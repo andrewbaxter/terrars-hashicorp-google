@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct AlloydbBackupData {
+struct AlloydbBackupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,6 +25,8 @@ struct AlloydbBackupData {
     backup_id: terrars::PrimField<std::string::String>,
     cluster_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     display_name: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -36,16 +40,16 @@ struct AlloydbBackupData {
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    encryption_config: std::option::Option<std::vec::Vec<AlloydbBackupEncryptionConfigEl>>,
+    encryption_config: std::option::Option<std::vec::Vec<AlloydbBackup_EncryptionConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<AlloydbBackupTimeoutsEl>,
+    timeouts: std::option::Option<AlloydbBackup_Timeouts>,
     dynamic: AlloydbBackupDynamic,
 }
 
 struct AlloydbBackup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AlloydbBackupData>,
+    data: std::cell::RefCell<AlloydbBackupData_>,
 }
 
 #[derive(Clone)]
@@ -155,6 +159,13 @@ impl AlloydbBackup {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nUser-provided description of the backup."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -199,7 +210,7 @@ impl AlloydbBackup {
     #[doc = "Set the field `encryption_config`.\n"]
     pub fn set_encryption_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AlloydbBackupEncryptionConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AlloydbBackup_EncryptionConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -213,7 +224,7 @@ impl AlloydbBackup {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<AlloydbBackupTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<AlloydbBackup_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -254,6 +265,12 @@ impl AlloydbBackup {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nUser-provided description of the backup."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -279,7 +296,7 @@ impl AlloydbBackup {
 
     #[doc =
         "Get a reference to the value of field `encryption_info` after provisioning.\nEncryptionInfo describes the encryption information of a cluster or a backup."]
-    pub fn encryption_info(&self) -> terrars::ListRef<AlloydbBackupEncryptionInfoElRef> {
+    pub fn encryption_info(&self) -> terrars::ListRef<AlloydbBackup_EncryptionInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_info", self.extract_ref()))
     }
 
@@ -291,7 +308,7 @@ impl AlloydbBackup {
 
     #[doc =
         "Get a reference to the value of field `expiry_quantity` after provisioning.\nOutput only. The QuantityBasedExpiry of the backup, specified by the backup's retention policy.\nOnce the expiry quantity is over retention, the backup is eligible to be garbage collected."]
-    pub fn expiry_quantity(&self) -> terrars::ListRef<AlloydbBackupExpiryQuantityElRef> {
+    pub fn expiry_quantity(&self) -> terrars::ListRef<AlloydbBackup_ExpiryQuantityRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.expiry_quantity", self.extract_ref()))
     }
 
@@ -372,13 +389,13 @@ impl AlloydbBackup {
     }
 
     #[doc = "Get a reference to the value of field `encryption_config` after provisioning.\n"]
-    pub fn encryption_config(&self) -> terrars::ListRef<AlloydbBackupEncryptionConfigElRef> {
+    pub fn encryption_config(&self) -> terrars::ListRef<AlloydbBackup_EncryptionConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> AlloydbBackupTimeoutsElRef {
-        AlloydbBackupTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> AlloydbBackup_TimeoutsRef {
+        AlloydbBackup_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -429,7 +446,7 @@ impl BuildAlloydbBackup {
         let out = AlloydbBackup(std::rc::Rc::new(AlloydbBackup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AlloydbBackupData {
+            data: std::cell::RefCell::new(AlloydbBackupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -438,6 +455,7 @@ impl BuildAlloydbBackup {
                 annotations: core::default::Default::default(),
                 backup_id: self.backup_id,
                 cluster_name: self.cluster_name,
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 display_name: core::default::Default::default(),
                 id: core::default::Default::default(),
@@ -514,6 +532,12 @@ impl AlloydbBackupRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nUser-provided description of the backup."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -539,7 +563,7 @@ impl AlloydbBackupRef {
 
     #[doc =
         "Get a reference to the value of field `encryption_info` after provisioning.\nEncryptionInfo describes the encryption information of a cluster or a backup."]
-    pub fn encryption_info(&self) -> terrars::ListRef<AlloydbBackupEncryptionInfoElRef> {
+    pub fn encryption_info(&self) -> terrars::ListRef<AlloydbBackup_EncryptionInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_info", self.extract_ref()))
     }
 
@@ -551,7 +575,7 @@ impl AlloydbBackupRef {
 
     #[doc =
         "Get a reference to the value of field `expiry_quantity` after provisioning.\nOutput only. The QuantityBasedExpiry of the backup, specified by the backup's retention policy.\nOnce the expiry quantity is over retention, the backup is eligible to be garbage collected."]
-    pub fn expiry_quantity(&self) -> terrars::ListRef<AlloydbBackupExpiryQuantityElRef> {
+    pub fn expiry_quantity(&self) -> terrars::ListRef<AlloydbBackup_ExpiryQuantityRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.expiry_quantity", self.extract_ref()))
     }
 
@@ -632,25 +656,30 @@ impl AlloydbBackupRef {
     }
 
     #[doc = "Get a reference to the value of field `encryption_config` after provisioning.\n"]
-    pub fn encryption_config(&self) -> terrars::ListRef<AlloydbBackupEncryptionConfigElRef> {
+    pub fn encryption_config(&self) -> terrars::ListRef<AlloydbBackup_EncryptionConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> AlloydbBackupTimeoutsElRef {
-        AlloydbBackupTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> AlloydbBackup_TimeoutsRef {
+        AlloydbBackup_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct AlloydbBackupDynamic {
+    encryption_config: std::option::Option<terrars::DynamicBlock<AlloydbBackup_EncryptionConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct AlloydbBackupEncryptionInfoEl {
+pub struct AlloydbBackup_EncryptionInfo {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     encryption_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_versions: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl AlloydbBackupEncryptionInfoEl {
+impl AlloydbBackup_EncryptionInfo {
     #[doc = "Set the field `encryption_type`.\n"]
     pub fn set_encryption_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.encryption_type = std::option::Option::Some(v.into());
@@ -667,8 +696,8 @@ impl AlloydbBackupEncryptionInfoEl {
     }
 }
 
-impl terrars::ToListMappable for AlloydbBackupEncryptionInfoEl {
-    type O = terrars::BlockAssignable<AlloydbBackupEncryptionInfoEl>;
+impl terrars::ToListMappable for AlloydbBackup_EncryptionInfo {
+    type O = terrars::BlockAssignable<AlloydbBackup_EncryptionInfo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -679,32 +708,34 @@ impl terrars::ToListMappable for AlloydbBackupEncryptionInfoEl {
     }
 }
 
-pub struct BuildAlloydbBackupEncryptionInfoEl {}
+pub struct BuildAlloydbBackup_EncryptionInfo {}
 
-impl BuildAlloydbBackupEncryptionInfoEl {
-    pub fn build(self) -> AlloydbBackupEncryptionInfoEl {
-        AlloydbBackupEncryptionInfoEl {
+impl BuildAlloydbBackup_EncryptionInfo {
+    pub fn build(self) -> AlloydbBackup_EncryptionInfo {
+        AlloydbBackup_EncryptionInfo {
             encryption_type: core::default::Default::default(),
             kms_key_versions: core::default::Default::default(),
         }
     }
 }
 
-pub struct AlloydbBackupEncryptionInfoElRef {
+#[allow(dead_code)]
+pub struct AlloydbBackup_EncryptionInfoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AlloydbBackupEncryptionInfoElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AlloydbBackupEncryptionInfoElRef {
-        AlloydbBackupEncryptionInfoElRef {
+impl terrars::Ref for AlloydbBackup_EncryptionInfoRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AlloydbBackup_EncryptionInfoRef {
+        AlloydbBackup_EncryptionInfoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AlloydbBackupEncryptionInfoElRef {
+impl AlloydbBackup_EncryptionInfoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -721,14 +752,14 @@ impl AlloydbBackupEncryptionInfoElRef {
 }
 
 #[derive(Serialize)]
-pub struct AlloydbBackupExpiryQuantityEl {
+pub struct AlloydbBackup_ExpiryQuantity {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     retention_count: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     total_retention_count: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl AlloydbBackupExpiryQuantityEl {
+impl AlloydbBackup_ExpiryQuantity {
     #[doc = "Set the field `retention_count`.\n"]
     pub fn set_retention_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.retention_count = std::option::Option::Some(v.into());
@@ -742,8 +773,8 @@ impl AlloydbBackupExpiryQuantityEl {
     }
 }
 
-impl terrars::ToListMappable for AlloydbBackupExpiryQuantityEl {
-    type O = terrars::BlockAssignable<AlloydbBackupExpiryQuantityEl>;
+impl terrars::ToListMappable for AlloydbBackup_ExpiryQuantity {
+    type O = terrars::BlockAssignable<AlloydbBackup_ExpiryQuantity>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -754,32 +785,34 @@ impl terrars::ToListMappable for AlloydbBackupExpiryQuantityEl {
     }
 }
 
-pub struct BuildAlloydbBackupExpiryQuantityEl {}
+pub struct BuildAlloydbBackup_ExpiryQuantity {}
 
-impl BuildAlloydbBackupExpiryQuantityEl {
-    pub fn build(self) -> AlloydbBackupExpiryQuantityEl {
-        AlloydbBackupExpiryQuantityEl {
+impl BuildAlloydbBackup_ExpiryQuantity {
+    pub fn build(self) -> AlloydbBackup_ExpiryQuantity {
+        AlloydbBackup_ExpiryQuantity {
             retention_count: core::default::Default::default(),
             total_retention_count: core::default::Default::default(),
         }
     }
 }
 
-pub struct AlloydbBackupExpiryQuantityElRef {
+#[allow(dead_code)]
+pub struct AlloydbBackup_ExpiryQuantityRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AlloydbBackupExpiryQuantityElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AlloydbBackupExpiryQuantityElRef {
-        AlloydbBackupExpiryQuantityElRef {
+impl terrars::Ref for AlloydbBackup_ExpiryQuantityRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AlloydbBackup_ExpiryQuantityRef {
+        AlloydbBackup_ExpiryQuantityRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AlloydbBackupExpiryQuantityElRef {
+impl AlloydbBackup_ExpiryQuantityRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -796,12 +829,12 @@ impl AlloydbBackupExpiryQuantityElRef {
 }
 
 #[derive(Serialize)]
-pub struct AlloydbBackupEncryptionConfigEl {
+pub struct AlloydbBackup_EncryptionConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AlloydbBackupEncryptionConfigEl {
+impl AlloydbBackup_EncryptionConfig {
     #[doc =
         "Set the field `kms_key_name`.\nThe fully-qualified resource name of the KMS key. Each Cloud KMS key is regionalized and has the following format: projects/[PROJECT]/locations/[REGION]/keyRings/[RING]/cryptoKeys/[KEY_NAME]."]
     pub fn set_kms_key_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -810,8 +843,8 @@ impl AlloydbBackupEncryptionConfigEl {
     }
 }
 
-impl terrars::ToListMappable for AlloydbBackupEncryptionConfigEl {
-    type O = terrars::BlockAssignable<AlloydbBackupEncryptionConfigEl>;
+impl terrars::ToListMappable for AlloydbBackup_EncryptionConfig {
+    type O = terrars::BlockAssignable<AlloydbBackup_EncryptionConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -822,29 +855,31 @@ impl terrars::ToListMappable for AlloydbBackupEncryptionConfigEl {
     }
 }
 
-pub struct BuildAlloydbBackupEncryptionConfigEl {}
+pub struct BuildAlloydbBackup_EncryptionConfig {}
 
-impl BuildAlloydbBackupEncryptionConfigEl {
-    pub fn build(self) -> AlloydbBackupEncryptionConfigEl {
-        AlloydbBackupEncryptionConfigEl { kms_key_name: core::default::Default::default() }
+impl BuildAlloydbBackup_EncryptionConfig {
+    pub fn build(self) -> AlloydbBackup_EncryptionConfig {
+        AlloydbBackup_EncryptionConfig { kms_key_name: core::default::Default::default() }
     }
 }
 
-pub struct AlloydbBackupEncryptionConfigElRef {
+#[allow(dead_code)]
+pub struct AlloydbBackup_EncryptionConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AlloydbBackupEncryptionConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AlloydbBackupEncryptionConfigElRef {
-        AlloydbBackupEncryptionConfigElRef {
+impl terrars::Ref for AlloydbBackup_EncryptionConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AlloydbBackup_EncryptionConfigRef {
+        AlloydbBackup_EncryptionConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AlloydbBackupEncryptionConfigElRef {
+impl AlloydbBackup_EncryptionConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -857,7 +892,7 @@ impl AlloydbBackupEncryptionConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct AlloydbBackupTimeoutsEl {
+pub struct AlloydbBackup_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -866,7 +901,7 @@ pub struct AlloydbBackupTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AlloydbBackupTimeoutsEl {
+impl AlloydbBackup_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -886,8 +921,8 @@ impl AlloydbBackupTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for AlloydbBackupTimeoutsEl {
-    type O = terrars::BlockAssignable<AlloydbBackupTimeoutsEl>;
+impl terrars::ToListMappable for AlloydbBackup_Timeouts {
+    type O = terrars::BlockAssignable<AlloydbBackup_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -898,11 +933,11 @@ impl terrars::ToListMappable for AlloydbBackupTimeoutsEl {
     }
 }
 
-pub struct BuildAlloydbBackupTimeoutsEl {}
+pub struct BuildAlloydbBackup_Timeouts {}
 
-impl BuildAlloydbBackupTimeoutsEl {
-    pub fn build(self) -> AlloydbBackupTimeoutsEl {
-        AlloydbBackupTimeoutsEl {
+impl BuildAlloydbBackup_Timeouts {
+    pub fn build(self) -> AlloydbBackup_Timeouts {
+        AlloydbBackup_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -910,21 +945,23 @@ impl BuildAlloydbBackupTimeoutsEl {
     }
 }
 
-pub struct AlloydbBackupTimeoutsElRef {
+#[allow(dead_code)]
+pub struct AlloydbBackup_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AlloydbBackupTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AlloydbBackupTimeoutsElRef {
-        AlloydbBackupTimeoutsElRef {
+impl terrars::Ref for AlloydbBackup_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AlloydbBackup_TimeoutsRef {
+        AlloydbBackup_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AlloydbBackupTimeoutsElRef {
+impl AlloydbBackup_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -943,9 +980,4 @@ impl AlloydbBackupTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AlloydbBackupDynamic {
-    encryption_config: std::option::Option<terrars::DynamicBlock<AlloydbBackupEncryptionConfigEl>>,
 }

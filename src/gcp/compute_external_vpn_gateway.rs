@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeExternalVpnGatewayData {
+struct ComputeExternalVpnGatewayData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct ComputeExternalVpnGatewayData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -30,16 +34,18 @@ struct ComputeExternalVpnGatewayData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     redundancy_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    interface: std::option::Option<std::vec::Vec<ComputeExternalVpnGatewayInterfaceEl>>,
+    interface: std::option::Option<std::vec::Vec<ComputeExternalVpnGateway_Interface>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComputeExternalVpnGatewayTimeoutsEl>,
+    params: std::option::Option<std::vec::Vec<ComputeExternalVpnGateway_Params>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<ComputeExternalVpnGateway_Timeouts>,
     dynamic: ComputeExternalVpnGatewayDynamic,
 }
 
 struct ComputeExternalVpnGateway_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeExternalVpnGatewayData>,
+    data: std::cell::RefCell<ComputeExternalVpnGatewayData_>,
 }
 
 #[derive(Clone)]
@@ -139,6 +145,13 @@ impl ComputeExternalVpnGateway {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nAn optional description of this resource."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -177,7 +190,7 @@ impl ComputeExternalVpnGateway {
     #[doc = "Set the field `interface`.\n"]
     pub fn set_interface(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeExternalVpnGatewayInterfaceEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeExternalVpnGateway_Interface>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -190,10 +203,32 @@ impl ComputeExternalVpnGateway {
         self
     }
 
+    #[doc = "Set the field `params`.\n"]
+    pub fn set_params(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeExternalVpnGateway_Params>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().params = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.params = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeExternalVpnGatewayTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeExternalVpnGateway_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -254,16 +289,18 @@ impl ComputeExternalVpnGateway {
     }
 
     #[doc = "Get a reference to the value of field `interface` after provisioning.\n"]
-    pub fn interface(&self) -> terrars::ListRef<ComputeExternalVpnGatewayInterfaceElRef> {
+    pub fn interface(&self) -> terrars::ListRef<ComputeExternalVpnGateway_InterfaceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.interface", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `params` after provisioning.\n"]
+    pub fn params(&self) -> terrars::ListRef<ComputeExternalVpnGateway_ParamsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.params", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeExternalVpnGatewayTimeoutsElRef {
-        ComputeExternalVpnGatewayTimeoutsElRef::new(
-            self.shared().clone(),
-            format!("{}.timeouts", self.extract_ref()),
-        )
+    pub fn timeouts(&self) -> ComputeExternalVpnGateway_TimeoutsRef {
+        ComputeExternalVpnGateway_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -310,12 +347,13 @@ impl BuildComputeExternalVpnGateway {
         let out = ComputeExternalVpnGateway(std::rc::Rc::new(ComputeExternalVpnGateway_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeExternalVpnGatewayData {
+            data: std::cell::RefCell::new(ComputeExternalVpnGatewayData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 labels: core::default::Default::default(),
@@ -323,6 +361,7 @@ impl BuildComputeExternalVpnGateway {
                 project: core::default::Default::default(),
                 redundancy_type: core::default::Default::default(),
                 interface: core::default::Default::default(),
+                params: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -353,6 +392,12 @@ impl ComputeExternalVpnGatewayRef {
 
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -413,28 +458,38 @@ impl ComputeExternalVpnGatewayRef {
     }
 
     #[doc = "Get a reference to the value of field `interface` after provisioning.\n"]
-    pub fn interface(&self) -> terrars::ListRef<ComputeExternalVpnGatewayInterfaceElRef> {
+    pub fn interface(&self) -> terrars::ListRef<ComputeExternalVpnGateway_InterfaceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.interface", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `params` after provisioning.\n"]
+    pub fn params(&self) -> terrars::ListRef<ComputeExternalVpnGateway_ParamsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.params", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeExternalVpnGatewayTimeoutsElRef {
-        ComputeExternalVpnGatewayTimeoutsElRef::new(
-            self.shared().clone(),
-            format!("{}.timeouts", self.extract_ref()),
-        )
+    pub fn timeouts(&self) -> ComputeExternalVpnGateway_TimeoutsRef {
+        ComputeExternalVpnGateway_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ComputeExternalVpnGatewayDynamic {
+    interface: std::option::Option<terrars::DynamicBlock<ComputeExternalVpnGateway_Interface>>,
+    params: std::option::Option<terrars::DynamicBlock<ComputeExternalVpnGateway_Params>>,
+}
+
 #[derive(Serialize)]
-pub struct ComputeExternalVpnGatewayInterfaceEl {
+pub struct ComputeExternalVpnGateway_Interface {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ip_address: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ipv6_address: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeExternalVpnGatewayInterfaceEl {
+impl ComputeExternalVpnGateway_Interface {
     #[doc =
         "Set the field `id`.\nThe numeric ID for this interface. Allowed values are based on the redundancy type\nof this external VPN gateway\n* '0 - SINGLE_IP_INTERNALLY_REDUNDANT'\n* '0, 1 - TWO_IPS_REDUNDANCY'\n* '0, 1, 2, 3 - FOUR_IPS_REDUNDANCY'"]
     pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -448,10 +503,17 @@ impl ComputeExternalVpnGatewayInterfaceEl {
         self.ip_address = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc =
+        "Set the field `ipv6_address`.\nIPv6 address of the interface in the external VPN gateway. This IPv6\naddress can be either from your on-premise gateway or another Cloud\nprovider's VPN gateway, it cannot be an IP address from Google Compute\nEngine. Must specify an IPv6 address (not IPV4-mapped) using any format\ndescribed in RFC 4291 (e.g. 2001:db8:0:0:2d9:51:0:0). The output format\nis RFC 5952 format (e.g. 2001:db8::2d9:51:0:0)."]
+    pub fn set_ipv6_address(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.ipv6_address = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for ComputeExternalVpnGatewayInterfaceEl {
-    type O = terrars::BlockAssignable<ComputeExternalVpnGatewayInterfaceEl>;
+impl terrars::ToListMappable for ComputeExternalVpnGateway_Interface {
+    type O = terrars::BlockAssignable<ComputeExternalVpnGateway_Interface>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -462,32 +524,35 @@ impl terrars::ToListMappable for ComputeExternalVpnGatewayInterfaceEl {
     }
 }
 
-pub struct BuildComputeExternalVpnGatewayInterfaceEl {}
+pub struct BuildComputeExternalVpnGateway_Interface {}
 
-impl BuildComputeExternalVpnGatewayInterfaceEl {
-    pub fn build(self) -> ComputeExternalVpnGatewayInterfaceEl {
-        ComputeExternalVpnGatewayInterfaceEl {
+impl BuildComputeExternalVpnGateway_Interface {
+    pub fn build(self) -> ComputeExternalVpnGateway_Interface {
+        ComputeExternalVpnGateway_Interface {
             id: core::default::Default::default(),
             ip_address: core::default::Default::default(),
+            ipv6_address: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeExternalVpnGatewayInterfaceElRef {
+#[allow(dead_code)]
+pub struct ComputeExternalVpnGateway_InterfaceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeExternalVpnGatewayInterfaceElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeExternalVpnGatewayInterfaceElRef {
-        ComputeExternalVpnGatewayInterfaceElRef {
+impl terrars::Ref for ComputeExternalVpnGateway_InterfaceRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeExternalVpnGateway_InterfaceRef {
+        ComputeExternalVpnGateway_InterfaceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeExternalVpnGatewayInterfaceElRef {
+impl ComputeExternalVpnGateway_InterfaceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -503,10 +568,82 @@ impl ComputeExternalVpnGatewayInterfaceElRef {
     pub fn ip_address(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_address", self.base))
     }
+
+    #[doc =
+        "Get a reference to the value of field `ipv6_address` after provisioning.\nIPv6 address of the interface in the external VPN gateway. This IPv6\naddress can be either from your on-premise gateway or another Cloud\nprovider's VPN gateway, it cannot be an IP address from Google Compute\nEngine. Must specify an IPv6 address (not IPV4-mapped) using any format\ndescribed in RFC 4291 (e.g. 2001:db8:0:0:2d9:51:0:0). The output format\nis RFC 5952 format (e.g. 2001:db8::2d9:51:0:0)."]
+    pub fn ipv6_address(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv6_address", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct ComputeExternalVpnGatewayTimeoutsEl {
+pub struct ComputeExternalVpnGateway_Params {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_manager_tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+}
+
+impl ComputeExternalVpnGateway_Params {
+    #[doc =
+        "Set the field `resource_manager_tags`.\nResource manager tags to be bound to the ExternalVpnGateway. Tag keys and values have the\nsame definition as resource manager tags. Keys must be in the format tagKeys/{tag_key_id},\nand values are in the format tagValues/456."]
+    pub fn set_resource_manager_tags(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.resource_manager_tags = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeExternalVpnGateway_Params {
+    type O = terrars::BlockAssignable<ComputeExternalVpnGateway_Params>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeExternalVpnGateway_Params {}
+
+impl BuildComputeExternalVpnGateway_Params {
+    pub fn build(self) -> ComputeExternalVpnGateway_Params {
+        ComputeExternalVpnGateway_Params { resource_manager_tags: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeExternalVpnGateway_ParamsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeExternalVpnGateway_ParamsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeExternalVpnGateway_ParamsRef {
+        ComputeExternalVpnGateway_ParamsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeExternalVpnGateway_ParamsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `resource_manager_tags` after provisioning.\nResource manager tags to be bound to the ExternalVpnGateway. Tag keys and values have the\nsame definition as resource manager tags. Keys must be in the format tagKeys/{tag_key_id},\nand values are in the format tagValues/456."]
+    pub fn resource_manager_tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.resource_manager_tags", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ComputeExternalVpnGateway_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -515,7 +652,7 @@ pub struct ComputeExternalVpnGatewayTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeExternalVpnGatewayTimeoutsEl {
+impl ComputeExternalVpnGateway_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -535,8 +672,8 @@ impl ComputeExternalVpnGatewayTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeExternalVpnGatewayTimeoutsEl {
-    type O = terrars::BlockAssignable<ComputeExternalVpnGatewayTimeoutsEl>;
+impl terrars::ToListMappable for ComputeExternalVpnGateway_Timeouts {
+    type O = terrars::BlockAssignable<ComputeExternalVpnGateway_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -547,11 +684,11 @@ impl terrars::ToListMappable for ComputeExternalVpnGatewayTimeoutsEl {
     }
 }
 
-pub struct BuildComputeExternalVpnGatewayTimeoutsEl {}
+pub struct BuildComputeExternalVpnGateway_Timeouts {}
 
-impl BuildComputeExternalVpnGatewayTimeoutsEl {
-    pub fn build(self) -> ComputeExternalVpnGatewayTimeoutsEl {
-        ComputeExternalVpnGatewayTimeoutsEl {
+impl BuildComputeExternalVpnGateway_Timeouts {
+    pub fn build(self) -> ComputeExternalVpnGateway_Timeouts {
+        ComputeExternalVpnGateway_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -559,21 +696,23 @@ impl BuildComputeExternalVpnGatewayTimeoutsEl {
     }
 }
 
-pub struct ComputeExternalVpnGatewayTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComputeExternalVpnGateway_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeExternalVpnGatewayTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeExternalVpnGatewayTimeoutsElRef {
-        ComputeExternalVpnGatewayTimeoutsElRef {
+impl terrars::Ref for ComputeExternalVpnGateway_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeExternalVpnGateway_TimeoutsRef {
+        ComputeExternalVpnGateway_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeExternalVpnGatewayTimeoutsElRef {
+impl ComputeExternalVpnGateway_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -592,9 +731,4 @@ impl ComputeExternalVpnGatewayTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ComputeExternalVpnGatewayDynamic {
-    interface: std::option::Option<terrars::DynamicBlock<ComputeExternalVpnGatewayInterfaceEl>>,
 }

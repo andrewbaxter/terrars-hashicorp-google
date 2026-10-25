@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct HealthcareDicomStoreData {
+struct HealthcareDicomStoreData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,21 +22,23 @@ struct HealthcareDicomStoreData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     dataset: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    notification_config: std::option::Option<std::vec::Vec<HealthcareDicomStoreNotificationConfigEl>>,
+    notification_config: std::option::Option<std::vec::Vec<HealthcareDicomStore_NotificationConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<HealthcareDicomStoreTimeoutsEl>,
+    timeouts: std::option::Option<HealthcareDicomStore_Timeouts>,
     dynamic: HealthcareDicomStoreDynamic,
 }
 
 struct HealthcareDicomStore_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<HealthcareDicomStoreData>,
+    data: std::cell::RefCell<HealthcareDicomStoreData_>,
 }
 
 #[derive(Clone)]
@@ -134,6 +138,13 @@ impl HealthcareDicomStore {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -153,7 +164,7 @@ impl HealthcareDicomStore {
     #[doc = "Set the field `notification_config`.\n"]
     pub fn set_notification_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<HealthcareDicomStoreNotificationConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<HealthcareDicomStore_NotificationConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -167,7 +178,7 @@ impl HealthcareDicomStore {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<HealthcareDicomStoreTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<HealthcareDicomStore_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -176,6 +187,12 @@ impl HealthcareDicomStore {
         "Get a reference to the value of field `dataset` after provisioning.\nIdentifies the dataset addressed by this request. Must be in the format\n'projects/{project}/locations/{location}/datasets/{dataset}'"]
     pub fn dataset(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.dataset", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -214,13 +231,13 @@ impl HealthcareDicomStore {
     }
 
     #[doc = "Get a reference to the value of field `notification_config` after provisioning.\n"]
-    pub fn notification_config(&self) -> terrars::ListRef<HealthcareDicomStoreNotificationConfigElRef> {
+    pub fn notification_config(&self) -> terrars::ListRef<HealthcareDicomStore_NotificationConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.notification_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> HealthcareDicomStoreTimeoutsElRef {
-        HealthcareDicomStoreTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> HealthcareDicomStore_TimeoutsRef {
+        HealthcareDicomStore_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -270,13 +287,14 @@ impl BuildHealthcareDicomStore {
         let out = HealthcareDicomStore(std::rc::Rc::new(HealthcareDicomStore_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(HealthcareDicomStoreData {
+            data: std::cell::RefCell::new(HealthcareDicomStoreData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 dataset: self.dataset,
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 labels: core::default::Default::default(),
                 name: self.name,
@@ -320,6 +338,12 @@ impl HealthcareDicomStoreRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
     pub fn effective_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
@@ -355,25 +379,39 @@ impl HealthcareDicomStoreRef {
     }
 
     #[doc = "Get a reference to the value of field `notification_config` after provisioning.\n"]
-    pub fn notification_config(&self) -> terrars::ListRef<HealthcareDicomStoreNotificationConfigElRef> {
+    pub fn notification_config(&self) -> terrars::ListRef<HealthcareDicomStore_NotificationConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.notification_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> HealthcareDicomStoreTimeoutsElRef {
-        HealthcareDicomStoreTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> HealthcareDicomStore_TimeoutsRef {
+        HealthcareDicomStore_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
-#[derive(Serialize)]
-pub struct HealthcareDicomStoreNotificationConfigEl {
-    pubsub_topic: terrars::PrimField<std::string::String>,
+#[derive(Serialize, Default)]
+struct HealthcareDicomStoreDynamic {
+    notification_config: std::option::Option<terrars::DynamicBlock<HealthcareDicomStore_NotificationConfig>>,
 }
 
-impl HealthcareDicomStoreNotificationConfigEl { }
+#[derive(Serialize)]
+pub struct HealthcareDicomStore_NotificationConfig {
+    pubsub_topic: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    send_for_bulk_import: std::option::Option<terrars::PrimField<bool>>,
+}
 
-impl terrars::ToListMappable for HealthcareDicomStoreNotificationConfigEl {
-    type O = terrars::BlockAssignable<HealthcareDicomStoreNotificationConfigEl>;
+impl HealthcareDicomStore_NotificationConfig {
+    #[doc =
+        "Set the field `send_for_bulk_import`.\nIndicates whether or not to send Pub/Sub notifications on bulk import. Only supported for DICOM imports."]
+    pub fn set_send_for_bulk_import(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.send_for_bulk_import = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for HealthcareDicomStore_NotificationConfig {
+    type O = terrars::BlockAssignable<HealthcareDicomStore_NotificationConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -384,33 +422,38 @@ impl terrars::ToListMappable for HealthcareDicomStoreNotificationConfigEl {
     }
 }
 
-pub struct BuildHealthcareDicomStoreNotificationConfigEl {
+pub struct BuildHealthcareDicomStore_NotificationConfig {
     #[doc =
         "The Cloud Pub/Sub topic that notifications of changes are published on. Supplied by the client.\nPubsubMessage.Data will contain the resource name. PubsubMessage.MessageId is the ID of this message.\nIt is guaranteed to be unique within the topic. PubsubMessage.PublishTime is the time at which the message\nwas published. Notifications are only sent if the topic is non-empty. Topic names must be scoped to a\nproject. service-PROJECT_NUMBER@gcp-sa-healthcare.iam.gserviceaccount.com must have publisher permissions on the given\nCloud Pub/Sub topic. Not having adequate permissions will cause the calls that send notifications to fail."]
     pub pubsub_topic: terrars::PrimField<std::string::String>,
 }
 
-impl BuildHealthcareDicomStoreNotificationConfigEl {
-    pub fn build(self) -> HealthcareDicomStoreNotificationConfigEl {
-        HealthcareDicomStoreNotificationConfigEl { pubsub_topic: self.pubsub_topic }
+impl BuildHealthcareDicomStore_NotificationConfig {
+    pub fn build(self) -> HealthcareDicomStore_NotificationConfig {
+        HealthcareDicomStore_NotificationConfig {
+            pubsub_topic: self.pubsub_topic,
+            send_for_bulk_import: core::default::Default::default(),
+        }
     }
 }
 
-pub struct HealthcareDicomStoreNotificationConfigElRef {
+#[allow(dead_code)]
+pub struct HealthcareDicomStore_NotificationConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for HealthcareDicomStoreNotificationConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> HealthcareDicomStoreNotificationConfigElRef {
-        HealthcareDicomStoreNotificationConfigElRef {
+impl terrars::Ref for HealthcareDicomStore_NotificationConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> HealthcareDicomStore_NotificationConfigRef {
+        HealthcareDicomStore_NotificationConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl HealthcareDicomStoreNotificationConfigElRef {
+impl HealthcareDicomStore_NotificationConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -420,10 +463,16 @@ impl HealthcareDicomStoreNotificationConfigElRef {
     pub fn pubsub_topic(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.pubsub_topic", self.base))
     }
+
+    #[doc =
+        "Get a reference to the value of field `send_for_bulk_import` after provisioning.\nIndicates whether or not to send Pub/Sub notifications on bulk import. Only supported for DICOM imports."]
+    pub fn send_for_bulk_import(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.send_for_bulk_import", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct HealthcareDicomStoreTimeoutsEl {
+pub struct HealthcareDicomStore_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -432,7 +481,7 @@ pub struct HealthcareDicomStoreTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl HealthcareDicomStoreTimeoutsEl {
+impl HealthcareDicomStore_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -452,8 +501,8 @@ impl HealthcareDicomStoreTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for HealthcareDicomStoreTimeoutsEl {
-    type O = terrars::BlockAssignable<HealthcareDicomStoreTimeoutsEl>;
+impl terrars::ToListMappable for HealthcareDicomStore_Timeouts {
+    type O = terrars::BlockAssignable<HealthcareDicomStore_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -464,11 +513,11 @@ impl terrars::ToListMappable for HealthcareDicomStoreTimeoutsEl {
     }
 }
 
-pub struct BuildHealthcareDicomStoreTimeoutsEl {}
+pub struct BuildHealthcareDicomStore_Timeouts {}
 
-impl BuildHealthcareDicomStoreTimeoutsEl {
-    pub fn build(self) -> HealthcareDicomStoreTimeoutsEl {
-        HealthcareDicomStoreTimeoutsEl {
+impl BuildHealthcareDicomStore_Timeouts {
+    pub fn build(self) -> HealthcareDicomStore_Timeouts {
+        HealthcareDicomStore_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -476,21 +525,23 @@ impl BuildHealthcareDicomStoreTimeoutsEl {
     }
 }
 
-pub struct HealthcareDicomStoreTimeoutsElRef {
+#[allow(dead_code)]
+pub struct HealthcareDicomStore_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for HealthcareDicomStoreTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> HealthcareDicomStoreTimeoutsElRef {
-        HealthcareDicomStoreTimeoutsElRef {
+impl terrars::Ref for HealthcareDicomStore_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> HealthcareDicomStore_TimeoutsRef {
+        HealthcareDicomStore_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl HealthcareDicomStoreTimeoutsElRef {
+impl HealthcareDicomStore_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -509,9 +560,4 @@ impl HealthcareDicomStoreTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct HealthcareDicomStoreDynamic {
-    notification_config: std::option::Option<terrars::DynamicBlock<HealthcareDicomStoreNotificationConfigEl>>,
 }

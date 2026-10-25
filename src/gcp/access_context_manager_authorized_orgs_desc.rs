@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct AccessContextManagerAuthorizedOrgsDescData {
+struct AccessContextManagerAuthorizedOrgsDescData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,19 +27,21 @@ struct AccessContextManagerAuthorizedOrgsDescData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     authorization_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     orgs: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     parent: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<AccessContextManagerAuthorizedOrgsDescTimeoutsEl>,
+    timeouts: std::option::Option<AccessContextManagerAuthorizedOrgsDesc_Timeouts>,
 }
 
 struct AccessContextManagerAuthorizedOrgsDesc_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AccessContextManagerAuthorizedOrgsDescData>,
+    data: std::cell::RefCell<AccessContextManagerAuthorizedOrgsDescData_>,
 }
 
 #[derive(Clone)]
@@ -161,6 +165,13 @@ impl AccessContextManagerAuthorizedOrgsDesc {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -178,7 +189,7 @@ impl AccessContextManagerAuthorizedOrgsDesc {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<AccessContextManagerAuthorizedOrgsDescTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<AccessContextManagerAuthorizedOrgsDesc_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -205,6 +216,12 @@ impl AccessContextManagerAuthorizedOrgsDesc {
         "Get a reference to the value of field `create_time` after provisioning.\nTime the AuthorizedOrgsDesc was created in UTC."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -237,8 +254,8 @@ impl AccessContextManagerAuthorizedOrgsDesc {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> AccessContextManagerAuthorizedOrgsDescTimeoutsElRef {
-        AccessContextManagerAuthorizedOrgsDescTimeoutsElRef::new(
+    pub fn timeouts(&self) -> AccessContextManagerAuthorizedOrgsDesc_TimeoutsRef {
+        AccessContextManagerAuthorizedOrgsDesc_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -290,7 +307,7 @@ impl BuildAccessContextManagerAuthorizedOrgsDesc {
         let out = AccessContextManagerAuthorizedOrgsDesc(std::rc::Rc::new(AccessContextManagerAuthorizedOrgsDesc_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AccessContextManagerAuthorizedOrgsDescData {
+            data: std::cell::RefCell::new(AccessContextManagerAuthorizedOrgsDescData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -299,6 +316,7 @@ impl BuildAccessContextManagerAuthorizedOrgsDesc {
                 asset_type: core::default::Default::default(),
                 authorization_direction: core::default::Default::default(),
                 authorization_type: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
                 orgs: core::default::Default::default(),
@@ -358,6 +376,12 @@ impl AccessContextManagerAuthorizedOrgsDescRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -388,8 +412,8 @@ impl AccessContextManagerAuthorizedOrgsDescRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> AccessContextManagerAuthorizedOrgsDescTimeoutsElRef {
-        AccessContextManagerAuthorizedOrgsDescTimeoutsElRef::new(
+    pub fn timeouts(&self) -> AccessContextManagerAuthorizedOrgsDesc_TimeoutsRef {
+        AccessContextManagerAuthorizedOrgsDesc_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -397,7 +421,7 @@ impl AccessContextManagerAuthorizedOrgsDescRef {
 }
 
 #[derive(Serialize)]
-pub struct AccessContextManagerAuthorizedOrgsDescTimeoutsEl {
+pub struct AccessContextManagerAuthorizedOrgsDesc_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -406,7 +430,7 @@ pub struct AccessContextManagerAuthorizedOrgsDescTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AccessContextManagerAuthorizedOrgsDescTimeoutsEl {
+impl AccessContextManagerAuthorizedOrgsDesc_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -426,8 +450,8 @@ impl AccessContextManagerAuthorizedOrgsDescTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for AccessContextManagerAuthorizedOrgsDescTimeoutsEl {
-    type O = terrars::BlockAssignable<AccessContextManagerAuthorizedOrgsDescTimeoutsEl>;
+impl terrars::ToListMappable for AccessContextManagerAuthorizedOrgsDesc_Timeouts {
+    type O = terrars::BlockAssignable<AccessContextManagerAuthorizedOrgsDesc_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -438,11 +462,11 @@ impl terrars::ToListMappable for AccessContextManagerAuthorizedOrgsDescTimeoutsE
     }
 }
 
-pub struct BuildAccessContextManagerAuthorizedOrgsDescTimeoutsEl {}
+pub struct BuildAccessContextManagerAuthorizedOrgsDesc_Timeouts {}
 
-impl BuildAccessContextManagerAuthorizedOrgsDescTimeoutsEl {
-    pub fn build(self) -> AccessContextManagerAuthorizedOrgsDescTimeoutsEl {
-        AccessContextManagerAuthorizedOrgsDescTimeoutsEl {
+impl BuildAccessContextManagerAuthorizedOrgsDesc_Timeouts {
+    pub fn build(self) -> AccessContextManagerAuthorizedOrgsDesc_Timeouts {
+        AccessContextManagerAuthorizedOrgsDesc_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -450,24 +474,26 @@ impl BuildAccessContextManagerAuthorizedOrgsDescTimeoutsEl {
     }
 }
 
-pub struct AccessContextManagerAuthorizedOrgsDescTimeoutsElRef {
+#[allow(dead_code)]
+pub struct AccessContextManagerAuthorizedOrgsDesc_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AccessContextManagerAuthorizedOrgsDescTimeoutsElRef {
+impl terrars::Ref for AccessContextManagerAuthorizedOrgsDesc_TimeoutsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AccessContextManagerAuthorizedOrgsDescTimeoutsElRef {
-        AccessContextManagerAuthorizedOrgsDescTimeoutsElRef {
+    ) -> AccessContextManagerAuthorizedOrgsDesc_TimeoutsRef {
+        AccessContextManagerAuthorizedOrgsDesc_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AccessContextManagerAuthorizedOrgsDescTimeoutsElRef {
+impl AccessContextManagerAuthorizedOrgsDesc_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

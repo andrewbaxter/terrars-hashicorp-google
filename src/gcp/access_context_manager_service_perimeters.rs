@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct AccessContextManagerServicePerimetersData {
+struct AccessContextManagerServicePerimetersData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,19 +21,21 @@ struct AccessContextManagerServicePerimetersData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     parent: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    service_perimeters: std::option::Option<std::vec::Vec<AccessContextManagerServicePerimetersServicePerimetersEl>>,
+    service_perimeters: std::option::Option<std::vec::Vec<AccessContextManagerServicePerimeters_ServicePerimeters>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<AccessContextManagerServicePerimetersTimeoutsEl>,
+    timeouts: std::option::Option<AccessContextManagerServicePerimeters_Timeouts>,
     dynamic: AccessContextManagerServicePerimetersDynamic,
 }
 
 struct AccessContextManagerServicePerimeters_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AccessContextManagerServicePerimetersData>,
+    data: std::cell::RefCell<AccessContextManagerServicePerimetersData_>,
 }
 
 #[derive(Clone)]
@@ -131,6 +135,13 @@ impl AccessContextManagerServicePerimeters {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -145,7 +156,7 @@ impl AccessContextManagerServicePerimeters {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<AccessContextManagerServicePerimetersServicePerimetersEl>>,
+                    ::Into<terrars::BlockAssignable<AccessContextManagerServicePerimeters_ServicePerimeters>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -159,9 +170,15 @@ impl AccessContextManagerServicePerimeters {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<AccessContextManagerServicePerimetersTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<AccessContextManagerServicePerimeters_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -176,13 +193,13 @@ impl AccessContextManagerServicePerimeters {
     }
 
     #[doc = "Get a reference to the value of field `service_perimeters` after provisioning.\n"]
-    pub fn service_perimeters(&self) -> terrars::ListRef<AccessContextManagerServicePerimetersServicePerimetersElRef> {
+    pub fn service_perimeters(&self) -> terrars::ListRef<AccessContextManagerServicePerimeters_ServicePerimetersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.service_perimeters", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> AccessContextManagerServicePerimetersTimeoutsElRef {
-        AccessContextManagerServicePerimetersTimeoutsElRef::new(
+    pub fn timeouts(&self) -> AccessContextManagerServicePerimeters_TimeoutsRef {
+        AccessContextManagerServicePerimeters_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -231,12 +248,13 @@ impl BuildAccessContextManagerServicePerimeters {
         let out = AccessContextManagerServicePerimeters(std::rc::Rc::new(AccessContextManagerServicePerimeters_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AccessContextManagerServicePerimetersData {
+            data: std::cell::RefCell::new(AccessContextManagerServicePerimetersData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 parent: self.parent,
                 service_perimeters: core::default::Default::default(),
@@ -272,6 +290,12 @@ impl AccessContextManagerServicePerimetersRef {
         &self.shared
     }
 
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -284,40 +308,47 @@ impl AccessContextManagerServicePerimetersRef {
     }
 
     #[doc = "Get a reference to the value of field `service_perimeters` after provisioning.\n"]
-    pub fn service_perimeters(&self) -> terrars::ListRef<AccessContextManagerServicePerimetersServicePerimetersElRef> {
+    pub fn service_perimeters(&self) -> terrars::ListRef<AccessContextManagerServicePerimeters_ServicePerimetersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.service_perimeters", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> AccessContextManagerServicePerimetersTimeoutsElRef {
-        AccessContextManagerServicePerimetersTimeoutsElRef::new(
+    pub fn timeouts(&self) -> AccessContextManagerServicePerimeters_TimeoutsRef {
+        AccessContextManagerServicePerimeters_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
-#[derive(Serialize)]
-pub struct AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressFromElSourcesEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    access_level: std::option::Option<terrars::PrimField<std::string::String>>,
+#[derive(Serialize, Default)]
+struct AccessContextManagerServicePerimetersDynamic {
+    service_perimeters: std
+    ::option
+    ::Option<terrars::DynamicBlock<AccessContextManagerServicePerimeters_ServicePerimeters>>,
 }
 
-impl AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressFromElSourcesEl {
+#[derive(Serialize)]
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_Sources_PscEndpoint {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    forwarding_rule: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_Sources_PscEndpoint {
     #[doc =
-        "Set the field `access_level`.\nAn AccessLevel resource name that allows resources outside the ServicePerimeter to be accessed from the inside."]
-    pub fn set_access_level(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.access_level = std::option::Option::Some(v.into());
+        "Set the field `forwarding_rule`.\nThe full resource name of the global forwarding rule that identifies a Private Service Connect endpoint.\nForwarding rule format: '//compute.googleapis.com/projects/{PROJECT_ID}/global/forwardingRules/{FORWARDING_RULE_ID}'."]
+    pub fn set_forwarding_rule(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.forwarding_rule = std::option::Option::Some(v.into());
         self
     }
 }
 
 impl terrars
-::ToListMappable for AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressFromElSourcesEl {
+::ToListMappable for AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_Sources_PscEndpoint {
     type O =
         terrars
         ::BlockAssignable<
-            AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressFromElSourcesEl,
+            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_Sources_PscEndpoint,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -329,37 +360,176 @@ impl terrars
     }
 }
 
-pub struct BuildAccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressFromElSourcesEl {}
+pub struct BuildAccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_Sources_PscEndpoint {}
 
-impl BuildAccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressFromElSourcesEl {
+impl BuildAccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_Sources_PscEndpoint {
     pub fn build(
         self,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressFromElSourcesEl {
-        AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressFromElSourcesEl {
-            access_level: core::default::Default::default(),
+    ) -> AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_Sources_PscEndpoint {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_Sources_PscEndpoint {
+            forwarding_rule: core::default::Default::default(),
         }
     }
 }
 
-pub struct AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressFromElSourcesElRef {
+#[allow(dead_code)]
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_Sources_PscEndpointRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressFromElSourcesElRef {
+::Ref for AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_Sources_PscEndpointRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressFromElSourcesElRef {
-        AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressFromElSourcesElRef {
+    ) -> AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_Sources_PscEndpointRef {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_Sources_PscEndpointRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressFromElSourcesElRef {
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_Sources_PscEndpointRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `forwarding_rule` after provisioning.\nThe full resource name of the global forwarding rule that identifies a Private Service Connect endpoint.\nForwarding rule format: '//compute.googleapis.com/projects/{PROJECT_ID}/global/forwardingRules/{FORWARDING_RULE_ID}'."]
+    pub fn forwarding_rule(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.forwarding_rule", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_SourcesDynamic {
+    psc_endpoint: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_Sources_PscEndpoint,
+        >,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_Sources {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    access_level: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    psc_endpoint: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
+            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_Sources_PscEndpoint,
+        >,
+    >,
+    dynamic: AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_SourcesDynamic,
+}
+
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_Sources {
+    #[doc =
+        "Set the field `access_level`.\nAn AccessLevel resource name that allows resources outside the ServicePerimeter to be accessed from the inside."]
+    pub fn set_access_level(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.access_level = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `resource`.\nA Google Cloud resource that is allowed to egress the perimeter.\nRequests from these resources are allowed to access data outside the perimeter.\nProjects, folders, and organizations are allowed.\nProject format: 'projects/{project_number}'\nFolder format: 'folders/{folder_number}'\nOrganization format: 'organizations/{organization_number}'\nThe resource may be in any Google Cloud organization, not just the\norganization that the perimeter is defined in. '*' is not allowed, the\ncase of allowing all Google Cloud resources only is not supported."]
+    pub fn set_resource(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.resource = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `psc_endpoint`.\n"]
+    pub fn set_psc_endpoint(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_Sources_PscEndpoint,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.psc_endpoint = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.psc_endpoint = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_Sources {
+    type O =
+        terrars
+        ::BlockAssignable<
+            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_Sources,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_Sources {}
+
+impl BuildAccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_Sources {
+    pub fn build(
+        self,
+    ) -> AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_Sources {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_Sources {
+            access_level: core::default::Default::default(),
+            resource: core::default::Default::default(),
+            psc_endpoint: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_SourcesRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_SourcesRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_SourcesRef {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_SourcesRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_SourcesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -369,22 +539,36 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPolicie
     pub fn access_level(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.access_level", self.base))
     }
+
+    #[doc =
+        "Get a reference to the value of field `resource` after provisioning.\nA Google Cloud resource that is allowed to egress the perimeter.\nRequests from these resources are allowed to access data outside the perimeter.\nProjects, folders, and organizations are allowed.\nProject format: 'projects/{project_number}'\nFolder format: 'folders/{folder_number}'\nOrganization format: 'organizations/{organization_number}'\nThe resource may be in any Google Cloud organization, not just the\norganization that the perimeter is defined in. '*' is not allowed, the\ncase of allowing all Google Cloud resources only is not supported."]
+    pub fn resource(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `psc_endpoint` after provisioning.\n"]
+    pub fn psc_endpoint(
+        &self,
+    ) -> terrars
+    ::ListRef<
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_Sources_PscEndpointRef,
+    > {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.psc_endpoint", self.base))
+    }
 }
 
 #[derive(Serialize, Default)]
-struct AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressFromElDynamic {
+struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFromDynamic {
     sources: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressFromElSourcesEl,
-        >,
+        ::DynamicBlock<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_Sources>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressFromEl {
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     identities: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -395,16 +579,14 @@ pub struct AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressP
     sources: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressFromElSourcesEl>,
+        std::vec::Vec<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_Sources>,
     >,
-    dynamic: AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressFromElDynamic,
+    dynamic: AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFromDynamic,
 }
 
-impl AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressFromEl {
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom {
     #[doc =
-        "Set the field `identities`.\nA list of identities that are allowed access through this 'EgressPolicy'.\nShould be in the format of email address. The email address should\nrepresent individual user or service account only."]
+        "Set the field `identities`.\nIdentities can be an individual user, service account, Google group,\nor third-party identity. For third-party identity, only single identities\nare supported and other identity types are not supported.The v1 identities\nthat have the prefix user, group and serviceAccount in\nhttps://cloud.google.com/iam/docs/principal-identifiers#v1 are supported."]
     pub fn set_identities(
         mut self,
         v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
@@ -441,7 +623,7 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPolicie
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressFromElSourcesEl,
+                            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_Sources,
                         >,
                     >,
     ) -> Self {
@@ -458,10 +640,10 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPolicie
 }
 
 impl terrars
-::ToListMappable for AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressFromEl {
+::ToListMappable for AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom {
     type O =
         terrars
-        ::BlockAssignable<AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressFromEl>;
+        ::BlockAssignable<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -472,11 +654,11 @@ impl terrars
     }
 }
 
-pub struct BuildAccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressFromEl {}
+pub struct BuildAccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom {}
 
-impl BuildAccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressFromEl {
-    pub fn build(self) -> AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressFromEl {
-        AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressFromEl {
+impl BuildAccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom {
+    pub fn build(self) -> AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom {
             identities: core::default::Default::default(),
             identity_type: core::default::Default::default(),
             source_restriction: core::default::Default::default(),
@@ -486,30 +668,32 @@ impl BuildAccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPo
     }
 }
 
-pub struct AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressFromElRef {
+#[allow(dead_code)]
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFromRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressFromElRef {
+impl terrars::Ref for AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFromRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressFromElRef {
-        AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressFromElRef {
+    ) -> AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFromRef {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFromRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressFromElRef {
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFromRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `identities` after provisioning.\nA list of identities that are allowed access through this 'EgressPolicy'.\nShould be in the format of email address. The email address should\nrepresent individual user or service account only."]
+        "Get a reference to the value of field `identities` after provisioning.\nIdentities can be an individual user, service account, Google group,\nor third-party identity. For third-party identity, only single identities\nare supported and other identity types are not supported.The v1 identities\nthat have the prefix user, group and serviceAccount in\nhttps://cloud.google.com/iam/docs/principal-identifiers#v1 are supported."]
     pub fn identities(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.identities", self.base))
     }
@@ -530,20 +714,20 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPolicie
     pub fn sources(
         &self,
     ) -> terrars
-    ::ListRef<AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressFromElSourcesElRef> {
+    ::ListRef<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_SourcesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sources", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElOperationsElMethodSelectorsEl {
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo_Operations_MethodSelectors {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     method: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     permission: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElOperationsElMethodSelectorsEl {
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo_Operations_MethodSelectors {
     #[doc =
         "Set the field `method`.\nValue for 'method' should be a valid method name for the corresponding\n'serviceName' in 'ApiOperation'. If '*' used as value for method,\nthen ALL methods and permissions are allowed."]
     pub fn set_method(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -560,11 +744,11 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPolicie
 }
 
 impl terrars
-::ToListMappable for AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElOperationsElMethodSelectorsEl {
+::ToListMappable for AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo_Operations_MethodSelectors {
     type O =
         terrars
         ::BlockAssignable<
-            AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElOperationsElMethodSelectorsEl,
+            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo_Operations_MethodSelectors,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -576,38 +760,40 @@ impl terrars
     }
 }
 
-pub struct BuildAccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElOperationsElMethodSelectorsEl {}
+pub struct BuildAccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo_Operations_MethodSelectors {}
 
-impl BuildAccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElOperationsElMethodSelectorsEl {
+impl BuildAccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo_Operations_MethodSelectors {
     pub fn build(
         self,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElOperationsElMethodSelectorsEl {
-        AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElOperationsElMethodSelectorsEl {
+    ) -> AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo_Operations_MethodSelectors {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo_Operations_MethodSelectors {
             method: core::default::Default::default(),
             permission: core::default::Default::default(),
         }
     }
 }
 
-pub struct AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElOperationsElMethodSelectorsElRef {
+#[allow(dead_code)]
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo_Operations_MethodSelectorsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElOperationsElMethodSelectorsElRef {
+::Ref for AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo_Operations_MethodSelectorsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElOperationsElMethodSelectorsElRef {
-        AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElOperationsElMethodSelectorsElRef {
+    ) -> AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo_Operations_MethodSelectorsRef {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo_Operations_MethodSelectorsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElOperationsElMethodSelectorsElRef {
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo_Operations_MethodSelectorsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -626,19 +812,19 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPolicie
 }
 
 #[derive(Serialize, Default)]
-struct AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElOperationsElDynamic {
+struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo_OperationsDynamic {
     method_selectors: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElOperationsElMethodSelectorsEl,
+            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo_Operations_MethodSelectors,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElOperationsEl {
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo_Operations {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     service_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -648,13 +834,13 @@ pub struct AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressP
         std
         ::vec
         ::Vec<
-            AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElOperationsElMethodSelectorsEl,
+            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo_Operations_MethodSelectors,
         >,
     >,
-    dynamic: AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElOperationsElDynamic,
+    dynamic: AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo_OperationsDynamic,
 }
 
-impl AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElOperationsEl {
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo_Operations {
     #[doc =
         "Set the field `service_name`.\nThe name of the API whose methods or permissions the 'IngressPolicy' or\n'EgressPolicy' want to allow. A single 'ApiOperation' with serviceName\nfield set to '*' will allow all methods AND permissions for all services."]
     pub fn set_service_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -673,7 +859,7 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPolicie
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElOperationsElMethodSelectorsEl,
+                            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo_Operations_MethodSelectors,
                         >,
                     >,
     ) -> Self {
@@ -690,11 +876,11 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPolicie
 }
 
 impl terrars
-::ToListMappable for AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElOperationsEl {
+::ToListMappable for AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo_Operations {
     type O =
         terrars
         ::BlockAssignable<
-            AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElOperationsEl,
+            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo_Operations,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -706,13 +892,13 @@ impl terrars
     }
 }
 
-pub struct BuildAccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElOperationsEl {}
+pub struct BuildAccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo_Operations {}
 
-impl BuildAccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElOperationsEl {
+impl BuildAccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo_Operations {
     pub fn build(
         self,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElOperationsEl {
-        AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElOperationsEl {
+    ) -> AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo_Operations {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo_Operations {
             service_name: core::default::Default::default(),
             method_selectors: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -720,25 +906,27 @@ impl BuildAccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPo
     }
 }
 
-pub struct AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElOperationsElRef {
+#[allow(dead_code)]
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo_OperationsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElOperationsElRef {
+::Ref for AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo_OperationsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElOperationsElRef {
-        AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElOperationsElRef {
+    ) -> AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo_OperationsRef {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo_OperationsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElOperationsElRef {
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo_OperationsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -754,42 +942,42 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPolicie
         &self,
     ) -> terrars
     ::ListRef<
-        AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElOperationsElMethodSelectorsElRef,
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo_Operations_MethodSelectorsRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.method_selectors", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElDynamic {
+struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressToDynamic {
     operations: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElOperationsEl,
+            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo_Operations,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToEl {
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     external_resources: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resources: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    roles: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     operations: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElOperationsEl>,
+        std::vec::Vec<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo_Operations>,
     >,
-    dynamic: AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElDynamic,
+    dynamic: AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressToDynamic,
 }
 
-impl AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToEl {
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo {
     #[doc =
         "Set the field `external_resources`.\nA list of external resources that are allowed to be accessed. A request\nmatches if it contains an external resource in this list (Example:\ns3://bucket/path). Currently '*' is not allowed."]
     pub fn set_external_resources(
@@ -801,12 +989,22 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPolicie
     }
 
     #[doc =
-        "Set the field `resources`.\nA list of resources, currently only projects in the form\n'projects/<projectnumber>', that match this to stanza. A request matches\nif it contains a resource in this list. If * is specified for resources,\nthen this 'EgressTo' rule will authorize access to all resources outside\nthe perimeter."]
+        "Set the field `resources`.\nA list of resources, in the form 'projects/{project_number}',\n'folders/{folder_number}', or 'organizations/{organization_number}',\nthat match this to stanza. A request matches\nif it contains a resource in this list. If * is specified for resources,\nthen this 'EgressTo' rule will authorize access to all resources outside\nthe perimeter."]
     pub fn set_resources(
         mut self,
         v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
     ) -> Self {
         self.resources = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `roles`.\nA list of IAM roles that represent the set of operations that the sources\nspecified in the corresponding 'EgressFrom'\nare allowed to perform."]
+    pub fn set_roles(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.roles = std::option::Option::Some(v.into());
         self
     }
 
@@ -821,7 +1019,7 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPolicie
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElOperationsEl,
+                            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo_Operations,
                         >,
                     >,
     ) -> Self {
@@ -837,11 +1035,10 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPolicie
     }
 }
 
-impl terrars
-::ToListMappable for AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToEl {
+impl terrars::ToListMappable for AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo {
     type O =
         terrars
-        ::BlockAssignable<AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToEl>;
+        ::BlockAssignable<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -852,37 +1049,40 @@ impl terrars
     }
 }
 
-pub struct BuildAccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToEl {}
+pub struct BuildAccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo {}
 
-impl BuildAccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToEl {
-    pub fn build(self) -> AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToEl {
-        AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToEl {
+impl BuildAccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo {
+    pub fn build(self) -> AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo {
             external_resources: core::default::Default::default(),
             resources: core::default::Default::default(),
+            roles: core::default::Default::default(),
             operations: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElRef {
+#[allow(dead_code)]
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressToRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElRef {
+impl terrars::Ref for AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressToRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElRef {
-        AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElRef {
+    ) -> AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressToRef {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressToRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElRef {
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressToRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -894,54 +1094,63 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPolicie
     }
 
     #[doc =
-        "Get a reference to the value of field `resources` after provisioning.\nA list of resources, currently only projects in the form\n'projects/<projectnumber>', that match this to stanza. A request matches\nif it contains a resource in this list. If * is specified for resources,\nthen this 'EgressTo' rule will authorize access to all resources outside\nthe perimeter."]
+        "Get a reference to the value of field `resources` after provisioning.\nA list of resources, in the form 'projects/{project_number}',\n'folders/{folder_number}', or 'organizations/{organization_number}',\nthat match this to stanza. A request matches\nif it contains a resource in this list. If * is specified for resources,\nthen this 'EgressTo' rule will authorize access to all resources outside\nthe perimeter."]
     pub fn resources(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.resources", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `roles` after provisioning.\nA list of IAM roles that represent the set of operations that the sources\nspecified in the corresponding 'EgressFrom'\nare allowed to perform."]
+    pub fn roles(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.roles", self.base))
     }
 
     #[doc = "Get a reference to the value of field `operations` after provisioning.\n"]
     pub fn operations(
         &self,
     ) -> terrars
-    ::ListRef<
-        AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElOperationsElRef,
-    > {
+    ::ListRef<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo_OperationsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.operations", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElDynamic {
+struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPoliciesDynamic {
     egress_from: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressFromEl>,
+        terrars::DynamicBlock<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom>,
     >,
     egress_to: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToEl>,
+        terrars::DynamicBlock<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesEl {
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    title: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     egress_from: std
     ::option
-    ::Option<
-        std::vec::Vec<AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressFromEl>,
-    >,
+    ::Option<std::vec::Vec<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     egress_to: std
     ::option
-    ::Option<std::vec::Vec<AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToEl>>,
-    dynamic: AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElDynamic,
+    ::Option<std::vec::Vec<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo>>,
+    dynamic: AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPoliciesDynamic,
 }
 
-impl AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesEl {
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies {
+    #[doc =
+        "Set the field `title`.\nHuman readable title. Must be unique within the perimeter. Does not affect behavior."]
+    pub fn set_title(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.title = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `egress_from`.\n"]
     pub fn set_egress_from(
         mut self,
@@ -953,7 +1162,7 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPolicie
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressFromEl,
+                            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom,
                         >,
                     >,
     ) -> Self {
@@ -979,7 +1188,7 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPolicie
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToEl,
+                            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo,
                         >,
                     >,
     ) -> Self {
@@ -995,9 +1204,8 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPolicie
     }
 }
 
-impl terrars::ToListMappable for AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesEl {
-    type O =
-        terrars::BlockAssignable<AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesEl>;
+impl terrars::ToListMappable for AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies {
+    type O = terrars::BlockAssignable<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1008,11 +1216,12 @@ impl terrars::ToListMappable for AccessContextManagerServicePerimetersServicePer
     }
 }
 
-pub struct BuildAccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesEl {}
+pub struct BuildAccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies {}
 
-impl BuildAccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesEl {
-    pub fn build(self) -> AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesEl {
-        AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesEl {
+impl BuildAccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies {
+    pub fn build(self) -> AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies {
+            title: core::default::Default::default(),
             egress_from: core::default::Default::default(),
             egress_to: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1020,54 +1229,83 @@ impl BuildAccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPo
     }
 }
 
-pub struct AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElRef {
+#[allow(dead_code)]
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPoliciesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElRef {
+impl terrars::Ref for AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPoliciesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElRef {
-        AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElRef {
+    ) -> AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPoliciesRef {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPoliciesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElRef {
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPoliciesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `title` after provisioning.\nHuman readable title. Must be unique within the perimeter. Does not affect behavior."]
+    pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
 
     #[doc = "Get a reference to the value of field `egress_from` after provisioning.\n"]
     pub fn egress_from(
         &self,
-    ) -> terrars
-    ::ListRef<AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressFromElRef> {
+    ) -> terrars::ListRef<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFromRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.egress_from", self.base))
     }
 
     #[doc = "Get a reference to the value of field `egress_to` after provisioning.\n"]
     pub fn egress_to(
         &self,
-    ) -> terrars
-    ::ListRef<AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElEgressToElRef> {
+    ) -> terrars::ListRef<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressToRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.egress_to", self.base))
     }
 }
 
+#[derive(Serialize, Default)]
+struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressFrom_SourcesDynamic {
+    psc_endpoint: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_Sources_PscEndpoint,
+        >,
+    >,
+}
+
 #[derive(Serialize)]
-pub struct AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressFromElSourcesEl {
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressFrom_Sources {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     access_level: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resource: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    psc_endpoint: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
+            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_Sources_PscEndpoint,
+        >,
+    >,
+    dynamic: AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressFrom_SourcesDynamic,
 }
 
-impl AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressFromElSourcesEl {
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressFrom_Sources {
     #[doc =
         "Set the field `access_level`.\nAn 'AccessLevel' resource name that allow resources within the\n'ServicePerimeters' to be accessed from the internet. 'AccessLevels' listed\nmust be in the same policy as this 'ServicePerimeter'. Referencing a nonexistent\n'AccessLevel' will cause an error. If no 'AccessLevel' names are listed,\nresources within the perimeter can only be accessed via Google Cloud calls\nwith request origins within the perimeter.\nExample 'accessPolicies/MY_POLICY/accessLevels/MY_LEVEL.'\nIf * is specified, then all IngressSources will be allowed."]
     pub fn set_access_level(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1076,19 +1314,45 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPolici
     }
 
     #[doc =
-        "Set the field `resource`.\nA Google Cloud resource that is allowed to ingress the perimeter.\nRequests from these resources will be allowed to access perimeter data.\nCurrently only projects are allowed. Format 'projects/{project_number}'\nThe project may be in any Google Cloud organization, not just the\norganization that the perimeter is defined in. '*' is not allowed, the case\nof allowing all Google Cloud resources only is not supported."]
+        "Set the field `resource`.\nA Google Cloud resource that is allowed to ingress the perimeter.\nRequests from these resources will be allowed to access perimeter data.\nProjects, folders, organizations, and VPC networks are allowed.\nProject format: 'projects/{project_number}'\nFolder format: 'folders/{folder_number}'\nOrganization format: 'organizations/{organization_number}'\nVPC network format: '//compute.googleapis.com/projects/{PROJECT_ID}/global/networks/{NAME}'\nThe resource may be in any Google Cloud organization, not just the\norganization that the perimeter is defined in. '*' is not allowed, the case\nof allowing all Google Cloud resources only is not supported."]
     pub fn set_resource(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.resource = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `psc_endpoint`.\n"]
+    pub fn set_psc_endpoint(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_Sources_PscEndpoint,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.psc_endpoint = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.psc_endpoint = std::option::Option::Some(d);
+            },
+        }
         self
     }
 }
 
 impl terrars
-::ToListMappable for AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressFromElSourcesEl {
+::ToListMappable for AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressFrom_Sources {
     type O =
         terrars
         ::BlockAssignable<
-            AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressFromElSourcesEl,
+            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressFrom_Sources,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -1100,38 +1364,42 @@ impl terrars
     }
 }
 
-pub struct BuildAccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressFromElSourcesEl {}
+pub struct BuildAccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressFrom_Sources {}
 
-impl BuildAccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressFromElSourcesEl {
+impl BuildAccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressFrom_Sources {
     pub fn build(
         self,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressFromElSourcesEl {
-        AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressFromElSourcesEl {
+    ) -> AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressFrom_Sources {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressFrom_Sources {
             access_level: core::default::Default::default(),
             resource: core::default::Default::default(),
+            psc_endpoint: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressFromElSourcesElRef {
+#[allow(dead_code)]
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressFrom_SourcesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressFromElSourcesElRef {
+::Ref for AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressFrom_SourcesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressFromElSourcesElRef {
-        AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressFromElSourcesElRef {
+    ) -> AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressFrom_SourcesRef {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressFrom_SourcesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressFromElSourcesElRef {
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressFrom_SourcesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1143,26 +1411,36 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPolici
     }
 
     #[doc =
-        "Get a reference to the value of field `resource` after provisioning.\nA Google Cloud resource that is allowed to ingress the perimeter.\nRequests from these resources will be allowed to access perimeter data.\nCurrently only projects are allowed. Format 'projects/{project_number}'\nThe project may be in any Google Cloud organization, not just the\norganization that the perimeter is defined in. '*' is not allowed, the case\nof allowing all Google Cloud resources only is not supported."]
+        "Get a reference to the value of field `resource` after provisioning.\nA Google Cloud resource that is allowed to ingress the perimeter.\nRequests from these resources will be allowed to access perimeter data.\nProjects, folders, organizations, and VPC networks are allowed.\nProject format: 'projects/{project_number}'\nFolder format: 'folders/{folder_number}'\nOrganization format: 'organizations/{organization_number}'\nVPC network format: '//compute.googleapis.com/projects/{PROJECT_ID}/global/networks/{NAME}'\nThe resource may be in any Google Cloud organization, not just the\norganization that the perimeter is defined in. '*' is not allowed, the case\nof allowing all Google Cloud resources only is not supported."]
     pub fn resource(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `psc_endpoint` after provisioning.\n"]
+    pub fn psc_endpoint(
+        &self,
+    ) -> terrars
+    ::ListRef<
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_Sources_PscEndpointRef,
+    > {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.psc_endpoint", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressFromElDynamic {
+struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressFromDynamic {
     sources: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressFromElSourcesEl,
+            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressFrom_Sources,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressFromEl {
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressFrom {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     identities: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1173,12 +1451,12 @@ pub struct AccessContextManagerServicePerimetersServicePerimetersElSpecElIngress
     ::Option<
         std
         ::vec
-        ::Vec<AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressFromElSourcesEl>,
+        ::Vec<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressFrom_Sources>,
     >,
-    dynamic: AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressFromElDynamic,
+    dynamic: AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressFromDynamic,
 }
 
-impl AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressFromEl {
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressFrom {
     #[doc =
         "Set the field `identities`.\nA list of identities that are allowed access through this ingress policy.\nShould be in the format of email address. The email address should represent\nindividual user or service account only."]
     pub fn set_identities(
@@ -1207,7 +1485,7 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPolici
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressFromElSourcesEl,
+                            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressFrom_Sources,
                         >,
                     >,
     ) -> Self {
@@ -1224,12 +1502,10 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPolici
 }
 
 impl terrars
-::ToListMappable for AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressFromEl {
+::ToListMappable for AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressFrom {
     type O =
         terrars
-        ::BlockAssignable<
-            AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressFromEl,
-        >;
+        ::BlockAssignable<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressFrom>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1240,13 +1516,11 @@ impl terrars
     }
 }
 
-pub struct BuildAccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressFromEl {}
+pub struct BuildAccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressFrom {}
 
-impl BuildAccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressFromEl {
-    pub fn build(
-        self,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressFromEl {
-        AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressFromEl {
+impl BuildAccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressFrom {
+    pub fn build(self) -> AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressFrom {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressFrom {
             identities: core::default::Default::default(),
             identity_type: core::default::Default::default(),
             sources: core::default::Default::default(),
@@ -1255,24 +1529,26 @@ impl BuildAccessContextManagerServicePerimetersServicePerimetersElSpecElIngressP
     }
 }
 
-pub struct AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressFromElRef {
+#[allow(dead_code)]
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressFromRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressFromElRef {
+impl terrars::Ref for AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressFromRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressFromElRef {
-        AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressFromElRef {
+    ) -> AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressFromRef {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressFromRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressFromElRef {
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressFromRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1293,22 +1569,20 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPolici
     pub fn sources(
         &self,
     ) -> terrars
-    ::ListRef<
-        AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressFromElSourcesElRef,
-    > {
+    ::ListRef<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressFrom_SourcesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sources", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElOperationsElMethodSelectorsEl {
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo_Operations_MethodSelectors {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     method: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     permission: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElOperationsElMethodSelectorsEl {
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo_Operations_MethodSelectors {
     #[doc =
         "Set the field `method`.\nValue for method should be a valid method name for the corresponding\nserviceName in 'ApiOperation'. If '*' used as value for 'method', then\nALL methods and permissions are allowed."]
     pub fn set_method(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1325,11 +1599,11 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPolici
 }
 
 impl terrars
-::ToListMappable for AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElOperationsElMethodSelectorsEl {
+::ToListMappable for AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo_Operations_MethodSelectors {
     type O =
         terrars
         ::BlockAssignable<
-            AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElOperationsElMethodSelectorsEl,
+            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo_Operations_MethodSelectors,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -1341,38 +1615,40 @@ impl terrars
     }
 }
 
-pub struct BuildAccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElOperationsElMethodSelectorsEl {}
+pub struct BuildAccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo_Operations_MethodSelectors {}
 
-impl BuildAccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElOperationsElMethodSelectorsEl {
+impl BuildAccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo_Operations_MethodSelectors {
     pub fn build(
         self,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElOperationsElMethodSelectorsEl {
-        AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElOperationsElMethodSelectorsEl {
+    ) -> AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo_Operations_MethodSelectors {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo_Operations_MethodSelectors {
             method: core::default::Default::default(),
             permission: core::default::Default::default(),
         }
     }
 }
 
-pub struct AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElOperationsElMethodSelectorsElRef {
+#[allow(dead_code)]
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo_Operations_MethodSelectorsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElOperationsElMethodSelectorsElRef {
+::Ref for AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo_Operations_MethodSelectorsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElOperationsElMethodSelectorsElRef {
-        AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElOperationsElMethodSelectorsElRef {
+    ) -> AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo_Operations_MethodSelectorsRef {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo_Operations_MethodSelectorsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElOperationsElMethodSelectorsElRef {
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo_Operations_MethodSelectorsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1391,19 +1667,19 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPolici
 }
 
 #[derive(Serialize, Default)]
-struct AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElOperationsElDynamic {
+struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo_OperationsDynamic {
     method_selectors: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElOperationsElMethodSelectorsEl,
+            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo_Operations_MethodSelectors,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElOperationsEl {
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo_Operations {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     service_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1413,13 +1689,13 @@ pub struct AccessContextManagerServicePerimetersServicePerimetersElSpecElIngress
         std
         ::vec
         ::Vec<
-            AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElOperationsElMethodSelectorsEl,
+            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo_Operations_MethodSelectors,
         >,
     >,
-    dynamic: AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElOperationsElDynamic,
+    dynamic: AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo_OperationsDynamic,
 }
 
-impl AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElOperationsEl {
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo_Operations {
     #[doc =
         "Set the field `service_name`.\nThe name of the API whose methods or permissions the 'IngressPolicy' or\n'EgressPolicy' want to allow. A single 'ApiOperation' with 'serviceName'\nfield set to '*' will allow all methods AND permissions for all services."]
     pub fn set_service_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1438,7 +1714,7 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPolici
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElOperationsElMethodSelectorsEl,
+                            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo_Operations_MethodSelectors,
                         >,
                     >,
     ) -> Self {
@@ -1455,11 +1731,11 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPolici
 }
 
 impl terrars
-::ToListMappable for AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElOperationsEl {
+::ToListMappable for AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo_Operations {
     type O =
         terrars
         ::BlockAssignable<
-            AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElOperationsEl,
+            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo_Operations,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -1471,13 +1747,13 @@ impl terrars
     }
 }
 
-pub struct BuildAccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElOperationsEl {}
+pub struct BuildAccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo_Operations {}
 
-impl BuildAccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElOperationsEl {
+impl BuildAccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo_Operations {
     pub fn build(
         self,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElOperationsEl {
-        AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElOperationsEl {
+    ) -> AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo_Operations {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo_Operations {
             service_name: core::default::Default::default(),
             method_selectors: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1485,25 +1761,27 @@ impl BuildAccessContextManagerServicePerimetersServicePerimetersElSpecElIngressP
     }
 }
 
-pub struct AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElOperationsElRef {
+#[allow(dead_code)]
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo_OperationsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElOperationsElRef {
+::Ref for AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo_OperationsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElOperationsElRef {
-        AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElOperationsElRef {
+    ) -> AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo_OperationsRef {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo_OperationsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElOperationsElRef {
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo_OperationsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1519,47 +1797,59 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPolici
         &self,
     ) -> terrars
     ::ListRef<
-        AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElOperationsElMethodSelectorsElRef,
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo_Operations_MethodSelectorsRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.method_selectors", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElDynamic {
+struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressToDynamic {
     operations: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElOperationsEl,
+            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo_Operations,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToEl {
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resources: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    roles: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     operations: std
     ::option
     ::Option<
         std
         ::vec
-        ::Vec<AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElOperationsEl>,
+        ::Vec<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo_Operations>,
     >,
-    dynamic: AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElDynamic,
+    dynamic: AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressToDynamic,
 }
 
-impl AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToEl {
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo {
     #[doc =
-        "Set the field `resources`.\nA list of resources, currently only projects in the form\n'projects/<projectnumber>', protected by this 'ServicePerimeter'\nthat are allowed to be accessed by sources defined in the\ncorresponding 'IngressFrom'. A request matches if it contains\na resource in this list. If '*' is specified for resources,\nthen this 'IngressTo' rule will authorize access to all\nresources inside the perimeter, provided that the request\nalso matches the 'operations' field."]
+        "Set the field `resources`.\nA list of resources protected by this 'ServicePerimeter', in the form\n'projects/{project_number}', 'folders/{folder_number}', or\n'organizations/{organization_number}',\nthat are allowed to be accessed by sources defined in the\ncorresponding 'IngressFrom'. A request matches if it contains\na resource in this list. If '*' is specified for resources,\nthen this 'IngressTo' rule will authorize access to all\nresources inside the perimeter, provided that the request\nalso matches the 'operations' field."]
     pub fn set_resources(
         mut self,
         v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
     ) -> Self {
         self.resources = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `roles`.\nA list of IAM roles that represent the set of operations that the sources\nspecified in the corresponding 'IngressFrom'\nare allowed to perform."]
+    pub fn set_roles(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.roles = std::option::Option::Some(v.into());
         self
     }
 
@@ -1574,7 +1864,7 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPolici
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElOperationsEl,
+                            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo_Operations,
                         >,
                     >,
     ) -> Self {
@@ -1591,10 +1881,10 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPolici
 }
 
 impl terrars
-::ToListMappable for AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToEl {
+::ToListMappable for AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo {
     type O =
         terrars
-        ::BlockAssignable<AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToEl>;
+        ::BlockAssignable<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1605,91 +1895,102 @@ impl terrars
     }
 }
 
-pub struct BuildAccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToEl {}
+pub struct BuildAccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo {}
 
-impl BuildAccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToEl {
-    pub fn build(self) -> AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToEl {
-        AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToEl {
+impl BuildAccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo {
+    pub fn build(self) -> AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo {
             resources: core::default::Default::default(),
+            roles: core::default::Default::default(),
             operations: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElRef {
+#[allow(dead_code)]
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressToRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElRef {
+impl terrars::Ref for AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressToRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElRef {
-        AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElRef {
+    ) -> AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressToRef {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressToRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElRef {
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressToRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `resources` after provisioning.\nA list of resources, currently only projects in the form\n'projects/<projectnumber>', protected by this 'ServicePerimeter'\nthat are allowed to be accessed by sources defined in the\ncorresponding 'IngressFrom'. A request matches if it contains\na resource in this list. If '*' is specified for resources,\nthen this 'IngressTo' rule will authorize access to all\nresources inside the perimeter, provided that the request\nalso matches the 'operations' field."]
+        "Get a reference to the value of field `resources` after provisioning.\nA list of resources protected by this 'ServicePerimeter', in the form\n'projects/{project_number}', 'folders/{folder_number}', or\n'organizations/{organization_number}',\nthat are allowed to be accessed by sources defined in the\ncorresponding 'IngressFrom'. A request matches if it contains\na resource in this list. If '*' is specified for resources,\nthen this 'IngressTo' rule will authorize access to all\nresources inside the perimeter, provided that the request\nalso matches the 'operations' field."]
     pub fn resources(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.resources", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `roles` after provisioning.\nA list of IAM roles that represent the set of operations that the sources\nspecified in the corresponding 'IngressFrom'\nare allowed to perform."]
+    pub fn roles(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.roles", self.base))
     }
 
     #[doc = "Get a reference to the value of field `operations` after provisioning.\n"]
     pub fn operations(
         &self,
     ) -> terrars
-    ::ListRef<
-        AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElOperationsElRef,
-    > {
+    ::ListRef<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo_OperationsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.operations", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElDynamic {
+struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPoliciesDynamic {
     ingress_from: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressFromEl>,
+        ::DynamicBlock<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressFrom>,
     >,
     ingress_to: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToEl>,
+        terrars::DynamicBlock<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesEl {
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    title: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ingress_from: std
     ::option
-    ::Option<
-        std::vec::Vec<AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressFromEl>,
-    >,
+    ::Option<std::vec::Vec<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressFrom>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ingress_to: std
     ::option
-    ::Option<
-        std::vec::Vec<AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToEl>,
-    >,
-    dynamic: AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElDynamic,
+    ::Option<std::vec::Vec<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo>>,
+    dynamic: AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPoliciesDynamic,
 }
 
-impl AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesEl {
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies {
+    #[doc =
+        "Set the field `title`.\nHuman readable title. Must be unique within the perimeter. Does not affect behavior."]
+    pub fn set_title(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.title = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `ingress_from`.\n"]
     pub fn set_ingress_from(
         mut self,
@@ -1701,7 +2002,7 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPolici
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressFromEl,
+                            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressFrom,
                         >,
                     >,
     ) -> Self {
@@ -1727,7 +2028,7 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPolici
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToEl,
+                            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressTo,
                         >,
                     >,
     ) -> Self {
@@ -1743,9 +2044,8 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPolici
     }
 }
 
-impl terrars::ToListMappable for AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesEl {
-    type O =
-        terrars::BlockAssignable<AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesEl>;
+impl terrars::ToListMappable for AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies {
+    type O = terrars::BlockAssignable<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1756,11 +2056,12 @@ impl terrars::ToListMappable for AccessContextManagerServicePerimetersServicePer
     }
 }
 
-pub struct BuildAccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesEl {}
+pub struct BuildAccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies {}
 
-impl BuildAccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesEl {
-    pub fn build(self) -> AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesEl {
-        AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesEl {
+impl BuildAccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies {
+    pub fn build(self) -> AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies {
+            title: core::default::Default::default(),
             ingress_from: core::default::Default::default(),
             ingress_to: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1768,54 +2069,439 @@ impl BuildAccessContextManagerServicePerimetersServicePerimetersElSpecElIngressP
     }
 }
 
-pub struct AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElRef {
+#[allow(dead_code)]
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPoliciesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElRef {
+impl terrars::Ref for AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPoliciesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElRef {
-        AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElRef {
+    ) -> AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPoliciesRef {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPoliciesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElRef {
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPoliciesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `title` after provisioning.\nHuman readable title. Must be unique within the perimeter. Does not affect behavior."]
+    pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
 
     #[doc = "Get a reference to the value of field `ingress_from` after provisioning.\n"]
     pub fn ingress_from(
         &self,
     ) -> terrars
-    ::ListRef<AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressFromElRef> {
+    ::ListRef<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressFromRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ingress_from", self.base))
     }
 
     #[doc = "Get a reference to the value of field `ingress_to` after provisioning.\n"]
     pub fn ingress_to(
         &self,
-    ) -> terrars
-    ::ListRef<AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElIngressToElRef> {
+    ) -> terrars::ListRef<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies_IngressToRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ingress_to", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AccessContextManagerServicePerimetersServicePerimetersElSpecElVpcAccessibleServicesEl {
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns_Modifiers_AddRequestHeader {
+    key: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
+}
+
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns_Modifiers_AddRequestHeader {
+
+}
+
+impl terrars
+::ToListMappable for AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns_Modifiers_AddRequestHeader {
+    type O =
+        terrars
+        ::BlockAssignable<
+            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns_Modifiers_AddRequestHeader,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns_Modifiers_AddRequestHeader {
+    #[doc = "HTTP header key."]
+    pub key: terrars::PrimField<std::string::String>,
+    #[doc = "HTTP header value."]
+    pub value: terrars::PrimField<std::string::String>,
+}
+
+impl BuildAccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns_Modifiers_AddRequestHeader {
+    pub fn build(
+        self,
+    ) -> AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns_Modifiers_AddRequestHeader {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns_Modifiers_AddRequestHeader {
+            key: self.key,
+            value: self.value,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns_Modifiers_AddRequestHeaderRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns_Modifiers_AddRequestHeaderRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns_Modifiers_AddRequestHeaderRef {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns_Modifiers_AddRequestHeaderRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns_Modifiers_AddRequestHeaderRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `key` after provisioning.\nHTTP header key."]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `value` after provisioning.\nHTTP header value."]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns_ModifiersDynamic {
+    add_request_header: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns_Modifiers_AddRequestHeader,
+        >,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns_Modifiers {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    add_request_header: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
+            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns_Modifiers_AddRequestHeader,
+        >,
+    >,
+    dynamic: AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns_ModifiersDynamic,
+}
+
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns_Modifiers {
+    #[doc = "Set the field `add_request_header`.\n"]
+    pub fn set_add_request_header(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns_Modifiers_AddRequestHeader,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.add_request_header = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.add_request_header = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns_Modifiers {
+    type O =
+        terrars
+        ::BlockAssignable<
+            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns_Modifiers,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns_Modifiers {}
+
+impl BuildAccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns_Modifiers {
+    pub fn build(
+        self,
+    ) -> AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns_Modifiers {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns_Modifiers {
+            add_request_header: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns_ModifiersRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns_ModifiersRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns_ModifiersRef {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns_ModifiersRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns_ModifiersRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `add_request_header` after provisioning.\n"]
+    pub fn add_request_header(
+        &self,
+    ) -> terrars
+    ::ListRef<
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns_Modifiers_AddRequestHeaderRef,
+    > {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.add_request_header", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatternsDynamic {
+    modifiers: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns_Modifiers,
+        >,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    pattern: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    service: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    modifiers: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
+            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns_Modifiers,
+        >,
+    >,
+    dynamic: AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatternsDynamic,
+}
+
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns {
+    #[doc = "Set the field `pattern`.\nURL pattern to allow."]
+    pub fn set_pattern(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.pattern = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `service`.\nSupported service to allow."]
+    pub fn set_service(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.service = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `modifiers`.\n"]
+    pub fn set_modifiers(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns_Modifiers,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.modifiers = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.modifiers = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns {
+    type O =
+        terrars
+        ::BlockAssignable<
+            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns {}
+
+impl BuildAccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns {
+    pub fn build(
+        self,
+    ) -> AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns {
+            pattern: core::default::Default::default(),
+            service: core::default::Default::default(),
+            modifiers: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatternsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatternsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatternsRef {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatternsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatternsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `pattern` after provisioning.\nURL pattern to allow."]
+    pub fn pattern(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.pattern", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `service` after provisioning.\nSupported service to allow."]
+    pub fn service(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `modifiers` after provisioning.\n"]
+    pub fn modifiers(
+        &self,
+    ) -> terrars
+    ::ListRef<
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns_ModifiersRef,
+    > {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.modifiers", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServicesDynamic {
+    allowed_service_patterns: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns,
+        >,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allowed_services: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_restriction: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    service_patterns_enforcement_scopes: std
+    ::option
+    ::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    allowed_service_patterns: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
+            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns,
+        >,
+    >,
+    dynamic: AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServicesDynamic,
 }
 
-impl AccessContextManagerServicePerimetersServicePerimetersElSpecElVpcAccessibleServicesEl {
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices {
     #[doc =
         "Set the field `allowed_services`.\nThe list of APIs usable within the Service Perimeter.\nMust be empty unless 'enableRestriction' is True."]
     pub fn set_allowed_services(
@@ -1832,12 +2518,47 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecElVpcAccessible
         self.enable_restriction = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc =
+        "Set the field `service_patterns_enforcement_scopes`.\nDefines the enforcement scopes of service patterns. Possible values: [\"GOOGLE_APIS_VIA_PRIVATE_PATH\"]"]
+    pub fn set_service_patterns_enforcement_scopes(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.service_patterns_enforcement_scopes = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `allowed_service_patterns`.\n"]
+    pub fn set_allowed_service_patterns(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatterns,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.allowed_service_patterns = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.allowed_service_patterns = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
 }
 
-impl terrars::ToListMappable for AccessContextManagerServicePerimetersServicePerimetersElSpecElVpcAccessibleServicesEl {
+impl terrars::ToListMappable for AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices {
     type O =
-        terrars
-        ::BlockAssignable<AccessContextManagerServicePerimetersServicePerimetersElSpecElVpcAccessibleServicesEl>;
+        terrars::BlockAssignable<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1848,35 +2569,40 @@ impl terrars::ToListMappable for AccessContextManagerServicePerimetersServicePer
     }
 }
 
-pub struct BuildAccessContextManagerServicePerimetersServicePerimetersElSpecElVpcAccessibleServicesEl {}
+pub struct BuildAccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices {}
 
-impl BuildAccessContextManagerServicePerimetersServicePerimetersElSpecElVpcAccessibleServicesEl {
-    pub fn build(self) -> AccessContextManagerServicePerimetersServicePerimetersElSpecElVpcAccessibleServicesEl {
-        AccessContextManagerServicePerimetersServicePerimetersElSpecElVpcAccessibleServicesEl {
+impl BuildAccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices {
+    pub fn build(self) -> AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices {
             allowed_services: core::default::Default::default(),
             enable_restriction: core::default::Default::default(),
+            service_patterns_enforcement_scopes: core::default::Default::default(),
+            allowed_service_patterns: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct AccessContextManagerServicePerimetersServicePerimetersElSpecElVpcAccessibleServicesElRef {
+#[allow(dead_code)]
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServicesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AccessContextManagerServicePerimetersServicePerimetersElSpecElVpcAccessibleServicesElRef {
+impl terrars::Ref for AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServicesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElSpecElVpcAccessibleServicesElRef {
-        AccessContextManagerServicePerimetersServicePerimetersElSpecElVpcAccessibleServicesElRef {
+    ) -> AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServicesRef {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServicesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AccessContextManagerServicePerimetersServicePerimetersElSpecElVpcAccessibleServicesElRef {
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServicesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1892,25 +2618,41 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecElVpcAccessible
     pub fn enable_restriction(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_restriction", self.base))
     }
+
+    #[doc =
+        "Get a reference to the value of field `service_patterns_enforcement_scopes` after provisioning.\nDefines the enforcement scopes of service patterns. Possible values: [\"GOOGLE_APIS_VIA_PRIVATE_PATH\"]"]
+    pub fn service_patterns_enforcement_scopes(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.service_patterns_enforcement_scopes", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `allowed_service_patterns` after provisioning.\n"]
+    pub fn allowed_service_patterns(
+        &self,
+    ) -> terrars
+    ::ListRef<
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices_AllowedServicePatternsRef,
+    > {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.allowed_service_patterns", self.base))
+    }
 }
 
 #[derive(Serialize, Default)]
-struct AccessContextManagerServicePerimetersServicePerimetersElSpecElDynamic {
+struct AccessContextManagerServicePerimeters_ServicePerimeters_SpecDynamic {
     egress_policies: std
     ::option
-    ::Option<terrars::DynamicBlock<AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesEl>>,
+    ::Option<terrars::DynamicBlock<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies>>,
     ingress_policies: std
     ::option
-    ::Option<terrars::DynamicBlock<AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesEl>>,
+    ::Option<terrars::DynamicBlock<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies>>,
     vpc_accessible_services: std
     ::option
     ::Option<
-        terrars::DynamicBlock<AccessContextManagerServicePerimetersServicePerimetersElSpecElVpcAccessibleServicesEl>,
+        terrars::DynamicBlock<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AccessContextManagerServicePerimetersServicePerimetersElSpecEl {
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Spec {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     access_levels: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1920,19 +2662,19 @@ pub struct AccessContextManagerServicePerimetersServicePerimetersElSpecEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     egress_policies: std
     ::option
-    ::Option<std::vec::Vec<AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesEl>>,
+    ::Option<std::vec::Vec<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ingress_policies: std
     ::option
-    ::Option<std::vec::Vec<AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesEl>>,
+    ::Option<std::vec::Vec<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_accessible_services: std
     ::option
-    ::Option<std::vec::Vec<AccessContextManagerServicePerimetersServicePerimetersElSpecElVpcAccessibleServicesEl>>,
-    dynamic: AccessContextManagerServicePerimetersServicePerimetersElSpecElDynamic,
+    ::Option<std::vec::Vec<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices>>,
+    dynamic: AccessContextManagerServicePerimeters_ServicePerimeters_SpecDynamic,
 }
 
-impl AccessContextManagerServicePerimetersServicePerimetersElSpecEl {
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Spec {
     #[doc =
         "Set the field `access_levels`.\nA list of AccessLevel resource names that allow resources within\nthe ServicePerimeter to be accessed from the internet.\nAccessLevels listed must be in the same policy as this\nServicePerimeter. Referencing a nonexistent AccessLevel is a\nsyntax error. If no AccessLevel names are listed, resources within\nthe perimeter can only be accessed via GCP calls with request\norigins within the perimeter. For Service Perimeter Bridge, must\nbe empty.\n\nFormat: accessPolicies/{policy_id}/accessLevels/{access_level_name}"]
     pub fn set_access_levels(
@@ -1944,7 +2686,7 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecEl {
     }
 
     #[doc =
-        "Set the field `resources`.\nA list of GCP resources that are inside of the service perimeter.\nCurrently only projects are allowed.\nFormat: projects/{project_number}"]
+        "Set the field `resources`.\nA list of GCP resources that are inside of the service perimeter.\nProjects, folders, and VPC networks are allowed.\nProject format: 'projects/{project_number}'\nFolder format: 'folders/{folder_number}'\nVPC network format: '//compute.googleapis.com/projects/{PROJECT_ID}/global/networks/{NAME}'"]
     pub fn set_resources(
         mut self,
         v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
@@ -1973,9 +2715,7 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesEl,
-                        >,
+                        ::BlockAssignable<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2000,7 +2740,7 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesEl,
+                            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies,
                         >,
                     >,
     ) -> Self {
@@ -2026,7 +2766,7 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AccessContextManagerServicePerimetersServicePerimetersElSpecElVpcAccessibleServicesEl,
+                            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices,
                         >,
                     >,
     ) -> Self {
@@ -2042,8 +2782,8 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecEl {
     }
 }
 
-impl terrars::ToListMappable for AccessContextManagerServicePerimetersServicePerimetersElSpecEl {
-    type O = terrars::BlockAssignable<AccessContextManagerServicePerimetersServicePerimetersElSpecEl>;
+impl terrars::ToListMappable for AccessContextManagerServicePerimeters_ServicePerimeters_Spec {
+    type O = terrars::BlockAssignable<AccessContextManagerServicePerimeters_ServicePerimeters_Spec>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2054,11 +2794,11 @@ impl terrars::ToListMappable for AccessContextManagerServicePerimetersServicePer
     }
 }
 
-pub struct BuildAccessContextManagerServicePerimetersServicePerimetersElSpecEl {}
+pub struct BuildAccessContextManagerServicePerimeters_ServicePerimeters_Spec {}
 
-impl BuildAccessContextManagerServicePerimetersServicePerimetersElSpecEl {
-    pub fn build(self) -> AccessContextManagerServicePerimetersServicePerimetersElSpecEl {
-        AccessContextManagerServicePerimetersServicePerimetersElSpecEl {
+impl BuildAccessContextManagerServicePerimeters_ServicePerimeters_Spec {
+    pub fn build(self) -> AccessContextManagerServicePerimeters_ServicePerimeters_Spec {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Spec {
             access_levels: core::default::Default::default(),
             resources: core::default::Default::default(),
             restricted_services: core::default::Default::default(),
@@ -2070,24 +2810,26 @@ impl BuildAccessContextManagerServicePerimetersServicePerimetersElSpecEl {
     }
 }
 
-pub struct AccessContextManagerServicePerimetersServicePerimetersElSpecElRef {
+#[allow(dead_code)]
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_SpecRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AccessContextManagerServicePerimetersServicePerimetersElSpecElRef {
+impl terrars::Ref for AccessContextManagerServicePerimeters_ServicePerimeters_SpecRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElSpecElRef {
-        AccessContextManagerServicePerimetersServicePerimetersElSpecElRef {
+    ) -> AccessContextManagerServicePerimeters_ServicePerimeters_SpecRef {
+        AccessContextManagerServicePerimeters_ServicePerimeters_SpecRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AccessContextManagerServicePerimetersServicePerimetersElSpecElRef {
+impl AccessContextManagerServicePerimeters_ServicePerimeters_SpecRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2099,7 +2841,7 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecElRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `resources` after provisioning.\nA list of GCP resources that are inside of the service perimeter.\nCurrently only projects are allowed.\nFormat: projects/{project_number}"]
+        "Get a reference to the value of field `resources` after provisioning.\nA list of GCP resources that are inside of the service perimeter.\nProjects, folders, and VPC networks are allowed.\nProject format: 'projects/{project_number}'\nFolder format: 'folders/{folder_number}'\nVPC network format: '//compute.googleapis.com/projects/{PROJECT_ID}/global/networks/{NAME}'"]
     pub fn resources(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.resources", self.base))
     }
@@ -2113,113 +2855,37 @@ impl AccessContextManagerServicePerimetersServicePerimetersElSpecElRef {
     #[doc = "Get a reference to the value of field `egress_policies` after provisioning.\n"]
     pub fn egress_policies(
         &self,
-    ) -> terrars::ListRef<AccessContextManagerServicePerimetersServicePerimetersElSpecElEgressPoliciesElRef> {
+    ) -> terrars::ListRef<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPoliciesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.egress_policies", self.base))
     }
 
     #[doc = "Get a reference to the value of field `ingress_policies` after provisioning.\n"]
     pub fn ingress_policies(
         &self,
-    ) -> terrars::ListRef<AccessContextManagerServicePerimetersServicePerimetersElSpecElIngressPoliciesElRef> {
+    ) -> terrars::ListRef<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPoliciesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ingress_policies", self.base))
     }
 
     #[doc = "Get a reference to the value of field `vpc_accessible_services` after provisioning.\n"]
     pub fn vpc_accessible_services(
         &self,
-    ) -> terrars::ListRef<AccessContextManagerServicePerimetersServicePerimetersElSpecElVpcAccessibleServicesElRef> {
+    ) -> terrars::ListRef<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServicesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_accessible_services", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressFromElSourcesEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    access_level: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressFromElSourcesEl {
-    #[doc =
-        "Set the field `access_level`.\nAn AccessLevel resource name that allows resources outside the ServicePerimeter to be accessed from the inside."]
-    pub fn set_access_level(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.access_level = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressFromElSourcesEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressFromElSourcesEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressFromElSourcesEl {}
-
-impl BuildAccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressFromElSourcesEl {
-    pub fn build(
-        self,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressFromElSourcesEl {
-        AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressFromElSourcesEl {
-            access_level: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressFromElSourcesElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressFromElSourcesElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressFromElSourcesElRef {
-        AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressFromElSourcesElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressFromElSourcesElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `access_level` after provisioning.\nAn AccessLevel resource name that allows resources outside the ServicePerimeter to be accessed from the inside."]
-    pub fn access_level(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.access_level", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressFromElDynamic {
+struct AccessContextManagerServicePerimeters_ServicePerimeters_Status_EgressPolicies_EgressFromDynamic {
     sources: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressFromElSourcesEl,
-        >,
+        ::DynamicBlock<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_Sources>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressFromEl {
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Status_EgressPolicies_EgressFrom {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     identities: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2230,14 +2896,12 @@ pub struct AccessContextManagerServicePerimetersServicePerimetersElStatusElEgres
     sources: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressFromElSourcesEl>,
+        std::vec::Vec<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_Sources>,
     >,
-    dynamic: AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressFromElDynamic,
+    dynamic: AccessContextManagerServicePerimeters_ServicePerimeters_Status_EgressPolicies_EgressFromDynamic,
 }
 
-impl AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressFromEl {
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Status_EgressPolicies_EgressFrom {
     #[doc =
         "Set the field `identities`.\nA list of identities that are allowed access through this 'EgressPolicy'.\nShould be in the format of email address. The email address should\nrepresent individual user or service account only."]
     pub fn set_identities(
@@ -2276,7 +2940,7 @@ impl AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPolic
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressFromElSourcesEl,
+                            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_Sources,
                         >,
                     >,
     ) -> Self {
@@ -2293,12 +2957,10 @@ impl AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPolic
 }
 
 impl terrars
-::ToListMappable for AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressFromEl {
+::ToListMappable for AccessContextManagerServicePerimeters_ServicePerimeters_Status_EgressPolicies_EgressFrom {
     type O =
         terrars
-        ::BlockAssignable<
-            AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressFromEl,
-        >;
+        ::BlockAssignable<AccessContextManagerServicePerimeters_ServicePerimeters_Status_EgressPolicies_EgressFrom>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2309,13 +2971,11 @@ impl terrars
     }
 }
 
-pub struct BuildAccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressFromEl {}
+pub struct BuildAccessContextManagerServicePerimeters_ServicePerimeters_Status_EgressPolicies_EgressFrom {}
 
-impl BuildAccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressFromEl {
-    pub fn build(
-        self,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressFromEl {
-        AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressFromEl {
+impl BuildAccessContextManagerServicePerimeters_ServicePerimeters_Status_EgressPolicies_EgressFrom {
+    pub fn build(self) -> AccessContextManagerServicePerimeters_ServicePerimeters_Status_EgressPolicies_EgressFrom {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Status_EgressPolicies_EgressFrom {
             identities: core::default::Default::default(),
             identity_type: core::default::Default::default(),
             source_restriction: core::default::Default::default(),
@@ -2325,24 +2985,26 @@ impl BuildAccessContextManagerServicePerimetersServicePerimetersElStatusElEgress
     }
 }
 
-pub struct AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressFromElRef {
+#[allow(dead_code)]
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Status_EgressPolicies_EgressFromRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressFromElRef {
+impl terrars::Ref for AccessContextManagerServicePerimeters_ServicePerimeters_Status_EgressPolicies_EgressFromRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressFromElRef {
-        AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressFromElRef {
+    ) -> AccessContextManagerServicePerimeters_ServicePerimeters_Status_EgressPolicies_EgressFromRef {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Status_EgressPolicies_EgressFromRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressFromElRef {
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Status_EgressPolicies_EgressFromRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2369,422 +3031,49 @@ impl AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPolic
     pub fn sources(
         &self,
     ) -> terrars
-    ::ListRef<
-        AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressFromElSourcesElRef,
-    > {
+    ::ListRef<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressFrom_SourcesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sources", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElOperationsElMethodSelectorsEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    method: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    permission: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElOperationsElMethodSelectorsEl {
-    #[doc =
-        "Set the field `method`.\nValue for 'method' should be a valid method name for the corresponding\n'serviceName' in 'ApiOperation'. If '*' used as value for method,\nthen ALL methods and permissions are allowed."]
-    pub fn set_method(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.method = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `permission`.\nValue for permission should be a valid Cloud IAM permission for the\ncorresponding 'serviceName' in 'ApiOperation'."]
-    pub fn set_permission(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.permission = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElOperationsElMethodSelectorsEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElOperationsElMethodSelectorsEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElOperationsElMethodSelectorsEl {}
-
-impl BuildAccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElOperationsElMethodSelectorsEl {
-    pub fn build(
-        self,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElOperationsElMethodSelectorsEl {
-        AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElOperationsElMethodSelectorsEl {
-            method: core::default::Default::default(),
-            permission: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElOperationsElMethodSelectorsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElOperationsElMethodSelectorsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElOperationsElMethodSelectorsElRef {
-        AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElOperationsElMethodSelectorsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElOperationsElMethodSelectorsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `method` after provisioning.\nValue for 'method' should be a valid method name for the corresponding\n'serviceName' in 'ApiOperation'. If '*' used as value for method,\nthen ALL methods and permissions are allowed."]
-    pub fn method(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.method", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `permission` after provisioning.\nValue for permission should be a valid Cloud IAM permission for the\ncorresponding 'serviceName' in 'ApiOperation'."]
-    pub fn permission(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.permission", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElOperationsElDynamic {
-    method_selectors: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElOperationsElMethodSelectorsEl,
-        >,
-    >,
-}
-
-#[derive(Serialize)]
-pub struct AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElOperationsEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    service_name: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    method_selectors: std
-    ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<
-            AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElOperationsElMethodSelectorsEl,
-        >,
-    >,
-    dynamic: AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElOperationsElDynamic,
-}
-
-impl AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElOperationsEl {
-    #[doc =
-        "Set the field `service_name`.\nThe name of the API whose methods or permissions the 'IngressPolicy' or\n'EgressPolicy' want to allow. A single 'ApiOperation' with serviceName\nfield set to '*' will allow all methods AND permissions for all services."]
-    pub fn set_service_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.service_name = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `method_selectors`.\n"]
-    pub fn set_method_selectors(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElOperationsElMethodSelectorsEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.method_selectors = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.method_selectors = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElOperationsEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElOperationsEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElOperationsEl {}
-
-impl BuildAccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElOperationsEl {
-    pub fn build(
-        self,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElOperationsEl {
-        AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElOperationsEl {
-            service_name: core::default::Default::default(),
-            method_selectors: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElOperationsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElOperationsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElOperationsElRef {
-        AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElOperationsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElOperationsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `service_name` after provisioning.\nThe name of the API whose methods or permissions the 'IngressPolicy' or\n'EgressPolicy' want to allow. A single 'ApiOperation' with serviceName\nfield set to '*' will allow all methods AND permissions for all services."]
-    pub fn service_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `method_selectors` after provisioning.\n"]
-    pub fn method_selectors(
-        &self,
-    ) -> terrars
-    ::ListRef<
-        AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElOperationsElMethodSelectorsElRef,
-    > {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.method_selectors", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElDynamic {
-    operations: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElOperationsEl,
-        >,
-    >,
-}
-
-#[derive(Serialize)]
-pub struct AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    external_resources: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    resources: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    operations: std
-    ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElOperationsEl>,
-    >,
-    dynamic: AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElDynamic,
-}
-
-impl AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToEl {
-    #[doc =
-        "Set the field `external_resources`.\nA list of external resources that are allowed to be accessed. A request\nmatches if it contains an external resource in this list (Example:\ns3://bucket/path). Currently '*' is not allowed."]
-    pub fn set_external_resources(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.external_resources = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `resources`.\nA list of resources, currently only projects in the form\n'projects/<projectnumber>', that match this to stanza. A request matches\nif it contains a resource in this list. If * is specified for resources,\nthen this 'EgressTo' rule will authorize access to all resources outside\nthe perimeter."]
-    pub fn set_resources(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.resources = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `operations`.\n"]
-    pub fn set_operations(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElOperationsEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.operations = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.operations = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToEl {
-    type O =
-        terrars
-        ::BlockAssignable<AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToEl {}
-
-impl BuildAccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToEl {
-    pub fn build(self) -> AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToEl {
-        AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToEl {
-            external_resources: core::default::Default::default(),
-            resources: core::default::Default::default(),
-            operations: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElRef {
-        AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `external_resources` after provisioning.\nA list of external resources that are allowed to be accessed. A request\nmatches if it contains an external resource in this list (Example:\ns3://bucket/path). Currently '*' is not allowed."]
-    pub fn external_resources(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.external_resources", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `resources` after provisioning.\nA list of resources, currently only projects in the form\n'projects/<projectnumber>', that match this to stanza. A request matches\nif it contains a resource in this list. If * is specified for resources,\nthen this 'EgressTo' rule will authorize access to all resources outside\nthe perimeter."]
-    pub fn resources(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.resources", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `operations` after provisioning.\n"]
-    pub fn operations(
-        &self,
-    ) -> terrars
-    ::ListRef<
-        AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElOperationsElRef,
-    > {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.operations", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElDynamic {
+struct AccessContextManagerServicePerimeters_ServicePerimeters_Status_EgressPoliciesDynamic {
     egress_from: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressFromEl>,
+        ::DynamicBlock<AccessContextManagerServicePerimeters_ServicePerimeters_Status_EgressPolicies_EgressFrom>,
     >,
     egress_to: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToEl>,
+        terrars::DynamicBlock<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesEl {
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Status_EgressPolicies {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    title: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     egress_from: std
     ::option
-    ::Option<
-        std::vec::Vec<AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressFromEl>,
-    >,
+    ::Option<std::vec::Vec<AccessContextManagerServicePerimeters_ServicePerimeters_Status_EgressPolicies_EgressFrom>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     egress_to: std
     ::option
-    ::Option<
-        std::vec::Vec<AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToEl>,
-    >,
-    dynamic: AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElDynamic,
+    ::Option<std::vec::Vec<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo>>,
+    dynamic: AccessContextManagerServicePerimeters_ServicePerimeters_Status_EgressPoliciesDynamic,
 }
 
-impl AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesEl {
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Status_EgressPolicies {
+    #[doc =
+        "Set the field `title`.\nHuman readable title. Must be unique within the perimeter. Does not affect behavior."]
+    pub fn set_title(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.title = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `egress_from`.\n"]
     pub fn set_egress_from(
         mut self,
@@ -2796,7 +3085,7 @@ impl AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPolic
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressFromEl,
+                            AccessContextManagerServicePerimeters_ServicePerimeters_Status_EgressPolicies_EgressFrom,
                         >,
                     >,
     ) -> Self {
@@ -2822,7 +3111,7 @@ impl AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPolic
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToEl,
+                            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressTo,
                         >,
                     >,
     ) -> Self {
@@ -2838,9 +3127,8 @@ impl AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPolic
     }
 }
 
-impl terrars::ToListMappable for AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesEl {
-    type O =
-        terrars::BlockAssignable<AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesEl>;
+impl terrars::ToListMappable for AccessContextManagerServicePerimeters_ServicePerimeters_Status_EgressPolicies {
+    type O = terrars::BlockAssignable<AccessContextManagerServicePerimeters_ServicePerimeters_Status_EgressPolicies>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2851,11 +3139,12 @@ impl terrars::ToListMappable for AccessContextManagerServicePerimetersServicePer
     }
 }
 
-pub struct BuildAccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesEl {}
+pub struct BuildAccessContextManagerServicePerimeters_ServicePerimeters_Status_EgressPolicies {}
 
-impl BuildAccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesEl {
-    pub fn build(self) -> AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesEl {
-        AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesEl {
+impl BuildAccessContextManagerServicePerimeters_ServicePerimeters_Status_EgressPolicies {
+    pub fn build(self) -> AccessContextManagerServicePerimeters_ServicePerimeters_Status_EgressPolicies {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Status_EgressPolicies {
+            title: core::default::Default::default(),
             egress_from: core::default::Default::default(),
             egress_to: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -2863,907 +3152,69 @@ impl BuildAccessContextManagerServicePerimetersServicePerimetersElStatusElEgress
     }
 }
 
-pub struct AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElRef {
+#[allow(dead_code)]
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Status_EgressPoliciesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElRef {
+impl terrars::Ref for AccessContextManagerServicePerimeters_ServicePerimeters_Status_EgressPoliciesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElRef {
-        AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElRef {
+    ) -> AccessContextManagerServicePerimeters_ServicePerimeters_Status_EgressPoliciesRef {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Status_EgressPoliciesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElRef {
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Status_EgressPoliciesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `title` after provisioning.\nHuman readable title. Must be unique within the perimeter. Does not affect behavior."]
+    pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
 
     #[doc = "Get a reference to the value of field `egress_from` after provisioning.\n"]
     pub fn egress_from(
         &self,
     ) -> terrars
-    ::ListRef<AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressFromElRef> {
+    ::ListRef<AccessContextManagerServicePerimeters_ServicePerimeters_Status_EgressPolicies_EgressFromRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.egress_from", self.base))
     }
 
     #[doc = "Get a reference to the value of field `egress_to` after provisioning.\n"]
     pub fn egress_to(
         &self,
-    ) -> terrars
-    ::ListRef<AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElEgressToElRef> {
+    ) -> terrars::ListRef<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_EgressPolicies_EgressToRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.egress_to", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressFromElSourcesEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    access_level: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    resource: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressFromElSourcesEl {
-    #[doc =
-        "Set the field `access_level`.\nAn 'AccessLevel' resource name that allow resources within the\n'ServicePerimeters' to be accessed from the internet. 'AccessLevels' listed\nmust be in the same policy as this 'ServicePerimeter'. Referencing a nonexistent\n'AccessLevel' will cause an error. If no 'AccessLevel' names are listed,\nresources within the perimeter can only be accessed via Google Cloud calls\nwith request origins within the perimeter.\nExample 'accessPolicies/MY_POLICY/accessLevels/MY_LEVEL.'\nIf * is specified, then all IngressSources will be allowed."]
-    pub fn set_access_level(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.access_level = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `resource`.\nA Google Cloud resource that is allowed to ingress the perimeter.\nRequests from these resources will be allowed to access perimeter data.\nCurrently only projects are allowed. Format 'projects/{project_number}'\nThe project may be in any Google Cloud organization, not just the\norganization that the perimeter is defined in. '*' is not allowed, the case\nof allowing all Google Cloud resources only is not supported."]
-    pub fn set_resource(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.resource = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressFromElSourcesEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressFromElSourcesEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressFromElSourcesEl {}
-
-impl BuildAccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressFromElSourcesEl {
-    pub fn build(
-        self,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressFromElSourcesEl {
-        AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressFromElSourcesEl {
-            access_level: core::default::Default::default(),
-            resource: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressFromElSourcesElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressFromElSourcesElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressFromElSourcesElRef {
-        AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressFromElSourcesElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressFromElSourcesElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `access_level` after provisioning.\nAn 'AccessLevel' resource name that allow resources within the\n'ServicePerimeters' to be accessed from the internet. 'AccessLevels' listed\nmust be in the same policy as this 'ServicePerimeter'. Referencing a nonexistent\n'AccessLevel' will cause an error. If no 'AccessLevel' names are listed,\nresources within the perimeter can only be accessed via Google Cloud calls\nwith request origins within the perimeter.\nExample 'accessPolicies/MY_POLICY/accessLevels/MY_LEVEL.'\nIf * is specified, then all IngressSources will be allowed."]
-    pub fn access_level(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.access_level", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `resource` after provisioning.\nA Google Cloud resource that is allowed to ingress the perimeter.\nRequests from these resources will be allowed to access perimeter data.\nCurrently only projects are allowed. Format 'projects/{project_number}'\nThe project may be in any Google Cloud organization, not just the\norganization that the perimeter is defined in. '*' is not allowed, the case\nof allowing all Google Cloud resources only is not supported."]
-    pub fn resource(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressFromElDynamic {
-    sources: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressFromElSourcesEl,
-        >,
-    >,
-}
-
-#[derive(Serialize)]
-pub struct AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressFromEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    identities: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    identity_type: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sources: std
-    ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressFromElSourcesEl>,
-    >,
-    dynamic: AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressFromElDynamic,
-}
-
-impl AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressFromEl {
-    #[doc =
-        "Set the field `identities`.\nA list of identities that are allowed access through this ingress policy.\nShould be in the format of email address. The email address should represent\nindividual user or service account only."]
-    pub fn set_identities(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.identities = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `identity_type`.\nSpecifies the type of identities that are allowed access from outside the\nperimeter. If left unspecified, then members of 'identities' field will be\nallowed access. Possible values: [\"IDENTITY_TYPE_UNSPECIFIED\", \"ANY_IDENTITY\", \"ANY_USER_ACCOUNT\", \"ANY_SERVICE_ACCOUNT\"]"]
-    pub fn set_identity_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.identity_type = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `sources`.\n"]
-    pub fn set_sources(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressFromElSourcesEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.sources = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.sources = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressFromEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressFromEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressFromEl {}
-
-impl BuildAccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressFromEl {
-    pub fn build(
-        self,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressFromEl {
-        AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressFromEl {
-            identities: core::default::Default::default(),
-            identity_type: core::default::Default::default(),
-            sources: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressFromElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressFromElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressFromElRef {
-        AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressFromElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressFromElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `identities` after provisioning.\nA list of identities that are allowed access through this ingress policy.\nShould be in the format of email address. The email address should represent\nindividual user or service account only."]
-    pub fn identities(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.identities", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `identity_type` after provisioning.\nSpecifies the type of identities that are allowed access from outside the\nperimeter. If left unspecified, then members of 'identities' field will be\nallowed access. Possible values: [\"IDENTITY_TYPE_UNSPECIFIED\", \"ANY_IDENTITY\", \"ANY_USER_ACCOUNT\", \"ANY_SERVICE_ACCOUNT\"]"]
-    pub fn identity_type(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.identity_type", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `sources` after provisioning.\n"]
-    pub fn sources(
-        &self,
-    ) -> terrars
-    ::ListRef<
-        AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressFromElSourcesElRef,
-    > {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.sources", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElOperationsElMethodSelectorsEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    method: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    permission: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElOperationsElMethodSelectorsEl {
-    #[doc =
-        "Set the field `method`.\nValue for method should be a valid method name for the corresponding\nserviceName in 'ApiOperation'. If '*' used as value for 'method', then\nALL methods and permissions are allowed."]
-    pub fn set_method(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.method = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `permission`.\nValue for permission should be a valid Cloud IAM permission for the\ncorresponding 'serviceName' in 'ApiOperation'."]
-    pub fn set_permission(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.permission = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElOperationsElMethodSelectorsEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElOperationsElMethodSelectorsEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElOperationsElMethodSelectorsEl {}
-
-impl BuildAccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElOperationsElMethodSelectorsEl {
-    pub fn build(
-        self,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElOperationsElMethodSelectorsEl {
-        AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElOperationsElMethodSelectorsEl {
-            method: core::default::Default::default(),
-            permission: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElOperationsElMethodSelectorsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElOperationsElMethodSelectorsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElOperationsElMethodSelectorsElRef {
-        AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElOperationsElMethodSelectorsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElOperationsElMethodSelectorsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `method` after provisioning.\nValue for method should be a valid method name for the corresponding\nserviceName in 'ApiOperation'. If '*' used as value for 'method', then\nALL methods and permissions are allowed."]
-    pub fn method(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.method", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `permission` after provisioning.\nValue for permission should be a valid Cloud IAM permission for the\ncorresponding 'serviceName' in 'ApiOperation'."]
-    pub fn permission(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.permission", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElOperationsElDynamic {
-    method_selectors: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElOperationsElMethodSelectorsEl,
-        >,
-    >,
-}
-
-#[derive(Serialize)]
-pub struct AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElOperationsEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    service_name: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    method_selectors: std
-    ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<
-            AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElOperationsElMethodSelectorsEl,
-        >,
-    >,
-    dynamic: AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElOperationsElDynamic,
-}
-
-impl AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElOperationsEl {
-    #[doc =
-        "Set the field `service_name`.\nThe name of the API whose methods or permissions the 'IngressPolicy' or\n'EgressPolicy' want to allow. A single 'ApiOperation' with 'serviceName'\nfield set to '*' will allow all methods AND permissions for all services."]
-    pub fn set_service_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.service_name = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `method_selectors`.\n"]
-    pub fn set_method_selectors(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElOperationsElMethodSelectorsEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.method_selectors = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.method_selectors = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElOperationsEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElOperationsEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElOperationsEl {}
-
-impl BuildAccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElOperationsEl {
-    pub fn build(
-        self,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElOperationsEl {
-        AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElOperationsEl {
-            service_name: core::default::Default::default(),
-            method_selectors: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElOperationsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElOperationsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElOperationsElRef {
-        AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElOperationsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElOperationsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `service_name` after provisioning.\nThe name of the API whose methods or permissions the 'IngressPolicy' or\n'EgressPolicy' want to allow. A single 'ApiOperation' with 'serviceName'\nfield set to '*' will allow all methods AND permissions for all services."]
-    pub fn service_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `method_selectors` after provisioning.\n"]
-    pub fn method_selectors(
-        &self,
-    ) -> terrars
-    ::ListRef<
-        AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElOperationsElMethodSelectorsElRef,
-    > {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.method_selectors", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElDynamic {
-    operations: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElOperationsEl,
-        >,
-    >,
-}
-
-#[derive(Serialize)]
-pub struct AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    resources: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    operations: std
-    ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<
-            AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElOperationsEl,
-        >,
-    >,
-    dynamic: AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElDynamic,
-}
-
-impl AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToEl {
-    #[doc =
-        "Set the field `resources`.\nA list of resources, currently only projects in the form\n'projects/<projectnumber>', protected by this 'ServicePerimeter'\nthat are allowed to be accessed by sources defined in the\ncorresponding 'IngressFrom'. A request matches if it contains\na resource in this list. If '*' is specified for resources,\nthen this 'IngressTo' rule will authorize access to all\nresources inside the perimeter, provided that the request\nalso matches the 'operations' field."]
-    pub fn set_resources(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.resources = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `operations`.\n"]
-    pub fn set_operations(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElOperationsEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.operations = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.operations = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToEl {}
-
-impl BuildAccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToEl {
-    pub fn build(
-        self,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToEl {
-        AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToEl {
-            resources: core::default::Default::default(),
-            operations: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElRef {
-        AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `resources` after provisioning.\nA list of resources, currently only projects in the form\n'projects/<projectnumber>', protected by this 'ServicePerimeter'\nthat are allowed to be accessed by sources defined in the\ncorresponding 'IngressFrom'. A request matches if it contains\na resource in this list. If '*' is specified for resources,\nthen this 'IngressTo' rule will authorize access to all\nresources inside the perimeter, provided that the request\nalso matches the 'operations' field."]
-    pub fn resources(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.resources", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `operations` after provisioning.\n"]
-    pub fn operations(
-        &self,
-    ) -> terrars
-    ::ListRef<
-        AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElOperationsElRef,
-    > {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.operations", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElDynamic {
-    ingress_from: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressFromEl>,
-    >,
-    ingress_to: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToEl>,
-    >,
-}
-
-#[derive(Serialize)]
-pub struct AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ingress_from: std
-    ::option
-    ::Option<
-        std::vec::Vec<AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressFromEl>,
-    >,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ingress_to: std
-    ::option
-    ::Option<
-        std::vec::Vec<AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToEl>,
-    >,
-    dynamic: AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElDynamic,
-}
-
-impl AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesEl {
-    #[doc = "Set the field `ingress_from`.\n"]
-    pub fn set_ingress_from(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressFromEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.ingress_from = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.ingress_from = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `ingress_to`.\n"]
-    pub fn set_ingress_to(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.ingress_to = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.ingress_to = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesEl {
-    type O =
-        terrars::BlockAssignable<AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesEl {}
-
-impl BuildAccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesEl {
-    pub fn build(self) -> AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesEl {
-        AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesEl {
-            ingress_from: core::default::Default::default(),
-            ingress_to: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElRef {
-        AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `ingress_from` after provisioning.\n"]
-    pub fn ingress_from(
-        &self,
-    ) -> terrars
-    ::ListRef<AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressFromElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.ingress_from", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `ingress_to` after provisioning.\n"]
-    pub fn ingress_to(
-        &self,
-    ) -> terrars
-    ::ListRef<AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesElIngressToElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.ingress_to", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct AccessContextManagerServicePerimetersServicePerimetersElStatusElVpcAccessibleServicesEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    allowed_services: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    enable_restriction: std::option::Option<terrars::PrimField<bool>>,
-}
-
-impl AccessContextManagerServicePerimetersServicePerimetersElStatusElVpcAccessibleServicesEl {
-    #[doc =
-        "Set the field `allowed_services`.\nThe list of APIs usable within the Service Perimeter.\nMust be empty unless 'enableRestriction' is True."]
-    pub fn set_allowed_services(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.allowed_services = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `enable_restriction`.\nWhether to restrict API calls within the Service Perimeter to the\nlist of APIs specified in 'allowedServices'."]
-    pub fn set_enable_restriction(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.enable_restriction = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for AccessContextManagerServicePerimetersServicePerimetersElStatusElVpcAccessibleServicesEl {
-    type O =
-        terrars
-        ::BlockAssignable<AccessContextManagerServicePerimetersServicePerimetersElStatusElVpcAccessibleServicesEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAccessContextManagerServicePerimetersServicePerimetersElStatusElVpcAccessibleServicesEl {}
-
-impl BuildAccessContextManagerServicePerimetersServicePerimetersElStatusElVpcAccessibleServicesEl {
-    pub fn build(self) -> AccessContextManagerServicePerimetersServicePerimetersElStatusElVpcAccessibleServicesEl {
-        AccessContextManagerServicePerimetersServicePerimetersElStatusElVpcAccessibleServicesEl {
-            allowed_services: core::default::Default::default(),
-            enable_restriction: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AccessContextManagerServicePerimetersServicePerimetersElStatusElVpcAccessibleServicesElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for AccessContextManagerServicePerimetersServicePerimetersElStatusElVpcAccessibleServicesElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElStatusElVpcAccessibleServicesElRef {
-        AccessContextManagerServicePerimetersServicePerimetersElStatusElVpcAccessibleServicesElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AccessContextManagerServicePerimetersServicePerimetersElStatusElVpcAccessibleServicesElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `allowed_services` after provisioning.\nThe list of APIs usable within the Service Perimeter.\nMust be empty unless 'enableRestriction' is True."]
-    pub fn allowed_services(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.allowed_services", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `enable_restriction` after provisioning.\nWhether to restrict API calls within the Service Perimeter to the\nlist of APIs specified in 'allowedServices'."]
-    pub fn enable_restriction(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_restriction", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct AccessContextManagerServicePerimetersServicePerimetersElStatusElDynamic {
+struct AccessContextManagerServicePerimeters_ServicePerimeters_StatusDynamic {
     egress_policies: std
     ::option
-    ::Option<terrars::DynamicBlock<AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesEl>>,
+    ::Option<terrars::DynamicBlock<AccessContextManagerServicePerimeters_ServicePerimeters_Status_EgressPolicies>>,
     ingress_policies: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesEl>,
-    >,
+    ::Option<terrars::DynamicBlock<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies>>,
     vpc_accessible_services: std
     ::option
     ::Option<
-        terrars::DynamicBlock<AccessContextManagerServicePerimetersServicePerimetersElStatusElVpcAccessibleServicesEl>,
+        terrars::DynamicBlock<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AccessContextManagerServicePerimetersServicePerimetersElStatusEl {
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_Status {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     access_levels: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3773,19 +3224,19 @@ pub struct AccessContextManagerServicePerimetersServicePerimetersElStatusEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     egress_policies: std
     ::option
-    ::Option<std::vec::Vec<AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesEl>>,
+    ::Option<std::vec::Vec<AccessContextManagerServicePerimeters_ServicePerimeters_Status_EgressPolicies>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ingress_policies: std
     ::option
-    ::Option<std::vec::Vec<AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesEl>>,
+    ::Option<std::vec::Vec<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_accessible_services: std
     ::option
-    ::Option<std::vec::Vec<AccessContextManagerServicePerimetersServicePerimetersElStatusElVpcAccessibleServicesEl>>,
-    dynamic: AccessContextManagerServicePerimetersServicePerimetersElStatusElDynamic,
+    ::Option<std::vec::Vec<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices>>,
+    dynamic: AccessContextManagerServicePerimeters_ServicePerimeters_StatusDynamic,
 }
 
-impl AccessContextManagerServicePerimetersServicePerimetersElStatusEl {
+impl AccessContextManagerServicePerimeters_ServicePerimeters_Status {
     #[doc =
         "Set the field `access_levels`.\nA list of AccessLevel resource names that allow resources within\nthe ServicePerimeter to be accessed from the internet.\nAccessLevels listed must be in the same policy as this\nServicePerimeter. Referencing a nonexistent AccessLevel is a\nsyntax error. If no AccessLevel names are listed, resources within\nthe perimeter can only be accessed via GCP calls with request\norigins within the perimeter. For Service Perimeter Bridge, must\nbe empty.\n\nFormat: accessPolicies/{policy_id}/accessLevels/{access_level_name}"]
     pub fn set_access_levels(
@@ -3797,7 +3248,7 @@ impl AccessContextManagerServicePerimetersServicePerimetersElStatusEl {
     }
 
     #[doc =
-        "Set the field `resources`.\nA list of GCP resources that are inside of the service perimeter.\nCurrently only projects are allowed.\nFormat: projects/{project_number}"]
+        "Set the field `resources`.\nA list of GCP resources that are inside of the service perimeter.\nProjects, folders, and VPC networks are allowed.\nProject format: 'projects/{project_number}'\nFolder format: 'folders/{folder_number}'\nVPC network format: '//compute.googleapis.com/projects/{PROJECT_ID}/global/networks/{NAME}'"]
     pub fn set_resources(
         mut self,
         v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
@@ -3827,7 +3278,7 @@ impl AccessContextManagerServicePerimetersServicePerimetersElStatusEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesEl,
+                            AccessContextManagerServicePerimeters_ServicePerimeters_Status_EgressPolicies,
                         >,
                     >,
     ) -> Self {
@@ -3853,7 +3304,7 @@ impl AccessContextManagerServicePerimetersServicePerimetersElStatusEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AccessContextManagerServicePerimetersServicePerimetersElStatusElIngressPoliciesEl,
+                            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_IngressPolicies,
                         >,
                     >,
     ) -> Self {
@@ -3879,7 +3330,7 @@ impl AccessContextManagerServicePerimetersServicePerimetersElStatusEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AccessContextManagerServicePerimetersServicePerimetersElStatusElVpcAccessibleServicesEl,
+                            AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServices,
                         >,
                     >,
     ) -> Self {
@@ -3895,8 +3346,8 @@ impl AccessContextManagerServicePerimetersServicePerimetersElStatusEl {
     }
 }
 
-impl terrars::ToListMappable for AccessContextManagerServicePerimetersServicePerimetersElStatusEl {
-    type O = terrars::BlockAssignable<AccessContextManagerServicePerimetersServicePerimetersElStatusEl>;
+impl terrars::ToListMappable for AccessContextManagerServicePerimeters_ServicePerimeters_Status {
+    type O = terrars::BlockAssignable<AccessContextManagerServicePerimeters_ServicePerimeters_Status>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3907,11 +3358,11 @@ impl terrars::ToListMappable for AccessContextManagerServicePerimetersServicePer
     }
 }
 
-pub struct BuildAccessContextManagerServicePerimetersServicePerimetersElStatusEl {}
+pub struct BuildAccessContextManagerServicePerimeters_ServicePerimeters_Status {}
 
-impl BuildAccessContextManagerServicePerimetersServicePerimetersElStatusEl {
-    pub fn build(self) -> AccessContextManagerServicePerimetersServicePerimetersElStatusEl {
-        AccessContextManagerServicePerimetersServicePerimetersElStatusEl {
+impl BuildAccessContextManagerServicePerimeters_ServicePerimeters_Status {
+    pub fn build(self) -> AccessContextManagerServicePerimeters_ServicePerimeters_Status {
+        AccessContextManagerServicePerimeters_ServicePerimeters_Status {
             access_levels: core::default::Default::default(),
             resources: core::default::Default::default(),
             restricted_services: core::default::Default::default(),
@@ -3923,24 +3374,26 @@ impl BuildAccessContextManagerServicePerimetersServicePerimetersElStatusEl {
     }
 }
 
-pub struct AccessContextManagerServicePerimetersServicePerimetersElStatusElRef {
+#[allow(dead_code)]
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters_StatusRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AccessContextManagerServicePerimetersServicePerimetersElStatusElRef {
+impl terrars::Ref for AccessContextManagerServicePerimeters_ServicePerimeters_StatusRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElStatusElRef {
-        AccessContextManagerServicePerimetersServicePerimetersElStatusElRef {
+    ) -> AccessContextManagerServicePerimeters_ServicePerimeters_StatusRef {
+        AccessContextManagerServicePerimeters_ServicePerimeters_StatusRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AccessContextManagerServicePerimetersServicePerimetersElStatusElRef {
+impl AccessContextManagerServicePerimeters_ServicePerimeters_StatusRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3952,7 +3405,7 @@ impl AccessContextManagerServicePerimetersServicePerimetersElStatusElRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `resources` after provisioning.\nA list of GCP resources that are inside of the service perimeter.\nCurrently only projects are allowed.\nFormat: projects/{project_number}"]
+        "Get a reference to the value of field `resources` after provisioning.\nA list of GCP resources that are inside of the service perimeter.\nProjects, folders, and VPC networks are allowed.\nProject format: 'projects/{project_number}'\nFolder format: 'folders/{folder_number}'\nVPC network format: '//compute.googleapis.com/projects/{PROJECT_ID}/global/networks/{NAME}'"]
     pub fn resources(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.resources", self.base))
     }
@@ -3966,28 +3419,28 @@ impl AccessContextManagerServicePerimetersServicePerimetersElStatusElRef {
     #[doc = "Get a reference to the value of field `egress_policies` after provisioning.\n"]
     pub fn egress_policies(
         &self,
-    ) -> terrars::ListRef<AccessContextManagerServicePerimetersServicePerimetersElStatusElEgressPoliciesElRef> {
+    ) -> terrars::ListRef<AccessContextManagerServicePerimeters_ServicePerimeters_Status_EgressPoliciesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.egress_policies", self.base))
     }
 
     #[doc = "Get a reference to the value of field `vpc_accessible_services` after provisioning.\n"]
     pub fn vpc_accessible_services(
         &self,
-    ) -> terrars::ListRef<AccessContextManagerServicePerimetersServicePerimetersElStatusElVpcAccessibleServicesElRef> {
+    ) -> terrars::ListRef<AccessContextManagerServicePerimeters_ServicePerimeters_Spec_VpcAccessibleServicesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_accessible_services", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AccessContextManagerServicePerimetersServicePerimetersElDynamic {
-    spec: std::option::Option<terrars::DynamicBlock<AccessContextManagerServicePerimetersServicePerimetersElSpecEl>>,
+struct AccessContextManagerServicePerimeters_ServicePerimetersDynamic {
+    spec: std::option::Option<terrars::DynamicBlock<AccessContextManagerServicePerimeters_ServicePerimeters_Spec>>,
     status: std
     ::option
-    ::Option<terrars::DynamicBlock<AccessContextManagerServicePerimetersServicePerimetersElStatusEl>>,
+    ::Option<terrars::DynamicBlock<AccessContextManagerServicePerimeters_ServicePerimeters_Status>>,
 }
 
 #[derive(Serialize)]
-pub struct AccessContextManagerServicePerimetersServicePerimetersEl {
+pub struct AccessContextManagerServicePerimeters_ServicePerimeters {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
@@ -3997,13 +3450,13 @@ pub struct AccessContextManagerServicePerimetersServicePerimetersEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     use_explicit_dry_run_spec: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    spec: std::option::Option<std::vec::Vec<AccessContextManagerServicePerimetersServicePerimetersElSpecEl>>,
+    spec: std::option::Option<std::vec::Vec<AccessContextManagerServicePerimeters_ServicePerimeters_Spec>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    status: std::option::Option<std::vec::Vec<AccessContextManagerServicePerimetersServicePerimetersElStatusEl>>,
-    dynamic: AccessContextManagerServicePerimetersServicePerimetersElDynamic,
+    status: std::option::Option<std::vec::Vec<AccessContextManagerServicePerimeters_ServicePerimeters_Status>>,
+    dynamic: AccessContextManagerServicePerimeters_ServicePerimetersDynamic,
 }
 
-impl AccessContextManagerServicePerimetersServicePerimetersEl {
+impl AccessContextManagerServicePerimeters_ServicePerimeters {
     #[doc =
         "Set the field `description`.\nDescription of the ServicePerimeter and its use. Does not affect\nbehavior."]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -4033,7 +3486,7 @@ impl AccessContextManagerServicePerimetersServicePerimetersEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<AccessContextManagerServicePerimetersServicePerimetersElSpecEl>>,
+                    ::Into<terrars::BlockAssignable<AccessContextManagerServicePerimeters_ServicePerimeters_Spec>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -4054,9 +3507,7 @@ impl AccessContextManagerServicePerimetersServicePerimetersEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<AccessContextManagerServicePerimetersServicePerimetersElStatusEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<AccessContextManagerServicePerimeters_ServicePerimeters_Status>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -4070,8 +3521,8 @@ impl AccessContextManagerServicePerimetersServicePerimetersEl {
     }
 }
 
-impl terrars::ToListMappable for AccessContextManagerServicePerimetersServicePerimetersEl {
-    type O = terrars::BlockAssignable<AccessContextManagerServicePerimetersServicePerimetersEl>;
+impl terrars::ToListMappable for AccessContextManagerServicePerimeters_ServicePerimeters {
+    type O = terrars::BlockAssignable<AccessContextManagerServicePerimeters_ServicePerimeters>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4082,7 +3533,7 @@ impl terrars::ToListMappable for AccessContextManagerServicePerimetersServicePer
     }
 }
 
-pub struct BuildAccessContextManagerServicePerimetersServicePerimetersEl {
+pub struct BuildAccessContextManagerServicePerimeters_ServicePerimeters {
     #[doc =
         "Resource name for the ServicePerimeter. The short_name component must\nbegin with a letter and only include alphanumeric and '_'.\nFormat: accessPolicies/{policy_id}/servicePerimeters/{short_name}"]
     pub name: terrars::PrimField<std::string::String>,
@@ -4090,9 +3541,9 @@ pub struct BuildAccessContextManagerServicePerimetersServicePerimetersEl {
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAccessContextManagerServicePerimetersServicePerimetersEl {
-    pub fn build(self) -> AccessContextManagerServicePerimetersServicePerimetersEl {
-        AccessContextManagerServicePerimetersServicePerimetersEl {
+impl BuildAccessContextManagerServicePerimeters_ServicePerimeters {
+    pub fn build(self) -> AccessContextManagerServicePerimeters_ServicePerimeters {
+        AccessContextManagerServicePerimeters_ServicePerimeters {
             description: core::default::Default::default(),
             name: self.name,
             perimeter_type: core::default::Default::default(),
@@ -4105,24 +3556,26 @@ impl BuildAccessContextManagerServicePerimetersServicePerimetersEl {
     }
 }
 
-pub struct AccessContextManagerServicePerimetersServicePerimetersElRef {
+#[allow(dead_code)]
+pub struct AccessContextManagerServicePerimeters_ServicePerimetersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AccessContextManagerServicePerimetersServicePerimetersElRef {
+impl terrars::Ref for AccessContextManagerServicePerimeters_ServicePerimetersRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AccessContextManagerServicePerimetersServicePerimetersElRef {
-        AccessContextManagerServicePerimetersServicePerimetersElRef {
+    ) -> AccessContextManagerServicePerimeters_ServicePerimetersRef {
+        AccessContextManagerServicePerimeters_ServicePerimetersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AccessContextManagerServicePerimetersServicePerimetersElRef {
+impl AccessContextManagerServicePerimeters_ServicePerimetersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4170,18 +3623,18 @@ impl AccessContextManagerServicePerimetersServicePerimetersElRef {
     }
 
     #[doc = "Get a reference to the value of field `spec` after provisioning.\n"]
-    pub fn spec(&self) -> terrars::ListRef<AccessContextManagerServicePerimetersServicePerimetersElSpecElRef> {
+    pub fn spec(&self) -> terrars::ListRef<AccessContextManagerServicePerimeters_ServicePerimeters_SpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.spec", self.base))
     }
 
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
-    pub fn status(&self) -> terrars::ListRef<AccessContextManagerServicePerimetersServicePerimetersElStatusElRef> {
+    pub fn status(&self) -> terrars::ListRef<AccessContextManagerServicePerimeters_ServicePerimeters_StatusRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.status", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AccessContextManagerServicePerimetersTimeoutsEl {
+pub struct AccessContextManagerServicePerimeters_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -4190,7 +3643,7 @@ pub struct AccessContextManagerServicePerimetersTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AccessContextManagerServicePerimetersTimeoutsEl {
+impl AccessContextManagerServicePerimeters_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -4210,8 +3663,8 @@ impl AccessContextManagerServicePerimetersTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for AccessContextManagerServicePerimetersTimeoutsEl {
-    type O = terrars::BlockAssignable<AccessContextManagerServicePerimetersTimeoutsEl>;
+impl terrars::ToListMappable for AccessContextManagerServicePerimeters_Timeouts {
+    type O = terrars::BlockAssignable<AccessContextManagerServicePerimeters_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4222,11 +3675,11 @@ impl terrars::ToListMappable for AccessContextManagerServicePerimetersTimeoutsEl
     }
 }
 
-pub struct BuildAccessContextManagerServicePerimetersTimeoutsEl {}
+pub struct BuildAccessContextManagerServicePerimeters_Timeouts {}
 
-impl BuildAccessContextManagerServicePerimetersTimeoutsEl {
-    pub fn build(self) -> AccessContextManagerServicePerimetersTimeoutsEl {
-        AccessContextManagerServicePerimetersTimeoutsEl {
+impl BuildAccessContextManagerServicePerimeters_Timeouts {
+    pub fn build(self) -> AccessContextManagerServicePerimeters_Timeouts {
+        AccessContextManagerServicePerimeters_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -4234,24 +3687,26 @@ impl BuildAccessContextManagerServicePerimetersTimeoutsEl {
     }
 }
 
-pub struct AccessContextManagerServicePerimetersTimeoutsElRef {
+#[allow(dead_code)]
+pub struct AccessContextManagerServicePerimeters_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AccessContextManagerServicePerimetersTimeoutsElRef {
+impl terrars::Ref for AccessContextManagerServicePerimeters_TimeoutsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AccessContextManagerServicePerimetersTimeoutsElRef {
-        AccessContextManagerServicePerimetersTimeoutsElRef {
+    ) -> AccessContextManagerServicePerimeters_TimeoutsRef {
+        AccessContextManagerServicePerimeters_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AccessContextManagerServicePerimetersTimeoutsElRef {
+impl AccessContextManagerServicePerimeters_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4270,11 +3725,4 @@ impl AccessContextManagerServicePerimetersTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AccessContextManagerServicePerimetersDynamic {
-    service_perimeters: std
-    ::option
-    ::Option<terrars::DynamicBlock<AccessContextManagerServicePerimetersServicePerimetersEl>>,
 }

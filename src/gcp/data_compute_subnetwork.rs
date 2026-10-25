@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataComputeSubnetworkData {
+struct DataComputeSubnetworkData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -31,7 +33,7 @@ struct DataComputeSubnetworkData {
 struct DataComputeSubnetwork_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataComputeSubnetworkData>,
+    data: std::cell::RefCell<DataComputeSubnetworkData_>,
 }
 
 #[derive(Clone)]
@@ -111,6 +113,11 @@ impl DataComputeSubnetwork {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `external_ipv6_prefix` after provisioning.\n"]
+    pub fn external_ipv6_prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.external_ipv6_prefix", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `gateway_address` after provisioning.\n"]
     pub fn gateway_address(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.gateway_address", self.extract_ref()))
@@ -129,6 +136,11 @@ impl DataComputeSubnetwork {
     #[doc = "Get a reference to the value of field `ip_cidr_range` after provisioning.\n"]
     pub fn ip_cidr_range(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_cidr_range", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ipv6_access_type` after provisioning.\n"]
+    pub fn ipv6_access_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv6_access_type", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
@@ -157,13 +169,23 @@ impl DataComputeSubnetwork {
     }
 
     #[doc = "Get a reference to the value of field `secondary_ip_range` after provisioning.\n"]
-    pub fn secondary_ip_range(&self) -> terrars::ListRef<DataComputeSubnetworkSecondaryIpRangeElRef> {
+    pub fn secondary_ip_range(&self) -> terrars::ListRef<DataComputeSubnetwork_SecondaryIpRangeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.secondary_ip_range", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `self_link` after provisioning.\n"]
     pub fn self_link(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `stack_type` after provisioning.\n"]
+    pub fn stack_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.stack_type", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `subnetwork_id` after provisioning.\n"]
+    pub fn subnetwork_id(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.subnetwork_id", self.extract_ref()))
     }
 }
 
@@ -207,7 +229,7 @@ impl BuildDataComputeSubnetwork {
         let out = DataComputeSubnetwork(std::rc::Rc::new(DataComputeSubnetwork_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataComputeSubnetworkData {
+            data: std::cell::RefCell::new(DataComputeSubnetworkData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -252,6 +274,11 @@ impl DataComputeSubnetworkRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `external_ipv6_prefix` after provisioning.\n"]
+    pub fn external_ipv6_prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.external_ipv6_prefix", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `gateway_address` after provisioning.\n"]
     pub fn gateway_address(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.gateway_address", self.extract_ref()))
@@ -270,6 +297,11 @@ impl DataComputeSubnetworkRef {
     #[doc = "Get a reference to the value of field `ip_cidr_range` after provisioning.\n"]
     pub fn ip_cidr_range(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_cidr_range", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ipv6_access_type` after provisioning.\n"]
+    pub fn ipv6_access_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv6_access_type", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
@@ -298,7 +330,7 @@ impl DataComputeSubnetworkRef {
     }
 
     #[doc = "Get a reference to the value of field `secondary_ip_range` after provisioning.\n"]
-    pub fn secondary_ip_range(&self) -> terrars::ListRef<DataComputeSubnetworkSecondaryIpRangeElRef> {
+    pub fn secondary_ip_range(&self) -> terrars::ListRef<DataComputeSubnetwork_SecondaryIpRangeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.secondary_ip_range", self.extract_ref()))
     }
 
@@ -306,17 +338,27 @@ impl DataComputeSubnetworkRef {
     pub fn self_link(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.extract_ref()))
     }
+
+    #[doc = "Get a reference to the value of field `stack_type` after provisioning.\n"]
+    pub fn stack_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.stack_type", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `subnetwork_id` after provisioning.\n"]
+    pub fn subnetwork_id(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.subnetwork_id", self.extract_ref()))
+    }
 }
 
 #[derive(Serialize)]
-pub struct DataComputeSubnetworkSecondaryIpRangeEl {
+pub struct DataComputeSubnetwork_SecondaryIpRange {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ip_cidr_range: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     range_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataComputeSubnetworkSecondaryIpRangeEl {
+impl DataComputeSubnetwork_SecondaryIpRange {
     #[doc = "Set the field `ip_cidr_range`.\n"]
     pub fn set_ip_cidr_range(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.ip_cidr_range = std::option::Option::Some(v.into());
@@ -330,8 +372,8 @@ impl DataComputeSubnetworkSecondaryIpRangeEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeSubnetworkSecondaryIpRangeEl {
-    type O = terrars::BlockAssignable<DataComputeSubnetworkSecondaryIpRangeEl>;
+impl terrars::ToListMappable for DataComputeSubnetwork_SecondaryIpRange {
+    type O = terrars::BlockAssignable<DataComputeSubnetwork_SecondaryIpRange>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -342,32 +384,34 @@ impl terrars::ToListMappable for DataComputeSubnetworkSecondaryIpRangeEl {
     }
 }
 
-pub struct BuildDataComputeSubnetworkSecondaryIpRangeEl {}
+pub struct BuildDataComputeSubnetwork_SecondaryIpRange {}
 
-impl BuildDataComputeSubnetworkSecondaryIpRangeEl {
-    pub fn build(self) -> DataComputeSubnetworkSecondaryIpRangeEl {
-        DataComputeSubnetworkSecondaryIpRangeEl {
+impl BuildDataComputeSubnetwork_SecondaryIpRange {
+    pub fn build(self) -> DataComputeSubnetwork_SecondaryIpRange {
+        DataComputeSubnetwork_SecondaryIpRange {
             ip_cidr_range: core::default::Default::default(),
             range_name: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataComputeSubnetworkSecondaryIpRangeElRef {
+#[allow(dead_code)]
+pub struct DataComputeSubnetwork_SecondaryIpRangeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeSubnetworkSecondaryIpRangeElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeSubnetworkSecondaryIpRangeElRef {
-        DataComputeSubnetworkSecondaryIpRangeElRef {
+impl terrars::Ref for DataComputeSubnetwork_SecondaryIpRangeRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeSubnetwork_SecondaryIpRangeRef {
+        DataComputeSubnetwork_SecondaryIpRangeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeSubnetworkSecondaryIpRangeElRef {
+impl DataComputeSubnetwork_SecondaryIpRangeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataCatalogTagTemplateData {
+struct DataCatalogTagTemplateData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct DataCatalogTagTemplateData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     display_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -30,16 +34,16 @@ struct DataCatalogTagTemplateData {
     region: std::option::Option<terrars::PrimField<std::string::String>>,
     tag_template_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    fields: std::option::Option<std::vec::Vec<DataCatalogTagTemplateFieldsEl>>,
+    fields: std::option::Option<std::vec::Vec<DataCatalogTagTemplate_Fields>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataCatalogTagTemplateTimeoutsEl>,
+    timeouts: std::option::Option<DataCatalogTagTemplate_Timeouts>,
     dynamic: DataCatalogTagTemplateDynamic,
 }
 
 struct DataCatalogTagTemplate_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataCatalogTagTemplateData>,
+    data: std::cell::RefCell<DataCatalogTagTemplateData_>,
 }
 
 #[derive(Clone)]
@@ -139,6 +143,13 @@ impl DataCatalogTagTemplate {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `display_name`.\nThe display name for this template."]
     pub fn set_display_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().display_name = std::option::Option::Some(v.into());
@@ -173,7 +184,7 @@ impl DataCatalogTagTemplate {
     #[doc = "Set the field `fields`.\n"]
     pub fn set_fields(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataCatalogTagTemplateFieldsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataCatalogTagTemplate_Fields>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -187,9 +198,15 @@ impl DataCatalogTagTemplate {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataCatalogTagTemplateTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataCatalogTagTemplate_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -232,8 +249,8 @@ impl DataCatalogTagTemplate {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataCatalogTagTemplateTimeoutsElRef {
-        DataCatalogTagTemplateTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataCatalogTagTemplate_TimeoutsRef {
+        DataCatalogTagTemplate_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -279,12 +296,13 @@ impl BuildDataCatalogTagTemplate {
         let out = DataCatalogTagTemplate(std::rc::Rc::new(DataCatalogTagTemplate_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataCatalogTagTemplateData {
+            data: std::cell::RefCell::new(DataCatalogTagTemplateData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 display_name: core::default::Default::default(),
                 force_delete: core::default::Default::default(),
                 id: core::default::Default::default(),
@@ -322,6 +340,12 @@ impl DataCatalogTagTemplateRef {
 
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -364,20 +388,25 @@ impl DataCatalogTagTemplateRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataCatalogTagTemplateTimeoutsElRef {
-        DataCatalogTagTemplateTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataCatalogTagTemplate_TimeoutsRef {
+        DataCatalogTagTemplate_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataCatalogTagTemplateDynamic {
+    fields: std::option::Option<terrars::DynamicBlock<DataCatalogTagTemplate_Fields>>,
+}
+
 #[derive(Serialize)]
-pub struct DataCatalogTagTemplateFieldsElTypeElEnumTypeElAllowedValuesEl {
+pub struct DataCatalogTagTemplate_Fields_Type_EnumType_AllowedValues {
     display_name: terrars::PrimField<std::string::String>,
 }
 
-impl DataCatalogTagTemplateFieldsElTypeElEnumTypeElAllowedValuesEl { }
+impl DataCatalogTagTemplate_Fields_Type_EnumType_AllowedValues { }
 
-impl terrars::ToListMappable for DataCatalogTagTemplateFieldsElTypeElEnumTypeElAllowedValuesEl {
-    type O = terrars::BlockAssignable<DataCatalogTagTemplateFieldsElTypeElEnumTypeElAllowedValuesEl>;
+impl terrars::ToListMappable for DataCatalogTagTemplate_Fields_Type_EnumType_AllowedValues {
+    type O = terrars::BlockAssignable<DataCatalogTagTemplate_Fields_Type_EnumType_AllowedValues>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -388,35 +417,37 @@ impl terrars::ToListMappable for DataCatalogTagTemplateFieldsElTypeElEnumTypeElA
     }
 }
 
-pub struct BuildDataCatalogTagTemplateFieldsElTypeElEnumTypeElAllowedValuesEl {
+pub struct BuildDataCatalogTagTemplate_Fields_Type_EnumType_AllowedValues {
     #[doc = "The display name of the enum value."]
     pub display_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataCatalogTagTemplateFieldsElTypeElEnumTypeElAllowedValuesEl {
-    pub fn build(self) -> DataCatalogTagTemplateFieldsElTypeElEnumTypeElAllowedValuesEl {
-        DataCatalogTagTemplateFieldsElTypeElEnumTypeElAllowedValuesEl { display_name: self.display_name }
+impl BuildDataCatalogTagTemplate_Fields_Type_EnumType_AllowedValues {
+    pub fn build(self) -> DataCatalogTagTemplate_Fields_Type_EnumType_AllowedValues {
+        DataCatalogTagTemplate_Fields_Type_EnumType_AllowedValues { display_name: self.display_name }
     }
 }
 
-pub struct DataCatalogTagTemplateFieldsElTypeElEnumTypeElAllowedValuesElRef {
+#[allow(dead_code)]
+pub struct DataCatalogTagTemplate_Fields_Type_EnumType_AllowedValuesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCatalogTagTemplateFieldsElTypeElEnumTypeElAllowedValuesElRef {
+impl terrars::Ref for DataCatalogTagTemplate_Fields_Type_EnumType_AllowedValuesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCatalogTagTemplateFieldsElTypeElEnumTypeElAllowedValuesElRef {
-        DataCatalogTagTemplateFieldsElTypeElEnumTypeElAllowedValuesElRef {
+    ) -> DataCatalogTagTemplate_Fields_Type_EnumType_AllowedValuesRef {
+        DataCatalogTagTemplate_Fields_Type_EnumType_AllowedValuesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCatalogTagTemplateFieldsElTypeElEnumTypeElAllowedValuesElRef {
+impl DataCatalogTagTemplate_Fields_Type_EnumType_AllowedValuesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -429,20 +460,20 @@ impl DataCatalogTagTemplateFieldsElTypeElEnumTypeElAllowedValuesElRef {
 }
 
 #[derive(Serialize, Default)]
-struct DataCatalogTagTemplateFieldsElTypeElEnumTypeElDynamic {
+struct DataCatalogTagTemplate_Fields_Type_EnumTypeDynamic {
     allowed_values: std
     ::option
-    ::Option<terrars::DynamicBlock<DataCatalogTagTemplateFieldsElTypeElEnumTypeElAllowedValuesEl>>,
+    ::Option<terrars::DynamicBlock<DataCatalogTagTemplate_Fields_Type_EnumType_AllowedValues>>,
 }
 
 #[derive(Serialize)]
-pub struct DataCatalogTagTemplateFieldsElTypeElEnumTypeEl {
+pub struct DataCatalogTagTemplate_Fields_Type_EnumType {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    allowed_values: std::option::Option<std::vec::Vec<DataCatalogTagTemplateFieldsElTypeElEnumTypeElAllowedValuesEl>>,
-    dynamic: DataCatalogTagTemplateFieldsElTypeElEnumTypeElDynamic,
+    allowed_values: std::option::Option<std::vec::Vec<DataCatalogTagTemplate_Fields_Type_EnumType_AllowedValues>>,
+    dynamic: DataCatalogTagTemplate_Fields_Type_EnumTypeDynamic,
 }
 
-impl DataCatalogTagTemplateFieldsElTypeElEnumTypeEl {
+impl DataCatalogTagTemplate_Fields_Type_EnumType {
     #[doc = "Set the field `allowed_values`.\n"]
     pub fn set_allowed_values(
         mut self,
@@ -451,7 +482,7 @@ impl DataCatalogTagTemplateFieldsElTypeElEnumTypeEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<DataCatalogTagTemplateFieldsElTypeElEnumTypeElAllowedValuesEl>>,
+                    ::Into<terrars::BlockAssignable<DataCatalogTagTemplate_Fields_Type_EnumType_AllowedValues>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -465,8 +496,8 @@ impl DataCatalogTagTemplateFieldsElTypeElEnumTypeEl {
     }
 }
 
-impl terrars::ToListMappable for DataCatalogTagTemplateFieldsElTypeElEnumTypeEl {
-    type O = terrars::BlockAssignable<DataCatalogTagTemplateFieldsElTypeElEnumTypeEl>;
+impl terrars::ToListMappable for DataCatalogTagTemplate_Fields_Type_EnumType {
+    type O = terrars::BlockAssignable<DataCatalogTagTemplate_Fields_Type_EnumType>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -477,57 +508,59 @@ impl terrars::ToListMappable for DataCatalogTagTemplateFieldsElTypeElEnumTypeEl 
     }
 }
 
-pub struct BuildDataCatalogTagTemplateFieldsElTypeElEnumTypeEl {}
+pub struct BuildDataCatalogTagTemplate_Fields_Type_EnumType {}
 
-impl BuildDataCatalogTagTemplateFieldsElTypeElEnumTypeEl {
-    pub fn build(self) -> DataCatalogTagTemplateFieldsElTypeElEnumTypeEl {
-        DataCatalogTagTemplateFieldsElTypeElEnumTypeEl {
+impl BuildDataCatalogTagTemplate_Fields_Type_EnumType {
+    pub fn build(self) -> DataCatalogTagTemplate_Fields_Type_EnumType {
+        DataCatalogTagTemplate_Fields_Type_EnumType {
             allowed_values: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataCatalogTagTemplateFieldsElTypeElEnumTypeElRef {
+#[allow(dead_code)]
+pub struct DataCatalogTagTemplate_Fields_Type_EnumTypeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCatalogTagTemplateFieldsElTypeElEnumTypeElRef {
+impl terrars::Ref for DataCatalogTagTemplate_Fields_Type_EnumTypeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCatalogTagTemplateFieldsElTypeElEnumTypeElRef {
-        DataCatalogTagTemplateFieldsElTypeElEnumTypeElRef {
+    ) -> DataCatalogTagTemplate_Fields_Type_EnumTypeRef {
+        DataCatalogTagTemplate_Fields_Type_EnumTypeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCatalogTagTemplateFieldsElTypeElEnumTypeElRef {
+impl DataCatalogTagTemplate_Fields_Type_EnumTypeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize, Default)]
-struct DataCatalogTagTemplateFieldsElTypeElDynamic {
-    enum_type: std::option::Option<terrars::DynamicBlock<DataCatalogTagTemplateFieldsElTypeElEnumTypeEl>>,
+struct DataCatalogTagTemplate_Fields_TypeDynamic {
+    enum_type: std::option::Option<terrars::DynamicBlock<DataCatalogTagTemplate_Fields_Type_EnumType>>,
 }
 
 #[derive(Serialize)]
-pub struct DataCatalogTagTemplateFieldsElTypeEl {
+pub struct DataCatalogTagTemplate_Fields_Type {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     primitive_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    enum_type: std::option::Option<std::vec::Vec<DataCatalogTagTemplateFieldsElTypeElEnumTypeEl>>,
-    dynamic: DataCatalogTagTemplateFieldsElTypeElDynamic,
+    enum_type: std::option::Option<std::vec::Vec<DataCatalogTagTemplate_Fields_Type_EnumType>>,
+    dynamic: DataCatalogTagTemplate_Fields_TypeDynamic,
 }
 
-impl DataCatalogTagTemplateFieldsElTypeEl {
+impl DataCatalogTagTemplate_Fields_Type {
     #[doc =
-        "Set the field `primitive_type`.\nRepresents primitive types - string, bool etc.\n Exactly one of 'primitive_type' or 'enum_type' must be set Possible values: [\"DOUBLE\", \"STRING\", \"BOOL\", \"TIMESTAMP\"]"]
+        "Set the field `primitive_type`.\nRepresents primitive types - string, bool etc.\n Exactly one of 'primitive_type' or 'enum_type' must be set Possible values: [\"DOUBLE\", \"STRING\", \"BOOL\", \"TIMESTAMP\", \"RICHTEXT\"]"]
     pub fn set_primitive_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.primitive_type = std::option::Option::Some(v.into());
         self
@@ -536,7 +569,7 @@ impl DataCatalogTagTemplateFieldsElTypeEl {
     #[doc = "Set the field `enum_type`.\n"]
     pub fn set_enum_type(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataCatalogTagTemplateFieldsElTypeElEnumTypeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataCatalogTagTemplate_Fields_Type_EnumType>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -550,8 +583,8 @@ impl DataCatalogTagTemplateFieldsElTypeEl {
     }
 }
 
-impl terrars::ToListMappable for DataCatalogTagTemplateFieldsElTypeEl {
-    type O = terrars::BlockAssignable<DataCatalogTagTemplateFieldsElTypeEl>;
+impl terrars::ToListMappable for DataCatalogTagTemplate_Fields_Type {
+    type O = terrars::BlockAssignable<DataCatalogTagTemplate_Fields_Type>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -562,11 +595,11 @@ impl terrars::ToListMappable for DataCatalogTagTemplateFieldsElTypeEl {
     }
 }
 
-pub struct BuildDataCatalogTagTemplateFieldsElTypeEl {}
+pub struct BuildDataCatalogTagTemplate_Fields_Type {}
 
-impl BuildDataCatalogTagTemplateFieldsElTypeEl {
-    pub fn build(self) -> DataCatalogTagTemplateFieldsElTypeEl {
-        DataCatalogTagTemplateFieldsElTypeEl {
+impl BuildDataCatalogTagTemplate_Fields_Type {
+    pub fn build(self) -> DataCatalogTagTemplate_Fields_Type {
+        DataCatalogTagTemplate_Fields_Type {
             primitive_type: core::default::Default::default(),
             enum_type: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -574,44 +607,46 @@ impl BuildDataCatalogTagTemplateFieldsElTypeEl {
     }
 }
 
-pub struct DataCatalogTagTemplateFieldsElTypeElRef {
+#[allow(dead_code)]
+pub struct DataCatalogTagTemplate_Fields_TypeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCatalogTagTemplateFieldsElTypeElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCatalogTagTemplateFieldsElTypeElRef {
-        DataCatalogTagTemplateFieldsElTypeElRef {
+impl terrars::Ref for DataCatalogTagTemplate_Fields_TypeRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCatalogTagTemplate_Fields_TypeRef {
+        DataCatalogTagTemplate_Fields_TypeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCatalogTagTemplateFieldsElTypeElRef {
+impl DataCatalogTagTemplate_Fields_TypeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `primitive_type` after provisioning.\nRepresents primitive types - string, bool etc.\n Exactly one of 'primitive_type' or 'enum_type' must be set Possible values: [\"DOUBLE\", \"STRING\", \"BOOL\", \"TIMESTAMP\"]"]
+        "Get a reference to the value of field `primitive_type` after provisioning.\nRepresents primitive types - string, bool etc.\n Exactly one of 'primitive_type' or 'enum_type' must be set Possible values: [\"DOUBLE\", \"STRING\", \"BOOL\", \"TIMESTAMP\", \"RICHTEXT\"]"]
     pub fn primitive_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.primitive_type", self.base))
     }
 
     #[doc = "Get a reference to the value of field `enum_type` after provisioning.\n"]
-    pub fn enum_type(&self) -> terrars::ListRef<DataCatalogTagTemplateFieldsElTypeElEnumTypeElRef> {
+    pub fn enum_type(&self) -> terrars::ListRef<DataCatalogTagTemplate_Fields_Type_EnumTypeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.enum_type", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct DataCatalogTagTemplateFieldsElDynamic {
-    type_: std::option::Option<terrars::DynamicBlock<DataCatalogTagTemplateFieldsElTypeEl>>,
+struct DataCatalogTagTemplate_FieldsDynamic {
+    type_: std::option::Option<terrars::DynamicBlock<DataCatalogTagTemplate_Fields_Type>>,
 }
 
 #[derive(Serialize)]
-pub struct DataCatalogTagTemplateFieldsEl {
+pub struct DataCatalogTagTemplate_Fields {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -622,11 +657,11 @@ pub struct DataCatalogTagTemplateFieldsEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     order: std::option::Option<terrars::PrimField<f64>>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
-    type_: std::option::Option<std::vec::Vec<DataCatalogTagTemplateFieldsElTypeEl>>,
-    dynamic: DataCatalogTagTemplateFieldsElDynamic,
+    type_: std::option::Option<std::vec::Vec<DataCatalogTagTemplate_Fields_Type>>,
+    dynamic: DataCatalogTagTemplate_FieldsDynamic,
 }
 
-impl DataCatalogTagTemplateFieldsEl {
+impl DataCatalogTagTemplate_Fields {
     #[doc = "Set the field `description`.\nA description for this field."]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -655,7 +690,7 @@ impl DataCatalogTagTemplateFieldsEl {
     #[doc = "Set the field `type_`.\n"]
     pub fn set_type(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataCatalogTagTemplateFieldsElTypeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataCatalogTagTemplate_Fields_Type>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -669,8 +704,8 @@ impl DataCatalogTagTemplateFieldsEl {
     }
 }
 
-impl terrars::ToListMappable for DataCatalogTagTemplateFieldsEl {
-    type O = terrars::BlockAssignable<DataCatalogTagTemplateFieldsEl>;
+impl terrars::ToListMappable for DataCatalogTagTemplate_Fields {
+    type O = terrars::BlockAssignable<DataCatalogTagTemplate_Fields>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -681,14 +716,14 @@ impl terrars::ToListMappable for DataCatalogTagTemplateFieldsEl {
     }
 }
 
-pub struct BuildDataCatalogTagTemplateFieldsEl {
+pub struct BuildDataCatalogTagTemplate_Fields {
     #[doc = ""]
     pub field_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataCatalogTagTemplateFieldsEl {
-    pub fn build(self) -> DataCatalogTagTemplateFieldsEl {
-        DataCatalogTagTemplateFieldsEl {
+impl BuildDataCatalogTagTemplate_Fields {
+    pub fn build(self) -> DataCatalogTagTemplate_Fields {
+        DataCatalogTagTemplate_Fields {
             description: core::default::Default::default(),
             display_name: core::default::Default::default(),
             field_id: self.field_id,
@@ -700,21 +735,23 @@ impl BuildDataCatalogTagTemplateFieldsEl {
     }
 }
 
-pub struct DataCatalogTagTemplateFieldsElRef {
+#[allow(dead_code)]
+pub struct DataCatalogTagTemplate_FieldsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCatalogTagTemplateFieldsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCatalogTagTemplateFieldsElRef {
-        DataCatalogTagTemplateFieldsElRef {
+impl terrars::Ref for DataCatalogTagTemplate_FieldsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCatalogTagTemplate_FieldsRef {
+        DataCatalogTagTemplate_FieldsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCatalogTagTemplateFieldsElRef {
+impl DataCatalogTagTemplate_FieldsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -754,13 +791,13 @@ impl DataCatalogTagTemplateFieldsElRef {
     }
 
     #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> terrars::ListRef<DataCatalogTagTemplateFieldsElTypeElRef> {
+    pub fn type_(&self) -> terrars::ListRef<DataCatalogTagTemplate_Fields_TypeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.type", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataCatalogTagTemplateTimeoutsEl {
+pub struct DataCatalogTagTemplate_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -769,7 +806,7 @@ pub struct DataCatalogTagTemplateTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCatalogTagTemplateTimeoutsEl {
+impl DataCatalogTagTemplate_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -789,8 +826,8 @@ impl DataCatalogTagTemplateTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataCatalogTagTemplateTimeoutsEl {
-    type O = terrars::BlockAssignable<DataCatalogTagTemplateTimeoutsEl>;
+impl terrars::ToListMappable for DataCatalogTagTemplate_Timeouts {
+    type O = terrars::BlockAssignable<DataCatalogTagTemplate_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -801,11 +838,11 @@ impl terrars::ToListMappable for DataCatalogTagTemplateTimeoutsEl {
     }
 }
 
-pub struct BuildDataCatalogTagTemplateTimeoutsEl {}
+pub struct BuildDataCatalogTagTemplate_Timeouts {}
 
-impl BuildDataCatalogTagTemplateTimeoutsEl {
-    pub fn build(self) -> DataCatalogTagTemplateTimeoutsEl {
-        DataCatalogTagTemplateTimeoutsEl {
+impl BuildDataCatalogTagTemplate_Timeouts {
+    pub fn build(self) -> DataCatalogTagTemplate_Timeouts {
+        DataCatalogTagTemplate_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -813,21 +850,23 @@ impl BuildDataCatalogTagTemplateTimeoutsEl {
     }
 }
 
-pub struct DataCatalogTagTemplateTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataCatalogTagTemplate_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCatalogTagTemplateTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCatalogTagTemplateTimeoutsElRef {
-        DataCatalogTagTemplateTimeoutsElRef {
+impl terrars::Ref for DataCatalogTagTemplate_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCatalogTagTemplate_TimeoutsRef {
+        DataCatalogTagTemplate_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCatalogTagTemplateTimeoutsElRef {
+impl DataCatalogTagTemplate_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -846,9 +885,4 @@ impl DataCatalogTagTemplateTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataCatalogTagTemplateDynamic {
-    fields: std::option::Option<terrars::DynamicBlock<DataCatalogTagTemplateFieldsEl>>,
 }

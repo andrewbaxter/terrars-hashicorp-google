@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct HealthcareDicomStoreIamBindingData {
+struct HealthcareDicomStoreIamBindingData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,14 +26,14 @@ struct HealthcareDicomStoreIamBindingData {
     members: terrars::SetField<terrars::PrimField<std::string::String>>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<HealthcareDicomStoreIamBindingConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<HealthcareDicomStoreIamBinding_Condition>>,
     dynamic: HealthcareDicomStoreIamBindingDynamic,
 }
 
 struct HealthcareDicomStoreIamBinding_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<HealthcareDicomStoreIamBindingData>,
+    data: std::cell::RefCell<HealthcareDicomStoreIamBindingData_>,
 }
 
 #[derive(Clone)]
@@ -140,7 +142,7 @@ impl HealthcareDicomStoreIamBinding {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<HealthcareDicomStoreIamBindingConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<HealthcareDicomStoreIamBinding_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -179,7 +181,7 @@ impl HealthcareDicomStoreIamBinding {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<HealthcareDicomStoreIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<HealthcareDicomStoreIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -230,7 +232,7 @@ impl BuildHealthcareDicomStoreIamBinding {
         let out = HealthcareDicomStoreIamBinding(std::rc::Rc::new(HealthcareDicomStoreIamBinding_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(HealthcareDicomStoreIamBindingData {
+            data: std::cell::RefCell::new(HealthcareDicomStoreIamBindingData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -298,20 +300,25 @@ impl HealthcareDicomStoreIamBindingRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<HealthcareDicomStoreIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<HealthcareDicomStoreIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct HealthcareDicomStoreIamBindingDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<HealthcareDicomStoreIamBinding_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct HealthcareDicomStoreIamBindingConditionEl {
+pub struct HealthcareDicomStoreIamBinding_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl HealthcareDicomStoreIamBindingConditionEl {
+impl HealthcareDicomStoreIamBinding_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -319,8 +326,8 @@ impl HealthcareDicomStoreIamBindingConditionEl {
     }
 }
 
-impl terrars::ToListMappable for HealthcareDicomStoreIamBindingConditionEl {
-    type O = terrars::BlockAssignable<HealthcareDicomStoreIamBindingConditionEl>;
+impl terrars::ToListMappable for HealthcareDicomStoreIamBinding_Condition {
+    type O = terrars::BlockAssignable<HealthcareDicomStoreIamBinding_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -331,16 +338,16 @@ impl terrars::ToListMappable for HealthcareDicomStoreIamBindingConditionEl {
     }
 }
 
-pub struct BuildHealthcareDicomStoreIamBindingConditionEl {
+pub struct BuildHealthcareDicomStoreIamBinding_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildHealthcareDicomStoreIamBindingConditionEl {
-    pub fn build(self) -> HealthcareDicomStoreIamBindingConditionEl {
-        HealthcareDicomStoreIamBindingConditionEl {
+impl BuildHealthcareDicomStoreIamBinding_Condition {
+    pub fn build(self) -> HealthcareDicomStoreIamBinding_Condition {
+        HealthcareDicomStoreIamBinding_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -348,21 +355,23 @@ impl BuildHealthcareDicomStoreIamBindingConditionEl {
     }
 }
 
-pub struct HealthcareDicomStoreIamBindingConditionElRef {
+#[allow(dead_code)]
+pub struct HealthcareDicomStoreIamBinding_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for HealthcareDicomStoreIamBindingConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> HealthcareDicomStoreIamBindingConditionElRef {
-        HealthcareDicomStoreIamBindingConditionElRef {
+impl terrars::Ref for HealthcareDicomStoreIamBinding_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> HealthcareDicomStoreIamBinding_ConditionRef {
+        HealthcareDicomStoreIamBinding_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl HealthcareDicomStoreIamBindingConditionElRef {
+impl HealthcareDicomStoreIamBinding_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -381,9 +390,4 @@ impl HealthcareDicomStoreIamBindingConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct HealthcareDicomStoreIamBindingDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<HealthcareDicomStoreIamBindingConditionEl>>,
 }

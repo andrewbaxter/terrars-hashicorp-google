@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct PubsubLiteTopicData {
+struct PubsubLiteTopicData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct PubsubLiteTopicData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,20 +32,20 @@ struct PubsubLiteTopicData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     zone: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    partition_config: std::option::Option<std::vec::Vec<PubsubLiteTopicPartitionConfigEl>>,
+    partition_config: std::option::Option<std::vec::Vec<PubsubLiteTopic_PartitionConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    reservation_config: std::option::Option<std::vec::Vec<PubsubLiteTopicReservationConfigEl>>,
+    reservation_config: std::option::Option<std::vec::Vec<PubsubLiteTopic_ReservationConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    retention_config: std::option::Option<std::vec::Vec<PubsubLiteTopicRetentionConfigEl>>,
+    retention_config: std::option::Option<std::vec::Vec<PubsubLiteTopic_RetentionConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<PubsubLiteTopicTimeoutsEl>,
+    timeouts: std::option::Option<PubsubLiteTopic_Timeouts>,
     dynamic: PubsubLiteTopicDynamic,
 }
 
 struct PubsubLiteTopic_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<PubsubLiteTopicData>,
+    data: std::cell::RefCell<PubsubLiteTopicData_>,
 }
 
 #[derive(Clone)]
@@ -141,6 +145,13 @@ impl PubsubLiteTopic {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -168,7 +179,7 @@ impl PubsubLiteTopic {
     #[doc = "Set the field `partition_config`.\n"]
     pub fn set_partition_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<PubsubLiteTopicPartitionConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<PubsubLiteTopic_PartitionConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -184,7 +195,7 @@ impl PubsubLiteTopic {
     #[doc = "Set the field `reservation_config`.\n"]
     pub fn set_reservation_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<PubsubLiteTopicReservationConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<PubsubLiteTopic_ReservationConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -200,7 +211,7 @@ impl PubsubLiteTopic {
     #[doc = "Set the field `retention_config`.\n"]
     pub fn set_retention_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<PubsubLiteTopicRetentionConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<PubsubLiteTopic_RetentionConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -214,9 +225,15 @@ impl PubsubLiteTopic {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<PubsubLiteTopicTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<PubsubLiteTopic_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -245,23 +262,23 @@ impl PubsubLiteTopic {
     }
 
     #[doc = "Get a reference to the value of field `partition_config` after provisioning.\n"]
-    pub fn partition_config(&self) -> terrars::ListRef<PubsubLiteTopicPartitionConfigElRef> {
+    pub fn partition_config(&self) -> terrars::ListRef<PubsubLiteTopic_PartitionConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.partition_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `reservation_config` after provisioning.\n"]
-    pub fn reservation_config(&self) -> terrars::ListRef<PubsubLiteTopicReservationConfigElRef> {
+    pub fn reservation_config(&self) -> terrars::ListRef<PubsubLiteTopic_ReservationConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.reservation_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `retention_config` after provisioning.\n"]
-    pub fn retention_config(&self) -> terrars::ListRef<PubsubLiteTopicRetentionConfigElRef> {
+    pub fn retention_config(&self) -> terrars::ListRef<PubsubLiteTopic_RetentionConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.retention_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> PubsubLiteTopicTimeoutsElRef {
-        PubsubLiteTopicTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> PubsubLiteTopic_TimeoutsRef {
+        PubsubLiteTopic_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -307,12 +324,13 @@ impl BuildPubsubLiteTopic {
         let out = PubsubLiteTopic(std::rc::Rc::new(PubsubLiteTopic_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(PubsubLiteTopicData {
+            data: std::cell::RefCell::new(PubsubLiteTopicData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
                 project: core::default::Default::default(),
@@ -353,6 +371,12 @@ impl PubsubLiteTopicRef {
         &self.shared
     }
 
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -379,36 +403,43 @@ impl PubsubLiteTopicRef {
     }
 
     #[doc = "Get a reference to the value of field `partition_config` after provisioning.\n"]
-    pub fn partition_config(&self) -> terrars::ListRef<PubsubLiteTopicPartitionConfigElRef> {
+    pub fn partition_config(&self) -> terrars::ListRef<PubsubLiteTopic_PartitionConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.partition_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `reservation_config` after provisioning.\n"]
-    pub fn reservation_config(&self) -> terrars::ListRef<PubsubLiteTopicReservationConfigElRef> {
+    pub fn reservation_config(&self) -> terrars::ListRef<PubsubLiteTopic_ReservationConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.reservation_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `retention_config` after provisioning.\n"]
-    pub fn retention_config(&self) -> terrars::ListRef<PubsubLiteTopicRetentionConfigElRef> {
+    pub fn retention_config(&self) -> terrars::ListRef<PubsubLiteTopic_RetentionConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.retention_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> PubsubLiteTopicTimeoutsElRef {
-        PubsubLiteTopicTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> PubsubLiteTopic_TimeoutsRef {
+        PubsubLiteTopic_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct PubsubLiteTopicDynamic {
+    partition_config: std::option::Option<terrars::DynamicBlock<PubsubLiteTopic_PartitionConfig>>,
+    reservation_config: std::option::Option<terrars::DynamicBlock<PubsubLiteTopic_ReservationConfig>>,
+    retention_config: std::option::Option<terrars::DynamicBlock<PubsubLiteTopic_RetentionConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct PubsubLiteTopicPartitionConfigElCapacityEl {
+pub struct PubsubLiteTopic_PartitionConfig_Capacity {
     publish_mib_per_sec: terrars::PrimField<f64>,
     subscribe_mib_per_sec: terrars::PrimField<f64>,
 }
 
-impl PubsubLiteTopicPartitionConfigElCapacityEl { }
+impl PubsubLiteTopic_PartitionConfig_Capacity { }
 
-impl terrars::ToListMappable for PubsubLiteTopicPartitionConfigElCapacityEl {
-    type O = terrars::BlockAssignable<PubsubLiteTopicPartitionConfigElCapacityEl>;
+impl terrars::ToListMappable for PubsubLiteTopic_PartitionConfig_Capacity {
+    type O = terrars::BlockAssignable<PubsubLiteTopic_PartitionConfig_Capacity>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -419,37 +450,39 @@ impl terrars::ToListMappable for PubsubLiteTopicPartitionConfigElCapacityEl {
     }
 }
 
-pub struct BuildPubsubLiteTopicPartitionConfigElCapacityEl {
+pub struct BuildPubsubLiteTopic_PartitionConfig_Capacity {
     #[doc = "Subscribe throughput capacity per partition in MiB/s. Must be >= 4 and <= 16."]
     pub publish_mib_per_sec: terrars::PrimField<f64>,
     #[doc = "Publish throughput capacity per partition in MiB/s. Must be >= 4 and <= 16."]
     pub subscribe_mib_per_sec: terrars::PrimField<f64>,
 }
 
-impl BuildPubsubLiteTopicPartitionConfigElCapacityEl {
-    pub fn build(self) -> PubsubLiteTopicPartitionConfigElCapacityEl {
-        PubsubLiteTopicPartitionConfigElCapacityEl {
+impl BuildPubsubLiteTopic_PartitionConfig_Capacity {
+    pub fn build(self) -> PubsubLiteTopic_PartitionConfig_Capacity {
+        PubsubLiteTopic_PartitionConfig_Capacity {
             publish_mib_per_sec: self.publish_mib_per_sec,
             subscribe_mib_per_sec: self.subscribe_mib_per_sec,
         }
     }
 }
 
-pub struct PubsubLiteTopicPartitionConfigElCapacityElRef {
+#[allow(dead_code)]
+pub struct PubsubLiteTopic_PartitionConfig_CapacityRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PubsubLiteTopicPartitionConfigElCapacityElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> PubsubLiteTopicPartitionConfigElCapacityElRef {
-        PubsubLiteTopicPartitionConfigElCapacityElRef {
+impl terrars::Ref for PubsubLiteTopic_PartitionConfig_CapacityRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> PubsubLiteTopic_PartitionConfig_CapacityRef {
+        PubsubLiteTopic_PartitionConfig_CapacityRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PubsubLiteTopicPartitionConfigElCapacityElRef {
+impl PubsubLiteTopic_PartitionConfig_CapacityRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -468,23 +501,23 @@ impl PubsubLiteTopicPartitionConfigElCapacityElRef {
 }
 
 #[derive(Serialize, Default)]
-struct PubsubLiteTopicPartitionConfigElDynamic {
-    capacity: std::option::Option<terrars::DynamicBlock<PubsubLiteTopicPartitionConfigElCapacityEl>>,
+struct PubsubLiteTopic_PartitionConfigDynamic {
+    capacity: std::option::Option<terrars::DynamicBlock<PubsubLiteTopic_PartitionConfig_Capacity>>,
 }
 
 #[derive(Serialize)]
-pub struct PubsubLiteTopicPartitionConfigEl {
+pub struct PubsubLiteTopic_PartitionConfig {
     count: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    capacity: std::option::Option<std::vec::Vec<PubsubLiteTopicPartitionConfigElCapacityEl>>,
-    dynamic: PubsubLiteTopicPartitionConfigElDynamic,
+    capacity: std::option::Option<std::vec::Vec<PubsubLiteTopic_PartitionConfig_Capacity>>,
+    dynamic: PubsubLiteTopic_PartitionConfigDynamic,
 }
 
-impl PubsubLiteTopicPartitionConfigEl {
+impl PubsubLiteTopic_PartitionConfig {
     #[doc = "Set the field `capacity`.\n"]
     pub fn set_capacity(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<PubsubLiteTopicPartitionConfigElCapacityEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<PubsubLiteTopic_PartitionConfig_Capacity>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -498,8 +531,8 @@ impl PubsubLiteTopicPartitionConfigEl {
     }
 }
 
-impl terrars::ToListMappable for PubsubLiteTopicPartitionConfigEl {
-    type O = terrars::BlockAssignable<PubsubLiteTopicPartitionConfigEl>;
+impl terrars::ToListMappable for PubsubLiteTopic_PartitionConfig {
+    type O = terrars::BlockAssignable<PubsubLiteTopic_PartitionConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -510,14 +543,14 @@ impl terrars::ToListMappable for PubsubLiteTopicPartitionConfigEl {
     }
 }
 
-pub struct BuildPubsubLiteTopicPartitionConfigEl {
+pub struct BuildPubsubLiteTopic_PartitionConfig {
     #[doc = "The number of partitions in the topic. Must be at least 1."]
     pub count: terrars::PrimField<f64>,
 }
 
-impl BuildPubsubLiteTopicPartitionConfigEl {
-    pub fn build(self) -> PubsubLiteTopicPartitionConfigEl {
-        PubsubLiteTopicPartitionConfigEl {
+impl BuildPubsubLiteTopic_PartitionConfig {
+    pub fn build(self) -> PubsubLiteTopic_PartitionConfig {
+        PubsubLiteTopic_PartitionConfig {
             count: self.count,
             capacity: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -525,21 +558,23 @@ impl BuildPubsubLiteTopicPartitionConfigEl {
     }
 }
 
-pub struct PubsubLiteTopicPartitionConfigElRef {
+#[allow(dead_code)]
+pub struct PubsubLiteTopic_PartitionConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PubsubLiteTopicPartitionConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> PubsubLiteTopicPartitionConfigElRef {
-        PubsubLiteTopicPartitionConfigElRef {
+impl terrars::Ref for PubsubLiteTopic_PartitionConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> PubsubLiteTopic_PartitionConfigRef {
+        PubsubLiteTopic_PartitionConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PubsubLiteTopicPartitionConfigElRef {
+impl PubsubLiteTopic_PartitionConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -551,18 +586,18 @@ impl PubsubLiteTopicPartitionConfigElRef {
     }
 
     #[doc = "Get a reference to the value of field `capacity` after provisioning.\n"]
-    pub fn capacity(&self) -> terrars::ListRef<PubsubLiteTopicPartitionConfigElCapacityElRef> {
+    pub fn capacity(&self) -> terrars::ListRef<PubsubLiteTopic_PartitionConfig_CapacityRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.capacity", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct PubsubLiteTopicReservationConfigEl {
+pub struct PubsubLiteTopic_ReservationConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     throughput_reservation: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl PubsubLiteTopicReservationConfigEl {
+impl PubsubLiteTopic_ReservationConfig {
     #[doc = "Set the field `throughput_reservation`.\nThe Reservation to use for this topic's throughput capacity."]
     pub fn set_throughput_reservation(
         mut self,
@@ -573,8 +608,8 @@ impl PubsubLiteTopicReservationConfigEl {
     }
 }
 
-impl terrars::ToListMappable for PubsubLiteTopicReservationConfigEl {
-    type O = terrars::BlockAssignable<PubsubLiteTopicReservationConfigEl>;
+impl terrars::ToListMappable for PubsubLiteTopic_ReservationConfig {
+    type O = terrars::BlockAssignable<PubsubLiteTopic_ReservationConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -585,29 +620,31 @@ impl terrars::ToListMappable for PubsubLiteTopicReservationConfigEl {
     }
 }
 
-pub struct BuildPubsubLiteTopicReservationConfigEl {}
+pub struct BuildPubsubLiteTopic_ReservationConfig {}
 
-impl BuildPubsubLiteTopicReservationConfigEl {
-    pub fn build(self) -> PubsubLiteTopicReservationConfigEl {
-        PubsubLiteTopicReservationConfigEl { throughput_reservation: core::default::Default::default() }
+impl BuildPubsubLiteTopic_ReservationConfig {
+    pub fn build(self) -> PubsubLiteTopic_ReservationConfig {
+        PubsubLiteTopic_ReservationConfig { throughput_reservation: core::default::Default::default() }
     }
 }
 
-pub struct PubsubLiteTopicReservationConfigElRef {
+#[allow(dead_code)]
+pub struct PubsubLiteTopic_ReservationConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PubsubLiteTopicReservationConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> PubsubLiteTopicReservationConfigElRef {
-        PubsubLiteTopicReservationConfigElRef {
+impl terrars::Ref for PubsubLiteTopic_ReservationConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> PubsubLiteTopic_ReservationConfigRef {
+        PubsubLiteTopic_ReservationConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PubsubLiteTopicReservationConfigElRef {
+impl PubsubLiteTopic_ReservationConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -620,13 +657,13 @@ impl PubsubLiteTopicReservationConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct PubsubLiteTopicRetentionConfigEl {
+pub struct PubsubLiteTopic_RetentionConfig {
     per_partition_bytes: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     period: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl PubsubLiteTopicRetentionConfigEl {
+impl PubsubLiteTopic_RetentionConfig {
     #[doc =
         "Set the field `period`.\nHow long a published message is retained. If unset, messages will be retained as\nlong as the bytes retained for each partition is below perPartitionBytes. A\nduration in seconds with up to nine fractional digits, terminated by 's'.\nExample: \"3.5s\"."]
     pub fn set_period(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -635,8 +672,8 @@ impl PubsubLiteTopicRetentionConfigEl {
     }
 }
 
-impl terrars::ToListMappable for PubsubLiteTopicRetentionConfigEl {
-    type O = terrars::BlockAssignable<PubsubLiteTopicRetentionConfigEl>;
+impl terrars::ToListMappable for PubsubLiteTopic_RetentionConfig {
+    type O = terrars::BlockAssignable<PubsubLiteTopic_RetentionConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -647,36 +684,38 @@ impl terrars::ToListMappable for PubsubLiteTopicRetentionConfigEl {
     }
 }
 
-pub struct BuildPubsubLiteTopicRetentionConfigEl {
+pub struct BuildPubsubLiteTopic_RetentionConfig {
     #[doc =
         "The provisioned storage, in bytes, per partition. If the number of bytes stored\nin any of the topic's partitions grows beyond this value, older messages will be\ndropped to make room for newer ones, regardless of the value of period."]
     pub per_partition_bytes: terrars::PrimField<std::string::String>,
 }
 
-impl BuildPubsubLiteTopicRetentionConfigEl {
-    pub fn build(self) -> PubsubLiteTopicRetentionConfigEl {
-        PubsubLiteTopicRetentionConfigEl {
+impl BuildPubsubLiteTopic_RetentionConfig {
+    pub fn build(self) -> PubsubLiteTopic_RetentionConfig {
+        PubsubLiteTopic_RetentionConfig {
             per_partition_bytes: self.per_partition_bytes,
             period: core::default::Default::default(),
         }
     }
 }
 
-pub struct PubsubLiteTopicRetentionConfigElRef {
+#[allow(dead_code)]
+pub struct PubsubLiteTopic_RetentionConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PubsubLiteTopicRetentionConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> PubsubLiteTopicRetentionConfigElRef {
-        PubsubLiteTopicRetentionConfigElRef {
+impl terrars::Ref for PubsubLiteTopic_RetentionConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> PubsubLiteTopic_RetentionConfigRef {
+        PubsubLiteTopic_RetentionConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PubsubLiteTopicRetentionConfigElRef {
+impl PubsubLiteTopic_RetentionConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -695,7 +734,7 @@ impl PubsubLiteTopicRetentionConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct PubsubLiteTopicTimeoutsEl {
+pub struct PubsubLiteTopic_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -704,7 +743,7 @@ pub struct PubsubLiteTopicTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl PubsubLiteTopicTimeoutsEl {
+impl PubsubLiteTopic_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -724,8 +763,8 @@ impl PubsubLiteTopicTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for PubsubLiteTopicTimeoutsEl {
-    type O = terrars::BlockAssignable<PubsubLiteTopicTimeoutsEl>;
+impl terrars::ToListMappable for PubsubLiteTopic_Timeouts {
+    type O = terrars::BlockAssignable<PubsubLiteTopic_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -736,11 +775,11 @@ impl terrars::ToListMappable for PubsubLiteTopicTimeoutsEl {
     }
 }
 
-pub struct BuildPubsubLiteTopicTimeoutsEl {}
+pub struct BuildPubsubLiteTopic_Timeouts {}
 
-impl BuildPubsubLiteTopicTimeoutsEl {
-    pub fn build(self) -> PubsubLiteTopicTimeoutsEl {
-        PubsubLiteTopicTimeoutsEl {
+impl BuildPubsubLiteTopic_Timeouts {
+    pub fn build(self) -> PubsubLiteTopic_Timeouts {
+        PubsubLiteTopic_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -748,21 +787,23 @@ impl BuildPubsubLiteTopicTimeoutsEl {
     }
 }
 
-pub struct PubsubLiteTopicTimeoutsElRef {
+#[allow(dead_code)]
+pub struct PubsubLiteTopic_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PubsubLiteTopicTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> PubsubLiteTopicTimeoutsElRef {
-        PubsubLiteTopicTimeoutsElRef {
+impl terrars::Ref for PubsubLiteTopic_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> PubsubLiteTopic_TimeoutsRef {
+        PubsubLiteTopic_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PubsubLiteTopicTimeoutsElRef {
+impl PubsubLiteTopic_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -781,11 +822,4 @@ impl PubsubLiteTopicTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct PubsubLiteTopicDynamic {
-    partition_config: std::option::Option<terrars::DynamicBlock<PubsubLiteTopicPartitionConfigEl>>,
-    reservation_config: std::option::Option<terrars::DynamicBlock<PubsubLiteTopicReservationConfigEl>>,
-    retention_config: std::option::Option<terrars::DynamicBlock<PubsubLiteTopicRetentionConfigEl>>,
 }

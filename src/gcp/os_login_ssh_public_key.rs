@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct OsLoginSshPublicKeyData {
+struct OsLoginSshPublicKeyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct OsLoginSshPublicKeyData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     expiration_time_usec: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -27,13 +31,13 @@ struct OsLoginSshPublicKeyData {
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     user: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<OsLoginSshPublicKeyTimeoutsEl>,
+    timeouts: std::option::Option<OsLoginSshPublicKey_Timeouts>,
 }
 
 struct OsLoginSshPublicKey_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<OsLoginSshPublicKeyData>,
+    data: std::cell::RefCell<OsLoginSshPublicKeyData_>,
 }
 
 #[derive(Clone)]
@@ -133,6 +137,13 @@ impl OsLoginSshPublicKey {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `expiration_time_usec`.\nAn expiration time in microseconds since epoch."]
     pub fn set_expiration_time_usec(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().expiration_time_usec = std::option::Option::Some(v.into());
@@ -152,9 +163,15 @@ impl OsLoginSshPublicKey {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<OsLoginSshPublicKeyTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<OsLoginSshPublicKey_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -192,8 +209,8 @@ impl OsLoginSshPublicKey {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> OsLoginSshPublicKeyTimeoutsElRef {
-        OsLoginSshPublicKeyTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> OsLoginSshPublicKey_TimeoutsRef {
+        OsLoginSshPublicKey_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -241,12 +258,13 @@ impl BuildOsLoginSshPublicKey {
         let out = OsLoginSshPublicKey(std::rc::Rc::new(OsLoginSshPublicKey_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(OsLoginSshPublicKeyData {
+            data: std::cell::RefCell::new(OsLoginSshPublicKeyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 expiration_time_usec: core::default::Default::default(),
                 id: core::default::Default::default(),
                 key: self.key,
@@ -284,6 +302,12 @@ impl OsLoginSshPublicKeyRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `expiration_time_usec` after provisioning.\nAn expiration time in microseconds since epoch."]
     pub fn expiration_time_usec(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.expiration_time_usec", self.extract_ref()))
@@ -318,13 +342,13 @@ impl OsLoginSshPublicKeyRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> OsLoginSshPublicKeyTimeoutsElRef {
-        OsLoginSshPublicKeyTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> OsLoginSshPublicKey_TimeoutsRef {
+        OsLoginSshPublicKey_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct OsLoginSshPublicKeyTimeoutsEl {
+pub struct OsLoginSshPublicKey_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -333,7 +357,7 @@ pub struct OsLoginSshPublicKeyTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl OsLoginSshPublicKeyTimeoutsEl {
+impl OsLoginSshPublicKey_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -353,8 +377,8 @@ impl OsLoginSshPublicKeyTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for OsLoginSshPublicKeyTimeoutsEl {
-    type O = terrars::BlockAssignable<OsLoginSshPublicKeyTimeoutsEl>;
+impl terrars::ToListMappable for OsLoginSshPublicKey_Timeouts {
+    type O = terrars::BlockAssignable<OsLoginSshPublicKey_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -365,11 +389,11 @@ impl terrars::ToListMappable for OsLoginSshPublicKeyTimeoutsEl {
     }
 }
 
-pub struct BuildOsLoginSshPublicKeyTimeoutsEl {}
+pub struct BuildOsLoginSshPublicKey_Timeouts {}
 
-impl BuildOsLoginSshPublicKeyTimeoutsEl {
-    pub fn build(self) -> OsLoginSshPublicKeyTimeoutsEl {
-        OsLoginSshPublicKeyTimeoutsEl {
+impl BuildOsLoginSshPublicKey_Timeouts {
+    pub fn build(self) -> OsLoginSshPublicKey_Timeouts {
+        OsLoginSshPublicKey_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -377,21 +401,23 @@ impl BuildOsLoginSshPublicKeyTimeoutsEl {
     }
 }
 
-pub struct OsLoginSshPublicKeyTimeoutsElRef {
+#[allow(dead_code)]
+pub struct OsLoginSshPublicKey_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsLoginSshPublicKeyTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> OsLoginSshPublicKeyTimeoutsElRef {
-        OsLoginSshPublicKeyTimeoutsElRef {
+impl terrars::Ref for OsLoginSshPublicKey_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> OsLoginSshPublicKey_TimeoutsRef {
+        OsLoginSshPublicKey_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsLoginSshPublicKeyTimeoutsElRef {
+impl OsLoginSshPublicKey_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

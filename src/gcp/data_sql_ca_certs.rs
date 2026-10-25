@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataSqlCaCertsData {
+struct DataSqlCaCertsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -26,7 +28,7 @@ struct DataSqlCaCertsData {
 struct DataSqlCaCerts_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataSqlCaCertsData>,
+    data: std::cell::RefCell<DataSqlCaCertsData_>,
 }
 
 #[derive(Clone)]
@@ -89,7 +91,7 @@ impl DataSqlCaCerts {
     }
 
     #[doc = "Get a reference to the value of field `certs` after provisioning.\n"]
-    pub fn certs(&self) -> terrars::ListRef<DataSqlCaCertsCertsElRef> {
+    pub fn certs(&self) -> terrars::ListRef<DataSqlCaCerts_CertsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.certs", self.extract_ref()))
     }
 
@@ -151,7 +153,7 @@ impl BuildDataSqlCaCerts {
         let out = DataSqlCaCerts(std::rc::Rc::new(DataSqlCaCerts_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataSqlCaCertsData {
+            data: std::cell::RefCell::new(DataSqlCaCertsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -195,7 +197,7 @@ impl DataSqlCaCertsRef {
     }
 
     #[doc = "Get a reference to the value of field `certs` after provisioning.\n"]
-    pub fn certs(&self) -> terrars::ListRef<DataSqlCaCertsCertsElRef> {
+    pub fn certs(&self) -> terrars::ListRef<DataSqlCaCerts_CertsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.certs", self.extract_ref()))
     }
 
@@ -216,7 +218,7 @@ impl DataSqlCaCertsRef {
 }
 
 #[derive(Serialize)]
-pub struct DataSqlCaCertsCertsEl {
+pub struct DataSqlCaCerts_Certs {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cert: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -229,7 +231,7 @@ pub struct DataSqlCaCertsCertsEl {
     sha1_fingerprint: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataSqlCaCertsCertsEl {
+impl DataSqlCaCerts_Certs {
     #[doc = "Set the field `cert`.\n"]
     pub fn set_cert(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.cert = std::option::Option::Some(v.into());
@@ -261,8 +263,8 @@ impl DataSqlCaCertsCertsEl {
     }
 }
 
-impl terrars::ToListMappable for DataSqlCaCertsCertsEl {
-    type O = terrars::BlockAssignable<DataSqlCaCertsCertsEl>;
+impl terrars::ToListMappable for DataSqlCaCerts_Certs {
+    type O = terrars::BlockAssignable<DataSqlCaCerts_Certs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -273,11 +275,11 @@ impl terrars::ToListMappable for DataSqlCaCertsCertsEl {
     }
 }
 
-pub struct BuildDataSqlCaCertsCertsEl {}
+pub struct BuildDataSqlCaCerts_Certs {}
 
-impl BuildDataSqlCaCertsCertsEl {
-    pub fn build(self) -> DataSqlCaCertsCertsEl {
-        DataSqlCaCertsCertsEl {
+impl BuildDataSqlCaCerts_Certs {
+    pub fn build(self) -> DataSqlCaCerts_Certs {
+        DataSqlCaCerts_Certs {
             cert: core::default::Default::default(),
             common_name: core::default::Default::default(),
             create_time: core::default::Default::default(),
@@ -287,21 +289,23 @@ impl BuildDataSqlCaCertsCertsEl {
     }
 }
 
-pub struct DataSqlCaCertsCertsElRef {
+#[allow(dead_code)]
+pub struct DataSqlCaCerts_CertsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSqlCaCertsCertsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSqlCaCertsCertsElRef {
-        DataSqlCaCertsCertsElRef {
+impl terrars::Ref for DataSqlCaCerts_CertsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSqlCaCerts_CertsRef {
+        DataSqlCaCerts_CertsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSqlCaCertsCertsElRef {
+impl DataSqlCaCerts_CertsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

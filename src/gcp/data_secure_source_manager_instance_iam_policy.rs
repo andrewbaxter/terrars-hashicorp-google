@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataSecureSourceManagerInstanceIamPolicyData {
+struct DataSecureSourceManagerInstanceIamPolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -28,7 +30,7 @@ struct DataSecureSourceManagerInstanceIamPolicyData {
 struct DataSecureSourceManagerInstanceIamPolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataSecureSourceManagerInstanceIamPolicyData>,
+    data: std::cell::RefCell<DataSecureSourceManagerInstanceIamPolicyData_>,
 }
 
 #[derive(Clone)]
@@ -165,7 +167,7 @@ impl BuildDataSecureSourceManagerInstanceIamPolicy {
             DataSecureSourceManagerInstanceIamPolicy(std::rc::Rc::new(DataSecureSourceManagerInstanceIamPolicy_ {
                 shared: stack.shared.clone(),
                 tf_id: self.tf_id,
-                data: std::cell::RefCell::new(DataSecureSourceManagerInstanceIamPolicyData {
+                data: std::cell::RefCell::new(DataSecureSourceManagerInstanceIamPolicyData_ {
                     depends_on: core::default::Default::default(),
                     provider: std::option::Option::None,
                     lifecycle: core::default::Default::default(),

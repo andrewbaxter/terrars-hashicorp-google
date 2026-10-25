@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataflowJobData {
+struct DataflowJobData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,6 +22,8 @@ struct DataflowJobData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     additional_experiments: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_streaming_engine: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -58,13 +62,13 @@ struct DataflowJobData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     zone: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataflowJobTimeoutsEl>,
+    timeouts: std::option::Option<DataflowJob_Timeouts>,
 }
 
 struct DataflowJob_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataflowJobData>,
+    data: std::cell::RefCell<DataflowJobData_>,
 }
 
 #[derive(Clone)]
@@ -171,6 +175,13 @@ impl DataflowJob {
         v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
     ) -> Self {
         self.0.data.borrow_mut().additional_experiments = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
         self
     }
 
@@ -296,7 +307,7 @@ impl DataflowJob {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataflowJobTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataflowJob_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -305,6 +316,12 @@ impl DataflowJob {
         "Get a reference to the value of field `additional_experiments` after provisioning.\nList of experiments that should be used by the job. An example value is [\"enable_stackdriver_agent_metrics\"]."]
     pub fn additional_experiments(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.additional_experiments", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -456,8 +473,8 @@ impl DataflowJob {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataflowJobTimeoutsElRef {
-        DataflowJobTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataflowJob_TimeoutsRef {
+        DataflowJob_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -507,13 +524,14 @@ impl BuildDataflowJob {
         let out = DataflowJob(std::rc::Rc::new(DataflowJob_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataflowJobData {
+            data: std::cell::RefCell::new(DataflowJobData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 additional_experiments: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 enable_streaming_engine: core::default::Default::default(),
                 id: core::default::Default::default(),
                 ip_configuration: core::default::Default::default(),
@@ -572,6 +590,12 @@ impl DataflowJobRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
     pub fn effective_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
@@ -720,18 +744,18 @@ impl DataflowJobRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataflowJobTimeoutsElRef {
-        DataflowJobTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataflowJob_TimeoutsRef {
+        DataflowJob_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataflowJobTimeoutsEl {
+pub struct DataflowJob_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataflowJobTimeoutsEl {
+impl DataflowJob_Timeouts {
     #[doc = "Set the field `update`.\n"]
     pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.update = std::option::Option::Some(v.into());
@@ -739,8 +763,8 @@ impl DataflowJobTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataflowJobTimeoutsEl {
-    type O = terrars::BlockAssignable<DataflowJobTimeoutsEl>;
+impl terrars::ToListMappable for DataflowJob_Timeouts {
+    type O = terrars::BlockAssignable<DataflowJob_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -751,29 +775,31 @@ impl terrars::ToListMappable for DataflowJobTimeoutsEl {
     }
 }
 
-pub struct BuildDataflowJobTimeoutsEl {}
+pub struct BuildDataflowJob_Timeouts {}
 
-impl BuildDataflowJobTimeoutsEl {
-    pub fn build(self) -> DataflowJobTimeoutsEl {
-        DataflowJobTimeoutsEl { update: core::default::Default::default() }
+impl BuildDataflowJob_Timeouts {
+    pub fn build(self) -> DataflowJob_Timeouts {
+        DataflowJob_Timeouts { update: core::default::Default::default() }
     }
 }
 
-pub struct DataflowJobTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataflowJob_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataflowJobTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataflowJobTimeoutsElRef {
-        DataflowJobTimeoutsElRef {
+impl terrars::Ref for DataflowJob_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataflowJob_TimeoutsRef {
+        DataflowJob_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataflowJobTimeoutsElRef {
+impl DataflowJob_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

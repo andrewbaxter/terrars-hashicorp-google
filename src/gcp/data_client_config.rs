@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataClientConfigData {
+struct DataClientConfigData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -21,7 +23,7 @@ struct DataClientConfigData {
 struct DataClientConfig_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataClientConfigData>,
+    data: std::cell::RefCell<DataClientConfigData_>,
 }
 
 #[derive(Clone)]
@@ -70,6 +72,12 @@ impl DataClientConfig {
         "Get a reference to the value of field `access_token` after provisioning.\nThe OAuth2 access token used by the client to authenticate against the Google Cloud API."]
     pub fn access_token(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.access_token", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `default_labels` after provisioning.\nThe default labels configured on the provider."]
+    pub fn default_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.default_labels", self.extract_ref()))
     }
 
     #[doc =
@@ -135,7 +143,7 @@ impl BuildDataClientConfig {
         let out = DataClientConfig(std::rc::Rc::new(DataClientConfig_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataClientConfigData {
+            data: std::cell::RefCell::new(DataClientConfigData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -174,6 +182,12 @@ impl DataClientConfigRef {
         "Get a reference to the value of field `access_token` after provisioning.\nThe OAuth2 access token used by the client to authenticate against the Google Cloud API."]
     pub fn access_token(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.access_token", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `default_labels` after provisioning.\nThe default labels configured on the provider."]
+    pub fn default_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.default_labels", self.extract_ref()))
     }
 
     #[doc =

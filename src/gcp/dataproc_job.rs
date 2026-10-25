@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataprocJobData {
+struct DataprocJobData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct DataprocJobData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     force_delete: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -29,34 +33,36 @@ struct DataprocJobData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    hadoop_config: std::option::Option<std::vec::Vec<DataprocJobHadoopConfigEl>>,
+    wait_for_completion: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    hive_config: std::option::Option<std::vec::Vec<DataprocJobHiveConfigEl>>,
+    hadoop_config: std::option::Option<std::vec::Vec<DataprocJob_HadoopConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    pig_config: std::option::Option<std::vec::Vec<DataprocJobPigConfigEl>>,
+    hive_config: std::option::Option<std::vec::Vec<DataprocJob_HiveConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    placement: std::option::Option<std::vec::Vec<DataprocJobPlacementEl>>,
+    pig_config: std::option::Option<std::vec::Vec<DataprocJob_PigConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    presto_config: std::option::Option<std::vec::Vec<DataprocJobPrestoConfigEl>>,
+    placement: std::option::Option<std::vec::Vec<DataprocJob_Placement>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    pyspark_config: std::option::Option<std::vec::Vec<DataprocJobPysparkConfigEl>>,
+    presto_config: std::option::Option<std::vec::Vec<DataprocJob_PrestoConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    reference: std::option::Option<std::vec::Vec<DataprocJobReferenceEl>>,
+    pyspark_config: std::option::Option<std::vec::Vec<DataprocJob_PysparkConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    scheduling: std::option::Option<std::vec::Vec<DataprocJobSchedulingEl>>,
+    reference: std::option::Option<std::vec::Vec<DataprocJob_Reference>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    spark_config: std::option::Option<std::vec::Vec<DataprocJobSparkConfigEl>>,
+    scheduling: std::option::Option<std::vec::Vec<DataprocJob_Scheduling>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sparksql_config: std::option::Option<std::vec::Vec<DataprocJobSparksqlConfigEl>>,
+    spark_config: std::option::Option<std::vec::Vec<DataprocJob_SparkConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataprocJobTimeoutsEl>,
+    sparksql_config: std::option::Option<std::vec::Vec<DataprocJob_SparksqlConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<DataprocJob_Timeouts>,
     dynamic: DataprocJobDynamic,
 }
 
 struct DataprocJob_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataprocJobData>,
+    data: std::cell::RefCell<DataprocJobData_>,
 }
 
 #[derive(Clone)]
@@ -157,6 +163,13 @@ impl DataprocJob {
     }
 
     #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `force_delete`.\nBy default, you can only delete inactive jobs within Dataproc. Setting this to true, and calling destroy, will ensure that the job is first cancelled before issuing the delete."]
     pub fn set_force_delete(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().force_delete = std::option::Option::Some(v.into());
@@ -193,10 +206,17 @@ impl DataprocJob {
         self
     }
 
+    #[doc =
+        "Set the field `wait_for_completion`.\nIf set to true, Terraform will wait for the job to reach a terminal state (DONE, ERROR, CANCELLED, ATTEMPT_FAILURE). Otherwise, Terraform will consider the job 'created' once it is in the RUNNING state."]
+    pub fn set_wait_for_completion(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().wait_for_completion = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `hadoop_config`.\n"]
     pub fn set_hadoop_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataprocJobHadoopConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocJob_HadoopConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -210,7 +230,7 @@ impl DataprocJob {
     }
 
     #[doc = "Set the field `hive_config`.\n"]
-    pub fn set_hive_config(self, v: impl std::convert::Into<terrars::BlockAssignable<DataprocJobHiveConfigEl>>) -> Self {
+    pub fn set_hive_config(self, v: impl std::convert::Into<terrars::BlockAssignable<DataprocJob_HiveConfig>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().hive_config = std::option::Option::Some(v);
@@ -223,7 +243,7 @@ impl DataprocJob {
     }
 
     #[doc = "Set the field `pig_config`.\n"]
-    pub fn set_pig_config(self, v: impl std::convert::Into<terrars::BlockAssignable<DataprocJobPigConfigEl>>) -> Self {
+    pub fn set_pig_config(self, v: impl std::convert::Into<terrars::BlockAssignable<DataprocJob_PigConfig>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().pig_config = std::option::Option::Some(v);
@@ -236,7 +256,7 @@ impl DataprocJob {
     }
 
     #[doc = "Set the field `placement`.\n"]
-    pub fn set_placement(self, v: impl std::convert::Into<terrars::BlockAssignable<DataprocJobPlacementEl>>) -> Self {
+    pub fn set_placement(self, v: impl std::convert::Into<terrars::BlockAssignable<DataprocJob_Placement>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().placement = std::option::Option::Some(v);
@@ -251,7 +271,7 @@ impl DataprocJob {
     #[doc = "Set the field `presto_config`.\n"]
     pub fn set_presto_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataprocJobPrestoConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocJob_PrestoConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -267,7 +287,7 @@ impl DataprocJob {
     #[doc = "Set the field `pyspark_config`.\n"]
     pub fn set_pyspark_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataprocJobPysparkConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocJob_PysparkConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -281,7 +301,7 @@ impl DataprocJob {
     }
 
     #[doc = "Set the field `reference`.\n"]
-    pub fn set_reference(self, v: impl std::convert::Into<terrars::BlockAssignable<DataprocJobReferenceEl>>) -> Self {
+    pub fn set_reference(self, v: impl std::convert::Into<terrars::BlockAssignable<DataprocJob_Reference>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().reference = std::option::Option::Some(v);
@@ -294,7 +314,7 @@ impl DataprocJob {
     }
 
     #[doc = "Set the field `scheduling`.\n"]
-    pub fn set_scheduling(self, v: impl std::convert::Into<terrars::BlockAssignable<DataprocJobSchedulingEl>>) -> Self {
+    pub fn set_scheduling(self, v: impl std::convert::Into<terrars::BlockAssignable<DataprocJob_Scheduling>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().scheduling = std::option::Option::Some(v);
@@ -309,7 +329,7 @@ impl DataprocJob {
     #[doc = "Set the field `spark_config`.\n"]
     pub fn set_spark_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataprocJobSparkConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocJob_SparkConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -325,7 +345,7 @@ impl DataprocJob {
     #[doc = "Set the field `sparksql_config`.\n"]
     pub fn set_sparksql_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataprocJobSparksqlConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocJob_SparksqlConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -339,9 +359,15 @@ impl DataprocJob {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataprocJobTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataprocJob_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -392,7 +418,7 @@ impl DataprocJob {
     }
 
     #[doc = "Get a reference to the value of field `status` after provisioning.\nThe status of the job."]
-    pub fn status(&self) -> terrars::ListRef<DataprocJobStatusElRef> {
+    pub fn status(&self) -> terrars::ListRef<DataprocJob_StatusRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
@@ -402,59 +428,65 @@ impl DataprocJob {
         terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `wait_for_completion` after provisioning.\nIf set to true, Terraform will wait for the job to reach a terminal state (DONE, ERROR, CANCELLED, ATTEMPT_FAILURE). Otherwise, Terraform will consider the job 'created' once it is in the RUNNING state."]
+    pub fn wait_for_completion(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.wait_for_completion", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `hadoop_config` after provisioning.\n"]
-    pub fn hadoop_config(&self) -> terrars::ListRef<DataprocJobHadoopConfigElRef> {
+    pub fn hadoop_config(&self) -> terrars::ListRef<DataprocJob_HadoopConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.hadoop_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `hive_config` after provisioning.\n"]
-    pub fn hive_config(&self) -> terrars::ListRef<DataprocJobHiveConfigElRef> {
+    pub fn hive_config(&self) -> terrars::ListRef<DataprocJob_HiveConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.hive_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `pig_config` after provisioning.\n"]
-    pub fn pig_config(&self) -> terrars::ListRef<DataprocJobPigConfigElRef> {
+    pub fn pig_config(&self) -> terrars::ListRef<DataprocJob_PigConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.pig_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `placement` after provisioning.\n"]
-    pub fn placement(&self) -> terrars::ListRef<DataprocJobPlacementElRef> {
+    pub fn placement(&self) -> terrars::ListRef<DataprocJob_PlacementRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.placement", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `presto_config` after provisioning.\n"]
-    pub fn presto_config(&self) -> terrars::ListRef<DataprocJobPrestoConfigElRef> {
+    pub fn presto_config(&self) -> terrars::ListRef<DataprocJob_PrestoConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.presto_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `pyspark_config` after provisioning.\n"]
-    pub fn pyspark_config(&self) -> terrars::ListRef<DataprocJobPysparkConfigElRef> {
+    pub fn pyspark_config(&self) -> terrars::ListRef<DataprocJob_PysparkConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.pyspark_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `reference` after provisioning.\n"]
-    pub fn reference(&self) -> terrars::ListRef<DataprocJobReferenceElRef> {
+    pub fn reference(&self) -> terrars::ListRef<DataprocJob_ReferenceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.reference", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `scheduling` after provisioning.\n"]
-    pub fn scheduling(&self) -> terrars::ListRef<DataprocJobSchedulingElRef> {
+    pub fn scheduling(&self) -> terrars::ListRef<DataprocJob_SchedulingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.scheduling", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `spark_config` after provisioning.\n"]
-    pub fn spark_config(&self) -> terrars::ListRef<DataprocJobSparkConfigElRef> {
+    pub fn spark_config(&self) -> terrars::ListRef<DataprocJob_SparkConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.spark_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `sparksql_config` after provisioning.\n"]
-    pub fn sparksql_config(&self) -> terrars::ListRef<DataprocJobSparksqlConfigElRef> {
+    pub fn sparksql_config(&self) -> terrars::ListRef<DataprocJob_SparksqlConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sparksql_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataprocJobTimeoutsElRef {
-        DataprocJobTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataprocJob_TimeoutsRef {
+        DataprocJob_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -498,17 +530,19 @@ impl BuildDataprocJob {
         let out = DataprocJob(std::rc::Rc::new(DataprocJob_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataprocJobData {
+            data: std::cell::RefCell::new(DataprocJobData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 force_delete: core::default::Default::default(),
                 id: core::default::Default::default(),
                 labels: core::default::Default::default(),
                 project: core::default::Default::default(),
                 region: core::default::Default::default(),
+                wait_for_completion: core::default::Default::default(),
                 hadoop_config: core::default::Default::default(),
                 hive_config: core::default::Default::default(),
                 pig_config: core::default::Default::default(),
@@ -549,6 +583,12 @@ impl DataprocJobRef {
 
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -599,7 +639,7 @@ impl DataprocJobRef {
     }
 
     #[doc = "Get a reference to the value of field `status` after provisioning.\nThe status of the job."]
-    pub fn status(&self) -> terrars::ListRef<DataprocJobStatusElRef> {
+    pub fn status(&self) -> terrars::ListRef<DataprocJob_StatusRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
@@ -609,64 +649,84 @@ impl DataprocJobRef {
         terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `wait_for_completion` after provisioning.\nIf set to true, Terraform will wait for the job to reach a terminal state (DONE, ERROR, CANCELLED, ATTEMPT_FAILURE). Otherwise, Terraform will consider the job 'created' once it is in the RUNNING state."]
+    pub fn wait_for_completion(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.wait_for_completion", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `hadoop_config` after provisioning.\n"]
-    pub fn hadoop_config(&self) -> terrars::ListRef<DataprocJobHadoopConfigElRef> {
+    pub fn hadoop_config(&self) -> terrars::ListRef<DataprocJob_HadoopConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.hadoop_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `hive_config` after provisioning.\n"]
-    pub fn hive_config(&self) -> terrars::ListRef<DataprocJobHiveConfigElRef> {
+    pub fn hive_config(&self) -> terrars::ListRef<DataprocJob_HiveConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.hive_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `pig_config` after provisioning.\n"]
-    pub fn pig_config(&self) -> terrars::ListRef<DataprocJobPigConfigElRef> {
+    pub fn pig_config(&self) -> terrars::ListRef<DataprocJob_PigConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.pig_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `placement` after provisioning.\n"]
-    pub fn placement(&self) -> terrars::ListRef<DataprocJobPlacementElRef> {
+    pub fn placement(&self) -> terrars::ListRef<DataprocJob_PlacementRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.placement", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `presto_config` after provisioning.\n"]
-    pub fn presto_config(&self) -> terrars::ListRef<DataprocJobPrestoConfigElRef> {
+    pub fn presto_config(&self) -> terrars::ListRef<DataprocJob_PrestoConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.presto_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `pyspark_config` after provisioning.\n"]
-    pub fn pyspark_config(&self) -> terrars::ListRef<DataprocJobPysparkConfigElRef> {
+    pub fn pyspark_config(&self) -> terrars::ListRef<DataprocJob_PysparkConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.pyspark_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `reference` after provisioning.\n"]
-    pub fn reference(&self) -> terrars::ListRef<DataprocJobReferenceElRef> {
+    pub fn reference(&self) -> terrars::ListRef<DataprocJob_ReferenceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.reference", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `scheduling` after provisioning.\n"]
-    pub fn scheduling(&self) -> terrars::ListRef<DataprocJobSchedulingElRef> {
+    pub fn scheduling(&self) -> terrars::ListRef<DataprocJob_SchedulingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.scheduling", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `spark_config` after provisioning.\n"]
-    pub fn spark_config(&self) -> terrars::ListRef<DataprocJobSparkConfigElRef> {
+    pub fn spark_config(&self) -> terrars::ListRef<DataprocJob_SparkConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.spark_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `sparksql_config` after provisioning.\n"]
-    pub fn sparksql_config(&self) -> terrars::ListRef<DataprocJobSparksqlConfigElRef> {
+    pub fn sparksql_config(&self) -> terrars::ListRef<DataprocJob_SparksqlConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sparksql_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataprocJobTimeoutsElRef {
-        DataprocJobTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataprocJob_TimeoutsRef {
+        DataprocJob_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataprocJobDynamic {
+    hadoop_config: std::option::Option<terrars::DynamicBlock<DataprocJob_HadoopConfig>>,
+    hive_config: std::option::Option<terrars::DynamicBlock<DataprocJob_HiveConfig>>,
+    pig_config: std::option::Option<terrars::DynamicBlock<DataprocJob_PigConfig>>,
+    placement: std::option::Option<terrars::DynamicBlock<DataprocJob_Placement>>,
+    presto_config: std::option::Option<terrars::DynamicBlock<DataprocJob_PrestoConfig>>,
+    pyspark_config: std::option::Option<terrars::DynamicBlock<DataprocJob_PysparkConfig>>,
+    reference: std::option::Option<terrars::DynamicBlock<DataprocJob_Reference>>,
+    scheduling: std::option::Option<terrars::DynamicBlock<DataprocJob_Scheduling>>,
+    spark_config: std::option::Option<terrars::DynamicBlock<DataprocJob_SparkConfig>>,
+    sparksql_config: std::option::Option<terrars::DynamicBlock<DataprocJob_SparksqlConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct DataprocJobStatusEl {
+pub struct DataprocJob_Status {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     details: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -677,7 +737,7 @@ pub struct DataprocJobStatusEl {
     substate: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataprocJobStatusEl {
+impl DataprocJob_Status {
     #[doc = "Set the field `details`.\n"]
     pub fn set_details(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.details = std::option::Option::Some(v.into());
@@ -703,8 +763,8 @@ impl DataprocJobStatusEl {
     }
 }
 
-impl terrars::ToListMappable for DataprocJobStatusEl {
-    type O = terrars::BlockAssignable<DataprocJobStatusEl>;
+impl terrars::ToListMappable for DataprocJob_Status {
+    type O = terrars::BlockAssignable<DataprocJob_Status>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -715,11 +775,11 @@ impl terrars::ToListMappable for DataprocJobStatusEl {
     }
 }
 
-pub struct BuildDataprocJobStatusEl {}
+pub struct BuildDataprocJob_Status {}
 
-impl BuildDataprocJobStatusEl {
-    pub fn build(self) -> DataprocJobStatusEl {
-        DataprocJobStatusEl {
+impl BuildDataprocJob_Status {
+    pub fn build(self) -> DataprocJob_Status {
+        DataprocJob_Status {
             details: core::default::Default::default(),
             state: core::default::Default::default(),
             state_start_time: core::default::Default::default(),
@@ -728,21 +788,23 @@ impl BuildDataprocJobStatusEl {
     }
 }
 
-pub struct DataprocJobStatusElRef {
+#[allow(dead_code)]
+pub struct DataprocJob_StatusRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocJobStatusElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocJobStatusElRef {
-        DataprocJobStatusElRef {
+impl terrars::Ref for DataprocJob_StatusRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocJob_StatusRef {
+        DataprocJob_StatusRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocJobStatusElRef {
+impl DataprocJob_StatusRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -769,14 +831,14 @@ impl DataprocJobStatusElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataprocJobHadoopConfigElLoggingConfigEl {
+pub struct DataprocJob_PigConfig_LoggingConfig {
     driver_log_levels: terrars::RecField<terrars::PrimField<std::string::String>>,
 }
 
-impl DataprocJobHadoopConfigElLoggingConfigEl { }
+impl DataprocJob_PigConfig_LoggingConfig { }
 
-impl terrars::ToListMappable for DataprocJobHadoopConfigElLoggingConfigEl {
-    type O = terrars::BlockAssignable<DataprocJobHadoopConfigElLoggingConfigEl>;
+impl terrars::ToListMappable for DataprocJob_PigConfig_LoggingConfig {
+    type O = terrars::BlockAssignable<DataprocJob_PigConfig_LoggingConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -787,33 +849,35 @@ impl terrars::ToListMappable for DataprocJobHadoopConfigElLoggingConfigEl {
     }
 }
 
-pub struct BuildDataprocJobHadoopConfigElLoggingConfigEl {
+pub struct BuildDataprocJob_PigConfig_LoggingConfig {
     #[doc =
         "Optional. The per-package log levels for the driver. This may include 'root' package name to configure rootLogger. Examples: 'com.google = FATAL', 'root = INFO', 'org.apache = DEBUG'."]
     pub driver_log_levels: terrars::RecField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataprocJobHadoopConfigElLoggingConfigEl {
-    pub fn build(self) -> DataprocJobHadoopConfigElLoggingConfigEl {
-        DataprocJobHadoopConfigElLoggingConfigEl { driver_log_levels: self.driver_log_levels }
+impl BuildDataprocJob_PigConfig_LoggingConfig {
+    pub fn build(self) -> DataprocJob_PigConfig_LoggingConfig {
+        DataprocJob_PigConfig_LoggingConfig { driver_log_levels: self.driver_log_levels }
     }
 }
 
-pub struct DataprocJobHadoopConfigElLoggingConfigElRef {
+#[allow(dead_code)]
+pub struct DataprocJob_PigConfig_LoggingConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocJobHadoopConfigElLoggingConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocJobHadoopConfigElLoggingConfigElRef {
-        DataprocJobHadoopConfigElLoggingConfigElRef {
+impl terrars::Ref for DataprocJob_PigConfig_LoggingConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocJob_PigConfig_LoggingConfigRef {
+        DataprocJob_PigConfig_LoggingConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocJobHadoopConfigElLoggingConfigElRef {
+impl DataprocJob_PigConfig_LoggingConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -826,12 +890,12 @@ impl DataprocJobHadoopConfigElLoggingConfigElRef {
 }
 
 #[derive(Serialize, Default)]
-struct DataprocJobHadoopConfigElDynamic {
-    logging_config: std::option::Option<terrars::DynamicBlock<DataprocJobHadoopConfigElLoggingConfigEl>>,
+struct DataprocJob_HadoopConfigDynamic {
+    logging_config: std::option::Option<terrars::DynamicBlock<DataprocJob_PigConfig_LoggingConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct DataprocJobHadoopConfigEl {
+pub struct DataprocJob_HadoopConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     archive_uris: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -847,11 +911,11 @@ pub struct DataprocJobHadoopConfigEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     properties: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    logging_config: std::option::Option<std::vec::Vec<DataprocJobHadoopConfigElLoggingConfigEl>>,
-    dynamic: DataprocJobHadoopConfigElDynamic,
+    logging_config: std::option::Option<std::vec::Vec<DataprocJob_PigConfig_LoggingConfig>>,
+    dynamic: DataprocJob_HadoopConfigDynamic,
 }
 
-impl DataprocJobHadoopConfigEl {
+impl DataprocJob_HadoopConfig {
     #[doc =
         "Set the field `archive_uris`.\nHCFS URIs of archives to be extracted in the working directory of .jar, .tar, .tar.gz, .tgz, and .zip."]
     pub fn set_archive_uris(
@@ -918,7 +982,7 @@ impl DataprocJobHadoopConfigEl {
     #[doc = "Set the field `logging_config`.\n"]
     pub fn set_logging_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataprocJobHadoopConfigElLoggingConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocJob_PigConfig_LoggingConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -932,8 +996,8 @@ impl DataprocJobHadoopConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataprocJobHadoopConfigEl {
-    type O = terrars::BlockAssignable<DataprocJobHadoopConfigEl>;
+impl terrars::ToListMappable for DataprocJob_HadoopConfig {
+    type O = terrars::BlockAssignable<DataprocJob_HadoopConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -944,11 +1008,11 @@ impl terrars::ToListMappable for DataprocJobHadoopConfigEl {
     }
 }
 
-pub struct BuildDataprocJobHadoopConfigEl {}
+pub struct BuildDataprocJob_HadoopConfig {}
 
-impl BuildDataprocJobHadoopConfigEl {
-    pub fn build(self) -> DataprocJobHadoopConfigEl {
-        DataprocJobHadoopConfigEl {
+impl BuildDataprocJob_HadoopConfig {
+    pub fn build(self) -> DataprocJob_HadoopConfig {
+        DataprocJob_HadoopConfig {
             archive_uris: core::default::Default::default(),
             args: core::default::Default::default(),
             file_uris: core::default::Default::default(),
@@ -962,21 +1026,23 @@ impl BuildDataprocJobHadoopConfigEl {
     }
 }
 
-pub struct DataprocJobHadoopConfigElRef {
+#[allow(dead_code)]
+pub struct DataprocJob_HadoopConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocJobHadoopConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocJobHadoopConfigElRef {
-        DataprocJobHadoopConfigElRef {
+impl terrars::Ref for DataprocJob_HadoopConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocJob_HadoopConfigRef {
+        DataprocJob_HadoopConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocJobHadoopConfigElRef {
+impl DataprocJob_HadoopConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1023,13 +1089,13 @@ impl DataprocJobHadoopConfigElRef {
     }
 
     #[doc = "Get a reference to the value of field `logging_config` after provisioning.\n"]
-    pub fn logging_config(&self) -> terrars::ListRef<DataprocJobHadoopConfigElLoggingConfigElRef> {
+    pub fn logging_config(&self) -> terrars::ListRef<DataprocJob_PigConfig_LoggingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataprocJobHiveConfigEl {
+pub struct DataprocJob_HiveConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     continue_on_failure: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1044,7 +1110,7 @@ pub struct DataprocJobHiveConfigEl {
     script_variables: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DataprocJobHiveConfigEl {
+impl DataprocJob_HiveConfig {
     #[doc =
         "Set the field `continue_on_failure`.\nWhether to continue executing queries if a query fails. The default value is false. Setting to true can be useful when executing independent parallel queries. Defaults to false."]
     pub fn set_continue_on_failure(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -1100,8 +1166,8 @@ impl DataprocJobHiveConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataprocJobHiveConfigEl {
-    type O = terrars::BlockAssignable<DataprocJobHiveConfigEl>;
+impl terrars::ToListMappable for DataprocJob_HiveConfig {
+    type O = terrars::BlockAssignable<DataprocJob_HiveConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1112,11 +1178,11 @@ impl terrars::ToListMappable for DataprocJobHiveConfigEl {
     }
 }
 
-pub struct BuildDataprocJobHiveConfigEl {}
+pub struct BuildDataprocJob_HiveConfig {}
 
-impl BuildDataprocJobHiveConfigEl {
-    pub fn build(self) -> DataprocJobHiveConfigEl {
-        DataprocJobHiveConfigEl {
+impl BuildDataprocJob_HiveConfig {
+    pub fn build(self) -> DataprocJob_HiveConfig {
+        DataprocJob_HiveConfig {
             continue_on_failure: core::default::Default::default(),
             jar_file_uris: core::default::Default::default(),
             properties: core::default::Default::default(),
@@ -1127,21 +1193,23 @@ impl BuildDataprocJobHiveConfigEl {
     }
 }
 
-pub struct DataprocJobHiveConfigElRef {
+#[allow(dead_code)]
+pub struct DataprocJob_HiveConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocJobHiveConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocJobHiveConfigElRef {
-        DataprocJobHiveConfigElRef {
+impl terrars::Ref for DataprocJob_HiveConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocJob_HiveConfigRef {
+        DataprocJob_HiveConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocJobHiveConfigElRef {
+impl DataprocJob_HiveConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1183,70 +1251,13 @@ impl DataprocJobHiveConfigElRef {
     }
 }
 
-#[derive(Serialize)]
-pub struct DataprocJobPigConfigElLoggingConfigEl {
-    driver_log_levels: terrars::RecField<terrars::PrimField<std::string::String>>,
-}
-
-impl DataprocJobPigConfigElLoggingConfigEl { }
-
-impl terrars::ToListMappable for DataprocJobPigConfigElLoggingConfigEl {
-    type O = terrars::BlockAssignable<DataprocJobPigConfigElLoggingConfigEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataprocJobPigConfigElLoggingConfigEl {
-    #[doc =
-        "Optional. The per-package log levels for the driver. This may include 'root' package name to configure rootLogger. Examples: 'com.google = FATAL', 'root = INFO', 'org.apache = DEBUG'."]
-    pub driver_log_levels: terrars::RecField<terrars::PrimField<std::string::String>>,
-}
-
-impl BuildDataprocJobPigConfigElLoggingConfigEl {
-    pub fn build(self) -> DataprocJobPigConfigElLoggingConfigEl {
-        DataprocJobPigConfigElLoggingConfigEl { driver_log_levels: self.driver_log_levels }
-    }
-}
-
-pub struct DataprocJobPigConfigElLoggingConfigElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataprocJobPigConfigElLoggingConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocJobPigConfigElLoggingConfigElRef {
-        DataprocJobPigConfigElLoggingConfigElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataprocJobPigConfigElLoggingConfigElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `driver_log_levels` after provisioning.\nOptional. The per-package log levels for the driver. This may include 'root' package name to configure rootLogger. Examples: 'com.google = FATAL', 'root = INFO', 'org.apache = DEBUG'."]
-    pub fn driver_log_levels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
-        terrars::RecRef::new(self.shared().clone(), format!("{}.driver_log_levels", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct DataprocJobPigConfigElDynamic {
-    logging_config: std::option::Option<terrars::DynamicBlock<DataprocJobPigConfigElLoggingConfigEl>>,
+struct DataprocJob_PigConfigDynamic {
+    logging_config: std::option::Option<terrars::DynamicBlock<DataprocJob_PigConfig_LoggingConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct DataprocJobPigConfigEl {
+pub struct DataprocJob_PigConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     continue_on_failure: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1260,11 +1271,11 @@ pub struct DataprocJobPigConfigEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     script_variables: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    logging_config: std::option::Option<std::vec::Vec<DataprocJobPigConfigElLoggingConfigEl>>,
-    dynamic: DataprocJobPigConfigElDynamic,
+    logging_config: std::option::Option<std::vec::Vec<DataprocJob_PigConfig_LoggingConfig>>,
+    dynamic: DataprocJob_PigConfigDynamic,
 }
 
-impl DataprocJobPigConfigEl {
+impl DataprocJob_PigConfig {
     #[doc =
         "Set the field `continue_on_failure`.\nWhether to continue executing queries if a query fails. The default value is false. Setting to true can be useful when executing independent parallel queries. Defaults to false."]
     pub fn set_continue_on_failure(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -1322,7 +1333,7 @@ impl DataprocJobPigConfigEl {
     #[doc = "Set the field `logging_config`.\n"]
     pub fn set_logging_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataprocJobPigConfigElLoggingConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocJob_PigConfig_LoggingConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1336,8 +1347,8 @@ impl DataprocJobPigConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataprocJobPigConfigEl {
-    type O = terrars::BlockAssignable<DataprocJobPigConfigEl>;
+impl terrars::ToListMappable for DataprocJob_PigConfig {
+    type O = terrars::BlockAssignable<DataprocJob_PigConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1348,11 +1359,11 @@ impl terrars::ToListMappable for DataprocJobPigConfigEl {
     }
 }
 
-pub struct BuildDataprocJobPigConfigEl {}
+pub struct BuildDataprocJob_PigConfig {}
 
-impl BuildDataprocJobPigConfigEl {
-    pub fn build(self) -> DataprocJobPigConfigEl {
-        DataprocJobPigConfigEl {
+impl BuildDataprocJob_PigConfig {
+    pub fn build(self) -> DataprocJob_PigConfig {
+        DataprocJob_PigConfig {
             continue_on_failure: core::default::Default::default(),
             jar_file_uris: core::default::Default::default(),
             properties: core::default::Default::default(),
@@ -1365,21 +1376,23 @@ impl BuildDataprocJobPigConfigEl {
     }
 }
 
-pub struct DataprocJobPigConfigElRef {
+#[allow(dead_code)]
+pub struct DataprocJob_PigConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocJobPigConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocJobPigConfigElRef {
-        DataprocJobPigConfigElRef {
+impl terrars::Ref for DataprocJob_PigConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocJob_PigConfigRef {
+        DataprocJob_PigConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocJobPigConfigElRef {
+impl DataprocJob_PigConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1421,20 +1434,20 @@ impl DataprocJobPigConfigElRef {
     }
 
     #[doc = "Get a reference to the value of field `logging_config` after provisioning.\n"]
-    pub fn logging_config(&self) -> terrars::ListRef<DataprocJobPigConfigElLoggingConfigElRef> {
+    pub fn logging_config(&self) -> terrars::ListRef<DataprocJob_PigConfig_LoggingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataprocJobPlacementEl {
+pub struct DataprocJob_Placement {
     cluster_name: terrars::PrimField<std::string::String>,
 }
 
-impl DataprocJobPlacementEl { }
+impl DataprocJob_Placement { }
 
-impl terrars::ToListMappable for DataprocJobPlacementEl {
-    type O = terrars::BlockAssignable<DataprocJobPlacementEl>;
+impl terrars::ToListMappable for DataprocJob_Placement {
+    type O = terrars::BlockAssignable<DataprocJob_Placement>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1445,32 +1458,34 @@ impl terrars::ToListMappable for DataprocJobPlacementEl {
     }
 }
 
-pub struct BuildDataprocJobPlacementEl {
+pub struct BuildDataprocJob_Placement {
     #[doc = "The name of the cluster where the job will be submitted"]
     pub cluster_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataprocJobPlacementEl {
-    pub fn build(self) -> DataprocJobPlacementEl {
-        DataprocJobPlacementEl { cluster_name: self.cluster_name }
+impl BuildDataprocJob_Placement {
+    pub fn build(self) -> DataprocJob_Placement {
+        DataprocJob_Placement { cluster_name: self.cluster_name }
     }
 }
 
-pub struct DataprocJobPlacementElRef {
+#[allow(dead_code)]
+pub struct DataprocJob_PlacementRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocJobPlacementElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocJobPlacementElRef {
-        DataprocJobPlacementElRef {
+impl terrars::Ref for DataprocJob_PlacementRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocJob_PlacementRef {
+        DataprocJob_PlacementRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocJobPlacementElRef {
+impl DataprocJob_PlacementRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1488,70 +1503,13 @@ impl DataprocJobPlacementElRef {
     }
 }
 
-#[derive(Serialize)]
-pub struct DataprocJobPrestoConfigElLoggingConfigEl {
-    driver_log_levels: terrars::RecField<terrars::PrimField<std::string::String>>,
-}
-
-impl DataprocJobPrestoConfigElLoggingConfigEl { }
-
-impl terrars::ToListMappable for DataprocJobPrestoConfigElLoggingConfigEl {
-    type O = terrars::BlockAssignable<DataprocJobPrestoConfigElLoggingConfigEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataprocJobPrestoConfigElLoggingConfigEl {
-    #[doc =
-        "Optional. The per-package log levels for the driver. This may include 'root' package name to configure rootLogger. Examples: 'com.google = FATAL', 'root = INFO', 'org.apache = DEBUG'."]
-    pub driver_log_levels: terrars::RecField<terrars::PrimField<std::string::String>>,
-}
-
-impl BuildDataprocJobPrestoConfigElLoggingConfigEl {
-    pub fn build(self) -> DataprocJobPrestoConfigElLoggingConfigEl {
-        DataprocJobPrestoConfigElLoggingConfigEl { driver_log_levels: self.driver_log_levels }
-    }
-}
-
-pub struct DataprocJobPrestoConfigElLoggingConfigElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataprocJobPrestoConfigElLoggingConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocJobPrestoConfigElLoggingConfigElRef {
-        DataprocJobPrestoConfigElLoggingConfigElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataprocJobPrestoConfigElLoggingConfigElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `driver_log_levels` after provisioning.\nOptional. The per-package log levels for the driver. This may include 'root' package name to configure rootLogger. Examples: 'com.google = FATAL', 'root = INFO', 'org.apache = DEBUG'."]
-    pub fn driver_log_levels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
-        terrars::RecRef::new(self.shared().clone(), format!("{}.driver_log_levels", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct DataprocJobPrestoConfigElDynamic {
-    logging_config: std::option::Option<terrars::DynamicBlock<DataprocJobPrestoConfigElLoggingConfigEl>>,
+struct DataprocJob_PrestoConfigDynamic {
+    logging_config: std::option::Option<terrars::DynamicBlock<DataprocJob_PigConfig_LoggingConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct DataprocJobPrestoConfigEl {
+pub struct DataprocJob_PrestoConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     client_tags: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1565,11 +1523,11 @@ pub struct DataprocJobPrestoConfigEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     query_list: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    logging_config: std::option::Option<std::vec::Vec<DataprocJobPrestoConfigElLoggingConfigEl>>,
-    dynamic: DataprocJobPrestoConfigElDynamic,
+    logging_config: std::option::Option<std::vec::Vec<DataprocJob_PigConfig_LoggingConfig>>,
+    dynamic: DataprocJob_PrestoConfigDynamic,
 }
 
-impl DataprocJobPrestoConfigEl {
+impl DataprocJob_PrestoConfig {
     #[doc = "Set the field `client_tags`.\nPresto client tags to attach to this query."]
     pub fn set_client_tags(
         mut self,
@@ -1623,7 +1581,7 @@ impl DataprocJobPrestoConfigEl {
     #[doc = "Set the field `logging_config`.\n"]
     pub fn set_logging_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataprocJobPrestoConfigElLoggingConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocJob_PigConfig_LoggingConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1637,8 +1595,8 @@ impl DataprocJobPrestoConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataprocJobPrestoConfigEl {
-    type O = terrars::BlockAssignable<DataprocJobPrestoConfigEl>;
+impl terrars::ToListMappable for DataprocJob_PrestoConfig {
+    type O = terrars::BlockAssignable<DataprocJob_PrestoConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1649,11 +1607,11 @@ impl terrars::ToListMappable for DataprocJobPrestoConfigEl {
     }
 }
 
-pub struct BuildDataprocJobPrestoConfigEl {}
+pub struct BuildDataprocJob_PrestoConfig {}
 
-impl BuildDataprocJobPrestoConfigEl {
-    pub fn build(self) -> DataprocJobPrestoConfigEl {
-        DataprocJobPrestoConfigEl {
+impl BuildDataprocJob_PrestoConfig {
+    pub fn build(self) -> DataprocJob_PrestoConfig {
+        DataprocJob_PrestoConfig {
             client_tags: core::default::Default::default(),
             continue_on_failure: core::default::Default::default(),
             output_format: core::default::Default::default(),
@@ -1666,21 +1624,23 @@ impl BuildDataprocJobPrestoConfigEl {
     }
 }
 
-pub struct DataprocJobPrestoConfigElRef {
+#[allow(dead_code)]
+pub struct DataprocJob_PrestoConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocJobPrestoConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocJobPrestoConfigElRef {
-        DataprocJobPrestoConfigElRef {
+impl terrars::Ref for DataprocJob_PrestoConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocJob_PrestoConfigRef {
+        DataprocJob_PrestoConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocJobPrestoConfigElRef {
+impl DataprocJob_PrestoConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1722,75 +1682,18 @@ impl DataprocJobPrestoConfigElRef {
     }
 
     #[doc = "Get a reference to the value of field `logging_config` after provisioning.\n"]
-    pub fn logging_config(&self) -> terrars::ListRef<DataprocJobPrestoConfigElLoggingConfigElRef> {
+    pub fn logging_config(&self) -> terrars::ListRef<DataprocJob_PigConfig_LoggingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging_config", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct DataprocJobPysparkConfigElLoggingConfigEl {
-    driver_log_levels: terrars::RecField<terrars::PrimField<std::string::String>>,
-}
-
-impl DataprocJobPysparkConfigElLoggingConfigEl { }
-
-impl terrars::ToListMappable for DataprocJobPysparkConfigElLoggingConfigEl {
-    type O = terrars::BlockAssignable<DataprocJobPysparkConfigElLoggingConfigEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataprocJobPysparkConfigElLoggingConfigEl {
-    #[doc =
-        "Optional. The per-package log levels for the driver. This may include 'root' package name to configure rootLogger. Examples: 'com.google = FATAL', 'root = INFO', 'org.apache = DEBUG'."]
-    pub driver_log_levels: terrars::RecField<terrars::PrimField<std::string::String>>,
-}
-
-impl BuildDataprocJobPysparkConfigElLoggingConfigEl {
-    pub fn build(self) -> DataprocJobPysparkConfigElLoggingConfigEl {
-        DataprocJobPysparkConfigElLoggingConfigEl { driver_log_levels: self.driver_log_levels }
-    }
-}
-
-pub struct DataprocJobPysparkConfigElLoggingConfigElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataprocJobPysparkConfigElLoggingConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocJobPysparkConfigElLoggingConfigElRef {
-        DataprocJobPysparkConfigElLoggingConfigElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataprocJobPysparkConfigElLoggingConfigElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `driver_log_levels` after provisioning.\nOptional. The per-package log levels for the driver. This may include 'root' package name to configure rootLogger. Examples: 'com.google = FATAL', 'root = INFO', 'org.apache = DEBUG'."]
-    pub fn driver_log_levels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
-        terrars::RecRef::new(self.shared().clone(), format!("{}.driver_log_levels", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct DataprocJobPysparkConfigElDynamic {
-    logging_config: std::option::Option<terrars::DynamicBlock<DataprocJobPysparkConfigElLoggingConfigEl>>,
+struct DataprocJob_PysparkConfigDynamic {
+    logging_config: std::option::Option<terrars::DynamicBlock<DataprocJob_PigConfig_LoggingConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct DataprocJobPysparkConfigEl {
+pub struct DataprocJob_PysparkConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     archive_uris: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1805,11 +1708,11 @@ pub struct DataprocJobPysparkConfigEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     python_file_uris: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    logging_config: std::option::Option<std::vec::Vec<DataprocJobPysparkConfigElLoggingConfigEl>>,
-    dynamic: DataprocJobPysparkConfigElDynamic,
+    logging_config: std::option::Option<std::vec::Vec<DataprocJob_PigConfig_LoggingConfig>>,
+    dynamic: DataprocJob_PysparkConfigDynamic,
 }
 
-impl DataprocJobPysparkConfigEl {
+impl DataprocJob_PysparkConfig {
     #[doc =
         "Set the field `archive_uris`.\nOptional. HCFS URIs of archives to be extracted in the working directory of .jar, .tar, .tar.gz, .tgz, and .zip"]
     pub fn set_archive_uris(
@@ -1873,7 +1776,7 @@ impl DataprocJobPysparkConfigEl {
     #[doc = "Set the field `logging_config`.\n"]
     pub fn set_logging_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataprocJobPysparkConfigElLoggingConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocJob_PigConfig_LoggingConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1887,8 +1790,8 @@ impl DataprocJobPysparkConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataprocJobPysparkConfigEl {
-    type O = terrars::BlockAssignable<DataprocJobPysparkConfigEl>;
+impl terrars::ToListMappable for DataprocJob_PysparkConfig {
+    type O = terrars::BlockAssignable<DataprocJob_PysparkConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1899,14 +1802,14 @@ impl terrars::ToListMappable for DataprocJobPysparkConfigEl {
     }
 }
 
-pub struct BuildDataprocJobPysparkConfigEl {
+pub struct BuildDataprocJob_PysparkConfig {
     #[doc = "Required. The HCFS URI of the main Python file to use as the driver. Must be a .py file"]
     pub main_python_file_uri: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataprocJobPysparkConfigEl {
-    pub fn build(self) -> DataprocJobPysparkConfigEl {
-        DataprocJobPysparkConfigEl {
+impl BuildDataprocJob_PysparkConfig {
+    pub fn build(self) -> DataprocJob_PysparkConfig {
+        DataprocJob_PysparkConfig {
             archive_uris: core::default::Default::default(),
             args: core::default::Default::default(),
             file_uris: core::default::Default::default(),
@@ -1920,21 +1823,23 @@ impl BuildDataprocJobPysparkConfigEl {
     }
 }
 
-pub struct DataprocJobPysparkConfigElRef {
+#[allow(dead_code)]
+pub struct DataprocJob_PysparkConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocJobPysparkConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocJobPysparkConfigElRef {
-        DataprocJobPysparkConfigElRef {
+impl terrars::Ref for DataprocJob_PysparkConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocJob_PysparkConfigRef {
+        DataprocJob_PysparkConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocJobPysparkConfigElRef {
+impl DataprocJob_PysparkConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1982,18 +1887,18 @@ impl DataprocJobPysparkConfigElRef {
     }
 
     #[doc = "Get a reference to the value of field `logging_config` after provisioning.\n"]
-    pub fn logging_config(&self) -> terrars::ListRef<DataprocJobPysparkConfigElLoggingConfigElRef> {
+    pub fn logging_config(&self) -> terrars::ListRef<DataprocJob_PigConfig_LoggingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataprocJobReferenceEl {
+pub struct DataprocJob_Reference {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     job_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataprocJobReferenceEl {
+impl DataprocJob_Reference {
     #[doc =
         "Set the field `job_id`.\nThe job ID, which must be unique within the project. The job ID is generated by the server upon job submission or provided by the user as a means to perform retries without creating duplicate jobs"]
     pub fn set_job_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -2002,8 +1907,8 @@ impl DataprocJobReferenceEl {
     }
 }
 
-impl terrars::ToListMappable for DataprocJobReferenceEl {
-    type O = terrars::BlockAssignable<DataprocJobReferenceEl>;
+impl terrars::ToListMappable for DataprocJob_Reference {
+    type O = terrars::BlockAssignable<DataprocJob_Reference>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2014,29 +1919,31 @@ impl terrars::ToListMappable for DataprocJobReferenceEl {
     }
 }
 
-pub struct BuildDataprocJobReferenceEl {}
+pub struct BuildDataprocJob_Reference {}
 
-impl BuildDataprocJobReferenceEl {
-    pub fn build(self) -> DataprocJobReferenceEl {
-        DataprocJobReferenceEl { job_id: core::default::Default::default() }
+impl BuildDataprocJob_Reference {
+    pub fn build(self) -> DataprocJob_Reference {
+        DataprocJob_Reference { job_id: core::default::Default::default() }
     }
 }
 
-pub struct DataprocJobReferenceElRef {
+#[allow(dead_code)]
+pub struct DataprocJob_ReferenceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocJobReferenceElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocJobReferenceElRef {
-        DataprocJobReferenceElRef {
+impl terrars::Ref for DataprocJob_ReferenceRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocJob_ReferenceRef {
+        DataprocJob_ReferenceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocJobReferenceElRef {
+impl DataprocJob_ReferenceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2049,15 +1956,15 @@ impl DataprocJobReferenceElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataprocJobSchedulingEl {
+pub struct DataprocJob_Scheduling {
     max_failures_per_hour: terrars::PrimField<f64>,
     max_failures_total: terrars::PrimField<f64>,
 }
 
-impl DataprocJobSchedulingEl { }
+impl DataprocJob_Scheduling { }
 
-impl terrars::ToListMappable for DataprocJobSchedulingEl {
-    type O = terrars::BlockAssignable<DataprocJobSchedulingEl>;
+impl terrars::ToListMappable for DataprocJob_Scheduling {
+    type O = terrars::BlockAssignable<DataprocJob_Scheduling>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2068,7 +1975,7 @@ impl terrars::ToListMappable for DataprocJobSchedulingEl {
     }
 }
 
-pub struct BuildDataprocJobSchedulingEl {
+pub struct BuildDataprocJob_Scheduling {
     #[doc =
         "Maximum number of times per hour a driver may be restarted as a result of driver exiting with non-zero code before job is reported failed."]
     pub max_failures_per_hour: terrars::PrimField<f64>,
@@ -2077,30 +1984,32 @@ pub struct BuildDataprocJobSchedulingEl {
     pub max_failures_total: terrars::PrimField<f64>,
 }
 
-impl BuildDataprocJobSchedulingEl {
-    pub fn build(self) -> DataprocJobSchedulingEl {
-        DataprocJobSchedulingEl {
+impl BuildDataprocJob_Scheduling {
+    pub fn build(self) -> DataprocJob_Scheduling {
+        DataprocJob_Scheduling {
             max_failures_per_hour: self.max_failures_per_hour,
             max_failures_total: self.max_failures_total,
         }
     }
 }
 
-pub struct DataprocJobSchedulingElRef {
+#[allow(dead_code)]
+pub struct DataprocJob_SchedulingRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocJobSchedulingElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocJobSchedulingElRef {
-        DataprocJobSchedulingElRef {
+impl terrars::Ref for DataprocJob_SchedulingRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocJob_SchedulingRef {
+        DataprocJob_SchedulingRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocJobSchedulingElRef {
+impl DataprocJob_SchedulingRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2118,70 +2027,13 @@ impl DataprocJobSchedulingElRef {
     }
 }
 
-#[derive(Serialize)]
-pub struct DataprocJobSparkConfigElLoggingConfigEl {
-    driver_log_levels: terrars::RecField<terrars::PrimField<std::string::String>>,
-}
-
-impl DataprocJobSparkConfigElLoggingConfigEl { }
-
-impl terrars::ToListMappable for DataprocJobSparkConfigElLoggingConfigEl {
-    type O = terrars::BlockAssignable<DataprocJobSparkConfigElLoggingConfigEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataprocJobSparkConfigElLoggingConfigEl {
-    #[doc =
-        "Optional. The per-package log levels for the driver. This may include 'root' package name to configure rootLogger. Examples: 'com.google = FATAL', 'root = INFO', 'org.apache = DEBUG'."]
-    pub driver_log_levels: terrars::RecField<terrars::PrimField<std::string::String>>,
-}
-
-impl BuildDataprocJobSparkConfigElLoggingConfigEl {
-    pub fn build(self) -> DataprocJobSparkConfigElLoggingConfigEl {
-        DataprocJobSparkConfigElLoggingConfigEl { driver_log_levels: self.driver_log_levels }
-    }
-}
-
-pub struct DataprocJobSparkConfigElLoggingConfigElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataprocJobSparkConfigElLoggingConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocJobSparkConfigElLoggingConfigElRef {
-        DataprocJobSparkConfigElLoggingConfigElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataprocJobSparkConfigElLoggingConfigElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `driver_log_levels` after provisioning.\nOptional. The per-package log levels for the driver. This may include 'root' package name to configure rootLogger. Examples: 'com.google = FATAL', 'root = INFO', 'org.apache = DEBUG'."]
-    pub fn driver_log_levels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
-        terrars::RecRef::new(self.shared().clone(), format!("{}.driver_log_levels", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct DataprocJobSparkConfigElDynamic {
-    logging_config: std::option::Option<terrars::DynamicBlock<DataprocJobSparkConfigElLoggingConfigEl>>,
+struct DataprocJob_SparkConfigDynamic {
+    logging_config: std::option::Option<terrars::DynamicBlock<DataprocJob_PigConfig_LoggingConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct DataprocJobSparkConfigEl {
+pub struct DataprocJob_SparkConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     archive_uris: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2197,11 +2049,11 @@ pub struct DataprocJobSparkConfigEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     properties: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    logging_config: std::option::Option<std::vec::Vec<DataprocJobSparkConfigElLoggingConfigEl>>,
-    dynamic: DataprocJobSparkConfigElDynamic,
+    logging_config: std::option::Option<std::vec::Vec<DataprocJob_PigConfig_LoggingConfig>>,
+    dynamic: DataprocJob_SparkConfigDynamic,
 }
 
-impl DataprocJobSparkConfigEl {
+impl DataprocJob_SparkConfig {
     #[doc =
         "Set the field `archive_uris`.\nHCFS URIs of archives to be extracted in the working directory of .jar, .tar, .tar.gz, .tgz, and .zip."]
     pub fn set_archive_uris(
@@ -2268,7 +2120,7 @@ impl DataprocJobSparkConfigEl {
     #[doc = "Set the field `logging_config`.\n"]
     pub fn set_logging_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataprocJobSparkConfigElLoggingConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocJob_PigConfig_LoggingConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2282,8 +2134,8 @@ impl DataprocJobSparkConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataprocJobSparkConfigEl {
-    type O = terrars::BlockAssignable<DataprocJobSparkConfigEl>;
+impl terrars::ToListMappable for DataprocJob_SparkConfig {
+    type O = terrars::BlockAssignable<DataprocJob_SparkConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2294,11 +2146,11 @@ impl terrars::ToListMappable for DataprocJobSparkConfigEl {
     }
 }
 
-pub struct BuildDataprocJobSparkConfigEl {}
+pub struct BuildDataprocJob_SparkConfig {}
 
-impl BuildDataprocJobSparkConfigEl {
-    pub fn build(self) -> DataprocJobSparkConfigEl {
-        DataprocJobSparkConfigEl {
+impl BuildDataprocJob_SparkConfig {
+    pub fn build(self) -> DataprocJob_SparkConfig {
+        DataprocJob_SparkConfig {
             archive_uris: core::default::Default::default(),
             args: core::default::Default::default(),
             file_uris: core::default::Default::default(),
@@ -2312,21 +2164,23 @@ impl BuildDataprocJobSparkConfigEl {
     }
 }
 
-pub struct DataprocJobSparkConfigElRef {
+#[allow(dead_code)]
+pub struct DataprocJob_SparkConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocJobSparkConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocJobSparkConfigElRef {
-        DataprocJobSparkConfigElRef {
+impl terrars::Ref for DataprocJob_SparkConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocJob_SparkConfigRef {
+        DataprocJob_SparkConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocJobSparkConfigElRef {
+impl DataprocJob_SparkConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2373,75 +2227,18 @@ impl DataprocJobSparkConfigElRef {
     }
 
     #[doc = "Get a reference to the value of field `logging_config` after provisioning.\n"]
-    pub fn logging_config(&self) -> terrars::ListRef<DataprocJobSparkConfigElLoggingConfigElRef> {
+    pub fn logging_config(&self) -> terrars::ListRef<DataprocJob_PigConfig_LoggingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging_config", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct DataprocJobSparksqlConfigElLoggingConfigEl {
-    driver_log_levels: terrars::RecField<terrars::PrimField<std::string::String>>,
-}
-
-impl DataprocJobSparksqlConfigElLoggingConfigEl { }
-
-impl terrars::ToListMappable for DataprocJobSparksqlConfigElLoggingConfigEl {
-    type O = terrars::BlockAssignable<DataprocJobSparksqlConfigElLoggingConfigEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataprocJobSparksqlConfigElLoggingConfigEl {
-    #[doc =
-        "Optional. The per-package log levels for the driver. This may include 'root' package name to configure rootLogger. Examples: 'com.google = FATAL', 'root = INFO', 'org.apache = DEBUG'."]
-    pub driver_log_levels: terrars::RecField<terrars::PrimField<std::string::String>>,
-}
-
-impl BuildDataprocJobSparksqlConfigElLoggingConfigEl {
-    pub fn build(self) -> DataprocJobSparksqlConfigElLoggingConfigEl {
-        DataprocJobSparksqlConfigElLoggingConfigEl { driver_log_levels: self.driver_log_levels }
-    }
-}
-
-pub struct DataprocJobSparksqlConfigElLoggingConfigElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataprocJobSparksqlConfigElLoggingConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocJobSparksqlConfigElLoggingConfigElRef {
-        DataprocJobSparksqlConfigElLoggingConfigElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataprocJobSparksqlConfigElLoggingConfigElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `driver_log_levels` after provisioning.\nOptional. The per-package log levels for the driver. This may include 'root' package name to configure rootLogger. Examples: 'com.google = FATAL', 'root = INFO', 'org.apache = DEBUG'."]
-    pub fn driver_log_levels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
-        terrars::RecRef::new(self.shared().clone(), format!("{}.driver_log_levels", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct DataprocJobSparksqlConfigElDynamic {
-    logging_config: std::option::Option<terrars::DynamicBlock<DataprocJobSparksqlConfigElLoggingConfigEl>>,
+struct DataprocJob_SparksqlConfigDynamic {
+    logging_config: std::option::Option<terrars::DynamicBlock<DataprocJob_PigConfig_LoggingConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct DataprocJobSparksqlConfigEl {
+pub struct DataprocJob_SparksqlConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     jar_file_uris: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2453,11 +2250,11 @@ pub struct DataprocJobSparksqlConfigEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     script_variables: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    logging_config: std::option::Option<std::vec::Vec<DataprocJobSparksqlConfigElLoggingConfigEl>>,
-    dynamic: DataprocJobSparksqlConfigElDynamic,
+    logging_config: std::option::Option<std::vec::Vec<DataprocJob_PigConfig_LoggingConfig>>,
+    dynamic: DataprocJob_SparksqlConfigDynamic,
 }
 
-impl DataprocJobSparksqlConfigEl {
+impl DataprocJob_SparksqlConfig {
     #[doc = "Set the field `jar_file_uris`.\nHCFS URIs of jar files to be added to the Spark CLASSPATH."]
     pub fn set_jar_file_uris(
         mut self,
@@ -2507,7 +2304,7 @@ impl DataprocJobSparksqlConfigEl {
     #[doc = "Set the field `logging_config`.\n"]
     pub fn set_logging_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataprocJobSparksqlConfigElLoggingConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocJob_PigConfig_LoggingConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2521,8 +2318,8 @@ impl DataprocJobSparksqlConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataprocJobSparksqlConfigEl {
-    type O = terrars::BlockAssignable<DataprocJobSparksqlConfigEl>;
+impl terrars::ToListMappable for DataprocJob_SparksqlConfig {
+    type O = terrars::BlockAssignable<DataprocJob_SparksqlConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2533,11 +2330,11 @@ impl terrars::ToListMappable for DataprocJobSparksqlConfigEl {
     }
 }
 
-pub struct BuildDataprocJobSparksqlConfigEl {}
+pub struct BuildDataprocJob_SparksqlConfig {}
 
-impl BuildDataprocJobSparksqlConfigEl {
-    pub fn build(self) -> DataprocJobSparksqlConfigEl {
-        DataprocJobSparksqlConfigEl {
+impl BuildDataprocJob_SparksqlConfig {
+    pub fn build(self) -> DataprocJob_SparksqlConfig {
+        DataprocJob_SparksqlConfig {
             jar_file_uris: core::default::Default::default(),
             properties: core::default::Default::default(),
             query_file_uri: core::default::Default::default(),
@@ -2549,21 +2346,23 @@ impl BuildDataprocJobSparksqlConfigEl {
     }
 }
 
-pub struct DataprocJobSparksqlConfigElRef {
+#[allow(dead_code)]
+pub struct DataprocJob_SparksqlConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocJobSparksqlConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocJobSparksqlConfigElRef {
-        DataprocJobSparksqlConfigElRef {
+impl terrars::Ref for DataprocJob_SparksqlConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocJob_SparksqlConfigRef {
+        DataprocJob_SparksqlConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocJobSparksqlConfigElRef {
+impl DataprocJob_SparksqlConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2599,20 +2398,20 @@ impl DataprocJobSparksqlConfigElRef {
     }
 
     #[doc = "Get a reference to the value of field `logging_config` after provisioning.\n"]
-    pub fn logging_config(&self) -> terrars::ListRef<DataprocJobSparksqlConfigElLoggingConfigElRef> {
+    pub fn logging_config(&self) -> terrars::ListRef<DataprocJob_PigConfig_LoggingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataprocJobTimeoutsEl {
+pub struct DataprocJob_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataprocJobTimeoutsEl {
+impl DataprocJob_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -2626,8 +2425,8 @@ impl DataprocJobTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataprocJobTimeoutsEl {
-    type O = terrars::BlockAssignable<DataprocJobTimeoutsEl>;
+impl terrars::ToListMappable for DataprocJob_Timeouts {
+    type O = terrars::BlockAssignable<DataprocJob_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2638,32 +2437,34 @@ impl terrars::ToListMappable for DataprocJobTimeoutsEl {
     }
 }
 
-pub struct BuildDataprocJobTimeoutsEl {}
+pub struct BuildDataprocJob_Timeouts {}
 
-impl BuildDataprocJobTimeoutsEl {
-    pub fn build(self) -> DataprocJobTimeoutsEl {
-        DataprocJobTimeoutsEl {
+impl BuildDataprocJob_Timeouts {
+    pub fn build(self) -> DataprocJob_Timeouts {
+        DataprocJob_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataprocJobTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataprocJob_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocJobTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocJobTimeoutsElRef {
-        DataprocJobTimeoutsElRef {
+impl terrars::Ref for DataprocJob_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocJob_TimeoutsRef {
+        DataprocJob_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocJobTimeoutsElRef {
+impl DataprocJob_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2677,18 +2478,4 @@ impl DataprocJobTimeoutsElRef {
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataprocJobDynamic {
-    hadoop_config: std::option::Option<terrars::DynamicBlock<DataprocJobHadoopConfigEl>>,
-    hive_config: std::option::Option<terrars::DynamicBlock<DataprocJobHiveConfigEl>>,
-    pig_config: std::option::Option<terrars::DynamicBlock<DataprocJobPigConfigEl>>,
-    placement: std::option::Option<terrars::DynamicBlock<DataprocJobPlacementEl>>,
-    presto_config: std::option::Option<terrars::DynamicBlock<DataprocJobPrestoConfigEl>>,
-    pyspark_config: std::option::Option<terrars::DynamicBlock<DataprocJobPysparkConfigEl>>,
-    reference: std::option::Option<terrars::DynamicBlock<DataprocJobReferenceEl>>,
-    scheduling: std::option::Option<terrars::DynamicBlock<DataprocJobSchedulingEl>>,
-    spark_config: std::option::Option<terrars::DynamicBlock<DataprocJobSparkConfigEl>>,
-    sparksql_config: std::option::Option<terrars::DynamicBlock<DataprocJobSparksqlConfigEl>>,
 }

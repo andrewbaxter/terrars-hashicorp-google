@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct BigtableInstanceIamBindingData {
+struct BigtableInstanceIamBindingData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,14 +28,14 @@ struct BigtableInstanceIamBindingData {
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<BigtableInstanceIamBindingConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<BigtableInstanceIamBinding_Condition>>,
     dynamic: BigtableInstanceIamBindingDynamic,
 }
 
 struct BigtableInstanceIamBinding_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<BigtableInstanceIamBindingData>,
+    data: std::cell::RefCell<BigtableInstanceIamBindingData_>,
 }
 
 #[derive(Clone)]
@@ -148,7 +150,7 @@ impl BigtableInstanceIamBinding {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BigtableInstanceIamBindingConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigtableInstanceIamBinding_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -192,7 +194,7 @@ impl BigtableInstanceIamBinding {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<BigtableInstanceIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<BigtableInstanceIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -243,7 +245,7 @@ impl BuildBigtableInstanceIamBinding {
         let out = BigtableInstanceIamBinding(std::rc::Rc::new(BigtableInstanceIamBinding_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(BigtableInstanceIamBindingData {
+            data: std::cell::RefCell::new(BigtableInstanceIamBindingData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -317,20 +319,25 @@ impl BigtableInstanceIamBindingRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<BigtableInstanceIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<BigtableInstanceIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct BigtableInstanceIamBindingDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<BigtableInstanceIamBinding_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct BigtableInstanceIamBindingConditionEl {
+pub struct BigtableInstanceIamBinding_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl BigtableInstanceIamBindingConditionEl {
+impl BigtableInstanceIamBinding_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -338,8 +345,8 @@ impl BigtableInstanceIamBindingConditionEl {
     }
 }
 
-impl terrars::ToListMappable for BigtableInstanceIamBindingConditionEl {
-    type O = terrars::BlockAssignable<BigtableInstanceIamBindingConditionEl>;
+impl terrars::ToListMappable for BigtableInstanceIamBinding_Condition {
+    type O = terrars::BlockAssignable<BigtableInstanceIamBinding_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -350,16 +357,16 @@ impl terrars::ToListMappable for BigtableInstanceIamBindingConditionEl {
     }
 }
 
-pub struct BuildBigtableInstanceIamBindingConditionEl {
+pub struct BuildBigtableInstanceIamBinding_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBigtableInstanceIamBindingConditionEl {
-    pub fn build(self) -> BigtableInstanceIamBindingConditionEl {
-        BigtableInstanceIamBindingConditionEl {
+impl BuildBigtableInstanceIamBinding_Condition {
+    pub fn build(self) -> BigtableInstanceIamBinding_Condition {
+        BigtableInstanceIamBinding_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -367,21 +374,23 @@ impl BuildBigtableInstanceIamBindingConditionEl {
     }
 }
 
-pub struct BigtableInstanceIamBindingConditionElRef {
+#[allow(dead_code)]
+pub struct BigtableInstanceIamBinding_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigtableInstanceIamBindingConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigtableInstanceIamBindingConditionElRef {
-        BigtableInstanceIamBindingConditionElRef {
+impl terrars::Ref for BigtableInstanceIamBinding_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigtableInstanceIamBinding_ConditionRef {
+        BigtableInstanceIamBinding_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigtableInstanceIamBindingConditionElRef {
+impl BigtableInstanceIamBinding_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -400,9 +409,4 @@ impl BigtableInstanceIamBindingConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct BigtableInstanceIamBindingDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<BigtableInstanceIamBindingConditionEl>>,
 }

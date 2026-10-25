@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct WorkflowsWorkflowData {
+struct WorkflowsWorkflowData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,9 +21,17 @@ struct WorkflowsWorkflowData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    call_log_level: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     crypto_key_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_protection: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    execution_history_level: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -36,18 +46,19 @@ struct WorkflowsWorkflowData {
     region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     service_account: std::option::Option<terrars::PrimField<std::string::String>>,
+    source_contents: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    source_contents: std::option::Option<terrars::PrimField<std::string::String>>,
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     user_env_vars: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<WorkflowsWorkflowTimeoutsEl>,
+    timeouts: std::option::Option<WorkflowsWorkflow_Timeouts>,
 }
 
 struct WorkflowsWorkflow_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<WorkflowsWorkflowData>,
+    data: std::cell::RefCell<WorkflowsWorkflowData_>,
 }
 
 #[derive(Clone)]
@@ -148,6 +159,13 @@ impl WorkflowsWorkflow {
     }
 
     #[doc =
+        "Set the field `call_log_level`.\nDescribes the level of platform logging to apply to calls and call responses during\nexecutions of this workflow. If both the workflow and the execution specify a logging level,\nthe execution level takes precedence. Possible values: [\"CALL_LOG_LEVEL_UNSPECIFIED\", \"LOG_ALL_CALLS\", \"LOG_ERRORS_ONLY\", \"LOG_NONE\"]"]
+    pub fn set_call_log_level(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().call_log_level = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `crypto_key_name`.\nThe KMS key used to encrypt workflow and execution data.\n\nFormat: projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys/{cryptoKey}"]
     pub fn set_crypto_key_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().crypto_key_name = std::option::Option::Some(v.into());
@@ -155,9 +173,33 @@ impl WorkflowsWorkflow {
     }
 
     #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `deletion_protection`.\nWhether Terraform will be prevented from destroying the workflow. Defaults to true.\nWhen a'terraform destroy' or 'terraform apply' would delete the workflow,\nthe command will fail if this field is not set to false in Terraform state.\nWhen the field is set to true or unset in Terraform state, a 'terraform apply'\nor 'terraform destroy' that would delete the workflow will fail.\nWhen the field is set to false, deleting the workflow is allowed."]
+    pub fn set_deletion_protection(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().deletion_protection = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `description`.\nDescription of the workflow provided by the user. Must be at most 1000 unicode characters long."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `execution_history_level`.\nDescribes the level of execution history to be stored for this workflow. This configuration\ndetermines how much information about workflow executions is preserved. If not specified,\ndefaults to EXECUTION_HISTORY_LEVEL_UNSPECIFIED. Possible values: [\"EXECUTION_HISTORY_LEVEL_UNSPECIFIED\", \"EXECUTION_HISTORY_BASIC\", \"EXECUTION_HISTORY_DETAILED\"]"]
+    pub fn set_execution_history_level(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().execution_history_level = std::option::Option::Some(v.into());
         self
     }
 
@@ -208,14 +250,18 @@ impl WorkflowsWorkflow {
         self
     }
 
-    #[doc = "Set the field `source_contents`.\nWorkflow code to be executed. The size limit is 32KB."]
-    pub fn set_source_contents(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.0.data.borrow_mut().source_contents = std::option::Option::Some(v.into());
+    #[doc =
+        "Set the field `tags`.\nA map of resource manager tags. Resource manager tag keys and values have the same definition\nas resource manager tags. Keys must be in the format tagKeys/{tag_key_id}, and values are in\nthe format tagValues/456. The field is ignored (both PUT & PATCH) when empty."]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
         self
     }
 
     #[doc =
-        "Set the field `user_env_vars`.\nUser-defined environment variables associated with this workflow revision. This map has a maximum length of 20. Each string can take up to 40KiB. Keys cannot be empty strings and cannot start with “GOOGLE” or “WORKFLOWS\"."]
+        "Set the field `user_env_vars`.\nUser-defined environment variables associated with this workflow revision. This map has a maximum length of 20. Each string can take up to 4KiB. Keys cannot be empty strings and cannot start with \"GOOGLE\" or \"WORKFLOWS\"."]
     pub fn set_user_env_vars(
         self,
         v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -225,9 +271,15 @@ impl WorkflowsWorkflow {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<WorkflowsWorkflowTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<WorkflowsWorkflow_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `call_log_level` after provisioning.\nDescribes the level of platform logging to apply to calls and call responses during\nexecutions of this workflow. If both the workflow and the execution specify a logging level,\nthe execution level takes precedence. Possible values: [\"CALL_LOG_LEVEL_UNSPECIFIED\", \"LOG_ALL_CALLS\", \"LOG_ERRORS_ONLY\", \"LOG_NONE\"]"]
+    pub fn call_log_level(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.call_log_level", self.extract_ref()))
     }
 
     #[doc =
@@ -243,6 +295,18 @@ impl WorkflowsWorkflow {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_protection` after provisioning.\nWhether Terraform will be prevented from destroying the workflow. Defaults to true.\nWhen a'terraform destroy' or 'terraform apply' would delete the workflow,\nthe command will fail if this field is not set to false in Terraform state.\nWhen the field is set to true or unset in Terraform state, a 'terraform apply'\nor 'terraform destroy' that would delete the workflow will fail.\nWhen the field is set to false, deleting the workflow is allowed."]
+    pub fn deletion_protection(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_protection", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nDescription of the workflow provided by the user. Must be at most 1000 unicode characters long."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -252,6 +316,12 @@ impl WorkflowsWorkflow {
         "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
     pub fn effective_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `execution_history_level` after provisioning.\nDescribes the level of execution history to be stored for this workflow. This configuration\ndetermines how much information about workflow executions is preserved. If not specified,\ndefaults to EXECUTION_HISTORY_LEVEL_UNSPECIFIED. Possible values: [\"EXECUTION_HISTORY_LEVEL_UNSPECIFIED\", \"EXECUTION_HISTORY_BASIC\", \"EXECUTION_HISTORY_DETAILED\"]"]
+    pub fn execution_history_level(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.execution_history_level", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -298,7 +368,7 @@ impl WorkflowsWorkflow {
     }
 
     #[doc =
-        "Get a reference to the value of field `source_contents` after provisioning.\nWorkflow code to be executed. The size limit is 32KB."]
+        "Get a reference to the value of field `source_contents` after provisioning.\nWorkflow code to be executed. The size limit is 128KB.\n\n~> **Warning:** This field is currently optional but **will become REQUIRED** in version 8.0.0 of the provider to align with API constraints."]
     pub fn source_contents(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_contents", self.extract_ref()))
     }
@@ -306,6 +376,12 @@ impl WorkflowsWorkflow {
     #[doc = "Get a reference to the value of field `state` after provisioning.\nState of the workflow deployment."]
     pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `tags` after provisioning.\nA map of resource manager tags. Resource manager tag keys and values have the same definition\nas resource manager tags. Keys must be in the format tagKeys/{tag_key_id}, and values are in\nthe format tagValues/456. The field is ignored (both PUT & PATCH) when empty."]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
     #[doc =
@@ -321,14 +397,14 @@ impl WorkflowsWorkflow {
     }
 
     #[doc =
-        "Get a reference to the value of field `user_env_vars` after provisioning.\nUser-defined environment variables associated with this workflow revision. This map has a maximum length of 20. Each string can take up to 40KiB. Keys cannot be empty strings and cannot start with “GOOGLE” or “WORKFLOWS\"."]
+        "Get a reference to the value of field `user_env_vars` after provisioning.\nUser-defined environment variables associated with this workflow revision. This map has a maximum length of 20. Each string can take up to 4KiB. Keys cannot be empty strings and cannot start with \"GOOGLE\" or \"WORKFLOWS\"."]
     pub fn user_env_vars(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.user_env_vars", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> WorkflowsWorkflowTimeoutsElRef {
-        WorkflowsWorkflowTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> WorkflowsWorkflow_TimeoutsRef {
+        WorkflowsWorkflow_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -365,6 +441,9 @@ impl terrars::Resource_ for WorkflowsWorkflow_ {
 
 pub struct BuildWorkflowsWorkflow {
     pub tf_id: std::string::String,
+    #[doc =
+        "Workflow code to be executed. The size limit is 128KB.\n\n~> **Warning:** This field is currently optional but **will become REQUIRED** in version 8.0.0 of the provider to align with API constraints."]
+    pub source_contents: terrars::PrimField<std::string::String>,
 }
 
 impl BuildWorkflowsWorkflow {
@@ -372,14 +451,18 @@ impl BuildWorkflowsWorkflow {
         let out = WorkflowsWorkflow(std::rc::Rc::new(WorkflowsWorkflow_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(WorkflowsWorkflowData {
+            data: std::cell::RefCell::new(WorkflowsWorkflowData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                call_log_level: core::default::Default::default(),
                 crypto_key_name: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
+                deletion_protection: core::default::Default::default(),
                 description: core::default::Default::default(),
+                execution_history_level: core::default::Default::default(),
                 id: core::default::Default::default(),
                 labels: core::default::Default::default(),
                 name: core::default::Default::default(),
@@ -387,7 +470,8 @@ impl BuildWorkflowsWorkflow {
                 project: core::default::Default::default(),
                 region: core::default::Default::default(),
                 service_account: core::default::Default::default(),
-                source_contents: core::default::Default::default(),
+                source_contents: self.source_contents,
+                tags: core::default::Default::default(),
                 user_env_vars: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
             }),
@@ -421,6 +505,12 @@ impl WorkflowsWorkflowRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `call_log_level` after provisioning.\nDescribes the level of platform logging to apply to calls and call responses during\nexecutions of this workflow. If both the workflow and the execution specify a logging level,\nthe execution level takes precedence. Possible values: [\"CALL_LOG_LEVEL_UNSPECIFIED\", \"LOG_ALL_CALLS\", \"LOG_ERRORS_ONLY\", \"LOG_NONE\"]"]
+    pub fn call_log_level(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.call_log_level", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `create_time` after provisioning.\nThe timestamp of when the workflow was created in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
@@ -433,6 +523,18 @@ impl WorkflowsWorkflowRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_protection` after provisioning.\nWhether Terraform will be prevented from destroying the workflow. Defaults to true.\nWhen a'terraform destroy' or 'terraform apply' would delete the workflow,\nthe command will fail if this field is not set to false in Terraform state.\nWhen the field is set to true or unset in Terraform state, a 'terraform apply'\nor 'terraform destroy' that would delete the workflow will fail.\nWhen the field is set to false, deleting the workflow is allowed."]
+    pub fn deletion_protection(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_protection", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nDescription of the workflow provided by the user. Must be at most 1000 unicode characters long."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -442,6 +544,12 @@ impl WorkflowsWorkflowRef {
         "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
     pub fn effective_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `execution_history_level` after provisioning.\nDescribes the level of execution history to be stored for this workflow. This configuration\ndetermines how much information about workflow executions is preserved. If not specified,\ndefaults to EXECUTION_HISTORY_LEVEL_UNSPECIFIED. Possible values: [\"EXECUTION_HISTORY_LEVEL_UNSPECIFIED\", \"EXECUTION_HISTORY_BASIC\", \"EXECUTION_HISTORY_DETAILED\"]"]
+    pub fn execution_history_level(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.execution_history_level", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -488,7 +596,7 @@ impl WorkflowsWorkflowRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `source_contents` after provisioning.\nWorkflow code to be executed. The size limit is 32KB."]
+        "Get a reference to the value of field `source_contents` after provisioning.\nWorkflow code to be executed. The size limit is 128KB.\n\n~> **Warning:** This field is currently optional but **will become REQUIRED** in version 8.0.0 of the provider to align with API constraints."]
     pub fn source_contents(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_contents", self.extract_ref()))
     }
@@ -496,6 +604,12 @@ impl WorkflowsWorkflowRef {
     #[doc = "Get a reference to the value of field `state` after provisioning.\nState of the workflow deployment."]
     pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `tags` after provisioning.\nA map of resource manager tags. Resource manager tag keys and values have the same definition\nas resource manager tags. Keys must be in the format tagKeys/{tag_key_id}, and values are in\nthe format tagValues/456. The field is ignored (both PUT & PATCH) when empty."]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
     #[doc =
@@ -511,19 +625,19 @@ impl WorkflowsWorkflowRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `user_env_vars` after provisioning.\nUser-defined environment variables associated with this workflow revision. This map has a maximum length of 20. Each string can take up to 40KiB. Keys cannot be empty strings and cannot start with “GOOGLE” or “WORKFLOWS\"."]
+        "Get a reference to the value of field `user_env_vars` after provisioning.\nUser-defined environment variables associated with this workflow revision. This map has a maximum length of 20. Each string can take up to 4KiB. Keys cannot be empty strings and cannot start with \"GOOGLE\" or \"WORKFLOWS\"."]
     pub fn user_env_vars(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.user_env_vars", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> WorkflowsWorkflowTimeoutsElRef {
-        WorkflowsWorkflowTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> WorkflowsWorkflow_TimeoutsRef {
+        WorkflowsWorkflow_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct WorkflowsWorkflowTimeoutsEl {
+pub struct WorkflowsWorkflow_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -532,7 +646,7 @@ pub struct WorkflowsWorkflowTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl WorkflowsWorkflowTimeoutsEl {
+impl WorkflowsWorkflow_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -552,8 +666,8 @@ impl WorkflowsWorkflowTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for WorkflowsWorkflowTimeoutsEl {
-    type O = terrars::BlockAssignable<WorkflowsWorkflowTimeoutsEl>;
+impl terrars::ToListMappable for WorkflowsWorkflow_Timeouts {
+    type O = terrars::BlockAssignable<WorkflowsWorkflow_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -564,11 +678,11 @@ impl terrars::ToListMappable for WorkflowsWorkflowTimeoutsEl {
     }
 }
 
-pub struct BuildWorkflowsWorkflowTimeoutsEl {}
+pub struct BuildWorkflowsWorkflow_Timeouts {}
 
-impl BuildWorkflowsWorkflowTimeoutsEl {
-    pub fn build(self) -> WorkflowsWorkflowTimeoutsEl {
-        WorkflowsWorkflowTimeoutsEl {
+impl BuildWorkflowsWorkflow_Timeouts {
+    pub fn build(self) -> WorkflowsWorkflow_Timeouts {
+        WorkflowsWorkflow_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -576,21 +690,23 @@ impl BuildWorkflowsWorkflowTimeoutsEl {
     }
 }
 
-pub struct WorkflowsWorkflowTimeoutsElRef {
+#[allow(dead_code)]
+pub struct WorkflowsWorkflow_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WorkflowsWorkflowTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> WorkflowsWorkflowTimeoutsElRef {
-        WorkflowsWorkflowTimeoutsElRef {
+impl terrars::Ref for WorkflowsWorkflow_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> WorkflowsWorkflow_TimeoutsRef {
+        WorkflowsWorkflow_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WorkflowsWorkflowTimeoutsElRef {
+impl WorkflowsWorkflow_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

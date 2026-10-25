@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct VmwareengineNetworkPolicyData {
+struct VmwareengineNetworkPolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct VmwareengineNetworkPolicyData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     edge_services_cidr: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -29,18 +33,18 @@ struct VmwareengineNetworkPolicyData {
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     vmware_engine_network: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    external_ip: std::option::Option<std::vec::Vec<VmwareengineNetworkPolicyExternalIpEl>>,
+    external_ip: std::option::Option<std::vec::Vec<VmwareengineNetworkPolicy_ExternalIp>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    internet_access: std::option::Option<std::vec::Vec<VmwareengineNetworkPolicyInternetAccessEl>>,
+    internet_access: std::option::Option<std::vec::Vec<VmwareengineNetworkPolicy_InternetAccess>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<VmwareengineNetworkPolicyTimeoutsEl>,
+    timeouts: std::option::Option<VmwareengineNetworkPolicy_Timeouts>,
     dynamic: VmwareengineNetworkPolicyDynamic,
 }
 
 struct VmwareengineNetworkPolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<VmwareengineNetworkPolicyData>,
+    data: std::cell::RefCell<VmwareengineNetworkPolicyData_>,
 }
 
 #[derive(Clone)]
@@ -140,6 +144,13 @@ impl VmwareengineNetworkPolicy {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nUser-provided description for this network policy."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -161,7 +172,7 @@ impl VmwareengineNetworkPolicy {
     #[doc = "Set the field `external_ip`.\n"]
     pub fn set_external_ip(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<VmwareengineNetworkPolicyExternalIpEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<VmwareengineNetworkPolicy_ExternalIp>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -177,7 +188,7 @@ impl VmwareengineNetworkPolicy {
     #[doc = "Set the field `internet_access`.\n"]
     pub fn set_internet_access(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<VmwareengineNetworkPolicyInternetAccessEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<VmwareengineNetworkPolicy_InternetAccess>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -191,7 +202,7 @@ impl VmwareengineNetworkPolicy {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<VmwareengineNetworkPolicyTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<VmwareengineNetworkPolicy_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -200,6 +211,12 @@ impl VmwareengineNetworkPolicy {
         "Get a reference to the value of field `create_time` after provisioning.\nCreation time of this resource.\nA timestamp in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and\nup to nine fractional digits. Examples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -263,21 +280,18 @@ impl VmwareengineNetworkPolicy {
     }
 
     #[doc = "Get a reference to the value of field `external_ip` after provisioning.\n"]
-    pub fn external_ip(&self) -> terrars::ListRef<VmwareengineNetworkPolicyExternalIpElRef> {
+    pub fn external_ip(&self) -> terrars::ListRef<VmwareengineNetworkPolicy_ExternalIpRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.external_ip", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `internet_access` after provisioning.\n"]
-    pub fn internet_access(&self) -> terrars::ListRef<VmwareengineNetworkPolicyInternetAccessElRef> {
+    pub fn internet_access(&self) -> terrars::ListRef<VmwareengineNetworkPolicy_InternetAccessRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.internet_access", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> VmwareengineNetworkPolicyTimeoutsElRef {
-        VmwareengineNetworkPolicyTimeoutsElRef::new(
-            self.shared().clone(),
-            format!("{}.timeouts", self.extract_ref()),
-        )
+    pub fn timeouts(&self) -> VmwareengineNetworkPolicy_TimeoutsRef {
+        VmwareengineNetworkPolicy_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -332,12 +346,13 @@ impl BuildVmwareengineNetworkPolicy {
         let out = VmwareengineNetworkPolicy(std::rc::Rc::new(VmwareengineNetworkPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(VmwareengineNetworkPolicyData {
+            data: std::cell::RefCell::new(VmwareengineNetworkPolicyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 edge_services_cidr: self.edge_services_cidr,
                 id: core::default::Default::default(),
@@ -383,6 +398,12 @@ impl VmwareengineNetworkPolicyRef {
         "Get a reference to the value of field `create_time` after provisioning.\nCreation time of this resource.\nA timestamp in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and\nup to nine fractional digits. Examples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -446,31 +467,34 @@ impl VmwareengineNetworkPolicyRef {
     }
 
     #[doc = "Get a reference to the value of field `external_ip` after provisioning.\n"]
-    pub fn external_ip(&self) -> terrars::ListRef<VmwareengineNetworkPolicyExternalIpElRef> {
+    pub fn external_ip(&self) -> terrars::ListRef<VmwareengineNetworkPolicy_ExternalIpRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.external_ip", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `internet_access` after provisioning.\n"]
-    pub fn internet_access(&self) -> terrars::ListRef<VmwareengineNetworkPolicyInternetAccessElRef> {
+    pub fn internet_access(&self) -> terrars::ListRef<VmwareengineNetworkPolicy_InternetAccessRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.internet_access", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> VmwareengineNetworkPolicyTimeoutsElRef {
-        VmwareengineNetworkPolicyTimeoutsElRef::new(
-            self.shared().clone(),
-            format!("{}.timeouts", self.extract_ref()),
-        )
+    pub fn timeouts(&self) -> VmwareengineNetworkPolicy_TimeoutsRef {
+        VmwareengineNetworkPolicy_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct VmwareengineNetworkPolicyDynamic {
+    external_ip: std::option::Option<terrars::DynamicBlock<VmwareengineNetworkPolicy_ExternalIp>>,
+    internet_access: std::option::Option<terrars::DynamicBlock<VmwareengineNetworkPolicy_InternetAccess>>,
+}
+
 #[derive(Serialize)]
-pub struct VmwareengineNetworkPolicyExternalIpEl {
+pub struct VmwareengineNetworkPolicy_ExternalIp {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl VmwareengineNetworkPolicyExternalIpEl {
+impl VmwareengineNetworkPolicy_ExternalIp {
     #[doc = "Set the field `enabled`.\nTrue if the service is enabled; false otherwise."]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -478,8 +502,8 @@ impl VmwareengineNetworkPolicyExternalIpEl {
     }
 }
 
-impl terrars::ToListMappable for VmwareengineNetworkPolicyExternalIpEl {
-    type O = terrars::BlockAssignable<VmwareengineNetworkPolicyExternalIpEl>;
+impl terrars::ToListMappable for VmwareengineNetworkPolicy_ExternalIp {
+    type O = terrars::BlockAssignable<VmwareengineNetworkPolicy_ExternalIp>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -490,29 +514,31 @@ impl terrars::ToListMappable for VmwareengineNetworkPolicyExternalIpEl {
     }
 }
 
-pub struct BuildVmwareengineNetworkPolicyExternalIpEl {}
+pub struct BuildVmwareengineNetworkPolicy_ExternalIp {}
 
-impl BuildVmwareengineNetworkPolicyExternalIpEl {
-    pub fn build(self) -> VmwareengineNetworkPolicyExternalIpEl {
-        VmwareengineNetworkPolicyExternalIpEl { enabled: core::default::Default::default() }
+impl BuildVmwareengineNetworkPolicy_ExternalIp {
+    pub fn build(self) -> VmwareengineNetworkPolicy_ExternalIp {
+        VmwareengineNetworkPolicy_ExternalIp { enabled: core::default::Default::default() }
     }
 }
 
-pub struct VmwareengineNetworkPolicyExternalIpElRef {
+#[allow(dead_code)]
+pub struct VmwareengineNetworkPolicy_ExternalIpRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for VmwareengineNetworkPolicyExternalIpElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> VmwareengineNetworkPolicyExternalIpElRef {
-        VmwareengineNetworkPolicyExternalIpElRef {
+impl terrars::Ref for VmwareengineNetworkPolicy_ExternalIpRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> VmwareengineNetworkPolicy_ExternalIpRef {
+        VmwareengineNetworkPolicy_ExternalIpRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl VmwareengineNetworkPolicyExternalIpElRef {
+impl VmwareengineNetworkPolicy_ExternalIpRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -531,12 +557,12 @@ impl VmwareengineNetworkPolicyExternalIpElRef {
 }
 
 #[derive(Serialize)]
-pub struct VmwareengineNetworkPolicyInternetAccessEl {
+pub struct VmwareengineNetworkPolicy_InternetAccess {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl VmwareengineNetworkPolicyInternetAccessEl {
+impl VmwareengineNetworkPolicy_InternetAccess {
     #[doc = "Set the field `enabled`.\nTrue if the service is enabled; false otherwise."]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -544,8 +570,8 @@ impl VmwareengineNetworkPolicyInternetAccessEl {
     }
 }
 
-impl terrars::ToListMappable for VmwareengineNetworkPolicyInternetAccessEl {
-    type O = terrars::BlockAssignable<VmwareengineNetworkPolicyInternetAccessEl>;
+impl terrars::ToListMappable for VmwareengineNetworkPolicy_InternetAccess {
+    type O = terrars::BlockAssignable<VmwareengineNetworkPolicy_InternetAccess>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -556,29 +582,31 @@ impl terrars::ToListMappable for VmwareengineNetworkPolicyInternetAccessEl {
     }
 }
 
-pub struct BuildVmwareengineNetworkPolicyInternetAccessEl {}
+pub struct BuildVmwareengineNetworkPolicy_InternetAccess {}
 
-impl BuildVmwareengineNetworkPolicyInternetAccessEl {
-    pub fn build(self) -> VmwareengineNetworkPolicyInternetAccessEl {
-        VmwareengineNetworkPolicyInternetAccessEl { enabled: core::default::Default::default() }
+impl BuildVmwareengineNetworkPolicy_InternetAccess {
+    pub fn build(self) -> VmwareengineNetworkPolicy_InternetAccess {
+        VmwareengineNetworkPolicy_InternetAccess { enabled: core::default::Default::default() }
     }
 }
 
-pub struct VmwareengineNetworkPolicyInternetAccessElRef {
+#[allow(dead_code)]
+pub struct VmwareengineNetworkPolicy_InternetAccessRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for VmwareengineNetworkPolicyInternetAccessElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> VmwareengineNetworkPolicyInternetAccessElRef {
-        VmwareengineNetworkPolicyInternetAccessElRef {
+impl terrars::Ref for VmwareengineNetworkPolicy_InternetAccessRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> VmwareengineNetworkPolicy_InternetAccessRef {
+        VmwareengineNetworkPolicy_InternetAccessRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl VmwareengineNetworkPolicyInternetAccessElRef {
+impl VmwareengineNetworkPolicy_InternetAccessRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -597,7 +625,7 @@ impl VmwareengineNetworkPolicyInternetAccessElRef {
 }
 
 #[derive(Serialize)]
-pub struct VmwareengineNetworkPolicyTimeoutsEl {
+pub struct VmwareengineNetworkPolicy_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -606,7 +634,7 @@ pub struct VmwareengineNetworkPolicyTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl VmwareengineNetworkPolicyTimeoutsEl {
+impl VmwareengineNetworkPolicy_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -626,8 +654,8 @@ impl VmwareengineNetworkPolicyTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for VmwareengineNetworkPolicyTimeoutsEl {
-    type O = terrars::BlockAssignable<VmwareengineNetworkPolicyTimeoutsEl>;
+impl terrars::ToListMappable for VmwareengineNetworkPolicy_Timeouts {
+    type O = terrars::BlockAssignable<VmwareengineNetworkPolicy_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -638,11 +666,11 @@ impl terrars::ToListMappable for VmwareengineNetworkPolicyTimeoutsEl {
     }
 }
 
-pub struct BuildVmwareengineNetworkPolicyTimeoutsEl {}
+pub struct BuildVmwareengineNetworkPolicy_Timeouts {}
 
-impl BuildVmwareengineNetworkPolicyTimeoutsEl {
-    pub fn build(self) -> VmwareengineNetworkPolicyTimeoutsEl {
-        VmwareengineNetworkPolicyTimeoutsEl {
+impl BuildVmwareengineNetworkPolicy_Timeouts {
+    pub fn build(self) -> VmwareengineNetworkPolicy_Timeouts {
+        VmwareengineNetworkPolicy_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -650,21 +678,23 @@ impl BuildVmwareengineNetworkPolicyTimeoutsEl {
     }
 }
 
-pub struct VmwareengineNetworkPolicyTimeoutsElRef {
+#[allow(dead_code)]
+pub struct VmwareengineNetworkPolicy_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for VmwareengineNetworkPolicyTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> VmwareengineNetworkPolicyTimeoutsElRef {
-        VmwareengineNetworkPolicyTimeoutsElRef {
+impl terrars::Ref for VmwareengineNetworkPolicy_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> VmwareengineNetworkPolicy_TimeoutsRef {
+        VmwareengineNetworkPolicy_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl VmwareengineNetworkPolicyTimeoutsElRef {
+impl VmwareengineNetworkPolicy_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -683,10 +713,4 @@ impl VmwareengineNetworkPolicyTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct VmwareengineNetworkPolicyDynamic {
-    external_ip: std::option::Option<terrars::DynamicBlock<VmwareengineNetworkPolicyExternalIpEl>>,
-    internet_access: std::option::Option<terrars::DynamicBlock<VmwareengineNetworkPolicyInternetAccessEl>>,
 }

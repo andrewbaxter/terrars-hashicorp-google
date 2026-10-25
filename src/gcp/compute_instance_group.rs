@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeInstanceGroupData {
+struct ComputeInstanceGroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct ComputeInstanceGroupData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -32,16 +36,16 @@ struct ComputeInstanceGroupData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     zone: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    named_port: std::option::Option<std::vec::Vec<ComputeInstanceGroupNamedPortEl>>,
+    named_port: std::option::Option<std::vec::Vec<ComputeInstanceGroup_NamedPort>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComputeInstanceGroupTimeoutsEl>,
+    timeouts: std::option::Option<ComputeInstanceGroup_Timeouts>,
     dynamic: ComputeInstanceGroupDynamic,
 }
 
 struct ComputeInstanceGroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeInstanceGroupData>,
+    data: std::cell::RefCell<ComputeInstanceGroupData_>,
 }
 
 #[derive(Clone)]
@@ -141,6 +145,13 @@ impl ComputeInstanceGroup {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nAn optional textual description of the instance group."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -186,7 +197,7 @@ impl ComputeInstanceGroup {
     #[doc = "Set the field `named_port`.\n"]
     pub fn set_named_port(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeInstanceGroupNamedPortEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeInstanceGroup_NamedPort>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -200,9 +211,15 @@ impl ComputeInstanceGroup {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeInstanceGroupTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeInstanceGroup_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -257,13 +274,13 @@ impl ComputeInstanceGroup {
     }
 
     #[doc = "Get a reference to the value of field `named_port` after provisioning.\n"]
-    pub fn named_port(&self) -> terrars::ListRef<ComputeInstanceGroupNamedPortElRef> {
+    pub fn named_port(&self) -> terrars::ListRef<ComputeInstanceGroup_NamedPortRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.named_port", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeInstanceGroupTimeoutsElRef {
-        ComputeInstanceGroupTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeInstanceGroup_TimeoutsRef {
+        ComputeInstanceGroup_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -310,12 +327,13 @@ impl BuildComputeInstanceGroup {
         let out = ComputeInstanceGroup(std::rc::Rc::new(ComputeInstanceGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeInstanceGroupData {
+            data: std::cell::RefCell::new(ComputeInstanceGroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 instances: core::default::Default::default(),
@@ -354,6 +372,12 @@ impl ComputeInstanceGroupRef {
 
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -408,26 +432,31 @@ impl ComputeInstanceGroupRef {
     }
 
     #[doc = "Get a reference to the value of field `named_port` after provisioning.\n"]
-    pub fn named_port(&self) -> terrars::ListRef<ComputeInstanceGroupNamedPortElRef> {
+    pub fn named_port(&self) -> terrars::ListRef<ComputeInstanceGroup_NamedPortRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.named_port", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeInstanceGroupTimeoutsElRef {
-        ComputeInstanceGroupTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeInstanceGroup_TimeoutsRef {
+        ComputeInstanceGroup_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ComputeInstanceGroupDynamic {
+    named_port: std::option::Option<terrars::DynamicBlock<ComputeInstanceGroup_NamedPort>>,
+}
+
 #[derive(Serialize)]
-pub struct ComputeInstanceGroupNamedPortEl {
+pub struct ComputeInstanceGroup_NamedPort {
     name: terrars::PrimField<std::string::String>,
     port: terrars::PrimField<f64>,
 }
 
-impl ComputeInstanceGroupNamedPortEl { }
+impl ComputeInstanceGroup_NamedPort { }
 
-impl terrars::ToListMappable for ComputeInstanceGroupNamedPortEl {
-    type O = terrars::BlockAssignable<ComputeInstanceGroupNamedPortEl>;
+impl terrars::ToListMappable for ComputeInstanceGroup_NamedPort {
+    type O = terrars::BlockAssignable<ComputeInstanceGroup_NamedPort>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -438,37 +467,39 @@ impl terrars::ToListMappable for ComputeInstanceGroupNamedPortEl {
     }
 }
 
-pub struct BuildComputeInstanceGroupNamedPortEl {
+pub struct BuildComputeInstanceGroup_NamedPort {
     #[doc = "The name which the port will be mapped to."]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = "The port number to map the name to."]
     pub port: terrars::PrimField<f64>,
 }
 
-impl BuildComputeInstanceGroupNamedPortEl {
-    pub fn build(self) -> ComputeInstanceGroupNamedPortEl {
-        ComputeInstanceGroupNamedPortEl {
+impl BuildComputeInstanceGroup_NamedPort {
+    pub fn build(self) -> ComputeInstanceGroup_NamedPort {
+        ComputeInstanceGroup_NamedPort {
             name: self.name,
             port: self.port,
         }
     }
 }
 
-pub struct ComputeInstanceGroupNamedPortElRef {
+#[allow(dead_code)]
+pub struct ComputeInstanceGroup_NamedPortRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeInstanceGroupNamedPortElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeInstanceGroupNamedPortElRef {
-        ComputeInstanceGroupNamedPortElRef {
+impl terrars::Ref for ComputeInstanceGroup_NamedPortRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeInstanceGroup_NamedPortRef {
+        ComputeInstanceGroup_NamedPortRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeInstanceGroupNamedPortElRef {
+impl ComputeInstanceGroup_NamedPortRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -486,7 +517,7 @@ impl ComputeInstanceGroupNamedPortElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeInstanceGroupTimeoutsEl {
+pub struct ComputeInstanceGroup_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -495,7 +526,7 @@ pub struct ComputeInstanceGroupTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeInstanceGroupTimeoutsEl {
+impl ComputeInstanceGroup_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -515,8 +546,8 @@ impl ComputeInstanceGroupTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeInstanceGroupTimeoutsEl {
-    type O = terrars::BlockAssignable<ComputeInstanceGroupTimeoutsEl>;
+impl terrars::ToListMappable for ComputeInstanceGroup_Timeouts {
+    type O = terrars::BlockAssignable<ComputeInstanceGroup_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -527,11 +558,11 @@ impl terrars::ToListMappable for ComputeInstanceGroupTimeoutsEl {
     }
 }
 
-pub struct BuildComputeInstanceGroupTimeoutsEl {}
+pub struct BuildComputeInstanceGroup_Timeouts {}
 
-impl BuildComputeInstanceGroupTimeoutsEl {
-    pub fn build(self) -> ComputeInstanceGroupTimeoutsEl {
-        ComputeInstanceGroupTimeoutsEl {
+impl BuildComputeInstanceGroup_Timeouts {
+    pub fn build(self) -> ComputeInstanceGroup_Timeouts {
+        ComputeInstanceGroup_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -539,21 +570,23 @@ impl BuildComputeInstanceGroupTimeoutsEl {
     }
 }
 
-pub struct ComputeInstanceGroupTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComputeInstanceGroup_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeInstanceGroupTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeInstanceGroupTimeoutsElRef {
-        ComputeInstanceGroupTimeoutsElRef {
+impl terrars::Ref for ComputeInstanceGroup_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeInstanceGroup_TimeoutsRef {
+        ComputeInstanceGroup_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeInstanceGroupTimeoutsElRef {
+impl ComputeInstanceGroup_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -572,9 +605,4 @@ impl ComputeInstanceGroupTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ComputeInstanceGroupDynamic {
-    named_port: std::option::Option<terrars::DynamicBlock<ComputeInstanceGroupNamedPortEl>>,
 }

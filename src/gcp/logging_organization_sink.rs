@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct LoggingOrganizationSinkData {
+struct LoggingOrganizationSinkData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct LoggingOrganizationSinkData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     destination: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -29,19 +33,21 @@ struct LoggingOrganizationSinkData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     include_children: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    intercept_children: std::option::Option<terrars::PrimField<bool>>,
     name: terrars::PrimField<std::string::String>,
     org_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    bigquery_options: std::option::Option<std::vec::Vec<LoggingOrganizationSinkBigqueryOptionsEl>>,
+    bigquery_options: std::option::Option<std::vec::Vec<LoggingOrganizationSink_BigqueryOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    exclusions: std::option::Option<std::vec::Vec<LoggingOrganizationSinkExclusionsEl>>,
+    exclusions: std::option::Option<std::vec::Vec<LoggingOrganizationSink_Exclusions>>,
     dynamic: LoggingOrganizationSinkDynamic,
 }
 
 struct LoggingOrganizationSink_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<LoggingOrganizationSinkData>,
+    data: std::cell::RefCell<LoggingOrganizationSinkData_>,
 }
 
 #[derive(Clone)]
@@ -142,6 +148,13 @@ impl LoggingOrganizationSink {
     }
 
     #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `description`.\nA description of this sink. The maximum length of the description is 8000 characters."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -169,16 +182,23 @@ impl LoggingOrganizationSink {
     }
 
     #[doc =
-        "Set the field `include_children`.\nWhether or not to include children organizations in the sink export. If true, logs associated with child projects are also exported; otherwise only logs relating to the provided organization are included."]
+        "Set the field `include_children`.\nWhether or not to include child folders or projects in the sink export. If true, logs associated with child projects are also exported; otherwise only logs relating to the provided organization are included."]
     pub fn set_include_children(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().include_children = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `intercept_children`.\nWhether or not to intercept logs from child projects. If true, matching logs will not match with sinks in child resources, except _Required sinks. This sink will be visible to child resources when listing sinks."]
+    pub fn set_intercept_children(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().intercept_children = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `bigquery_options`.\n"]
     pub fn set_bigquery_options(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LoggingOrganizationSinkBigqueryOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LoggingOrganizationSink_BigqueryOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -194,7 +214,7 @@ impl LoggingOrganizationSink {
     #[doc = "Set the field `exclusions`.\n"]
     pub fn set_exclusions(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LoggingOrganizationSinkExclusionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LoggingOrganizationSink_Exclusions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -205,6 +225,12 @@ impl LoggingOrganizationSink {
             },
         }
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -237,9 +263,15 @@ impl LoggingOrganizationSink {
     }
 
     #[doc =
-        "Get a reference to the value of field `include_children` after provisioning.\nWhether or not to include children organizations in the sink export. If true, logs associated with child projects are also exported; otherwise only logs relating to the provided organization are included."]
+        "Get a reference to the value of field `include_children` after provisioning.\nWhether or not to include child folders or projects in the sink export. If true, logs associated with child projects are also exported; otherwise only logs relating to the provided organization are included."]
     pub fn include_children(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.include_children", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `intercept_children` after provisioning.\nWhether or not to intercept logs from child projects. If true, matching logs will not match with sinks in child resources, except _Required sinks. This sink will be visible to child resources when listing sinks."]
+    pub fn intercept_children(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.intercept_children", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `name` after provisioning.\nThe name of the logging sink."]
@@ -260,12 +292,12 @@ impl LoggingOrganizationSink {
     }
 
     #[doc = "Get a reference to the value of field `bigquery_options` after provisioning.\n"]
-    pub fn bigquery_options(&self) -> terrars::ListRef<LoggingOrganizationSinkBigqueryOptionsElRef> {
+    pub fn bigquery_options(&self) -> terrars::ListRef<LoggingOrganizationSink_BigqueryOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.bigquery_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `exclusions` after provisioning.\n"]
-    pub fn exclusions(&self) -> terrars::ListRef<LoggingOrganizationSinkExclusionsElRef> {
+    pub fn exclusions(&self) -> terrars::ListRef<LoggingOrganizationSink_ExclusionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.exclusions", self.extract_ref()))
     }
 }
@@ -317,18 +349,20 @@ impl BuildLoggingOrganizationSink {
         let out = LoggingOrganizationSink(std::rc::Rc::new(LoggingOrganizationSink_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(LoggingOrganizationSinkData {
+            data: std::cell::RefCell::new(LoggingOrganizationSinkData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 destination: self.destination,
                 disabled: core::default::Default::default(),
                 filter: core::default::Default::default(),
                 id: core::default::Default::default(),
                 include_children: core::default::Default::default(),
+                intercept_children: core::default::Default::default(),
                 name: self.name,
                 org_id: self.org_id,
                 bigquery_options: core::default::Default::default(),
@@ -365,6 +399,12 @@ impl LoggingOrganizationSinkRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nA description of this sink. The maximum length of the description is 8000 characters."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -394,9 +434,15 @@ impl LoggingOrganizationSinkRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `include_children` after provisioning.\nWhether or not to include children organizations in the sink export. If true, logs associated with child projects are also exported; otherwise only logs relating to the provided organization are included."]
+        "Get a reference to the value of field `include_children` after provisioning.\nWhether or not to include child folders or projects in the sink export. If true, logs associated with child projects are also exported; otherwise only logs relating to the provided organization are included."]
     pub fn include_children(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.include_children", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `intercept_children` after provisioning.\nWhether or not to intercept logs from child projects. If true, matching logs will not match with sinks in child resources, except _Required sinks. This sink will be visible to child resources when listing sinks."]
+    pub fn intercept_children(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.intercept_children", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `name` after provisioning.\nThe name of the logging sink."]
@@ -417,25 +463,31 @@ impl LoggingOrganizationSinkRef {
     }
 
     #[doc = "Get a reference to the value of field `bigquery_options` after provisioning.\n"]
-    pub fn bigquery_options(&self) -> terrars::ListRef<LoggingOrganizationSinkBigqueryOptionsElRef> {
+    pub fn bigquery_options(&self) -> terrars::ListRef<LoggingOrganizationSink_BigqueryOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.bigquery_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `exclusions` after provisioning.\n"]
-    pub fn exclusions(&self) -> terrars::ListRef<LoggingOrganizationSinkExclusionsElRef> {
+    pub fn exclusions(&self) -> terrars::ListRef<LoggingOrganizationSink_ExclusionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.exclusions", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct LoggingOrganizationSinkDynamic {
+    bigquery_options: std::option::Option<terrars::DynamicBlock<LoggingOrganizationSink_BigqueryOptions>>,
+    exclusions: std::option::Option<terrars::DynamicBlock<LoggingOrganizationSink_Exclusions>>,
+}
+
 #[derive(Serialize)]
-pub struct LoggingOrganizationSinkBigqueryOptionsEl {
+pub struct LoggingOrganizationSink_BigqueryOptions {
     use_partitioned_tables: terrars::PrimField<bool>,
 }
 
-impl LoggingOrganizationSinkBigqueryOptionsEl { }
+impl LoggingOrganizationSink_BigqueryOptions { }
 
-impl terrars::ToListMappable for LoggingOrganizationSinkBigqueryOptionsEl {
-    type O = terrars::BlockAssignable<LoggingOrganizationSinkBigqueryOptionsEl>;
+impl terrars::ToListMappable for LoggingOrganizationSink_BigqueryOptions {
+    type O = terrars::BlockAssignable<LoggingOrganizationSink_BigqueryOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -446,33 +498,35 @@ impl terrars::ToListMappable for LoggingOrganizationSinkBigqueryOptionsEl {
     }
 }
 
-pub struct BuildLoggingOrganizationSinkBigqueryOptionsEl {
+pub struct BuildLoggingOrganizationSink_BigqueryOptions {
     #[doc =
         "Whether to use BigQuery's partition tables. By default, Logging creates dated tables based on the log entries' timestamps, e.g. syslog_20170523. With partitioned tables the date suffix is no longer present and special query syntax has to be used instead. In both cases, tables are sharded based on UTC timezone."]
     pub use_partitioned_tables: terrars::PrimField<bool>,
 }
 
-impl BuildLoggingOrganizationSinkBigqueryOptionsEl {
-    pub fn build(self) -> LoggingOrganizationSinkBigqueryOptionsEl {
-        LoggingOrganizationSinkBigqueryOptionsEl { use_partitioned_tables: self.use_partitioned_tables }
+impl BuildLoggingOrganizationSink_BigqueryOptions {
+    pub fn build(self) -> LoggingOrganizationSink_BigqueryOptions {
+        LoggingOrganizationSink_BigqueryOptions { use_partitioned_tables: self.use_partitioned_tables }
     }
 }
 
-pub struct LoggingOrganizationSinkBigqueryOptionsElRef {
+#[allow(dead_code)]
+pub struct LoggingOrganizationSink_BigqueryOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LoggingOrganizationSinkBigqueryOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LoggingOrganizationSinkBigqueryOptionsElRef {
-        LoggingOrganizationSinkBigqueryOptionsElRef {
+impl terrars::Ref for LoggingOrganizationSink_BigqueryOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LoggingOrganizationSink_BigqueryOptionsRef {
+        LoggingOrganizationSink_BigqueryOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LoggingOrganizationSinkBigqueryOptionsElRef {
+impl LoggingOrganizationSink_BigqueryOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -485,7 +539,7 @@ impl LoggingOrganizationSinkBigqueryOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct LoggingOrganizationSinkExclusionsEl {
+pub struct LoggingOrganizationSink_Exclusions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -494,7 +548,7 @@ pub struct LoggingOrganizationSinkExclusionsEl {
     name: terrars::PrimField<std::string::String>,
 }
 
-impl LoggingOrganizationSinkExclusionsEl {
+impl LoggingOrganizationSink_Exclusions {
     #[doc = "Set the field `description`.\nA description of this exclusion."]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -509,8 +563,8 @@ impl LoggingOrganizationSinkExclusionsEl {
     }
 }
 
-impl terrars::ToListMappable for LoggingOrganizationSinkExclusionsEl {
-    type O = terrars::BlockAssignable<LoggingOrganizationSinkExclusionsEl>;
+impl terrars::ToListMappable for LoggingOrganizationSink_Exclusions {
+    type O = terrars::BlockAssignable<LoggingOrganizationSink_Exclusions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -521,7 +575,7 @@ impl terrars::ToListMappable for LoggingOrganizationSinkExclusionsEl {
     }
 }
 
-pub struct BuildLoggingOrganizationSinkExclusionsEl {
+pub struct BuildLoggingOrganizationSink_Exclusions {
     #[doc =
         "An advanced logs filter that matches the log entries to be excluded. By using the sample function, you can exclude less than 100% of the matching log entries"]
     pub filter: terrars::PrimField<std::string::String>,
@@ -530,9 +584,9 @@ pub struct BuildLoggingOrganizationSinkExclusionsEl {
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLoggingOrganizationSinkExclusionsEl {
-    pub fn build(self) -> LoggingOrganizationSinkExclusionsEl {
-        LoggingOrganizationSinkExclusionsEl {
+impl BuildLoggingOrganizationSink_Exclusions {
+    pub fn build(self) -> LoggingOrganizationSink_Exclusions {
+        LoggingOrganizationSink_Exclusions {
             description: core::default::Default::default(),
             disabled: core::default::Default::default(),
             filter: self.filter,
@@ -541,21 +595,23 @@ impl BuildLoggingOrganizationSinkExclusionsEl {
     }
 }
 
-pub struct LoggingOrganizationSinkExclusionsElRef {
+#[allow(dead_code)]
+pub struct LoggingOrganizationSink_ExclusionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LoggingOrganizationSinkExclusionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LoggingOrganizationSinkExclusionsElRef {
-        LoggingOrganizationSinkExclusionsElRef {
+impl terrars::Ref for LoggingOrganizationSink_ExclusionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LoggingOrganizationSink_ExclusionsRef {
+        LoggingOrganizationSink_ExclusionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LoggingOrganizationSinkExclusionsElRef {
+impl LoggingOrganizationSink_ExclusionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -582,10 +638,4 @@ impl LoggingOrganizationSinkExclusionsElRef {
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct LoggingOrganizationSinkDynamic {
-    bigquery_options: std::option::Option<terrars::DynamicBlock<LoggingOrganizationSinkBigqueryOptionsEl>>,
-    exclusions: std::option::Option<terrars::DynamicBlock<LoggingOrganizationSinkExclusionsEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataClientOpenidUserinfoData {
+struct DataClientOpenidUserinfoData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -21,7 +23,7 @@ struct DataClientOpenidUserinfoData {
 struct DataClientOpenidUserinfo_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataClientOpenidUserinfoData>,
+    data: std::cell::RefCell<DataClientOpenidUserinfoData_>,
 }
 
 #[derive(Clone)]
@@ -119,7 +121,7 @@ impl BuildDataClientOpenidUserinfo {
         let out = DataClientOpenidUserinfo(std::rc::Rc::new(DataClientOpenidUserinfo_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataClientOpenidUserinfoData {
+            data: std::cell::RefCell::new(DataClientOpenidUserinfoData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),

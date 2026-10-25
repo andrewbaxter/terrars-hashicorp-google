@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataCatalogTaxonomyIamMemberData {
+struct DataCatalogTaxonomyIamMemberData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,14 +30,14 @@ struct DataCatalogTaxonomyIamMemberData {
     role: terrars::PrimField<std::string::String>,
     taxonomy: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<DataCatalogTaxonomyIamMemberConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<DataCatalogTaxonomyIamMember_Condition>>,
     dynamic: DataCatalogTaxonomyIamMemberDynamic,
 }
 
 struct DataCatalogTaxonomyIamMember_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataCatalogTaxonomyIamMemberData>,
+    data: std::cell::RefCell<DataCatalogTaxonomyIamMemberData_>,
 }
 
 #[derive(Clone)]
@@ -156,7 +158,7 @@ impl DataCatalogTaxonomyIamMember {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataCatalogTaxonomyIamMemberConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataCatalogTaxonomyIamMember_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -205,7 +207,7 @@ impl DataCatalogTaxonomyIamMember {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<DataCatalogTaxonomyIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<DataCatalogTaxonomyIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -256,7 +258,7 @@ impl BuildDataCatalogTaxonomyIamMember {
         let out = DataCatalogTaxonomyIamMember(std::rc::Rc::new(DataCatalogTaxonomyIamMember_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataCatalogTaxonomyIamMemberData {
+            data: std::cell::RefCell::new(DataCatalogTaxonomyIamMemberData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -336,20 +338,25 @@ impl DataCatalogTaxonomyIamMemberRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<DataCatalogTaxonomyIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<DataCatalogTaxonomyIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataCatalogTaxonomyIamMemberDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<DataCatalogTaxonomyIamMember_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct DataCatalogTaxonomyIamMemberConditionEl {
+pub struct DataCatalogTaxonomyIamMember_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl DataCatalogTaxonomyIamMemberConditionEl {
+impl DataCatalogTaxonomyIamMember_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -357,8 +364,8 @@ impl DataCatalogTaxonomyIamMemberConditionEl {
     }
 }
 
-impl terrars::ToListMappable for DataCatalogTaxonomyIamMemberConditionEl {
-    type O = terrars::BlockAssignable<DataCatalogTaxonomyIamMemberConditionEl>;
+impl terrars::ToListMappable for DataCatalogTaxonomyIamMember_Condition {
+    type O = terrars::BlockAssignable<DataCatalogTaxonomyIamMember_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -369,16 +376,16 @@ impl terrars::ToListMappable for DataCatalogTaxonomyIamMemberConditionEl {
     }
 }
 
-pub struct BuildDataCatalogTaxonomyIamMemberConditionEl {
+pub struct BuildDataCatalogTaxonomyIamMember_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataCatalogTaxonomyIamMemberConditionEl {
-    pub fn build(self) -> DataCatalogTaxonomyIamMemberConditionEl {
-        DataCatalogTaxonomyIamMemberConditionEl {
+impl BuildDataCatalogTaxonomyIamMember_Condition {
+    pub fn build(self) -> DataCatalogTaxonomyIamMember_Condition {
+        DataCatalogTaxonomyIamMember_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -386,21 +393,23 @@ impl BuildDataCatalogTaxonomyIamMemberConditionEl {
     }
 }
 
-pub struct DataCatalogTaxonomyIamMemberConditionElRef {
+#[allow(dead_code)]
+pub struct DataCatalogTaxonomyIamMember_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCatalogTaxonomyIamMemberConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCatalogTaxonomyIamMemberConditionElRef {
-        DataCatalogTaxonomyIamMemberConditionElRef {
+impl terrars::Ref for DataCatalogTaxonomyIamMember_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCatalogTaxonomyIamMember_ConditionRef {
+        DataCatalogTaxonomyIamMember_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCatalogTaxonomyIamMemberConditionElRef {
+impl DataCatalogTaxonomyIamMember_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -419,9 +428,4 @@ impl DataCatalogTaxonomyIamMemberConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataCatalogTaxonomyIamMemberDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<DataCatalogTaxonomyIamMemberConditionEl>>,
 }

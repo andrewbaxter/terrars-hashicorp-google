@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct AppEngineApplicationUrlDispatchRulesData {
+struct AppEngineApplicationUrlDispatchRulesData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,20 +21,22 @@ struct AppEngineApplicationUrlDispatchRulesData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    dispatch_rules: std::option::Option<std::vec::Vec<AppEngineApplicationUrlDispatchRulesDispatchRulesEl>>,
+    dispatch_rules: std::option::Option<std::vec::Vec<AppEngineApplicationUrlDispatchRules_DispatchRules>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<AppEngineApplicationUrlDispatchRulesTimeoutsEl>,
+    timeouts: std::option::Option<AppEngineApplicationUrlDispatchRules_Timeouts>,
     dynamic: AppEngineApplicationUrlDispatchRulesDynamic,
 }
 
 struct AppEngineApplicationUrlDispatchRules_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AppEngineApplicationUrlDispatchRulesData>,
+    data: std::cell::RefCell<AppEngineApplicationUrlDispatchRulesData_>,
 }
 
 #[derive(Clone)]
@@ -132,6 +136,13 @@ impl AppEngineApplicationUrlDispatchRules {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -147,7 +158,7 @@ impl AppEngineApplicationUrlDispatchRules {
     #[doc = "Set the field `dispatch_rules`.\n"]
     pub fn set_dispatch_rules(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineApplicationUrlDispatchRulesDispatchRulesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineApplicationUrlDispatchRules_DispatchRules>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -161,9 +172,15 @@ impl AppEngineApplicationUrlDispatchRules {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<AppEngineApplicationUrlDispatchRulesTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<AppEngineApplicationUrlDispatchRules_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -177,13 +194,13 @@ impl AppEngineApplicationUrlDispatchRules {
     }
 
     #[doc = "Get a reference to the value of field `dispatch_rules` after provisioning.\n"]
-    pub fn dispatch_rules(&self) -> terrars::ListRef<AppEngineApplicationUrlDispatchRulesDispatchRulesElRef> {
+    pub fn dispatch_rules(&self) -> terrars::ListRef<AppEngineApplicationUrlDispatchRules_DispatchRulesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dispatch_rules", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> AppEngineApplicationUrlDispatchRulesTimeoutsElRef {
-        AppEngineApplicationUrlDispatchRulesTimeoutsElRef::new(
+    pub fn timeouts(&self) -> AppEngineApplicationUrlDispatchRules_TimeoutsRef {
+        AppEngineApplicationUrlDispatchRules_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -230,12 +247,13 @@ impl BuildAppEngineApplicationUrlDispatchRules {
         let out = AppEngineApplicationUrlDispatchRules(std::rc::Rc::new(AppEngineApplicationUrlDispatchRules_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AppEngineApplicationUrlDispatchRulesData {
+            data: std::cell::RefCell::new(AppEngineApplicationUrlDispatchRulesData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 project: core::default::Default::default(),
                 dispatch_rules: core::default::Default::default(),
@@ -271,6 +289,12 @@ impl AppEngineApplicationUrlDispatchRulesRef {
         &self.shared
     }
 
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -282,28 +306,33 @@ impl AppEngineApplicationUrlDispatchRulesRef {
     }
 
     #[doc = "Get a reference to the value of field `dispatch_rules` after provisioning.\n"]
-    pub fn dispatch_rules(&self) -> terrars::ListRef<AppEngineApplicationUrlDispatchRulesDispatchRulesElRef> {
+    pub fn dispatch_rules(&self) -> terrars::ListRef<AppEngineApplicationUrlDispatchRules_DispatchRulesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dispatch_rules", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> AppEngineApplicationUrlDispatchRulesTimeoutsElRef {
-        AppEngineApplicationUrlDispatchRulesTimeoutsElRef::new(
+    pub fn timeouts(&self) -> AppEngineApplicationUrlDispatchRules_TimeoutsRef {
+        AppEngineApplicationUrlDispatchRules_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct AppEngineApplicationUrlDispatchRulesDynamic {
+    dispatch_rules: std::option::Option<terrars::DynamicBlock<AppEngineApplicationUrlDispatchRules_DispatchRules>>,
+}
+
 #[derive(Serialize)]
-pub struct AppEngineApplicationUrlDispatchRulesDispatchRulesEl {
+pub struct AppEngineApplicationUrlDispatchRules_DispatchRules {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     domain: std::option::Option<terrars::PrimField<std::string::String>>,
     path: terrars::PrimField<std::string::String>,
     service: terrars::PrimField<std::string::String>,
 }
 
-impl AppEngineApplicationUrlDispatchRulesDispatchRulesEl {
+impl AppEngineApplicationUrlDispatchRules_DispatchRules {
     #[doc =
         "Set the field `domain`.\nDomain name to match against. The wildcard \"*\" is supported if specified before a period: \"*.\".\nDefaults to matching all domains: \"*\"."]
     pub fn set_domain(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -312,8 +341,8 @@ impl AppEngineApplicationUrlDispatchRulesDispatchRulesEl {
     }
 }
 
-impl terrars::ToListMappable for AppEngineApplicationUrlDispatchRulesDispatchRulesEl {
-    type O = terrars::BlockAssignable<AppEngineApplicationUrlDispatchRulesDispatchRulesEl>;
+impl terrars::ToListMappable for AppEngineApplicationUrlDispatchRules_DispatchRules {
+    type O = terrars::BlockAssignable<AppEngineApplicationUrlDispatchRules_DispatchRules>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -324,7 +353,7 @@ impl terrars::ToListMappable for AppEngineApplicationUrlDispatchRulesDispatchRul
     }
 }
 
-pub struct BuildAppEngineApplicationUrlDispatchRulesDispatchRulesEl {
+pub struct BuildAppEngineApplicationUrlDispatchRules_DispatchRules {
     #[doc =
         "Pathname within the host. Must start with a \"/\". A single \"*\" can be included at the end of the path.\nThe sum of the lengths of the domain and path may not exceed 100 characters."]
     pub path: terrars::PrimField<std::string::String>,
@@ -333,9 +362,9 @@ pub struct BuildAppEngineApplicationUrlDispatchRulesDispatchRulesEl {
     pub service: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppEngineApplicationUrlDispatchRulesDispatchRulesEl {
-    pub fn build(self) -> AppEngineApplicationUrlDispatchRulesDispatchRulesEl {
-        AppEngineApplicationUrlDispatchRulesDispatchRulesEl {
+impl BuildAppEngineApplicationUrlDispatchRules_DispatchRules {
+    pub fn build(self) -> AppEngineApplicationUrlDispatchRules_DispatchRules {
+        AppEngineApplicationUrlDispatchRules_DispatchRules {
             domain: core::default::Default::default(),
             path: self.path,
             service: self.service,
@@ -343,24 +372,26 @@ impl BuildAppEngineApplicationUrlDispatchRulesDispatchRulesEl {
     }
 }
 
-pub struct AppEngineApplicationUrlDispatchRulesDispatchRulesElRef {
+#[allow(dead_code)]
+pub struct AppEngineApplicationUrlDispatchRules_DispatchRulesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineApplicationUrlDispatchRulesDispatchRulesElRef {
+impl terrars::Ref for AppEngineApplicationUrlDispatchRules_DispatchRulesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppEngineApplicationUrlDispatchRulesDispatchRulesElRef {
-        AppEngineApplicationUrlDispatchRulesDispatchRulesElRef {
+    ) -> AppEngineApplicationUrlDispatchRules_DispatchRulesRef {
+        AppEngineApplicationUrlDispatchRules_DispatchRulesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineApplicationUrlDispatchRulesDispatchRulesElRef {
+impl AppEngineApplicationUrlDispatchRules_DispatchRulesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -385,7 +416,7 @@ impl AppEngineApplicationUrlDispatchRulesDispatchRulesElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppEngineApplicationUrlDispatchRulesTimeoutsEl {
+pub struct AppEngineApplicationUrlDispatchRules_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -394,7 +425,7 @@ pub struct AppEngineApplicationUrlDispatchRulesTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppEngineApplicationUrlDispatchRulesTimeoutsEl {
+impl AppEngineApplicationUrlDispatchRules_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -414,8 +445,8 @@ impl AppEngineApplicationUrlDispatchRulesTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for AppEngineApplicationUrlDispatchRulesTimeoutsEl {
-    type O = terrars::BlockAssignable<AppEngineApplicationUrlDispatchRulesTimeoutsEl>;
+impl terrars::ToListMappable for AppEngineApplicationUrlDispatchRules_Timeouts {
+    type O = terrars::BlockAssignable<AppEngineApplicationUrlDispatchRules_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -426,11 +457,11 @@ impl terrars::ToListMappable for AppEngineApplicationUrlDispatchRulesTimeoutsEl 
     }
 }
 
-pub struct BuildAppEngineApplicationUrlDispatchRulesTimeoutsEl {}
+pub struct BuildAppEngineApplicationUrlDispatchRules_Timeouts {}
 
-impl BuildAppEngineApplicationUrlDispatchRulesTimeoutsEl {
-    pub fn build(self) -> AppEngineApplicationUrlDispatchRulesTimeoutsEl {
-        AppEngineApplicationUrlDispatchRulesTimeoutsEl {
+impl BuildAppEngineApplicationUrlDispatchRules_Timeouts {
+    pub fn build(self) -> AppEngineApplicationUrlDispatchRules_Timeouts {
+        AppEngineApplicationUrlDispatchRules_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -438,24 +469,26 @@ impl BuildAppEngineApplicationUrlDispatchRulesTimeoutsEl {
     }
 }
 
-pub struct AppEngineApplicationUrlDispatchRulesTimeoutsElRef {
+#[allow(dead_code)]
+pub struct AppEngineApplicationUrlDispatchRules_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineApplicationUrlDispatchRulesTimeoutsElRef {
+impl terrars::Ref for AppEngineApplicationUrlDispatchRules_TimeoutsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppEngineApplicationUrlDispatchRulesTimeoutsElRef {
-        AppEngineApplicationUrlDispatchRulesTimeoutsElRef {
+    ) -> AppEngineApplicationUrlDispatchRules_TimeoutsRef {
+        AppEngineApplicationUrlDispatchRules_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineApplicationUrlDispatchRulesTimeoutsElRef {
+impl AppEngineApplicationUrlDispatchRules_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -474,9 +507,4 @@ impl AppEngineApplicationUrlDispatchRulesTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AppEngineApplicationUrlDispatchRulesDynamic {
-    dispatch_rules: std::option::Option<terrars::DynamicBlock<AppEngineApplicationUrlDispatchRulesDispatchRulesEl>>,
 }

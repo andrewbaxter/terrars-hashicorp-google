@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct IdentityPlatformTenantInboundSamlConfigData {
+struct IdentityPlatformTenantInboundSamlConfigData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct IdentityPlatformTenantInboundSamlConfigData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     display_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
@@ -28,18 +32,18 @@ struct IdentityPlatformTenantInboundSamlConfigData {
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     tenant: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    idp_config: std::option::Option<std::vec::Vec<IdentityPlatformTenantInboundSamlConfigIdpConfigEl>>,
+    idp_config: std::option::Option<std::vec::Vec<IdentityPlatformTenantInboundSamlConfig_IdpConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sp_config: std::option::Option<std::vec::Vec<IdentityPlatformTenantInboundSamlConfigSpConfigEl>>,
+    sp_config: std::option::Option<std::vec::Vec<IdentityPlatformTenantInboundSamlConfig_SpConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<IdentityPlatformTenantInboundSamlConfigTimeoutsEl>,
+    timeouts: std::option::Option<IdentityPlatformTenantInboundSamlConfig_Timeouts>,
     dynamic: IdentityPlatformTenantInboundSamlConfigDynamic,
 }
 
 struct IdentityPlatformTenantInboundSamlConfig_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<IdentityPlatformTenantInboundSamlConfigData>,
+    data: std::cell::RefCell<IdentityPlatformTenantInboundSamlConfigData_>,
 }
 
 #[derive(Clone)]
@@ -139,6 +143,13 @@ impl IdentityPlatformTenantInboundSamlConfig {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `enabled`.\nIf this config allows users to sign in with the provider."]
     pub fn set_enabled(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().enabled = std::option::Option::Some(v.into());
@@ -160,7 +171,7 @@ impl IdentityPlatformTenantInboundSamlConfig {
     #[doc = "Set the field `idp_config`.\n"]
     pub fn set_idp_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<IdentityPlatformTenantInboundSamlConfigIdpConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IdentityPlatformTenantInboundSamlConfig_IdpConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -176,7 +187,7 @@ impl IdentityPlatformTenantInboundSamlConfig {
     #[doc = "Set the field `sp_config`.\n"]
     pub fn set_sp_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<IdentityPlatformTenantInboundSamlConfigSpConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IdentityPlatformTenantInboundSamlConfig_SpConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -190,9 +201,15 @@ impl IdentityPlatformTenantInboundSamlConfig {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<IdentityPlatformTenantInboundSamlConfigTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<IdentityPlatformTenantInboundSamlConfig_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `display_name` after provisioning.\nHuman friendly display name."]
@@ -229,18 +246,18 @@ impl IdentityPlatformTenantInboundSamlConfig {
     }
 
     #[doc = "Get a reference to the value of field `idp_config` after provisioning.\n"]
-    pub fn idp_config(&self) -> terrars::ListRef<IdentityPlatformTenantInboundSamlConfigIdpConfigElRef> {
+    pub fn idp_config(&self) -> terrars::ListRef<IdentityPlatformTenantInboundSamlConfig_IdpConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.idp_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `sp_config` after provisioning.\n"]
-    pub fn sp_config(&self) -> terrars::ListRef<IdentityPlatformTenantInboundSamlConfigSpConfigElRef> {
+    pub fn sp_config(&self) -> terrars::ListRef<IdentityPlatformTenantInboundSamlConfig_SpConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sp_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> IdentityPlatformTenantInboundSamlConfigTimeoutsElRef {
-        IdentityPlatformTenantInboundSamlConfigTimeoutsElRef::new(
+    pub fn timeouts(&self) -> IdentityPlatformTenantInboundSamlConfig_TimeoutsRef {
+        IdentityPlatformTenantInboundSamlConfig_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -294,12 +311,13 @@ impl BuildIdentityPlatformTenantInboundSamlConfig {
         let out = IdentityPlatformTenantInboundSamlConfig(std::rc::Rc::new(IdentityPlatformTenantInboundSamlConfig_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(IdentityPlatformTenantInboundSamlConfigData {
+            data: std::cell::RefCell::new(IdentityPlatformTenantInboundSamlConfigData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 display_name: self.display_name,
                 enabled: core::default::Default::default(),
                 id: core::default::Default::default(),
@@ -340,6 +358,12 @@ impl IdentityPlatformTenantInboundSamlConfigRef {
         &self.shared
     }
 
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `display_name` after provisioning.\nHuman friendly display name."]
     pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
@@ -374,31 +398,37 @@ impl IdentityPlatformTenantInboundSamlConfigRef {
     }
 
     #[doc = "Get a reference to the value of field `idp_config` after provisioning.\n"]
-    pub fn idp_config(&self) -> terrars::ListRef<IdentityPlatformTenantInboundSamlConfigIdpConfigElRef> {
+    pub fn idp_config(&self) -> terrars::ListRef<IdentityPlatformTenantInboundSamlConfig_IdpConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.idp_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `sp_config` after provisioning.\n"]
-    pub fn sp_config(&self) -> terrars::ListRef<IdentityPlatformTenantInboundSamlConfigSpConfigElRef> {
+    pub fn sp_config(&self) -> terrars::ListRef<IdentityPlatformTenantInboundSamlConfig_SpConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sp_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> IdentityPlatformTenantInboundSamlConfigTimeoutsElRef {
-        IdentityPlatformTenantInboundSamlConfigTimeoutsElRef::new(
+    pub fn timeouts(&self) -> IdentityPlatformTenantInboundSamlConfig_TimeoutsRef {
+        IdentityPlatformTenantInboundSamlConfig_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct IdentityPlatformTenantInboundSamlConfigDynamic {
+    idp_config: std::option::Option<terrars::DynamicBlock<IdentityPlatformTenantInboundSamlConfig_IdpConfig>>,
+    sp_config: std::option::Option<terrars::DynamicBlock<IdentityPlatformTenantInboundSamlConfig_SpConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct IdentityPlatformTenantInboundSamlConfigIdpConfigElIdpCertificatesEl {
+pub struct IdentityPlatformTenantInboundSamlConfig_IdpConfig_IdpCertificates {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     x509_certificate: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl IdentityPlatformTenantInboundSamlConfigIdpConfigElIdpCertificatesEl {
+impl IdentityPlatformTenantInboundSamlConfig_IdpConfig_IdpCertificates {
     #[doc = "Set the field `x509_certificate`.\nThe x509 certificate"]
     pub fn set_x509_certificate(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.x509_certificate = std::option::Option::Some(v.into());
@@ -406,8 +436,8 @@ impl IdentityPlatformTenantInboundSamlConfigIdpConfigElIdpCertificatesEl {
     }
 }
 
-impl terrars::ToListMappable for IdentityPlatformTenantInboundSamlConfigIdpConfigElIdpCertificatesEl {
-    type O = terrars::BlockAssignable<IdentityPlatformTenantInboundSamlConfigIdpConfigElIdpCertificatesEl>;
+impl terrars::ToListMappable for IdentityPlatformTenantInboundSamlConfig_IdpConfig_IdpCertificates {
+    type O = terrars::BlockAssignable<IdentityPlatformTenantInboundSamlConfig_IdpConfig_IdpCertificates>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -418,34 +448,36 @@ impl terrars::ToListMappable for IdentityPlatformTenantInboundSamlConfigIdpConfi
     }
 }
 
-pub struct BuildIdentityPlatformTenantInboundSamlConfigIdpConfigElIdpCertificatesEl {}
+pub struct BuildIdentityPlatformTenantInboundSamlConfig_IdpConfig_IdpCertificates {}
 
-impl BuildIdentityPlatformTenantInboundSamlConfigIdpConfigElIdpCertificatesEl {
-    pub fn build(self) -> IdentityPlatformTenantInboundSamlConfigIdpConfigElIdpCertificatesEl {
-        IdentityPlatformTenantInboundSamlConfigIdpConfigElIdpCertificatesEl {
+impl BuildIdentityPlatformTenantInboundSamlConfig_IdpConfig_IdpCertificates {
+    pub fn build(self) -> IdentityPlatformTenantInboundSamlConfig_IdpConfig_IdpCertificates {
+        IdentityPlatformTenantInboundSamlConfig_IdpConfig_IdpCertificates {
             x509_certificate: core::default::Default::default(),
         }
     }
 }
 
-pub struct IdentityPlatformTenantInboundSamlConfigIdpConfigElIdpCertificatesElRef {
+#[allow(dead_code)]
+pub struct IdentityPlatformTenantInboundSamlConfig_IdpConfig_IdpCertificatesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IdentityPlatformTenantInboundSamlConfigIdpConfigElIdpCertificatesElRef {
+impl terrars::Ref for IdentityPlatformTenantInboundSamlConfig_IdpConfig_IdpCertificatesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IdentityPlatformTenantInboundSamlConfigIdpConfigElIdpCertificatesElRef {
-        IdentityPlatformTenantInboundSamlConfigIdpConfigElIdpCertificatesElRef {
+    ) -> IdentityPlatformTenantInboundSamlConfig_IdpConfig_IdpCertificatesRef {
+        IdentityPlatformTenantInboundSamlConfig_IdpConfig_IdpCertificatesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IdentityPlatformTenantInboundSamlConfigIdpConfigElIdpCertificatesElRef {
+impl IdentityPlatformTenantInboundSamlConfig_IdpConfig_IdpCertificatesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -457,14 +489,14 @@ impl IdentityPlatformTenantInboundSamlConfigIdpConfigElIdpCertificatesElRef {
 }
 
 #[derive(Serialize, Default)]
-struct IdentityPlatformTenantInboundSamlConfigIdpConfigElDynamic {
+struct IdentityPlatformTenantInboundSamlConfig_IdpConfigDynamic {
     idp_certificates: std
     ::option
-    ::Option<terrars::DynamicBlock<IdentityPlatformTenantInboundSamlConfigIdpConfigElIdpCertificatesEl>>,
+    ::Option<terrars::DynamicBlock<IdentityPlatformTenantInboundSamlConfig_IdpConfig_IdpCertificates>>,
 }
 
 #[derive(Serialize)]
-pub struct IdentityPlatformTenantInboundSamlConfigIdpConfigEl {
+pub struct IdentityPlatformTenantInboundSamlConfig_IdpConfig {
     idp_entity_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sign_request: std::option::Option<terrars::PrimField<bool>>,
@@ -472,11 +504,11 @@ pub struct IdentityPlatformTenantInboundSamlConfigIdpConfigEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     idp_certificates: std
     ::option
-    ::Option<std::vec::Vec<IdentityPlatformTenantInboundSamlConfigIdpConfigElIdpCertificatesEl>>,
-    dynamic: IdentityPlatformTenantInboundSamlConfigIdpConfigElDynamic,
+    ::Option<std::vec::Vec<IdentityPlatformTenantInboundSamlConfig_IdpConfig_IdpCertificates>>,
+    dynamic: IdentityPlatformTenantInboundSamlConfig_IdpConfigDynamic,
 }
 
-impl IdentityPlatformTenantInboundSamlConfigIdpConfigEl {
+impl IdentityPlatformTenantInboundSamlConfig_IdpConfig {
     #[doc = "Set the field `sign_request`.\nIndicates if outbounding SAMLRequest should be signed."]
     pub fn set_sign_request(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.sign_request = std::option::Option::Some(v.into());
@@ -492,7 +524,7 @@ impl IdentityPlatformTenantInboundSamlConfigIdpConfigEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<IdentityPlatformTenantInboundSamlConfigIdpConfigElIdpCertificatesEl>,
+                        terrars::BlockAssignable<IdentityPlatformTenantInboundSamlConfig_IdpConfig_IdpCertificates>,
                     >,
     ) -> Self {
         match v.into() {
@@ -507,8 +539,8 @@ impl IdentityPlatformTenantInboundSamlConfigIdpConfigEl {
     }
 }
 
-impl terrars::ToListMappable for IdentityPlatformTenantInboundSamlConfigIdpConfigEl {
-    type O = terrars::BlockAssignable<IdentityPlatformTenantInboundSamlConfigIdpConfigEl>;
+impl terrars::ToListMappable for IdentityPlatformTenantInboundSamlConfig_IdpConfig {
+    type O = terrars::BlockAssignable<IdentityPlatformTenantInboundSamlConfig_IdpConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -519,16 +551,16 @@ impl terrars::ToListMappable for IdentityPlatformTenantInboundSamlConfigIdpConfi
     }
 }
 
-pub struct BuildIdentityPlatformTenantInboundSamlConfigIdpConfigEl {
+pub struct BuildIdentityPlatformTenantInboundSamlConfig_IdpConfig {
     #[doc = "Unique identifier for all SAML entities"]
     pub idp_entity_id: terrars::PrimField<std::string::String>,
     #[doc = "URL to send Authentication request to."]
     pub sso_url: terrars::PrimField<std::string::String>,
 }
 
-impl BuildIdentityPlatformTenantInboundSamlConfigIdpConfigEl {
-    pub fn build(self) -> IdentityPlatformTenantInboundSamlConfigIdpConfigEl {
-        IdentityPlatformTenantInboundSamlConfigIdpConfigEl {
+impl BuildIdentityPlatformTenantInboundSamlConfig_IdpConfig {
+    pub fn build(self) -> IdentityPlatformTenantInboundSamlConfig_IdpConfig {
+        IdentityPlatformTenantInboundSamlConfig_IdpConfig {
             idp_entity_id: self.idp_entity_id,
             sign_request: core::default::Default::default(),
             sso_url: self.sso_url,
@@ -538,24 +570,26 @@ impl BuildIdentityPlatformTenantInboundSamlConfigIdpConfigEl {
     }
 }
 
-pub struct IdentityPlatformTenantInboundSamlConfigIdpConfigElRef {
+#[allow(dead_code)]
+pub struct IdentityPlatformTenantInboundSamlConfig_IdpConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IdentityPlatformTenantInboundSamlConfigIdpConfigElRef {
+impl terrars::Ref for IdentityPlatformTenantInboundSamlConfig_IdpConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IdentityPlatformTenantInboundSamlConfigIdpConfigElRef {
-        IdentityPlatformTenantInboundSamlConfigIdpConfigElRef {
+    ) -> IdentityPlatformTenantInboundSamlConfig_IdpConfigRef {
+        IdentityPlatformTenantInboundSamlConfig_IdpConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IdentityPlatformTenantInboundSamlConfigIdpConfigElRef {
+impl IdentityPlatformTenantInboundSamlConfig_IdpConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -581,18 +615,18 @@ impl IdentityPlatformTenantInboundSamlConfigIdpConfigElRef {
     #[doc = "Get a reference to the value of field `idp_certificates` after provisioning.\n"]
     pub fn idp_certificates(
         &self,
-    ) -> terrars::ListRef<IdentityPlatformTenantInboundSamlConfigIdpConfigElIdpCertificatesElRef> {
+    ) -> terrars::ListRef<IdentityPlatformTenantInboundSamlConfig_IdpConfig_IdpCertificatesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.idp_certificates", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct IdentityPlatformTenantInboundSamlConfigSpConfigElSpCertificatesEl {
+pub struct IdentityPlatformTenantInboundSamlConfig_SpConfig_SpCertificates {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     x509_certificate: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl IdentityPlatformTenantInboundSamlConfigSpConfigElSpCertificatesEl {
+impl IdentityPlatformTenantInboundSamlConfig_SpConfig_SpCertificates {
     #[doc = "Set the field `x509_certificate`.\n"]
     pub fn set_x509_certificate(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.x509_certificate = std::option::Option::Some(v.into());
@@ -600,8 +634,8 @@ impl IdentityPlatformTenantInboundSamlConfigSpConfigElSpCertificatesEl {
     }
 }
 
-impl terrars::ToListMappable for IdentityPlatformTenantInboundSamlConfigSpConfigElSpCertificatesEl {
-    type O = terrars::BlockAssignable<IdentityPlatformTenantInboundSamlConfigSpConfigElSpCertificatesEl>;
+impl terrars::ToListMappable for IdentityPlatformTenantInboundSamlConfig_SpConfig_SpCertificates {
+    type O = terrars::BlockAssignable<IdentityPlatformTenantInboundSamlConfig_SpConfig_SpCertificates>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -612,34 +646,36 @@ impl terrars::ToListMappable for IdentityPlatformTenantInboundSamlConfigSpConfig
     }
 }
 
-pub struct BuildIdentityPlatformTenantInboundSamlConfigSpConfigElSpCertificatesEl {}
+pub struct BuildIdentityPlatformTenantInboundSamlConfig_SpConfig_SpCertificates {}
 
-impl BuildIdentityPlatformTenantInboundSamlConfigSpConfigElSpCertificatesEl {
-    pub fn build(self) -> IdentityPlatformTenantInboundSamlConfigSpConfigElSpCertificatesEl {
-        IdentityPlatformTenantInboundSamlConfigSpConfigElSpCertificatesEl {
+impl BuildIdentityPlatformTenantInboundSamlConfig_SpConfig_SpCertificates {
+    pub fn build(self) -> IdentityPlatformTenantInboundSamlConfig_SpConfig_SpCertificates {
+        IdentityPlatformTenantInboundSamlConfig_SpConfig_SpCertificates {
             x509_certificate: core::default::Default::default(),
         }
     }
 }
 
-pub struct IdentityPlatformTenantInboundSamlConfigSpConfigElSpCertificatesElRef {
+#[allow(dead_code)]
+pub struct IdentityPlatformTenantInboundSamlConfig_SpConfig_SpCertificatesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IdentityPlatformTenantInboundSamlConfigSpConfigElSpCertificatesElRef {
+impl terrars::Ref for IdentityPlatformTenantInboundSamlConfig_SpConfig_SpCertificatesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IdentityPlatformTenantInboundSamlConfigSpConfigElSpCertificatesElRef {
-        IdentityPlatformTenantInboundSamlConfigSpConfigElSpCertificatesElRef {
+    ) -> IdentityPlatformTenantInboundSamlConfig_SpConfig_SpCertificatesRef {
+        IdentityPlatformTenantInboundSamlConfig_SpConfig_SpCertificatesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IdentityPlatformTenantInboundSamlConfigSpConfigElSpCertificatesElRef {
+impl IdentityPlatformTenantInboundSamlConfig_SpConfig_SpCertificatesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -651,15 +687,15 @@ impl IdentityPlatformTenantInboundSamlConfigSpConfigElSpCertificatesElRef {
 }
 
 #[derive(Serialize)]
-pub struct IdentityPlatformTenantInboundSamlConfigSpConfigEl {
+pub struct IdentityPlatformTenantInboundSamlConfig_SpConfig {
     callback_uri: terrars::PrimField<std::string::String>,
     sp_entity_id: terrars::PrimField<std::string::String>,
 }
 
-impl IdentityPlatformTenantInboundSamlConfigSpConfigEl { }
+impl IdentityPlatformTenantInboundSamlConfig_SpConfig { }
 
-impl terrars::ToListMappable for IdentityPlatformTenantInboundSamlConfigSpConfigEl {
-    type O = terrars::BlockAssignable<IdentityPlatformTenantInboundSamlConfigSpConfigEl>;
+impl terrars::ToListMappable for IdentityPlatformTenantInboundSamlConfig_SpConfig {
+    type O = terrars::BlockAssignable<IdentityPlatformTenantInboundSamlConfig_SpConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -670,40 +706,42 @@ impl terrars::ToListMappable for IdentityPlatformTenantInboundSamlConfigSpConfig
     }
 }
 
-pub struct BuildIdentityPlatformTenantInboundSamlConfigSpConfigEl {
+pub struct BuildIdentityPlatformTenantInboundSamlConfig_SpConfig {
     #[doc = "Callback URI where responses from IDP are handled. Must start with 'https://'."]
     pub callback_uri: terrars::PrimField<std::string::String>,
     #[doc = "Unique identifier for all SAML entities."]
     pub sp_entity_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildIdentityPlatformTenantInboundSamlConfigSpConfigEl {
-    pub fn build(self) -> IdentityPlatformTenantInboundSamlConfigSpConfigEl {
-        IdentityPlatformTenantInboundSamlConfigSpConfigEl {
+impl BuildIdentityPlatformTenantInboundSamlConfig_SpConfig {
+    pub fn build(self) -> IdentityPlatformTenantInboundSamlConfig_SpConfig {
+        IdentityPlatformTenantInboundSamlConfig_SpConfig {
             callback_uri: self.callback_uri,
             sp_entity_id: self.sp_entity_id,
         }
     }
 }
 
-pub struct IdentityPlatformTenantInboundSamlConfigSpConfigElRef {
+#[allow(dead_code)]
+pub struct IdentityPlatformTenantInboundSamlConfig_SpConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IdentityPlatformTenantInboundSamlConfigSpConfigElRef {
+impl terrars::Ref for IdentityPlatformTenantInboundSamlConfig_SpConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IdentityPlatformTenantInboundSamlConfigSpConfigElRef {
-        IdentityPlatformTenantInboundSamlConfigSpConfigElRef {
+    ) -> IdentityPlatformTenantInboundSamlConfig_SpConfigRef {
+        IdentityPlatformTenantInboundSamlConfig_SpConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IdentityPlatformTenantInboundSamlConfigSpConfigElRef {
+impl IdentityPlatformTenantInboundSamlConfig_SpConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -718,7 +756,7 @@ impl IdentityPlatformTenantInboundSamlConfigSpConfigElRef {
         "Get a reference to the value of field `sp_certificates` after provisioning.\nThe IDP's certificate data to verify the signature in the SAMLResponse issued by the IDP."]
     pub fn sp_certificates(
         &self,
-    ) -> terrars::ListRef<IdentityPlatformTenantInboundSamlConfigSpConfigElSpCertificatesElRef> {
+    ) -> terrars::ListRef<IdentityPlatformTenantInboundSamlConfig_SpConfig_SpCertificatesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sp_certificates", self.base))
     }
 
@@ -730,7 +768,7 @@ impl IdentityPlatformTenantInboundSamlConfigSpConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct IdentityPlatformTenantInboundSamlConfigTimeoutsEl {
+pub struct IdentityPlatformTenantInboundSamlConfig_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -739,7 +777,7 @@ pub struct IdentityPlatformTenantInboundSamlConfigTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl IdentityPlatformTenantInboundSamlConfigTimeoutsEl {
+impl IdentityPlatformTenantInboundSamlConfig_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -759,8 +797,8 @@ impl IdentityPlatformTenantInboundSamlConfigTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for IdentityPlatformTenantInboundSamlConfigTimeoutsEl {
-    type O = terrars::BlockAssignable<IdentityPlatformTenantInboundSamlConfigTimeoutsEl>;
+impl terrars::ToListMappable for IdentityPlatformTenantInboundSamlConfig_Timeouts {
+    type O = terrars::BlockAssignable<IdentityPlatformTenantInboundSamlConfig_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -771,11 +809,11 @@ impl terrars::ToListMappable for IdentityPlatformTenantInboundSamlConfigTimeouts
     }
 }
 
-pub struct BuildIdentityPlatformTenantInboundSamlConfigTimeoutsEl {}
+pub struct BuildIdentityPlatformTenantInboundSamlConfig_Timeouts {}
 
-impl BuildIdentityPlatformTenantInboundSamlConfigTimeoutsEl {
-    pub fn build(self) -> IdentityPlatformTenantInboundSamlConfigTimeoutsEl {
-        IdentityPlatformTenantInboundSamlConfigTimeoutsEl {
+impl BuildIdentityPlatformTenantInboundSamlConfig_Timeouts {
+    pub fn build(self) -> IdentityPlatformTenantInboundSamlConfig_Timeouts {
+        IdentityPlatformTenantInboundSamlConfig_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -783,24 +821,26 @@ impl BuildIdentityPlatformTenantInboundSamlConfigTimeoutsEl {
     }
 }
 
-pub struct IdentityPlatformTenantInboundSamlConfigTimeoutsElRef {
+#[allow(dead_code)]
+pub struct IdentityPlatformTenantInboundSamlConfig_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IdentityPlatformTenantInboundSamlConfigTimeoutsElRef {
+impl terrars::Ref for IdentityPlatformTenantInboundSamlConfig_TimeoutsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IdentityPlatformTenantInboundSamlConfigTimeoutsElRef {
-        IdentityPlatformTenantInboundSamlConfigTimeoutsElRef {
+    ) -> IdentityPlatformTenantInboundSamlConfig_TimeoutsRef {
+        IdentityPlatformTenantInboundSamlConfig_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IdentityPlatformTenantInboundSamlConfigTimeoutsElRef {
+impl IdentityPlatformTenantInboundSamlConfig_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -819,10 +859,4 @@ impl IdentityPlatformTenantInboundSamlConfigTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct IdentityPlatformTenantInboundSamlConfigDynamic {
-    idp_config: std::option::Option<terrars::DynamicBlock<IdentityPlatformTenantInboundSamlConfigIdpConfigEl>>,
-    sp_config: std::option::Option<terrars::DynamicBlock<IdentityPlatformTenantInboundSamlConfigSpConfigEl>>,
 }

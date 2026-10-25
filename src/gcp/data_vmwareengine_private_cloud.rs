@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataVmwareenginePrivateCloudData {
+struct DataVmwareenginePrivateCloudData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -27,7 +29,7 @@ struct DataVmwareenginePrivateCloudData {
 struct DataVmwareenginePrivateCloud_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataVmwareenginePrivateCloudData>,
+    data: std::cell::RefCell<DataVmwareenginePrivateCloudData_>,
 }
 
 #[derive(Clone)]
@@ -85,14 +87,44 @@ impl DataVmwareenginePrivateCloud {
     }
 
     #[doc =
+        "Get a reference to the value of field `create_time` after provisioning.\nCreation time of this resource.\nA timestamp in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
+    pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `delete_time` after provisioning.\nTime when the resource was scheduled for deletion.\nA timestamp in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
+    pub fn delete_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_delay_hours` after provisioning.\nThe number of hours to delay this request. You can set this value to an hour between 0 to 8, where setting it to 0 starts the deletion request immediately. If no value is set, a default value is set at the API Level."]
+    pub fn deletion_delay_hours(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_delay_hours", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nUser-provided description for this private cloud."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
     #[doc =
+        "Get a reference to the value of field `expire_time` after provisioning.\nTime when the resource will be irreversibly deleted.\nA timestamp in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
+    pub fn expire_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.expire_time", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `hcx` after provisioning.\nDetails about a HCX Cloud Manager appliance."]
-    pub fn hcx(&self) -> terrars::ListRef<DataVmwareenginePrivateCloudHcxElRef> {
+    pub fn hcx(&self) -> terrars::ListRef<DataVmwareenginePrivateCloud_HcxRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.hcx", self.extract_ref()))
     }
 
@@ -109,7 +141,7 @@ impl DataVmwareenginePrivateCloud {
 
     #[doc =
         "Get a reference to the value of field `management_cluster` after provisioning.\nThe management cluster for this private cloud. This used for creating and managing the default cluster."]
-    pub fn management_cluster(&self) -> terrars::ListRef<DataVmwareenginePrivateCloudManagementClusterElRef> {
+    pub fn management_cluster(&self) -> terrars::ListRef<DataVmwareenginePrivateCloud_ManagementClusterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.management_cluster", self.extract_ref()))
     }
 
@@ -120,12 +152,12 @@ impl DataVmwareenginePrivateCloud {
 
     #[doc =
         "Get a reference to the value of field `network_config` after provisioning.\nNetwork configuration in the consumer project with which the peering has to be done."]
-    pub fn network_config(&self) -> terrars::ListRef<DataVmwareenginePrivateCloudNetworkConfigElRef> {
+    pub fn network_config(&self) -> terrars::ListRef<DataVmwareenginePrivateCloud_NetworkConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `nsx` after provisioning.\nDetails about a NSX Manager appliance."]
-    pub fn nsx(&self) -> terrars::ListRef<DataVmwareenginePrivateCloudNsxElRef> {
+    pub fn nsx(&self) -> terrars::ListRef<DataVmwareenginePrivateCloud_NsxRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.nsx", self.extract_ref()))
     }
 
@@ -135,13 +167,22 @@ impl DataVmwareenginePrivateCloud {
     }
 
     #[doc =
+        "Get a reference to the value of field `send_deletion_delay_hours_if_zero` after provisioning.\nWhile set true, deletion_delay_hours value will be sent in the request even for zero value of the field. This field is only useful for setting 0 value to the deletion_delay_hours field. It can be used both alone and together with deletion_delay_hours."]
+    pub fn send_deletion_delay_hours_if_zero(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.send_deletion_delay_hours_if_zero", self.extract_ref()),
+        )
+    }
+
+    #[doc =
         "Get a reference to the value of field `state` after provisioning.\nState of the resource. New values may be added to this enum when appropriate."]
     pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `type_` after provisioning.\nInitial type of the private cloud. Default value: \"STANDARD\" Possible values: [\"STANDARD\", \"TIME_LIMITED\"]"]
+        "Get a reference to the value of field `type_` after provisioning.\nInitial type of the private cloud. Possible values: [\"STANDARD\", \"TIME_LIMITED\", \"STRETCHED\"]"]
     pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
     }
@@ -153,8 +194,14 @@ impl DataVmwareenginePrivateCloud {
     }
 
     #[doc =
+        "Get a reference to the value of field `update_time` after provisioning.\nLast update time of this resource.\nA timestamp in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
+    pub fn update_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update_time", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `vcenter` after provisioning.\nDetails about a vCenter Server management appliance."]
-    pub fn vcenter(&self) -> terrars::ListRef<DataVmwareenginePrivateCloudVcenterElRef> {
+    pub fn vcenter(&self) -> terrars::ListRef<DataVmwareenginePrivateCloud_VcenterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vcenter", self.extract_ref()))
     }
 }
@@ -203,7 +250,7 @@ impl BuildDataVmwareenginePrivateCloud {
         let out = DataVmwareenginePrivateCloud(std::rc::Rc::new(DataVmwareenginePrivateCloud_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataVmwareenginePrivateCloudData {
+            data: std::cell::RefCell::new(DataVmwareenginePrivateCloudData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -243,14 +290,44 @@ impl DataVmwareenginePrivateCloudRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `create_time` after provisioning.\nCreation time of this resource.\nA timestamp in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
+    pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `delete_time` after provisioning.\nTime when the resource was scheduled for deletion.\nA timestamp in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
+    pub fn delete_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_delay_hours` after provisioning.\nThe number of hours to delay this request. You can set this value to an hour between 0 to 8, where setting it to 0 starts the deletion request immediately. If no value is set, a default value is set at the API Level."]
+    pub fn deletion_delay_hours(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_delay_hours", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nUser-provided description for this private cloud."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
     #[doc =
+        "Get a reference to the value of field `expire_time` after provisioning.\nTime when the resource will be irreversibly deleted.\nA timestamp in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
+    pub fn expire_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.expire_time", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `hcx` after provisioning.\nDetails about a HCX Cloud Manager appliance."]
-    pub fn hcx(&self) -> terrars::ListRef<DataVmwareenginePrivateCloudHcxElRef> {
+    pub fn hcx(&self) -> terrars::ListRef<DataVmwareenginePrivateCloud_HcxRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.hcx", self.extract_ref()))
     }
 
@@ -267,7 +344,7 @@ impl DataVmwareenginePrivateCloudRef {
 
     #[doc =
         "Get a reference to the value of field `management_cluster` after provisioning.\nThe management cluster for this private cloud. This used for creating and managing the default cluster."]
-    pub fn management_cluster(&self) -> terrars::ListRef<DataVmwareenginePrivateCloudManagementClusterElRef> {
+    pub fn management_cluster(&self) -> terrars::ListRef<DataVmwareenginePrivateCloud_ManagementClusterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.management_cluster", self.extract_ref()))
     }
 
@@ -278,12 +355,12 @@ impl DataVmwareenginePrivateCloudRef {
 
     #[doc =
         "Get a reference to the value of field `network_config` after provisioning.\nNetwork configuration in the consumer project with which the peering has to be done."]
-    pub fn network_config(&self) -> terrars::ListRef<DataVmwareenginePrivateCloudNetworkConfigElRef> {
+    pub fn network_config(&self) -> terrars::ListRef<DataVmwareenginePrivateCloud_NetworkConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `nsx` after provisioning.\nDetails about a NSX Manager appliance."]
-    pub fn nsx(&self) -> terrars::ListRef<DataVmwareenginePrivateCloudNsxElRef> {
+    pub fn nsx(&self) -> terrars::ListRef<DataVmwareenginePrivateCloud_NsxRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.nsx", self.extract_ref()))
     }
 
@@ -293,13 +370,22 @@ impl DataVmwareenginePrivateCloudRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `send_deletion_delay_hours_if_zero` after provisioning.\nWhile set true, deletion_delay_hours value will be sent in the request even for zero value of the field. This field is only useful for setting 0 value to the deletion_delay_hours field. It can be used both alone and together with deletion_delay_hours."]
+    pub fn send_deletion_delay_hours_if_zero(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.send_deletion_delay_hours_if_zero", self.extract_ref()),
+        )
+    }
+
+    #[doc =
         "Get a reference to the value of field `state` after provisioning.\nState of the resource. New values may be added to this enum when appropriate."]
     pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `type_` after provisioning.\nInitial type of the private cloud. Default value: \"STANDARD\" Possible values: [\"STANDARD\", \"TIME_LIMITED\"]"]
+        "Get a reference to the value of field `type_` after provisioning.\nInitial type of the private cloud. Possible values: [\"STANDARD\", \"TIME_LIMITED\", \"STRETCHED\"]"]
     pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
     }
@@ -311,14 +397,20 @@ impl DataVmwareenginePrivateCloudRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `update_time` after provisioning.\nLast update time of this resource.\nA timestamp in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
+    pub fn update_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update_time", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `vcenter` after provisioning.\nDetails about a vCenter Server management appliance."]
-    pub fn vcenter(&self) -> terrars::ListRef<DataVmwareenginePrivateCloudVcenterElRef> {
+    pub fn vcenter(&self) -> terrars::ListRef<DataVmwareenginePrivateCloud_VcenterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vcenter", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataVmwareenginePrivateCloudHcxEl {
+pub struct DataVmwareenginePrivateCloud_Hcx {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     fqdn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -329,7 +421,7 @@ pub struct DataVmwareenginePrivateCloudHcxEl {
     version: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataVmwareenginePrivateCloudHcxEl {
+impl DataVmwareenginePrivateCloud_Hcx {
     #[doc = "Set the field `fqdn`.\n"]
     pub fn set_fqdn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.fqdn = std::option::Option::Some(v.into());
@@ -355,8 +447,8 @@ impl DataVmwareenginePrivateCloudHcxEl {
     }
 }
 
-impl terrars::ToListMappable for DataVmwareenginePrivateCloudHcxEl {
-    type O = terrars::BlockAssignable<DataVmwareenginePrivateCloudHcxEl>;
+impl terrars::ToListMappable for DataVmwareenginePrivateCloud_Hcx {
+    type O = terrars::BlockAssignable<DataVmwareenginePrivateCloud_Hcx>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -367,11 +459,11 @@ impl terrars::ToListMappable for DataVmwareenginePrivateCloudHcxEl {
     }
 }
 
-pub struct BuildDataVmwareenginePrivateCloudHcxEl {}
+pub struct BuildDataVmwareenginePrivateCloud_Hcx {}
 
-impl BuildDataVmwareenginePrivateCloudHcxEl {
-    pub fn build(self) -> DataVmwareenginePrivateCloudHcxEl {
-        DataVmwareenginePrivateCloudHcxEl {
+impl BuildDataVmwareenginePrivateCloud_Hcx {
+    pub fn build(self) -> DataVmwareenginePrivateCloud_Hcx {
+        DataVmwareenginePrivateCloud_Hcx {
             fqdn: core::default::Default::default(),
             internal_ip: core::default::Default::default(),
             state: core::default::Default::default(),
@@ -380,21 +472,23 @@ impl BuildDataVmwareenginePrivateCloudHcxEl {
     }
 }
 
-pub struct DataVmwareenginePrivateCloudHcxElRef {
+#[allow(dead_code)]
+pub struct DataVmwareenginePrivateCloud_HcxRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataVmwareenginePrivateCloudHcxElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVmwareenginePrivateCloudHcxElRef {
-        DataVmwareenginePrivateCloudHcxElRef {
+impl terrars::Ref for DataVmwareenginePrivateCloud_HcxRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVmwareenginePrivateCloud_HcxRef {
+        DataVmwareenginePrivateCloud_HcxRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataVmwareenginePrivateCloudHcxElRef {
+impl DataVmwareenginePrivateCloud_HcxRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -421,7 +515,615 @@ impl DataVmwareenginePrivateCloudHcxElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataVmwareenginePrivateCloudManagementClusterElNodeTypeConfigsEl {
+pub struct DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_ConsumedMemoryThresholds {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    scale_in: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    scale_out: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_ConsumedMemoryThresholds {
+    #[doc = "Set the field `scale_in`.\n"]
+    pub fn set_scale_in(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.scale_in = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `scale_out`.\n"]
+    pub fn set_scale_out(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.scale_out = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_ConsumedMemoryThresholds {
+    type O =
+        terrars
+        ::BlockAssignable<
+            DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_ConsumedMemoryThresholds,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_ConsumedMemoryThresholds {}
+
+impl BuildDataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_ConsumedMemoryThresholds {
+    pub fn build(
+        self,
+    ) -> DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_ConsumedMemoryThresholds {
+        DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_ConsumedMemoryThresholds {
+            scale_in: core::default::Default::default(),
+            scale_out: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_ConsumedMemoryThresholdsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_ConsumedMemoryThresholdsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_ConsumedMemoryThresholdsRef {
+        DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_ConsumedMemoryThresholdsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_ConsumedMemoryThresholdsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `scale_in` after provisioning.\n"]
+    pub fn scale_in(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.scale_in", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `scale_out` after provisioning.\n"]
+    pub fn scale_out(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.scale_out", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_CpuThresholds {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    scale_in: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    scale_out: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_CpuThresholds {
+    #[doc = "Set the field `scale_in`.\n"]
+    pub fn set_scale_in(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.scale_in = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `scale_out`.\n"]
+    pub fn set_scale_out(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.scale_out = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_CpuThresholds {
+    type O =
+        terrars
+        ::BlockAssignable<
+            DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_CpuThresholds,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_CpuThresholds {}
+
+impl BuildDataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_CpuThresholds {
+    pub fn build(
+        self,
+    ) -> DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_CpuThresholds {
+        DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_CpuThresholds {
+            scale_in: core::default::Default::default(),
+            scale_out: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_CpuThresholdsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_CpuThresholdsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_CpuThresholdsRef {
+        DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_CpuThresholdsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_CpuThresholdsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `scale_in` after provisioning.\n"]
+    pub fn scale_in(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.scale_in", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `scale_out` after provisioning.\n"]
+    pub fn scale_out(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.scale_out", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_StorageThresholds {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    scale_in: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    scale_out: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_StorageThresholds {
+    #[doc = "Set the field `scale_in`.\n"]
+    pub fn set_scale_in(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.scale_in = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `scale_out`.\n"]
+    pub fn set_scale_out(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.scale_out = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_StorageThresholds {
+    type O =
+        terrars
+        ::BlockAssignable<
+            DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_StorageThresholds,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_StorageThresholds {}
+
+impl BuildDataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_StorageThresholds {
+    pub fn build(
+        self,
+    ) -> DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_StorageThresholds {
+        DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_StorageThresholds {
+            scale_in: core::default::Default::default(),
+            scale_out: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_StorageThresholdsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_StorageThresholdsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_StorageThresholdsRef {
+        DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_StorageThresholdsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_StorageThresholdsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `scale_in` after provisioning.\n"]
+    pub fn scale_in(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.scale_in", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `scale_out` after provisioning.\n"]
+    pub fn scale_out(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.scale_out", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    autoscale_policy_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    consumed_memory_thresholds: std
+    ::option
+    ::Option<
+        terrars
+        ::ListField<
+            DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_ConsumedMemoryThresholds,
+        >,
+    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cpu_thresholds: std
+    ::option
+    ::Option<
+        terrars
+        ::ListField<
+            DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_CpuThresholds,
+        >,
+    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    node_type_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    scale_out_size: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    storage_thresholds: std
+    ::option
+    ::Option<
+        terrars
+        ::ListField<
+            DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_StorageThresholds,
+        >,
+    >,
+}
+
+impl DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies {
+    #[doc = "Set the field `autoscale_policy_id`.\n"]
+    pub fn set_autoscale_policy_id(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.autoscale_policy_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `consumed_memory_thresholds`.\n"]
+    pub fn set_consumed_memory_thresholds(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::ListField<
+                            DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_ConsumedMemoryThresholds,
+                        >,
+                    >,
+    ) -> Self {
+        self.consumed_memory_thresholds = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `cpu_thresholds`.\n"]
+    pub fn set_cpu_thresholds(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::ListField<
+                            DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_CpuThresholds,
+                        >,
+                    >,
+    ) -> Self {
+        self.cpu_thresholds = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `node_type_id`.\n"]
+    pub fn set_node_type_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.node_type_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `scale_out_size`.\n"]
+    pub fn set_scale_out_size(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.scale_out_size = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `storage_thresholds`.\n"]
+    pub fn set_storage_thresholds(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::ListField<
+                            DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_StorageThresholds,
+                        >,
+                    >,
+    ) -> Self {
+        self.storage_thresholds = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies {
+    type O =
+        terrars
+        ::BlockAssignable<DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies {}
+
+impl BuildDataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies {
+    pub fn build(self) -> DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies {
+        DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies {
+            autoscale_policy_id: core::default::Default::default(),
+            consumed_memory_thresholds: core::default::Default::default(),
+            cpu_thresholds: core::default::Default::default(),
+            node_type_id: core::default::Default::default(),
+            scale_out_size: core::default::Default::default(),
+            storage_thresholds: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPoliciesRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPoliciesRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPoliciesRef {
+        DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPoliciesRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPoliciesRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `autoscale_policy_id` after provisioning.\n"]
+    pub fn autoscale_policy_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.autoscale_policy_id", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `consumed_memory_thresholds` after provisioning.\n"]
+    pub fn consumed_memory_thresholds(
+        &self,
+    ) -> terrars
+    ::ListRef<
+        DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_ConsumedMemoryThresholdsRef,
+    > {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.consumed_memory_thresholds", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `cpu_thresholds` after provisioning.\n"]
+    pub fn cpu_thresholds(
+        &self,
+    ) -> terrars
+    ::ListRef<
+        DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_CpuThresholdsRef,
+    > {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cpu_thresholds", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `node_type_id` after provisioning.\n"]
+    pub fn node_type_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.node_type_id", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `scale_out_size` after provisioning.\n"]
+    pub fn scale_out_size(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.scale_out_size", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `storage_thresholds` after provisioning.\n"]
+    pub fn storage_thresholds(
+        &self,
+    ) -> terrars
+    ::ListRef<
+        DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies_StorageThresholdsRef,
+    > {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.storage_thresholds", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    autoscaling_policies: std
+    ::option
+    ::Option<
+        terrars::SetField<DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies>,
+    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cool_down_period: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_cluster_node_count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    min_cluster_node_count: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings {
+    #[doc = "Set the field `autoscaling_policies`.\n"]
+    pub fn set_autoscaling_policies(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::SetField<
+                            DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPolicies,
+                        >,
+                    >,
+    ) -> Self {
+        self.autoscaling_policies = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `cool_down_period`.\n"]
+    pub fn set_cool_down_period(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.cool_down_period = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `max_cluster_node_count`.\n"]
+    pub fn set_max_cluster_node_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_cluster_node_count = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `min_cluster_node_count`.\n"]
+    pub fn set_min_cluster_node_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.min_cluster_node_count = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings {
+    type O = terrars::BlockAssignable<DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings {}
+
+impl BuildDataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings {
+    pub fn build(self) -> DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings {
+        DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings {
+            autoscaling_policies: core::default::Default::default(),
+            cool_down_period: core::default::Default::default(),
+            max_cluster_node_count: core::default::Default::default(),
+            min_cluster_node_count: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettingsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettingsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettingsRef {
+        DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettingsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettingsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `autoscaling_policies` after provisioning.\n"]
+    pub fn autoscaling_policies(
+        &self,
+    ) -> terrars::SetRef<DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings_AutoscalingPoliciesRef> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.autoscaling_policies", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `cool_down_period` after provisioning.\n"]
+    pub fn cool_down_period(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cool_down_period", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `max_cluster_node_count` after provisioning.\n"]
+    pub fn max_cluster_node_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_cluster_node_count", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `min_cluster_node_count` after provisioning.\n"]
+    pub fn min_cluster_node_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_cluster_node_count", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataVmwareenginePrivateCloud_ManagementCluster_NodeTypeConfigs {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     custom_core_count: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -430,7 +1132,7 @@ pub struct DataVmwareenginePrivateCloudManagementClusterElNodeTypeConfigsEl {
     node_type_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataVmwareenginePrivateCloudManagementClusterElNodeTypeConfigsEl {
+impl DataVmwareenginePrivateCloud_ManagementCluster_NodeTypeConfigs {
     #[doc = "Set the field `custom_core_count`.\n"]
     pub fn set_custom_core_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.custom_core_count = std::option::Option::Some(v.into());
@@ -450,8 +1152,8 @@ impl DataVmwareenginePrivateCloudManagementClusterElNodeTypeConfigsEl {
     }
 }
 
-impl terrars::ToListMappable for DataVmwareenginePrivateCloudManagementClusterElNodeTypeConfigsEl {
-    type O = terrars::BlockAssignable<DataVmwareenginePrivateCloudManagementClusterElNodeTypeConfigsEl>;
+impl terrars::ToListMappable for DataVmwareenginePrivateCloud_ManagementCluster_NodeTypeConfigs {
+    type O = terrars::BlockAssignable<DataVmwareenginePrivateCloud_ManagementCluster_NodeTypeConfigs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -462,11 +1164,11 @@ impl terrars::ToListMappable for DataVmwareenginePrivateCloudManagementClusterEl
     }
 }
 
-pub struct BuildDataVmwareenginePrivateCloudManagementClusterElNodeTypeConfigsEl {}
+pub struct BuildDataVmwareenginePrivateCloud_ManagementCluster_NodeTypeConfigs {}
 
-impl BuildDataVmwareenginePrivateCloudManagementClusterElNodeTypeConfigsEl {
-    pub fn build(self) -> DataVmwareenginePrivateCloudManagementClusterElNodeTypeConfigsEl {
-        DataVmwareenginePrivateCloudManagementClusterElNodeTypeConfigsEl {
+impl BuildDataVmwareenginePrivateCloud_ManagementCluster_NodeTypeConfigs {
+    pub fn build(self) -> DataVmwareenginePrivateCloud_ManagementCluster_NodeTypeConfigs {
+        DataVmwareenginePrivateCloud_ManagementCluster_NodeTypeConfigs {
             custom_core_count: core::default::Default::default(),
             node_count: core::default::Default::default(),
             node_type_id: core::default::Default::default(),
@@ -474,24 +1176,26 @@ impl BuildDataVmwareenginePrivateCloudManagementClusterElNodeTypeConfigsEl {
     }
 }
 
-pub struct DataVmwareenginePrivateCloudManagementClusterElNodeTypeConfigsElRef {
+#[allow(dead_code)]
+pub struct DataVmwareenginePrivateCloud_ManagementCluster_NodeTypeConfigsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataVmwareenginePrivateCloudManagementClusterElNodeTypeConfigsElRef {
+impl terrars::Ref for DataVmwareenginePrivateCloud_ManagementCluster_NodeTypeConfigsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataVmwareenginePrivateCloudManagementClusterElNodeTypeConfigsElRef {
-        DataVmwareenginePrivateCloudManagementClusterElNodeTypeConfigsElRef {
+    ) -> DataVmwareenginePrivateCloud_ManagementCluster_NodeTypeConfigsRef {
+        DataVmwareenginePrivateCloud_ManagementCluster_NodeTypeConfigsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataVmwareenginePrivateCloudManagementClusterElNodeTypeConfigsElRef {
+impl DataVmwareenginePrivateCloud_ManagementCluster_NodeTypeConfigsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -513,16 +1217,124 @@ impl DataVmwareenginePrivateCloudManagementClusterElNodeTypeConfigsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataVmwareenginePrivateCloudManagementClusterEl {
+pub struct DataVmwareenginePrivateCloud_ManagementCluster_StretchedClusterConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    preferred_location: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secondary_location: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataVmwareenginePrivateCloud_ManagementCluster_StretchedClusterConfig {
+    #[doc = "Set the field `preferred_location`.\n"]
+    pub fn set_preferred_location(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.preferred_location = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `secondary_location`.\n"]
+    pub fn set_secondary_location(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.secondary_location = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataVmwareenginePrivateCloud_ManagementCluster_StretchedClusterConfig {
+    type O = terrars::BlockAssignable<DataVmwareenginePrivateCloud_ManagementCluster_StretchedClusterConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataVmwareenginePrivateCloud_ManagementCluster_StretchedClusterConfig {}
+
+impl BuildDataVmwareenginePrivateCloud_ManagementCluster_StretchedClusterConfig {
+    pub fn build(self) -> DataVmwareenginePrivateCloud_ManagementCluster_StretchedClusterConfig {
+        DataVmwareenginePrivateCloud_ManagementCluster_StretchedClusterConfig {
+            preferred_location: core::default::Default::default(),
+            secondary_location: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataVmwareenginePrivateCloud_ManagementCluster_StretchedClusterConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataVmwareenginePrivateCloud_ManagementCluster_StretchedClusterConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataVmwareenginePrivateCloud_ManagementCluster_StretchedClusterConfigRef {
+        DataVmwareenginePrivateCloud_ManagementCluster_StretchedClusterConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataVmwareenginePrivateCloud_ManagementCluster_StretchedClusterConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `preferred_location` after provisioning.\n"]
+    pub fn preferred_location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.preferred_location", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `secondary_location` after provisioning.\n"]
+    pub fn secondary_location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secondary_location", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataVmwareenginePrivateCloud_ManagementCluster {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    autoscaling_settings: std
+    ::option
+    ::Option<terrars::ListField<DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cluster_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     node_type_configs: std
     ::option
-    ::Option<terrars::SetField<DataVmwareenginePrivateCloudManagementClusterElNodeTypeConfigsEl>>,
+    ::Option<terrars::SetField<DataVmwareenginePrivateCloud_ManagementCluster_NodeTypeConfigs>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    stretched_cluster_config: std
+    ::option
+    ::Option<terrars::ListField<DataVmwareenginePrivateCloud_ManagementCluster_StretchedClusterConfig>>,
 }
 
-impl DataVmwareenginePrivateCloudManagementClusterEl {
+impl DataVmwareenginePrivateCloud_ManagementCluster {
+    #[doc = "Set the field `autoscaling_settings`.\n"]
+    pub fn set_autoscaling_settings(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::ListField<DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettings>>,
+    ) -> Self {
+        self.autoscaling_settings = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `cluster_id`.\n"]
     pub fn set_cluster_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.cluster_id = std::option::Option::Some(v.into());
@@ -537,15 +1349,29 @@ impl DataVmwareenginePrivateCloudManagementClusterEl {
 
                     std
                     ::convert
-                    ::Into<terrars::SetField<DataVmwareenginePrivateCloudManagementClusterElNodeTypeConfigsEl>>,
+                    ::Into<terrars::SetField<DataVmwareenginePrivateCloud_ManagementCluster_NodeTypeConfigs>>,
     ) -> Self {
         self.node_type_configs = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `stretched_cluster_config`.\n"]
+    pub fn set_stretched_cluster_config(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::ListField<DataVmwareenginePrivateCloud_ManagementCluster_StretchedClusterConfig>>,
+    ) -> Self {
+        self.stretched_cluster_config = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for DataVmwareenginePrivateCloudManagementClusterEl {
-    type O = terrars::BlockAssignable<DataVmwareenginePrivateCloudManagementClusterEl>;
+impl terrars::ToListMappable for DataVmwareenginePrivateCloud_ManagementCluster {
+    type O = terrars::BlockAssignable<DataVmwareenginePrivateCloud_ManagementCluster>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -556,37 +1382,48 @@ impl terrars::ToListMappable for DataVmwareenginePrivateCloudManagementClusterEl
     }
 }
 
-pub struct BuildDataVmwareenginePrivateCloudManagementClusterEl {}
+pub struct BuildDataVmwareenginePrivateCloud_ManagementCluster {}
 
-impl BuildDataVmwareenginePrivateCloudManagementClusterEl {
-    pub fn build(self) -> DataVmwareenginePrivateCloudManagementClusterEl {
-        DataVmwareenginePrivateCloudManagementClusterEl {
+impl BuildDataVmwareenginePrivateCloud_ManagementCluster {
+    pub fn build(self) -> DataVmwareenginePrivateCloud_ManagementCluster {
+        DataVmwareenginePrivateCloud_ManagementCluster {
+            autoscaling_settings: core::default::Default::default(),
             cluster_id: core::default::Default::default(),
             node_type_configs: core::default::Default::default(),
+            stretched_cluster_config: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataVmwareenginePrivateCloudManagementClusterElRef {
+#[allow(dead_code)]
+pub struct DataVmwareenginePrivateCloud_ManagementClusterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataVmwareenginePrivateCloudManagementClusterElRef {
+impl terrars::Ref for DataVmwareenginePrivateCloud_ManagementClusterRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataVmwareenginePrivateCloudManagementClusterElRef {
-        DataVmwareenginePrivateCloudManagementClusterElRef {
+    ) -> DataVmwareenginePrivateCloud_ManagementClusterRef {
+        DataVmwareenginePrivateCloud_ManagementClusterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataVmwareenginePrivateCloudManagementClusterElRef {
+impl DataVmwareenginePrivateCloud_ManagementClusterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `autoscaling_settings` after provisioning.\n"]
+    pub fn autoscaling_settings(
+        &self,
+    ) -> terrars::ListRef<DataVmwareenginePrivateCloud_ManagementCluster_AutoscalingSettingsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.autoscaling_settings", self.base))
     }
 
     #[doc = "Get a reference to the value of field `cluster_id` after provisioning.\n"]
@@ -597,13 +1434,20 @@ impl DataVmwareenginePrivateCloudManagementClusterElRef {
     #[doc = "Get a reference to the value of field `node_type_configs` after provisioning.\n"]
     pub fn node_type_configs(
         &self,
-    ) -> terrars::SetRef<DataVmwareenginePrivateCloudManagementClusterElNodeTypeConfigsElRef> {
+    ) -> terrars::SetRef<DataVmwareenginePrivateCloud_ManagementCluster_NodeTypeConfigsRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.node_type_configs", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `stretched_cluster_config` after provisioning.\n"]
+    pub fn stretched_cluster_config(
+        &self,
+    ) -> terrars::ListRef<DataVmwareenginePrivateCloud_ManagementCluster_StretchedClusterConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.stretched_cluster_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataVmwareenginePrivateCloudNetworkConfigEl {
+pub struct DataVmwareenginePrivateCloud_NetworkConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dns_server_ip: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -616,7 +1460,7 @@ pub struct DataVmwareenginePrivateCloudNetworkConfigEl {
     vmware_engine_network_canonical: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataVmwareenginePrivateCloudNetworkConfigEl {
+impl DataVmwareenginePrivateCloud_NetworkConfig {
     #[doc = "Set the field `dns_server_ip`.\n"]
     pub fn set_dns_server_ip(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.dns_server_ip = std::option::Option::Some(v.into());
@@ -657,8 +1501,8 @@ impl DataVmwareenginePrivateCloudNetworkConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataVmwareenginePrivateCloudNetworkConfigEl {
-    type O = terrars::BlockAssignable<DataVmwareenginePrivateCloudNetworkConfigEl>;
+impl terrars::ToListMappable for DataVmwareenginePrivateCloud_NetworkConfig {
+    type O = terrars::BlockAssignable<DataVmwareenginePrivateCloud_NetworkConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -669,11 +1513,11 @@ impl terrars::ToListMappable for DataVmwareenginePrivateCloudNetworkConfigEl {
     }
 }
 
-pub struct BuildDataVmwareenginePrivateCloudNetworkConfigEl {}
+pub struct BuildDataVmwareenginePrivateCloud_NetworkConfig {}
 
-impl BuildDataVmwareenginePrivateCloudNetworkConfigEl {
-    pub fn build(self) -> DataVmwareenginePrivateCloudNetworkConfigEl {
-        DataVmwareenginePrivateCloudNetworkConfigEl {
+impl BuildDataVmwareenginePrivateCloud_NetworkConfig {
+    pub fn build(self) -> DataVmwareenginePrivateCloud_NetworkConfig {
+        DataVmwareenginePrivateCloud_NetworkConfig {
             dns_server_ip: core::default::Default::default(),
             management_cidr: core::default::Default::default(),
             management_ip_address_layout_version: core::default::Default::default(),
@@ -683,24 +1527,23 @@ impl BuildDataVmwareenginePrivateCloudNetworkConfigEl {
     }
 }
 
-pub struct DataVmwareenginePrivateCloudNetworkConfigElRef {
+#[allow(dead_code)]
+pub struct DataVmwareenginePrivateCloud_NetworkConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataVmwareenginePrivateCloudNetworkConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataVmwareenginePrivateCloudNetworkConfigElRef {
-        DataVmwareenginePrivateCloudNetworkConfigElRef {
+impl terrars::Ref for DataVmwareenginePrivateCloud_NetworkConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVmwareenginePrivateCloud_NetworkConfigRef {
+        DataVmwareenginePrivateCloud_NetworkConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataVmwareenginePrivateCloudNetworkConfigElRef {
+impl DataVmwareenginePrivateCloud_NetworkConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -732,7 +1575,7 @@ impl DataVmwareenginePrivateCloudNetworkConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataVmwareenginePrivateCloudNsxEl {
+pub struct DataVmwareenginePrivateCloud_Nsx {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     fqdn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -743,7 +1586,7 @@ pub struct DataVmwareenginePrivateCloudNsxEl {
     version: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataVmwareenginePrivateCloudNsxEl {
+impl DataVmwareenginePrivateCloud_Nsx {
     #[doc = "Set the field `fqdn`.\n"]
     pub fn set_fqdn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.fqdn = std::option::Option::Some(v.into());
@@ -769,8 +1612,8 @@ impl DataVmwareenginePrivateCloudNsxEl {
     }
 }
 
-impl terrars::ToListMappable for DataVmwareenginePrivateCloudNsxEl {
-    type O = terrars::BlockAssignable<DataVmwareenginePrivateCloudNsxEl>;
+impl terrars::ToListMappable for DataVmwareenginePrivateCloud_Nsx {
+    type O = terrars::BlockAssignable<DataVmwareenginePrivateCloud_Nsx>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -781,11 +1624,11 @@ impl terrars::ToListMappable for DataVmwareenginePrivateCloudNsxEl {
     }
 }
 
-pub struct BuildDataVmwareenginePrivateCloudNsxEl {}
+pub struct BuildDataVmwareenginePrivateCloud_Nsx {}
 
-impl BuildDataVmwareenginePrivateCloudNsxEl {
-    pub fn build(self) -> DataVmwareenginePrivateCloudNsxEl {
-        DataVmwareenginePrivateCloudNsxEl {
+impl BuildDataVmwareenginePrivateCloud_Nsx {
+    pub fn build(self) -> DataVmwareenginePrivateCloud_Nsx {
+        DataVmwareenginePrivateCloud_Nsx {
             fqdn: core::default::Default::default(),
             internal_ip: core::default::Default::default(),
             state: core::default::Default::default(),
@@ -794,21 +1637,23 @@ impl BuildDataVmwareenginePrivateCloudNsxEl {
     }
 }
 
-pub struct DataVmwareenginePrivateCloudNsxElRef {
+#[allow(dead_code)]
+pub struct DataVmwareenginePrivateCloud_NsxRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataVmwareenginePrivateCloudNsxElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVmwareenginePrivateCloudNsxElRef {
-        DataVmwareenginePrivateCloudNsxElRef {
+impl terrars::Ref for DataVmwareenginePrivateCloud_NsxRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVmwareenginePrivateCloud_NsxRef {
+        DataVmwareenginePrivateCloud_NsxRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataVmwareenginePrivateCloudNsxElRef {
+impl DataVmwareenginePrivateCloud_NsxRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -835,7 +1680,7 @@ impl DataVmwareenginePrivateCloudNsxElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataVmwareenginePrivateCloudVcenterEl {
+pub struct DataVmwareenginePrivateCloud_Vcenter {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     fqdn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -846,7 +1691,7 @@ pub struct DataVmwareenginePrivateCloudVcenterEl {
     version: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataVmwareenginePrivateCloudVcenterEl {
+impl DataVmwareenginePrivateCloud_Vcenter {
     #[doc = "Set the field `fqdn`.\n"]
     pub fn set_fqdn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.fqdn = std::option::Option::Some(v.into());
@@ -872,8 +1717,8 @@ impl DataVmwareenginePrivateCloudVcenterEl {
     }
 }
 
-impl terrars::ToListMappable for DataVmwareenginePrivateCloudVcenterEl {
-    type O = terrars::BlockAssignable<DataVmwareenginePrivateCloudVcenterEl>;
+impl terrars::ToListMappable for DataVmwareenginePrivateCloud_Vcenter {
+    type O = terrars::BlockAssignable<DataVmwareenginePrivateCloud_Vcenter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -884,11 +1729,11 @@ impl terrars::ToListMappable for DataVmwareenginePrivateCloudVcenterEl {
     }
 }
 
-pub struct BuildDataVmwareenginePrivateCloudVcenterEl {}
+pub struct BuildDataVmwareenginePrivateCloud_Vcenter {}
 
-impl BuildDataVmwareenginePrivateCloudVcenterEl {
-    pub fn build(self) -> DataVmwareenginePrivateCloudVcenterEl {
-        DataVmwareenginePrivateCloudVcenterEl {
+impl BuildDataVmwareenginePrivateCloud_Vcenter {
+    pub fn build(self) -> DataVmwareenginePrivateCloud_Vcenter {
+        DataVmwareenginePrivateCloud_Vcenter {
             fqdn: core::default::Default::default(),
             internal_ip: core::default::Default::default(),
             state: core::default::Default::default(),
@@ -897,21 +1742,23 @@ impl BuildDataVmwareenginePrivateCloudVcenterEl {
     }
 }
 
-pub struct DataVmwareenginePrivateCloudVcenterElRef {
+#[allow(dead_code)]
+pub struct DataVmwareenginePrivateCloud_VcenterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataVmwareenginePrivateCloudVcenterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVmwareenginePrivateCloudVcenterElRef {
-        DataVmwareenginePrivateCloudVcenterElRef {
+impl terrars::Ref for DataVmwareenginePrivateCloud_VcenterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVmwareenginePrivateCloud_VcenterRef {
+        DataVmwareenginePrivateCloud_VcenterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataVmwareenginePrivateCloudVcenterElRef {
+impl DataVmwareenginePrivateCloud_VcenterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

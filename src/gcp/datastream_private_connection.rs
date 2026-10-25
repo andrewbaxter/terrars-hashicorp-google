@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DatastreamPrivateConnectionData {
+struct DatastreamPrivateConnectionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,10 @@ struct DatastreamPrivateConnectionData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create_without_validation: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     display_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -28,16 +34,18 @@ struct DatastreamPrivateConnectionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DatastreamPrivateConnectionTimeoutsEl>,
+    psc_interface_config: std::option::Option<std::vec::Vec<DatastreamPrivateConnection_PscInterfaceConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpc_peering_config: std::option::Option<std::vec::Vec<DatastreamPrivateConnectionVpcPeeringConfigEl>>,
+    timeouts: std::option::Option<DatastreamPrivateConnection_Timeouts>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vpc_peering_config: std::option::Option<std::vec::Vec<DatastreamPrivateConnection_VpcPeeringConfig>>,
     dynamic: DatastreamPrivateConnectionDynamic,
 }
 
 struct DatastreamPrivateConnection_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DatastreamPrivateConnectionData>,
+    data: std::cell::RefCell<DatastreamPrivateConnectionData_>,
 }
 
 #[derive(Clone)]
@@ -137,6 +145,19 @@ impl DatastreamPrivateConnection {
         self
     }
 
+    #[doc = "Set the field `create_without_validation`.\nIf set to true, will skip validations."]
+    pub fn set_create_without_validation(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().create_without_validation = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `deletion_policy`.\nThis field uses a custom implementation please refer to documentation under /hashicorp/terraform-provider-google-beta/website/docs/r/datastream_private_connection.html.markdown for specifics"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -159,8 +180,24 @@ impl DatastreamPrivateConnection {
         self
     }
 
+    #[doc = "Set the field `psc_interface_config`.\n"]
+    pub fn set_psc_interface_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<DatastreamPrivateConnection_PscInterfaceConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().psc_interface_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.psc_interface_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DatastreamPrivateConnectionTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DatastreamPrivateConnection_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -168,7 +205,7 @@ impl DatastreamPrivateConnection {
     #[doc = "Set the field `vpc_peering_config`.\n"]
     pub fn set_vpc_peering_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DatastreamPrivateConnectionVpcPeeringConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DatastreamPrivateConnection_VpcPeeringConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -179,6 +216,18 @@ impl DatastreamPrivateConnection {
             },
         }
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `create_without_validation` after provisioning.\nIf set to true, will skip validations."]
+    pub fn create_without_validation(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_without_validation", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nThis field uses a custom implementation please refer to documentation under /hashicorp/terraform-provider-google-beta/website/docs/r/datastream_private_connection.html.markdown for specifics"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `display_name` after provisioning.\nDisplay name."]
@@ -194,7 +243,7 @@ impl DatastreamPrivateConnection {
 
     #[doc =
         "Get a reference to the value of field `error` after provisioning.\nThe PrivateConnection error in case of failure."]
-    pub fn error(&self) -> terrars::ListRef<DatastreamPrivateConnectionErrorElRef> {
+    pub fn error(&self) -> terrars::ListRef<DatastreamPrivateConnection_ErrorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.error", self.extract_ref()))
     }
 
@@ -242,16 +291,21 @@ impl DatastreamPrivateConnection {
         terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `psc_interface_config` after provisioning.\n"]
+    pub fn psc_interface_config(&self) -> terrars::ListRef<DatastreamPrivateConnection_PscInterfaceConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.psc_interface_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DatastreamPrivateConnectionTimeoutsElRef {
-        DatastreamPrivateConnectionTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DatastreamPrivateConnection_TimeoutsRef {
+        DatastreamPrivateConnection_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 
     #[doc = "Get a reference to the value of field `vpc_peering_config` after provisioning.\n"]
-    pub fn vpc_peering_config(&self) -> terrars::ListRef<DatastreamPrivateConnectionVpcPeeringConfigElRef> {
+    pub fn vpc_peering_config(&self) -> terrars::ListRef<DatastreamPrivateConnection_VpcPeeringConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_peering_config", self.extract_ref()))
     }
 }
@@ -302,18 +356,21 @@ impl BuildDatastreamPrivateConnection {
         let out = DatastreamPrivateConnection(std::rc::Rc::new(DatastreamPrivateConnection_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DatastreamPrivateConnectionData {
+            data: std::cell::RefCell::new(DatastreamPrivateConnectionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                create_without_validation: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 display_name: self.display_name,
                 id: core::default::Default::default(),
                 labels: core::default::Default::default(),
                 location: self.location,
                 private_connection_id: self.private_connection_id,
                 project: core::default::Default::default(),
+                psc_interface_config: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 vpc_peering_config: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -347,6 +404,18 @@ impl DatastreamPrivateConnectionRef {
         &self.shared
     }
 
+    #[doc =
+        "Get a reference to the value of field `create_without_validation` after provisioning.\nIf set to true, will skip validations."]
+    pub fn create_without_validation(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_without_validation", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nThis field uses a custom implementation please refer to documentation under /hashicorp/terraform-provider-google-beta/website/docs/r/datastream_private_connection.html.markdown for specifics"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `display_name` after provisioning.\nDisplay name."]
     pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
@@ -360,7 +429,7 @@ impl DatastreamPrivateConnectionRef {
 
     #[doc =
         "Get a reference to the value of field `error` after provisioning.\nThe PrivateConnection error in case of failure."]
-    pub fn error(&self) -> terrars::ListRef<DatastreamPrivateConnectionErrorElRef> {
+    pub fn error(&self) -> terrars::ListRef<DatastreamPrivateConnection_ErrorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.error", self.extract_ref()))
     }
 
@@ -408,29 +477,40 @@ impl DatastreamPrivateConnectionRef {
         terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `psc_interface_config` after provisioning.\n"]
+    pub fn psc_interface_config(&self) -> terrars::ListRef<DatastreamPrivateConnection_PscInterfaceConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.psc_interface_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DatastreamPrivateConnectionTimeoutsElRef {
-        DatastreamPrivateConnectionTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DatastreamPrivateConnection_TimeoutsRef {
+        DatastreamPrivateConnection_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 
     #[doc = "Get a reference to the value of field `vpc_peering_config` after provisioning.\n"]
-    pub fn vpc_peering_config(&self) -> terrars::ListRef<DatastreamPrivateConnectionVpcPeeringConfigElRef> {
+    pub fn vpc_peering_config(&self) -> terrars::ListRef<DatastreamPrivateConnection_VpcPeeringConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_peering_config", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DatastreamPrivateConnectionDynamic {
+    psc_interface_config: std::option::Option<terrars::DynamicBlock<DatastreamPrivateConnection_PscInterfaceConfig>>,
+    vpc_peering_config: std::option::Option<terrars::DynamicBlock<DatastreamPrivateConnection_VpcPeeringConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct DatastreamPrivateConnectionErrorEl {
+pub struct DatastreamPrivateConnection_Error {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     details: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     message: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DatastreamPrivateConnectionErrorEl {
+impl DatastreamPrivateConnection_Error {
     #[doc = "Set the field `details`.\n"]
     pub fn set_details(
         mut self,
@@ -447,8 +527,8 @@ impl DatastreamPrivateConnectionErrorEl {
     }
 }
 
-impl terrars::ToListMappable for DatastreamPrivateConnectionErrorEl {
-    type O = terrars::BlockAssignable<DatastreamPrivateConnectionErrorEl>;
+impl terrars::ToListMappable for DatastreamPrivateConnection_Error {
+    type O = terrars::BlockAssignable<DatastreamPrivateConnection_Error>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -459,32 +539,34 @@ impl terrars::ToListMappable for DatastreamPrivateConnectionErrorEl {
     }
 }
 
-pub struct BuildDatastreamPrivateConnectionErrorEl {}
+pub struct BuildDatastreamPrivateConnection_Error {}
 
-impl BuildDatastreamPrivateConnectionErrorEl {
-    pub fn build(self) -> DatastreamPrivateConnectionErrorEl {
-        DatastreamPrivateConnectionErrorEl {
+impl BuildDatastreamPrivateConnection_Error {
+    pub fn build(self) -> DatastreamPrivateConnection_Error {
+        DatastreamPrivateConnection_Error {
             details: core::default::Default::default(),
             message: core::default::Default::default(),
         }
     }
 }
 
-pub struct DatastreamPrivateConnectionErrorElRef {
+#[allow(dead_code)]
+pub struct DatastreamPrivateConnection_ErrorRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DatastreamPrivateConnectionErrorElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DatastreamPrivateConnectionErrorElRef {
-        DatastreamPrivateConnectionErrorElRef {
+impl terrars::Ref for DatastreamPrivateConnection_ErrorRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DatastreamPrivateConnection_ErrorRef {
+        DatastreamPrivateConnection_ErrorRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DatastreamPrivateConnectionErrorElRef {
+impl DatastreamPrivateConnection_ErrorRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -501,14 +583,78 @@ impl DatastreamPrivateConnectionErrorElRef {
 }
 
 #[derive(Serialize)]
-pub struct DatastreamPrivateConnectionTimeoutsEl {
+pub struct DatastreamPrivateConnection_PscInterfaceConfig {
+    network_attachment: terrars::PrimField<std::string::String>,
+}
+
+impl DatastreamPrivateConnection_PscInterfaceConfig { }
+
+impl terrars::ToListMappable for DatastreamPrivateConnection_PscInterfaceConfig {
+    type O = terrars::BlockAssignable<DatastreamPrivateConnection_PscInterfaceConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDatastreamPrivateConnection_PscInterfaceConfig {
+    #[doc =
+        "Fully qualified name of the network attachment that Datastream will connect to.\nFormat: projects/{project}/regions/{region}/networkAttachments/{name}\n\nTo get Datastream project for the accepted list:\n'gcloud datastream private-connections create [PC ID] --location=[LOCATION] --network-attachment=[NA URI] --validate-only --display-name=[ANY STRING]'\nAdd Datastream project to the attachment accepted list:\n'gcloud compute network-attachments update [NA URI] --region=[NA region] --producer-accept-list=[TP from prev command]'"]
+    pub network_attachment: terrars::PrimField<std::string::String>,
+}
+
+impl BuildDatastreamPrivateConnection_PscInterfaceConfig {
+    pub fn build(self) -> DatastreamPrivateConnection_PscInterfaceConfig {
+        DatastreamPrivateConnection_PscInterfaceConfig { network_attachment: self.network_attachment }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DatastreamPrivateConnection_PscInterfaceConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DatastreamPrivateConnection_PscInterfaceConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DatastreamPrivateConnection_PscInterfaceConfigRef {
+        DatastreamPrivateConnection_PscInterfaceConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DatastreamPrivateConnection_PscInterfaceConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `network_attachment` after provisioning.\nFully qualified name of the network attachment that Datastream will connect to.\nFormat: projects/{project}/regions/{region}/networkAttachments/{name}\n\nTo get Datastream project for the accepted list:\n'gcloud datastream private-connections create [PC ID] --location=[LOCATION] --network-attachment=[NA URI] --validate-only --display-name=[ANY STRING]'\nAdd Datastream project to the attachment accepted list:\n'gcloud compute network-attachments update [NA URI] --region=[NA region] --producer-accept-list=[TP from prev command]'"]
+    pub fn network_attachment(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_attachment", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DatastreamPrivateConnection_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DatastreamPrivateConnectionTimeoutsEl {
+impl DatastreamPrivateConnection_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -520,10 +666,16 @@ impl DatastreamPrivateConnectionTimeoutsEl {
         self.delete = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for DatastreamPrivateConnectionTimeoutsEl {
-    type O = terrars::BlockAssignable<DatastreamPrivateConnectionTimeoutsEl>;
+impl terrars::ToListMappable for DatastreamPrivateConnection_Timeouts {
+    type O = terrars::BlockAssignable<DatastreamPrivateConnection_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -534,32 +686,35 @@ impl terrars::ToListMappable for DatastreamPrivateConnectionTimeoutsEl {
     }
 }
 
-pub struct BuildDatastreamPrivateConnectionTimeoutsEl {}
+pub struct BuildDatastreamPrivateConnection_Timeouts {}
 
-impl BuildDatastreamPrivateConnectionTimeoutsEl {
-    pub fn build(self) -> DatastreamPrivateConnectionTimeoutsEl {
-        DatastreamPrivateConnectionTimeoutsEl {
+impl BuildDatastreamPrivateConnection_Timeouts {
+    pub fn build(self) -> DatastreamPrivateConnection_Timeouts {
+        DatastreamPrivateConnection_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
+            update: core::default::Default::default(),
         }
     }
 }
 
-pub struct DatastreamPrivateConnectionTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DatastreamPrivateConnection_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DatastreamPrivateConnectionTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DatastreamPrivateConnectionTimeoutsElRef {
-        DatastreamPrivateConnectionTimeoutsElRef {
+impl terrars::Ref for DatastreamPrivateConnection_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DatastreamPrivateConnection_TimeoutsRef {
+        DatastreamPrivateConnection_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DatastreamPrivateConnectionTimeoutsElRef {
+impl DatastreamPrivateConnection_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -573,18 +728,23 @@ impl DatastreamPrivateConnectionTimeoutsElRef {
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct DatastreamPrivateConnectionVpcPeeringConfigEl {
+pub struct DatastreamPrivateConnection_VpcPeeringConfig {
     subnet: terrars::PrimField<std::string::String>,
     vpc: terrars::PrimField<std::string::String>,
 }
 
-impl DatastreamPrivateConnectionVpcPeeringConfigEl { }
+impl DatastreamPrivateConnection_VpcPeeringConfig { }
 
-impl terrars::ToListMappable for DatastreamPrivateConnectionVpcPeeringConfigEl {
-    type O = terrars::BlockAssignable<DatastreamPrivateConnectionVpcPeeringConfigEl>;
+impl terrars::ToListMappable for DatastreamPrivateConnection_VpcPeeringConfig {
+    type O = terrars::BlockAssignable<DatastreamPrivateConnection_VpcPeeringConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -595,7 +755,7 @@ impl terrars::ToListMappable for DatastreamPrivateConnectionVpcPeeringConfigEl {
     }
 }
 
-pub struct BuildDatastreamPrivateConnectionVpcPeeringConfigEl {
+pub struct BuildDatastreamPrivateConnection_VpcPeeringConfig {
     #[doc = "A free subnet for peering. (CIDR of /29)"]
     pub subnet: terrars::PrimField<std::string::String>,
     #[doc =
@@ -603,33 +763,35 @@ pub struct BuildDatastreamPrivateConnectionVpcPeeringConfigEl {
     pub vpc: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDatastreamPrivateConnectionVpcPeeringConfigEl {
-    pub fn build(self) -> DatastreamPrivateConnectionVpcPeeringConfigEl {
-        DatastreamPrivateConnectionVpcPeeringConfigEl {
+impl BuildDatastreamPrivateConnection_VpcPeeringConfig {
+    pub fn build(self) -> DatastreamPrivateConnection_VpcPeeringConfig {
+        DatastreamPrivateConnection_VpcPeeringConfig {
             subnet: self.subnet,
             vpc: self.vpc,
         }
     }
 }
 
-pub struct DatastreamPrivateConnectionVpcPeeringConfigElRef {
+#[allow(dead_code)]
+pub struct DatastreamPrivateConnection_VpcPeeringConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DatastreamPrivateConnectionVpcPeeringConfigElRef {
+impl terrars::Ref for DatastreamPrivateConnection_VpcPeeringConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DatastreamPrivateConnectionVpcPeeringConfigElRef {
-        DatastreamPrivateConnectionVpcPeeringConfigElRef {
+    ) -> DatastreamPrivateConnection_VpcPeeringConfigRef {
+        DatastreamPrivateConnection_VpcPeeringConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DatastreamPrivateConnectionVpcPeeringConfigElRef {
+impl DatastreamPrivateConnection_VpcPeeringConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -645,9 +807,4 @@ impl DatastreamPrivateConnectionVpcPeeringConfigElRef {
     pub fn vpc(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DatastreamPrivateConnectionDynamic {
-    vpc_peering_config: std::option::Option<terrars::DynamicBlock<DatastreamPrivateConnectionVpcPeeringConfigEl>>,
 }

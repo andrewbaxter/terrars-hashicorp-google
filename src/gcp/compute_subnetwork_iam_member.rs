@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeSubnetworkIamMemberData {
+struct ComputeSubnetworkIamMemberData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,14 +30,14 @@ struct ComputeSubnetworkIamMemberData {
     role: terrars::PrimField<std::string::String>,
     subnetwork: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<ComputeSubnetworkIamMemberConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<ComputeSubnetworkIamMember_Condition>>,
     dynamic: ComputeSubnetworkIamMemberDynamic,
 }
 
 struct ComputeSubnetworkIamMember_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeSubnetworkIamMemberData>,
+    data: std::cell::RefCell<ComputeSubnetworkIamMemberData_>,
 }
 
 #[derive(Clone)]
@@ -156,7 +158,7 @@ impl ComputeSubnetworkIamMember {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeSubnetworkIamMemberConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeSubnetworkIamMember_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -205,7 +207,7 @@ impl ComputeSubnetworkIamMember {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<ComputeSubnetworkIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<ComputeSubnetworkIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -256,7 +258,7 @@ impl BuildComputeSubnetworkIamMember {
         let out = ComputeSubnetworkIamMember(std::rc::Rc::new(ComputeSubnetworkIamMember_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeSubnetworkIamMemberData {
+            data: std::cell::RefCell::new(ComputeSubnetworkIamMemberData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -336,20 +338,25 @@ impl ComputeSubnetworkIamMemberRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<ComputeSubnetworkIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<ComputeSubnetworkIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ComputeSubnetworkIamMemberDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<ComputeSubnetworkIamMember_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct ComputeSubnetworkIamMemberConditionEl {
+pub struct ComputeSubnetworkIamMember_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl ComputeSubnetworkIamMemberConditionEl {
+impl ComputeSubnetworkIamMember_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -357,8 +364,8 @@ impl ComputeSubnetworkIamMemberConditionEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeSubnetworkIamMemberConditionEl {
-    type O = terrars::BlockAssignable<ComputeSubnetworkIamMemberConditionEl>;
+impl terrars::ToListMappable for ComputeSubnetworkIamMember_Condition {
+    type O = terrars::BlockAssignable<ComputeSubnetworkIamMember_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -369,16 +376,16 @@ impl terrars::ToListMappable for ComputeSubnetworkIamMemberConditionEl {
     }
 }
 
-pub struct BuildComputeSubnetworkIamMemberConditionEl {
+pub struct BuildComputeSubnetworkIamMember_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputeSubnetworkIamMemberConditionEl {
-    pub fn build(self) -> ComputeSubnetworkIamMemberConditionEl {
-        ComputeSubnetworkIamMemberConditionEl {
+impl BuildComputeSubnetworkIamMember_Condition {
+    pub fn build(self) -> ComputeSubnetworkIamMember_Condition {
+        ComputeSubnetworkIamMember_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -386,21 +393,23 @@ impl BuildComputeSubnetworkIamMemberConditionEl {
     }
 }
 
-pub struct ComputeSubnetworkIamMemberConditionElRef {
+#[allow(dead_code)]
+pub struct ComputeSubnetworkIamMember_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeSubnetworkIamMemberConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeSubnetworkIamMemberConditionElRef {
-        ComputeSubnetworkIamMemberConditionElRef {
+impl terrars::Ref for ComputeSubnetworkIamMember_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeSubnetworkIamMember_ConditionRef {
+        ComputeSubnetworkIamMember_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeSubnetworkIamMemberConditionElRef {
+impl ComputeSubnetworkIamMember_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -419,9 +428,4 @@ impl ComputeSubnetworkIamMemberConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ComputeSubnetworkIamMemberDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<ComputeSubnetworkIamMemberConditionEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct HealthcareHl7V2StoreData {
+struct HealthcareHl7V2StoreData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,25 +22,29 @@ struct HealthcareHl7V2StoreData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     dataset: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    notification_config: std::option::Option<std::vec::Vec<HealthcareHl7V2StoreNotificationConfigEl>>,
+    reject_duplicate_message: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    notification_configs: std::option::Option<std::vec::Vec<HealthcareHl7V2StoreNotificationConfigsEl>>,
+    notification_config: std::option::Option<std::vec::Vec<HealthcareHl7V2Store_NotificationConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    parser_config: std::option::Option<std::vec::Vec<HealthcareHl7V2StoreParserConfigEl>>,
+    notification_configs: std::option::Option<std::vec::Vec<HealthcareHl7V2Store_NotificationConfigs>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<HealthcareHl7V2StoreTimeoutsEl>,
+    parser_config: std::option::Option<std::vec::Vec<HealthcareHl7V2Store_ParserConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<HealthcareHl7V2Store_Timeouts>,
     dynamic: HealthcareHl7V2StoreDynamic,
 }
 
 struct HealthcareHl7V2Store_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<HealthcareHl7V2StoreData>,
+    data: std::cell::RefCell<HealthcareHl7V2StoreData_>,
 }
 
 #[derive(Clone)]
@@ -138,6 +144,13 @@ impl HealthcareHl7V2Store {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -154,10 +167,16 @@ impl HealthcareHl7V2Store {
         self
     }
 
+    #[doc = "Set the field `reject_duplicate_message`.\nDetermines whether duplicate messages are allowed."]
+    pub fn set_reject_duplicate_message(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().reject_duplicate_message = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `notification_config`.\n"]
     pub fn set_notification_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<HealthcareHl7V2StoreNotificationConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<HealthcareHl7V2Store_NotificationConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -173,7 +192,7 @@ impl HealthcareHl7V2Store {
     #[doc = "Set the field `notification_configs`.\n"]
     pub fn set_notification_configs(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<HealthcareHl7V2StoreNotificationConfigsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<HealthcareHl7V2Store_NotificationConfigs>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -189,7 +208,7 @@ impl HealthcareHl7V2Store {
     #[doc = "Set the field `parser_config`.\n"]
     pub fn set_parser_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<HealthcareHl7V2StoreParserConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<HealthcareHl7V2Store_ParserConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -203,7 +222,7 @@ impl HealthcareHl7V2Store {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<HealthcareHl7V2StoreTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<HealthcareHl7V2Store_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -212,6 +231,12 @@ impl HealthcareHl7V2Store {
         "Get a reference to the value of field `dataset` after provisioning.\nIdentifies the dataset addressed by this request. Must be in the format\n'projects/{project}/locations/{location}/datasets/{dataset}'"]
     pub fn dataset(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.dataset", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -238,6 +263,12 @@ impl HealthcareHl7V2Store {
     }
 
     #[doc =
+        "Get a reference to the value of field `reject_duplicate_message` after provisioning.\nDetermines whether duplicate messages are allowed."]
+    pub fn reject_duplicate_message(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.reject_duplicate_message", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `self_link` after provisioning.\nThe fully qualified name of this dataset"]
     pub fn self_link(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.extract_ref()))
@@ -250,23 +281,23 @@ impl HealthcareHl7V2Store {
     }
 
     #[doc = "Get a reference to the value of field `notification_config` after provisioning.\n"]
-    pub fn notification_config(&self) -> terrars::ListRef<HealthcareHl7V2StoreNotificationConfigElRef> {
+    pub fn notification_config(&self) -> terrars::ListRef<HealthcareHl7V2Store_NotificationConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.notification_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `notification_configs` after provisioning.\n"]
-    pub fn notification_configs(&self) -> terrars::ListRef<HealthcareHl7V2StoreNotificationConfigsElRef> {
+    pub fn notification_configs(&self) -> terrars::ListRef<HealthcareHl7V2Store_NotificationConfigsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.notification_configs", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `parser_config` after provisioning.\n"]
-    pub fn parser_config(&self) -> terrars::ListRef<HealthcareHl7V2StoreParserConfigElRef> {
+    pub fn parser_config(&self) -> terrars::ListRef<HealthcareHl7V2Store_ParserConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.parser_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> HealthcareHl7V2StoreTimeoutsElRef {
-        HealthcareHl7V2StoreTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> HealthcareHl7V2Store_TimeoutsRef {
+        HealthcareHl7V2Store_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -316,16 +347,18 @@ impl BuildHealthcareHl7V2Store {
         let out = HealthcareHl7V2Store(std::rc::Rc::new(HealthcareHl7V2Store_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(HealthcareHl7V2StoreData {
+            data: std::cell::RefCell::new(HealthcareHl7V2StoreData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 dataset: self.dataset,
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 labels: core::default::Default::default(),
                 name: self.name,
+                reject_duplicate_message: core::default::Default::default(),
                 notification_config: core::default::Default::default(),
                 notification_configs: core::default::Default::default(),
                 parser_config: core::default::Default::default(),
@@ -368,6 +401,12 @@ impl HealthcareHl7V2StoreRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
     pub fn effective_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
@@ -391,6 +430,12 @@ impl HealthcareHl7V2StoreRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `reject_duplicate_message` after provisioning.\nDetermines whether duplicate messages are allowed."]
+    pub fn reject_duplicate_message(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.reject_duplicate_message", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `self_link` after provisioning.\nThe fully qualified name of this dataset"]
     pub fn self_link(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.extract_ref()))
@@ -403,35 +448,42 @@ impl HealthcareHl7V2StoreRef {
     }
 
     #[doc = "Get a reference to the value of field `notification_config` after provisioning.\n"]
-    pub fn notification_config(&self) -> terrars::ListRef<HealthcareHl7V2StoreNotificationConfigElRef> {
+    pub fn notification_config(&self) -> terrars::ListRef<HealthcareHl7V2Store_NotificationConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.notification_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `notification_configs` after provisioning.\n"]
-    pub fn notification_configs(&self) -> terrars::ListRef<HealthcareHl7V2StoreNotificationConfigsElRef> {
+    pub fn notification_configs(&self) -> terrars::ListRef<HealthcareHl7V2Store_NotificationConfigsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.notification_configs", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `parser_config` after provisioning.\n"]
-    pub fn parser_config(&self) -> terrars::ListRef<HealthcareHl7V2StoreParserConfigElRef> {
+    pub fn parser_config(&self) -> terrars::ListRef<HealthcareHl7V2Store_ParserConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.parser_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> HealthcareHl7V2StoreTimeoutsElRef {
-        HealthcareHl7V2StoreTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> HealthcareHl7V2Store_TimeoutsRef {
+        HealthcareHl7V2Store_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct HealthcareHl7V2StoreDynamic {
+    notification_config: std::option::Option<terrars::DynamicBlock<HealthcareHl7V2Store_NotificationConfig>>,
+    notification_configs: std::option::Option<terrars::DynamicBlock<HealthcareHl7V2Store_NotificationConfigs>>,
+    parser_config: std::option::Option<terrars::DynamicBlock<HealthcareHl7V2Store_ParserConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct HealthcareHl7V2StoreNotificationConfigEl {
+pub struct HealthcareHl7V2Store_NotificationConfig {
     pubsub_topic: terrars::PrimField<std::string::String>,
 }
 
-impl HealthcareHl7V2StoreNotificationConfigEl { }
+impl HealthcareHl7V2Store_NotificationConfig { }
 
-impl terrars::ToListMappable for HealthcareHl7V2StoreNotificationConfigEl {
-    type O = terrars::BlockAssignable<HealthcareHl7V2StoreNotificationConfigEl>;
+impl terrars::ToListMappable for HealthcareHl7V2Store_NotificationConfig {
+    type O = terrars::BlockAssignable<HealthcareHl7V2Store_NotificationConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -442,33 +494,35 @@ impl terrars::ToListMappable for HealthcareHl7V2StoreNotificationConfigEl {
     }
 }
 
-pub struct BuildHealthcareHl7V2StoreNotificationConfigEl {
+pub struct BuildHealthcareHl7V2Store_NotificationConfig {
     #[doc =
         "The Cloud Pub/Sub topic that notifications of changes are published on. Supplied by the client.\nPubsubMessage.Data will contain the resource name. PubsubMessage.MessageId is the ID of this message.\nIt is guaranteed to be unique within the topic. PubsubMessage.PublishTime is the time at which the message\nwas published. Notifications are only sent if the topic is non-empty. Topic names must be scoped to a\nproject. service-PROJECT_NUMBER@gcp-sa-healthcare.iam.gserviceaccount.com must have publisher permissions on the given\nCloud Pub/Sub topic. Not having adequate permissions will cause the calls that send notifications to fail."]
     pub pubsub_topic: terrars::PrimField<std::string::String>,
 }
 
-impl BuildHealthcareHl7V2StoreNotificationConfigEl {
-    pub fn build(self) -> HealthcareHl7V2StoreNotificationConfigEl {
-        HealthcareHl7V2StoreNotificationConfigEl { pubsub_topic: self.pubsub_topic }
+impl BuildHealthcareHl7V2Store_NotificationConfig {
+    pub fn build(self) -> HealthcareHl7V2Store_NotificationConfig {
+        HealthcareHl7V2Store_NotificationConfig { pubsub_topic: self.pubsub_topic }
     }
 }
 
-pub struct HealthcareHl7V2StoreNotificationConfigElRef {
+#[allow(dead_code)]
+pub struct HealthcareHl7V2Store_NotificationConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for HealthcareHl7V2StoreNotificationConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> HealthcareHl7V2StoreNotificationConfigElRef {
-        HealthcareHl7V2StoreNotificationConfigElRef {
+impl terrars::Ref for HealthcareHl7V2Store_NotificationConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> HealthcareHl7V2Store_NotificationConfigRef {
+        HealthcareHl7V2Store_NotificationConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl HealthcareHl7V2StoreNotificationConfigElRef {
+impl HealthcareHl7V2Store_NotificationConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -481,13 +535,13 @@ impl HealthcareHl7V2StoreNotificationConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct HealthcareHl7V2StoreNotificationConfigsEl {
+pub struct HealthcareHl7V2Store_NotificationConfigs {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     filter: std::option::Option<terrars::PrimField<std::string::String>>,
     pubsub_topic: terrars::PrimField<std::string::String>,
 }
 
-impl HealthcareHl7V2StoreNotificationConfigsEl {
+impl HealthcareHl7V2Store_NotificationConfigs {
     #[doc =
         "Set the field `filter`.\nRestricts notifications sent for messages matching a filter. If this is empty, all messages\nare matched. Syntax: https://cloud.google.com/appengine/docs/standard/python/search/query_strings\n\nFields/functions available for filtering are:\n\n* messageType, from the MSH-9.1 field. For example, NOT messageType = \"ADT\".\n* send_date or sendDate, the YYYY-MM-DD date the message was sent in the dataset's timeZone, from the MSH-7 segment. For example, send_date < \"2017-01-02\".\n* sendTime, the timestamp when the message was sent, using the RFC3339 time format for comparisons, from the MSH-7 segment. For example, sendTime < \"2017-01-02T00:00:00-05:00\".\n* sendFacility, the care center that the message came from, from the MSH-4 segment. For example, sendFacility = \"ABC\".\n* PatientId(value, type), which matches if the message lists a patient having an ID of the given value and type in the PID-2, PID-3, or PID-4 segments. For example, PatientId(\"123456\", \"MRN\").\n* labels.x, a string value of the label with key x as set using the Message.labels map. For example, labels.\"priority\"=\"high\". The operator :* can be used to assert the existence of a label. For example, labels.\"priority\":*."]
     pub fn set_filter(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -496,8 +550,8 @@ impl HealthcareHl7V2StoreNotificationConfigsEl {
     }
 }
 
-impl terrars::ToListMappable for HealthcareHl7V2StoreNotificationConfigsEl {
-    type O = terrars::BlockAssignable<HealthcareHl7V2StoreNotificationConfigsEl>;
+impl terrars::ToListMappable for HealthcareHl7V2Store_NotificationConfigs {
+    type O = terrars::BlockAssignable<HealthcareHl7V2Store_NotificationConfigs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -508,36 +562,38 @@ impl terrars::ToListMappable for HealthcareHl7V2StoreNotificationConfigsEl {
     }
 }
 
-pub struct BuildHealthcareHl7V2StoreNotificationConfigsEl {
+pub struct BuildHealthcareHl7V2Store_NotificationConfigs {
     #[doc =
         "The Cloud Pub/Sub topic that notifications of changes are published on. Supplied by the client.\nPubsubMessage.Data will contain the resource name. PubsubMessage.MessageId is the ID of this message.\nIt is guaranteed to be unique within the topic. PubsubMessage.PublishTime is the time at which the message\nwas published. Notifications are only sent if the topic is non-empty. Topic names must be scoped to a\nproject. service-PROJECT_NUMBER@gcp-sa-healthcare.iam.gserviceaccount.com must have publisher permissions on the given\nCloud Pub/Sub topic. Not having adequate permissions will cause the calls that send notifications to fail.\n\nIf a notification cannot be published to Cloud Pub/Sub, errors will be logged to Stackdriver"]
     pub pubsub_topic: terrars::PrimField<std::string::String>,
 }
 
-impl BuildHealthcareHl7V2StoreNotificationConfigsEl {
-    pub fn build(self) -> HealthcareHl7V2StoreNotificationConfigsEl {
-        HealthcareHl7V2StoreNotificationConfigsEl {
+impl BuildHealthcareHl7V2Store_NotificationConfigs {
+    pub fn build(self) -> HealthcareHl7V2Store_NotificationConfigs {
+        HealthcareHl7V2Store_NotificationConfigs {
             filter: core::default::Default::default(),
             pubsub_topic: self.pubsub_topic,
         }
     }
 }
 
-pub struct HealthcareHl7V2StoreNotificationConfigsElRef {
+#[allow(dead_code)]
+pub struct HealthcareHl7V2Store_NotificationConfigsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for HealthcareHl7V2StoreNotificationConfigsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> HealthcareHl7V2StoreNotificationConfigsElRef {
-        HealthcareHl7V2StoreNotificationConfigsElRef {
+impl terrars::Ref for HealthcareHl7V2Store_NotificationConfigsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> HealthcareHl7V2Store_NotificationConfigsRef {
+        HealthcareHl7V2Store_NotificationConfigsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl HealthcareHl7V2StoreNotificationConfigsElRef {
+impl HealthcareHl7V2Store_NotificationConfigsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -556,7 +612,7 @@ impl HealthcareHl7V2StoreNotificationConfigsElRef {
 }
 
 #[derive(Serialize)]
-pub struct HealthcareHl7V2StoreParserConfigEl {
+pub struct HealthcareHl7V2Store_ParserConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allow_null_header: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -567,7 +623,7 @@ pub struct HealthcareHl7V2StoreParserConfigEl {
     version: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl HealthcareHl7V2StoreParserConfigEl {
+impl HealthcareHl7V2Store_ParserConfig {
     #[doc = "Set the field `allow_null_header`.\nDetermines whether messages with no header are allowed."]
     pub fn set_allow_null_header(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.allow_null_header = std::option::Option::Some(v.into());
@@ -599,8 +655,8 @@ impl HealthcareHl7V2StoreParserConfigEl {
     }
 }
 
-impl terrars::ToListMappable for HealthcareHl7V2StoreParserConfigEl {
-    type O = terrars::BlockAssignable<HealthcareHl7V2StoreParserConfigEl>;
+impl terrars::ToListMappable for HealthcareHl7V2Store_ParserConfig {
+    type O = terrars::BlockAssignable<HealthcareHl7V2Store_ParserConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -611,11 +667,11 @@ impl terrars::ToListMappable for HealthcareHl7V2StoreParserConfigEl {
     }
 }
 
-pub struct BuildHealthcareHl7V2StoreParserConfigEl {}
+pub struct BuildHealthcareHl7V2Store_ParserConfig {}
 
-impl BuildHealthcareHl7V2StoreParserConfigEl {
-    pub fn build(self) -> HealthcareHl7V2StoreParserConfigEl {
-        HealthcareHl7V2StoreParserConfigEl {
+impl BuildHealthcareHl7V2Store_ParserConfig {
+    pub fn build(self) -> HealthcareHl7V2Store_ParserConfig {
+        HealthcareHl7V2Store_ParserConfig {
             allow_null_header: core::default::Default::default(),
             schema: core::default::Default::default(),
             segment_terminator: core::default::Default::default(),
@@ -624,21 +680,23 @@ impl BuildHealthcareHl7V2StoreParserConfigEl {
     }
 }
 
-pub struct HealthcareHl7V2StoreParserConfigElRef {
+#[allow(dead_code)]
+pub struct HealthcareHl7V2Store_ParserConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for HealthcareHl7V2StoreParserConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> HealthcareHl7V2StoreParserConfigElRef {
-        HealthcareHl7V2StoreParserConfigElRef {
+impl terrars::Ref for HealthcareHl7V2Store_ParserConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> HealthcareHl7V2Store_ParserConfigRef {
+        HealthcareHl7V2Store_ParserConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl HealthcareHl7V2StoreParserConfigElRef {
+impl HealthcareHl7V2Store_ParserConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -669,7 +727,7 @@ impl HealthcareHl7V2StoreParserConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct HealthcareHl7V2StoreTimeoutsEl {
+pub struct HealthcareHl7V2Store_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -678,7 +736,7 @@ pub struct HealthcareHl7V2StoreTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl HealthcareHl7V2StoreTimeoutsEl {
+impl HealthcareHl7V2Store_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -698,8 +756,8 @@ impl HealthcareHl7V2StoreTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for HealthcareHl7V2StoreTimeoutsEl {
-    type O = terrars::BlockAssignable<HealthcareHl7V2StoreTimeoutsEl>;
+impl terrars::ToListMappable for HealthcareHl7V2Store_Timeouts {
+    type O = terrars::BlockAssignable<HealthcareHl7V2Store_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -710,11 +768,11 @@ impl terrars::ToListMappable for HealthcareHl7V2StoreTimeoutsEl {
     }
 }
 
-pub struct BuildHealthcareHl7V2StoreTimeoutsEl {}
+pub struct BuildHealthcareHl7V2Store_Timeouts {}
 
-impl BuildHealthcareHl7V2StoreTimeoutsEl {
-    pub fn build(self) -> HealthcareHl7V2StoreTimeoutsEl {
-        HealthcareHl7V2StoreTimeoutsEl {
+impl BuildHealthcareHl7V2Store_Timeouts {
+    pub fn build(self) -> HealthcareHl7V2Store_Timeouts {
+        HealthcareHl7V2Store_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -722,21 +780,23 @@ impl BuildHealthcareHl7V2StoreTimeoutsEl {
     }
 }
 
-pub struct HealthcareHl7V2StoreTimeoutsElRef {
+#[allow(dead_code)]
+pub struct HealthcareHl7V2Store_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for HealthcareHl7V2StoreTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> HealthcareHl7V2StoreTimeoutsElRef {
-        HealthcareHl7V2StoreTimeoutsElRef {
+impl terrars::Ref for HealthcareHl7V2Store_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> HealthcareHl7V2Store_TimeoutsRef {
+        HealthcareHl7V2Store_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl HealthcareHl7V2StoreTimeoutsElRef {
+impl HealthcareHl7V2Store_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -755,11 +815,4 @@ impl HealthcareHl7V2StoreTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct HealthcareHl7V2StoreDynamic {
-    notification_config: std::option::Option<terrars::DynamicBlock<HealthcareHl7V2StoreNotificationConfigEl>>,
-    notification_configs: std::option::Option<terrars::DynamicBlock<HealthcareHl7V2StoreNotificationConfigsEl>>,
-    parser_config: std::option::Option<terrars::DynamicBlock<HealthcareHl7V2StoreParserConfigEl>>,
 }

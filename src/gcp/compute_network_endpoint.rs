@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeNetworkEndpointData {
+struct ComputeNetworkEndpointData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct ComputeNetworkEndpointData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -31,13 +35,13 @@ struct ComputeNetworkEndpointData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     zone: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComputeNetworkEndpointTimeoutsEl>,
+    timeouts: std::option::Option<ComputeNetworkEndpoint_Timeouts>,
 }
 
 struct ComputeNetworkEndpoint_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeNetworkEndpointData>,
+    data: std::cell::RefCell<ComputeNetworkEndpointData_>,
 }
 
 #[derive(Clone)]
@@ -137,6 +141,13 @@ impl ComputeNetworkEndpoint {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -170,9 +181,15 @@ impl ComputeNetworkEndpoint {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeNetworkEndpointTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeNetworkEndpoint_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -216,8 +233,8 @@ impl ComputeNetworkEndpoint {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeNetworkEndpointTimeoutsElRef {
-        ComputeNetworkEndpointTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeNetworkEndpoint_TimeoutsRef {
+        ComputeNetworkEndpoint_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -266,12 +283,13 @@ impl BuildComputeNetworkEndpoint {
         let out = ComputeNetworkEndpoint(std::rc::Rc::new(ComputeNetworkEndpoint_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeNetworkEndpointData {
+            data: std::cell::RefCell::new(ComputeNetworkEndpointData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 instance: core::default::Default::default(),
                 ip_address: self.ip_address,
@@ -308,6 +326,12 @@ impl ComputeNetworkEndpointRef {
 
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -351,20 +375,20 @@ impl ComputeNetworkEndpointRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeNetworkEndpointTimeoutsElRef {
-        ComputeNetworkEndpointTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeNetworkEndpoint_TimeoutsRef {
+        ComputeNetworkEndpoint_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeNetworkEndpointTimeoutsEl {
+pub struct ComputeNetworkEndpoint_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeNetworkEndpointTimeoutsEl {
+impl ComputeNetworkEndpoint_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -378,8 +402,8 @@ impl ComputeNetworkEndpointTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeNetworkEndpointTimeoutsEl {
-    type O = terrars::BlockAssignable<ComputeNetworkEndpointTimeoutsEl>;
+impl terrars::ToListMappable for ComputeNetworkEndpoint_Timeouts {
+    type O = terrars::BlockAssignable<ComputeNetworkEndpoint_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -390,32 +414,34 @@ impl terrars::ToListMappable for ComputeNetworkEndpointTimeoutsEl {
     }
 }
 
-pub struct BuildComputeNetworkEndpointTimeoutsEl {}
+pub struct BuildComputeNetworkEndpoint_Timeouts {}
 
-impl BuildComputeNetworkEndpointTimeoutsEl {
-    pub fn build(self) -> ComputeNetworkEndpointTimeoutsEl {
-        ComputeNetworkEndpointTimeoutsEl {
+impl BuildComputeNetworkEndpoint_Timeouts {
+    pub fn build(self) -> ComputeNetworkEndpoint_Timeouts {
+        ComputeNetworkEndpoint_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeNetworkEndpointTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComputeNetworkEndpoint_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeNetworkEndpointTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeNetworkEndpointTimeoutsElRef {
-        ComputeNetworkEndpointTimeoutsElRef {
+impl terrars::Ref for ComputeNetworkEndpoint_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeNetworkEndpoint_TimeoutsRef {
+        ComputeNetworkEndpoint_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeNetworkEndpointTimeoutsElRef {
+impl ComputeNetworkEndpoint_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

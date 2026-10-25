@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct IamAccessBoundaryPolicyData {
+struct IamAccessBoundaryPolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,22 +21,24 @@ struct IamAccessBoundaryPolicyData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     display_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     parent: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    rules: std::option::Option<std::vec::Vec<IamAccessBoundaryPolicyRulesEl>>,
+    rules: std::option::Option<std::vec::Vec<IamAccessBoundaryPolicy_Rules>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<IamAccessBoundaryPolicyTimeoutsEl>,
+    timeouts: std::option::Option<IamAccessBoundaryPolicy_Timeouts>,
     dynamic: IamAccessBoundaryPolicyDynamic,
 }
 
 struct IamAccessBoundaryPolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<IamAccessBoundaryPolicyData>,
+    data: std::cell::RefCell<IamAccessBoundaryPolicyData_>,
 }
 
 #[derive(Clone)]
@@ -134,6 +138,13 @@ impl IamAccessBoundaryPolicy {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `display_name`.\nThe display name of the rule."]
     pub fn set_display_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().display_name = std::option::Option::Some(v.into());
@@ -147,10 +158,7 @@ impl IamAccessBoundaryPolicy {
     }
 
     #[doc = "Set the field `rules`.\n"]
-    pub fn set_rules(
-        self,
-        v: impl std::convert::Into<terrars::BlockAssignable<IamAccessBoundaryPolicyRulesEl>>,
-    ) -> Self {
+    pub fn set_rules(self, v: impl std::convert::Into<terrars::BlockAssignable<IamAccessBoundaryPolicy_Rules>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().rules = std::option::Option::Some(v);
@@ -163,9 +171,15 @@ impl IamAccessBoundaryPolicy {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<IamAccessBoundaryPolicyTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<IamAccessBoundaryPolicy_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `display_name` after provisioning.\nThe display name of the rule."]
@@ -196,13 +210,13 @@ impl IamAccessBoundaryPolicy {
     }
 
     #[doc = "Get a reference to the value of field `rules` after provisioning.\n"]
-    pub fn rules(&self) -> terrars::ListRef<IamAccessBoundaryPolicyRulesElRef> {
+    pub fn rules(&self) -> terrars::ListRef<IamAccessBoundaryPolicy_RulesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.rules", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> IamAccessBoundaryPolicyTimeoutsElRef {
-        IamAccessBoundaryPolicyTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> IamAccessBoundaryPolicy_TimeoutsRef {
+        IamAccessBoundaryPolicy_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -250,12 +264,13 @@ impl BuildIamAccessBoundaryPolicy {
         let out = IamAccessBoundaryPolicy(std::rc::Rc::new(IamAccessBoundaryPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(IamAccessBoundaryPolicyData {
+            data: std::cell::RefCell::new(IamAccessBoundaryPolicyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 display_name: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
@@ -293,6 +308,12 @@ impl IamAccessBoundaryPolicyRef {
         &self.shared
     }
 
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `display_name` after provisioning.\nThe display name of the rule."]
     pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
@@ -321,18 +342,23 @@ impl IamAccessBoundaryPolicyRef {
     }
 
     #[doc = "Get a reference to the value of field `rules` after provisioning.\n"]
-    pub fn rules(&self) -> terrars::ListRef<IamAccessBoundaryPolicyRulesElRef> {
+    pub fn rules(&self) -> terrars::ListRef<IamAccessBoundaryPolicy_RulesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.rules", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> IamAccessBoundaryPolicyTimeoutsElRef {
-        IamAccessBoundaryPolicyTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> IamAccessBoundaryPolicy_TimeoutsRef {
+        IamAccessBoundaryPolicy_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct IamAccessBoundaryPolicyDynamic {
+    rules: std::option::Option<terrars::DynamicBlock<IamAccessBoundaryPolicy_Rules>>,
+}
+
 #[derive(Serialize)]
-pub struct IamAccessBoundaryPolicyRulesElAccessBoundaryRuleElAvailabilityConditionEl {
+pub struct IamAccessBoundaryPolicy_Rules_AccessBoundaryRule_AvailabilityCondition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
@@ -342,7 +368,7 @@ pub struct IamAccessBoundaryPolicyRulesElAccessBoundaryRuleElAvailabilityConditi
     title: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl IamAccessBoundaryPolicyRulesElAccessBoundaryRuleElAvailabilityConditionEl {
+impl IamAccessBoundaryPolicy_Rules_AccessBoundaryRule_AvailabilityCondition {
     #[doc =
         "Set the field `description`.\nDescription of the expression. This is a longer text which describes the expression,\ne.g. when hovered over it in a UI."]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -365,8 +391,8 @@ impl IamAccessBoundaryPolicyRulesElAccessBoundaryRuleElAvailabilityConditionEl {
     }
 }
 
-impl terrars::ToListMappable for IamAccessBoundaryPolicyRulesElAccessBoundaryRuleElAvailabilityConditionEl {
-    type O = terrars::BlockAssignable<IamAccessBoundaryPolicyRulesElAccessBoundaryRuleElAvailabilityConditionEl>;
+impl terrars::ToListMappable for IamAccessBoundaryPolicy_Rules_AccessBoundaryRule_AvailabilityCondition {
+    type O = terrars::BlockAssignable<IamAccessBoundaryPolicy_Rules_AccessBoundaryRule_AvailabilityCondition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -377,14 +403,14 @@ impl terrars::ToListMappable for IamAccessBoundaryPolicyRulesElAccessBoundaryRul
     }
 }
 
-pub struct BuildIamAccessBoundaryPolicyRulesElAccessBoundaryRuleElAvailabilityConditionEl {
+pub struct BuildIamAccessBoundaryPolicy_Rules_AccessBoundaryRule_AvailabilityCondition {
     #[doc = "Textual representation of an expression in Common Expression Language syntax."]
     pub expression: terrars::PrimField<std::string::String>,
 }
 
-impl BuildIamAccessBoundaryPolicyRulesElAccessBoundaryRuleElAvailabilityConditionEl {
-    pub fn build(self) -> IamAccessBoundaryPolicyRulesElAccessBoundaryRuleElAvailabilityConditionEl {
-        IamAccessBoundaryPolicyRulesElAccessBoundaryRuleElAvailabilityConditionEl {
+impl BuildIamAccessBoundaryPolicy_Rules_AccessBoundaryRule_AvailabilityCondition {
+    pub fn build(self) -> IamAccessBoundaryPolicy_Rules_AccessBoundaryRule_AvailabilityCondition {
+        IamAccessBoundaryPolicy_Rules_AccessBoundaryRule_AvailabilityCondition {
             description: core::default::Default::default(),
             expression: self.expression,
             location: core::default::Default::default(),
@@ -393,24 +419,26 @@ impl BuildIamAccessBoundaryPolicyRulesElAccessBoundaryRuleElAvailabilityConditio
     }
 }
 
-pub struct IamAccessBoundaryPolicyRulesElAccessBoundaryRuleElAvailabilityConditionElRef {
+#[allow(dead_code)]
+pub struct IamAccessBoundaryPolicy_Rules_AccessBoundaryRule_AvailabilityConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IamAccessBoundaryPolicyRulesElAccessBoundaryRuleElAvailabilityConditionElRef {
+impl terrars::Ref for IamAccessBoundaryPolicy_Rules_AccessBoundaryRule_AvailabilityConditionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IamAccessBoundaryPolicyRulesElAccessBoundaryRuleElAvailabilityConditionElRef {
-        IamAccessBoundaryPolicyRulesElAccessBoundaryRuleElAvailabilityConditionElRef {
+    ) -> IamAccessBoundaryPolicy_Rules_AccessBoundaryRule_AvailabilityConditionRef {
+        IamAccessBoundaryPolicy_Rules_AccessBoundaryRule_AvailabilityConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IamAccessBoundaryPolicyRulesElAccessBoundaryRuleElAvailabilityConditionElRef {
+impl IamAccessBoundaryPolicy_Rules_AccessBoundaryRule_AvailabilityConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -441,14 +469,14 @@ impl IamAccessBoundaryPolicyRulesElAccessBoundaryRuleElAvailabilityConditionElRe
 }
 
 #[derive(Serialize, Default)]
-struct IamAccessBoundaryPolicyRulesElAccessBoundaryRuleElDynamic {
+struct IamAccessBoundaryPolicy_Rules_AccessBoundaryRuleDynamic {
     availability_condition: std
     ::option
-    ::Option<terrars::DynamicBlock<IamAccessBoundaryPolicyRulesElAccessBoundaryRuleElAvailabilityConditionEl>>,
+    ::Option<terrars::DynamicBlock<IamAccessBoundaryPolicy_Rules_AccessBoundaryRule_AvailabilityCondition>>,
 }
 
 #[derive(Serialize)]
-pub struct IamAccessBoundaryPolicyRulesElAccessBoundaryRuleEl {
+pub struct IamAccessBoundaryPolicy_Rules_AccessBoundaryRule {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     available_permissions: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -456,11 +484,11 @@ pub struct IamAccessBoundaryPolicyRulesElAccessBoundaryRuleEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     availability_condition: std
     ::option
-    ::Option<std::vec::Vec<IamAccessBoundaryPolicyRulesElAccessBoundaryRuleElAvailabilityConditionEl>>,
-    dynamic: IamAccessBoundaryPolicyRulesElAccessBoundaryRuleElDynamic,
+    ::Option<std::vec::Vec<IamAccessBoundaryPolicy_Rules_AccessBoundaryRule_AvailabilityCondition>>,
+    dynamic: IamAccessBoundaryPolicy_Rules_AccessBoundaryRuleDynamic,
 }
 
-impl IamAccessBoundaryPolicyRulesElAccessBoundaryRuleEl {
+impl IamAccessBoundaryPolicy_Rules_AccessBoundaryRule {
     #[doc =
         "Set the field `available_permissions`.\nA list of permissions that may be allowed for use on the specified resource."]
     pub fn set_available_permissions(
@@ -490,7 +518,7 @@ impl IamAccessBoundaryPolicyRulesElAccessBoundaryRuleEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<IamAccessBoundaryPolicyRulesElAccessBoundaryRuleElAvailabilityConditionEl>,
+                        ::BlockAssignable<IamAccessBoundaryPolicy_Rules_AccessBoundaryRule_AvailabilityCondition>,
                     >,
     ) -> Self {
         match v.into() {
@@ -505,8 +533,8 @@ impl IamAccessBoundaryPolicyRulesElAccessBoundaryRuleEl {
     }
 }
 
-impl terrars::ToListMappable for IamAccessBoundaryPolicyRulesElAccessBoundaryRuleEl {
-    type O = terrars::BlockAssignable<IamAccessBoundaryPolicyRulesElAccessBoundaryRuleEl>;
+impl terrars::ToListMappable for IamAccessBoundaryPolicy_Rules_AccessBoundaryRule {
+    type O = terrars::BlockAssignable<IamAccessBoundaryPolicy_Rules_AccessBoundaryRule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -517,11 +545,11 @@ impl terrars::ToListMappable for IamAccessBoundaryPolicyRulesElAccessBoundaryRul
     }
 }
 
-pub struct BuildIamAccessBoundaryPolicyRulesElAccessBoundaryRuleEl {}
+pub struct BuildIamAccessBoundaryPolicy_Rules_AccessBoundaryRule {}
 
-impl BuildIamAccessBoundaryPolicyRulesElAccessBoundaryRuleEl {
-    pub fn build(self) -> IamAccessBoundaryPolicyRulesElAccessBoundaryRuleEl {
-        IamAccessBoundaryPolicyRulesElAccessBoundaryRuleEl {
+impl BuildIamAccessBoundaryPolicy_Rules_AccessBoundaryRule {
+    pub fn build(self) -> IamAccessBoundaryPolicy_Rules_AccessBoundaryRule {
+        IamAccessBoundaryPolicy_Rules_AccessBoundaryRule {
             available_permissions: core::default::Default::default(),
             available_resource: core::default::Default::default(),
             availability_condition: core::default::Default::default(),
@@ -530,24 +558,26 @@ impl BuildIamAccessBoundaryPolicyRulesElAccessBoundaryRuleEl {
     }
 }
 
-pub struct IamAccessBoundaryPolicyRulesElAccessBoundaryRuleElRef {
+#[allow(dead_code)]
+pub struct IamAccessBoundaryPolicy_Rules_AccessBoundaryRuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IamAccessBoundaryPolicyRulesElAccessBoundaryRuleElRef {
+impl terrars::Ref for IamAccessBoundaryPolicy_Rules_AccessBoundaryRuleRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IamAccessBoundaryPolicyRulesElAccessBoundaryRuleElRef {
-        IamAccessBoundaryPolicyRulesElAccessBoundaryRuleElRef {
+    ) -> IamAccessBoundaryPolicy_Rules_AccessBoundaryRuleRef {
+        IamAccessBoundaryPolicy_Rules_AccessBoundaryRuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IamAccessBoundaryPolicyRulesElAccessBoundaryRuleElRef {
+impl IamAccessBoundaryPolicy_Rules_AccessBoundaryRuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -567,28 +597,28 @@ impl IamAccessBoundaryPolicyRulesElAccessBoundaryRuleElRef {
     #[doc = "Get a reference to the value of field `availability_condition` after provisioning.\n"]
     pub fn availability_condition(
         &self,
-    ) -> terrars::ListRef<IamAccessBoundaryPolicyRulesElAccessBoundaryRuleElAvailabilityConditionElRef> {
+    ) -> terrars::ListRef<IamAccessBoundaryPolicy_Rules_AccessBoundaryRule_AvailabilityConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.availability_condition", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct IamAccessBoundaryPolicyRulesElDynamic {
+struct IamAccessBoundaryPolicy_RulesDynamic {
     access_boundary_rule: std
     ::option
-    ::Option<terrars::DynamicBlock<IamAccessBoundaryPolicyRulesElAccessBoundaryRuleEl>>,
+    ::Option<terrars::DynamicBlock<IamAccessBoundaryPolicy_Rules_AccessBoundaryRule>>,
 }
 
 #[derive(Serialize)]
-pub struct IamAccessBoundaryPolicyRulesEl {
+pub struct IamAccessBoundaryPolicy_Rules {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    access_boundary_rule: std::option::Option<std::vec::Vec<IamAccessBoundaryPolicyRulesElAccessBoundaryRuleEl>>,
-    dynamic: IamAccessBoundaryPolicyRulesElDynamic,
+    access_boundary_rule: std::option::Option<std::vec::Vec<IamAccessBoundaryPolicy_Rules_AccessBoundaryRule>>,
+    dynamic: IamAccessBoundaryPolicy_RulesDynamic,
 }
 
-impl IamAccessBoundaryPolicyRulesEl {
+impl IamAccessBoundaryPolicy_Rules {
     #[doc = "Set the field `description`.\nThe description of the rule."]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -598,7 +628,7 @@ impl IamAccessBoundaryPolicyRulesEl {
     #[doc = "Set the field `access_boundary_rule`.\n"]
     pub fn set_access_boundary_rule(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<IamAccessBoundaryPolicyRulesElAccessBoundaryRuleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IamAccessBoundaryPolicy_Rules_AccessBoundaryRule>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -612,8 +642,8 @@ impl IamAccessBoundaryPolicyRulesEl {
     }
 }
 
-impl terrars::ToListMappable for IamAccessBoundaryPolicyRulesEl {
-    type O = terrars::BlockAssignable<IamAccessBoundaryPolicyRulesEl>;
+impl terrars::ToListMappable for IamAccessBoundaryPolicy_Rules {
+    type O = terrars::BlockAssignable<IamAccessBoundaryPolicy_Rules>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -624,11 +654,11 @@ impl terrars::ToListMappable for IamAccessBoundaryPolicyRulesEl {
     }
 }
 
-pub struct BuildIamAccessBoundaryPolicyRulesEl {}
+pub struct BuildIamAccessBoundaryPolicy_Rules {}
 
-impl BuildIamAccessBoundaryPolicyRulesEl {
-    pub fn build(self) -> IamAccessBoundaryPolicyRulesEl {
-        IamAccessBoundaryPolicyRulesEl {
+impl BuildIamAccessBoundaryPolicy_Rules {
+    pub fn build(self) -> IamAccessBoundaryPolicy_Rules {
+        IamAccessBoundaryPolicy_Rules {
             description: core::default::Default::default(),
             access_boundary_rule: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -636,21 +666,23 @@ impl BuildIamAccessBoundaryPolicyRulesEl {
     }
 }
 
-pub struct IamAccessBoundaryPolicyRulesElRef {
+#[allow(dead_code)]
+pub struct IamAccessBoundaryPolicy_RulesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IamAccessBoundaryPolicyRulesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> IamAccessBoundaryPolicyRulesElRef {
-        IamAccessBoundaryPolicyRulesElRef {
+impl terrars::Ref for IamAccessBoundaryPolicy_RulesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IamAccessBoundaryPolicy_RulesRef {
+        IamAccessBoundaryPolicy_RulesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IamAccessBoundaryPolicyRulesElRef {
+impl IamAccessBoundaryPolicy_RulesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -661,13 +693,13 @@ impl IamAccessBoundaryPolicyRulesElRef {
     }
 
     #[doc = "Get a reference to the value of field `access_boundary_rule` after provisioning.\n"]
-    pub fn access_boundary_rule(&self) -> terrars::ListRef<IamAccessBoundaryPolicyRulesElAccessBoundaryRuleElRef> {
+    pub fn access_boundary_rule(&self) -> terrars::ListRef<IamAccessBoundaryPolicy_Rules_AccessBoundaryRuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.access_boundary_rule", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct IamAccessBoundaryPolicyTimeoutsEl {
+pub struct IamAccessBoundaryPolicy_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -676,7 +708,7 @@ pub struct IamAccessBoundaryPolicyTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl IamAccessBoundaryPolicyTimeoutsEl {
+impl IamAccessBoundaryPolicy_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -696,8 +728,8 @@ impl IamAccessBoundaryPolicyTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for IamAccessBoundaryPolicyTimeoutsEl {
-    type O = terrars::BlockAssignable<IamAccessBoundaryPolicyTimeoutsEl>;
+impl terrars::ToListMappable for IamAccessBoundaryPolicy_Timeouts {
+    type O = terrars::BlockAssignable<IamAccessBoundaryPolicy_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -708,11 +740,11 @@ impl terrars::ToListMappable for IamAccessBoundaryPolicyTimeoutsEl {
     }
 }
 
-pub struct BuildIamAccessBoundaryPolicyTimeoutsEl {}
+pub struct BuildIamAccessBoundaryPolicy_Timeouts {}
 
-impl BuildIamAccessBoundaryPolicyTimeoutsEl {
-    pub fn build(self) -> IamAccessBoundaryPolicyTimeoutsEl {
-        IamAccessBoundaryPolicyTimeoutsEl {
+impl BuildIamAccessBoundaryPolicy_Timeouts {
+    pub fn build(self) -> IamAccessBoundaryPolicy_Timeouts {
+        IamAccessBoundaryPolicy_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -720,21 +752,23 @@ impl BuildIamAccessBoundaryPolicyTimeoutsEl {
     }
 }
 
-pub struct IamAccessBoundaryPolicyTimeoutsElRef {
+#[allow(dead_code)]
+pub struct IamAccessBoundaryPolicy_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IamAccessBoundaryPolicyTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> IamAccessBoundaryPolicyTimeoutsElRef {
-        IamAccessBoundaryPolicyTimeoutsElRef {
+impl terrars::Ref for IamAccessBoundaryPolicy_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IamAccessBoundaryPolicy_TimeoutsRef {
+        IamAccessBoundaryPolicy_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IamAccessBoundaryPolicyTimeoutsElRef {
+impl IamAccessBoundaryPolicy_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -753,9 +787,4 @@ impl IamAccessBoundaryPolicyTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct IamAccessBoundaryPolicyDynamic {
-    rules: std::option::Option<terrars::DynamicBlock<IamAccessBoundaryPolicyRulesEl>>,
 }

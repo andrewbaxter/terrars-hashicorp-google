@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeRegionTargetHttpProxyData {
+struct ComputeRegionTargetHttpProxyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,7 +21,11 @@ struct ComputeRegionTargetHttpProxyData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    http_keep_alive_timeout_sec: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
@@ -29,13 +35,13 @@ struct ComputeRegionTargetHttpProxyData {
     region: std::option::Option<terrars::PrimField<std::string::String>>,
     url_map: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComputeRegionTargetHttpProxyTimeoutsEl>,
+    timeouts: std::option::Option<ComputeRegionTargetHttpProxy_Timeouts>,
 }
 
 struct ComputeRegionTargetHttpProxy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeRegionTargetHttpProxyData>,
+    data: std::cell::RefCell<ComputeRegionTargetHttpProxyData_>,
 }
 
 #[derive(Clone)]
@@ -135,9 +141,23 @@ impl ComputeRegionTargetHttpProxy {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nAn optional description of this resource."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `http_keep_alive_timeout_sec`.\nSpecifies how long to keep a connection open, after completing a response,\nwhile there is no matching traffic (in seconds). If an HTTP keepalive is\nnot specified, a default value (600 seconds) will be used. For Regional\nHTTP(S) load balancer, the minimum allowed value is 5 seconds and the\nmaximum allowed value is 600 seconds."]
+    pub fn set_http_keep_alive_timeout_sec(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().http_keep_alive_timeout_sec = std::option::Option::Some(v.into());
         self
     }
 
@@ -161,7 +181,7 @@ impl ComputeRegionTargetHttpProxy {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeRegionTargetHttpProxyTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeRegionTargetHttpProxy_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -173,9 +193,21 @@ impl ComputeRegionTargetHttpProxy {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nAn optional description of this resource."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `http_keep_alive_timeout_sec` after provisioning.\nSpecifies how long to keep a connection open, after completing a response,\nwhile there is no matching traffic (in seconds). If an HTTP keepalive is\nnot specified, a default value (600 seconds) will be used. For Regional\nHTTP(S) load balancer, the minimum allowed value is 5 seconds and the\nmaximum allowed value is 600 seconds."]
+    pub fn http_keep_alive_timeout_sec(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.http_keep_alive_timeout_sec", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -218,8 +250,8 @@ impl ComputeRegionTargetHttpProxy {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeRegionTargetHttpProxyTimeoutsElRef {
-        ComputeRegionTargetHttpProxyTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ComputeRegionTargetHttpProxy_TimeoutsRef {
+        ComputeRegionTargetHttpProxy_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -271,13 +303,15 @@ impl BuildComputeRegionTargetHttpProxy {
         let out = ComputeRegionTargetHttpProxy(std::rc::Rc::new(ComputeRegionTargetHttpProxy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeRegionTargetHttpProxyData {
+            data: std::cell::RefCell::new(ComputeRegionTargetHttpProxyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
+                http_keep_alive_timeout_sec: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
                 project: core::default::Default::default(),
@@ -321,9 +355,21 @@ impl ComputeRegionTargetHttpProxyRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nAn optional description of this resource."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `http_keep_alive_timeout_sec` after provisioning.\nSpecifies how long to keep a connection open, after completing a response,\nwhile there is no matching traffic (in seconds). If an HTTP keepalive is\nnot specified, a default value (600 seconds) will be used. For Regional\nHTTP(S) load balancer, the minimum allowed value is 5 seconds and the\nmaximum allowed value is 600 seconds."]
+    pub fn http_keep_alive_timeout_sec(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.http_keep_alive_timeout_sec", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -366,8 +412,8 @@ impl ComputeRegionTargetHttpProxyRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeRegionTargetHttpProxyTimeoutsElRef {
-        ComputeRegionTargetHttpProxyTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ComputeRegionTargetHttpProxy_TimeoutsRef {
+        ComputeRegionTargetHttpProxy_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -375,7 +421,7 @@ impl ComputeRegionTargetHttpProxyRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeRegionTargetHttpProxyTimeoutsEl {
+pub struct ComputeRegionTargetHttpProxy_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -384,7 +430,7 @@ pub struct ComputeRegionTargetHttpProxyTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeRegionTargetHttpProxyTimeoutsEl {
+impl ComputeRegionTargetHttpProxy_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -404,8 +450,8 @@ impl ComputeRegionTargetHttpProxyTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeRegionTargetHttpProxyTimeoutsEl {
-    type O = terrars::BlockAssignable<ComputeRegionTargetHttpProxyTimeoutsEl>;
+impl terrars::ToListMappable for ComputeRegionTargetHttpProxy_Timeouts {
+    type O = terrars::BlockAssignable<ComputeRegionTargetHttpProxy_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -416,11 +462,11 @@ impl terrars::ToListMappable for ComputeRegionTargetHttpProxyTimeoutsEl {
     }
 }
 
-pub struct BuildComputeRegionTargetHttpProxyTimeoutsEl {}
+pub struct BuildComputeRegionTargetHttpProxy_Timeouts {}
 
-impl BuildComputeRegionTargetHttpProxyTimeoutsEl {
-    pub fn build(self) -> ComputeRegionTargetHttpProxyTimeoutsEl {
-        ComputeRegionTargetHttpProxyTimeoutsEl {
+impl BuildComputeRegionTargetHttpProxy_Timeouts {
+    pub fn build(self) -> ComputeRegionTargetHttpProxy_Timeouts {
+        ComputeRegionTargetHttpProxy_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -428,21 +474,23 @@ impl BuildComputeRegionTargetHttpProxyTimeoutsEl {
     }
 }
 
-pub struct ComputeRegionTargetHttpProxyTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComputeRegionTargetHttpProxy_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeRegionTargetHttpProxyTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRegionTargetHttpProxyTimeoutsElRef {
-        ComputeRegionTargetHttpProxyTimeoutsElRef {
+impl terrars::Ref for ComputeRegionTargetHttpProxy_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRegionTargetHttpProxy_TimeoutsRef {
+        ComputeRegionTargetHttpProxy_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeRegionTargetHttpProxyTimeoutsElRef {
+impl ComputeRegionTargetHttpProxy_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

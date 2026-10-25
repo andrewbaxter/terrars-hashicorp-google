@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ApigeeEnvironmentData {
+struct ApigeeEnvironmentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,11 +23,15 @@ struct ApigeeEnvironmentData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     api_proxy_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     deployment_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     display_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    forward_proxy_uri: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
@@ -33,16 +39,20 @@ struct ApigeeEnvironmentData {
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    node_config: std::option::Option<std::vec::Vec<ApigeeEnvironmentNodeConfigEl>>,
+    client_ip_resolution_config: std::option::Option<std::vec::Vec<ApigeeEnvironment_ClientIpResolutionConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ApigeeEnvironmentTimeoutsEl>,
+    node_config: std::option::Option<std::vec::Vec<ApigeeEnvironment_NodeConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    properties: std::option::Option<std::vec::Vec<ApigeeEnvironment_Properties>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<ApigeeEnvironment_Timeouts>,
     dynamic: ApigeeEnvironmentDynamic,
 }
 
 struct ApigeeEnvironment_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ApigeeEnvironmentData>,
+    data: std::cell::RefCell<ApigeeEnvironmentData_>,
 }
 
 #[derive(Clone)]
@@ -150,6 +160,13 @@ impl ApigeeEnvironment {
     }
 
     #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `deployment_type`.\nOptional. Deployment type supported by the environment. The deployment type can be\nset when creating the environment and cannot be changed. When you enable archive\ndeployment, you will be prevented from performing a subset of actions within the\nenvironment, including:\nManaging the deployment of API proxy or shared flow revisions;\nCreating, updating, or deleting resource files;\nCreating, updating, or deleting target servers. Possible values: [\"DEPLOYMENT_TYPE_UNSPECIFIED\", \"PROXY\", \"ARCHIVE\"]"]
     pub fn set_deployment_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().deployment_type = std::option::Option::Some(v.into());
@@ -168,6 +185,13 @@ impl ApigeeEnvironment {
         self
     }
 
+    #[doc =
+        "Set the field `forward_proxy_uri`.\nOptional. URI of the forward proxy to be applied to the runtime instances in this environment. Must be in the format of {scheme}://{hostname}:{port}. Note that the scheme must be one of \"http\" or \"https\", and the port must be supplied."]
+    pub fn set_forward_proxy_uri(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().forward_proxy_uri = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -181,10 +205,26 @@ impl ApigeeEnvironment {
         self
     }
 
+    #[doc = "Set the field `client_ip_resolution_config`.\n"]
+    pub fn set_client_ip_resolution_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApigeeEnvironment_ClientIpResolutionConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().client_ip_resolution_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.client_ip_resolution_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `node_config`.\n"]
     pub fn set_node_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ApigeeEnvironmentNodeConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApigeeEnvironment_NodeConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -197,8 +237,24 @@ impl ApigeeEnvironment {
         self
     }
 
+    #[doc = "Set the field `properties`.\n"]
+    pub fn set_properties(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApigeeEnvironment_Properties>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().properties = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.properties = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ApigeeEnvironmentTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ApigeeEnvironment_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -207,6 +263,12 @@ impl ApigeeEnvironment {
         "Get a reference to the value of field `api_proxy_type` after provisioning.\nOptional. API Proxy type supported by the environment. The type can be set when creating\nthe Environment and cannot be changed. Possible values: [\"API_PROXY_TYPE_UNSPECIFIED\", \"PROGRAMMABLE\", \"CONFIGURABLE\"]"]
     pub fn api_proxy_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.api_proxy_type", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -224,6 +286,12 @@ impl ApigeeEnvironment {
         "Get a reference to the value of field `display_name` after provisioning.\nDisplay name of the environment."]
     pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `forward_proxy_uri` after provisioning.\nOptional. URI of the forward proxy to be applied to the runtime instances in this environment. Must be in the format of {scheme}://{hostname}:{port}. Note that the scheme must be one of \"http\" or \"https\", and the port must be supplied."]
+    pub fn forward_proxy_uri(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.forward_proxy_uri", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -248,14 +316,24 @@ impl ApigeeEnvironment {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `client_ip_resolution_config` after provisioning.\n"]
+    pub fn client_ip_resolution_config(&self) -> terrars::ListRef<ApigeeEnvironment_ClientIpResolutionConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.client_ip_resolution_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `node_config` after provisioning.\n"]
-    pub fn node_config(&self) -> terrars::ListRef<ApigeeEnvironmentNodeConfigElRef> {
+    pub fn node_config(&self) -> terrars::ListRef<ApigeeEnvironment_NodeConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.node_config", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `properties` after provisioning.\n"]
+    pub fn properties(&self) -> terrars::ListRef<ApigeeEnvironment_PropertiesRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.properties", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ApigeeEnvironmentTimeoutsElRef {
-        ApigeeEnvironmentTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ApigeeEnvironment_TimeoutsRef {
+        ApigeeEnvironment_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -304,21 +382,25 @@ impl BuildApigeeEnvironment {
         let out = ApigeeEnvironment(std::rc::Rc::new(ApigeeEnvironment_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ApigeeEnvironmentData {
+            data: std::cell::RefCell::new(ApigeeEnvironmentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 api_proxy_type: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 deployment_type: core::default::Default::default(),
                 description: core::default::Default::default(),
                 display_name: core::default::Default::default(),
+                forward_proxy_uri: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
                 org_id: self.org_id,
                 type_: core::default::Default::default(),
+                client_ip_resolution_config: core::default::Default::default(),
                 node_config: core::default::Default::default(),
+                properties: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -358,6 +440,12 @@ impl ApigeeEnvironmentRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `deployment_type` after provisioning.\nOptional. Deployment type supported by the environment. The deployment type can be\nset when creating the environment and cannot be changed. When you enable archive\ndeployment, you will be prevented from performing a subset of actions within the\nenvironment, including:\nManaging the deployment of API proxy or shared flow revisions;\nCreating, updating, or deleting resource files;\nCreating, updating, or deleting target servers. Possible values: [\"DEPLOYMENT_TYPE_UNSPECIFIED\", \"PROXY\", \"ARCHIVE\"]"]
     pub fn deployment_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.deployment_type", self.extract_ref()))
@@ -372,6 +460,12 @@ impl ApigeeEnvironmentRef {
         "Get a reference to the value of field `display_name` after provisioning.\nDisplay name of the environment."]
     pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `forward_proxy_uri` after provisioning.\nOptional. URI of the forward proxy to be applied to the runtime instances in this environment. Must be in the format of {scheme}://{hostname}:{port}. Note that the scheme must be one of \"http\" or \"https\", and the port must be supplied."]
+    pub fn forward_proxy_uri(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.forward_proxy_uri", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -396,26 +490,211 @@ impl ApigeeEnvironmentRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `client_ip_resolution_config` after provisioning.\n"]
+    pub fn client_ip_resolution_config(&self) -> terrars::ListRef<ApigeeEnvironment_ClientIpResolutionConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.client_ip_resolution_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `node_config` after provisioning.\n"]
-    pub fn node_config(&self) -> terrars::ListRef<ApigeeEnvironmentNodeConfigElRef> {
+    pub fn node_config(&self) -> terrars::ListRef<ApigeeEnvironment_NodeConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.node_config", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `properties` after provisioning.\n"]
+    pub fn properties(&self) -> terrars::ListRef<ApigeeEnvironment_PropertiesRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.properties", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ApigeeEnvironmentTimeoutsElRef {
-        ApigeeEnvironmentTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ApigeeEnvironment_TimeoutsRef {
+        ApigeeEnvironment_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct ApigeeEnvironmentDynamic {
+    client_ip_resolution_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<ApigeeEnvironment_ClientIpResolutionConfig>>,
+    node_config: std::option::Option<terrars::DynamicBlock<ApigeeEnvironment_NodeConfig>>,
+    properties: std::option::Option<terrars::DynamicBlock<ApigeeEnvironment_Properties>>,
+}
+
+#[derive(Serialize)]
+pub struct ApigeeEnvironment_ClientIpResolutionConfig_HeaderIndexAlgorithm {
+    ip_header_index: terrars::PrimField<f64>,
+    ip_header_name: terrars::PrimField<std::string::String>,
+}
+
+impl ApigeeEnvironment_ClientIpResolutionConfig_HeaderIndexAlgorithm { }
+
+impl terrars::ToListMappable for ApigeeEnvironment_ClientIpResolutionConfig_HeaderIndexAlgorithm {
+    type O = terrars::BlockAssignable<ApigeeEnvironment_ClientIpResolutionConfig_HeaderIndexAlgorithm>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildApigeeEnvironment_ClientIpResolutionConfig_HeaderIndexAlgorithm {
+    #[doc =
+        "The index of the ip in the header. Positive indices 0, 1, 2, 3 chooses indices from the left (first ips). Negative indices -1, -2, -3 chooses indices from the right (last ips)."]
+    pub ip_header_index: terrars::PrimField<f64>,
+    #[doc =
+        "The name of the header to extract the client ip from. We are currently only supporting the X-Forwarded-For header."]
+    pub ip_header_name: terrars::PrimField<std::string::String>,
+}
+
+impl BuildApigeeEnvironment_ClientIpResolutionConfig_HeaderIndexAlgorithm {
+    pub fn build(self) -> ApigeeEnvironment_ClientIpResolutionConfig_HeaderIndexAlgorithm {
+        ApigeeEnvironment_ClientIpResolutionConfig_HeaderIndexAlgorithm {
+            ip_header_index: self.ip_header_index,
+            ip_header_name: self.ip_header_name,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ApigeeEnvironment_ClientIpResolutionConfig_HeaderIndexAlgorithmRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ApigeeEnvironment_ClientIpResolutionConfig_HeaderIndexAlgorithmRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ApigeeEnvironment_ClientIpResolutionConfig_HeaderIndexAlgorithmRef {
+        ApigeeEnvironment_ClientIpResolutionConfig_HeaderIndexAlgorithmRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ApigeeEnvironment_ClientIpResolutionConfig_HeaderIndexAlgorithmRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `ip_header_index` after provisioning.\nThe index of the ip in the header. Positive indices 0, 1, 2, 3 chooses indices from the left (first ips). Negative indices -1, -2, -3 chooses indices from the right (last ips)."]
+    pub fn ip_header_index(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_header_index", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `ip_header_name` after provisioning.\nThe name of the header to extract the client ip from. We are currently only supporting the X-Forwarded-For header."]
+    pub fn ip_header_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_header_name", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct ApigeeEnvironment_ClientIpResolutionConfigDynamic {
+    header_index_algorithm: std
+    ::option
+    ::Option<terrars::DynamicBlock<ApigeeEnvironment_ClientIpResolutionConfig_HeaderIndexAlgorithm>>,
+}
+
+#[derive(Serialize)]
+pub struct ApigeeEnvironment_ClientIpResolutionConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    header_index_algorithm: std
+    ::option
+    ::Option<std::vec::Vec<ApigeeEnvironment_ClientIpResolutionConfig_HeaderIndexAlgorithm>>,
+    dynamic: ApigeeEnvironment_ClientIpResolutionConfigDynamic,
+}
+
+impl ApigeeEnvironment_ClientIpResolutionConfig {
+    #[doc = "Set the field `header_index_algorithm`.\n"]
+    pub fn set_header_index_algorithm(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<ApigeeEnvironment_ClientIpResolutionConfig_HeaderIndexAlgorithm>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.header_index_algorithm = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.header_index_algorithm = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for ApigeeEnvironment_ClientIpResolutionConfig {
+    type O = terrars::BlockAssignable<ApigeeEnvironment_ClientIpResolutionConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildApigeeEnvironment_ClientIpResolutionConfig {}
+
+impl BuildApigeeEnvironment_ClientIpResolutionConfig {
+    pub fn build(self) -> ApigeeEnvironment_ClientIpResolutionConfig {
+        ApigeeEnvironment_ClientIpResolutionConfig {
+            header_index_algorithm: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ApigeeEnvironment_ClientIpResolutionConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ApigeeEnvironment_ClientIpResolutionConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApigeeEnvironment_ClientIpResolutionConfigRef {
+        ApigeeEnvironment_ClientIpResolutionConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ApigeeEnvironment_ClientIpResolutionConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `header_index_algorithm` after provisioning.\n"]
+    pub fn header_index_algorithm(
+        &self,
+    ) -> terrars::ListRef<ApigeeEnvironment_ClientIpResolutionConfig_HeaderIndexAlgorithmRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.header_index_algorithm", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ApigeeEnvironmentNodeConfigEl {
+pub struct ApigeeEnvironment_NodeConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max_node_count: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min_node_count: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ApigeeEnvironmentNodeConfigEl {
+impl ApigeeEnvironment_NodeConfig {
     #[doc =
         "Set the field `max_node_count`.\nThe maximum total number of gateway nodes that the is reserved for all instances that\nhas the specified environment. If not specified, the default is determined by the\nrecommended maximum number of nodes for that gateway."]
     pub fn set_max_node_count(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -431,8 +710,8 @@ impl ApigeeEnvironmentNodeConfigEl {
     }
 }
 
-impl terrars::ToListMappable for ApigeeEnvironmentNodeConfigEl {
-    type O = terrars::BlockAssignable<ApigeeEnvironmentNodeConfigEl>;
+impl terrars::ToListMappable for ApigeeEnvironment_NodeConfig {
+    type O = terrars::BlockAssignable<ApigeeEnvironment_NodeConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -443,32 +722,34 @@ impl terrars::ToListMappable for ApigeeEnvironmentNodeConfigEl {
     }
 }
 
-pub struct BuildApigeeEnvironmentNodeConfigEl {}
+pub struct BuildApigeeEnvironment_NodeConfig {}
 
-impl BuildApigeeEnvironmentNodeConfigEl {
-    pub fn build(self) -> ApigeeEnvironmentNodeConfigEl {
-        ApigeeEnvironmentNodeConfigEl {
+impl BuildApigeeEnvironment_NodeConfig {
+    pub fn build(self) -> ApigeeEnvironment_NodeConfig {
+        ApigeeEnvironment_NodeConfig {
             max_node_count: core::default::Default::default(),
             min_node_count: core::default::Default::default(),
         }
     }
 }
 
-pub struct ApigeeEnvironmentNodeConfigElRef {
+#[allow(dead_code)]
+pub struct ApigeeEnvironment_NodeConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApigeeEnvironmentNodeConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ApigeeEnvironmentNodeConfigElRef {
-        ApigeeEnvironmentNodeConfigElRef {
+impl terrars::Ref for ApigeeEnvironment_NodeConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApigeeEnvironment_NodeConfigRef {
+        ApigeeEnvironment_NodeConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApigeeEnvironmentNodeConfigElRef {
+impl ApigeeEnvironment_NodeConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -493,7 +774,164 @@ impl ApigeeEnvironmentNodeConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct ApigeeEnvironmentTimeoutsEl {
+pub struct ApigeeEnvironment_Properties_Property {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    value: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl ApigeeEnvironment_Properties_Property {
+    #[doc = "Set the field `name`.\nThe property key."]
+    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `value`.\nThe property value."]
+    pub fn set_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.value = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ApigeeEnvironment_Properties_Property {
+    type O = terrars::BlockAssignable<ApigeeEnvironment_Properties_Property>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildApigeeEnvironment_Properties_Property {}
+
+impl BuildApigeeEnvironment_Properties_Property {
+    pub fn build(self) -> ApigeeEnvironment_Properties_Property {
+        ApigeeEnvironment_Properties_Property {
+            name: core::default::Default::default(),
+            value: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ApigeeEnvironment_Properties_PropertyRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ApigeeEnvironment_Properties_PropertyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApigeeEnvironment_Properties_PropertyRef {
+        ApigeeEnvironment_Properties_PropertyRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ApigeeEnvironment_Properties_PropertyRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `name` after provisioning.\nThe property key."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `value` after provisioning.\nThe property value."]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct ApigeeEnvironment_PropertiesDynamic {
+    property: std::option::Option<terrars::DynamicBlock<ApigeeEnvironment_Properties_Property>>,
+}
+
+#[derive(Serialize)]
+pub struct ApigeeEnvironment_Properties {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    property: std::option::Option<std::vec::Vec<ApigeeEnvironment_Properties_Property>>,
+    dynamic: ApigeeEnvironment_PropertiesDynamic,
+}
+
+impl ApigeeEnvironment_Properties {
+    #[doc = "Set the field `property`.\n"]
+    pub fn set_property(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApigeeEnvironment_Properties_Property>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.property = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.property = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for ApigeeEnvironment_Properties {
+    type O = terrars::BlockAssignable<ApigeeEnvironment_Properties>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildApigeeEnvironment_Properties {}
+
+impl BuildApigeeEnvironment_Properties {
+    pub fn build(self) -> ApigeeEnvironment_Properties {
+        ApigeeEnvironment_Properties {
+            property: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ApigeeEnvironment_PropertiesRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ApigeeEnvironment_PropertiesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApigeeEnvironment_PropertiesRef {
+        ApigeeEnvironment_PropertiesRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ApigeeEnvironment_PropertiesRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `property` after provisioning.\n"]
+    pub fn property(&self) -> terrars::ListRef<ApigeeEnvironment_Properties_PropertyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.property", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ApigeeEnvironment_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -502,7 +940,7 @@ pub struct ApigeeEnvironmentTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ApigeeEnvironmentTimeoutsEl {
+impl ApigeeEnvironment_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -522,8 +960,8 @@ impl ApigeeEnvironmentTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ApigeeEnvironmentTimeoutsEl {
-    type O = terrars::BlockAssignable<ApigeeEnvironmentTimeoutsEl>;
+impl terrars::ToListMappable for ApigeeEnvironment_Timeouts {
+    type O = terrars::BlockAssignable<ApigeeEnvironment_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -534,11 +972,11 @@ impl terrars::ToListMappable for ApigeeEnvironmentTimeoutsEl {
     }
 }
 
-pub struct BuildApigeeEnvironmentTimeoutsEl {}
+pub struct BuildApigeeEnvironment_Timeouts {}
 
-impl BuildApigeeEnvironmentTimeoutsEl {
-    pub fn build(self) -> ApigeeEnvironmentTimeoutsEl {
-        ApigeeEnvironmentTimeoutsEl {
+impl BuildApigeeEnvironment_Timeouts {
+    pub fn build(self) -> ApigeeEnvironment_Timeouts {
+        ApigeeEnvironment_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -546,21 +984,23 @@ impl BuildApigeeEnvironmentTimeoutsEl {
     }
 }
 
-pub struct ApigeeEnvironmentTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ApigeeEnvironment_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApigeeEnvironmentTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ApigeeEnvironmentTimeoutsElRef {
-        ApigeeEnvironmentTimeoutsElRef {
+impl terrars::Ref for ApigeeEnvironment_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApigeeEnvironment_TimeoutsRef {
+        ApigeeEnvironment_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApigeeEnvironmentTimeoutsElRef {
+impl ApigeeEnvironment_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -579,9 +1019,4 @@ impl ApigeeEnvironmentTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ApigeeEnvironmentDynamic {
-    node_config: std::option::Option<terrars::DynamicBlock<ApigeeEnvironmentNodeConfigEl>>,
 }

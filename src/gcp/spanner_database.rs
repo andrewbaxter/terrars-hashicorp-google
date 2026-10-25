@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct SpannerDatabaseData {
+struct SpannerDatabaseData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,6 +25,10 @@ struct SpannerDatabaseData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ddl: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    default_time_zone: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     deletion_protection: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_drop_protection: std::option::Option<terrars::PrimField<bool>>,
@@ -35,16 +41,16 @@ struct SpannerDatabaseData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     version_retention_period: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    encryption_config: std::option::Option<std::vec::Vec<SpannerDatabaseEncryptionConfigEl>>,
+    encryption_config: std::option::Option<std::vec::Vec<SpannerDatabase_EncryptionConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<SpannerDatabaseTimeoutsEl>,
+    timeouts: std::option::Option<SpannerDatabase_Timeouts>,
     dynamic: SpannerDatabaseDynamic,
 }
 
 struct SpannerDatabase_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SpannerDatabaseData>,
+    data: std::cell::RefCell<SpannerDatabaseData_>,
 }
 
 #[derive(Clone)]
@@ -152,7 +158,7 @@ impl SpannerDatabase {
     }
 
     #[doc =
-        "Set the field `ddl`.\nAn optional list of DDL statements to run inside the newly created\ndatabase. Statements can create tables, indexes, etc. These statements\nexecute atomically with the creation of the database: if there is an\nerror in any statement, the database is not created."]
+        "Set the field `ddl`.\nAn optional list of DDL statements to run inside the database. Statements can create\ntables, indexes, etc.\n\nDuring creation these statements execute atomically with the creation of the database\nand if there is an error in any statement, the database is not created.\n\nTerraform does not perform drift detection on this field and assumes that the values\nrecorded in state are accurate. Limited updates to this field are supported, and\nnewly appended DDL statements can be executed in an update. However, modifications\nto prior statements will create a plan that marks the resource for recreation."]
     pub fn set_ddl(
         self,
         v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
@@ -162,7 +168,21 @@ impl SpannerDatabase {
     }
 
     #[doc =
-        "Set the field `deletion_protection`.\nWhether or not to allow Terraform to destroy the database. Defaults to true. Unless this field is set to false\nin Terraform state, a 'terraform destroy' or 'terraform apply' that would delete the database will fail."]
+        "Set the field `default_time_zone`.\nThe default time zone for the database. The default time zone must be a valid name\nfrom the tz database. Default value is \"America/Los_angeles\"."]
+    pub fn set_default_time_zone(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().default_time_zone = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `deletion_protection`.\nWhether Terraform will be prevented from destroying the database. Defaults to true.\nWhen a'terraform destroy' or 'terraform apply' would delete the database,\nthe command will fail if this field is not set to false in Terraform state.\nWhen the field is set to true or unset in Terraform state, a 'terraform apply'\nor 'terraform destroy' that would delete the database will fail.\nWhen the field is set to false, deleting the database is allowed."]
     pub fn set_deletion_protection(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().deletion_protection = std::option::Option::Some(v.into());
         self
@@ -200,7 +220,7 @@ impl SpannerDatabase {
     #[doc = "Set the field `encryption_config`.\n"]
     pub fn set_encryption_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SpannerDatabaseEncryptionConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SpannerDatabase_EncryptionConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -214,7 +234,7 @@ impl SpannerDatabase {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<SpannerDatabaseTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<SpannerDatabase_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -226,13 +246,25 @@ impl SpannerDatabase {
     }
 
     #[doc =
-        "Get a reference to the value of field `ddl` after provisioning.\nAn optional list of DDL statements to run inside the newly created\ndatabase. Statements can create tables, indexes, etc. These statements\nexecute atomically with the creation of the database: if there is an\nerror in any statement, the database is not created."]
+        "Get a reference to the value of field `ddl` after provisioning.\nAn optional list of DDL statements to run inside the database. Statements can create\ntables, indexes, etc.\n\nDuring creation these statements execute atomically with the creation of the database\nand if there is an error in any statement, the database is not created.\n\nTerraform does not perform drift detection on this field and assumes that the values\nrecorded in state are accurate. Limited updates to this field are supported, and\nnewly appended DDL statements can be executed in an update. However, modifications\nto prior statements will create a plan that marks the resource for recreation."]
     pub fn ddl(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ddl", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `deletion_protection` after provisioning.\nWhether or not to allow Terraform to destroy the database. Defaults to true. Unless this field is set to false\nin Terraform state, a 'terraform destroy' or 'terraform apply' that would delete the database will fail."]
+        "Get a reference to the value of field `default_time_zone` after provisioning.\nThe default time zone for the database. The default time zone must be a valid name\nfrom the tz database. Default value is \"America/Los_angeles\"."]
+    pub fn default_time_zone(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.default_time_zone", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_protection` after provisioning.\nWhether Terraform will be prevented from destroying the database. Defaults to true.\nWhen a'terraform destroy' or 'terraform apply' would delete the database,\nthe command will fail if this field is not set to false in Terraform state.\nWhen the field is set to true or unset in Terraform state, a 'terraform apply'\nor 'terraform destroy' that would delete the database will fail.\nWhen the field is set to false, deleting the database is allowed."]
     pub fn deletion_protection(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_protection", self.extract_ref()))
     }
@@ -255,7 +287,7 @@ impl SpannerDatabase {
     }
 
     #[doc =
-        "Get a reference to the value of field `name` after provisioning.\nA unique identifier for the database, which cannot be changed after\nthe instance is created. Values are of the form [a-z][-a-z0-9]*[a-z0-9]."]
+        "Get a reference to the value of field `name` after provisioning.\nA unique identifier for the database, which cannot be changed after the\ninstance is created. Values are of the form '[a-z][-_a-z0-9]*[a-z0-9]'."]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
@@ -278,13 +310,13 @@ impl SpannerDatabase {
     }
 
     #[doc = "Get a reference to the value of field `encryption_config` after provisioning.\n"]
-    pub fn encryption_config(&self) -> terrars::ListRef<SpannerDatabaseEncryptionConfigElRef> {
+    pub fn encryption_config(&self) -> terrars::ListRef<SpannerDatabase_EncryptionConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> SpannerDatabaseTimeoutsElRef {
-        SpannerDatabaseTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> SpannerDatabase_TimeoutsRef {
+        SpannerDatabase_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -324,7 +356,7 @@ pub struct BuildSpannerDatabase {
     #[doc = "The instance to create the database on."]
     pub instance: terrars::PrimField<std::string::String>,
     #[doc =
-        "A unique identifier for the database, which cannot be changed after\nthe instance is created. Values are of the form [a-z][-a-z0-9]*[a-z0-9]."]
+        "A unique identifier for the database, which cannot be changed after the\ninstance is created. Values are of the form '[a-z][-_a-z0-9]*[a-z0-9]'."]
     pub name: terrars::PrimField<std::string::String>,
 }
 
@@ -333,7 +365,7 @@ impl BuildSpannerDatabase {
         let out = SpannerDatabase(std::rc::Rc::new(SpannerDatabase_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SpannerDatabaseData {
+            data: std::cell::RefCell::new(SpannerDatabaseData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -341,6 +373,8 @@ impl BuildSpannerDatabase {
                 provisioner: core::default::Default::default(),
                 database_dialect: core::default::Default::default(),
                 ddl: core::default::Default::default(),
+                default_time_zone: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 deletion_protection: core::default::Default::default(),
                 enable_drop_protection: core::default::Default::default(),
                 id: core::default::Default::default(),
@@ -388,13 +422,25 @@ impl SpannerDatabaseRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `ddl` after provisioning.\nAn optional list of DDL statements to run inside the newly created\ndatabase. Statements can create tables, indexes, etc. These statements\nexecute atomically with the creation of the database: if there is an\nerror in any statement, the database is not created."]
+        "Get a reference to the value of field `ddl` after provisioning.\nAn optional list of DDL statements to run inside the database. Statements can create\ntables, indexes, etc.\n\nDuring creation these statements execute atomically with the creation of the database\nand if there is an error in any statement, the database is not created.\n\nTerraform does not perform drift detection on this field and assumes that the values\nrecorded in state are accurate. Limited updates to this field are supported, and\nnewly appended DDL statements can be executed in an update. However, modifications\nto prior statements will create a plan that marks the resource for recreation."]
     pub fn ddl(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ddl", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `deletion_protection` after provisioning.\nWhether or not to allow Terraform to destroy the database. Defaults to true. Unless this field is set to false\nin Terraform state, a 'terraform destroy' or 'terraform apply' that would delete the database will fail."]
+        "Get a reference to the value of field `default_time_zone` after provisioning.\nThe default time zone for the database. The default time zone must be a valid name\nfrom the tz database. Default value is \"America/Los_angeles\"."]
+    pub fn default_time_zone(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.default_time_zone", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_protection` after provisioning.\nWhether Terraform will be prevented from destroying the database. Defaults to true.\nWhen a'terraform destroy' or 'terraform apply' would delete the database,\nthe command will fail if this field is not set to false in Terraform state.\nWhen the field is set to true or unset in Terraform state, a 'terraform apply'\nor 'terraform destroy' that would delete the database will fail.\nWhen the field is set to false, deleting the database is allowed."]
     pub fn deletion_protection(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_protection", self.extract_ref()))
     }
@@ -417,7 +463,7 @@ impl SpannerDatabaseRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `name` after provisioning.\nA unique identifier for the database, which cannot be changed after\nthe instance is created. Values are of the form [a-z][-a-z0-9]*[a-z0-9]."]
+        "Get a reference to the value of field `name` after provisioning.\nA unique identifier for the database, which cannot be changed after the\ninstance is created. Values are of the form '[a-z][-_a-z0-9]*[a-z0-9]'."]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
@@ -440,25 +486,50 @@ impl SpannerDatabaseRef {
     }
 
     #[doc = "Get a reference to the value of field `encryption_config` after provisioning.\n"]
-    pub fn encryption_config(&self) -> terrars::ListRef<SpannerDatabaseEncryptionConfigElRef> {
+    pub fn encryption_config(&self) -> terrars::ListRef<SpannerDatabase_EncryptionConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> SpannerDatabaseTimeoutsElRef {
-        SpannerDatabaseTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> SpannerDatabase_TimeoutsRef {
+        SpannerDatabase_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
-#[derive(Serialize)]
-pub struct SpannerDatabaseEncryptionConfigEl {
-    kms_key_name: terrars::PrimField<std::string::String>,
+#[derive(Serialize, Default)]
+struct SpannerDatabaseDynamic {
+    encryption_config: std::option::Option<terrars::DynamicBlock<SpannerDatabase_EncryptionConfig>>,
 }
 
-impl SpannerDatabaseEncryptionConfigEl { }
+#[derive(Serialize)]
+pub struct SpannerDatabase_EncryptionConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_names: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+}
 
-impl terrars::ToListMappable for SpannerDatabaseEncryptionConfigEl {
-    type O = terrars::BlockAssignable<SpannerDatabaseEncryptionConfigEl>;
+impl SpannerDatabase_EncryptionConfig {
+    #[doc =
+        "Set the field `kms_key_name`.\nFully qualified name of the KMS key to use to encrypt this database. This key must exist\nin the same location as the Spanner Database."]
+    pub fn set_kms_key_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.kms_key_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `kms_key_names`.\nFully qualified name of the KMS keys to use to encrypt this database. The keys must exist\nin the same locations as the Spanner Database."]
+    pub fn set_kms_key_names(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.kms_key_names = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for SpannerDatabase_EncryptionConfig {
+    type O = terrars::BlockAssignable<SpannerDatabase_EncryptionConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -469,33 +540,34 @@ impl terrars::ToListMappable for SpannerDatabaseEncryptionConfigEl {
     }
 }
 
-pub struct BuildSpannerDatabaseEncryptionConfigEl {
-    #[doc =
-        "Fully qualified name of the KMS key to use to encrypt this database. This key must exist\nin the same location as the Spanner Database."]
-    pub kms_key_name: terrars::PrimField<std::string::String>,
-}
+pub struct BuildSpannerDatabase_EncryptionConfig {}
 
-impl BuildSpannerDatabaseEncryptionConfigEl {
-    pub fn build(self) -> SpannerDatabaseEncryptionConfigEl {
-        SpannerDatabaseEncryptionConfigEl { kms_key_name: self.kms_key_name }
+impl BuildSpannerDatabase_EncryptionConfig {
+    pub fn build(self) -> SpannerDatabase_EncryptionConfig {
+        SpannerDatabase_EncryptionConfig {
+            kms_key_name: core::default::Default::default(),
+            kms_key_names: core::default::Default::default(),
+        }
     }
 }
 
-pub struct SpannerDatabaseEncryptionConfigElRef {
+#[allow(dead_code)]
+pub struct SpannerDatabase_EncryptionConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SpannerDatabaseEncryptionConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SpannerDatabaseEncryptionConfigElRef {
-        SpannerDatabaseEncryptionConfigElRef {
+impl terrars::Ref for SpannerDatabase_EncryptionConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SpannerDatabase_EncryptionConfigRef {
+        SpannerDatabase_EncryptionConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SpannerDatabaseEncryptionConfigElRef {
+impl SpannerDatabase_EncryptionConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -505,10 +577,16 @@ impl SpannerDatabaseEncryptionConfigElRef {
     pub fn kms_key_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_name", self.base))
     }
+
+    #[doc =
+        "Get a reference to the value of field `kms_key_names` after provisioning.\nFully qualified name of the KMS keys to use to encrypt this database. The keys must exist\nin the same locations as the Spanner Database."]
+    pub fn kms_key_names(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.kms_key_names", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct SpannerDatabaseTimeoutsEl {
+pub struct SpannerDatabase_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -517,7 +595,7 @@ pub struct SpannerDatabaseTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SpannerDatabaseTimeoutsEl {
+impl SpannerDatabase_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -537,8 +615,8 @@ impl SpannerDatabaseTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for SpannerDatabaseTimeoutsEl {
-    type O = terrars::BlockAssignable<SpannerDatabaseTimeoutsEl>;
+impl terrars::ToListMappable for SpannerDatabase_Timeouts {
+    type O = terrars::BlockAssignable<SpannerDatabase_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -549,11 +627,11 @@ impl terrars::ToListMappable for SpannerDatabaseTimeoutsEl {
     }
 }
 
-pub struct BuildSpannerDatabaseTimeoutsEl {}
+pub struct BuildSpannerDatabase_Timeouts {}
 
-impl BuildSpannerDatabaseTimeoutsEl {
-    pub fn build(self) -> SpannerDatabaseTimeoutsEl {
-        SpannerDatabaseTimeoutsEl {
+impl BuildSpannerDatabase_Timeouts {
+    pub fn build(self) -> SpannerDatabase_Timeouts {
+        SpannerDatabase_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -561,21 +639,23 @@ impl BuildSpannerDatabaseTimeoutsEl {
     }
 }
 
-pub struct SpannerDatabaseTimeoutsElRef {
+#[allow(dead_code)]
+pub struct SpannerDatabase_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SpannerDatabaseTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SpannerDatabaseTimeoutsElRef {
-        SpannerDatabaseTimeoutsElRef {
+impl terrars::Ref for SpannerDatabase_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SpannerDatabase_TimeoutsRef {
+        SpannerDatabase_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SpannerDatabaseTimeoutsElRef {
+impl SpannerDatabase_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -594,9 +674,4 @@ impl SpannerDatabaseTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct SpannerDatabaseDynamic {
-    encryption_config: std::option::Option<terrars::DynamicBlock<SpannerDatabaseEncryptionConfigEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct BiglakeCatalogData {
+struct BiglakeCatalogData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,19 +21,21 @@ struct BiglakeCatalogData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     location: terrars::PrimField<std::string::String>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<BiglakeCatalogTimeoutsEl>,
+    timeouts: std::option::Option<BiglakeCatalog_Timeouts>,
 }
 
 struct BiglakeCatalog_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<BiglakeCatalogData>,
+    data: std::cell::RefCell<BiglakeCatalogData_>,
 }
 
 #[derive(Clone)]
@@ -131,6 +135,13 @@ impl BiglakeCatalog {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -144,7 +155,7 @@ impl BiglakeCatalog {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<BiglakeCatalogTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<BiglakeCatalog_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -159,6 +170,12 @@ impl BiglakeCatalog {
         "Get a reference to the value of field `delete_time` after provisioning.\nOutput only. The deletion time of the catalog. Only set after the catalog\nis deleted. A timestamp in RFC3339 UTC \"Zulu\" format, with nanosecond\nresolution and up to nine fractional digits."]
     pub fn delete_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -196,8 +213,8 @@ impl BiglakeCatalog {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> BiglakeCatalogTimeoutsElRef {
-        BiglakeCatalogTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> BiglakeCatalog_TimeoutsRef {
+        BiglakeCatalog_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -246,12 +263,13 @@ impl BuildBiglakeCatalog {
         let out = BiglakeCatalog(std::rc::Rc::new(BiglakeCatalog_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(BiglakeCatalogData {
+            data: std::cell::RefCell::new(BiglakeCatalogData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 location: self.location,
                 name: self.name,
@@ -300,6 +318,12 @@ impl BiglakeCatalogRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `expire_time` after provisioning.\nOutput only. The time when this catalog is considered expired. Only set\nafter the catalog is deleted. Only set after the catalog is deleted.\nA timestamp in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and\nup to nine fractional digits."]
     pub fn expire_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.expire_time", self.extract_ref()))
@@ -334,20 +358,20 @@ impl BiglakeCatalogRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> BiglakeCatalogTimeoutsElRef {
-        BiglakeCatalogTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> BiglakeCatalog_TimeoutsRef {
+        BiglakeCatalog_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct BiglakeCatalogTimeoutsEl {
+pub struct BiglakeCatalog_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl BiglakeCatalogTimeoutsEl {
+impl BiglakeCatalog_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -361,8 +385,8 @@ impl BiglakeCatalogTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for BiglakeCatalogTimeoutsEl {
-    type O = terrars::BlockAssignable<BiglakeCatalogTimeoutsEl>;
+impl terrars::ToListMappable for BiglakeCatalog_Timeouts {
+    type O = terrars::BlockAssignable<BiglakeCatalog_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -373,32 +397,34 @@ impl terrars::ToListMappable for BiglakeCatalogTimeoutsEl {
     }
 }
 
-pub struct BuildBiglakeCatalogTimeoutsEl {}
+pub struct BuildBiglakeCatalog_Timeouts {}
 
-impl BuildBiglakeCatalogTimeoutsEl {
-    pub fn build(self) -> BiglakeCatalogTimeoutsEl {
-        BiglakeCatalogTimeoutsEl {
+impl BuildBiglakeCatalog_Timeouts {
+    pub fn build(self) -> BiglakeCatalog_Timeouts {
+        BiglakeCatalog_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct BiglakeCatalogTimeoutsElRef {
+#[allow(dead_code)]
+pub struct BiglakeCatalog_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BiglakeCatalogTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BiglakeCatalogTimeoutsElRef {
-        BiglakeCatalogTimeoutsElRef {
+impl terrars::Ref for BiglakeCatalog_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BiglakeCatalog_TimeoutsRef {
+        BiglakeCatalog_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BiglakeCatalogTimeoutsElRef {
+impl BiglakeCatalog_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

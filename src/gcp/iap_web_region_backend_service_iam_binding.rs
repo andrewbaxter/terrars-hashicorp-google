@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct IapWebRegionBackendServiceIamBindingData {
+struct IapWebRegionBackendServiceIamBindingData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,14 +30,14 @@ struct IapWebRegionBackendServiceIamBindingData {
     role: terrars::PrimField<std::string::String>,
     web_region_backend_service: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<IapWebRegionBackendServiceIamBindingConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<IapWebRegionBackendServiceIamBinding_Condition>>,
     dynamic: IapWebRegionBackendServiceIamBindingDynamic,
 }
 
 struct IapWebRegionBackendServiceIamBinding_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<IapWebRegionBackendServiceIamBindingData>,
+    data: std::cell::RefCell<IapWebRegionBackendServiceIamBindingData_>,
 }
 
 #[derive(Clone)]
@@ -156,7 +158,7 @@ impl IapWebRegionBackendServiceIamBinding {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<IapWebRegionBackendServiceIamBindingConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IapWebRegionBackendServiceIamBinding_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -205,7 +207,7 @@ impl IapWebRegionBackendServiceIamBinding {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<IapWebRegionBackendServiceIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<IapWebRegionBackendServiceIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -256,7 +258,7 @@ impl BuildIapWebRegionBackendServiceIamBinding {
         let out = IapWebRegionBackendServiceIamBinding(std::rc::Rc::new(IapWebRegionBackendServiceIamBinding_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(IapWebRegionBackendServiceIamBindingData {
+            data: std::cell::RefCell::new(IapWebRegionBackendServiceIamBindingData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -336,20 +338,25 @@ impl IapWebRegionBackendServiceIamBindingRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<IapWebRegionBackendServiceIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<IapWebRegionBackendServiceIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct IapWebRegionBackendServiceIamBindingDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<IapWebRegionBackendServiceIamBinding_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct IapWebRegionBackendServiceIamBindingConditionEl {
+pub struct IapWebRegionBackendServiceIamBinding_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl IapWebRegionBackendServiceIamBindingConditionEl {
+impl IapWebRegionBackendServiceIamBinding_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -357,8 +364,8 @@ impl IapWebRegionBackendServiceIamBindingConditionEl {
     }
 }
 
-impl terrars::ToListMappable for IapWebRegionBackendServiceIamBindingConditionEl {
-    type O = terrars::BlockAssignable<IapWebRegionBackendServiceIamBindingConditionEl>;
+impl terrars::ToListMappable for IapWebRegionBackendServiceIamBinding_Condition {
+    type O = terrars::BlockAssignable<IapWebRegionBackendServiceIamBinding_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -369,16 +376,16 @@ impl terrars::ToListMappable for IapWebRegionBackendServiceIamBindingConditionEl
     }
 }
 
-pub struct BuildIapWebRegionBackendServiceIamBindingConditionEl {
+pub struct BuildIapWebRegionBackendServiceIamBinding_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildIapWebRegionBackendServiceIamBindingConditionEl {
-    pub fn build(self) -> IapWebRegionBackendServiceIamBindingConditionEl {
-        IapWebRegionBackendServiceIamBindingConditionEl {
+impl BuildIapWebRegionBackendServiceIamBinding_Condition {
+    pub fn build(self) -> IapWebRegionBackendServiceIamBinding_Condition {
+        IapWebRegionBackendServiceIamBinding_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -386,24 +393,26 @@ impl BuildIapWebRegionBackendServiceIamBindingConditionEl {
     }
 }
 
-pub struct IapWebRegionBackendServiceIamBindingConditionElRef {
+#[allow(dead_code)]
+pub struct IapWebRegionBackendServiceIamBinding_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IapWebRegionBackendServiceIamBindingConditionElRef {
+impl terrars::Ref for IapWebRegionBackendServiceIamBinding_ConditionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IapWebRegionBackendServiceIamBindingConditionElRef {
-        IapWebRegionBackendServiceIamBindingConditionElRef {
+    ) -> IapWebRegionBackendServiceIamBinding_ConditionRef {
+        IapWebRegionBackendServiceIamBinding_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IapWebRegionBackendServiceIamBindingConditionElRef {
+impl IapWebRegionBackendServiceIamBinding_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -422,9 +431,4 @@ impl IapWebRegionBackendServiceIamBindingConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct IapWebRegionBackendServiceIamBindingDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<IapWebRegionBackendServiceIamBindingConditionEl>>,
 }

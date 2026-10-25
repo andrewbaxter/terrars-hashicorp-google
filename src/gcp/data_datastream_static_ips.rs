@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataDatastreamStaticIpsData {
+struct DataDatastreamStaticIpsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -26,7 +28,7 @@ struct DataDatastreamStaticIpsData {
 struct DataDatastreamStaticIps_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataDatastreamStaticIpsData>,
+    data: std::cell::RefCell<DataDatastreamStaticIpsData_>,
 }
 
 #[derive(Clone)]
@@ -146,7 +148,7 @@ impl BuildDataDatastreamStaticIps {
         let out = DataDatastreamStaticIps(std::rc::Rc::new(DataDatastreamStaticIps_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataDatastreamStaticIpsData {
+            data: std::cell::RefCell::new(DataDatastreamStaticIpsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),

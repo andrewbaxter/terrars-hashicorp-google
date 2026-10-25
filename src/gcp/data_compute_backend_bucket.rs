@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataComputeBackendBucketData {
+struct DataComputeBackendBucketData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -26,7 +28,7 @@ struct DataComputeBackendBucketData {
 struct DataComputeBackendBucket_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataComputeBackendBucketData>,
+    data: std::cell::RefCell<DataComputeBackendBucketData_>,
 }
 
 #[derive(Clone)]
@@ -90,7 +92,7 @@ impl DataComputeBackendBucket {
 
     #[doc =
         "Get a reference to the value of field `cdn_policy` after provisioning.\nCloud CDN configuration for this Backend Bucket."]
-    pub fn cdn_policy(&self) -> terrars::ListRef<DataComputeBackendBucketCdnPolicyElRef> {
+    pub fn cdn_policy(&self) -> terrars::ListRef<DataComputeBackendBucket_CdnPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cdn_policy", self.extract_ref()))
     }
 
@@ -113,6 +115,12 @@ impl DataComputeBackendBucket {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nAn optional textual description of the resource; provided by the\nclient when the resource is created."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -125,7 +133,7 @@ impl DataComputeBackendBucket {
     }
 
     #[doc =
-        "Get a reference to the value of field `enable_cdn` after provisioning.\nIf true, enable Cloud CDN for this BackendBucket."]
+        "Get a reference to the value of field `enable_cdn` after provisioning.\nIf true, enable Cloud CDN for this BackendBucket.\nNote: This cannot be set to true when loadBalancingScheme is set to INTERNAL_MANAGED."]
     pub fn enable_cdn(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_cdn", self.extract_ref()))
     }
@@ -136,9 +144,21 @@ impl DataComputeBackendBucket {
     }
 
     #[doc =
+        "Get a reference to the value of field `load_balancing_scheme` after provisioning.\nThe value can only be INTERNAL_MANAGED for cross-region internal layer 7 load balancer.\nIf loadBalancingScheme is not specified, the backend bucket can be used by classic global external load balancers, or global application external load balancers, or both.\nImportant: CDN cannot be enabled (enableCdn cannot be set to true) when loadBalancingScheme is set to INTERNAL_MANAGED. Possible values: [\"INTERNAL_MANAGED\"]"]
+    pub fn load_balancing_scheme(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.load_balancing_scheme", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `name` after provisioning.\nName of the resource. Provided by the client when the resource is\ncreated. The name must be 1-63 characters long, and comply with\nRFC1035.  Specifically, the name must be 1-63 characters long and\nmatch the regular expression '[a-z]([-a-z0-9]*[a-z0-9])?' which means\nthe first character must be a lowercase letter, and all following\ncharacters must be a dash, lowercase letter, or digit, except the\nlast character, which cannot be a dash."]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `params` after provisioning.\nAdditional params passed with the request, but not persisted as part of resource payload"]
+    pub fn params(&self) -> terrars::ListRef<DataComputeBackendBucket_ParamsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.params", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
@@ -195,7 +215,7 @@ impl BuildDataComputeBackendBucket {
         let out = DataComputeBackendBucket(std::rc::Rc::new(DataComputeBackendBucket_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataComputeBackendBucketData {
+            data: std::cell::RefCell::new(DataComputeBackendBucketData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -240,7 +260,7 @@ impl DataComputeBackendBucketRef {
 
     #[doc =
         "Get a reference to the value of field `cdn_policy` after provisioning.\nCloud CDN configuration for this Backend Bucket."]
-    pub fn cdn_policy(&self) -> terrars::ListRef<DataComputeBackendBucketCdnPolicyElRef> {
+    pub fn cdn_policy(&self) -> terrars::ListRef<DataComputeBackendBucket_CdnPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cdn_policy", self.extract_ref()))
     }
 
@@ -263,6 +283,12 @@ impl DataComputeBackendBucketRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nAn optional textual description of the resource; provided by the\nclient when the resource is created."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -275,7 +301,7 @@ impl DataComputeBackendBucketRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `enable_cdn` after provisioning.\nIf true, enable Cloud CDN for this BackendBucket."]
+        "Get a reference to the value of field `enable_cdn` after provisioning.\nIf true, enable Cloud CDN for this BackendBucket.\nNote: This cannot be set to true when loadBalancingScheme is set to INTERNAL_MANAGED."]
     pub fn enable_cdn(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_cdn", self.extract_ref()))
     }
@@ -286,9 +312,21 @@ impl DataComputeBackendBucketRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `load_balancing_scheme` after provisioning.\nThe value can only be INTERNAL_MANAGED for cross-region internal layer 7 load balancer.\nIf loadBalancingScheme is not specified, the backend bucket can be used by classic global external load balancers, or global application external load balancers, or both.\nImportant: CDN cannot be enabled (enableCdn cannot be set to true) when loadBalancingScheme is set to INTERNAL_MANAGED. Possible values: [\"INTERNAL_MANAGED\"]"]
+    pub fn load_balancing_scheme(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.load_balancing_scheme", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `name` after provisioning.\nName of the resource. Provided by the client when the resource is\ncreated. The name must be 1-63 characters long, and comply with\nRFC1035.  Specifically, the name must be 1-63 characters long and\nmatch the regular expression '[a-z]([-a-z0-9]*[a-z0-9])?' which means\nthe first character must be a lowercase letter, and all following\ncharacters must be a dash, lowercase letter, or digit, except the\nlast character, which cannot be a dash."]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `params` after provisioning.\nAdditional params passed with the request, but not persisted as part of resource payload"]
+    pub fn params(&self) -> terrars::ListRef<DataComputeBackendBucket_ParamsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.params", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
@@ -303,12 +341,12 @@ impl DataComputeBackendBucketRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComputeBackendBucketCdnPolicyElBypassCacheOnRequestHeadersEl {
+pub struct DataComputeBackendBucket_CdnPolicy_BypassCacheOnRequestHeaders {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     header_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataComputeBackendBucketCdnPolicyElBypassCacheOnRequestHeadersEl {
+impl DataComputeBackendBucket_CdnPolicy_BypassCacheOnRequestHeaders {
     #[doc = "Set the field `header_name`.\n"]
     pub fn set_header_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.header_name = std::option::Option::Some(v.into());
@@ -316,8 +354,8 @@ impl DataComputeBackendBucketCdnPolicyElBypassCacheOnRequestHeadersEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeBackendBucketCdnPolicyElBypassCacheOnRequestHeadersEl {
-    type O = terrars::BlockAssignable<DataComputeBackendBucketCdnPolicyElBypassCacheOnRequestHeadersEl>;
+impl terrars::ToListMappable for DataComputeBackendBucket_CdnPolicy_BypassCacheOnRequestHeaders {
+    type O = terrars::BlockAssignable<DataComputeBackendBucket_CdnPolicy_BypassCacheOnRequestHeaders>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -328,34 +366,36 @@ impl terrars::ToListMappable for DataComputeBackendBucketCdnPolicyElBypassCacheO
     }
 }
 
-pub struct BuildDataComputeBackendBucketCdnPolicyElBypassCacheOnRequestHeadersEl {}
+pub struct BuildDataComputeBackendBucket_CdnPolicy_BypassCacheOnRequestHeaders {}
 
-impl BuildDataComputeBackendBucketCdnPolicyElBypassCacheOnRequestHeadersEl {
-    pub fn build(self) -> DataComputeBackendBucketCdnPolicyElBypassCacheOnRequestHeadersEl {
-        DataComputeBackendBucketCdnPolicyElBypassCacheOnRequestHeadersEl {
+impl BuildDataComputeBackendBucket_CdnPolicy_BypassCacheOnRequestHeaders {
+    pub fn build(self) -> DataComputeBackendBucket_CdnPolicy_BypassCacheOnRequestHeaders {
+        DataComputeBackendBucket_CdnPolicy_BypassCacheOnRequestHeaders {
             header_name: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataComputeBackendBucketCdnPolicyElBypassCacheOnRequestHeadersElRef {
+#[allow(dead_code)]
+pub struct DataComputeBackendBucket_CdnPolicy_BypassCacheOnRequestHeadersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeBackendBucketCdnPolicyElBypassCacheOnRequestHeadersElRef {
+impl terrars::Ref for DataComputeBackendBucket_CdnPolicy_BypassCacheOnRequestHeadersRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComputeBackendBucketCdnPolicyElBypassCacheOnRequestHeadersElRef {
-        DataComputeBackendBucketCdnPolicyElBypassCacheOnRequestHeadersElRef {
+    ) -> DataComputeBackendBucket_CdnPolicy_BypassCacheOnRequestHeadersRef {
+        DataComputeBackendBucket_CdnPolicy_BypassCacheOnRequestHeadersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeBackendBucketCdnPolicyElBypassCacheOnRequestHeadersElRef {
+impl DataComputeBackendBucket_CdnPolicy_BypassCacheOnRequestHeadersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -367,14 +407,14 @@ impl DataComputeBackendBucketCdnPolicyElBypassCacheOnRequestHeadersElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComputeBackendBucketCdnPolicyElCacheKeyPolicyEl {
+pub struct DataComputeBackendBucket_CdnPolicy_CacheKeyPolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     include_http_headers: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     query_string_whitelist: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DataComputeBackendBucketCdnPolicyElCacheKeyPolicyEl {
+impl DataComputeBackendBucket_CdnPolicy_CacheKeyPolicy {
     #[doc = "Set the field `include_http_headers`.\n"]
     pub fn set_include_http_headers(
         mut self,
@@ -394,8 +434,8 @@ impl DataComputeBackendBucketCdnPolicyElCacheKeyPolicyEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeBackendBucketCdnPolicyElCacheKeyPolicyEl {
-    type O = terrars::BlockAssignable<DataComputeBackendBucketCdnPolicyElCacheKeyPolicyEl>;
+impl terrars::ToListMappable for DataComputeBackendBucket_CdnPolicy_CacheKeyPolicy {
+    type O = terrars::BlockAssignable<DataComputeBackendBucket_CdnPolicy_CacheKeyPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -406,35 +446,37 @@ impl terrars::ToListMappable for DataComputeBackendBucketCdnPolicyElCacheKeyPoli
     }
 }
 
-pub struct BuildDataComputeBackendBucketCdnPolicyElCacheKeyPolicyEl {}
+pub struct BuildDataComputeBackendBucket_CdnPolicy_CacheKeyPolicy {}
 
-impl BuildDataComputeBackendBucketCdnPolicyElCacheKeyPolicyEl {
-    pub fn build(self) -> DataComputeBackendBucketCdnPolicyElCacheKeyPolicyEl {
-        DataComputeBackendBucketCdnPolicyElCacheKeyPolicyEl {
+impl BuildDataComputeBackendBucket_CdnPolicy_CacheKeyPolicy {
+    pub fn build(self) -> DataComputeBackendBucket_CdnPolicy_CacheKeyPolicy {
+        DataComputeBackendBucket_CdnPolicy_CacheKeyPolicy {
             include_http_headers: core::default::Default::default(),
             query_string_whitelist: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataComputeBackendBucketCdnPolicyElCacheKeyPolicyElRef {
+#[allow(dead_code)]
+pub struct DataComputeBackendBucket_CdnPolicy_CacheKeyPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeBackendBucketCdnPolicyElCacheKeyPolicyElRef {
+impl terrars::Ref for DataComputeBackendBucket_CdnPolicy_CacheKeyPolicyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComputeBackendBucketCdnPolicyElCacheKeyPolicyElRef {
-        DataComputeBackendBucketCdnPolicyElCacheKeyPolicyElRef {
+    ) -> DataComputeBackendBucket_CdnPolicy_CacheKeyPolicyRef {
+        DataComputeBackendBucket_CdnPolicy_CacheKeyPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeBackendBucketCdnPolicyElCacheKeyPolicyElRef {
+impl DataComputeBackendBucket_CdnPolicy_CacheKeyPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -451,14 +493,14 @@ impl DataComputeBackendBucketCdnPolicyElCacheKeyPolicyElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComputeBackendBucketCdnPolicyElNegativeCachingPolicyEl {
+pub struct DataComputeBackendBucket_CdnPolicy_NegativeCachingPolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     code: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ttl: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataComputeBackendBucketCdnPolicyElNegativeCachingPolicyEl {
+impl DataComputeBackendBucket_CdnPolicy_NegativeCachingPolicy {
     #[doc = "Set the field `code`.\n"]
     pub fn set_code(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.code = std::option::Option::Some(v.into());
@@ -472,8 +514,8 @@ impl DataComputeBackendBucketCdnPolicyElNegativeCachingPolicyEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeBackendBucketCdnPolicyElNegativeCachingPolicyEl {
-    type O = terrars::BlockAssignable<DataComputeBackendBucketCdnPolicyElNegativeCachingPolicyEl>;
+impl terrars::ToListMappable for DataComputeBackendBucket_CdnPolicy_NegativeCachingPolicy {
+    type O = terrars::BlockAssignable<DataComputeBackendBucket_CdnPolicy_NegativeCachingPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -484,35 +526,37 @@ impl terrars::ToListMappable for DataComputeBackendBucketCdnPolicyElNegativeCach
     }
 }
 
-pub struct BuildDataComputeBackendBucketCdnPolicyElNegativeCachingPolicyEl {}
+pub struct BuildDataComputeBackendBucket_CdnPolicy_NegativeCachingPolicy {}
 
-impl BuildDataComputeBackendBucketCdnPolicyElNegativeCachingPolicyEl {
-    pub fn build(self) -> DataComputeBackendBucketCdnPolicyElNegativeCachingPolicyEl {
-        DataComputeBackendBucketCdnPolicyElNegativeCachingPolicyEl {
+impl BuildDataComputeBackendBucket_CdnPolicy_NegativeCachingPolicy {
+    pub fn build(self) -> DataComputeBackendBucket_CdnPolicy_NegativeCachingPolicy {
+        DataComputeBackendBucket_CdnPolicy_NegativeCachingPolicy {
             code: core::default::Default::default(),
             ttl: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataComputeBackendBucketCdnPolicyElNegativeCachingPolicyElRef {
+#[allow(dead_code)]
+pub struct DataComputeBackendBucket_CdnPolicy_NegativeCachingPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeBackendBucketCdnPolicyElNegativeCachingPolicyElRef {
+impl terrars::Ref for DataComputeBackendBucket_CdnPolicy_NegativeCachingPolicyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComputeBackendBucketCdnPolicyElNegativeCachingPolicyElRef {
-        DataComputeBackendBucketCdnPolicyElNegativeCachingPolicyElRef {
+    ) -> DataComputeBackendBucket_CdnPolicy_NegativeCachingPolicyRef {
+        DataComputeBackendBucket_CdnPolicy_NegativeCachingPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeBackendBucketCdnPolicyElNegativeCachingPolicyElRef {
+impl DataComputeBackendBucket_CdnPolicy_NegativeCachingPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -529,13 +573,13 @@ impl DataComputeBackendBucketCdnPolicyElNegativeCachingPolicyElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComputeBackendBucketCdnPolicyEl {
+pub struct DataComputeBackendBucket_CdnPolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bypass_cache_on_request_headers: std
     ::option
-    ::Option<terrars::ListField<DataComputeBackendBucketCdnPolicyElBypassCacheOnRequestHeadersEl>>,
+    ::Option<terrars::ListField<DataComputeBackendBucket_CdnPolicy_BypassCacheOnRequestHeaders>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cache_key_policy: std::option::Option<terrars::ListField<DataComputeBackendBucketCdnPolicyElCacheKeyPolicyEl>>,
+    cache_key_policy: std::option::Option<terrars::ListField<DataComputeBackendBucket_CdnPolicy_CacheKeyPolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cache_mode: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -549,7 +593,7 @@ pub struct DataComputeBackendBucketCdnPolicyEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     negative_caching_policy: std
     ::option
-    ::Option<terrars::ListField<DataComputeBackendBucketCdnPolicyElNegativeCachingPolicyEl>>,
+    ::Option<terrars::ListField<DataComputeBackendBucket_CdnPolicy_NegativeCachingPolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     request_coalescing: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -558,7 +602,7 @@ pub struct DataComputeBackendBucketCdnPolicyEl {
     signed_url_cache_max_age_sec: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataComputeBackendBucketCdnPolicyEl {
+impl DataComputeBackendBucket_CdnPolicy {
     #[doc = "Set the field `bypass_cache_on_request_headers`.\n"]
     pub fn set_bypass_cache_on_request_headers(
         mut self,
@@ -567,7 +611,7 @@ impl DataComputeBackendBucketCdnPolicyEl {
 
                     std
                     ::convert
-                    ::Into<terrars::ListField<DataComputeBackendBucketCdnPolicyElBypassCacheOnRequestHeadersEl>>,
+                    ::Into<terrars::ListField<DataComputeBackendBucket_CdnPolicy_BypassCacheOnRequestHeaders>>,
     ) -> Self {
         self.bypass_cache_on_request_headers = std::option::Option::Some(v.into());
         self
@@ -576,7 +620,7 @@ impl DataComputeBackendBucketCdnPolicyEl {
     #[doc = "Set the field `cache_key_policy`.\n"]
     pub fn set_cache_key_policy(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataComputeBackendBucketCdnPolicyElCacheKeyPolicyEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataComputeBackendBucket_CdnPolicy_CacheKeyPolicy>>,
     ) -> Self {
         self.cache_key_policy = std::option::Option::Some(v.into());
         self
@@ -615,7 +659,7 @@ impl DataComputeBackendBucketCdnPolicyEl {
     #[doc = "Set the field `negative_caching_policy`.\n"]
     pub fn set_negative_caching_policy(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataComputeBackendBucketCdnPolicyElNegativeCachingPolicyEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataComputeBackendBucket_CdnPolicy_NegativeCachingPolicy>>,
     ) -> Self {
         self.negative_caching_policy = std::option::Option::Some(v.into());
         self
@@ -640,8 +684,8 @@ impl DataComputeBackendBucketCdnPolicyEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeBackendBucketCdnPolicyEl {
-    type O = terrars::BlockAssignable<DataComputeBackendBucketCdnPolicyEl>;
+impl terrars::ToListMappable for DataComputeBackendBucket_CdnPolicy {
+    type O = terrars::BlockAssignable<DataComputeBackendBucket_CdnPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -652,11 +696,11 @@ impl terrars::ToListMappable for DataComputeBackendBucketCdnPolicyEl {
     }
 }
 
-pub struct BuildDataComputeBackendBucketCdnPolicyEl {}
+pub struct BuildDataComputeBackendBucket_CdnPolicy {}
 
-impl BuildDataComputeBackendBucketCdnPolicyEl {
-    pub fn build(self) -> DataComputeBackendBucketCdnPolicyEl {
-        DataComputeBackendBucketCdnPolicyEl {
+impl BuildDataComputeBackendBucket_CdnPolicy {
+    pub fn build(self) -> DataComputeBackendBucket_CdnPolicy {
+        DataComputeBackendBucket_CdnPolicy {
             bypass_cache_on_request_headers: core::default::Default::default(),
             cache_key_policy: core::default::Default::default(),
             cache_mode: core::default::Default::default(),
@@ -672,21 +716,23 @@ impl BuildDataComputeBackendBucketCdnPolicyEl {
     }
 }
 
-pub struct DataComputeBackendBucketCdnPolicyElRef {
+#[allow(dead_code)]
+pub struct DataComputeBackendBucket_CdnPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeBackendBucketCdnPolicyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeBackendBucketCdnPolicyElRef {
-        DataComputeBackendBucketCdnPolicyElRef {
+impl terrars::Ref for DataComputeBackendBucket_CdnPolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeBackendBucket_CdnPolicyRef {
+        DataComputeBackendBucket_CdnPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeBackendBucketCdnPolicyElRef {
+impl DataComputeBackendBucket_CdnPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -694,12 +740,12 @@ impl DataComputeBackendBucketCdnPolicyElRef {
     #[doc = "Get a reference to the value of field `bypass_cache_on_request_headers` after provisioning.\n"]
     pub fn bypass_cache_on_request_headers(
         &self,
-    ) -> terrars::ListRef<DataComputeBackendBucketCdnPolicyElBypassCacheOnRequestHeadersElRef> {
+    ) -> terrars::ListRef<DataComputeBackendBucket_CdnPolicy_BypassCacheOnRequestHeadersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.bypass_cache_on_request_headers", self.base))
     }
 
     #[doc = "Get a reference to the value of field `cache_key_policy` after provisioning.\n"]
-    pub fn cache_key_policy(&self) -> terrars::ListRef<DataComputeBackendBucketCdnPolicyElCacheKeyPolicyElRef> {
+    pub fn cache_key_policy(&self) -> terrars::ListRef<DataComputeBackendBucket_CdnPolicy_CacheKeyPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cache_key_policy", self.base))
     }
 
@@ -731,7 +777,7 @@ impl DataComputeBackendBucketCdnPolicyElRef {
     #[doc = "Get a reference to the value of field `negative_caching_policy` after provisioning.\n"]
     pub fn negative_caching_policy(
         &self,
-    ) -> terrars::ListRef<DataComputeBackendBucketCdnPolicyElNegativeCachingPolicyElRef> {
+    ) -> terrars::ListRef<DataComputeBackendBucket_CdnPolicy_NegativeCachingPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.negative_caching_policy", self.base))
     }
 
@@ -748,5 +794,69 @@ impl DataComputeBackendBucketCdnPolicyElRef {
     #[doc = "Get a reference to the value of field `signed_url_cache_max_age_sec` after provisioning.\n"]
     pub fn signed_url_cache_max_age_sec(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.signed_url_cache_max_age_sec", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataComputeBackendBucket_Params {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_manager_tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+}
+
+impl DataComputeBackendBucket_Params {
+    #[doc = "Set the field `resource_manager_tags`.\n"]
+    pub fn set_resource_manager_tags(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.resource_manager_tags = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataComputeBackendBucket_Params {
+    type O = terrars::BlockAssignable<DataComputeBackendBucket_Params>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataComputeBackendBucket_Params {}
+
+impl BuildDataComputeBackendBucket_Params {
+    pub fn build(self) -> DataComputeBackendBucket_Params {
+        DataComputeBackendBucket_Params { resource_manager_tags: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataComputeBackendBucket_ParamsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataComputeBackendBucket_ParamsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeBackendBucket_ParamsRef {
+        DataComputeBackendBucket_ParamsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataComputeBackendBucket_ParamsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `resource_manager_tags` after provisioning.\n"]
+    pub fn resource_manager_tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.resource_manager_tags", self.base))
     }
 }

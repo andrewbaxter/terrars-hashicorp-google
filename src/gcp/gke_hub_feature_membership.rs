@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct GkeHubFeatureMembershipData {
+struct GkeHubFeatureMembershipData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct GkeHubFeatureMembershipData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     feature: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -28,18 +32,20 @@ struct GkeHubFeatureMembershipData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    configmanagement: std::option::Option<std::vec::Vec<GkeHubFeatureMembershipConfigmanagementEl>>,
+    configmanagement: std::option::Option<std::vec::Vec<GkeHubFeatureMembership_Configmanagement>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    mesh: std::option::Option<std::vec::Vec<GkeHubFeatureMembershipMeshEl>>,
+    mesh: std::option::Option<std::vec::Vec<GkeHubFeatureMembership_Mesh>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<GkeHubFeatureMembershipTimeoutsEl>,
+    policycontroller: std::option::Option<std::vec::Vec<GkeHubFeatureMembership_Policycontroller>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<GkeHubFeatureMembership_Timeouts>,
     dynamic: GkeHubFeatureMembershipDynamic,
 }
 
 struct GkeHubFeatureMembership_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<GkeHubFeatureMembershipData>,
+    data: std::cell::RefCell<GkeHubFeatureMembershipData_>,
 }
 
 #[derive(Clone)]
@@ -139,6 +145,13 @@ impl GkeHubFeatureMembership {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -160,7 +173,7 @@ impl GkeHubFeatureMembership {
     #[doc = "Set the field `configmanagement`.\n"]
     pub fn set_configmanagement(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeHubFeatureMembershipConfigmanagementEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeHubFeatureMembership_Configmanagement>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -174,7 +187,7 @@ impl GkeHubFeatureMembership {
     }
 
     #[doc = "Set the field `mesh`.\n"]
-    pub fn set_mesh(self, v: impl std::convert::Into<terrars::BlockAssignable<GkeHubFeatureMembershipMeshEl>>) -> Self {
+    pub fn set_mesh(self, v: impl std::convert::Into<terrars::BlockAssignable<GkeHubFeatureMembership_Mesh>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().mesh = std::option::Option::Some(v);
@@ -186,10 +199,32 @@ impl GkeHubFeatureMembership {
         self
     }
 
+    #[doc = "Set the field `policycontroller`.\n"]
+    pub fn set_policycontroller(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeHubFeatureMembership_Policycontroller>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().policycontroller = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.policycontroller = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<GkeHubFeatureMembershipTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<GkeHubFeatureMembership_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `feature` after provisioning.\nThe name of the feature"]
@@ -224,18 +259,23 @@ impl GkeHubFeatureMembership {
     }
 
     #[doc = "Get a reference to the value of field `configmanagement` after provisioning.\n"]
-    pub fn configmanagement(&self) -> terrars::ListRef<GkeHubFeatureMembershipConfigmanagementElRef> {
+    pub fn configmanagement(&self) -> terrars::ListRef<GkeHubFeatureMembership_ConfigmanagementRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.configmanagement", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `mesh` after provisioning.\n"]
-    pub fn mesh(&self) -> terrars::ListRef<GkeHubFeatureMembershipMeshElRef> {
+    pub fn mesh(&self) -> terrars::ListRef<GkeHubFeatureMembership_MeshRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.mesh", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `policycontroller` after provisioning.\n"]
+    pub fn policycontroller(&self) -> terrars::ListRef<GkeHubFeatureMembership_PolicycontrollerRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.policycontroller", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> GkeHubFeatureMembershipTimeoutsElRef {
-        GkeHubFeatureMembershipTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> GkeHubFeatureMembership_TimeoutsRef {
+        GkeHubFeatureMembership_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -285,12 +325,13 @@ impl BuildGkeHubFeatureMembership {
         let out = GkeHubFeatureMembership(std::rc::Rc::new(GkeHubFeatureMembership_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(GkeHubFeatureMembershipData {
+            data: std::cell::RefCell::new(GkeHubFeatureMembershipData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 feature: self.feature,
                 id: core::default::Default::default(),
                 location: self.location,
@@ -299,6 +340,7 @@ impl BuildGkeHubFeatureMembership {
                 project: core::default::Default::default(),
                 configmanagement: core::default::Default::default(),
                 mesh: core::default::Default::default(),
+                policycontroller: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -329,6 +371,12 @@ impl GkeHubFeatureMembershipRef {
 
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `feature` after provisioning.\nThe name of the feature"]
@@ -363,37 +411,82 @@ impl GkeHubFeatureMembershipRef {
     }
 
     #[doc = "Get a reference to the value of field `configmanagement` after provisioning.\n"]
-    pub fn configmanagement(&self) -> terrars::ListRef<GkeHubFeatureMembershipConfigmanagementElRef> {
+    pub fn configmanagement(&self) -> terrars::ListRef<GkeHubFeatureMembership_ConfigmanagementRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.configmanagement", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `mesh` after provisioning.\n"]
-    pub fn mesh(&self) -> terrars::ListRef<GkeHubFeatureMembershipMeshElRef> {
+    pub fn mesh(&self) -> terrars::ListRef<GkeHubFeatureMembership_MeshRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.mesh", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `policycontroller` after provisioning.\n"]
+    pub fn policycontroller(&self) -> terrars::ListRef<GkeHubFeatureMembership_PolicycontrollerRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.policycontroller", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> GkeHubFeatureMembershipTimeoutsElRef {
-        GkeHubFeatureMembershipTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> GkeHubFeatureMembership_TimeoutsRef {
+        GkeHubFeatureMembership_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
-#[derive(Serialize)]
-pub struct GkeHubFeatureMembershipConfigmanagementElBinauthzEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    enabled: std::option::Option<terrars::PrimField<bool>>,
+#[derive(Serialize, Default)]
+struct GkeHubFeatureMembershipDynamic {
+    configmanagement: std::option::Option<terrars::DynamicBlock<GkeHubFeatureMembership_Configmanagement>>,
+    mesh: std::option::Option<terrars::DynamicBlock<GkeHubFeatureMembership_Mesh>>,
+    policycontroller: std::option::Option<terrars::DynamicBlock<GkeHubFeatureMembership_Policycontroller>>,
 }
 
-impl GkeHubFeatureMembershipConfigmanagementElBinauthzEl {
-    #[doc = "Set the field `enabled`.\nWhether binauthz is enabled in this cluster."]
-    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.enabled = std::option::Option::Some(v.into());
+#[derive(Serialize)]
+pub struct GkeHubFeatureMembership_Configmanagement_ConfigSync_DeploymentOverrides_Containers {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    container_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cpu_limit: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cpu_request: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    memory_limit: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    memory_request: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl GkeHubFeatureMembership_Configmanagement_ConfigSync_DeploymentOverrides_Containers {
+    #[doc = "Set the field `container_name`.\nThe name of the container."]
+    pub fn set_container_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.container_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `cpu_limit`.\nThe CPU limit of the container."]
+    pub fn set_cpu_limit(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.cpu_limit = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `cpu_request`.\nThe CPU request of the container."]
+    pub fn set_cpu_request(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.cpu_request = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `memory_limit`.\nThe memory limit of the container."]
+    pub fn set_memory_limit(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.memory_limit = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `memory_request`.\nThe memory request of the container."]
+    pub fn set_memory_request(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.memory_request = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for GkeHubFeatureMembershipConfigmanagementElBinauthzEl {
-    type O = terrars::BlockAssignable<GkeHubFeatureMembershipConfigmanagementElBinauthzEl>;
+impl terrars::ToListMappable for GkeHubFeatureMembership_Configmanagement_ConfigSync_DeploymentOverrides_Containers {
+    type O =
+        terrars::BlockAssignable<GkeHubFeatureMembership_Configmanagement_ConfigSync_DeploymentOverrides_Containers>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -404,45 +497,208 @@ impl terrars::ToListMappable for GkeHubFeatureMembershipConfigmanagementElBinaut
     }
 }
 
-pub struct BuildGkeHubFeatureMembershipConfigmanagementElBinauthzEl {}
+pub struct BuildGkeHubFeatureMembership_Configmanagement_ConfigSync_DeploymentOverrides_Containers {}
 
-impl BuildGkeHubFeatureMembershipConfigmanagementElBinauthzEl {
-    pub fn build(self) -> GkeHubFeatureMembershipConfigmanagementElBinauthzEl {
-        GkeHubFeatureMembershipConfigmanagementElBinauthzEl { enabled: core::default::Default::default() }
+impl BuildGkeHubFeatureMembership_Configmanagement_ConfigSync_DeploymentOverrides_Containers {
+    pub fn build(self) -> GkeHubFeatureMembership_Configmanagement_ConfigSync_DeploymentOverrides_Containers {
+        GkeHubFeatureMembership_Configmanagement_ConfigSync_DeploymentOverrides_Containers {
+            container_name: core::default::Default::default(),
+            cpu_limit: core::default::Default::default(),
+            cpu_request: core::default::Default::default(),
+            memory_limit: core::default::Default::default(),
+            memory_request: core::default::Default::default(),
+        }
     }
 }
 
-pub struct GkeHubFeatureMembershipConfigmanagementElBinauthzElRef {
+#[allow(dead_code)]
+pub struct GkeHubFeatureMembership_Configmanagement_ConfigSync_DeploymentOverrides_ContainersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeHubFeatureMembershipConfigmanagementElBinauthzElRef {
+impl terrars::Ref for GkeHubFeatureMembership_Configmanagement_ConfigSync_DeploymentOverrides_ContainersRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeHubFeatureMembershipConfigmanagementElBinauthzElRef {
-        GkeHubFeatureMembershipConfigmanagementElBinauthzElRef {
+    ) -> GkeHubFeatureMembership_Configmanagement_ConfigSync_DeploymentOverrides_ContainersRef {
+        GkeHubFeatureMembership_Configmanagement_ConfigSync_DeploymentOverrides_ContainersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeHubFeatureMembershipConfigmanagementElBinauthzElRef {
+impl GkeHubFeatureMembership_Configmanagement_ConfigSync_DeploymentOverrides_ContainersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
+    #[doc = "Get a reference to the value of field `container_name` after provisioning.\nThe name of the container."]
+    pub fn container_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.container_name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `cpu_limit` after provisioning.\nThe CPU limit of the container."]
+    pub fn cpu_limit(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cpu_limit", self.base))
+    }
+
     #[doc =
-        "Get a reference to the value of field `enabled` after provisioning.\nWhether binauthz is enabled in this cluster."]
-    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+        "Get a reference to the value of field `cpu_request` after provisioning.\nThe CPU request of the container."]
+    pub fn cpu_request(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cpu_request", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `memory_limit` after provisioning.\nThe memory limit of the container."]
+    pub fn memory_limit(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.memory_limit", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `memory_request` after provisioning.\nThe memory request of the container."]
+    pub fn memory_request(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.memory_request", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct GkeHubFeatureMembership_Configmanagement_ConfigSync_DeploymentOverridesDynamic {
+    containers: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<GkeHubFeatureMembership_Configmanagement_ConfigSync_DeploymentOverrides_Containers>,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct GkeHubFeatureMembership_Configmanagement_ConfigSync_DeploymentOverrides {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deployment_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deployment_namespace: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    containers: std
+    ::option
+    ::Option<std::vec::Vec<GkeHubFeatureMembership_Configmanagement_ConfigSync_DeploymentOverrides_Containers>>,
+    dynamic: GkeHubFeatureMembership_Configmanagement_ConfigSync_DeploymentOverridesDynamic,
+}
+
+impl GkeHubFeatureMembership_Configmanagement_ConfigSync_DeploymentOverrides {
+    #[doc = "Set the field `deployment_name`.\nThe name of the Deployment."]
+    pub fn set_deployment_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.deployment_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `deployment_namespace`.\nThe namespace of the Deployment."]
+    pub fn set_deployment_namespace(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.deployment_namespace = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `containers`.\n"]
+    pub fn set_containers(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            GkeHubFeatureMembership_Configmanagement_ConfigSync_DeploymentOverrides_Containers,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.containers = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.containers = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for GkeHubFeatureMembership_Configmanagement_ConfigSync_DeploymentOverrides {
+    type O = terrars::BlockAssignable<GkeHubFeatureMembership_Configmanagement_ConfigSync_DeploymentOverrides>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildGkeHubFeatureMembership_Configmanagement_ConfigSync_DeploymentOverrides {}
+
+impl BuildGkeHubFeatureMembership_Configmanagement_ConfigSync_DeploymentOverrides {
+    pub fn build(self) -> GkeHubFeatureMembership_Configmanagement_ConfigSync_DeploymentOverrides {
+        GkeHubFeatureMembership_Configmanagement_ConfigSync_DeploymentOverrides {
+            deployment_name: core::default::Default::default(),
+            deployment_namespace: core::default::Default::default(),
+            containers: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct GkeHubFeatureMembership_Configmanagement_ConfigSync_DeploymentOverridesRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for GkeHubFeatureMembership_Configmanagement_ConfigSync_DeploymentOverridesRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GkeHubFeatureMembership_Configmanagement_ConfigSync_DeploymentOverridesRef {
+        GkeHubFeatureMembership_Configmanagement_ConfigSync_DeploymentOverridesRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl GkeHubFeatureMembership_Configmanagement_ConfigSync_DeploymentOverridesRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `deployment_name` after provisioning.\nThe name of the Deployment."]
+    pub fn deployment_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deployment_name", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deployment_namespace` after provisioning.\nThe namespace of the Deployment."]
+    pub fn deployment_namespace(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deployment_namespace", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `containers` after provisioning.\n"]
+    pub fn containers(
+        &self,
+    ) -> terrars::ListRef<GkeHubFeatureMembership_Configmanagement_ConfigSync_DeploymentOverrides_ContainersRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.containers", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct GkeHubFeatureMembershipConfigmanagementElConfigSyncElGitEl {
+pub struct GkeHubFeatureMembership_Configmanagement_ConfigSync_Git {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     gcp_service_account_email: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -461,7 +717,7 @@ pub struct GkeHubFeatureMembershipConfigmanagementElConfigSyncElGitEl {
     sync_wait_secs: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeHubFeatureMembershipConfigmanagementElConfigSyncElGitEl {
+impl GkeHubFeatureMembership_Configmanagement_ConfigSync_Git {
     #[doc =
         "Set the field `gcp_service_account_email`.\nThe GCP Service Account Email used for auth when secretType is gcpServiceAccount."]
     pub fn set_gcp_service_account_email(
@@ -517,8 +773,8 @@ impl GkeHubFeatureMembershipConfigmanagementElConfigSyncElGitEl {
     }
 }
 
-impl terrars::ToListMappable for GkeHubFeatureMembershipConfigmanagementElConfigSyncElGitEl {
-    type O = terrars::BlockAssignable<GkeHubFeatureMembershipConfigmanagementElConfigSyncElGitEl>;
+impl terrars::ToListMappable for GkeHubFeatureMembership_Configmanagement_ConfigSync_Git {
+    type O = terrars::BlockAssignable<GkeHubFeatureMembership_Configmanagement_ConfigSync_Git>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -529,11 +785,11 @@ impl terrars::ToListMappable for GkeHubFeatureMembershipConfigmanagementElConfig
     }
 }
 
-pub struct BuildGkeHubFeatureMembershipConfigmanagementElConfigSyncElGitEl {}
+pub struct BuildGkeHubFeatureMembership_Configmanagement_ConfigSync_Git {}
 
-impl BuildGkeHubFeatureMembershipConfigmanagementElConfigSyncElGitEl {
-    pub fn build(self) -> GkeHubFeatureMembershipConfigmanagementElConfigSyncElGitEl {
-        GkeHubFeatureMembershipConfigmanagementElConfigSyncElGitEl {
+impl BuildGkeHubFeatureMembership_Configmanagement_ConfigSync_Git {
+    pub fn build(self) -> GkeHubFeatureMembership_Configmanagement_ConfigSync_Git {
+        GkeHubFeatureMembership_Configmanagement_ConfigSync_Git {
             gcp_service_account_email: core::default::Default::default(),
             https_proxy: core::default::Default::default(),
             policy_dir: core::default::Default::default(),
@@ -546,24 +802,26 @@ impl BuildGkeHubFeatureMembershipConfigmanagementElConfigSyncElGitEl {
     }
 }
 
-pub struct GkeHubFeatureMembershipConfigmanagementElConfigSyncElGitElRef {
+#[allow(dead_code)]
+pub struct GkeHubFeatureMembership_Configmanagement_ConfigSync_GitRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeHubFeatureMembershipConfigmanagementElConfigSyncElGitElRef {
+impl terrars::Ref for GkeHubFeatureMembership_Configmanagement_ConfigSync_GitRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeHubFeatureMembershipConfigmanagementElConfigSyncElGitElRef {
-        GkeHubFeatureMembershipConfigmanagementElConfigSyncElGitElRef {
+    ) -> GkeHubFeatureMembership_Configmanagement_ConfigSync_GitRef {
+        GkeHubFeatureMembership_Configmanagement_ConfigSync_GitRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeHubFeatureMembershipConfigmanagementElConfigSyncElGitElRef {
+impl GkeHubFeatureMembership_Configmanagement_ConfigSync_GitRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -618,7 +876,7 @@ impl GkeHubFeatureMembershipConfigmanagementElConfigSyncElGitElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeHubFeatureMembershipConfigmanagementElConfigSyncElOciEl {
+pub struct GkeHubFeatureMembership_Configmanagement_ConfigSync_Oci {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     gcp_service_account_email: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -631,7 +889,7 @@ pub struct GkeHubFeatureMembershipConfigmanagementElConfigSyncElOciEl {
     sync_wait_secs: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeHubFeatureMembershipConfigmanagementElConfigSyncElOciEl {
+impl GkeHubFeatureMembership_Configmanagement_ConfigSync_Oci {
     #[doc =
         "Set the field `gcp_service_account_email`.\nThe GCP Service Account Email used for auth when secret_type is gcpserviceaccount. "]
     pub fn set_gcp_service_account_email(
@@ -670,8 +928,8 @@ impl GkeHubFeatureMembershipConfigmanagementElConfigSyncElOciEl {
     }
 }
 
-impl terrars::ToListMappable for GkeHubFeatureMembershipConfigmanagementElConfigSyncElOciEl {
-    type O = terrars::BlockAssignable<GkeHubFeatureMembershipConfigmanagementElConfigSyncElOciEl>;
+impl terrars::ToListMappable for GkeHubFeatureMembership_Configmanagement_ConfigSync_Oci {
+    type O = terrars::BlockAssignable<GkeHubFeatureMembership_Configmanagement_ConfigSync_Oci>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -682,11 +940,11 @@ impl terrars::ToListMappable for GkeHubFeatureMembershipConfigmanagementElConfig
     }
 }
 
-pub struct BuildGkeHubFeatureMembershipConfigmanagementElConfigSyncElOciEl {}
+pub struct BuildGkeHubFeatureMembership_Configmanagement_ConfigSync_Oci {}
 
-impl BuildGkeHubFeatureMembershipConfigmanagementElConfigSyncElOciEl {
-    pub fn build(self) -> GkeHubFeatureMembershipConfigmanagementElConfigSyncElOciEl {
-        GkeHubFeatureMembershipConfigmanagementElConfigSyncElOciEl {
+impl BuildGkeHubFeatureMembership_Configmanagement_ConfigSync_Oci {
+    pub fn build(self) -> GkeHubFeatureMembership_Configmanagement_ConfigSync_Oci {
+        GkeHubFeatureMembership_Configmanagement_ConfigSync_Oci {
             gcp_service_account_email: core::default::Default::default(),
             policy_dir: core::default::Default::default(),
             secret_type: core::default::Default::default(),
@@ -696,24 +954,26 @@ impl BuildGkeHubFeatureMembershipConfigmanagementElConfigSyncElOciEl {
     }
 }
 
-pub struct GkeHubFeatureMembershipConfigmanagementElConfigSyncElOciElRef {
+#[allow(dead_code)]
+pub struct GkeHubFeatureMembership_Configmanagement_ConfigSync_OciRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeHubFeatureMembershipConfigmanagementElConfigSyncElOciElRef {
+impl terrars::Ref for GkeHubFeatureMembership_Configmanagement_ConfigSync_OciRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeHubFeatureMembershipConfigmanagementElConfigSyncElOciElRef {
-        GkeHubFeatureMembershipConfigmanagementElConfigSyncElOciElRef {
+    ) -> GkeHubFeatureMembership_Configmanagement_ConfigSync_OciRef {
+        GkeHubFeatureMembership_Configmanagement_ConfigSync_OciRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeHubFeatureMembershipConfigmanagementElConfigSyncElOciElRef {
+impl GkeHubFeatureMembership_Configmanagement_ConfigSync_OciRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -750,13 +1010,18 @@ impl GkeHubFeatureMembershipConfigmanagementElConfigSyncElOciElRef {
 }
 
 #[derive(Serialize, Default)]
-struct GkeHubFeatureMembershipConfigmanagementElConfigSyncElDynamic {
-    git: std::option::Option<terrars::DynamicBlock<GkeHubFeatureMembershipConfigmanagementElConfigSyncElGitEl>>,
-    oci: std::option::Option<terrars::DynamicBlock<GkeHubFeatureMembershipConfigmanagementElConfigSyncElOciEl>>,
+struct GkeHubFeatureMembership_Configmanagement_ConfigSyncDynamic {
+    deployment_overrides: std
+    ::option
+    ::Option<terrars::DynamicBlock<GkeHubFeatureMembership_Configmanagement_ConfigSync_DeploymentOverrides>>,
+    git: std::option::Option<terrars::DynamicBlock<GkeHubFeatureMembership_Configmanagement_ConfigSync_Git>>,
+    oci: std::option::Option<terrars::DynamicBlock<GkeHubFeatureMembership_Configmanagement_ConfigSync_Oci>>,
 }
 
 #[derive(Serialize)]
-pub struct GkeHubFeatureMembershipConfigmanagementElConfigSyncEl {
+pub struct GkeHubFeatureMembership_Configmanagement_ConfigSync {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     metrics_gcp_service_account_email: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -764,15 +1029,28 @@ pub struct GkeHubFeatureMembershipConfigmanagementElConfigSyncEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     source_format: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    git: std::option::Option<std::vec::Vec<GkeHubFeatureMembershipConfigmanagementElConfigSyncElGitEl>>,
+    stop_syncing: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    oci: std::option::Option<std::vec::Vec<GkeHubFeatureMembershipConfigmanagementElConfigSyncElOciEl>>,
-    dynamic: GkeHubFeatureMembershipConfigmanagementElConfigSyncElDynamic,
+    deployment_overrides: std
+    ::option
+    ::Option<std::vec::Vec<GkeHubFeatureMembership_Configmanagement_ConfigSync_DeploymentOverrides>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    git: std::option::Option<std::vec::Vec<GkeHubFeatureMembership_Configmanagement_ConfigSync_Git>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    oci: std::option::Option<std::vec::Vec<GkeHubFeatureMembership_Configmanagement_ConfigSync_Oci>>,
+    dynamic: GkeHubFeatureMembership_Configmanagement_ConfigSyncDynamic,
 }
 
-impl GkeHubFeatureMembershipConfigmanagementElConfigSyncEl {
+impl GkeHubFeatureMembership_Configmanagement_ConfigSync {
     #[doc =
-        "Set the field `metrics_gcp_service_account_email`.\nThe Email of the Google Cloud Service Account (GSA) used for exporting Config Sync metrics to Cloud Monitoring. The GSA should have the Monitoring Metric Writer(roles/monitoring.metricWriter) IAM role. The Kubernetes ServiceAccount `default` in the namespace `config-management-monitoring` should be bound to the GSA."]
+        "Set the field `enabled`.\nEnables the installation of ConfigSync. If set to true, ConfigSync resources will be created and the other ConfigSync fields will be applied if exist. If set to false, all other ConfigSync fields will be ignored, ConfigSync resources will be deleted. If omitted, ConfigSync resources will be managed depends on the presence of the git or oci field."]
+    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enabled = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `metrics_gcp_service_account_email`.\nDeprecated: If Workload Identity Federation for GKE is enabled, Google Cloud Service Account is no longer needed for exporting Config Sync metrics: https://cloud.google.com/kubernetes-engine/enterprise/config-sync/docs/how-to/monitor-config-sync-cloud-monitoring#custom-monitoring."]
     pub fn set_metrics_gcp_service_account_email(
         mut self,
         v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
@@ -795,6 +1073,36 @@ impl GkeHubFeatureMembershipConfigmanagementElConfigSyncEl {
         self
     }
 
+    #[doc = "Set the field `stop_syncing`.\nSet to true to stop syncing configs for a single cluster. Default: false."]
+    pub fn set_stop_syncing(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.stop_syncing = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `deployment_overrides`.\n"]
+    pub fn set_deployment_overrides(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<GkeHubFeatureMembership_Configmanagement_ConfigSync_DeploymentOverrides>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.deployment_overrides = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.deployment_overrides = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `git`.\n"]
     pub fn set_git(
         mut self,
@@ -803,7 +1111,7 @@ impl GkeHubFeatureMembershipConfigmanagementElConfigSyncEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<GkeHubFeatureMembershipConfigmanagementElConfigSyncElGitEl>>,
+                    ::Into<terrars::BlockAssignable<GkeHubFeatureMembership_Configmanagement_ConfigSync_Git>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -824,7 +1132,7 @@ impl GkeHubFeatureMembershipConfigmanagementElConfigSyncEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<GkeHubFeatureMembershipConfigmanagementElConfigSyncElOciEl>>,
+                    ::Into<terrars::BlockAssignable<GkeHubFeatureMembership_Configmanagement_ConfigSync_Oci>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -838,8 +1146,8 @@ impl GkeHubFeatureMembershipConfigmanagementElConfigSyncEl {
     }
 }
 
-impl terrars::ToListMappable for GkeHubFeatureMembershipConfigmanagementElConfigSyncEl {
-    type O = terrars::BlockAssignable<GkeHubFeatureMembershipConfigmanagementElConfigSyncEl>;
+impl terrars::ToListMappable for GkeHubFeatureMembership_Configmanagement_ConfigSync {
+    type O = terrars::BlockAssignable<GkeHubFeatureMembership_Configmanagement_ConfigSync>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -850,14 +1158,17 @@ impl terrars::ToListMappable for GkeHubFeatureMembershipConfigmanagementElConfig
     }
 }
 
-pub struct BuildGkeHubFeatureMembershipConfigmanagementElConfigSyncEl {}
+pub struct BuildGkeHubFeatureMembership_Configmanagement_ConfigSync {}
 
-impl BuildGkeHubFeatureMembershipConfigmanagementElConfigSyncEl {
-    pub fn build(self) -> GkeHubFeatureMembershipConfigmanagementElConfigSyncEl {
-        GkeHubFeatureMembershipConfigmanagementElConfigSyncEl {
+impl BuildGkeHubFeatureMembership_Configmanagement_ConfigSync {
+    pub fn build(self) -> GkeHubFeatureMembership_Configmanagement_ConfigSync {
+        GkeHubFeatureMembership_Configmanagement_ConfigSync {
+            enabled: core::default::Default::default(),
             metrics_gcp_service_account_email: core::default::Default::default(),
             prevent_drift: core::default::Default::default(),
             source_format: core::default::Default::default(),
+            stop_syncing: core::default::Default::default(),
+            deployment_overrides: core::default::Default::default(),
             git: core::default::Default::default(),
             oci: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -865,30 +1176,38 @@ impl BuildGkeHubFeatureMembershipConfigmanagementElConfigSyncEl {
     }
 }
 
-pub struct GkeHubFeatureMembershipConfigmanagementElConfigSyncElRef {
+#[allow(dead_code)]
+pub struct GkeHubFeatureMembership_Configmanagement_ConfigSyncRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeHubFeatureMembershipConfigmanagementElConfigSyncElRef {
+impl terrars::Ref for GkeHubFeatureMembership_Configmanagement_ConfigSyncRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeHubFeatureMembershipConfigmanagementElConfigSyncElRef {
-        GkeHubFeatureMembershipConfigmanagementElConfigSyncElRef {
+    ) -> GkeHubFeatureMembership_Configmanagement_ConfigSyncRef {
+        GkeHubFeatureMembership_Configmanagement_ConfigSyncRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeHubFeatureMembershipConfigmanagementElConfigSyncElRef {
+impl GkeHubFeatureMembership_Configmanagement_ConfigSyncRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `metrics_gcp_service_account_email` after provisioning.\nThe Email of the Google Cloud Service Account (GSA) used for exporting Config Sync metrics to Cloud Monitoring. The GSA should have the Monitoring Metric Writer(roles/monitoring.metricWriter) IAM role. The Kubernetes ServiceAccount `default` in the namespace `config-management-monitoring` should be bound to the GSA."]
+        "Get a reference to the value of field `enabled` after provisioning.\nEnables the installation of ConfigSync. If set to true, ConfigSync resources will be created and the other ConfigSync fields will be applied if exist. If set to false, all other ConfigSync fields will be ignored, ConfigSync resources will be deleted. If omitted, ConfigSync resources will be managed depends on the presence of the git or oci field."]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `metrics_gcp_service_account_email` after provisioning.\nDeprecated: If Workload Identity Federation for GKE is enabled, Google Cloud Service Account is no longer needed for exporting Config Sync metrics: https://cloud.google.com/kubernetes-engine/enterprise/config-sync/docs/how-to/monitor-config-sync-cloud-monitoring#custom-monitoring."]
     pub fn metrics_gcp_service_account_email(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.metrics_gcp_service_account_email", self.base))
     }
@@ -905,19 +1224,32 @@ impl GkeHubFeatureMembershipConfigmanagementElConfigSyncElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_format", self.base))
     }
 
+    #[doc =
+        "Get a reference to the value of field `stop_syncing` after provisioning.\nSet to true to stop syncing configs for a single cluster. Default: false."]
+    pub fn stop_syncing(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.stop_syncing", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `deployment_overrides` after provisioning.\n"]
+    pub fn deployment_overrides(
+        &self,
+    ) -> terrars::ListRef<GkeHubFeatureMembership_Configmanagement_ConfigSync_DeploymentOverridesRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.deployment_overrides", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `git` after provisioning.\n"]
-    pub fn git(&self) -> terrars::ListRef<GkeHubFeatureMembershipConfigmanagementElConfigSyncElGitElRef> {
+    pub fn git(&self) -> terrars::ListRef<GkeHubFeatureMembership_Configmanagement_ConfigSync_GitRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.git", self.base))
     }
 
     #[doc = "Get a reference to the value of field `oci` after provisioning.\n"]
-    pub fn oci(&self) -> terrars::ListRef<GkeHubFeatureMembershipConfigmanagementElConfigSyncElOciElRef> {
+    pub fn oci(&self) -> terrars::ListRef<GkeHubFeatureMembership_Configmanagement_ConfigSync_OciRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.oci", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct GkeHubFeatureMembershipConfigmanagementElHierarchyControllerEl {
+pub struct GkeHubFeatureMembership_Configmanagement_HierarchyController {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_hierarchical_resource_quota: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -926,7 +1258,7 @@ pub struct GkeHubFeatureMembershipConfigmanagementElHierarchyControllerEl {
     enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl GkeHubFeatureMembershipConfigmanagementElHierarchyControllerEl {
+impl GkeHubFeatureMembership_Configmanagement_HierarchyController {
     #[doc =
         "Set the field `enable_hierarchical_resource_quota`.\nWhether hierarchical resource quota is enabled in this cluster."]
     pub fn set_enable_hierarchical_resource_quota(
@@ -943,15 +1275,16 @@ impl GkeHubFeatureMembershipConfigmanagementElHierarchyControllerEl {
         self
     }
 
-    #[doc = "Set the field `enabled`.\nWhether Hierarchy Controller is enabled in this cluster."]
+    #[doc =
+        "Set the field `enabled`.\n**DEPRECATED** Configuring Hierarchy Controller through the configmanagement feature is no longer recommended. Use https://github.com/kubernetes-sigs/hierarchical-namespaces instead."]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for GkeHubFeatureMembershipConfigmanagementElHierarchyControllerEl {
-    type O = terrars::BlockAssignable<GkeHubFeatureMembershipConfigmanagementElHierarchyControllerEl>;
+impl terrars::ToListMappable for GkeHubFeatureMembership_Configmanagement_HierarchyController {
+    type O = terrars::BlockAssignable<GkeHubFeatureMembership_Configmanagement_HierarchyController>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -962,11 +1295,11 @@ impl terrars::ToListMappable for GkeHubFeatureMembershipConfigmanagementElHierar
     }
 }
 
-pub struct BuildGkeHubFeatureMembershipConfigmanagementElHierarchyControllerEl {}
+pub struct BuildGkeHubFeatureMembership_Configmanagement_HierarchyController {}
 
-impl BuildGkeHubFeatureMembershipConfigmanagementElHierarchyControllerEl {
-    pub fn build(self) -> GkeHubFeatureMembershipConfigmanagementElHierarchyControllerEl {
-        GkeHubFeatureMembershipConfigmanagementElHierarchyControllerEl {
+impl BuildGkeHubFeatureMembership_Configmanagement_HierarchyController {
+    pub fn build(self) -> GkeHubFeatureMembership_Configmanagement_HierarchyController {
+        GkeHubFeatureMembership_Configmanagement_HierarchyController {
             enable_hierarchical_resource_quota: core::default::Default::default(),
             enable_pod_tree_labels: core::default::Default::default(),
             enabled: core::default::Default::default(),
@@ -974,24 +1307,26 @@ impl BuildGkeHubFeatureMembershipConfigmanagementElHierarchyControllerEl {
     }
 }
 
-pub struct GkeHubFeatureMembershipConfigmanagementElHierarchyControllerElRef {
+#[allow(dead_code)]
+pub struct GkeHubFeatureMembership_Configmanagement_HierarchyControllerRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeHubFeatureMembershipConfigmanagementElHierarchyControllerElRef {
+impl terrars::Ref for GkeHubFeatureMembership_Configmanagement_HierarchyControllerRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeHubFeatureMembershipConfigmanagementElHierarchyControllerElRef {
-        GkeHubFeatureMembershipConfigmanagementElHierarchyControllerElRef {
+    ) -> GkeHubFeatureMembership_Configmanagement_HierarchyControllerRef {
+        GkeHubFeatureMembership_Configmanagement_HierarchyControllerRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeHubFeatureMembershipConfigmanagementElHierarchyControllerElRef {
+impl GkeHubFeatureMembership_Configmanagement_HierarchyControllerRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1009,19 +1344,19 @@ impl GkeHubFeatureMembershipConfigmanagementElHierarchyControllerElRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `enabled` after provisioning.\nWhether Hierarchy Controller is enabled in this cluster."]
+        "Get a reference to the value of field `enabled` after provisioning.\n**DEPRECATED** Configuring Hierarchy Controller through the configmanagement feature is no longer recommended. Use https://github.com/kubernetes-sigs/hierarchical-namespaces instead."]
     pub fn enabled(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct GkeHubFeatureMembershipConfigmanagementElPolicyControllerElMonitoringEl {
+pub struct GkeHubFeatureMembership_Configmanagement_PolicyController_Monitoring {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     backends: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl GkeHubFeatureMembershipConfigmanagementElPolicyControllerElMonitoringEl {
+impl GkeHubFeatureMembership_Configmanagement_PolicyController_Monitoring {
     #[doc =
         "Set the field `backends`.\n Specifies the list of backends Policy Controller will export to. Specifying an empty value `[]` disables metrics export."]
     pub fn set_backends(
@@ -1033,8 +1368,8 @@ impl GkeHubFeatureMembershipConfigmanagementElPolicyControllerElMonitoringEl {
     }
 }
 
-impl terrars::ToListMappable for GkeHubFeatureMembershipConfigmanagementElPolicyControllerElMonitoringEl {
-    type O = terrars::BlockAssignable<GkeHubFeatureMembershipConfigmanagementElPolicyControllerElMonitoringEl>;
+impl terrars::ToListMappable for GkeHubFeatureMembership_Configmanagement_PolicyController_Monitoring {
+    type O = terrars::BlockAssignable<GkeHubFeatureMembership_Configmanagement_PolicyController_Monitoring>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1045,34 +1380,36 @@ impl terrars::ToListMappable for GkeHubFeatureMembershipConfigmanagementElPolicy
     }
 }
 
-pub struct BuildGkeHubFeatureMembershipConfigmanagementElPolicyControllerElMonitoringEl {}
+pub struct BuildGkeHubFeatureMembership_Configmanagement_PolicyController_Monitoring {}
 
-impl BuildGkeHubFeatureMembershipConfigmanagementElPolicyControllerElMonitoringEl {
-    pub fn build(self) -> GkeHubFeatureMembershipConfigmanagementElPolicyControllerElMonitoringEl {
-        GkeHubFeatureMembershipConfigmanagementElPolicyControllerElMonitoringEl {
+impl BuildGkeHubFeatureMembership_Configmanagement_PolicyController_Monitoring {
+    pub fn build(self) -> GkeHubFeatureMembership_Configmanagement_PolicyController_Monitoring {
+        GkeHubFeatureMembership_Configmanagement_PolicyController_Monitoring {
             backends: core::default::Default::default(),
         }
     }
 }
 
-pub struct GkeHubFeatureMembershipConfigmanagementElPolicyControllerElMonitoringElRef {
+#[allow(dead_code)]
+pub struct GkeHubFeatureMembership_Configmanagement_PolicyController_MonitoringRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeHubFeatureMembershipConfigmanagementElPolicyControllerElMonitoringElRef {
+impl terrars::Ref for GkeHubFeatureMembership_Configmanagement_PolicyController_MonitoringRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeHubFeatureMembershipConfigmanagementElPolicyControllerElMonitoringElRef {
-        GkeHubFeatureMembershipConfigmanagementElPolicyControllerElMonitoringElRef {
+    ) -> GkeHubFeatureMembership_Configmanagement_PolicyController_MonitoringRef {
+        GkeHubFeatureMembership_Configmanagement_PolicyController_MonitoringRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeHubFeatureMembershipConfigmanagementElPolicyControllerElMonitoringElRef {
+impl GkeHubFeatureMembership_Configmanagement_PolicyController_MonitoringRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1085,14 +1422,14 @@ impl GkeHubFeatureMembershipConfigmanagementElPolicyControllerElMonitoringElRef 
 }
 
 #[derive(Serialize, Default)]
-struct GkeHubFeatureMembershipConfigmanagementElPolicyControllerElDynamic {
+struct GkeHubFeatureMembership_Configmanagement_PolicyControllerDynamic {
     monitoring: std
     ::option
-    ::Option<terrars::DynamicBlock<GkeHubFeatureMembershipConfigmanagementElPolicyControllerElMonitoringEl>>,
+    ::Option<terrars::DynamicBlock<GkeHubFeatureMembership_Configmanagement_PolicyController_Monitoring>>,
 }
 
 #[derive(Serialize)]
-pub struct GkeHubFeatureMembershipConfigmanagementElPolicyControllerEl {
+pub struct GkeHubFeatureMembership_Configmanagement_PolicyController {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     audit_interval_seconds: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1108,13 +1445,11 @@ pub struct GkeHubFeatureMembershipConfigmanagementElPolicyControllerEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     template_library_installed: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    monitoring: std
-    ::option
-    ::Option<std::vec::Vec<GkeHubFeatureMembershipConfigmanagementElPolicyControllerElMonitoringEl>>,
-    dynamic: GkeHubFeatureMembershipConfigmanagementElPolicyControllerElDynamic,
+    monitoring: std::option::Option<std::vec::Vec<GkeHubFeatureMembership_Configmanagement_PolicyController_Monitoring>>,
+    dynamic: GkeHubFeatureMembership_Configmanagement_PolicyControllerDynamic,
 }
 
-impl GkeHubFeatureMembershipConfigmanagementElPolicyControllerEl {
+impl GkeHubFeatureMembership_Configmanagement_PolicyController {
     #[doc =
         "Set the field `audit_interval_seconds`.\nSets the interval for Policy Controller Audit Scans (in seconds). When set to 0, this disables audit functionality altogether."]
     pub fn set_audit_interval_seconds(
@@ -1178,8 +1513,7 @@ impl GkeHubFeatureMembershipConfigmanagementElPolicyControllerEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<GkeHubFeatureMembershipConfigmanagementElPolicyControllerElMonitoringEl>,
+                        terrars::BlockAssignable<GkeHubFeatureMembership_Configmanagement_PolicyController_Monitoring>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1194,8 +1528,8 @@ impl GkeHubFeatureMembershipConfigmanagementElPolicyControllerEl {
     }
 }
 
-impl terrars::ToListMappable for GkeHubFeatureMembershipConfigmanagementElPolicyControllerEl {
-    type O = terrars::BlockAssignable<GkeHubFeatureMembershipConfigmanagementElPolicyControllerEl>;
+impl terrars::ToListMappable for GkeHubFeatureMembership_Configmanagement_PolicyController {
+    type O = terrars::BlockAssignable<GkeHubFeatureMembership_Configmanagement_PolicyController>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1206,11 +1540,11 @@ impl terrars::ToListMappable for GkeHubFeatureMembershipConfigmanagementElPolicy
     }
 }
 
-pub struct BuildGkeHubFeatureMembershipConfigmanagementElPolicyControllerEl {}
+pub struct BuildGkeHubFeatureMembership_Configmanagement_PolicyController {}
 
-impl BuildGkeHubFeatureMembershipConfigmanagementElPolicyControllerEl {
-    pub fn build(self) -> GkeHubFeatureMembershipConfigmanagementElPolicyControllerEl {
-        GkeHubFeatureMembershipConfigmanagementElPolicyControllerEl {
+impl BuildGkeHubFeatureMembership_Configmanagement_PolicyController {
+    pub fn build(self) -> GkeHubFeatureMembership_Configmanagement_PolicyController {
+        GkeHubFeatureMembership_Configmanagement_PolicyController {
             audit_interval_seconds: core::default::Default::default(),
             enabled: core::default::Default::default(),
             exemptable_namespaces: core::default::Default::default(),
@@ -1224,24 +1558,26 @@ impl BuildGkeHubFeatureMembershipConfigmanagementElPolicyControllerEl {
     }
 }
 
-pub struct GkeHubFeatureMembershipConfigmanagementElPolicyControllerElRef {
+#[allow(dead_code)]
+pub struct GkeHubFeatureMembership_Configmanagement_PolicyControllerRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeHubFeatureMembershipConfigmanagementElPolicyControllerElRef {
+impl terrars::Ref for GkeHubFeatureMembership_Configmanagement_PolicyControllerRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeHubFeatureMembershipConfigmanagementElPolicyControllerElRef {
-        GkeHubFeatureMembershipConfigmanagementElPolicyControllerElRef {
+    ) -> GkeHubFeatureMembership_Configmanagement_PolicyControllerRef {
+        GkeHubFeatureMembership_Configmanagement_PolicyControllerRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeHubFeatureMembershipConfigmanagementElPolicyControllerElRef {
+impl GkeHubFeatureMembership_Configmanagement_PolicyControllerRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1291,67 +1627,57 @@ impl GkeHubFeatureMembershipConfigmanagementElPolicyControllerElRef {
     #[doc = "Get a reference to the value of field `monitoring` after provisioning.\n"]
     pub fn monitoring(
         &self,
-    ) -> terrars::ListRef<GkeHubFeatureMembershipConfigmanagementElPolicyControllerElMonitoringElRef> {
+    ) -> terrars::ListRef<GkeHubFeatureMembership_Configmanagement_PolicyController_MonitoringRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.monitoring", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct GkeHubFeatureMembershipConfigmanagementElDynamic {
-    binauthz: std::option::Option<terrars::DynamicBlock<GkeHubFeatureMembershipConfigmanagementElBinauthzEl>>,
-    config_sync: std::option::Option<terrars::DynamicBlock<GkeHubFeatureMembershipConfigmanagementElConfigSyncEl>>,
+struct GkeHubFeatureMembership_ConfigmanagementDynamic {
+    config_sync: std::option::Option<terrars::DynamicBlock<GkeHubFeatureMembership_Configmanagement_ConfigSync>>,
     hierarchy_controller: std
     ::option
-    ::Option<terrars::DynamicBlock<GkeHubFeatureMembershipConfigmanagementElHierarchyControllerEl>>,
+    ::Option<terrars::DynamicBlock<GkeHubFeatureMembership_Configmanagement_HierarchyController>>,
     policy_controller: std
     ::option
-    ::Option<terrars::DynamicBlock<GkeHubFeatureMembershipConfigmanagementElPolicyControllerEl>>,
+    ::Option<terrars::DynamicBlock<GkeHubFeatureMembership_Configmanagement_PolicyController>>,
 }
 
 #[derive(Serialize)]
-pub struct GkeHubFeatureMembershipConfigmanagementEl {
+pub struct GkeHubFeatureMembership_Configmanagement {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    management: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     version: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    binauthz: std::option::Option<std::vec::Vec<GkeHubFeatureMembershipConfigmanagementElBinauthzEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    config_sync: std::option::Option<std::vec::Vec<GkeHubFeatureMembershipConfigmanagementElConfigSyncEl>>,
+    config_sync: std::option::Option<std::vec::Vec<GkeHubFeatureMembership_Configmanagement_ConfigSync>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     hierarchy_controller: std
     ::option
-    ::Option<std::vec::Vec<GkeHubFeatureMembershipConfigmanagementElHierarchyControllerEl>>,
+    ::Option<std::vec::Vec<GkeHubFeatureMembership_Configmanagement_HierarchyController>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    policy_controller: std::option::Option<std::vec::Vec<GkeHubFeatureMembershipConfigmanagementElPolicyControllerEl>>,
-    dynamic: GkeHubFeatureMembershipConfigmanagementElDynamic,
+    policy_controller: std::option::Option<std::vec::Vec<GkeHubFeatureMembership_Configmanagement_PolicyController>>,
+    dynamic: GkeHubFeatureMembership_ConfigmanagementDynamic,
 }
 
-impl GkeHubFeatureMembershipConfigmanagementEl {
+impl GkeHubFeatureMembership_Configmanagement {
+    #[doc =
+        "Set the field `management`.\nSet this field to MANAGEMENT_AUTOMATIC to enable Config Sync auto-upgrades, and set this field to MANAGEMENT_MANUAL or MANAGEMENT_UNSPECIFIED to disable Config Sync auto-upgrades."]
+    pub fn set_management(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.management = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `version`.\nOptional. Version of ACM to install. Defaults to the latest version."]
     pub fn set_version(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.version = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc = "Set the field `binauthz`.\n"]
-    pub fn set_binauthz(
-        mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeHubFeatureMembershipConfigmanagementElBinauthzEl>>,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.binauthz = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.binauthz = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
     #[doc = "Set the field `config_sync`.\n"]
     pub fn set_config_sync(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeHubFeatureMembershipConfigmanagementElConfigSyncEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeHubFeatureMembership_Configmanagement_ConfigSync>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1372,7 +1698,7 @@ impl GkeHubFeatureMembershipConfigmanagementEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<GkeHubFeatureMembershipConfigmanagementElHierarchyControllerEl>>,
+                    ::Into<terrars::BlockAssignable<GkeHubFeatureMembership_Configmanagement_HierarchyController>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1393,7 +1719,7 @@ impl GkeHubFeatureMembershipConfigmanagementEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<GkeHubFeatureMembershipConfigmanagementElPolicyControllerEl>>,
+                    ::Into<terrars::BlockAssignable<GkeHubFeatureMembership_Configmanagement_PolicyController>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1407,8 +1733,8 @@ impl GkeHubFeatureMembershipConfigmanagementEl {
     }
 }
 
-impl terrars::ToListMappable for GkeHubFeatureMembershipConfigmanagementEl {
-    type O = terrars::BlockAssignable<GkeHubFeatureMembershipConfigmanagementEl>;
+impl terrars::ToListMappable for GkeHubFeatureMembership_Configmanagement {
+    type O = terrars::BlockAssignable<GkeHubFeatureMembership_Configmanagement>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1419,13 +1745,13 @@ impl terrars::ToListMappable for GkeHubFeatureMembershipConfigmanagementEl {
     }
 }
 
-pub struct BuildGkeHubFeatureMembershipConfigmanagementEl {}
+pub struct BuildGkeHubFeatureMembership_Configmanagement {}
 
-impl BuildGkeHubFeatureMembershipConfigmanagementEl {
-    pub fn build(self) -> GkeHubFeatureMembershipConfigmanagementEl {
-        GkeHubFeatureMembershipConfigmanagementEl {
+impl BuildGkeHubFeatureMembership_Configmanagement {
+    pub fn build(self) -> GkeHubFeatureMembership_Configmanagement {
+        GkeHubFeatureMembership_Configmanagement {
+            management: core::default::Default::default(),
             version: core::default::Default::default(),
-            binauthz: core::default::Default::default(),
             config_sync: core::default::Default::default(),
             hierarchy_controller: core::default::Default::default(),
             policy_controller: core::default::Default::default(),
@@ -1434,23 +1760,31 @@ impl BuildGkeHubFeatureMembershipConfigmanagementEl {
     }
 }
 
-pub struct GkeHubFeatureMembershipConfigmanagementElRef {
+#[allow(dead_code)]
+pub struct GkeHubFeatureMembership_ConfigmanagementRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeHubFeatureMembershipConfigmanagementElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeHubFeatureMembershipConfigmanagementElRef {
-        GkeHubFeatureMembershipConfigmanagementElRef {
+impl terrars::Ref for GkeHubFeatureMembership_ConfigmanagementRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeHubFeatureMembership_ConfigmanagementRef {
+        GkeHubFeatureMembership_ConfigmanagementRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeHubFeatureMembershipConfigmanagementElRef {
+impl GkeHubFeatureMembership_ConfigmanagementRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `management` after provisioning.\nSet this field to MANAGEMENT_AUTOMATIC to enable Config Sync auto-upgrades, and set this field to MANAGEMENT_MANUAL or MANAGEMENT_UNSPECIFIED to disable Config Sync auto-upgrades."]
+    pub fn management(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.management", self.base))
     }
 
     #[doc =
@@ -1459,38 +1793,33 @@ impl GkeHubFeatureMembershipConfigmanagementElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.version", self.base))
     }
 
-    #[doc = "Get a reference to the value of field `binauthz` after provisioning.\n"]
-    pub fn binauthz(&self) -> terrars::ListRef<GkeHubFeatureMembershipConfigmanagementElBinauthzElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.binauthz", self.base))
-    }
-
     #[doc = "Get a reference to the value of field `config_sync` after provisioning.\n"]
-    pub fn config_sync(&self) -> terrars::ListRef<GkeHubFeatureMembershipConfigmanagementElConfigSyncElRef> {
+    pub fn config_sync(&self) -> terrars::ListRef<GkeHubFeatureMembership_Configmanagement_ConfigSyncRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.config_sync", self.base))
     }
 
     #[doc = "Get a reference to the value of field `hierarchy_controller` after provisioning.\n"]
     pub fn hierarchy_controller(
         &self,
-    ) -> terrars::ListRef<GkeHubFeatureMembershipConfigmanagementElHierarchyControllerElRef> {
+    ) -> terrars::ListRef<GkeHubFeatureMembership_Configmanagement_HierarchyControllerRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.hierarchy_controller", self.base))
     }
 
     #[doc = "Get a reference to the value of field `policy_controller` after provisioning.\n"]
-    pub fn policy_controller(&self) -> terrars::ListRef<GkeHubFeatureMembershipConfigmanagementElPolicyControllerElRef> {
+    pub fn policy_controller(&self) -> terrars::ListRef<GkeHubFeatureMembership_Configmanagement_PolicyControllerRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.policy_controller", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct GkeHubFeatureMembershipMeshEl {
+pub struct GkeHubFeatureMembership_Mesh {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     control_plane: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     management: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeHubFeatureMembershipMeshEl {
+impl GkeHubFeatureMembership_Mesh {
     #[doc =
         "Set the field `control_plane`.\n**DEPRECATED** Whether to automatically manage Service Mesh control planes. Possible values: CONTROL_PLANE_MANAGEMENT_UNSPECIFIED, AUTOMATIC, MANUAL"]
     pub fn set_control_plane(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1506,8 +1835,8 @@ impl GkeHubFeatureMembershipMeshEl {
     }
 }
 
-impl terrars::ToListMappable for GkeHubFeatureMembershipMeshEl {
-    type O = terrars::BlockAssignable<GkeHubFeatureMembershipMeshEl>;
+impl terrars::ToListMappable for GkeHubFeatureMembership_Mesh {
+    type O = terrars::BlockAssignable<GkeHubFeatureMembership_Mesh>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1518,32 +1847,34 @@ impl terrars::ToListMappable for GkeHubFeatureMembershipMeshEl {
     }
 }
 
-pub struct BuildGkeHubFeatureMembershipMeshEl {}
+pub struct BuildGkeHubFeatureMembership_Mesh {}
 
-impl BuildGkeHubFeatureMembershipMeshEl {
-    pub fn build(self) -> GkeHubFeatureMembershipMeshEl {
-        GkeHubFeatureMembershipMeshEl {
+impl BuildGkeHubFeatureMembership_Mesh {
+    pub fn build(self) -> GkeHubFeatureMembership_Mesh {
+        GkeHubFeatureMembership_Mesh {
             control_plane: core::default::Default::default(),
             management: core::default::Default::default(),
         }
     }
 }
 
-pub struct GkeHubFeatureMembershipMeshElRef {
+#[allow(dead_code)]
+pub struct GkeHubFeatureMembership_MeshRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeHubFeatureMembershipMeshElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeHubFeatureMembershipMeshElRef {
-        GkeHubFeatureMembershipMeshElRef {
+impl terrars::Ref for GkeHubFeatureMembership_MeshRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeHubFeatureMembership_MeshRef {
+        GkeHubFeatureMembership_MeshRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeHubFeatureMembershipMeshElRef {
+impl GkeHubFeatureMembership_MeshRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1562,7 +1893,1387 @@ impl GkeHubFeatureMembershipMeshElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeHubFeatureMembershipTimeoutsEl {
+pub struct GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources_Limits {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cpu: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    memory: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources_Limits {
+    #[doc = "Set the field `cpu`.\nCPU requirement expressed in Kubernetes resource units."]
+    pub fn set_cpu(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.cpu = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `memory`.\nMemory requirement expressed in Kubernetes resource units."]
+    pub fn set_memory(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.memory = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources_Limits {
+    type O =
+        terrars
+        ::BlockAssignable<
+            GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources_Limits,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildGkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources_Limits {}
+
+impl BuildGkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources_Limits {
+    pub fn build(
+        self,
+    ) -> GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources_Limits {
+        GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources_Limits {
+            cpu: core::default::Default::default(),
+            memory: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources_LimitsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources_LimitsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources_LimitsRef {
+        GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources_LimitsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources_LimitsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `cpu` after provisioning.\nCPU requirement expressed in Kubernetes resource units."]
+    pub fn cpu(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cpu", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `memory` after provisioning.\nMemory requirement expressed in Kubernetes resource units."]
+    pub fn memory(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.memory", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources_Requests {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cpu: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    memory: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources_Requests {
+    #[doc = "Set the field `cpu`.\nCPU requirement expressed in Kubernetes resource units."]
+    pub fn set_cpu(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.cpu = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `memory`.\nMemory requirement expressed in Kubernetes resource units."]
+    pub fn set_memory(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.memory = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources_Requests {
+    type O =
+        terrars
+        ::BlockAssignable<
+            GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources_Requests,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildGkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources_Requests {}
+
+impl BuildGkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources_Requests {
+    pub fn build(
+        self,
+    ) -> GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources_Requests {
+        GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources_Requests {
+            cpu: core::default::Default::default(),
+            memory: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources_RequestsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources_RequestsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources_RequestsRef {
+        GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources_RequestsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources_RequestsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `cpu` after provisioning.\nCPU requirement expressed in Kubernetes resource units."]
+    pub fn cpu(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cpu", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `memory` after provisioning.\nMemory requirement expressed in Kubernetes resource units."]
+    pub fn memory(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.memory", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResourcesDynamic {
+    limits: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources_Limits,
+        >,
+    >,
+    requests: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources_Requests,
+        >,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    limits: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
+            GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources_Limits,
+        >,
+    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    requests: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
+            GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources_Requests,
+        >,
+    >,
+    dynamic: GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResourcesDynamic,
+}
+
+impl GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources {
+    #[doc = "Set the field `limits`.\n"]
+    pub fn set_limits(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources_Limits,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.limits = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.limits = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `requests`.\n"]
+    pub fn set_requests(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources_Requests,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.requests = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.requests = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources {
+    type O =
+        terrars
+        ::BlockAssignable<
+            GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildGkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources {}
+
+impl BuildGkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources {
+    pub fn build(
+        self,
+    ) -> GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources {
+        GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources {
+            limits: core::default::Default::default(),
+            requests: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResourcesRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResourcesRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResourcesRef {
+        GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResourcesRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResourcesRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `limits` after provisioning.\n"]
+    pub fn limits(
+        &self,
+    ) -> terrars
+    ::ListRef<
+        GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources_LimitsRef,
+    > {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.limits", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `requests` after provisioning.\n"]
+    pub fn requests(
+        &self,
+    ) -> terrars
+    ::ListRef<
+        GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources_RequestsRef,
+    > {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.requests", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_PodTolerations {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    effect: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    operator: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    value: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_PodTolerations {
+    #[doc = "Set the field `effect`.\nMatches a taint effect."]
+    pub fn set_effect(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.effect = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `key`.\nMatches a taint key (not necessarily unique)."]
+    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.key = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `operator`.\nMatches a taint operator."]
+    pub fn set_operator(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.operator = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `value`.\nMatches a taint value."]
+    pub fn set_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.value = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_PodTolerations {
+    type O =
+        terrars
+        ::BlockAssignable<
+            GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_PodTolerations,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildGkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_PodTolerations {}
+
+impl BuildGkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_PodTolerations {
+    pub fn build(
+        self,
+    ) -> GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_PodTolerations {
+        GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_PodTolerations {
+            effect: core::default::Default::default(),
+            key: core::default::Default::default(),
+            operator: core::default::Default::default(),
+            value: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_PodTolerationsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_PodTolerationsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_PodTolerationsRef {
+        GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_PodTolerationsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_PodTolerationsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `effect` after provisioning.\nMatches a taint effect."]
+    pub fn effect(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.effect", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `key` after provisioning.\nMatches a taint key (not necessarily unique)."]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `operator` after provisioning.\nMatches a taint operator."]
+    pub fn operator(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.operator", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `value` after provisioning.\nMatches a taint value."]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigsDynamic {
+    container_resources: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources,
+        >,
+    >,
+    pod_tolerations: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_PodTolerations,
+        >,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs {
+    component_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    pod_affinity: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    replica_count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    container_resources: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources>,
+    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    pod_tolerations: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_PodTolerations>,
+    >,
+    dynamic: GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigsDynamic,
+}
+
+impl GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs {
+    #[doc =
+        "Set the field `pod_affinity`.\nPod affinity configuration. Possible values: AFFINITY_UNSPECIFIED, NO_AFFINITY, ANTI_AFFINITY"]
+    pub fn set_pod_affinity(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.pod_affinity = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `replica_count`.\nPod replica count."]
+    pub fn set_replica_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.replica_count = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `container_resources`.\n"]
+    pub fn set_container_resources(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResources,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.container_resources = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.container_resources = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `pod_tolerations`.\n"]
+    pub fn set_pod_tolerations(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_PodTolerations,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.pod_tolerations = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.pod_tolerations = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs {
+    type O =
+        terrars
+        ::BlockAssignable<GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildGkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs {
+    #[doc = "The name for the key in the map for which this object is mapped to in the API"]
+    pub component_name: terrars::PrimField<std::string::String>,
+}
+
+impl BuildGkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs {
+    pub fn build(self) -> GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs {
+        GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs {
+            component_name: self.component_name,
+            pod_affinity: core::default::Default::default(),
+            replica_count: core::default::Default::default(),
+            container_resources: core::default::Default::default(),
+            pod_tolerations: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigsRef {
+        GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `component_name` after provisioning.\nThe name for the key in the map for which this object is mapped to in the API"]
+    pub fn component_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.component_name", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `pod_affinity` after provisioning.\nPod affinity configuration. Possible values: AFFINITY_UNSPECIFIED, NO_AFFINITY, ANTI_AFFINITY"]
+    pub fn pod_affinity(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.pod_affinity", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `replica_count` after provisioning.\nPod replica count."]
+    pub fn replica_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.replica_count", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `container_resources` after provisioning.\n"]
+    pub fn container_resources(
+        &self,
+    ) -> terrars
+    ::ListRef<
+        GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_ContainerResourcesRef,
+    > {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.container_resources", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `pod_tolerations` after provisioning.\n"]
+    pub fn pod_tolerations(
+        &self,
+    ) -> terrars
+    ::ListRef<GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs_PodTolerationsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.pod_tolerations", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent_Bundles {
+    bundle_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    exempted_namespaces: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+}
+
+impl GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent_Bundles {
+    #[doc = "Set the field `exempted_namespaces`.\nThe set of namespaces to be exempted from the bundle."]
+    pub fn set_exempted_namespaces(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.exempted_namespaces = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent_Bundles {
+    type O =
+        terrars
+        ::BlockAssignable<GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent_Bundles>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildGkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent_Bundles {
+    #[doc = "The name for the key in the map for which this object is mapped to in the API"]
+    pub bundle_name: terrars::PrimField<std::string::String>,
+}
+
+impl BuildGkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent_Bundles {
+    pub fn build(self) -> GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent_Bundles {
+        GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent_Bundles {
+            bundle_name: self.bundle_name,
+            exempted_namespaces: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent_BundlesRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent_BundlesRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent_BundlesRef {
+        GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent_BundlesRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent_BundlesRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `bundle_name` after provisioning.\nThe name for the key in the map for which this object is mapped to in the API"]
+    pub fn bundle_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bundle_name", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `exempted_namespaces` after provisioning.\nThe set of namespaces to be exempted from the bundle."]
+    pub fn exempted_namespaces(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.exempted_namespaces", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent_TemplateLibrary {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    installation: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent_TemplateLibrary {
+    #[doc =
+        "Set the field `installation`.\nConfigures the manner in which the template library is installed on the cluster. Possible values: INSTALLATION_UNSPECIFIED, NOT_INSTALLED, ALL"]
+    pub fn set_installation(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.installation = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent_TemplateLibrary {
+    type O =
+        terrars
+        ::BlockAssignable<
+            GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent_TemplateLibrary,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildGkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent_TemplateLibrary {}
+
+impl BuildGkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent_TemplateLibrary {
+    pub fn build(
+        self,
+    ) -> GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent_TemplateLibrary {
+        GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent_TemplateLibrary {
+            installation: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent_TemplateLibraryRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent_TemplateLibraryRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent_TemplateLibraryRef {
+        GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent_TemplateLibraryRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent_TemplateLibraryRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `installation` after provisioning.\nConfigures the manner in which the template library is installed on the cluster. Possible values: INSTALLATION_UNSPECIFIED, NOT_INSTALLED, ALL"]
+    pub fn installation(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.installation", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContentDynamic {
+    bundles: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent_Bundles>,
+    >,
+    template_library: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent_TemplateLibrary,
+        >,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bundles: std
+    ::option
+    ::Option<std::vec::Vec<GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent_Bundles>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    template_library: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent_TemplateLibrary>,
+    >,
+    dynamic: GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContentDynamic,
+}
+
+impl GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent {
+    #[doc = "Set the field `bundles`.\n"]
+    pub fn set_bundles(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent_Bundles,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.bundles = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.bundles = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `template_library`.\n"]
+    pub fn set_template_library(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent_TemplateLibrary,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.template_library = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.template_library = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent {
+    type O =
+        terrars::BlockAssignable<GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildGkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent {}
+
+impl BuildGkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent {
+    pub fn build(self) -> GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent {
+        GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent {
+            bundles: core::default::Default::default(),
+            template_library: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContentRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContentRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContentRef {
+        GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContentRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContentRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `template_library` after provisioning.\n"]
+    pub fn template_library(
+        &self,
+    ) -> terrars
+    ::ListRef<GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent_TemplateLibraryRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.template_library", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfigDynamic {
+    deployment_configs: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs>,
+    >,
+    monitoring: std
+    ::option
+    ::Option<terrars::DynamicBlock<GkeHubFeatureMembership_Configmanagement_PolicyController_Monitoring>>,
+    policy_content: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent>,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    audit_interval_seconds: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    constraint_violation_limit: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    exemptable_namespaces: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    install_spec: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    log_denies_enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mutation_enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    referential_rules_enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deployment_configs: std
+    ::option
+    ::Option<std::vec::Vec<GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    monitoring: std::option::Option<std::vec::Vec<GkeHubFeatureMembership_Configmanagement_PolicyController_Monitoring>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    policy_content: std
+    ::option
+    ::Option<std::vec::Vec<GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent>>,
+    dynamic: GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfigDynamic,
+}
+
+impl GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig {
+    #[doc =
+        "Set the field `audit_interval_seconds`.\nSets the interval for Policy Controller Audit Scans (in seconds). When set to 0, this disables audit functionality altogether."]
+    pub fn set_audit_interval_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.audit_interval_seconds = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `constraint_violation_limit`.\nThe maximum number of audit violations to be stored in a constraint. If not set, the internal default of 20 will be used."]
+    pub fn set_constraint_violation_limit(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.constraint_violation_limit = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `exemptable_namespaces`.\nThe set of namespaces that are excluded from Policy Controller checks. Namespaces do not need to currently exist on the cluster."]
+    pub fn set_exemptable_namespaces(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.exemptable_namespaces = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `install_spec`.\nConfigures the mode of the Policy Controller installation. Possible values: INSTALL_SPEC_UNSPECIFIED, INSTALL_SPEC_NOT_INSTALLED, INSTALL_SPEC_ENABLED, INSTALL_SPEC_SUSPENDED, INSTALL_SPEC_DETACHED"]
+    pub fn set_install_spec(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.install_spec = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `log_denies_enabled`.\nLogs all denies and dry run failures."]
+    pub fn set_log_denies_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.log_denies_enabled = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `mutation_enabled`.\nEnables the ability to mutate resources using Policy Controller."]
+    pub fn set_mutation_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.mutation_enabled = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `referential_rules_enabled`.\nEnables the ability to use Constraint Templates that reference to objects other than the object currently being evaluated."]
+    pub fn set_referential_rules_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.referential_rules_enabled = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `deployment_configs`.\n"]
+    pub fn set_deployment_configs(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_DeploymentConfigs,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.deployment_configs = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.deployment_configs = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `monitoring`.\n"]
+    pub fn set_monitoring(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<GkeHubFeatureMembership_Configmanagement_PolicyController_Monitoring>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.monitoring = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.monitoring = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `policy_content`.\n"]
+    pub fn set_policy_content(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContent,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.policy_content = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.policy_content = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig {
+    type O = terrars::BlockAssignable<GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildGkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig {}
+
+impl BuildGkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig {
+    pub fn build(self) -> GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig {
+        GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig {
+            audit_interval_seconds: core::default::Default::default(),
+            constraint_violation_limit: core::default::Default::default(),
+            exemptable_namespaces: core::default::Default::default(),
+            install_spec: core::default::Default::default(),
+            log_denies_enabled: core::default::Default::default(),
+            mutation_enabled: core::default::Default::default(),
+            referential_rules_enabled: core::default::Default::default(),
+            deployment_configs: core::default::Default::default(),
+            monitoring: core::default::Default::default(),
+            policy_content: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfigRef {
+        GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `audit_interval_seconds` after provisioning.\nSets the interval for Policy Controller Audit Scans (in seconds). When set to 0, this disables audit functionality altogether."]
+    pub fn audit_interval_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.audit_interval_seconds", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `constraint_violation_limit` after provisioning.\nThe maximum number of audit violations to be stored in a constraint. If not set, the internal default of 20 will be used."]
+    pub fn constraint_violation_limit(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.constraint_violation_limit", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `exemptable_namespaces` after provisioning.\nThe set of namespaces that are excluded from Policy Controller checks. Namespaces do not need to currently exist on the cluster."]
+    pub fn exemptable_namespaces(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.exemptable_namespaces", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `install_spec` after provisioning.\nConfigures the mode of the Policy Controller installation. Possible values: INSTALL_SPEC_UNSPECIFIED, INSTALL_SPEC_NOT_INSTALLED, INSTALL_SPEC_ENABLED, INSTALL_SPEC_SUSPENDED, INSTALL_SPEC_DETACHED"]
+    pub fn install_spec(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.install_spec", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `log_denies_enabled` after provisioning.\nLogs all denies and dry run failures."]
+    pub fn log_denies_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.log_denies_enabled", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `mutation_enabled` after provisioning.\nEnables the ability to mutate resources using Policy Controller."]
+    pub fn mutation_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.mutation_enabled", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `referential_rules_enabled` after provisioning.\nEnables the ability to use Constraint Templates that reference to objects other than the object currently being evaluated."]
+    pub fn referential_rules_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.referential_rules_enabled", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `monitoring` after provisioning.\n"]
+    pub fn monitoring(
+        &self,
+    ) -> terrars::ListRef<GkeHubFeatureMembership_Configmanagement_PolicyController_MonitoringRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.monitoring", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `policy_content` after provisioning.\n"]
+    pub fn policy_content(
+        &self,
+    ) -> terrars::ListRef<GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig_PolicyContentRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.policy_content", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct GkeHubFeatureMembership_PolicycontrollerDynamic {
+    policy_controller_hub_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig>>,
+}
+
+#[derive(Serialize)]
+pub struct GkeHubFeatureMembership_Policycontroller {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    version: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    policy_controller_hub_config: std
+    ::option
+    ::Option<std::vec::Vec<GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig>>,
+    dynamic: GkeHubFeatureMembership_PolicycontrollerDynamic,
+}
+
+impl GkeHubFeatureMembership_Policycontroller {
+    #[doc =
+        "Set the field `version`.\nOptional. Version of Policy Controller to install. Defaults to the latest version."]
+    pub fn set_version(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.version = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `policy_controller_hub_config`.\n"]
+    pub fn set_policy_controller_hub_config(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfig>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.policy_controller_hub_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.policy_controller_hub_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for GkeHubFeatureMembership_Policycontroller {
+    type O = terrars::BlockAssignable<GkeHubFeatureMembership_Policycontroller>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildGkeHubFeatureMembership_Policycontroller {}
+
+impl BuildGkeHubFeatureMembership_Policycontroller {
+    pub fn build(self) -> GkeHubFeatureMembership_Policycontroller {
+        GkeHubFeatureMembership_Policycontroller {
+            version: core::default::Default::default(),
+            policy_controller_hub_config: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct GkeHubFeatureMembership_PolicycontrollerRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for GkeHubFeatureMembership_PolicycontrollerRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeHubFeatureMembership_PolicycontrollerRef {
+        GkeHubFeatureMembership_PolicycontrollerRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl GkeHubFeatureMembership_PolicycontrollerRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `version` after provisioning.\nOptional. Version of Policy Controller to install. Defaults to the latest version."]
+    pub fn version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.version", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `policy_controller_hub_config` after provisioning.\n"]
+    pub fn policy_controller_hub_config(
+        &self,
+    ) -> terrars::ListRef<GkeHubFeatureMembership_Policycontroller_PolicyControllerHubConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.policy_controller_hub_config", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct GkeHubFeatureMembership_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1571,7 +3282,7 @@ pub struct GkeHubFeatureMembershipTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeHubFeatureMembershipTimeoutsEl {
+impl GkeHubFeatureMembership_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1591,8 +3302,8 @@ impl GkeHubFeatureMembershipTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for GkeHubFeatureMembershipTimeoutsEl {
-    type O = terrars::BlockAssignable<GkeHubFeatureMembershipTimeoutsEl>;
+impl terrars::ToListMappable for GkeHubFeatureMembership_Timeouts {
+    type O = terrars::BlockAssignable<GkeHubFeatureMembership_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1603,11 +3314,11 @@ impl terrars::ToListMappable for GkeHubFeatureMembershipTimeoutsEl {
     }
 }
 
-pub struct BuildGkeHubFeatureMembershipTimeoutsEl {}
+pub struct BuildGkeHubFeatureMembership_Timeouts {}
 
-impl BuildGkeHubFeatureMembershipTimeoutsEl {
-    pub fn build(self) -> GkeHubFeatureMembershipTimeoutsEl {
-        GkeHubFeatureMembershipTimeoutsEl {
+impl BuildGkeHubFeatureMembership_Timeouts {
+    pub fn build(self) -> GkeHubFeatureMembership_Timeouts {
+        GkeHubFeatureMembership_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1615,21 +3326,23 @@ impl BuildGkeHubFeatureMembershipTimeoutsEl {
     }
 }
 
-pub struct GkeHubFeatureMembershipTimeoutsElRef {
+#[allow(dead_code)]
+pub struct GkeHubFeatureMembership_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeHubFeatureMembershipTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeHubFeatureMembershipTimeoutsElRef {
-        GkeHubFeatureMembershipTimeoutsElRef {
+impl terrars::Ref for GkeHubFeatureMembership_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeHubFeatureMembership_TimeoutsRef {
+        GkeHubFeatureMembership_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeHubFeatureMembershipTimeoutsElRef {
+impl GkeHubFeatureMembership_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1648,10 +3361,4 @@ impl GkeHubFeatureMembershipTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct GkeHubFeatureMembershipDynamic {
-    configmanagement: std::option::Option<terrars::DynamicBlock<GkeHubFeatureMembershipConfigmanagementEl>>,
-    mesh: std::option::Option<terrars::DynamicBlock<GkeHubFeatureMembershipMeshEl>>,
 }

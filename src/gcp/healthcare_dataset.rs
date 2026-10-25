@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct HealthcareDatasetData {
+struct HealthcareDatasetData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct HealthcareDatasetData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     location: terrars::PrimField<std::string::String>,
     name: terrars::PrimField<std::string::String>,
@@ -27,13 +31,16 @@ struct HealthcareDatasetData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     time_zone: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<HealthcareDatasetTimeoutsEl>,
+    encryption_spec: std::option::Option<std::vec::Vec<HealthcareDataset_EncryptionSpec>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<HealthcareDataset_Timeouts>,
+    dynamic: HealthcareDatasetDynamic,
 }
 
 struct HealthcareDataset_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<HealthcareDatasetData>,
+    data: std::cell::RefCell<HealthcareDatasetData_>,
 }
 
 #[derive(Clone)]
@@ -133,6 +140,13 @@ impl HealthcareDataset {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -152,10 +166,32 @@ impl HealthcareDataset {
         self
     }
 
+    #[doc = "Set the field `encryption_spec`.\n"]
+    pub fn set_encryption_spec(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<HealthcareDataset_EncryptionSpec>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().encryption_spec = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.encryption_spec = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<HealthcareDatasetTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<HealthcareDataset_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -190,9 +226,14 @@ impl HealthcareDataset {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.time_zone", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `encryption_spec` after provisioning.\n"]
+    pub fn encryption_spec(&self) -> terrars::ListRef<HealthcareDataset_EncryptionSpecRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_spec", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> HealthcareDatasetTimeoutsElRef {
-        HealthcareDatasetTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> HealthcareDataset_TimeoutsRef {
+        HealthcareDataset_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -240,18 +281,21 @@ impl BuildHealthcareDataset {
         let out = HealthcareDataset(std::rc::Rc::new(HealthcareDataset_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(HealthcareDatasetData {
+            data: std::cell::RefCell::new(HealthcareDatasetData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 location: self.location,
                 name: self.name,
                 project: core::default::Default::default(),
                 time_zone: core::default::Default::default(),
+                encryption_spec: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -280,6 +324,12 @@ impl HealthcareDatasetRef {
 
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -314,14 +364,87 @@ impl HealthcareDatasetRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.time_zone", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `encryption_spec` after provisioning.\n"]
+    pub fn encryption_spec(&self) -> terrars::ListRef<HealthcareDataset_EncryptionSpecRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_spec", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> HealthcareDatasetTimeoutsElRef {
-        HealthcareDatasetTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> HealthcareDataset_TimeoutsRef {
+        HealthcareDataset_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct HealthcareDatasetDynamic {
+    encryption_spec: std::option::Option<terrars::DynamicBlock<HealthcareDataset_EncryptionSpec>>,
+}
+
+#[derive(Serialize)]
+pub struct HealthcareDataset_EncryptionSpec {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_name: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl HealthcareDataset_EncryptionSpec {
+    #[doc =
+        "Set the field `kms_key_name`.\nKMS encryption key that is used to secure this dataset and its sub-resources. The key used for\nencryption and the dataset must be in the same location. If empty, the default Google encryption\nkey will be used to secure this dataset. The format is\nprojects/{projectId}/locations/{locationId}/keyRings/{keyRingId}/cryptoKeys/{keyId}."]
+    pub fn set_kms_key_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.kms_key_name = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for HealthcareDataset_EncryptionSpec {
+    type O = terrars::BlockAssignable<HealthcareDataset_EncryptionSpec>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildHealthcareDataset_EncryptionSpec {}
+
+impl BuildHealthcareDataset_EncryptionSpec {
+    pub fn build(self) -> HealthcareDataset_EncryptionSpec {
+        HealthcareDataset_EncryptionSpec { kms_key_name: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct HealthcareDataset_EncryptionSpecRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for HealthcareDataset_EncryptionSpecRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> HealthcareDataset_EncryptionSpecRef {
+        HealthcareDataset_EncryptionSpecRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl HealthcareDataset_EncryptionSpecRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `kms_key_name` after provisioning.\nKMS encryption key that is used to secure this dataset and its sub-resources. The key used for\nencryption and the dataset must be in the same location. If empty, the default Google encryption\nkey will be used to secure this dataset. The format is\nprojects/{projectId}/locations/{locationId}/keyRings/{keyRingId}/cryptoKeys/{keyId}."]
+    pub fn kms_key_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_name", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct HealthcareDatasetTimeoutsEl {
+pub struct HealthcareDataset_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -330,7 +453,7 @@ pub struct HealthcareDatasetTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl HealthcareDatasetTimeoutsEl {
+impl HealthcareDataset_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -350,8 +473,8 @@ impl HealthcareDatasetTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for HealthcareDatasetTimeoutsEl {
-    type O = terrars::BlockAssignable<HealthcareDatasetTimeoutsEl>;
+impl terrars::ToListMappable for HealthcareDataset_Timeouts {
+    type O = terrars::BlockAssignable<HealthcareDataset_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -362,11 +485,11 @@ impl terrars::ToListMappable for HealthcareDatasetTimeoutsEl {
     }
 }
 
-pub struct BuildHealthcareDatasetTimeoutsEl {}
+pub struct BuildHealthcareDataset_Timeouts {}
 
-impl BuildHealthcareDatasetTimeoutsEl {
-    pub fn build(self) -> HealthcareDatasetTimeoutsEl {
-        HealthcareDatasetTimeoutsEl {
+impl BuildHealthcareDataset_Timeouts {
+    pub fn build(self) -> HealthcareDataset_Timeouts {
+        HealthcareDataset_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -374,21 +497,23 @@ impl BuildHealthcareDatasetTimeoutsEl {
     }
 }
 
-pub struct HealthcareDatasetTimeoutsElRef {
+#[allow(dead_code)]
+pub struct HealthcareDataset_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for HealthcareDatasetTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> HealthcareDatasetTimeoutsElRef {
-        HealthcareDatasetTimeoutsElRef {
+impl terrars::Ref for HealthcareDataset_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> HealthcareDataset_TimeoutsRef {
+        HealthcareDataset_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl HealthcareDatasetTimeoutsElRef {
+impl HealthcareDataset_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

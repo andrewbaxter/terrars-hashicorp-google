@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataplexLakeIamBindingData {
+struct DataplexLakeIamBindingData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,14 +30,14 @@ struct DataplexLakeIamBindingData {
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<DataplexLakeIamBindingConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<DataplexLakeIamBinding_Condition>>,
     dynamic: DataplexLakeIamBindingDynamic,
 }
 
 struct DataplexLakeIamBinding_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataplexLakeIamBindingData>,
+    data: std::cell::RefCell<DataplexLakeIamBindingData_>,
 }
 
 #[derive(Clone)]
@@ -156,7 +158,7 @@ impl DataplexLakeIamBinding {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataplexLakeIamBindingConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataplexLakeIamBinding_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -205,7 +207,7 @@ impl DataplexLakeIamBinding {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<DataplexLakeIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<DataplexLakeIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -256,7 +258,7 @@ impl BuildDataplexLakeIamBinding {
         let out = DataplexLakeIamBinding(std::rc::Rc::new(DataplexLakeIamBinding_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataplexLakeIamBindingData {
+            data: std::cell::RefCell::new(DataplexLakeIamBindingData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -336,20 +338,25 @@ impl DataplexLakeIamBindingRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<DataplexLakeIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<DataplexLakeIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataplexLakeIamBindingDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<DataplexLakeIamBinding_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct DataplexLakeIamBindingConditionEl {
+pub struct DataplexLakeIamBinding_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl DataplexLakeIamBindingConditionEl {
+impl DataplexLakeIamBinding_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -357,8 +364,8 @@ impl DataplexLakeIamBindingConditionEl {
     }
 }
 
-impl terrars::ToListMappable for DataplexLakeIamBindingConditionEl {
-    type O = terrars::BlockAssignable<DataplexLakeIamBindingConditionEl>;
+impl terrars::ToListMappable for DataplexLakeIamBinding_Condition {
+    type O = terrars::BlockAssignable<DataplexLakeIamBinding_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -369,16 +376,16 @@ impl terrars::ToListMappable for DataplexLakeIamBindingConditionEl {
     }
 }
 
-pub struct BuildDataplexLakeIamBindingConditionEl {
+pub struct BuildDataplexLakeIamBinding_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataplexLakeIamBindingConditionEl {
-    pub fn build(self) -> DataplexLakeIamBindingConditionEl {
-        DataplexLakeIamBindingConditionEl {
+impl BuildDataplexLakeIamBinding_Condition {
+    pub fn build(self) -> DataplexLakeIamBinding_Condition {
+        DataplexLakeIamBinding_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -386,21 +393,23 @@ impl BuildDataplexLakeIamBindingConditionEl {
     }
 }
 
-pub struct DataplexLakeIamBindingConditionElRef {
+#[allow(dead_code)]
+pub struct DataplexLakeIamBinding_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataplexLakeIamBindingConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexLakeIamBindingConditionElRef {
-        DataplexLakeIamBindingConditionElRef {
+impl terrars::Ref for DataplexLakeIamBinding_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexLakeIamBinding_ConditionRef {
+        DataplexLakeIamBinding_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataplexLakeIamBindingConditionElRef {
+impl DataplexLakeIamBinding_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -419,9 +428,4 @@ impl DataplexLakeIamBindingConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataplexLakeIamBindingDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<DataplexLakeIamBindingConditionEl>>,
 }

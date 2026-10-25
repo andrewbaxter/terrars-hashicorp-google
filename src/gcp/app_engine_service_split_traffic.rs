@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct AppEngineServiceSplitTrafficData {
+struct AppEngineServiceSplitTrafficData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,16 +28,16 @@ struct AppEngineServiceSplitTrafficData {
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     service: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    split: std::option::Option<std::vec::Vec<AppEngineServiceSplitTrafficSplitEl>>,
+    split: std::option::Option<std::vec::Vec<AppEngineServiceSplitTraffic_Split>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<AppEngineServiceSplitTrafficTimeoutsEl>,
+    timeouts: std::option::Option<AppEngineServiceSplitTraffic_Timeouts>,
     dynamic: AppEngineServiceSplitTrafficDynamic,
 }
 
 struct AppEngineServiceSplitTraffic_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AppEngineServiceSplitTrafficData>,
+    data: std::cell::RefCell<AppEngineServiceSplitTrafficData_>,
 }
 
 #[derive(Clone)]
@@ -156,7 +158,7 @@ impl AppEngineServiceSplitTraffic {
     #[doc = "Set the field `split`.\n"]
     pub fn set_split(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineServiceSplitTrafficSplitEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineServiceSplitTraffic_Split>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -170,7 +172,7 @@ impl AppEngineServiceSplitTraffic {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<AppEngineServiceSplitTrafficTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<AppEngineServiceSplitTraffic_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -198,13 +200,13 @@ impl AppEngineServiceSplitTraffic {
     }
 
     #[doc = "Get a reference to the value of field `split` after provisioning.\n"]
-    pub fn split(&self) -> terrars::ListRef<AppEngineServiceSplitTrafficSplitElRef> {
+    pub fn split(&self) -> terrars::ListRef<AppEngineServiceSplitTraffic_SplitRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.split", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> AppEngineServiceSplitTrafficTimeoutsElRef {
-        AppEngineServiceSplitTrafficTimeoutsElRef::new(
+    pub fn timeouts(&self) -> AppEngineServiceSplitTraffic_TimeoutsRef {
+        AppEngineServiceSplitTraffic_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -253,7 +255,7 @@ impl BuildAppEngineServiceSplitTraffic {
         let out = AppEngineServiceSplitTraffic(std::rc::Rc::new(AppEngineServiceSplitTraffic_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AppEngineServiceSplitTrafficData {
+            data: std::cell::RefCell::new(AppEngineServiceSplitTrafficData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -319,27 +321,32 @@ impl AppEngineServiceSplitTrafficRef {
     }
 
     #[doc = "Get a reference to the value of field `split` after provisioning.\n"]
-    pub fn split(&self) -> terrars::ListRef<AppEngineServiceSplitTrafficSplitElRef> {
+    pub fn split(&self) -> terrars::ListRef<AppEngineServiceSplitTraffic_SplitRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.split", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> AppEngineServiceSplitTrafficTimeoutsElRef {
-        AppEngineServiceSplitTrafficTimeoutsElRef::new(
+    pub fn timeouts(&self) -> AppEngineServiceSplitTraffic_TimeoutsRef {
+        AppEngineServiceSplitTraffic_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct AppEngineServiceSplitTrafficDynamic {
+    split: std::option::Option<terrars::DynamicBlock<AppEngineServiceSplitTraffic_Split>>,
+}
+
 #[derive(Serialize)]
-pub struct AppEngineServiceSplitTrafficSplitEl {
+pub struct AppEngineServiceSplitTraffic_Split {
     allocations: terrars::RecField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     shard_by: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppEngineServiceSplitTrafficSplitEl {
+impl AppEngineServiceSplitTraffic_Split {
     #[doc =
         "Set the field `shard_by`.\nMechanism used to determine which version a request is sent to. The traffic selection algorithm will be stable for either type until allocations are changed. Possible values: [\"UNSPECIFIED\", \"COOKIE\", \"IP\", \"RANDOM\"]"]
     pub fn set_shard_by(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -348,8 +355,8 @@ impl AppEngineServiceSplitTrafficSplitEl {
     }
 }
 
-impl terrars::ToListMappable for AppEngineServiceSplitTrafficSplitEl {
-    type O = terrars::BlockAssignable<AppEngineServiceSplitTrafficSplitEl>;
+impl terrars::ToListMappable for AppEngineServiceSplitTraffic_Split {
+    type O = terrars::BlockAssignable<AppEngineServiceSplitTraffic_Split>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -360,36 +367,38 @@ impl terrars::ToListMappable for AppEngineServiceSplitTrafficSplitEl {
     }
 }
 
-pub struct BuildAppEngineServiceSplitTrafficSplitEl {
+pub struct BuildAppEngineServiceSplitTraffic_Split {
     #[doc =
         "Mapping from version IDs within the service to fractional (0.000, 1] allocations of traffic for that version. Each version can be specified only once, but some versions in the service may not have any traffic allocation. Services that have traffic allocated cannot be deleted until either the service is deleted or their traffic allocation is removed. Allocations must sum to 1. Up to two decimal place precision is supported for IP-based splits and up to three decimal places is supported for cookie-based splits."]
     pub allocations: terrars::RecField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildAppEngineServiceSplitTrafficSplitEl {
-    pub fn build(self) -> AppEngineServiceSplitTrafficSplitEl {
-        AppEngineServiceSplitTrafficSplitEl {
+impl BuildAppEngineServiceSplitTraffic_Split {
+    pub fn build(self) -> AppEngineServiceSplitTraffic_Split {
+        AppEngineServiceSplitTraffic_Split {
             allocations: self.allocations,
             shard_by: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppEngineServiceSplitTrafficSplitElRef {
+#[allow(dead_code)]
+pub struct AppEngineServiceSplitTraffic_SplitRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineServiceSplitTrafficSplitElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineServiceSplitTrafficSplitElRef {
-        AppEngineServiceSplitTrafficSplitElRef {
+impl terrars::Ref for AppEngineServiceSplitTraffic_SplitRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineServiceSplitTraffic_SplitRef {
+        AppEngineServiceSplitTraffic_SplitRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineServiceSplitTrafficSplitElRef {
+impl AppEngineServiceSplitTraffic_SplitRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -408,7 +417,7 @@ impl AppEngineServiceSplitTrafficSplitElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppEngineServiceSplitTrafficTimeoutsEl {
+pub struct AppEngineServiceSplitTraffic_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -417,7 +426,7 @@ pub struct AppEngineServiceSplitTrafficTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppEngineServiceSplitTrafficTimeoutsEl {
+impl AppEngineServiceSplitTraffic_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -437,8 +446,8 @@ impl AppEngineServiceSplitTrafficTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for AppEngineServiceSplitTrafficTimeoutsEl {
-    type O = terrars::BlockAssignable<AppEngineServiceSplitTrafficTimeoutsEl>;
+impl terrars::ToListMappable for AppEngineServiceSplitTraffic_Timeouts {
+    type O = terrars::BlockAssignable<AppEngineServiceSplitTraffic_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -449,11 +458,11 @@ impl terrars::ToListMappable for AppEngineServiceSplitTrafficTimeoutsEl {
     }
 }
 
-pub struct BuildAppEngineServiceSplitTrafficTimeoutsEl {}
+pub struct BuildAppEngineServiceSplitTraffic_Timeouts {}
 
-impl BuildAppEngineServiceSplitTrafficTimeoutsEl {
-    pub fn build(self) -> AppEngineServiceSplitTrafficTimeoutsEl {
-        AppEngineServiceSplitTrafficTimeoutsEl {
+impl BuildAppEngineServiceSplitTraffic_Timeouts {
+    pub fn build(self) -> AppEngineServiceSplitTraffic_Timeouts {
+        AppEngineServiceSplitTraffic_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -461,21 +470,23 @@ impl BuildAppEngineServiceSplitTrafficTimeoutsEl {
     }
 }
 
-pub struct AppEngineServiceSplitTrafficTimeoutsElRef {
+#[allow(dead_code)]
+pub struct AppEngineServiceSplitTraffic_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineServiceSplitTrafficTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineServiceSplitTrafficTimeoutsElRef {
-        AppEngineServiceSplitTrafficTimeoutsElRef {
+impl terrars::Ref for AppEngineServiceSplitTraffic_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineServiceSplitTraffic_TimeoutsRef {
+        AppEngineServiceSplitTraffic_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineServiceSplitTrafficTimeoutsElRef {
+impl AppEngineServiceSplitTraffic_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -494,9 +505,4 @@ impl AppEngineServiceSplitTrafficTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AppEngineServiceSplitTrafficDynamic {
-    split: std::option::Option<terrars::DynamicBlock<AppEngineServiceSplitTrafficSplitEl>>,
 }

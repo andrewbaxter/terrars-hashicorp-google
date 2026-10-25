@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ContainerAnalysisNoteIamMemberData {
+struct ContainerAnalysisNoteIamMemberData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,14 +28,14 @@ struct ContainerAnalysisNoteIamMemberData {
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<ContainerAnalysisNoteIamMemberConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<ContainerAnalysisNoteIamMember_Condition>>,
     dynamic: ContainerAnalysisNoteIamMemberDynamic,
 }
 
 struct ContainerAnalysisNoteIamMember_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ContainerAnalysisNoteIamMemberData>,
+    data: std::cell::RefCell<ContainerAnalysisNoteIamMemberData_>,
 }
 
 #[derive(Clone)]
@@ -148,7 +150,7 @@ impl ContainerAnalysisNoteIamMember {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAnalysisNoteIamMemberConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAnalysisNoteIamMember_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -192,7 +194,7 @@ impl ContainerAnalysisNoteIamMember {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<ContainerAnalysisNoteIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<ContainerAnalysisNoteIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -243,7 +245,7 @@ impl BuildContainerAnalysisNoteIamMember {
         let out = ContainerAnalysisNoteIamMember(std::rc::Rc::new(ContainerAnalysisNoteIamMember_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ContainerAnalysisNoteIamMemberData {
+            data: std::cell::RefCell::new(ContainerAnalysisNoteIamMemberData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -317,20 +319,25 @@ impl ContainerAnalysisNoteIamMemberRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<ContainerAnalysisNoteIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<ContainerAnalysisNoteIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ContainerAnalysisNoteIamMemberDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<ContainerAnalysisNoteIamMember_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct ContainerAnalysisNoteIamMemberConditionEl {
+pub struct ContainerAnalysisNoteIamMember_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl ContainerAnalysisNoteIamMemberConditionEl {
+impl ContainerAnalysisNoteIamMember_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -338,8 +345,8 @@ impl ContainerAnalysisNoteIamMemberConditionEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAnalysisNoteIamMemberConditionEl {
-    type O = terrars::BlockAssignable<ContainerAnalysisNoteIamMemberConditionEl>;
+impl terrars::ToListMappable for ContainerAnalysisNoteIamMember_Condition {
+    type O = terrars::BlockAssignable<ContainerAnalysisNoteIamMember_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -350,16 +357,16 @@ impl terrars::ToListMappable for ContainerAnalysisNoteIamMemberConditionEl {
     }
 }
 
-pub struct BuildContainerAnalysisNoteIamMemberConditionEl {
+pub struct BuildContainerAnalysisNoteIamMember_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildContainerAnalysisNoteIamMemberConditionEl {
-    pub fn build(self) -> ContainerAnalysisNoteIamMemberConditionEl {
-        ContainerAnalysisNoteIamMemberConditionEl {
+impl BuildContainerAnalysisNoteIamMember_Condition {
+    pub fn build(self) -> ContainerAnalysisNoteIamMember_Condition {
+        ContainerAnalysisNoteIamMember_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -367,21 +374,23 @@ impl BuildContainerAnalysisNoteIamMemberConditionEl {
     }
 }
 
-pub struct ContainerAnalysisNoteIamMemberConditionElRef {
+#[allow(dead_code)]
+pub struct ContainerAnalysisNoteIamMember_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAnalysisNoteIamMemberConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAnalysisNoteIamMemberConditionElRef {
-        ContainerAnalysisNoteIamMemberConditionElRef {
+impl terrars::Ref for ContainerAnalysisNoteIamMember_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAnalysisNoteIamMember_ConditionRef {
+        ContainerAnalysisNoteIamMember_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAnalysisNoteIamMemberConditionElRef {
+impl ContainerAnalysisNoteIamMember_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -400,9 +409,4 @@ impl ContainerAnalysisNoteIamMemberConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ContainerAnalysisNoteIamMemberDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<ContainerAnalysisNoteIamMemberConditionEl>>,
 }

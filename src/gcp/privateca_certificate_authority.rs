@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct PrivatecaCertificateAuthorityData {
+struct PrivatecaCertificateAuthorityData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct PrivatecaCertificateAuthorityData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     certificate_authority_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     deletion_protection: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -44,20 +48,22 @@ struct PrivatecaCertificateAuthorityData {
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    config: std::option::Option<std::vec::Vec<PrivatecaCertificateAuthorityConfigEl>>,
+    config: std::option::Option<std::vec::Vec<PrivatecaCertificateAuthority_Config>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    key_spec: std::option::Option<std::vec::Vec<PrivatecaCertificateAuthorityKeySpecEl>>,
+    key_spec: std::option::Option<std::vec::Vec<PrivatecaCertificateAuthority_KeySpec>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    subordinate_config: std::option::Option<std::vec::Vec<PrivatecaCertificateAuthoritySubordinateConfigEl>>,
+    subordinate_config: std::option::Option<std::vec::Vec<PrivatecaCertificateAuthority_SubordinateConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<PrivatecaCertificateAuthorityTimeoutsEl>,
+    timeouts: std::option::Option<PrivatecaCertificateAuthority_Timeouts>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    user_defined_access_urls: std::option::Option<std::vec::Vec<PrivatecaCertificateAuthority_UserDefinedAccessUrls>>,
     dynamic: PrivatecaCertificateAuthorityDynamic,
 }
 
 struct PrivatecaCertificateAuthority_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<PrivatecaCertificateAuthorityData>,
+    data: std::cell::RefCell<PrivatecaCertificateAuthorityData_>,
 }
 
 #[derive(Clone)]
@@ -158,14 +164,21 @@ impl PrivatecaCertificateAuthority {
     }
 
     #[doc =
-        "Set the field `deletion_protection`.\nWhether or not to allow Terraform to destroy the CertificateAuthority. Unless this field is set to false\nin Terraform state, a 'terraform destroy' or 'terraform apply' that would delete the instance will fail."]
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `deletion_protection`.\nWhether Terraform will be prevented from destroying the CertificateAuthority.\nWhen the field is set to true or unset in Terraform state, a 'terraform apply'\nor 'terraform destroy' that would delete the CertificateAuthority will fail.\nWhen the field is set to false, deleting the CertificateAuthority is allowed."]
     pub fn set_deletion_protection(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().deletion_protection = std::option::Option::Some(v.into());
         self
     }
 
     #[doc =
-        "Set the field `desired_state`.\nDesired state of the CertificateAuthority. Set this field to 'STAGED' to create a 'STAGED' root CA."]
+        "Set the field `desired_state`.\nDesired state of the CertificateAuthority. Set this field to 'STAGED' to create a 'STAGED' root CA.\nPossible values: ENABLED, DISABLED, STAGED."]
     pub fn set_desired_state(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().desired_state = std::option::Option::Some(v.into());
         self
@@ -241,7 +254,7 @@ impl PrivatecaCertificateAuthority {
     #[doc = "Set the field `config`.\n"]
     pub fn set_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<PrivatecaCertificateAuthorityConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<PrivatecaCertificateAuthority_Config>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -257,7 +270,7 @@ impl PrivatecaCertificateAuthority {
     #[doc = "Set the field `key_spec`.\n"]
     pub fn set_key_spec(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<PrivatecaCertificateAuthorityKeySpecEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<PrivatecaCertificateAuthority_KeySpec>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -273,7 +286,7 @@ impl PrivatecaCertificateAuthority {
     #[doc = "Set the field `subordinate_config`.\n"]
     pub fn set_subordinate_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<PrivatecaCertificateAuthoritySubordinateConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<PrivatecaCertificateAuthority_SubordinateConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -287,14 +300,30 @@ impl PrivatecaCertificateAuthority {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<PrivatecaCertificateAuthorityTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<PrivatecaCertificateAuthority_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `user_defined_access_urls`.\n"]
+    pub fn set_user_defined_access_urls(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<PrivatecaCertificateAuthority_UserDefinedAccessUrls>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().user_defined_access_urls = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.user_defined_access_urls = std::option::Option::Some(d);
+            },
+        }
         self
     }
 
     #[doc =
         "Get a reference to the value of field `access_urls` after provisioning.\nURLs for accessing content published by this CA, such as the CA certificate and CRLs."]
-    pub fn access_urls(&self) -> terrars::ListRef<PrivatecaCertificateAuthorityAccessUrlsElRef> {
+    pub fn access_urls(&self) -> terrars::ListRef<PrivatecaCertificateAuthority_AccessUrlsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.access_urls", self.extract_ref()))
     }
 
@@ -311,13 +340,19 @@ impl PrivatecaCertificateAuthority {
     }
 
     #[doc =
-        "Get a reference to the value of field `deletion_protection` after provisioning.\nWhether or not to allow Terraform to destroy the CertificateAuthority. Unless this field is set to false\nin Terraform state, a 'terraform destroy' or 'terraform apply' that would delete the instance will fail."]
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_protection` after provisioning.\nWhether Terraform will be prevented from destroying the CertificateAuthority.\nWhen the field is set to true or unset in Terraform state, a 'terraform apply'\nor 'terraform destroy' that would delete the CertificateAuthority will fail.\nWhen the field is set to false, deleting the CertificateAuthority is allowed."]
     pub fn deletion_protection(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_protection", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `desired_state` after provisioning.\nDesired state of the CertificateAuthority. Set this field to 'STAGED' to create a 'STAGED' root CA."]
+        "Get a reference to the value of field `desired_state` after provisioning.\nDesired state of the CertificateAuthority. Set this field to 'STAGED' to create a 'STAGED' root CA.\nPossible values: ENABLED, DISABLED, STAGED."]
     pub fn desired_state(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.desired_state", self.extract_ref()))
     }
@@ -426,26 +461,31 @@ impl PrivatecaCertificateAuthority {
     }
 
     #[doc = "Get a reference to the value of field `config` after provisioning.\n"]
-    pub fn config(&self) -> terrars::ListRef<PrivatecaCertificateAuthorityConfigElRef> {
+    pub fn config(&self) -> terrars::ListRef<PrivatecaCertificateAuthority_ConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `key_spec` after provisioning.\n"]
-    pub fn key_spec(&self) -> terrars::ListRef<PrivatecaCertificateAuthorityKeySpecElRef> {
+    pub fn key_spec(&self) -> terrars::ListRef<PrivatecaCertificateAuthority_KeySpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.key_spec", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `subordinate_config` after provisioning.\n"]
-    pub fn subordinate_config(&self) -> terrars::ListRef<PrivatecaCertificateAuthoritySubordinateConfigElRef> {
+    pub fn subordinate_config(&self) -> terrars::ListRef<PrivatecaCertificateAuthority_SubordinateConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.subordinate_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> PrivatecaCertificateAuthorityTimeoutsElRef {
-        PrivatecaCertificateAuthorityTimeoutsElRef::new(
+    pub fn timeouts(&self) -> PrivatecaCertificateAuthority_TimeoutsRef {
+        PrivatecaCertificateAuthority_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
+    }
+
+    #[doc = "Get a reference to the value of field `user_defined_access_urls` after provisioning.\n"]
+    pub fn user_defined_access_urls(&self) -> terrars::ListRef<PrivatecaCertificateAuthority_UserDefinedAccessUrlsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.user_defined_access_urls", self.extract_ref()))
     }
 }
 
@@ -496,13 +536,14 @@ impl BuildPrivatecaCertificateAuthority {
         let out = PrivatecaCertificateAuthority(std::rc::Rc::new(PrivatecaCertificateAuthority_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(PrivatecaCertificateAuthorityData {
+            data: std::cell::RefCell::new(PrivatecaCertificateAuthorityData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 certificate_authority_id: self.certificate_authority_id,
+                deletion_policy: core::default::Default::default(),
                 deletion_protection: core::default::Default::default(),
                 desired_state: core::default::Default::default(),
                 gcs_bucket: core::default::Default::default(),
@@ -520,6 +561,7 @@ impl BuildPrivatecaCertificateAuthority {
                 key_spec: core::default::Default::default(),
                 subordinate_config: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
+                user_defined_access_urls: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -553,7 +595,7 @@ impl PrivatecaCertificateAuthorityRef {
 
     #[doc =
         "Get a reference to the value of field `access_urls` after provisioning.\nURLs for accessing content published by this CA, such as the CA certificate and CRLs."]
-    pub fn access_urls(&self) -> terrars::ListRef<PrivatecaCertificateAuthorityAccessUrlsElRef> {
+    pub fn access_urls(&self) -> terrars::ListRef<PrivatecaCertificateAuthority_AccessUrlsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.access_urls", self.extract_ref()))
     }
 
@@ -570,13 +612,19 @@ impl PrivatecaCertificateAuthorityRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `deletion_protection` after provisioning.\nWhether or not to allow Terraform to destroy the CertificateAuthority. Unless this field is set to false\nin Terraform state, a 'terraform destroy' or 'terraform apply' that would delete the instance will fail."]
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_protection` after provisioning.\nWhether Terraform will be prevented from destroying the CertificateAuthority.\nWhen the field is set to true or unset in Terraform state, a 'terraform apply'\nor 'terraform destroy' that would delete the CertificateAuthority will fail.\nWhen the field is set to false, deleting the CertificateAuthority is allowed."]
     pub fn deletion_protection(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_protection", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `desired_state` after provisioning.\nDesired state of the CertificateAuthority. Set this field to 'STAGED' to create a 'STAGED' root CA."]
+        "Get a reference to the value of field `desired_state` after provisioning.\nDesired state of the CertificateAuthority. Set this field to 'STAGED' to create a 'STAGED' root CA.\nPossible values: ENABLED, DISABLED, STAGED."]
     pub fn desired_state(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.desired_state", self.extract_ref()))
     }
@@ -685,38 +733,53 @@ impl PrivatecaCertificateAuthorityRef {
     }
 
     #[doc = "Get a reference to the value of field `config` after provisioning.\n"]
-    pub fn config(&self) -> terrars::ListRef<PrivatecaCertificateAuthorityConfigElRef> {
+    pub fn config(&self) -> terrars::ListRef<PrivatecaCertificateAuthority_ConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `key_spec` after provisioning.\n"]
-    pub fn key_spec(&self) -> terrars::ListRef<PrivatecaCertificateAuthorityKeySpecElRef> {
+    pub fn key_spec(&self) -> terrars::ListRef<PrivatecaCertificateAuthority_KeySpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.key_spec", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `subordinate_config` after provisioning.\n"]
-    pub fn subordinate_config(&self) -> terrars::ListRef<PrivatecaCertificateAuthoritySubordinateConfigElRef> {
+    pub fn subordinate_config(&self) -> terrars::ListRef<PrivatecaCertificateAuthority_SubordinateConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.subordinate_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> PrivatecaCertificateAuthorityTimeoutsElRef {
-        PrivatecaCertificateAuthorityTimeoutsElRef::new(
+    pub fn timeouts(&self) -> PrivatecaCertificateAuthority_TimeoutsRef {
+        PrivatecaCertificateAuthority_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
+
+    #[doc = "Get a reference to the value of field `user_defined_access_urls` after provisioning.\n"]
+    pub fn user_defined_access_urls(&self) -> terrars::ListRef<PrivatecaCertificateAuthority_UserDefinedAccessUrlsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.user_defined_access_urls", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct PrivatecaCertificateAuthorityDynamic {
+    config: std::option::Option<terrars::DynamicBlock<PrivatecaCertificateAuthority_Config>>,
+    key_spec: std::option::Option<terrars::DynamicBlock<PrivatecaCertificateAuthority_KeySpec>>,
+    subordinate_config: std::option::Option<terrars::DynamicBlock<PrivatecaCertificateAuthority_SubordinateConfig>>,
+    user_defined_access_urls: std
+    ::option
+    ::Option<terrars::DynamicBlock<PrivatecaCertificateAuthority_UserDefinedAccessUrls>>,
 }
 
 #[derive(Serialize)]
-pub struct PrivatecaCertificateAuthorityAccessUrlsEl {
+pub struct PrivatecaCertificateAuthority_AccessUrls {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ca_certificate_access_url: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     crl_access_urls: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl PrivatecaCertificateAuthorityAccessUrlsEl {
+impl PrivatecaCertificateAuthority_AccessUrls {
     #[doc = "Set the field `ca_certificate_access_url`.\n"]
     pub fn set_ca_certificate_access_url(
         mut self,
@@ -736,8 +799,8 @@ impl PrivatecaCertificateAuthorityAccessUrlsEl {
     }
 }
 
-impl terrars::ToListMappable for PrivatecaCertificateAuthorityAccessUrlsEl {
-    type O = terrars::BlockAssignable<PrivatecaCertificateAuthorityAccessUrlsEl>;
+impl terrars::ToListMappable for PrivatecaCertificateAuthority_AccessUrls {
+    type O = terrars::BlockAssignable<PrivatecaCertificateAuthority_AccessUrls>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -748,32 +811,34 @@ impl terrars::ToListMappable for PrivatecaCertificateAuthorityAccessUrlsEl {
     }
 }
 
-pub struct BuildPrivatecaCertificateAuthorityAccessUrlsEl {}
+pub struct BuildPrivatecaCertificateAuthority_AccessUrls {}
 
-impl BuildPrivatecaCertificateAuthorityAccessUrlsEl {
-    pub fn build(self) -> PrivatecaCertificateAuthorityAccessUrlsEl {
-        PrivatecaCertificateAuthorityAccessUrlsEl {
+impl BuildPrivatecaCertificateAuthority_AccessUrls {
+    pub fn build(self) -> PrivatecaCertificateAuthority_AccessUrls {
+        PrivatecaCertificateAuthority_AccessUrls {
             ca_certificate_access_url: core::default::Default::default(),
             crl_access_urls: core::default::Default::default(),
         }
     }
 }
 
-pub struct PrivatecaCertificateAuthorityAccessUrlsElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCertificateAuthority_AccessUrlsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCertificateAuthorityAccessUrlsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> PrivatecaCertificateAuthorityAccessUrlsElRef {
-        PrivatecaCertificateAuthorityAccessUrlsElRef {
+impl terrars::Ref for PrivatecaCertificateAuthority_AccessUrlsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> PrivatecaCertificateAuthority_AccessUrlsRef {
+        PrivatecaCertificateAuthority_AccessUrlsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCertificateAuthorityAccessUrlsElRef {
+impl PrivatecaCertificateAuthority_AccessUrlsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -790,13 +855,14 @@ impl PrivatecaCertificateAuthorityAccessUrlsElRef {
 }
 
 #[derive(Serialize)]
-pub struct PrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectEl {
+pub struct PrivatecaCertificateAuthority_Config_SubjectConfig_Subject {
     common_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     country_code: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     locality: std::option::Option<terrars::PrimField<std::string::String>>,
-    organization: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    organization: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     organizational_unit: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -807,7 +873,7 @@ pub struct PrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectEl {
     street_address: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl PrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectEl {
+impl PrivatecaCertificateAuthority_Config_SubjectConfig_Subject {
     #[doc = "Set the field `country_code`.\nThe country code of the subject."]
     pub fn set_country_code(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.country_code = std::option::Option::Some(v.into());
@@ -817,6 +883,12 @@ impl PrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectEl {
     #[doc = "Set the field `locality`.\nThe locality or city of the subject."]
     pub fn set_locality(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.locality = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `organization`.\nThe organization of the subject."]
+    pub fn set_organization(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.organization = std::option::Option::Some(v.into());
         self
     }
 
@@ -848,8 +920,8 @@ impl PrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectEl {
     }
 }
 
-impl terrars::ToListMappable for PrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectEl {
-    type O = terrars::BlockAssignable<PrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectEl>;
+impl terrars::ToListMappable for PrivatecaCertificateAuthority_Config_SubjectConfig_Subject {
+    type O = terrars::BlockAssignable<PrivatecaCertificateAuthority_Config_SubjectConfig_Subject>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -860,20 +932,18 @@ impl terrars::ToListMappable for PrivatecaCertificateAuthorityConfigElSubjectCon
     }
 }
 
-pub struct BuildPrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectEl {
+pub struct BuildPrivatecaCertificateAuthority_Config_SubjectConfig_Subject {
     #[doc = "The common name of the distinguished name."]
     pub common_name: terrars::PrimField<std::string::String>,
-    #[doc = "The organization of the subject."]
-    pub organization: terrars::PrimField<std::string::String>,
 }
 
-impl BuildPrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectEl {
-    pub fn build(self) -> PrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectEl {
-        PrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectEl {
+impl BuildPrivatecaCertificateAuthority_Config_SubjectConfig_Subject {
+    pub fn build(self) -> PrivatecaCertificateAuthority_Config_SubjectConfig_Subject {
+        PrivatecaCertificateAuthority_Config_SubjectConfig_Subject {
             common_name: self.common_name,
             country_code: core::default::Default::default(),
             locality: core::default::Default::default(),
-            organization: self.organization,
+            organization: core::default::Default::default(),
             organizational_unit: core::default::Default::default(),
             postal_code: core::default::Default::default(),
             province: core::default::Default::default(),
@@ -882,24 +952,26 @@ impl BuildPrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectEl {
     }
 }
 
-pub struct PrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCertificateAuthority_Config_SubjectConfig_SubjectRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectElRef {
+impl terrars::Ref for PrivatecaCertificateAuthority_Config_SubjectConfig_SubjectRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> PrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectElRef {
-        PrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectElRef {
+    ) -> PrivatecaCertificateAuthority_Config_SubjectConfig_SubjectRef {
+        PrivatecaCertificateAuthority_Config_SubjectConfig_SubjectRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectElRef {
+impl PrivatecaCertificateAuthority_Config_SubjectConfig_SubjectRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -953,7 +1025,7 @@ impl PrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectElRef {
 }
 
 #[derive(Serialize)]
-pub struct PrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectAltNameEl {
+pub struct PrivatecaCertificateAuthority_Config_SubjectConfig_SubjectAltName {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dns_names: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -964,7 +1036,7 @@ pub struct PrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectAltNameEl 
     uris: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl PrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectAltNameEl {
+impl PrivatecaCertificateAuthority_Config_SubjectConfig_SubjectAltName {
     #[doc = "Set the field `dns_names`.\nContains only valid, fully-qualified host names."]
     pub fn set_dns_names(
         mut self,
@@ -1002,8 +1074,8 @@ impl PrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectAltNameEl {
     }
 }
 
-impl terrars::ToListMappable for PrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectAltNameEl {
-    type O = terrars::BlockAssignable<PrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectAltNameEl>;
+impl terrars::ToListMappable for PrivatecaCertificateAuthority_Config_SubjectConfig_SubjectAltName {
+    type O = terrars::BlockAssignable<PrivatecaCertificateAuthority_Config_SubjectConfig_SubjectAltName>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1014,11 +1086,11 @@ impl terrars::ToListMappable for PrivatecaCertificateAuthorityConfigElSubjectCon
     }
 }
 
-pub struct BuildPrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectAltNameEl {}
+pub struct BuildPrivatecaCertificateAuthority_Config_SubjectConfig_SubjectAltName {}
 
-impl BuildPrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectAltNameEl {
-    pub fn build(self) -> PrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectAltNameEl {
-        PrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectAltNameEl {
+impl BuildPrivatecaCertificateAuthority_Config_SubjectConfig_SubjectAltName {
+    pub fn build(self) -> PrivatecaCertificateAuthority_Config_SubjectConfig_SubjectAltName {
+        PrivatecaCertificateAuthority_Config_SubjectConfig_SubjectAltName {
             dns_names: core::default::Default::default(),
             email_addresses: core::default::Default::default(),
             ip_addresses: core::default::Default::default(),
@@ -1027,24 +1099,26 @@ impl BuildPrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectAltNameEl {
     }
 }
 
-pub struct PrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectAltNameElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCertificateAuthority_Config_SubjectConfig_SubjectAltNameRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectAltNameElRef {
+impl terrars::Ref for PrivatecaCertificateAuthority_Config_SubjectConfig_SubjectAltNameRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> PrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectAltNameElRef {
-        PrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectAltNameElRef {
+    ) -> PrivatecaCertificateAuthority_Config_SubjectConfig_SubjectAltNameRef {
+        PrivatecaCertificateAuthority_Config_SubjectConfig_SubjectAltNameRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectAltNameElRef {
+impl PrivatecaCertificateAuthority_Config_SubjectConfig_SubjectAltNameRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1074,27 +1148,25 @@ impl PrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectAltNameElRef {
 }
 
 #[derive(Serialize, Default)]
-struct PrivatecaCertificateAuthorityConfigElSubjectConfigElDynamic {
-    subject: std
-    ::option
-    ::Option<terrars::DynamicBlock<PrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectEl>>,
+struct PrivatecaCertificateAuthority_Config_SubjectConfigDynamic {
+    subject: std::option::Option<terrars::DynamicBlock<PrivatecaCertificateAuthority_Config_SubjectConfig_Subject>>,
     subject_alt_name: std
     ::option
-    ::Option<terrars::DynamicBlock<PrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectAltNameEl>>,
+    ::Option<terrars::DynamicBlock<PrivatecaCertificateAuthority_Config_SubjectConfig_SubjectAltName>>,
 }
 
 #[derive(Serialize)]
-pub struct PrivatecaCertificateAuthorityConfigElSubjectConfigEl {
+pub struct PrivatecaCertificateAuthority_Config_SubjectConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    subject: std::option::Option<std::vec::Vec<PrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectEl>>,
+    subject: std::option::Option<std::vec::Vec<PrivatecaCertificateAuthority_Config_SubjectConfig_Subject>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     subject_alt_name: std
     ::option
-    ::Option<std::vec::Vec<PrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectAltNameEl>>,
-    dynamic: PrivatecaCertificateAuthorityConfigElSubjectConfigElDynamic,
+    ::Option<std::vec::Vec<PrivatecaCertificateAuthority_Config_SubjectConfig_SubjectAltName>>,
+    dynamic: PrivatecaCertificateAuthority_Config_SubjectConfigDynamic,
 }
 
-impl PrivatecaCertificateAuthorityConfigElSubjectConfigEl {
+impl PrivatecaCertificateAuthority_Config_SubjectConfig {
     #[doc = "Set the field `subject`.\n"]
     pub fn set_subject(
         mut self,
@@ -1103,7 +1175,7 @@ impl PrivatecaCertificateAuthorityConfigElSubjectConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<PrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectEl>>,
+                    ::Into<terrars::BlockAssignable<PrivatecaCertificateAuthority_Config_SubjectConfig_Subject>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1125,7 +1197,7 @@ impl PrivatecaCertificateAuthorityConfigElSubjectConfigEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<PrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectAltNameEl>,
+                        terrars::BlockAssignable<PrivatecaCertificateAuthority_Config_SubjectConfig_SubjectAltName>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1140,8 +1212,8 @@ impl PrivatecaCertificateAuthorityConfigElSubjectConfigEl {
     }
 }
 
-impl terrars::ToListMappable for PrivatecaCertificateAuthorityConfigElSubjectConfigEl {
-    type O = terrars::BlockAssignable<PrivatecaCertificateAuthorityConfigElSubjectConfigEl>;
+impl terrars::ToListMappable for PrivatecaCertificateAuthority_Config_SubjectConfig {
+    type O = terrars::BlockAssignable<PrivatecaCertificateAuthority_Config_SubjectConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1152,11 +1224,11 @@ impl terrars::ToListMappable for PrivatecaCertificateAuthorityConfigElSubjectCon
     }
 }
 
-pub struct BuildPrivatecaCertificateAuthorityConfigElSubjectConfigEl {}
+pub struct BuildPrivatecaCertificateAuthority_Config_SubjectConfig {}
 
-impl BuildPrivatecaCertificateAuthorityConfigElSubjectConfigEl {
-    pub fn build(self) -> PrivatecaCertificateAuthorityConfigElSubjectConfigEl {
-        PrivatecaCertificateAuthorityConfigElSubjectConfigEl {
+impl BuildPrivatecaCertificateAuthority_Config_SubjectConfig {
+    pub fn build(self) -> PrivatecaCertificateAuthority_Config_SubjectConfig {
+        PrivatecaCertificateAuthority_Config_SubjectConfig {
             subject: core::default::Default::default(),
             subject_alt_name: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1164,51 +1236,59 @@ impl BuildPrivatecaCertificateAuthorityConfigElSubjectConfigEl {
     }
 }
 
-pub struct PrivatecaCertificateAuthorityConfigElSubjectConfigElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCertificateAuthority_Config_SubjectConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCertificateAuthorityConfigElSubjectConfigElRef {
+impl terrars::Ref for PrivatecaCertificateAuthority_Config_SubjectConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> PrivatecaCertificateAuthorityConfigElSubjectConfigElRef {
-        PrivatecaCertificateAuthorityConfigElSubjectConfigElRef {
+    ) -> PrivatecaCertificateAuthority_Config_SubjectConfigRef {
+        PrivatecaCertificateAuthority_Config_SubjectConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCertificateAuthorityConfigElSubjectConfigElRef {
+impl PrivatecaCertificateAuthority_Config_SubjectConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `subject` after provisioning.\n"]
-    pub fn subject(&self) -> terrars::ListRef<PrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectElRef> {
+    pub fn subject(&self) -> terrars::ListRef<PrivatecaCertificateAuthority_Config_SubjectConfig_SubjectRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.subject", self.base))
     }
 
     #[doc = "Get a reference to the value of field `subject_alt_name` after provisioning.\n"]
     pub fn subject_alt_name(
         &self,
-    ) -> terrars::ListRef<PrivatecaCertificateAuthorityConfigElSubjectConfigElSubjectAltNameElRef> {
+    ) -> terrars::ListRef<PrivatecaCertificateAuthority_Config_SubjectConfig_SubjectAltNameRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.subject_alt_name", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct PrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsElObjectIdEl {
-    object_id_path: terrars::ListField<terrars::PrimField<f64>>,
+pub struct PrivatecaCertificateAuthority_Config_SubjectKeyId {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    key_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl PrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsElObjectIdEl { }
+impl PrivatecaCertificateAuthority_Config_SubjectKeyId {
+    #[doc = "Set the field `key_id`.\nThe value of the KeyId in lowercase hexadecimal."]
+    pub fn set_key_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.key_id = std::option::Option::Some(v.into());
+        self
+    }
+}
 
-impl terrars::ToListMappable for PrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsElObjectIdEl {
-    type O =
-        terrars::BlockAssignable<PrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsElObjectIdEl>;
+impl terrars::ToListMappable for PrivatecaCertificateAuthority_Config_SubjectKeyId {
+    type O = terrars::BlockAssignable<PrivatecaCertificateAuthority_Config_SubjectKeyId>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1219,38 +1299,98 @@ impl terrars::ToListMappable for PrivatecaCertificateAuthorityConfigElX509Config
     }
 }
 
-pub struct BuildPrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsElObjectIdEl {
-    #[doc =
-        "An ObjectId specifies an object identifier (OID). These provide context and describe types in ASN.1 messages."]
-    pub object_id_path: terrars::ListField<terrars::PrimField<f64>>,
-}
+pub struct BuildPrivatecaCertificateAuthority_Config_SubjectKeyId {}
 
-impl BuildPrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsElObjectIdEl {
-    pub fn build(self) -> PrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsElObjectIdEl {
-        PrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsElObjectIdEl {
-            object_id_path: self.object_id_path,
-        }
+impl BuildPrivatecaCertificateAuthority_Config_SubjectKeyId {
+    pub fn build(self) -> PrivatecaCertificateAuthority_Config_SubjectKeyId {
+        PrivatecaCertificateAuthority_Config_SubjectKeyId { key_id: core::default::Default::default() }
     }
 }
 
-pub struct PrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsElObjectIdElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCertificateAuthority_Config_SubjectKeyIdRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsElObjectIdElRef {
+impl terrars::Ref for PrivatecaCertificateAuthority_Config_SubjectKeyIdRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> PrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsElObjectIdElRef {
-        PrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsElObjectIdElRef {
+    ) -> PrivatecaCertificateAuthority_Config_SubjectKeyIdRef {
+        PrivatecaCertificateAuthority_Config_SubjectKeyIdRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsElObjectIdElRef {
+impl PrivatecaCertificateAuthority_Config_SubjectKeyIdRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `key_id` after provisioning.\nThe value of the KeyId in lowercase hexadecimal."]
+    pub fn key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key_id", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct PrivatecaCertificateAuthority_Config_X509Config_AdditionalExtensions_ObjectId {
+    object_id_path: terrars::ListField<terrars::PrimField<f64>>,
+}
+
+impl PrivatecaCertificateAuthority_Config_X509Config_AdditionalExtensions_ObjectId { }
+
+impl terrars::ToListMappable for PrivatecaCertificateAuthority_Config_X509Config_AdditionalExtensions_ObjectId {
+    type O = terrars::BlockAssignable<PrivatecaCertificateAuthority_Config_X509Config_AdditionalExtensions_ObjectId>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildPrivatecaCertificateAuthority_Config_X509Config_AdditionalExtensions_ObjectId {
+    #[doc =
+        "An ObjectId specifies an object identifier (OID). These provide context and describe types in ASN.1 messages."]
+    pub object_id_path: terrars::ListField<terrars::PrimField<f64>>,
+}
+
+impl BuildPrivatecaCertificateAuthority_Config_X509Config_AdditionalExtensions_ObjectId {
+    pub fn build(self) -> PrivatecaCertificateAuthority_Config_X509Config_AdditionalExtensions_ObjectId {
+        PrivatecaCertificateAuthority_Config_X509Config_AdditionalExtensions_ObjectId {
+            object_id_path: self.object_id_path,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct PrivatecaCertificateAuthority_Config_X509Config_AdditionalExtensions_ObjectIdRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for PrivatecaCertificateAuthority_Config_X509Config_AdditionalExtensions_ObjectIdRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> PrivatecaCertificateAuthority_Config_X509Config_AdditionalExtensions_ObjectIdRef {
+        PrivatecaCertificateAuthority_Config_X509Config_AdditionalExtensions_ObjectIdRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl PrivatecaCertificateAuthority_Config_X509Config_AdditionalExtensions_ObjectIdRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1263,26 +1403,24 @@ impl PrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsElObje
 }
 
 #[derive(Serialize, Default)]
-struct PrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsElDynamic {
+struct PrivatecaCertificateAuthority_Config_X509Config_AdditionalExtensionsDynamic {
     object_id: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<PrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsElObjectIdEl>,
-    >,
+    ::Option<terrars::DynamicBlock<PrivatecaCertificateAuthority_Config_X509Config_AdditionalExtensions_ObjectId>>,
 }
 
 #[derive(Serialize)]
-pub struct PrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsEl {
+pub struct PrivatecaCertificateAuthority_Config_X509Config_AdditionalExtensions {
     critical: terrars::PrimField<bool>,
     value: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     object_id: std
     ::option
-    ::Option<std::vec::Vec<PrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsElObjectIdEl>>,
-    dynamic: PrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsElDynamic,
+    ::Option<std::vec::Vec<PrivatecaCertificateAuthority_Config_X509Config_AdditionalExtensions_ObjectId>>,
+    dynamic: PrivatecaCertificateAuthority_Config_X509Config_AdditionalExtensionsDynamic,
 }
 
-impl PrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsEl {
+impl PrivatecaCertificateAuthority_Config_X509Config_AdditionalExtensions {
     #[doc = "Set the field `object_id`.\n"]
     pub fn set_object_id(
         mut self,
@@ -1294,7 +1432,7 @@ impl PrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            PrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsElObjectIdEl,
+                            PrivatecaCertificateAuthority_Config_X509Config_AdditionalExtensions_ObjectId,
                         >,
                     >,
     ) -> Self {
@@ -1310,8 +1448,8 @@ impl PrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsEl {
     }
 }
 
-impl terrars::ToListMappable for PrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsEl {
-    type O = terrars::BlockAssignable<PrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsEl>;
+impl terrars::ToListMappable for PrivatecaCertificateAuthority_Config_X509Config_AdditionalExtensions {
+    type O = terrars::BlockAssignable<PrivatecaCertificateAuthority_Config_X509Config_AdditionalExtensions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1322,7 +1460,7 @@ impl terrars::ToListMappable for PrivatecaCertificateAuthorityConfigElX509Config
     }
 }
 
-pub struct BuildPrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsEl {
+pub struct BuildPrivatecaCertificateAuthority_Config_X509Config_AdditionalExtensions {
     #[doc =
         "Indicates whether or not this extension is critical (i.e., if the client does not know how to\nhandle this extension, the client should consider this to be an error)."]
     pub critical: terrars::PrimField<bool>,
@@ -1330,9 +1468,9 @@ pub struct BuildPrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExten
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildPrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsEl {
-    pub fn build(self) -> PrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsEl {
-        PrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsEl {
+impl BuildPrivatecaCertificateAuthority_Config_X509Config_AdditionalExtensions {
+    pub fn build(self) -> PrivatecaCertificateAuthority_Config_X509Config_AdditionalExtensions {
+        PrivatecaCertificateAuthority_Config_X509Config_AdditionalExtensions {
             critical: self.critical,
             value: self.value,
             object_id: core::default::Default::default(),
@@ -1341,24 +1479,26 @@ impl BuildPrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsE
     }
 }
 
-pub struct PrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCertificateAuthority_Config_X509Config_AdditionalExtensionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsElRef {
+impl terrars::Ref for PrivatecaCertificateAuthority_Config_X509Config_AdditionalExtensionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> PrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsElRef {
-        PrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsElRef {
+    ) -> PrivatecaCertificateAuthority_Config_X509Config_AdditionalExtensionsRef {
+        PrivatecaCertificateAuthority_Config_X509Config_AdditionalExtensionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsElRef {
+impl PrivatecaCertificateAuthority_Config_X509Config_AdditionalExtensionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1378,13 +1518,13 @@ impl PrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsElRef 
     #[doc = "Get a reference to the value of field `object_id` after provisioning.\n"]
     pub fn object_id(
         &self,
-    ) -> terrars::ListRef<PrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsElObjectIdElRef> {
+    ) -> terrars::ListRef<PrivatecaCertificateAuthority_Config_X509Config_AdditionalExtensions_ObjectIdRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.object_id", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct PrivatecaCertificateAuthorityConfigElX509ConfigElCaOptionsEl {
+pub struct PrivatecaCertificateAuthority_Config_X509Config_CaOptions {
     is_ca: terrars::PrimField<bool>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max_issuer_path_length: std::option::Option<terrars::PrimField<f64>>,
@@ -1394,7 +1534,7 @@ pub struct PrivatecaCertificateAuthorityConfigElX509ConfigElCaOptionsEl {
     zero_max_issuer_path_length: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl PrivatecaCertificateAuthorityConfigElX509ConfigElCaOptionsEl {
+impl PrivatecaCertificateAuthority_Config_X509Config_CaOptions {
     #[doc =
         "Set the field `max_issuer_path_length`.\nRefers to the \"path length constraint\" in Basic Constraints extension. For a CA certificate, this value describes the depth of\nsubordinate CA certificates that are allowed. If this value is less than 0, the request will fail. Setting the value to 0\nrequires setting 'zero_max_issuer_path_length = true'."]
     pub fn set_max_issuer_path_length(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -1417,8 +1557,8 @@ impl PrivatecaCertificateAuthorityConfigElX509ConfigElCaOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for PrivatecaCertificateAuthorityConfigElX509ConfigElCaOptionsEl {
-    type O = terrars::BlockAssignable<PrivatecaCertificateAuthorityConfigElX509ConfigElCaOptionsEl>;
+impl terrars::ToListMappable for PrivatecaCertificateAuthority_Config_X509Config_CaOptions {
+    type O = terrars::BlockAssignable<PrivatecaCertificateAuthority_Config_X509Config_CaOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1429,14 +1569,14 @@ impl terrars::ToListMappable for PrivatecaCertificateAuthorityConfigElX509Config
     }
 }
 
-pub struct BuildPrivatecaCertificateAuthorityConfigElX509ConfigElCaOptionsEl {
+pub struct BuildPrivatecaCertificateAuthority_Config_X509Config_CaOptions {
     #[doc = "When true, the \"CA\" in Basic Constraints extension will be set to true."]
     pub is_ca: terrars::PrimField<bool>,
 }
 
-impl BuildPrivatecaCertificateAuthorityConfigElX509ConfigElCaOptionsEl {
-    pub fn build(self) -> PrivatecaCertificateAuthorityConfigElX509ConfigElCaOptionsEl {
-        PrivatecaCertificateAuthorityConfigElX509ConfigElCaOptionsEl {
+impl BuildPrivatecaCertificateAuthority_Config_X509Config_CaOptions {
+    pub fn build(self) -> PrivatecaCertificateAuthority_Config_X509Config_CaOptions {
+        PrivatecaCertificateAuthority_Config_X509Config_CaOptions {
             is_ca: self.is_ca,
             max_issuer_path_length: core::default::Default::default(),
             non_ca: core::default::Default::default(),
@@ -1445,24 +1585,26 @@ impl BuildPrivatecaCertificateAuthorityConfigElX509ConfigElCaOptionsEl {
     }
 }
 
-pub struct PrivatecaCertificateAuthorityConfigElX509ConfigElCaOptionsElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCertificateAuthority_Config_X509Config_CaOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCertificateAuthorityConfigElX509ConfigElCaOptionsElRef {
+impl terrars::Ref for PrivatecaCertificateAuthority_Config_X509Config_CaOptionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> PrivatecaCertificateAuthorityConfigElX509ConfigElCaOptionsElRef {
-        PrivatecaCertificateAuthorityConfigElX509ConfigElCaOptionsElRef {
+    ) -> PrivatecaCertificateAuthority_Config_X509Config_CaOptionsRef {
+        PrivatecaCertificateAuthority_Config_X509Config_CaOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCertificateAuthorityConfigElX509ConfigElCaOptionsElRef {
+impl PrivatecaCertificateAuthority_Config_X509Config_CaOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1493,7 +1635,7 @@ impl PrivatecaCertificateAuthorityConfigElX509ConfigElCaOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElBaseKeyUsageEl {
+pub struct PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_BaseKeyUsage {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cert_sign: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1514,7 +1656,7 @@ pub struct PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElBaseKeyUsa
     key_encipherment: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElBaseKeyUsageEl {
+impl PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_BaseKeyUsage {
     #[doc = "Set the field `cert_sign`.\nThe key may be used to sign certificates."]
     pub fn set_cert_sign(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.cert_sign = std::option::Option::Some(v.into());
@@ -1571,8 +1713,8 @@ impl PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElBaseKeyUsageEl {
     }
 }
 
-impl terrars::ToListMappable for PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElBaseKeyUsageEl {
-    type O = terrars::BlockAssignable<PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElBaseKeyUsageEl>;
+impl terrars::ToListMappable for PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_BaseKeyUsage {
+    type O = terrars::BlockAssignable<PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_BaseKeyUsage>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1583,11 +1725,11 @@ impl terrars::ToListMappable for PrivatecaCertificateAuthorityConfigElX509Config
     }
 }
 
-pub struct BuildPrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElBaseKeyUsageEl {}
+pub struct BuildPrivatecaCertificateAuthority_Config_X509Config_KeyUsage_BaseKeyUsage {}
 
-impl BuildPrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElBaseKeyUsageEl {
-    pub fn build(self) -> PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElBaseKeyUsageEl {
-        PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElBaseKeyUsageEl {
+impl BuildPrivatecaCertificateAuthority_Config_X509Config_KeyUsage_BaseKeyUsage {
+    pub fn build(self) -> PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_BaseKeyUsage {
+        PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_BaseKeyUsage {
             cert_sign: core::default::Default::default(),
             content_commitment: core::default::Default::default(),
             crl_sign: core::default::Default::default(),
@@ -1601,24 +1743,26 @@ impl BuildPrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElBaseKeyUsag
     }
 }
 
-pub struct PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElBaseKeyUsageElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_BaseKeyUsageRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElBaseKeyUsageElRef {
+impl terrars::Ref for PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_BaseKeyUsageRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElBaseKeyUsageElRef {
-        PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElBaseKeyUsageElRef {
+    ) -> PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_BaseKeyUsageRef {
+        PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_BaseKeyUsageRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElBaseKeyUsageElRef {
+impl PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_BaseKeyUsageRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1679,7 +1823,7 @@ impl PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElBaseKeyUsageElRe
 }
 
 #[derive(Serialize)]
-pub struct PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElExtendedKeyUsageEl {
+pub struct PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_ExtendedKeyUsage {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     client_auth: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1694,7 +1838,7 @@ pub struct PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElExtendedKe
     time_stamping: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElExtendedKeyUsageEl {
+impl PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_ExtendedKeyUsage {
     #[doc =
         "Set the field `client_auth`.\nCorresponds to OID 1.3.6.1.5.5.7.3.2. Officially described as \"TLS WWW client authentication\", though regularly used for non-WWW TLS."]
     pub fn set_client_auth(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -1738,8 +1882,8 @@ impl PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElExtendedKeyUsage
     }
 }
 
-impl terrars::ToListMappable for PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElExtendedKeyUsageEl {
-    type O = terrars::BlockAssignable<PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElExtendedKeyUsageEl>;
+impl terrars::ToListMappable for PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_ExtendedKeyUsage {
+    type O = terrars::BlockAssignable<PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_ExtendedKeyUsage>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1750,11 +1894,11 @@ impl terrars::ToListMappable for PrivatecaCertificateAuthorityConfigElX509Config
     }
 }
 
-pub struct BuildPrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElExtendedKeyUsageEl {}
+pub struct BuildPrivatecaCertificateAuthority_Config_X509Config_KeyUsage_ExtendedKeyUsage {}
 
-impl BuildPrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElExtendedKeyUsageEl {
-    pub fn build(self) -> PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElExtendedKeyUsageEl {
-        PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElExtendedKeyUsageEl {
+impl BuildPrivatecaCertificateAuthority_Config_X509Config_KeyUsage_ExtendedKeyUsage {
+    pub fn build(self) -> PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_ExtendedKeyUsage {
+        PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_ExtendedKeyUsage {
             client_auth: core::default::Default::default(),
             code_signing: core::default::Default::default(),
             email_protection: core::default::Default::default(),
@@ -1765,24 +1909,26 @@ impl BuildPrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElExtendedKey
     }
 }
 
-pub struct PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElExtendedKeyUsageElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_ExtendedKeyUsageRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElExtendedKeyUsageElRef {
+impl terrars::Ref for PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_ExtendedKeyUsageRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElExtendedKeyUsageElRef {
-        PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElExtendedKeyUsageElRef {
+    ) -> PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_ExtendedKeyUsageRef {
+        PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_ExtendedKeyUsageRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElExtendedKeyUsageElRef {
+impl PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_ExtendedKeyUsageRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1825,16 +1971,15 @@ impl PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElExtendedKeyUsage
 }
 
 #[derive(Serialize)]
-pub struct PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElUnknownExtendedKeyUsagesEl {
+pub struct PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_UnknownExtendedKeyUsages {
     object_id_path: terrars::ListField<terrars::PrimField<f64>>,
 }
 
-impl PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElUnknownExtendedKeyUsagesEl { }
+impl PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_UnknownExtendedKeyUsages { }
 
-impl terrars::ToListMappable for PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElUnknownExtendedKeyUsagesEl {
+impl terrars::ToListMappable for PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_UnknownExtendedKeyUsages {
     type O =
-        terrars
-        ::BlockAssignable<PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElUnknownExtendedKeyUsagesEl>;
+        terrars::BlockAssignable<PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_UnknownExtendedKeyUsages>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1845,38 +1990,40 @@ impl terrars::ToListMappable for PrivatecaCertificateAuthorityConfigElX509Config
     }
 }
 
-pub struct BuildPrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElUnknownExtendedKeyUsagesEl {
+pub struct BuildPrivatecaCertificateAuthority_Config_X509Config_KeyUsage_UnknownExtendedKeyUsages {
     #[doc =
         "An ObjectId specifies an object identifier (OID). These provide context and describe types in ASN.1 messages."]
     pub object_id_path: terrars::ListField<terrars::PrimField<f64>>,
 }
 
-impl BuildPrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElUnknownExtendedKeyUsagesEl {
-    pub fn build(self) -> PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElUnknownExtendedKeyUsagesEl {
-        PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElUnknownExtendedKeyUsagesEl {
+impl BuildPrivatecaCertificateAuthority_Config_X509Config_KeyUsage_UnknownExtendedKeyUsages {
+    pub fn build(self) -> PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_UnknownExtendedKeyUsages {
+        PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_UnknownExtendedKeyUsages {
             object_id_path: self.object_id_path,
         }
     }
 }
 
-pub struct PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElUnknownExtendedKeyUsagesElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_UnknownExtendedKeyUsagesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElUnknownExtendedKeyUsagesElRef {
+impl terrars::Ref for PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_UnknownExtendedKeyUsagesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElUnknownExtendedKeyUsagesElRef {
-        PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElUnknownExtendedKeyUsagesElRef {
+    ) -> PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_UnknownExtendedKeyUsagesRef {
+        PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_UnknownExtendedKeyUsagesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElUnknownExtendedKeyUsagesElRef {
+impl PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_UnknownExtendedKeyUsagesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1889,38 +2036,38 @@ impl PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElUnknownExtendedK
 }
 
 #[derive(Serialize, Default)]
-struct PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElDynamic {
+struct PrivatecaCertificateAuthority_Config_X509Config_KeyUsageDynamic {
     base_key_usage: std
     ::option
-    ::Option<terrars::DynamicBlock<PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElBaseKeyUsageEl>>,
+    ::Option<terrars::DynamicBlock<PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_BaseKeyUsage>>,
     extended_key_usage: std
     ::option
-    ::Option<terrars::DynamicBlock<PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElExtendedKeyUsageEl>>,
+    ::Option<terrars::DynamicBlock<PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_ExtendedKeyUsage>>,
     unknown_extended_key_usages: std
     ::option
     ::Option<
-        terrars::DynamicBlock<PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElUnknownExtendedKeyUsagesEl>,
+        terrars::DynamicBlock<PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_UnknownExtendedKeyUsages>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageEl {
+pub struct PrivatecaCertificateAuthority_Config_X509Config_KeyUsage {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     base_key_usage: std
     ::option
-    ::Option<std::vec::Vec<PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElBaseKeyUsageEl>>,
+    ::Option<std::vec::Vec<PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_BaseKeyUsage>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     extended_key_usage: std
     ::option
-    ::Option<std::vec::Vec<PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElExtendedKeyUsageEl>>,
+    ::Option<std::vec::Vec<PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_ExtendedKeyUsage>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     unknown_extended_key_usages: std
     ::option
-    ::Option<std::vec::Vec<PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElUnknownExtendedKeyUsagesEl>>,
-    dynamic: PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElDynamic,
+    ::Option<std::vec::Vec<PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_UnknownExtendedKeyUsages>>,
+    dynamic: PrivatecaCertificateAuthority_Config_X509Config_KeyUsageDynamic,
 }
 
-impl PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageEl {
+impl PrivatecaCertificateAuthority_Config_X509Config_KeyUsage {
     #[doc = "Set the field `base_key_usage`.\n"]
     pub fn set_base_key_usage(
         mut self,
@@ -1931,7 +2078,7 @@ impl PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElBaseKeyUsageEl>,
+                        ::BlockAssignable<PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_BaseKeyUsage>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1955,9 +2102,7 @@ impl PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElExtendedKeyUsageEl,
-                        >,
+                        ::BlockAssignable<PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_ExtendedKeyUsage>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1982,7 +2127,7 @@ impl PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElUnknownExtendedKeyUsagesEl,
+                            PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_UnknownExtendedKeyUsages,
                         >,
                     >,
     ) -> Self {
@@ -1998,8 +2143,8 @@ impl PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageEl {
     }
 }
 
-impl terrars::ToListMappable for PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageEl {
-    type O = terrars::BlockAssignable<PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageEl>;
+impl terrars::ToListMappable for PrivatecaCertificateAuthority_Config_X509Config_KeyUsage {
+    type O = terrars::BlockAssignable<PrivatecaCertificateAuthority_Config_X509Config_KeyUsage>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2010,11 +2155,11 @@ impl terrars::ToListMappable for PrivatecaCertificateAuthorityConfigElX509Config
     }
 }
 
-pub struct BuildPrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageEl {}
+pub struct BuildPrivatecaCertificateAuthority_Config_X509Config_KeyUsage {}
 
-impl BuildPrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageEl {
-    pub fn build(self) -> PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageEl {
-        PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageEl {
+impl BuildPrivatecaCertificateAuthority_Config_X509Config_KeyUsage {
+    pub fn build(self) -> PrivatecaCertificateAuthority_Config_X509Config_KeyUsage {
+        PrivatecaCertificateAuthority_Config_X509Config_KeyUsage {
             base_key_usage: core::default::Default::default(),
             extended_key_usage: core::default::Default::default(),
             unknown_extended_key_usages: core::default::Default::default(),
@@ -2023,24 +2168,26 @@ impl BuildPrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageEl {
     }
 }
 
-pub struct PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCertificateAuthority_Config_X509Config_KeyUsageRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElRef {
+impl terrars::Ref for PrivatecaCertificateAuthority_Config_X509Config_KeyUsageRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElRef {
-        PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElRef {
+    ) -> PrivatecaCertificateAuthority_Config_X509Config_KeyUsageRef {
+        PrivatecaCertificateAuthority_Config_X509Config_KeyUsageRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElRef {
+impl PrivatecaCertificateAuthority_Config_X509Config_KeyUsageRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2048,27 +2195,27 @@ impl PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElRef {
     #[doc = "Get a reference to the value of field `base_key_usage` after provisioning.\n"]
     pub fn base_key_usage(
         &self,
-    ) -> terrars::ListRef<PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElBaseKeyUsageElRef> {
+    ) -> terrars::ListRef<PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_BaseKeyUsageRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.base_key_usage", self.base))
     }
 
     #[doc = "Get a reference to the value of field `extended_key_usage` after provisioning.\n"]
     pub fn extended_key_usage(
         &self,
-    ) -> terrars::ListRef<PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElExtendedKeyUsageElRef> {
+    ) -> terrars::ListRef<PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_ExtendedKeyUsageRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.extended_key_usage", self.base))
     }
 
     #[doc = "Get a reference to the value of field `unknown_extended_key_usages` after provisioning.\n"]
     pub fn unknown_extended_key_usages(
         &self,
-    ) -> terrars::ListRef<PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElUnknownExtendedKeyUsagesElRef> {
+    ) -> terrars::ListRef<PrivatecaCertificateAuthority_Config_X509Config_KeyUsage_UnknownExtendedKeyUsagesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.unknown_extended_key_usages", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct PrivatecaCertificateAuthorityConfigElX509ConfigElNameConstraintsEl {
+pub struct PrivatecaCertificateAuthority_Config_X509Config_NameConstraints {
     critical: terrars::PrimField<bool>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     excluded_dns_names: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
@@ -2088,7 +2235,7 @@ pub struct PrivatecaCertificateAuthorityConfigElX509ConfigElNameConstraintsEl {
     permitted_uris: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl PrivatecaCertificateAuthorityConfigElX509ConfigElNameConstraintsEl {
+impl PrivatecaCertificateAuthority_Config_X509Config_NameConstraints {
     #[doc =
         "Set the field `excluded_dns_names`.\nContains excluded DNS names. Any DNS name that can be\nconstructed by simply adding zero or more labels to\nthe left-hand side of the name satisfies the name constraint.\nFor example, 'example.com', 'www.example.com', 'www.sub.example.com'\nwould satisfy 'example.com' while 'example1.com' does not."]
     pub fn set_excluded_dns_names(
@@ -2170,8 +2317,8 @@ impl PrivatecaCertificateAuthorityConfigElX509ConfigElNameConstraintsEl {
     }
 }
 
-impl terrars::ToListMappable for PrivatecaCertificateAuthorityConfigElX509ConfigElNameConstraintsEl {
-    type O = terrars::BlockAssignable<PrivatecaCertificateAuthorityConfigElX509ConfigElNameConstraintsEl>;
+impl terrars::ToListMappable for PrivatecaCertificateAuthority_Config_X509Config_NameConstraints {
+    type O = terrars::BlockAssignable<PrivatecaCertificateAuthority_Config_X509Config_NameConstraints>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2182,14 +2329,14 @@ impl terrars::ToListMappable for PrivatecaCertificateAuthorityConfigElX509Config
     }
 }
 
-pub struct BuildPrivatecaCertificateAuthorityConfigElX509ConfigElNameConstraintsEl {
+pub struct BuildPrivatecaCertificateAuthority_Config_X509Config_NameConstraints {
     #[doc = "Indicates whether or not the name constraints are marked critical."]
     pub critical: terrars::PrimField<bool>,
 }
 
-impl BuildPrivatecaCertificateAuthorityConfigElX509ConfigElNameConstraintsEl {
-    pub fn build(self) -> PrivatecaCertificateAuthorityConfigElX509ConfigElNameConstraintsEl {
-        PrivatecaCertificateAuthorityConfigElX509ConfigElNameConstraintsEl {
+impl BuildPrivatecaCertificateAuthority_Config_X509Config_NameConstraints {
+    pub fn build(self) -> PrivatecaCertificateAuthority_Config_X509Config_NameConstraints {
+        PrivatecaCertificateAuthority_Config_X509Config_NameConstraints {
             critical: self.critical,
             excluded_dns_names: core::default::Default::default(),
             excluded_email_addresses: core::default::Default::default(),
@@ -2203,24 +2350,26 @@ impl BuildPrivatecaCertificateAuthorityConfigElX509ConfigElNameConstraintsEl {
     }
 }
 
-pub struct PrivatecaCertificateAuthorityConfigElX509ConfigElNameConstraintsElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCertificateAuthority_Config_X509Config_NameConstraintsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCertificateAuthorityConfigElX509ConfigElNameConstraintsElRef {
+impl terrars::Ref for PrivatecaCertificateAuthority_Config_X509Config_NameConstraintsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> PrivatecaCertificateAuthorityConfigElX509ConfigElNameConstraintsElRef {
-        PrivatecaCertificateAuthorityConfigElX509ConfigElNameConstraintsElRef {
+    ) -> PrivatecaCertificateAuthority_Config_X509Config_NameConstraintsRef {
+        PrivatecaCertificateAuthority_Config_X509Config_NameConstraintsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCertificateAuthorityConfigElX509ConfigElNameConstraintsElRef {
+impl PrivatecaCertificateAuthority_Config_X509Config_NameConstraintsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2281,14 +2430,14 @@ impl PrivatecaCertificateAuthorityConfigElX509ConfigElNameConstraintsElRef {
 }
 
 #[derive(Serialize)]
-pub struct PrivatecaCertificateAuthorityConfigElX509ConfigElPolicyIdsEl {
+pub struct PrivatecaCertificateAuthority_Config_X509Config_PolicyIds {
     object_id_path: terrars::ListField<terrars::PrimField<f64>>,
 }
 
-impl PrivatecaCertificateAuthorityConfigElX509ConfigElPolicyIdsEl { }
+impl PrivatecaCertificateAuthority_Config_X509Config_PolicyIds { }
 
-impl terrars::ToListMappable for PrivatecaCertificateAuthorityConfigElX509ConfigElPolicyIdsEl {
-    type O = terrars::BlockAssignable<PrivatecaCertificateAuthorityConfigElX509ConfigElPolicyIdsEl>;
+impl terrars::ToListMappable for PrivatecaCertificateAuthority_Config_X509Config_PolicyIds {
+    type O = terrars::BlockAssignable<PrivatecaCertificateAuthority_Config_X509Config_PolicyIds>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2299,36 +2448,38 @@ impl terrars::ToListMappable for PrivatecaCertificateAuthorityConfigElX509Config
     }
 }
 
-pub struct BuildPrivatecaCertificateAuthorityConfigElX509ConfigElPolicyIdsEl {
+pub struct BuildPrivatecaCertificateAuthority_Config_X509Config_PolicyIds {
     #[doc =
         "An ObjectId specifies an object identifier (OID). These provide context and describe types in ASN.1 messages."]
     pub object_id_path: terrars::ListField<terrars::PrimField<f64>>,
 }
 
-impl BuildPrivatecaCertificateAuthorityConfigElX509ConfigElPolicyIdsEl {
-    pub fn build(self) -> PrivatecaCertificateAuthorityConfigElX509ConfigElPolicyIdsEl {
-        PrivatecaCertificateAuthorityConfigElX509ConfigElPolicyIdsEl { object_id_path: self.object_id_path }
+impl BuildPrivatecaCertificateAuthority_Config_X509Config_PolicyIds {
+    pub fn build(self) -> PrivatecaCertificateAuthority_Config_X509Config_PolicyIds {
+        PrivatecaCertificateAuthority_Config_X509Config_PolicyIds { object_id_path: self.object_id_path }
     }
 }
 
-pub struct PrivatecaCertificateAuthorityConfigElX509ConfigElPolicyIdsElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCertificateAuthority_Config_X509Config_PolicyIdsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCertificateAuthorityConfigElX509ConfigElPolicyIdsElRef {
+impl terrars::Ref for PrivatecaCertificateAuthority_Config_X509Config_PolicyIdsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> PrivatecaCertificateAuthorityConfigElX509ConfigElPolicyIdsElRef {
-        PrivatecaCertificateAuthorityConfigElX509ConfigElPolicyIdsElRef {
+    ) -> PrivatecaCertificateAuthority_Config_X509Config_PolicyIdsRef {
+        PrivatecaCertificateAuthority_Config_X509Config_PolicyIdsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCertificateAuthorityConfigElX509ConfigElPolicyIdsElRef {
+impl PrivatecaCertificateAuthority_Config_X509Config_PolicyIdsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2341,46 +2492,42 @@ impl PrivatecaCertificateAuthorityConfigElX509ConfigElPolicyIdsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct PrivatecaCertificateAuthorityConfigElX509ConfigElDynamic {
+struct PrivatecaCertificateAuthority_Config_X509ConfigDynamic {
     additional_extensions: std
     ::option
-    ::Option<terrars::DynamicBlock<PrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsEl>>,
+    ::Option<terrars::DynamicBlock<PrivatecaCertificateAuthority_Config_X509Config_AdditionalExtensions>>,
     ca_options: std
     ::option
-    ::Option<terrars::DynamicBlock<PrivatecaCertificateAuthorityConfigElX509ConfigElCaOptionsEl>>,
-    key_usage: std
-    ::option
-    ::Option<terrars::DynamicBlock<PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageEl>>,
+    ::Option<terrars::DynamicBlock<PrivatecaCertificateAuthority_Config_X509Config_CaOptions>>,
+    key_usage: std::option::Option<terrars::DynamicBlock<PrivatecaCertificateAuthority_Config_X509Config_KeyUsage>>,
     name_constraints: std
     ::option
-    ::Option<terrars::DynamicBlock<PrivatecaCertificateAuthorityConfigElX509ConfigElNameConstraintsEl>>,
+    ::Option<terrars::DynamicBlock<PrivatecaCertificateAuthority_Config_X509Config_NameConstraints>>,
     policy_ids: std
     ::option
-    ::Option<terrars::DynamicBlock<PrivatecaCertificateAuthorityConfigElX509ConfigElPolicyIdsEl>>,
+    ::Option<terrars::DynamicBlock<PrivatecaCertificateAuthority_Config_X509Config_PolicyIds>>,
 }
 
 #[derive(Serialize)]
-pub struct PrivatecaCertificateAuthorityConfigElX509ConfigEl {
+pub struct PrivatecaCertificateAuthority_Config_X509Config {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     aia_ocsp_servers: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     additional_extensions: std
     ::option
-    ::Option<std::vec::Vec<PrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsEl>>,
+    ::Option<std::vec::Vec<PrivatecaCertificateAuthority_Config_X509Config_AdditionalExtensions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ca_options: std::option::Option<std::vec::Vec<PrivatecaCertificateAuthorityConfigElX509ConfigElCaOptionsEl>>,
+    ca_options: std::option::Option<std::vec::Vec<PrivatecaCertificateAuthority_Config_X509Config_CaOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    key_usage: std::option::Option<std::vec::Vec<PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageEl>>,
+    key_usage: std::option::Option<std::vec::Vec<PrivatecaCertificateAuthority_Config_X509Config_KeyUsage>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    name_constraints: std
-    ::option
-    ::Option<std::vec::Vec<PrivatecaCertificateAuthorityConfigElX509ConfigElNameConstraintsEl>>,
+    name_constraints: std::option::Option<std::vec::Vec<PrivatecaCertificateAuthority_Config_X509Config_NameConstraints>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    policy_ids: std::option::Option<std::vec::Vec<PrivatecaCertificateAuthorityConfigElX509ConfigElPolicyIdsEl>>,
-    dynamic: PrivatecaCertificateAuthorityConfigElX509ConfigElDynamic,
+    policy_ids: std::option::Option<std::vec::Vec<PrivatecaCertificateAuthority_Config_X509Config_PolicyIds>>,
+    dynamic: PrivatecaCertificateAuthority_Config_X509ConfigDynamic,
 }
 
-impl PrivatecaCertificateAuthorityConfigElX509ConfigEl {
+impl PrivatecaCertificateAuthority_Config_X509Config {
     #[doc =
         "Set the field `aia_ocsp_servers`.\nDescribes Online Certificate Status Protocol (OCSP) endpoint addresses that appear in the\n\"Authority Information Access\" extension in the certificate."]
     pub fn set_aia_ocsp_servers(
@@ -2400,8 +2547,7 @@ impl PrivatecaCertificateAuthorityConfigElX509ConfigEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<PrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsEl>,
+                        terrars::BlockAssignable<PrivatecaCertificateAuthority_Config_X509Config_AdditionalExtensions>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2423,7 +2569,7 @@ impl PrivatecaCertificateAuthorityConfigElX509ConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<PrivatecaCertificateAuthorityConfigElX509ConfigElCaOptionsEl>>,
+                    ::Into<terrars::BlockAssignable<PrivatecaCertificateAuthority_Config_X509Config_CaOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2444,7 +2590,7 @@ impl PrivatecaCertificateAuthorityConfigElX509ConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageEl>>,
+                    ::Into<terrars::BlockAssignable<PrivatecaCertificateAuthority_Config_X509Config_KeyUsage>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2465,9 +2611,7 @@ impl PrivatecaCertificateAuthorityConfigElX509ConfigEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<PrivatecaCertificateAuthorityConfigElX509ConfigElNameConstraintsEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<PrivatecaCertificateAuthority_Config_X509Config_NameConstraints>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2488,7 +2632,7 @@ impl PrivatecaCertificateAuthorityConfigElX509ConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<PrivatecaCertificateAuthorityConfigElX509ConfigElPolicyIdsEl>>,
+                    ::Into<terrars::BlockAssignable<PrivatecaCertificateAuthority_Config_X509Config_PolicyIds>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2502,8 +2646,8 @@ impl PrivatecaCertificateAuthorityConfigElX509ConfigEl {
     }
 }
 
-impl terrars::ToListMappable for PrivatecaCertificateAuthorityConfigElX509ConfigEl {
-    type O = terrars::BlockAssignable<PrivatecaCertificateAuthorityConfigElX509ConfigEl>;
+impl terrars::ToListMappable for PrivatecaCertificateAuthority_Config_X509Config {
+    type O = terrars::BlockAssignable<PrivatecaCertificateAuthority_Config_X509Config>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2514,11 +2658,11 @@ impl terrars::ToListMappable for PrivatecaCertificateAuthorityConfigElX509Config
     }
 }
 
-pub struct BuildPrivatecaCertificateAuthorityConfigElX509ConfigEl {}
+pub struct BuildPrivatecaCertificateAuthority_Config_X509Config {}
 
-impl BuildPrivatecaCertificateAuthorityConfigElX509ConfigEl {
-    pub fn build(self) -> PrivatecaCertificateAuthorityConfigElX509ConfigEl {
-        PrivatecaCertificateAuthorityConfigElX509ConfigEl {
+impl BuildPrivatecaCertificateAuthority_Config_X509Config {
+    pub fn build(self) -> PrivatecaCertificateAuthority_Config_X509Config {
+        PrivatecaCertificateAuthority_Config_X509Config {
             aia_ocsp_servers: core::default::Default::default(),
             additional_extensions: core::default::Default::default(),
             ca_options: core::default::Default::default(),
@@ -2530,24 +2674,26 @@ impl BuildPrivatecaCertificateAuthorityConfigElX509ConfigEl {
     }
 }
 
-pub struct PrivatecaCertificateAuthorityConfigElX509ConfigElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCertificateAuthority_Config_X509ConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCertificateAuthorityConfigElX509ConfigElRef {
+impl terrars::Ref for PrivatecaCertificateAuthority_Config_X509ConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> PrivatecaCertificateAuthorityConfigElX509ConfigElRef {
-        PrivatecaCertificateAuthorityConfigElX509ConfigElRef {
+    ) -> PrivatecaCertificateAuthority_Config_X509ConfigRef {
+        PrivatecaCertificateAuthority_Config_X509ConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCertificateAuthorityConfigElX509ConfigElRef {
+impl PrivatecaCertificateAuthority_Config_X509ConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2561,53 +2707,56 @@ impl PrivatecaCertificateAuthorityConfigElX509ConfigElRef {
     #[doc = "Get a reference to the value of field `additional_extensions` after provisioning.\n"]
     pub fn additional_extensions(
         &self,
-    ) -> terrars::ListRef<PrivatecaCertificateAuthorityConfigElX509ConfigElAdditionalExtensionsElRef> {
+    ) -> terrars::ListRef<PrivatecaCertificateAuthority_Config_X509Config_AdditionalExtensionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.additional_extensions", self.base))
     }
 
     #[doc = "Get a reference to the value of field `ca_options` after provisioning.\n"]
-    pub fn ca_options(&self) -> terrars::ListRef<PrivatecaCertificateAuthorityConfigElX509ConfigElCaOptionsElRef> {
+    pub fn ca_options(&self) -> terrars::ListRef<PrivatecaCertificateAuthority_Config_X509Config_CaOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ca_options", self.base))
     }
 
     #[doc = "Get a reference to the value of field `key_usage` after provisioning.\n"]
-    pub fn key_usage(&self) -> terrars::ListRef<PrivatecaCertificateAuthorityConfigElX509ConfigElKeyUsageElRef> {
+    pub fn key_usage(&self) -> terrars::ListRef<PrivatecaCertificateAuthority_Config_X509Config_KeyUsageRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.key_usage", self.base))
     }
 
     #[doc = "Get a reference to the value of field `name_constraints` after provisioning.\n"]
     pub fn name_constraints(
         &self,
-    ) -> terrars::ListRef<PrivatecaCertificateAuthorityConfigElX509ConfigElNameConstraintsElRef> {
+    ) -> terrars::ListRef<PrivatecaCertificateAuthority_Config_X509Config_NameConstraintsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.name_constraints", self.base))
     }
 
     #[doc = "Get a reference to the value of field `policy_ids` after provisioning.\n"]
-    pub fn policy_ids(&self) -> terrars::ListRef<PrivatecaCertificateAuthorityConfigElX509ConfigElPolicyIdsElRef> {
+    pub fn policy_ids(&self) -> terrars::ListRef<PrivatecaCertificateAuthority_Config_X509Config_PolicyIdsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.policy_ids", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct PrivatecaCertificateAuthorityConfigElDynamic {
-    subject_config: std::option::Option<terrars::DynamicBlock<PrivatecaCertificateAuthorityConfigElSubjectConfigEl>>,
-    x509_config: std::option::Option<terrars::DynamicBlock<PrivatecaCertificateAuthorityConfigElX509ConfigEl>>,
+struct PrivatecaCertificateAuthority_ConfigDynamic {
+    subject_config: std::option::Option<terrars::DynamicBlock<PrivatecaCertificateAuthority_Config_SubjectConfig>>,
+    subject_key_id: std::option::Option<terrars::DynamicBlock<PrivatecaCertificateAuthority_Config_SubjectKeyId>>,
+    x509_config: std::option::Option<terrars::DynamicBlock<PrivatecaCertificateAuthority_Config_X509Config>>,
 }
 
 #[derive(Serialize)]
-pub struct PrivatecaCertificateAuthorityConfigEl {
+pub struct PrivatecaCertificateAuthority_Config {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    subject_config: std::option::Option<std::vec::Vec<PrivatecaCertificateAuthorityConfigElSubjectConfigEl>>,
+    subject_config: std::option::Option<std::vec::Vec<PrivatecaCertificateAuthority_Config_SubjectConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    x509_config: std::option::Option<std::vec::Vec<PrivatecaCertificateAuthorityConfigElX509ConfigEl>>,
-    dynamic: PrivatecaCertificateAuthorityConfigElDynamic,
+    subject_key_id: std::option::Option<std::vec::Vec<PrivatecaCertificateAuthority_Config_SubjectKeyId>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    x509_config: std::option::Option<std::vec::Vec<PrivatecaCertificateAuthority_Config_X509Config>>,
+    dynamic: PrivatecaCertificateAuthority_ConfigDynamic,
 }
 
-impl PrivatecaCertificateAuthorityConfigEl {
+impl PrivatecaCertificateAuthority_Config {
     #[doc = "Set the field `subject_config`.\n"]
     pub fn set_subject_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<PrivatecaCertificateAuthorityConfigElSubjectConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<PrivatecaCertificateAuthority_Config_SubjectConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2620,10 +2769,26 @@ impl PrivatecaCertificateAuthorityConfigEl {
         self
     }
 
+    #[doc = "Set the field `subject_key_id`.\n"]
+    pub fn set_subject_key_id(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<PrivatecaCertificateAuthority_Config_SubjectKeyId>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.subject_key_id = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.subject_key_id = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `x509_config`.\n"]
     pub fn set_x509_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<PrivatecaCertificateAuthorityConfigElX509ConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<PrivatecaCertificateAuthority_Config_X509Config>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2637,8 +2802,8 @@ impl PrivatecaCertificateAuthorityConfigEl {
     }
 }
 
-impl terrars::ToListMappable for PrivatecaCertificateAuthorityConfigEl {
-    type O = terrars::BlockAssignable<PrivatecaCertificateAuthorityConfigEl>;
+impl terrars::ToListMappable for PrivatecaCertificateAuthority_Config {
+    type O = terrars::BlockAssignable<PrivatecaCertificateAuthority_Config>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2649,57 +2814,65 @@ impl terrars::ToListMappable for PrivatecaCertificateAuthorityConfigEl {
     }
 }
 
-pub struct BuildPrivatecaCertificateAuthorityConfigEl {}
+pub struct BuildPrivatecaCertificateAuthority_Config {}
 
-impl BuildPrivatecaCertificateAuthorityConfigEl {
-    pub fn build(self) -> PrivatecaCertificateAuthorityConfigEl {
-        PrivatecaCertificateAuthorityConfigEl {
+impl BuildPrivatecaCertificateAuthority_Config {
+    pub fn build(self) -> PrivatecaCertificateAuthority_Config {
+        PrivatecaCertificateAuthority_Config {
             subject_config: core::default::Default::default(),
+            subject_key_id: core::default::Default::default(),
             x509_config: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct PrivatecaCertificateAuthorityConfigElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCertificateAuthority_ConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCertificateAuthorityConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> PrivatecaCertificateAuthorityConfigElRef {
-        PrivatecaCertificateAuthorityConfigElRef {
+impl terrars::Ref for PrivatecaCertificateAuthority_ConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> PrivatecaCertificateAuthority_ConfigRef {
+        PrivatecaCertificateAuthority_ConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCertificateAuthorityConfigElRef {
+impl PrivatecaCertificateAuthority_ConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `subject_config` after provisioning.\n"]
-    pub fn subject_config(&self) -> terrars::ListRef<PrivatecaCertificateAuthorityConfigElSubjectConfigElRef> {
+    pub fn subject_config(&self) -> terrars::ListRef<PrivatecaCertificateAuthority_Config_SubjectConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.subject_config", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `subject_key_id` after provisioning.\n"]
+    pub fn subject_key_id(&self) -> terrars::ListRef<PrivatecaCertificateAuthority_Config_SubjectKeyIdRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.subject_key_id", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `x509_config` after provisioning.\n"]
-    pub fn x509_config(&self) -> terrars::ListRef<PrivatecaCertificateAuthorityConfigElX509ConfigElRef> {
+    pub fn x509_config(&self) -> terrars::ListRef<PrivatecaCertificateAuthority_Config_X509ConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.x509_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct PrivatecaCertificateAuthorityKeySpecEl {
+pub struct PrivatecaCertificateAuthority_KeySpec {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     algorithm: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cloud_kms_key_version: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl PrivatecaCertificateAuthorityKeySpecEl {
+impl PrivatecaCertificateAuthority_KeySpec {
     #[doc =
         "Set the field `algorithm`.\nThe algorithm to use for creating a managed Cloud KMS key for a for a simplified\nexperience. All managed keys will be have their ProtectionLevel as HSM. Possible values: [\"SIGN_HASH_ALGORITHM_UNSPECIFIED\", \"RSA_PSS_2048_SHA256\", \"RSA_PSS_3072_SHA256\", \"RSA_PSS_4096_SHA256\", \"RSA_PKCS1_2048_SHA256\", \"RSA_PKCS1_3072_SHA256\", \"RSA_PKCS1_4096_SHA256\", \"EC_P256_SHA256\", \"EC_P384_SHA384\"]"]
     pub fn set_algorithm(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -2718,8 +2891,8 @@ impl PrivatecaCertificateAuthorityKeySpecEl {
     }
 }
 
-impl terrars::ToListMappable for PrivatecaCertificateAuthorityKeySpecEl {
-    type O = terrars::BlockAssignable<PrivatecaCertificateAuthorityKeySpecEl>;
+impl terrars::ToListMappable for PrivatecaCertificateAuthority_KeySpec {
+    type O = terrars::BlockAssignable<PrivatecaCertificateAuthority_KeySpec>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2730,32 +2903,34 @@ impl terrars::ToListMappable for PrivatecaCertificateAuthorityKeySpecEl {
     }
 }
 
-pub struct BuildPrivatecaCertificateAuthorityKeySpecEl {}
+pub struct BuildPrivatecaCertificateAuthority_KeySpec {}
 
-impl BuildPrivatecaCertificateAuthorityKeySpecEl {
-    pub fn build(self) -> PrivatecaCertificateAuthorityKeySpecEl {
-        PrivatecaCertificateAuthorityKeySpecEl {
+impl BuildPrivatecaCertificateAuthority_KeySpec {
+    pub fn build(self) -> PrivatecaCertificateAuthority_KeySpec {
+        PrivatecaCertificateAuthority_KeySpec {
             algorithm: core::default::Default::default(),
             cloud_kms_key_version: core::default::Default::default(),
         }
     }
 }
 
-pub struct PrivatecaCertificateAuthorityKeySpecElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCertificateAuthority_KeySpecRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCertificateAuthorityKeySpecElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> PrivatecaCertificateAuthorityKeySpecElRef {
-        PrivatecaCertificateAuthorityKeySpecElRef {
+impl terrars::Ref for PrivatecaCertificateAuthority_KeySpecRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> PrivatecaCertificateAuthority_KeySpecRef {
+        PrivatecaCertificateAuthority_KeySpecRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCertificateAuthorityKeySpecElRef {
+impl PrivatecaCertificateAuthority_KeySpecRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2774,12 +2949,12 @@ impl PrivatecaCertificateAuthorityKeySpecElRef {
 }
 
 #[derive(Serialize)]
-pub struct PrivatecaCertificateAuthoritySubordinateConfigElPemIssuerChainEl {
+pub struct PrivatecaCertificateAuthority_SubordinateConfig_PemIssuerChain {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     pem_certificates: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl PrivatecaCertificateAuthoritySubordinateConfigElPemIssuerChainEl {
+impl PrivatecaCertificateAuthority_SubordinateConfig_PemIssuerChain {
     #[doc = "Set the field `pem_certificates`.\nExpected to be in leaf-to-root order according to RFC 5246."]
     pub fn set_pem_certificates(
         mut self,
@@ -2790,8 +2965,8 @@ impl PrivatecaCertificateAuthoritySubordinateConfigElPemIssuerChainEl {
     }
 }
 
-impl terrars::ToListMappable for PrivatecaCertificateAuthoritySubordinateConfigElPemIssuerChainEl {
-    type O = terrars::BlockAssignable<PrivatecaCertificateAuthoritySubordinateConfigElPemIssuerChainEl>;
+impl terrars::ToListMappable for PrivatecaCertificateAuthority_SubordinateConfig_PemIssuerChain {
+    type O = terrars::BlockAssignable<PrivatecaCertificateAuthority_SubordinateConfig_PemIssuerChain>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2802,34 +2977,36 @@ impl terrars::ToListMappable for PrivatecaCertificateAuthoritySubordinateConfigE
     }
 }
 
-pub struct BuildPrivatecaCertificateAuthoritySubordinateConfigElPemIssuerChainEl {}
+pub struct BuildPrivatecaCertificateAuthority_SubordinateConfig_PemIssuerChain {}
 
-impl BuildPrivatecaCertificateAuthoritySubordinateConfigElPemIssuerChainEl {
-    pub fn build(self) -> PrivatecaCertificateAuthoritySubordinateConfigElPemIssuerChainEl {
-        PrivatecaCertificateAuthoritySubordinateConfigElPemIssuerChainEl {
+impl BuildPrivatecaCertificateAuthority_SubordinateConfig_PemIssuerChain {
+    pub fn build(self) -> PrivatecaCertificateAuthority_SubordinateConfig_PemIssuerChain {
+        PrivatecaCertificateAuthority_SubordinateConfig_PemIssuerChain {
             pem_certificates: core::default::Default::default(),
         }
     }
 }
 
-pub struct PrivatecaCertificateAuthoritySubordinateConfigElPemIssuerChainElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCertificateAuthority_SubordinateConfig_PemIssuerChainRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCertificateAuthoritySubordinateConfigElPemIssuerChainElRef {
+impl terrars::Ref for PrivatecaCertificateAuthority_SubordinateConfig_PemIssuerChainRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> PrivatecaCertificateAuthoritySubordinateConfigElPemIssuerChainElRef {
-        PrivatecaCertificateAuthoritySubordinateConfigElPemIssuerChainElRef {
+    ) -> PrivatecaCertificateAuthority_SubordinateConfig_PemIssuerChainRef {
+        PrivatecaCertificateAuthority_SubordinateConfig_PemIssuerChainRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCertificateAuthoritySubordinateConfigElPemIssuerChainElRef {
+impl PrivatecaCertificateAuthority_SubordinateConfig_PemIssuerChainRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2842,24 +3019,22 @@ impl PrivatecaCertificateAuthoritySubordinateConfigElPemIssuerChainElRef {
 }
 
 #[derive(Serialize, Default)]
-struct PrivatecaCertificateAuthoritySubordinateConfigElDynamic {
+struct PrivatecaCertificateAuthority_SubordinateConfigDynamic {
     pem_issuer_chain: std
     ::option
-    ::Option<terrars::DynamicBlock<PrivatecaCertificateAuthoritySubordinateConfigElPemIssuerChainEl>>,
+    ::Option<terrars::DynamicBlock<PrivatecaCertificateAuthority_SubordinateConfig_PemIssuerChain>>,
 }
 
 #[derive(Serialize)]
-pub struct PrivatecaCertificateAuthoritySubordinateConfigEl {
+pub struct PrivatecaCertificateAuthority_SubordinateConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     certificate_authority: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    pem_issuer_chain: std
-    ::option
-    ::Option<std::vec::Vec<PrivatecaCertificateAuthoritySubordinateConfigElPemIssuerChainEl>>,
-    dynamic: PrivatecaCertificateAuthoritySubordinateConfigElDynamic,
+    pem_issuer_chain: std::option::Option<std::vec::Vec<PrivatecaCertificateAuthority_SubordinateConfig_PemIssuerChain>>,
+    dynamic: PrivatecaCertificateAuthority_SubordinateConfigDynamic,
 }
 
-impl PrivatecaCertificateAuthoritySubordinateConfigEl {
+impl PrivatecaCertificateAuthority_SubordinateConfig {
     #[doc =
         "Set the field `certificate_authority`.\nThis can refer to a CertificateAuthority that was used to create a\nsubordinate CertificateAuthority. This field is used for information\nand usability purposes only. The resource name is in the format\n'projects/*/locations/*/caPools/*/certificateAuthorities/*'."]
     pub fn set_certificate_authority(
@@ -2878,9 +3053,7 @@ impl PrivatecaCertificateAuthoritySubordinateConfigEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<PrivatecaCertificateAuthoritySubordinateConfigElPemIssuerChainEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<PrivatecaCertificateAuthority_SubordinateConfig_PemIssuerChain>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2894,8 +3067,8 @@ impl PrivatecaCertificateAuthoritySubordinateConfigEl {
     }
 }
 
-impl terrars::ToListMappable for PrivatecaCertificateAuthoritySubordinateConfigEl {
-    type O = terrars::BlockAssignable<PrivatecaCertificateAuthoritySubordinateConfigEl>;
+impl terrars::ToListMappable for PrivatecaCertificateAuthority_SubordinateConfig {
+    type O = terrars::BlockAssignable<PrivatecaCertificateAuthority_SubordinateConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2906,11 +3079,11 @@ impl terrars::ToListMappable for PrivatecaCertificateAuthoritySubordinateConfigE
     }
 }
 
-pub struct BuildPrivatecaCertificateAuthoritySubordinateConfigEl {}
+pub struct BuildPrivatecaCertificateAuthority_SubordinateConfig {}
 
-impl BuildPrivatecaCertificateAuthoritySubordinateConfigEl {
-    pub fn build(self) -> PrivatecaCertificateAuthoritySubordinateConfigEl {
-        PrivatecaCertificateAuthoritySubordinateConfigEl {
+impl BuildPrivatecaCertificateAuthority_SubordinateConfig {
+    pub fn build(self) -> PrivatecaCertificateAuthority_SubordinateConfig {
+        PrivatecaCertificateAuthority_SubordinateConfig {
             certificate_authority: core::default::Default::default(),
             pem_issuer_chain: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -2918,24 +3091,26 @@ impl BuildPrivatecaCertificateAuthoritySubordinateConfigEl {
     }
 }
 
-pub struct PrivatecaCertificateAuthoritySubordinateConfigElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCertificateAuthority_SubordinateConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCertificateAuthoritySubordinateConfigElRef {
+impl terrars::Ref for PrivatecaCertificateAuthority_SubordinateConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> PrivatecaCertificateAuthoritySubordinateConfigElRef {
-        PrivatecaCertificateAuthoritySubordinateConfigElRef {
+    ) -> PrivatecaCertificateAuthority_SubordinateConfigRef {
+        PrivatecaCertificateAuthority_SubordinateConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCertificateAuthoritySubordinateConfigElRef {
+impl PrivatecaCertificateAuthority_SubordinateConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2949,13 +3124,13 @@ impl PrivatecaCertificateAuthoritySubordinateConfigElRef {
     #[doc = "Get a reference to the value of field `pem_issuer_chain` after provisioning.\n"]
     pub fn pem_issuer_chain(
         &self,
-    ) -> terrars::ListRef<PrivatecaCertificateAuthoritySubordinateConfigElPemIssuerChainElRef> {
+    ) -> terrars::ListRef<PrivatecaCertificateAuthority_SubordinateConfig_PemIssuerChainRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.pem_issuer_chain", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct PrivatecaCertificateAuthorityTimeoutsEl {
+pub struct PrivatecaCertificateAuthority_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2964,7 +3139,7 @@ pub struct PrivatecaCertificateAuthorityTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl PrivatecaCertificateAuthorityTimeoutsEl {
+impl PrivatecaCertificateAuthority_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -2984,8 +3159,8 @@ impl PrivatecaCertificateAuthorityTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for PrivatecaCertificateAuthorityTimeoutsEl {
-    type O = terrars::BlockAssignable<PrivatecaCertificateAuthorityTimeoutsEl>;
+impl terrars::ToListMappable for PrivatecaCertificateAuthority_Timeouts {
+    type O = terrars::BlockAssignable<PrivatecaCertificateAuthority_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2996,11 +3171,11 @@ impl terrars::ToListMappable for PrivatecaCertificateAuthorityTimeoutsEl {
     }
 }
 
-pub struct BuildPrivatecaCertificateAuthorityTimeoutsEl {}
+pub struct BuildPrivatecaCertificateAuthority_Timeouts {}
 
-impl BuildPrivatecaCertificateAuthorityTimeoutsEl {
-    pub fn build(self) -> PrivatecaCertificateAuthorityTimeoutsEl {
-        PrivatecaCertificateAuthorityTimeoutsEl {
+impl BuildPrivatecaCertificateAuthority_Timeouts {
+    pub fn build(self) -> PrivatecaCertificateAuthority_Timeouts {
+        PrivatecaCertificateAuthority_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -3008,21 +3183,23 @@ impl BuildPrivatecaCertificateAuthorityTimeoutsEl {
     }
 }
 
-pub struct PrivatecaCertificateAuthorityTimeoutsElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCertificateAuthority_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCertificateAuthorityTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> PrivatecaCertificateAuthorityTimeoutsElRef {
-        PrivatecaCertificateAuthorityTimeoutsElRef {
+impl terrars::Ref for PrivatecaCertificateAuthority_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> PrivatecaCertificateAuthority_TimeoutsRef {
+        PrivatecaCertificateAuthority_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCertificateAuthorityTimeoutsElRef {
+impl PrivatecaCertificateAuthority_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3043,11 +3220,92 @@ impl PrivatecaCertificateAuthorityTimeoutsElRef {
     }
 }
 
-#[derive(Serialize, Default)]
-struct PrivatecaCertificateAuthorityDynamic {
-    config: std::option::Option<terrars::DynamicBlock<PrivatecaCertificateAuthorityConfigEl>>,
-    key_spec: std::option::Option<terrars::DynamicBlock<PrivatecaCertificateAuthorityKeySpecEl>>,
-    subordinate_config: std
-    ::option
-    ::Option<terrars::DynamicBlock<PrivatecaCertificateAuthoritySubordinateConfigEl>>,
+#[derive(Serialize)]
+pub struct PrivatecaCertificateAuthority_UserDefinedAccessUrls {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    aia_issuing_certificate_urls: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    crl_access_urls: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+}
+
+impl PrivatecaCertificateAuthority_UserDefinedAccessUrls {
+    #[doc =
+        "Set the field `aia_issuing_certificate_urls`.\nA list of URLs where this CertificateAuthority's CA certificate is published that is specified by users."]
+    pub fn set_aia_issuing_certificate_urls(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.aia_issuing_certificate_urls = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `crl_access_urls`.\nA list of URLs where this CertificateAuthority's CRLs are published that is specified by users."]
+    pub fn set_crl_access_urls(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.crl_access_urls = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for PrivatecaCertificateAuthority_UserDefinedAccessUrls {
+    type O = terrars::BlockAssignable<PrivatecaCertificateAuthority_UserDefinedAccessUrls>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildPrivatecaCertificateAuthority_UserDefinedAccessUrls {}
+
+impl BuildPrivatecaCertificateAuthority_UserDefinedAccessUrls {
+    pub fn build(self) -> PrivatecaCertificateAuthority_UserDefinedAccessUrls {
+        PrivatecaCertificateAuthority_UserDefinedAccessUrls {
+            aia_issuing_certificate_urls: core::default::Default::default(),
+            crl_access_urls: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct PrivatecaCertificateAuthority_UserDefinedAccessUrlsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for PrivatecaCertificateAuthority_UserDefinedAccessUrlsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> PrivatecaCertificateAuthority_UserDefinedAccessUrlsRef {
+        PrivatecaCertificateAuthority_UserDefinedAccessUrlsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl PrivatecaCertificateAuthority_UserDefinedAccessUrlsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `aia_issuing_certificate_urls` after provisioning.\nA list of URLs where this CertificateAuthority's CA certificate is published that is specified by users."]
+    pub fn aia_issuing_certificate_urls(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.aia_issuing_certificate_urls", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `crl_access_urls` after provisioning.\nA list of URLs where this CertificateAuthority's CRLs are published that is specified by users."]
+    pub fn crl_access_urls(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.crl_access_urls", self.base))
+    }
 }

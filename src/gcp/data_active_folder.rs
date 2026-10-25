@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataActiveFolderData {
+struct DataActiveFolderData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -16,6 +18,8 @@ struct DataActiveFolderData {
     lifecycle: terrars::DatasourceLifecycle,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    api_method: std::option::Option<terrars::PrimField<std::string::String>>,
     display_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -25,7 +29,7 @@ struct DataActiveFolderData {
 struct DataActiveFolder_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataActiveFolderData>,
+    data: std::cell::RefCell<DataActiveFolderData_>,
 }
 
 #[derive(Clone)]
@@ -70,10 +74,23 @@ impl DataActiveFolder {
         self
     }
 
+    #[doc =
+        "Set the field `api_method`.\nProvides the REST method through which to find the folder. LIST is recommended as it is strongly consistent."]
+    pub fn set_api_method(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().api_method = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `api_method` after provisioning.\nProvides the REST method through which to find the folder. LIST is recommended as it is strongly consistent."]
+    pub fn api_method(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.api_method", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `display_name` after provisioning.\n"]
@@ -141,11 +158,12 @@ impl BuildDataActiveFolder {
         let out = DataActiveFolder(std::rc::Rc::new(DataActiveFolder_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataActiveFolderData {
+            data: std::cell::RefCell::new(DataActiveFolderData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
+                api_method: core::default::Default::default(),
                 display_name: self.display_name,
                 id: core::default::Default::default(),
                 parent: self.parent,
@@ -177,6 +195,12 @@ impl DataActiveFolderRef {
 
     fn extract_ref(&self) -> std::string::String {
         self.base.clone()
+    }
+
+    #[doc =
+        "Get a reference to the value of field `api_method` after provisioning.\nProvides the REST method through which to find the folder. LIST is recommended as it is strongly consistent."]
+    pub fn api_method(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.api_method", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `display_name` after provisioning.\n"]

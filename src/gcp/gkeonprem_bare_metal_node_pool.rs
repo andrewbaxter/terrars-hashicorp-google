@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct GkeonpremBareMetalNodePoolData {
+struct GkeonpremBareMetalNodePoolData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,6 +24,8 @@ struct GkeonpremBareMetalNodePoolData {
     annotations: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     bare_metal_cluster: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     display_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -30,16 +34,16 @@ struct GkeonpremBareMetalNodePoolData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    node_pool_config: std::option::Option<std::vec::Vec<GkeonpremBareMetalNodePoolNodePoolConfigEl>>,
+    node_pool_config: std::option::Option<std::vec::Vec<GkeonpremBareMetalNodePool_NodePoolConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<GkeonpremBareMetalNodePoolTimeoutsEl>,
+    timeouts: std::option::Option<GkeonpremBareMetalNodePool_Timeouts>,
     dynamic: GkeonpremBareMetalNodePoolDynamic,
 }
 
 struct GkeonpremBareMetalNodePool_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<GkeonpremBareMetalNodePoolData>,
+    data: std::cell::RefCell<GkeonpremBareMetalNodePoolData_>,
 }
 
 #[derive(Clone)]
@@ -149,6 +153,13 @@ impl GkeonpremBareMetalNodePool {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `display_name`.\nThe display name for the Bare Metal Node Pool."]
     pub fn set_display_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().display_name = std::option::Option::Some(v.into());
@@ -170,7 +181,7 @@ impl GkeonpremBareMetalNodePool {
     #[doc = "Set the field `node_pool_config`.\n"]
     pub fn set_node_pool_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremBareMetalNodePoolNodePoolConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremBareMetalNodePool_NodePoolConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -184,7 +195,7 @@ impl GkeonpremBareMetalNodePool {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<GkeonpremBareMetalNodePoolTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<GkeonpremBareMetalNodePool_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -211,6 +222,12 @@ impl GkeonpremBareMetalNodePool {
         "Get a reference to the value of field `delete_time` after provisioning.\nThe time the cluster was deleted, in RFC3339 text format."]
     pub fn delete_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -263,7 +280,7 @@ impl GkeonpremBareMetalNodePool {
     }
 
     #[doc = "Get a reference to the value of field `status` after provisioning.\nSpecifies detailed node pool status."]
-    pub fn status(&self) -> terrars::ListRef<GkeonpremBareMetalNodePoolStatusElRef> {
+    pub fn status(&self) -> terrars::ListRef<GkeonpremBareMetalNodePool_StatusRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
@@ -280,13 +297,13 @@ impl GkeonpremBareMetalNodePool {
     }
 
     #[doc = "Get a reference to the value of field `node_pool_config` after provisioning.\n"]
-    pub fn node_pool_config(&self) -> terrars::ListRef<GkeonpremBareMetalNodePoolNodePoolConfigElRef> {
+    pub fn node_pool_config(&self) -> terrars::ListRef<GkeonpremBareMetalNodePool_NodePoolConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.node_pool_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> GkeonpremBareMetalNodePoolTimeoutsElRef {
-        GkeonpremBareMetalNodePoolTimeoutsElRef::new(
+    pub fn timeouts(&self) -> GkeonpremBareMetalNodePool_TimeoutsRef {
+        GkeonpremBareMetalNodePool_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -339,7 +356,7 @@ impl BuildGkeonpremBareMetalNodePool {
         let out = GkeonpremBareMetalNodePool(std::rc::Rc::new(GkeonpremBareMetalNodePool_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(GkeonpremBareMetalNodePoolData {
+            data: std::cell::RefCell::new(GkeonpremBareMetalNodePoolData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -347,6 +364,7 @@ impl BuildGkeonpremBareMetalNodePool {
                 provisioner: core::default::Default::default(),
                 annotations: core::default::Default::default(),
                 bare_metal_cluster: self.bare_metal_cluster,
+                deletion_policy: core::default::Default::default(),
                 display_name: core::default::Default::default(),
                 id: core::default::Default::default(),
                 location: self.location,
@@ -410,6 +428,12 @@ impl GkeonpremBareMetalNodePoolRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `display_name` after provisioning.\nThe display name for the Bare Metal Node Pool."]
     pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
@@ -459,7 +483,7 @@ impl GkeonpremBareMetalNodePoolRef {
     }
 
     #[doc = "Get a reference to the value of field `status` after provisioning.\nSpecifies detailed node pool status."]
-    pub fn status(&self) -> terrars::ListRef<GkeonpremBareMetalNodePoolStatusElRef> {
+    pub fn status(&self) -> terrars::ListRef<GkeonpremBareMetalNodePool_StatusRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
@@ -476,21 +500,26 @@ impl GkeonpremBareMetalNodePoolRef {
     }
 
     #[doc = "Get a reference to the value of field `node_pool_config` after provisioning.\n"]
-    pub fn node_pool_config(&self) -> terrars::ListRef<GkeonpremBareMetalNodePoolNodePoolConfigElRef> {
+    pub fn node_pool_config(&self) -> terrars::ListRef<GkeonpremBareMetalNodePool_NodePoolConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.node_pool_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> GkeonpremBareMetalNodePoolTimeoutsElRef {
-        GkeonpremBareMetalNodePoolTimeoutsElRef::new(
+    pub fn timeouts(&self) -> GkeonpremBareMetalNodePool_TimeoutsRef {
+        GkeonpremBareMetalNodePool_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct GkeonpremBareMetalNodePoolDynamic {
+    node_pool_config: std::option::Option<terrars::DynamicBlock<GkeonpremBareMetalNodePool_NodePoolConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct GkeonpremBareMetalNodePoolStatusElConditionsEl {
+pub struct GkeonpremBareMetalNodePool_Status_Conditions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     last_transition_time: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -503,7 +532,7 @@ pub struct GkeonpremBareMetalNodePoolStatusElConditionsEl {
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeonpremBareMetalNodePoolStatusElConditionsEl {
+impl GkeonpremBareMetalNodePool_Status_Conditions {
     #[doc = "Set the field `last_transition_time`.\n"]
     pub fn set_last_transition_time(
         mut self,
@@ -538,8 +567,8 @@ impl GkeonpremBareMetalNodePoolStatusElConditionsEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremBareMetalNodePoolStatusElConditionsEl {
-    type O = terrars::BlockAssignable<GkeonpremBareMetalNodePoolStatusElConditionsEl>;
+impl terrars::ToListMappable for GkeonpremBareMetalNodePool_Status_Conditions {
+    type O = terrars::BlockAssignable<GkeonpremBareMetalNodePool_Status_Conditions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -550,11 +579,11 @@ impl terrars::ToListMappable for GkeonpremBareMetalNodePoolStatusElConditionsEl 
     }
 }
 
-pub struct BuildGkeonpremBareMetalNodePoolStatusElConditionsEl {}
+pub struct BuildGkeonpremBareMetalNodePool_Status_Conditions {}
 
-impl BuildGkeonpremBareMetalNodePoolStatusElConditionsEl {
-    pub fn build(self) -> GkeonpremBareMetalNodePoolStatusElConditionsEl {
-        GkeonpremBareMetalNodePoolStatusElConditionsEl {
+impl BuildGkeonpremBareMetalNodePool_Status_Conditions {
+    pub fn build(self) -> GkeonpremBareMetalNodePool_Status_Conditions {
+        GkeonpremBareMetalNodePool_Status_Conditions {
             last_transition_time: core::default::Default::default(),
             message: core::default::Default::default(),
             reason: core::default::Default::default(),
@@ -564,24 +593,26 @@ impl BuildGkeonpremBareMetalNodePoolStatusElConditionsEl {
     }
 }
 
-pub struct GkeonpremBareMetalNodePoolStatusElConditionsElRef {
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalNodePool_Status_ConditionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremBareMetalNodePoolStatusElConditionsElRef {
+impl terrars::Ref for GkeonpremBareMetalNodePool_Status_ConditionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremBareMetalNodePoolStatusElConditionsElRef {
-        GkeonpremBareMetalNodePoolStatusElConditionsElRef {
+    ) -> GkeonpremBareMetalNodePool_Status_ConditionsRef {
+        GkeonpremBareMetalNodePool_Status_ConditionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremBareMetalNodePoolStatusElConditionsElRef {
+impl GkeonpremBareMetalNodePool_Status_ConditionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -613,18 +644,18 @@ impl GkeonpremBareMetalNodePoolStatusElConditionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremBareMetalNodePoolStatusEl {
+pub struct GkeonpremBareMetalNodePool_Status {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    conditions: std::option::Option<terrars::ListField<GkeonpremBareMetalNodePoolStatusElConditionsEl>>,
+    conditions: std::option::Option<terrars::ListField<GkeonpremBareMetalNodePool_Status_Conditions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     error_message: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeonpremBareMetalNodePoolStatusEl {
+impl GkeonpremBareMetalNodePool_Status {
     #[doc = "Set the field `conditions`.\n"]
     pub fn set_conditions(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<GkeonpremBareMetalNodePoolStatusElConditionsEl>>,
+        v: impl std::convert::Into<terrars::ListField<GkeonpremBareMetalNodePool_Status_Conditions>>,
     ) -> Self {
         self.conditions = std::option::Option::Some(v.into());
         self
@@ -637,8 +668,8 @@ impl GkeonpremBareMetalNodePoolStatusEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremBareMetalNodePoolStatusEl {
-    type O = terrars::BlockAssignable<GkeonpremBareMetalNodePoolStatusEl>;
+impl terrars::ToListMappable for GkeonpremBareMetalNodePool_Status {
+    type O = terrars::BlockAssignable<GkeonpremBareMetalNodePool_Status>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -649,38 +680,40 @@ impl terrars::ToListMappable for GkeonpremBareMetalNodePoolStatusEl {
     }
 }
 
-pub struct BuildGkeonpremBareMetalNodePoolStatusEl {}
+pub struct BuildGkeonpremBareMetalNodePool_Status {}
 
-impl BuildGkeonpremBareMetalNodePoolStatusEl {
-    pub fn build(self) -> GkeonpremBareMetalNodePoolStatusEl {
-        GkeonpremBareMetalNodePoolStatusEl {
+impl BuildGkeonpremBareMetalNodePool_Status {
+    pub fn build(self) -> GkeonpremBareMetalNodePool_Status {
+        GkeonpremBareMetalNodePool_Status {
             conditions: core::default::Default::default(),
             error_message: core::default::Default::default(),
         }
     }
 }
 
-pub struct GkeonpremBareMetalNodePoolStatusElRef {
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalNodePool_StatusRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremBareMetalNodePoolStatusElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremBareMetalNodePoolStatusElRef {
-        GkeonpremBareMetalNodePoolStatusElRef {
+impl terrars::Ref for GkeonpremBareMetalNodePool_StatusRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremBareMetalNodePool_StatusRef {
+        GkeonpremBareMetalNodePool_StatusRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremBareMetalNodePoolStatusElRef {
+impl GkeonpremBareMetalNodePool_StatusRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `conditions` after provisioning.\n"]
-    pub fn conditions(&self) -> terrars::ListRef<GkeonpremBareMetalNodePoolStatusElConditionsElRef> {
+    pub fn conditions(&self) -> terrars::ListRef<GkeonpremBareMetalNodePool_Status_ConditionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.conditions", self.base))
     }
 
@@ -691,16 +724,16 @@ impl GkeonpremBareMetalNodePoolStatusElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremBareMetalNodePoolNodePoolConfigElNodeConfigsEl {
+pub struct GkeonpremBareMetalNodePool_NodePoolConfig_NodeConfigs {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     node_ip: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeonpremBareMetalNodePoolNodePoolConfigElNodeConfigsEl {
+impl GkeonpremBareMetalNodePool_NodePoolConfig_NodeConfigs {
     #[doc =
-        "Set the field `labels`.\nThe map of Kubernetes labels (key/value pairs) to be applied to\neach node. These will added in addition to any default label(s)\nthat Kubernetes may apply to the node. In case of conflict in\nlabel keys, the applied set may differ depending on the Kubernetes\nversion -- it's best to assume the behavior is undefined and\nconflicts should be avoided. For more information, including usage\nand the valid values, see:\n  http://kubernetes.io/v1.1/docs/user-guide/labels.html\nAn object containing a list of \"key\": value pairs.\nExample: { \"name\": \"wrench\", \"mass\": \"1.3kg\", \"count\": \"3\" }."]
+        "Set the field `labels`.\nThe map of Kubernetes labels (key/value pairs) to be applied to\neach node. These will added in addition to any default label(s)\nthat Kubernetes may apply to the node. In case of conflict in\nlabel keys, the applied set may differ depending on the Kubernetes\nversion -- it's best to assume the behavior is undefined and\nconflicts should be avoided. For more information, including usage\nand the valid values, see:\n  - http://kubernetes.io/v1.1/docs/user-guide/labels.html\nAn object containing a list of \"key\": value pairs.\nFor example: { \"name\": \"wrench\", \"mass\": \"1.3kg\", \"count\": \"3\" }."]
     pub fn set_labels(
         mut self,
         v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -717,8 +750,8 @@ impl GkeonpremBareMetalNodePoolNodePoolConfigElNodeConfigsEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremBareMetalNodePoolNodePoolConfigElNodeConfigsEl {
-    type O = terrars::BlockAssignable<GkeonpremBareMetalNodePoolNodePoolConfigElNodeConfigsEl>;
+impl terrars::ToListMappable for GkeonpremBareMetalNodePool_NodePoolConfig_NodeConfigs {
+    type O = terrars::BlockAssignable<GkeonpremBareMetalNodePool_NodePoolConfig_NodeConfigs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -729,41 +762,43 @@ impl terrars::ToListMappable for GkeonpremBareMetalNodePoolNodePoolConfigElNodeC
     }
 }
 
-pub struct BuildGkeonpremBareMetalNodePoolNodePoolConfigElNodeConfigsEl {}
+pub struct BuildGkeonpremBareMetalNodePool_NodePoolConfig_NodeConfigs {}
 
-impl BuildGkeonpremBareMetalNodePoolNodePoolConfigElNodeConfigsEl {
-    pub fn build(self) -> GkeonpremBareMetalNodePoolNodePoolConfigElNodeConfigsEl {
-        GkeonpremBareMetalNodePoolNodePoolConfigElNodeConfigsEl {
+impl BuildGkeonpremBareMetalNodePool_NodePoolConfig_NodeConfigs {
+    pub fn build(self) -> GkeonpremBareMetalNodePool_NodePoolConfig_NodeConfigs {
+        GkeonpremBareMetalNodePool_NodePoolConfig_NodeConfigs {
             labels: core::default::Default::default(),
             node_ip: core::default::Default::default(),
         }
     }
 }
 
-pub struct GkeonpremBareMetalNodePoolNodePoolConfigElNodeConfigsElRef {
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalNodePool_NodePoolConfig_NodeConfigsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremBareMetalNodePoolNodePoolConfigElNodeConfigsElRef {
+impl terrars::Ref for GkeonpremBareMetalNodePool_NodePoolConfig_NodeConfigsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremBareMetalNodePoolNodePoolConfigElNodeConfigsElRef {
-        GkeonpremBareMetalNodePoolNodePoolConfigElNodeConfigsElRef {
+    ) -> GkeonpremBareMetalNodePool_NodePoolConfig_NodeConfigsRef {
+        GkeonpremBareMetalNodePool_NodePoolConfig_NodeConfigsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremBareMetalNodePoolNodePoolConfigElNodeConfigsElRef {
+impl GkeonpremBareMetalNodePool_NodePoolConfig_NodeConfigsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `labels` after provisioning.\nThe map of Kubernetes labels (key/value pairs) to be applied to\neach node. These will added in addition to any default label(s)\nthat Kubernetes may apply to the node. In case of conflict in\nlabel keys, the applied set may differ depending on the Kubernetes\nversion -- it's best to assume the behavior is undefined and\nconflicts should be avoided. For more information, including usage\nand the valid values, see:\n  http://kubernetes.io/v1.1/docs/user-guide/labels.html\nAn object containing a list of \"key\": value pairs.\nExample: { \"name\": \"wrench\", \"mass\": \"1.3kg\", \"count\": \"3\" }."]
+        "Get a reference to the value of field `labels` after provisioning.\nThe map of Kubernetes labels (key/value pairs) to be applied to\neach node. These will added in addition to any default label(s)\nthat Kubernetes may apply to the node. In case of conflict in\nlabel keys, the applied set may differ depending on the Kubernetes\nversion -- it's best to assume the behavior is undefined and\nconflicts should be avoided. For more information, including usage\nand the valid values, see:\n  - http://kubernetes.io/v1.1/docs/user-guide/labels.html\nAn object containing a list of \"key\": value pairs.\nFor example: { \"name\": \"wrench\", \"mass\": \"1.3kg\", \"count\": \"3\" }."]
     pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.base))
     }
@@ -776,7 +811,7 @@ impl GkeonpremBareMetalNodePoolNodePoolConfigElNodeConfigsElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremBareMetalNodePoolNodePoolConfigElTaintsEl {
+pub struct GkeonpremBareMetalNodePool_NodePoolConfig_Taints {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     effect: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -785,7 +820,7 @@ pub struct GkeonpremBareMetalNodePoolNodePoolConfigElTaintsEl {
     value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeonpremBareMetalNodePoolNodePoolConfigElTaintsEl {
+impl GkeonpremBareMetalNodePool_NodePoolConfig_Taints {
     #[doc =
         "Set the field `effect`.\nSpecifies the nodes operating system (default: LINUX). Possible values: [\"EFFECT_UNSPECIFIED\", \"PREFER_NO_SCHEDULE\", \"NO_EXECUTE\"]"]
     pub fn set_effect(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -806,8 +841,8 @@ impl GkeonpremBareMetalNodePoolNodePoolConfigElTaintsEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremBareMetalNodePoolNodePoolConfigElTaintsEl {
-    type O = terrars::BlockAssignable<GkeonpremBareMetalNodePoolNodePoolConfigElTaintsEl>;
+impl terrars::ToListMappable for GkeonpremBareMetalNodePool_NodePoolConfig_Taints {
+    type O = terrars::BlockAssignable<GkeonpremBareMetalNodePool_NodePoolConfig_Taints>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -818,11 +853,11 @@ impl terrars::ToListMappable for GkeonpremBareMetalNodePoolNodePoolConfigElTaint
     }
 }
 
-pub struct BuildGkeonpremBareMetalNodePoolNodePoolConfigElTaintsEl {}
+pub struct BuildGkeonpremBareMetalNodePool_NodePoolConfig_Taints {}
 
-impl BuildGkeonpremBareMetalNodePoolNodePoolConfigElTaintsEl {
-    pub fn build(self) -> GkeonpremBareMetalNodePoolNodePoolConfigElTaintsEl {
-        GkeonpremBareMetalNodePoolNodePoolConfigElTaintsEl {
+impl BuildGkeonpremBareMetalNodePool_NodePoolConfig_Taints {
+    pub fn build(self) -> GkeonpremBareMetalNodePool_NodePoolConfig_Taints {
+        GkeonpremBareMetalNodePool_NodePoolConfig_Taints {
             effect: core::default::Default::default(),
             key: core::default::Default::default(),
             value: core::default::Default::default(),
@@ -830,24 +865,26 @@ impl BuildGkeonpremBareMetalNodePoolNodePoolConfigElTaintsEl {
     }
 }
 
-pub struct GkeonpremBareMetalNodePoolNodePoolConfigElTaintsElRef {
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalNodePool_NodePoolConfig_TaintsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremBareMetalNodePoolNodePoolConfigElTaintsElRef {
+impl terrars::Ref for GkeonpremBareMetalNodePool_NodePoolConfig_TaintsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremBareMetalNodePoolNodePoolConfigElTaintsElRef {
-        GkeonpremBareMetalNodePoolNodePoolConfigElTaintsElRef {
+    ) -> GkeonpremBareMetalNodePool_NodePoolConfig_TaintsRef {
+        GkeonpremBareMetalNodePool_NodePoolConfig_TaintsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremBareMetalNodePoolNodePoolConfigElTaintsElRef {
+impl GkeonpremBareMetalNodePool_NodePoolConfig_TaintsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -870,27 +907,27 @@ impl GkeonpremBareMetalNodePoolNodePoolConfigElTaintsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct GkeonpremBareMetalNodePoolNodePoolConfigElDynamic {
-    node_configs: std::option::Option<terrars::DynamicBlock<GkeonpremBareMetalNodePoolNodePoolConfigElNodeConfigsEl>>,
-    taints: std::option::Option<terrars::DynamicBlock<GkeonpremBareMetalNodePoolNodePoolConfigElTaintsEl>>,
+struct GkeonpremBareMetalNodePool_NodePoolConfigDynamic {
+    node_configs: std::option::Option<terrars::DynamicBlock<GkeonpremBareMetalNodePool_NodePoolConfig_NodeConfigs>>,
+    taints: std::option::Option<terrars::DynamicBlock<GkeonpremBareMetalNodePool_NodePoolConfig_Taints>>,
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremBareMetalNodePoolNodePoolConfigEl {
+pub struct GkeonpremBareMetalNodePool_NodePoolConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     operating_system: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    node_configs: std::option::Option<std::vec::Vec<GkeonpremBareMetalNodePoolNodePoolConfigElNodeConfigsEl>>,
+    node_configs: std::option::Option<std::vec::Vec<GkeonpremBareMetalNodePool_NodePoolConfig_NodeConfigs>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    taints: std::option::Option<std::vec::Vec<GkeonpremBareMetalNodePoolNodePoolConfigElTaintsEl>>,
-    dynamic: GkeonpremBareMetalNodePoolNodePoolConfigElDynamic,
+    taints: std::option::Option<std::vec::Vec<GkeonpremBareMetalNodePool_NodePoolConfig_Taints>>,
+    dynamic: GkeonpremBareMetalNodePool_NodePoolConfigDynamic,
 }
 
-impl GkeonpremBareMetalNodePoolNodePoolConfigEl {
+impl GkeonpremBareMetalNodePool_NodePoolConfig {
     #[doc =
-        "Set the field `labels`.\nThe map of Kubernetes labels (key/value pairs) to be applied to\neach node. These will added in addition to any default label(s)\nthat Kubernetes may apply to the node. In case of conflict in\nlabel keys, the applied set may differ depending on the Kubernetes\nversion -- it's best to assume the behavior is undefined and\nconflicts should be avoided. For more information, including usage\nand the valid values, see:\n  http://kubernetes.io/v1.1/docs/user-guide/labels.html\nAn object containing a list of \"key\": value pairs.\nExample: { \"name\": \"wrench\", \"mass\": \"1.3kg\", \"count\": \"3\" }."]
+        "Set the field `labels`.\nThe map of Kubernetes labels (key/value pairs) to be applied to\neach node. These will added in addition to any default label(s)\nthat Kubernetes may apply to the node. In case of conflict in\nlabel keys, the applied set may differ depending on the Kubernetes\nversion -- it's best to assume the behavior is undefined and\nconflicts should be avoided. For more information, including usage\nand the valid values, see:\n  - http://kubernetes.io/v1.1/docs/user-guide/labels.html\nAn object containing a list of \"key\": value pairs.\nFor example: { \"name\": \"wrench\", \"mass\": \"1.3kg\", \"count\": \"3\" }."]
     pub fn set_labels(
         mut self,
         v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -908,12 +945,7 @@ impl GkeonpremBareMetalNodePoolNodePoolConfigEl {
     #[doc = "Set the field `node_configs`.\n"]
     pub fn set_node_configs(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<GkeonpremBareMetalNodePoolNodePoolConfigElNodeConfigsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremBareMetalNodePool_NodePoolConfig_NodeConfigs>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -929,7 +961,7 @@ impl GkeonpremBareMetalNodePoolNodePoolConfigEl {
     #[doc = "Set the field `taints`.\n"]
     pub fn set_taints(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremBareMetalNodePoolNodePoolConfigElTaintsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremBareMetalNodePool_NodePoolConfig_Taints>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -943,8 +975,8 @@ impl GkeonpremBareMetalNodePoolNodePoolConfigEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremBareMetalNodePoolNodePoolConfigEl {
-    type O = terrars::BlockAssignable<GkeonpremBareMetalNodePoolNodePoolConfigEl>;
+impl terrars::ToListMappable for GkeonpremBareMetalNodePool_NodePoolConfig {
+    type O = terrars::BlockAssignable<GkeonpremBareMetalNodePool_NodePoolConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -955,11 +987,11 @@ impl terrars::ToListMappable for GkeonpremBareMetalNodePoolNodePoolConfigEl {
     }
 }
 
-pub struct BuildGkeonpremBareMetalNodePoolNodePoolConfigEl {}
+pub struct BuildGkeonpremBareMetalNodePool_NodePoolConfig {}
 
-impl BuildGkeonpremBareMetalNodePoolNodePoolConfigEl {
-    pub fn build(self) -> GkeonpremBareMetalNodePoolNodePoolConfigEl {
-        GkeonpremBareMetalNodePoolNodePoolConfigEl {
+impl BuildGkeonpremBareMetalNodePool_NodePoolConfig {
+    pub fn build(self) -> GkeonpremBareMetalNodePool_NodePoolConfig {
+        GkeonpremBareMetalNodePool_NodePoolConfig {
             labels: core::default::Default::default(),
             operating_system: core::default::Default::default(),
             node_configs: core::default::Default::default(),
@@ -969,27 +1001,29 @@ impl BuildGkeonpremBareMetalNodePoolNodePoolConfigEl {
     }
 }
 
-pub struct GkeonpremBareMetalNodePoolNodePoolConfigElRef {
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalNodePool_NodePoolConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremBareMetalNodePoolNodePoolConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremBareMetalNodePoolNodePoolConfigElRef {
-        GkeonpremBareMetalNodePoolNodePoolConfigElRef {
+impl terrars::Ref for GkeonpremBareMetalNodePool_NodePoolConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremBareMetalNodePool_NodePoolConfigRef {
+        GkeonpremBareMetalNodePool_NodePoolConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremBareMetalNodePoolNodePoolConfigElRef {
+impl GkeonpremBareMetalNodePool_NodePoolConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `labels` after provisioning.\nThe map of Kubernetes labels (key/value pairs) to be applied to\neach node. These will added in addition to any default label(s)\nthat Kubernetes may apply to the node. In case of conflict in\nlabel keys, the applied set may differ depending on the Kubernetes\nversion -- it's best to assume the behavior is undefined and\nconflicts should be avoided. For more information, including usage\nand the valid values, see:\n  http://kubernetes.io/v1.1/docs/user-guide/labels.html\nAn object containing a list of \"key\": value pairs.\nExample: { \"name\": \"wrench\", \"mass\": \"1.3kg\", \"count\": \"3\" }."]
+        "Get a reference to the value of field `labels` after provisioning.\nThe map of Kubernetes labels (key/value pairs) to be applied to\neach node. These will added in addition to any default label(s)\nthat Kubernetes may apply to the node. In case of conflict in\nlabel keys, the applied set may differ depending on the Kubernetes\nversion -- it's best to assume the behavior is undefined and\nconflicts should be avoided. For more information, including usage\nand the valid values, see:\n  - http://kubernetes.io/v1.1/docs/user-guide/labels.html\nAn object containing a list of \"key\": value pairs.\nFor example: { \"name\": \"wrench\", \"mass\": \"1.3kg\", \"count\": \"3\" }."]
     pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.base))
     }
@@ -1001,18 +1035,18 @@ impl GkeonpremBareMetalNodePoolNodePoolConfigElRef {
     }
 
     #[doc = "Get a reference to the value of field `node_configs` after provisioning.\n"]
-    pub fn node_configs(&self) -> terrars::ListRef<GkeonpremBareMetalNodePoolNodePoolConfigElNodeConfigsElRef> {
+    pub fn node_configs(&self) -> terrars::ListRef<GkeonpremBareMetalNodePool_NodePoolConfig_NodeConfigsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.node_configs", self.base))
     }
 
     #[doc = "Get a reference to the value of field `taints` after provisioning.\n"]
-    pub fn taints(&self) -> terrars::ListRef<GkeonpremBareMetalNodePoolNodePoolConfigElTaintsElRef> {
+    pub fn taints(&self) -> terrars::ListRef<GkeonpremBareMetalNodePool_NodePoolConfig_TaintsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.taints", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremBareMetalNodePoolTimeoutsEl {
+pub struct GkeonpremBareMetalNodePool_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1021,7 +1055,7 @@ pub struct GkeonpremBareMetalNodePoolTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeonpremBareMetalNodePoolTimeoutsEl {
+impl GkeonpremBareMetalNodePool_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1041,8 +1075,8 @@ impl GkeonpremBareMetalNodePoolTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremBareMetalNodePoolTimeoutsEl {
-    type O = terrars::BlockAssignable<GkeonpremBareMetalNodePoolTimeoutsEl>;
+impl terrars::ToListMappable for GkeonpremBareMetalNodePool_Timeouts {
+    type O = terrars::BlockAssignable<GkeonpremBareMetalNodePool_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1053,11 +1087,11 @@ impl terrars::ToListMappable for GkeonpremBareMetalNodePoolTimeoutsEl {
     }
 }
 
-pub struct BuildGkeonpremBareMetalNodePoolTimeoutsEl {}
+pub struct BuildGkeonpremBareMetalNodePool_Timeouts {}
 
-impl BuildGkeonpremBareMetalNodePoolTimeoutsEl {
-    pub fn build(self) -> GkeonpremBareMetalNodePoolTimeoutsEl {
-        GkeonpremBareMetalNodePoolTimeoutsEl {
+impl BuildGkeonpremBareMetalNodePool_Timeouts {
+    pub fn build(self) -> GkeonpremBareMetalNodePool_Timeouts {
+        GkeonpremBareMetalNodePool_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1065,21 +1099,23 @@ impl BuildGkeonpremBareMetalNodePoolTimeoutsEl {
     }
 }
 
-pub struct GkeonpremBareMetalNodePoolTimeoutsElRef {
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalNodePool_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremBareMetalNodePoolTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremBareMetalNodePoolTimeoutsElRef {
-        GkeonpremBareMetalNodePoolTimeoutsElRef {
+impl terrars::Ref for GkeonpremBareMetalNodePool_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremBareMetalNodePool_TimeoutsRef {
+        GkeonpremBareMetalNodePool_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremBareMetalNodePoolTimeoutsElRef {
+impl GkeonpremBareMetalNodePool_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1098,9 +1134,4 @@ impl GkeonpremBareMetalNodePoolTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct GkeonpremBareMetalNodePoolDynamic {
-    node_pool_config: std::option::Option<terrars::DynamicBlock<GkeonpremBareMetalNodePoolNodePoolConfigEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeVpnGatewayData {
+struct ComputeVpnGatewayData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct ComputeVpnGatewayData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -29,13 +33,16 @@ struct ComputeVpnGatewayData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComputeVpnGatewayTimeoutsEl>,
+    params: std::option::Option<std::vec::Vec<ComputeVpnGateway_Params>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<ComputeVpnGateway_Timeouts>,
+    dynamic: ComputeVpnGatewayDynamic,
 }
 
 struct ComputeVpnGateway_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeVpnGatewayData>,
+    data: std::cell::RefCell<ComputeVpnGatewayData_>,
 }
 
 #[derive(Clone)]
@@ -135,6 +142,13 @@ impl ComputeVpnGateway {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nAn optional description of this resource."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -159,8 +173,21 @@ impl ComputeVpnGateway {
         self
     }
 
+    #[doc = "Set the field `params`.\n"]
+    pub fn set_params(self, v: impl std::convert::Into<terrars::BlockAssignable<ComputeVpnGateway_Params>>) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().params = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.params = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeVpnGatewayTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeVpnGateway_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -169,6 +196,12 @@ impl ComputeVpnGateway {
         "Get a reference to the value of field `creation_timestamp` after provisioning.\nCreation timestamp in RFC3339 text format."]
     pub fn creation_timestamp(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_timestamp", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -216,9 +249,14 @@ impl ComputeVpnGateway {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `params` after provisioning.\n"]
+    pub fn params(&self) -> terrars::ListRef<ComputeVpnGateway_ParamsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.params", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeVpnGatewayTimeoutsElRef {
-        ComputeVpnGatewayTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeVpnGateway_TimeoutsRef {
+        ComputeVpnGateway_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -267,19 +305,22 @@ impl BuildComputeVpnGateway {
         let out = ComputeVpnGateway(std::rc::Rc::new(ComputeVpnGateway_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeVpnGatewayData {
+            data: std::cell::RefCell::new(ComputeVpnGatewayData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
                 network: self.network,
                 project: core::default::Default::default(),
                 region: core::default::Default::default(),
+                params: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -314,6 +355,12 @@ impl ComputeVpnGatewayRef {
         "Get a reference to the value of field `creation_timestamp` after provisioning.\nCreation timestamp in RFC3339 text format."]
     pub fn creation_timestamp(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_timestamp", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -361,21 +408,97 @@ impl ComputeVpnGatewayRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `params` after provisioning.\n"]
+    pub fn params(&self) -> terrars::ListRef<ComputeVpnGateway_ParamsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.params", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeVpnGatewayTimeoutsElRef {
-        ComputeVpnGatewayTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeVpnGateway_TimeoutsRef {
+        ComputeVpnGateway_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct ComputeVpnGatewayDynamic {
+    params: std::option::Option<terrars::DynamicBlock<ComputeVpnGateway_Params>>,
+}
+
+#[derive(Serialize)]
+pub struct ComputeVpnGateway_Params {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_manager_tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+}
+
+impl ComputeVpnGateway_Params {
+    #[doc =
+        "Set the field `resource_manager_tags`.\nResource manager tags to be bound to the Vpn Gateway. Tag keys and values have the\nsame definition as resource manager tags. Keys must be in the format tagKeys/{tag_key_id},\nand values are in the format tagValues/456."]
+    pub fn set_resource_manager_tags(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.resource_manager_tags = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeVpnGateway_Params {
+    type O = terrars::BlockAssignable<ComputeVpnGateway_Params>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeVpnGateway_Params {}
+
+impl BuildComputeVpnGateway_Params {
+    pub fn build(self) -> ComputeVpnGateway_Params {
+        ComputeVpnGateway_Params { resource_manager_tags: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeVpnGateway_ParamsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeVpnGateway_ParamsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeVpnGateway_ParamsRef {
+        ComputeVpnGateway_ParamsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeVpnGateway_ParamsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `resource_manager_tags` after provisioning.\nResource manager tags to be bound to the Vpn Gateway. Tag keys and values have the\nsame definition as resource manager tags. Keys must be in the format tagKeys/{tag_key_id},\nand values are in the format tagValues/456."]
+    pub fn resource_manager_tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.resource_manager_tags", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeVpnGatewayTimeoutsEl {
+pub struct ComputeVpnGateway_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeVpnGatewayTimeoutsEl {
+impl ComputeVpnGateway_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -389,8 +512,8 @@ impl ComputeVpnGatewayTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeVpnGatewayTimeoutsEl {
-    type O = terrars::BlockAssignable<ComputeVpnGatewayTimeoutsEl>;
+impl terrars::ToListMappable for ComputeVpnGateway_Timeouts {
+    type O = terrars::BlockAssignable<ComputeVpnGateway_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -401,32 +524,34 @@ impl terrars::ToListMappable for ComputeVpnGatewayTimeoutsEl {
     }
 }
 
-pub struct BuildComputeVpnGatewayTimeoutsEl {}
+pub struct BuildComputeVpnGateway_Timeouts {}
 
-impl BuildComputeVpnGatewayTimeoutsEl {
-    pub fn build(self) -> ComputeVpnGatewayTimeoutsEl {
-        ComputeVpnGatewayTimeoutsEl {
+impl BuildComputeVpnGateway_Timeouts {
+    pub fn build(self) -> ComputeVpnGateway_Timeouts {
+        ComputeVpnGateway_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeVpnGatewayTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComputeVpnGateway_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeVpnGatewayTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeVpnGatewayTimeoutsElRef {
-        ComputeVpnGatewayTimeoutsElRef {
+impl terrars::Ref for ComputeVpnGateway_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeVpnGateway_TimeoutsRef {
+        ComputeVpnGateway_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeVpnGatewayTimeoutsElRef {
+impl ComputeVpnGateway_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

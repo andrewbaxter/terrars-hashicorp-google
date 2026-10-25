@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeNetworkData {
+struct ComputeNetworkData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,7 +23,17 @@ struct ComputeNetworkData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     auto_create_subnetworks: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bgp_always_compare_med: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bgp_best_path_selection_mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bgp_inter_region_cost: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete_bgp_always_compare_med: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete_default_routes_on_create: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -36,17 +48,22 @@ struct ComputeNetworkData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     network_firewall_policy_enforcement_order: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_profile: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     routing_mode: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComputeNetworkTimeoutsEl>,
+    params: std::option::Option<std::vec::Vec<ComputeNetwork_Params>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<ComputeNetwork_Timeouts>,
+    dynamic: ComputeNetworkDynamic,
 }
 
 struct ComputeNetwork_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeNetworkData>,
+    data: std::cell::RefCell<ComputeNetworkData_>,
 }
 
 #[derive(Clone)]
@@ -154,9 +171,47 @@ impl ComputeNetwork {
     }
 
     #[doc =
+        "Set the field `bgp_always_compare_med`.\nEnables/disables the comparison of MED across routes with different Neighbor ASNs.\nThis value can only be set if the --bgp-best-path-selection-mode is STANDARD"]
+    pub fn set_bgp_always_compare_med(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().bgp_always_compare_med = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `bgp_best_path_selection_mode`.\nThe BGP best selection algorithm to be employed. MODE can be LEGACY or STANDARD. Possible values: [\"LEGACY\", \"STANDARD\"]"]
+    pub fn set_bgp_best_path_selection_mode(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().bgp_best_path_selection_mode = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `bgp_inter_region_cost`.\nChoice of the behavior of inter-regional cost and MED in the BPS algorithm. Possible values: [\"DEFAULT\", \"ADD_COST_TO_MED\"]"]
+    pub fn set_bgp_inter_region_cost(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().bgp_inter_region_cost = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `delete_bgp_always_compare_med`.\nIf set to 'true', the 'bgp_always_compare_med' field will be cleared.\nIf set to 'false' (the default), 'bgp_always_compare_med' will be set to the value specified in the configuration."]
+    pub fn set_delete_bgp_always_compare_med(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().delete_bgp_always_compare_med = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `delete_default_routes_on_create`.\nIf set to 'true', default routes ('0.0.0.0/0') will be deleted\nimmediately after network creation. Defaults to 'false'."]
     pub fn set_delete_default_routes_on_create(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().delete_default_routes_on_create = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
         self
     }
 
@@ -204,6 +259,13 @@ impl ComputeNetwork {
         self
     }
 
+    #[doc =
+        "Set the field `network_profile`.\nA full or partial URL of the network profile to apply to this network.\nThis field can be set only at resource creation time. For example, the\nfollowing are valid URLs:\n* https://www.googleapis.com/compute/v1/projects/{projectId}/global/networkProfiles/{network_profile_name}\n* projects/{projectId}/global/networkProfiles/{network_profile_name}"]
+    pub fn set_network_profile(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().network_profile = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `project`.\n"]
     pub fn set_project(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().project = std::option::Option::Some(v.into());
@@ -217,8 +279,21 @@ impl ComputeNetwork {
         self
     }
 
+    #[doc = "Set the field `params`.\n"]
+    pub fn set_params(self, v: impl std::convert::Into<terrars::BlockAssignable<ComputeNetwork_Params>>) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().params = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.params = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeNetworkTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeNetwork_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -230,12 +305,45 @@ impl ComputeNetwork {
     }
 
     #[doc =
+        "Get a reference to the value of field `bgp_always_compare_med` after provisioning.\nEnables/disables the comparison of MED across routes with different Neighbor ASNs.\nThis value can only be set if the --bgp-best-path-selection-mode is STANDARD"]
+    pub fn bgp_always_compare_med(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bgp_always_compare_med", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `bgp_best_path_selection_mode` after provisioning.\nThe BGP best selection algorithm to be employed. MODE can be LEGACY or STANDARD. Possible values: [\"LEGACY\", \"STANDARD\"]"]
+    pub fn bgp_best_path_selection_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bgp_best_path_selection_mode", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `bgp_inter_region_cost` after provisioning.\nChoice of the behavior of inter-regional cost and MED in the BPS algorithm. Possible values: [\"DEFAULT\", \"ADD_COST_TO_MED\"]"]
+    pub fn bgp_inter_region_cost(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bgp_inter_region_cost", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `delete_bgp_always_compare_med` after provisioning.\nIf set to 'true', the 'bgp_always_compare_med' field will be cleared.\nIf set to 'false' (the default), 'bgp_always_compare_med' will be set to the value specified in the configuration."]
+    pub fn delete_bgp_always_compare_med(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.delete_bgp_always_compare_med", self.extract_ref()),
+        )
+    }
+
+    #[doc =
         "Get a reference to the value of field `delete_default_routes_on_create` after provisioning.\nIf set to 'true', default routes ('0.0.0.0/0') will be deleted\nimmediately after network creation. Defaults to 'false'."]
     pub fn delete_default_routes_on_create(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(
             self.shared().clone(),
             format!("{}.delete_default_routes_on_create", self.extract_ref()),
         )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -289,6 +397,18 @@ impl ComputeNetwork {
     }
 
     #[doc =
+        "Get a reference to the value of field `network_id` after provisioning.\nThe unique identifier for the resource. This identifier is defined by the server."]
+    pub fn network_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `network_profile` after provisioning.\nA full or partial URL of the network profile to apply to this network.\nThis field can be set only at resource creation time. For example, the\nfollowing are valid URLs:\n* https://www.googleapis.com/compute/v1/projects/{projectId}/global/networkProfiles/{network_profile_name}\n* projects/{projectId}/global/networkProfiles/{network_profile_name}"]
+    pub fn network_profile(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_profile", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `numeric_id` after provisioning.\nThe unique identifier for the resource. This identifier is defined by the server."]
     pub fn numeric_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.numeric_id", self.extract_ref()))
@@ -310,9 +430,14 @@ impl ComputeNetwork {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `params` after provisioning.\n"]
+    pub fn params(&self) -> terrars::ListRef<ComputeNetwork_ParamsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.params", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeNetworkTimeoutsElRef {
-        ComputeNetworkTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeNetwork_TimeoutsRef {
+        ComputeNetwork_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -359,14 +484,19 @@ impl BuildComputeNetwork {
         let out = ComputeNetwork(std::rc::Rc::new(ComputeNetwork_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeNetworkData {
+            data: std::cell::RefCell::new(ComputeNetworkData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 auto_create_subnetworks: core::default::Default::default(),
+                bgp_always_compare_med: core::default::Default::default(),
+                bgp_best_path_selection_mode: core::default::Default::default(),
+                bgp_inter_region_cost: core::default::Default::default(),
+                delete_bgp_always_compare_med: core::default::Default::default(),
                 delete_default_routes_on_create: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 enable_ula_internal_ipv6: core::default::Default::default(),
                 id: core::default::Default::default(),
@@ -374,9 +504,12 @@ impl BuildComputeNetwork {
                 mtu: core::default::Default::default(),
                 name: self.name,
                 network_firewall_policy_enforcement_order: core::default::Default::default(),
+                network_profile: core::default::Default::default(),
                 project: core::default::Default::default(),
                 routing_mode: core::default::Default::default(),
+                params: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -414,12 +547,45 @@ impl ComputeNetworkRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `bgp_always_compare_med` after provisioning.\nEnables/disables the comparison of MED across routes with different Neighbor ASNs.\nThis value can only be set if the --bgp-best-path-selection-mode is STANDARD"]
+    pub fn bgp_always_compare_med(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bgp_always_compare_med", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `bgp_best_path_selection_mode` after provisioning.\nThe BGP best selection algorithm to be employed. MODE can be LEGACY or STANDARD. Possible values: [\"LEGACY\", \"STANDARD\"]"]
+    pub fn bgp_best_path_selection_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bgp_best_path_selection_mode", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `bgp_inter_region_cost` after provisioning.\nChoice of the behavior of inter-regional cost and MED in the BPS algorithm. Possible values: [\"DEFAULT\", \"ADD_COST_TO_MED\"]"]
+    pub fn bgp_inter_region_cost(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bgp_inter_region_cost", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `delete_bgp_always_compare_med` after provisioning.\nIf set to 'true', the 'bgp_always_compare_med' field will be cleared.\nIf set to 'false' (the default), 'bgp_always_compare_med' will be set to the value specified in the configuration."]
+    pub fn delete_bgp_always_compare_med(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.delete_bgp_always_compare_med", self.extract_ref()),
+        )
+    }
+
+    #[doc =
         "Get a reference to the value of field `delete_default_routes_on_create` after provisioning.\nIf set to 'true', default routes ('0.0.0.0/0') will be deleted\nimmediately after network creation. Defaults to 'false'."]
     pub fn delete_default_routes_on_create(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(
             self.shared().clone(),
             format!("{}.delete_default_routes_on_create", self.extract_ref()),
         )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -473,6 +639,18 @@ impl ComputeNetworkRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `network_id` after provisioning.\nThe unique identifier for the resource. This identifier is defined by the server."]
+    pub fn network_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `network_profile` after provisioning.\nA full or partial URL of the network profile to apply to this network.\nThis field can be set only at resource creation time. For example, the\nfollowing are valid URLs:\n* https://www.googleapis.com/compute/v1/projects/{projectId}/global/networkProfiles/{network_profile_name}\n* projects/{projectId}/global/networkProfiles/{network_profile_name}"]
+    pub fn network_profile(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_profile", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `numeric_id` after provisioning.\nThe unique identifier for the resource. This identifier is defined by the server."]
     pub fn numeric_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.numeric_id", self.extract_ref()))
@@ -494,14 +672,90 @@ impl ComputeNetworkRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `params` after provisioning.\n"]
+    pub fn params(&self) -> terrars::ListRef<ComputeNetwork_ParamsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.params", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeNetworkTimeoutsElRef {
-        ComputeNetworkTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeNetwork_TimeoutsRef {
+        ComputeNetwork_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct ComputeNetworkDynamic {
+    params: std::option::Option<terrars::DynamicBlock<ComputeNetwork_Params>>,
+}
+
+#[derive(Serialize)]
+pub struct ComputeNetwork_Params {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_manager_tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+}
+
+impl ComputeNetwork_Params {
+    #[doc =
+        "Set the field `resource_manager_tags`.\nResource manager tags to be bound to the network. Tag keys and values have the\nsame definition as resource manager tags. Keys must be in the format tagKeys/{tag_key_id},\nand values are in the format tagValues/456."]
+    pub fn set_resource_manager_tags(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.resource_manager_tags = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeNetwork_Params {
+    type O = terrars::BlockAssignable<ComputeNetwork_Params>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeNetwork_Params {}
+
+impl BuildComputeNetwork_Params {
+    pub fn build(self) -> ComputeNetwork_Params {
+        ComputeNetwork_Params { resource_manager_tags: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeNetwork_ParamsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeNetwork_ParamsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeNetwork_ParamsRef {
+        ComputeNetwork_ParamsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeNetwork_ParamsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `resource_manager_tags` after provisioning.\nResource manager tags to be bound to the network. Tag keys and values have the\nsame definition as resource manager tags. Keys must be in the format tagKeys/{tag_key_id},\nand values are in the format tagValues/456."]
+    pub fn resource_manager_tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.resource_manager_tags", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeNetworkTimeoutsEl {
+pub struct ComputeNetwork_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -510,7 +764,7 @@ pub struct ComputeNetworkTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeNetworkTimeoutsEl {
+impl ComputeNetwork_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -530,8 +784,8 @@ impl ComputeNetworkTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeNetworkTimeoutsEl {
-    type O = terrars::BlockAssignable<ComputeNetworkTimeoutsEl>;
+impl terrars::ToListMappable for ComputeNetwork_Timeouts {
+    type O = terrars::BlockAssignable<ComputeNetwork_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -542,11 +796,11 @@ impl terrars::ToListMappable for ComputeNetworkTimeoutsEl {
     }
 }
 
-pub struct BuildComputeNetworkTimeoutsEl {}
+pub struct BuildComputeNetwork_Timeouts {}
 
-impl BuildComputeNetworkTimeoutsEl {
-    pub fn build(self) -> ComputeNetworkTimeoutsEl {
-        ComputeNetworkTimeoutsEl {
+impl BuildComputeNetwork_Timeouts {
+    pub fn build(self) -> ComputeNetwork_Timeouts {
+        ComputeNetwork_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -554,21 +808,23 @@ impl BuildComputeNetworkTimeoutsEl {
     }
 }
 
-pub struct ComputeNetworkTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComputeNetwork_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeNetworkTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeNetworkTimeoutsElRef {
-        ComputeNetworkTimeoutsElRef {
+impl terrars::Ref for ComputeNetwork_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeNetwork_TimeoutsRef {
+        ComputeNetwork_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeNetworkTimeoutsElRef {
+impl ComputeNetwork_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

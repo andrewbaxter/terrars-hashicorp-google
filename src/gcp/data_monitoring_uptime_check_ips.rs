@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataMonitoringUptimeCheckIpsData {
+struct DataMonitoringUptimeCheckIpsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -23,7 +25,7 @@ struct DataMonitoringUptimeCheckIpsData {
 struct DataMonitoringUptimeCheckIps_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataMonitoringUptimeCheckIpsData>,
+    data: std::cell::RefCell<DataMonitoringUptimeCheckIpsData_>,
 }
 
 #[derive(Clone)]
@@ -80,7 +82,7 @@ impl DataMonitoringUptimeCheckIps {
     }
 
     #[doc = "Get a reference to the value of field `uptime_check_ips` after provisioning.\n"]
-    pub fn uptime_check_ips(&self) -> terrars::ListRef<DataMonitoringUptimeCheckIpsUptimeCheckIpsElRef> {
+    pub fn uptime_check_ips(&self) -> terrars::ListRef<DataMonitoringUptimeCheckIps_UptimeCheckIpsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.uptime_check_ips", self.extract_ref()))
     }
 }
@@ -125,7 +127,7 @@ impl BuildDataMonitoringUptimeCheckIps {
         let out = DataMonitoringUptimeCheckIps(std::rc::Rc::new(DataMonitoringUptimeCheckIps_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataMonitoringUptimeCheckIpsData {
+            data: std::cell::RefCell::new(DataMonitoringUptimeCheckIpsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -167,13 +169,13 @@ impl DataMonitoringUptimeCheckIpsRef {
     }
 
     #[doc = "Get a reference to the value of field `uptime_check_ips` after provisioning.\n"]
-    pub fn uptime_check_ips(&self) -> terrars::ListRef<DataMonitoringUptimeCheckIpsUptimeCheckIpsElRef> {
+    pub fn uptime_check_ips(&self) -> terrars::ListRef<DataMonitoringUptimeCheckIps_UptimeCheckIpsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.uptime_check_ips", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataMonitoringUptimeCheckIpsUptimeCheckIpsEl {
+pub struct DataMonitoringUptimeCheckIps_UptimeCheckIps {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ip_address: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -182,7 +184,7 @@ pub struct DataMonitoringUptimeCheckIpsUptimeCheckIpsEl {
     region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataMonitoringUptimeCheckIpsUptimeCheckIpsEl {
+impl DataMonitoringUptimeCheckIps_UptimeCheckIps {
     #[doc = "Set the field `ip_address`.\n"]
     pub fn set_ip_address(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.ip_address = std::option::Option::Some(v.into());
@@ -202,8 +204,8 @@ impl DataMonitoringUptimeCheckIpsUptimeCheckIpsEl {
     }
 }
 
-impl terrars::ToListMappable for DataMonitoringUptimeCheckIpsUptimeCheckIpsEl {
-    type O = terrars::BlockAssignable<DataMonitoringUptimeCheckIpsUptimeCheckIpsEl>;
+impl terrars::ToListMappable for DataMonitoringUptimeCheckIps_UptimeCheckIps {
+    type O = terrars::BlockAssignable<DataMonitoringUptimeCheckIps_UptimeCheckIps>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -214,11 +216,11 @@ impl terrars::ToListMappable for DataMonitoringUptimeCheckIpsUptimeCheckIpsEl {
     }
 }
 
-pub struct BuildDataMonitoringUptimeCheckIpsUptimeCheckIpsEl {}
+pub struct BuildDataMonitoringUptimeCheckIps_UptimeCheckIps {}
 
-impl BuildDataMonitoringUptimeCheckIpsUptimeCheckIpsEl {
-    pub fn build(self) -> DataMonitoringUptimeCheckIpsUptimeCheckIpsEl {
-        DataMonitoringUptimeCheckIpsUptimeCheckIpsEl {
+impl BuildDataMonitoringUptimeCheckIps_UptimeCheckIps {
+    pub fn build(self) -> DataMonitoringUptimeCheckIps_UptimeCheckIps {
+        DataMonitoringUptimeCheckIps_UptimeCheckIps {
             ip_address: core::default::Default::default(),
             location: core::default::Default::default(),
             region: core::default::Default::default(),
@@ -226,24 +228,26 @@ impl BuildDataMonitoringUptimeCheckIpsUptimeCheckIpsEl {
     }
 }
 
-pub struct DataMonitoringUptimeCheckIpsUptimeCheckIpsElRef {
+#[allow(dead_code)]
+pub struct DataMonitoringUptimeCheckIps_UptimeCheckIpsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataMonitoringUptimeCheckIpsUptimeCheckIpsElRef {
+impl terrars::Ref for DataMonitoringUptimeCheckIps_UptimeCheckIpsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataMonitoringUptimeCheckIpsUptimeCheckIpsElRef {
-        DataMonitoringUptimeCheckIpsUptimeCheckIpsElRef {
+    ) -> DataMonitoringUptimeCheckIps_UptimeCheckIpsRef {
+        DataMonitoringUptimeCheckIps_UptimeCheckIpsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataMonitoringUptimeCheckIpsUptimeCheckIpsElRef {
+impl DataMonitoringUptimeCheckIps_UptimeCheckIpsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

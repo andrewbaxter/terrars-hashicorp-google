@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataSqlDatabaseInstanceData {
+struct DataSqlDatabaseInstanceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -26,7 +28,7 @@ struct DataSqlDatabaseInstanceData {
 struct DataSqlDatabaseInstance_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataSqlDatabaseInstanceData>,
+    data: std::cell::RefCell<DataSqlDatabaseInstanceData_>,
 }
 
 #[derive(Clone)]
@@ -94,8 +96,14 @@ impl DataSqlDatabaseInstance {
     }
 
     #[doc =
+        "Get a reference to the value of field `backupdr_backup` after provisioning.\nThe name of the BackupDR backup to restore from."]
+    pub fn backupdr_backup(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.backupdr_backup", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `clone` after provisioning.\nConfiguration for creating a new instance as a clone of another instance."]
-    pub fn clone(&self) -> terrars::ListRef<DataSqlDatabaseInstanceCloneElRef> {
+    pub fn clone(&self) -> terrars::ListRef<DataSqlDatabaseInstance_CloneRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.clone", self.extract_ref()))
     }
 
@@ -106,9 +114,15 @@ impl DataSqlDatabaseInstance {
     }
 
     #[doc =
-        "Get a reference to the value of field `database_version` after provisioning.\nThe MySQL, PostgreSQL or SQL Server (beta) version to use. Supported values include MYSQL_5_6, MYSQL_5_7, MYSQL_8_0, POSTGRES_9_6, POSTGRES_10, POSTGRES_11, POSTGRES_12, POSTGRES_13, POSTGRES_14, POSTGRES_15, SQLSERVER_2017_STANDARD, SQLSERVER_2017_ENTERPRISE, SQLSERVER_2017_EXPRESS, SQLSERVER_2017_WEB. Database Version Policies includes an up-to-date reference of supported versions."]
+        "Get a reference to the value of field `database_version` after provisioning.\nThe MySQL, PostgreSQL or SQL Server version to use. Supported values include MYSQL_5_6, MYSQL_5_7, MYSQL_8_0, MYSQL_8_4, POSTGRES_9_6, POSTGRES_10, POSTGRES_11, POSTGRES_12, POSTGRES_13, POSTGRES_14, POSTGRES_15, POSTGRES_16, POSTGRES_17, POSTGRES_18, SQLSERVER_2022_STANDARD, SQLSERVER_2022_ENTERPRISE, SQLSERVER_2022_EXPRESS, SQLSERVER_2022_WEB, SQLSERVER_2025_STANDARD, SQLSERVER_2025_ENTERPRISE, SQLSERVER_2025_EXPRESS, SQLSERVER_2025_WEB. Database Version Policies includes an up-to-date reference of supported versions."]
     pub fn database_version(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.database_version", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -117,14 +131,42 @@ impl DataSqlDatabaseInstance {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_protection", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `dns_name` after provisioning.\nThe dns name of the instance."]
+    #[doc =
+        "Get a reference to the value of field `dns_name` after provisioning.\nThe instance-level dns name of the instance for PSC instances or public IP CAS instances."]
     pub fn dns_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.dns_name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `dns_names` after provisioning.\nThe list of DNS names used by this instance. Different connection types for an instance may have different DNS names. DNS names can apply to an individual instance or a cluster of instances."]
+    pub fn dns_names(&self) -> terrars::ListRef<DataSqlDatabaseInstance_DnsNamesRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.dns_names", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `encryption_confidential_mode` after provisioning.\nEnables Confidential Mode on Hyperdisk storage for enhanced security. Only supported on Zonal C4A PG and MySQL instances."]
+    pub fn encryption_confidential_mode(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.encryption_confidential_mode", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `encryption_key_name` after provisioning.\n"]
     pub fn encryption_key_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.encryption_key_name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `enforce_new_sql_network_architecture` after provisioning.\nWhether to enforce the new SQL network architecture."]
+    pub fn enforce_new_sql_network_architecture(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.enforce_new_sql_network_architecture", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `final_backup_description` after provisioning.\nThe description of final backup if instance enable create final backup during instance deletion. "]
+    pub fn final_backup_description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.final_backup_description", self.extract_ref()))
     }
 
     #[doc =
@@ -139,13 +181,22 @@ impl DataSqlDatabaseInstance {
     }
 
     #[doc =
-        "Get a reference to the value of field `instance_type` after provisioning.\nThe type of the instance. The valid values are:- 'SQL_INSTANCE_TYPE_UNSPECIFIED', 'CLOUD_SQL_INSTANCE', 'ON_PREMISES_INSTANCE' and 'READ_REPLICA_INSTANCE'."]
+        "Get a reference to the value of field `include_replicas_for_major_version_upgrade` after provisioning.\nWhen this parameter is set to true, Cloud SQL instances can perform in-place major version upgrades of read replicas along with the primary instance when 'database_version' is updated. This is an input-only field that is not persisted in the API and only takes effect during a major version upgrade."]
+    pub fn include_replicas_for_major_version_upgrade(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.include_replicas_for_major_version_upgrade", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `instance_type` after provisioning.\nThe type of the instance. See https://cloud.google.com/sql/docs/mysql/admin-api/rest/v1/instances#SqlInstanceType for supported values."]
     pub fn instance_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_type", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `ip_address` after provisioning.\n"]
-    pub fn ip_address(&self) -> terrars::ListRef<DataSqlDatabaseInstanceIpAddressElRef> {
+    pub fn ip_address(&self) -> terrars::ListRef<DataSqlDatabaseInstance_IpAddressRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ip_address", self.extract_ref()))
     }
 
@@ -164,6 +215,20 @@ impl DataSqlDatabaseInstance {
         "Get a reference to the value of field `name` after provisioning.\nThe name of the instance. If the name is left blank, Terraform will randomly generate one when the instance is first created. This is done because after a name is used, it cannot be reused for up to one week."]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `node_count` after provisioning.\nFor a read pool instance, the number of nodes in the read pool. For read pools with auto scaling enabled, this field is read only."]
+    pub fn node_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.node_count", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `point_in_time_restore_context` after provisioning.\nConfiguration for creating a new instance using point-in-time-restore from backupdr backup."]
+    pub fn point_in_time_restore_context(
+        &self,
+    ) -> terrars::ListRef<DataSqlDatabaseInstance_PointInTimeRestoreContextRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.point_in_time_restore_context", self.extract_ref()))
     }
 
     #[doc =
@@ -198,12 +263,23 @@ impl DataSqlDatabaseInstance {
 
     #[doc =
         "Get a reference to the value of field `replica_configuration` after provisioning.\nThe configuration for replication."]
-    pub fn replica_configuration(&self) -> terrars::ListRef<DataSqlDatabaseInstanceReplicaConfigurationElRef> {
+    pub fn replica_configuration(&self) -> terrars::ListRef<DataSqlDatabaseInstance_ReplicaConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.replica_configuration", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `replica_names` after provisioning.\nThe replicas of the instance."]
+    pub fn replica_names(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.replica_names", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `replication_cluster` after provisioning.\nA primary instance and disaster recovery replica pair. Applicable to MySQL and PostgreSQL. This field can be set if the primary has psa_write_endpoint set or both the primary and replica are created."]
+    pub fn replication_cluster(&self) -> terrars::ListRef<DataSqlDatabaseInstance_ReplicationClusterRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.replication_cluster", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `restore_backup_context` after provisioning.\n"]
-    pub fn restore_backup_context(&self) -> terrars::ListRef<DataSqlDatabaseInstanceRestoreBackupContextElRef> {
+    pub fn restore_backup_context(&self) -> terrars::ListRef<DataSqlDatabaseInstance_RestoreBackupContextRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.restore_backup_context", self.extract_ref()))
     }
 
@@ -213,13 +289,25 @@ impl DataSqlDatabaseInstance {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.root_password", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `root_password_wo` after provisioning.\nInitial root password. Required for MS SQL Server.\n\t\t\t\tNote: This property is write-only and will not be read from the API. For more info see [updating write-only arguments](/docs/providers/google/guides/using_write_only_arguments.html#updating-write-only-arguments)"]
+    pub fn root_password_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.root_password_wo", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `root_password_wo_version` after provisioning.\nTriggers update of root_password_wo write-only. For more info see [updating write-only arguments](/docs/providers/google/guides/using_write_only_arguments.html#updating-write-only-arguments)"]
+    pub fn root_password_wo_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.root_password_wo_version", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `self_link` after provisioning.\nThe URI of the created resource."]
     pub fn self_link(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `server_ca_cert` after provisioning.\n"]
-    pub fn server_ca_cert(&self) -> terrars::ListRef<DataSqlDatabaseInstanceServerCaCertElRef> {
+    pub fn server_ca_cert(&self) -> terrars::ListRef<DataSqlDatabaseInstance_ServerCaCertRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.server_ca_cert", self.extract_ref()))
     }
 
@@ -234,8 +322,17 @@ impl DataSqlDatabaseInstance {
 
     #[doc =
         "Get a reference to the value of field `settings` after provisioning.\nThe settings to use for the database. The configuration is detailed below."]
-    pub fn settings(&self) -> terrars::ListRef<DataSqlDatabaseInstanceSettingsElRef> {
+    pub fn settings(&self) -> terrars::ListRef<DataSqlDatabaseInstance_SettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.settings", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `switch_transaction_logs_to_cloud_storage_enabled` after provisioning.\nWhen set to true, Cloud SQL instances can switch storing point-in-time recovery transaction logs from a data disk to Cloud Storage, freeing up data disk space and enabling longer retention windows. This is an input-only field that is not persisted in the API."]
+    pub fn switch_transaction_logs_to_cloud_storage_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.switch_transaction_logs_to_cloud_storage_enabled", self.extract_ref()),
+        )
     }
 }
 
@@ -282,7 +379,7 @@ impl BuildDataSqlDatabaseInstance {
         let out = DataSqlDatabaseInstance(std::rc::Rc::new(DataSqlDatabaseInstance_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataSqlDatabaseInstanceData {
+            data: std::cell::RefCell::new(DataSqlDatabaseInstanceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -330,8 +427,14 @@ impl DataSqlDatabaseInstanceRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `backupdr_backup` after provisioning.\nThe name of the BackupDR backup to restore from."]
+    pub fn backupdr_backup(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.backupdr_backup", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `clone` after provisioning.\nConfiguration for creating a new instance as a clone of another instance."]
-    pub fn clone(&self) -> terrars::ListRef<DataSqlDatabaseInstanceCloneElRef> {
+    pub fn clone(&self) -> terrars::ListRef<DataSqlDatabaseInstance_CloneRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.clone", self.extract_ref()))
     }
 
@@ -342,9 +445,15 @@ impl DataSqlDatabaseInstanceRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `database_version` after provisioning.\nThe MySQL, PostgreSQL or SQL Server (beta) version to use. Supported values include MYSQL_5_6, MYSQL_5_7, MYSQL_8_0, POSTGRES_9_6, POSTGRES_10, POSTGRES_11, POSTGRES_12, POSTGRES_13, POSTGRES_14, POSTGRES_15, SQLSERVER_2017_STANDARD, SQLSERVER_2017_ENTERPRISE, SQLSERVER_2017_EXPRESS, SQLSERVER_2017_WEB. Database Version Policies includes an up-to-date reference of supported versions."]
+        "Get a reference to the value of field `database_version` after provisioning.\nThe MySQL, PostgreSQL or SQL Server version to use. Supported values include MYSQL_5_6, MYSQL_5_7, MYSQL_8_0, MYSQL_8_4, POSTGRES_9_6, POSTGRES_10, POSTGRES_11, POSTGRES_12, POSTGRES_13, POSTGRES_14, POSTGRES_15, POSTGRES_16, POSTGRES_17, POSTGRES_18, SQLSERVER_2022_STANDARD, SQLSERVER_2022_ENTERPRISE, SQLSERVER_2022_EXPRESS, SQLSERVER_2022_WEB, SQLSERVER_2025_STANDARD, SQLSERVER_2025_ENTERPRISE, SQLSERVER_2025_EXPRESS, SQLSERVER_2025_WEB. Database Version Policies includes an up-to-date reference of supported versions."]
     pub fn database_version(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.database_version", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -353,14 +462,42 @@ impl DataSqlDatabaseInstanceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_protection", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `dns_name` after provisioning.\nThe dns name of the instance."]
+    #[doc =
+        "Get a reference to the value of field `dns_name` after provisioning.\nThe instance-level dns name of the instance for PSC instances or public IP CAS instances."]
     pub fn dns_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.dns_name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `dns_names` after provisioning.\nThe list of DNS names used by this instance. Different connection types for an instance may have different DNS names. DNS names can apply to an individual instance or a cluster of instances."]
+    pub fn dns_names(&self) -> terrars::ListRef<DataSqlDatabaseInstance_DnsNamesRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.dns_names", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `encryption_confidential_mode` after provisioning.\nEnables Confidential Mode on Hyperdisk storage for enhanced security. Only supported on Zonal C4A PG and MySQL instances."]
+    pub fn encryption_confidential_mode(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.encryption_confidential_mode", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `encryption_key_name` after provisioning.\n"]
     pub fn encryption_key_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.encryption_key_name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `enforce_new_sql_network_architecture` after provisioning.\nWhether to enforce the new SQL network architecture."]
+    pub fn enforce_new_sql_network_architecture(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.enforce_new_sql_network_architecture", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `final_backup_description` after provisioning.\nThe description of final backup if instance enable create final backup during instance deletion. "]
+    pub fn final_backup_description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.final_backup_description", self.extract_ref()))
     }
 
     #[doc =
@@ -375,13 +512,22 @@ impl DataSqlDatabaseInstanceRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `instance_type` after provisioning.\nThe type of the instance. The valid values are:- 'SQL_INSTANCE_TYPE_UNSPECIFIED', 'CLOUD_SQL_INSTANCE', 'ON_PREMISES_INSTANCE' and 'READ_REPLICA_INSTANCE'."]
+        "Get a reference to the value of field `include_replicas_for_major_version_upgrade` after provisioning.\nWhen this parameter is set to true, Cloud SQL instances can perform in-place major version upgrades of read replicas along with the primary instance when 'database_version' is updated. This is an input-only field that is not persisted in the API and only takes effect during a major version upgrade."]
+    pub fn include_replicas_for_major_version_upgrade(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.include_replicas_for_major_version_upgrade", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `instance_type` after provisioning.\nThe type of the instance. See https://cloud.google.com/sql/docs/mysql/admin-api/rest/v1/instances#SqlInstanceType for supported values."]
     pub fn instance_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_type", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `ip_address` after provisioning.\n"]
-    pub fn ip_address(&self) -> terrars::ListRef<DataSqlDatabaseInstanceIpAddressElRef> {
+    pub fn ip_address(&self) -> terrars::ListRef<DataSqlDatabaseInstance_IpAddressRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ip_address", self.extract_ref()))
     }
 
@@ -400,6 +546,20 @@ impl DataSqlDatabaseInstanceRef {
         "Get a reference to the value of field `name` after provisioning.\nThe name of the instance. If the name is left blank, Terraform will randomly generate one when the instance is first created. This is done because after a name is used, it cannot be reused for up to one week."]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `node_count` after provisioning.\nFor a read pool instance, the number of nodes in the read pool. For read pools with auto scaling enabled, this field is read only."]
+    pub fn node_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.node_count", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `point_in_time_restore_context` after provisioning.\nConfiguration for creating a new instance using point-in-time-restore from backupdr backup."]
+    pub fn point_in_time_restore_context(
+        &self,
+    ) -> terrars::ListRef<DataSqlDatabaseInstance_PointInTimeRestoreContextRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.point_in_time_restore_context", self.extract_ref()))
     }
 
     #[doc =
@@ -434,12 +594,23 @@ impl DataSqlDatabaseInstanceRef {
 
     #[doc =
         "Get a reference to the value of field `replica_configuration` after provisioning.\nThe configuration for replication."]
-    pub fn replica_configuration(&self) -> terrars::ListRef<DataSqlDatabaseInstanceReplicaConfigurationElRef> {
+    pub fn replica_configuration(&self) -> terrars::ListRef<DataSqlDatabaseInstance_ReplicaConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.replica_configuration", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `replica_names` after provisioning.\nThe replicas of the instance."]
+    pub fn replica_names(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.replica_names", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `replication_cluster` after provisioning.\nA primary instance and disaster recovery replica pair. Applicable to MySQL and PostgreSQL. This field can be set if the primary has psa_write_endpoint set or both the primary and replica are created."]
+    pub fn replication_cluster(&self) -> terrars::ListRef<DataSqlDatabaseInstance_ReplicationClusterRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.replication_cluster", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `restore_backup_context` after provisioning.\n"]
-    pub fn restore_backup_context(&self) -> terrars::ListRef<DataSqlDatabaseInstanceRestoreBackupContextElRef> {
+    pub fn restore_backup_context(&self) -> terrars::ListRef<DataSqlDatabaseInstance_RestoreBackupContextRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.restore_backup_context", self.extract_ref()))
     }
 
@@ -449,13 +620,25 @@ impl DataSqlDatabaseInstanceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.root_password", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `root_password_wo` after provisioning.\nInitial root password. Required for MS SQL Server.\n\t\t\t\tNote: This property is write-only and will not be read from the API. For more info see [updating write-only arguments](/docs/providers/google/guides/using_write_only_arguments.html#updating-write-only-arguments)"]
+    pub fn root_password_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.root_password_wo", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `root_password_wo_version` after provisioning.\nTriggers update of root_password_wo write-only. For more info see [updating write-only arguments](/docs/providers/google/guides/using_write_only_arguments.html#updating-write-only-arguments)"]
+    pub fn root_password_wo_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.root_password_wo_version", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `self_link` after provisioning.\nThe URI of the created resource."]
     pub fn self_link(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `server_ca_cert` after provisioning.\n"]
-    pub fn server_ca_cert(&self) -> terrars::ListRef<DataSqlDatabaseInstanceServerCaCertElRef> {
+    pub fn server_ca_cert(&self) -> terrars::ListRef<DataSqlDatabaseInstance_ServerCaCertRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.server_ca_cert", self.extract_ref()))
     }
 
@@ -470,13 +653,22 @@ impl DataSqlDatabaseInstanceRef {
 
     #[doc =
         "Get a reference to the value of field `settings` after provisioning.\nThe settings to use for the database. The configuration is detailed below."]
-    pub fn settings(&self) -> terrars::ListRef<DataSqlDatabaseInstanceSettingsElRef> {
+    pub fn settings(&self) -> terrars::ListRef<DataSqlDatabaseInstance_SettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.settings", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `switch_transaction_logs_to_cloud_storage_enabled` after provisioning.\nWhen set to true, Cloud SQL instances can switch storing point-in-time recovery transaction logs from a data disk to Cloud Storage, freeing up data disk space and enabling longer retention windows. This is an input-only field that is not persisted in the API."]
+    pub fn switch_transaction_logs_to_cloud_storage_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.switch_transaction_logs_to_cloud_storage_enabled", self.extract_ref()),
+        )
     }
 }
 
 #[derive(Serialize)]
-pub struct DataSqlDatabaseInstanceCloneEl {
+pub struct DataSqlDatabaseInstance_Clone {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allocated_ip_range: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -486,10 +678,14 @@ pub struct DataSqlDatabaseInstanceCloneEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     preferred_zone: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source_instance_deletion_time: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     source_instance_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source_project: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataSqlDatabaseInstanceCloneEl {
+impl DataSqlDatabaseInstance_Clone {
     #[doc = "Set the field `allocated_ip_range`.\n"]
     pub fn set_allocated_ip_range(
         mut self,
@@ -520,6 +716,15 @@ impl DataSqlDatabaseInstanceCloneEl {
         self
     }
 
+    #[doc = "Set the field `source_instance_deletion_time`.\n"]
+    pub fn set_source_instance_deletion_time(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.source_instance_deletion_time = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `source_instance_name`.\n"]
     pub fn set_source_instance_name(
         mut self,
@@ -528,10 +733,16 @@ impl DataSqlDatabaseInstanceCloneEl {
         self.source_instance_name = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `source_project`.\n"]
+    pub fn set_source_project(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.source_project = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for DataSqlDatabaseInstanceCloneEl {
-    type O = terrars::BlockAssignable<DataSqlDatabaseInstanceCloneEl>;
+impl terrars::ToListMappable for DataSqlDatabaseInstance_Clone {
+    type O = terrars::BlockAssignable<DataSqlDatabaseInstance_Clone>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -542,35 +753,39 @@ impl terrars::ToListMappable for DataSqlDatabaseInstanceCloneEl {
     }
 }
 
-pub struct BuildDataSqlDatabaseInstanceCloneEl {}
+pub struct BuildDataSqlDatabaseInstance_Clone {}
 
-impl BuildDataSqlDatabaseInstanceCloneEl {
-    pub fn build(self) -> DataSqlDatabaseInstanceCloneEl {
-        DataSqlDatabaseInstanceCloneEl {
+impl BuildDataSqlDatabaseInstance_Clone {
+    pub fn build(self) -> DataSqlDatabaseInstance_Clone {
+        DataSqlDatabaseInstance_Clone {
             allocated_ip_range: core::default::Default::default(),
             database_names: core::default::Default::default(),
             point_in_time: core::default::Default::default(),
             preferred_zone: core::default::Default::default(),
+            source_instance_deletion_time: core::default::Default::default(),
             source_instance_name: core::default::Default::default(),
+            source_project: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataSqlDatabaseInstanceCloneElRef {
+#[allow(dead_code)]
+pub struct DataSqlDatabaseInstance_CloneRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSqlDatabaseInstanceCloneElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSqlDatabaseInstanceCloneElRef {
-        DataSqlDatabaseInstanceCloneElRef {
+impl terrars::Ref for DataSqlDatabaseInstance_CloneRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSqlDatabaseInstance_CloneRef {
+        DataSqlDatabaseInstance_CloneRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSqlDatabaseInstanceCloneElRef {
+impl DataSqlDatabaseInstance_CloneRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -595,14 +810,115 @@ impl DataSqlDatabaseInstanceCloneElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.preferred_zone", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `source_instance_deletion_time` after provisioning.\n"]
+    pub fn source_instance_deletion_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_instance_deletion_time", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `source_instance_name` after provisioning.\n"]
     pub fn source_instance_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_instance_name", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `source_project` after provisioning.\n"]
+    pub fn source_project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_project", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct DataSqlDatabaseInstanceIpAddressEl {
+pub struct DataSqlDatabaseInstance_DnsNames {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    connection_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dns_scope: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataSqlDatabaseInstance_DnsNames {
+    #[doc = "Set the field `connection_type`.\n"]
+    pub fn set_connection_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.connection_type = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `dns_scope`.\n"]
+    pub fn set_dns_scope(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.dns_scope = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `name`.\n"]
+    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.name = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataSqlDatabaseInstance_DnsNames {
+    type O = terrars::BlockAssignable<DataSqlDatabaseInstance_DnsNames>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataSqlDatabaseInstance_DnsNames {}
+
+impl BuildDataSqlDatabaseInstance_DnsNames {
+    pub fn build(self) -> DataSqlDatabaseInstance_DnsNames {
+        DataSqlDatabaseInstance_DnsNames {
+            connection_type: core::default::Default::default(),
+            dns_scope: core::default::Default::default(),
+            name: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataSqlDatabaseInstance_DnsNamesRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataSqlDatabaseInstance_DnsNamesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSqlDatabaseInstance_DnsNamesRef {
+        DataSqlDatabaseInstance_DnsNamesRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataSqlDatabaseInstance_DnsNamesRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `connection_type` after provisioning.\n"]
+    pub fn connection_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.connection_type", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `dns_scope` after provisioning.\n"]
+    pub fn dns_scope(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.dns_scope", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataSqlDatabaseInstance_IpAddress {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ip_address: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -611,7 +927,7 @@ pub struct DataSqlDatabaseInstanceIpAddressEl {
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataSqlDatabaseInstanceIpAddressEl {
+impl DataSqlDatabaseInstance_IpAddress {
     #[doc = "Set the field `ip_address`.\n"]
     pub fn set_ip_address(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.ip_address = std::option::Option::Some(v.into());
@@ -631,8 +947,8 @@ impl DataSqlDatabaseInstanceIpAddressEl {
     }
 }
 
-impl terrars::ToListMappable for DataSqlDatabaseInstanceIpAddressEl {
-    type O = terrars::BlockAssignable<DataSqlDatabaseInstanceIpAddressEl>;
+impl terrars::ToListMappable for DataSqlDatabaseInstance_IpAddress {
+    type O = terrars::BlockAssignable<DataSqlDatabaseInstance_IpAddress>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -643,11 +959,11 @@ impl terrars::ToListMappable for DataSqlDatabaseInstanceIpAddressEl {
     }
 }
 
-pub struct BuildDataSqlDatabaseInstanceIpAddressEl {}
+pub struct BuildDataSqlDatabaseInstance_IpAddress {}
 
-impl BuildDataSqlDatabaseInstanceIpAddressEl {
-    pub fn build(self) -> DataSqlDatabaseInstanceIpAddressEl {
-        DataSqlDatabaseInstanceIpAddressEl {
+impl BuildDataSqlDatabaseInstance_IpAddress {
+    pub fn build(self) -> DataSqlDatabaseInstance_IpAddress {
+        DataSqlDatabaseInstance_IpAddress {
             ip_address: core::default::Default::default(),
             time_to_retire: core::default::Default::default(),
             type_: core::default::Default::default(),
@@ -655,21 +971,23 @@ impl BuildDataSqlDatabaseInstanceIpAddressEl {
     }
 }
 
-pub struct DataSqlDatabaseInstanceIpAddressElRef {
+#[allow(dead_code)]
+pub struct DataSqlDatabaseInstance_IpAddressRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSqlDatabaseInstanceIpAddressElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSqlDatabaseInstanceIpAddressElRef {
-        DataSqlDatabaseInstanceIpAddressElRef {
+impl terrars::Ref for DataSqlDatabaseInstance_IpAddressRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSqlDatabaseInstance_IpAddressRef {
+        DataSqlDatabaseInstance_IpAddressRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSqlDatabaseInstanceIpAddressElRef {
+impl DataSqlDatabaseInstance_IpAddressRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -691,9 +1009,150 @@ impl DataSqlDatabaseInstanceIpAddressElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataSqlDatabaseInstanceReplicaConfigurationEl {
+pub struct DataSqlDatabaseInstance_PointInTimeRestoreContext {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    allocated_ip_range: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    datasource: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    point_in_time: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    preferred_zone: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    target_instance: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataSqlDatabaseInstance_PointInTimeRestoreContext {
+    #[doc = "Set the field `allocated_ip_range`.\n"]
+    pub fn set_allocated_ip_range(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.allocated_ip_range = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `datasource`.\n"]
+    pub fn set_datasource(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.datasource = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `point_in_time`.\n"]
+    pub fn set_point_in_time(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.point_in_time = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `preferred_zone`.\n"]
+    pub fn set_preferred_zone(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.preferred_zone = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `region`.\n"]
+    pub fn set_region(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `target_instance`.\n"]
+    pub fn set_target_instance(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.target_instance = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataSqlDatabaseInstance_PointInTimeRestoreContext {
+    type O = terrars::BlockAssignable<DataSqlDatabaseInstance_PointInTimeRestoreContext>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataSqlDatabaseInstance_PointInTimeRestoreContext {}
+
+impl BuildDataSqlDatabaseInstance_PointInTimeRestoreContext {
+    pub fn build(self) -> DataSqlDatabaseInstance_PointInTimeRestoreContext {
+        DataSqlDatabaseInstance_PointInTimeRestoreContext {
+            allocated_ip_range: core::default::Default::default(),
+            datasource: core::default::Default::default(),
+            point_in_time: core::default::Default::default(),
+            preferred_zone: core::default::Default::default(),
+            region: core::default::Default::default(),
+            target_instance: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataSqlDatabaseInstance_PointInTimeRestoreContextRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataSqlDatabaseInstance_PointInTimeRestoreContextRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataSqlDatabaseInstance_PointInTimeRestoreContextRef {
+        DataSqlDatabaseInstance_PointInTimeRestoreContextRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataSqlDatabaseInstance_PointInTimeRestoreContextRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `allocated_ip_range` after provisioning.\n"]
+    pub fn allocated_ip_range(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.allocated_ip_range", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `datasource` after provisioning.\n"]
+    pub fn datasource(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.datasource", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `point_in_time` after provisioning.\n"]
+    pub fn point_in_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.point_in_time", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `preferred_zone` after provisioning.\n"]
+    pub fn preferred_zone(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.preferred_zone", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `region` after provisioning.\n"]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `target_instance` after provisioning.\n"]
+    pub fn target_instance(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_instance", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataSqlDatabaseInstance_ReplicaConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ca_certificate: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cascadable_replica: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     client_certificate: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -716,10 +1175,16 @@ pub struct DataSqlDatabaseInstanceReplicaConfigurationEl {
     verify_server_certificate: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataSqlDatabaseInstanceReplicaConfigurationEl {
+impl DataSqlDatabaseInstance_ReplicaConfiguration {
     #[doc = "Set the field `ca_certificate`.\n"]
     pub fn set_ca_certificate(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.ca_certificate = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `cascadable_replica`.\n"]
+    pub fn set_cascadable_replica(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.cascadable_replica = std::option::Option::Some(v.into());
         self
     }
 
@@ -787,8 +1252,8 @@ impl DataSqlDatabaseInstanceReplicaConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for DataSqlDatabaseInstanceReplicaConfigurationEl {
-    type O = terrars::BlockAssignable<DataSqlDatabaseInstanceReplicaConfigurationEl>;
+impl terrars::ToListMappable for DataSqlDatabaseInstance_ReplicaConfiguration {
+    type O = terrars::BlockAssignable<DataSqlDatabaseInstance_ReplicaConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -799,12 +1264,13 @@ impl terrars::ToListMappable for DataSqlDatabaseInstanceReplicaConfigurationEl {
     }
 }
 
-pub struct BuildDataSqlDatabaseInstanceReplicaConfigurationEl {}
+pub struct BuildDataSqlDatabaseInstance_ReplicaConfiguration {}
 
-impl BuildDataSqlDatabaseInstanceReplicaConfigurationEl {
-    pub fn build(self) -> DataSqlDatabaseInstanceReplicaConfigurationEl {
-        DataSqlDatabaseInstanceReplicaConfigurationEl {
+impl BuildDataSqlDatabaseInstance_ReplicaConfiguration {
+    pub fn build(self) -> DataSqlDatabaseInstance_ReplicaConfiguration {
+        DataSqlDatabaseInstance_ReplicaConfiguration {
             ca_certificate: core::default::Default::default(),
+            cascadable_replica: core::default::Default::default(),
             client_certificate: core::default::Default::default(),
             client_key: core::default::Default::default(),
             connect_retry_interval: core::default::Default::default(),
@@ -819,24 +1285,26 @@ impl BuildDataSqlDatabaseInstanceReplicaConfigurationEl {
     }
 }
 
-pub struct DataSqlDatabaseInstanceReplicaConfigurationElRef {
+#[allow(dead_code)]
+pub struct DataSqlDatabaseInstance_ReplicaConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSqlDatabaseInstanceReplicaConfigurationElRef {
+impl terrars::Ref for DataSqlDatabaseInstance_ReplicaConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataSqlDatabaseInstanceReplicaConfigurationElRef {
-        DataSqlDatabaseInstanceReplicaConfigurationElRef {
+    ) -> DataSqlDatabaseInstance_ReplicaConfigurationRef {
+        DataSqlDatabaseInstance_ReplicaConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSqlDatabaseInstanceReplicaConfigurationElRef {
+impl DataSqlDatabaseInstance_ReplicaConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -844,6 +1312,11 @@ impl DataSqlDatabaseInstanceReplicaConfigurationElRef {
     #[doc = "Get a reference to the value of field `ca_certificate` after provisioning.\n"]
     pub fn ca_certificate(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ca_certificate", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `cascadable_replica` after provisioning.\n"]
+    pub fn cascadable_replica(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cascadable_replica", self.base))
     }
 
     #[doc = "Get a reference to the value of field `client_certificate` after provisioning.\n"]
@@ -898,7 +1371,104 @@ impl DataSqlDatabaseInstanceReplicaConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataSqlDatabaseInstanceRestoreBackupContextEl {
+pub struct DataSqlDatabaseInstance_ReplicationCluster {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dr_replica: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    failover_dr_replica_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    psa_write_endpoint: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataSqlDatabaseInstance_ReplicationCluster {
+    #[doc = "Set the field `dr_replica`.\n"]
+    pub fn set_dr_replica(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.dr_replica = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `failover_dr_replica_name`.\n"]
+    pub fn set_failover_dr_replica_name(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.failover_dr_replica_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `psa_write_endpoint`.\n"]
+    pub fn set_psa_write_endpoint(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.psa_write_endpoint = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataSqlDatabaseInstance_ReplicationCluster {
+    type O = terrars::BlockAssignable<DataSqlDatabaseInstance_ReplicationCluster>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataSqlDatabaseInstance_ReplicationCluster {}
+
+impl BuildDataSqlDatabaseInstance_ReplicationCluster {
+    pub fn build(self) -> DataSqlDatabaseInstance_ReplicationCluster {
+        DataSqlDatabaseInstance_ReplicationCluster {
+            dr_replica: core::default::Default::default(),
+            failover_dr_replica_name: core::default::Default::default(),
+            psa_write_endpoint: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataSqlDatabaseInstance_ReplicationClusterRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataSqlDatabaseInstance_ReplicationClusterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSqlDatabaseInstance_ReplicationClusterRef {
+        DataSqlDatabaseInstance_ReplicationClusterRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataSqlDatabaseInstance_ReplicationClusterRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `dr_replica` after provisioning.\n"]
+    pub fn dr_replica(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.dr_replica", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `failover_dr_replica_name` after provisioning.\n"]
+    pub fn failover_dr_replica_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.failover_dr_replica_name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `psa_write_endpoint` after provisioning.\n"]
+    pub fn psa_write_endpoint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.psa_write_endpoint", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataSqlDatabaseInstance_RestoreBackupContext {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     backup_run_id: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -907,7 +1477,7 @@ pub struct DataSqlDatabaseInstanceRestoreBackupContextEl {
     project: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataSqlDatabaseInstanceRestoreBackupContextEl {
+impl DataSqlDatabaseInstance_RestoreBackupContext {
     #[doc = "Set the field `backup_run_id`.\n"]
     pub fn set_backup_run_id(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.backup_run_id = std::option::Option::Some(v.into());
@@ -927,8 +1497,8 @@ impl DataSqlDatabaseInstanceRestoreBackupContextEl {
     }
 }
 
-impl terrars::ToListMappable for DataSqlDatabaseInstanceRestoreBackupContextEl {
-    type O = terrars::BlockAssignable<DataSqlDatabaseInstanceRestoreBackupContextEl>;
+impl terrars::ToListMappable for DataSqlDatabaseInstance_RestoreBackupContext {
+    type O = terrars::BlockAssignable<DataSqlDatabaseInstance_RestoreBackupContext>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -939,11 +1509,11 @@ impl terrars::ToListMappable for DataSqlDatabaseInstanceRestoreBackupContextEl {
     }
 }
 
-pub struct BuildDataSqlDatabaseInstanceRestoreBackupContextEl {}
+pub struct BuildDataSqlDatabaseInstance_RestoreBackupContext {}
 
-impl BuildDataSqlDatabaseInstanceRestoreBackupContextEl {
-    pub fn build(self) -> DataSqlDatabaseInstanceRestoreBackupContextEl {
-        DataSqlDatabaseInstanceRestoreBackupContextEl {
+impl BuildDataSqlDatabaseInstance_RestoreBackupContext {
+    pub fn build(self) -> DataSqlDatabaseInstance_RestoreBackupContext {
+        DataSqlDatabaseInstance_RestoreBackupContext {
             backup_run_id: core::default::Default::default(),
             instance_id: core::default::Default::default(),
             project: core::default::Default::default(),
@@ -951,24 +1521,26 @@ impl BuildDataSqlDatabaseInstanceRestoreBackupContextEl {
     }
 }
 
-pub struct DataSqlDatabaseInstanceRestoreBackupContextElRef {
+#[allow(dead_code)]
+pub struct DataSqlDatabaseInstance_RestoreBackupContextRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSqlDatabaseInstanceRestoreBackupContextElRef {
+impl terrars::Ref for DataSqlDatabaseInstance_RestoreBackupContextRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataSqlDatabaseInstanceRestoreBackupContextElRef {
-        DataSqlDatabaseInstanceRestoreBackupContextElRef {
+    ) -> DataSqlDatabaseInstance_RestoreBackupContextRef {
+        DataSqlDatabaseInstance_RestoreBackupContextRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSqlDatabaseInstanceRestoreBackupContextElRef {
+impl DataSqlDatabaseInstance_RestoreBackupContextRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -990,7 +1562,7 @@ impl DataSqlDatabaseInstanceRestoreBackupContextElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataSqlDatabaseInstanceServerCaCertEl {
+pub struct DataSqlDatabaseInstance_ServerCaCert {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cert: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1003,7 +1575,7 @@ pub struct DataSqlDatabaseInstanceServerCaCertEl {
     sha1_fingerprint: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataSqlDatabaseInstanceServerCaCertEl {
+impl DataSqlDatabaseInstance_ServerCaCert {
     #[doc = "Set the field `cert`.\n"]
     pub fn set_cert(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.cert = std::option::Option::Some(v.into());
@@ -1035,8 +1607,8 @@ impl DataSqlDatabaseInstanceServerCaCertEl {
     }
 }
 
-impl terrars::ToListMappable for DataSqlDatabaseInstanceServerCaCertEl {
-    type O = terrars::BlockAssignable<DataSqlDatabaseInstanceServerCaCertEl>;
+impl terrars::ToListMappable for DataSqlDatabaseInstance_ServerCaCert {
+    type O = terrars::BlockAssignable<DataSqlDatabaseInstance_ServerCaCert>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1047,11 +1619,11 @@ impl terrars::ToListMappable for DataSqlDatabaseInstanceServerCaCertEl {
     }
 }
 
-pub struct BuildDataSqlDatabaseInstanceServerCaCertEl {}
+pub struct BuildDataSqlDatabaseInstance_ServerCaCert {}
 
-impl BuildDataSqlDatabaseInstanceServerCaCertEl {
-    pub fn build(self) -> DataSqlDatabaseInstanceServerCaCertEl {
-        DataSqlDatabaseInstanceServerCaCertEl {
+impl BuildDataSqlDatabaseInstance_ServerCaCert {
+    pub fn build(self) -> DataSqlDatabaseInstance_ServerCaCert {
+        DataSqlDatabaseInstance_ServerCaCert {
             cert: core::default::Default::default(),
             common_name: core::default::Default::default(),
             create_time: core::default::Default::default(),
@@ -1061,21 +1633,23 @@ impl BuildDataSqlDatabaseInstanceServerCaCertEl {
     }
 }
 
-pub struct DataSqlDatabaseInstanceServerCaCertElRef {
+#[allow(dead_code)]
+pub struct DataSqlDatabaseInstance_ServerCaCertRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSqlDatabaseInstanceServerCaCertElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSqlDatabaseInstanceServerCaCertElRef {
-        DataSqlDatabaseInstanceServerCaCertElRef {
+impl terrars::Ref for DataSqlDatabaseInstance_ServerCaCertRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSqlDatabaseInstance_ServerCaCertRef {
+        DataSqlDatabaseInstance_ServerCaCertRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSqlDatabaseInstanceServerCaCertElRef {
+impl DataSqlDatabaseInstance_ServerCaCertRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1107,21 +1681,62 @@ impl DataSqlDatabaseInstanceServerCaCertElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataSqlDatabaseInstanceSettingsElActiveDirectoryConfigEl {
+pub struct DataSqlDatabaseInstance_Settings_ActiveDirectoryConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    admin_credential_secret_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dns_servers: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     domain: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    organizational_unit: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataSqlDatabaseInstanceSettingsElActiveDirectoryConfigEl {
+impl DataSqlDatabaseInstance_Settings_ActiveDirectoryConfig {
+    #[doc = "Set the field `admin_credential_secret_name`.\n"]
+    pub fn set_admin_credential_secret_name(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.admin_credential_secret_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `dns_servers`.\n"]
+    pub fn set_dns_servers(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.dns_servers = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `domain`.\n"]
     pub fn set_domain(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.domain = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `mode`.\n"]
+    pub fn set_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.mode = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `organizational_unit`.\n"]
+    pub fn set_organizational_unit(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.organizational_unit = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for DataSqlDatabaseInstanceSettingsElActiveDirectoryConfigEl {
-    type O = terrars::BlockAssignable<DataSqlDatabaseInstanceSettingsElActiveDirectoryConfigEl>;
+impl terrars::ToListMappable for DataSqlDatabaseInstance_Settings_ActiveDirectoryConfig {
+    type O = terrars::BlockAssignable<DataSqlDatabaseInstance_Settings_ActiveDirectoryConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1132,49 +1747,77 @@ impl terrars::ToListMappable for DataSqlDatabaseInstanceSettingsElActiveDirector
     }
 }
 
-pub struct BuildDataSqlDatabaseInstanceSettingsElActiveDirectoryConfigEl {}
+pub struct BuildDataSqlDatabaseInstance_Settings_ActiveDirectoryConfig {}
 
-impl BuildDataSqlDatabaseInstanceSettingsElActiveDirectoryConfigEl {
-    pub fn build(self) -> DataSqlDatabaseInstanceSettingsElActiveDirectoryConfigEl {
-        DataSqlDatabaseInstanceSettingsElActiveDirectoryConfigEl { domain: core::default::Default::default() }
+impl BuildDataSqlDatabaseInstance_Settings_ActiveDirectoryConfig {
+    pub fn build(self) -> DataSqlDatabaseInstance_Settings_ActiveDirectoryConfig {
+        DataSqlDatabaseInstance_Settings_ActiveDirectoryConfig {
+            admin_credential_secret_name: core::default::Default::default(),
+            dns_servers: core::default::Default::default(),
+            domain: core::default::Default::default(),
+            mode: core::default::Default::default(),
+            organizational_unit: core::default::Default::default(),
+        }
     }
 }
 
-pub struct DataSqlDatabaseInstanceSettingsElActiveDirectoryConfigElRef {
+#[allow(dead_code)]
+pub struct DataSqlDatabaseInstance_Settings_ActiveDirectoryConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSqlDatabaseInstanceSettingsElActiveDirectoryConfigElRef {
+impl terrars::Ref for DataSqlDatabaseInstance_Settings_ActiveDirectoryConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataSqlDatabaseInstanceSettingsElActiveDirectoryConfigElRef {
-        DataSqlDatabaseInstanceSettingsElActiveDirectoryConfigElRef {
+    ) -> DataSqlDatabaseInstance_Settings_ActiveDirectoryConfigRef {
+        DataSqlDatabaseInstance_Settings_ActiveDirectoryConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSqlDatabaseInstanceSettingsElActiveDirectoryConfigElRef {
+impl DataSqlDatabaseInstance_Settings_ActiveDirectoryConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `admin_credential_secret_name` after provisioning.\n"]
+    pub fn admin_credential_secret_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.admin_credential_secret_name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `dns_servers` after provisioning.\n"]
+    pub fn dns_servers(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.dns_servers", self.base))
     }
 
     #[doc = "Get a reference to the value of field `domain` after provisioning.\n"]
     pub fn domain(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `mode` after provisioning.\n"]
+    pub fn mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.mode", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `organizational_unit` after provisioning.\n"]
+    pub fn organizational_unit(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.organizational_unit", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct DataSqlDatabaseInstanceSettingsElAdvancedMachineFeaturesEl {
+pub struct DataSqlDatabaseInstance_Settings_AdvancedMachineFeatures {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     threads_per_core: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataSqlDatabaseInstanceSettingsElAdvancedMachineFeaturesEl {
+impl DataSqlDatabaseInstance_Settings_AdvancedMachineFeatures {
     #[doc = "Set the field `threads_per_core`.\n"]
     pub fn set_threads_per_core(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.threads_per_core = std::option::Option::Some(v.into());
@@ -1182,8 +1825,8 @@ impl DataSqlDatabaseInstanceSettingsElAdvancedMachineFeaturesEl {
     }
 }
 
-impl terrars::ToListMappable for DataSqlDatabaseInstanceSettingsElAdvancedMachineFeaturesEl {
-    type O = terrars::BlockAssignable<DataSqlDatabaseInstanceSettingsElAdvancedMachineFeaturesEl>;
+impl terrars::ToListMappable for DataSqlDatabaseInstance_Settings_AdvancedMachineFeatures {
+    type O = terrars::BlockAssignable<DataSqlDatabaseInstance_Settings_AdvancedMachineFeatures>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1194,34 +1837,36 @@ impl terrars::ToListMappable for DataSqlDatabaseInstanceSettingsElAdvancedMachin
     }
 }
 
-pub struct BuildDataSqlDatabaseInstanceSettingsElAdvancedMachineFeaturesEl {}
+pub struct BuildDataSqlDatabaseInstance_Settings_AdvancedMachineFeatures {}
 
-impl BuildDataSqlDatabaseInstanceSettingsElAdvancedMachineFeaturesEl {
-    pub fn build(self) -> DataSqlDatabaseInstanceSettingsElAdvancedMachineFeaturesEl {
-        DataSqlDatabaseInstanceSettingsElAdvancedMachineFeaturesEl {
+impl BuildDataSqlDatabaseInstance_Settings_AdvancedMachineFeatures {
+    pub fn build(self) -> DataSqlDatabaseInstance_Settings_AdvancedMachineFeatures {
+        DataSqlDatabaseInstance_Settings_AdvancedMachineFeatures {
             threads_per_core: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataSqlDatabaseInstanceSettingsElAdvancedMachineFeaturesElRef {
+#[allow(dead_code)]
+pub struct DataSqlDatabaseInstance_Settings_AdvancedMachineFeaturesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSqlDatabaseInstanceSettingsElAdvancedMachineFeaturesElRef {
+impl terrars::Ref for DataSqlDatabaseInstance_Settings_AdvancedMachineFeaturesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataSqlDatabaseInstanceSettingsElAdvancedMachineFeaturesElRef {
-        DataSqlDatabaseInstanceSettingsElAdvancedMachineFeaturesElRef {
+    ) -> DataSqlDatabaseInstance_Settings_AdvancedMachineFeaturesRef {
+        DataSqlDatabaseInstance_Settings_AdvancedMachineFeaturesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSqlDatabaseInstanceSettingsElAdvancedMachineFeaturesElRef {
+impl DataSqlDatabaseInstance_Settings_AdvancedMachineFeaturesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1233,14 +1878,14 @@ impl DataSqlDatabaseInstanceSettingsElAdvancedMachineFeaturesElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataSqlDatabaseInstanceSettingsElBackupConfigurationElBackupRetentionSettingsEl {
+pub struct DataSqlDatabaseInstance_Settings_BackupConfiguration_BackupRetentionSettings {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     retained_backups: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     retention_unit: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataSqlDatabaseInstanceSettingsElBackupConfigurationElBackupRetentionSettingsEl {
+impl DataSqlDatabaseInstance_Settings_BackupConfiguration_BackupRetentionSettings {
     #[doc = "Set the field `retained_backups`.\n"]
     pub fn set_retained_backups(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.retained_backups = std::option::Option::Some(v.into());
@@ -1254,9 +1899,8 @@ impl DataSqlDatabaseInstanceSettingsElBackupConfigurationElBackupRetentionSettin
     }
 }
 
-impl terrars::ToListMappable for DataSqlDatabaseInstanceSettingsElBackupConfigurationElBackupRetentionSettingsEl {
-    type O =
-        terrars::BlockAssignable<DataSqlDatabaseInstanceSettingsElBackupConfigurationElBackupRetentionSettingsEl>;
+impl terrars::ToListMappable for DataSqlDatabaseInstance_Settings_BackupConfiguration_BackupRetentionSettings {
+    type O = terrars::BlockAssignable<DataSqlDatabaseInstance_Settings_BackupConfiguration_BackupRetentionSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1267,35 +1911,37 @@ impl terrars::ToListMappable for DataSqlDatabaseInstanceSettingsElBackupConfigur
     }
 }
 
-pub struct BuildDataSqlDatabaseInstanceSettingsElBackupConfigurationElBackupRetentionSettingsEl {}
+pub struct BuildDataSqlDatabaseInstance_Settings_BackupConfiguration_BackupRetentionSettings {}
 
-impl BuildDataSqlDatabaseInstanceSettingsElBackupConfigurationElBackupRetentionSettingsEl {
-    pub fn build(self) -> DataSqlDatabaseInstanceSettingsElBackupConfigurationElBackupRetentionSettingsEl {
-        DataSqlDatabaseInstanceSettingsElBackupConfigurationElBackupRetentionSettingsEl {
+impl BuildDataSqlDatabaseInstance_Settings_BackupConfiguration_BackupRetentionSettings {
+    pub fn build(self) -> DataSqlDatabaseInstance_Settings_BackupConfiguration_BackupRetentionSettings {
+        DataSqlDatabaseInstance_Settings_BackupConfiguration_BackupRetentionSettings {
             retained_backups: core::default::Default::default(),
             retention_unit: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataSqlDatabaseInstanceSettingsElBackupConfigurationElBackupRetentionSettingsElRef {
+#[allow(dead_code)]
+pub struct DataSqlDatabaseInstance_Settings_BackupConfiguration_BackupRetentionSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSqlDatabaseInstanceSettingsElBackupConfigurationElBackupRetentionSettingsElRef {
+impl terrars::Ref for DataSqlDatabaseInstance_Settings_BackupConfiguration_BackupRetentionSettingsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataSqlDatabaseInstanceSettingsElBackupConfigurationElBackupRetentionSettingsElRef {
-        DataSqlDatabaseInstanceSettingsElBackupConfigurationElBackupRetentionSettingsElRef {
+    ) -> DataSqlDatabaseInstance_Settings_BackupConfiguration_BackupRetentionSettingsRef {
+        DataSqlDatabaseInstance_Settings_BackupConfiguration_BackupRetentionSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSqlDatabaseInstanceSettingsElBackupConfigurationElBackupRetentionSettingsElRef {
+impl DataSqlDatabaseInstance_Settings_BackupConfiguration_BackupRetentionSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1312,11 +1958,13 @@ impl DataSqlDatabaseInstanceSettingsElBackupConfigurationElBackupRetentionSettin
 }
 
 #[derive(Serialize)]
-pub struct DataSqlDatabaseInstanceSettingsElBackupConfigurationEl {
+pub struct DataSqlDatabaseInstance_Settings_BackupConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     backup_retention_settings: std
     ::option
-    ::Option<terrars::ListField<DataSqlDatabaseInstanceSettingsElBackupConfigurationElBackupRetentionSettingsEl>>,
+    ::Option<terrars::ListField<DataSqlDatabaseInstance_Settings_BackupConfiguration_BackupRetentionSettings>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    backup_tier: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     binary_log_enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1331,7 +1979,7 @@ pub struct DataSqlDatabaseInstanceSettingsElBackupConfigurationEl {
     transaction_log_retention_days: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataSqlDatabaseInstanceSettingsElBackupConfigurationEl {
+impl DataSqlDatabaseInstance_Settings_BackupConfiguration {
     #[doc = "Set the field `backup_retention_settings`.\n"]
     pub fn set_backup_retention_settings(
         mut self,
@@ -1342,10 +1990,16 @@ impl DataSqlDatabaseInstanceSettingsElBackupConfigurationEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::ListField<DataSqlDatabaseInstanceSettingsElBackupConfigurationElBackupRetentionSettingsEl>,
+                        ::ListField<DataSqlDatabaseInstance_Settings_BackupConfiguration_BackupRetentionSettings>,
                     >,
     ) -> Self {
         self.backup_retention_settings = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `backup_tier`.\n"]
+    pub fn set_backup_tier(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.backup_tier = std::option::Option::Some(v.into());
         self
     }
 
@@ -1386,8 +2040,8 @@ impl DataSqlDatabaseInstanceSettingsElBackupConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for DataSqlDatabaseInstanceSettingsElBackupConfigurationEl {
-    type O = terrars::BlockAssignable<DataSqlDatabaseInstanceSettingsElBackupConfigurationEl>;
+impl terrars::ToListMappable for DataSqlDatabaseInstance_Settings_BackupConfiguration {
+    type O = terrars::BlockAssignable<DataSqlDatabaseInstance_Settings_BackupConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1398,12 +2052,13 @@ impl terrars::ToListMappable for DataSqlDatabaseInstanceSettingsElBackupConfigur
     }
 }
 
-pub struct BuildDataSqlDatabaseInstanceSettingsElBackupConfigurationEl {}
+pub struct BuildDataSqlDatabaseInstance_Settings_BackupConfiguration {}
 
-impl BuildDataSqlDatabaseInstanceSettingsElBackupConfigurationEl {
-    pub fn build(self) -> DataSqlDatabaseInstanceSettingsElBackupConfigurationEl {
-        DataSqlDatabaseInstanceSettingsElBackupConfigurationEl {
+impl BuildDataSqlDatabaseInstance_Settings_BackupConfiguration {
+    pub fn build(self) -> DataSqlDatabaseInstance_Settings_BackupConfiguration {
+        DataSqlDatabaseInstance_Settings_BackupConfiguration {
             backup_retention_settings: core::default::Default::default(),
+            backup_tier: core::default::Default::default(),
             binary_log_enabled: core::default::Default::default(),
             enabled: core::default::Default::default(),
             location: core::default::Default::default(),
@@ -1414,24 +2069,26 @@ impl BuildDataSqlDatabaseInstanceSettingsElBackupConfigurationEl {
     }
 }
 
-pub struct DataSqlDatabaseInstanceSettingsElBackupConfigurationElRef {
+#[allow(dead_code)]
+pub struct DataSqlDatabaseInstance_Settings_BackupConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSqlDatabaseInstanceSettingsElBackupConfigurationElRef {
+impl terrars::Ref for DataSqlDatabaseInstance_Settings_BackupConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataSqlDatabaseInstanceSettingsElBackupConfigurationElRef {
-        DataSqlDatabaseInstanceSettingsElBackupConfigurationElRef {
+    ) -> DataSqlDatabaseInstance_Settings_BackupConfigurationRef {
+        DataSqlDatabaseInstance_Settings_BackupConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSqlDatabaseInstanceSettingsElBackupConfigurationElRef {
+impl DataSqlDatabaseInstance_Settings_BackupConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1439,8 +2096,13 @@ impl DataSqlDatabaseInstanceSettingsElBackupConfigurationElRef {
     #[doc = "Get a reference to the value of field `backup_retention_settings` after provisioning.\n"]
     pub fn backup_retention_settings(
         &self,
-    ) -> terrars::ListRef<DataSqlDatabaseInstanceSettingsElBackupConfigurationElBackupRetentionSettingsElRef> {
+    ) -> terrars::ListRef<DataSqlDatabaseInstance_Settings_BackupConfiguration_BackupRetentionSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.backup_retention_settings", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `backup_tier` after provisioning.\n"]
+    pub fn backup_tier(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.backup_tier", self.base))
     }
 
     #[doc = "Get a reference to the value of field `binary_log_enabled` after provisioning.\n"]
@@ -1475,76 +2137,14 @@ impl DataSqlDatabaseInstanceSettingsElBackupConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataSqlDatabaseInstanceSettingsElDataCacheConfigEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    data_cache_enabled: std::option::Option<terrars::PrimField<bool>>,
-}
-
-impl DataSqlDatabaseInstanceSettingsElDataCacheConfigEl {
-    #[doc = "Set the field `data_cache_enabled`.\n"]
-    pub fn set_data_cache_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.data_cache_enabled = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataSqlDatabaseInstanceSettingsElDataCacheConfigEl {
-    type O = terrars::BlockAssignable<DataSqlDatabaseInstanceSettingsElDataCacheConfigEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataSqlDatabaseInstanceSettingsElDataCacheConfigEl {}
-
-impl BuildDataSqlDatabaseInstanceSettingsElDataCacheConfigEl {
-    pub fn build(self) -> DataSqlDatabaseInstanceSettingsElDataCacheConfigEl {
-        DataSqlDatabaseInstanceSettingsElDataCacheConfigEl { data_cache_enabled: core::default::Default::default() }
-    }
-}
-
-pub struct DataSqlDatabaseInstanceSettingsElDataCacheConfigElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataSqlDatabaseInstanceSettingsElDataCacheConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataSqlDatabaseInstanceSettingsElDataCacheConfigElRef {
-        DataSqlDatabaseInstanceSettingsElDataCacheConfigElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataSqlDatabaseInstanceSettingsElDataCacheConfigElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `data_cache_enabled` after provisioning.\n"]
-    pub fn data_cache_enabled(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.data_cache_enabled", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataSqlDatabaseInstanceSettingsElDatabaseFlagsEl {
+pub struct DataSqlDatabaseInstance_Settings_ConnectionPoolConfig_Flags {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataSqlDatabaseInstanceSettingsElDatabaseFlagsEl {
+impl DataSqlDatabaseInstance_Settings_ConnectionPoolConfig_Flags {
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
@@ -1558,8 +2158,8 @@ impl DataSqlDatabaseInstanceSettingsElDatabaseFlagsEl {
     }
 }
 
-impl terrars::ToListMappable for DataSqlDatabaseInstanceSettingsElDatabaseFlagsEl {
-    type O = terrars::BlockAssignable<DataSqlDatabaseInstanceSettingsElDatabaseFlagsEl>;
+impl terrars::ToListMappable for DataSqlDatabaseInstance_Settings_ConnectionPoolConfig_Flags {
+    type O = terrars::BlockAssignable<DataSqlDatabaseInstance_Settings_ConnectionPoolConfig_Flags>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1570,35 +2170,37 @@ impl terrars::ToListMappable for DataSqlDatabaseInstanceSettingsElDatabaseFlagsE
     }
 }
 
-pub struct BuildDataSqlDatabaseInstanceSettingsElDatabaseFlagsEl {}
+pub struct BuildDataSqlDatabaseInstance_Settings_ConnectionPoolConfig_Flags {}
 
-impl BuildDataSqlDatabaseInstanceSettingsElDatabaseFlagsEl {
-    pub fn build(self) -> DataSqlDatabaseInstanceSettingsElDatabaseFlagsEl {
-        DataSqlDatabaseInstanceSettingsElDatabaseFlagsEl {
+impl BuildDataSqlDatabaseInstance_Settings_ConnectionPoolConfig_Flags {
+    pub fn build(self) -> DataSqlDatabaseInstance_Settings_ConnectionPoolConfig_Flags {
+        DataSqlDatabaseInstance_Settings_ConnectionPoolConfig_Flags {
             name: core::default::Default::default(),
             value: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataSqlDatabaseInstanceSettingsElDatabaseFlagsElRef {
+#[allow(dead_code)]
+pub struct DataSqlDatabaseInstance_Settings_ConnectionPoolConfig_FlagsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSqlDatabaseInstanceSettingsElDatabaseFlagsElRef {
+impl terrars::Ref for DataSqlDatabaseInstance_Settings_ConnectionPoolConfig_FlagsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataSqlDatabaseInstanceSettingsElDatabaseFlagsElRef {
-        DataSqlDatabaseInstanceSettingsElDatabaseFlagsElRef {
+    ) -> DataSqlDatabaseInstance_Settings_ConnectionPoolConfig_FlagsRef {
+        DataSqlDatabaseInstance_Settings_ConnectionPoolConfig_FlagsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSqlDatabaseInstanceSettingsElDatabaseFlagsElRef {
+impl DataSqlDatabaseInstance_Settings_ConnectionPoolConfig_FlagsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1615,7 +2217,234 @@ impl DataSqlDatabaseInstanceSettingsElDatabaseFlagsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataSqlDatabaseInstanceSettingsElDenyMaintenancePeriodEl {
+pub struct DataSqlDatabaseInstance_Settings_ConnectionPoolConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    connection_pooling_enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    flags: std::option::Option<terrars::SetField<DataSqlDatabaseInstance_Settings_ConnectionPoolConfig_Flags>>,
+}
+
+impl DataSqlDatabaseInstance_Settings_ConnectionPoolConfig {
+    #[doc = "Set the field `connection_pooling_enabled`.\n"]
+    pub fn set_connection_pooling_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.connection_pooling_enabled = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `flags`.\n"]
+    pub fn set_flags(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<DataSqlDatabaseInstance_Settings_ConnectionPoolConfig_Flags>>,
+    ) -> Self {
+        self.flags = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataSqlDatabaseInstance_Settings_ConnectionPoolConfig {
+    type O = terrars::BlockAssignable<DataSqlDatabaseInstance_Settings_ConnectionPoolConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataSqlDatabaseInstance_Settings_ConnectionPoolConfig {}
+
+impl BuildDataSqlDatabaseInstance_Settings_ConnectionPoolConfig {
+    pub fn build(self) -> DataSqlDatabaseInstance_Settings_ConnectionPoolConfig {
+        DataSqlDatabaseInstance_Settings_ConnectionPoolConfig {
+            connection_pooling_enabled: core::default::Default::default(),
+            flags: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataSqlDatabaseInstance_Settings_ConnectionPoolConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataSqlDatabaseInstance_Settings_ConnectionPoolConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataSqlDatabaseInstance_Settings_ConnectionPoolConfigRef {
+        DataSqlDatabaseInstance_Settings_ConnectionPoolConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataSqlDatabaseInstance_Settings_ConnectionPoolConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `connection_pooling_enabled` after provisioning.\n"]
+    pub fn connection_pooling_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.connection_pooling_enabled", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `flags` after provisioning.\n"]
+    pub fn flags(&self) -> terrars::SetRef<DataSqlDatabaseInstance_Settings_ConnectionPoolConfig_FlagsRef> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.flags", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataSqlDatabaseInstance_Settings_DataCacheConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    data_cache_enabled: std::option::Option<terrars::PrimField<bool>>,
+}
+
+impl DataSqlDatabaseInstance_Settings_DataCacheConfig {
+    #[doc = "Set the field `data_cache_enabled`.\n"]
+    pub fn set_data_cache_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.data_cache_enabled = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataSqlDatabaseInstance_Settings_DataCacheConfig {
+    type O = terrars::BlockAssignable<DataSqlDatabaseInstance_Settings_DataCacheConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataSqlDatabaseInstance_Settings_DataCacheConfig {}
+
+impl BuildDataSqlDatabaseInstance_Settings_DataCacheConfig {
+    pub fn build(self) -> DataSqlDatabaseInstance_Settings_DataCacheConfig {
+        DataSqlDatabaseInstance_Settings_DataCacheConfig { data_cache_enabled: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataSqlDatabaseInstance_Settings_DataCacheConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataSqlDatabaseInstance_Settings_DataCacheConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataSqlDatabaseInstance_Settings_DataCacheConfigRef {
+        DataSqlDatabaseInstance_Settings_DataCacheConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataSqlDatabaseInstance_Settings_DataCacheConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `data_cache_enabled` after provisioning.\n"]
+    pub fn data_cache_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.data_cache_enabled", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataSqlDatabaseInstance_Settings_DatabaseFlags {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    value: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataSqlDatabaseInstance_Settings_DatabaseFlags {
+    #[doc = "Set the field `name`.\n"]
+    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `value`.\n"]
+    pub fn set_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.value = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataSqlDatabaseInstance_Settings_DatabaseFlags {
+    type O = terrars::BlockAssignable<DataSqlDatabaseInstance_Settings_DatabaseFlags>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataSqlDatabaseInstance_Settings_DatabaseFlags {}
+
+impl BuildDataSqlDatabaseInstance_Settings_DatabaseFlags {
+    pub fn build(self) -> DataSqlDatabaseInstance_Settings_DatabaseFlags {
+        DataSqlDatabaseInstance_Settings_DatabaseFlags {
+            name: core::default::Default::default(),
+            value: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataSqlDatabaseInstance_Settings_DatabaseFlagsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataSqlDatabaseInstance_Settings_DatabaseFlagsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataSqlDatabaseInstance_Settings_DatabaseFlagsRef {
+        DataSqlDatabaseInstance_Settings_DatabaseFlagsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataSqlDatabaseInstance_Settings_DatabaseFlagsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataSqlDatabaseInstance_Settings_DenyMaintenancePeriod {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     end_date: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1624,7 +2453,7 @@ pub struct DataSqlDatabaseInstanceSettingsElDenyMaintenancePeriodEl {
     time: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataSqlDatabaseInstanceSettingsElDenyMaintenancePeriodEl {
+impl DataSqlDatabaseInstance_Settings_DenyMaintenancePeriod {
     #[doc = "Set the field `end_date`.\n"]
     pub fn set_end_date(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.end_date = std::option::Option::Some(v.into());
@@ -1644,8 +2473,8 @@ impl DataSqlDatabaseInstanceSettingsElDenyMaintenancePeriodEl {
     }
 }
 
-impl terrars::ToListMappable for DataSqlDatabaseInstanceSettingsElDenyMaintenancePeriodEl {
-    type O = terrars::BlockAssignable<DataSqlDatabaseInstanceSettingsElDenyMaintenancePeriodEl>;
+impl terrars::ToListMappable for DataSqlDatabaseInstance_Settings_DenyMaintenancePeriod {
+    type O = terrars::BlockAssignable<DataSqlDatabaseInstance_Settings_DenyMaintenancePeriod>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1656,11 +2485,11 @@ impl terrars::ToListMappable for DataSqlDatabaseInstanceSettingsElDenyMaintenanc
     }
 }
 
-pub struct BuildDataSqlDatabaseInstanceSettingsElDenyMaintenancePeriodEl {}
+pub struct BuildDataSqlDatabaseInstance_Settings_DenyMaintenancePeriod {}
 
-impl BuildDataSqlDatabaseInstanceSettingsElDenyMaintenancePeriodEl {
-    pub fn build(self) -> DataSqlDatabaseInstanceSettingsElDenyMaintenancePeriodEl {
-        DataSqlDatabaseInstanceSettingsElDenyMaintenancePeriodEl {
+impl BuildDataSqlDatabaseInstance_Settings_DenyMaintenancePeriod {
+    pub fn build(self) -> DataSqlDatabaseInstance_Settings_DenyMaintenancePeriod {
+        DataSqlDatabaseInstance_Settings_DenyMaintenancePeriod {
             end_date: core::default::Default::default(),
             start_date: core::default::Default::default(),
             time: core::default::Default::default(),
@@ -1668,24 +2497,26 @@ impl BuildDataSqlDatabaseInstanceSettingsElDenyMaintenancePeriodEl {
     }
 }
 
-pub struct DataSqlDatabaseInstanceSettingsElDenyMaintenancePeriodElRef {
+#[allow(dead_code)]
+pub struct DataSqlDatabaseInstance_Settings_DenyMaintenancePeriodRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSqlDatabaseInstanceSettingsElDenyMaintenancePeriodElRef {
+impl terrars::Ref for DataSqlDatabaseInstance_Settings_DenyMaintenancePeriodRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataSqlDatabaseInstanceSettingsElDenyMaintenancePeriodElRef {
-        DataSqlDatabaseInstanceSettingsElDenyMaintenancePeriodElRef {
+    ) -> DataSqlDatabaseInstance_Settings_DenyMaintenancePeriodRef {
+        DataSqlDatabaseInstance_Settings_DenyMaintenancePeriodRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSqlDatabaseInstanceSettingsElDenyMaintenancePeriodElRef {
+impl DataSqlDatabaseInstance_Settings_DenyMaintenancePeriodRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1707,7 +2538,169 @@ impl DataSqlDatabaseInstanceSettingsElDenyMaintenancePeriodElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataSqlDatabaseInstanceSettingsElInsightsConfigEl {
+pub struct DataSqlDatabaseInstance_Settings_EntraidConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    application_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tenant_id: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataSqlDatabaseInstance_Settings_EntraidConfig {
+    #[doc = "Set the field `application_id`.\n"]
+    pub fn set_application_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.application_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tenant_id`.\n"]
+    pub fn set_tenant_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.tenant_id = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataSqlDatabaseInstance_Settings_EntraidConfig {
+    type O = terrars::BlockAssignable<DataSqlDatabaseInstance_Settings_EntraidConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataSqlDatabaseInstance_Settings_EntraidConfig {}
+
+impl BuildDataSqlDatabaseInstance_Settings_EntraidConfig {
+    pub fn build(self) -> DataSqlDatabaseInstance_Settings_EntraidConfig {
+        DataSqlDatabaseInstance_Settings_EntraidConfig {
+            application_id: core::default::Default::default(),
+            tenant_id: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataSqlDatabaseInstance_Settings_EntraidConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataSqlDatabaseInstance_Settings_EntraidConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataSqlDatabaseInstance_Settings_EntraidConfigRef {
+        DataSqlDatabaseInstance_Settings_EntraidConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataSqlDatabaseInstance_Settings_EntraidConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `application_id` after provisioning.\n"]
+    pub fn application_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.application_id", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `tenant_id` after provisioning.\n"]
+    pub fn tenant_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tenant_id", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataSqlDatabaseInstance_Settings_FinalBackupConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    retention_days: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl DataSqlDatabaseInstance_Settings_FinalBackupConfig {
+    #[doc = "Set the field `enabled`.\n"]
+    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enabled = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `retention_days`.\n"]
+    pub fn set_retention_days(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.retention_days = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataSqlDatabaseInstance_Settings_FinalBackupConfig {
+    type O = terrars::BlockAssignable<DataSqlDatabaseInstance_Settings_FinalBackupConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataSqlDatabaseInstance_Settings_FinalBackupConfig {}
+
+impl BuildDataSqlDatabaseInstance_Settings_FinalBackupConfig {
+    pub fn build(self) -> DataSqlDatabaseInstance_Settings_FinalBackupConfig {
+        DataSqlDatabaseInstance_Settings_FinalBackupConfig {
+            enabled: core::default::Default::default(),
+            retention_days: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataSqlDatabaseInstance_Settings_FinalBackupConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataSqlDatabaseInstance_Settings_FinalBackupConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataSqlDatabaseInstance_Settings_FinalBackupConfigRef {
+        DataSqlDatabaseInstance_Settings_FinalBackupConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataSqlDatabaseInstance_Settings_FinalBackupConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `retention_days` after provisioning.\n"]
+    pub fn retention_days(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.retention_days", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataSqlDatabaseInstance_Settings_InsightsConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enhanced_query_insights_enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     query_insights_enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1720,7 +2713,13 @@ pub struct DataSqlDatabaseInstanceSettingsElInsightsConfigEl {
     record_client_address: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataSqlDatabaseInstanceSettingsElInsightsConfigEl {
+impl DataSqlDatabaseInstance_Settings_InsightsConfig {
+    #[doc = "Set the field `enhanced_query_insights_enabled`.\n"]
+    pub fn set_enhanced_query_insights_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enhanced_query_insights_enabled = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `query_insights_enabled`.\n"]
     pub fn set_query_insights_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.query_insights_enabled = std::option::Option::Some(v.into());
@@ -1752,8 +2751,8 @@ impl DataSqlDatabaseInstanceSettingsElInsightsConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataSqlDatabaseInstanceSettingsElInsightsConfigEl {
-    type O = terrars::BlockAssignable<DataSqlDatabaseInstanceSettingsElInsightsConfigEl>;
+impl terrars::ToListMappable for DataSqlDatabaseInstance_Settings_InsightsConfig {
+    type O = terrars::BlockAssignable<DataSqlDatabaseInstance_Settings_InsightsConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1764,11 +2763,12 @@ impl terrars::ToListMappable for DataSqlDatabaseInstanceSettingsElInsightsConfig
     }
 }
 
-pub struct BuildDataSqlDatabaseInstanceSettingsElInsightsConfigEl {}
+pub struct BuildDataSqlDatabaseInstance_Settings_InsightsConfig {}
 
-impl BuildDataSqlDatabaseInstanceSettingsElInsightsConfigEl {
-    pub fn build(self) -> DataSqlDatabaseInstanceSettingsElInsightsConfigEl {
-        DataSqlDatabaseInstanceSettingsElInsightsConfigEl {
+impl BuildDataSqlDatabaseInstance_Settings_InsightsConfig {
+    pub fn build(self) -> DataSqlDatabaseInstance_Settings_InsightsConfig {
+        DataSqlDatabaseInstance_Settings_InsightsConfig {
+            enhanced_query_insights_enabled: core::default::Default::default(),
             query_insights_enabled: core::default::Default::default(),
             query_plans_per_minute: core::default::Default::default(),
             query_string_length: core::default::Default::default(),
@@ -1778,26 +2778,33 @@ impl BuildDataSqlDatabaseInstanceSettingsElInsightsConfigEl {
     }
 }
 
-pub struct DataSqlDatabaseInstanceSettingsElInsightsConfigElRef {
+#[allow(dead_code)]
+pub struct DataSqlDatabaseInstance_Settings_InsightsConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSqlDatabaseInstanceSettingsElInsightsConfigElRef {
+impl terrars::Ref for DataSqlDatabaseInstance_Settings_InsightsConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataSqlDatabaseInstanceSettingsElInsightsConfigElRef {
-        DataSqlDatabaseInstanceSettingsElInsightsConfigElRef {
+    ) -> DataSqlDatabaseInstance_Settings_InsightsConfigRef {
+        DataSqlDatabaseInstance_Settings_InsightsConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSqlDatabaseInstanceSettingsElInsightsConfigElRef {
+impl DataSqlDatabaseInstance_Settings_InsightsConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `enhanced_query_insights_enabled` after provisioning.\n"]
+    pub fn enhanced_query_insights_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enhanced_query_insights_enabled", self.base))
     }
 
     #[doc = "Get a reference to the value of field `query_insights_enabled` after provisioning.\n"]
@@ -1827,7 +2834,7 @@ impl DataSqlDatabaseInstanceSettingsElInsightsConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataSqlDatabaseInstanceSettingsElIpConfigurationElAuthorizedNetworksEl {
+pub struct DataSqlDatabaseInstance_Settings_IpConfiguration_AuthorizedNetworks {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     expiration_time: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1836,7 +2843,7 @@ pub struct DataSqlDatabaseInstanceSettingsElIpConfigurationElAuthorizedNetworksE
     value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataSqlDatabaseInstanceSettingsElIpConfigurationElAuthorizedNetworksEl {
+impl DataSqlDatabaseInstance_Settings_IpConfiguration_AuthorizedNetworks {
     #[doc = "Set the field `expiration_time`.\n"]
     pub fn set_expiration_time(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.expiration_time = std::option::Option::Some(v.into());
@@ -1856,8 +2863,8 @@ impl DataSqlDatabaseInstanceSettingsElIpConfigurationElAuthorizedNetworksEl {
     }
 }
 
-impl terrars::ToListMappable for DataSqlDatabaseInstanceSettingsElIpConfigurationElAuthorizedNetworksEl {
-    type O = terrars::BlockAssignable<DataSqlDatabaseInstanceSettingsElIpConfigurationElAuthorizedNetworksEl>;
+impl terrars::ToListMappable for DataSqlDatabaseInstance_Settings_IpConfiguration_AuthorizedNetworks {
+    type O = terrars::BlockAssignable<DataSqlDatabaseInstance_Settings_IpConfiguration_AuthorizedNetworks>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1868,11 +2875,11 @@ impl terrars::ToListMappable for DataSqlDatabaseInstanceSettingsElIpConfiguratio
     }
 }
 
-pub struct BuildDataSqlDatabaseInstanceSettingsElIpConfigurationElAuthorizedNetworksEl {}
+pub struct BuildDataSqlDatabaseInstance_Settings_IpConfiguration_AuthorizedNetworks {}
 
-impl BuildDataSqlDatabaseInstanceSettingsElIpConfigurationElAuthorizedNetworksEl {
-    pub fn build(self) -> DataSqlDatabaseInstanceSettingsElIpConfigurationElAuthorizedNetworksEl {
-        DataSqlDatabaseInstanceSettingsElIpConfigurationElAuthorizedNetworksEl {
+impl BuildDataSqlDatabaseInstance_Settings_IpConfiguration_AuthorizedNetworks {
+    pub fn build(self) -> DataSqlDatabaseInstance_Settings_IpConfiguration_AuthorizedNetworks {
+        DataSqlDatabaseInstance_Settings_IpConfiguration_AuthorizedNetworks {
             expiration_time: core::default::Default::default(),
             name: core::default::Default::default(),
             value: core::default::Default::default(),
@@ -1880,24 +2887,26 @@ impl BuildDataSqlDatabaseInstanceSettingsElIpConfigurationElAuthorizedNetworksEl
     }
 }
 
-pub struct DataSqlDatabaseInstanceSettingsElIpConfigurationElAuthorizedNetworksElRef {
+#[allow(dead_code)]
+pub struct DataSqlDatabaseInstance_Settings_IpConfiguration_AuthorizedNetworksRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSqlDatabaseInstanceSettingsElIpConfigurationElAuthorizedNetworksElRef {
+impl terrars::Ref for DataSqlDatabaseInstance_Settings_IpConfiguration_AuthorizedNetworksRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataSqlDatabaseInstanceSettingsElIpConfigurationElAuthorizedNetworksElRef {
-        DataSqlDatabaseInstanceSettingsElIpConfigurationElAuthorizedNetworksElRef {
+    ) -> DataSqlDatabaseInstance_Settings_IpConfiguration_AuthorizedNetworksRef {
+        DataSqlDatabaseInstance_Settings_IpConfiguration_AuthorizedNetworksRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSqlDatabaseInstanceSettingsElIpConfigurationElAuthorizedNetworksElRef {
+impl DataSqlDatabaseInstance_Settings_IpConfiguration_AuthorizedNetworksRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1919,32 +2928,103 @@ impl DataSqlDatabaseInstanceSettingsElIpConfigurationElAuthorizedNetworksElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataSqlDatabaseInstanceSettingsElIpConfigurationElPscConfigEl {
+pub struct DataSqlDatabaseInstance_Settings_IpConfiguration_PscConfig_PscAutoConnections {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    allowed_consumer_projects: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    consumer_network: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    psc_enabled: std::option::Option<terrars::PrimField<bool>>,
+    consumer_network_status: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    consumer_service_project_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    instance_auto_dns_status: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ip_address: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    service_connection_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    service_connection_policy_creation_result: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    status: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    write_endpoint_auto_dns_status: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataSqlDatabaseInstanceSettingsElIpConfigurationElPscConfigEl {
-    #[doc = "Set the field `allowed_consumer_projects`.\n"]
-    pub fn set_allowed_consumer_projects(
+impl DataSqlDatabaseInstance_Settings_IpConfiguration_PscConfig_PscAutoConnections {
+    #[doc = "Set the field `consumer_network`.\n"]
+    pub fn set_consumer_network(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.consumer_network = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `consumer_network_status`.\n"]
+    pub fn set_consumer_network_status(
         mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
     ) -> Self {
-        self.allowed_consumer_projects = std::option::Option::Some(v.into());
+        self.consumer_network_status = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc = "Set the field `psc_enabled`.\n"]
-    pub fn set_psc_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.psc_enabled = std::option::Option::Some(v.into());
+    #[doc = "Set the field `consumer_service_project_id`.\n"]
+    pub fn set_consumer_service_project_id(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.consumer_service_project_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `instance_auto_dns_status`.\n"]
+    pub fn set_instance_auto_dns_status(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.instance_auto_dns_status = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `ip_address`.\n"]
+    pub fn set_ip_address(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.ip_address = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `service_connection_policy`.\n"]
+    pub fn set_service_connection_policy(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.service_connection_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `service_connection_policy_creation_result`.\n"]
+    pub fn set_service_connection_policy_creation_result(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.service_connection_policy_creation_result = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `status`.\n"]
+    pub fn set_status(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.status = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `write_endpoint_auto_dns_status`.\n"]
+    pub fn set_write_endpoint_auto_dns_status(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.write_endpoint_auto_dns_status = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataSqlDatabaseInstanceSettingsElIpConfigurationElPscConfigEl {
-    type O = terrars::BlockAssignable<DataSqlDatabaseInstanceSettingsElIpConfigurationElPscConfigEl>;
+impl terrars::ToListMappable for DataSqlDatabaseInstance_Settings_IpConfiguration_PscConfig_PscAutoConnections {
+    type O = terrars::BlockAssignable<DataSqlDatabaseInstance_Settings_IpConfiguration_PscConfig_PscAutoConnections>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1955,35 +3035,229 @@ impl terrars::ToListMappable for DataSqlDatabaseInstanceSettingsElIpConfiguratio
     }
 }
 
-pub struct BuildDataSqlDatabaseInstanceSettingsElIpConfigurationElPscConfigEl {}
+pub struct BuildDataSqlDatabaseInstance_Settings_IpConfiguration_PscConfig_PscAutoConnections {}
 
-impl BuildDataSqlDatabaseInstanceSettingsElIpConfigurationElPscConfigEl {
-    pub fn build(self) -> DataSqlDatabaseInstanceSettingsElIpConfigurationElPscConfigEl {
-        DataSqlDatabaseInstanceSettingsElIpConfigurationElPscConfigEl {
-            allowed_consumer_projects: core::default::Default::default(),
-            psc_enabled: core::default::Default::default(),
+impl BuildDataSqlDatabaseInstance_Settings_IpConfiguration_PscConfig_PscAutoConnections {
+    pub fn build(self) -> DataSqlDatabaseInstance_Settings_IpConfiguration_PscConfig_PscAutoConnections {
+        DataSqlDatabaseInstance_Settings_IpConfiguration_PscConfig_PscAutoConnections {
+            consumer_network: core::default::Default::default(),
+            consumer_network_status: core::default::Default::default(),
+            consumer_service_project_id: core::default::Default::default(),
+            instance_auto_dns_status: core::default::Default::default(),
+            ip_address: core::default::Default::default(),
+            service_connection_policy: core::default::Default::default(),
+            service_connection_policy_creation_result: core::default::Default::default(),
+            status: core::default::Default::default(),
+            write_endpoint_auto_dns_status: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataSqlDatabaseInstanceSettingsElIpConfigurationElPscConfigElRef {
+#[allow(dead_code)]
+pub struct DataSqlDatabaseInstance_Settings_IpConfiguration_PscConfig_PscAutoConnectionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSqlDatabaseInstanceSettingsElIpConfigurationElPscConfigElRef {
+impl terrars::Ref for DataSqlDatabaseInstance_Settings_IpConfiguration_PscConfig_PscAutoConnectionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataSqlDatabaseInstanceSettingsElIpConfigurationElPscConfigElRef {
-        DataSqlDatabaseInstanceSettingsElIpConfigurationElPscConfigElRef {
+    ) -> DataSqlDatabaseInstance_Settings_IpConfiguration_PscConfig_PscAutoConnectionsRef {
+        DataSqlDatabaseInstance_Settings_IpConfiguration_PscConfig_PscAutoConnectionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSqlDatabaseInstanceSettingsElIpConfigurationElPscConfigElRef {
+impl DataSqlDatabaseInstance_Settings_IpConfiguration_PscConfig_PscAutoConnectionsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `consumer_network` after provisioning.\n"]
+    pub fn consumer_network(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.consumer_network", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `consumer_network_status` after provisioning.\n"]
+    pub fn consumer_network_status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.consumer_network_status", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `consumer_service_project_id` after provisioning.\n"]
+    pub fn consumer_service_project_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.consumer_service_project_id", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `instance_auto_dns_status` after provisioning.\n"]
+    pub fn instance_auto_dns_status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_auto_dns_status", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `ip_address` after provisioning.\n"]
+    pub fn ip_address(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_address", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `service_connection_policy` after provisioning.\n"]
+    pub fn service_connection_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_connection_policy", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `service_connection_policy_creation_result` after provisioning.\n"]
+    pub fn service_connection_policy_creation_result(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.service_connection_policy_creation_result", self.base),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
+    pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `write_endpoint_auto_dns_status` after provisioning.\n"]
+    pub fn write_endpoint_auto_dns_status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.write_endpoint_auto_dns_status", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataSqlDatabaseInstance_Settings_IpConfiguration_PscConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    allowed_consumer_projects: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_attachment_uri: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    psc_auto_connection_policy_enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    psc_auto_connections: std
+    ::option
+    ::Option<terrars::ListField<DataSqlDatabaseInstance_Settings_IpConfiguration_PscConfig_PscAutoConnections>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    psc_auto_dns_enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    psc_enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    psc_write_endpoint_dns_enabled: std::option::Option<terrars::PrimField<bool>>,
+}
+
+impl DataSqlDatabaseInstance_Settings_IpConfiguration_PscConfig {
+    #[doc = "Set the field `allowed_consumer_projects`.\n"]
+    pub fn set_allowed_consumer_projects(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.allowed_consumer_projects = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `network_attachment_uri`.\n"]
+    pub fn set_network_attachment_uri(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.network_attachment_uri = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `psc_auto_connection_policy_enabled`.\n"]
+    pub fn set_psc_auto_connection_policy_enabled(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<bool>>,
+    ) -> Self {
+        self.psc_auto_connection_policy_enabled = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `psc_auto_connections`.\n"]
+    pub fn set_psc_auto_connections(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::ListField<DataSqlDatabaseInstance_Settings_IpConfiguration_PscConfig_PscAutoConnections>,
+                    >,
+    ) -> Self {
+        self.psc_auto_connections = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `psc_auto_dns_enabled`.\n"]
+    pub fn set_psc_auto_dns_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.psc_auto_dns_enabled = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `psc_enabled`.\n"]
+    pub fn set_psc_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.psc_enabled = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `psc_write_endpoint_dns_enabled`.\n"]
+    pub fn set_psc_write_endpoint_dns_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.psc_write_endpoint_dns_enabled = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataSqlDatabaseInstance_Settings_IpConfiguration_PscConfig {
+    type O = terrars::BlockAssignable<DataSqlDatabaseInstance_Settings_IpConfiguration_PscConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataSqlDatabaseInstance_Settings_IpConfiguration_PscConfig {}
+
+impl BuildDataSqlDatabaseInstance_Settings_IpConfiguration_PscConfig {
+    pub fn build(self) -> DataSqlDatabaseInstance_Settings_IpConfiguration_PscConfig {
+        DataSqlDatabaseInstance_Settings_IpConfiguration_PscConfig {
+            allowed_consumer_projects: core::default::Default::default(),
+            network_attachment_uri: core::default::Default::default(),
+            psc_auto_connection_policy_enabled: core::default::Default::default(),
+            psc_auto_connections: core::default::Default::default(),
+            psc_auto_dns_enabled: core::default::Default::default(),
+            psc_enabled: core::default::Default::default(),
+            psc_write_endpoint_dns_enabled: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataSqlDatabaseInstance_Settings_IpConfiguration_PscConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataSqlDatabaseInstance_Settings_IpConfiguration_PscConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataSqlDatabaseInstance_Settings_IpConfiguration_PscConfigRef {
+        DataSqlDatabaseInstance_Settings_IpConfiguration_PscConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataSqlDatabaseInstance_Settings_IpConfiguration_PscConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1993,20 +3267,49 @@ impl DataSqlDatabaseInstanceSettingsElIpConfigurationElPscConfigElRef {
         terrars::SetRef::new(self.shared().clone(), format!("{}.allowed_consumer_projects", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `network_attachment_uri` after provisioning.\n"]
+    pub fn network_attachment_uri(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_attachment_uri", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `psc_auto_connection_policy_enabled` after provisioning.\n"]
+    pub fn psc_auto_connection_policy_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.psc_auto_connection_policy_enabled", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `psc_auto_connections` after provisioning.\n"]
+    pub fn psc_auto_connections(
+        &self,
+    ) -> terrars::ListRef<DataSqlDatabaseInstance_Settings_IpConfiguration_PscConfig_PscAutoConnectionsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.psc_auto_connections", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `psc_auto_dns_enabled` after provisioning.\n"]
+    pub fn psc_auto_dns_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.psc_auto_dns_enabled", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `psc_enabled` after provisioning.\n"]
     pub fn psc_enabled(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.psc_enabled", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `psc_write_endpoint_dns_enabled` after provisioning.\n"]
+    pub fn psc_write_endpoint_dns_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.psc_write_endpoint_dns_enabled", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct DataSqlDatabaseInstanceSettingsElIpConfigurationEl {
+pub struct DataSqlDatabaseInstance_Settings_IpConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allocated_ip_range: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     authorized_networks: std
     ::option
-    ::Option<terrars::SetField<DataSqlDatabaseInstanceSettingsElIpConfigurationElAuthorizedNetworksEl>>,
+    ::Option<terrars::SetField<DataSqlDatabaseInstance_Settings_IpConfiguration_AuthorizedNetworks>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_subject_alternative_names: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_private_path_for_google_cloud_services: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2014,14 +3317,18 @@ pub struct DataSqlDatabaseInstanceSettingsElIpConfigurationEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     private_network: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    psc_config: std::option::Option<terrars::SetField<DataSqlDatabaseInstanceSettingsElIpConfigurationElPscConfigEl>>,
+    psc_config: std::option::Option<terrars::SetField<DataSqlDatabaseInstance_Settings_IpConfiguration_PscConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    require_ssl: std::option::Option<terrars::PrimField<bool>>,
+    server_ca_mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    server_ca_pool: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    server_certificate_rotation_mode: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ssl_mode: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataSqlDatabaseInstanceSettingsElIpConfigurationEl {
+impl DataSqlDatabaseInstance_Settings_IpConfiguration {
     #[doc = "Set the field `allocated_ip_range`.\n"]
     pub fn set_allocated_ip_range(
         mut self,
@@ -2039,9 +3346,18 @@ impl DataSqlDatabaseInstanceSettingsElIpConfigurationEl {
 
                     std
                     ::convert
-                    ::Into<terrars::SetField<DataSqlDatabaseInstanceSettingsElIpConfigurationElAuthorizedNetworksEl>>,
+                    ::Into<terrars::SetField<DataSqlDatabaseInstance_Settings_IpConfiguration_AuthorizedNetworks>>,
     ) -> Self {
         self.authorized_networks = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `custom_subject_alternative_names`.\n"]
+    pub fn set_custom_subject_alternative_names(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.custom_subject_alternative_names = std::option::Option::Some(v.into());
         self
     }
 
@@ -2069,15 +3385,30 @@ impl DataSqlDatabaseInstanceSettingsElIpConfigurationEl {
     #[doc = "Set the field `psc_config`.\n"]
     pub fn set_psc_config(
         mut self,
-        v: impl std::convert::Into<terrars::SetField<DataSqlDatabaseInstanceSettingsElIpConfigurationElPscConfigEl>>,
+        v: impl std::convert::Into<terrars::SetField<DataSqlDatabaseInstance_Settings_IpConfiguration_PscConfig>>,
     ) -> Self {
         self.psc_config = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc = "Set the field `require_ssl`.\n"]
-    pub fn set_require_ssl(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.require_ssl = std::option::Option::Some(v.into());
+    #[doc = "Set the field `server_ca_mode`.\n"]
+    pub fn set_server_ca_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.server_ca_mode = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `server_ca_pool`.\n"]
+    pub fn set_server_ca_pool(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.server_ca_pool = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `server_certificate_rotation_mode`.\n"]
+    pub fn set_server_certificate_rotation_mode(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.server_certificate_rotation_mode = std::option::Option::Some(v.into());
         self
     }
 
@@ -2088,8 +3419,8 @@ impl DataSqlDatabaseInstanceSettingsElIpConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for DataSqlDatabaseInstanceSettingsElIpConfigurationEl {
-    type O = terrars::BlockAssignable<DataSqlDatabaseInstanceSettingsElIpConfigurationEl>;
+impl terrars::ToListMappable for DataSqlDatabaseInstance_Settings_IpConfiguration {
+    type O = terrars::BlockAssignable<DataSqlDatabaseInstance_Settings_IpConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2100,41 +3431,46 @@ impl terrars::ToListMappable for DataSqlDatabaseInstanceSettingsElIpConfiguratio
     }
 }
 
-pub struct BuildDataSqlDatabaseInstanceSettingsElIpConfigurationEl {}
+pub struct BuildDataSqlDatabaseInstance_Settings_IpConfiguration {}
 
-impl BuildDataSqlDatabaseInstanceSettingsElIpConfigurationEl {
-    pub fn build(self) -> DataSqlDatabaseInstanceSettingsElIpConfigurationEl {
-        DataSqlDatabaseInstanceSettingsElIpConfigurationEl {
+impl BuildDataSqlDatabaseInstance_Settings_IpConfiguration {
+    pub fn build(self) -> DataSqlDatabaseInstance_Settings_IpConfiguration {
+        DataSqlDatabaseInstance_Settings_IpConfiguration {
             allocated_ip_range: core::default::Default::default(),
             authorized_networks: core::default::Default::default(),
+            custom_subject_alternative_names: core::default::Default::default(),
             enable_private_path_for_google_cloud_services: core::default::Default::default(),
             ipv4_enabled: core::default::Default::default(),
             private_network: core::default::Default::default(),
             psc_config: core::default::Default::default(),
-            require_ssl: core::default::Default::default(),
+            server_ca_mode: core::default::Default::default(),
+            server_ca_pool: core::default::Default::default(),
+            server_certificate_rotation_mode: core::default::Default::default(),
             ssl_mode: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataSqlDatabaseInstanceSettingsElIpConfigurationElRef {
+#[allow(dead_code)]
+pub struct DataSqlDatabaseInstance_Settings_IpConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSqlDatabaseInstanceSettingsElIpConfigurationElRef {
+impl terrars::Ref for DataSqlDatabaseInstance_Settings_IpConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataSqlDatabaseInstanceSettingsElIpConfigurationElRef {
-        DataSqlDatabaseInstanceSettingsElIpConfigurationElRef {
+    ) -> DataSqlDatabaseInstance_Settings_IpConfigurationRef {
+        DataSqlDatabaseInstance_Settings_IpConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSqlDatabaseInstanceSettingsElIpConfigurationElRef {
+impl DataSqlDatabaseInstance_Settings_IpConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2147,8 +3483,13 @@ impl DataSqlDatabaseInstanceSettingsElIpConfigurationElRef {
     #[doc = "Get a reference to the value of field `authorized_networks` after provisioning.\n"]
     pub fn authorized_networks(
         &self,
-    ) -> terrars::SetRef<DataSqlDatabaseInstanceSettingsElIpConfigurationElAuthorizedNetworksElRef> {
+    ) -> terrars::SetRef<DataSqlDatabaseInstance_Settings_IpConfiguration_AuthorizedNetworksRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.authorized_networks", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `custom_subject_alternative_names` after provisioning.\n"]
+    pub fn custom_subject_alternative_names(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.custom_subject_alternative_names", self.base))
     }
 
     #[doc =
@@ -2171,13 +3512,23 @@ impl DataSqlDatabaseInstanceSettingsElIpConfigurationElRef {
     }
 
     #[doc = "Get a reference to the value of field `psc_config` after provisioning.\n"]
-    pub fn psc_config(&self) -> terrars::SetRef<DataSqlDatabaseInstanceSettingsElIpConfigurationElPscConfigElRef> {
+    pub fn psc_config(&self) -> terrars::SetRef<DataSqlDatabaseInstance_Settings_IpConfiguration_PscConfigRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.psc_config", self.base))
     }
 
-    #[doc = "Get a reference to the value of field `require_ssl` after provisioning.\n"]
-    pub fn require_ssl(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.require_ssl", self.base))
+    #[doc = "Get a reference to the value of field `server_ca_mode` after provisioning.\n"]
+    pub fn server_ca_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.server_ca_mode", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `server_ca_pool` after provisioning.\n"]
+    pub fn server_ca_pool(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.server_ca_pool", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `server_certificate_rotation_mode` after provisioning.\n"]
+    pub fn server_certificate_rotation_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.server_certificate_rotation_mode", self.base))
     }
 
     #[doc = "Get a reference to the value of field `ssl_mode` after provisioning.\n"]
@@ -2187,7 +3538,7 @@ impl DataSqlDatabaseInstanceSettingsElIpConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataSqlDatabaseInstanceSettingsElLocationPreferenceEl {
+pub struct DataSqlDatabaseInstance_Settings_LocationPreference {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     follow_gae_application: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2196,7 +3547,7 @@ pub struct DataSqlDatabaseInstanceSettingsElLocationPreferenceEl {
     zone: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataSqlDatabaseInstanceSettingsElLocationPreferenceEl {
+impl DataSqlDatabaseInstance_Settings_LocationPreference {
     #[doc = "Set the field `follow_gae_application`.\n"]
     pub fn set_follow_gae_application(
         mut self,
@@ -2219,8 +3570,8 @@ impl DataSqlDatabaseInstanceSettingsElLocationPreferenceEl {
     }
 }
 
-impl terrars::ToListMappable for DataSqlDatabaseInstanceSettingsElLocationPreferenceEl {
-    type O = terrars::BlockAssignable<DataSqlDatabaseInstanceSettingsElLocationPreferenceEl>;
+impl terrars::ToListMappable for DataSqlDatabaseInstance_Settings_LocationPreference {
+    type O = terrars::BlockAssignable<DataSqlDatabaseInstance_Settings_LocationPreference>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2231,11 +3582,11 @@ impl terrars::ToListMappable for DataSqlDatabaseInstanceSettingsElLocationPrefer
     }
 }
 
-pub struct BuildDataSqlDatabaseInstanceSettingsElLocationPreferenceEl {}
+pub struct BuildDataSqlDatabaseInstance_Settings_LocationPreference {}
 
-impl BuildDataSqlDatabaseInstanceSettingsElLocationPreferenceEl {
-    pub fn build(self) -> DataSqlDatabaseInstanceSettingsElLocationPreferenceEl {
-        DataSqlDatabaseInstanceSettingsElLocationPreferenceEl {
+impl BuildDataSqlDatabaseInstance_Settings_LocationPreference {
+    pub fn build(self) -> DataSqlDatabaseInstance_Settings_LocationPreference {
+        DataSqlDatabaseInstance_Settings_LocationPreference {
             follow_gae_application: core::default::Default::default(),
             secondary_zone: core::default::Default::default(),
             zone: core::default::Default::default(),
@@ -2243,24 +3594,26 @@ impl BuildDataSqlDatabaseInstanceSettingsElLocationPreferenceEl {
     }
 }
 
-pub struct DataSqlDatabaseInstanceSettingsElLocationPreferenceElRef {
+#[allow(dead_code)]
+pub struct DataSqlDatabaseInstance_Settings_LocationPreferenceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSqlDatabaseInstanceSettingsElLocationPreferenceElRef {
+impl terrars::Ref for DataSqlDatabaseInstance_Settings_LocationPreferenceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataSqlDatabaseInstanceSettingsElLocationPreferenceElRef {
-        DataSqlDatabaseInstanceSettingsElLocationPreferenceElRef {
+    ) -> DataSqlDatabaseInstance_Settings_LocationPreferenceRef {
+        DataSqlDatabaseInstance_Settings_LocationPreferenceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSqlDatabaseInstanceSettingsElLocationPreferenceElRef {
+impl DataSqlDatabaseInstance_Settings_LocationPreferenceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2282,7 +3635,7 @@ impl DataSqlDatabaseInstanceSettingsElLocationPreferenceElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataSqlDatabaseInstanceSettingsElMaintenanceWindowEl {
+pub struct DataSqlDatabaseInstance_Settings_MaintenanceWindow {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     day: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2291,7 +3644,7 @@ pub struct DataSqlDatabaseInstanceSettingsElMaintenanceWindowEl {
     update_track: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataSqlDatabaseInstanceSettingsElMaintenanceWindowEl {
+impl DataSqlDatabaseInstance_Settings_MaintenanceWindow {
     #[doc = "Set the field `day`.\n"]
     pub fn set_day(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.day = std::option::Option::Some(v.into());
@@ -2311,8 +3664,8 @@ impl DataSqlDatabaseInstanceSettingsElMaintenanceWindowEl {
     }
 }
 
-impl terrars::ToListMappable for DataSqlDatabaseInstanceSettingsElMaintenanceWindowEl {
-    type O = terrars::BlockAssignable<DataSqlDatabaseInstanceSettingsElMaintenanceWindowEl>;
+impl terrars::ToListMappable for DataSqlDatabaseInstance_Settings_MaintenanceWindow {
+    type O = terrars::BlockAssignable<DataSqlDatabaseInstance_Settings_MaintenanceWindow>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2323,11 +3676,11 @@ impl terrars::ToListMappable for DataSqlDatabaseInstanceSettingsElMaintenanceWin
     }
 }
 
-pub struct BuildDataSqlDatabaseInstanceSettingsElMaintenanceWindowEl {}
+pub struct BuildDataSqlDatabaseInstance_Settings_MaintenanceWindow {}
 
-impl BuildDataSqlDatabaseInstanceSettingsElMaintenanceWindowEl {
-    pub fn build(self) -> DataSqlDatabaseInstanceSettingsElMaintenanceWindowEl {
-        DataSqlDatabaseInstanceSettingsElMaintenanceWindowEl {
+impl BuildDataSqlDatabaseInstance_Settings_MaintenanceWindow {
+    pub fn build(self) -> DataSqlDatabaseInstance_Settings_MaintenanceWindow {
+        DataSqlDatabaseInstance_Settings_MaintenanceWindow {
             day: core::default::Default::default(),
             hour: core::default::Default::default(),
             update_track: core::default::Default::default(),
@@ -2335,24 +3688,26 @@ impl BuildDataSqlDatabaseInstanceSettingsElMaintenanceWindowEl {
     }
 }
 
-pub struct DataSqlDatabaseInstanceSettingsElMaintenanceWindowElRef {
+#[allow(dead_code)]
+pub struct DataSqlDatabaseInstance_Settings_MaintenanceWindowRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSqlDatabaseInstanceSettingsElMaintenanceWindowElRef {
+impl terrars::Ref for DataSqlDatabaseInstance_Settings_MaintenanceWindowRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataSqlDatabaseInstanceSettingsElMaintenanceWindowElRef {
-        DataSqlDatabaseInstanceSettingsElMaintenanceWindowElRef {
+    ) -> DataSqlDatabaseInstance_Settings_MaintenanceWindowRef {
+        DataSqlDatabaseInstance_Settings_MaintenanceWindowRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSqlDatabaseInstanceSettingsElMaintenanceWindowElRef {
+impl DataSqlDatabaseInstance_Settings_MaintenanceWindowRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2374,7 +3729,7 @@ impl DataSqlDatabaseInstanceSettingsElMaintenanceWindowElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataSqlDatabaseInstanceSettingsElPasswordValidationPolicyEl {
+pub struct DataSqlDatabaseInstance_Settings_PasswordValidationPolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     complexity: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2389,7 +3744,7 @@ pub struct DataSqlDatabaseInstanceSettingsElPasswordValidationPolicyEl {
     reuse_interval: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataSqlDatabaseInstanceSettingsElPasswordValidationPolicyEl {
+impl DataSqlDatabaseInstance_Settings_PasswordValidationPolicy {
     #[doc = "Set the field `complexity`.\n"]
     pub fn set_complexity(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.complexity = std::option::Option::Some(v.into());
@@ -2430,8 +3785,8 @@ impl DataSqlDatabaseInstanceSettingsElPasswordValidationPolicyEl {
     }
 }
 
-impl terrars::ToListMappable for DataSqlDatabaseInstanceSettingsElPasswordValidationPolicyEl {
-    type O = terrars::BlockAssignable<DataSqlDatabaseInstanceSettingsElPasswordValidationPolicyEl>;
+impl terrars::ToListMappable for DataSqlDatabaseInstance_Settings_PasswordValidationPolicy {
+    type O = terrars::BlockAssignable<DataSqlDatabaseInstance_Settings_PasswordValidationPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2442,11 +3797,11 @@ impl terrars::ToListMappable for DataSqlDatabaseInstanceSettingsElPasswordValida
     }
 }
 
-pub struct BuildDataSqlDatabaseInstanceSettingsElPasswordValidationPolicyEl {}
+pub struct BuildDataSqlDatabaseInstance_Settings_PasswordValidationPolicy {}
 
-impl BuildDataSqlDatabaseInstanceSettingsElPasswordValidationPolicyEl {
-    pub fn build(self) -> DataSqlDatabaseInstanceSettingsElPasswordValidationPolicyEl {
-        DataSqlDatabaseInstanceSettingsElPasswordValidationPolicyEl {
+impl BuildDataSqlDatabaseInstance_Settings_PasswordValidationPolicy {
+    pub fn build(self) -> DataSqlDatabaseInstance_Settings_PasswordValidationPolicy {
+        DataSqlDatabaseInstance_Settings_PasswordValidationPolicy {
             complexity: core::default::Default::default(),
             disallow_username_substring: core::default::Default::default(),
             enable_password_policy: core::default::Default::default(),
@@ -2457,24 +3812,26 @@ impl BuildDataSqlDatabaseInstanceSettingsElPasswordValidationPolicyEl {
     }
 }
 
-pub struct DataSqlDatabaseInstanceSettingsElPasswordValidationPolicyElRef {
+#[allow(dead_code)]
+pub struct DataSqlDatabaseInstance_Settings_PasswordValidationPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSqlDatabaseInstanceSettingsElPasswordValidationPolicyElRef {
+impl terrars::Ref for DataSqlDatabaseInstance_Settings_PasswordValidationPolicyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataSqlDatabaseInstanceSettingsElPasswordValidationPolicyElRef {
-        DataSqlDatabaseInstanceSettingsElPasswordValidationPolicyElRef {
+    ) -> DataSqlDatabaseInstance_Settings_PasswordValidationPolicyRef {
+        DataSqlDatabaseInstance_Settings_PasswordValidationPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSqlDatabaseInstanceSettingsElPasswordValidationPolicyElRef {
+impl DataSqlDatabaseInstance_Settings_PasswordValidationPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2511,7 +3868,249 @@ impl DataSqlDatabaseInstanceSettingsElPasswordValidationPolicyElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataSqlDatabaseInstanceSettingsElSqlServerAuditConfigEl {
+pub struct DataSqlDatabaseInstance_Settings_ReadPoolAutoScaleConfig_TargetMetrics {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metric: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    target_value: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl DataSqlDatabaseInstance_Settings_ReadPoolAutoScaleConfig_TargetMetrics {
+    #[doc = "Set the field `metric`.\n"]
+    pub fn set_metric(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.metric = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `target_value`.\n"]
+    pub fn set_target_value(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.target_value = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataSqlDatabaseInstance_Settings_ReadPoolAutoScaleConfig_TargetMetrics {
+    type O = terrars::BlockAssignable<DataSqlDatabaseInstance_Settings_ReadPoolAutoScaleConfig_TargetMetrics>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataSqlDatabaseInstance_Settings_ReadPoolAutoScaleConfig_TargetMetrics {}
+
+impl BuildDataSqlDatabaseInstance_Settings_ReadPoolAutoScaleConfig_TargetMetrics {
+    pub fn build(self) -> DataSqlDatabaseInstance_Settings_ReadPoolAutoScaleConfig_TargetMetrics {
+        DataSqlDatabaseInstance_Settings_ReadPoolAutoScaleConfig_TargetMetrics {
+            metric: core::default::Default::default(),
+            target_value: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataSqlDatabaseInstance_Settings_ReadPoolAutoScaleConfig_TargetMetricsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataSqlDatabaseInstance_Settings_ReadPoolAutoScaleConfig_TargetMetricsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataSqlDatabaseInstance_Settings_ReadPoolAutoScaleConfig_TargetMetricsRef {
+        DataSqlDatabaseInstance_Settings_ReadPoolAutoScaleConfig_TargetMetricsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataSqlDatabaseInstance_Settings_ReadPoolAutoScaleConfig_TargetMetricsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `metric` after provisioning.\n"]
+    pub fn metric(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.metric", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `target_value` after provisioning.\n"]
+    pub fn target_value(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_value", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataSqlDatabaseInstance_Settings_ReadPoolAutoScaleConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    disable_scale_in: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_node_count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    min_node_count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    scale_in_cooldown_seconds: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    scale_out_cooldown_seconds: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    target_metrics: std
+    ::option
+    ::Option<terrars::SetField<DataSqlDatabaseInstance_Settings_ReadPoolAutoScaleConfig_TargetMetrics>>,
+}
+
+impl DataSqlDatabaseInstance_Settings_ReadPoolAutoScaleConfig {
+    #[doc = "Set the field `disable_scale_in`.\n"]
+    pub fn set_disable_scale_in(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.disable_scale_in = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `enabled`.\n"]
+    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enabled = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `max_node_count`.\n"]
+    pub fn set_max_node_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_node_count = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `min_node_count`.\n"]
+    pub fn set_min_node_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.min_node_count = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `scale_in_cooldown_seconds`.\n"]
+    pub fn set_scale_in_cooldown_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.scale_in_cooldown_seconds = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `scale_out_cooldown_seconds`.\n"]
+    pub fn set_scale_out_cooldown_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.scale_out_cooldown_seconds = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `target_metrics`.\n"]
+    pub fn set_target_metrics(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::SetField<DataSqlDatabaseInstance_Settings_ReadPoolAutoScaleConfig_TargetMetrics>>,
+    ) -> Self {
+        self.target_metrics = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataSqlDatabaseInstance_Settings_ReadPoolAutoScaleConfig {
+    type O = terrars::BlockAssignable<DataSqlDatabaseInstance_Settings_ReadPoolAutoScaleConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataSqlDatabaseInstance_Settings_ReadPoolAutoScaleConfig {}
+
+impl BuildDataSqlDatabaseInstance_Settings_ReadPoolAutoScaleConfig {
+    pub fn build(self) -> DataSqlDatabaseInstance_Settings_ReadPoolAutoScaleConfig {
+        DataSqlDatabaseInstance_Settings_ReadPoolAutoScaleConfig {
+            disable_scale_in: core::default::Default::default(),
+            enabled: core::default::Default::default(),
+            max_node_count: core::default::Default::default(),
+            min_node_count: core::default::Default::default(),
+            scale_in_cooldown_seconds: core::default::Default::default(),
+            scale_out_cooldown_seconds: core::default::Default::default(),
+            target_metrics: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataSqlDatabaseInstance_Settings_ReadPoolAutoScaleConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataSqlDatabaseInstance_Settings_ReadPoolAutoScaleConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataSqlDatabaseInstance_Settings_ReadPoolAutoScaleConfigRef {
+        DataSqlDatabaseInstance_Settings_ReadPoolAutoScaleConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataSqlDatabaseInstance_Settings_ReadPoolAutoScaleConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `disable_scale_in` after provisioning.\n"]
+    pub fn disable_scale_in(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.disable_scale_in", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `max_node_count` after provisioning.\n"]
+    pub fn max_node_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_node_count", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `min_node_count` after provisioning.\n"]
+    pub fn min_node_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_node_count", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `scale_in_cooldown_seconds` after provisioning.\n"]
+    pub fn scale_in_cooldown_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.scale_in_cooldown_seconds", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `scale_out_cooldown_seconds` after provisioning.\n"]
+    pub fn scale_out_cooldown_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.scale_out_cooldown_seconds", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `target_metrics` after provisioning.\n"]
+    pub fn target_metrics(
+        &self,
+    ) -> terrars::SetRef<DataSqlDatabaseInstance_Settings_ReadPoolAutoScaleConfig_TargetMetricsRef> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.target_metrics", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataSqlDatabaseInstance_Settings_SqlServerAuditConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bucket: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2520,7 +4119,7 @@ pub struct DataSqlDatabaseInstanceSettingsElSqlServerAuditConfigEl {
     upload_interval: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataSqlDatabaseInstanceSettingsElSqlServerAuditConfigEl {
+impl DataSqlDatabaseInstance_Settings_SqlServerAuditConfig {
     #[doc = "Set the field `bucket`.\n"]
     pub fn set_bucket(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.bucket = std::option::Option::Some(v.into());
@@ -2543,8 +4142,8 @@ impl DataSqlDatabaseInstanceSettingsElSqlServerAuditConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataSqlDatabaseInstanceSettingsElSqlServerAuditConfigEl {
-    type O = terrars::BlockAssignable<DataSqlDatabaseInstanceSettingsElSqlServerAuditConfigEl>;
+impl terrars::ToListMappable for DataSqlDatabaseInstance_Settings_SqlServerAuditConfig {
+    type O = terrars::BlockAssignable<DataSqlDatabaseInstance_Settings_SqlServerAuditConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2555,11 +4154,11 @@ impl terrars::ToListMappable for DataSqlDatabaseInstanceSettingsElSqlServerAudit
     }
 }
 
-pub struct BuildDataSqlDatabaseInstanceSettingsElSqlServerAuditConfigEl {}
+pub struct BuildDataSqlDatabaseInstance_Settings_SqlServerAuditConfig {}
 
-impl BuildDataSqlDatabaseInstanceSettingsElSqlServerAuditConfigEl {
-    pub fn build(self) -> DataSqlDatabaseInstanceSettingsElSqlServerAuditConfigEl {
-        DataSqlDatabaseInstanceSettingsElSqlServerAuditConfigEl {
+impl BuildDataSqlDatabaseInstance_Settings_SqlServerAuditConfig {
+    pub fn build(self) -> DataSqlDatabaseInstance_Settings_SqlServerAuditConfig {
+        DataSqlDatabaseInstance_Settings_SqlServerAuditConfig {
             bucket: core::default::Default::default(),
             retention_interval: core::default::Default::default(),
             upload_interval: core::default::Default::default(),
@@ -2567,24 +4166,26 @@ impl BuildDataSqlDatabaseInstanceSettingsElSqlServerAuditConfigEl {
     }
 }
 
-pub struct DataSqlDatabaseInstanceSettingsElSqlServerAuditConfigElRef {
+#[allow(dead_code)]
+pub struct DataSqlDatabaseInstance_Settings_SqlServerAuditConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSqlDatabaseInstanceSettingsElSqlServerAuditConfigElRef {
+impl terrars::Ref for DataSqlDatabaseInstance_Settings_SqlServerAuditConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataSqlDatabaseInstanceSettingsElSqlServerAuditConfigElRef {
-        DataSqlDatabaseInstanceSettingsElSqlServerAuditConfigElRef {
+    ) -> DataSqlDatabaseInstance_Settings_SqlServerAuditConfigRef {
+        DataSqlDatabaseInstance_Settings_SqlServerAuditConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSqlDatabaseInstanceSettingsElSqlServerAuditConfigElRef {
+impl DataSqlDatabaseInstance_Settings_SqlServerAuditConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2606,35 +4207,45 @@ impl DataSqlDatabaseInstanceSettingsElSqlServerAuditConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataSqlDatabaseInstanceSettingsEl {
+pub struct DataSqlDatabaseInstance_Settings {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     activation_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     active_directory_config: std
     ::option
-    ::Option<terrars::ListField<DataSqlDatabaseInstanceSettingsElActiveDirectoryConfigEl>>,
+    ::Option<terrars::ListField<DataSqlDatabaseInstance_Settings_ActiveDirectoryConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     advanced_machine_features: std
     ::option
-    ::Option<terrars::ListField<DataSqlDatabaseInstanceSettingsElAdvancedMachineFeaturesEl>>,
+    ::Option<terrars::ListField<DataSqlDatabaseInstance_Settings_AdvancedMachineFeatures>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    auto_upgrade_enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     availability_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    backup_configuration: std::option::Option<terrars::ListField<DataSqlDatabaseInstanceSettingsElBackupConfigurationEl>>,
+    backup_configuration: std::option::Option<terrars::ListField<DataSqlDatabaseInstance_Settings_BackupConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     collation: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    connection_pool_config: std::option::Option<terrars::SetField<DataSqlDatabaseInstance_Settings_ConnectionPoolConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     connector_enforcement: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    data_cache_config: std::option::Option<terrars::ListField<DataSqlDatabaseInstanceSettingsElDataCacheConfigEl>>,
+    data_api_access: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    database_flags: std::option::Option<terrars::SetField<DataSqlDatabaseInstanceSettingsElDatabaseFlagsEl>>,
+    data_cache_config: std::option::Option<terrars::ListField<DataSqlDatabaseInstance_Settings_DataCacheConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    data_disk_provisioned_iops: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    data_disk_provisioned_throughput: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    database_flags: std::option::Option<terrars::SetField<DataSqlDatabaseInstance_Settings_DatabaseFlags>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     deletion_protection_enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     deny_maintenance_period: std
     ::option
-    ::Option<terrars::ListField<DataSqlDatabaseInstanceSettingsElDenyMaintenancePeriodEl>>,
+    ::Option<terrars::ListField<DataSqlDatabaseInstance_Settings_DenyMaintenancePeriod>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     disk_autoresize: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2646,23 +4257,41 @@ pub struct DataSqlDatabaseInstanceSettingsEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     edition: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    insights_config: std::option::Option<terrars::ListField<DataSqlDatabaseInstanceSettingsElInsightsConfigEl>>,
+    effective_availability_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ip_configuration: std::option::Option<terrars::ListField<DataSqlDatabaseInstanceSettingsElIpConfigurationEl>>,
+    enable_dataplex_integration: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    location_preference: std::option::Option<terrars::ListField<DataSqlDatabaseInstanceSettingsElLocationPreferenceEl>>,
+    enable_google_ml_integration: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    maintenance_window: std::option::Option<terrars::ListField<DataSqlDatabaseInstanceSettingsElMaintenanceWindowEl>>,
+    entraid_config: std::option::Option<terrars::ListField<DataSqlDatabaseInstance_Settings_EntraidConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    final_backup_config: std::option::Option<terrars::ListField<DataSqlDatabaseInstance_Settings_FinalBackupConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    insights_config: std::option::Option<terrars::ListField<DataSqlDatabaseInstance_Settings_InsightsConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ip_configuration: std::option::Option<terrars::ListField<DataSqlDatabaseInstance_Settings_IpConfiguration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    location_preference: std::option::Option<terrars::ListField<DataSqlDatabaseInstance_Settings_LocationPreference>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    maintenance_window: std::option::Option<terrars::ListField<DataSqlDatabaseInstance_Settings_MaintenanceWindow>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     password_validation_policy: std
     ::option
-    ::Option<terrars::ListField<DataSqlDatabaseInstanceSettingsElPasswordValidationPolicyEl>>,
+    ::Option<terrars::ListField<DataSqlDatabaseInstance_Settings_PasswordValidationPolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     pricing_plan: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    read_pool_auto_scale_config: std
+    ::option
+    ::Option<terrars::ListField<DataSqlDatabaseInstance_Settings_ReadPoolAutoScaleConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    replication_lag_max_seconds: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    retain_backups_on_delete: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sql_server_audit_config: std
     ::option
-    ::Option<terrars::ListField<DataSqlDatabaseInstanceSettingsElSqlServerAuditConfigEl>>,
+    ::Option<terrars::ListField<DataSqlDatabaseInstance_Settings_SqlServerAuditConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tier: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2673,7 +4302,7 @@ pub struct DataSqlDatabaseInstanceSettingsEl {
     version: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataSqlDatabaseInstanceSettingsEl {
+impl DataSqlDatabaseInstance_Settings {
     #[doc = "Set the field `activation_policy`.\n"]
     pub fn set_activation_policy(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.activation_policy = std::option::Option::Some(v.into());
@@ -2683,7 +4312,7 @@ impl DataSqlDatabaseInstanceSettingsEl {
     #[doc = "Set the field `active_directory_config`.\n"]
     pub fn set_active_directory_config(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataSqlDatabaseInstanceSettingsElActiveDirectoryConfigEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataSqlDatabaseInstance_Settings_ActiveDirectoryConfig>>,
     ) -> Self {
         self.active_directory_config = std::option::Option::Some(v.into());
         self
@@ -2692,9 +4321,15 @@ impl DataSqlDatabaseInstanceSettingsEl {
     #[doc = "Set the field `advanced_machine_features`.\n"]
     pub fn set_advanced_machine_features(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataSqlDatabaseInstanceSettingsElAdvancedMachineFeaturesEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataSqlDatabaseInstance_Settings_AdvancedMachineFeatures>>,
     ) -> Self {
         self.advanced_machine_features = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `auto_upgrade_enabled`.\n"]
+    pub fn set_auto_upgrade_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.auto_upgrade_enabled = std::option::Option::Some(v.into());
         self
     }
 
@@ -2707,7 +4342,7 @@ impl DataSqlDatabaseInstanceSettingsEl {
     #[doc = "Set the field `backup_configuration`.\n"]
     pub fn set_backup_configuration(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataSqlDatabaseInstanceSettingsElBackupConfigurationEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataSqlDatabaseInstance_Settings_BackupConfiguration>>,
     ) -> Self {
         self.backup_configuration = std::option::Option::Some(v.into());
         self
@@ -2716,6 +4351,15 @@ impl DataSqlDatabaseInstanceSettingsEl {
     #[doc = "Set the field `collation`.\n"]
     pub fn set_collation(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.collation = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `connection_pool_config`.\n"]
+    pub fn set_connection_pool_config(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<DataSqlDatabaseInstance_Settings_ConnectionPoolConfig>>,
+    ) -> Self {
+        self.connection_pool_config = std::option::Option::Some(v.into());
         self
     }
 
@@ -2728,19 +4372,37 @@ impl DataSqlDatabaseInstanceSettingsEl {
         self
     }
 
+    #[doc = "Set the field `data_api_access`.\n"]
+    pub fn set_data_api_access(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.data_api_access = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `data_cache_config`.\n"]
     pub fn set_data_cache_config(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataSqlDatabaseInstanceSettingsElDataCacheConfigEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataSqlDatabaseInstance_Settings_DataCacheConfig>>,
     ) -> Self {
         self.data_cache_config = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `data_disk_provisioned_iops`.\n"]
+    pub fn set_data_disk_provisioned_iops(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.data_disk_provisioned_iops = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `data_disk_provisioned_throughput`.\n"]
+    pub fn set_data_disk_provisioned_throughput(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.data_disk_provisioned_throughput = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `database_flags`.\n"]
     pub fn set_database_flags(
         mut self,
-        v: impl std::convert::Into<terrars::SetField<DataSqlDatabaseInstanceSettingsElDatabaseFlagsEl>>,
+        v: impl std::convert::Into<terrars::SetField<DataSqlDatabaseInstance_Settings_DatabaseFlags>>,
     ) -> Self {
         self.database_flags = std::option::Option::Some(v.into());
         self
@@ -2755,7 +4417,7 @@ impl DataSqlDatabaseInstanceSettingsEl {
     #[doc = "Set the field `deny_maintenance_period`.\n"]
     pub fn set_deny_maintenance_period(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataSqlDatabaseInstanceSettingsElDenyMaintenancePeriodEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataSqlDatabaseInstance_Settings_DenyMaintenancePeriod>>,
     ) -> Self {
         self.deny_maintenance_period = std::option::Option::Some(v.into());
         self
@@ -2791,10 +4453,49 @@ impl DataSqlDatabaseInstanceSettingsEl {
         self
     }
 
+    #[doc = "Set the field `effective_availability_type`.\n"]
+    pub fn set_effective_availability_type(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.effective_availability_type = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `enable_dataplex_integration`.\n"]
+    pub fn set_enable_dataplex_integration(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enable_dataplex_integration = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `enable_google_ml_integration`.\n"]
+    pub fn set_enable_google_ml_integration(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enable_google_ml_integration = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `entraid_config`.\n"]
+    pub fn set_entraid_config(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataSqlDatabaseInstance_Settings_EntraidConfig>>,
+    ) -> Self {
+        self.entraid_config = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `final_backup_config`.\n"]
+    pub fn set_final_backup_config(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataSqlDatabaseInstance_Settings_FinalBackupConfig>>,
+    ) -> Self {
+        self.final_backup_config = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `insights_config`.\n"]
     pub fn set_insights_config(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataSqlDatabaseInstanceSettingsElInsightsConfigEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataSqlDatabaseInstance_Settings_InsightsConfig>>,
     ) -> Self {
         self.insights_config = std::option::Option::Some(v.into());
         self
@@ -2803,7 +4504,7 @@ impl DataSqlDatabaseInstanceSettingsEl {
     #[doc = "Set the field `ip_configuration`.\n"]
     pub fn set_ip_configuration(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataSqlDatabaseInstanceSettingsElIpConfigurationEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataSqlDatabaseInstance_Settings_IpConfiguration>>,
     ) -> Self {
         self.ip_configuration = std::option::Option::Some(v.into());
         self
@@ -2812,7 +4513,7 @@ impl DataSqlDatabaseInstanceSettingsEl {
     #[doc = "Set the field `location_preference`.\n"]
     pub fn set_location_preference(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataSqlDatabaseInstanceSettingsElLocationPreferenceEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataSqlDatabaseInstance_Settings_LocationPreference>>,
     ) -> Self {
         self.location_preference = std::option::Option::Some(v.into());
         self
@@ -2821,7 +4522,7 @@ impl DataSqlDatabaseInstanceSettingsEl {
     #[doc = "Set the field `maintenance_window`.\n"]
     pub fn set_maintenance_window(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataSqlDatabaseInstanceSettingsElMaintenanceWindowEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataSqlDatabaseInstance_Settings_MaintenanceWindow>>,
     ) -> Self {
         self.maintenance_window = std::option::Option::Some(v.into());
         self
@@ -2830,7 +4531,7 @@ impl DataSqlDatabaseInstanceSettingsEl {
     #[doc = "Set the field `password_validation_policy`.\n"]
     pub fn set_password_validation_policy(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataSqlDatabaseInstanceSettingsElPasswordValidationPolicyEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataSqlDatabaseInstance_Settings_PasswordValidationPolicy>>,
     ) -> Self {
         self.password_validation_policy = std::option::Option::Some(v.into());
         self
@@ -2842,10 +4543,31 @@ impl DataSqlDatabaseInstanceSettingsEl {
         self
     }
 
+    #[doc = "Set the field `read_pool_auto_scale_config`.\n"]
+    pub fn set_read_pool_auto_scale_config(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataSqlDatabaseInstance_Settings_ReadPoolAutoScaleConfig>>,
+    ) -> Self {
+        self.read_pool_auto_scale_config = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `replication_lag_max_seconds`.\n"]
+    pub fn set_replication_lag_max_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.replication_lag_max_seconds = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `retain_backups_on_delete`.\n"]
+    pub fn set_retain_backups_on_delete(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.retain_backups_on_delete = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `sql_server_audit_config`.\n"]
     pub fn set_sql_server_audit_config(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataSqlDatabaseInstanceSettingsElSqlServerAuditConfigEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataSqlDatabaseInstance_Settings_SqlServerAuditConfig>>,
     ) -> Self {
         self.sql_server_audit_config = std::option::Option::Some(v.into());
         self
@@ -2879,8 +4601,8 @@ impl DataSqlDatabaseInstanceSettingsEl {
     }
 }
 
-impl terrars::ToListMappable for DataSqlDatabaseInstanceSettingsEl {
-    type O = terrars::BlockAssignable<DataSqlDatabaseInstanceSettingsEl>;
+impl terrars::ToListMappable for DataSqlDatabaseInstance_Settings {
+    type O = terrars::BlockAssignable<DataSqlDatabaseInstance_Settings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2891,19 +4613,24 @@ impl terrars::ToListMappable for DataSqlDatabaseInstanceSettingsEl {
     }
 }
 
-pub struct BuildDataSqlDatabaseInstanceSettingsEl {}
+pub struct BuildDataSqlDatabaseInstance_Settings {}
 
-impl BuildDataSqlDatabaseInstanceSettingsEl {
-    pub fn build(self) -> DataSqlDatabaseInstanceSettingsEl {
-        DataSqlDatabaseInstanceSettingsEl {
+impl BuildDataSqlDatabaseInstance_Settings {
+    pub fn build(self) -> DataSqlDatabaseInstance_Settings {
+        DataSqlDatabaseInstance_Settings {
             activation_policy: core::default::Default::default(),
             active_directory_config: core::default::Default::default(),
             advanced_machine_features: core::default::Default::default(),
+            auto_upgrade_enabled: core::default::Default::default(),
             availability_type: core::default::Default::default(),
             backup_configuration: core::default::Default::default(),
             collation: core::default::Default::default(),
+            connection_pool_config: core::default::Default::default(),
             connector_enforcement: core::default::Default::default(),
+            data_api_access: core::default::Default::default(),
             data_cache_config: core::default::Default::default(),
+            data_disk_provisioned_iops: core::default::Default::default(),
+            data_disk_provisioned_throughput: core::default::Default::default(),
             database_flags: core::default::Default::default(),
             deletion_protection_enabled: core::default::Default::default(),
             deny_maintenance_period: core::default::Default::default(),
@@ -2912,12 +4639,20 @@ impl BuildDataSqlDatabaseInstanceSettingsEl {
             disk_size: core::default::Default::default(),
             disk_type: core::default::Default::default(),
             edition: core::default::Default::default(),
+            effective_availability_type: core::default::Default::default(),
+            enable_dataplex_integration: core::default::Default::default(),
+            enable_google_ml_integration: core::default::Default::default(),
+            entraid_config: core::default::Default::default(),
+            final_backup_config: core::default::Default::default(),
             insights_config: core::default::Default::default(),
             ip_configuration: core::default::Default::default(),
             location_preference: core::default::Default::default(),
             maintenance_window: core::default::Default::default(),
             password_validation_policy: core::default::Default::default(),
             pricing_plan: core::default::Default::default(),
+            read_pool_auto_scale_config: core::default::Default::default(),
+            replication_lag_max_seconds: core::default::Default::default(),
+            retain_backups_on_delete: core::default::Default::default(),
             sql_server_audit_config: core::default::Default::default(),
             tier: core::default::Default::default(),
             time_zone: core::default::Default::default(),
@@ -2927,21 +4662,23 @@ impl BuildDataSqlDatabaseInstanceSettingsEl {
     }
 }
 
-pub struct DataSqlDatabaseInstanceSettingsElRef {
+#[allow(dead_code)]
+pub struct DataSqlDatabaseInstance_SettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSqlDatabaseInstanceSettingsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSqlDatabaseInstanceSettingsElRef {
-        DataSqlDatabaseInstanceSettingsElRef {
+impl terrars::Ref for DataSqlDatabaseInstance_SettingsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSqlDatabaseInstance_SettingsRef {
+        DataSqlDatabaseInstance_SettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSqlDatabaseInstanceSettingsElRef {
+impl DataSqlDatabaseInstance_SettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2952,17 +4689,20 @@ impl DataSqlDatabaseInstanceSettingsElRef {
     }
 
     #[doc = "Get a reference to the value of field `active_directory_config` after provisioning.\n"]
-    pub fn active_directory_config(
-        &self,
-    ) -> terrars::ListRef<DataSqlDatabaseInstanceSettingsElActiveDirectoryConfigElRef> {
+    pub fn active_directory_config(&self) -> terrars::ListRef<DataSqlDatabaseInstance_Settings_ActiveDirectoryConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.active_directory_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `advanced_machine_features` after provisioning.\n"]
     pub fn advanced_machine_features(
         &self,
-    ) -> terrars::ListRef<DataSqlDatabaseInstanceSettingsElAdvancedMachineFeaturesElRef> {
+    ) -> terrars::ListRef<DataSqlDatabaseInstance_Settings_AdvancedMachineFeaturesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.advanced_machine_features", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `auto_upgrade_enabled` after provisioning.\n"]
+    pub fn auto_upgrade_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auto_upgrade_enabled", self.base))
     }
 
     #[doc = "Get a reference to the value of field `availability_type` after provisioning.\n"]
@@ -2971,7 +4711,7 @@ impl DataSqlDatabaseInstanceSettingsElRef {
     }
 
     #[doc = "Get a reference to the value of field `backup_configuration` after provisioning.\n"]
-    pub fn backup_configuration(&self) -> terrars::ListRef<DataSqlDatabaseInstanceSettingsElBackupConfigurationElRef> {
+    pub fn backup_configuration(&self) -> terrars::ListRef<DataSqlDatabaseInstance_Settings_BackupConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.backup_configuration", self.base))
     }
 
@@ -2980,18 +4720,38 @@ impl DataSqlDatabaseInstanceSettingsElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.collation", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `connection_pool_config` after provisioning.\n"]
+    pub fn connection_pool_config(&self) -> terrars::SetRef<DataSqlDatabaseInstance_Settings_ConnectionPoolConfigRef> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.connection_pool_config", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `connector_enforcement` after provisioning.\n"]
     pub fn connector_enforcement(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.connector_enforcement", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `data_api_access` after provisioning.\n"]
+    pub fn data_api_access(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.data_api_access", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `data_cache_config` after provisioning.\n"]
-    pub fn data_cache_config(&self) -> terrars::ListRef<DataSqlDatabaseInstanceSettingsElDataCacheConfigElRef> {
+    pub fn data_cache_config(&self) -> terrars::ListRef<DataSqlDatabaseInstance_Settings_DataCacheConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.data_cache_config", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `data_disk_provisioned_iops` after provisioning.\n"]
+    pub fn data_disk_provisioned_iops(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.data_disk_provisioned_iops", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `data_disk_provisioned_throughput` after provisioning.\n"]
+    pub fn data_disk_provisioned_throughput(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.data_disk_provisioned_throughput", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `database_flags` after provisioning.\n"]
-    pub fn database_flags(&self) -> terrars::SetRef<DataSqlDatabaseInstanceSettingsElDatabaseFlagsElRef> {
+    pub fn database_flags(&self) -> terrars::SetRef<DataSqlDatabaseInstance_Settings_DatabaseFlagsRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.database_flags", self.base))
     }
 
@@ -3001,9 +4761,7 @@ impl DataSqlDatabaseInstanceSettingsElRef {
     }
 
     #[doc = "Get a reference to the value of field `deny_maintenance_period` after provisioning.\n"]
-    pub fn deny_maintenance_period(
-        &self,
-    ) -> terrars::ListRef<DataSqlDatabaseInstanceSettingsElDenyMaintenancePeriodElRef> {
+    pub fn deny_maintenance_period(&self) -> terrars::ListRef<DataSqlDatabaseInstance_Settings_DenyMaintenancePeriodRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.deny_maintenance_period", self.base))
     }
 
@@ -3032,30 +4790,55 @@ impl DataSqlDatabaseInstanceSettingsElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.edition", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `effective_availability_type` after provisioning.\n"]
+    pub fn effective_availability_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.effective_availability_type", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `enable_dataplex_integration` after provisioning.\n"]
+    pub fn enable_dataplex_integration(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_dataplex_integration", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `enable_google_ml_integration` after provisioning.\n"]
+    pub fn enable_google_ml_integration(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_google_ml_integration", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `entraid_config` after provisioning.\n"]
+    pub fn entraid_config(&self) -> terrars::ListRef<DataSqlDatabaseInstance_Settings_EntraidConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.entraid_config", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `final_backup_config` after provisioning.\n"]
+    pub fn final_backup_config(&self) -> terrars::ListRef<DataSqlDatabaseInstance_Settings_FinalBackupConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.final_backup_config", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `insights_config` after provisioning.\n"]
-    pub fn insights_config(&self) -> terrars::ListRef<DataSqlDatabaseInstanceSettingsElInsightsConfigElRef> {
+    pub fn insights_config(&self) -> terrars::ListRef<DataSqlDatabaseInstance_Settings_InsightsConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.insights_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `ip_configuration` after provisioning.\n"]
-    pub fn ip_configuration(&self) -> terrars::ListRef<DataSqlDatabaseInstanceSettingsElIpConfigurationElRef> {
+    pub fn ip_configuration(&self) -> terrars::ListRef<DataSqlDatabaseInstance_Settings_IpConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ip_configuration", self.base))
     }
 
     #[doc = "Get a reference to the value of field `location_preference` after provisioning.\n"]
-    pub fn location_preference(&self) -> terrars::ListRef<DataSqlDatabaseInstanceSettingsElLocationPreferenceElRef> {
+    pub fn location_preference(&self) -> terrars::ListRef<DataSqlDatabaseInstance_Settings_LocationPreferenceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.location_preference", self.base))
     }
 
     #[doc = "Get a reference to the value of field `maintenance_window` after provisioning.\n"]
-    pub fn maintenance_window(&self) -> terrars::ListRef<DataSqlDatabaseInstanceSettingsElMaintenanceWindowElRef> {
+    pub fn maintenance_window(&self) -> terrars::ListRef<DataSqlDatabaseInstance_Settings_MaintenanceWindowRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.maintenance_window", self.base))
     }
 
     #[doc = "Get a reference to the value of field `password_validation_policy` after provisioning.\n"]
     pub fn password_validation_policy(
         &self,
-    ) -> terrars::ListRef<DataSqlDatabaseInstanceSettingsElPasswordValidationPolicyElRef> {
+    ) -> terrars::ListRef<DataSqlDatabaseInstance_Settings_PasswordValidationPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.password_validation_policy", self.base))
     }
 
@@ -3064,10 +4847,25 @@ impl DataSqlDatabaseInstanceSettingsElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.pricing_plan", self.base))
     }
 
-    #[doc = "Get a reference to the value of field `sql_server_audit_config` after provisioning.\n"]
-    pub fn sql_server_audit_config(
+    #[doc = "Get a reference to the value of field `read_pool_auto_scale_config` after provisioning.\n"]
+    pub fn read_pool_auto_scale_config(
         &self,
-    ) -> terrars::ListRef<DataSqlDatabaseInstanceSettingsElSqlServerAuditConfigElRef> {
+    ) -> terrars::ListRef<DataSqlDatabaseInstance_Settings_ReadPoolAutoScaleConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.read_pool_auto_scale_config", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `replication_lag_max_seconds` after provisioning.\n"]
+    pub fn replication_lag_max_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.replication_lag_max_seconds", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `retain_backups_on_delete` after provisioning.\n"]
+    pub fn retain_backups_on_delete(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.retain_backups_on_delete", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `sql_server_audit_config` after provisioning.\n"]
+    pub fn sql_server_audit_config(&self) -> terrars::ListRef<DataSqlDatabaseInstance_Settings_SqlServerAuditConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sql_server_audit_config", self.base))
     }
 

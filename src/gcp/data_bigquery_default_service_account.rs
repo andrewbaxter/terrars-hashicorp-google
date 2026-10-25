@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataBigqueryDefaultServiceAccountData {
+struct DataBigqueryDefaultServiceAccountData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -25,7 +27,7 @@ struct DataBigqueryDefaultServiceAccountData {
 struct DataBigqueryDefaultServiceAccount_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataBigqueryDefaultServiceAccountData>,
+    data: std::cell::RefCell<DataBigqueryDefaultServiceAccountData_>,
 }
 
 #[derive(Clone)]
@@ -143,7 +145,7 @@ impl BuildDataBigqueryDefaultServiceAccount {
         let out = DataBigqueryDefaultServiceAccount(std::rc::Rc::new(DataBigqueryDefaultServiceAccount_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataBigqueryDefaultServiceAccountData {
+            data: std::cell::RefCell::new(DataBigqueryDefaultServiceAccountData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),

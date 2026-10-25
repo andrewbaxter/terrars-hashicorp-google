@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct VertexAiDatasetData {
+struct VertexAiDatasetData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct VertexAiDatasetData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     display_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -29,16 +33,16 @@ struct VertexAiDatasetData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    encryption_spec: std::option::Option<std::vec::Vec<VertexAiDatasetEncryptionSpecEl>>,
+    encryption_spec: std::option::Option<std::vec::Vec<VertexAiDataset_EncryptionSpec>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<VertexAiDatasetTimeoutsEl>,
+    timeouts: std::option::Option<VertexAiDataset_Timeouts>,
     dynamic: VertexAiDatasetDynamic,
 }
 
 struct VertexAiDataset_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<VertexAiDatasetData>,
+    data: std::cell::RefCell<VertexAiDatasetData_>,
 }
 
 #[derive(Clone)]
@@ -138,6 +142,13 @@ impl VertexAiDataset {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -169,7 +180,7 @@ impl VertexAiDataset {
     #[doc = "Set the field `encryption_spec`.\n"]
     pub fn set_encryption_spec(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<VertexAiDatasetEncryptionSpecEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<VertexAiDataset_EncryptionSpec>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -183,7 +194,7 @@ impl VertexAiDataset {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<VertexAiDatasetTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<VertexAiDataset_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -192,6 +203,12 @@ impl VertexAiDataset {
         "Get a reference to the value of field `create_time` after provisioning.\nThe timestamp of when the dataset was created in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -253,13 +270,13 @@ impl VertexAiDataset {
     }
 
     #[doc = "Get a reference to the value of field `encryption_spec` after provisioning.\n"]
-    pub fn encryption_spec(&self) -> terrars::ListRef<VertexAiDatasetEncryptionSpecElRef> {
+    pub fn encryption_spec(&self) -> terrars::ListRef<VertexAiDataset_EncryptionSpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_spec", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> VertexAiDatasetTimeoutsElRef {
-        VertexAiDatasetTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> VertexAiDataset_TimeoutsRef {
+        VertexAiDataset_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -309,12 +326,13 @@ impl BuildVertexAiDataset {
         let out = VertexAiDataset(std::rc::Rc::new(VertexAiDataset_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(VertexAiDatasetData {
+            data: std::cell::RefCell::new(VertexAiDatasetData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 display_name: self.display_name,
                 id: core::default::Default::default(),
                 labels: core::default::Default::default(),
@@ -358,6 +376,12 @@ impl VertexAiDatasetRef {
         "Get a reference to the value of field `create_time` after provisioning.\nThe timestamp of when the dataset was created in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -419,23 +443,28 @@ impl VertexAiDatasetRef {
     }
 
     #[doc = "Get a reference to the value of field `encryption_spec` after provisioning.\n"]
-    pub fn encryption_spec(&self) -> terrars::ListRef<VertexAiDatasetEncryptionSpecElRef> {
+    pub fn encryption_spec(&self) -> terrars::ListRef<VertexAiDataset_EncryptionSpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_spec", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> VertexAiDatasetTimeoutsElRef {
-        VertexAiDatasetTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> VertexAiDataset_TimeoutsRef {
+        VertexAiDataset_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct VertexAiDatasetDynamic {
+    encryption_spec: std::option::Option<terrars::DynamicBlock<VertexAiDataset_EncryptionSpec>>,
+}
+
 #[derive(Serialize)]
-pub struct VertexAiDatasetEncryptionSpecEl {
+pub struct VertexAiDataset_EncryptionSpec {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl VertexAiDatasetEncryptionSpecEl {
+impl VertexAiDataset_EncryptionSpec {
     #[doc =
         "Set the field `kms_key_name`.\nRequired. The Cloud KMS resource identifier of the customer managed encryption key used to protect a resource.\nHas the form: projects/my-project/locations/my-region/keyRings/my-kr/cryptoKeys/my-key. The key needs to be in the same region as where the resource is created."]
     pub fn set_kms_key_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -444,8 +473,8 @@ impl VertexAiDatasetEncryptionSpecEl {
     }
 }
 
-impl terrars::ToListMappable for VertexAiDatasetEncryptionSpecEl {
-    type O = terrars::BlockAssignable<VertexAiDatasetEncryptionSpecEl>;
+impl terrars::ToListMappable for VertexAiDataset_EncryptionSpec {
+    type O = terrars::BlockAssignable<VertexAiDataset_EncryptionSpec>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -456,29 +485,31 @@ impl terrars::ToListMappable for VertexAiDatasetEncryptionSpecEl {
     }
 }
 
-pub struct BuildVertexAiDatasetEncryptionSpecEl {}
+pub struct BuildVertexAiDataset_EncryptionSpec {}
 
-impl BuildVertexAiDatasetEncryptionSpecEl {
-    pub fn build(self) -> VertexAiDatasetEncryptionSpecEl {
-        VertexAiDatasetEncryptionSpecEl { kms_key_name: core::default::Default::default() }
+impl BuildVertexAiDataset_EncryptionSpec {
+    pub fn build(self) -> VertexAiDataset_EncryptionSpec {
+        VertexAiDataset_EncryptionSpec { kms_key_name: core::default::Default::default() }
     }
 }
 
-pub struct VertexAiDatasetEncryptionSpecElRef {
+#[allow(dead_code)]
+pub struct VertexAiDataset_EncryptionSpecRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for VertexAiDatasetEncryptionSpecElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> VertexAiDatasetEncryptionSpecElRef {
-        VertexAiDatasetEncryptionSpecElRef {
+impl terrars::Ref for VertexAiDataset_EncryptionSpecRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> VertexAiDataset_EncryptionSpecRef {
+        VertexAiDataset_EncryptionSpecRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl VertexAiDatasetEncryptionSpecElRef {
+impl VertexAiDataset_EncryptionSpecRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -491,7 +522,7 @@ impl VertexAiDatasetEncryptionSpecElRef {
 }
 
 #[derive(Serialize)]
-pub struct VertexAiDatasetTimeoutsEl {
+pub struct VertexAiDataset_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -500,7 +531,7 @@ pub struct VertexAiDatasetTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl VertexAiDatasetTimeoutsEl {
+impl VertexAiDataset_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -520,8 +551,8 @@ impl VertexAiDatasetTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for VertexAiDatasetTimeoutsEl {
-    type O = terrars::BlockAssignable<VertexAiDatasetTimeoutsEl>;
+impl terrars::ToListMappable for VertexAiDataset_Timeouts {
+    type O = terrars::BlockAssignable<VertexAiDataset_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -532,11 +563,11 @@ impl terrars::ToListMappable for VertexAiDatasetTimeoutsEl {
     }
 }
 
-pub struct BuildVertexAiDatasetTimeoutsEl {}
+pub struct BuildVertexAiDataset_Timeouts {}
 
-impl BuildVertexAiDatasetTimeoutsEl {
-    pub fn build(self) -> VertexAiDatasetTimeoutsEl {
-        VertexAiDatasetTimeoutsEl {
+impl BuildVertexAiDataset_Timeouts {
+    pub fn build(self) -> VertexAiDataset_Timeouts {
+        VertexAiDataset_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -544,21 +575,23 @@ impl BuildVertexAiDatasetTimeoutsEl {
     }
 }
 
-pub struct VertexAiDatasetTimeoutsElRef {
+#[allow(dead_code)]
+pub struct VertexAiDataset_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for VertexAiDatasetTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> VertexAiDatasetTimeoutsElRef {
-        VertexAiDatasetTimeoutsElRef {
+impl terrars::Ref for VertexAiDataset_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> VertexAiDataset_TimeoutsRef {
+        VertexAiDataset_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl VertexAiDatasetTimeoutsElRef {
+impl VertexAiDataset_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -577,9 +610,4 @@ impl VertexAiDatasetTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct VertexAiDatasetDynamic {
-    encryption_spec: std::option::Option<terrars::DynamicBlock<VertexAiDatasetEncryptionSpecEl>>,
 }

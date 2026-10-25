@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ContainerAwsNodePoolData {
+struct ContainerAwsNodePoolData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,6 +24,8 @@ struct ContainerAwsNodePoolData {
     annotations: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     cluster: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     location: terrars::PrimField<std::string::String>,
     name: terrars::PrimField<std::string::String>,
@@ -30,22 +34,26 @@ struct ContainerAwsNodePoolData {
     subnet_id: terrars::PrimField<std::string::String>,
     version: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    autoscaling: std::option::Option<std::vec::Vec<ContainerAwsNodePoolAutoscalingEl>>,
+    autoscaling: std::option::Option<std::vec::Vec<ContainerAwsNodePool_Autoscaling>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    config: std::option::Option<std::vec::Vec<ContainerAwsNodePoolConfigEl>>,
+    config: std::option::Option<std::vec::Vec<ContainerAwsNodePool_Config>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    management: std::option::Option<std::vec::Vec<ContainerAwsNodePoolManagementEl>>,
+    kubelet_config: std::option::Option<std::vec::Vec<ContainerAwsNodePool_KubeletConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    max_pods_constraint: std::option::Option<std::vec::Vec<ContainerAwsNodePoolMaxPodsConstraintEl>>,
+    management: std::option::Option<std::vec::Vec<ContainerAwsNodePool_Management>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ContainerAwsNodePoolTimeoutsEl>,
+    max_pods_constraint: std::option::Option<std::vec::Vec<ContainerAwsNodePool_MaxPodsConstraint>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<ContainerAwsNodePool_Timeouts>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update_settings: std::option::Option<std::vec::Vec<ContainerAwsNodePool_UpdateSettings>>,
     dynamic: ContainerAwsNodePoolDynamic,
 }
 
 struct ContainerAwsNodePool_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ContainerAwsNodePoolData>,
+    data: std::cell::RefCell<ContainerAwsNodePoolData_>,
 }
 
 #[derive(Clone)]
@@ -155,6 +163,13 @@ impl ContainerAwsNodePool {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -170,7 +185,7 @@ impl ContainerAwsNodePool {
     #[doc = "Set the field `autoscaling`.\n"]
     pub fn set_autoscaling(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsNodePoolAutoscalingEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsNodePool_Autoscaling>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -184,7 +199,7 @@ impl ContainerAwsNodePool {
     }
 
     #[doc = "Set the field `config`.\n"]
-    pub fn set_config(self, v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsNodePoolConfigEl>>) -> Self {
+    pub fn set_config(self, v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsNodePool_Config>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().config = std::option::Option::Some(v);
@@ -196,10 +211,26 @@ impl ContainerAwsNodePool {
         self
     }
 
+    #[doc = "Set the field `kubelet_config`.\n"]
+    pub fn set_kubelet_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsNodePool_KubeletConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().kubelet_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.kubelet_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `management`.\n"]
     pub fn set_management(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsNodePoolManagementEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsNodePool_Management>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -215,7 +246,7 @@ impl ContainerAwsNodePool {
     #[doc = "Set the field `max_pods_constraint`.\n"]
     pub fn set_max_pods_constraint(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsNodePoolMaxPodsConstraintEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsNodePool_MaxPodsConstraint>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -229,8 +260,24 @@ impl ContainerAwsNodePool {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ContainerAwsNodePoolTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ContainerAwsNodePool_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `update_settings`.\n"]
+    pub fn set_update_settings(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsNodePool_UpdateSettings>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().update_settings = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.update_settings = std::option::Option::Some(d);
+            },
+        }
         self
     }
 
@@ -249,6 +296,12 @@ impl ContainerAwsNodePool {
         "Get a reference to the value of field `create_time` after provisioning.\nOutput only. The time at which this node pool was created."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -320,28 +373,38 @@ impl ContainerAwsNodePool {
     }
 
     #[doc = "Get a reference to the value of field `autoscaling` after provisioning.\n"]
-    pub fn autoscaling(&self) -> terrars::ListRef<ContainerAwsNodePoolAutoscalingElRef> {
+    pub fn autoscaling(&self) -> terrars::ListRef<ContainerAwsNodePool_AutoscalingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.autoscaling", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `config` after provisioning.\n"]
-    pub fn config(&self) -> terrars::ListRef<ContainerAwsNodePoolConfigElRef> {
+    pub fn config(&self) -> terrars::ListRef<ContainerAwsNodePool_ConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.config", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `kubelet_config` after provisioning.\n"]
+    pub fn kubelet_config(&self) -> terrars::ListRef<ContainerAwsNodePool_KubeletConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.kubelet_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `management` after provisioning.\n"]
-    pub fn management(&self) -> terrars::ListRef<ContainerAwsNodePoolManagementElRef> {
+    pub fn management(&self) -> terrars::ListRef<ContainerAwsNodePool_ManagementRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.management", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `max_pods_constraint` after provisioning.\n"]
-    pub fn max_pods_constraint(&self) -> terrars::ListRef<ContainerAwsNodePoolMaxPodsConstraintElRef> {
+    pub fn max_pods_constraint(&self) -> terrars::ListRef<ContainerAwsNodePool_MaxPodsConstraintRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.max_pods_constraint", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ContainerAwsNodePoolTimeoutsElRef {
-        ContainerAwsNodePoolTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ContainerAwsNodePool_TimeoutsRef {
+        ContainerAwsNodePool_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `update_settings` after provisioning.\n"]
+    pub fn update_settings(&self) -> terrars::ListRef<ContainerAwsNodePool_UpdateSettingsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.update_settings", self.extract_ref()))
     }
 }
 
@@ -396,7 +459,7 @@ impl BuildContainerAwsNodePool {
         let out = ContainerAwsNodePool(std::rc::Rc::new(ContainerAwsNodePool_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ContainerAwsNodePoolData {
+            data: std::cell::RefCell::new(ContainerAwsNodePoolData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -404,6 +467,7 @@ impl BuildContainerAwsNodePool {
                 provisioner: core::default::Default::default(),
                 annotations: core::default::Default::default(),
                 cluster: self.cluster,
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 location: self.location,
                 name: self.name,
@@ -412,9 +476,11 @@ impl BuildContainerAwsNodePool {
                 version: self.version,
                 autoscaling: core::default::Default::default(),
                 config: core::default::Default::default(),
+                kubelet_config: core::default::Default::default(),
                 management: core::default::Default::default(),
                 max_pods_constraint: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
+                update_settings: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -461,6 +527,12 @@ impl ContainerAwsNodePoolRef {
         "Get a reference to the value of field `create_time` after provisioning.\nOutput only. The time at which this node pool was created."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -532,41 +604,61 @@ impl ContainerAwsNodePoolRef {
     }
 
     #[doc = "Get a reference to the value of field `autoscaling` after provisioning.\n"]
-    pub fn autoscaling(&self) -> terrars::ListRef<ContainerAwsNodePoolAutoscalingElRef> {
+    pub fn autoscaling(&self) -> terrars::ListRef<ContainerAwsNodePool_AutoscalingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.autoscaling", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `config` after provisioning.\n"]
-    pub fn config(&self) -> terrars::ListRef<ContainerAwsNodePoolConfigElRef> {
+    pub fn config(&self) -> terrars::ListRef<ContainerAwsNodePool_ConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.config", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `kubelet_config` after provisioning.\n"]
+    pub fn kubelet_config(&self) -> terrars::ListRef<ContainerAwsNodePool_KubeletConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.kubelet_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `management` after provisioning.\n"]
-    pub fn management(&self) -> terrars::ListRef<ContainerAwsNodePoolManagementElRef> {
+    pub fn management(&self) -> terrars::ListRef<ContainerAwsNodePool_ManagementRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.management", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `max_pods_constraint` after provisioning.\n"]
-    pub fn max_pods_constraint(&self) -> terrars::ListRef<ContainerAwsNodePoolMaxPodsConstraintElRef> {
+    pub fn max_pods_constraint(&self) -> terrars::ListRef<ContainerAwsNodePool_MaxPodsConstraintRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.max_pods_constraint", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ContainerAwsNodePoolTimeoutsElRef {
-        ContainerAwsNodePoolTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ContainerAwsNodePool_TimeoutsRef {
+        ContainerAwsNodePool_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `update_settings` after provisioning.\n"]
+    pub fn update_settings(&self) -> terrars::ListRef<ContainerAwsNodePool_UpdateSettingsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.update_settings", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ContainerAwsNodePoolDynamic {
+    autoscaling: std::option::Option<terrars::DynamicBlock<ContainerAwsNodePool_Autoscaling>>,
+    config: std::option::Option<terrars::DynamicBlock<ContainerAwsNodePool_Config>>,
+    kubelet_config: std::option::Option<terrars::DynamicBlock<ContainerAwsNodePool_KubeletConfig>>,
+    management: std::option::Option<terrars::DynamicBlock<ContainerAwsNodePool_Management>>,
+    max_pods_constraint: std::option::Option<terrars::DynamicBlock<ContainerAwsNodePool_MaxPodsConstraint>>,
+    update_settings: std::option::Option<terrars::DynamicBlock<ContainerAwsNodePool_UpdateSettings>>,
+}
+
 #[derive(Serialize)]
-pub struct ContainerAwsNodePoolAutoscalingEl {
+pub struct ContainerAwsNodePool_Autoscaling {
     max_node_count: terrars::PrimField<f64>,
     min_node_count: terrars::PrimField<f64>,
 }
 
-impl ContainerAwsNodePoolAutoscalingEl { }
+impl ContainerAwsNodePool_Autoscaling { }
 
-impl terrars::ToListMappable for ContainerAwsNodePoolAutoscalingEl {
-    type O = terrars::BlockAssignable<ContainerAwsNodePoolAutoscalingEl>;
+impl terrars::ToListMappable for ContainerAwsNodePool_Autoscaling {
+    type O = terrars::BlockAssignable<ContainerAwsNodePool_Autoscaling>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -577,37 +669,39 @@ impl terrars::ToListMappable for ContainerAwsNodePoolAutoscalingEl {
     }
 }
 
-pub struct BuildContainerAwsNodePoolAutoscalingEl {
+pub struct BuildContainerAwsNodePool_Autoscaling {
     #[doc = "Maximum number of nodes in the NodePool. Must be >= min_node_count."]
     pub max_node_count: terrars::PrimField<f64>,
     #[doc = "Minimum number of nodes in the NodePool. Must be >= 1 and <= max_node_count."]
     pub min_node_count: terrars::PrimField<f64>,
 }
 
-impl BuildContainerAwsNodePoolAutoscalingEl {
-    pub fn build(self) -> ContainerAwsNodePoolAutoscalingEl {
-        ContainerAwsNodePoolAutoscalingEl {
+impl BuildContainerAwsNodePool_Autoscaling {
+    pub fn build(self) -> ContainerAwsNodePool_Autoscaling {
+        ContainerAwsNodePool_Autoscaling {
             max_node_count: self.max_node_count,
             min_node_count: self.min_node_count,
         }
     }
 }
 
-pub struct ContainerAwsNodePoolAutoscalingElRef {
+#[allow(dead_code)]
+pub struct ContainerAwsNodePool_AutoscalingRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAwsNodePoolAutoscalingElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAwsNodePoolAutoscalingElRef {
-        ContainerAwsNodePoolAutoscalingElRef {
+impl terrars::Ref for ContainerAwsNodePool_AutoscalingRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAwsNodePool_AutoscalingRef {
+        ContainerAwsNodePool_AutoscalingRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAwsNodePoolAutoscalingElRef {
+impl ContainerAwsNodePool_AutoscalingRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -626,13 +720,13 @@ impl ContainerAwsNodePoolAutoscalingElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAwsNodePoolConfigElAutoscalingMetricsCollectionEl {
+pub struct ContainerAwsNodePool_Config_AutoscalingMetricsCollection {
     granularity: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     metrics: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl ContainerAwsNodePoolConfigElAutoscalingMetricsCollectionEl {
+impl ContainerAwsNodePool_Config_AutoscalingMetricsCollection {
     #[doc =
         "Set the field `metrics`.\nThe metrics to enable. For a list of valid metrics, see https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_EnableMetricsCollection.html. If you specify granularity and don't specify any metrics, all metrics are enabled."]
     pub fn set_metrics(
@@ -644,8 +738,8 @@ impl ContainerAwsNodePoolConfigElAutoscalingMetricsCollectionEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAwsNodePoolConfigElAutoscalingMetricsCollectionEl {
-    type O = terrars::BlockAssignable<ContainerAwsNodePoolConfigElAutoscalingMetricsCollectionEl>;
+impl terrars::ToListMappable for ContainerAwsNodePool_Config_AutoscalingMetricsCollection {
+    type O = terrars::BlockAssignable<ContainerAwsNodePool_Config_AutoscalingMetricsCollection>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -656,39 +750,41 @@ impl terrars::ToListMappable for ContainerAwsNodePoolConfigElAutoscalingMetricsC
     }
 }
 
-pub struct BuildContainerAwsNodePoolConfigElAutoscalingMetricsCollectionEl {
+pub struct BuildContainerAwsNodePool_Config_AutoscalingMetricsCollection {
     #[doc =
         "The frequency at which EC2 Auto Scaling sends aggregated data to AWS CloudWatch. The only valid value is \"1Minute\"."]
     pub granularity: terrars::PrimField<std::string::String>,
 }
 
-impl BuildContainerAwsNodePoolConfigElAutoscalingMetricsCollectionEl {
-    pub fn build(self) -> ContainerAwsNodePoolConfigElAutoscalingMetricsCollectionEl {
-        ContainerAwsNodePoolConfigElAutoscalingMetricsCollectionEl {
+impl BuildContainerAwsNodePool_Config_AutoscalingMetricsCollection {
+    pub fn build(self) -> ContainerAwsNodePool_Config_AutoscalingMetricsCollection {
+        ContainerAwsNodePool_Config_AutoscalingMetricsCollection {
             granularity: self.granularity,
             metrics: core::default::Default::default(),
         }
     }
 }
 
-pub struct ContainerAwsNodePoolConfigElAutoscalingMetricsCollectionElRef {
+#[allow(dead_code)]
+pub struct ContainerAwsNodePool_Config_AutoscalingMetricsCollectionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAwsNodePoolConfigElAutoscalingMetricsCollectionElRef {
+impl terrars::Ref for ContainerAwsNodePool_Config_AutoscalingMetricsCollectionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ContainerAwsNodePoolConfigElAutoscalingMetricsCollectionElRef {
-        ContainerAwsNodePoolConfigElAutoscalingMetricsCollectionElRef {
+    ) -> ContainerAwsNodePool_Config_AutoscalingMetricsCollectionRef {
+        ContainerAwsNodePool_Config_AutoscalingMetricsCollectionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAwsNodePoolConfigElAutoscalingMetricsCollectionElRef {
+impl ContainerAwsNodePool_Config_AutoscalingMetricsCollectionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -707,14 +803,14 @@ impl ContainerAwsNodePoolConfigElAutoscalingMetricsCollectionElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAwsNodePoolConfigElConfigEncryptionEl {
+pub struct ContainerAwsNodePool_Config_ConfigEncryption {
     kms_key_arn: terrars::PrimField<std::string::String>,
 }
 
-impl ContainerAwsNodePoolConfigElConfigEncryptionEl { }
+impl ContainerAwsNodePool_Config_ConfigEncryption { }
 
-impl terrars::ToListMappable for ContainerAwsNodePoolConfigElConfigEncryptionEl {
-    type O = terrars::BlockAssignable<ContainerAwsNodePoolConfigElConfigEncryptionEl>;
+impl terrars::ToListMappable for ContainerAwsNodePool_Config_ConfigEncryption {
+    type O = terrars::BlockAssignable<ContainerAwsNodePool_Config_ConfigEncryption>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -725,35 +821,37 @@ impl terrars::ToListMappable for ContainerAwsNodePoolConfigElConfigEncryptionEl 
     }
 }
 
-pub struct BuildContainerAwsNodePoolConfigElConfigEncryptionEl {
+pub struct BuildContainerAwsNodePool_Config_ConfigEncryption {
     #[doc = "The ARN of the AWS KMS key used to encrypt node pool configuration."]
     pub kms_key_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildContainerAwsNodePoolConfigElConfigEncryptionEl {
-    pub fn build(self) -> ContainerAwsNodePoolConfigElConfigEncryptionEl {
-        ContainerAwsNodePoolConfigElConfigEncryptionEl { kms_key_arn: self.kms_key_arn }
+impl BuildContainerAwsNodePool_Config_ConfigEncryption {
+    pub fn build(self) -> ContainerAwsNodePool_Config_ConfigEncryption {
+        ContainerAwsNodePool_Config_ConfigEncryption { kms_key_arn: self.kms_key_arn }
     }
 }
 
-pub struct ContainerAwsNodePoolConfigElConfigEncryptionElRef {
+#[allow(dead_code)]
+pub struct ContainerAwsNodePool_Config_ConfigEncryptionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAwsNodePoolConfigElConfigEncryptionElRef {
+impl terrars::Ref for ContainerAwsNodePool_Config_ConfigEncryptionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ContainerAwsNodePoolConfigElConfigEncryptionElRef {
-        ContainerAwsNodePoolConfigElConfigEncryptionElRef {
+    ) -> ContainerAwsNodePool_Config_ConfigEncryptionRef {
+        ContainerAwsNodePool_Config_ConfigEncryptionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAwsNodePoolConfigElConfigEncryptionElRef {
+impl ContainerAwsNodePool_Config_ConfigEncryptionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -766,15 +864,15 @@ impl ContainerAwsNodePoolConfigElConfigEncryptionElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAwsNodePoolConfigElProxyConfigEl {
+pub struct ContainerAwsNodePool_Config_ProxyConfig {
     secret_arn: terrars::PrimField<std::string::String>,
     secret_version: terrars::PrimField<std::string::String>,
 }
 
-impl ContainerAwsNodePoolConfigElProxyConfigEl { }
+impl ContainerAwsNodePool_Config_ProxyConfig { }
 
-impl terrars::ToListMappable for ContainerAwsNodePoolConfigElProxyConfigEl {
-    type O = terrars::BlockAssignable<ContainerAwsNodePoolConfigElProxyConfigEl>;
+impl terrars::ToListMappable for ContainerAwsNodePool_Config_ProxyConfig {
+    type O = terrars::BlockAssignable<ContainerAwsNodePool_Config_ProxyConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -785,37 +883,39 @@ impl terrars::ToListMappable for ContainerAwsNodePoolConfigElProxyConfigEl {
     }
 }
 
-pub struct BuildContainerAwsNodePoolConfigElProxyConfigEl {
+pub struct BuildContainerAwsNodePool_Config_ProxyConfig {
     #[doc = "The ARN of the AWS Secret Manager secret that contains the HTTP(S) proxy configuration."]
     pub secret_arn: terrars::PrimField<std::string::String>,
     #[doc = "The version string of the AWS Secret Manager secret that contains the HTTP(S) proxy configuration."]
     pub secret_version: terrars::PrimField<std::string::String>,
 }
 
-impl BuildContainerAwsNodePoolConfigElProxyConfigEl {
-    pub fn build(self) -> ContainerAwsNodePoolConfigElProxyConfigEl {
-        ContainerAwsNodePoolConfigElProxyConfigEl {
+impl BuildContainerAwsNodePool_Config_ProxyConfig {
+    pub fn build(self) -> ContainerAwsNodePool_Config_ProxyConfig {
+        ContainerAwsNodePool_Config_ProxyConfig {
             secret_arn: self.secret_arn,
             secret_version: self.secret_version,
         }
     }
 }
 
-pub struct ContainerAwsNodePoolConfigElProxyConfigElRef {
+#[allow(dead_code)]
+pub struct ContainerAwsNodePool_Config_ProxyConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAwsNodePoolConfigElProxyConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAwsNodePoolConfigElProxyConfigElRef {
-        ContainerAwsNodePoolConfigElProxyConfigElRef {
+impl terrars::Ref for ContainerAwsNodePool_Config_ProxyConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAwsNodePool_Config_ProxyConfigRef {
+        ContainerAwsNodePool_Config_ProxyConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAwsNodePoolConfigElProxyConfigElRef {
+impl ContainerAwsNodePool_Config_ProxyConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -834,7 +934,7 @@ impl ContainerAwsNodePoolConfigElProxyConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAwsNodePoolConfigElRootVolumeEl {
+pub struct ContainerAwsNodePool_Config_RootVolume {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     iops: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -847,7 +947,7 @@ pub struct ContainerAwsNodePoolConfigElRootVolumeEl {
     volume_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ContainerAwsNodePoolConfigElRootVolumeEl {
+impl ContainerAwsNodePool_Config_RootVolume {
     #[doc =
         "Set the field `iops`.\nOptional. The number of I/O operations per second (IOPS) to provision for GP3 volume."]
     pub fn set_iops(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -884,8 +984,8 @@ impl ContainerAwsNodePoolConfigElRootVolumeEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAwsNodePoolConfigElRootVolumeEl {
-    type O = terrars::BlockAssignable<ContainerAwsNodePoolConfigElRootVolumeEl>;
+impl terrars::ToListMappable for ContainerAwsNodePool_Config_RootVolume {
+    type O = terrars::BlockAssignable<ContainerAwsNodePool_Config_RootVolume>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -896,11 +996,11 @@ impl terrars::ToListMappable for ContainerAwsNodePoolConfigElRootVolumeEl {
     }
 }
 
-pub struct BuildContainerAwsNodePoolConfigElRootVolumeEl {}
+pub struct BuildContainerAwsNodePool_Config_RootVolume {}
 
-impl BuildContainerAwsNodePoolConfigElRootVolumeEl {
-    pub fn build(self) -> ContainerAwsNodePoolConfigElRootVolumeEl {
-        ContainerAwsNodePoolConfigElRootVolumeEl {
+impl BuildContainerAwsNodePool_Config_RootVolume {
+    pub fn build(self) -> ContainerAwsNodePool_Config_RootVolume {
+        ContainerAwsNodePool_Config_RootVolume {
             iops: core::default::Default::default(),
             kms_key_arn: core::default::Default::default(),
             size_gib: core::default::Default::default(),
@@ -910,21 +1010,23 @@ impl BuildContainerAwsNodePoolConfigElRootVolumeEl {
     }
 }
 
-pub struct ContainerAwsNodePoolConfigElRootVolumeElRef {
+#[allow(dead_code)]
+pub struct ContainerAwsNodePool_Config_RootVolumeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAwsNodePoolConfigElRootVolumeElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAwsNodePoolConfigElRootVolumeElRef {
-        ContainerAwsNodePoolConfigElRootVolumeElRef {
+impl terrars::Ref for ContainerAwsNodePool_Config_RootVolumeRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAwsNodePool_Config_RootVolumeRef {
+        ContainerAwsNodePool_Config_RootVolumeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAwsNodePoolConfigElRootVolumeElRef {
+impl ContainerAwsNodePool_Config_RootVolumeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -961,14 +1063,14 @@ impl ContainerAwsNodePoolConfigElRootVolumeElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAwsNodePoolConfigElSshConfigEl {
+pub struct ContainerAwsNodePool_Config_SshConfig {
     ec2_key_pair: terrars::PrimField<std::string::String>,
 }
 
-impl ContainerAwsNodePoolConfigElSshConfigEl { }
+impl ContainerAwsNodePool_Config_SshConfig { }
 
-impl terrars::ToListMappable for ContainerAwsNodePoolConfigElSshConfigEl {
-    type O = terrars::BlockAssignable<ContainerAwsNodePoolConfigElSshConfigEl>;
+impl terrars::ToListMappable for ContainerAwsNodePool_Config_SshConfig {
+    type O = terrars::BlockAssignable<ContainerAwsNodePool_Config_SshConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -979,32 +1081,34 @@ impl terrars::ToListMappable for ContainerAwsNodePoolConfigElSshConfigEl {
     }
 }
 
-pub struct BuildContainerAwsNodePoolConfigElSshConfigEl {
+pub struct BuildContainerAwsNodePool_Config_SshConfig {
     #[doc = "The name of the EC2 key pair used to login into cluster machines."]
     pub ec2_key_pair: terrars::PrimField<std::string::String>,
 }
 
-impl BuildContainerAwsNodePoolConfigElSshConfigEl {
-    pub fn build(self) -> ContainerAwsNodePoolConfigElSshConfigEl {
-        ContainerAwsNodePoolConfigElSshConfigEl { ec2_key_pair: self.ec2_key_pair }
+impl BuildContainerAwsNodePool_Config_SshConfig {
+    pub fn build(self) -> ContainerAwsNodePool_Config_SshConfig {
+        ContainerAwsNodePool_Config_SshConfig { ec2_key_pair: self.ec2_key_pair }
     }
 }
 
-pub struct ContainerAwsNodePoolConfigElSshConfigElRef {
+#[allow(dead_code)]
+pub struct ContainerAwsNodePool_Config_SshConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAwsNodePoolConfigElSshConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAwsNodePoolConfigElSshConfigElRef {
-        ContainerAwsNodePoolConfigElSshConfigElRef {
+impl terrars::Ref for ContainerAwsNodePool_Config_SshConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAwsNodePool_Config_SshConfigRef {
+        ContainerAwsNodePool_Config_SshConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAwsNodePoolConfigElSshConfigElRef {
+impl ContainerAwsNodePool_Config_SshConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1017,16 +1121,16 @@ impl ContainerAwsNodePoolConfigElSshConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAwsNodePoolConfigElTaintsEl {
+pub struct ContainerAwsNodePool_Config_Taints {
     effect: terrars::PrimField<std::string::String>,
     key: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl ContainerAwsNodePoolConfigElTaintsEl { }
+impl ContainerAwsNodePool_Config_Taints { }
 
-impl terrars::ToListMappable for ContainerAwsNodePoolConfigElTaintsEl {
-    type O = terrars::BlockAssignable<ContainerAwsNodePoolConfigElTaintsEl>;
+impl terrars::ToListMappable for ContainerAwsNodePool_Config_Taints {
+    type O = terrars::BlockAssignable<ContainerAwsNodePool_Config_Taints>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1037,7 +1141,7 @@ impl terrars::ToListMappable for ContainerAwsNodePoolConfigElTaintsEl {
     }
 }
 
-pub struct BuildContainerAwsNodePoolConfigElTaintsEl {
+pub struct BuildContainerAwsNodePool_Config_Taints {
     #[doc = "The taint effect. Possible values: EFFECT_UNSPECIFIED, NO_SCHEDULE, PREFER_NO_SCHEDULE, NO_EXECUTE"]
     pub effect: terrars::PrimField<std::string::String>,
     #[doc = "Key for the taint."]
@@ -1046,9 +1150,9 @@ pub struct BuildContainerAwsNodePoolConfigElTaintsEl {
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildContainerAwsNodePoolConfigElTaintsEl {
-    pub fn build(self) -> ContainerAwsNodePoolConfigElTaintsEl {
-        ContainerAwsNodePoolConfigElTaintsEl {
+impl BuildContainerAwsNodePool_Config_Taints {
+    pub fn build(self) -> ContainerAwsNodePool_Config_Taints {
+        ContainerAwsNodePool_Config_Taints {
             effect: self.effect,
             key: self.key,
             value: self.value,
@@ -1056,21 +1160,23 @@ impl BuildContainerAwsNodePoolConfigElTaintsEl {
     }
 }
 
-pub struct ContainerAwsNodePoolConfigElTaintsElRef {
+#[allow(dead_code)]
+pub struct ContainerAwsNodePool_Config_TaintsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAwsNodePoolConfigElTaintsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAwsNodePoolConfigElTaintsElRef {
-        ContainerAwsNodePoolConfigElTaintsElRef {
+impl terrars::Ref for ContainerAwsNodePool_Config_TaintsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAwsNodePool_Config_TaintsRef {
+        ContainerAwsNodePool_Config_TaintsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAwsNodePoolConfigElTaintsElRef {
+impl ContainerAwsNodePool_Config_TaintsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1093,19 +1199,19 @@ impl ContainerAwsNodePoolConfigElTaintsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct ContainerAwsNodePoolConfigElDynamic {
+struct ContainerAwsNodePool_ConfigDynamic {
     autoscaling_metrics_collection: std
     ::option
-    ::Option<terrars::DynamicBlock<ContainerAwsNodePoolConfigElAutoscalingMetricsCollectionEl>>,
-    config_encryption: std::option::Option<terrars::DynamicBlock<ContainerAwsNodePoolConfigElConfigEncryptionEl>>,
-    proxy_config: std::option::Option<terrars::DynamicBlock<ContainerAwsNodePoolConfigElProxyConfigEl>>,
-    root_volume: std::option::Option<terrars::DynamicBlock<ContainerAwsNodePoolConfigElRootVolumeEl>>,
-    ssh_config: std::option::Option<terrars::DynamicBlock<ContainerAwsNodePoolConfigElSshConfigEl>>,
-    taints: std::option::Option<terrars::DynamicBlock<ContainerAwsNodePoolConfigElTaintsEl>>,
+    ::Option<terrars::DynamicBlock<ContainerAwsNodePool_Config_AutoscalingMetricsCollection>>,
+    config_encryption: std::option::Option<terrars::DynamicBlock<ContainerAwsNodePool_Config_ConfigEncryption>>,
+    proxy_config: std::option::Option<terrars::DynamicBlock<ContainerAwsNodePool_Config_ProxyConfig>>,
+    root_volume: std::option::Option<terrars::DynamicBlock<ContainerAwsNodePool_Config_RootVolume>>,
+    ssh_config: std::option::Option<terrars::DynamicBlock<ContainerAwsNodePool_Config_SshConfig>>,
+    taints: std::option::Option<terrars::DynamicBlock<ContainerAwsNodePool_Config_Taints>>,
 }
 
 #[derive(Serialize)]
-pub struct ContainerAwsNodePoolConfigEl {
+pub struct ContainerAwsNodePool_Config {
     iam_instance_profile: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     instance_type: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -1118,21 +1224,21 @@ pub struct ContainerAwsNodePoolConfigEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     autoscaling_metrics_collection: std
     ::option
-    ::Option<std::vec::Vec<ContainerAwsNodePoolConfigElAutoscalingMetricsCollectionEl>>,
+    ::Option<std::vec::Vec<ContainerAwsNodePool_Config_AutoscalingMetricsCollection>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    config_encryption: std::option::Option<std::vec::Vec<ContainerAwsNodePoolConfigElConfigEncryptionEl>>,
+    config_encryption: std::option::Option<std::vec::Vec<ContainerAwsNodePool_Config_ConfigEncryption>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    proxy_config: std::option::Option<std::vec::Vec<ContainerAwsNodePoolConfigElProxyConfigEl>>,
+    proxy_config: std::option::Option<std::vec::Vec<ContainerAwsNodePool_Config_ProxyConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    root_volume: std::option::Option<std::vec::Vec<ContainerAwsNodePoolConfigElRootVolumeEl>>,
+    root_volume: std::option::Option<std::vec::Vec<ContainerAwsNodePool_Config_RootVolume>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ssh_config: std::option::Option<std::vec::Vec<ContainerAwsNodePoolConfigElSshConfigEl>>,
+    ssh_config: std::option::Option<std::vec::Vec<ContainerAwsNodePool_Config_SshConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    taints: std::option::Option<std::vec::Vec<ContainerAwsNodePoolConfigElTaintsEl>>,
-    dynamic: ContainerAwsNodePoolConfigElDynamic,
+    taints: std::option::Option<std::vec::Vec<ContainerAwsNodePool_Config_Taints>>,
+    dynamic: ContainerAwsNodePool_ConfigDynamic,
 }
 
-impl ContainerAwsNodePoolConfigEl {
+impl ContainerAwsNodePool_Config {
     #[doc =
         "Set the field `instance_type`.\nOptional. The AWS instance type. When unspecified, it defaults to `m5.large`."]
     pub fn set_instance_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1178,7 +1284,7 @@ impl ContainerAwsNodePoolConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<ContainerAwsNodePoolConfigElAutoscalingMetricsCollectionEl>>,
+                    ::Into<terrars::BlockAssignable<ContainerAwsNodePool_Config_AutoscalingMetricsCollection>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1194,7 +1300,7 @@ impl ContainerAwsNodePoolConfigEl {
     #[doc = "Set the field `config_encryption`.\n"]
     pub fn set_config_encryption(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsNodePoolConfigElConfigEncryptionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsNodePool_Config_ConfigEncryption>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1210,7 +1316,7 @@ impl ContainerAwsNodePoolConfigEl {
     #[doc = "Set the field `proxy_config`.\n"]
     pub fn set_proxy_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsNodePoolConfigElProxyConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsNodePool_Config_ProxyConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1226,7 +1332,7 @@ impl ContainerAwsNodePoolConfigEl {
     #[doc = "Set the field `root_volume`.\n"]
     pub fn set_root_volume(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsNodePoolConfigElRootVolumeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsNodePool_Config_RootVolume>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1242,7 +1348,7 @@ impl ContainerAwsNodePoolConfigEl {
     #[doc = "Set the field `ssh_config`.\n"]
     pub fn set_ssh_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsNodePoolConfigElSshConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsNodePool_Config_SshConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1258,7 +1364,7 @@ impl ContainerAwsNodePoolConfigEl {
     #[doc = "Set the field `taints`.\n"]
     pub fn set_taints(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsNodePoolConfigElTaintsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsNodePool_Config_Taints>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1272,8 +1378,8 @@ impl ContainerAwsNodePoolConfigEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAwsNodePoolConfigEl {
-    type O = terrars::BlockAssignable<ContainerAwsNodePoolConfigEl>;
+impl terrars::ToListMappable for ContainerAwsNodePool_Config {
+    type O = terrars::BlockAssignable<ContainerAwsNodePool_Config>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1284,14 +1390,14 @@ impl terrars::ToListMappable for ContainerAwsNodePoolConfigEl {
     }
 }
 
-pub struct BuildContainerAwsNodePoolConfigEl {
+pub struct BuildContainerAwsNodePool_Config {
     #[doc = "The name of the AWS IAM role assigned to nodes in the pool."]
     pub iam_instance_profile: terrars::PrimField<std::string::String>,
 }
 
-impl BuildContainerAwsNodePoolConfigEl {
-    pub fn build(self) -> ContainerAwsNodePoolConfigEl {
-        ContainerAwsNodePoolConfigEl {
+impl BuildContainerAwsNodePool_Config {
+    pub fn build(self) -> ContainerAwsNodePool_Config {
+        ContainerAwsNodePool_Config {
             iam_instance_profile: self.iam_instance_profile,
             instance_type: core::default::Default::default(),
             labels: core::default::Default::default(),
@@ -1308,21 +1414,23 @@ impl BuildContainerAwsNodePoolConfigEl {
     }
 }
 
-pub struct ContainerAwsNodePoolConfigElRef {
+#[allow(dead_code)]
+pub struct ContainerAwsNodePool_ConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAwsNodePoolConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAwsNodePoolConfigElRef {
-        ContainerAwsNodePoolConfigElRef {
+impl terrars::Ref for ContainerAwsNodePool_ConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAwsNodePool_ConfigRef {
+        ContainerAwsNodePool_ConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAwsNodePoolConfigElRef {
+impl ContainerAwsNodePool_ConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1360,52 +1468,84 @@ impl ContainerAwsNodePoolConfigElRef {
     #[doc = "Get a reference to the value of field `autoscaling_metrics_collection` after provisioning.\n"]
     pub fn autoscaling_metrics_collection(
         &self,
-    ) -> terrars::ListRef<ContainerAwsNodePoolConfigElAutoscalingMetricsCollectionElRef> {
+    ) -> terrars::ListRef<ContainerAwsNodePool_Config_AutoscalingMetricsCollectionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.autoscaling_metrics_collection", self.base))
     }
 
     #[doc = "Get a reference to the value of field `config_encryption` after provisioning.\n"]
-    pub fn config_encryption(&self) -> terrars::ListRef<ContainerAwsNodePoolConfigElConfigEncryptionElRef> {
+    pub fn config_encryption(&self) -> terrars::ListRef<ContainerAwsNodePool_Config_ConfigEncryptionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.config_encryption", self.base))
     }
 
     #[doc = "Get a reference to the value of field `proxy_config` after provisioning.\n"]
-    pub fn proxy_config(&self) -> terrars::ListRef<ContainerAwsNodePoolConfigElProxyConfigElRef> {
+    pub fn proxy_config(&self) -> terrars::ListRef<ContainerAwsNodePool_Config_ProxyConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.proxy_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `root_volume` after provisioning.\n"]
-    pub fn root_volume(&self) -> terrars::ListRef<ContainerAwsNodePoolConfigElRootVolumeElRef> {
+    pub fn root_volume(&self) -> terrars::ListRef<ContainerAwsNodePool_Config_RootVolumeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.root_volume", self.base))
     }
 
     #[doc = "Get a reference to the value of field `ssh_config` after provisioning.\n"]
-    pub fn ssh_config(&self) -> terrars::ListRef<ContainerAwsNodePoolConfigElSshConfigElRef> {
+    pub fn ssh_config(&self) -> terrars::ListRef<ContainerAwsNodePool_Config_SshConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ssh_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `taints` after provisioning.\n"]
-    pub fn taints(&self) -> terrars::ListRef<ContainerAwsNodePoolConfigElTaintsElRef> {
+    pub fn taints(&self) -> terrars::ListRef<ContainerAwsNodePool_Config_TaintsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.taints", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ContainerAwsNodePoolManagementEl {
+pub struct ContainerAwsNodePool_KubeletConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    auto_repair: std::option::Option<terrars::PrimField<bool>>,
+    cpu_cfs_quota: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cpu_cfs_quota_period: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cpu_manager_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    pod_pids_limit: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl ContainerAwsNodePoolManagementEl {
-    #[doc = "Set the field `auto_repair`.\nOptional. Whether or not the nodes will be automatically repaired."]
-    pub fn set_auto_repair(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.auto_repair = std::option::Option::Some(v.into());
+impl ContainerAwsNodePool_KubeletConfig {
+    #[doc = "Set the field `cpu_cfs_quota`.\nWhether or not to enable CPU CFS quota. Defaults to true."]
+    pub fn set_cpu_cfs_quota(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.cpu_cfs_quota = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `cpu_cfs_quota_period`.\nOptional. The CPU CFS quota period to use for the node. Defaults to \"100ms\"."]
+    pub fn set_cpu_cfs_quota_period(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.cpu_cfs_quota_period = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `cpu_manager_policy`.\nThe CpuManagerPolicy to use for the node. Defaults to \"none\"."]
+    pub fn set_cpu_manager_policy(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.cpu_manager_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `pod_pids_limit`.\nOptional. The maximum number of PIDs in each pod running on the node. The limit scales automatically based on underlying machine size if left unset."]
+    pub fn set_pod_pids_limit(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.pod_pids_limit = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for ContainerAwsNodePoolManagementEl {
-    type O = terrars::BlockAssignable<ContainerAwsNodePoolManagementEl>;
+impl terrars::ToListMappable for ContainerAwsNodePool_KubeletConfig {
+    type O = terrars::BlockAssignable<ContainerAwsNodePool_KubeletConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1416,29 +1556,116 @@ impl terrars::ToListMappable for ContainerAwsNodePoolManagementEl {
     }
 }
 
-pub struct BuildContainerAwsNodePoolManagementEl {}
+pub struct BuildContainerAwsNodePool_KubeletConfig {}
 
-impl BuildContainerAwsNodePoolManagementEl {
-    pub fn build(self) -> ContainerAwsNodePoolManagementEl {
-        ContainerAwsNodePoolManagementEl { auto_repair: core::default::Default::default() }
+impl BuildContainerAwsNodePool_KubeletConfig {
+    pub fn build(self) -> ContainerAwsNodePool_KubeletConfig {
+        ContainerAwsNodePool_KubeletConfig {
+            cpu_cfs_quota: core::default::Default::default(),
+            cpu_cfs_quota_period: core::default::Default::default(),
+            cpu_manager_policy: core::default::Default::default(),
+            pod_pids_limit: core::default::Default::default(),
+        }
     }
 }
 
-pub struct ContainerAwsNodePoolManagementElRef {
+#[allow(dead_code)]
+pub struct ContainerAwsNodePool_KubeletConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAwsNodePoolManagementElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAwsNodePoolManagementElRef {
-        ContainerAwsNodePoolManagementElRef {
+impl terrars::Ref for ContainerAwsNodePool_KubeletConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAwsNodePool_KubeletConfigRef {
+        ContainerAwsNodePool_KubeletConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAwsNodePoolManagementElRef {
+impl ContainerAwsNodePool_KubeletConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `cpu_cfs_quota` after provisioning.\nWhether or not to enable CPU CFS quota. Defaults to true."]
+    pub fn cpu_cfs_quota(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cpu_cfs_quota", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `cpu_cfs_quota_period` after provisioning.\nOptional. The CPU CFS quota period to use for the node. Defaults to \"100ms\"."]
+    pub fn cpu_cfs_quota_period(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cpu_cfs_quota_period", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `cpu_manager_policy` after provisioning.\nThe CpuManagerPolicy to use for the node. Defaults to \"none\"."]
+    pub fn cpu_manager_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cpu_manager_policy", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `pod_pids_limit` after provisioning.\nOptional. The maximum number of PIDs in each pod running on the node. The limit scales automatically based on underlying machine size if left unset."]
+    pub fn pod_pids_limit(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.pod_pids_limit", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ContainerAwsNodePool_Management {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    auto_repair: std::option::Option<terrars::PrimField<bool>>,
+}
+
+impl ContainerAwsNodePool_Management {
+    #[doc = "Set the field `auto_repair`.\nOptional. Whether or not the nodes will be automatically repaired."]
+    pub fn set_auto_repair(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.auto_repair = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ContainerAwsNodePool_Management {
+    type O = terrars::BlockAssignable<ContainerAwsNodePool_Management>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildContainerAwsNodePool_Management {}
+
+impl BuildContainerAwsNodePool_Management {
+    pub fn build(self) -> ContainerAwsNodePool_Management {
+        ContainerAwsNodePool_Management { auto_repair: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ContainerAwsNodePool_ManagementRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ContainerAwsNodePool_ManagementRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAwsNodePool_ManagementRef {
+        ContainerAwsNodePool_ManagementRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ContainerAwsNodePool_ManagementRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1451,14 +1678,14 @@ impl ContainerAwsNodePoolManagementElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAwsNodePoolMaxPodsConstraintEl {
+pub struct ContainerAwsNodePool_MaxPodsConstraint {
     max_pods_per_node: terrars::PrimField<f64>,
 }
 
-impl ContainerAwsNodePoolMaxPodsConstraintEl { }
+impl ContainerAwsNodePool_MaxPodsConstraint { }
 
-impl terrars::ToListMappable for ContainerAwsNodePoolMaxPodsConstraintEl {
-    type O = terrars::BlockAssignable<ContainerAwsNodePoolMaxPodsConstraintEl>;
+impl terrars::ToListMappable for ContainerAwsNodePool_MaxPodsConstraint {
+    type O = terrars::BlockAssignable<ContainerAwsNodePool_MaxPodsConstraint>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1469,32 +1696,34 @@ impl terrars::ToListMappable for ContainerAwsNodePoolMaxPodsConstraintEl {
     }
 }
 
-pub struct BuildContainerAwsNodePoolMaxPodsConstraintEl {
+pub struct BuildContainerAwsNodePool_MaxPodsConstraint {
     #[doc = "The maximum number of pods to schedule on a single node."]
     pub max_pods_per_node: terrars::PrimField<f64>,
 }
 
-impl BuildContainerAwsNodePoolMaxPodsConstraintEl {
-    pub fn build(self) -> ContainerAwsNodePoolMaxPodsConstraintEl {
-        ContainerAwsNodePoolMaxPodsConstraintEl { max_pods_per_node: self.max_pods_per_node }
+impl BuildContainerAwsNodePool_MaxPodsConstraint {
+    pub fn build(self) -> ContainerAwsNodePool_MaxPodsConstraint {
+        ContainerAwsNodePool_MaxPodsConstraint { max_pods_per_node: self.max_pods_per_node }
     }
 }
 
-pub struct ContainerAwsNodePoolMaxPodsConstraintElRef {
+#[allow(dead_code)]
+pub struct ContainerAwsNodePool_MaxPodsConstraintRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAwsNodePoolMaxPodsConstraintElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAwsNodePoolMaxPodsConstraintElRef {
-        ContainerAwsNodePoolMaxPodsConstraintElRef {
+impl terrars::Ref for ContainerAwsNodePool_MaxPodsConstraintRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAwsNodePool_MaxPodsConstraintRef {
+        ContainerAwsNodePool_MaxPodsConstraintRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAwsNodePoolMaxPodsConstraintElRef {
+impl ContainerAwsNodePool_MaxPodsConstraintRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1507,7 +1736,7 @@ impl ContainerAwsNodePoolMaxPodsConstraintElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAwsNodePoolTimeoutsEl {
+pub struct ContainerAwsNodePool_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1516,7 +1745,7 @@ pub struct ContainerAwsNodePoolTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ContainerAwsNodePoolTimeoutsEl {
+impl ContainerAwsNodePool_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1536,8 +1765,8 @@ impl ContainerAwsNodePoolTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAwsNodePoolTimeoutsEl {
-    type O = terrars::BlockAssignable<ContainerAwsNodePoolTimeoutsEl>;
+impl terrars::ToListMappable for ContainerAwsNodePool_Timeouts {
+    type O = terrars::BlockAssignable<ContainerAwsNodePool_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1548,11 +1777,11 @@ impl terrars::ToListMappable for ContainerAwsNodePoolTimeoutsEl {
     }
 }
 
-pub struct BuildContainerAwsNodePoolTimeoutsEl {}
+pub struct BuildContainerAwsNodePool_Timeouts {}
 
-impl BuildContainerAwsNodePoolTimeoutsEl {
-    pub fn build(self) -> ContainerAwsNodePoolTimeoutsEl {
-        ContainerAwsNodePoolTimeoutsEl {
+impl BuildContainerAwsNodePool_Timeouts {
+    pub fn build(self) -> ContainerAwsNodePool_Timeouts {
+        ContainerAwsNodePool_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1560,21 +1789,23 @@ impl BuildContainerAwsNodePoolTimeoutsEl {
     }
 }
 
-pub struct ContainerAwsNodePoolTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ContainerAwsNodePool_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAwsNodePoolTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAwsNodePoolTimeoutsElRef {
-        ContainerAwsNodePoolTimeoutsElRef {
+impl terrars::Ref for ContainerAwsNodePool_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAwsNodePool_TimeoutsRef {
+        ContainerAwsNodePool_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAwsNodePoolTimeoutsElRef {
+impl ContainerAwsNodePool_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1595,10 +1826,166 @@ impl ContainerAwsNodePoolTimeoutsElRef {
     }
 }
 
+#[derive(Serialize)]
+pub struct ContainerAwsNodePool_UpdateSettings_SurgeSettings {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_surge: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_unavailable: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl ContainerAwsNodePool_UpdateSettings_SurgeSettings {
+    #[doc =
+        "Set the field `max_surge`.\nOptional. The maximum number of nodes that can be created beyond the current size of the node pool during the update process."]
+    pub fn set_max_surge(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_surge = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `max_unavailable`.\nOptional. The maximum number of nodes that can be simultaneously unavailable during the update process. A node is considered unavailable if its status is not Ready."]
+    pub fn set_max_unavailable(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_unavailable = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ContainerAwsNodePool_UpdateSettings_SurgeSettings {
+    type O = terrars::BlockAssignable<ContainerAwsNodePool_UpdateSettings_SurgeSettings>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildContainerAwsNodePool_UpdateSettings_SurgeSettings {}
+
+impl BuildContainerAwsNodePool_UpdateSettings_SurgeSettings {
+    pub fn build(self) -> ContainerAwsNodePool_UpdateSettings_SurgeSettings {
+        ContainerAwsNodePool_UpdateSettings_SurgeSettings {
+            max_surge: core::default::Default::default(),
+            max_unavailable: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ContainerAwsNodePool_UpdateSettings_SurgeSettingsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ContainerAwsNodePool_UpdateSettings_SurgeSettingsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerAwsNodePool_UpdateSettings_SurgeSettingsRef {
+        ContainerAwsNodePool_UpdateSettings_SurgeSettingsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ContainerAwsNodePool_UpdateSettings_SurgeSettingsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `max_surge` after provisioning.\nOptional. The maximum number of nodes that can be created beyond the current size of the node pool during the update process."]
+    pub fn max_surge(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_surge", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `max_unavailable` after provisioning.\nOptional. The maximum number of nodes that can be simultaneously unavailable during the update process. A node is considered unavailable if its status is not Ready."]
+    pub fn max_unavailable(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_unavailable", self.base))
+    }
+}
+
 #[derive(Serialize, Default)]
-struct ContainerAwsNodePoolDynamic {
-    autoscaling: std::option::Option<terrars::DynamicBlock<ContainerAwsNodePoolAutoscalingEl>>,
-    config: std::option::Option<terrars::DynamicBlock<ContainerAwsNodePoolConfigEl>>,
-    management: std::option::Option<terrars::DynamicBlock<ContainerAwsNodePoolManagementEl>>,
-    max_pods_constraint: std::option::Option<terrars::DynamicBlock<ContainerAwsNodePoolMaxPodsConstraintEl>>,
+struct ContainerAwsNodePool_UpdateSettingsDynamic {
+    surge_settings: std::option::Option<terrars::DynamicBlock<ContainerAwsNodePool_UpdateSettings_SurgeSettings>>,
+}
+
+#[derive(Serialize)]
+pub struct ContainerAwsNodePool_UpdateSettings {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    surge_settings: std::option::Option<std::vec::Vec<ContainerAwsNodePool_UpdateSettings_SurgeSettings>>,
+    dynamic: ContainerAwsNodePool_UpdateSettingsDynamic,
+}
+
+impl ContainerAwsNodePool_UpdateSettings {
+    #[doc = "Set the field `surge_settings`.\n"]
+    pub fn set_surge_settings(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsNodePool_UpdateSettings_SurgeSettings>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.surge_settings = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.surge_settings = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for ContainerAwsNodePool_UpdateSettings {
+    type O = terrars::BlockAssignable<ContainerAwsNodePool_UpdateSettings>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildContainerAwsNodePool_UpdateSettings {}
+
+impl BuildContainerAwsNodePool_UpdateSettings {
+    pub fn build(self) -> ContainerAwsNodePool_UpdateSettings {
+        ContainerAwsNodePool_UpdateSettings {
+            surge_settings: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ContainerAwsNodePool_UpdateSettingsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ContainerAwsNodePool_UpdateSettingsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAwsNodePool_UpdateSettingsRef {
+        ContainerAwsNodePool_UpdateSettingsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ContainerAwsNodePool_UpdateSettingsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `surge_settings` after provisioning.\n"]
+    pub fn surge_settings(&self) -> terrars::ListRef<ContainerAwsNodePool_UpdateSettings_SurgeSettingsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.surge_settings", self.base))
+    }
 }

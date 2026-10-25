@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct BigtableInstanceData {
+struct BigtableInstanceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,9 +21,15 @@ struct BigtableInstanceData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     deletion_protection: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     display_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    edition: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    force_destroy: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -32,16 +40,18 @@ struct BigtableInstanceData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cluster: std::option::Option<std::vec::Vec<BigtableInstanceClusterEl>>,
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<BigtableInstanceTimeoutsEl>,
+    cluster: std::option::Option<std::vec::Vec<BigtableInstance_Cluster>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<BigtableInstance_Timeouts>,
     dynamic: BigtableInstanceDynamic,
 }
 
 struct BigtableInstance_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<BigtableInstanceData>,
+    data: std::cell::RefCell<BigtableInstanceData_>,
 }
 
 #[derive(Clone)]
@@ -142,7 +152,14 @@ impl BigtableInstance {
     }
 
     #[doc =
-        "Set the field `deletion_protection`.\nWhether or not to allow Terraform to destroy the instance. Unless this field is set to false in Terraform state, a terraform destroy or terraform apply that would delete the instance will fail."]
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `deletion_protection`.\nWhen the field is set to true or unset in Terraform state, a terraform apply or terraform destroy that would delete the instance will fail. When the field is set to false, deleting the instance is allowed."]
     pub fn set_deletion_protection(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().deletion_protection = std::option::Option::Some(v.into());
         self
@@ -152,6 +169,20 @@ impl BigtableInstance {
         "Set the field `display_name`.\nThe human-readable display name of the Bigtable instance. Defaults to the instance name."]
     pub fn set_display_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().display_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `edition`.\nThe edition of the instance. One of \"ENTERPRISE\" or \"ENTERPRISE_PLUS\". Defaults to \"ENTERPRISE\"."]
+    pub fn set_edition(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().edition = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `force_destroy`.\nWhen deleting a BigTable instance, this boolean option will delete all backups within the instance."]
+    pub fn set_force_destroy(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().force_destroy = std::option::Option::Some(v.into());
         self
     }
 
@@ -185,8 +216,18 @@ impl BigtableInstance {
         self
     }
 
+    #[doc =
+        "Set the field `tags`.\nA map of Resource Manager Tags. Keys can be either the numeric tag key ID (tagKeys/123) or the namespaced name (project/tag-key). Values can be the numeric tag value ID (tagValues/456) or the namespaced value (project/tag-key/tag-value). The field is ignored when empty."]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `cluster`.\n"]
-    pub fn set_cluster(self, v: impl std::convert::Into<terrars::BlockAssignable<BigtableInstanceClusterEl>>) -> Self {
+    pub fn set_cluster(self, v: impl std::convert::Into<terrars::BlockAssignable<BigtableInstance_Cluster>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().cluster = std::option::Option::Some(v);
@@ -199,13 +240,19 @@ impl BigtableInstance {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<BigtableInstanceTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<BigtableInstance_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
     #[doc =
-        "Get a reference to the value of field `deletion_protection` after provisioning.\nWhether or not to allow Terraform to destroy the instance. Unless this field is set to false in Terraform state, a terraform destroy or terraform apply that would delete the instance will fail."]
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_protection` after provisioning.\nWhen the field is set to true or unset in Terraform state, a terraform apply or terraform destroy that would delete the instance will fail. When the field is set to false, deleting the instance is allowed."]
     pub fn deletion_protection(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_protection", self.extract_ref()))
     }
@@ -217,9 +264,21 @@ impl BigtableInstance {
     }
 
     #[doc =
+        "Get a reference to the value of field `edition` after provisioning.\nThe edition of the instance. One of \"ENTERPRISE\" or \"ENTERPRISE_PLUS\". Defaults to \"ENTERPRISE\"."]
+    pub fn edition(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.edition", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
     pub fn effective_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `force_destroy` after provisioning.\nWhen deleting a BigTable instance, this boolean option will delete all backups within the instance."]
+    pub fn force_destroy(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.force_destroy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -252,19 +311,25 @@ impl BigtableInstance {
     }
 
     #[doc =
+        "Get a reference to the value of field `tags` after provisioning.\nA map of Resource Manager Tags. Keys can be either the numeric tag key ID (tagKeys/123) or the namespaced name (project/tag-key). Values can be the numeric tag value ID (tagValues/456) or the namespaced value (project/tag-key/tag-value). The field is ignored when empty."]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource and default labels configured on the provider."]
     pub fn terraform_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `cluster` after provisioning.\n"]
-    pub fn cluster(&self) -> terrars::ListRef<BigtableInstanceClusterElRef> {
+    pub fn cluster(&self) -> terrars::ListRef<BigtableInstance_ClusterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cluster", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> BigtableInstanceTimeoutsElRef {
-        BigtableInstanceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> BigtableInstance_TimeoutsRef {
+        BigtableInstance_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -311,19 +376,23 @@ impl BuildBigtableInstance {
         let out = BigtableInstance(std::rc::Rc::new(BigtableInstance_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(BigtableInstanceData {
+            data: std::cell::RefCell::new(BigtableInstanceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 deletion_protection: core::default::Default::default(),
                 display_name: core::default::Default::default(),
+                edition: core::default::Default::default(),
+                force_destroy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 instance_type: core::default::Default::default(),
                 labels: core::default::Default::default(),
                 name: self.name,
                 project: core::default::Default::default(),
+                tags: core::default::Default::default(),
                 cluster: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -358,7 +427,13 @@ impl BigtableInstanceRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `deletion_protection` after provisioning.\nWhether or not to allow Terraform to destroy the instance. Unless this field is set to false in Terraform state, a terraform destroy or terraform apply that would delete the instance will fail."]
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_protection` after provisioning.\nWhen the field is set to true or unset in Terraform state, a terraform apply or terraform destroy that would delete the instance will fail. When the field is set to false, deleting the instance is allowed."]
     pub fn deletion_protection(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_protection", self.extract_ref()))
     }
@@ -370,9 +445,21 @@ impl BigtableInstanceRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `edition` after provisioning.\nThe edition of the instance. One of \"ENTERPRISE\" or \"ENTERPRISE_PLUS\". Defaults to \"ENTERPRISE\"."]
+    pub fn edition(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.edition", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
     pub fn effective_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `force_destroy` after provisioning.\nWhen deleting a BigTable instance, this boolean option will delete all backups within the instance."]
+    pub fn force_destroy(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.force_destroy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -405,24 +492,35 @@ impl BigtableInstanceRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `tags` after provisioning.\nA map of Resource Manager Tags. Keys can be either the numeric tag key ID (tagKeys/123) or the namespaced name (project/tag-key). Values can be the numeric tag value ID (tagValues/456) or the namespaced value (project/tag-key/tag-value). The field is ignored when empty."]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource and default labels configured on the provider."]
     pub fn terraform_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `cluster` after provisioning.\n"]
-    pub fn cluster(&self) -> terrars::ListRef<BigtableInstanceClusterElRef> {
+    pub fn cluster(&self) -> terrars::ListRef<BigtableInstance_ClusterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cluster", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> BigtableInstanceTimeoutsElRef {
-        BigtableInstanceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> BigtableInstance_TimeoutsRef {
+        BigtableInstance_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct BigtableInstanceDynamic {
+    cluster: std::option::Option<terrars::DynamicBlock<BigtableInstance_Cluster>>,
+}
+
 #[derive(Serialize)]
-pub struct BigtableInstanceClusterElAutoscalingConfigEl {
+pub struct BigtableInstance_Cluster_AutoscalingConfig {
     cpu_target: terrars::PrimField<f64>,
     max_nodes: terrars::PrimField<f64>,
     min_nodes: terrars::PrimField<f64>,
@@ -430,7 +528,7 @@ pub struct BigtableInstanceClusterElAutoscalingConfigEl {
     storage_target: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl BigtableInstanceClusterElAutoscalingConfigEl {
+impl BigtableInstance_Cluster_AutoscalingConfig {
     #[doc =
         "Set the field `storage_target`.\nThe target storage utilization for autoscaling, in GB, for each node in a cluster. This number is limited between 2560 (2.5TiB) and 5120 (5TiB) for a SSD cluster and between 8192 (8TiB) and 16384 (16 TiB) for an HDD cluster. If not set, whatever is already set for the cluster will not change, or if the cluster is just being created, it will use the default value of 2560 for SSD clusters and 8192 for HDD clusters."]
     pub fn set_storage_target(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -439,8 +537,8 @@ impl BigtableInstanceClusterElAutoscalingConfigEl {
     }
 }
 
-impl terrars::ToListMappable for BigtableInstanceClusterElAutoscalingConfigEl {
-    type O = terrars::BlockAssignable<BigtableInstanceClusterElAutoscalingConfigEl>;
+impl terrars::ToListMappable for BigtableInstance_Cluster_AutoscalingConfig {
+    type O = terrars::BlockAssignable<BigtableInstance_Cluster_AutoscalingConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -451,7 +549,7 @@ impl terrars::ToListMappable for BigtableInstanceClusterElAutoscalingConfigEl {
     }
 }
 
-pub struct BuildBigtableInstanceClusterElAutoscalingConfigEl {
+pub struct BuildBigtableInstance_Cluster_AutoscalingConfig {
     #[doc = "The target CPU utilization for autoscaling. Value must be between 10 and 80."]
     pub cpu_target: terrars::PrimField<f64>,
     #[doc = "The maximum number of nodes for autoscaling."]
@@ -460,9 +558,9 @@ pub struct BuildBigtableInstanceClusterElAutoscalingConfigEl {
     pub min_nodes: terrars::PrimField<f64>,
 }
 
-impl BuildBigtableInstanceClusterElAutoscalingConfigEl {
-    pub fn build(self) -> BigtableInstanceClusterElAutoscalingConfigEl {
-        BigtableInstanceClusterElAutoscalingConfigEl {
+impl BuildBigtableInstance_Cluster_AutoscalingConfig {
+    pub fn build(self) -> BigtableInstance_Cluster_AutoscalingConfig {
+        BigtableInstance_Cluster_AutoscalingConfig {
             cpu_target: self.cpu_target,
             max_nodes: self.max_nodes,
             min_nodes: self.min_nodes,
@@ -471,24 +569,23 @@ impl BuildBigtableInstanceClusterElAutoscalingConfigEl {
     }
 }
 
-pub struct BigtableInstanceClusterElAutoscalingConfigElRef {
+#[allow(dead_code)]
+pub struct BigtableInstance_Cluster_AutoscalingConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigtableInstanceClusterElAutoscalingConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> BigtableInstanceClusterElAutoscalingConfigElRef {
-        BigtableInstanceClusterElAutoscalingConfigElRef {
+impl terrars::Ref for BigtableInstance_Cluster_AutoscalingConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigtableInstance_Cluster_AutoscalingConfigRef {
+        BigtableInstance_Cluster_AutoscalingConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigtableInstanceClusterElAutoscalingConfigElRef {
+impl BigtableInstance_Cluster_AutoscalingConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -519,15 +616,17 @@ impl BigtableInstanceClusterElAutoscalingConfigElRef {
 }
 
 #[derive(Serialize, Default)]
-struct BigtableInstanceClusterElDynamic {
-    autoscaling_config: std::option::Option<terrars::DynamicBlock<BigtableInstanceClusterElAutoscalingConfigEl>>,
+struct BigtableInstance_ClusterDynamic {
+    autoscaling_config: std::option::Option<terrars::DynamicBlock<BigtableInstance_Cluster_AutoscalingConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct BigtableInstanceClusterEl {
+pub struct BigtableInstance_Cluster {
     cluster_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    node_scaling_factor: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     num_nodes: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -535,15 +634,25 @@ pub struct BigtableInstanceClusterEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     zone: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    autoscaling_config: std::option::Option<std::vec::Vec<BigtableInstanceClusterElAutoscalingConfigEl>>,
-    dynamic: BigtableInstanceClusterElDynamic,
+    autoscaling_config: std::option::Option<std::vec::Vec<BigtableInstance_Cluster_AutoscalingConfig>>,
+    dynamic: BigtableInstance_ClusterDynamic,
 }
 
-impl BigtableInstanceClusterEl {
+impl BigtableInstance_Cluster {
     #[doc =
         "Set the field `kms_key_name`.\nDescribes the Cloud KMS encryption key that will be used to protect the destination Bigtable cluster. The requirements for this key are: 1) The Cloud Bigtable service account associated with the project that contains this cluster must be granted the cloudkms.cryptoKeyEncrypterDecrypter role on the CMEK key. 2) Only regional keys can be used and the region of the CMEK key must match the region of the cluster. 3) All clusters within an instance must use the same CMEK key. Values are of the form projects/{project}/locations/{location}/keyRings/{keyring}/cryptoKeys/{key}"]
     pub fn set_kms_key_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.kms_key_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `node_scaling_factor`.\nThe node scaling factor of this cluster. One of \"NodeScalingFactor1X\" or \"NodeScalingFactor2X\". Defaults to \"NodeScalingFactor1X\"."]
+    pub fn set_node_scaling_factor(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.node_scaling_factor = std::option::Option::Some(v.into());
         self
     }
 
@@ -570,7 +679,7 @@ impl BigtableInstanceClusterEl {
     #[doc = "Set the field `autoscaling_config`.\n"]
     pub fn set_autoscaling_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BigtableInstanceClusterElAutoscalingConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigtableInstance_Cluster_AutoscalingConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -584,8 +693,8 @@ impl BigtableInstanceClusterEl {
     }
 }
 
-impl terrars::ToListMappable for BigtableInstanceClusterEl {
-    type O = terrars::BlockAssignable<BigtableInstanceClusterEl>;
+impl terrars::ToListMappable for BigtableInstance_Cluster {
+    type O = terrars::BlockAssignable<BigtableInstance_Cluster>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -596,17 +705,18 @@ impl terrars::ToListMappable for BigtableInstanceClusterEl {
     }
 }
 
-pub struct BuildBigtableInstanceClusterEl {
+pub struct BuildBigtableInstance_Cluster {
     #[doc =
         "The ID of the Cloud Bigtable cluster. Must be 6-30 characters and must only contain hyphens, lowercase letters and numbers."]
     pub cluster_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBigtableInstanceClusterEl {
-    pub fn build(self) -> BigtableInstanceClusterEl {
-        BigtableInstanceClusterEl {
+impl BuildBigtableInstance_Cluster {
+    pub fn build(self) -> BigtableInstance_Cluster {
+        BigtableInstance_Cluster {
             cluster_id: self.cluster_id,
             kms_key_name: core::default::Default::default(),
+            node_scaling_factor: core::default::Default::default(),
             num_nodes: core::default::Default::default(),
             storage_type: core::default::Default::default(),
             zone: core::default::Default::default(),
@@ -616,21 +726,23 @@ impl BuildBigtableInstanceClusterEl {
     }
 }
 
-pub struct BigtableInstanceClusterElRef {
+#[allow(dead_code)]
+pub struct BigtableInstance_ClusterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigtableInstanceClusterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigtableInstanceClusterElRef {
-        BigtableInstanceClusterElRef {
+impl terrars::Ref for BigtableInstance_ClusterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigtableInstance_ClusterRef {
+        BigtableInstance_ClusterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigtableInstanceClusterElRef {
+impl BigtableInstance_ClusterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -645,6 +757,12 @@ impl BigtableInstanceClusterElRef {
         "Get a reference to the value of field `kms_key_name` after provisioning.\nDescribes the Cloud KMS encryption key that will be used to protect the destination Bigtable cluster. The requirements for this key are: 1) The Cloud Bigtable service account associated with the project that contains this cluster must be granted the cloudkms.cryptoKeyEncrypterDecrypter role on the CMEK key. 2) Only regional keys can be used and the region of the CMEK key must match the region of the cluster. 3) All clusters within an instance must use the same CMEK key. Values are of the form projects/{project}/locations/{location}/keyRings/{keyring}/cryptoKeys/{key}"]
     pub fn kms_key_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_name", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `node_scaling_factor` after provisioning.\nThe node scaling factor of this cluster. One of \"NodeScalingFactor1X\" or \"NodeScalingFactor2X\". Defaults to \"NodeScalingFactor1X\"."]
+    pub fn node_scaling_factor(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.node_scaling_factor", self.base))
     }
 
     #[doc =
@@ -671,13 +789,13 @@ impl BigtableInstanceClusterElRef {
     }
 
     #[doc = "Get a reference to the value of field `autoscaling_config` after provisioning.\n"]
-    pub fn autoscaling_config(&self) -> terrars::ListRef<BigtableInstanceClusterElAutoscalingConfigElRef> {
+    pub fn autoscaling_config(&self) -> terrars::ListRef<BigtableInstance_Cluster_AutoscalingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.autoscaling_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct BigtableInstanceTimeoutsEl {
+pub struct BigtableInstance_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -686,7 +804,7 @@ pub struct BigtableInstanceTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl BigtableInstanceTimeoutsEl {
+impl BigtableInstance_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -706,8 +824,8 @@ impl BigtableInstanceTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for BigtableInstanceTimeoutsEl {
-    type O = terrars::BlockAssignable<BigtableInstanceTimeoutsEl>;
+impl terrars::ToListMappable for BigtableInstance_Timeouts {
+    type O = terrars::BlockAssignable<BigtableInstance_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -718,11 +836,11 @@ impl terrars::ToListMappable for BigtableInstanceTimeoutsEl {
     }
 }
 
-pub struct BuildBigtableInstanceTimeoutsEl {}
+pub struct BuildBigtableInstance_Timeouts {}
 
-impl BuildBigtableInstanceTimeoutsEl {
-    pub fn build(self) -> BigtableInstanceTimeoutsEl {
-        BigtableInstanceTimeoutsEl {
+impl BuildBigtableInstance_Timeouts {
+    pub fn build(self) -> BigtableInstance_Timeouts {
+        BigtableInstance_Timeouts {
             create: core::default::Default::default(),
             read: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -730,21 +848,23 @@ impl BuildBigtableInstanceTimeoutsEl {
     }
 }
 
-pub struct BigtableInstanceTimeoutsElRef {
+#[allow(dead_code)]
+pub struct BigtableInstance_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigtableInstanceTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigtableInstanceTimeoutsElRef {
-        BigtableInstanceTimeoutsElRef {
+impl terrars::Ref for BigtableInstance_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigtableInstance_TimeoutsRef {
+        BigtableInstance_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigtableInstanceTimeoutsElRef {
+impl BigtableInstance_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -763,9 +883,4 @@ impl BigtableInstanceTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct BigtableInstanceDynamic {
-    cluster: std::option::Option<terrars::DynamicBlock<BigtableInstanceClusterEl>>,
 }

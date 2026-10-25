@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataSecretManagerSecretData {
+struct DataSecretManagerSecretData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -26,7 +28,7 @@ struct DataSecretManagerSecretData {
 struct DataSecretManagerSecret_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataSecretManagerSecretData>,
+    data: std::cell::RefCell<DataSecretManagerSecretData_>,
 }
 
 #[derive(Clone)]
@@ -96,6 +98,18 @@ impl DataSecretManagerSecret {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_protection` after provisioning.\nWhether Terraform will be prevented from destroying the secret. Defaults to false.\nWhen the field is set to true in Terraform state, a 'terraform apply'\nor 'terraform destroy' that would delete the secret will fail."]
+    pub fn deletion_protection(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_protection", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `effective_annotations` after provisioning.\nAll of annotations (key/value pairs) present on the resource in GCP, including the annotations configured through Terraform, other clients and services."]
     pub fn effective_annotations(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.effective_annotations", self.extract_ref()))
@@ -137,13 +151,13 @@ impl DataSecretManagerSecret {
 
     #[doc =
         "Get a reference to the value of field `replication` after provisioning.\nThe replication policy of the secret data attached to the Secret. It cannot be changed\nafter the Secret has been created."]
-    pub fn replication(&self) -> terrars::ListRef<DataSecretManagerSecretReplicationElRef> {
+    pub fn replication(&self) -> terrars::ListRef<DataSecretManagerSecret_ReplicationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.replication", self.extract_ref()))
     }
 
     #[doc =
         "Get a reference to the value of field `rotation` after provisioning.\nThe rotation time and period for a Secret. At 'next_rotation_time', Secret Manager will send a Pub/Sub notification to the topics configured on the Secret. 'topics' must be set to configure rotation."]
-    pub fn rotation(&self) -> terrars::ListRef<DataSecretManagerSecretRotationElRef> {
+    pub fn rotation(&self) -> terrars::ListRef<DataSecretManagerSecret_RotationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.rotation", self.extract_ref()))
     }
 
@@ -154,6 +168,18 @@ impl DataSecretManagerSecret {
     }
 
     #[doc =
+        "Get a reference to the value of field `secret_type` after provisioning.\nThis defines the type of the secret. Enforces certain structural requirements on the SecretVersions.\nFor secret of type UNSPECIFIED, the SecretVersions can be of any type."]
+    pub fn secret_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_type", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `tags` after provisioning.\nA map of resource manager tags.\nResource manager tag keys and values have the same definition as resource manager tags.\nKeys must be in the format tagKeys/{tag_key_id}, and values are in the format tagValues/{tag_value_id}."]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
     pub fn terraform_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
@@ -161,7 +187,7 @@ impl DataSecretManagerSecret {
 
     #[doc =
         "Get a reference to the value of field `topics` after provisioning.\nA list of up to 10 Pub/Sub topics to which messages are published when control plane operations are called on the secret or its versions."]
-    pub fn topics(&self) -> terrars::ListRef<DataSecretManagerSecretTopicsElRef> {
+    pub fn topics(&self) -> terrars::ListRef<DataSecretManagerSecret_TopicsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.topics", self.extract_ref()))
     }
 
@@ -175,6 +201,12 @@ impl DataSecretManagerSecret {
         "Get a reference to the value of field `version_aliases` after provisioning.\nMapping from version alias to version name.\n\nA version alias is a string with a maximum length of 63 characters and can contain\nuppercase and lowercase letters, numerals, and the hyphen (-) and underscore ('_')\ncharacters. An alias string must start with a letter and cannot be the string\n'latest' or 'NEW'. No more than 50 aliases can be assigned to a given secret.\n\nAn object containing a list of \"key\": value pairs. Example:\n{ \"name\": \"wrench\", \"mass\": \"1.3kg\", \"count\": \"3\" }."]
     pub fn version_aliases(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.version_aliases", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `version_destroy_ttl` after provisioning.\nSecret Version TTL after destruction request.\nThis is a part of the delayed delete feature on Secret Version.\nFor secret with versionDestroyTtl>0, version destruction doesn't happen immediately\non calling destroy instead the version goes to a disabled state and\nthe actual destruction happens after this TTL expires."]
+    pub fn version_destroy_ttl(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.version_destroy_ttl", self.extract_ref()))
     }
 }
 
@@ -220,7 +252,7 @@ impl BuildDataSecretManagerSecret {
         let out = DataSecretManagerSecret(std::rc::Rc::new(DataSecretManagerSecret_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataSecretManagerSecretData {
+            data: std::cell::RefCell::new(DataSecretManagerSecretData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -271,6 +303,18 @@ impl DataSecretManagerSecretRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_protection` after provisioning.\nWhether Terraform will be prevented from destroying the secret. Defaults to false.\nWhen the field is set to true in Terraform state, a 'terraform apply'\nor 'terraform destroy' that would delete the secret will fail."]
+    pub fn deletion_protection(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_protection", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `effective_annotations` after provisioning.\nAll of annotations (key/value pairs) present on the resource in GCP, including the annotations configured through Terraform, other clients and services."]
     pub fn effective_annotations(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.effective_annotations", self.extract_ref()))
@@ -312,13 +356,13 @@ impl DataSecretManagerSecretRef {
 
     #[doc =
         "Get a reference to the value of field `replication` after provisioning.\nThe replication policy of the secret data attached to the Secret. It cannot be changed\nafter the Secret has been created."]
-    pub fn replication(&self) -> terrars::ListRef<DataSecretManagerSecretReplicationElRef> {
+    pub fn replication(&self) -> terrars::ListRef<DataSecretManagerSecret_ReplicationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.replication", self.extract_ref()))
     }
 
     #[doc =
         "Get a reference to the value of field `rotation` after provisioning.\nThe rotation time and period for a Secret. At 'next_rotation_time', Secret Manager will send a Pub/Sub notification to the topics configured on the Secret. 'topics' must be set to configure rotation."]
-    pub fn rotation(&self) -> terrars::ListRef<DataSecretManagerSecretRotationElRef> {
+    pub fn rotation(&self) -> terrars::ListRef<DataSecretManagerSecret_RotationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.rotation", self.extract_ref()))
     }
 
@@ -329,6 +373,18 @@ impl DataSecretManagerSecretRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `secret_type` after provisioning.\nThis defines the type of the secret. Enforces certain structural requirements on the SecretVersions.\nFor secret of type UNSPECIFIED, the SecretVersions can be of any type."]
+    pub fn secret_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_type", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `tags` after provisioning.\nA map of resource manager tags.\nResource manager tag keys and values have the same definition as resource manager tags.\nKeys must be in the format tagKeys/{tag_key_id}, and values are in the format tagValues/{tag_value_id}."]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
     pub fn terraform_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
@@ -336,7 +392,7 @@ impl DataSecretManagerSecretRef {
 
     #[doc =
         "Get a reference to the value of field `topics` after provisioning.\nA list of up to 10 Pub/Sub topics to which messages are published when control plane operations are called on the secret or its versions."]
-    pub fn topics(&self) -> terrars::ListRef<DataSecretManagerSecretTopicsElRef> {
+    pub fn topics(&self) -> terrars::ListRef<DataSecretManagerSecret_TopicsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.topics", self.extract_ref()))
     }
 
@@ -351,15 +407,21 @@ impl DataSecretManagerSecretRef {
     pub fn version_aliases(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.version_aliases", self.extract_ref()))
     }
+
+    #[doc =
+        "Get a reference to the value of field `version_destroy_ttl` after provisioning.\nSecret Version TTL after destruction request.\nThis is a part of the delayed delete feature on Secret Version.\nFor secret with versionDestroyTtl>0, version destruction doesn't happen immediately\non calling destroy instead the version goes to a disabled state and\nthe actual destruction happens after this TTL expires."]
+    pub fn version_destroy_ttl(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.version_destroy_ttl", self.extract_ref()))
+    }
 }
 
 #[derive(Serialize)]
-pub struct DataSecretManagerSecretReplicationElAutoElCustomerManagedEncryptionEl {
+pub struct DataSecretManagerSecret_Replication_Auto_CustomerManagedEncryption {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataSecretManagerSecretReplicationElAutoElCustomerManagedEncryptionEl {
+impl DataSecretManagerSecret_Replication_Auto_CustomerManagedEncryption {
     #[doc = "Set the field `kms_key_name`.\n"]
     pub fn set_kms_key_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.kms_key_name = std::option::Option::Some(v.into());
@@ -367,8 +429,8 @@ impl DataSecretManagerSecretReplicationElAutoElCustomerManagedEncryptionEl {
     }
 }
 
-impl terrars::ToListMappable for DataSecretManagerSecretReplicationElAutoElCustomerManagedEncryptionEl {
-    type O = terrars::BlockAssignable<DataSecretManagerSecretReplicationElAutoElCustomerManagedEncryptionEl>;
+impl terrars::ToListMappable for DataSecretManagerSecret_Replication_Auto_CustomerManagedEncryption {
+    type O = terrars::BlockAssignable<DataSecretManagerSecret_Replication_Auto_CustomerManagedEncryption>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -379,34 +441,36 @@ impl terrars::ToListMappable for DataSecretManagerSecretReplicationElAutoElCusto
     }
 }
 
-pub struct BuildDataSecretManagerSecretReplicationElAutoElCustomerManagedEncryptionEl {}
+pub struct BuildDataSecretManagerSecret_Replication_Auto_CustomerManagedEncryption {}
 
-impl BuildDataSecretManagerSecretReplicationElAutoElCustomerManagedEncryptionEl {
-    pub fn build(self) -> DataSecretManagerSecretReplicationElAutoElCustomerManagedEncryptionEl {
-        DataSecretManagerSecretReplicationElAutoElCustomerManagedEncryptionEl {
+impl BuildDataSecretManagerSecret_Replication_Auto_CustomerManagedEncryption {
+    pub fn build(self) -> DataSecretManagerSecret_Replication_Auto_CustomerManagedEncryption {
+        DataSecretManagerSecret_Replication_Auto_CustomerManagedEncryption {
             kms_key_name: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataSecretManagerSecretReplicationElAutoElCustomerManagedEncryptionElRef {
+#[allow(dead_code)]
+pub struct DataSecretManagerSecret_Replication_Auto_CustomerManagedEncryptionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSecretManagerSecretReplicationElAutoElCustomerManagedEncryptionElRef {
+impl terrars::Ref for DataSecretManagerSecret_Replication_Auto_CustomerManagedEncryptionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataSecretManagerSecretReplicationElAutoElCustomerManagedEncryptionElRef {
-        DataSecretManagerSecretReplicationElAutoElCustomerManagedEncryptionElRef {
+    ) -> DataSecretManagerSecret_Replication_Auto_CustomerManagedEncryptionRef {
+        DataSecretManagerSecret_Replication_Auto_CustomerManagedEncryptionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSecretManagerSecretReplicationElAutoElCustomerManagedEncryptionElRef {
+impl DataSecretManagerSecret_Replication_Auto_CustomerManagedEncryptionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -418,14 +482,14 @@ impl DataSecretManagerSecretReplicationElAutoElCustomerManagedEncryptionElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataSecretManagerSecretReplicationElAutoEl {
+pub struct DataSecretManagerSecret_Replication_Auto {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     customer_managed_encryption: std
     ::option
-    ::Option<terrars::ListField<DataSecretManagerSecretReplicationElAutoElCustomerManagedEncryptionEl>>,
+    ::Option<terrars::ListField<DataSecretManagerSecret_Replication_Auto_CustomerManagedEncryption>>,
 }
 
-impl DataSecretManagerSecretReplicationElAutoEl {
+impl DataSecretManagerSecret_Replication_Auto {
     #[doc = "Set the field `customer_managed_encryption`.\n"]
     pub fn set_customer_managed_encryption(
         mut self,
@@ -434,15 +498,15 @@ impl DataSecretManagerSecretReplicationElAutoEl {
 
                     std
                     ::convert
-                    ::Into<terrars::ListField<DataSecretManagerSecretReplicationElAutoElCustomerManagedEncryptionEl>>,
+                    ::Into<terrars::ListField<DataSecretManagerSecret_Replication_Auto_CustomerManagedEncryption>>,
     ) -> Self {
         self.customer_managed_encryption = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataSecretManagerSecretReplicationElAutoEl {
-    type O = terrars::BlockAssignable<DataSecretManagerSecretReplicationElAutoEl>;
+impl terrars::ToListMappable for DataSecretManagerSecret_Replication_Auto {
+    type O = terrars::BlockAssignable<DataSecretManagerSecret_Replication_Auto>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -453,29 +517,31 @@ impl terrars::ToListMappable for DataSecretManagerSecretReplicationElAutoEl {
     }
 }
 
-pub struct BuildDataSecretManagerSecretReplicationElAutoEl {}
+pub struct BuildDataSecretManagerSecret_Replication_Auto {}
 
-impl BuildDataSecretManagerSecretReplicationElAutoEl {
-    pub fn build(self) -> DataSecretManagerSecretReplicationElAutoEl {
-        DataSecretManagerSecretReplicationElAutoEl { customer_managed_encryption: core::default::Default::default() }
+impl BuildDataSecretManagerSecret_Replication_Auto {
+    pub fn build(self) -> DataSecretManagerSecret_Replication_Auto {
+        DataSecretManagerSecret_Replication_Auto { customer_managed_encryption: core::default::Default::default() }
     }
 }
 
-pub struct DataSecretManagerSecretReplicationElAutoElRef {
+#[allow(dead_code)]
+pub struct DataSecretManagerSecret_Replication_AutoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSecretManagerSecretReplicationElAutoElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSecretManagerSecretReplicationElAutoElRef {
-        DataSecretManagerSecretReplicationElAutoElRef {
+impl terrars::Ref for DataSecretManagerSecret_Replication_AutoRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSecretManagerSecret_Replication_AutoRef {
+        DataSecretManagerSecret_Replication_AutoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSecretManagerSecretReplicationElAutoElRef {
+impl DataSecretManagerSecret_Replication_AutoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -483,91 +549,22 @@ impl DataSecretManagerSecretReplicationElAutoElRef {
     #[doc = "Get a reference to the value of field `customer_managed_encryption` after provisioning.\n"]
     pub fn customer_managed_encryption(
         &self,
-    ) -> terrars::ListRef<DataSecretManagerSecretReplicationElAutoElCustomerManagedEncryptionElRef> {
+    ) -> terrars::ListRef<DataSecretManagerSecret_Replication_Auto_CustomerManagedEncryptionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.customer_managed_encryption", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataSecretManagerSecretReplicationElUserManagedElReplicasElCustomerManagedEncryptionEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    kms_key_name: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DataSecretManagerSecretReplicationElUserManagedElReplicasElCustomerManagedEncryptionEl {
-    #[doc = "Set the field `kms_key_name`.\n"]
-    pub fn set_kms_key_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.kms_key_name = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for DataSecretManagerSecretReplicationElUserManagedElReplicasElCustomerManagedEncryptionEl {
-    type O =
-        terrars
-        ::BlockAssignable<DataSecretManagerSecretReplicationElUserManagedElReplicasElCustomerManagedEncryptionEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataSecretManagerSecretReplicationElUserManagedElReplicasElCustomerManagedEncryptionEl {}
-
-impl BuildDataSecretManagerSecretReplicationElUserManagedElReplicasElCustomerManagedEncryptionEl {
-    pub fn build(self) -> DataSecretManagerSecretReplicationElUserManagedElReplicasElCustomerManagedEncryptionEl {
-        DataSecretManagerSecretReplicationElUserManagedElReplicasElCustomerManagedEncryptionEl {
-            kms_key_name: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataSecretManagerSecretReplicationElUserManagedElReplicasElCustomerManagedEncryptionElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataSecretManagerSecretReplicationElUserManagedElReplicasElCustomerManagedEncryptionElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataSecretManagerSecretReplicationElUserManagedElReplicasElCustomerManagedEncryptionElRef {
-        DataSecretManagerSecretReplicationElUserManagedElReplicasElCustomerManagedEncryptionElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataSecretManagerSecretReplicationElUserManagedElReplicasElCustomerManagedEncryptionElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `kms_key_name` after provisioning.\n"]
-    pub fn kms_key_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_name", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataSecretManagerSecretReplicationElUserManagedElReplicasEl {
+pub struct DataSecretManagerSecret_Replication_UserManaged_Replicas {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     customer_managed_encryption: std
     ::option
-    ::Option<
-        terrars::ListField<DataSecretManagerSecretReplicationElUserManagedElReplicasElCustomerManagedEncryptionEl>,
-    >,
+    ::Option<terrars::ListField<DataSecretManagerSecret_Replication_Auto_CustomerManagedEncryption>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     location: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataSecretManagerSecretReplicationElUserManagedElReplicasEl {
+impl DataSecretManagerSecret_Replication_UserManaged_Replicas {
     #[doc = "Set the field `customer_managed_encryption`.\n"]
     pub fn set_customer_managed_encryption(
         mut self,
@@ -576,12 +573,7 @@ impl DataSecretManagerSecretReplicationElUserManagedElReplicasEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars
-                        ::ListField<
-                            DataSecretManagerSecretReplicationElUserManagedElReplicasElCustomerManagedEncryptionEl,
-                        >,
-                    >,
+                    ::Into<terrars::ListField<DataSecretManagerSecret_Replication_Auto_CustomerManagedEncryption>>,
     ) -> Self {
         self.customer_managed_encryption = std::option::Option::Some(v.into());
         self
@@ -594,8 +586,8 @@ impl DataSecretManagerSecretReplicationElUserManagedElReplicasEl {
     }
 }
 
-impl terrars::ToListMappable for DataSecretManagerSecretReplicationElUserManagedElReplicasEl {
-    type O = terrars::BlockAssignable<DataSecretManagerSecretReplicationElUserManagedElReplicasEl>;
+impl terrars::ToListMappable for DataSecretManagerSecret_Replication_UserManaged_Replicas {
+    type O = terrars::BlockAssignable<DataSecretManagerSecret_Replication_UserManaged_Replicas>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -606,35 +598,37 @@ impl terrars::ToListMappable for DataSecretManagerSecretReplicationElUserManaged
     }
 }
 
-pub struct BuildDataSecretManagerSecretReplicationElUserManagedElReplicasEl {}
+pub struct BuildDataSecretManagerSecret_Replication_UserManaged_Replicas {}
 
-impl BuildDataSecretManagerSecretReplicationElUserManagedElReplicasEl {
-    pub fn build(self) -> DataSecretManagerSecretReplicationElUserManagedElReplicasEl {
-        DataSecretManagerSecretReplicationElUserManagedElReplicasEl {
+impl BuildDataSecretManagerSecret_Replication_UserManaged_Replicas {
+    pub fn build(self) -> DataSecretManagerSecret_Replication_UserManaged_Replicas {
+        DataSecretManagerSecret_Replication_UserManaged_Replicas {
             customer_managed_encryption: core::default::Default::default(),
             location: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataSecretManagerSecretReplicationElUserManagedElReplicasElRef {
+#[allow(dead_code)]
+pub struct DataSecretManagerSecret_Replication_UserManaged_ReplicasRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSecretManagerSecretReplicationElUserManagedElReplicasElRef {
+impl terrars::Ref for DataSecretManagerSecret_Replication_UserManaged_ReplicasRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataSecretManagerSecretReplicationElUserManagedElReplicasElRef {
-        DataSecretManagerSecretReplicationElUserManagedElReplicasElRef {
+    ) -> DataSecretManagerSecret_Replication_UserManaged_ReplicasRef {
+        DataSecretManagerSecret_Replication_UserManaged_ReplicasRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSecretManagerSecretReplicationElUserManagedElReplicasElRef {
+impl DataSecretManagerSecret_Replication_UserManaged_ReplicasRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -642,7 +636,7 @@ impl DataSecretManagerSecretReplicationElUserManagedElReplicasElRef {
     #[doc = "Get a reference to the value of field `customer_managed_encryption` after provisioning.\n"]
     pub fn customer_managed_encryption(
         &self,
-    ) -> terrars::ListRef<DataSecretManagerSecretReplicationElUserManagedElReplicasElCustomerManagedEncryptionElRef> {
+    ) -> terrars::ListRef<DataSecretManagerSecret_Replication_Auto_CustomerManagedEncryptionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.customer_managed_encryption", self.base))
     }
 
@@ -653,24 +647,24 @@ impl DataSecretManagerSecretReplicationElUserManagedElReplicasElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataSecretManagerSecretReplicationElUserManagedEl {
+pub struct DataSecretManagerSecret_Replication_UserManaged {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    replicas: std::option::Option<terrars::ListField<DataSecretManagerSecretReplicationElUserManagedElReplicasEl>>,
+    replicas: std::option::Option<terrars::ListField<DataSecretManagerSecret_Replication_UserManaged_Replicas>>,
 }
 
-impl DataSecretManagerSecretReplicationElUserManagedEl {
+impl DataSecretManagerSecret_Replication_UserManaged {
     #[doc = "Set the field `replicas`.\n"]
     pub fn set_replicas(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataSecretManagerSecretReplicationElUserManagedElReplicasEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataSecretManagerSecret_Replication_UserManaged_Replicas>>,
     ) -> Self {
         self.replicas = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataSecretManagerSecretReplicationElUserManagedEl {
-    type O = terrars::BlockAssignable<DataSecretManagerSecretReplicationElUserManagedEl>;
+impl terrars::ToListMappable for DataSecretManagerSecret_Replication_UserManaged {
+    type O = terrars::BlockAssignable<DataSecretManagerSecret_Replication_UserManaged>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -681,55 +675,57 @@ impl terrars::ToListMappable for DataSecretManagerSecretReplicationElUserManaged
     }
 }
 
-pub struct BuildDataSecretManagerSecretReplicationElUserManagedEl {}
+pub struct BuildDataSecretManagerSecret_Replication_UserManaged {}
 
-impl BuildDataSecretManagerSecretReplicationElUserManagedEl {
-    pub fn build(self) -> DataSecretManagerSecretReplicationElUserManagedEl {
-        DataSecretManagerSecretReplicationElUserManagedEl { replicas: core::default::Default::default() }
+impl BuildDataSecretManagerSecret_Replication_UserManaged {
+    pub fn build(self) -> DataSecretManagerSecret_Replication_UserManaged {
+        DataSecretManagerSecret_Replication_UserManaged { replicas: core::default::Default::default() }
     }
 }
 
-pub struct DataSecretManagerSecretReplicationElUserManagedElRef {
+#[allow(dead_code)]
+pub struct DataSecretManagerSecret_Replication_UserManagedRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSecretManagerSecretReplicationElUserManagedElRef {
+impl terrars::Ref for DataSecretManagerSecret_Replication_UserManagedRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataSecretManagerSecretReplicationElUserManagedElRef {
-        DataSecretManagerSecretReplicationElUserManagedElRef {
+    ) -> DataSecretManagerSecret_Replication_UserManagedRef {
+        DataSecretManagerSecret_Replication_UserManagedRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSecretManagerSecretReplicationElUserManagedElRef {
+impl DataSecretManagerSecret_Replication_UserManagedRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `replicas` after provisioning.\n"]
-    pub fn replicas(&self) -> terrars::ListRef<DataSecretManagerSecretReplicationElUserManagedElReplicasElRef> {
+    pub fn replicas(&self) -> terrars::ListRef<DataSecretManagerSecret_Replication_UserManaged_ReplicasRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.replicas", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataSecretManagerSecretReplicationEl {
+pub struct DataSecretManagerSecret_Replication {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    auto: std::option::Option<terrars::ListField<DataSecretManagerSecretReplicationElAutoEl>>,
+    auto: std::option::Option<terrars::ListField<DataSecretManagerSecret_Replication_Auto>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    user_managed: std::option::Option<terrars::ListField<DataSecretManagerSecretReplicationElUserManagedEl>>,
+    user_managed: std::option::Option<terrars::ListField<DataSecretManagerSecret_Replication_UserManaged>>,
 }
 
-impl DataSecretManagerSecretReplicationEl {
+impl DataSecretManagerSecret_Replication {
     #[doc = "Set the field `auto`.\n"]
     pub fn set_auto(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataSecretManagerSecretReplicationElAutoEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataSecretManagerSecret_Replication_Auto>>,
     ) -> Self {
         self.auto = std::option::Option::Some(v.into());
         self
@@ -738,15 +734,15 @@ impl DataSecretManagerSecretReplicationEl {
     #[doc = "Set the field `user_managed`.\n"]
     pub fn set_user_managed(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataSecretManagerSecretReplicationElUserManagedEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataSecretManagerSecret_Replication_UserManaged>>,
     ) -> Self {
         self.user_managed = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataSecretManagerSecretReplicationEl {
-    type O = terrars::BlockAssignable<DataSecretManagerSecretReplicationEl>;
+impl terrars::ToListMappable for DataSecretManagerSecret_Replication {
+    type O = terrars::BlockAssignable<DataSecretManagerSecret_Replication>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -757,56 +753,58 @@ impl terrars::ToListMappable for DataSecretManagerSecretReplicationEl {
     }
 }
 
-pub struct BuildDataSecretManagerSecretReplicationEl {}
+pub struct BuildDataSecretManagerSecret_Replication {}
 
-impl BuildDataSecretManagerSecretReplicationEl {
-    pub fn build(self) -> DataSecretManagerSecretReplicationEl {
-        DataSecretManagerSecretReplicationEl {
+impl BuildDataSecretManagerSecret_Replication {
+    pub fn build(self) -> DataSecretManagerSecret_Replication {
+        DataSecretManagerSecret_Replication {
             auto: core::default::Default::default(),
             user_managed: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataSecretManagerSecretReplicationElRef {
+#[allow(dead_code)]
+pub struct DataSecretManagerSecret_ReplicationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSecretManagerSecretReplicationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSecretManagerSecretReplicationElRef {
-        DataSecretManagerSecretReplicationElRef {
+impl terrars::Ref for DataSecretManagerSecret_ReplicationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSecretManagerSecret_ReplicationRef {
+        DataSecretManagerSecret_ReplicationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSecretManagerSecretReplicationElRef {
+impl DataSecretManagerSecret_ReplicationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `auto` after provisioning.\n"]
-    pub fn auto(&self) -> terrars::ListRef<DataSecretManagerSecretReplicationElAutoElRef> {
+    pub fn auto(&self) -> terrars::ListRef<DataSecretManagerSecret_Replication_AutoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.auto", self.base))
     }
 
     #[doc = "Get a reference to the value of field `user_managed` after provisioning.\n"]
-    pub fn user_managed(&self) -> terrars::ListRef<DataSecretManagerSecretReplicationElUserManagedElRef> {
+    pub fn user_managed(&self) -> terrars::ListRef<DataSecretManagerSecret_Replication_UserManagedRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.user_managed", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataSecretManagerSecretRotationEl {
+pub struct DataSecretManagerSecret_Rotation {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     next_rotation_time: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     rotation_period: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataSecretManagerSecretRotationEl {
+impl DataSecretManagerSecret_Rotation {
     #[doc = "Set the field `next_rotation_time`.\n"]
     pub fn set_next_rotation_time(
         mut self,
@@ -823,8 +821,8 @@ impl DataSecretManagerSecretRotationEl {
     }
 }
 
-impl terrars::ToListMappable for DataSecretManagerSecretRotationEl {
-    type O = terrars::BlockAssignable<DataSecretManagerSecretRotationEl>;
+impl terrars::ToListMappable for DataSecretManagerSecret_Rotation {
+    type O = terrars::BlockAssignable<DataSecretManagerSecret_Rotation>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -835,32 +833,34 @@ impl terrars::ToListMappable for DataSecretManagerSecretRotationEl {
     }
 }
 
-pub struct BuildDataSecretManagerSecretRotationEl {}
+pub struct BuildDataSecretManagerSecret_Rotation {}
 
-impl BuildDataSecretManagerSecretRotationEl {
-    pub fn build(self) -> DataSecretManagerSecretRotationEl {
-        DataSecretManagerSecretRotationEl {
+impl BuildDataSecretManagerSecret_Rotation {
+    pub fn build(self) -> DataSecretManagerSecret_Rotation {
+        DataSecretManagerSecret_Rotation {
             next_rotation_time: core::default::Default::default(),
             rotation_period: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataSecretManagerSecretRotationElRef {
+#[allow(dead_code)]
+pub struct DataSecretManagerSecret_RotationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSecretManagerSecretRotationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSecretManagerSecretRotationElRef {
-        DataSecretManagerSecretRotationElRef {
+impl terrars::Ref for DataSecretManagerSecret_RotationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSecretManagerSecret_RotationRef {
+        DataSecretManagerSecret_RotationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSecretManagerSecretRotationElRef {
+impl DataSecretManagerSecret_RotationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -877,12 +877,12 @@ impl DataSecretManagerSecretRotationElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataSecretManagerSecretTopicsEl {
+pub struct DataSecretManagerSecret_Topics {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataSecretManagerSecretTopicsEl {
+impl DataSecretManagerSecret_Topics {
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
@@ -890,8 +890,8 @@ impl DataSecretManagerSecretTopicsEl {
     }
 }
 
-impl terrars::ToListMappable for DataSecretManagerSecretTopicsEl {
-    type O = terrars::BlockAssignable<DataSecretManagerSecretTopicsEl>;
+impl terrars::ToListMappable for DataSecretManagerSecret_Topics {
+    type O = terrars::BlockAssignable<DataSecretManagerSecret_Topics>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -902,29 +902,31 @@ impl terrars::ToListMappable for DataSecretManagerSecretTopicsEl {
     }
 }
 
-pub struct BuildDataSecretManagerSecretTopicsEl {}
+pub struct BuildDataSecretManagerSecret_Topics {}
 
-impl BuildDataSecretManagerSecretTopicsEl {
-    pub fn build(self) -> DataSecretManagerSecretTopicsEl {
-        DataSecretManagerSecretTopicsEl { name: core::default::Default::default() }
+impl BuildDataSecretManagerSecret_Topics {
+    pub fn build(self) -> DataSecretManagerSecret_Topics {
+        DataSecretManagerSecret_Topics { name: core::default::Default::default() }
     }
 }
 
-pub struct DataSecretManagerSecretTopicsElRef {
+#[allow(dead_code)]
+pub struct DataSecretManagerSecret_TopicsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSecretManagerSecretTopicsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSecretManagerSecretTopicsElRef {
-        DataSecretManagerSecretTopicsElRef {
+impl terrars::Ref for DataSecretManagerSecret_TopicsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSecretManagerSecret_TopicsRef {
+        DataSecretManagerSecret_TopicsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSecretManagerSecretTopicsElRef {
+impl DataSecretManagerSecret_TopicsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct AppEngineFlexibleAppVersionData {
+struct AppEngineFlexibleAppVersionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,6 +26,8 @@ struct AppEngineFlexibleAppVersionData {
     default_expiration: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete_service_on_destroy: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     env_variables: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -53,38 +57,40 @@ struct AppEngineFlexibleAppVersionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     version_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    api_config: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersionApiConfigEl>>,
+    api_config: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersion_ApiConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    automatic_scaling: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersionAutomaticScalingEl>>,
+    automatic_scaling: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersion_AutomaticScaling>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    deployment: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersionDeploymentEl>>,
+    deployment: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersion_Deployment>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    endpoints_api_service: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersionEndpointsApiServiceEl>>,
+    endpoints_api_service: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersion_EndpointsApiService>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    entrypoint: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersionEntrypointEl>>,
+    entrypoint: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersion_Entrypoint>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    handlers: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersionHandlersEl>>,
+    flexible_runtime_settings: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersion_FlexibleRuntimeSettings>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    liveness_check: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersionLivenessCheckEl>>,
+    handlers: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersion_Handlers>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    manual_scaling: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersionManualScalingEl>>,
+    liveness_check: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersion_LivenessCheck>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    network: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersionNetworkEl>>,
+    manual_scaling: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersion_ManualScaling>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    readiness_check: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersionReadinessCheckEl>>,
+    network: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersion_Network>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    resources: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersionResourcesEl>>,
+    readiness_check: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersion_ReadinessCheck>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<AppEngineFlexibleAppVersionTimeoutsEl>,
+    resources: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersion_Resources>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpc_access_connector: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersionVpcAccessConnectorEl>>,
+    timeouts: std::option::Option<AppEngineFlexibleAppVersion_Timeouts>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vpc_access_connector: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersion_VpcAccessConnector>>,
     dynamic: AppEngineFlexibleAppVersionDynamic,
 }
 
 struct AppEngineFlexibleAppVersion_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AppEngineFlexibleAppVersionData>,
+    data: std::cell::RefCell<AppEngineFlexibleAppVersionData_>,
 }
 
 #[derive(Clone)]
@@ -209,6 +215,13 @@ impl AppEngineFlexibleAppVersion {
     }
 
     #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `env_variables`.\nEnvironment variables available to the application.  As these are not returned in the API request, Terraform will not detect any changes made outside of the Terraform config."]
     pub fn set_env_variables(
         self,
@@ -306,7 +319,7 @@ impl AppEngineFlexibleAppVersion {
     #[doc = "Set the field `api_config`.\n"]
     pub fn set_api_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersionApiConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersion_ApiConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -322,7 +335,7 @@ impl AppEngineFlexibleAppVersion {
     #[doc = "Set the field `automatic_scaling`.\n"]
     pub fn set_automatic_scaling(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersionAutomaticScalingEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersion_AutomaticScaling>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -338,7 +351,7 @@ impl AppEngineFlexibleAppVersion {
     #[doc = "Set the field `deployment`.\n"]
     pub fn set_deployment(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersionDeploymentEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersion_Deployment>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -354,7 +367,7 @@ impl AppEngineFlexibleAppVersion {
     #[doc = "Set the field `endpoints_api_service`.\n"]
     pub fn set_endpoints_api_service(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersionEndpointsApiServiceEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersion_EndpointsApiService>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -370,7 +383,7 @@ impl AppEngineFlexibleAppVersion {
     #[doc = "Set the field `entrypoint`.\n"]
     pub fn set_entrypoint(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersionEntrypointEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersion_Entrypoint>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -383,10 +396,26 @@ impl AppEngineFlexibleAppVersion {
         self
     }
 
+    #[doc = "Set the field `flexible_runtime_settings`.\n"]
+    pub fn set_flexible_runtime_settings(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersion_FlexibleRuntimeSettings>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().flexible_runtime_settings = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.flexible_runtime_settings = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `handlers`.\n"]
     pub fn set_handlers(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersionHandlersEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersion_Handlers>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -402,7 +431,7 @@ impl AppEngineFlexibleAppVersion {
     #[doc = "Set the field `liveness_check`.\n"]
     pub fn set_liveness_check(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersionLivenessCheckEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersion_LivenessCheck>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -418,7 +447,7 @@ impl AppEngineFlexibleAppVersion {
     #[doc = "Set the field `manual_scaling`.\n"]
     pub fn set_manual_scaling(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersionManualScalingEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersion_ManualScaling>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -434,7 +463,7 @@ impl AppEngineFlexibleAppVersion {
     #[doc = "Set the field `network`.\n"]
     pub fn set_network(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersionNetworkEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersion_Network>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -450,7 +479,7 @@ impl AppEngineFlexibleAppVersion {
     #[doc = "Set the field `readiness_check`.\n"]
     pub fn set_readiness_check(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersionReadinessCheckEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersion_ReadinessCheck>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -466,7 +495,7 @@ impl AppEngineFlexibleAppVersion {
     #[doc = "Set the field `resources`.\n"]
     pub fn set_resources(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersionResourcesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersion_Resources>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -480,7 +509,7 @@ impl AppEngineFlexibleAppVersion {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<AppEngineFlexibleAppVersionTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<AppEngineFlexibleAppVersion_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -488,7 +517,7 @@ impl AppEngineFlexibleAppVersion {
     #[doc = "Set the field `vpc_access_connector`.\n"]
     pub fn set_vpc_access_connector(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersionVpcAccessConnectorEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersion_VpcAccessConnector>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -517,6 +546,12 @@ impl AppEngineFlexibleAppVersion {
         "Get a reference to the value of field `delete_service_on_destroy` after provisioning.\nIf set to 'true', the service will be deleted if it is the last version."]
     pub fn delete_service_on_destroy(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete_service_on_destroy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -613,70 +648,75 @@ impl AppEngineFlexibleAppVersion {
     }
 
     #[doc = "Get a reference to the value of field `api_config` after provisioning.\n"]
-    pub fn api_config(&self) -> terrars::ListRef<AppEngineFlexibleAppVersionApiConfigElRef> {
+    pub fn api_config(&self) -> terrars::ListRef<AppEngineFlexibleAppVersion_ApiConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.api_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `automatic_scaling` after provisioning.\n"]
-    pub fn automatic_scaling(&self) -> terrars::ListRef<AppEngineFlexibleAppVersionAutomaticScalingElRef> {
+    pub fn automatic_scaling(&self) -> terrars::ListRef<AppEngineFlexibleAppVersion_AutomaticScalingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.automatic_scaling", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `deployment` after provisioning.\n"]
-    pub fn deployment(&self) -> terrars::ListRef<AppEngineFlexibleAppVersionDeploymentElRef> {
+    pub fn deployment(&self) -> terrars::ListRef<AppEngineFlexibleAppVersion_DeploymentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.deployment", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `endpoints_api_service` after provisioning.\n"]
-    pub fn endpoints_api_service(&self) -> terrars::ListRef<AppEngineFlexibleAppVersionEndpointsApiServiceElRef> {
+    pub fn endpoints_api_service(&self) -> terrars::ListRef<AppEngineFlexibleAppVersion_EndpointsApiServiceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.endpoints_api_service", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `entrypoint` after provisioning.\n"]
-    pub fn entrypoint(&self) -> terrars::ListRef<AppEngineFlexibleAppVersionEntrypointElRef> {
+    pub fn entrypoint(&self) -> terrars::ListRef<AppEngineFlexibleAppVersion_EntrypointRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.entrypoint", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `flexible_runtime_settings` after provisioning.\n"]
+    pub fn flexible_runtime_settings(&self) -> terrars::ListRef<AppEngineFlexibleAppVersion_FlexibleRuntimeSettingsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.flexible_runtime_settings", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `handlers` after provisioning.\n"]
-    pub fn handlers(&self) -> terrars::ListRef<AppEngineFlexibleAppVersionHandlersElRef> {
+    pub fn handlers(&self) -> terrars::ListRef<AppEngineFlexibleAppVersion_HandlersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.handlers", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `liveness_check` after provisioning.\n"]
-    pub fn liveness_check(&self) -> terrars::ListRef<AppEngineFlexibleAppVersionLivenessCheckElRef> {
+    pub fn liveness_check(&self) -> terrars::ListRef<AppEngineFlexibleAppVersion_LivenessCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.liveness_check", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `manual_scaling` after provisioning.\n"]
-    pub fn manual_scaling(&self) -> terrars::ListRef<AppEngineFlexibleAppVersionManualScalingElRef> {
+    pub fn manual_scaling(&self) -> terrars::ListRef<AppEngineFlexibleAppVersion_ManualScalingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.manual_scaling", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `network` after provisioning.\n"]
-    pub fn network(&self) -> terrars::ListRef<AppEngineFlexibleAppVersionNetworkElRef> {
+    pub fn network(&self) -> terrars::ListRef<AppEngineFlexibleAppVersion_NetworkRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `readiness_check` after provisioning.\n"]
-    pub fn readiness_check(&self) -> terrars::ListRef<AppEngineFlexibleAppVersionReadinessCheckElRef> {
+    pub fn readiness_check(&self) -> terrars::ListRef<AppEngineFlexibleAppVersion_ReadinessCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.readiness_check", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `resources` after provisioning.\n"]
-    pub fn resources(&self) -> terrars::ListRef<AppEngineFlexibleAppVersionResourcesElRef> {
+    pub fn resources(&self) -> terrars::ListRef<AppEngineFlexibleAppVersion_ResourcesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.resources", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> AppEngineFlexibleAppVersionTimeoutsElRef {
-        AppEngineFlexibleAppVersionTimeoutsElRef::new(
+    pub fn timeouts(&self) -> AppEngineFlexibleAppVersion_TimeoutsRef {
+        AppEngineFlexibleAppVersion_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 
     #[doc = "Get a reference to the value of field `vpc_access_connector` after provisioning.\n"]
-    pub fn vpc_access_connector(&self) -> terrars::ListRef<AppEngineFlexibleAppVersionVpcAccessConnectorElRef> {
+    pub fn vpc_access_connector(&self) -> terrars::ListRef<AppEngineFlexibleAppVersion_VpcAccessConnectorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_access_connector", self.extract_ref()))
     }
 }
@@ -725,7 +765,7 @@ impl BuildAppEngineFlexibleAppVersion {
         let out = AppEngineFlexibleAppVersion(std::rc::Rc::new(AppEngineFlexibleAppVersion_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AppEngineFlexibleAppVersionData {
+            data: std::cell::RefCell::new(AppEngineFlexibleAppVersionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -734,6 +774,7 @@ impl BuildAppEngineFlexibleAppVersion {
                 beta_settings: core::default::Default::default(),
                 default_expiration: core::default::Default::default(),
                 delete_service_on_destroy: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 env_variables: core::default::Default::default(),
                 id: core::default::Default::default(),
                 inbound_services: core::default::Default::default(),
@@ -754,6 +795,7 @@ impl BuildAppEngineFlexibleAppVersion {
                 deployment: core::default::Default::default(),
                 endpoints_api_service: core::default::Default::default(),
                 entrypoint: core::default::Default::default(),
+                flexible_runtime_settings: core::default::Default::default(),
                 handlers: core::default::Default::default(),
                 liveness_check: core::default::Default::default(),
                 manual_scaling: core::default::Default::default(),
@@ -812,6 +854,12 @@ impl AppEngineFlexibleAppVersionRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `env_variables` after provisioning.\nEnvironment variables available to the application.  As these are not returned in the API request, Terraform will not detect any changes made outside of the Terraform config."]
     pub fn env_variables(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.env_variables", self.extract_ref()))
@@ -905,76 +953,104 @@ impl AppEngineFlexibleAppVersionRef {
     }
 
     #[doc = "Get a reference to the value of field `api_config` after provisioning.\n"]
-    pub fn api_config(&self) -> terrars::ListRef<AppEngineFlexibleAppVersionApiConfigElRef> {
+    pub fn api_config(&self) -> terrars::ListRef<AppEngineFlexibleAppVersion_ApiConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.api_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `automatic_scaling` after provisioning.\n"]
-    pub fn automatic_scaling(&self) -> terrars::ListRef<AppEngineFlexibleAppVersionAutomaticScalingElRef> {
+    pub fn automatic_scaling(&self) -> terrars::ListRef<AppEngineFlexibleAppVersion_AutomaticScalingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.automatic_scaling", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `deployment` after provisioning.\n"]
-    pub fn deployment(&self) -> terrars::ListRef<AppEngineFlexibleAppVersionDeploymentElRef> {
+    pub fn deployment(&self) -> terrars::ListRef<AppEngineFlexibleAppVersion_DeploymentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.deployment", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `endpoints_api_service` after provisioning.\n"]
-    pub fn endpoints_api_service(&self) -> terrars::ListRef<AppEngineFlexibleAppVersionEndpointsApiServiceElRef> {
+    pub fn endpoints_api_service(&self) -> terrars::ListRef<AppEngineFlexibleAppVersion_EndpointsApiServiceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.endpoints_api_service", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `entrypoint` after provisioning.\n"]
-    pub fn entrypoint(&self) -> terrars::ListRef<AppEngineFlexibleAppVersionEntrypointElRef> {
+    pub fn entrypoint(&self) -> terrars::ListRef<AppEngineFlexibleAppVersion_EntrypointRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.entrypoint", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `flexible_runtime_settings` after provisioning.\n"]
+    pub fn flexible_runtime_settings(&self) -> terrars::ListRef<AppEngineFlexibleAppVersion_FlexibleRuntimeSettingsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.flexible_runtime_settings", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `handlers` after provisioning.\n"]
-    pub fn handlers(&self) -> terrars::ListRef<AppEngineFlexibleAppVersionHandlersElRef> {
+    pub fn handlers(&self) -> terrars::ListRef<AppEngineFlexibleAppVersion_HandlersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.handlers", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `liveness_check` after provisioning.\n"]
-    pub fn liveness_check(&self) -> terrars::ListRef<AppEngineFlexibleAppVersionLivenessCheckElRef> {
+    pub fn liveness_check(&self) -> terrars::ListRef<AppEngineFlexibleAppVersion_LivenessCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.liveness_check", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `manual_scaling` after provisioning.\n"]
-    pub fn manual_scaling(&self) -> terrars::ListRef<AppEngineFlexibleAppVersionManualScalingElRef> {
+    pub fn manual_scaling(&self) -> terrars::ListRef<AppEngineFlexibleAppVersion_ManualScalingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.manual_scaling", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `network` after provisioning.\n"]
-    pub fn network(&self) -> terrars::ListRef<AppEngineFlexibleAppVersionNetworkElRef> {
+    pub fn network(&self) -> terrars::ListRef<AppEngineFlexibleAppVersion_NetworkRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `readiness_check` after provisioning.\n"]
-    pub fn readiness_check(&self) -> terrars::ListRef<AppEngineFlexibleAppVersionReadinessCheckElRef> {
+    pub fn readiness_check(&self) -> terrars::ListRef<AppEngineFlexibleAppVersion_ReadinessCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.readiness_check", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `resources` after provisioning.\n"]
-    pub fn resources(&self) -> terrars::ListRef<AppEngineFlexibleAppVersionResourcesElRef> {
+    pub fn resources(&self) -> terrars::ListRef<AppEngineFlexibleAppVersion_ResourcesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.resources", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> AppEngineFlexibleAppVersionTimeoutsElRef {
-        AppEngineFlexibleAppVersionTimeoutsElRef::new(
+    pub fn timeouts(&self) -> AppEngineFlexibleAppVersion_TimeoutsRef {
+        AppEngineFlexibleAppVersion_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 
     #[doc = "Get a reference to the value of field `vpc_access_connector` after provisioning.\n"]
-    pub fn vpc_access_connector(&self) -> terrars::ListRef<AppEngineFlexibleAppVersionVpcAccessConnectorElRef> {
+    pub fn vpc_access_connector(&self) -> terrars::ListRef<AppEngineFlexibleAppVersion_VpcAccessConnectorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_access_connector", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct AppEngineFlexibleAppVersionDynamic {
+    api_config: std::option::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersion_ApiConfig>>,
+    automatic_scaling: std::option::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersion_AutomaticScaling>>,
+    deployment: std::option::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersion_Deployment>>,
+    endpoints_api_service: std
+    ::option
+    ::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersion_EndpointsApiService>>,
+    entrypoint: std::option::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersion_Entrypoint>>,
+    flexible_runtime_settings: std
+    ::option
+    ::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersion_FlexibleRuntimeSettings>>,
+    handlers: std::option::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersion_Handlers>>,
+    liveness_check: std::option::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersion_LivenessCheck>>,
+    manual_scaling: std::option::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersion_ManualScaling>>,
+    network: std::option::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersion_Network>>,
+    readiness_check: std::option::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersion_ReadinessCheck>>,
+    resources: std::option::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersion_Resources>>,
+    vpc_access_connector: std
+    ::option
+    ::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersion_VpcAccessConnector>>,
+}
+
 #[derive(Serialize)]
-pub struct AppEngineFlexibleAppVersionApiConfigEl {
+pub struct AppEngineFlexibleAppVersion_ApiConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     auth_fail_action: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -986,7 +1062,7 @@ pub struct AppEngineFlexibleAppVersionApiConfigEl {
     url: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppEngineFlexibleAppVersionApiConfigEl {
+impl AppEngineFlexibleAppVersion_ApiConfig {
     #[doc =
         "Set the field `auth_fail_action`.\nAction to take when users access resources that require authentication. Default value: \"AUTH_FAIL_ACTION_REDIRECT\" Possible values: [\"AUTH_FAIL_ACTION_REDIRECT\", \"AUTH_FAIL_ACTION_UNAUTHORIZED\"]"]
     pub fn set_auth_fail_action(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1015,8 +1091,8 @@ impl AppEngineFlexibleAppVersionApiConfigEl {
     }
 }
 
-impl terrars::ToListMappable for AppEngineFlexibleAppVersionApiConfigEl {
-    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersionApiConfigEl>;
+impl terrars::ToListMappable for AppEngineFlexibleAppVersion_ApiConfig {
+    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersion_ApiConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1027,14 +1103,14 @@ impl terrars::ToListMappable for AppEngineFlexibleAppVersionApiConfigEl {
     }
 }
 
-pub struct BuildAppEngineFlexibleAppVersionApiConfigEl {
+pub struct BuildAppEngineFlexibleAppVersion_ApiConfig {
     #[doc = "Path to the script from the application root directory."]
     pub script: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppEngineFlexibleAppVersionApiConfigEl {
-    pub fn build(self) -> AppEngineFlexibleAppVersionApiConfigEl {
-        AppEngineFlexibleAppVersionApiConfigEl {
+impl BuildAppEngineFlexibleAppVersion_ApiConfig {
+    pub fn build(self) -> AppEngineFlexibleAppVersion_ApiConfig {
+        AppEngineFlexibleAppVersion_ApiConfig {
             auth_fail_action: core::default::Default::default(),
             login: core::default::Default::default(),
             script: self.script,
@@ -1044,21 +1120,23 @@ impl BuildAppEngineFlexibleAppVersionApiConfigEl {
     }
 }
 
-pub struct AppEngineFlexibleAppVersionApiConfigElRef {
+#[allow(dead_code)]
+pub struct AppEngineFlexibleAppVersion_ApiConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineFlexibleAppVersionApiConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineFlexibleAppVersionApiConfigElRef {
-        AppEngineFlexibleAppVersionApiConfigElRef {
+impl terrars::Ref for AppEngineFlexibleAppVersion_ApiConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineFlexibleAppVersion_ApiConfigRef {
+        AppEngineFlexibleAppVersion_ApiConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineFlexibleAppVersionApiConfigElRef {
+impl AppEngineFlexibleAppVersion_ApiConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1094,13 +1172,13 @@ impl AppEngineFlexibleAppVersionApiConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppEngineFlexibleAppVersionAutomaticScalingElCpuUtilizationEl {
+pub struct AppEngineFlexibleAppVersion_AutomaticScaling_CpuUtilization {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     aggregation_window_length: std::option::Option<terrars::PrimField<std::string::String>>,
     target_utilization: terrars::PrimField<f64>,
 }
 
-impl AppEngineFlexibleAppVersionAutomaticScalingElCpuUtilizationEl {
+impl AppEngineFlexibleAppVersion_AutomaticScaling_CpuUtilization {
     #[doc = "Set the field `aggregation_window_length`.\nPeriod of time over which CPU utilization is calculated."]
     pub fn set_aggregation_window_length(
         mut self,
@@ -1111,8 +1189,8 @@ impl AppEngineFlexibleAppVersionAutomaticScalingElCpuUtilizationEl {
     }
 }
 
-impl terrars::ToListMappable for AppEngineFlexibleAppVersionAutomaticScalingElCpuUtilizationEl {
-    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersionAutomaticScalingElCpuUtilizationEl>;
+impl terrars::ToListMappable for AppEngineFlexibleAppVersion_AutomaticScaling_CpuUtilization {
+    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersion_AutomaticScaling_CpuUtilization>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1123,38 +1201,40 @@ impl terrars::ToListMappable for AppEngineFlexibleAppVersionAutomaticScalingElCp
     }
 }
 
-pub struct BuildAppEngineFlexibleAppVersionAutomaticScalingElCpuUtilizationEl {
+pub struct BuildAppEngineFlexibleAppVersion_AutomaticScaling_CpuUtilization {
     #[doc = "Target CPU utilization ratio to maintain when scaling. Must be between 0 and 1."]
     pub target_utilization: terrars::PrimField<f64>,
 }
 
-impl BuildAppEngineFlexibleAppVersionAutomaticScalingElCpuUtilizationEl {
-    pub fn build(self) -> AppEngineFlexibleAppVersionAutomaticScalingElCpuUtilizationEl {
-        AppEngineFlexibleAppVersionAutomaticScalingElCpuUtilizationEl {
+impl BuildAppEngineFlexibleAppVersion_AutomaticScaling_CpuUtilization {
+    pub fn build(self) -> AppEngineFlexibleAppVersion_AutomaticScaling_CpuUtilization {
+        AppEngineFlexibleAppVersion_AutomaticScaling_CpuUtilization {
             aggregation_window_length: core::default::Default::default(),
             target_utilization: self.target_utilization,
         }
     }
 }
 
-pub struct AppEngineFlexibleAppVersionAutomaticScalingElCpuUtilizationElRef {
+#[allow(dead_code)]
+pub struct AppEngineFlexibleAppVersion_AutomaticScaling_CpuUtilizationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineFlexibleAppVersionAutomaticScalingElCpuUtilizationElRef {
+impl terrars::Ref for AppEngineFlexibleAppVersion_AutomaticScaling_CpuUtilizationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppEngineFlexibleAppVersionAutomaticScalingElCpuUtilizationElRef {
-        AppEngineFlexibleAppVersionAutomaticScalingElCpuUtilizationElRef {
+    ) -> AppEngineFlexibleAppVersion_AutomaticScaling_CpuUtilizationRef {
+        AppEngineFlexibleAppVersion_AutomaticScaling_CpuUtilizationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineFlexibleAppVersionAutomaticScalingElCpuUtilizationElRef {
+impl AppEngineFlexibleAppVersion_AutomaticScaling_CpuUtilizationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1173,7 +1253,7 @@ impl AppEngineFlexibleAppVersionAutomaticScalingElCpuUtilizationElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppEngineFlexibleAppVersionAutomaticScalingElDiskUtilizationEl {
+pub struct AppEngineFlexibleAppVersion_AutomaticScaling_DiskUtilization {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     target_read_bytes_per_second: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1184,7 +1264,7 @@ pub struct AppEngineFlexibleAppVersionAutomaticScalingElDiskUtilizationEl {
     target_write_ops_per_second: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl AppEngineFlexibleAppVersionAutomaticScalingElDiskUtilizationEl {
+impl AppEngineFlexibleAppVersion_AutomaticScaling_DiskUtilization {
     #[doc = "Set the field `target_read_bytes_per_second`.\nTarget bytes read per second."]
     pub fn set_target_read_bytes_per_second(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.target_read_bytes_per_second = std::option::Option::Some(v.into());
@@ -1210,8 +1290,8 @@ impl AppEngineFlexibleAppVersionAutomaticScalingElDiskUtilizationEl {
     }
 }
 
-impl terrars::ToListMappable for AppEngineFlexibleAppVersionAutomaticScalingElDiskUtilizationEl {
-    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersionAutomaticScalingElDiskUtilizationEl>;
+impl terrars::ToListMappable for AppEngineFlexibleAppVersion_AutomaticScaling_DiskUtilization {
+    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersion_AutomaticScaling_DiskUtilization>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1222,11 +1302,11 @@ impl terrars::ToListMappable for AppEngineFlexibleAppVersionAutomaticScalingElDi
     }
 }
 
-pub struct BuildAppEngineFlexibleAppVersionAutomaticScalingElDiskUtilizationEl {}
+pub struct BuildAppEngineFlexibleAppVersion_AutomaticScaling_DiskUtilization {}
 
-impl BuildAppEngineFlexibleAppVersionAutomaticScalingElDiskUtilizationEl {
-    pub fn build(self) -> AppEngineFlexibleAppVersionAutomaticScalingElDiskUtilizationEl {
-        AppEngineFlexibleAppVersionAutomaticScalingElDiskUtilizationEl {
+impl BuildAppEngineFlexibleAppVersion_AutomaticScaling_DiskUtilization {
+    pub fn build(self) -> AppEngineFlexibleAppVersion_AutomaticScaling_DiskUtilization {
+        AppEngineFlexibleAppVersion_AutomaticScaling_DiskUtilization {
             target_read_bytes_per_second: core::default::Default::default(),
             target_read_ops_per_second: core::default::Default::default(),
             target_write_bytes_per_second: core::default::Default::default(),
@@ -1235,24 +1315,26 @@ impl BuildAppEngineFlexibleAppVersionAutomaticScalingElDiskUtilizationEl {
     }
 }
 
-pub struct AppEngineFlexibleAppVersionAutomaticScalingElDiskUtilizationElRef {
+#[allow(dead_code)]
+pub struct AppEngineFlexibleAppVersion_AutomaticScaling_DiskUtilizationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineFlexibleAppVersionAutomaticScalingElDiskUtilizationElRef {
+impl terrars::Ref for AppEngineFlexibleAppVersion_AutomaticScaling_DiskUtilizationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppEngineFlexibleAppVersionAutomaticScalingElDiskUtilizationElRef {
-        AppEngineFlexibleAppVersionAutomaticScalingElDiskUtilizationElRef {
+    ) -> AppEngineFlexibleAppVersion_AutomaticScaling_DiskUtilizationRef {
+        AppEngineFlexibleAppVersion_AutomaticScaling_DiskUtilizationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineFlexibleAppVersionAutomaticScalingElDiskUtilizationElRef {
+impl AppEngineFlexibleAppVersion_AutomaticScaling_DiskUtilizationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1283,7 +1365,7 @@ impl AppEngineFlexibleAppVersionAutomaticScalingElDiskUtilizationElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppEngineFlexibleAppVersionAutomaticScalingElNetworkUtilizationEl {
+pub struct AppEngineFlexibleAppVersion_AutomaticScaling_NetworkUtilization {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     target_received_bytes_per_second: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1294,7 +1376,7 @@ pub struct AppEngineFlexibleAppVersionAutomaticScalingElNetworkUtilizationEl {
     target_sent_packets_per_second: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl AppEngineFlexibleAppVersionAutomaticScalingElNetworkUtilizationEl {
+impl AppEngineFlexibleAppVersion_AutomaticScaling_NetworkUtilization {
     #[doc = "Set the field `target_received_bytes_per_second`.\nTarget bytes received per second."]
     pub fn set_target_received_bytes_per_second(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.target_received_bytes_per_second = std::option::Option::Some(v.into());
@@ -1323,8 +1405,8 @@ impl AppEngineFlexibleAppVersionAutomaticScalingElNetworkUtilizationEl {
     }
 }
 
-impl terrars::ToListMappable for AppEngineFlexibleAppVersionAutomaticScalingElNetworkUtilizationEl {
-    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersionAutomaticScalingElNetworkUtilizationEl>;
+impl terrars::ToListMappable for AppEngineFlexibleAppVersion_AutomaticScaling_NetworkUtilization {
+    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersion_AutomaticScaling_NetworkUtilization>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1335,11 +1417,11 @@ impl terrars::ToListMappable for AppEngineFlexibleAppVersionAutomaticScalingElNe
     }
 }
 
-pub struct BuildAppEngineFlexibleAppVersionAutomaticScalingElNetworkUtilizationEl {}
+pub struct BuildAppEngineFlexibleAppVersion_AutomaticScaling_NetworkUtilization {}
 
-impl BuildAppEngineFlexibleAppVersionAutomaticScalingElNetworkUtilizationEl {
-    pub fn build(self) -> AppEngineFlexibleAppVersionAutomaticScalingElNetworkUtilizationEl {
-        AppEngineFlexibleAppVersionAutomaticScalingElNetworkUtilizationEl {
+impl BuildAppEngineFlexibleAppVersion_AutomaticScaling_NetworkUtilization {
+    pub fn build(self) -> AppEngineFlexibleAppVersion_AutomaticScaling_NetworkUtilization {
+        AppEngineFlexibleAppVersion_AutomaticScaling_NetworkUtilization {
             target_received_bytes_per_second: core::default::Default::default(),
             target_received_packets_per_second: core::default::Default::default(),
             target_sent_bytes_per_second: core::default::Default::default(),
@@ -1348,24 +1430,26 @@ impl BuildAppEngineFlexibleAppVersionAutomaticScalingElNetworkUtilizationEl {
     }
 }
 
-pub struct AppEngineFlexibleAppVersionAutomaticScalingElNetworkUtilizationElRef {
+#[allow(dead_code)]
+pub struct AppEngineFlexibleAppVersion_AutomaticScaling_NetworkUtilizationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineFlexibleAppVersionAutomaticScalingElNetworkUtilizationElRef {
+impl terrars::Ref for AppEngineFlexibleAppVersion_AutomaticScaling_NetworkUtilizationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppEngineFlexibleAppVersionAutomaticScalingElNetworkUtilizationElRef {
-        AppEngineFlexibleAppVersionAutomaticScalingElNetworkUtilizationElRef {
+    ) -> AppEngineFlexibleAppVersion_AutomaticScaling_NetworkUtilizationRef {
+        AppEngineFlexibleAppVersion_AutomaticScaling_NetworkUtilizationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineFlexibleAppVersionAutomaticScalingElNetworkUtilizationElRef {
+impl AppEngineFlexibleAppVersion_AutomaticScaling_NetworkUtilizationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1396,14 +1480,14 @@ impl AppEngineFlexibleAppVersionAutomaticScalingElNetworkUtilizationElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppEngineFlexibleAppVersionAutomaticScalingElRequestUtilizationEl {
+pub struct AppEngineFlexibleAppVersion_AutomaticScaling_RequestUtilization {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     target_concurrent_requests: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     target_request_count_per_second: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppEngineFlexibleAppVersionAutomaticScalingElRequestUtilizationEl {
+impl AppEngineFlexibleAppVersion_AutomaticScaling_RequestUtilization {
     #[doc = "Set the field `target_concurrent_requests`.\nTarget number of concurrent requests."]
     pub fn set_target_concurrent_requests(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.target_concurrent_requests = std::option::Option::Some(v.into());
@@ -1420,8 +1504,8 @@ impl AppEngineFlexibleAppVersionAutomaticScalingElRequestUtilizationEl {
     }
 }
 
-impl terrars::ToListMappable for AppEngineFlexibleAppVersionAutomaticScalingElRequestUtilizationEl {
-    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersionAutomaticScalingElRequestUtilizationEl>;
+impl terrars::ToListMappable for AppEngineFlexibleAppVersion_AutomaticScaling_RequestUtilization {
+    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersion_AutomaticScaling_RequestUtilization>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1432,35 +1516,37 @@ impl terrars::ToListMappable for AppEngineFlexibleAppVersionAutomaticScalingElRe
     }
 }
 
-pub struct BuildAppEngineFlexibleAppVersionAutomaticScalingElRequestUtilizationEl {}
+pub struct BuildAppEngineFlexibleAppVersion_AutomaticScaling_RequestUtilization {}
 
-impl BuildAppEngineFlexibleAppVersionAutomaticScalingElRequestUtilizationEl {
-    pub fn build(self) -> AppEngineFlexibleAppVersionAutomaticScalingElRequestUtilizationEl {
-        AppEngineFlexibleAppVersionAutomaticScalingElRequestUtilizationEl {
+impl BuildAppEngineFlexibleAppVersion_AutomaticScaling_RequestUtilization {
+    pub fn build(self) -> AppEngineFlexibleAppVersion_AutomaticScaling_RequestUtilization {
+        AppEngineFlexibleAppVersion_AutomaticScaling_RequestUtilization {
             target_concurrent_requests: core::default::Default::default(),
             target_request_count_per_second: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppEngineFlexibleAppVersionAutomaticScalingElRequestUtilizationElRef {
+#[allow(dead_code)]
+pub struct AppEngineFlexibleAppVersion_AutomaticScaling_RequestUtilizationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineFlexibleAppVersionAutomaticScalingElRequestUtilizationElRef {
+impl terrars::Ref for AppEngineFlexibleAppVersion_AutomaticScaling_RequestUtilizationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppEngineFlexibleAppVersionAutomaticScalingElRequestUtilizationElRef {
-        AppEngineFlexibleAppVersionAutomaticScalingElRequestUtilizationElRef {
+    ) -> AppEngineFlexibleAppVersion_AutomaticScaling_RequestUtilizationRef {
+        AppEngineFlexibleAppVersion_AutomaticScaling_RequestUtilizationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineFlexibleAppVersionAutomaticScalingElRequestUtilizationElRef {
+impl AppEngineFlexibleAppVersion_AutomaticScaling_RequestUtilizationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1479,23 +1565,23 @@ impl AppEngineFlexibleAppVersionAutomaticScalingElRequestUtilizationElRef {
 }
 
 #[derive(Serialize, Default)]
-struct AppEngineFlexibleAppVersionAutomaticScalingElDynamic {
+struct AppEngineFlexibleAppVersion_AutomaticScalingDynamic {
     cpu_utilization: std
     ::option
-    ::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersionAutomaticScalingElCpuUtilizationEl>>,
+    ::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersion_AutomaticScaling_CpuUtilization>>,
     disk_utilization: std
     ::option
-    ::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersionAutomaticScalingElDiskUtilizationEl>>,
+    ::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersion_AutomaticScaling_DiskUtilization>>,
     network_utilization: std
     ::option
-    ::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersionAutomaticScalingElNetworkUtilizationEl>>,
+    ::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersion_AutomaticScaling_NetworkUtilization>>,
     request_utilization: std
     ::option
-    ::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersionAutomaticScalingElRequestUtilizationEl>>,
+    ::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersion_AutomaticScaling_RequestUtilization>>,
 }
 
 #[derive(Serialize)]
-pub struct AppEngineFlexibleAppVersionAutomaticScalingEl {
+pub struct AppEngineFlexibleAppVersion_AutomaticScaling {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cool_down_period: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1513,21 +1599,21 @@ pub struct AppEngineFlexibleAppVersionAutomaticScalingEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min_total_instances: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cpu_utilization: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersionAutomaticScalingElCpuUtilizationEl>>,
+    cpu_utilization: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersion_AutomaticScaling_CpuUtilization>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    disk_utilization: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersionAutomaticScalingElDiskUtilizationEl>>,
+    disk_utilization: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersion_AutomaticScaling_DiskUtilization>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     network_utilization: std
     ::option
-    ::Option<std::vec::Vec<AppEngineFlexibleAppVersionAutomaticScalingElNetworkUtilizationEl>>,
+    ::Option<std::vec::Vec<AppEngineFlexibleAppVersion_AutomaticScaling_NetworkUtilization>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     request_utilization: std
     ::option
-    ::Option<std::vec::Vec<AppEngineFlexibleAppVersionAutomaticScalingElRequestUtilizationEl>>,
-    dynamic: AppEngineFlexibleAppVersionAutomaticScalingElDynamic,
+    ::Option<std::vec::Vec<AppEngineFlexibleAppVersion_AutomaticScaling_RequestUtilization>>,
+    dynamic: AppEngineFlexibleAppVersion_AutomaticScalingDynamic,
 }
 
-impl AppEngineFlexibleAppVersionAutomaticScalingEl {
+impl AppEngineFlexibleAppVersion_AutomaticScaling {
     #[doc =
         "Set the field `cool_down_period`.\nThe time period that the Autoscaler should wait before it starts collecting information from a new instance.\nThis prevents the autoscaler from collecting information when the instance is initializing,\nduring which the collected usage would not be reliable. Default: 120s"]
     pub fn set_cool_down_period(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1598,7 +1684,7 @@ impl AppEngineFlexibleAppVersionAutomaticScalingEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersionAutomaticScalingElCpuUtilizationEl>>,
+                    ::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersion_AutomaticScaling_CpuUtilization>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1619,7 +1705,7 @@ impl AppEngineFlexibleAppVersionAutomaticScalingEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersionAutomaticScalingElDiskUtilizationEl>>,
+                    ::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersion_AutomaticScaling_DiskUtilization>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1640,9 +1726,7 @@ impl AppEngineFlexibleAppVersionAutomaticScalingEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<AppEngineFlexibleAppVersionAutomaticScalingElNetworkUtilizationEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersion_AutomaticScaling_NetworkUtilization>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1663,9 +1747,7 @@ impl AppEngineFlexibleAppVersionAutomaticScalingEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<AppEngineFlexibleAppVersionAutomaticScalingElRequestUtilizationEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersion_AutomaticScaling_RequestUtilization>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1679,8 +1761,8 @@ impl AppEngineFlexibleAppVersionAutomaticScalingEl {
     }
 }
 
-impl terrars::ToListMappable for AppEngineFlexibleAppVersionAutomaticScalingEl {
-    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersionAutomaticScalingEl>;
+impl terrars::ToListMappable for AppEngineFlexibleAppVersion_AutomaticScaling {
+    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersion_AutomaticScaling>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1691,11 +1773,11 @@ impl terrars::ToListMappable for AppEngineFlexibleAppVersionAutomaticScalingEl {
     }
 }
 
-pub struct BuildAppEngineFlexibleAppVersionAutomaticScalingEl {}
+pub struct BuildAppEngineFlexibleAppVersion_AutomaticScaling {}
 
-impl BuildAppEngineFlexibleAppVersionAutomaticScalingEl {
-    pub fn build(self) -> AppEngineFlexibleAppVersionAutomaticScalingEl {
-        AppEngineFlexibleAppVersionAutomaticScalingEl {
+impl BuildAppEngineFlexibleAppVersion_AutomaticScaling {
+    pub fn build(self) -> AppEngineFlexibleAppVersion_AutomaticScaling {
+        AppEngineFlexibleAppVersion_AutomaticScaling {
             cool_down_period: core::default::Default::default(),
             max_concurrent_requests: core::default::Default::default(),
             max_idle_instances: core::default::Default::default(),
@@ -1713,24 +1795,26 @@ impl BuildAppEngineFlexibleAppVersionAutomaticScalingEl {
     }
 }
 
-pub struct AppEngineFlexibleAppVersionAutomaticScalingElRef {
+#[allow(dead_code)]
+pub struct AppEngineFlexibleAppVersion_AutomaticScalingRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineFlexibleAppVersionAutomaticScalingElRef {
+impl terrars::Ref for AppEngineFlexibleAppVersion_AutomaticScalingRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppEngineFlexibleAppVersionAutomaticScalingElRef {
-        AppEngineFlexibleAppVersionAutomaticScalingElRef {
+    ) -> AppEngineFlexibleAppVersion_AutomaticScalingRef {
+        AppEngineFlexibleAppVersion_AutomaticScalingRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineFlexibleAppVersionAutomaticScalingElRef {
+impl AppEngineFlexibleAppVersion_AutomaticScalingRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1784,40 +1868,38 @@ impl AppEngineFlexibleAppVersionAutomaticScalingElRef {
     }
 
     #[doc = "Get a reference to the value of field `cpu_utilization` after provisioning.\n"]
-    pub fn cpu_utilization(&self) -> terrars::ListRef<AppEngineFlexibleAppVersionAutomaticScalingElCpuUtilizationElRef> {
+    pub fn cpu_utilization(&self) -> terrars::ListRef<AppEngineFlexibleAppVersion_AutomaticScaling_CpuUtilizationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cpu_utilization", self.base))
     }
 
     #[doc = "Get a reference to the value of field `disk_utilization` after provisioning.\n"]
-    pub fn disk_utilization(
-        &self,
-    ) -> terrars::ListRef<AppEngineFlexibleAppVersionAutomaticScalingElDiskUtilizationElRef> {
+    pub fn disk_utilization(&self) -> terrars::ListRef<AppEngineFlexibleAppVersion_AutomaticScaling_DiskUtilizationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.disk_utilization", self.base))
     }
 
     #[doc = "Get a reference to the value of field `network_utilization` after provisioning.\n"]
     pub fn network_utilization(
         &self,
-    ) -> terrars::ListRef<AppEngineFlexibleAppVersionAutomaticScalingElNetworkUtilizationElRef> {
+    ) -> terrars::ListRef<AppEngineFlexibleAppVersion_AutomaticScaling_NetworkUtilizationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_utilization", self.base))
     }
 
     #[doc = "Get a reference to the value of field `request_utilization` after provisioning.\n"]
     pub fn request_utilization(
         &self,
-    ) -> terrars::ListRef<AppEngineFlexibleAppVersionAutomaticScalingElRequestUtilizationElRef> {
+    ) -> terrars::ListRef<AppEngineFlexibleAppVersion_AutomaticScaling_RequestUtilizationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.request_utilization", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AppEngineFlexibleAppVersionDeploymentElCloudBuildOptionsEl {
+pub struct AppEngineFlexibleAppVersion_Deployment_CloudBuildOptions {
     app_yaml_path: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cloud_build_timeout: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppEngineFlexibleAppVersionDeploymentElCloudBuildOptionsEl {
+impl AppEngineFlexibleAppVersion_Deployment_CloudBuildOptions {
     #[doc =
         "Set the field `cloud_build_timeout`.\nThe Cloud Build timeout used as part of any dependent builds performed by version creation. Defaults to 10 minutes.\n\nA duration in seconds with up to nine fractional digits, terminated by 's'. Example: \"3.5s\"."]
     pub fn set_cloud_build_timeout(
@@ -1829,8 +1911,8 @@ impl AppEngineFlexibleAppVersionDeploymentElCloudBuildOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for AppEngineFlexibleAppVersionDeploymentElCloudBuildOptionsEl {
-    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersionDeploymentElCloudBuildOptionsEl>;
+impl terrars::ToListMappable for AppEngineFlexibleAppVersion_Deployment_CloudBuildOptions {
+    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersion_Deployment_CloudBuildOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1841,38 +1923,40 @@ impl terrars::ToListMappable for AppEngineFlexibleAppVersionDeploymentElCloudBui
     }
 }
 
-pub struct BuildAppEngineFlexibleAppVersionDeploymentElCloudBuildOptionsEl {
+pub struct BuildAppEngineFlexibleAppVersion_Deployment_CloudBuildOptions {
     #[doc = "Path to the yaml file used in deployment, used to determine runtime configuration details."]
     pub app_yaml_path: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppEngineFlexibleAppVersionDeploymentElCloudBuildOptionsEl {
-    pub fn build(self) -> AppEngineFlexibleAppVersionDeploymentElCloudBuildOptionsEl {
-        AppEngineFlexibleAppVersionDeploymentElCloudBuildOptionsEl {
+impl BuildAppEngineFlexibleAppVersion_Deployment_CloudBuildOptions {
+    pub fn build(self) -> AppEngineFlexibleAppVersion_Deployment_CloudBuildOptions {
+        AppEngineFlexibleAppVersion_Deployment_CloudBuildOptions {
             app_yaml_path: self.app_yaml_path,
             cloud_build_timeout: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppEngineFlexibleAppVersionDeploymentElCloudBuildOptionsElRef {
+#[allow(dead_code)]
+pub struct AppEngineFlexibleAppVersion_Deployment_CloudBuildOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineFlexibleAppVersionDeploymentElCloudBuildOptionsElRef {
+impl terrars::Ref for AppEngineFlexibleAppVersion_Deployment_CloudBuildOptionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppEngineFlexibleAppVersionDeploymentElCloudBuildOptionsElRef {
-        AppEngineFlexibleAppVersionDeploymentElCloudBuildOptionsElRef {
+    ) -> AppEngineFlexibleAppVersion_Deployment_CloudBuildOptionsRef {
+        AppEngineFlexibleAppVersion_Deployment_CloudBuildOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineFlexibleAppVersionDeploymentElCloudBuildOptionsElRef {
+impl AppEngineFlexibleAppVersion_Deployment_CloudBuildOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1891,14 +1975,14 @@ impl AppEngineFlexibleAppVersionDeploymentElCloudBuildOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppEngineFlexibleAppVersionDeploymentElContainerEl {
+pub struct AppEngineFlexibleAppVersion_Deployment_Container {
     image: terrars::PrimField<std::string::String>,
 }
 
-impl AppEngineFlexibleAppVersionDeploymentElContainerEl { }
+impl AppEngineFlexibleAppVersion_Deployment_Container { }
 
-impl terrars::ToListMappable for AppEngineFlexibleAppVersionDeploymentElContainerEl {
-    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersionDeploymentElContainerEl>;
+impl terrars::ToListMappable for AppEngineFlexibleAppVersion_Deployment_Container {
+    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersion_Deployment_Container>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1909,36 +1993,38 @@ impl terrars::ToListMappable for AppEngineFlexibleAppVersionDeploymentElContaine
     }
 }
 
-pub struct BuildAppEngineFlexibleAppVersionDeploymentElContainerEl {
+pub struct BuildAppEngineFlexibleAppVersion_Deployment_Container {
     #[doc =
         "URI to the hosted container image in Google Container Registry. The URI must be fully qualified and include a tag or digest.\nExamples: \"gcr.io/my-project/image:tag\" or \"gcr.io/my-project/image@digest\""]
     pub image: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppEngineFlexibleAppVersionDeploymentElContainerEl {
-    pub fn build(self) -> AppEngineFlexibleAppVersionDeploymentElContainerEl {
-        AppEngineFlexibleAppVersionDeploymentElContainerEl { image: self.image }
+impl BuildAppEngineFlexibleAppVersion_Deployment_Container {
+    pub fn build(self) -> AppEngineFlexibleAppVersion_Deployment_Container {
+        AppEngineFlexibleAppVersion_Deployment_Container { image: self.image }
     }
 }
 
-pub struct AppEngineFlexibleAppVersionDeploymentElContainerElRef {
+#[allow(dead_code)]
+pub struct AppEngineFlexibleAppVersion_Deployment_ContainerRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineFlexibleAppVersionDeploymentElContainerElRef {
+impl terrars::Ref for AppEngineFlexibleAppVersion_Deployment_ContainerRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppEngineFlexibleAppVersionDeploymentElContainerElRef {
-        AppEngineFlexibleAppVersionDeploymentElContainerElRef {
+    ) -> AppEngineFlexibleAppVersion_Deployment_ContainerRef {
+        AppEngineFlexibleAppVersion_Deployment_ContainerRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineFlexibleAppVersionDeploymentElContainerElRef {
+impl AppEngineFlexibleAppVersion_Deployment_ContainerRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1951,14 +2037,14 @@ impl AppEngineFlexibleAppVersionDeploymentElContainerElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppEngineFlexibleAppVersionDeploymentElFilesEl {
+pub struct AppEngineFlexibleAppVersion_Deployment_Files {
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sha1_sum: std::option::Option<terrars::PrimField<std::string::String>>,
     source_url: terrars::PrimField<std::string::String>,
 }
 
-impl AppEngineFlexibleAppVersionDeploymentElFilesEl {
+impl AppEngineFlexibleAppVersion_Deployment_Files {
     #[doc = "Set the field `sha1_sum`.\nSHA1 checksum of the file"]
     pub fn set_sha1_sum(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.sha1_sum = std::option::Option::Some(v.into());
@@ -1966,8 +2052,8 @@ impl AppEngineFlexibleAppVersionDeploymentElFilesEl {
     }
 }
 
-impl terrars::ToListMappable for AppEngineFlexibleAppVersionDeploymentElFilesEl {
-    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersionDeploymentElFilesEl>;
+impl terrars::ToListMappable for AppEngineFlexibleAppVersion_Deployment_Files {
+    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersion_Deployment_Files>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1978,16 +2064,16 @@ impl terrars::ToListMappable for AppEngineFlexibleAppVersionDeploymentElFilesEl 
     }
 }
 
-pub struct BuildAppEngineFlexibleAppVersionDeploymentElFilesEl {
+pub struct BuildAppEngineFlexibleAppVersion_Deployment_Files {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = "Source URL"]
     pub source_url: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppEngineFlexibleAppVersionDeploymentElFilesEl {
-    pub fn build(self) -> AppEngineFlexibleAppVersionDeploymentElFilesEl {
-        AppEngineFlexibleAppVersionDeploymentElFilesEl {
+impl BuildAppEngineFlexibleAppVersion_Deployment_Files {
+    pub fn build(self) -> AppEngineFlexibleAppVersion_Deployment_Files {
+        AppEngineFlexibleAppVersion_Deployment_Files {
             name: self.name,
             sha1_sum: core::default::Default::default(),
             source_url: self.source_url,
@@ -1995,24 +2081,26 @@ impl BuildAppEngineFlexibleAppVersionDeploymentElFilesEl {
     }
 }
 
-pub struct AppEngineFlexibleAppVersionDeploymentElFilesElRef {
+#[allow(dead_code)]
+pub struct AppEngineFlexibleAppVersion_Deployment_FilesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineFlexibleAppVersionDeploymentElFilesElRef {
+impl terrars::Ref for AppEngineFlexibleAppVersion_Deployment_FilesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppEngineFlexibleAppVersionDeploymentElFilesElRef {
-        AppEngineFlexibleAppVersionDeploymentElFilesElRef {
+    ) -> AppEngineFlexibleAppVersion_Deployment_FilesRef {
+        AppEngineFlexibleAppVersion_Deployment_FilesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineFlexibleAppVersionDeploymentElFilesElRef {
+impl AppEngineFlexibleAppVersion_Deployment_FilesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2034,13 +2122,13 @@ impl AppEngineFlexibleAppVersionDeploymentElFilesElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppEngineFlexibleAppVersionDeploymentElZipEl {
+pub struct AppEngineFlexibleAppVersion_Deployment_Zip {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     files_count: std::option::Option<terrars::PrimField<f64>>,
     source_url: terrars::PrimField<std::string::String>,
 }
 
-impl AppEngineFlexibleAppVersionDeploymentElZipEl {
+impl AppEngineFlexibleAppVersion_Deployment_Zip {
     #[doc = "Set the field `files_count`.\nfiles count"]
     pub fn set_files_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.files_count = std::option::Option::Some(v.into());
@@ -2048,8 +2136,8 @@ impl AppEngineFlexibleAppVersionDeploymentElZipEl {
     }
 }
 
-impl terrars::ToListMappable for AppEngineFlexibleAppVersionDeploymentElZipEl {
-    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersionDeploymentElZipEl>;
+impl terrars::ToListMappable for AppEngineFlexibleAppVersion_Deployment_Zip {
+    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersion_Deployment_Zip>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2060,38 +2148,37 @@ impl terrars::ToListMappable for AppEngineFlexibleAppVersionDeploymentElZipEl {
     }
 }
 
-pub struct BuildAppEngineFlexibleAppVersionDeploymentElZipEl {
+pub struct BuildAppEngineFlexibleAppVersion_Deployment_Zip {
     #[doc = "Source URL"]
     pub source_url: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppEngineFlexibleAppVersionDeploymentElZipEl {
-    pub fn build(self) -> AppEngineFlexibleAppVersionDeploymentElZipEl {
-        AppEngineFlexibleAppVersionDeploymentElZipEl {
+impl BuildAppEngineFlexibleAppVersion_Deployment_Zip {
+    pub fn build(self) -> AppEngineFlexibleAppVersion_Deployment_Zip {
+        AppEngineFlexibleAppVersion_Deployment_Zip {
             files_count: core::default::Default::default(),
             source_url: self.source_url,
         }
     }
 }
 
-pub struct AppEngineFlexibleAppVersionDeploymentElZipElRef {
+#[allow(dead_code)]
+pub struct AppEngineFlexibleAppVersion_Deployment_ZipRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineFlexibleAppVersionDeploymentElZipElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppEngineFlexibleAppVersionDeploymentElZipElRef {
-        AppEngineFlexibleAppVersionDeploymentElZipElRef {
+impl terrars::Ref for AppEngineFlexibleAppVersion_Deployment_ZipRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineFlexibleAppVersion_Deployment_ZipRef {
+        AppEngineFlexibleAppVersion_Deployment_ZipRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineFlexibleAppVersionDeploymentElZipElRef {
+impl AppEngineFlexibleAppVersion_Deployment_ZipRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2108,29 +2195,29 @@ impl AppEngineFlexibleAppVersionDeploymentElZipElRef {
 }
 
 #[derive(Serialize, Default)]
-struct AppEngineFlexibleAppVersionDeploymentElDynamic {
+struct AppEngineFlexibleAppVersion_DeploymentDynamic {
     cloud_build_options: std
     ::option
-    ::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersionDeploymentElCloudBuildOptionsEl>>,
-    container: std::option::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersionDeploymentElContainerEl>>,
-    files: std::option::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersionDeploymentElFilesEl>>,
-    zip: std::option::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersionDeploymentElZipEl>>,
+    ::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersion_Deployment_CloudBuildOptions>>,
+    container: std::option::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersion_Deployment_Container>>,
+    files: std::option::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersion_Deployment_Files>>,
+    zip: std::option::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersion_Deployment_Zip>>,
 }
 
 #[derive(Serialize)]
-pub struct AppEngineFlexibleAppVersionDeploymentEl {
+pub struct AppEngineFlexibleAppVersion_Deployment {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cloud_build_options: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersionDeploymentElCloudBuildOptionsEl>>,
+    cloud_build_options: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersion_Deployment_CloudBuildOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    container: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersionDeploymentElContainerEl>>,
+    container: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersion_Deployment_Container>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    files: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersionDeploymentElFilesEl>>,
+    files: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersion_Deployment_Files>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    zip: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersionDeploymentElZipEl>>,
-    dynamic: AppEngineFlexibleAppVersionDeploymentElDynamic,
+    zip: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersion_Deployment_Zip>>,
+    dynamic: AppEngineFlexibleAppVersion_DeploymentDynamic,
 }
 
-impl AppEngineFlexibleAppVersionDeploymentEl {
+impl AppEngineFlexibleAppVersion_Deployment {
     #[doc = "Set the field `cloud_build_options`.\n"]
     pub fn set_cloud_build_options(
         mut self,
@@ -2139,7 +2226,7 @@ impl AppEngineFlexibleAppVersionDeploymentEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersionDeploymentElCloudBuildOptionsEl>>,
+                    ::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersion_Deployment_CloudBuildOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2155,7 +2242,7 @@ impl AppEngineFlexibleAppVersionDeploymentEl {
     #[doc = "Set the field `container`.\n"]
     pub fn set_container(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersionDeploymentElContainerEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersion_Deployment_Container>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2171,7 +2258,7 @@ impl AppEngineFlexibleAppVersionDeploymentEl {
     #[doc = "Set the field `files`.\n"]
     pub fn set_files(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersionDeploymentElFilesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersion_Deployment_Files>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2187,7 +2274,7 @@ impl AppEngineFlexibleAppVersionDeploymentEl {
     #[doc = "Set the field `zip`.\n"]
     pub fn set_zip(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersionDeploymentElZipEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersion_Deployment_Zip>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2201,8 +2288,8 @@ impl AppEngineFlexibleAppVersionDeploymentEl {
     }
 }
 
-impl terrars::ToListMappable for AppEngineFlexibleAppVersionDeploymentEl {
-    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersionDeploymentEl>;
+impl terrars::ToListMappable for AppEngineFlexibleAppVersion_Deployment {
+    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersion_Deployment>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2213,11 +2300,11 @@ impl terrars::ToListMappable for AppEngineFlexibleAppVersionDeploymentEl {
     }
 }
 
-pub struct BuildAppEngineFlexibleAppVersionDeploymentEl {}
+pub struct BuildAppEngineFlexibleAppVersion_Deployment {}
 
-impl BuildAppEngineFlexibleAppVersionDeploymentEl {
-    pub fn build(self) -> AppEngineFlexibleAppVersionDeploymentEl {
-        AppEngineFlexibleAppVersionDeploymentEl {
+impl BuildAppEngineFlexibleAppVersion_Deployment {
+    pub fn build(self) -> AppEngineFlexibleAppVersion_Deployment {
+        AppEngineFlexibleAppVersion_Deployment {
             cloud_build_options: core::default::Default::default(),
             container: core::default::Default::default(),
             files: core::default::Default::default(),
@@ -2227,43 +2314,45 @@ impl BuildAppEngineFlexibleAppVersionDeploymentEl {
     }
 }
 
-pub struct AppEngineFlexibleAppVersionDeploymentElRef {
+#[allow(dead_code)]
+pub struct AppEngineFlexibleAppVersion_DeploymentRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineFlexibleAppVersionDeploymentElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineFlexibleAppVersionDeploymentElRef {
-        AppEngineFlexibleAppVersionDeploymentElRef {
+impl terrars::Ref for AppEngineFlexibleAppVersion_DeploymentRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineFlexibleAppVersion_DeploymentRef {
+        AppEngineFlexibleAppVersion_DeploymentRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineFlexibleAppVersionDeploymentElRef {
+impl AppEngineFlexibleAppVersion_DeploymentRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `cloud_build_options` after provisioning.\n"]
-    pub fn cloud_build_options(&self) -> terrars::ListRef<AppEngineFlexibleAppVersionDeploymentElCloudBuildOptionsElRef> {
+    pub fn cloud_build_options(&self) -> terrars::ListRef<AppEngineFlexibleAppVersion_Deployment_CloudBuildOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cloud_build_options", self.base))
     }
 
     #[doc = "Get a reference to the value of field `container` after provisioning.\n"]
-    pub fn container(&self) -> terrars::ListRef<AppEngineFlexibleAppVersionDeploymentElContainerElRef> {
+    pub fn container(&self) -> terrars::ListRef<AppEngineFlexibleAppVersion_Deployment_ContainerRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.container", self.base))
     }
 
     #[doc = "Get a reference to the value of field `zip` after provisioning.\n"]
-    pub fn zip(&self) -> terrars::ListRef<AppEngineFlexibleAppVersionDeploymentElZipElRef> {
+    pub fn zip(&self) -> terrars::ListRef<AppEngineFlexibleAppVersion_Deployment_ZipRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.zip", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AppEngineFlexibleAppVersionEndpointsApiServiceEl {
+pub struct AppEngineFlexibleAppVersion_EndpointsApiService {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     config_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2273,7 +2362,7 @@ pub struct AppEngineFlexibleAppVersionEndpointsApiServiceEl {
     rollout_strategy: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppEngineFlexibleAppVersionEndpointsApiServiceEl {
+impl AppEngineFlexibleAppVersion_EndpointsApiService {
     #[doc =
         "Set the field `config_id`.\nEndpoints service configuration ID as specified by the Service Management API. For example \"2016-09-19r1\".\n\nBy default, the rollout strategy for Endpoints is \"FIXED\". This means that Endpoints starts up with a particular configuration ID.\nWhen a new configuration is rolled out, Endpoints must be given the new configuration ID. The configId field is used to give the configuration ID\nand is required in this case.\n\nEndpoints also has a rollout strategy called \"MANAGED\". When using this, Endpoints fetches the latest configuration and does not need\nthe configuration ID. In this case, configId must be omitted."]
     pub fn set_config_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -2296,8 +2385,8 @@ impl AppEngineFlexibleAppVersionEndpointsApiServiceEl {
     }
 }
 
-impl terrars::ToListMappable for AppEngineFlexibleAppVersionEndpointsApiServiceEl {
-    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersionEndpointsApiServiceEl>;
+impl terrars::ToListMappable for AppEngineFlexibleAppVersion_EndpointsApiService {
+    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersion_EndpointsApiService>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2308,15 +2397,15 @@ impl terrars::ToListMappable for AppEngineFlexibleAppVersionEndpointsApiServiceE
     }
 }
 
-pub struct BuildAppEngineFlexibleAppVersionEndpointsApiServiceEl {
+pub struct BuildAppEngineFlexibleAppVersion_EndpointsApiService {
     #[doc =
         "Endpoints service name which is the name of the \"service\" resource in the Service Management API.\nFor example \"myapi.endpoints.myproject.cloud.goog\""]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppEngineFlexibleAppVersionEndpointsApiServiceEl {
-    pub fn build(self) -> AppEngineFlexibleAppVersionEndpointsApiServiceEl {
-        AppEngineFlexibleAppVersionEndpointsApiServiceEl {
+impl BuildAppEngineFlexibleAppVersion_EndpointsApiService {
+    pub fn build(self) -> AppEngineFlexibleAppVersion_EndpointsApiService {
+        AppEngineFlexibleAppVersion_EndpointsApiService {
             config_id: core::default::Default::default(),
             disable_trace_sampling: core::default::Default::default(),
             name: self.name,
@@ -2325,24 +2414,26 @@ impl BuildAppEngineFlexibleAppVersionEndpointsApiServiceEl {
     }
 }
 
-pub struct AppEngineFlexibleAppVersionEndpointsApiServiceElRef {
+#[allow(dead_code)]
+pub struct AppEngineFlexibleAppVersion_EndpointsApiServiceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineFlexibleAppVersionEndpointsApiServiceElRef {
+impl terrars::Ref for AppEngineFlexibleAppVersion_EndpointsApiServiceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppEngineFlexibleAppVersionEndpointsApiServiceElRef {
-        AppEngineFlexibleAppVersionEndpointsApiServiceElRef {
+    ) -> AppEngineFlexibleAppVersion_EndpointsApiServiceRef {
+        AppEngineFlexibleAppVersion_EndpointsApiServiceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineFlexibleAppVersionEndpointsApiServiceElRef {
+impl AppEngineFlexibleAppVersion_EndpointsApiServiceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2373,14 +2464,14 @@ impl AppEngineFlexibleAppVersionEndpointsApiServiceElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppEngineFlexibleAppVersionEntrypointEl {
+pub struct AppEngineFlexibleAppVersion_Entrypoint {
     shell: terrars::PrimField<std::string::String>,
 }
 
-impl AppEngineFlexibleAppVersionEntrypointEl { }
+impl AppEngineFlexibleAppVersion_Entrypoint { }
 
-impl terrars::ToListMappable for AppEngineFlexibleAppVersionEntrypointEl {
-    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersionEntrypointEl>;
+impl terrars::ToListMappable for AppEngineFlexibleAppVersion_Entrypoint {
+    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersion_Entrypoint>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2391,32 +2482,34 @@ impl terrars::ToListMappable for AppEngineFlexibleAppVersionEntrypointEl {
     }
 }
 
-pub struct BuildAppEngineFlexibleAppVersionEntrypointEl {
+pub struct BuildAppEngineFlexibleAppVersion_Entrypoint {
     #[doc = "The format should be a shell command that can be fed to bash -c."]
     pub shell: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppEngineFlexibleAppVersionEntrypointEl {
-    pub fn build(self) -> AppEngineFlexibleAppVersionEntrypointEl {
-        AppEngineFlexibleAppVersionEntrypointEl { shell: self.shell }
+impl BuildAppEngineFlexibleAppVersion_Entrypoint {
+    pub fn build(self) -> AppEngineFlexibleAppVersion_Entrypoint {
+        AppEngineFlexibleAppVersion_Entrypoint { shell: self.shell }
     }
 }
 
-pub struct AppEngineFlexibleAppVersionEntrypointElRef {
+#[allow(dead_code)]
+pub struct AppEngineFlexibleAppVersion_EntrypointRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineFlexibleAppVersionEntrypointElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineFlexibleAppVersionEntrypointElRef {
-        AppEngineFlexibleAppVersionEntrypointElRef {
+impl terrars::Ref for AppEngineFlexibleAppVersion_EntrypointRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineFlexibleAppVersion_EntrypointRef {
+        AppEngineFlexibleAppVersion_EntrypointRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineFlexibleAppVersionEntrypointElRef {
+impl AppEngineFlexibleAppVersion_EntrypointRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2429,14 +2522,29 @@ impl AppEngineFlexibleAppVersionEntrypointElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppEngineFlexibleAppVersionHandlersElScriptEl {
-    script_path: terrars::PrimField<std::string::String>,
+pub struct AppEngineFlexibleAppVersion_FlexibleRuntimeSettings {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    operating_system: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    runtime_version: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppEngineFlexibleAppVersionHandlersElScriptEl { }
+impl AppEngineFlexibleAppVersion_FlexibleRuntimeSettings {
+    #[doc = "Set the field `operating_system`.\nOperating System of the application runtime."]
+    pub fn set_operating_system(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.operating_system = std::option::Option::Some(v.into());
+        self
+    }
 
-impl terrars::ToListMappable for AppEngineFlexibleAppVersionHandlersElScriptEl {
-    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersionHandlersElScriptEl>;
+    #[doc = "Set the field `runtime_version`.\nThe runtime version of an App Engine flexible application."]
+    pub fn set_runtime_version(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.runtime_version = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for AppEngineFlexibleAppVersion_FlexibleRuntimeSettings {
+    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersion_FlexibleRuntimeSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2447,35 +2555,104 @@ impl terrars::ToListMappable for AppEngineFlexibleAppVersionHandlersElScriptEl {
     }
 }
 
-pub struct BuildAppEngineFlexibleAppVersionHandlersElScriptEl {
-    #[doc = "Path to the script from the application root directory."]
-    pub script_path: terrars::PrimField<std::string::String>,
-}
+pub struct BuildAppEngineFlexibleAppVersion_FlexibleRuntimeSettings {}
 
-impl BuildAppEngineFlexibleAppVersionHandlersElScriptEl {
-    pub fn build(self) -> AppEngineFlexibleAppVersionHandlersElScriptEl {
-        AppEngineFlexibleAppVersionHandlersElScriptEl { script_path: self.script_path }
+impl BuildAppEngineFlexibleAppVersion_FlexibleRuntimeSettings {
+    pub fn build(self) -> AppEngineFlexibleAppVersion_FlexibleRuntimeSettings {
+        AppEngineFlexibleAppVersion_FlexibleRuntimeSettings {
+            operating_system: core::default::Default::default(),
+            runtime_version: core::default::Default::default(),
+        }
     }
 }
 
-pub struct AppEngineFlexibleAppVersionHandlersElScriptElRef {
+#[allow(dead_code)]
+pub struct AppEngineFlexibleAppVersion_FlexibleRuntimeSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineFlexibleAppVersionHandlersElScriptElRef {
+impl terrars::Ref for AppEngineFlexibleAppVersion_FlexibleRuntimeSettingsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppEngineFlexibleAppVersionHandlersElScriptElRef {
-        AppEngineFlexibleAppVersionHandlersElScriptElRef {
+    ) -> AppEngineFlexibleAppVersion_FlexibleRuntimeSettingsRef {
+        AppEngineFlexibleAppVersion_FlexibleRuntimeSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineFlexibleAppVersionHandlersElScriptElRef {
+impl AppEngineFlexibleAppVersion_FlexibleRuntimeSettingsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `operating_system` after provisioning.\nOperating System of the application runtime."]
+    pub fn operating_system(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.operating_system", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `runtime_version` after provisioning.\nThe runtime version of an App Engine flexible application."]
+    pub fn runtime_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.runtime_version", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct AppEngineFlexibleAppVersion_Handlers_Script {
+    script_path: terrars::PrimField<std::string::String>,
+}
+
+impl AppEngineFlexibleAppVersion_Handlers_Script { }
+
+impl terrars::ToListMappable for AppEngineFlexibleAppVersion_Handlers_Script {
+    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersion_Handlers_Script>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppEngineFlexibleAppVersion_Handlers_Script {
+    #[doc = "Path to the script from the application root directory."]
+    pub script_path: terrars::PrimField<std::string::String>,
+}
+
+impl BuildAppEngineFlexibleAppVersion_Handlers_Script {
+    pub fn build(self) -> AppEngineFlexibleAppVersion_Handlers_Script {
+        AppEngineFlexibleAppVersion_Handlers_Script { script_path: self.script_path }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AppEngineFlexibleAppVersion_Handlers_ScriptRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AppEngineFlexibleAppVersion_Handlers_ScriptRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AppEngineFlexibleAppVersion_Handlers_ScriptRef {
+        AppEngineFlexibleAppVersion_Handlers_ScriptRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppEngineFlexibleAppVersion_Handlers_ScriptRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2488,7 +2665,7 @@ impl AppEngineFlexibleAppVersionHandlersElScriptElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppEngineFlexibleAppVersionHandlersElStaticFilesEl {
+pub struct AppEngineFlexibleAppVersion_Handlers_StaticFiles {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     application_readable: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2505,7 +2682,7 @@ pub struct AppEngineFlexibleAppVersionHandlersElStaticFilesEl {
     upload_path_regex: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppEngineFlexibleAppVersionHandlersElStaticFilesEl {
+impl AppEngineFlexibleAppVersion_Handlers_StaticFiles {
     #[doc =
         "Set the field `application_readable`.\nWhether files should also be uploaded as code data. By default, files declared in static file handlers are\nuploaded as static data and are only served to end users; they cannot be read by the application. If enabled,\nuploads are charged against both your code and static data storage resource quotas."]
     pub fn set_application_readable(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -2559,8 +2736,8 @@ impl AppEngineFlexibleAppVersionHandlersElStaticFilesEl {
     }
 }
 
-impl terrars::ToListMappable for AppEngineFlexibleAppVersionHandlersElStaticFilesEl {
-    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersionHandlersElStaticFilesEl>;
+impl terrars::ToListMappable for AppEngineFlexibleAppVersion_Handlers_StaticFiles {
+    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersion_Handlers_StaticFiles>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2571,11 +2748,11 @@ impl terrars::ToListMappable for AppEngineFlexibleAppVersionHandlersElStaticFile
     }
 }
 
-pub struct BuildAppEngineFlexibleAppVersionHandlersElStaticFilesEl {}
+pub struct BuildAppEngineFlexibleAppVersion_Handlers_StaticFiles {}
 
-impl BuildAppEngineFlexibleAppVersionHandlersElStaticFilesEl {
-    pub fn build(self) -> AppEngineFlexibleAppVersionHandlersElStaticFilesEl {
-        AppEngineFlexibleAppVersionHandlersElStaticFilesEl {
+impl BuildAppEngineFlexibleAppVersion_Handlers_StaticFiles {
+    pub fn build(self) -> AppEngineFlexibleAppVersion_Handlers_StaticFiles {
+        AppEngineFlexibleAppVersion_Handlers_StaticFiles {
             application_readable: core::default::Default::default(),
             expiration: core::default::Default::default(),
             http_headers: core::default::Default::default(),
@@ -2587,24 +2764,26 @@ impl BuildAppEngineFlexibleAppVersionHandlersElStaticFilesEl {
     }
 }
 
-pub struct AppEngineFlexibleAppVersionHandlersElStaticFilesElRef {
+#[allow(dead_code)]
+pub struct AppEngineFlexibleAppVersion_Handlers_StaticFilesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineFlexibleAppVersionHandlersElStaticFilesElRef {
+impl terrars::Ref for AppEngineFlexibleAppVersion_Handlers_StaticFilesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppEngineFlexibleAppVersionHandlersElStaticFilesElRef {
-        AppEngineFlexibleAppVersionHandlersElStaticFilesElRef {
+    ) -> AppEngineFlexibleAppVersion_Handlers_StaticFilesRef {
+        AppEngineFlexibleAppVersion_Handlers_StaticFilesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineFlexibleAppVersionHandlersElStaticFilesElRef {
+impl AppEngineFlexibleAppVersion_Handlers_StaticFilesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2653,13 +2832,13 @@ impl AppEngineFlexibleAppVersionHandlersElStaticFilesElRef {
 }
 
 #[derive(Serialize, Default)]
-struct AppEngineFlexibleAppVersionHandlersElDynamic {
-    script: std::option::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersionHandlersElScriptEl>>,
-    static_files: std::option::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersionHandlersElStaticFilesEl>>,
+struct AppEngineFlexibleAppVersion_HandlersDynamic {
+    script: std::option::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersion_Handlers_Script>>,
+    static_files: std::option::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersion_Handlers_StaticFiles>>,
 }
 
 #[derive(Serialize)]
-pub struct AppEngineFlexibleAppVersionHandlersEl {
+pub struct AppEngineFlexibleAppVersion_Handlers {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     auth_fail_action: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2671,13 +2850,13 @@ pub struct AppEngineFlexibleAppVersionHandlersEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     url_regex: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    script: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersionHandlersElScriptEl>>,
+    script: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersion_Handlers_Script>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    static_files: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersionHandlersElStaticFilesEl>>,
-    dynamic: AppEngineFlexibleAppVersionHandlersElDynamic,
+    static_files: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersion_Handlers_StaticFiles>>,
+    dynamic: AppEngineFlexibleAppVersion_HandlersDynamic,
 }
 
-impl AppEngineFlexibleAppVersionHandlersEl {
+impl AppEngineFlexibleAppVersion_Handlers {
     #[doc =
         "Set the field `auth_fail_action`.\nActions to take when the user is not logged in. Possible values: [\"AUTH_FAIL_ACTION_REDIRECT\", \"AUTH_FAIL_ACTION_UNAUTHORIZED\"]"]
     pub fn set_auth_fail_action(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -2719,7 +2898,7 @@ impl AppEngineFlexibleAppVersionHandlersEl {
     #[doc = "Set the field `script`.\n"]
     pub fn set_script(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersionHandlersElScriptEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersion_Handlers_Script>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2735,7 +2914,7 @@ impl AppEngineFlexibleAppVersionHandlersEl {
     #[doc = "Set the field `static_files`.\n"]
     pub fn set_static_files(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersionHandlersElStaticFilesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersion_Handlers_StaticFiles>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2749,8 +2928,8 @@ impl AppEngineFlexibleAppVersionHandlersEl {
     }
 }
 
-impl terrars::ToListMappable for AppEngineFlexibleAppVersionHandlersEl {
-    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersionHandlersEl>;
+impl terrars::ToListMappable for AppEngineFlexibleAppVersion_Handlers {
+    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersion_Handlers>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2761,11 +2940,11 @@ impl terrars::ToListMappable for AppEngineFlexibleAppVersionHandlersEl {
     }
 }
 
-pub struct BuildAppEngineFlexibleAppVersionHandlersEl {}
+pub struct BuildAppEngineFlexibleAppVersion_Handlers {}
 
-impl BuildAppEngineFlexibleAppVersionHandlersEl {
-    pub fn build(self) -> AppEngineFlexibleAppVersionHandlersEl {
-        AppEngineFlexibleAppVersionHandlersEl {
+impl BuildAppEngineFlexibleAppVersion_Handlers {
+    pub fn build(self) -> AppEngineFlexibleAppVersion_Handlers {
+        AppEngineFlexibleAppVersion_Handlers {
             auth_fail_action: core::default::Default::default(),
             login: core::default::Default::default(),
             redirect_http_response_code: core::default::Default::default(),
@@ -2778,21 +2957,23 @@ impl BuildAppEngineFlexibleAppVersionHandlersEl {
     }
 }
 
-pub struct AppEngineFlexibleAppVersionHandlersElRef {
+#[allow(dead_code)]
+pub struct AppEngineFlexibleAppVersion_HandlersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineFlexibleAppVersionHandlersElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineFlexibleAppVersionHandlersElRef {
-        AppEngineFlexibleAppVersionHandlersElRef {
+impl terrars::Ref for AppEngineFlexibleAppVersion_HandlersRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineFlexibleAppVersion_HandlersRef {
+        AppEngineFlexibleAppVersion_HandlersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineFlexibleAppVersionHandlersElRef {
+impl AppEngineFlexibleAppVersion_HandlersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2828,18 +3009,18 @@ impl AppEngineFlexibleAppVersionHandlersElRef {
     }
 
     #[doc = "Get a reference to the value of field `script` after provisioning.\n"]
-    pub fn script(&self) -> terrars::ListRef<AppEngineFlexibleAppVersionHandlersElScriptElRef> {
+    pub fn script(&self) -> terrars::ListRef<AppEngineFlexibleAppVersion_Handlers_ScriptRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.script", self.base))
     }
 
     #[doc = "Get a reference to the value of field `static_files` after provisioning.\n"]
-    pub fn static_files(&self) -> terrars::ListRef<AppEngineFlexibleAppVersionHandlersElStaticFilesElRef> {
+    pub fn static_files(&self) -> terrars::ListRef<AppEngineFlexibleAppVersion_Handlers_StaticFilesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.static_files", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AppEngineFlexibleAppVersionLivenessCheckEl {
+pub struct AppEngineFlexibleAppVersion_LivenessCheck {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     check_interval: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2855,7 +3036,7 @@ pub struct AppEngineFlexibleAppVersionLivenessCheckEl {
     timeout: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppEngineFlexibleAppVersionLivenessCheckEl {
+impl AppEngineFlexibleAppVersion_LivenessCheck {
     #[doc = "Set the field `check_interval`.\nInterval between health checks."]
     pub fn set_check_interval(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.check_interval = std::option::Option::Some(v.into());
@@ -2897,8 +3078,8 @@ impl AppEngineFlexibleAppVersionLivenessCheckEl {
     }
 }
 
-impl terrars::ToListMappable for AppEngineFlexibleAppVersionLivenessCheckEl {
-    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersionLivenessCheckEl>;
+impl terrars::ToListMappable for AppEngineFlexibleAppVersion_LivenessCheck {
+    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersion_LivenessCheck>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2909,14 +3090,14 @@ impl terrars::ToListMappable for AppEngineFlexibleAppVersionLivenessCheckEl {
     }
 }
 
-pub struct BuildAppEngineFlexibleAppVersionLivenessCheckEl {
+pub struct BuildAppEngineFlexibleAppVersion_LivenessCheck {
     #[doc = "The request path."]
     pub path: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppEngineFlexibleAppVersionLivenessCheckEl {
-    pub fn build(self) -> AppEngineFlexibleAppVersionLivenessCheckEl {
-        AppEngineFlexibleAppVersionLivenessCheckEl {
+impl BuildAppEngineFlexibleAppVersion_LivenessCheck {
+    pub fn build(self) -> AppEngineFlexibleAppVersion_LivenessCheck {
+        AppEngineFlexibleAppVersion_LivenessCheck {
             check_interval: core::default::Default::default(),
             failure_threshold: core::default::Default::default(),
             host: core::default::Default::default(),
@@ -2928,21 +3109,23 @@ impl BuildAppEngineFlexibleAppVersionLivenessCheckEl {
     }
 }
 
-pub struct AppEngineFlexibleAppVersionLivenessCheckElRef {
+#[allow(dead_code)]
+pub struct AppEngineFlexibleAppVersion_LivenessCheckRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineFlexibleAppVersionLivenessCheckElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineFlexibleAppVersionLivenessCheckElRef {
-        AppEngineFlexibleAppVersionLivenessCheckElRef {
+impl terrars::Ref for AppEngineFlexibleAppVersion_LivenessCheckRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineFlexibleAppVersion_LivenessCheckRef {
+        AppEngineFlexibleAppVersion_LivenessCheckRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineFlexibleAppVersionLivenessCheckElRef {
+impl AppEngineFlexibleAppVersion_LivenessCheckRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2990,14 +3173,14 @@ impl AppEngineFlexibleAppVersionLivenessCheckElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppEngineFlexibleAppVersionManualScalingEl {
+pub struct AppEngineFlexibleAppVersion_ManualScaling {
     instances: terrars::PrimField<f64>,
 }
 
-impl AppEngineFlexibleAppVersionManualScalingEl { }
+impl AppEngineFlexibleAppVersion_ManualScaling { }
 
-impl terrars::ToListMappable for AppEngineFlexibleAppVersionManualScalingEl {
-    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersionManualScalingEl>;
+impl terrars::ToListMappable for AppEngineFlexibleAppVersion_ManualScaling {
+    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersion_ManualScaling>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3008,33 +3191,35 @@ impl terrars::ToListMappable for AppEngineFlexibleAppVersionManualScalingEl {
     }
 }
 
-pub struct BuildAppEngineFlexibleAppVersionManualScalingEl {
+pub struct BuildAppEngineFlexibleAppVersion_ManualScaling {
     #[doc =
         "Number of instances to assign to the service at the start.\n\n**Note:** When managing the number of instances at runtime through the App Engine Admin API or the (now deprecated) Python 2\nModules API set_num_instances() you must use 'lifecycle.ignore_changes = [\"manual_scaling\"[0].instances]' to prevent drift detection."]
     pub instances: terrars::PrimField<f64>,
 }
 
-impl BuildAppEngineFlexibleAppVersionManualScalingEl {
-    pub fn build(self) -> AppEngineFlexibleAppVersionManualScalingEl {
-        AppEngineFlexibleAppVersionManualScalingEl { instances: self.instances }
+impl BuildAppEngineFlexibleAppVersion_ManualScaling {
+    pub fn build(self) -> AppEngineFlexibleAppVersion_ManualScaling {
+        AppEngineFlexibleAppVersion_ManualScaling { instances: self.instances }
     }
 }
 
-pub struct AppEngineFlexibleAppVersionManualScalingElRef {
+#[allow(dead_code)]
+pub struct AppEngineFlexibleAppVersion_ManualScalingRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineFlexibleAppVersionManualScalingElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineFlexibleAppVersionManualScalingElRef {
-        AppEngineFlexibleAppVersionManualScalingElRef {
+impl terrars::Ref for AppEngineFlexibleAppVersion_ManualScalingRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineFlexibleAppVersion_ManualScalingRef {
+        AppEngineFlexibleAppVersion_ManualScalingRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineFlexibleAppVersionManualScalingElRef {
+impl AppEngineFlexibleAppVersion_ManualScalingRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3047,7 +3232,7 @@ impl AppEngineFlexibleAppVersionManualScalingElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppEngineFlexibleAppVersionNetworkEl {
+pub struct AppEngineFlexibleAppVersion_Network {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     forwarded_ports: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3059,7 +3244,7 @@ pub struct AppEngineFlexibleAppVersionNetworkEl {
     subnetwork: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppEngineFlexibleAppVersionNetworkEl {
+impl AppEngineFlexibleAppVersion_Network {
     #[doc =
         "Set the field `forwarded_ports`.\nList of ports, or port pairs, to forward from the virtual machine to the application container."]
     pub fn set_forwarded_ports(
@@ -3090,8 +3275,8 @@ impl AppEngineFlexibleAppVersionNetworkEl {
     }
 }
 
-impl terrars::ToListMappable for AppEngineFlexibleAppVersionNetworkEl {
-    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersionNetworkEl>;
+impl terrars::ToListMappable for AppEngineFlexibleAppVersion_Network {
+    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersion_Network>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3102,15 +3287,15 @@ impl terrars::ToListMappable for AppEngineFlexibleAppVersionNetworkEl {
     }
 }
 
-pub struct BuildAppEngineFlexibleAppVersionNetworkEl {
+pub struct BuildAppEngineFlexibleAppVersion_Network {
     #[doc =
         "Google Compute Engine network where the virtual machines are created. Specify the short name, not the resource path."]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppEngineFlexibleAppVersionNetworkEl {
-    pub fn build(self) -> AppEngineFlexibleAppVersionNetworkEl {
-        AppEngineFlexibleAppVersionNetworkEl {
+impl BuildAppEngineFlexibleAppVersion_Network {
+    pub fn build(self) -> AppEngineFlexibleAppVersion_Network {
+        AppEngineFlexibleAppVersion_Network {
             forwarded_ports: core::default::Default::default(),
             instance_tag: core::default::Default::default(),
             name: self.name,
@@ -3120,21 +3305,23 @@ impl BuildAppEngineFlexibleAppVersionNetworkEl {
     }
 }
 
-pub struct AppEngineFlexibleAppVersionNetworkElRef {
+#[allow(dead_code)]
+pub struct AppEngineFlexibleAppVersion_NetworkRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineFlexibleAppVersionNetworkElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineFlexibleAppVersionNetworkElRef {
-        AppEngineFlexibleAppVersionNetworkElRef {
+impl terrars::Ref for AppEngineFlexibleAppVersion_NetworkRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineFlexibleAppVersion_NetworkRef {
+        AppEngineFlexibleAppVersion_NetworkRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineFlexibleAppVersionNetworkElRef {
+impl AppEngineFlexibleAppVersion_NetworkRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3170,7 +3357,7 @@ impl AppEngineFlexibleAppVersionNetworkElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppEngineFlexibleAppVersionReadinessCheckEl {
+pub struct AppEngineFlexibleAppVersion_ReadinessCheck {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     app_start_timeout: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3186,7 +3373,7 @@ pub struct AppEngineFlexibleAppVersionReadinessCheckEl {
     timeout: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppEngineFlexibleAppVersionReadinessCheckEl {
+impl AppEngineFlexibleAppVersion_ReadinessCheck {
     #[doc =
         "Set the field `app_start_timeout`.\nA maximum time limit on application initialization, measured from moment the application successfully\nreplies to a healthcheck until it is ready to serve traffic. Default: \"300s\""]
     pub fn set_app_start_timeout(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -3228,8 +3415,8 @@ impl AppEngineFlexibleAppVersionReadinessCheckEl {
     }
 }
 
-impl terrars::ToListMappable for AppEngineFlexibleAppVersionReadinessCheckEl {
-    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersionReadinessCheckEl>;
+impl terrars::ToListMappable for AppEngineFlexibleAppVersion_ReadinessCheck {
+    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersion_ReadinessCheck>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3240,14 +3427,14 @@ impl terrars::ToListMappable for AppEngineFlexibleAppVersionReadinessCheckEl {
     }
 }
 
-pub struct BuildAppEngineFlexibleAppVersionReadinessCheckEl {
+pub struct BuildAppEngineFlexibleAppVersion_ReadinessCheck {
     #[doc = "The request path."]
     pub path: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppEngineFlexibleAppVersionReadinessCheckEl {
-    pub fn build(self) -> AppEngineFlexibleAppVersionReadinessCheckEl {
-        AppEngineFlexibleAppVersionReadinessCheckEl {
+impl BuildAppEngineFlexibleAppVersion_ReadinessCheck {
+    pub fn build(self) -> AppEngineFlexibleAppVersion_ReadinessCheck {
+        AppEngineFlexibleAppVersion_ReadinessCheck {
             app_start_timeout: core::default::Default::default(),
             check_interval: core::default::Default::default(),
             failure_threshold: core::default::Default::default(),
@@ -3259,24 +3446,23 @@ impl BuildAppEngineFlexibleAppVersionReadinessCheckEl {
     }
 }
 
-pub struct AppEngineFlexibleAppVersionReadinessCheckElRef {
+#[allow(dead_code)]
+pub struct AppEngineFlexibleAppVersion_ReadinessCheckRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineFlexibleAppVersionReadinessCheckElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppEngineFlexibleAppVersionReadinessCheckElRef {
-        AppEngineFlexibleAppVersionReadinessCheckElRef {
+impl terrars::Ref for AppEngineFlexibleAppVersion_ReadinessCheckRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineFlexibleAppVersion_ReadinessCheckRef {
+        AppEngineFlexibleAppVersion_ReadinessCheckRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineFlexibleAppVersionReadinessCheckElRef {
+impl AppEngineFlexibleAppVersion_ReadinessCheckRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3324,16 +3510,16 @@ impl AppEngineFlexibleAppVersionReadinessCheckElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppEngineFlexibleAppVersionResourcesElVolumesEl {
+pub struct AppEngineFlexibleAppVersion_Resources_Volumes {
     name: terrars::PrimField<std::string::String>,
     size_gb: terrars::PrimField<f64>,
     volume_type: terrars::PrimField<std::string::String>,
 }
 
-impl AppEngineFlexibleAppVersionResourcesElVolumesEl { }
+impl AppEngineFlexibleAppVersion_Resources_Volumes { }
 
-impl terrars::ToListMappable for AppEngineFlexibleAppVersionResourcesElVolumesEl {
-    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersionResourcesElVolumesEl>;
+impl terrars::ToListMappable for AppEngineFlexibleAppVersion_Resources_Volumes {
+    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersion_Resources_Volumes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3344,7 +3530,7 @@ impl terrars::ToListMappable for AppEngineFlexibleAppVersionResourcesElVolumesEl
     }
 }
 
-pub struct BuildAppEngineFlexibleAppVersionResourcesElVolumesEl {
+pub struct BuildAppEngineFlexibleAppVersion_Resources_Volumes {
     #[doc = "Unique name for the volume."]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = "Volume size in gigabytes."]
@@ -3353,9 +3539,9 @@ pub struct BuildAppEngineFlexibleAppVersionResourcesElVolumesEl {
     pub volume_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppEngineFlexibleAppVersionResourcesElVolumesEl {
-    pub fn build(self) -> AppEngineFlexibleAppVersionResourcesElVolumesEl {
-        AppEngineFlexibleAppVersionResourcesElVolumesEl {
+impl BuildAppEngineFlexibleAppVersion_Resources_Volumes {
+    pub fn build(self) -> AppEngineFlexibleAppVersion_Resources_Volumes {
+        AppEngineFlexibleAppVersion_Resources_Volumes {
             name: self.name,
             size_gb: self.size_gb,
             volume_type: self.volume_type,
@@ -3363,24 +3549,26 @@ impl BuildAppEngineFlexibleAppVersionResourcesElVolumesEl {
     }
 }
 
-pub struct AppEngineFlexibleAppVersionResourcesElVolumesElRef {
+#[allow(dead_code)]
+pub struct AppEngineFlexibleAppVersion_Resources_VolumesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineFlexibleAppVersionResourcesElVolumesElRef {
+impl terrars::Ref for AppEngineFlexibleAppVersion_Resources_VolumesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppEngineFlexibleAppVersionResourcesElVolumesElRef {
-        AppEngineFlexibleAppVersionResourcesElVolumesElRef {
+    ) -> AppEngineFlexibleAppVersion_Resources_VolumesRef {
+        AppEngineFlexibleAppVersion_Resources_VolumesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineFlexibleAppVersionResourcesElVolumesElRef {
+impl AppEngineFlexibleAppVersion_Resources_VolumesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3403,12 +3591,12 @@ impl AppEngineFlexibleAppVersionResourcesElVolumesElRef {
 }
 
 #[derive(Serialize, Default)]
-struct AppEngineFlexibleAppVersionResourcesElDynamic {
-    volumes: std::option::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersionResourcesElVolumesEl>>,
+struct AppEngineFlexibleAppVersion_ResourcesDynamic {
+    volumes: std::option::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersion_Resources_Volumes>>,
 }
 
 #[derive(Serialize)]
-pub struct AppEngineFlexibleAppVersionResourcesEl {
+pub struct AppEngineFlexibleAppVersion_Resources {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cpu: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3416,11 +3604,11 @@ pub struct AppEngineFlexibleAppVersionResourcesEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     memory_gb: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    volumes: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersionResourcesElVolumesEl>>,
-    dynamic: AppEngineFlexibleAppVersionResourcesElDynamic,
+    volumes: std::option::Option<std::vec::Vec<AppEngineFlexibleAppVersion_Resources_Volumes>>,
+    dynamic: AppEngineFlexibleAppVersion_ResourcesDynamic,
 }
 
-impl AppEngineFlexibleAppVersionResourcesEl {
+impl AppEngineFlexibleAppVersion_Resources {
     #[doc = "Set the field `cpu`.\nNumber of CPU cores needed."]
     pub fn set_cpu(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.cpu = std::option::Option::Some(v.into());
@@ -3442,7 +3630,7 @@ impl AppEngineFlexibleAppVersionResourcesEl {
     #[doc = "Set the field `volumes`.\n"]
     pub fn set_volumes(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersionResourcesElVolumesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineFlexibleAppVersion_Resources_Volumes>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3456,8 +3644,8 @@ impl AppEngineFlexibleAppVersionResourcesEl {
     }
 }
 
-impl terrars::ToListMappable for AppEngineFlexibleAppVersionResourcesEl {
-    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersionResourcesEl>;
+impl terrars::ToListMappable for AppEngineFlexibleAppVersion_Resources {
+    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersion_Resources>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3468,11 +3656,11 @@ impl terrars::ToListMappable for AppEngineFlexibleAppVersionResourcesEl {
     }
 }
 
-pub struct BuildAppEngineFlexibleAppVersionResourcesEl {}
+pub struct BuildAppEngineFlexibleAppVersion_Resources {}
 
-impl BuildAppEngineFlexibleAppVersionResourcesEl {
-    pub fn build(self) -> AppEngineFlexibleAppVersionResourcesEl {
-        AppEngineFlexibleAppVersionResourcesEl {
+impl BuildAppEngineFlexibleAppVersion_Resources {
+    pub fn build(self) -> AppEngineFlexibleAppVersion_Resources {
+        AppEngineFlexibleAppVersion_Resources {
             cpu: core::default::Default::default(),
             disk_gb: core::default::Default::default(),
             memory_gb: core::default::Default::default(),
@@ -3482,21 +3670,23 @@ impl BuildAppEngineFlexibleAppVersionResourcesEl {
     }
 }
 
-pub struct AppEngineFlexibleAppVersionResourcesElRef {
+#[allow(dead_code)]
+pub struct AppEngineFlexibleAppVersion_ResourcesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineFlexibleAppVersionResourcesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineFlexibleAppVersionResourcesElRef {
-        AppEngineFlexibleAppVersionResourcesElRef {
+impl terrars::Ref for AppEngineFlexibleAppVersion_ResourcesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineFlexibleAppVersion_ResourcesRef {
+        AppEngineFlexibleAppVersion_ResourcesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineFlexibleAppVersionResourcesElRef {
+impl AppEngineFlexibleAppVersion_ResourcesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3517,13 +3707,13 @@ impl AppEngineFlexibleAppVersionResourcesElRef {
     }
 
     #[doc = "Get a reference to the value of field `volumes` after provisioning.\n"]
-    pub fn volumes(&self) -> terrars::ListRef<AppEngineFlexibleAppVersionResourcesElVolumesElRef> {
+    pub fn volumes(&self) -> terrars::ListRef<AppEngineFlexibleAppVersion_Resources_VolumesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.volumes", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AppEngineFlexibleAppVersionTimeoutsEl {
+pub struct AppEngineFlexibleAppVersion_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3532,7 +3722,7 @@ pub struct AppEngineFlexibleAppVersionTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppEngineFlexibleAppVersionTimeoutsEl {
+impl AppEngineFlexibleAppVersion_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -3552,8 +3742,8 @@ impl AppEngineFlexibleAppVersionTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for AppEngineFlexibleAppVersionTimeoutsEl {
-    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersionTimeoutsEl>;
+impl terrars::ToListMappable for AppEngineFlexibleAppVersion_Timeouts {
+    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersion_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3564,11 +3754,11 @@ impl terrars::ToListMappable for AppEngineFlexibleAppVersionTimeoutsEl {
     }
 }
 
-pub struct BuildAppEngineFlexibleAppVersionTimeoutsEl {}
+pub struct BuildAppEngineFlexibleAppVersion_Timeouts {}
 
-impl BuildAppEngineFlexibleAppVersionTimeoutsEl {
-    pub fn build(self) -> AppEngineFlexibleAppVersionTimeoutsEl {
-        AppEngineFlexibleAppVersionTimeoutsEl {
+impl BuildAppEngineFlexibleAppVersion_Timeouts {
+    pub fn build(self) -> AppEngineFlexibleAppVersion_Timeouts {
+        AppEngineFlexibleAppVersion_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -3576,21 +3766,23 @@ impl BuildAppEngineFlexibleAppVersionTimeoutsEl {
     }
 }
 
-pub struct AppEngineFlexibleAppVersionTimeoutsElRef {
+#[allow(dead_code)]
+pub struct AppEngineFlexibleAppVersion_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineFlexibleAppVersionTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineFlexibleAppVersionTimeoutsElRef {
-        AppEngineFlexibleAppVersionTimeoutsElRef {
+impl terrars::Ref for AppEngineFlexibleAppVersion_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineFlexibleAppVersion_TimeoutsRef {
+        AppEngineFlexibleAppVersion_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineFlexibleAppVersionTimeoutsElRef {
+impl AppEngineFlexibleAppVersion_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3612,14 +3804,14 @@ impl AppEngineFlexibleAppVersionTimeoutsElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppEngineFlexibleAppVersionVpcAccessConnectorEl {
+pub struct AppEngineFlexibleAppVersion_VpcAccessConnector {
     name: terrars::PrimField<std::string::String>,
 }
 
-impl AppEngineFlexibleAppVersionVpcAccessConnectorEl { }
+impl AppEngineFlexibleAppVersion_VpcAccessConnector { }
 
-impl terrars::ToListMappable for AppEngineFlexibleAppVersionVpcAccessConnectorEl {
-    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersionVpcAccessConnectorEl>;
+impl terrars::ToListMappable for AppEngineFlexibleAppVersion_VpcAccessConnector {
+    type O = terrars::BlockAssignable<AppEngineFlexibleAppVersion_VpcAccessConnector>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3630,35 +3822,37 @@ impl terrars::ToListMappable for AppEngineFlexibleAppVersionVpcAccessConnectorEl
     }
 }
 
-pub struct BuildAppEngineFlexibleAppVersionVpcAccessConnectorEl {
+pub struct BuildAppEngineFlexibleAppVersion_VpcAccessConnector {
     #[doc = "Full Serverless VPC Access Connector name e.g. /projects/my-project/locations/us-central1/connectors/c1."]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppEngineFlexibleAppVersionVpcAccessConnectorEl {
-    pub fn build(self) -> AppEngineFlexibleAppVersionVpcAccessConnectorEl {
-        AppEngineFlexibleAppVersionVpcAccessConnectorEl { name: self.name }
+impl BuildAppEngineFlexibleAppVersion_VpcAccessConnector {
+    pub fn build(self) -> AppEngineFlexibleAppVersion_VpcAccessConnector {
+        AppEngineFlexibleAppVersion_VpcAccessConnector { name: self.name }
     }
 }
 
-pub struct AppEngineFlexibleAppVersionVpcAccessConnectorElRef {
+#[allow(dead_code)]
+pub struct AppEngineFlexibleAppVersion_VpcAccessConnectorRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineFlexibleAppVersionVpcAccessConnectorElRef {
+impl terrars::Ref for AppEngineFlexibleAppVersion_VpcAccessConnectorRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppEngineFlexibleAppVersionVpcAccessConnectorElRef {
-        AppEngineFlexibleAppVersionVpcAccessConnectorElRef {
+    ) -> AppEngineFlexibleAppVersion_VpcAccessConnectorRef {
+        AppEngineFlexibleAppVersion_VpcAccessConnectorRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineFlexibleAppVersionVpcAccessConnectorElRef {
+impl AppEngineFlexibleAppVersion_VpcAccessConnectorRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3668,24 +3862,4 @@ impl AppEngineFlexibleAppVersionVpcAccessConnectorElRef {
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AppEngineFlexibleAppVersionDynamic {
-    api_config: std::option::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersionApiConfigEl>>,
-    automatic_scaling: std::option::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersionAutomaticScalingEl>>,
-    deployment: std::option::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersionDeploymentEl>>,
-    endpoints_api_service: std
-    ::option
-    ::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersionEndpointsApiServiceEl>>,
-    entrypoint: std::option::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersionEntrypointEl>>,
-    handlers: std::option::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersionHandlersEl>>,
-    liveness_check: std::option::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersionLivenessCheckEl>>,
-    manual_scaling: std::option::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersionManualScalingEl>>,
-    network: std::option::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersionNetworkEl>>,
-    readiness_check: std::option::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersionReadinessCheckEl>>,
-    resources: std::option::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersionResourcesEl>>,
-    vpc_access_connector: std
-    ::option
-    ::Option<terrars::DynamicBlock<AppEngineFlexibleAppVersionVpcAccessConnectorEl>>,
 }

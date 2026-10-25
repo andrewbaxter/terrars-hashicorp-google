@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct BinaryAuthorizationAttestorData {
+struct BinaryAuthorizationAttestorData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct BinaryAuthorizationAttestorData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -26,16 +30,16 @@ struct BinaryAuthorizationAttestorData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    attestation_authority_note: std::option::Option<std::vec::Vec<BinaryAuthorizationAttestorAttestationAuthorityNoteEl>>,
+    attestation_authority_note: std::option::Option<std::vec::Vec<BinaryAuthorizationAttestor_AttestationAuthorityNote>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<BinaryAuthorizationAttestorTimeoutsEl>,
+    timeouts: std::option::Option<BinaryAuthorizationAttestor_Timeouts>,
     dynamic: BinaryAuthorizationAttestorDynamic,
 }
 
 struct BinaryAuthorizationAttestor_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<BinaryAuthorizationAttestorData>,
+    data: std::cell::RefCell<BinaryAuthorizationAttestorData_>,
 }
 
 #[derive(Clone)]
@@ -136,6 +140,13 @@ impl BinaryAuthorizationAttestor {
     }
 
     #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `description`.\nA descriptive comment. This field may be updated. The field may be\ndisplayed in chooser dialogs."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -157,7 +168,7 @@ impl BinaryAuthorizationAttestor {
     #[doc = "Set the field `attestation_authority_note`.\n"]
     pub fn set_attestation_authority_note(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BinaryAuthorizationAttestorAttestationAuthorityNoteEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BinaryAuthorizationAttestor_AttestationAuthorityNote>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -171,9 +182,15 @@ impl BinaryAuthorizationAttestor {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<BinaryAuthorizationAttestorTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<BinaryAuthorizationAttestor_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -200,13 +217,13 @@ impl BinaryAuthorizationAttestor {
     #[doc = "Get a reference to the value of field `attestation_authority_note` after provisioning.\n"]
     pub fn attestation_authority_note(
         &self,
-    ) -> terrars::ListRef<BinaryAuthorizationAttestorAttestationAuthorityNoteElRef> {
+    ) -> terrars::ListRef<BinaryAuthorizationAttestor_AttestationAuthorityNoteRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.attestation_authority_note", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> BinaryAuthorizationAttestorTimeoutsElRef {
-        BinaryAuthorizationAttestorTimeoutsElRef::new(
+    pub fn timeouts(&self) -> BinaryAuthorizationAttestor_TimeoutsRef {
+        BinaryAuthorizationAttestor_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -255,12 +272,13 @@ impl BuildBinaryAuthorizationAttestor {
         let out = BinaryAuthorizationAttestor(std::rc::Rc::new(BinaryAuthorizationAttestor_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(BinaryAuthorizationAttestorData {
+            data: std::cell::RefCell::new(BinaryAuthorizationAttestorData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
@@ -299,6 +317,12 @@ impl BinaryAuthorizationAttestorRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nA descriptive comment. This field may be updated. The field may be\ndisplayed in chooser dialogs."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -322,28 +346,35 @@ impl BinaryAuthorizationAttestorRef {
     #[doc = "Get a reference to the value of field `attestation_authority_note` after provisioning.\n"]
     pub fn attestation_authority_note(
         &self,
-    ) -> terrars::ListRef<BinaryAuthorizationAttestorAttestationAuthorityNoteElRef> {
+    ) -> terrars::ListRef<BinaryAuthorizationAttestor_AttestationAuthorityNoteRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.attestation_authority_note", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> BinaryAuthorizationAttestorTimeoutsElRef {
-        BinaryAuthorizationAttestorTimeoutsElRef::new(
+    pub fn timeouts(&self) -> BinaryAuthorizationAttestor_TimeoutsRef {
+        BinaryAuthorizationAttestor_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct BinaryAuthorizationAttestorDynamic {
+    attestation_authority_note: std
+    ::option
+    ::Option<terrars::DynamicBlock<BinaryAuthorizationAttestor_AttestationAuthorityNote>>,
+}
+
 #[derive(Serialize)]
-pub struct BinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysElPkixPublicKeyEl {
+pub struct BinaryAuthorizationAttestor_AttestationAuthorityNote_PublicKeys_PkixPublicKey {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     public_key_pem: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     signature_algorithm: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl BinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysElPkixPublicKeyEl {
+impl BinaryAuthorizationAttestor_AttestationAuthorityNote_PublicKeys_PkixPublicKey {
     #[doc =
         "Set the field `public_key_pem`.\nA PEM-encoded public key, as described in\n'https://tools.ietf.org/html/rfc7468#section-13'"]
     pub fn set_public_key_pem(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -362,9 +393,8 @@ impl BinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysElPkixPublic
     }
 }
 
-impl terrars::ToListMappable for BinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysElPkixPublicKeyEl {
-    type O =
-        terrars::BlockAssignable<BinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysElPkixPublicKeyEl>;
+impl terrars::ToListMappable for BinaryAuthorizationAttestor_AttestationAuthorityNote_PublicKeys_PkixPublicKey {
+    type O = terrars::BlockAssignable<BinaryAuthorizationAttestor_AttestationAuthorityNote_PublicKeys_PkixPublicKey>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -375,35 +405,37 @@ impl terrars::ToListMappable for BinaryAuthorizationAttestorAttestationAuthority
     }
 }
 
-pub struct BuildBinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysElPkixPublicKeyEl {}
+pub struct BuildBinaryAuthorizationAttestor_AttestationAuthorityNote_PublicKeys_PkixPublicKey {}
 
-impl BuildBinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysElPkixPublicKeyEl {
-    pub fn build(self) -> BinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysElPkixPublicKeyEl {
-        BinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysElPkixPublicKeyEl {
+impl BuildBinaryAuthorizationAttestor_AttestationAuthorityNote_PublicKeys_PkixPublicKey {
+    pub fn build(self) -> BinaryAuthorizationAttestor_AttestationAuthorityNote_PublicKeys_PkixPublicKey {
+        BinaryAuthorizationAttestor_AttestationAuthorityNote_PublicKeys_PkixPublicKey {
             public_key_pem: core::default::Default::default(),
             signature_algorithm: core::default::Default::default(),
         }
     }
 }
 
-pub struct BinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysElPkixPublicKeyElRef {
+#[allow(dead_code)]
+pub struct BinaryAuthorizationAttestor_AttestationAuthorityNote_PublicKeys_PkixPublicKeyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysElPkixPublicKeyElRef {
+impl terrars::Ref for BinaryAuthorizationAttestor_AttestationAuthorityNote_PublicKeys_PkixPublicKeyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> BinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysElPkixPublicKeyElRef {
-        BinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysElPkixPublicKeyElRef {
+    ) -> BinaryAuthorizationAttestor_AttestationAuthorityNote_PublicKeys_PkixPublicKeyRef {
+        BinaryAuthorizationAttestor_AttestationAuthorityNote_PublicKeys_PkixPublicKeyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysElPkixPublicKeyElRef {
+impl BinaryAuthorizationAttestor_AttestationAuthorityNote_PublicKeys_PkixPublicKeyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -422,16 +454,14 @@ impl BinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysElPkixPublic
 }
 
 #[derive(Serialize, Default)]
-struct BinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysElDynamic {
+struct BinaryAuthorizationAttestor_AttestationAuthorityNote_PublicKeysDynamic {
     pkix_public_key: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<BinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysElPkixPublicKeyEl>,
-    >,
+    ::Option<terrars::DynamicBlock<BinaryAuthorizationAttestor_AttestationAuthorityNote_PublicKeys_PkixPublicKey>>,
 }
 
 #[derive(Serialize)]
-pub struct BinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysEl {
+pub struct BinaryAuthorizationAttestor_AttestationAuthorityNote_PublicKeys {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ascii_armored_pgp_public_key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -441,11 +471,11 @@ pub struct BinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     pkix_public_key: std
     ::option
-    ::Option<std::vec::Vec<BinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysElPkixPublicKeyEl>>,
-    dynamic: BinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysElDynamic,
+    ::Option<std::vec::Vec<BinaryAuthorizationAttestor_AttestationAuthorityNote_PublicKeys_PkixPublicKey>>,
+    dynamic: BinaryAuthorizationAttestor_AttestationAuthorityNote_PublicKeysDynamic,
 }
 
-impl BinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysEl {
+impl BinaryAuthorizationAttestor_AttestationAuthorityNote_PublicKeys {
     #[doc =
         "Set the field `ascii_armored_pgp_public_key`.\nASCII-armored representation of a PGP public key, as the\nentire output by the command\n'gpg --export --armor foo@example.com' (either LF or CRLF\nline endings). When using this field, id should be left\nblank. The BinAuthz API handlers will calculate the ID\nand fill it in automatically. BinAuthz computes this ID\nas the OpenPGP RFC4880 V4 fingerprint, represented as\nupper-case hex. If id is provided by the caller, it will\nbe overwritten by the API-calculated ID."]
     pub fn set_ascii_armored_pgp_public_key(
@@ -480,7 +510,7 @@ impl BinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            BinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysElPkixPublicKeyEl,
+                            BinaryAuthorizationAttestor_AttestationAuthorityNote_PublicKeys_PkixPublicKey,
                         >,
                     >,
     ) -> Self {
@@ -496,8 +526,8 @@ impl BinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysEl {
     }
 }
 
-impl terrars::ToListMappable for BinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysEl {
-    type O = terrars::BlockAssignable<BinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysEl>;
+impl terrars::ToListMappable for BinaryAuthorizationAttestor_AttestationAuthorityNote_PublicKeys {
+    type O = terrars::BlockAssignable<BinaryAuthorizationAttestor_AttestationAuthorityNote_PublicKeys>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -508,11 +538,11 @@ impl terrars::ToListMappable for BinaryAuthorizationAttestorAttestationAuthority
     }
 }
 
-pub struct BuildBinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysEl {}
+pub struct BuildBinaryAuthorizationAttestor_AttestationAuthorityNote_PublicKeys {}
 
-impl BuildBinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysEl {
-    pub fn build(self) -> BinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysEl {
-        BinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysEl {
+impl BuildBinaryAuthorizationAttestor_AttestationAuthorityNote_PublicKeys {
+    pub fn build(self) -> BinaryAuthorizationAttestor_AttestationAuthorityNote_PublicKeys {
+        BinaryAuthorizationAttestor_AttestationAuthorityNote_PublicKeys {
             ascii_armored_pgp_public_key: core::default::Default::default(),
             comment: core::default::Default::default(),
             id: core::default::Default::default(),
@@ -522,24 +552,26 @@ impl BuildBinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysEl {
     }
 }
 
-pub struct BinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysElRef {
+#[allow(dead_code)]
+pub struct BinaryAuthorizationAttestor_AttestationAuthorityNote_PublicKeysRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysElRef {
+impl terrars::Ref for BinaryAuthorizationAttestor_AttestationAuthorityNote_PublicKeysRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> BinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysElRef {
-        BinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysElRef {
+    ) -> BinaryAuthorizationAttestor_AttestationAuthorityNote_PublicKeysRef {
+        BinaryAuthorizationAttestor_AttestationAuthorityNote_PublicKeysRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysElRef {
+impl BinaryAuthorizationAttestor_AttestationAuthorityNote_PublicKeysRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -565,27 +597,27 @@ impl BinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysElRef {
     #[doc = "Get a reference to the value of field `pkix_public_key` after provisioning.\n"]
     pub fn pkix_public_key(
         &self,
-    ) -> terrars::ListRef<BinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysElPkixPublicKeyElRef> {
+    ) -> terrars::ListRef<BinaryAuthorizationAttestor_AttestationAuthorityNote_PublicKeys_PkixPublicKeyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.pkix_public_key", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct BinaryAuthorizationAttestorAttestationAuthorityNoteElDynamic {
+struct BinaryAuthorizationAttestor_AttestationAuthorityNoteDynamic {
     public_keys: std
     ::option
-    ::Option<terrars::DynamicBlock<BinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysEl>>,
+    ::Option<terrars::DynamicBlock<BinaryAuthorizationAttestor_AttestationAuthorityNote_PublicKeys>>,
 }
 
 #[derive(Serialize)]
-pub struct BinaryAuthorizationAttestorAttestationAuthorityNoteEl {
+pub struct BinaryAuthorizationAttestor_AttestationAuthorityNote {
     note_reference: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    public_keys: std::option::Option<std::vec::Vec<BinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysEl>>,
-    dynamic: BinaryAuthorizationAttestorAttestationAuthorityNoteElDynamic,
+    public_keys: std::option::Option<std::vec::Vec<BinaryAuthorizationAttestor_AttestationAuthorityNote_PublicKeys>>,
+    dynamic: BinaryAuthorizationAttestor_AttestationAuthorityNoteDynamic,
 }
 
-impl BinaryAuthorizationAttestorAttestationAuthorityNoteEl {
+impl BinaryAuthorizationAttestor_AttestationAuthorityNote {
     #[doc = "Set the field `public_keys`.\n"]
     pub fn set_public_keys(
         mut self,
@@ -594,9 +626,7 @@ impl BinaryAuthorizationAttestorAttestationAuthorityNoteEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<BinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<BinaryAuthorizationAttestor_AttestationAuthorityNote_PublicKeys>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -610,8 +640,8 @@ impl BinaryAuthorizationAttestorAttestationAuthorityNoteEl {
     }
 }
 
-impl terrars::ToListMappable for BinaryAuthorizationAttestorAttestationAuthorityNoteEl {
-    type O = terrars::BlockAssignable<BinaryAuthorizationAttestorAttestationAuthorityNoteEl>;
+impl terrars::ToListMappable for BinaryAuthorizationAttestor_AttestationAuthorityNote {
+    type O = terrars::BlockAssignable<BinaryAuthorizationAttestor_AttestationAuthorityNote>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -622,15 +652,15 @@ impl terrars::ToListMappable for BinaryAuthorizationAttestorAttestationAuthority
     }
 }
 
-pub struct BuildBinaryAuthorizationAttestorAttestationAuthorityNoteEl {
+pub struct BuildBinaryAuthorizationAttestor_AttestationAuthorityNote {
     #[doc =
         "The resource name of a ATTESTATION_AUTHORITY Note, created by the\nuser. If the Note is in a different project from the Attestor, it\nshould be specified in the format 'projects/*/notes/*' (or the legacy\n'providers/*/notes/*'). This field may not be updated.\nAn attestation by this attestor is stored as a Container Analysis\nATTESTATION_AUTHORITY Occurrence that names a container image\nand that links to this Note."]
     pub note_reference: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBinaryAuthorizationAttestorAttestationAuthorityNoteEl {
-    pub fn build(self) -> BinaryAuthorizationAttestorAttestationAuthorityNoteEl {
-        BinaryAuthorizationAttestorAttestationAuthorityNoteEl {
+impl BuildBinaryAuthorizationAttestor_AttestationAuthorityNote {
+    pub fn build(self) -> BinaryAuthorizationAttestor_AttestationAuthorityNote {
+        BinaryAuthorizationAttestor_AttestationAuthorityNote {
             note_reference: self.note_reference,
             public_keys: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -638,24 +668,26 @@ impl BuildBinaryAuthorizationAttestorAttestationAuthorityNoteEl {
     }
 }
 
-pub struct BinaryAuthorizationAttestorAttestationAuthorityNoteElRef {
+#[allow(dead_code)]
+pub struct BinaryAuthorizationAttestor_AttestationAuthorityNoteRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BinaryAuthorizationAttestorAttestationAuthorityNoteElRef {
+impl terrars::Ref for BinaryAuthorizationAttestor_AttestationAuthorityNoteRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> BinaryAuthorizationAttestorAttestationAuthorityNoteElRef {
-        BinaryAuthorizationAttestorAttestationAuthorityNoteElRef {
+    ) -> BinaryAuthorizationAttestor_AttestationAuthorityNoteRef {
+        BinaryAuthorizationAttestor_AttestationAuthorityNoteRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BinaryAuthorizationAttestorAttestationAuthorityNoteElRef {
+impl BinaryAuthorizationAttestor_AttestationAuthorityNoteRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -673,13 +705,13 @@ impl BinaryAuthorizationAttestorAttestationAuthorityNoteElRef {
     }
 
     #[doc = "Get a reference to the value of field `public_keys` after provisioning.\n"]
-    pub fn public_keys(&self) -> terrars::ListRef<BinaryAuthorizationAttestorAttestationAuthorityNoteElPublicKeysElRef> {
+    pub fn public_keys(&self) -> terrars::ListRef<BinaryAuthorizationAttestor_AttestationAuthorityNote_PublicKeysRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.public_keys", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct BinaryAuthorizationAttestorTimeoutsEl {
+pub struct BinaryAuthorizationAttestor_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -688,7 +720,7 @@ pub struct BinaryAuthorizationAttestorTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl BinaryAuthorizationAttestorTimeoutsEl {
+impl BinaryAuthorizationAttestor_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -708,8 +740,8 @@ impl BinaryAuthorizationAttestorTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for BinaryAuthorizationAttestorTimeoutsEl {
-    type O = terrars::BlockAssignable<BinaryAuthorizationAttestorTimeoutsEl>;
+impl terrars::ToListMappable for BinaryAuthorizationAttestor_Timeouts {
+    type O = terrars::BlockAssignable<BinaryAuthorizationAttestor_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -720,11 +752,11 @@ impl terrars::ToListMappable for BinaryAuthorizationAttestorTimeoutsEl {
     }
 }
 
-pub struct BuildBinaryAuthorizationAttestorTimeoutsEl {}
+pub struct BuildBinaryAuthorizationAttestor_Timeouts {}
 
-impl BuildBinaryAuthorizationAttestorTimeoutsEl {
-    pub fn build(self) -> BinaryAuthorizationAttestorTimeoutsEl {
-        BinaryAuthorizationAttestorTimeoutsEl {
+impl BuildBinaryAuthorizationAttestor_Timeouts {
+    pub fn build(self) -> BinaryAuthorizationAttestor_Timeouts {
+        BinaryAuthorizationAttestor_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -732,21 +764,23 @@ impl BuildBinaryAuthorizationAttestorTimeoutsEl {
     }
 }
 
-pub struct BinaryAuthorizationAttestorTimeoutsElRef {
+#[allow(dead_code)]
+pub struct BinaryAuthorizationAttestor_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BinaryAuthorizationAttestorTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BinaryAuthorizationAttestorTimeoutsElRef {
-        BinaryAuthorizationAttestorTimeoutsElRef {
+impl terrars::Ref for BinaryAuthorizationAttestor_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BinaryAuthorizationAttestor_TimeoutsRef {
+        BinaryAuthorizationAttestor_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BinaryAuthorizationAttestorTimeoutsElRef {
+impl BinaryAuthorizationAttestor_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -765,11 +799,4 @@ impl BinaryAuthorizationAttestorTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct BinaryAuthorizationAttestorDynamic {
-    attestation_authority_note: std
-    ::option
-    ::Option<terrars::DynamicBlock<BinaryAuthorizationAttestorAttestationAuthorityNoteEl>>,
 }

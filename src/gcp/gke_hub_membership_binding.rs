@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct GkeHubMembershipBindingData {
+struct GkeHubMembershipBindingData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct GkeHubMembershipBindingData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -29,13 +33,13 @@ struct GkeHubMembershipBindingData {
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     scope: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<GkeHubMembershipBindingTimeoutsEl>,
+    timeouts: std::option::Option<GkeHubMembershipBinding_Timeouts>,
 }
 
 struct GkeHubMembershipBinding_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<GkeHubMembershipBindingData>,
+    data: std::cell::RefCell<GkeHubMembershipBindingData_>,
 }
 
 #[derive(Clone)]
@@ -135,6 +139,13 @@ impl GkeHubMembershipBinding {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -158,7 +169,7 @@ impl GkeHubMembershipBinding {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<GkeHubMembershipBindingTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<GkeHubMembershipBinding_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -173,6 +184,12 @@ impl GkeHubMembershipBinding {
         "Get a reference to the value of field `delete_time` after provisioning.\nTime the MembershipBinding was deleted in UTC."]
     pub fn delete_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -227,7 +244,7 @@ impl GkeHubMembershipBinding {
 
     #[doc =
         "Get a reference to the value of field `state` after provisioning.\nState of the membership binding resource."]
-    pub fn state(&self) -> terrars::ListRef<GkeHubMembershipBindingStateElRef> {
+    pub fn state(&self) -> terrars::ListRef<GkeHubMembershipBinding_StateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
     }
 
@@ -249,8 +266,8 @@ impl GkeHubMembershipBinding {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> GkeHubMembershipBindingTimeoutsElRef {
-        GkeHubMembershipBindingTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> GkeHubMembershipBinding_TimeoutsRef {
+        GkeHubMembershipBinding_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -302,12 +319,13 @@ impl BuildGkeHubMembershipBinding {
         let out = GkeHubMembershipBinding(std::rc::Rc::new(GkeHubMembershipBinding_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(GkeHubMembershipBindingData {
+            data: std::cell::RefCell::new(GkeHubMembershipBindingData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 labels: core::default::Default::default(),
                 location: self.location,
@@ -356,6 +374,12 @@ impl GkeHubMembershipBindingRef {
         "Get a reference to the value of field `delete_time` after provisioning.\nTime the MembershipBinding was deleted in UTC."]
     pub fn delete_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -410,7 +434,7 @@ impl GkeHubMembershipBindingRef {
 
     #[doc =
         "Get a reference to the value of field `state` after provisioning.\nState of the membership binding resource."]
-    pub fn state(&self) -> terrars::ListRef<GkeHubMembershipBindingStateElRef> {
+    pub fn state(&self) -> terrars::ListRef<GkeHubMembershipBinding_StateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
     }
 
@@ -432,18 +456,18 @@ impl GkeHubMembershipBindingRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> GkeHubMembershipBindingTimeoutsElRef {
-        GkeHubMembershipBindingTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> GkeHubMembershipBinding_TimeoutsRef {
+        GkeHubMembershipBinding_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct GkeHubMembershipBindingStateEl {
+pub struct GkeHubMembershipBinding_State {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     code: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeHubMembershipBindingStateEl {
+impl GkeHubMembershipBinding_State {
     #[doc = "Set the field `code`.\n"]
     pub fn set_code(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.code = std::option::Option::Some(v.into());
@@ -451,8 +475,8 @@ impl GkeHubMembershipBindingStateEl {
     }
 }
 
-impl terrars::ToListMappable for GkeHubMembershipBindingStateEl {
-    type O = terrars::BlockAssignable<GkeHubMembershipBindingStateEl>;
+impl terrars::ToListMappable for GkeHubMembershipBinding_State {
+    type O = terrars::BlockAssignable<GkeHubMembershipBinding_State>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -463,29 +487,31 @@ impl terrars::ToListMappable for GkeHubMembershipBindingStateEl {
     }
 }
 
-pub struct BuildGkeHubMembershipBindingStateEl {}
+pub struct BuildGkeHubMembershipBinding_State {}
 
-impl BuildGkeHubMembershipBindingStateEl {
-    pub fn build(self) -> GkeHubMembershipBindingStateEl {
-        GkeHubMembershipBindingStateEl { code: core::default::Default::default() }
+impl BuildGkeHubMembershipBinding_State {
+    pub fn build(self) -> GkeHubMembershipBinding_State {
+        GkeHubMembershipBinding_State { code: core::default::Default::default() }
     }
 }
 
-pub struct GkeHubMembershipBindingStateElRef {
+#[allow(dead_code)]
+pub struct GkeHubMembershipBinding_StateRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeHubMembershipBindingStateElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeHubMembershipBindingStateElRef {
-        GkeHubMembershipBindingStateElRef {
+impl terrars::Ref for GkeHubMembershipBinding_StateRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeHubMembershipBinding_StateRef {
+        GkeHubMembershipBinding_StateRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeHubMembershipBindingStateElRef {
+impl GkeHubMembershipBinding_StateRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -497,7 +523,7 @@ impl GkeHubMembershipBindingStateElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeHubMembershipBindingTimeoutsEl {
+pub struct GkeHubMembershipBinding_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -506,7 +532,7 @@ pub struct GkeHubMembershipBindingTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeHubMembershipBindingTimeoutsEl {
+impl GkeHubMembershipBinding_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -526,8 +552,8 @@ impl GkeHubMembershipBindingTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for GkeHubMembershipBindingTimeoutsEl {
-    type O = terrars::BlockAssignable<GkeHubMembershipBindingTimeoutsEl>;
+impl terrars::ToListMappable for GkeHubMembershipBinding_Timeouts {
+    type O = terrars::BlockAssignable<GkeHubMembershipBinding_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -538,11 +564,11 @@ impl terrars::ToListMappable for GkeHubMembershipBindingTimeoutsEl {
     }
 }
 
-pub struct BuildGkeHubMembershipBindingTimeoutsEl {}
+pub struct BuildGkeHubMembershipBinding_Timeouts {}
 
-impl BuildGkeHubMembershipBindingTimeoutsEl {
-    pub fn build(self) -> GkeHubMembershipBindingTimeoutsEl {
-        GkeHubMembershipBindingTimeoutsEl {
+impl BuildGkeHubMembershipBinding_Timeouts {
+    pub fn build(self) -> GkeHubMembershipBinding_Timeouts {
+        GkeHubMembershipBinding_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -550,21 +576,23 @@ impl BuildGkeHubMembershipBindingTimeoutsEl {
     }
 }
 
-pub struct GkeHubMembershipBindingTimeoutsElRef {
+#[allow(dead_code)]
+pub struct GkeHubMembershipBinding_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeHubMembershipBindingTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeHubMembershipBindingTimeoutsElRef {
-        GkeHubMembershipBindingTimeoutsElRef {
+impl terrars::Ref for GkeHubMembershipBinding_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeHubMembershipBinding_TimeoutsRef {
+        GkeHubMembershipBinding_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeHubMembershipBindingTimeoutsElRef {
+impl GkeHubMembershipBinding_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

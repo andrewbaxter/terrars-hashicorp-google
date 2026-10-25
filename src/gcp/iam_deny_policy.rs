@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct IamDenyPolicyData {
+struct IamDenyPolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,22 +21,24 @@ struct IamDenyPolicyData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     display_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     parent: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    rules: std::option::Option<std::vec::Vec<IamDenyPolicyRulesEl>>,
+    rules: std::option::Option<std::vec::Vec<IamDenyPolicy_Rules>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<IamDenyPolicyTimeoutsEl>,
+    timeouts: std::option::Option<IamDenyPolicy_Timeouts>,
     dynamic: IamDenyPolicyDynamic,
 }
 
 struct IamDenyPolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<IamDenyPolicyData>,
+    data: std::cell::RefCell<IamDenyPolicyData_>,
 }
 
 #[derive(Clone)]
@@ -134,6 +138,13 @@ impl IamDenyPolicy {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `display_name`.\nThe display name of the rule."]
     pub fn set_display_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().display_name = std::option::Option::Some(v.into());
@@ -147,7 +158,7 @@ impl IamDenyPolicy {
     }
 
     #[doc = "Set the field `rules`.\n"]
-    pub fn set_rules(self, v: impl std::convert::Into<terrars::BlockAssignable<IamDenyPolicyRulesEl>>) -> Self {
+    pub fn set_rules(self, v: impl std::convert::Into<terrars::BlockAssignable<IamDenyPolicy_Rules>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().rules = std::option::Option::Some(v);
@@ -160,9 +171,15 @@ impl IamDenyPolicy {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<IamDenyPolicyTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<IamDenyPolicy_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `display_name` after provisioning.\nThe display name of the rule."]
@@ -193,13 +210,13 @@ impl IamDenyPolicy {
     }
 
     #[doc = "Get a reference to the value of field `rules` after provisioning.\n"]
-    pub fn rules(&self) -> terrars::ListRef<IamDenyPolicyRulesElRef> {
+    pub fn rules(&self) -> terrars::ListRef<IamDenyPolicy_RulesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.rules", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> IamDenyPolicyTimeoutsElRef {
-        IamDenyPolicyTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> IamDenyPolicy_TimeoutsRef {
+        IamDenyPolicy_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -247,12 +264,13 @@ impl BuildIamDenyPolicy {
         let out = IamDenyPolicy(std::rc::Rc::new(IamDenyPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(IamDenyPolicyData {
+            data: std::cell::RefCell::new(IamDenyPolicyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 display_name: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
@@ -290,6 +308,12 @@ impl IamDenyPolicyRef {
         &self.shared
     }
 
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `display_name` after provisioning.\nThe display name of the rule."]
     pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
@@ -318,18 +342,23 @@ impl IamDenyPolicyRef {
     }
 
     #[doc = "Get a reference to the value of field `rules` after provisioning.\n"]
-    pub fn rules(&self) -> terrars::ListRef<IamDenyPolicyRulesElRef> {
+    pub fn rules(&self) -> terrars::ListRef<IamDenyPolicy_RulesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.rules", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> IamDenyPolicyTimeoutsElRef {
-        IamDenyPolicyTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> IamDenyPolicy_TimeoutsRef {
+        IamDenyPolicy_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct IamDenyPolicyDynamic {
+    rules: std::option::Option<terrars::DynamicBlock<IamDenyPolicy_Rules>>,
+}
+
 #[derive(Serialize)]
-pub struct IamDenyPolicyRulesElDenyRuleElDenialConditionEl {
+pub struct IamDenyPolicy_Rules_DenyRule_DenialCondition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
@@ -339,7 +368,7 @@ pub struct IamDenyPolicyRulesElDenyRuleElDenialConditionEl {
     title: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl IamDenyPolicyRulesElDenyRuleElDenialConditionEl {
+impl IamDenyPolicy_Rules_DenyRule_DenialCondition {
     #[doc =
         "Set the field `description`.\nDescription of the expression. This is a longer text which describes the expression,\ne.g. when hovered over it in a UI."]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -362,8 +391,8 @@ impl IamDenyPolicyRulesElDenyRuleElDenialConditionEl {
     }
 }
 
-impl terrars::ToListMappable for IamDenyPolicyRulesElDenyRuleElDenialConditionEl {
-    type O = terrars::BlockAssignable<IamDenyPolicyRulesElDenyRuleElDenialConditionEl>;
+impl terrars::ToListMappable for IamDenyPolicy_Rules_DenyRule_DenialCondition {
+    type O = terrars::BlockAssignable<IamDenyPolicy_Rules_DenyRule_DenialCondition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -374,14 +403,14 @@ impl terrars::ToListMappable for IamDenyPolicyRulesElDenyRuleElDenialConditionEl
     }
 }
 
-pub struct BuildIamDenyPolicyRulesElDenyRuleElDenialConditionEl {
+pub struct BuildIamDenyPolicy_Rules_DenyRule_DenialCondition {
     #[doc = "Textual representation of an expression in Common Expression Language syntax."]
     pub expression: terrars::PrimField<std::string::String>,
 }
 
-impl BuildIamDenyPolicyRulesElDenyRuleElDenialConditionEl {
-    pub fn build(self) -> IamDenyPolicyRulesElDenyRuleElDenialConditionEl {
-        IamDenyPolicyRulesElDenyRuleElDenialConditionEl {
+impl BuildIamDenyPolicy_Rules_DenyRule_DenialCondition {
+    pub fn build(self) -> IamDenyPolicy_Rules_DenyRule_DenialCondition {
+        IamDenyPolicy_Rules_DenyRule_DenialCondition {
             description: core::default::Default::default(),
             expression: self.expression,
             location: core::default::Default::default(),
@@ -390,24 +419,26 @@ impl BuildIamDenyPolicyRulesElDenyRuleElDenialConditionEl {
     }
 }
 
-pub struct IamDenyPolicyRulesElDenyRuleElDenialConditionElRef {
+#[allow(dead_code)]
+pub struct IamDenyPolicy_Rules_DenyRule_DenialConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IamDenyPolicyRulesElDenyRuleElDenialConditionElRef {
+impl terrars::Ref for IamDenyPolicy_Rules_DenyRule_DenialConditionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IamDenyPolicyRulesElDenyRuleElDenialConditionElRef {
-        IamDenyPolicyRulesElDenyRuleElDenialConditionElRef {
+    ) -> IamDenyPolicy_Rules_DenyRule_DenialConditionRef {
+        IamDenyPolicy_Rules_DenyRule_DenialConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IamDenyPolicyRulesElDenyRuleElDenialConditionElRef {
+impl IamDenyPolicy_Rules_DenyRule_DenialConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -438,12 +469,12 @@ impl IamDenyPolicyRulesElDenyRuleElDenialConditionElRef {
 }
 
 #[derive(Serialize, Default)]
-struct IamDenyPolicyRulesElDenyRuleElDynamic {
-    denial_condition: std::option::Option<terrars::DynamicBlock<IamDenyPolicyRulesElDenyRuleElDenialConditionEl>>,
+struct IamDenyPolicy_Rules_DenyRuleDynamic {
+    denial_condition: std::option::Option<terrars::DynamicBlock<IamDenyPolicy_Rules_DenyRule_DenialCondition>>,
 }
 
 #[derive(Serialize)]
-pub struct IamDenyPolicyRulesElDenyRuleEl {
+pub struct IamDenyPolicy_Rules_DenyRule {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     denied_permissions: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -453,11 +484,11 @@ pub struct IamDenyPolicyRulesElDenyRuleEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     exception_principals: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    denial_condition: std::option::Option<std::vec::Vec<IamDenyPolicyRulesElDenyRuleElDenialConditionEl>>,
-    dynamic: IamDenyPolicyRulesElDenyRuleElDynamic,
+    denial_condition: std::option::Option<std::vec::Vec<IamDenyPolicy_Rules_DenyRule_DenialCondition>>,
+    dynamic: IamDenyPolicy_Rules_DenyRuleDynamic,
 }
 
-impl IamDenyPolicyRulesElDenyRuleEl {
+impl IamDenyPolicy_Rules_DenyRule {
     #[doc =
         "Set the field `denied_permissions`.\nThe permissions that are explicitly denied by this rule. Each permission uses the format '{service-fqdn}/{resource}.{verb}',\nwhere '{service-fqdn}' is the fully qualified domain name for the service. For example, 'iam.googleapis.com/roles.list'."]
     pub fn set_denied_permissions(
@@ -501,7 +532,7 @@ impl IamDenyPolicyRulesElDenyRuleEl {
     #[doc = "Set the field `denial_condition`.\n"]
     pub fn set_denial_condition(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<IamDenyPolicyRulesElDenyRuleElDenialConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IamDenyPolicy_Rules_DenyRule_DenialCondition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -515,8 +546,8 @@ impl IamDenyPolicyRulesElDenyRuleEl {
     }
 }
 
-impl terrars::ToListMappable for IamDenyPolicyRulesElDenyRuleEl {
-    type O = terrars::BlockAssignable<IamDenyPolicyRulesElDenyRuleEl>;
+impl terrars::ToListMappable for IamDenyPolicy_Rules_DenyRule {
+    type O = terrars::BlockAssignable<IamDenyPolicy_Rules_DenyRule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -527,11 +558,11 @@ impl terrars::ToListMappable for IamDenyPolicyRulesElDenyRuleEl {
     }
 }
 
-pub struct BuildIamDenyPolicyRulesElDenyRuleEl {}
+pub struct BuildIamDenyPolicy_Rules_DenyRule {}
 
-impl BuildIamDenyPolicyRulesElDenyRuleEl {
-    pub fn build(self) -> IamDenyPolicyRulesElDenyRuleEl {
-        IamDenyPolicyRulesElDenyRuleEl {
+impl BuildIamDenyPolicy_Rules_DenyRule {
+    pub fn build(self) -> IamDenyPolicy_Rules_DenyRule {
+        IamDenyPolicy_Rules_DenyRule {
             denied_permissions: core::default::Default::default(),
             denied_principals: core::default::Default::default(),
             exception_permissions: core::default::Default::default(),
@@ -542,21 +573,23 @@ impl BuildIamDenyPolicyRulesElDenyRuleEl {
     }
 }
 
-pub struct IamDenyPolicyRulesElDenyRuleElRef {
+#[allow(dead_code)]
+pub struct IamDenyPolicy_Rules_DenyRuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IamDenyPolicyRulesElDenyRuleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> IamDenyPolicyRulesElDenyRuleElRef {
-        IamDenyPolicyRulesElDenyRuleElRef {
+impl terrars::Ref for IamDenyPolicy_Rules_DenyRuleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IamDenyPolicy_Rules_DenyRuleRef {
+        IamDenyPolicy_Rules_DenyRuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IamDenyPolicyRulesElDenyRuleElRef {
+impl IamDenyPolicy_Rules_DenyRuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -586,26 +619,26 @@ impl IamDenyPolicyRulesElDenyRuleElRef {
     }
 
     #[doc = "Get a reference to the value of field `denial_condition` after provisioning.\n"]
-    pub fn denial_condition(&self) -> terrars::ListRef<IamDenyPolicyRulesElDenyRuleElDenialConditionElRef> {
+    pub fn denial_condition(&self) -> terrars::ListRef<IamDenyPolicy_Rules_DenyRule_DenialConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.denial_condition", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct IamDenyPolicyRulesElDynamic {
-    deny_rule: std::option::Option<terrars::DynamicBlock<IamDenyPolicyRulesElDenyRuleEl>>,
+struct IamDenyPolicy_RulesDynamic {
+    deny_rule: std::option::Option<terrars::DynamicBlock<IamDenyPolicy_Rules_DenyRule>>,
 }
 
 #[derive(Serialize)]
-pub struct IamDenyPolicyRulesEl {
+pub struct IamDenyPolicy_Rules {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    deny_rule: std::option::Option<std::vec::Vec<IamDenyPolicyRulesElDenyRuleEl>>,
-    dynamic: IamDenyPolicyRulesElDynamic,
+    deny_rule: std::option::Option<std::vec::Vec<IamDenyPolicy_Rules_DenyRule>>,
+    dynamic: IamDenyPolicy_RulesDynamic,
 }
 
-impl IamDenyPolicyRulesEl {
+impl IamDenyPolicy_Rules {
     #[doc = "Set the field `description`.\nThe description of the rule."]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -615,7 +648,7 @@ impl IamDenyPolicyRulesEl {
     #[doc = "Set the field `deny_rule`.\n"]
     pub fn set_deny_rule(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<IamDenyPolicyRulesElDenyRuleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IamDenyPolicy_Rules_DenyRule>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -629,8 +662,8 @@ impl IamDenyPolicyRulesEl {
     }
 }
 
-impl terrars::ToListMappable for IamDenyPolicyRulesEl {
-    type O = terrars::BlockAssignable<IamDenyPolicyRulesEl>;
+impl terrars::ToListMappable for IamDenyPolicy_Rules {
+    type O = terrars::BlockAssignable<IamDenyPolicy_Rules>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -641,11 +674,11 @@ impl terrars::ToListMappable for IamDenyPolicyRulesEl {
     }
 }
 
-pub struct BuildIamDenyPolicyRulesEl {}
+pub struct BuildIamDenyPolicy_Rules {}
 
-impl BuildIamDenyPolicyRulesEl {
-    pub fn build(self) -> IamDenyPolicyRulesEl {
-        IamDenyPolicyRulesEl {
+impl BuildIamDenyPolicy_Rules {
+    pub fn build(self) -> IamDenyPolicy_Rules {
+        IamDenyPolicy_Rules {
             description: core::default::Default::default(),
             deny_rule: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -653,21 +686,23 @@ impl BuildIamDenyPolicyRulesEl {
     }
 }
 
-pub struct IamDenyPolicyRulesElRef {
+#[allow(dead_code)]
+pub struct IamDenyPolicy_RulesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IamDenyPolicyRulesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> IamDenyPolicyRulesElRef {
-        IamDenyPolicyRulesElRef {
+impl terrars::Ref for IamDenyPolicy_RulesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IamDenyPolicy_RulesRef {
+        IamDenyPolicy_RulesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IamDenyPolicyRulesElRef {
+impl IamDenyPolicy_RulesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -678,13 +713,13 @@ impl IamDenyPolicyRulesElRef {
     }
 
     #[doc = "Get a reference to the value of field `deny_rule` after provisioning.\n"]
-    pub fn deny_rule(&self) -> terrars::ListRef<IamDenyPolicyRulesElDenyRuleElRef> {
+    pub fn deny_rule(&self) -> terrars::ListRef<IamDenyPolicy_Rules_DenyRuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.deny_rule", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct IamDenyPolicyTimeoutsEl {
+pub struct IamDenyPolicy_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -693,7 +728,7 @@ pub struct IamDenyPolicyTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl IamDenyPolicyTimeoutsEl {
+impl IamDenyPolicy_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -713,8 +748,8 @@ impl IamDenyPolicyTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for IamDenyPolicyTimeoutsEl {
-    type O = terrars::BlockAssignable<IamDenyPolicyTimeoutsEl>;
+impl terrars::ToListMappable for IamDenyPolicy_Timeouts {
+    type O = terrars::BlockAssignable<IamDenyPolicy_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -725,11 +760,11 @@ impl terrars::ToListMappable for IamDenyPolicyTimeoutsEl {
     }
 }
 
-pub struct BuildIamDenyPolicyTimeoutsEl {}
+pub struct BuildIamDenyPolicy_Timeouts {}
 
-impl BuildIamDenyPolicyTimeoutsEl {
-    pub fn build(self) -> IamDenyPolicyTimeoutsEl {
-        IamDenyPolicyTimeoutsEl {
+impl BuildIamDenyPolicy_Timeouts {
+    pub fn build(self) -> IamDenyPolicy_Timeouts {
+        IamDenyPolicy_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -737,21 +772,23 @@ impl BuildIamDenyPolicyTimeoutsEl {
     }
 }
 
-pub struct IamDenyPolicyTimeoutsElRef {
+#[allow(dead_code)]
+pub struct IamDenyPolicy_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IamDenyPolicyTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> IamDenyPolicyTimeoutsElRef {
-        IamDenyPolicyTimeoutsElRef {
+impl terrars::Ref for IamDenyPolicy_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IamDenyPolicy_TimeoutsRef {
+        IamDenyPolicy_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IamDenyPolicyTimeoutsElRef {
+impl IamDenyPolicy_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -770,9 +807,4 @@ impl IamDenyPolicyTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct IamDenyPolicyDynamic {
-    rules: std::option::Option<terrars::DynamicBlock<IamDenyPolicyRulesEl>>,
 }

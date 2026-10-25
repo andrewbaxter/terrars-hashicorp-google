@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct OrganizationIamBindingData {
+struct OrganizationIamBindingData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,14 +26,14 @@ struct OrganizationIamBindingData {
     org_id: terrars::PrimField<std::string::String>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<OrganizationIamBindingConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<OrganizationIamBinding_Condition>>,
     dynamic: OrganizationIamBindingDynamic,
 }
 
 struct OrganizationIamBinding_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<OrganizationIamBindingData>,
+    data: std::cell::RefCell<OrganizationIamBindingData_>,
 }
 
 #[derive(Clone)]
@@ -140,7 +142,7 @@ impl OrganizationIamBinding {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<OrganizationIamBindingConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OrganizationIamBinding_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -180,7 +182,7 @@ impl OrganizationIamBinding {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<OrganizationIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<OrganizationIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -231,7 +233,7 @@ impl BuildOrganizationIamBinding {
         let out = OrganizationIamBinding(std::rc::Rc::new(OrganizationIamBinding_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(OrganizationIamBindingData {
+            data: std::cell::RefCell::new(OrganizationIamBindingData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -300,20 +302,25 @@ impl OrganizationIamBindingRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<OrganizationIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<OrganizationIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct OrganizationIamBindingDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<OrganizationIamBinding_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct OrganizationIamBindingConditionEl {
+pub struct OrganizationIamBinding_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl OrganizationIamBindingConditionEl {
+impl OrganizationIamBinding_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -321,8 +328,8 @@ impl OrganizationIamBindingConditionEl {
     }
 }
 
-impl terrars::ToListMappable for OrganizationIamBindingConditionEl {
-    type O = terrars::BlockAssignable<OrganizationIamBindingConditionEl>;
+impl terrars::ToListMappable for OrganizationIamBinding_Condition {
+    type O = terrars::BlockAssignable<OrganizationIamBinding_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -333,16 +340,16 @@ impl terrars::ToListMappable for OrganizationIamBindingConditionEl {
     }
 }
 
-pub struct BuildOrganizationIamBindingConditionEl {
+pub struct BuildOrganizationIamBinding_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildOrganizationIamBindingConditionEl {
-    pub fn build(self) -> OrganizationIamBindingConditionEl {
-        OrganizationIamBindingConditionEl {
+impl BuildOrganizationIamBinding_Condition {
+    pub fn build(self) -> OrganizationIamBinding_Condition {
+        OrganizationIamBinding_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -350,21 +357,23 @@ impl BuildOrganizationIamBindingConditionEl {
     }
 }
 
-pub struct OrganizationIamBindingConditionElRef {
+#[allow(dead_code)]
+pub struct OrganizationIamBinding_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OrganizationIamBindingConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> OrganizationIamBindingConditionElRef {
-        OrganizationIamBindingConditionElRef {
+impl terrars::Ref for OrganizationIamBinding_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> OrganizationIamBinding_ConditionRef {
+        OrganizationIamBinding_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OrganizationIamBindingConditionElRef {
+impl OrganizationIamBinding_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -383,9 +392,4 @@ impl OrganizationIamBindingConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct OrganizationIamBindingDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<OrganizationIamBindingConditionEl>>,
 }

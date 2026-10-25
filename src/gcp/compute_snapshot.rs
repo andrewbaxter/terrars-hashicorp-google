@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeSnapshotData {
+struct ComputeSnapshotData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,6 +23,8 @@ struct ComputeSnapshotData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     chain_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -29,24 +33,31 @@ struct ComputeSnapshotData {
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
-    source_disk: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    snapshot_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source_disk: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source_instant_snapshot: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     storage_locations: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     zone: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    snapshot_encryption_key: std::option::Option<std::vec::Vec<ComputeSnapshotSnapshotEncryptionKeyEl>>,
+    params: std::option::Option<std::vec::Vec<ComputeSnapshot_Params>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    source_disk_encryption_key: std::option::Option<std::vec::Vec<ComputeSnapshotSourceDiskEncryptionKeyEl>>,
+    snapshot_encryption_key: std::option::Option<std::vec::Vec<ComputeSnapshot_SnapshotEncryptionKey>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComputeSnapshotTimeoutsEl>,
+    source_disk_encryption_key: std::option::Option<std::vec::Vec<ComputeSnapshot_SourceDiskEncryptionKey>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<ComputeSnapshot_Timeouts>,
     dynamic: ComputeSnapshotDynamic,
 }
 
 struct ComputeSnapshot_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeSnapshotData>,
+    data: std::cell::RefCell<ComputeSnapshotData_>,
 }
 
 #[derive(Clone)]
@@ -153,6 +164,13 @@ impl ComputeSnapshot {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nAn optional description of this resource."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -182,6 +200,29 @@ impl ComputeSnapshot {
     }
 
     #[doc =
+        "Set the field `snapshot_type`.\nIndicates the type of the snapshot. Possible values: [\"ARCHIVE\", \"STANDARD\"]"]
+    pub fn set_snapshot_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().snapshot_type = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `source_disk`.\nA reference to the disk used to create this snapshot."]
+    pub fn set_source_disk(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().source_disk = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `source_instant_snapshot`.\nA reference to the instant snapshot used to create this snapshot."]
+    pub fn set_source_instant_snapshot(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().source_instant_snapshot = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `storage_locations`.\nCloud Storage bucket storage location of the snapshot (regional or multi-regional)."]
     pub fn set_storage_locations(
         self,
@@ -197,10 +238,23 @@ impl ComputeSnapshot {
         self
     }
 
+    #[doc = "Set the field `params`.\n"]
+    pub fn set_params(self, v: impl std::convert::Into<terrars::BlockAssignable<ComputeSnapshot_Params>>) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().params = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.params = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `snapshot_encryption_key`.\n"]
     pub fn set_snapshot_encryption_key(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeSnapshotSnapshotEncryptionKeyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeSnapshot_SnapshotEncryptionKey>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -216,7 +270,7 @@ impl ComputeSnapshot {
     #[doc = "Set the field `source_disk_encryption_key`.\n"]
     pub fn set_source_disk_encryption_key(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeSnapshotSourceDiskEncryptionKeyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeSnapshot_SourceDiskEncryptionKey>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -230,7 +284,7 @@ impl ComputeSnapshot {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeSnapshotTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeSnapshot_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -245,6 +299,12 @@ impl ComputeSnapshot {
         "Get a reference to the value of field `creation_timestamp` after provisioning.\nCreation timestamp in RFC3339 text format."]
     pub fn creation_timestamp(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_timestamp", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -311,9 +371,21 @@ impl ComputeSnapshot {
     }
 
     #[doc =
+        "Get a reference to the value of field `snapshot_type` after provisioning.\nIndicates the type of the snapshot. Possible values: [\"ARCHIVE\", \"STANDARD\"]"]
+    pub fn snapshot_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.snapshot_type", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `source_disk` after provisioning.\nA reference to the disk used to create this snapshot."]
     pub fn source_disk(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_disk", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `source_instant_snapshot` after provisioning.\nA reference to the instant snapshot used to create this snapshot."]
+    pub fn source_instant_snapshot(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_instant_snapshot", self.extract_ref()))
     }
 
     #[doc =
@@ -340,19 +412,24 @@ impl ComputeSnapshot {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.zone", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `params` after provisioning.\n"]
+    pub fn params(&self) -> terrars::ListRef<ComputeSnapshot_ParamsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.params", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `snapshot_encryption_key` after provisioning.\n"]
-    pub fn snapshot_encryption_key(&self) -> terrars::ListRef<ComputeSnapshotSnapshotEncryptionKeyElRef> {
+    pub fn snapshot_encryption_key(&self) -> terrars::ListRef<ComputeSnapshot_SnapshotEncryptionKeyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.snapshot_encryption_key", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `source_disk_encryption_key` after provisioning.\n"]
-    pub fn source_disk_encryption_key(&self) -> terrars::ListRef<ComputeSnapshotSourceDiskEncryptionKeyElRef> {
+    pub fn source_disk_encryption_key(&self) -> terrars::ListRef<ComputeSnapshot_SourceDiskEncryptionKeyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source_disk_encryption_key", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeSnapshotTimeoutsElRef {
-        ComputeSnapshotTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeSnapshot_TimeoutsRef {
+        ComputeSnapshot_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -392,8 +469,6 @@ pub struct BuildComputeSnapshot {
     #[doc =
         "Name of the resource; provided by the client when the resource is\ncreated. The name must be 1-63 characters long, and comply with\nRFC1035. Specifically, the name must be 1-63 characters long and match\nthe regular expression '[a-z]([-a-z0-9]*[a-z0-9])?' which means the\nfirst character must be a lowercase letter, and all following\ncharacters must be a dash, lowercase letter, or digit, except the last\ncharacter, which cannot be a dash."]
     pub name: terrars::PrimField<std::string::String>,
-    #[doc = "A reference to the disk used to create this snapshot."]
-    pub source_disk: terrars::PrimField<std::string::String>,
 }
 
 impl BuildComputeSnapshot {
@@ -401,21 +476,25 @@ impl BuildComputeSnapshot {
         let out = ComputeSnapshot(std::rc::Rc::new(ComputeSnapshot_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeSnapshotData {
+            data: std::cell::RefCell::new(ComputeSnapshotData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 chain_name: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 labels: core::default::Default::default(),
                 name: self.name,
                 project: core::default::Default::default(),
-                source_disk: self.source_disk,
+                snapshot_type: core::default::Default::default(),
+                source_disk: core::default::Default::default(),
+                source_instant_snapshot: core::default::Default::default(),
                 storage_locations: core::default::Default::default(),
                 zone: core::default::Default::default(),
+                params: core::default::Default::default(),
                 snapshot_encryption_key: core::default::Default::default(),
                 source_disk_encryption_key: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
@@ -463,6 +542,12 @@ impl ComputeSnapshotRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nAn optional description of this resource."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -526,9 +611,21 @@ impl ComputeSnapshotRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `snapshot_type` after provisioning.\nIndicates the type of the snapshot. Possible values: [\"ARCHIVE\", \"STANDARD\"]"]
+    pub fn snapshot_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.snapshot_type", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `source_disk` after provisioning.\nA reference to the disk used to create this snapshot."]
     pub fn source_disk(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_disk", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `source_instant_snapshot` after provisioning.\nA reference to the instant snapshot used to create this snapshot."]
+    pub fn source_instant_snapshot(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_instant_snapshot", self.extract_ref()))
     }
 
     #[doc =
@@ -555,33 +652,113 @@ impl ComputeSnapshotRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.zone", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `params` after provisioning.\n"]
+    pub fn params(&self) -> terrars::ListRef<ComputeSnapshot_ParamsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.params", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `snapshot_encryption_key` after provisioning.\n"]
-    pub fn snapshot_encryption_key(&self) -> terrars::ListRef<ComputeSnapshotSnapshotEncryptionKeyElRef> {
+    pub fn snapshot_encryption_key(&self) -> terrars::ListRef<ComputeSnapshot_SnapshotEncryptionKeyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.snapshot_encryption_key", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `source_disk_encryption_key` after provisioning.\n"]
-    pub fn source_disk_encryption_key(&self) -> terrars::ListRef<ComputeSnapshotSourceDiskEncryptionKeyElRef> {
+    pub fn source_disk_encryption_key(&self) -> terrars::ListRef<ComputeSnapshot_SourceDiskEncryptionKeyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source_disk_encryption_key", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeSnapshotTimeoutsElRef {
-        ComputeSnapshotTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeSnapshot_TimeoutsRef {
+        ComputeSnapshot_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct ComputeSnapshotDynamic {
+    params: std::option::Option<terrars::DynamicBlock<ComputeSnapshot_Params>>,
+    snapshot_encryption_key: std::option::Option<terrars::DynamicBlock<ComputeSnapshot_SnapshotEncryptionKey>>,
+    source_disk_encryption_key: std::option::Option<terrars::DynamicBlock<ComputeSnapshot_SourceDiskEncryptionKey>>,
+}
+
+#[derive(Serialize)]
+pub struct ComputeSnapshot_Params {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_manager_tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+}
+
+impl ComputeSnapshot_Params {
+    #[doc =
+        "Set the field `resource_manager_tags`.\nResource manager tags to be bound to the snapshot. Tag keys and values have the\nsame definition as resource manager tags. Keys must be in the format tagKeys/{tag_key_id},\nand values are in the format tagValues/456."]
+    pub fn set_resource_manager_tags(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.resource_manager_tags = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeSnapshot_Params {
+    type O = terrars::BlockAssignable<ComputeSnapshot_Params>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeSnapshot_Params {}
+
+impl BuildComputeSnapshot_Params {
+    pub fn build(self) -> ComputeSnapshot_Params {
+        ComputeSnapshot_Params { resource_manager_tags: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeSnapshot_ParamsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeSnapshot_ParamsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeSnapshot_ParamsRef {
+        ComputeSnapshot_ParamsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeSnapshot_ParamsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `resource_manager_tags` after provisioning.\nResource manager tags to be bound to the snapshot. Tag keys and values have the\nsame definition as resource manager tags. Keys must be in the format tagKeys/{tag_key_id},\nand values are in the format tagValues/456."]
+    pub fn resource_manager_tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.resource_manager_tags", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeSnapshotSnapshotEncryptionKeyEl {
+pub struct ComputeSnapshot_SnapshotEncryptionKey {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_self_link: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_service_account: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     raw_key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    rsa_encrypted_key: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeSnapshotSnapshotEncryptionKeyEl {
+impl ComputeSnapshot_SnapshotEncryptionKey {
     #[doc = "Set the field `kms_key_self_link`.\nThe name of the encryption key that is stored in Google Cloud KMS."]
     pub fn set_kms_key_self_link(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.kms_key_self_link = std::option::Option::Some(v.into());
@@ -604,10 +781,17 @@ impl ComputeSnapshotSnapshotEncryptionKeyEl {
         self.raw_key = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc =
+        "Set the field `rsa_encrypted_key`.\nSpecifies an encryption key stored in Google Cloud KMS, encoded in\nRFC 4648 base64 to either encrypt or decrypt this resource."]
+    pub fn set_rsa_encrypted_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.rsa_encrypted_key = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for ComputeSnapshotSnapshotEncryptionKeyEl {
-    type O = terrars::BlockAssignable<ComputeSnapshotSnapshotEncryptionKeyEl>;
+impl terrars::ToListMappable for ComputeSnapshot_SnapshotEncryptionKey {
+    type O = terrars::BlockAssignable<ComputeSnapshot_SnapshotEncryptionKey>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -618,33 +802,36 @@ impl terrars::ToListMappable for ComputeSnapshotSnapshotEncryptionKeyEl {
     }
 }
 
-pub struct BuildComputeSnapshotSnapshotEncryptionKeyEl {}
+pub struct BuildComputeSnapshot_SnapshotEncryptionKey {}
 
-impl BuildComputeSnapshotSnapshotEncryptionKeyEl {
-    pub fn build(self) -> ComputeSnapshotSnapshotEncryptionKeyEl {
-        ComputeSnapshotSnapshotEncryptionKeyEl {
+impl BuildComputeSnapshot_SnapshotEncryptionKey {
+    pub fn build(self) -> ComputeSnapshot_SnapshotEncryptionKey {
+        ComputeSnapshot_SnapshotEncryptionKey {
             kms_key_self_link: core::default::Default::default(),
             kms_key_service_account: core::default::Default::default(),
             raw_key: core::default::Default::default(),
+            rsa_encrypted_key: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeSnapshotSnapshotEncryptionKeyElRef {
+#[allow(dead_code)]
+pub struct ComputeSnapshot_SnapshotEncryptionKeyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeSnapshotSnapshotEncryptionKeyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeSnapshotSnapshotEncryptionKeyElRef {
-        ComputeSnapshotSnapshotEncryptionKeyElRef {
+impl terrars::Ref for ComputeSnapshot_SnapshotEncryptionKeyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeSnapshot_SnapshotEncryptionKeyRef {
+        ComputeSnapshot_SnapshotEncryptionKeyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeSnapshotSnapshotEncryptionKeyElRef {
+impl ComputeSnapshot_SnapshotEncryptionKeyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -668,6 +855,12 @@ impl ComputeSnapshotSnapshotEncryptionKeyElRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `rsa_encrypted_key` after provisioning.\nSpecifies an encryption key stored in Google Cloud KMS, encoded in\nRFC 4648 base64 to either encrypt or decrypt this resource."]
+    pub fn rsa_encrypted_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rsa_encrypted_key", self.base))
+    }
+
+    #[doc =
         "Get a reference to the value of field `sha256` after provisioning.\nThe RFC 4648 base64 encoded SHA-256 hash of the customer-supplied\nencryption key that protects this resource."]
     pub fn sha256(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.sha256", self.base))
@@ -675,14 +868,24 @@ impl ComputeSnapshotSnapshotEncryptionKeyElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeSnapshotSourceDiskEncryptionKeyEl {
+pub struct ComputeSnapshot_SourceDiskEncryptionKey {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_self_link: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_service_account: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     raw_key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    rsa_encrypted_key: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeSnapshotSourceDiskEncryptionKeyEl {
+impl ComputeSnapshot_SourceDiskEncryptionKey {
+    #[doc = "Set the field `kms_key_self_link`.\nThe name of the encryption key that is stored in Google Cloud KMS."]
+    pub fn set_kms_key_self_link(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.kms_key_self_link = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc =
         "Set the field `kms_key_service_account`.\nThe service account used for the encryption request for the given KMS key.\nIf absent, the Compute Engine Service Agent service account is used."]
     pub fn set_kms_key_service_account(
@@ -699,10 +902,17 @@ impl ComputeSnapshotSourceDiskEncryptionKeyEl {
         self.raw_key = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc =
+        "Set the field `rsa_encrypted_key`.\nSpecifies an encryption key stored in Google Cloud KMS, encoded in\nRFC 4648 base64 to either encrypt or decrypt this resource."]
+    pub fn set_rsa_encrypted_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.rsa_encrypted_key = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for ComputeSnapshotSourceDiskEncryptionKeyEl {
-    type O = terrars::BlockAssignable<ComputeSnapshotSourceDiskEncryptionKeyEl>;
+impl terrars::ToListMappable for ComputeSnapshot_SourceDiskEncryptionKey {
+    type O = terrars::BlockAssignable<ComputeSnapshot_SourceDiskEncryptionKey>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -713,34 +923,44 @@ impl terrars::ToListMappable for ComputeSnapshotSourceDiskEncryptionKeyEl {
     }
 }
 
-pub struct BuildComputeSnapshotSourceDiskEncryptionKeyEl {}
+pub struct BuildComputeSnapshot_SourceDiskEncryptionKey {}
 
-impl BuildComputeSnapshotSourceDiskEncryptionKeyEl {
-    pub fn build(self) -> ComputeSnapshotSourceDiskEncryptionKeyEl {
-        ComputeSnapshotSourceDiskEncryptionKeyEl {
+impl BuildComputeSnapshot_SourceDiskEncryptionKey {
+    pub fn build(self) -> ComputeSnapshot_SourceDiskEncryptionKey {
+        ComputeSnapshot_SourceDiskEncryptionKey {
+            kms_key_self_link: core::default::Default::default(),
             kms_key_service_account: core::default::Default::default(),
             raw_key: core::default::Default::default(),
+            rsa_encrypted_key: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeSnapshotSourceDiskEncryptionKeyElRef {
+#[allow(dead_code)]
+pub struct ComputeSnapshot_SourceDiskEncryptionKeyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeSnapshotSourceDiskEncryptionKeyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeSnapshotSourceDiskEncryptionKeyElRef {
-        ComputeSnapshotSourceDiskEncryptionKeyElRef {
+impl terrars::Ref for ComputeSnapshot_SourceDiskEncryptionKeyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeSnapshot_SourceDiskEncryptionKeyRef {
+        ComputeSnapshot_SourceDiskEncryptionKeyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeSnapshotSourceDiskEncryptionKeyElRef {
+impl ComputeSnapshot_SourceDiskEncryptionKeyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `kms_key_self_link` after provisioning.\nThe name of the encryption key that is stored in Google Cloud KMS."]
+    pub fn kms_key_self_link(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_self_link", self.base))
     }
 
     #[doc =
@@ -754,10 +974,16 @@ impl ComputeSnapshotSourceDiskEncryptionKeyElRef {
     pub fn raw_key(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.raw_key", self.base))
     }
+
+    #[doc =
+        "Get a reference to the value of field `rsa_encrypted_key` after provisioning.\nSpecifies an encryption key stored in Google Cloud KMS, encoded in\nRFC 4648 base64 to either encrypt or decrypt this resource."]
+    pub fn rsa_encrypted_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rsa_encrypted_key", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct ComputeSnapshotTimeoutsEl {
+pub struct ComputeSnapshot_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -766,7 +992,7 @@ pub struct ComputeSnapshotTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeSnapshotTimeoutsEl {
+impl ComputeSnapshot_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -786,8 +1012,8 @@ impl ComputeSnapshotTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeSnapshotTimeoutsEl {
-    type O = terrars::BlockAssignable<ComputeSnapshotTimeoutsEl>;
+impl terrars::ToListMappable for ComputeSnapshot_Timeouts {
+    type O = terrars::BlockAssignable<ComputeSnapshot_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -798,11 +1024,11 @@ impl terrars::ToListMappable for ComputeSnapshotTimeoutsEl {
     }
 }
 
-pub struct BuildComputeSnapshotTimeoutsEl {}
+pub struct BuildComputeSnapshot_Timeouts {}
 
-impl BuildComputeSnapshotTimeoutsEl {
-    pub fn build(self) -> ComputeSnapshotTimeoutsEl {
-        ComputeSnapshotTimeoutsEl {
+impl BuildComputeSnapshot_Timeouts {
+    pub fn build(self) -> ComputeSnapshot_Timeouts {
+        ComputeSnapshot_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -810,21 +1036,23 @@ impl BuildComputeSnapshotTimeoutsEl {
     }
 }
 
-pub struct ComputeSnapshotTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComputeSnapshot_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeSnapshotTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeSnapshotTimeoutsElRef {
-        ComputeSnapshotTimeoutsElRef {
+impl terrars::Ref for ComputeSnapshot_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeSnapshot_TimeoutsRef {
+        ComputeSnapshot_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeSnapshotTimeoutsElRef {
+impl ComputeSnapshot_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -843,12 +1071,4 @@ impl ComputeSnapshotTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ComputeSnapshotDynamic {
-    snapshot_encryption_key: std::option::Option<terrars::DynamicBlock<ComputeSnapshotSnapshotEncryptionKeyEl>>,
-    source_disk_encryption_key: std
-    ::option
-    ::Option<terrars::DynamicBlock<ComputeSnapshotSourceDiskEncryptionKeyEl>>,
 }

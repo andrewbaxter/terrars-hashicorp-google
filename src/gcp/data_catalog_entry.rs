@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataCatalogEntryData {
+struct DataCatalogEntryData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct DataCatalogEntryData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -37,16 +41,16 @@ struct DataCatalogEntryData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     user_specified_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    gcs_fileset_spec: std::option::Option<std::vec::Vec<DataCatalogEntryGcsFilesetSpecEl>>,
+    gcs_fileset_spec: std::option::Option<std::vec::Vec<DataCatalogEntry_GcsFilesetSpec>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataCatalogEntryTimeoutsEl>,
+    timeouts: std::option::Option<DataCatalogEntry_Timeouts>,
     dynamic: DataCatalogEntryDynamic,
 }
 
 struct DataCatalogEntry_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataCatalogEntryData>,
+    data: std::cell::RefCell<DataCatalogEntryData_>,
 }
 
 #[derive(Clone)]
@@ -147,6 +151,13 @@ impl DataCatalogEntry {
     }
 
     #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `description`.\nEntry description, which can consist of several sentences or paragraphs that describe entry contents."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -204,7 +215,7 @@ impl DataCatalogEntry {
     #[doc = "Set the field `gcs_fileset_spec`.\n"]
     pub fn set_gcs_fileset_spec(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataCatalogEntryGcsFilesetSpecEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataCatalogEntry_GcsFilesetSpec>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -218,21 +229,27 @@ impl DataCatalogEntry {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataCatalogEntryTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataCatalogEntry_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
     #[doc =
         "Get a reference to the value of field `bigquery_date_sharded_spec` after provisioning.\nSpecification for a group of BigQuery tables with name pattern [prefix]YYYYMMDD.\nContext: https://cloud.google.com/bigquery/docs/partitioned-tables#partitioning_versus_sharding."]
-    pub fn bigquery_date_sharded_spec(&self) -> terrars::ListRef<DataCatalogEntryBigqueryDateShardedSpecElRef> {
+    pub fn bigquery_date_sharded_spec(&self) -> terrars::ListRef<DataCatalogEntry_BigqueryDateShardedSpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.bigquery_date_sharded_spec", self.extract_ref()))
     }
 
     #[doc =
         "Get a reference to the value of field `bigquery_table_spec` after provisioning.\nSpecification that applies to a BigQuery table. This is only valid on entries of type TABLE."]
-    pub fn bigquery_table_spec(&self) -> terrars::ListRef<DataCatalogEntryBigqueryTableSpecElRef> {
+    pub fn bigquery_table_spec(&self) -> terrars::ListRef<DataCatalogEntry_BigqueryTableSpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.bigquery_table_spec", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -306,13 +323,13 @@ impl DataCatalogEntry {
     }
 
     #[doc = "Get a reference to the value of field `gcs_fileset_spec` after provisioning.\n"]
-    pub fn gcs_fileset_spec(&self) -> terrars::ListRef<DataCatalogEntryGcsFilesetSpecElRef> {
+    pub fn gcs_fileset_spec(&self) -> terrars::ListRef<DataCatalogEntry_GcsFilesetSpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.gcs_fileset_spec", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataCatalogEntryTimeoutsElRef {
-        DataCatalogEntryTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataCatalogEntry_TimeoutsRef {
+        DataCatalogEntry_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -360,12 +377,13 @@ impl BuildDataCatalogEntry {
         let out = DataCatalogEntry(std::rc::Rc::new(DataCatalogEntry_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataCatalogEntryData {
+            data: std::cell::RefCell::new(DataCatalogEntryData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 display_name: core::default::Default::default(),
                 entry_group: self.entry_group,
@@ -411,14 +429,20 @@ impl DataCatalogEntryRef {
 
     #[doc =
         "Get a reference to the value of field `bigquery_date_sharded_spec` after provisioning.\nSpecification for a group of BigQuery tables with name pattern [prefix]YYYYMMDD.\nContext: https://cloud.google.com/bigquery/docs/partitioned-tables#partitioning_versus_sharding."]
-    pub fn bigquery_date_sharded_spec(&self) -> terrars::ListRef<DataCatalogEntryBigqueryDateShardedSpecElRef> {
+    pub fn bigquery_date_sharded_spec(&self) -> terrars::ListRef<DataCatalogEntry_BigqueryDateShardedSpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.bigquery_date_sharded_spec", self.extract_ref()))
     }
 
     #[doc =
         "Get a reference to the value of field `bigquery_table_spec` after provisioning.\nSpecification that applies to a BigQuery table. This is only valid on entries of type TABLE."]
-    pub fn bigquery_table_spec(&self) -> terrars::ListRef<DataCatalogEntryBigqueryTableSpecElRef> {
+    pub fn bigquery_table_spec(&self) -> terrars::ListRef<DataCatalogEntry_BigqueryTableSpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.bigquery_table_spec", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -492,18 +516,23 @@ impl DataCatalogEntryRef {
     }
 
     #[doc = "Get a reference to the value of field `gcs_fileset_spec` after provisioning.\n"]
-    pub fn gcs_fileset_spec(&self) -> terrars::ListRef<DataCatalogEntryGcsFilesetSpecElRef> {
+    pub fn gcs_fileset_spec(&self) -> terrars::ListRef<DataCatalogEntry_GcsFilesetSpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.gcs_fileset_spec", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataCatalogEntryTimeoutsElRef {
-        DataCatalogEntryTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataCatalogEntry_TimeoutsRef {
+        DataCatalogEntry_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataCatalogEntryDynamic {
+    gcs_fileset_spec: std::option::Option<terrars::DynamicBlock<DataCatalogEntry_GcsFilesetSpec>>,
+}
+
 #[derive(Serialize)]
-pub struct DataCatalogEntryBigqueryDateShardedSpecEl {
+pub struct DataCatalogEntry_BigqueryDateShardedSpec {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dataset: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -512,7 +541,7 @@ pub struct DataCatalogEntryBigqueryDateShardedSpecEl {
     table_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCatalogEntryBigqueryDateShardedSpecEl {
+impl DataCatalogEntry_BigqueryDateShardedSpec {
     #[doc = "Set the field `dataset`.\n"]
     pub fn set_dataset(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.dataset = std::option::Option::Some(v.into());
@@ -532,8 +561,8 @@ impl DataCatalogEntryBigqueryDateShardedSpecEl {
     }
 }
 
-impl terrars::ToListMappable for DataCatalogEntryBigqueryDateShardedSpecEl {
-    type O = terrars::BlockAssignable<DataCatalogEntryBigqueryDateShardedSpecEl>;
+impl terrars::ToListMappable for DataCatalogEntry_BigqueryDateShardedSpec {
+    type O = terrars::BlockAssignable<DataCatalogEntry_BigqueryDateShardedSpec>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -544,11 +573,11 @@ impl terrars::ToListMappable for DataCatalogEntryBigqueryDateShardedSpecEl {
     }
 }
 
-pub struct BuildDataCatalogEntryBigqueryDateShardedSpecEl {}
+pub struct BuildDataCatalogEntry_BigqueryDateShardedSpec {}
 
-impl BuildDataCatalogEntryBigqueryDateShardedSpecEl {
-    pub fn build(self) -> DataCatalogEntryBigqueryDateShardedSpecEl {
-        DataCatalogEntryBigqueryDateShardedSpecEl {
+impl BuildDataCatalogEntry_BigqueryDateShardedSpec {
+    pub fn build(self) -> DataCatalogEntry_BigqueryDateShardedSpec {
+        DataCatalogEntry_BigqueryDateShardedSpec {
             dataset: core::default::Default::default(),
             shard_count: core::default::Default::default(),
             table_prefix: core::default::Default::default(),
@@ -556,21 +585,23 @@ impl BuildDataCatalogEntryBigqueryDateShardedSpecEl {
     }
 }
 
-pub struct DataCatalogEntryBigqueryDateShardedSpecElRef {
+#[allow(dead_code)]
+pub struct DataCatalogEntry_BigqueryDateShardedSpecRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCatalogEntryBigqueryDateShardedSpecElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCatalogEntryBigqueryDateShardedSpecElRef {
-        DataCatalogEntryBigqueryDateShardedSpecElRef {
+impl terrars::Ref for DataCatalogEntry_BigqueryDateShardedSpecRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCatalogEntry_BigqueryDateShardedSpecRef {
+        DataCatalogEntry_BigqueryDateShardedSpecRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCatalogEntryBigqueryDateShardedSpecElRef {
+impl DataCatalogEntry_BigqueryDateShardedSpecRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -592,12 +623,12 @@ impl DataCatalogEntryBigqueryDateShardedSpecElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCatalogEntryBigqueryTableSpecElTableSpecEl {
+pub struct DataCatalogEntry_BigqueryTableSpec_TableSpec {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     grouped_entry: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCatalogEntryBigqueryTableSpecElTableSpecEl {
+impl DataCatalogEntry_BigqueryTableSpec_TableSpec {
     #[doc = "Set the field `grouped_entry`.\n"]
     pub fn set_grouped_entry(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.grouped_entry = std::option::Option::Some(v.into());
@@ -605,8 +636,8 @@ impl DataCatalogEntryBigqueryTableSpecElTableSpecEl {
     }
 }
 
-impl terrars::ToListMappable for DataCatalogEntryBigqueryTableSpecElTableSpecEl {
-    type O = terrars::BlockAssignable<DataCatalogEntryBigqueryTableSpecElTableSpecEl>;
+impl terrars::ToListMappable for DataCatalogEntry_BigqueryTableSpec_TableSpec {
+    type O = terrars::BlockAssignable<DataCatalogEntry_BigqueryTableSpec_TableSpec>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -617,32 +648,34 @@ impl terrars::ToListMappable for DataCatalogEntryBigqueryTableSpecElTableSpecEl 
     }
 }
 
-pub struct BuildDataCatalogEntryBigqueryTableSpecElTableSpecEl {}
+pub struct BuildDataCatalogEntry_BigqueryTableSpec_TableSpec {}
 
-impl BuildDataCatalogEntryBigqueryTableSpecElTableSpecEl {
-    pub fn build(self) -> DataCatalogEntryBigqueryTableSpecElTableSpecEl {
-        DataCatalogEntryBigqueryTableSpecElTableSpecEl { grouped_entry: core::default::Default::default() }
+impl BuildDataCatalogEntry_BigqueryTableSpec_TableSpec {
+    pub fn build(self) -> DataCatalogEntry_BigqueryTableSpec_TableSpec {
+        DataCatalogEntry_BigqueryTableSpec_TableSpec { grouped_entry: core::default::Default::default() }
     }
 }
 
-pub struct DataCatalogEntryBigqueryTableSpecElTableSpecElRef {
+#[allow(dead_code)]
+pub struct DataCatalogEntry_BigqueryTableSpec_TableSpecRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCatalogEntryBigqueryTableSpecElTableSpecElRef {
+impl terrars::Ref for DataCatalogEntry_BigqueryTableSpec_TableSpecRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCatalogEntryBigqueryTableSpecElTableSpecElRef {
-        DataCatalogEntryBigqueryTableSpecElTableSpecElRef {
+    ) -> DataCatalogEntry_BigqueryTableSpec_TableSpecRef {
+        DataCatalogEntry_BigqueryTableSpec_TableSpecRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCatalogEntryBigqueryTableSpecElTableSpecElRef {
+impl DataCatalogEntry_BigqueryTableSpec_TableSpecRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -654,12 +687,12 @@ impl DataCatalogEntryBigqueryTableSpecElTableSpecElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCatalogEntryBigqueryTableSpecElViewSpecEl {
+pub struct DataCatalogEntry_BigqueryTableSpec_ViewSpec {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     view_query: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCatalogEntryBigqueryTableSpecElViewSpecEl {
+impl DataCatalogEntry_BigqueryTableSpec_ViewSpec {
     #[doc = "Set the field `view_query`.\n"]
     pub fn set_view_query(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.view_query = std::option::Option::Some(v.into());
@@ -667,8 +700,8 @@ impl DataCatalogEntryBigqueryTableSpecElViewSpecEl {
     }
 }
 
-impl terrars::ToListMappable for DataCatalogEntryBigqueryTableSpecElViewSpecEl {
-    type O = terrars::BlockAssignable<DataCatalogEntryBigqueryTableSpecElViewSpecEl>;
+impl terrars::ToListMappable for DataCatalogEntry_BigqueryTableSpec_ViewSpec {
+    type O = terrars::BlockAssignable<DataCatalogEntry_BigqueryTableSpec_ViewSpec>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -679,32 +712,34 @@ impl terrars::ToListMappable for DataCatalogEntryBigqueryTableSpecElViewSpecEl {
     }
 }
 
-pub struct BuildDataCatalogEntryBigqueryTableSpecElViewSpecEl {}
+pub struct BuildDataCatalogEntry_BigqueryTableSpec_ViewSpec {}
 
-impl BuildDataCatalogEntryBigqueryTableSpecElViewSpecEl {
-    pub fn build(self) -> DataCatalogEntryBigqueryTableSpecElViewSpecEl {
-        DataCatalogEntryBigqueryTableSpecElViewSpecEl { view_query: core::default::Default::default() }
+impl BuildDataCatalogEntry_BigqueryTableSpec_ViewSpec {
+    pub fn build(self) -> DataCatalogEntry_BigqueryTableSpec_ViewSpec {
+        DataCatalogEntry_BigqueryTableSpec_ViewSpec { view_query: core::default::Default::default() }
     }
 }
 
-pub struct DataCatalogEntryBigqueryTableSpecElViewSpecElRef {
+#[allow(dead_code)]
+pub struct DataCatalogEntry_BigqueryTableSpec_ViewSpecRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCatalogEntryBigqueryTableSpecElViewSpecElRef {
+impl terrars::Ref for DataCatalogEntry_BigqueryTableSpec_ViewSpecRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCatalogEntryBigqueryTableSpecElViewSpecElRef {
-        DataCatalogEntryBigqueryTableSpecElViewSpecElRef {
+    ) -> DataCatalogEntry_BigqueryTableSpec_ViewSpecRef {
+        DataCatalogEntry_BigqueryTableSpec_ViewSpecRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCatalogEntryBigqueryTableSpecElViewSpecElRef {
+impl DataCatalogEntry_BigqueryTableSpec_ViewSpecRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -716,16 +751,16 @@ impl DataCatalogEntryBigqueryTableSpecElViewSpecElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCatalogEntryBigqueryTableSpecEl {
+pub struct DataCatalogEntry_BigqueryTableSpec {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     table_source_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    table_spec: std::option::Option<terrars::ListField<DataCatalogEntryBigqueryTableSpecElTableSpecEl>>,
+    table_spec: std::option::Option<terrars::ListField<DataCatalogEntry_BigqueryTableSpec_TableSpec>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    view_spec: std::option::Option<terrars::ListField<DataCatalogEntryBigqueryTableSpecElViewSpecEl>>,
+    view_spec: std::option::Option<terrars::ListField<DataCatalogEntry_BigqueryTableSpec_ViewSpec>>,
 }
 
-impl DataCatalogEntryBigqueryTableSpecEl {
+impl DataCatalogEntry_BigqueryTableSpec {
     #[doc = "Set the field `table_source_type`.\n"]
     pub fn set_table_source_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.table_source_type = std::option::Option::Some(v.into());
@@ -735,7 +770,7 @@ impl DataCatalogEntryBigqueryTableSpecEl {
     #[doc = "Set the field `table_spec`.\n"]
     pub fn set_table_spec(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataCatalogEntryBigqueryTableSpecElTableSpecEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataCatalogEntry_BigqueryTableSpec_TableSpec>>,
     ) -> Self {
         self.table_spec = std::option::Option::Some(v.into());
         self
@@ -744,15 +779,15 @@ impl DataCatalogEntryBigqueryTableSpecEl {
     #[doc = "Set the field `view_spec`.\n"]
     pub fn set_view_spec(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataCatalogEntryBigqueryTableSpecElViewSpecEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataCatalogEntry_BigqueryTableSpec_ViewSpec>>,
     ) -> Self {
         self.view_spec = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataCatalogEntryBigqueryTableSpecEl {
-    type O = terrars::BlockAssignable<DataCatalogEntryBigqueryTableSpecEl>;
+impl terrars::ToListMappable for DataCatalogEntry_BigqueryTableSpec {
+    type O = terrars::BlockAssignable<DataCatalogEntry_BigqueryTableSpec>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -763,11 +798,11 @@ impl terrars::ToListMappable for DataCatalogEntryBigqueryTableSpecEl {
     }
 }
 
-pub struct BuildDataCatalogEntryBigqueryTableSpecEl {}
+pub struct BuildDataCatalogEntry_BigqueryTableSpec {}
 
-impl BuildDataCatalogEntryBigqueryTableSpecEl {
-    pub fn build(self) -> DataCatalogEntryBigqueryTableSpecEl {
-        DataCatalogEntryBigqueryTableSpecEl {
+impl BuildDataCatalogEntry_BigqueryTableSpec {
+    pub fn build(self) -> DataCatalogEntry_BigqueryTableSpec {
+        DataCatalogEntry_BigqueryTableSpec {
             table_source_type: core::default::Default::default(),
             table_spec: core::default::Default::default(),
             view_spec: core::default::Default::default(),
@@ -775,21 +810,23 @@ impl BuildDataCatalogEntryBigqueryTableSpecEl {
     }
 }
 
-pub struct DataCatalogEntryBigqueryTableSpecElRef {
+#[allow(dead_code)]
+pub struct DataCatalogEntry_BigqueryTableSpecRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCatalogEntryBigqueryTableSpecElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCatalogEntryBigqueryTableSpecElRef {
-        DataCatalogEntryBigqueryTableSpecElRef {
+impl terrars::Ref for DataCatalogEntry_BigqueryTableSpecRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCatalogEntry_BigqueryTableSpecRef {
+        DataCatalogEntry_BigqueryTableSpecRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCatalogEntryBigqueryTableSpecElRef {
+impl DataCatalogEntry_BigqueryTableSpecRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -800,25 +837,25 @@ impl DataCatalogEntryBigqueryTableSpecElRef {
     }
 
     #[doc = "Get a reference to the value of field `table_spec` after provisioning.\n"]
-    pub fn table_spec(&self) -> terrars::ListRef<DataCatalogEntryBigqueryTableSpecElTableSpecElRef> {
+    pub fn table_spec(&self) -> terrars::ListRef<DataCatalogEntry_BigqueryTableSpec_TableSpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.table_spec", self.base))
     }
 
     #[doc = "Get a reference to the value of field `view_spec` after provisioning.\n"]
-    pub fn view_spec(&self) -> terrars::ListRef<DataCatalogEntryBigqueryTableSpecElViewSpecElRef> {
+    pub fn view_spec(&self) -> terrars::ListRef<DataCatalogEntry_BigqueryTableSpec_ViewSpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.view_spec", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataCatalogEntryGcsFilesetSpecElSampleGcsFileSpecsEl {
+pub struct DataCatalogEntry_GcsFilesetSpec_SampleGcsFileSpecs {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     file_path: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     size_bytes: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataCatalogEntryGcsFilesetSpecElSampleGcsFileSpecsEl {
+impl DataCatalogEntry_GcsFilesetSpec_SampleGcsFileSpecs {
     #[doc = "Set the field `file_path`.\n"]
     pub fn set_file_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.file_path = std::option::Option::Some(v.into());
@@ -832,8 +869,8 @@ impl DataCatalogEntryGcsFilesetSpecElSampleGcsFileSpecsEl {
     }
 }
 
-impl terrars::ToListMappable for DataCatalogEntryGcsFilesetSpecElSampleGcsFileSpecsEl {
-    type O = terrars::BlockAssignable<DataCatalogEntryGcsFilesetSpecElSampleGcsFileSpecsEl>;
+impl terrars::ToListMappable for DataCatalogEntry_GcsFilesetSpec_SampleGcsFileSpecs {
+    type O = terrars::BlockAssignable<DataCatalogEntry_GcsFilesetSpec_SampleGcsFileSpecs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -844,35 +881,37 @@ impl terrars::ToListMappable for DataCatalogEntryGcsFilesetSpecElSampleGcsFileSp
     }
 }
 
-pub struct BuildDataCatalogEntryGcsFilesetSpecElSampleGcsFileSpecsEl {}
+pub struct BuildDataCatalogEntry_GcsFilesetSpec_SampleGcsFileSpecs {}
 
-impl BuildDataCatalogEntryGcsFilesetSpecElSampleGcsFileSpecsEl {
-    pub fn build(self) -> DataCatalogEntryGcsFilesetSpecElSampleGcsFileSpecsEl {
-        DataCatalogEntryGcsFilesetSpecElSampleGcsFileSpecsEl {
+impl BuildDataCatalogEntry_GcsFilesetSpec_SampleGcsFileSpecs {
+    pub fn build(self) -> DataCatalogEntry_GcsFilesetSpec_SampleGcsFileSpecs {
+        DataCatalogEntry_GcsFilesetSpec_SampleGcsFileSpecs {
             file_path: core::default::Default::default(),
             size_bytes: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataCatalogEntryGcsFilesetSpecElSampleGcsFileSpecsElRef {
+#[allow(dead_code)]
+pub struct DataCatalogEntry_GcsFilesetSpec_SampleGcsFileSpecsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCatalogEntryGcsFilesetSpecElSampleGcsFileSpecsElRef {
+impl terrars::Ref for DataCatalogEntry_GcsFilesetSpec_SampleGcsFileSpecsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCatalogEntryGcsFilesetSpecElSampleGcsFileSpecsElRef {
-        DataCatalogEntryGcsFilesetSpecElSampleGcsFileSpecsElRef {
+    ) -> DataCatalogEntry_GcsFilesetSpec_SampleGcsFileSpecsRef {
+        DataCatalogEntry_GcsFilesetSpec_SampleGcsFileSpecsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCatalogEntryGcsFilesetSpecElSampleGcsFileSpecsElRef {
+impl DataCatalogEntry_GcsFilesetSpec_SampleGcsFileSpecsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -889,14 +928,14 @@ impl DataCatalogEntryGcsFilesetSpecElSampleGcsFileSpecsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCatalogEntryGcsFilesetSpecEl {
+pub struct DataCatalogEntry_GcsFilesetSpec {
     file_patterns: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCatalogEntryGcsFilesetSpecEl { }
+impl DataCatalogEntry_GcsFilesetSpec { }
 
-impl terrars::ToListMappable for DataCatalogEntryGcsFilesetSpecEl {
-    type O = terrars::BlockAssignable<DataCatalogEntryGcsFilesetSpecEl>;
+impl terrars::ToListMappable for DataCatalogEntry_GcsFilesetSpec {
+    type O = terrars::BlockAssignable<DataCatalogEntry_GcsFilesetSpec>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -907,33 +946,35 @@ impl terrars::ToListMappable for DataCatalogEntryGcsFilesetSpecEl {
     }
 }
 
-pub struct BuildDataCatalogEntryGcsFilesetSpecEl {
+pub struct BuildDataCatalogEntry_GcsFilesetSpec {
     #[doc =
         "Patterns to identify a set of files in Google Cloud Storage.\nSee [Cloud Storage documentation](https://cloud.google.com/storage/docs/gsutil/addlhelp/WildcardNames)\nfor more information. Note that bucket wildcards are currently not supported. Examples of valid filePatterns:\n\n* gs://bucket_name/dir/*: matches all files within bucket_name/dir directory.\n* gs://bucket_name/dir/**: matches all files in bucket_name/dir spanning all subdirectories.\n* gs://bucket_name/file*: matches files prefixed by file in bucket_name\n* gs://bucket_name/??.txt: matches files with two characters followed by .txt in bucket_name\n* gs://bucket_name/[aeiou].txt: matches files that contain a single vowel character followed by .txt in bucket_name\n* gs://bucket_name/[a-m].txt: matches files that contain a, b, ... or m followed by .txt in bucket_name\n* gs://bucket_name/a/*/b: matches all files in bucket_name that match a/*/b pattern, such as a/c/b, a/d/b\n* gs://another_bucket/a.txt: matches gs://another_bucket/a.txt"]
     pub file_patterns: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataCatalogEntryGcsFilesetSpecEl {
-    pub fn build(self) -> DataCatalogEntryGcsFilesetSpecEl {
-        DataCatalogEntryGcsFilesetSpecEl { file_patterns: self.file_patterns }
+impl BuildDataCatalogEntry_GcsFilesetSpec {
+    pub fn build(self) -> DataCatalogEntry_GcsFilesetSpec {
+        DataCatalogEntry_GcsFilesetSpec { file_patterns: self.file_patterns }
     }
 }
 
-pub struct DataCatalogEntryGcsFilesetSpecElRef {
+#[allow(dead_code)]
+pub struct DataCatalogEntry_GcsFilesetSpecRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCatalogEntryGcsFilesetSpecElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCatalogEntryGcsFilesetSpecElRef {
-        DataCatalogEntryGcsFilesetSpecElRef {
+impl terrars::Ref for DataCatalogEntry_GcsFilesetSpecRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCatalogEntry_GcsFilesetSpecRef {
+        DataCatalogEntry_GcsFilesetSpecRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCatalogEntryGcsFilesetSpecElRef {
+impl DataCatalogEntry_GcsFilesetSpecRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -946,13 +987,13 @@ impl DataCatalogEntryGcsFilesetSpecElRef {
 
     #[doc =
         "Get a reference to the value of field `sample_gcs_file_specs` after provisioning.\nSample files contained in this fileset, not all files contained in this fileset are represented here."]
-    pub fn sample_gcs_file_specs(&self) -> terrars::ListRef<DataCatalogEntryGcsFilesetSpecElSampleGcsFileSpecsElRef> {
+    pub fn sample_gcs_file_specs(&self) -> terrars::ListRef<DataCatalogEntry_GcsFilesetSpec_SampleGcsFileSpecsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sample_gcs_file_specs", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataCatalogEntryTimeoutsEl {
+pub struct DataCatalogEntry_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -961,7 +1002,7 @@ pub struct DataCatalogEntryTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCatalogEntryTimeoutsEl {
+impl DataCatalogEntry_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -981,8 +1022,8 @@ impl DataCatalogEntryTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataCatalogEntryTimeoutsEl {
-    type O = terrars::BlockAssignable<DataCatalogEntryTimeoutsEl>;
+impl terrars::ToListMappable for DataCatalogEntry_Timeouts {
+    type O = terrars::BlockAssignable<DataCatalogEntry_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -993,11 +1034,11 @@ impl terrars::ToListMappable for DataCatalogEntryTimeoutsEl {
     }
 }
 
-pub struct BuildDataCatalogEntryTimeoutsEl {}
+pub struct BuildDataCatalogEntry_Timeouts {}
 
-impl BuildDataCatalogEntryTimeoutsEl {
-    pub fn build(self) -> DataCatalogEntryTimeoutsEl {
-        DataCatalogEntryTimeoutsEl {
+impl BuildDataCatalogEntry_Timeouts {
+    pub fn build(self) -> DataCatalogEntry_Timeouts {
+        DataCatalogEntry_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1005,21 +1046,23 @@ impl BuildDataCatalogEntryTimeoutsEl {
     }
 }
 
-pub struct DataCatalogEntryTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataCatalogEntry_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCatalogEntryTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCatalogEntryTimeoutsElRef {
-        DataCatalogEntryTimeoutsElRef {
+impl terrars::Ref for DataCatalogEntry_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCatalogEntry_TimeoutsRef {
+        DataCatalogEntry_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCatalogEntryTimeoutsElRef {
+impl DataCatalogEntry_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1038,9 +1081,4 @@ impl DataCatalogEntryTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataCatalogEntryDynamic {
-    gcs_fileset_spec: std::option::Option<terrars::DynamicBlock<DataCatalogEntryGcsFilesetSpecEl>>,
 }

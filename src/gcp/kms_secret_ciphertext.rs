@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct KmsSecretCiphertextData {
+struct KmsSecretCiphertextData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,13 +27,13 @@ struct KmsSecretCiphertextData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     plaintext: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<KmsSecretCiphertextTimeoutsEl>,
+    timeouts: std::option::Option<KmsSecretCiphertext_Timeouts>,
 }
 
 struct KmsSecretCiphertext_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<KmsSecretCiphertextData>,
+    data: std::cell::RefCell<KmsSecretCiphertextData_>,
 }
 
 #[derive(Clone)]
@@ -148,7 +150,7 @@ impl KmsSecretCiphertext {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<KmsSecretCiphertextTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<KmsSecretCiphertext_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -185,8 +187,8 @@ impl KmsSecretCiphertext {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> KmsSecretCiphertextTimeoutsElRef {
-        KmsSecretCiphertextTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> KmsSecretCiphertext_TimeoutsRef {
+        KmsSecretCiphertext_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -235,7 +237,7 @@ impl BuildKmsSecretCiphertext {
         let out = KmsSecretCiphertext(std::rc::Rc::new(KmsSecretCiphertext_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(KmsSecretCiphertextData {
+            data: std::cell::RefCell::new(KmsSecretCiphertextData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -308,20 +310,20 @@ impl KmsSecretCiphertextRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> KmsSecretCiphertextTimeoutsElRef {
-        KmsSecretCiphertextTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> KmsSecretCiphertext_TimeoutsRef {
+        KmsSecretCiphertext_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct KmsSecretCiphertextTimeoutsEl {
+pub struct KmsSecretCiphertext_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl KmsSecretCiphertextTimeoutsEl {
+impl KmsSecretCiphertext_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -335,8 +337,8 @@ impl KmsSecretCiphertextTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for KmsSecretCiphertextTimeoutsEl {
-    type O = terrars::BlockAssignable<KmsSecretCiphertextTimeoutsEl>;
+impl terrars::ToListMappable for KmsSecretCiphertext_Timeouts {
+    type O = terrars::BlockAssignable<KmsSecretCiphertext_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -347,32 +349,34 @@ impl terrars::ToListMappable for KmsSecretCiphertextTimeoutsEl {
     }
 }
 
-pub struct BuildKmsSecretCiphertextTimeoutsEl {}
+pub struct BuildKmsSecretCiphertext_Timeouts {}
 
-impl BuildKmsSecretCiphertextTimeoutsEl {
-    pub fn build(self) -> KmsSecretCiphertextTimeoutsEl {
-        KmsSecretCiphertextTimeoutsEl {
+impl BuildKmsSecretCiphertext_Timeouts {
+    pub fn build(self) -> KmsSecretCiphertext_Timeouts {
+        KmsSecretCiphertext_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct KmsSecretCiphertextTimeoutsElRef {
+#[allow(dead_code)]
+pub struct KmsSecretCiphertext_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KmsSecretCiphertextTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> KmsSecretCiphertextTimeoutsElRef {
-        KmsSecretCiphertextTimeoutsElRef {
+impl terrars::Ref for KmsSecretCiphertext_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> KmsSecretCiphertext_TimeoutsRef {
+        KmsSecretCiphertext_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KmsSecretCiphertextTimeoutsElRef {
+impl KmsSecretCiphertext_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

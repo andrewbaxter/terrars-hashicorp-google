@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeFirewallData {
+struct ComputeFirewallData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct ComputeFirewallData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -47,20 +51,22 @@ struct ComputeFirewallData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     target_tags: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    allow: std::option::Option<std::vec::Vec<ComputeFirewallAllowEl>>,
+    allow: std::option::Option<std::vec::Vec<ComputeFirewall_Allow>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    deny: std::option::Option<std::vec::Vec<ComputeFirewallDenyEl>>,
+    deny: std::option::Option<std::vec::Vec<ComputeFirewall_Deny>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    log_config: std::option::Option<std::vec::Vec<ComputeFirewallLogConfigEl>>,
+    log_config: std::option::Option<std::vec::Vec<ComputeFirewall_LogConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComputeFirewallTimeoutsEl>,
+    params: std::option::Option<std::vec::Vec<ComputeFirewall_Params>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<ComputeFirewall_Timeouts>,
     dynamic: ComputeFirewallDynamic,
 }
 
 struct ComputeFirewall_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeFirewallData>,
+    data: std::cell::RefCell<ComputeFirewallData_>,
 }
 
 #[derive(Clone)]
@@ -157,6 +163,13 @@ impl ComputeFirewall {
             condition: condition.into(),
             error_message: error_message.into(),
         });
+        self
+    }
+
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
         self
     }
 
@@ -268,7 +281,7 @@ impl ComputeFirewall {
     }
 
     #[doc = "Set the field `allow`.\n"]
-    pub fn set_allow(self, v: impl std::convert::Into<terrars::BlockAssignable<ComputeFirewallAllowEl>>) -> Self {
+    pub fn set_allow(self, v: impl std::convert::Into<terrars::BlockAssignable<ComputeFirewall_Allow>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().allow = std::option::Option::Some(v);
@@ -281,7 +294,7 @@ impl ComputeFirewall {
     }
 
     #[doc = "Set the field `deny`.\n"]
-    pub fn set_deny(self, v: impl std::convert::Into<terrars::BlockAssignable<ComputeFirewallDenyEl>>) -> Self {
+    pub fn set_deny(self, v: impl std::convert::Into<terrars::BlockAssignable<ComputeFirewall_Deny>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().deny = std::option::Option::Some(v);
@@ -296,7 +309,7 @@ impl ComputeFirewall {
     #[doc = "Set the field `log_config`.\n"]
     pub fn set_log_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeFirewallLogConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeFirewall_LogConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -309,8 +322,21 @@ impl ComputeFirewall {
         self
     }
 
+    #[doc = "Set the field `params`.\n"]
+    pub fn set_params(self, v: impl std::convert::Into<terrars::BlockAssignable<ComputeFirewall_Params>>) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().params = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.params = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeFirewallTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeFirewall_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -319,6 +345,12 @@ impl ComputeFirewall {
         "Get a reference to the value of field `creation_timestamp` after provisioning.\nCreation timestamp in RFC3339 text format."]
     pub fn creation_timestamp(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_timestamp", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -415,13 +447,18 @@ impl ComputeFirewall {
     }
 
     #[doc = "Get a reference to the value of field `log_config` after provisioning.\n"]
-    pub fn log_config(&self) -> terrars::ListRef<ComputeFirewallLogConfigElRef> {
+    pub fn log_config(&self) -> terrars::ListRef<ComputeFirewall_LogConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.log_config", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `params` after provisioning.\n"]
+    pub fn params(&self) -> terrars::ListRef<ComputeFirewall_ParamsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.params", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeFirewallTimeoutsElRef {
-        ComputeFirewallTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeFirewall_TimeoutsRef {
+        ComputeFirewall_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -470,12 +507,13 @@ impl BuildComputeFirewall {
         let out = ComputeFirewall(std::rc::Rc::new(ComputeFirewall_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeFirewallData {
+            data: std::cell::RefCell::new(ComputeFirewallData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 destination_ranges: core::default::Default::default(),
                 direction: core::default::Default::default(),
@@ -494,6 +532,7 @@ impl BuildComputeFirewall {
                 allow: core::default::Default::default(),
                 deny: core::default::Default::default(),
                 log_config: core::default::Default::default(),
+                params: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -530,6 +569,12 @@ impl ComputeFirewallRef {
         "Get a reference to the value of field `creation_timestamp` after provisioning.\nCreation timestamp in RFC3339 text format."]
     pub fn creation_timestamp(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_timestamp", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -626,26 +671,39 @@ impl ComputeFirewallRef {
     }
 
     #[doc = "Get a reference to the value of field `log_config` after provisioning.\n"]
-    pub fn log_config(&self) -> terrars::ListRef<ComputeFirewallLogConfigElRef> {
+    pub fn log_config(&self) -> terrars::ListRef<ComputeFirewall_LogConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.log_config", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `params` after provisioning.\n"]
+    pub fn params(&self) -> terrars::ListRef<ComputeFirewall_ParamsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.params", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeFirewallTimeoutsElRef {
-        ComputeFirewallTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeFirewall_TimeoutsRef {
+        ComputeFirewall_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ComputeFirewallDynamic {
+    allow: std::option::Option<terrars::DynamicBlock<ComputeFirewall_Allow>>,
+    deny: std::option::Option<terrars::DynamicBlock<ComputeFirewall_Deny>>,
+    log_config: std::option::Option<terrars::DynamicBlock<ComputeFirewall_LogConfig>>,
+    params: std::option::Option<terrars::DynamicBlock<ComputeFirewall_Params>>,
+}
+
 #[derive(Serialize)]
-pub struct ComputeFirewallAllowEl {
+pub struct ComputeFirewall_Allow {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ports: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     protocol: terrars::PrimField<std::string::String>,
 }
 
-impl ComputeFirewallAllowEl {
+impl ComputeFirewall_Allow {
     #[doc =
-        "Set the field `ports`.\nAn optional list of ports to which this rule applies. This field\nis only applicable for UDP or TCP protocol. Each entry must be\neither an integer or a range. If not specified, this rule\napplies to connections through any port.\n\nExample inputs include: [\"22\"], [\"80\",\"443\"], and\n[\"12345-12349\"]."]
+        "Set the field `ports`.\nAn optional list of ports to which this rule applies. This field\nis only applicable for UDP or TCP protocol. Each entry must be\neither an integer or a range. If not specified, this rule\napplies to connections through any port.\n\nExample inputs include: [22], [80, 443], and\n[\"12345-12349\"]."]
     pub fn set_ports(
         mut self,
         v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
@@ -655,8 +713,8 @@ impl ComputeFirewallAllowEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeFirewallAllowEl {
-    type O = terrars::BlockAssignable<ComputeFirewallAllowEl>;
+impl terrars::ToListMappable for ComputeFirewall_Allow {
+    type O = terrars::BlockAssignable<ComputeFirewall_Allow>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -667,42 +725,44 @@ impl terrars::ToListMappable for ComputeFirewallAllowEl {
     }
 }
 
-pub struct BuildComputeFirewallAllowEl {
+pub struct BuildComputeFirewall_Allow {
     #[doc =
         "The IP protocol to which this rule applies. The protocol type is\nrequired when creating a firewall rule. This value can either be\none of the following well known protocol strings (tcp, udp,\nicmp, esp, ah, sctp, ipip, all), or the IP protocol number."]
     pub protocol: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputeFirewallAllowEl {
-    pub fn build(self) -> ComputeFirewallAllowEl {
-        ComputeFirewallAllowEl {
+impl BuildComputeFirewall_Allow {
+    pub fn build(self) -> ComputeFirewall_Allow {
+        ComputeFirewall_Allow {
             ports: core::default::Default::default(),
             protocol: self.protocol,
         }
     }
 }
 
-pub struct ComputeFirewallAllowElRef {
+#[allow(dead_code)]
+pub struct ComputeFirewall_AllowRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeFirewallAllowElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeFirewallAllowElRef {
-        ComputeFirewallAllowElRef {
+impl terrars::Ref for ComputeFirewall_AllowRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeFirewall_AllowRef {
+        ComputeFirewall_AllowRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeFirewallAllowElRef {
+impl ComputeFirewall_AllowRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `ports` after provisioning.\nAn optional list of ports to which this rule applies. This field\nis only applicable for UDP or TCP protocol. Each entry must be\neither an integer or a range. If not specified, this rule\napplies to connections through any port.\n\nExample inputs include: [\"22\"], [\"80\",\"443\"], and\n[\"12345-12349\"]."]
+        "Get a reference to the value of field `ports` after provisioning.\nAn optional list of ports to which this rule applies. This field\nis only applicable for UDP or TCP protocol. Each entry must be\neither an integer or a range. If not specified, this rule\napplies to connections through any port.\n\nExample inputs include: [22], [80, 443], and\n[\"12345-12349\"]."]
     pub fn ports(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ports", self.base))
     }
@@ -715,15 +775,15 @@ impl ComputeFirewallAllowElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeFirewallDenyEl {
+pub struct ComputeFirewall_Deny {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ports: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     protocol: terrars::PrimField<std::string::String>,
 }
 
-impl ComputeFirewallDenyEl {
+impl ComputeFirewall_Deny {
     #[doc =
-        "Set the field `ports`.\nAn optional list of ports to which this rule applies. This field\nis only applicable for UDP or TCP protocol. Each entry must be\neither an integer or a range. If not specified, this rule\napplies to connections through any port.\n\nExample inputs include: [\"22\"], [\"80\",\"443\"], and\n[\"12345-12349\"]."]
+        "Set the field `ports`.\nAn optional list of ports to which this rule applies. This field\nis only applicable for UDP or TCP protocol. Each entry must be\neither an integer or a range. If not specified, this rule\napplies to connections through any port.\n\nExample inputs include: [22], [80, 443], and\n[\"12345-12349\"]."]
     pub fn set_ports(
         mut self,
         v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
@@ -733,8 +793,8 @@ impl ComputeFirewallDenyEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeFirewallDenyEl {
-    type O = terrars::BlockAssignable<ComputeFirewallDenyEl>;
+impl terrars::ToListMappable for ComputeFirewall_Deny {
+    type O = terrars::BlockAssignable<ComputeFirewall_Deny>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -745,42 +805,44 @@ impl terrars::ToListMappable for ComputeFirewallDenyEl {
     }
 }
 
-pub struct BuildComputeFirewallDenyEl {
+pub struct BuildComputeFirewall_Deny {
     #[doc =
         "The IP protocol to which this rule applies. The protocol type is\nrequired when creating a firewall rule. This value can either be\none of the following well known protocol strings (tcp, udp,\nicmp, esp, ah, sctp, ipip, all), or the IP protocol number."]
     pub protocol: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputeFirewallDenyEl {
-    pub fn build(self) -> ComputeFirewallDenyEl {
-        ComputeFirewallDenyEl {
+impl BuildComputeFirewall_Deny {
+    pub fn build(self) -> ComputeFirewall_Deny {
+        ComputeFirewall_Deny {
             ports: core::default::Default::default(),
             protocol: self.protocol,
         }
     }
 }
 
-pub struct ComputeFirewallDenyElRef {
+#[allow(dead_code)]
+pub struct ComputeFirewall_DenyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeFirewallDenyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeFirewallDenyElRef {
-        ComputeFirewallDenyElRef {
+impl terrars::Ref for ComputeFirewall_DenyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeFirewall_DenyRef {
+        ComputeFirewall_DenyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeFirewallDenyElRef {
+impl ComputeFirewall_DenyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `ports` after provisioning.\nAn optional list of ports to which this rule applies. This field\nis only applicable for UDP or TCP protocol. Each entry must be\neither an integer or a range. If not specified, this rule\napplies to connections through any port.\n\nExample inputs include: [\"22\"], [\"80\",\"443\"], and\n[\"12345-12349\"]."]
+        "Get a reference to the value of field `ports` after provisioning.\nAn optional list of ports to which this rule applies. This field\nis only applicable for UDP or TCP protocol. Each entry must be\neither an integer or a range. If not specified, this rule\napplies to connections through any port.\n\nExample inputs include: [22], [80, 443], and\n[\"12345-12349\"]."]
     pub fn ports(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ports", self.base))
     }
@@ -793,14 +855,14 @@ impl ComputeFirewallDenyElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeFirewallLogConfigEl {
+pub struct ComputeFirewall_LogConfig {
     metadata: terrars::PrimField<std::string::String>,
 }
 
-impl ComputeFirewallLogConfigEl { }
+impl ComputeFirewall_LogConfig { }
 
-impl terrars::ToListMappable for ComputeFirewallLogConfigEl {
-    type O = terrars::BlockAssignable<ComputeFirewallLogConfigEl>;
+impl terrars::ToListMappable for ComputeFirewall_LogConfig {
+    type O = terrars::BlockAssignable<ComputeFirewall_LogConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -811,33 +873,35 @@ impl terrars::ToListMappable for ComputeFirewallLogConfigEl {
     }
 }
 
-pub struct BuildComputeFirewallLogConfigEl {
+pub struct BuildComputeFirewall_LogConfig {
     #[doc =
         "This field denotes whether to include or exclude metadata for firewall logs. Possible values: [\"EXCLUDE_ALL_METADATA\", \"INCLUDE_ALL_METADATA\"]"]
     pub metadata: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputeFirewallLogConfigEl {
-    pub fn build(self) -> ComputeFirewallLogConfigEl {
-        ComputeFirewallLogConfigEl { metadata: self.metadata }
+impl BuildComputeFirewall_LogConfig {
+    pub fn build(self) -> ComputeFirewall_LogConfig {
+        ComputeFirewall_LogConfig { metadata: self.metadata }
     }
 }
 
-pub struct ComputeFirewallLogConfigElRef {
+#[allow(dead_code)]
+pub struct ComputeFirewall_LogConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeFirewallLogConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeFirewallLogConfigElRef {
-        ComputeFirewallLogConfigElRef {
+impl terrars::Ref for ComputeFirewall_LogConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeFirewall_LogConfigRef {
+        ComputeFirewall_LogConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeFirewallLogConfigElRef {
+impl ComputeFirewall_LogConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -850,7 +914,73 @@ impl ComputeFirewallLogConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeFirewallTimeoutsEl {
+pub struct ComputeFirewall_Params {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_manager_tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+}
+
+impl ComputeFirewall_Params {
+    #[doc =
+        "Set the field `resource_manager_tags`.\nResource manager tags to be bound to the firewall. Tag keys and values have the\nsame definition as resource manager tags. Keys must be in the format tagKeys/{tag_key_id},\nand values are in the format tagValues/456. The field is ignored when empty.\nThe field is immutable and causes resource replacement when mutated. This field is only\nset at create time and modifying this field after creation will trigger recreation.\nTo apply tags to an existing resource, see the google_tags_tag_binding resource."]
+    pub fn set_resource_manager_tags(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.resource_manager_tags = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeFirewall_Params {
+    type O = terrars::BlockAssignable<ComputeFirewall_Params>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeFirewall_Params {}
+
+impl BuildComputeFirewall_Params {
+    pub fn build(self) -> ComputeFirewall_Params {
+        ComputeFirewall_Params { resource_manager_tags: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeFirewall_ParamsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeFirewall_ParamsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeFirewall_ParamsRef {
+        ComputeFirewall_ParamsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeFirewall_ParamsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `resource_manager_tags` after provisioning.\nResource manager tags to be bound to the firewall. Tag keys and values have the\nsame definition as resource manager tags. Keys must be in the format tagKeys/{tag_key_id},\nand values are in the format tagValues/456. The field is ignored when empty.\nThe field is immutable and causes resource replacement when mutated. This field is only\nset at create time and modifying this field after creation will trigger recreation.\nTo apply tags to an existing resource, see the google_tags_tag_binding resource."]
+    pub fn resource_manager_tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.resource_manager_tags", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ComputeFirewall_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -859,7 +989,7 @@ pub struct ComputeFirewallTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeFirewallTimeoutsEl {
+impl ComputeFirewall_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -879,8 +1009,8 @@ impl ComputeFirewallTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeFirewallTimeoutsEl {
-    type O = terrars::BlockAssignable<ComputeFirewallTimeoutsEl>;
+impl terrars::ToListMappable for ComputeFirewall_Timeouts {
+    type O = terrars::BlockAssignable<ComputeFirewall_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -891,11 +1021,11 @@ impl terrars::ToListMappable for ComputeFirewallTimeoutsEl {
     }
 }
 
-pub struct BuildComputeFirewallTimeoutsEl {}
+pub struct BuildComputeFirewall_Timeouts {}
 
-impl BuildComputeFirewallTimeoutsEl {
-    pub fn build(self) -> ComputeFirewallTimeoutsEl {
-        ComputeFirewallTimeoutsEl {
+impl BuildComputeFirewall_Timeouts {
+    pub fn build(self) -> ComputeFirewall_Timeouts {
+        ComputeFirewall_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -903,21 +1033,23 @@ impl BuildComputeFirewallTimeoutsEl {
     }
 }
 
-pub struct ComputeFirewallTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComputeFirewall_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeFirewallTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeFirewallTimeoutsElRef {
-        ComputeFirewallTimeoutsElRef {
+impl terrars::Ref for ComputeFirewall_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeFirewall_TimeoutsRef {
+        ComputeFirewall_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeFirewallTimeoutsElRef {
+impl ComputeFirewall_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -936,11 +1068,4 @@ impl ComputeFirewallTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ComputeFirewallDynamic {
-    allow: std::option::Option<terrars::DynamicBlock<ComputeFirewallAllowEl>>,
-    deny: std::option::Option<terrars::DynamicBlock<ComputeFirewallDenyEl>>,
-    log_config: std::option::Option<terrars::DynamicBlock<ComputeFirewallLogConfigEl>>,
 }

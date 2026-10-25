@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct SourcerepoRepositoryData {
+struct SourcerepoRepositoryData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,21 +21,25 @@ struct SourcerepoRepositoryData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create_ignore_already_exists: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    pubsub_configs: std::option::Option<std::vec::Vec<SourcerepoRepositoryPubsubConfigsEl>>,
+    pubsub_configs: std::option::Option<std::vec::Vec<SourcerepoRepository_PubsubConfigs>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<SourcerepoRepositoryTimeoutsEl>,
+    timeouts: std::option::Option<SourcerepoRepository_Timeouts>,
     dynamic: SourcerepoRepositoryDynamic,
 }
 
 struct SourcerepoRepository_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SourcerepoRepositoryData>,
+    data: std::cell::RefCell<SourcerepoRepositoryData_>,
 }
 
 #[derive(Clone)]
@@ -133,6 +139,20 @@ impl SourcerepoRepository {
         self
     }
 
+    #[doc =
+        "Set the field `create_ignore_already_exists`.\nIf set to true, skip repository creation if a repository with the same name already exists."]
+    pub fn set_create_ignore_already_exists(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().create_ignore_already_exists = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -148,7 +168,7 @@ impl SourcerepoRepository {
     #[doc = "Set the field `pubsub_configs`.\n"]
     pub fn set_pubsub_configs(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SourcerepoRepositoryPubsubConfigsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SourcerepoRepository_PubsubConfigs>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -162,9 +182,21 @@ impl SourcerepoRepository {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<SourcerepoRepositoryTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<SourcerepoRepository_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `create_ignore_already_exists` after provisioning.\nIf set to true, skip repository creation if a repository with the same name already exists."]
+    pub fn create_ignore_already_exists(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_ignore_already_exists", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -195,8 +227,8 @@ impl SourcerepoRepository {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> SourcerepoRepositoryTimeoutsElRef {
-        SourcerepoRepositoryTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> SourcerepoRepository_TimeoutsRef {
+        SourcerepoRepository_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -243,12 +275,14 @@ impl BuildSourcerepoRepository {
         let out = SourcerepoRepository(std::rc::Rc::new(SourcerepoRepository_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SourcerepoRepositoryData {
+            data: std::cell::RefCell::new(SourcerepoRepositoryData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                create_ignore_already_exists: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
                 project: core::default::Default::default(),
@@ -285,6 +319,18 @@ impl SourcerepoRepositoryRef {
         &self.shared
     }
 
+    #[doc =
+        "Get a reference to the value of field `create_ignore_already_exists` after provisioning.\nIf set to true, skip repository creation if a repository with the same name already exists."]
+    pub fn create_ignore_already_exists(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_ignore_already_exists", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -313,20 +359,25 @@ impl SourcerepoRepositoryRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> SourcerepoRepositoryTimeoutsElRef {
-        SourcerepoRepositoryTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> SourcerepoRepository_TimeoutsRef {
+        SourcerepoRepository_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct SourcerepoRepositoryDynamic {
+    pubsub_configs: std::option::Option<terrars::DynamicBlock<SourcerepoRepository_PubsubConfigs>>,
+}
+
 #[derive(Serialize)]
-pub struct SourcerepoRepositoryPubsubConfigsEl {
+pub struct SourcerepoRepository_PubsubConfigs {
     message_format: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     service_account_email: std::option::Option<terrars::PrimField<std::string::String>>,
     topic: terrars::PrimField<std::string::String>,
 }
 
-impl SourcerepoRepositoryPubsubConfigsEl {
+impl SourcerepoRepository_PubsubConfigs {
     #[doc =
         "Set the field `service_account_email`.\nEmail address of the service account used for publishing Cloud Pub/Sub messages.\nThis service account needs to be in the same project as the PubsubConfig. When added,\nthe caller needs to have iam.serviceAccounts.actAs permission on this service account.\nIf unspecified, it defaults to the compute engine default service account."]
     pub fn set_service_account_email(
@@ -338,8 +389,8 @@ impl SourcerepoRepositoryPubsubConfigsEl {
     }
 }
 
-impl terrars::ToListMappable for SourcerepoRepositoryPubsubConfigsEl {
-    type O = terrars::BlockAssignable<SourcerepoRepositoryPubsubConfigsEl>;
+impl terrars::ToListMappable for SourcerepoRepository_PubsubConfigs {
+    type O = terrars::BlockAssignable<SourcerepoRepository_PubsubConfigs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -350,7 +401,7 @@ impl terrars::ToListMappable for SourcerepoRepositoryPubsubConfigsEl {
     }
 }
 
-pub struct BuildSourcerepoRepositoryPubsubConfigsEl {
+pub struct BuildSourcerepoRepository_PubsubConfigs {
     #[doc =
         "The format of the Cloud Pub/Sub messages.\n- PROTOBUF: The message payload is a serialized protocol buffer of SourceRepoEvent.\n- JSON: The message payload is a JSON string of SourceRepoEvent. Possible values: [\"PROTOBUF\", \"JSON\"]"]
     pub message_format: terrars::PrimField<std::string::String>,
@@ -358,9 +409,9 @@ pub struct BuildSourcerepoRepositoryPubsubConfigsEl {
     pub topic: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSourcerepoRepositoryPubsubConfigsEl {
-    pub fn build(self) -> SourcerepoRepositoryPubsubConfigsEl {
-        SourcerepoRepositoryPubsubConfigsEl {
+impl BuildSourcerepoRepository_PubsubConfigs {
+    pub fn build(self) -> SourcerepoRepository_PubsubConfigs {
+        SourcerepoRepository_PubsubConfigs {
             message_format: self.message_format,
             service_account_email: core::default::Default::default(),
             topic: self.topic,
@@ -368,21 +419,23 @@ impl BuildSourcerepoRepositoryPubsubConfigsEl {
     }
 }
 
-pub struct SourcerepoRepositoryPubsubConfigsElRef {
+#[allow(dead_code)]
+pub struct SourcerepoRepository_PubsubConfigsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SourcerepoRepositoryPubsubConfigsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SourcerepoRepositoryPubsubConfigsElRef {
-        SourcerepoRepositoryPubsubConfigsElRef {
+impl terrars::Ref for SourcerepoRepository_PubsubConfigsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SourcerepoRepository_PubsubConfigsRef {
+        SourcerepoRepository_PubsubConfigsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SourcerepoRepositoryPubsubConfigsElRef {
+impl SourcerepoRepository_PubsubConfigsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -406,7 +459,7 @@ impl SourcerepoRepositoryPubsubConfigsElRef {
 }
 
 #[derive(Serialize)]
-pub struct SourcerepoRepositoryTimeoutsEl {
+pub struct SourcerepoRepository_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -415,7 +468,7 @@ pub struct SourcerepoRepositoryTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SourcerepoRepositoryTimeoutsEl {
+impl SourcerepoRepository_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -435,8 +488,8 @@ impl SourcerepoRepositoryTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for SourcerepoRepositoryTimeoutsEl {
-    type O = terrars::BlockAssignable<SourcerepoRepositoryTimeoutsEl>;
+impl terrars::ToListMappable for SourcerepoRepository_Timeouts {
+    type O = terrars::BlockAssignable<SourcerepoRepository_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -447,11 +500,11 @@ impl terrars::ToListMappable for SourcerepoRepositoryTimeoutsEl {
     }
 }
 
-pub struct BuildSourcerepoRepositoryTimeoutsEl {}
+pub struct BuildSourcerepoRepository_Timeouts {}
 
-impl BuildSourcerepoRepositoryTimeoutsEl {
-    pub fn build(self) -> SourcerepoRepositoryTimeoutsEl {
-        SourcerepoRepositoryTimeoutsEl {
+impl BuildSourcerepoRepository_Timeouts {
+    pub fn build(self) -> SourcerepoRepository_Timeouts {
+        SourcerepoRepository_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -459,21 +512,23 @@ impl BuildSourcerepoRepositoryTimeoutsEl {
     }
 }
 
-pub struct SourcerepoRepositoryTimeoutsElRef {
+#[allow(dead_code)]
+pub struct SourcerepoRepository_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SourcerepoRepositoryTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SourcerepoRepositoryTimeoutsElRef {
-        SourcerepoRepositoryTimeoutsElRef {
+impl terrars::Ref for SourcerepoRepository_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SourcerepoRepository_TimeoutsRef {
+        SourcerepoRepository_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SourcerepoRepositoryTimeoutsElRef {
+impl SourcerepoRepository_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -492,9 +547,4 @@ impl SourcerepoRepositoryTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct SourcerepoRepositoryDynamic {
-    pubsub_configs: std::option::Option<terrars::DynamicBlock<SourcerepoRepositoryPubsubConfigsEl>>,
 }

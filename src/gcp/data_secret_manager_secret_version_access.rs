@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataSecretManagerSecretVersionAccessData {
+struct DataSecretManagerSecretVersionAccessData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -19,6 +21,8 @@ struct DataSecretManagerSecretVersionAccessData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    is_secret_data_base64: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     secret: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,7 +32,7 @@ struct DataSecretManagerSecretVersionAccessData {
 struct DataSecretManagerSecretVersionAccess_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataSecretManagerSecretVersionAccessData>,
+    data: std::cell::RefCell<DataSecretManagerSecretVersionAccessData_>,
 }
 
 #[derive(Clone)]
@@ -79,6 +83,12 @@ impl DataSecretManagerSecretVersionAccess {
         self
     }
 
+    #[doc = "Set the field `is_secret_data_base64`.\n"]
+    pub fn set_is_secret_data_base64(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().is_secret_data_base64 = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `project`.\n"]
     pub fn set_project(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().project = std::option::Option::Some(v.into());
@@ -94,6 +104,11 @@ impl DataSecretManagerSecretVersionAccess {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `is_secret_data_base64` after provisioning.\n"]
+    pub fn is_secret_data_base64(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.is_secret_data_base64", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
@@ -164,12 +179,13 @@ impl BuildDataSecretManagerSecretVersionAccess {
         let out = DataSecretManagerSecretVersionAccess(std::rc::Rc::new(DataSecretManagerSecretVersionAccess_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataSecretManagerSecretVersionAccessData {
+            data: std::cell::RefCell::new(DataSecretManagerSecretVersionAccessData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
+                is_secret_data_base64: core::default::Default::default(),
                 project: core::default::Default::default(),
                 secret: self.secret,
                 version: core::default::Default::default(),
@@ -206,6 +222,11 @@ impl DataSecretManagerSecretVersionAccessRef {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `is_secret_data_base64` after provisioning.\n"]
+    pub fn is_secret_data_base64(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.is_secret_data_base64", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]

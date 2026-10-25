@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeVpnTunnelData {
+struct ComputeVpnTunnelData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct ComputeVpnTunnelData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -45,7 +49,12 @@ struct ComputeVpnTunnelData {
     remote_traffic_selector: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     router: std::option::Option<terrars::PrimField<std::string::String>>,
-    shared_secret: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    shared_secret: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    shared_secret_wo: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    shared_secret_wo_version: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     target_vpn_gateway: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -53,13 +62,18 @@ struct ComputeVpnTunnelData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpn_gateway_interface: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComputeVpnTunnelTimeoutsEl>,
+    cipher_suite: std::option::Option<std::vec::Vec<ComputeVpnTunnel_CipherSuite>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    params: std::option::Option<std::vec::Vec<ComputeVpnTunnel_Params>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<ComputeVpnTunnel_Timeouts>,
+    dynamic: ComputeVpnTunnelDynamic,
 }
 
 struct ComputeVpnTunnel_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeVpnTunnelData>,
+    data: std::cell::RefCell<ComputeVpnTunnelData_>,
 }
 
 #[derive(Clone)]
@@ -159,6 +173,13 @@ impl ComputeVpnTunnel {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nAn optional description of this resource."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -255,6 +276,30 @@ impl ComputeVpnTunnel {
     }
 
     #[doc =
+        "Set the field `shared_secret`.\nShared secret used to set the secure session between the Cloud VPN\ngateway and the peer VPN gateway."]
+    pub fn set_shared_secret(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().shared_secret = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `shared_secret_wo`.\nShared secret used to set the secure session between the Cloud VPN\ngateway and the peer VPN gateway."]
+    pub fn set_shared_secret_wo(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().shared_secret_wo = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `shared_secret_wo_version`.\nTriggers update of 'shared_secret_wo' write-only. Increment this value when an update to 'shared_secret_wo' is needed. For more info see [updating write-only arguments](/docs/providers/google/guides/using_write_only_arguments.html#updating-write-only-arguments)"]
+    pub fn set_shared_secret_wo_version(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().shared_secret_wo_version = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `target_vpn_gateway`.\nURL of the Target VPN gateway with which this VPN tunnel is\nassociated."]
     pub fn set_target_vpn_gateway(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().target_vpn_gateway = std::option::Option::Some(v.into());
@@ -275,8 +320,37 @@ impl ComputeVpnTunnel {
         self
     }
 
+    #[doc = "Set the field `cipher_suite`.\n"]
+    pub fn set_cipher_suite(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeVpnTunnel_CipherSuite>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().cipher_suite = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.cipher_suite = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `params`.\n"]
+    pub fn set_params(self, v: impl std::convert::Into<terrars::BlockAssignable<ComputeVpnTunnel_Params>>) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().params = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.params = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeVpnTunnelTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeVpnTunnel_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -285,6 +359,12 @@ impl ComputeVpnTunnel {
         "Get a reference to the value of field `creation_timestamp` after provisioning.\nCreation timestamp in RFC3339 text format."]
     pub fn creation_timestamp(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_timestamp", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -314,6 +394,12 @@ impl ComputeVpnTunnel {
         "Get a reference to the value of field `ike_version` after provisioning.\nIKE protocol version to use when establishing the VPN tunnel with\npeer VPN gateway.\nAcceptable IKE versions are 1 or 2. Default version is 2."]
     pub fn ike_version(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ike_version", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `label_fingerprint` after provisioning.\nThe fingerprint used for optimistic locking of this resource.  Used\ninternally during updates."]
+    pub fn label_fingerprint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.label_fingerprint", self.extract_ref()))
     }
 
     #[doc =
@@ -402,6 +488,18 @@ impl ComputeVpnTunnel {
     }
 
     #[doc =
+        "Get a reference to the value of field `shared_secret_wo` after provisioning.\nShared secret used to set the secure session between the Cloud VPN\ngateway and the peer VPN gateway."]
+    pub fn shared_secret_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.shared_secret_wo", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `shared_secret_wo_version` after provisioning.\nTriggers update of 'shared_secret_wo' write-only. Increment this value when an update to 'shared_secret_wo' is needed. For more info see [updating write-only arguments](/docs/providers/google/guides/using_write_only_arguments.html#updating-write-only-arguments)"]
+    pub fn shared_secret_wo_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.shared_secret_wo_version", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `target_vpn_gateway` after provisioning.\nURL of the Target VPN gateway with which this VPN tunnel is\nassociated."]
     pub fn target_vpn_gateway(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_vpn_gateway", self.extract_ref()))
@@ -431,9 +529,19 @@ impl ComputeVpnTunnel {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpn_gateway_interface", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `cipher_suite` after provisioning.\n"]
+    pub fn cipher_suite(&self) -> terrars::ListRef<ComputeVpnTunnel_CipherSuiteRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cipher_suite", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `params` after provisioning.\n"]
+    pub fn params(&self) -> terrars::ListRef<ComputeVpnTunnel_ParamsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.params", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeVpnTunnelTimeoutsElRef {
-        ComputeVpnTunnelTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeVpnTunnel_TimeoutsRef {
+        ComputeVpnTunnel_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -473,8 +581,6 @@ pub struct BuildComputeVpnTunnel {
     #[doc =
         "Name of the resource. The name must be 1-63 characters long, and\ncomply with RFC1035. Specifically, the name must be 1-63\ncharacters long and match the regular expression\n'[a-z]([-a-z0-9]*[a-z0-9])?' which means the first character\nmust be a lowercase letter, and all following characters must\nbe a dash, lowercase letter, or digit,\nexcept the last character, which cannot be a dash."]
     pub name: terrars::PrimField<std::string::String>,
-    #[doc = "Shared secret used to set the secure session between the Cloud VPN\ngateway and the peer VPN gateway."]
-    pub shared_secret: terrars::PrimField<std::string::String>,
 }
 
 impl BuildComputeVpnTunnel {
@@ -482,12 +588,13 @@ impl BuildComputeVpnTunnel {
         let out = ComputeVpnTunnel(std::rc::Rc::new(ComputeVpnTunnel_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeVpnTunnelData {
+            data: std::cell::RefCell::new(ComputeVpnTunnelData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 ike_version: core::default::Default::default(),
@@ -502,11 +609,16 @@ impl BuildComputeVpnTunnel {
                 region: core::default::Default::default(),
                 remote_traffic_selector: core::default::Default::default(),
                 router: core::default::Default::default(),
-                shared_secret: self.shared_secret,
+                shared_secret: core::default::Default::default(),
+                shared_secret_wo: core::default::Default::default(),
+                shared_secret_wo_version: core::default::Default::default(),
                 target_vpn_gateway: core::default::Default::default(),
                 vpn_gateway: core::default::Default::default(),
                 vpn_gateway_interface: core::default::Default::default(),
+                cipher_suite: core::default::Default::default(),
+                params: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -544,6 +656,12 @@ impl ComputeVpnTunnelRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nAn optional description of this resource."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -570,6 +688,12 @@ impl ComputeVpnTunnelRef {
         "Get a reference to the value of field `ike_version` after provisioning.\nIKE protocol version to use when establishing the VPN tunnel with\npeer VPN gateway.\nAcceptable IKE versions are 1 or 2. Default version is 2."]
     pub fn ike_version(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ike_version", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `label_fingerprint` after provisioning.\nThe fingerprint used for optimistic locking of this resource.  Used\ninternally during updates."]
+    pub fn label_fingerprint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.label_fingerprint", self.extract_ref()))
     }
 
     #[doc =
@@ -658,6 +782,18 @@ impl ComputeVpnTunnelRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `shared_secret_wo` after provisioning.\nShared secret used to set the secure session between the Cloud VPN\ngateway and the peer VPN gateway."]
+    pub fn shared_secret_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.shared_secret_wo", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `shared_secret_wo_version` after provisioning.\nTriggers update of 'shared_secret_wo' write-only. Increment this value when an update to 'shared_secret_wo' is needed. For more info see [updating write-only arguments](/docs/providers/google/guides/using_write_only_arguments.html#updating-write-only-arguments)"]
+    pub fn shared_secret_wo_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.shared_secret_wo_version", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `target_vpn_gateway` after provisioning.\nURL of the Target VPN gateway with which this VPN tunnel is\nassociated."]
     pub fn target_vpn_gateway(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_vpn_gateway", self.extract_ref()))
@@ -687,14 +823,418 @@ impl ComputeVpnTunnelRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpn_gateway_interface", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `cipher_suite` after provisioning.\n"]
+    pub fn cipher_suite(&self) -> terrars::ListRef<ComputeVpnTunnel_CipherSuiteRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cipher_suite", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `params` after provisioning.\n"]
+    pub fn params(&self) -> terrars::ListRef<ComputeVpnTunnel_ParamsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.params", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeVpnTunnelTimeoutsElRef {
-        ComputeVpnTunnelTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeVpnTunnel_TimeoutsRef {
+        ComputeVpnTunnel_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct ComputeVpnTunnelDynamic {
+    cipher_suite: std::option::Option<terrars::DynamicBlock<ComputeVpnTunnel_CipherSuite>>,
+    params: std::option::Option<terrars::DynamicBlock<ComputeVpnTunnel_Params>>,
+}
+
+#[derive(Serialize)]
+pub struct ComputeVpnTunnel_CipherSuite_Phase1 {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dh: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    encryption: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    integrity: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    prf: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+}
+
+impl ComputeVpnTunnel_CipherSuite_Phase1 {
+    #[doc = "Set the field `dh`.\nDiffie-Hellman groups."]
+    pub fn set_dh(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.dh = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `encryption`.\nEncryption algorithms."]
+    pub fn set_encryption(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.encryption = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `integrity`.\nIntegrity algorithms."]
+    pub fn set_integrity(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.integrity = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `prf`.\nPseudo-random functions."]
+    pub fn set_prf(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.prf = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeVpnTunnel_CipherSuite_Phase1 {
+    type O = terrars::BlockAssignable<ComputeVpnTunnel_CipherSuite_Phase1>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeVpnTunnel_CipherSuite_Phase1 {}
+
+impl BuildComputeVpnTunnel_CipherSuite_Phase1 {
+    pub fn build(self) -> ComputeVpnTunnel_CipherSuite_Phase1 {
+        ComputeVpnTunnel_CipherSuite_Phase1 {
+            dh: core::default::Default::default(),
+            encryption: core::default::Default::default(),
+            integrity: core::default::Default::default(),
+            prf: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeVpnTunnel_CipherSuite_Phase1Ref {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeVpnTunnel_CipherSuite_Phase1Ref {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeVpnTunnel_CipherSuite_Phase1Ref {
+        ComputeVpnTunnel_CipherSuite_Phase1Ref {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeVpnTunnel_CipherSuite_Phase1Ref {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `dh` after provisioning.\nDiffie-Hellman groups."]
+    pub fn dh(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.dh", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `encryption` after provisioning.\nEncryption algorithms."]
+    pub fn encryption(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.encryption", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `integrity` after provisioning.\nIntegrity algorithms."]
+    pub fn integrity(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.integrity", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `prf` after provisioning.\nPseudo-random functions."]
+    pub fn prf(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.prf", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeVpnTunnelTimeoutsEl {
+pub struct ComputeVpnTunnel_CipherSuite_Phase2 {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    encryption: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    integrity: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    pfs: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+}
+
+impl ComputeVpnTunnel_CipherSuite_Phase2 {
+    #[doc = "Set the field `encryption`.\nEncryption algorithms."]
+    pub fn set_encryption(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.encryption = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `integrity`.\nIntegrity algorithms."]
+    pub fn set_integrity(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.integrity = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `pfs`.\nPerfect forward secrecy groups."]
+    pub fn set_pfs(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.pfs = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeVpnTunnel_CipherSuite_Phase2 {
+    type O = terrars::BlockAssignable<ComputeVpnTunnel_CipherSuite_Phase2>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeVpnTunnel_CipherSuite_Phase2 {}
+
+impl BuildComputeVpnTunnel_CipherSuite_Phase2 {
+    pub fn build(self) -> ComputeVpnTunnel_CipherSuite_Phase2 {
+        ComputeVpnTunnel_CipherSuite_Phase2 {
+            encryption: core::default::Default::default(),
+            integrity: core::default::Default::default(),
+            pfs: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeVpnTunnel_CipherSuite_Phase2Ref {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeVpnTunnel_CipherSuite_Phase2Ref {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeVpnTunnel_CipherSuite_Phase2Ref {
+        ComputeVpnTunnel_CipherSuite_Phase2Ref {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeVpnTunnel_CipherSuite_Phase2Ref {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `encryption` after provisioning.\nEncryption algorithms."]
+    pub fn encryption(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.encryption", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `integrity` after provisioning.\nIntegrity algorithms."]
+    pub fn integrity(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.integrity", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `pfs` after provisioning.\nPerfect forward secrecy groups."]
+    pub fn pfs(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.pfs", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct ComputeVpnTunnel_CipherSuiteDynamic {
+    phase1: std::option::Option<terrars::DynamicBlock<ComputeVpnTunnel_CipherSuite_Phase1>>,
+    phase2: std::option::Option<terrars::DynamicBlock<ComputeVpnTunnel_CipherSuite_Phase2>>,
+}
+
+#[derive(Serialize)]
+pub struct ComputeVpnTunnel_CipherSuite {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    phase1: std::option::Option<std::vec::Vec<ComputeVpnTunnel_CipherSuite_Phase1>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    phase2: std::option::Option<std::vec::Vec<ComputeVpnTunnel_CipherSuite_Phase2>>,
+    dynamic: ComputeVpnTunnel_CipherSuiteDynamic,
+}
+
+impl ComputeVpnTunnel_CipherSuite {
+    #[doc = "Set the field `phase1`.\n"]
+    pub fn set_phase1(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeVpnTunnel_CipherSuite_Phase1>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.phase1 = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.phase1 = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `phase2`.\n"]
+    pub fn set_phase2(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeVpnTunnel_CipherSuite_Phase2>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.phase2 = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.phase2 = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeVpnTunnel_CipherSuite {
+    type O = terrars::BlockAssignable<ComputeVpnTunnel_CipherSuite>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeVpnTunnel_CipherSuite {}
+
+impl BuildComputeVpnTunnel_CipherSuite {
+    pub fn build(self) -> ComputeVpnTunnel_CipherSuite {
+        ComputeVpnTunnel_CipherSuite {
+            phase1: core::default::Default::default(),
+            phase2: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeVpnTunnel_CipherSuiteRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeVpnTunnel_CipherSuiteRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeVpnTunnel_CipherSuiteRef {
+        ComputeVpnTunnel_CipherSuiteRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeVpnTunnel_CipherSuiteRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `phase1` after provisioning.\n"]
+    pub fn phase1(&self) -> terrars::ListRef<ComputeVpnTunnel_CipherSuite_Phase1Ref> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.phase1", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `phase2` after provisioning.\n"]
+    pub fn phase2(&self) -> terrars::ListRef<ComputeVpnTunnel_CipherSuite_Phase2Ref> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.phase2", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ComputeVpnTunnel_Params {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_manager_tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+}
+
+impl ComputeVpnTunnel_Params {
+    #[doc =
+        "Set the field `resource_manager_tags`.\nResource manager tags to be bound to the Vpn Tunnel. Tag keys and values have the\nsame definition as resource manager tags. Keys must be in the format tagKeys/{tag_key_id},\nand values are in the format tagValues/456."]
+    pub fn set_resource_manager_tags(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.resource_manager_tags = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeVpnTunnel_Params {
+    type O = terrars::BlockAssignable<ComputeVpnTunnel_Params>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeVpnTunnel_Params {}
+
+impl BuildComputeVpnTunnel_Params {
+    pub fn build(self) -> ComputeVpnTunnel_Params {
+        ComputeVpnTunnel_Params { resource_manager_tags: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeVpnTunnel_ParamsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeVpnTunnel_ParamsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeVpnTunnel_ParamsRef {
+        ComputeVpnTunnel_ParamsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeVpnTunnel_ParamsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `resource_manager_tags` after provisioning.\nResource manager tags to be bound to the Vpn Tunnel. Tag keys and values have the\nsame definition as resource manager tags. Keys must be in the format tagKeys/{tag_key_id},\nand values are in the format tagValues/456."]
+    pub fn resource_manager_tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.resource_manager_tags", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ComputeVpnTunnel_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -703,7 +1243,7 @@ pub struct ComputeVpnTunnelTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeVpnTunnelTimeoutsEl {
+impl ComputeVpnTunnel_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -723,8 +1263,8 @@ impl ComputeVpnTunnelTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeVpnTunnelTimeoutsEl {
-    type O = terrars::BlockAssignable<ComputeVpnTunnelTimeoutsEl>;
+impl terrars::ToListMappable for ComputeVpnTunnel_Timeouts {
+    type O = terrars::BlockAssignable<ComputeVpnTunnel_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -735,11 +1275,11 @@ impl terrars::ToListMappable for ComputeVpnTunnelTimeoutsEl {
     }
 }
 
-pub struct BuildComputeVpnTunnelTimeoutsEl {}
+pub struct BuildComputeVpnTunnel_Timeouts {}
 
-impl BuildComputeVpnTunnelTimeoutsEl {
-    pub fn build(self) -> ComputeVpnTunnelTimeoutsEl {
-        ComputeVpnTunnelTimeoutsEl {
+impl BuildComputeVpnTunnel_Timeouts {
+    pub fn build(self) -> ComputeVpnTunnel_Timeouts {
+        ComputeVpnTunnel_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -747,21 +1287,23 @@ impl BuildComputeVpnTunnelTimeoutsEl {
     }
 }
 
-pub struct ComputeVpnTunnelTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComputeVpnTunnel_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeVpnTunnelTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeVpnTunnelTimeoutsElRef {
-        ComputeVpnTunnelTimeoutsElRef {
+impl terrars::Ref for ComputeVpnTunnel_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeVpnTunnel_TimeoutsRef {
+        ComputeVpnTunnel_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeVpnTunnelTimeoutsElRef {
+impl ComputeVpnTunnel_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

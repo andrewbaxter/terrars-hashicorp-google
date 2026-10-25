@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct AccessContextManagerAccessPolicyIamMemberData {
+struct AccessContextManagerAccessPolicyIamMemberData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,14 +26,14 @@ struct AccessContextManagerAccessPolicyIamMemberData {
     name: terrars::PrimField<std::string::String>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<AccessContextManagerAccessPolicyIamMemberConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<AccessContextManagerAccessPolicyIamMember_Condition>>,
     dynamic: AccessContextManagerAccessPolicyIamMemberDynamic,
 }
 
 struct AccessContextManagerAccessPolicyIamMember_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AccessContextManagerAccessPolicyIamMemberData>,
+    data: std::cell::RefCell<AccessContextManagerAccessPolicyIamMemberData_>,
 }
 
 #[derive(Clone)]
@@ -140,7 +142,7 @@ impl AccessContextManagerAccessPolicyIamMember {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AccessContextManagerAccessPolicyIamMemberConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AccessContextManagerAccessPolicyIamMember_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -179,7 +181,7 @@ impl AccessContextManagerAccessPolicyIamMember {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<AccessContextManagerAccessPolicyIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<AccessContextManagerAccessPolicyIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -231,7 +233,7 @@ impl BuildAccessContextManagerAccessPolicyIamMember {
             AccessContextManagerAccessPolicyIamMember(std::rc::Rc::new(AccessContextManagerAccessPolicyIamMember_ {
                 shared: stack.shared.clone(),
                 tf_id: self.tf_id,
-                data: std::cell::RefCell::new(AccessContextManagerAccessPolicyIamMemberData {
+                data: std::cell::RefCell::new(AccessContextManagerAccessPolicyIamMemberData_ {
                     depends_on: core::default::Default::default(),
                     provider: std::option::Option::None,
                     lifecycle: core::default::Default::default(),
@@ -299,20 +301,25 @@ impl AccessContextManagerAccessPolicyIamMemberRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<AccessContextManagerAccessPolicyIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<AccessContextManagerAccessPolicyIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct AccessContextManagerAccessPolicyIamMemberDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<AccessContextManagerAccessPolicyIamMember_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct AccessContextManagerAccessPolicyIamMemberConditionEl {
+pub struct AccessContextManagerAccessPolicyIamMember_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl AccessContextManagerAccessPolicyIamMemberConditionEl {
+impl AccessContextManagerAccessPolicyIamMember_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -320,8 +327,8 @@ impl AccessContextManagerAccessPolicyIamMemberConditionEl {
     }
 }
 
-impl terrars::ToListMappable for AccessContextManagerAccessPolicyIamMemberConditionEl {
-    type O = terrars::BlockAssignable<AccessContextManagerAccessPolicyIamMemberConditionEl>;
+impl terrars::ToListMappable for AccessContextManagerAccessPolicyIamMember_Condition {
+    type O = terrars::BlockAssignable<AccessContextManagerAccessPolicyIamMember_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -332,16 +339,16 @@ impl terrars::ToListMappable for AccessContextManagerAccessPolicyIamMemberCondit
     }
 }
 
-pub struct BuildAccessContextManagerAccessPolicyIamMemberConditionEl {
+pub struct BuildAccessContextManagerAccessPolicyIamMember_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAccessContextManagerAccessPolicyIamMemberConditionEl {
-    pub fn build(self) -> AccessContextManagerAccessPolicyIamMemberConditionEl {
-        AccessContextManagerAccessPolicyIamMemberConditionEl {
+impl BuildAccessContextManagerAccessPolicyIamMember_Condition {
+    pub fn build(self) -> AccessContextManagerAccessPolicyIamMember_Condition {
+        AccessContextManagerAccessPolicyIamMember_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -349,24 +356,26 @@ impl BuildAccessContextManagerAccessPolicyIamMemberConditionEl {
     }
 }
 
-pub struct AccessContextManagerAccessPolicyIamMemberConditionElRef {
+#[allow(dead_code)]
+pub struct AccessContextManagerAccessPolicyIamMember_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AccessContextManagerAccessPolicyIamMemberConditionElRef {
+impl terrars::Ref for AccessContextManagerAccessPolicyIamMember_ConditionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AccessContextManagerAccessPolicyIamMemberConditionElRef {
-        AccessContextManagerAccessPolicyIamMemberConditionElRef {
+    ) -> AccessContextManagerAccessPolicyIamMember_ConditionRef {
+        AccessContextManagerAccessPolicyIamMember_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AccessContextManagerAccessPolicyIamMemberConditionElRef {
+impl AccessContextManagerAccessPolicyIamMember_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -385,9 +394,4 @@ impl AccessContextManagerAccessPolicyIamMemberConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AccessContextManagerAccessPolicyIamMemberDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<AccessContextManagerAccessPolicyIamMemberConditionEl>>,
 }

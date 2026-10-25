@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataSourcerepoRepositoryData {
+struct DataSourcerepoRepositoryData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -26,7 +28,7 @@ struct DataSourcerepoRepositoryData {
 struct DataSourcerepoRepository_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataSourcerepoRepositoryData>,
+    data: std::cell::RefCell<DataSourcerepoRepositoryData_>,
 }
 
 #[derive(Clone)]
@@ -83,6 +85,18 @@ impl DataSourcerepoRepository {
         self
     }
 
+    #[doc =
+        "Get a reference to the value of field `create_ignore_already_exists` after provisioning.\nIf set to true, skip repository creation if a repository with the same name already exists."]
+    pub fn create_ignore_already_exists(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_ignore_already_exists", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -101,7 +115,7 @@ impl DataSourcerepoRepository {
 
     #[doc =
         "Get a reference to the value of field `pubsub_configs` after provisioning.\nHow this repository publishes a change in the repository through Cloud Pub/Sub.\nKeyed by the topic names."]
-    pub fn pubsub_configs(&self) -> terrars::SetRef<DataSourcerepoRepositoryPubsubConfigsElRef> {
+    pub fn pubsub_configs(&self) -> terrars::SetRef<DataSourcerepoRepository_PubsubConfigsRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.pubsub_configs", self.extract_ref()))
     }
 
@@ -160,7 +174,7 @@ impl BuildDataSourcerepoRepository {
         let out = DataSourcerepoRepository(std::rc::Rc::new(DataSourcerepoRepository_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataSourcerepoRepositoryData {
+            data: std::cell::RefCell::new(DataSourcerepoRepositoryData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -198,6 +212,18 @@ impl DataSourcerepoRepositoryRef {
         self.base.clone()
     }
 
+    #[doc =
+        "Get a reference to the value of field `create_ignore_already_exists` after provisioning.\nIf set to true, skip repository creation if a repository with the same name already exists."]
+    pub fn create_ignore_already_exists(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_ignore_already_exists", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -216,7 +242,7 @@ impl DataSourcerepoRepositoryRef {
 
     #[doc =
         "Get a reference to the value of field `pubsub_configs` after provisioning.\nHow this repository publishes a change in the repository through Cloud Pub/Sub.\nKeyed by the topic names."]
-    pub fn pubsub_configs(&self) -> terrars::SetRef<DataSourcerepoRepositoryPubsubConfigsElRef> {
+    pub fn pubsub_configs(&self) -> terrars::SetRef<DataSourcerepoRepository_PubsubConfigsRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.pubsub_configs", self.extract_ref()))
     }
 
@@ -233,7 +259,7 @@ impl DataSourcerepoRepositoryRef {
 }
 
 #[derive(Serialize)]
-pub struct DataSourcerepoRepositoryPubsubConfigsEl {
+pub struct DataSourcerepoRepository_PubsubConfigs {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     message_format: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -242,7 +268,7 @@ pub struct DataSourcerepoRepositoryPubsubConfigsEl {
     topic: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataSourcerepoRepositoryPubsubConfigsEl {
+impl DataSourcerepoRepository_PubsubConfigs {
     #[doc = "Set the field `message_format`.\n"]
     pub fn set_message_format(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.message_format = std::option::Option::Some(v.into());
@@ -265,8 +291,8 @@ impl DataSourcerepoRepositoryPubsubConfigsEl {
     }
 }
 
-impl terrars::ToListMappable for DataSourcerepoRepositoryPubsubConfigsEl {
-    type O = terrars::BlockAssignable<DataSourcerepoRepositoryPubsubConfigsEl>;
+impl terrars::ToListMappable for DataSourcerepoRepository_PubsubConfigs {
+    type O = terrars::BlockAssignable<DataSourcerepoRepository_PubsubConfigs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -277,11 +303,11 @@ impl terrars::ToListMappable for DataSourcerepoRepositoryPubsubConfigsEl {
     }
 }
 
-pub struct BuildDataSourcerepoRepositoryPubsubConfigsEl {}
+pub struct BuildDataSourcerepoRepository_PubsubConfigs {}
 
-impl BuildDataSourcerepoRepositoryPubsubConfigsEl {
-    pub fn build(self) -> DataSourcerepoRepositoryPubsubConfigsEl {
-        DataSourcerepoRepositoryPubsubConfigsEl {
+impl BuildDataSourcerepoRepository_PubsubConfigs {
+    pub fn build(self) -> DataSourcerepoRepository_PubsubConfigs {
+        DataSourcerepoRepository_PubsubConfigs {
             message_format: core::default::Default::default(),
             service_account_email: core::default::Default::default(),
             topic: core::default::Default::default(),
@@ -289,21 +315,23 @@ impl BuildDataSourcerepoRepositoryPubsubConfigsEl {
     }
 }
 
-pub struct DataSourcerepoRepositoryPubsubConfigsElRef {
+#[allow(dead_code)]
+pub struct DataSourcerepoRepository_PubsubConfigsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSourcerepoRepositoryPubsubConfigsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSourcerepoRepositoryPubsubConfigsElRef {
-        DataSourcerepoRepositoryPubsubConfigsElRef {
+impl terrars::Ref for DataSourcerepoRepository_PubsubConfigsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSourcerepoRepository_PubsubConfigsRef {
+        DataSourcerepoRepository_PubsubConfigsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSourcerepoRepositoryPubsubConfigsElRef {
+impl DataSourcerepoRepository_PubsubConfigsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

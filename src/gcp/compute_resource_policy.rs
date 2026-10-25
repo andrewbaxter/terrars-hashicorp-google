@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeResourcePolicyData {
+struct ComputeResourcePolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct ComputeResourcePolicyData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -28,22 +32,24 @@ struct ComputeResourcePolicyData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    disk_consistency_group_policy: std::option::Option<std::vec::Vec<ComputeResourcePolicyDiskConsistencyGroupPolicyEl>>,
+    disk_consistency_group_policy: std::option::Option<std::vec::Vec<ComputeResourcePolicy_DiskConsistencyGroupPolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    group_placement_policy: std::option::Option<std::vec::Vec<ComputeResourcePolicyGroupPlacementPolicyEl>>,
+    group_placement_policy: std::option::Option<std::vec::Vec<ComputeResourcePolicy_GroupPlacementPolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    instance_schedule_policy: std::option::Option<std::vec::Vec<ComputeResourcePolicyInstanceSchedulePolicyEl>>,
+    instance_schedule_policy: std::option::Option<std::vec::Vec<ComputeResourcePolicy_InstanceSchedulePolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    snapshot_schedule_policy: std::option::Option<std::vec::Vec<ComputeResourcePolicySnapshotSchedulePolicyEl>>,
+    snapshot_schedule_policy: std::option::Option<std::vec::Vec<ComputeResourcePolicy_SnapshotSchedulePolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComputeResourcePolicyTimeoutsEl>,
+    timeouts: std::option::Option<ComputeResourcePolicy_Timeouts>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    workload_policy: std::option::Option<std::vec::Vec<ComputeResourcePolicy_WorkloadPolicy>>,
     dynamic: ComputeResourcePolicyDynamic,
 }
 
 struct ComputeResourcePolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeResourcePolicyData>,
+    data: std::cell::RefCell<ComputeResourcePolicyData_>,
 }
 
 #[derive(Clone)]
@@ -144,6 +150,13 @@ impl ComputeResourcePolicy {
     }
 
     #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `description`.\nAn optional description of this resource. Provide this property when you create the resource."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -171,7 +184,7 @@ impl ComputeResourcePolicy {
     #[doc = "Set the field `disk_consistency_group_policy`.\n"]
     pub fn set_disk_consistency_group_policy(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeResourcePolicyDiskConsistencyGroupPolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeResourcePolicy_DiskConsistencyGroupPolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -187,7 +200,7 @@ impl ComputeResourcePolicy {
     #[doc = "Set the field `group_placement_policy`.\n"]
     pub fn set_group_placement_policy(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeResourcePolicyGroupPlacementPolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeResourcePolicy_GroupPlacementPolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -203,7 +216,7 @@ impl ComputeResourcePolicy {
     #[doc = "Set the field `instance_schedule_policy`.\n"]
     pub fn set_instance_schedule_policy(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeResourcePolicyInstanceSchedulePolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeResourcePolicy_InstanceSchedulePolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -219,7 +232,7 @@ impl ComputeResourcePolicy {
     #[doc = "Set the field `snapshot_schedule_policy`.\n"]
     pub fn set_snapshot_schedule_policy(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeResourcePolicySnapshotSchedulePolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeResourcePolicy_SnapshotSchedulePolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -233,9 +246,31 @@ impl ComputeResourcePolicy {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeResourcePolicyTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeResourcePolicy_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc = "Set the field `workload_policy`.\n"]
+    pub fn set_workload_policy(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeResourcePolicy_WorkloadPolicy>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().workload_policy = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.workload_policy = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -271,30 +306,33 @@ impl ComputeResourcePolicy {
     }
 
     #[doc = "Get a reference to the value of field `disk_consistency_group_policy` after provisioning.\n"]
-    pub fn disk_consistency_group_policy(
-        &self,
-    ) -> terrars::ListRef<ComputeResourcePolicyDiskConsistencyGroupPolicyElRef> {
+    pub fn disk_consistency_group_policy(&self) -> terrars::ListRef<ComputeResourcePolicy_DiskConsistencyGroupPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.disk_consistency_group_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `group_placement_policy` after provisioning.\n"]
-    pub fn group_placement_policy(&self) -> terrars::ListRef<ComputeResourcePolicyGroupPlacementPolicyElRef> {
+    pub fn group_placement_policy(&self) -> terrars::ListRef<ComputeResourcePolicy_GroupPlacementPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.group_placement_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `instance_schedule_policy` after provisioning.\n"]
-    pub fn instance_schedule_policy(&self) -> terrars::ListRef<ComputeResourcePolicyInstanceSchedulePolicyElRef> {
+    pub fn instance_schedule_policy(&self) -> terrars::ListRef<ComputeResourcePolicy_InstanceSchedulePolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.instance_schedule_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `snapshot_schedule_policy` after provisioning.\n"]
-    pub fn snapshot_schedule_policy(&self) -> terrars::ListRef<ComputeResourcePolicySnapshotSchedulePolicyElRef> {
+    pub fn snapshot_schedule_policy(&self) -> terrars::ListRef<ComputeResourcePolicy_SnapshotSchedulePolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.snapshot_schedule_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeResourcePolicyTimeoutsElRef {
-        ComputeResourcePolicyTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeResourcePolicy_TimeoutsRef {
+        ComputeResourcePolicy_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `workload_policy` after provisioning.\n"]
+    pub fn workload_policy(&self) -> terrars::ListRef<ComputeResourcePolicy_WorkloadPolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.workload_policy", self.extract_ref()))
     }
 }
 
@@ -341,12 +379,13 @@ impl BuildComputeResourcePolicy {
         let out = ComputeResourcePolicy(std::rc::Rc::new(ComputeResourcePolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeResourcePolicyData {
+            data: std::cell::RefCell::new(ComputeResourcePolicyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
@@ -357,6 +396,7 @@ impl BuildComputeResourcePolicy {
                 instance_schedule_policy: core::default::Default::default(),
                 snapshot_schedule_policy: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
+                workload_policy: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -386,6 +426,12 @@ impl ComputeResourcePolicyRef {
 
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -421,42 +467,60 @@ impl ComputeResourcePolicyRef {
     }
 
     #[doc = "Get a reference to the value of field `disk_consistency_group_policy` after provisioning.\n"]
-    pub fn disk_consistency_group_policy(
-        &self,
-    ) -> terrars::ListRef<ComputeResourcePolicyDiskConsistencyGroupPolicyElRef> {
+    pub fn disk_consistency_group_policy(&self) -> terrars::ListRef<ComputeResourcePolicy_DiskConsistencyGroupPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.disk_consistency_group_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `group_placement_policy` after provisioning.\n"]
-    pub fn group_placement_policy(&self) -> terrars::ListRef<ComputeResourcePolicyGroupPlacementPolicyElRef> {
+    pub fn group_placement_policy(&self) -> terrars::ListRef<ComputeResourcePolicy_GroupPlacementPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.group_placement_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `instance_schedule_policy` after provisioning.\n"]
-    pub fn instance_schedule_policy(&self) -> terrars::ListRef<ComputeResourcePolicyInstanceSchedulePolicyElRef> {
+    pub fn instance_schedule_policy(&self) -> terrars::ListRef<ComputeResourcePolicy_InstanceSchedulePolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.instance_schedule_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `snapshot_schedule_policy` after provisioning.\n"]
-    pub fn snapshot_schedule_policy(&self) -> terrars::ListRef<ComputeResourcePolicySnapshotSchedulePolicyElRef> {
+    pub fn snapshot_schedule_policy(&self) -> terrars::ListRef<ComputeResourcePolicy_SnapshotSchedulePolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.snapshot_schedule_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeResourcePolicyTimeoutsElRef {
-        ComputeResourcePolicyTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeResourcePolicy_TimeoutsRef {
+        ComputeResourcePolicy_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `workload_policy` after provisioning.\n"]
+    pub fn workload_policy(&self) -> terrars::ListRef<ComputeResourcePolicy_WorkloadPolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.workload_policy", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ComputeResourcePolicyDynamic {
+    disk_consistency_group_policy: std
+    ::option
+    ::Option<terrars::DynamicBlock<ComputeResourcePolicy_DiskConsistencyGroupPolicy>>,
+    group_placement_policy: std::option::Option<terrars::DynamicBlock<ComputeResourcePolicy_GroupPlacementPolicy>>,
+    instance_schedule_policy: std
+    ::option
+    ::Option<terrars::DynamicBlock<ComputeResourcePolicy_InstanceSchedulePolicy>>,
+    snapshot_schedule_policy: std
+    ::option
+    ::Option<terrars::DynamicBlock<ComputeResourcePolicy_SnapshotSchedulePolicy>>,
+    workload_policy: std::option::Option<terrars::DynamicBlock<ComputeResourcePolicy_WorkloadPolicy>>,
+}
+
 #[derive(Serialize)]
-pub struct ComputeResourcePolicyDiskConsistencyGroupPolicyEl {
+pub struct ComputeResourcePolicy_DiskConsistencyGroupPolicy {
     enabled: terrars::PrimField<bool>,
 }
 
-impl ComputeResourcePolicyDiskConsistencyGroupPolicyEl { }
+impl ComputeResourcePolicy_DiskConsistencyGroupPolicy { }
 
-impl terrars::ToListMappable for ComputeResourcePolicyDiskConsistencyGroupPolicyEl {
-    type O = terrars::BlockAssignable<ComputeResourcePolicyDiskConsistencyGroupPolicyEl>;
+impl terrars::ToListMappable for ComputeResourcePolicy_DiskConsistencyGroupPolicy {
+    type O = terrars::BlockAssignable<ComputeResourcePolicy_DiskConsistencyGroupPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -467,35 +531,37 @@ impl terrars::ToListMappable for ComputeResourcePolicyDiskConsistencyGroupPolicy
     }
 }
 
-pub struct BuildComputeResourcePolicyDiskConsistencyGroupPolicyEl {
+pub struct BuildComputeResourcePolicy_DiskConsistencyGroupPolicy {
     #[doc = "Enable disk consistency on the resource policy."]
     pub enabled: terrars::PrimField<bool>,
 }
 
-impl BuildComputeResourcePolicyDiskConsistencyGroupPolicyEl {
-    pub fn build(self) -> ComputeResourcePolicyDiskConsistencyGroupPolicyEl {
-        ComputeResourcePolicyDiskConsistencyGroupPolicyEl { enabled: self.enabled }
+impl BuildComputeResourcePolicy_DiskConsistencyGroupPolicy {
+    pub fn build(self) -> ComputeResourcePolicy_DiskConsistencyGroupPolicy {
+        ComputeResourcePolicy_DiskConsistencyGroupPolicy { enabled: self.enabled }
     }
 }
 
-pub struct ComputeResourcePolicyDiskConsistencyGroupPolicyElRef {
+#[allow(dead_code)]
+pub struct ComputeResourcePolicy_DiskConsistencyGroupPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeResourcePolicyDiskConsistencyGroupPolicyElRef {
+impl terrars::Ref for ComputeResourcePolicy_DiskConsistencyGroupPolicyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeResourcePolicyDiskConsistencyGroupPolicyElRef {
-        ComputeResourcePolicyDiskConsistencyGroupPolicyElRef {
+    ) -> ComputeResourcePolicy_DiskConsistencyGroupPolicyRef {
+        ComputeResourcePolicy_DiskConsistencyGroupPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeResourcePolicyDiskConsistencyGroupPolicyElRef {
+impl ComputeResourcePolicy_DiskConsistencyGroupPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -508,16 +574,18 @@ impl ComputeResourcePolicyDiskConsistencyGroupPolicyElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeResourcePolicyGroupPlacementPolicyEl {
+pub struct ComputeResourcePolicy_GroupPlacementPolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     availability_domain_count: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     collocation: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gpu_topology: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vm_count: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl ComputeResourcePolicyGroupPlacementPolicyEl {
+impl ComputeResourcePolicy_GroupPlacementPolicy {
     #[doc =
         "Set the field `availability_domain_count`.\nThe number of availability domains instances will be spread across. If two instances are in different\navailability domain, they will not be put in the same low latency network"]
     pub fn set_availability_domain_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -532,6 +600,12 @@ impl ComputeResourcePolicyGroupPlacementPolicyEl {
         self
     }
 
+    #[doc = "Set the field `gpu_topology`.\nSpecifies the shape of the GPU slice, in slice based GPU families eg. A4X."]
+    pub fn set_gpu_topology(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.gpu_topology = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc =
         "Set the field `vm_count`.\nNumber of VMs in this placement group. Google does not recommend that you use this field\nunless you use a compact policy and you want your policy to work only if it contains this\nexact number of VMs."]
     pub fn set_vm_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -540,8 +614,8 @@ impl ComputeResourcePolicyGroupPlacementPolicyEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeResourcePolicyGroupPlacementPolicyEl {
-    type O = terrars::BlockAssignable<ComputeResourcePolicyGroupPlacementPolicyEl>;
+impl terrars::ToListMappable for ComputeResourcePolicy_GroupPlacementPolicy {
+    type O = terrars::BlockAssignable<ComputeResourcePolicy_GroupPlacementPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -552,36 +626,36 @@ impl terrars::ToListMappable for ComputeResourcePolicyGroupPlacementPolicyEl {
     }
 }
 
-pub struct BuildComputeResourcePolicyGroupPlacementPolicyEl {}
+pub struct BuildComputeResourcePolicy_GroupPlacementPolicy {}
 
-impl BuildComputeResourcePolicyGroupPlacementPolicyEl {
-    pub fn build(self) -> ComputeResourcePolicyGroupPlacementPolicyEl {
-        ComputeResourcePolicyGroupPlacementPolicyEl {
+impl BuildComputeResourcePolicy_GroupPlacementPolicy {
+    pub fn build(self) -> ComputeResourcePolicy_GroupPlacementPolicy {
+        ComputeResourcePolicy_GroupPlacementPolicy {
             availability_domain_count: core::default::Default::default(),
             collocation: core::default::Default::default(),
+            gpu_topology: core::default::Default::default(),
             vm_count: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeResourcePolicyGroupPlacementPolicyElRef {
+#[allow(dead_code)]
+pub struct ComputeResourcePolicy_GroupPlacementPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeResourcePolicyGroupPlacementPolicyElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ComputeResourcePolicyGroupPlacementPolicyElRef {
-        ComputeResourcePolicyGroupPlacementPolicyElRef {
+impl terrars::Ref for ComputeResourcePolicy_GroupPlacementPolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeResourcePolicy_GroupPlacementPolicyRef {
+        ComputeResourcePolicy_GroupPlacementPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeResourcePolicyGroupPlacementPolicyElRef {
+impl ComputeResourcePolicy_GroupPlacementPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -599,6 +673,12 @@ impl ComputeResourcePolicyGroupPlacementPolicyElRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `gpu_topology` after provisioning.\nSpecifies the shape of the GPU slice, in slice based GPU families eg. A4X."]
+    pub fn gpu_topology(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.gpu_topology", self.base))
+    }
+
+    #[doc =
         "Get a reference to the value of field `vm_count` after provisioning.\nNumber of VMs in this placement group. Google does not recommend that you use this field\nunless you use a compact policy and you want your policy to work only if it contains this\nexact number of VMs."]
     pub fn vm_count(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.vm_count", self.base))
@@ -606,14 +686,14 @@ impl ComputeResourcePolicyGroupPlacementPolicyElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeResourcePolicyInstanceSchedulePolicyElVmStartScheduleEl {
+pub struct ComputeResourcePolicy_InstanceSchedulePolicy_VmStartSchedule {
     schedule: terrars::PrimField<std::string::String>,
 }
 
-impl ComputeResourcePolicyInstanceSchedulePolicyElVmStartScheduleEl { }
+impl ComputeResourcePolicy_InstanceSchedulePolicy_VmStartSchedule { }
 
-impl terrars::ToListMappable for ComputeResourcePolicyInstanceSchedulePolicyElVmStartScheduleEl {
-    type O = terrars::BlockAssignable<ComputeResourcePolicyInstanceSchedulePolicyElVmStartScheduleEl>;
+impl terrars::ToListMappable for ComputeResourcePolicy_InstanceSchedulePolicy_VmStartSchedule {
+    type O = terrars::BlockAssignable<ComputeResourcePolicy_InstanceSchedulePolicy_VmStartSchedule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -624,35 +704,37 @@ impl terrars::ToListMappable for ComputeResourcePolicyInstanceSchedulePolicyElVm
     }
 }
 
-pub struct BuildComputeResourcePolicyInstanceSchedulePolicyElVmStartScheduleEl {
+pub struct BuildComputeResourcePolicy_InstanceSchedulePolicy_VmStartSchedule {
     #[doc = "Specifies the frequency for the operation, using the unix-cron format."]
     pub schedule: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputeResourcePolicyInstanceSchedulePolicyElVmStartScheduleEl {
-    pub fn build(self) -> ComputeResourcePolicyInstanceSchedulePolicyElVmStartScheduleEl {
-        ComputeResourcePolicyInstanceSchedulePolicyElVmStartScheduleEl { schedule: self.schedule }
+impl BuildComputeResourcePolicy_InstanceSchedulePolicy_VmStartSchedule {
+    pub fn build(self) -> ComputeResourcePolicy_InstanceSchedulePolicy_VmStartSchedule {
+        ComputeResourcePolicy_InstanceSchedulePolicy_VmStartSchedule { schedule: self.schedule }
     }
 }
 
-pub struct ComputeResourcePolicyInstanceSchedulePolicyElVmStartScheduleElRef {
+#[allow(dead_code)]
+pub struct ComputeResourcePolicy_InstanceSchedulePolicy_VmStartScheduleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeResourcePolicyInstanceSchedulePolicyElVmStartScheduleElRef {
+impl terrars::Ref for ComputeResourcePolicy_InstanceSchedulePolicy_VmStartScheduleRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeResourcePolicyInstanceSchedulePolicyElVmStartScheduleElRef {
-        ComputeResourcePolicyInstanceSchedulePolicyElVmStartScheduleElRef {
+    ) -> ComputeResourcePolicy_InstanceSchedulePolicy_VmStartScheduleRef {
+        ComputeResourcePolicy_InstanceSchedulePolicy_VmStartScheduleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeResourcePolicyInstanceSchedulePolicyElVmStartScheduleElRef {
+impl ComputeResourcePolicy_InstanceSchedulePolicy_VmStartScheduleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -665,14 +747,14 @@ impl ComputeResourcePolicyInstanceSchedulePolicyElVmStartScheduleElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeResourcePolicyInstanceSchedulePolicyElVmStopScheduleEl {
+pub struct ComputeResourcePolicy_InstanceSchedulePolicy_VmStopSchedule {
     schedule: terrars::PrimField<std::string::String>,
 }
 
-impl ComputeResourcePolicyInstanceSchedulePolicyElVmStopScheduleEl { }
+impl ComputeResourcePolicy_InstanceSchedulePolicy_VmStopSchedule { }
 
-impl terrars::ToListMappable for ComputeResourcePolicyInstanceSchedulePolicyElVmStopScheduleEl {
-    type O = terrars::BlockAssignable<ComputeResourcePolicyInstanceSchedulePolicyElVmStopScheduleEl>;
+impl terrars::ToListMappable for ComputeResourcePolicy_InstanceSchedulePolicy_VmStopSchedule {
+    type O = terrars::BlockAssignable<ComputeResourcePolicy_InstanceSchedulePolicy_VmStopSchedule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -683,35 +765,37 @@ impl terrars::ToListMappable for ComputeResourcePolicyInstanceSchedulePolicyElVm
     }
 }
 
-pub struct BuildComputeResourcePolicyInstanceSchedulePolicyElVmStopScheduleEl {
+pub struct BuildComputeResourcePolicy_InstanceSchedulePolicy_VmStopSchedule {
     #[doc = "Specifies the frequency for the operation, using the unix-cron format."]
     pub schedule: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputeResourcePolicyInstanceSchedulePolicyElVmStopScheduleEl {
-    pub fn build(self) -> ComputeResourcePolicyInstanceSchedulePolicyElVmStopScheduleEl {
-        ComputeResourcePolicyInstanceSchedulePolicyElVmStopScheduleEl { schedule: self.schedule }
+impl BuildComputeResourcePolicy_InstanceSchedulePolicy_VmStopSchedule {
+    pub fn build(self) -> ComputeResourcePolicy_InstanceSchedulePolicy_VmStopSchedule {
+        ComputeResourcePolicy_InstanceSchedulePolicy_VmStopSchedule { schedule: self.schedule }
     }
 }
 
-pub struct ComputeResourcePolicyInstanceSchedulePolicyElVmStopScheduleElRef {
+#[allow(dead_code)]
+pub struct ComputeResourcePolicy_InstanceSchedulePolicy_VmStopScheduleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeResourcePolicyInstanceSchedulePolicyElVmStopScheduleElRef {
+impl terrars::Ref for ComputeResourcePolicy_InstanceSchedulePolicy_VmStopScheduleRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeResourcePolicyInstanceSchedulePolicyElVmStopScheduleElRef {
-        ComputeResourcePolicyInstanceSchedulePolicyElVmStopScheduleElRef {
+    ) -> ComputeResourcePolicy_InstanceSchedulePolicy_VmStopScheduleRef {
+        ComputeResourcePolicy_InstanceSchedulePolicy_VmStopScheduleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeResourcePolicyInstanceSchedulePolicyElVmStopScheduleElRef {
+impl ComputeResourcePolicy_InstanceSchedulePolicy_VmStopScheduleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -724,30 +808,30 @@ impl ComputeResourcePolicyInstanceSchedulePolicyElVmStopScheduleElRef {
 }
 
 #[derive(Serialize, Default)]
-struct ComputeResourcePolicyInstanceSchedulePolicyElDynamic {
+struct ComputeResourcePolicy_InstanceSchedulePolicyDynamic {
     vm_start_schedule: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeResourcePolicyInstanceSchedulePolicyElVmStartScheduleEl>>,
+    ::Option<terrars::DynamicBlock<ComputeResourcePolicy_InstanceSchedulePolicy_VmStartSchedule>>,
     vm_stop_schedule: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeResourcePolicyInstanceSchedulePolicyElVmStopScheduleEl>>,
+    ::Option<terrars::DynamicBlock<ComputeResourcePolicy_InstanceSchedulePolicy_VmStopSchedule>>,
 }
 
 #[derive(Serialize)]
-pub struct ComputeResourcePolicyInstanceSchedulePolicyEl {
+pub struct ComputeResourcePolicy_InstanceSchedulePolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     expiration_time: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     start_time: std::option::Option<terrars::PrimField<std::string::String>>,
     time_zone: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vm_start_schedule: std::option::Option<std::vec::Vec<ComputeResourcePolicyInstanceSchedulePolicyElVmStartScheduleEl>>,
+    vm_start_schedule: std::option::Option<std::vec::Vec<ComputeResourcePolicy_InstanceSchedulePolicy_VmStartSchedule>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vm_stop_schedule: std::option::Option<std::vec::Vec<ComputeResourcePolicyInstanceSchedulePolicyElVmStopScheduleEl>>,
-    dynamic: ComputeResourcePolicyInstanceSchedulePolicyElDynamic,
+    vm_stop_schedule: std::option::Option<std::vec::Vec<ComputeResourcePolicy_InstanceSchedulePolicy_VmStopSchedule>>,
+    dynamic: ComputeResourcePolicy_InstanceSchedulePolicyDynamic,
 }
 
-impl ComputeResourcePolicyInstanceSchedulePolicyEl {
+impl ComputeResourcePolicy_InstanceSchedulePolicy {
     #[doc =
         "Set the field `expiration_time`.\nThe expiration time of the schedule. The timestamp is an RFC3339 string."]
     pub fn set_expiration_time(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -769,7 +853,7 @@ impl ComputeResourcePolicyInstanceSchedulePolicyEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<ComputeResourcePolicyInstanceSchedulePolicyElVmStartScheduleEl>>,
+                    ::Into<terrars::BlockAssignable<ComputeResourcePolicy_InstanceSchedulePolicy_VmStartSchedule>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -790,7 +874,7 @@ impl ComputeResourcePolicyInstanceSchedulePolicyEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<ComputeResourcePolicyInstanceSchedulePolicyElVmStopScheduleEl>>,
+                    ::Into<terrars::BlockAssignable<ComputeResourcePolicy_InstanceSchedulePolicy_VmStopSchedule>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -804,8 +888,8 @@ impl ComputeResourcePolicyInstanceSchedulePolicyEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeResourcePolicyInstanceSchedulePolicyEl {
-    type O = terrars::BlockAssignable<ComputeResourcePolicyInstanceSchedulePolicyEl>;
+impl terrars::ToListMappable for ComputeResourcePolicy_InstanceSchedulePolicy {
+    type O = terrars::BlockAssignable<ComputeResourcePolicy_InstanceSchedulePolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -816,15 +900,15 @@ impl terrars::ToListMappable for ComputeResourcePolicyInstanceSchedulePolicyEl {
     }
 }
 
-pub struct BuildComputeResourcePolicyInstanceSchedulePolicyEl {
+pub struct BuildComputeResourcePolicy_InstanceSchedulePolicy {
     #[doc =
         "Specifies the time zone to be used in interpreting the schedule. The value of this field must be a time zone name\nfrom the tz database: http://en.wikipedia.org/wiki/Tz_database."]
     pub time_zone: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputeResourcePolicyInstanceSchedulePolicyEl {
-    pub fn build(self) -> ComputeResourcePolicyInstanceSchedulePolicyEl {
-        ComputeResourcePolicyInstanceSchedulePolicyEl {
+impl BuildComputeResourcePolicy_InstanceSchedulePolicy {
+    pub fn build(self) -> ComputeResourcePolicy_InstanceSchedulePolicy {
+        ComputeResourcePolicy_InstanceSchedulePolicy {
             expiration_time: core::default::Default::default(),
             start_time: core::default::Default::default(),
             time_zone: self.time_zone,
@@ -835,24 +919,26 @@ impl BuildComputeResourcePolicyInstanceSchedulePolicyEl {
     }
 }
 
-pub struct ComputeResourcePolicyInstanceSchedulePolicyElRef {
+#[allow(dead_code)]
+pub struct ComputeResourcePolicy_InstanceSchedulePolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeResourcePolicyInstanceSchedulePolicyElRef {
+impl terrars::Ref for ComputeResourcePolicy_InstanceSchedulePolicyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeResourcePolicyInstanceSchedulePolicyElRef {
-        ComputeResourcePolicyInstanceSchedulePolicyElRef {
+    ) -> ComputeResourcePolicy_InstanceSchedulePolicyRef {
+        ComputeResourcePolicy_InstanceSchedulePolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeResourcePolicyInstanceSchedulePolicyElRef {
+impl ComputeResourcePolicy_InstanceSchedulePolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -876,26 +962,24 @@ impl ComputeResourcePolicyInstanceSchedulePolicyElRef {
     }
 
     #[doc = "Get a reference to the value of field `vm_start_schedule` after provisioning.\n"]
-    pub fn vm_start_schedule(
-        &self,
-    ) -> terrars::ListRef<ComputeResourcePolicyInstanceSchedulePolicyElVmStartScheduleElRef> {
+    pub fn vm_start_schedule(&self) -> terrars::ListRef<ComputeResourcePolicy_InstanceSchedulePolicy_VmStartScheduleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vm_start_schedule", self.base))
     }
 
     #[doc = "Get a reference to the value of field `vm_stop_schedule` after provisioning.\n"]
-    pub fn vm_stop_schedule(&self) -> terrars::ListRef<ComputeResourcePolicyInstanceSchedulePolicyElVmStopScheduleElRef> {
+    pub fn vm_stop_schedule(&self) -> terrars::ListRef<ComputeResourcePolicy_InstanceSchedulePolicy_VmStopScheduleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vm_stop_schedule", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyEl {
+pub struct ComputeResourcePolicy_SnapshotSchedulePolicy_RetentionPolicy {
     max_retention_days: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     on_source_disk_delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyEl {
+impl ComputeResourcePolicy_SnapshotSchedulePolicy_RetentionPolicy {
     #[doc =
         "Set the field `on_source_disk_delete`.\nSpecifies the behavior to apply to scheduled snapshots when\nthe source disk is deleted. Default value: \"KEEP_AUTO_SNAPSHOTS\" Possible values: [\"KEEP_AUTO_SNAPSHOTS\", \"APPLY_RETENTION_POLICY\"]"]
     pub fn set_on_source_disk_delete(
@@ -907,8 +991,8 @@ impl ComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyEl {
-    type O = terrars::BlockAssignable<ComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyEl>;
+impl terrars::ToListMappable for ComputeResourcePolicy_SnapshotSchedulePolicy_RetentionPolicy {
+    type O = terrars::BlockAssignable<ComputeResourcePolicy_SnapshotSchedulePolicy_RetentionPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -919,38 +1003,40 @@ impl terrars::ToListMappable for ComputeResourcePolicySnapshotSchedulePolicyElRe
     }
 }
 
-pub struct BuildComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyEl {
+pub struct BuildComputeResourcePolicy_SnapshotSchedulePolicy_RetentionPolicy {
     #[doc = "Maximum age of the snapshot that is allowed to be kept."]
     pub max_retention_days: terrars::PrimField<f64>,
 }
 
-impl BuildComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyEl {
-    pub fn build(self) -> ComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyEl {
-        ComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyEl {
+impl BuildComputeResourcePolicy_SnapshotSchedulePolicy_RetentionPolicy {
+    pub fn build(self) -> ComputeResourcePolicy_SnapshotSchedulePolicy_RetentionPolicy {
+        ComputeResourcePolicy_SnapshotSchedulePolicy_RetentionPolicy {
             max_retention_days: self.max_retention_days,
             on_source_disk_delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyElRef {
+#[allow(dead_code)]
+pub struct ComputeResourcePolicy_SnapshotSchedulePolicy_RetentionPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyElRef {
+impl terrars::Ref for ComputeResourcePolicy_SnapshotSchedulePolicy_RetentionPolicyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyElRef {
-        ComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyElRef {
+    ) -> ComputeResourcePolicy_SnapshotSchedulePolicy_RetentionPolicyRef {
+        ComputeResourcePolicy_SnapshotSchedulePolicy_RetentionPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyElRef {
+impl ComputeResourcePolicy_SnapshotSchedulePolicy_RetentionPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -969,15 +1055,15 @@ impl ComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailyScheduleEl {
+pub struct ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_DailySchedule {
     days_in_cycle: terrars::PrimField<f64>,
     start_time: terrars::PrimField<std::string::String>,
 }
 
-impl ComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailyScheduleEl { }
+impl ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_DailySchedule { }
 
-impl terrars::ToListMappable for ComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailyScheduleEl {
-    type O = terrars::BlockAssignable<ComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailyScheduleEl>;
+impl terrars::ToListMappable for ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_DailySchedule {
+    type O = terrars::BlockAssignable<ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_DailySchedule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -988,7 +1074,7 @@ impl terrars::ToListMappable for ComputeResourcePolicySnapshotSchedulePolicyElSc
     }
 }
 
-pub struct BuildComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailyScheduleEl {
+pub struct BuildComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_DailySchedule {
     #[doc =
         "Defines a schedule with units measured in days. The value determines how many days pass between the start of each cycle. Days in cycle for snapshot schedule policy must be 1."]
     pub days_in_cycle: terrars::PrimField<f64>,
@@ -997,33 +1083,35 @@ pub struct BuildComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailySche
     pub start_time: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailyScheduleEl {
-    pub fn build(self) -> ComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailyScheduleEl {
-        ComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailyScheduleEl {
+impl BuildComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_DailySchedule {
+    pub fn build(self) -> ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_DailySchedule {
+        ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_DailySchedule {
             days_in_cycle: self.days_in_cycle,
             start_time: self.start_time,
         }
     }
 }
 
-pub struct ComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailyScheduleElRef {
+#[allow(dead_code)]
+pub struct ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_DailyScheduleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailyScheduleElRef {
+impl terrars::Ref for ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_DailyScheduleRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailyScheduleElRef {
-        ComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailyScheduleElRef {
+    ) -> ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_DailyScheduleRef {
+        ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_DailyScheduleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailyScheduleElRef {
+impl ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_DailyScheduleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1042,15 +1130,15 @@ impl ComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailyScheduleElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeResourcePolicySnapshotSchedulePolicyElScheduleElHourlyScheduleEl {
+pub struct ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_HourlySchedule {
     hours_in_cycle: terrars::PrimField<f64>,
     start_time: terrars::PrimField<std::string::String>,
 }
 
-impl ComputeResourcePolicySnapshotSchedulePolicyElScheduleElHourlyScheduleEl { }
+impl ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_HourlySchedule { }
 
-impl terrars::ToListMappable for ComputeResourcePolicySnapshotSchedulePolicyElScheduleElHourlyScheduleEl {
-    type O = terrars::BlockAssignable<ComputeResourcePolicySnapshotSchedulePolicyElScheduleElHourlyScheduleEl>;
+impl terrars::ToListMappable for ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_HourlySchedule {
+    type O = terrars::BlockAssignable<ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_HourlySchedule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1061,41 +1149,43 @@ impl terrars::ToListMappable for ComputeResourcePolicySnapshotSchedulePolicyElSc
     }
 }
 
-pub struct BuildComputeResourcePolicySnapshotSchedulePolicyElScheduleElHourlyScheduleEl {
+pub struct BuildComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_HourlySchedule {
     #[doc = "The number of hours between snapshots."]
     pub hours_in_cycle: terrars::PrimField<f64>,
     #[doc =
-        "Time within the window to start the operations.\nIt must be in an hourly format \"HH:MM\",\nwhere HH : [00-23] and MM : [00] GMT.\neg: 21:00"]
+        "Time within the window to start the operations.\nIt must be in an hourly format \"HH:MM\",\nwhere HH : [00-23] and MM : [00] GMT. eg: 21:00"]
     pub start_time: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputeResourcePolicySnapshotSchedulePolicyElScheduleElHourlyScheduleEl {
-    pub fn build(self) -> ComputeResourcePolicySnapshotSchedulePolicyElScheduleElHourlyScheduleEl {
-        ComputeResourcePolicySnapshotSchedulePolicyElScheduleElHourlyScheduleEl {
+impl BuildComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_HourlySchedule {
+    pub fn build(self) -> ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_HourlySchedule {
+        ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_HourlySchedule {
             hours_in_cycle: self.hours_in_cycle,
             start_time: self.start_time,
         }
     }
 }
 
-pub struct ComputeResourcePolicySnapshotSchedulePolicyElScheduleElHourlyScheduleElRef {
+#[allow(dead_code)]
+pub struct ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_HourlyScheduleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeResourcePolicySnapshotSchedulePolicyElScheduleElHourlyScheduleElRef {
+impl terrars::Ref for ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_HourlyScheduleRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeResourcePolicySnapshotSchedulePolicyElScheduleElHourlyScheduleElRef {
-        ComputeResourcePolicySnapshotSchedulePolicyElScheduleElHourlyScheduleElRef {
+    ) -> ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_HourlyScheduleRef {
+        ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_HourlyScheduleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeResourcePolicySnapshotSchedulePolicyElScheduleElHourlyScheduleElRef {
+impl ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_HourlyScheduleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1107,24 +1197,23 @@ impl ComputeResourcePolicySnapshotSchedulePolicyElScheduleElHourlyScheduleElRef 
     }
 
     #[doc =
-        "Get a reference to the value of field `start_time` after provisioning.\nTime within the window to start the operations.\nIt must be in an hourly format \"HH:MM\",\nwhere HH : [00-23] and MM : [00] GMT.\neg: 21:00"]
+        "Get a reference to the value of field `start_time` after provisioning.\nTime within the window to start the operations.\nIt must be in an hourly format \"HH:MM\",\nwhere HH : [00-23] and MM : [00] GMT. eg: 21:00"]
     pub fn start_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.start_time", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElDayOfWeeksEl {
+pub struct ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_WeeklySchedule_DayOfWeeks {
     day: terrars::PrimField<std::string::String>,
     start_time: terrars::PrimField<std::string::String>,
 }
 
-impl ComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElDayOfWeeksEl { }
+impl ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_WeeklySchedule_DayOfWeeks { }
 
-impl terrars::ToListMappable for ComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElDayOfWeeksEl {
+impl terrars::ToListMappable for ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_WeeklySchedule_DayOfWeeks {
     type O =
-        terrars
-        ::BlockAssignable<ComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElDayOfWeeksEl>;
+        terrars::BlockAssignable<ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_WeeklySchedule_DayOfWeeks>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1135,7 +1224,7 @@ impl terrars::ToListMappable for ComputeResourcePolicySnapshotSchedulePolicyElSc
     }
 }
 
-pub struct BuildComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElDayOfWeeksEl {
+pub struct BuildComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_WeeklySchedule_DayOfWeeks {
     #[doc =
         "The day of the week to create the snapshot. e.g. MONDAY Possible values: [\"MONDAY\", \"TUESDAY\", \"WEDNESDAY\", \"THURSDAY\", \"FRIDAY\", \"SATURDAY\", \"SUNDAY\"]"]
     pub day: terrars::PrimField<std::string::String>,
@@ -1144,33 +1233,35 @@ pub struct BuildComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklySch
     pub start_time: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElDayOfWeeksEl {
-    pub fn build(self) -> ComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElDayOfWeeksEl {
-        ComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElDayOfWeeksEl {
+impl BuildComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_WeeklySchedule_DayOfWeeks {
+    pub fn build(self) -> ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_WeeklySchedule_DayOfWeeks {
+        ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_WeeklySchedule_DayOfWeeks {
             day: self.day,
             start_time: self.start_time,
         }
     }
 }
 
-pub struct ComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElDayOfWeeksElRef {
+#[allow(dead_code)]
+pub struct ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_WeeklySchedule_DayOfWeeksRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElDayOfWeeksElRef {
+impl terrars::Ref for ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_WeeklySchedule_DayOfWeeksRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElDayOfWeeksElRef {
-        ComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElDayOfWeeksElRef {
+    ) -> ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_WeeklySchedule_DayOfWeeksRef {
+        ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_WeeklySchedule_DayOfWeeksRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElDayOfWeeksElRef {
+impl ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_WeeklySchedule_DayOfWeeksRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1189,24 +1280,22 @@ impl ComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElDayO
 }
 
 #[derive(Serialize, Default)]
-struct ComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElDynamic {
+struct ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_WeeklyScheduleDynamic {
     day_of_weeks: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<ComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElDayOfWeeksEl>,
-    >,
+    ::Option<terrars::DynamicBlock<ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_WeeklySchedule_DayOfWeeks>>,
 }
 
 #[derive(Serialize)]
-pub struct ComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleEl {
+pub struct ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_WeeklySchedule {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     day_of_weeks: std
     ::option
-    ::Option<std::vec::Vec<ComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElDayOfWeeksEl>>,
-    dynamic: ComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElDynamic,
+    ::Option<std::vec::Vec<ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_WeeklySchedule_DayOfWeeks>>,
+    dynamic: ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_WeeklyScheduleDynamic,
 }
 
-impl ComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleEl {
+impl ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_WeeklySchedule {
     #[doc = "Set the field `day_of_weeks`.\n"]
     pub fn set_day_of_weeks(
         mut self,
@@ -1218,7 +1307,7 @@ impl ComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            ComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElDayOfWeeksEl,
+                            ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_WeeklySchedule_DayOfWeeks,
                         >,
                     >,
     ) -> Self {
@@ -1234,8 +1323,8 @@ impl ComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleEl {
-    type O = terrars::BlockAssignable<ComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleEl>;
+impl terrars::ToListMappable for ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_WeeklySchedule {
+    type O = terrars::BlockAssignable<ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_WeeklySchedule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1246,71 +1335,73 @@ impl terrars::ToListMappable for ComputeResourcePolicySnapshotSchedulePolicyElSc
     }
 }
 
-pub struct BuildComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleEl {}
+pub struct BuildComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_WeeklySchedule {}
 
-impl BuildComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleEl {
-    pub fn build(self) -> ComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleEl {
-        ComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleEl {
+impl BuildComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_WeeklySchedule {
+    pub fn build(self) -> ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_WeeklySchedule {
+        ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_WeeklySchedule {
             day_of_weeks: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElRef {
+#[allow(dead_code)]
+pub struct ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_WeeklyScheduleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElRef {
+impl terrars::Ref for ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_WeeklyScheduleRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElRef {
-        ComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElRef {
+    ) -> ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_WeeklyScheduleRef {
+        ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_WeeklyScheduleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElRef {
+impl ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_WeeklyScheduleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize, Default)]
-struct ComputeResourcePolicySnapshotSchedulePolicyElScheduleElDynamic {
+struct ComputeResourcePolicy_SnapshotSchedulePolicy_ScheduleDynamic {
     daily_schedule: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailyScheduleEl>>,
+    ::Option<terrars::DynamicBlock<ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_DailySchedule>>,
     hourly_schedule: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeResourcePolicySnapshotSchedulePolicyElScheduleElHourlyScheduleEl>>,
+    ::Option<terrars::DynamicBlock<ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_HourlySchedule>>,
     weekly_schedule: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleEl>>,
+    ::Option<terrars::DynamicBlock<ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_WeeklySchedule>>,
 }
 
 #[derive(Serialize)]
-pub struct ComputeResourcePolicySnapshotSchedulePolicyElScheduleEl {
+pub struct ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     daily_schedule: std
     ::option
-    ::Option<std::vec::Vec<ComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailyScheduleEl>>,
+    ::Option<std::vec::Vec<ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_DailySchedule>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     hourly_schedule: std
     ::option
-    ::Option<std::vec::Vec<ComputeResourcePolicySnapshotSchedulePolicyElScheduleElHourlyScheduleEl>>,
+    ::Option<std::vec::Vec<ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_HourlySchedule>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     weekly_schedule: std
     ::option
-    ::Option<std::vec::Vec<ComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleEl>>,
-    dynamic: ComputeResourcePolicySnapshotSchedulePolicyElScheduleElDynamic,
+    ::Option<std::vec::Vec<ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_WeeklySchedule>>,
+    dynamic: ComputeResourcePolicy_SnapshotSchedulePolicy_ScheduleDynamic,
 }
 
-impl ComputeResourcePolicySnapshotSchedulePolicyElScheduleEl {
+impl ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule {
     #[doc = "Set the field `daily_schedule`.\n"]
     pub fn set_daily_schedule(
         mut self,
@@ -1320,8 +1411,7 @@ impl ComputeResourcePolicySnapshotSchedulePolicyElScheduleEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<ComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailyScheduleEl>,
+                        terrars::BlockAssignable<ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_DailySchedule>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1344,8 +1434,7 @@ impl ComputeResourcePolicySnapshotSchedulePolicyElScheduleEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<ComputeResourcePolicySnapshotSchedulePolicyElScheduleElHourlyScheduleEl>,
+                        terrars::BlockAssignable<ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_HourlySchedule>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1368,8 +1457,7 @@ impl ComputeResourcePolicySnapshotSchedulePolicyElScheduleEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<ComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleEl>,
+                        terrars::BlockAssignable<ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_WeeklySchedule>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1384,8 +1472,8 @@ impl ComputeResourcePolicySnapshotSchedulePolicyElScheduleEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeResourcePolicySnapshotSchedulePolicyElScheduleEl {
-    type O = terrars::BlockAssignable<ComputeResourcePolicySnapshotSchedulePolicyElScheduleEl>;
+impl terrars::ToListMappable for ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule {
+    type O = terrars::BlockAssignable<ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1396,11 +1484,11 @@ impl terrars::ToListMappable for ComputeResourcePolicySnapshotSchedulePolicyElSc
     }
 }
 
-pub struct BuildComputeResourcePolicySnapshotSchedulePolicyElScheduleEl {}
+pub struct BuildComputeResourcePolicy_SnapshotSchedulePolicy_Schedule {}
 
-impl BuildComputeResourcePolicySnapshotSchedulePolicyElScheduleEl {
-    pub fn build(self) -> ComputeResourcePolicySnapshotSchedulePolicyElScheduleEl {
-        ComputeResourcePolicySnapshotSchedulePolicyElScheduleEl {
+impl BuildComputeResourcePolicy_SnapshotSchedulePolicy_Schedule {
+    pub fn build(self) -> ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule {
+        ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule {
             daily_schedule: core::default::Default::default(),
             hourly_schedule: core::default::Default::default(),
             weekly_schedule: core::default::Default::default(),
@@ -1409,24 +1497,26 @@ impl BuildComputeResourcePolicySnapshotSchedulePolicyElScheduleEl {
     }
 }
 
-pub struct ComputeResourcePolicySnapshotSchedulePolicyElScheduleElRef {
+#[allow(dead_code)]
+pub struct ComputeResourcePolicy_SnapshotSchedulePolicy_ScheduleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeResourcePolicySnapshotSchedulePolicyElScheduleElRef {
+impl terrars::Ref for ComputeResourcePolicy_SnapshotSchedulePolicy_ScheduleRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeResourcePolicySnapshotSchedulePolicyElScheduleElRef {
-        ComputeResourcePolicySnapshotSchedulePolicyElScheduleElRef {
+    ) -> ComputeResourcePolicy_SnapshotSchedulePolicy_ScheduleRef {
+        ComputeResourcePolicy_SnapshotSchedulePolicy_ScheduleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeResourcePolicySnapshotSchedulePolicyElScheduleElRef {
+impl ComputeResourcePolicy_SnapshotSchedulePolicy_ScheduleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1434,27 +1524,27 @@ impl ComputeResourcePolicySnapshotSchedulePolicyElScheduleElRef {
     #[doc = "Get a reference to the value of field `daily_schedule` after provisioning.\n"]
     pub fn daily_schedule(
         &self,
-    ) -> terrars::ListRef<ComputeResourcePolicySnapshotSchedulePolicyElScheduleElDailyScheduleElRef> {
+    ) -> terrars::ListRef<ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_DailyScheduleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.daily_schedule", self.base))
     }
 
     #[doc = "Get a reference to the value of field `hourly_schedule` after provisioning.\n"]
     pub fn hourly_schedule(
         &self,
-    ) -> terrars::ListRef<ComputeResourcePolicySnapshotSchedulePolicyElScheduleElHourlyScheduleElRef> {
+    ) -> terrars::ListRef<ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_HourlyScheduleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.hourly_schedule", self.base))
     }
 
     #[doc = "Get a reference to the value of field `weekly_schedule` after provisioning.\n"]
     pub fn weekly_schedule(
         &self,
-    ) -> terrars::ListRef<ComputeResourcePolicySnapshotSchedulePolicyElScheduleElWeeklyScheduleElRef> {
+    ) -> terrars::ListRef<ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule_WeeklyScheduleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.weekly_schedule", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesEl {
+pub struct ComputeResourcePolicy_SnapshotSchedulePolicy_SnapshotProperties {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     chain_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1465,7 +1555,7 @@ pub struct ComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesEl {
     storage_locations: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl ComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesEl {
+impl ComputeResourcePolicy_SnapshotSchedulePolicy_SnapshotProperties {
     #[doc =
         "Set the field `chain_name`.\nCreates the new snapshot in the snapshot chain labeled with the\nspecified name. The chain name must be 1-63 characters long and comply\nwith RFC1035."]
     pub fn set_chain_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1499,8 +1589,8 @@ impl ComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesEl {
-    type O = terrars::BlockAssignable<ComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesEl>;
+impl terrars::ToListMappable for ComputeResourcePolicy_SnapshotSchedulePolicy_SnapshotProperties {
+    type O = terrars::BlockAssignable<ComputeResourcePolicy_SnapshotSchedulePolicy_SnapshotProperties>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1511,11 +1601,11 @@ impl terrars::ToListMappable for ComputeResourcePolicySnapshotSchedulePolicyElSn
     }
 }
 
-pub struct BuildComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesEl {}
+pub struct BuildComputeResourcePolicy_SnapshotSchedulePolicy_SnapshotProperties {}
 
-impl BuildComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesEl {
-    pub fn build(self) -> ComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesEl {
-        ComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesEl {
+impl BuildComputeResourcePolicy_SnapshotSchedulePolicy_SnapshotProperties {
+    pub fn build(self) -> ComputeResourcePolicy_SnapshotSchedulePolicy_SnapshotProperties {
+        ComputeResourcePolicy_SnapshotSchedulePolicy_SnapshotProperties {
             chain_name: core::default::Default::default(),
             guest_flush: core::default::Default::default(),
             labels: core::default::Default::default(),
@@ -1524,24 +1614,26 @@ impl BuildComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesEl {
     }
 }
 
-pub struct ComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesElRef {
+#[allow(dead_code)]
+pub struct ComputeResourcePolicy_SnapshotSchedulePolicy_SnapshotPropertiesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesElRef {
+impl terrars::Ref for ComputeResourcePolicy_SnapshotSchedulePolicy_SnapshotPropertiesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesElRef {
-        ComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesElRef {
+    ) -> ComputeResourcePolicy_SnapshotSchedulePolicy_SnapshotPropertiesRef {
+        ComputeResourcePolicy_SnapshotSchedulePolicy_SnapshotPropertiesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesElRef {
+impl ComputeResourcePolicy_SnapshotSchedulePolicy_SnapshotPropertiesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1571,30 +1663,30 @@ impl ComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesElRef {
 }
 
 #[derive(Serialize, Default)]
-struct ComputeResourcePolicySnapshotSchedulePolicyElDynamic {
+struct ComputeResourcePolicy_SnapshotSchedulePolicyDynamic {
     retention_policy: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyEl>>,
-    schedule: std::option::Option<terrars::DynamicBlock<ComputeResourcePolicySnapshotSchedulePolicyElScheduleEl>>,
+    ::Option<terrars::DynamicBlock<ComputeResourcePolicy_SnapshotSchedulePolicy_RetentionPolicy>>,
+    schedule: std::option::Option<terrars::DynamicBlock<ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule>>,
     snapshot_properties: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesEl>>,
+    ::Option<terrars::DynamicBlock<ComputeResourcePolicy_SnapshotSchedulePolicy_SnapshotProperties>>,
 }
 
 #[derive(Serialize)]
-pub struct ComputeResourcePolicySnapshotSchedulePolicyEl {
+pub struct ComputeResourcePolicy_SnapshotSchedulePolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    retention_policy: std::option::Option<std::vec::Vec<ComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyEl>>,
+    retention_policy: std::option::Option<std::vec::Vec<ComputeResourcePolicy_SnapshotSchedulePolicy_RetentionPolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    schedule: std::option::Option<std::vec::Vec<ComputeResourcePolicySnapshotSchedulePolicyElScheduleEl>>,
+    schedule: std::option::Option<std::vec::Vec<ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     snapshot_properties: std
     ::option
-    ::Option<std::vec::Vec<ComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesEl>>,
-    dynamic: ComputeResourcePolicySnapshotSchedulePolicyElDynamic,
+    ::Option<std::vec::Vec<ComputeResourcePolicy_SnapshotSchedulePolicy_SnapshotProperties>>,
+    dynamic: ComputeResourcePolicy_SnapshotSchedulePolicyDynamic,
 }
 
-impl ComputeResourcePolicySnapshotSchedulePolicyEl {
+impl ComputeResourcePolicy_SnapshotSchedulePolicy {
     #[doc = "Set the field `retention_policy`.\n"]
     pub fn set_retention_policy(
         mut self,
@@ -1603,7 +1695,7 @@ impl ComputeResourcePolicySnapshotSchedulePolicyEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<ComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyEl>>,
+                    ::Into<terrars::BlockAssignable<ComputeResourcePolicy_SnapshotSchedulePolicy_RetentionPolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1619,12 +1711,7 @@ impl ComputeResourcePolicySnapshotSchedulePolicyEl {
     #[doc = "Set the field `schedule`.\n"]
     pub fn set_schedule(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<ComputeResourcePolicySnapshotSchedulePolicyElScheduleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeResourcePolicy_SnapshotSchedulePolicy_Schedule>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1645,9 +1732,7 @@ impl ComputeResourcePolicySnapshotSchedulePolicyEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<ComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<ComputeResourcePolicy_SnapshotSchedulePolicy_SnapshotProperties>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1661,8 +1746,8 @@ impl ComputeResourcePolicySnapshotSchedulePolicyEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeResourcePolicySnapshotSchedulePolicyEl {
-    type O = terrars::BlockAssignable<ComputeResourcePolicySnapshotSchedulePolicyEl>;
+impl terrars::ToListMappable for ComputeResourcePolicy_SnapshotSchedulePolicy {
+    type O = terrars::BlockAssignable<ComputeResourcePolicy_SnapshotSchedulePolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1673,11 +1758,11 @@ impl terrars::ToListMappable for ComputeResourcePolicySnapshotSchedulePolicyEl {
     }
 }
 
-pub struct BuildComputeResourcePolicySnapshotSchedulePolicyEl {}
+pub struct BuildComputeResourcePolicy_SnapshotSchedulePolicy {}
 
-impl BuildComputeResourcePolicySnapshotSchedulePolicyEl {
-    pub fn build(self) -> ComputeResourcePolicySnapshotSchedulePolicyEl {
-        ComputeResourcePolicySnapshotSchedulePolicyEl {
+impl BuildComputeResourcePolicy_SnapshotSchedulePolicy {
+    pub fn build(self) -> ComputeResourcePolicy_SnapshotSchedulePolicy {
+        ComputeResourcePolicy_SnapshotSchedulePolicy {
             retention_policy: core::default::Default::default(),
             schedule: core::default::Default::default(),
             snapshot_properties: core::default::Default::default(),
@@ -1686,57 +1771,59 @@ impl BuildComputeResourcePolicySnapshotSchedulePolicyEl {
     }
 }
 
-pub struct ComputeResourcePolicySnapshotSchedulePolicyElRef {
+#[allow(dead_code)]
+pub struct ComputeResourcePolicy_SnapshotSchedulePolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeResourcePolicySnapshotSchedulePolicyElRef {
+impl terrars::Ref for ComputeResourcePolicy_SnapshotSchedulePolicyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeResourcePolicySnapshotSchedulePolicyElRef {
-        ComputeResourcePolicySnapshotSchedulePolicyElRef {
+    ) -> ComputeResourcePolicy_SnapshotSchedulePolicyRef {
+        ComputeResourcePolicy_SnapshotSchedulePolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeResourcePolicySnapshotSchedulePolicyElRef {
+impl ComputeResourcePolicy_SnapshotSchedulePolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `retention_policy` after provisioning.\n"]
-    pub fn retention_policy(
-        &self,
-    ) -> terrars::ListRef<ComputeResourcePolicySnapshotSchedulePolicyElRetentionPolicyElRef> {
+    pub fn retention_policy(&self) -> terrars::ListRef<ComputeResourcePolicy_SnapshotSchedulePolicy_RetentionPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.retention_policy", self.base))
     }
 
     #[doc = "Get a reference to the value of field `schedule` after provisioning.\n"]
-    pub fn schedule(&self) -> terrars::ListRef<ComputeResourcePolicySnapshotSchedulePolicyElScheduleElRef> {
+    pub fn schedule(&self) -> terrars::ListRef<ComputeResourcePolicy_SnapshotSchedulePolicy_ScheduleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.schedule", self.base))
     }
 
     #[doc = "Get a reference to the value of field `snapshot_properties` after provisioning.\n"]
     pub fn snapshot_properties(
         &self,
-    ) -> terrars::ListRef<ComputeResourcePolicySnapshotSchedulePolicyElSnapshotPropertiesElRef> {
+    ) -> terrars::ListRef<ComputeResourcePolicy_SnapshotSchedulePolicy_SnapshotPropertiesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.snapshot_properties", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeResourcePolicyTimeoutsEl {
+pub struct ComputeResourcePolicy_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeResourcePolicyTimeoutsEl {
+impl ComputeResourcePolicy_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1748,10 +1835,16 @@ impl ComputeResourcePolicyTimeoutsEl {
         self.delete = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for ComputeResourcePolicyTimeoutsEl {
-    type O = terrars::BlockAssignable<ComputeResourcePolicyTimeoutsEl>;
+impl terrars::ToListMappable for ComputeResourcePolicy_Timeouts {
+    type O = terrars::BlockAssignable<ComputeResourcePolicy_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1762,32 +1855,35 @@ impl terrars::ToListMappable for ComputeResourcePolicyTimeoutsEl {
     }
 }
 
-pub struct BuildComputeResourcePolicyTimeoutsEl {}
+pub struct BuildComputeResourcePolicy_Timeouts {}
 
-impl BuildComputeResourcePolicyTimeoutsEl {
-    pub fn build(self) -> ComputeResourcePolicyTimeoutsEl {
-        ComputeResourcePolicyTimeoutsEl {
+impl BuildComputeResourcePolicy_Timeouts {
+    pub fn build(self) -> ComputeResourcePolicy_Timeouts {
+        ComputeResourcePolicy_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
+            update: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeResourcePolicyTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComputeResourcePolicy_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeResourcePolicyTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeResourcePolicyTimeoutsElRef {
-        ComputeResourcePolicyTimeoutsElRef {
+impl terrars::Ref for ComputeResourcePolicy_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeResourcePolicy_TimeoutsRef {
+        ComputeResourcePolicy_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeResourcePolicyTimeoutsElRef {
+impl ComputeResourcePolicy_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1801,18 +1897,108 @@ impl ComputeResourcePolicyTimeoutsElRef {
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    }
 }
 
-#[derive(Serialize, Default)]
-struct ComputeResourcePolicyDynamic {
-    disk_consistency_group_policy: std
-    ::option
-    ::Option<terrars::DynamicBlock<ComputeResourcePolicyDiskConsistencyGroupPolicyEl>>,
-    group_placement_policy: std::option::Option<terrars::DynamicBlock<ComputeResourcePolicyGroupPlacementPolicyEl>>,
-    instance_schedule_policy: std
-    ::option
-    ::Option<terrars::DynamicBlock<ComputeResourcePolicyInstanceSchedulePolicyEl>>,
-    snapshot_schedule_policy: std
-    ::option
-    ::Option<terrars::DynamicBlock<ComputeResourcePolicySnapshotSchedulePolicyEl>>,
+#[derive(Serialize)]
+pub struct ComputeResourcePolicy_WorkloadPolicy {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    accelerator_topology: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_topology_distance: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(rename = "type")]
+    type_: terrars::PrimField<std::string::String>,
+}
+
+impl ComputeResourcePolicy_WorkloadPolicy {
+    #[doc =
+        "Set the field `accelerator_topology`.\nThe accelerator topology. This field can be set only when the workload policy type is HIGH_THROUGHPUT\nand cannot be set if max topology distance is set."]
+    pub fn set_accelerator_topology(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.accelerator_topology = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `max_topology_distance`.\nThe maximum topology distance. This field can be set only when the workload policy type is HIGH_THROUGHPUT\nand cannot be set if accelerator topology or accelerator topology mode is set. Possible values: [\"BLOCK\", \"CLUSTER\", \"SUBBLOCK\"]"]
+    pub fn set_max_topology_distance(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.max_topology_distance = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeResourcePolicy_WorkloadPolicy {
+    type O = terrars::BlockAssignable<ComputeResourcePolicy_WorkloadPolicy>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeResourcePolicy_WorkloadPolicy {
+    #[doc = "The type of workload policy. Possible values: [\"HIGH_AVAILABILITY\", \"HIGH_THROUGHPUT\"]"]
+    pub type_: terrars::PrimField<std::string::String>,
+}
+
+impl BuildComputeResourcePolicy_WorkloadPolicy {
+    pub fn build(self) -> ComputeResourcePolicy_WorkloadPolicy {
+        ComputeResourcePolicy_WorkloadPolicy {
+            accelerator_topology: core::default::Default::default(),
+            max_topology_distance: core::default::Default::default(),
+            type_: self.type_,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeResourcePolicy_WorkloadPolicyRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeResourcePolicy_WorkloadPolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeResourcePolicy_WorkloadPolicyRef {
+        ComputeResourcePolicy_WorkloadPolicyRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeResourcePolicy_WorkloadPolicyRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `accelerator_topology` after provisioning.\nThe accelerator topology. This field can be set only when the workload policy type is HIGH_THROUGHPUT\nand cannot be set if max topology distance is set."]
+    pub fn accelerator_topology(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.accelerator_topology", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `max_topology_distance` after provisioning.\nThe maximum topology distance. This field can be set only when the workload policy type is HIGH_THROUGHPUT\nand cannot be set if accelerator topology or accelerator topology mode is set. Possible values: [\"BLOCK\", \"CLUSTER\", \"SUBBLOCK\"]"]
+    pub fn max_topology_distance(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_topology_distance", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `type_` after provisioning.\nThe type of workload policy. Possible values: [\"HIGH_AVAILABILITY\", \"HIGH_THROUGHPUT\"]"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    }
 }

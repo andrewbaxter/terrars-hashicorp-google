@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataLoggingOrganizationSettingsData {
+struct DataLoggingOrganizationSettingsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -24,7 +26,7 @@ struct DataLoggingOrganizationSettingsData {
 struct DataLoggingOrganizationSettings_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataLoggingOrganizationSettingsData>,
+    data: std::cell::RefCell<DataLoggingOrganizationSettingsData_>,
 }
 
 #[derive(Clone)]
@@ -164,7 +166,7 @@ impl BuildDataLoggingOrganizationSettings {
         let out = DataLoggingOrganizationSettings(std::rc::Rc::new(DataLoggingOrganizationSettings_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataLoggingOrganizationSettingsData {
+            data: std::cell::RefCell::new(DataLoggingOrganizationSettingsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),

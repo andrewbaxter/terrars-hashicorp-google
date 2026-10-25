@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct FirestoreBackupScheduleData {
+struct FirestoreBackupScheduleData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,23 +23,25 @@ struct FirestoreBackupScheduleData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     database: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     retention: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    daily_recurrence: std::option::Option<std::vec::Vec<FirestoreBackupScheduleDailyRecurrenceEl>>,
+    daily_recurrence: std::option::Option<std::vec::Vec<FirestoreBackupSchedule_DailyRecurrence>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<FirestoreBackupScheduleTimeoutsEl>,
+    timeouts: std::option::Option<FirestoreBackupSchedule_Timeouts>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    weekly_recurrence: std::option::Option<std::vec::Vec<FirestoreBackupScheduleWeeklyRecurrenceEl>>,
+    weekly_recurrence: std::option::Option<std::vec::Vec<FirestoreBackupSchedule_WeeklyRecurrence>>,
     dynamic: FirestoreBackupScheduleDynamic,
 }
 
 struct FirestoreBackupSchedule_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<FirestoreBackupScheduleData>,
+    data: std::cell::RefCell<FirestoreBackupScheduleData_>,
 }
 
 #[derive(Clone)]
@@ -143,6 +147,13 @@ impl FirestoreBackupSchedule {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -158,7 +169,7 @@ impl FirestoreBackupSchedule {
     #[doc = "Set the field `daily_recurrence`.\n"]
     pub fn set_daily_recurrence(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<FirestoreBackupScheduleDailyRecurrenceEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<FirestoreBackupSchedule_DailyRecurrence>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -172,7 +183,7 @@ impl FirestoreBackupSchedule {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<FirestoreBackupScheduleTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<FirestoreBackupSchedule_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -180,7 +191,7 @@ impl FirestoreBackupSchedule {
     #[doc = "Set the field `weekly_recurrence`.\n"]
     pub fn set_weekly_recurrence(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<FirestoreBackupScheduleWeeklyRecurrenceEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<FirestoreBackupSchedule_WeeklyRecurrence>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -199,13 +210,19 @@ impl FirestoreBackupSchedule {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.database", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `name` after provisioning.\nThe unique backup schedule identifier across all locations and databases for the given project. Format:\n'projects/{{project}}/databases/{{database}}/backupSchedules/{{backupSchedule}}"]
+        "Get a reference to the value of field `name` after provisioning.\nThe unique backup schedule identifier across all locations and databases for the given project. Format:\n'projects/{{project}}/databases/{{database}}/backupSchedules/{{backupSchedule}}'"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
@@ -216,23 +233,23 @@ impl FirestoreBackupSchedule {
     }
 
     #[doc =
-        "Get a reference to the value of field `retention` after provisioning.\nAt what relative time in the future, compared to its creation time, the backup should be deleted, e.g. keep backups for 7 days.\nA duration in seconds with up to nine fractional digits, ending with 's'. Example: \"3.5s\".\n\nFor a daily backup recurrence, set this to a value up to 7 days. If you set a weekly backup recurrence, set this to a value up to 14 weeks."]
+        "Get a reference to the value of field `retention` after provisioning.\nAt what relative time in the future, compared to its creation time, the backup should be deleted, e.g. keep backups for 7 days.\nA duration in seconds with up to nine fractional digits, ending with 's'. Example: \"3.5s\".\n\nYou can set this to a value up to 14 weeks."]
     pub fn retention(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.retention", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `daily_recurrence` after provisioning.\n"]
-    pub fn daily_recurrence(&self) -> terrars::ListRef<FirestoreBackupScheduleDailyRecurrenceElRef> {
+    pub fn daily_recurrence(&self) -> terrars::ListRef<FirestoreBackupSchedule_DailyRecurrenceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.daily_recurrence", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> FirestoreBackupScheduleTimeoutsElRef {
-        FirestoreBackupScheduleTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> FirestoreBackupSchedule_TimeoutsRef {
+        FirestoreBackupSchedule_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `weekly_recurrence` after provisioning.\n"]
-    pub fn weekly_recurrence(&self) -> terrars::ListRef<FirestoreBackupScheduleWeeklyRecurrenceElRef> {
+    pub fn weekly_recurrence(&self) -> terrars::ListRef<FirestoreBackupSchedule_WeeklyRecurrenceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.weekly_recurrence", self.extract_ref()))
     }
 }
@@ -271,7 +288,7 @@ impl terrars::Resource_ for FirestoreBackupSchedule_ {
 pub struct BuildFirestoreBackupSchedule {
     pub tf_id: std::string::String,
     #[doc =
-        "At what relative time in the future, compared to its creation time, the backup should be deleted, e.g. keep backups for 7 days.\nA duration in seconds with up to nine fractional digits, ending with 's'. Example: \"3.5s\".\n\nFor a daily backup recurrence, set this to a value up to 7 days. If you set a weekly backup recurrence, set this to a value up to 14 weeks."]
+        "At what relative time in the future, compared to its creation time, the backup should be deleted, e.g. keep backups for 7 days.\nA duration in seconds with up to nine fractional digits, ending with 's'. Example: \"3.5s\".\n\nYou can set this to a value up to 14 weeks."]
     pub retention: terrars::PrimField<std::string::String>,
 }
 
@@ -280,13 +297,14 @@ impl BuildFirestoreBackupSchedule {
         let out = FirestoreBackupSchedule(std::rc::Rc::new(FirestoreBackupSchedule_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(FirestoreBackupScheduleData {
+            data: std::cell::RefCell::new(FirestoreBackupScheduleData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 database: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 project: core::default::Default::default(),
                 retention: self.retention,
@@ -330,13 +348,19 @@ impl FirestoreBackupScheduleRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.database", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `name` after provisioning.\nThe unique backup schedule identifier across all locations and databases for the given project. Format:\n'projects/{{project}}/databases/{{database}}/backupSchedules/{{backupSchedule}}"]
+        "Get a reference to the value of field `name` after provisioning.\nThe unique backup schedule identifier across all locations and databases for the given project. Format:\n'projects/{{project}}/databases/{{database}}/backupSchedules/{{backupSchedule}}'"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
@@ -347,34 +371,40 @@ impl FirestoreBackupScheduleRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `retention` after provisioning.\nAt what relative time in the future, compared to its creation time, the backup should be deleted, e.g. keep backups for 7 days.\nA duration in seconds with up to nine fractional digits, ending with 's'. Example: \"3.5s\".\n\nFor a daily backup recurrence, set this to a value up to 7 days. If you set a weekly backup recurrence, set this to a value up to 14 weeks."]
+        "Get a reference to the value of field `retention` after provisioning.\nAt what relative time in the future, compared to its creation time, the backup should be deleted, e.g. keep backups for 7 days.\nA duration in seconds with up to nine fractional digits, ending with 's'. Example: \"3.5s\".\n\nYou can set this to a value up to 14 weeks."]
     pub fn retention(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.retention", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `daily_recurrence` after provisioning.\n"]
-    pub fn daily_recurrence(&self) -> terrars::ListRef<FirestoreBackupScheduleDailyRecurrenceElRef> {
+    pub fn daily_recurrence(&self) -> terrars::ListRef<FirestoreBackupSchedule_DailyRecurrenceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.daily_recurrence", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> FirestoreBackupScheduleTimeoutsElRef {
-        FirestoreBackupScheduleTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> FirestoreBackupSchedule_TimeoutsRef {
+        FirestoreBackupSchedule_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `weekly_recurrence` after provisioning.\n"]
-    pub fn weekly_recurrence(&self) -> terrars::ListRef<FirestoreBackupScheduleWeeklyRecurrenceElRef> {
+    pub fn weekly_recurrence(&self) -> terrars::ListRef<FirestoreBackupSchedule_WeeklyRecurrenceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.weekly_recurrence", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct FirestoreBackupScheduleDynamic {
+    daily_recurrence: std::option::Option<terrars::DynamicBlock<FirestoreBackupSchedule_DailyRecurrence>>,
+    weekly_recurrence: std::option::Option<terrars::DynamicBlock<FirestoreBackupSchedule_WeeklyRecurrence>>,
+}
+
 #[derive(Serialize)]
-pub struct FirestoreBackupScheduleDailyRecurrenceEl {}
+pub struct FirestoreBackupSchedule_DailyRecurrence {}
 
-impl FirestoreBackupScheduleDailyRecurrenceEl { }
+impl FirestoreBackupSchedule_DailyRecurrence { }
 
-impl terrars::ToListMappable for FirestoreBackupScheduleDailyRecurrenceEl {
-    type O = terrars::BlockAssignable<FirestoreBackupScheduleDailyRecurrenceEl>;
+impl terrars::ToListMappable for FirestoreBackupSchedule_DailyRecurrence {
+    type O = terrars::BlockAssignable<FirestoreBackupSchedule_DailyRecurrence>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -385,36 +415,38 @@ impl terrars::ToListMappable for FirestoreBackupScheduleDailyRecurrenceEl {
     }
 }
 
-pub struct BuildFirestoreBackupScheduleDailyRecurrenceEl {}
+pub struct BuildFirestoreBackupSchedule_DailyRecurrence {}
 
-impl BuildFirestoreBackupScheduleDailyRecurrenceEl {
-    pub fn build(self) -> FirestoreBackupScheduleDailyRecurrenceEl {
-        FirestoreBackupScheduleDailyRecurrenceEl {}
+impl BuildFirestoreBackupSchedule_DailyRecurrence {
+    pub fn build(self) -> FirestoreBackupSchedule_DailyRecurrence {
+        FirestoreBackupSchedule_DailyRecurrence {}
     }
 }
 
-pub struct FirestoreBackupScheduleDailyRecurrenceElRef {
+#[allow(dead_code)]
+pub struct FirestoreBackupSchedule_DailyRecurrenceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FirestoreBackupScheduleDailyRecurrenceElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FirestoreBackupScheduleDailyRecurrenceElRef {
-        FirestoreBackupScheduleDailyRecurrenceElRef {
+impl terrars::Ref for FirestoreBackupSchedule_DailyRecurrenceRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FirestoreBackupSchedule_DailyRecurrenceRef {
+        FirestoreBackupSchedule_DailyRecurrenceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FirestoreBackupScheduleDailyRecurrenceElRef {
+impl FirestoreBackupSchedule_DailyRecurrenceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize)]
-pub struct FirestoreBackupScheduleTimeoutsEl {
+pub struct FirestoreBackupSchedule_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -423,7 +455,7 @@ pub struct FirestoreBackupScheduleTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl FirestoreBackupScheduleTimeoutsEl {
+impl FirestoreBackupSchedule_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -443,8 +475,8 @@ impl FirestoreBackupScheduleTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for FirestoreBackupScheduleTimeoutsEl {
-    type O = terrars::BlockAssignable<FirestoreBackupScheduleTimeoutsEl>;
+impl terrars::ToListMappable for FirestoreBackupSchedule_Timeouts {
+    type O = terrars::BlockAssignable<FirestoreBackupSchedule_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -455,11 +487,11 @@ impl terrars::ToListMappable for FirestoreBackupScheduleTimeoutsEl {
     }
 }
 
-pub struct BuildFirestoreBackupScheduleTimeoutsEl {}
+pub struct BuildFirestoreBackupSchedule_Timeouts {}
 
-impl BuildFirestoreBackupScheduleTimeoutsEl {
-    pub fn build(self) -> FirestoreBackupScheduleTimeoutsEl {
-        FirestoreBackupScheduleTimeoutsEl {
+impl BuildFirestoreBackupSchedule_Timeouts {
+    pub fn build(self) -> FirestoreBackupSchedule_Timeouts {
+        FirestoreBackupSchedule_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -467,21 +499,23 @@ impl BuildFirestoreBackupScheduleTimeoutsEl {
     }
 }
 
-pub struct FirestoreBackupScheduleTimeoutsElRef {
+#[allow(dead_code)]
+pub struct FirestoreBackupSchedule_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FirestoreBackupScheduleTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FirestoreBackupScheduleTimeoutsElRef {
-        FirestoreBackupScheduleTimeoutsElRef {
+impl terrars::Ref for FirestoreBackupSchedule_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FirestoreBackupSchedule_TimeoutsRef {
+        FirestoreBackupSchedule_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FirestoreBackupScheduleTimeoutsElRef {
+impl FirestoreBackupSchedule_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -503,12 +537,12 @@ impl FirestoreBackupScheduleTimeoutsElRef {
 }
 
 #[derive(Serialize)]
-pub struct FirestoreBackupScheduleWeeklyRecurrenceEl {
+pub struct FirestoreBackupSchedule_WeeklyRecurrence {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     day: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl FirestoreBackupScheduleWeeklyRecurrenceEl {
+impl FirestoreBackupSchedule_WeeklyRecurrence {
     #[doc =
         "Set the field `day`.\nThe day of week to run. Possible values: [\"DAY_OF_WEEK_UNSPECIFIED\", \"MONDAY\", \"TUESDAY\", \"WEDNESDAY\", \"THURSDAY\", \"FRIDAY\", \"SATURDAY\", \"SUNDAY\"]"]
     pub fn set_day(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -517,8 +551,8 @@ impl FirestoreBackupScheduleWeeklyRecurrenceEl {
     }
 }
 
-impl terrars::ToListMappable for FirestoreBackupScheduleWeeklyRecurrenceEl {
-    type O = terrars::BlockAssignable<FirestoreBackupScheduleWeeklyRecurrenceEl>;
+impl terrars::ToListMappable for FirestoreBackupSchedule_WeeklyRecurrence {
+    type O = terrars::BlockAssignable<FirestoreBackupSchedule_WeeklyRecurrence>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -529,29 +563,31 @@ impl terrars::ToListMappable for FirestoreBackupScheduleWeeklyRecurrenceEl {
     }
 }
 
-pub struct BuildFirestoreBackupScheduleWeeklyRecurrenceEl {}
+pub struct BuildFirestoreBackupSchedule_WeeklyRecurrence {}
 
-impl BuildFirestoreBackupScheduleWeeklyRecurrenceEl {
-    pub fn build(self) -> FirestoreBackupScheduleWeeklyRecurrenceEl {
-        FirestoreBackupScheduleWeeklyRecurrenceEl { day: core::default::Default::default() }
+impl BuildFirestoreBackupSchedule_WeeklyRecurrence {
+    pub fn build(self) -> FirestoreBackupSchedule_WeeklyRecurrence {
+        FirestoreBackupSchedule_WeeklyRecurrence { day: core::default::Default::default() }
     }
 }
 
-pub struct FirestoreBackupScheduleWeeklyRecurrenceElRef {
+#[allow(dead_code)]
+pub struct FirestoreBackupSchedule_WeeklyRecurrenceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FirestoreBackupScheduleWeeklyRecurrenceElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FirestoreBackupScheduleWeeklyRecurrenceElRef {
-        FirestoreBackupScheduleWeeklyRecurrenceElRef {
+impl terrars::Ref for FirestoreBackupSchedule_WeeklyRecurrenceRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FirestoreBackupSchedule_WeeklyRecurrenceRef {
+        FirestoreBackupSchedule_WeeklyRecurrenceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FirestoreBackupScheduleWeeklyRecurrenceElRef {
+impl FirestoreBackupSchedule_WeeklyRecurrenceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -561,10 +597,4 @@ impl FirestoreBackupScheduleWeeklyRecurrenceElRef {
     pub fn day(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.day", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct FirestoreBackupScheduleDynamic {
-    daily_recurrence: std::option::Option<terrars::DynamicBlock<FirestoreBackupScheduleDailyRecurrenceEl>>,
-    weekly_recurrence: std::option::Option<terrars::DynamicBlock<FirestoreBackupScheduleWeeklyRecurrenceEl>>,
 }

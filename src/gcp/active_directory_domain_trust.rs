@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ActiveDirectoryDomainTrustData {
+struct ActiveDirectoryDomainTrustData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct ActiveDirectoryDomainTrustData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     domain: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -31,13 +35,13 @@ struct ActiveDirectoryDomainTrustData {
     trust_handshake_secret: terrars::PrimField<std::string::String>,
     trust_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ActiveDirectoryDomainTrustTimeoutsEl>,
+    timeouts: std::option::Option<ActiveDirectoryDomainTrust_Timeouts>,
 }
 
 struct ActiveDirectoryDomainTrust_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ActiveDirectoryDomainTrustData>,
+    data: std::cell::RefCell<ActiveDirectoryDomainTrustData_>,
 }
 
 #[derive(Clone)]
@@ -137,6 +141,13 @@ impl ActiveDirectoryDomainTrust {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -157,13 +168,19 @@ impl ActiveDirectoryDomainTrust {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ActiveDirectoryDomainTrustTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ActiveDirectoryDomainTrust_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
     #[doc =
-        "Get a reference to the value of field `domain` after provisioning.\nThe fully qualified domain name. e.g. mydomain.myorganization.com, with the restrictions,\nhttps://cloud.google.com/managed-microsoft-ad/reference/rest/v1/projects.locations.global.domains."]
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `domain` after provisioning.\nThe fully qualified domain name. e.g. mydomain.myorganization.com, with the restrictions\nof https://cloud.google.com/managed-microsoft-ad/reference/rest/v1/projects.locations.global.domains."]
     pub fn domain(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain", self.extract_ref()))
     }
@@ -215,8 +232,8 @@ impl ActiveDirectoryDomainTrust {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ActiveDirectoryDomainTrustTimeoutsElRef {
-        ActiveDirectoryDomainTrustTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ActiveDirectoryDomainTrust_TimeoutsRef {
+        ActiveDirectoryDomainTrust_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -257,7 +274,7 @@ impl terrars::Resource_ for ActiveDirectoryDomainTrust_ {
 pub struct BuildActiveDirectoryDomainTrust {
     pub tf_id: std::string::String,
     #[doc =
-        "The fully qualified domain name. e.g. mydomain.myorganization.com, with the restrictions,\nhttps://cloud.google.com/managed-microsoft-ad/reference/rest/v1/projects.locations.global.domains."]
+        "The fully qualified domain name. e.g. mydomain.myorganization.com, with the restrictions\nof https://cloud.google.com/managed-microsoft-ad/reference/rest/v1/projects.locations.global.domains."]
     pub domain: terrars::PrimField<std::string::String>,
     #[doc = "The target DNS server IP addresses which can resolve the remote domain involved in the trust."]
     pub target_dns_ip_addresses: terrars::SetField<terrars::PrimField<std::string::String>>,
@@ -277,12 +294,13 @@ impl BuildActiveDirectoryDomainTrust {
         let out = ActiveDirectoryDomainTrust(std::rc::Rc::new(ActiveDirectoryDomainTrust_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ActiveDirectoryDomainTrustData {
+            data: std::cell::RefCell::new(ActiveDirectoryDomainTrustData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 domain: self.domain,
                 id: core::default::Default::default(),
                 project: core::default::Default::default(),
@@ -324,7 +342,13 @@ impl ActiveDirectoryDomainTrustRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `domain` after provisioning.\nThe fully qualified domain name. e.g. mydomain.myorganization.com, with the restrictions,\nhttps://cloud.google.com/managed-microsoft-ad/reference/rest/v1/projects.locations.global.domains."]
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `domain` after provisioning.\nThe fully qualified domain name. e.g. mydomain.myorganization.com, with the restrictions\nof https://cloud.google.com/managed-microsoft-ad/reference/rest/v1/projects.locations.global.domains."]
     pub fn domain(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain", self.extract_ref()))
     }
@@ -376,8 +400,8 @@ impl ActiveDirectoryDomainTrustRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ActiveDirectoryDomainTrustTimeoutsElRef {
-        ActiveDirectoryDomainTrustTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ActiveDirectoryDomainTrust_TimeoutsRef {
+        ActiveDirectoryDomainTrust_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -385,7 +409,7 @@ impl ActiveDirectoryDomainTrustRef {
 }
 
 #[derive(Serialize)]
-pub struct ActiveDirectoryDomainTrustTimeoutsEl {
+pub struct ActiveDirectoryDomainTrust_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -394,7 +418,7 @@ pub struct ActiveDirectoryDomainTrustTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ActiveDirectoryDomainTrustTimeoutsEl {
+impl ActiveDirectoryDomainTrust_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -414,8 +438,8 @@ impl ActiveDirectoryDomainTrustTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ActiveDirectoryDomainTrustTimeoutsEl {
-    type O = terrars::BlockAssignable<ActiveDirectoryDomainTrustTimeoutsEl>;
+impl terrars::ToListMappable for ActiveDirectoryDomainTrust_Timeouts {
+    type O = terrars::BlockAssignable<ActiveDirectoryDomainTrust_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -426,11 +450,11 @@ impl terrars::ToListMappable for ActiveDirectoryDomainTrustTimeoutsEl {
     }
 }
 
-pub struct BuildActiveDirectoryDomainTrustTimeoutsEl {}
+pub struct BuildActiveDirectoryDomainTrust_Timeouts {}
 
-impl BuildActiveDirectoryDomainTrustTimeoutsEl {
-    pub fn build(self) -> ActiveDirectoryDomainTrustTimeoutsEl {
-        ActiveDirectoryDomainTrustTimeoutsEl {
+impl BuildActiveDirectoryDomainTrust_Timeouts {
+    pub fn build(self) -> ActiveDirectoryDomainTrust_Timeouts {
+        ActiveDirectoryDomainTrust_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -438,21 +462,23 @@ impl BuildActiveDirectoryDomainTrustTimeoutsEl {
     }
 }
 
-pub struct ActiveDirectoryDomainTrustTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ActiveDirectoryDomainTrust_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ActiveDirectoryDomainTrustTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ActiveDirectoryDomainTrustTimeoutsElRef {
-        ActiveDirectoryDomainTrustTimeoutsElRef {
+impl terrars::Ref for ActiveDirectoryDomainTrust_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ActiveDirectoryDomainTrust_TimeoutsRef {
+        ActiveDirectoryDomainTrust_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ActiveDirectoryDomainTrustTimeoutsElRef {
+impl ActiveDirectoryDomainTrust_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

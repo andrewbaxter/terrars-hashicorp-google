@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct KmsKeyRingIamBindingData {
+struct KmsKeyRingIamBindingData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,14 +26,14 @@ struct KmsKeyRingIamBindingData {
     members: terrars::SetField<terrars::PrimField<std::string::String>>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<KmsKeyRingIamBindingConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<KmsKeyRingIamBinding_Condition>>,
     dynamic: KmsKeyRingIamBindingDynamic,
 }
 
 struct KmsKeyRingIamBinding_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<KmsKeyRingIamBindingData>,
+    data: std::cell::RefCell<KmsKeyRingIamBindingData_>,
 }
 
 #[derive(Clone)]
@@ -140,7 +142,7 @@ impl KmsKeyRingIamBinding {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<KmsKeyRingIamBindingConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<KmsKeyRingIamBinding_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -179,7 +181,7 @@ impl KmsKeyRingIamBinding {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<KmsKeyRingIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<KmsKeyRingIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -230,7 +232,7 @@ impl BuildKmsKeyRingIamBinding {
         let out = KmsKeyRingIamBinding(std::rc::Rc::new(KmsKeyRingIamBinding_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(KmsKeyRingIamBindingData {
+            data: std::cell::RefCell::new(KmsKeyRingIamBindingData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -298,20 +300,25 @@ impl KmsKeyRingIamBindingRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<KmsKeyRingIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<KmsKeyRingIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct KmsKeyRingIamBindingDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<KmsKeyRingIamBinding_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct KmsKeyRingIamBindingConditionEl {
+pub struct KmsKeyRingIamBinding_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl KmsKeyRingIamBindingConditionEl {
+impl KmsKeyRingIamBinding_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -319,8 +326,8 @@ impl KmsKeyRingIamBindingConditionEl {
     }
 }
 
-impl terrars::ToListMappable for KmsKeyRingIamBindingConditionEl {
-    type O = terrars::BlockAssignable<KmsKeyRingIamBindingConditionEl>;
+impl terrars::ToListMappable for KmsKeyRingIamBinding_Condition {
+    type O = terrars::BlockAssignable<KmsKeyRingIamBinding_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -331,16 +338,16 @@ impl terrars::ToListMappable for KmsKeyRingIamBindingConditionEl {
     }
 }
 
-pub struct BuildKmsKeyRingIamBindingConditionEl {
+pub struct BuildKmsKeyRingIamBinding_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildKmsKeyRingIamBindingConditionEl {
-    pub fn build(self) -> KmsKeyRingIamBindingConditionEl {
-        KmsKeyRingIamBindingConditionEl {
+impl BuildKmsKeyRingIamBinding_Condition {
+    pub fn build(self) -> KmsKeyRingIamBinding_Condition {
+        KmsKeyRingIamBinding_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -348,21 +355,23 @@ impl BuildKmsKeyRingIamBindingConditionEl {
     }
 }
 
-pub struct KmsKeyRingIamBindingConditionElRef {
+#[allow(dead_code)]
+pub struct KmsKeyRingIamBinding_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KmsKeyRingIamBindingConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> KmsKeyRingIamBindingConditionElRef {
-        KmsKeyRingIamBindingConditionElRef {
+impl terrars::Ref for KmsKeyRingIamBinding_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> KmsKeyRingIamBinding_ConditionRef {
+        KmsKeyRingIamBinding_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KmsKeyRingIamBindingConditionElRef {
+impl KmsKeyRingIamBinding_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -381,9 +390,4 @@ impl KmsKeyRingIamBindingConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct KmsKeyRingIamBindingDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<KmsKeyRingIamBindingConditionEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataTagsTagValueData {
+struct DataTagsTagValueData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -23,7 +25,7 @@ struct DataTagsTagValueData {
 struct DataTagsTagValue_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataTagsTagValueData>,
+    data: std::cell::RefCell<DataTagsTagValueData_>,
 }
 
 #[derive(Clone)]
@@ -153,7 +155,7 @@ impl BuildDataTagsTagValue {
         let out = DataTagsTagValue(std::rc::Rc::new(DataTagsTagValue_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataTagsTagValueData {
+            data: std::cell::RefCell::new(DataTagsTagValueData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),

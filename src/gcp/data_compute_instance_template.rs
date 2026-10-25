@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataComputeInstanceTemplateData {
+struct DataComputeInstanceTemplateData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -33,7 +35,7 @@ struct DataComputeInstanceTemplateData {
 struct DataComputeInstanceTemplate_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataComputeInstanceTemplateData>,
+    data: std::cell::RefCell<DataComputeInstanceTemplateData_>,
 }
 
 #[derive(Clone)]
@@ -118,7 +120,7 @@ impl DataComputeInstanceTemplate {
 
     #[doc =
         "Get a reference to the value of field `advanced_machine_features` after provisioning.\nControls for advanced machine-related behavior features."]
-    pub fn advanced_machine_features(&self) -> terrars::ListRef<DataComputeInstanceTemplateAdvancedMachineFeaturesElRef> {
+    pub fn advanced_machine_features(&self) -> terrars::ListRef<DataComputeInstanceTemplate_AdvancedMachineFeaturesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.advanced_machine_features", self.extract_ref()))
     }
 
@@ -132,8 +134,14 @@ impl DataComputeInstanceTemplate {
         "Get a reference to the value of field `confidential_instance_config` after provisioning.\nThe Confidential VM config being used by the instance. on_host_maintenance has to be set to TERMINATE or this will fail to create."]
     pub fn confidential_instance_config(
         &self,
-    ) -> terrars::ListRef<DataComputeInstanceTemplateConfidentialInstanceConfigElRef> {
+    ) -> terrars::ListRef<DataComputeInstanceTemplate_ConfidentialInstanceConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.confidential_instance_config", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `creation_timestamp` after provisioning.\nCreation timestamp in RFC3339 text format."]
+    pub fn creation_timestamp(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_timestamp", self.extract_ref()))
     }
 
     #[doc =
@@ -144,7 +152,7 @@ impl DataComputeInstanceTemplate {
 
     #[doc =
         "Get a reference to the value of field `disk` after provisioning.\nDisks to attach to instances created from this template. This can be specified multiple times for multiple disks."]
-    pub fn disk(&self) -> terrars::ListRef<DataComputeInstanceTemplateDiskElRef> {
+    pub fn disk(&self) -> terrars::ListRef<DataComputeInstanceTemplate_DiskRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.disk", self.extract_ref()))
     }
 
@@ -161,7 +169,7 @@ impl DataComputeInstanceTemplate {
 
     #[doc =
         "Get a reference to the value of field `guest_accelerator` after provisioning.\nList of the type and count of accelerator cards attached to the instance."]
-    pub fn guest_accelerator(&self) -> terrars::ListRef<DataComputeInstanceTemplateGuestAcceleratorElRef> {
+    pub fn guest_accelerator(&self) -> terrars::ListRef<DataComputeInstanceTemplate_GuestAcceleratorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.guest_accelerator", self.extract_ref()))
     }
 
@@ -177,7 +185,13 @@ impl DataComputeInstanceTemplate {
     }
 
     #[doc =
-        "Get a reference to the value of field `labels` after provisioning.\nA set of key/value label pairs to assign to instances created from this template.\n\t\t\t\t\n\t\t\t\t**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\n\t\t\t\tPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
+        "Get a reference to the value of field `key_revocation_action_type` after provisioning.\nAction to be taken when a customer's encryption key is revoked. Supports \"STOP\" and \"NONE\", with \"NONE\" being the default."]
+    pub fn key_revocation_action_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key_revocation_action_type", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `labels` after provisioning.\nA set of key/value label pairs to assign to instances created from this template.\n\n\t\t\t\t**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\n\t\t\t\tPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
     pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
     }
@@ -224,14 +238,14 @@ impl DataComputeInstanceTemplate {
     }
 
     #[doc =
-        "Get a reference to the value of field `name_prefix` after provisioning.\nCreates a unique name beginning with the specified prefix. Conflicts with name."]
+        "Get a reference to the value of field `name_prefix` after provisioning.\nCreates a unique name beginning with the specified prefix. Conflicts with name. Max length is 54 characters. Prefixes with lengths longer than 37 characters will use a shortened UUID that will be more prone to collisions."]
     pub fn name_prefix(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name_prefix", self.extract_ref()))
     }
 
     #[doc =
         "Get a reference to the value of field `network_interface` after provisioning.\nNetworks to attach to instances created from this template. This can be specified multiple times for multiple networks."]
-    pub fn network_interface(&self) -> terrars::ListRef<DataComputeInstanceTemplateNetworkInterfaceElRef> {
+    pub fn network_interface(&self) -> terrars::ListRef<DataComputeInstanceTemplate_NetworkInterfaceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_interface", self.extract_ref()))
     }
 
@@ -239,8 +253,14 @@ impl DataComputeInstanceTemplate {
         "Get a reference to the value of field `network_performance_config` after provisioning.\nConfigures network performance settings for the instance. If not specified, the instance will be created with its default network performance configuration."]
     pub fn network_performance_config(
         &self,
-    ) -> terrars::ListRef<DataComputeInstanceTemplateNetworkPerformanceConfigElRef> {
+    ) -> terrars::ListRef<DataComputeInstanceTemplate_NetworkPerformanceConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_performance_config", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `numeric_id` after provisioning.\nThe ID of the template in numeric format."]
+    pub fn numeric_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.numeric_id", self.extract_ref()))
     }
 
     #[doc =
@@ -257,8 +277,14 @@ impl DataComputeInstanceTemplate {
 
     #[doc =
         "Get a reference to the value of field `reservation_affinity` after provisioning.\nSpecifies the reservations that this instance can consume from."]
-    pub fn reservation_affinity(&self) -> terrars::ListRef<DataComputeInstanceTemplateReservationAffinityElRef> {
+    pub fn reservation_affinity(&self) -> terrars::ListRef<DataComputeInstanceTemplate_ReservationAffinityRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.reservation_affinity", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `resource_manager_tags` after provisioning.\nA map of resource manager tags.\n\t\t\t\tResource manager tag keys and values have the same definition as resource manager tags.\n\t\t\t\tKeys must be in the format tagKeys/{tag_key_id}, and values are in the format tagValues/456.\n\t\t\t\tThe field is ignored (both PUT & PATCH) when empty."]
+    pub fn resource_manager_tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.resource_manager_tags", self.extract_ref()))
     }
 
     #[doc =
@@ -268,7 +294,7 @@ impl DataComputeInstanceTemplate {
     }
 
     #[doc = "Get a reference to the value of field `scheduling` after provisioning.\nThe scheduling strategy to use."]
-    pub fn scheduling(&self) -> terrars::ListRef<DataComputeInstanceTemplateSchedulingElRef> {
+    pub fn scheduling(&self) -> terrars::ListRef<DataComputeInstanceTemplate_SchedulingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.scheduling", self.extract_ref()))
     }
 
@@ -284,13 +310,13 @@ impl DataComputeInstanceTemplate {
 
     #[doc =
         "Get a reference to the value of field `service_account` after provisioning.\nService account to attach to the instance."]
-    pub fn service_account(&self) -> terrars::ListRef<DataComputeInstanceTemplateServiceAccountElRef> {
+    pub fn service_account(&self) -> terrars::ListRef<DataComputeInstanceTemplate_ServiceAccountRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.service_account", self.extract_ref()))
     }
 
     #[doc =
         "Get a reference to the value of field `shielded_instance_config` after provisioning.\nEnable Shielded VM on this instance. Shielded VM provides verifiable integrity to prevent against malware and rootkits. Defaults to disabled. Note: shielded_instance_config can only be used with boot images with shielded vm support."]
-    pub fn shielded_instance_config(&self) -> terrars::ListRef<DataComputeInstanceTemplateShieldedInstanceConfigElRef> {
+    pub fn shielded_instance_config(&self) -> terrars::ListRef<DataComputeInstanceTemplate_ShieldedInstanceConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.shielded_instance_config", self.extract_ref()))
     }
 
@@ -309,6 +335,12 @@ impl DataComputeInstanceTemplate {
         "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource and default labels configured on the provider."]
     pub fn terraform_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `workload_identity_config` after provisioning.\nWorkload identity config."]
+    pub fn workload_identity_config(&self) -> terrars::ListRef<DataComputeInstanceTemplate_WorkloadIdentityConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.workload_identity_config", self.extract_ref()))
     }
 }
 
@@ -352,7 +384,7 @@ impl BuildDataComputeInstanceTemplate {
         let out = DataComputeInstanceTemplate(std::rc::Rc::new(DataComputeInstanceTemplate_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataComputeInstanceTemplateData {
+            data: std::cell::RefCell::new(DataComputeInstanceTemplateData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -395,7 +427,7 @@ impl DataComputeInstanceTemplateRef {
 
     #[doc =
         "Get a reference to the value of field `advanced_machine_features` after provisioning.\nControls for advanced machine-related behavior features."]
-    pub fn advanced_machine_features(&self) -> terrars::ListRef<DataComputeInstanceTemplateAdvancedMachineFeaturesElRef> {
+    pub fn advanced_machine_features(&self) -> terrars::ListRef<DataComputeInstanceTemplate_AdvancedMachineFeaturesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.advanced_machine_features", self.extract_ref()))
     }
 
@@ -409,8 +441,14 @@ impl DataComputeInstanceTemplateRef {
         "Get a reference to the value of field `confidential_instance_config` after provisioning.\nThe Confidential VM config being used by the instance. on_host_maintenance has to be set to TERMINATE or this will fail to create."]
     pub fn confidential_instance_config(
         &self,
-    ) -> terrars::ListRef<DataComputeInstanceTemplateConfidentialInstanceConfigElRef> {
+    ) -> terrars::ListRef<DataComputeInstanceTemplate_ConfidentialInstanceConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.confidential_instance_config", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `creation_timestamp` after provisioning.\nCreation timestamp in RFC3339 text format."]
+    pub fn creation_timestamp(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_timestamp", self.extract_ref()))
     }
 
     #[doc =
@@ -421,7 +459,7 @@ impl DataComputeInstanceTemplateRef {
 
     #[doc =
         "Get a reference to the value of field `disk` after provisioning.\nDisks to attach to instances created from this template. This can be specified multiple times for multiple disks."]
-    pub fn disk(&self) -> terrars::ListRef<DataComputeInstanceTemplateDiskElRef> {
+    pub fn disk(&self) -> terrars::ListRef<DataComputeInstanceTemplate_DiskRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.disk", self.extract_ref()))
     }
 
@@ -438,7 +476,7 @@ impl DataComputeInstanceTemplateRef {
 
     #[doc =
         "Get a reference to the value of field `guest_accelerator` after provisioning.\nList of the type and count of accelerator cards attached to the instance."]
-    pub fn guest_accelerator(&self) -> terrars::ListRef<DataComputeInstanceTemplateGuestAcceleratorElRef> {
+    pub fn guest_accelerator(&self) -> terrars::ListRef<DataComputeInstanceTemplate_GuestAcceleratorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.guest_accelerator", self.extract_ref()))
     }
 
@@ -454,7 +492,13 @@ impl DataComputeInstanceTemplateRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `labels` after provisioning.\nA set of key/value label pairs to assign to instances created from this template.\n\t\t\t\t\n\t\t\t\t**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\n\t\t\t\tPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
+        "Get a reference to the value of field `key_revocation_action_type` after provisioning.\nAction to be taken when a customer's encryption key is revoked. Supports \"STOP\" and \"NONE\", with \"NONE\" being the default."]
+    pub fn key_revocation_action_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key_revocation_action_type", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `labels` after provisioning.\nA set of key/value label pairs to assign to instances created from this template.\n\n\t\t\t\t**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\n\t\t\t\tPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
     pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
     }
@@ -501,14 +545,14 @@ impl DataComputeInstanceTemplateRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `name_prefix` after provisioning.\nCreates a unique name beginning with the specified prefix. Conflicts with name."]
+        "Get a reference to the value of field `name_prefix` after provisioning.\nCreates a unique name beginning with the specified prefix. Conflicts with name. Max length is 54 characters. Prefixes with lengths longer than 37 characters will use a shortened UUID that will be more prone to collisions."]
     pub fn name_prefix(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name_prefix", self.extract_ref()))
     }
 
     #[doc =
         "Get a reference to the value of field `network_interface` after provisioning.\nNetworks to attach to instances created from this template. This can be specified multiple times for multiple networks."]
-    pub fn network_interface(&self) -> terrars::ListRef<DataComputeInstanceTemplateNetworkInterfaceElRef> {
+    pub fn network_interface(&self) -> terrars::ListRef<DataComputeInstanceTemplate_NetworkInterfaceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_interface", self.extract_ref()))
     }
 
@@ -516,8 +560,14 @@ impl DataComputeInstanceTemplateRef {
         "Get a reference to the value of field `network_performance_config` after provisioning.\nConfigures network performance settings for the instance. If not specified, the instance will be created with its default network performance configuration."]
     pub fn network_performance_config(
         &self,
-    ) -> terrars::ListRef<DataComputeInstanceTemplateNetworkPerformanceConfigElRef> {
+    ) -> terrars::ListRef<DataComputeInstanceTemplate_NetworkPerformanceConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_performance_config", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `numeric_id` after provisioning.\nThe ID of the template in numeric format."]
+    pub fn numeric_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.numeric_id", self.extract_ref()))
     }
 
     #[doc =
@@ -534,8 +584,14 @@ impl DataComputeInstanceTemplateRef {
 
     #[doc =
         "Get a reference to the value of field `reservation_affinity` after provisioning.\nSpecifies the reservations that this instance can consume from."]
-    pub fn reservation_affinity(&self) -> terrars::ListRef<DataComputeInstanceTemplateReservationAffinityElRef> {
+    pub fn reservation_affinity(&self) -> terrars::ListRef<DataComputeInstanceTemplate_ReservationAffinityRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.reservation_affinity", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `resource_manager_tags` after provisioning.\nA map of resource manager tags.\n\t\t\t\tResource manager tag keys and values have the same definition as resource manager tags.\n\t\t\t\tKeys must be in the format tagKeys/{tag_key_id}, and values are in the format tagValues/456.\n\t\t\t\tThe field is ignored (both PUT & PATCH) when empty."]
+    pub fn resource_manager_tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.resource_manager_tags", self.extract_ref()))
     }
 
     #[doc =
@@ -545,7 +601,7 @@ impl DataComputeInstanceTemplateRef {
     }
 
     #[doc = "Get a reference to the value of field `scheduling` after provisioning.\nThe scheduling strategy to use."]
-    pub fn scheduling(&self) -> terrars::ListRef<DataComputeInstanceTemplateSchedulingElRef> {
+    pub fn scheduling(&self) -> terrars::ListRef<DataComputeInstanceTemplate_SchedulingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.scheduling", self.extract_ref()))
     }
 
@@ -561,13 +617,13 @@ impl DataComputeInstanceTemplateRef {
 
     #[doc =
         "Get a reference to the value of field `service_account` after provisioning.\nService account to attach to the instance."]
-    pub fn service_account(&self) -> terrars::ListRef<DataComputeInstanceTemplateServiceAccountElRef> {
+    pub fn service_account(&self) -> terrars::ListRef<DataComputeInstanceTemplate_ServiceAccountRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.service_account", self.extract_ref()))
     }
 
     #[doc =
         "Get a reference to the value of field `shielded_instance_config` after provisioning.\nEnable Shielded VM on this instance. Shielded VM provides verifiable integrity to prevent against malware and rootkits. Defaults to disabled. Note: shielded_instance_config can only be used with boot images with shielded vm support."]
-    pub fn shielded_instance_config(&self) -> terrars::ListRef<DataComputeInstanceTemplateShieldedInstanceConfigElRef> {
+    pub fn shielded_instance_config(&self) -> terrars::ListRef<DataComputeInstanceTemplate_ShieldedInstanceConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.shielded_instance_config", self.extract_ref()))
     }
 
@@ -587,28 +643,61 @@ impl DataComputeInstanceTemplateRef {
     pub fn terraform_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
     }
+
+    #[doc =
+        "Get a reference to the value of field `workload_identity_config` after provisioning.\nWorkload identity config."]
+    pub fn workload_identity_config(&self) -> terrars::ListRef<DataComputeInstanceTemplate_WorkloadIdentityConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.workload_identity_config", self.extract_ref()))
+    }
 }
 
 #[derive(Serialize)]
-pub struct DataComputeInstanceTemplateAdvancedMachineFeaturesEl {
+pub struct DataComputeInstanceTemplate_AdvancedMachineFeatures {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_nested_virtualization: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_uefi_networking: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    performance_monitoring_unit: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     threads_per_core: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    turbo_mode: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     visible_core_count: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataComputeInstanceTemplateAdvancedMachineFeaturesEl {
+impl DataComputeInstanceTemplate_AdvancedMachineFeatures {
     #[doc = "Set the field `enable_nested_virtualization`.\n"]
     pub fn set_enable_nested_virtualization(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enable_nested_virtualization = std::option::Option::Some(v.into());
         self
     }
 
+    #[doc = "Set the field `enable_uefi_networking`.\n"]
+    pub fn set_enable_uefi_networking(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enable_uefi_networking = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `performance_monitoring_unit`.\n"]
+    pub fn set_performance_monitoring_unit(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.performance_monitoring_unit = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `threads_per_core`.\n"]
     pub fn set_threads_per_core(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.threads_per_core = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `turbo_mode`.\n"]
+    pub fn set_turbo_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.turbo_mode = std::option::Option::Some(v.into());
         self
     }
 
@@ -619,8 +708,8 @@ impl DataComputeInstanceTemplateAdvancedMachineFeaturesEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeInstanceTemplateAdvancedMachineFeaturesEl {
-    type O = terrars::BlockAssignable<DataComputeInstanceTemplateAdvancedMachineFeaturesEl>;
+impl terrars::ToListMappable for DataComputeInstanceTemplate_AdvancedMachineFeatures {
+    type O = terrars::BlockAssignable<DataComputeInstanceTemplate_AdvancedMachineFeatures>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -631,36 +720,41 @@ impl terrars::ToListMappable for DataComputeInstanceTemplateAdvancedMachineFeatu
     }
 }
 
-pub struct BuildDataComputeInstanceTemplateAdvancedMachineFeaturesEl {}
+pub struct BuildDataComputeInstanceTemplate_AdvancedMachineFeatures {}
 
-impl BuildDataComputeInstanceTemplateAdvancedMachineFeaturesEl {
-    pub fn build(self) -> DataComputeInstanceTemplateAdvancedMachineFeaturesEl {
-        DataComputeInstanceTemplateAdvancedMachineFeaturesEl {
+impl BuildDataComputeInstanceTemplate_AdvancedMachineFeatures {
+    pub fn build(self) -> DataComputeInstanceTemplate_AdvancedMachineFeatures {
+        DataComputeInstanceTemplate_AdvancedMachineFeatures {
             enable_nested_virtualization: core::default::Default::default(),
+            enable_uefi_networking: core::default::Default::default(),
+            performance_monitoring_unit: core::default::Default::default(),
             threads_per_core: core::default::Default::default(),
+            turbo_mode: core::default::Default::default(),
             visible_core_count: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataComputeInstanceTemplateAdvancedMachineFeaturesElRef {
+#[allow(dead_code)]
+pub struct DataComputeInstanceTemplate_AdvancedMachineFeaturesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeInstanceTemplateAdvancedMachineFeaturesElRef {
+impl terrars::Ref for DataComputeInstanceTemplate_AdvancedMachineFeaturesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComputeInstanceTemplateAdvancedMachineFeaturesElRef {
-        DataComputeInstanceTemplateAdvancedMachineFeaturesElRef {
+    ) -> DataComputeInstanceTemplate_AdvancedMachineFeaturesRef {
+        DataComputeInstanceTemplate_AdvancedMachineFeaturesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeInstanceTemplateAdvancedMachineFeaturesElRef {
+impl DataComputeInstanceTemplate_AdvancedMachineFeaturesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -670,9 +764,24 @@ impl DataComputeInstanceTemplateAdvancedMachineFeaturesElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_nested_virtualization", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `enable_uefi_networking` after provisioning.\n"]
+    pub fn enable_uefi_networking(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_uefi_networking", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `performance_monitoring_unit` after provisioning.\n"]
+    pub fn performance_monitoring_unit(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.performance_monitoring_unit", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `threads_per_core` after provisioning.\n"]
     pub fn threads_per_core(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.threads_per_core", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `turbo_mode` after provisioning.\n"]
+    pub fn turbo_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.turbo_mode", self.base))
     }
 
     #[doc = "Get a reference to the value of field `visible_core_count` after provisioning.\n"]
@@ -682,12 +791,23 @@ impl DataComputeInstanceTemplateAdvancedMachineFeaturesElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComputeInstanceTemplateConfidentialInstanceConfigEl {
+pub struct DataComputeInstanceTemplate_ConfidentialInstanceConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    confidential_instance_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_confidential_compute: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataComputeInstanceTemplateConfidentialInstanceConfigEl {
+impl DataComputeInstanceTemplate_ConfidentialInstanceConfig {
+    #[doc = "Set the field `confidential_instance_type`.\n"]
+    pub fn set_confidential_instance_type(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.confidential_instance_type = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `enable_confidential_compute`.\n"]
     pub fn set_enable_confidential_compute(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enable_confidential_compute = std::option::Option::Some(v.into());
@@ -695,8 +815,8 @@ impl DataComputeInstanceTemplateConfidentialInstanceConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeInstanceTemplateConfidentialInstanceConfigEl {
-    type O = terrars::BlockAssignable<DataComputeInstanceTemplateConfidentialInstanceConfigEl>;
+impl terrars::ToListMappable for DataComputeInstanceTemplate_ConfidentialInstanceConfig {
+    type O = terrars::BlockAssignable<DataComputeInstanceTemplate_ConfidentialInstanceConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -707,36 +827,44 @@ impl terrars::ToListMappable for DataComputeInstanceTemplateConfidentialInstance
     }
 }
 
-pub struct BuildDataComputeInstanceTemplateConfidentialInstanceConfigEl {}
+pub struct BuildDataComputeInstanceTemplate_ConfidentialInstanceConfig {}
 
-impl BuildDataComputeInstanceTemplateConfidentialInstanceConfigEl {
-    pub fn build(self) -> DataComputeInstanceTemplateConfidentialInstanceConfigEl {
-        DataComputeInstanceTemplateConfidentialInstanceConfigEl {
+impl BuildDataComputeInstanceTemplate_ConfidentialInstanceConfig {
+    pub fn build(self) -> DataComputeInstanceTemplate_ConfidentialInstanceConfig {
+        DataComputeInstanceTemplate_ConfidentialInstanceConfig {
+            confidential_instance_type: core::default::Default::default(),
             enable_confidential_compute: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataComputeInstanceTemplateConfidentialInstanceConfigElRef {
+#[allow(dead_code)]
+pub struct DataComputeInstanceTemplate_ConfidentialInstanceConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeInstanceTemplateConfidentialInstanceConfigElRef {
+impl terrars::Ref for DataComputeInstanceTemplate_ConfidentialInstanceConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComputeInstanceTemplateConfidentialInstanceConfigElRef {
-        DataComputeInstanceTemplateConfidentialInstanceConfigElRef {
+    ) -> DataComputeInstanceTemplate_ConfidentialInstanceConfigRef {
+        DataComputeInstanceTemplate_ConfidentialInstanceConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeInstanceTemplateConfidentialInstanceConfigElRef {
+impl DataComputeInstanceTemplate_ConfidentialInstanceConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `confidential_instance_type` after provisioning.\n"]
+    pub fn confidential_instance_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.confidential_instance_type", self.base))
     }
 
     #[doc = "Get a reference to the value of field `enable_confidential_compute` after provisioning.\n"]
@@ -746,76 +874,14 @@ impl DataComputeInstanceTemplateConfidentialInstanceConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComputeInstanceTemplateDiskElDiskEncryptionKeyEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    kms_key_self_link: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DataComputeInstanceTemplateDiskElDiskEncryptionKeyEl {
-    #[doc = "Set the field `kms_key_self_link`.\n"]
-    pub fn set_kms_key_self_link(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.kms_key_self_link = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataComputeInstanceTemplateDiskElDiskEncryptionKeyEl {
-    type O = terrars::BlockAssignable<DataComputeInstanceTemplateDiskElDiskEncryptionKeyEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataComputeInstanceTemplateDiskElDiskEncryptionKeyEl {}
-
-impl BuildDataComputeInstanceTemplateDiskElDiskEncryptionKeyEl {
-    pub fn build(self) -> DataComputeInstanceTemplateDiskElDiskEncryptionKeyEl {
-        DataComputeInstanceTemplateDiskElDiskEncryptionKeyEl { kms_key_self_link: core::default::Default::default() }
-    }
-}
-
-pub struct DataComputeInstanceTemplateDiskElDiskEncryptionKeyElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataComputeInstanceTemplateDiskElDiskEncryptionKeyElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataComputeInstanceTemplateDiskElDiskEncryptionKeyElRef {
-        DataComputeInstanceTemplateDiskElDiskEncryptionKeyElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataComputeInstanceTemplateDiskElDiskEncryptionKeyElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `kms_key_self_link` after provisioning.\n"]
-    pub fn kms_key_self_link(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_self_link", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataComputeInstanceTemplateDiskElSourceImageEncryptionKeyEl {
+pub struct DataComputeInstanceTemplate_Disk_DiskEncryptionKey {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_self_link: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_service_account: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataComputeInstanceTemplateDiskElSourceImageEncryptionKeyEl {
+impl DataComputeInstanceTemplate_Disk_DiskEncryptionKey {
     #[doc = "Set the field `kms_key_self_link`.\n"]
     pub fn set_kms_key_self_link(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.kms_key_self_link = std::option::Option::Some(v.into());
@@ -832,8 +898,8 @@ impl DataComputeInstanceTemplateDiskElSourceImageEncryptionKeyEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeInstanceTemplateDiskElSourceImageEncryptionKeyEl {
-    type O = terrars::BlockAssignable<DataComputeInstanceTemplateDiskElSourceImageEncryptionKeyEl>;
+impl terrars::ToListMappable for DataComputeInstanceTemplate_Disk_DiskEncryptionKey {
+    type O = terrars::BlockAssignable<DataComputeInstanceTemplate_Disk_DiskEncryptionKey>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -844,35 +910,37 @@ impl terrars::ToListMappable for DataComputeInstanceTemplateDiskElSourceImageEnc
     }
 }
 
-pub struct BuildDataComputeInstanceTemplateDiskElSourceImageEncryptionKeyEl {}
+pub struct BuildDataComputeInstanceTemplate_Disk_DiskEncryptionKey {}
 
-impl BuildDataComputeInstanceTemplateDiskElSourceImageEncryptionKeyEl {
-    pub fn build(self) -> DataComputeInstanceTemplateDiskElSourceImageEncryptionKeyEl {
-        DataComputeInstanceTemplateDiskElSourceImageEncryptionKeyEl {
+impl BuildDataComputeInstanceTemplate_Disk_DiskEncryptionKey {
+    pub fn build(self) -> DataComputeInstanceTemplate_Disk_DiskEncryptionKey {
+        DataComputeInstanceTemplate_Disk_DiskEncryptionKey {
             kms_key_self_link: core::default::Default::default(),
             kms_key_service_account: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataComputeInstanceTemplateDiskElSourceImageEncryptionKeyElRef {
+#[allow(dead_code)]
+pub struct DataComputeInstanceTemplate_Disk_DiskEncryptionKeyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeInstanceTemplateDiskElSourceImageEncryptionKeyElRef {
+impl terrars::Ref for DataComputeInstanceTemplate_Disk_DiskEncryptionKeyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComputeInstanceTemplateDiskElSourceImageEncryptionKeyElRef {
-        DataComputeInstanceTemplateDiskElSourceImageEncryptionKeyElRef {
+    ) -> DataComputeInstanceTemplate_Disk_DiskEncryptionKeyRef {
+        DataComputeInstanceTemplate_Disk_DiskEncryptionKeyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeInstanceTemplateDiskElSourceImageEncryptionKeyElRef {
+impl DataComputeInstanceTemplate_Disk_DiskEncryptionKeyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -889,14 +957,18 @@ impl DataComputeInstanceTemplateDiskElSourceImageEncryptionKeyElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComputeInstanceTemplateDiskElSourceSnapshotEncryptionKeyEl {
+pub struct DataComputeInstanceTemplate_Disk_SourceImageEncryptionKey {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_self_link: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_service_account: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    raw_key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    rsa_encrypted_key: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataComputeInstanceTemplateDiskElSourceSnapshotEncryptionKeyEl {
+impl DataComputeInstanceTemplate_Disk_SourceImageEncryptionKey {
     #[doc = "Set the field `kms_key_self_link`.\n"]
     pub fn set_kms_key_self_link(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.kms_key_self_link = std::option::Option::Some(v.into());
@@ -911,10 +983,22 @@ impl DataComputeInstanceTemplateDiskElSourceSnapshotEncryptionKeyEl {
         self.kms_key_service_account = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `raw_key`.\n"]
+    pub fn set_raw_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.raw_key = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `rsa_encrypted_key`.\n"]
+    pub fn set_rsa_encrypted_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.rsa_encrypted_key = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for DataComputeInstanceTemplateDiskElSourceSnapshotEncryptionKeyEl {
-    type O = terrars::BlockAssignable<DataComputeInstanceTemplateDiskElSourceSnapshotEncryptionKeyEl>;
+impl terrars::ToListMappable for DataComputeInstanceTemplate_Disk_SourceImageEncryptionKey {
+    type O = terrars::BlockAssignable<DataComputeInstanceTemplate_Disk_SourceImageEncryptionKey>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -925,35 +1009,39 @@ impl terrars::ToListMappable for DataComputeInstanceTemplateDiskElSourceSnapshot
     }
 }
 
-pub struct BuildDataComputeInstanceTemplateDiskElSourceSnapshotEncryptionKeyEl {}
+pub struct BuildDataComputeInstanceTemplate_Disk_SourceImageEncryptionKey {}
 
-impl BuildDataComputeInstanceTemplateDiskElSourceSnapshotEncryptionKeyEl {
-    pub fn build(self) -> DataComputeInstanceTemplateDiskElSourceSnapshotEncryptionKeyEl {
-        DataComputeInstanceTemplateDiskElSourceSnapshotEncryptionKeyEl {
+impl BuildDataComputeInstanceTemplate_Disk_SourceImageEncryptionKey {
+    pub fn build(self) -> DataComputeInstanceTemplate_Disk_SourceImageEncryptionKey {
+        DataComputeInstanceTemplate_Disk_SourceImageEncryptionKey {
             kms_key_self_link: core::default::Default::default(),
             kms_key_service_account: core::default::Default::default(),
+            raw_key: core::default::Default::default(),
+            rsa_encrypted_key: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataComputeInstanceTemplateDiskElSourceSnapshotEncryptionKeyElRef {
+#[allow(dead_code)]
+pub struct DataComputeInstanceTemplate_Disk_SourceImageEncryptionKeyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeInstanceTemplateDiskElSourceSnapshotEncryptionKeyElRef {
+impl terrars::Ref for DataComputeInstanceTemplate_Disk_SourceImageEncryptionKeyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComputeInstanceTemplateDiskElSourceSnapshotEncryptionKeyElRef {
-        DataComputeInstanceTemplateDiskElSourceSnapshotEncryptionKeyElRef {
+    ) -> DataComputeInstanceTemplate_Disk_SourceImageEncryptionKeyRef {
+        DataComputeInstanceTemplate_Disk_SourceImageEncryptionKeyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeInstanceTemplateDiskElSourceSnapshotEncryptionKeyElRef {
+impl DataComputeInstanceTemplate_Disk_SourceImageEncryptionKeyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -967,10 +1055,133 @@ impl DataComputeInstanceTemplateDiskElSourceSnapshotEncryptionKeyElRef {
     pub fn kms_key_service_account(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_service_account", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `raw_key` after provisioning.\n"]
+    pub fn raw_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.raw_key", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `rsa_encrypted_key` after provisioning.\n"]
+    pub fn rsa_encrypted_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rsa_encrypted_key", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct DataComputeInstanceTemplateDiskEl {
+pub struct DataComputeInstanceTemplate_Disk_SourceSnapshotEncryptionKey {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_self_link: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_service_account: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    raw_key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    rsa_encrypted_key: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataComputeInstanceTemplate_Disk_SourceSnapshotEncryptionKey {
+    #[doc = "Set the field `kms_key_self_link`.\n"]
+    pub fn set_kms_key_self_link(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.kms_key_self_link = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `kms_key_service_account`.\n"]
+    pub fn set_kms_key_service_account(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.kms_key_service_account = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `raw_key`.\n"]
+    pub fn set_raw_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.raw_key = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `rsa_encrypted_key`.\n"]
+    pub fn set_rsa_encrypted_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.rsa_encrypted_key = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataComputeInstanceTemplate_Disk_SourceSnapshotEncryptionKey {
+    type O = terrars::BlockAssignable<DataComputeInstanceTemplate_Disk_SourceSnapshotEncryptionKey>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataComputeInstanceTemplate_Disk_SourceSnapshotEncryptionKey {}
+
+impl BuildDataComputeInstanceTemplate_Disk_SourceSnapshotEncryptionKey {
+    pub fn build(self) -> DataComputeInstanceTemplate_Disk_SourceSnapshotEncryptionKey {
+        DataComputeInstanceTemplate_Disk_SourceSnapshotEncryptionKey {
+            kms_key_self_link: core::default::Default::default(),
+            kms_key_service_account: core::default::Default::default(),
+            raw_key: core::default::Default::default(),
+            rsa_encrypted_key: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataComputeInstanceTemplate_Disk_SourceSnapshotEncryptionKeyRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataComputeInstanceTemplate_Disk_SourceSnapshotEncryptionKeyRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataComputeInstanceTemplate_Disk_SourceSnapshotEncryptionKeyRef {
+        DataComputeInstanceTemplate_Disk_SourceSnapshotEncryptionKeyRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataComputeInstanceTemplate_Disk_SourceSnapshotEncryptionKeyRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `kms_key_self_link` after provisioning.\n"]
+    pub fn kms_key_self_link(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_self_link", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `kms_key_service_account` after provisioning.\n"]
+    pub fn kms_key_service_account(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_service_account", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `raw_key` after provisioning.\n"]
+    pub fn raw_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.raw_key", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `rsa_encrypted_key` after provisioning.\n"]
+    pub fn rsa_encrypted_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rsa_encrypted_key", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataComputeInstanceTemplate_Disk {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    architecture: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     auto_delete: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -978,13 +1189,15 @@ pub struct DataComputeInstanceTemplateDiskEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     device_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    disk_encryption_key: std::option::Option<terrars::ListField<DataComputeInstanceTemplateDiskElDiskEncryptionKeyEl>>,
+    disk_encryption_key: std::option::Option<terrars::ListField<DataComputeInstanceTemplate_Disk_DiskEncryptionKey>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     disk_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     disk_size_gb: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     disk_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    guest_os_features: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     interface: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -994,6 +1207,10 @@ pub struct DataComputeInstanceTemplateDiskEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     provisioned_iops: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provisioned_throughput: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_manager_tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resource_policies: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     source: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -1002,18 +1219,26 @@ pub struct DataComputeInstanceTemplateDiskEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     source_image_encryption_key: std
     ::option
-    ::Option<terrars::ListField<DataComputeInstanceTemplateDiskElSourceImageEncryptionKeyEl>>,
+    ::Option<terrars::ListField<DataComputeInstanceTemplate_Disk_SourceImageEncryptionKey>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     source_snapshot: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     source_snapshot_encryption_key: std
     ::option
-    ::Option<terrars::ListField<DataComputeInstanceTemplateDiskElSourceSnapshotEncryptionKeyEl>>,
+    ::Option<terrars::ListField<DataComputeInstanceTemplate_Disk_SourceSnapshotEncryptionKey>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    storage_pool: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataComputeInstanceTemplateDiskEl {
+impl DataComputeInstanceTemplate_Disk {
+    #[doc = "Set the field `architecture`.\n"]
+    pub fn set_architecture(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.architecture = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `auto_delete`.\n"]
     pub fn set_auto_delete(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.auto_delete = std::option::Option::Some(v.into());
@@ -1035,7 +1260,7 @@ impl DataComputeInstanceTemplateDiskEl {
     #[doc = "Set the field `disk_encryption_key`.\n"]
     pub fn set_disk_encryption_key(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataComputeInstanceTemplateDiskElDiskEncryptionKeyEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataComputeInstanceTemplate_Disk_DiskEncryptionKey>>,
     ) -> Self {
         self.disk_encryption_key = std::option::Option::Some(v.into());
         self
@@ -1056,6 +1281,15 @@ impl DataComputeInstanceTemplateDiskEl {
     #[doc = "Set the field `disk_type`.\n"]
     pub fn set_disk_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.disk_type = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `guest_os_features`.\n"]
+    pub fn set_guest_os_features(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.guest_os_features = std::option::Option::Some(v.into());
         self
     }
 
@@ -1086,6 +1320,21 @@ impl DataComputeInstanceTemplateDiskEl {
         self
     }
 
+    #[doc = "Set the field `provisioned_throughput`.\n"]
+    pub fn set_provisioned_throughput(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.provisioned_throughput = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `resource_manager_tags`.\n"]
+    pub fn set_resource_manager_tags(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.resource_manager_tags = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `resource_policies`.\n"]
     pub fn set_resource_policies(
         mut self,
@@ -1110,7 +1359,7 @@ impl DataComputeInstanceTemplateDiskEl {
     #[doc = "Set the field `source_image_encryption_key`.\n"]
     pub fn set_source_image_encryption_key(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataComputeInstanceTemplateDiskElSourceImageEncryptionKeyEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataComputeInstanceTemplate_Disk_SourceImageEncryptionKey>>,
     ) -> Self {
         self.source_image_encryption_key = std::option::Option::Some(v.into());
         self
@@ -1125,14 +1374,15 @@ impl DataComputeInstanceTemplateDiskEl {
     #[doc = "Set the field `source_snapshot_encryption_key`.\n"]
     pub fn set_source_snapshot_encryption_key(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::ListField<DataComputeInstanceTemplateDiskElSourceSnapshotEncryptionKeyEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataComputeInstanceTemplate_Disk_SourceSnapshotEncryptionKey>>,
     ) -> Self {
         self.source_snapshot_encryption_key = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `storage_pool`.\n"]
+    pub fn set_storage_pool(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.storage_pool = std::option::Option::Some(v.into());
         self
     }
 
@@ -1143,8 +1393,8 @@ impl DataComputeInstanceTemplateDiskEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeInstanceTemplateDiskEl {
-    type O = terrars::BlockAssignable<DataComputeInstanceTemplateDiskEl>;
+impl terrars::ToListMappable for DataComputeInstanceTemplate_Disk {
+    type O = terrars::BlockAssignable<DataComputeInstanceTemplate_Disk>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1155,11 +1405,12 @@ impl terrars::ToListMappable for DataComputeInstanceTemplateDiskEl {
     }
 }
 
-pub struct BuildDataComputeInstanceTemplateDiskEl {}
+pub struct BuildDataComputeInstanceTemplate_Disk {}
 
-impl BuildDataComputeInstanceTemplateDiskEl {
-    pub fn build(self) -> DataComputeInstanceTemplateDiskEl {
-        DataComputeInstanceTemplateDiskEl {
+impl BuildDataComputeInstanceTemplate_Disk {
+    pub fn build(self) -> DataComputeInstanceTemplate_Disk {
+        DataComputeInstanceTemplate_Disk {
+            architecture: core::default::Default::default(),
             auto_delete: core::default::Default::default(),
             boot: core::default::Default::default(),
             device_name: core::default::Default::default(),
@@ -1167,38 +1418,49 @@ impl BuildDataComputeInstanceTemplateDiskEl {
             disk_name: core::default::Default::default(),
             disk_size_gb: core::default::Default::default(),
             disk_type: core::default::Default::default(),
+            guest_os_features: core::default::Default::default(),
             interface: core::default::Default::default(),
             labels: core::default::Default::default(),
             mode: core::default::Default::default(),
             provisioned_iops: core::default::Default::default(),
+            provisioned_throughput: core::default::Default::default(),
+            resource_manager_tags: core::default::Default::default(),
             resource_policies: core::default::Default::default(),
             source: core::default::Default::default(),
             source_image: core::default::Default::default(),
             source_image_encryption_key: core::default::Default::default(),
             source_snapshot: core::default::Default::default(),
             source_snapshot_encryption_key: core::default::Default::default(),
+            storage_pool: core::default::Default::default(),
             type_: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataComputeInstanceTemplateDiskElRef {
+#[allow(dead_code)]
+pub struct DataComputeInstanceTemplate_DiskRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeInstanceTemplateDiskElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeInstanceTemplateDiskElRef {
-        DataComputeInstanceTemplateDiskElRef {
+impl terrars::Ref for DataComputeInstanceTemplate_DiskRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeInstanceTemplate_DiskRef {
+        DataComputeInstanceTemplate_DiskRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeInstanceTemplateDiskElRef {
+impl DataComputeInstanceTemplate_DiskRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `architecture` after provisioning.\n"]
+    pub fn architecture(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.architecture", self.base))
     }
 
     #[doc = "Get a reference to the value of field `auto_delete` after provisioning.\n"]
@@ -1217,7 +1479,7 @@ impl DataComputeInstanceTemplateDiskElRef {
     }
 
     #[doc = "Get a reference to the value of field `disk_encryption_key` after provisioning.\n"]
-    pub fn disk_encryption_key(&self) -> terrars::ListRef<DataComputeInstanceTemplateDiskElDiskEncryptionKeyElRef> {
+    pub fn disk_encryption_key(&self) -> terrars::ListRef<DataComputeInstanceTemplate_Disk_DiskEncryptionKeyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.disk_encryption_key", self.base))
     }
 
@@ -1234,6 +1496,11 @@ impl DataComputeInstanceTemplateDiskElRef {
     #[doc = "Get a reference to the value of field `disk_type` after provisioning.\n"]
     pub fn disk_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.disk_type", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `guest_os_features` after provisioning.\n"]
+    pub fn guest_os_features(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.guest_os_features", self.base))
     }
 
     #[doc = "Get a reference to the value of field `interface` after provisioning.\n"]
@@ -1256,6 +1523,16 @@ impl DataComputeInstanceTemplateDiskElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.provisioned_iops", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `provisioned_throughput` after provisioning.\n"]
+    pub fn provisioned_throughput(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.provisioned_throughput", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `resource_manager_tags` after provisioning.\n"]
+    pub fn resource_manager_tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.resource_manager_tags", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `resource_policies` after provisioning.\n"]
     pub fn resource_policies(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.resource_policies", self.base))
@@ -1274,7 +1551,7 @@ impl DataComputeInstanceTemplateDiskElRef {
     #[doc = "Get a reference to the value of field `source_image_encryption_key` after provisioning.\n"]
     pub fn source_image_encryption_key(
         &self,
-    ) -> terrars::ListRef<DataComputeInstanceTemplateDiskElSourceImageEncryptionKeyElRef> {
+    ) -> terrars::ListRef<DataComputeInstanceTemplate_Disk_SourceImageEncryptionKeyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source_image_encryption_key", self.base))
     }
 
@@ -1286,8 +1563,13 @@ impl DataComputeInstanceTemplateDiskElRef {
     #[doc = "Get a reference to the value of field `source_snapshot_encryption_key` after provisioning.\n"]
     pub fn source_snapshot_encryption_key(
         &self,
-    ) -> terrars::ListRef<DataComputeInstanceTemplateDiskElSourceSnapshotEncryptionKeyElRef> {
+    ) -> terrars::ListRef<DataComputeInstanceTemplate_Disk_SourceSnapshotEncryptionKeyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source_snapshot_encryption_key", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `storage_pool` after provisioning.\n"]
+    pub fn storage_pool(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.storage_pool", self.base))
     }
 
     #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
@@ -1297,14 +1579,14 @@ impl DataComputeInstanceTemplateDiskElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComputeInstanceTemplateGuestAcceleratorEl {
+pub struct DataComputeInstanceTemplate_GuestAccelerator {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     count: std::option::Option<terrars::PrimField<f64>>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataComputeInstanceTemplateGuestAcceleratorEl {
+impl DataComputeInstanceTemplate_GuestAccelerator {
     #[doc = "Set the field `count`.\n"]
     pub fn set_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.count = std::option::Option::Some(v.into());
@@ -1318,8 +1600,8 @@ impl DataComputeInstanceTemplateGuestAcceleratorEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeInstanceTemplateGuestAcceleratorEl {
-    type O = terrars::BlockAssignable<DataComputeInstanceTemplateGuestAcceleratorEl>;
+impl terrars::ToListMappable for DataComputeInstanceTemplate_GuestAccelerator {
+    type O = terrars::BlockAssignable<DataComputeInstanceTemplate_GuestAccelerator>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1330,35 +1612,37 @@ impl terrars::ToListMappable for DataComputeInstanceTemplateGuestAcceleratorEl {
     }
 }
 
-pub struct BuildDataComputeInstanceTemplateGuestAcceleratorEl {}
+pub struct BuildDataComputeInstanceTemplate_GuestAccelerator {}
 
-impl BuildDataComputeInstanceTemplateGuestAcceleratorEl {
-    pub fn build(self) -> DataComputeInstanceTemplateGuestAcceleratorEl {
-        DataComputeInstanceTemplateGuestAcceleratorEl {
+impl BuildDataComputeInstanceTemplate_GuestAccelerator {
+    pub fn build(self) -> DataComputeInstanceTemplate_GuestAccelerator {
+        DataComputeInstanceTemplate_GuestAccelerator {
             count: core::default::Default::default(),
             type_: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataComputeInstanceTemplateGuestAcceleratorElRef {
+#[allow(dead_code)]
+pub struct DataComputeInstanceTemplate_GuestAcceleratorRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeInstanceTemplateGuestAcceleratorElRef {
+impl terrars::Ref for DataComputeInstanceTemplate_GuestAcceleratorRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComputeInstanceTemplateGuestAcceleratorElRef {
-        DataComputeInstanceTemplateGuestAcceleratorElRef {
+    ) -> DataComputeInstanceTemplate_GuestAcceleratorRef {
+        DataComputeInstanceTemplate_GuestAcceleratorRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeInstanceTemplateGuestAcceleratorElRef {
+impl DataComputeInstanceTemplate_GuestAcceleratorRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1375,7 +1659,7 @@ impl DataComputeInstanceTemplateGuestAcceleratorElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComputeInstanceTemplateNetworkInterfaceElAccessConfigEl {
+pub struct DataComputeInstanceTemplate_NetworkInterface_AccessConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     nat_ip: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1384,7 +1668,7 @@ pub struct DataComputeInstanceTemplateNetworkInterfaceElAccessConfigEl {
     public_ptr_domain_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataComputeInstanceTemplateNetworkInterfaceElAccessConfigEl {
+impl DataComputeInstanceTemplate_NetworkInterface_AccessConfig {
     #[doc = "Set the field `nat_ip`.\n"]
     pub fn set_nat_ip(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.nat_ip = std::option::Option::Some(v.into());
@@ -1407,8 +1691,8 @@ impl DataComputeInstanceTemplateNetworkInterfaceElAccessConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeInstanceTemplateNetworkInterfaceElAccessConfigEl {
-    type O = terrars::BlockAssignable<DataComputeInstanceTemplateNetworkInterfaceElAccessConfigEl>;
+impl terrars::ToListMappable for DataComputeInstanceTemplate_NetworkInterface_AccessConfig {
+    type O = terrars::BlockAssignable<DataComputeInstanceTemplate_NetworkInterface_AccessConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1419,11 +1703,11 @@ impl terrars::ToListMappable for DataComputeInstanceTemplateNetworkInterfaceElAc
     }
 }
 
-pub struct BuildDataComputeInstanceTemplateNetworkInterfaceElAccessConfigEl {}
+pub struct BuildDataComputeInstanceTemplate_NetworkInterface_AccessConfig {}
 
-impl BuildDataComputeInstanceTemplateNetworkInterfaceElAccessConfigEl {
-    pub fn build(self) -> DataComputeInstanceTemplateNetworkInterfaceElAccessConfigEl {
-        DataComputeInstanceTemplateNetworkInterfaceElAccessConfigEl {
+impl BuildDataComputeInstanceTemplate_NetworkInterface_AccessConfig {
+    pub fn build(self) -> DataComputeInstanceTemplate_NetworkInterface_AccessConfig {
+        DataComputeInstanceTemplate_NetworkInterface_AccessConfig {
             nat_ip: core::default::Default::default(),
             network_tier: core::default::Default::default(),
             public_ptr_domain_name: core::default::Default::default(),
@@ -1431,24 +1715,26 @@ impl BuildDataComputeInstanceTemplateNetworkInterfaceElAccessConfigEl {
     }
 }
 
-pub struct DataComputeInstanceTemplateNetworkInterfaceElAccessConfigElRef {
+#[allow(dead_code)]
+pub struct DataComputeInstanceTemplate_NetworkInterface_AccessConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeInstanceTemplateNetworkInterfaceElAccessConfigElRef {
+impl terrars::Ref for DataComputeInstanceTemplate_NetworkInterface_AccessConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComputeInstanceTemplateNetworkInterfaceElAccessConfigElRef {
-        DataComputeInstanceTemplateNetworkInterfaceElAccessConfigElRef {
+    ) -> DataComputeInstanceTemplate_NetworkInterface_AccessConfigRef {
+        DataComputeInstanceTemplate_NetworkInterface_AccessConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeInstanceTemplateNetworkInterfaceElAccessConfigElRef {
+impl DataComputeInstanceTemplate_NetworkInterface_AccessConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1470,14 +1756,14 @@ impl DataComputeInstanceTemplateNetworkInterfaceElAccessConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComputeInstanceTemplateNetworkInterfaceElAliasIpRangeEl {
+pub struct DataComputeInstanceTemplate_NetworkInterface_AliasIpRange {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ip_cidr_range: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     subnetwork_range_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataComputeInstanceTemplateNetworkInterfaceElAliasIpRangeEl {
+impl DataComputeInstanceTemplate_NetworkInterface_AliasIpRange {
     #[doc = "Set the field `ip_cidr_range`.\n"]
     pub fn set_ip_cidr_range(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.ip_cidr_range = std::option::Option::Some(v.into());
@@ -1494,8 +1780,8 @@ impl DataComputeInstanceTemplateNetworkInterfaceElAliasIpRangeEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeInstanceTemplateNetworkInterfaceElAliasIpRangeEl {
-    type O = terrars::BlockAssignable<DataComputeInstanceTemplateNetworkInterfaceElAliasIpRangeEl>;
+impl terrars::ToListMappable for DataComputeInstanceTemplate_NetworkInterface_AliasIpRange {
+    type O = terrars::BlockAssignable<DataComputeInstanceTemplate_NetworkInterface_AliasIpRange>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1506,35 +1792,37 @@ impl terrars::ToListMappable for DataComputeInstanceTemplateNetworkInterfaceElAl
     }
 }
 
-pub struct BuildDataComputeInstanceTemplateNetworkInterfaceElAliasIpRangeEl {}
+pub struct BuildDataComputeInstanceTemplate_NetworkInterface_AliasIpRange {}
 
-impl BuildDataComputeInstanceTemplateNetworkInterfaceElAliasIpRangeEl {
-    pub fn build(self) -> DataComputeInstanceTemplateNetworkInterfaceElAliasIpRangeEl {
-        DataComputeInstanceTemplateNetworkInterfaceElAliasIpRangeEl {
+impl BuildDataComputeInstanceTemplate_NetworkInterface_AliasIpRange {
+    pub fn build(self) -> DataComputeInstanceTemplate_NetworkInterface_AliasIpRange {
+        DataComputeInstanceTemplate_NetworkInterface_AliasIpRange {
             ip_cidr_range: core::default::Default::default(),
             subnetwork_range_name: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataComputeInstanceTemplateNetworkInterfaceElAliasIpRangeElRef {
+#[allow(dead_code)]
+pub struct DataComputeInstanceTemplate_NetworkInterface_AliasIpRangeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeInstanceTemplateNetworkInterfaceElAliasIpRangeElRef {
+impl terrars::Ref for DataComputeInstanceTemplate_NetworkInterface_AliasIpRangeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComputeInstanceTemplateNetworkInterfaceElAliasIpRangeElRef {
-        DataComputeInstanceTemplateNetworkInterfaceElAliasIpRangeElRef {
+    ) -> DataComputeInstanceTemplate_NetworkInterface_AliasIpRangeRef {
+        DataComputeInstanceTemplate_NetworkInterface_AliasIpRangeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeInstanceTemplateNetworkInterfaceElAliasIpRangeElRef {
+impl DataComputeInstanceTemplate_NetworkInterface_AliasIpRangeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1551,7 +1839,7 @@ impl DataComputeInstanceTemplateNetworkInterfaceElAliasIpRangeElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComputeInstanceTemplateNetworkInterfaceElIpv6AccessConfigEl {
+pub struct DataComputeInstanceTemplate_NetworkInterface_Ipv6AccessConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     external_ipv6: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1564,7 +1852,7 @@ pub struct DataComputeInstanceTemplateNetworkInterfaceElIpv6AccessConfigEl {
     public_ptr_domain_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataComputeInstanceTemplateNetworkInterfaceElIpv6AccessConfigEl {
+impl DataComputeInstanceTemplate_NetworkInterface_Ipv6AccessConfig {
     #[doc = "Set the field `external_ipv6`.\n"]
     pub fn set_external_ipv6(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.external_ipv6 = std::option::Option::Some(v.into());
@@ -1602,8 +1890,8 @@ impl DataComputeInstanceTemplateNetworkInterfaceElIpv6AccessConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeInstanceTemplateNetworkInterfaceElIpv6AccessConfigEl {
-    type O = terrars::BlockAssignable<DataComputeInstanceTemplateNetworkInterfaceElIpv6AccessConfigEl>;
+impl terrars::ToListMappable for DataComputeInstanceTemplate_NetworkInterface_Ipv6AccessConfig {
+    type O = terrars::BlockAssignable<DataComputeInstanceTemplate_NetworkInterface_Ipv6AccessConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1614,11 +1902,11 @@ impl terrars::ToListMappable for DataComputeInstanceTemplateNetworkInterfaceElIp
     }
 }
 
-pub struct BuildDataComputeInstanceTemplateNetworkInterfaceElIpv6AccessConfigEl {}
+pub struct BuildDataComputeInstanceTemplate_NetworkInterface_Ipv6AccessConfig {}
 
-impl BuildDataComputeInstanceTemplateNetworkInterfaceElIpv6AccessConfigEl {
-    pub fn build(self) -> DataComputeInstanceTemplateNetworkInterfaceElIpv6AccessConfigEl {
-        DataComputeInstanceTemplateNetworkInterfaceElIpv6AccessConfigEl {
+impl BuildDataComputeInstanceTemplate_NetworkInterface_Ipv6AccessConfig {
+    pub fn build(self) -> DataComputeInstanceTemplate_NetworkInterface_Ipv6AccessConfig {
+        DataComputeInstanceTemplate_NetworkInterface_Ipv6AccessConfig {
             external_ipv6: core::default::Default::default(),
             external_ipv6_prefix_length: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -1628,24 +1916,26 @@ impl BuildDataComputeInstanceTemplateNetworkInterfaceElIpv6AccessConfigEl {
     }
 }
 
-pub struct DataComputeInstanceTemplateNetworkInterfaceElIpv6AccessConfigElRef {
+#[allow(dead_code)]
+pub struct DataComputeInstanceTemplate_NetworkInterface_Ipv6AccessConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeInstanceTemplateNetworkInterfaceElIpv6AccessConfigElRef {
+impl terrars::Ref for DataComputeInstanceTemplate_NetworkInterface_Ipv6AccessConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComputeInstanceTemplateNetworkInterfaceElIpv6AccessConfigElRef {
-        DataComputeInstanceTemplateNetworkInterfaceElIpv6AccessConfigElRef {
+    ) -> DataComputeInstanceTemplate_NetworkInterface_Ipv6AccessConfigRef {
+        DataComputeInstanceTemplate_NetworkInterface_Ipv6AccessConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeInstanceTemplateNetworkInterfaceElIpv6AccessConfigElRef {
+impl DataComputeInstanceTemplate_NetworkInterface_Ipv6AccessConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1677,17 +1967,21 @@ impl DataComputeInstanceTemplateNetworkInterfaceElIpv6AccessConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComputeInstanceTemplateNetworkInterfaceEl {
+pub struct DataComputeInstanceTemplate_NetworkInterface {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    access_config: std::option::Option<terrars::ListField<DataComputeInstanceTemplateNetworkInterfaceElAccessConfigEl>>,
+    access_config: std::option::Option<terrars::ListField<DataComputeInstanceTemplate_NetworkInterface_AccessConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    alias_ip_range: std::option::Option<terrars::ListField<DataComputeInstanceTemplateNetworkInterfaceElAliasIpRangeEl>>,
+    alias_ip_range: std::option::Option<terrars::ListField<DataComputeInstanceTemplate_NetworkInterface_AliasIpRange>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_vpc_scoped_dns: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    igmp_query: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     internal_ipv6_prefix_length: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ipv6_access_config: std
     ::option
-    ::Option<terrars::ListField<DataComputeInstanceTemplateNetworkInterfaceElIpv6AccessConfigEl>>,
+    ::Option<terrars::ListField<DataComputeInstanceTemplate_NetworkInterface_Ipv6AccessConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ipv6_access_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1697,24 +1991,32 @@ pub struct DataComputeInstanceTemplateNetworkInterfaceEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     network: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_attachment: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     network_ip: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     nic_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    parent_nic_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     queue_count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    service_class_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     stack_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     subnetwork: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     subnetwork_project: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vlan: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataComputeInstanceTemplateNetworkInterfaceEl {
+impl DataComputeInstanceTemplate_NetworkInterface {
     #[doc = "Set the field `access_config`.\n"]
     pub fn set_access_config(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataComputeInstanceTemplateNetworkInterfaceElAccessConfigEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataComputeInstanceTemplate_NetworkInterface_AccessConfig>>,
     ) -> Self {
         self.access_config = std::option::Option::Some(v.into());
         self
@@ -1723,9 +2025,21 @@ impl DataComputeInstanceTemplateNetworkInterfaceEl {
     #[doc = "Set the field `alias_ip_range`.\n"]
     pub fn set_alias_ip_range(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataComputeInstanceTemplateNetworkInterfaceElAliasIpRangeEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataComputeInstanceTemplate_NetworkInterface_AliasIpRange>>,
     ) -> Self {
         self.alias_ip_range = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `enable_vpc_scoped_dns`.\n"]
+    pub fn set_enable_vpc_scoped_dns(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enable_vpc_scoped_dns = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `igmp_query`.\n"]
+    pub fn set_igmp_query(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.igmp_query = std::option::Option::Some(v.into());
         self
     }
 
@@ -1743,7 +2057,7 @@ impl DataComputeInstanceTemplateNetworkInterfaceEl {
 
                     std
                     ::convert
-                    ::Into<terrars::ListField<DataComputeInstanceTemplateNetworkInterfaceElIpv6AccessConfigEl>>,
+                    ::Into<terrars::ListField<DataComputeInstanceTemplate_NetworkInterface_Ipv6AccessConfig>>,
     ) -> Self {
         self.ipv6_access_config = std::option::Option::Some(v.into());
         self
@@ -1773,6 +2087,15 @@ impl DataComputeInstanceTemplateNetworkInterfaceEl {
         self
     }
 
+    #[doc = "Set the field `network_attachment`.\n"]
+    pub fn set_network_attachment(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.network_attachment = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `network_ip`.\n"]
     pub fn set_network_ip(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.network_ip = std::option::Option::Some(v.into());
@@ -1785,9 +2108,21 @@ impl DataComputeInstanceTemplateNetworkInterfaceEl {
         self
     }
 
+    #[doc = "Set the field `parent_nic_name`.\n"]
+    pub fn set_parent_nic_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.parent_nic_name = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `queue_count`.\n"]
     pub fn set_queue_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.queue_count = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `service_class_id`.\n"]
+    pub fn set_service_class_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.service_class_id = std::option::Option::Some(v.into());
         self
     }
 
@@ -1811,10 +2146,16 @@ impl DataComputeInstanceTemplateNetworkInterfaceEl {
         self.subnetwork_project = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `vlan`.\n"]
+    pub fn set_vlan(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.vlan = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for DataComputeInstanceTemplateNetworkInterfaceEl {
-    type O = terrars::BlockAssignable<DataComputeInstanceTemplateNetworkInterfaceEl>;
+impl terrars::ToListMappable for DataComputeInstanceTemplate_NetworkInterface {
+    type O = terrars::BlockAssignable<DataComputeInstanceTemplate_NetworkInterface>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1825,59 +2166,77 @@ impl terrars::ToListMappable for DataComputeInstanceTemplateNetworkInterfaceEl {
     }
 }
 
-pub struct BuildDataComputeInstanceTemplateNetworkInterfaceEl {}
+pub struct BuildDataComputeInstanceTemplate_NetworkInterface {}
 
-impl BuildDataComputeInstanceTemplateNetworkInterfaceEl {
-    pub fn build(self) -> DataComputeInstanceTemplateNetworkInterfaceEl {
-        DataComputeInstanceTemplateNetworkInterfaceEl {
+impl BuildDataComputeInstanceTemplate_NetworkInterface {
+    pub fn build(self) -> DataComputeInstanceTemplate_NetworkInterface {
+        DataComputeInstanceTemplate_NetworkInterface {
             access_config: core::default::Default::default(),
             alias_ip_range: core::default::Default::default(),
+            enable_vpc_scoped_dns: core::default::Default::default(),
+            igmp_query: core::default::Default::default(),
             internal_ipv6_prefix_length: core::default::Default::default(),
             ipv6_access_config: core::default::Default::default(),
             ipv6_access_type: core::default::Default::default(),
             ipv6_address: core::default::Default::default(),
             name: core::default::Default::default(),
             network: core::default::Default::default(),
+            network_attachment: core::default::Default::default(),
             network_ip: core::default::Default::default(),
             nic_type: core::default::Default::default(),
+            parent_nic_name: core::default::Default::default(),
             queue_count: core::default::Default::default(),
+            service_class_id: core::default::Default::default(),
             stack_type: core::default::Default::default(),
             subnetwork: core::default::Default::default(),
             subnetwork_project: core::default::Default::default(),
+            vlan: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataComputeInstanceTemplateNetworkInterfaceElRef {
+#[allow(dead_code)]
+pub struct DataComputeInstanceTemplate_NetworkInterfaceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeInstanceTemplateNetworkInterfaceElRef {
+impl terrars::Ref for DataComputeInstanceTemplate_NetworkInterfaceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComputeInstanceTemplateNetworkInterfaceElRef {
-        DataComputeInstanceTemplateNetworkInterfaceElRef {
+    ) -> DataComputeInstanceTemplate_NetworkInterfaceRef {
+        DataComputeInstanceTemplate_NetworkInterfaceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeInstanceTemplateNetworkInterfaceElRef {
+impl DataComputeInstanceTemplate_NetworkInterfaceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `access_config` after provisioning.\n"]
-    pub fn access_config(&self) -> terrars::ListRef<DataComputeInstanceTemplateNetworkInterfaceElAccessConfigElRef> {
+    pub fn access_config(&self) -> terrars::ListRef<DataComputeInstanceTemplate_NetworkInterface_AccessConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.access_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `alias_ip_range` after provisioning.\n"]
-    pub fn alias_ip_range(&self) -> terrars::ListRef<DataComputeInstanceTemplateNetworkInterfaceElAliasIpRangeElRef> {
+    pub fn alias_ip_range(&self) -> terrars::ListRef<DataComputeInstanceTemplate_NetworkInterface_AliasIpRangeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.alias_ip_range", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `enable_vpc_scoped_dns` after provisioning.\n"]
+    pub fn enable_vpc_scoped_dns(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_vpc_scoped_dns", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `igmp_query` after provisioning.\n"]
+    pub fn igmp_query(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.igmp_query", self.base))
     }
 
     #[doc = "Get a reference to the value of field `internal_ipv6_prefix_length` after provisioning.\n"]
@@ -1888,7 +2247,7 @@ impl DataComputeInstanceTemplateNetworkInterfaceElRef {
     #[doc = "Get a reference to the value of field `ipv6_access_config` after provisioning.\n"]
     pub fn ipv6_access_config(
         &self,
-    ) -> terrars::ListRef<DataComputeInstanceTemplateNetworkInterfaceElIpv6AccessConfigElRef> {
+    ) -> terrars::ListRef<DataComputeInstanceTemplate_NetworkInterface_Ipv6AccessConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ipv6_access_config", self.base))
     }
 
@@ -1912,6 +2271,11 @@ impl DataComputeInstanceTemplateNetworkInterfaceElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.network", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `network_attachment` after provisioning.\n"]
+    pub fn network_attachment(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_attachment", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `network_ip` after provisioning.\n"]
     pub fn network_ip(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_ip", self.base))
@@ -1922,9 +2286,19 @@ impl DataComputeInstanceTemplateNetworkInterfaceElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.nic_type", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `parent_nic_name` after provisioning.\n"]
+    pub fn parent_nic_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.parent_nic_name", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `queue_count` after provisioning.\n"]
     pub fn queue_count(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.queue_count", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `service_class_id` after provisioning.\n"]
+    pub fn service_class_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_class_id", self.base))
     }
 
     #[doc = "Get a reference to the value of field `stack_type` after provisioning.\n"]
@@ -1941,15 +2315,20 @@ impl DataComputeInstanceTemplateNetworkInterfaceElRef {
     pub fn subnetwork_project(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.subnetwork_project", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `vlan` after provisioning.\n"]
+    pub fn vlan(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vlan", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct DataComputeInstanceTemplateNetworkPerformanceConfigEl {
+pub struct DataComputeInstanceTemplate_NetworkPerformanceConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     total_egress_bandwidth_tier: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataComputeInstanceTemplateNetworkPerformanceConfigEl {
+impl DataComputeInstanceTemplate_NetworkPerformanceConfig {
     #[doc = "Set the field `total_egress_bandwidth_tier`.\n"]
     pub fn set_total_egress_bandwidth_tier(
         mut self,
@@ -1960,8 +2339,8 @@ impl DataComputeInstanceTemplateNetworkPerformanceConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeInstanceTemplateNetworkPerformanceConfigEl {
-    type O = terrars::BlockAssignable<DataComputeInstanceTemplateNetworkPerformanceConfigEl>;
+impl terrars::ToListMappable for DataComputeInstanceTemplate_NetworkPerformanceConfig {
+    type O = terrars::BlockAssignable<DataComputeInstanceTemplate_NetworkPerformanceConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1972,34 +2351,36 @@ impl terrars::ToListMappable for DataComputeInstanceTemplateNetworkPerformanceCo
     }
 }
 
-pub struct BuildDataComputeInstanceTemplateNetworkPerformanceConfigEl {}
+pub struct BuildDataComputeInstanceTemplate_NetworkPerformanceConfig {}
 
-impl BuildDataComputeInstanceTemplateNetworkPerformanceConfigEl {
-    pub fn build(self) -> DataComputeInstanceTemplateNetworkPerformanceConfigEl {
-        DataComputeInstanceTemplateNetworkPerformanceConfigEl {
+impl BuildDataComputeInstanceTemplate_NetworkPerformanceConfig {
+    pub fn build(self) -> DataComputeInstanceTemplate_NetworkPerformanceConfig {
+        DataComputeInstanceTemplate_NetworkPerformanceConfig {
             total_egress_bandwidth_tier: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataComputeInstanceTemplateNetworkPerformanceConfigElRef {
+#[allow(dead_code)]
+pub struct DataComputeInstanceTemplate_NetworkPerformanceConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeInstanceTemplateNetworkPerformanceConfigElRef {
+impl terrars::Ref for DataComputeInstanceTemplate_NetworkPerformanceConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComputeInstanceTemplateNetworkPerformanceConfigElRef {
-        DataComputeInstanceTemplateNetworkPerformanceConfigElRef {
+    ) -> DataComputeInstanceTemplate_NetworkPerformanceConfigRef {
+        DataComputeInstanceTemplate_NetworkPerformanceConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeInstanceTemplateNetworkPerformanceConfigElRef {
+impl DataComputeInstanceTemplate_NetworkPerformanceConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2011,14 +2392,14 @@ impl DataComputeInstanceTemplateNetworkPerformanceConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComputeInstanceTemplateReservationAffinityElSpecificReservationEl {
+pub struct DataComputeInstanceTemplate_ReservationAffinity_SpecificReservation {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     values: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DataComputeInstanceTemplateReservationAffinityElSpecificReservationEl {
+impl DataComputeInstanceTemplate_ReservationAffinity_SpecificReservation {
     #[doc = "Set the field `key`.\n"]
     pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.key = std::option::Option::Some(v.into());
@@ -2035,8 +2416,8 @@ impl DataComputeInstanceTemplateReservationAffinityElSpecificReservationEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeInstanceTemplateReservationAffinityElSpecificReservationEl {
-    type O = terrars::BlockAssignable<DataComputeInstanceTemplateReservationAffinityElSpecificReservationEl>;
+impl terrars::ToListMappable for DataComputeInstanceTemplate_ReservationAffinity_SpecificReservation {
+    type O = terrars::BlockAssignable<DataComputeInstanceTemplate_ReservationAffinity_SpecificReservation>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2047,35 +2428,37 @@ impl terrars::ToListMappable for DataComputeInstanceTemplateReservationAffinityE
     }
 }
 
-pub struct BuildDataComputeInstanceTemplateReservationAffinityElSpecificReservationEl {}
+pub struct BuildDataComputeInstanceTemplate_ReservationAffinity_SpecificReservation {}
 
-impl BuildDataComputeInstanceTemplateReservationAffinityElSpecificReservationEl {
-    pub fn build(self) -> DataComputeInstanceTemplateReservationAffinityElSpecificReservationEl {
-        DataComputeInstanceTemplateReservationAffinityElSpecificReservationEl {
+impl BuildDataComputeInstanceTemplate_ReservationAffinity_SpecificReservation {
+    pub fn build(self) -> DataComputeInstanceTemplate_ReservationAffinity_SpecificReservation {
+        DataComputeInstanceTemplate_ReservationAffinity_SpecificReservation {
             key: core::default::Default::default(),
             values: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataComputeInstanceTemplateReservationAffinityElSpecificReservationElRef {
+#[allow(dead_code)]
+pub struct DataComputeInstanceTemplate_ReservationAffinity_SpecificReservationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeInstanceTemplateReservationAffinityElSpecificReservationElRef {
+impl terrars::Ref for DataComputeInstanceTemplate_ReservationAffinity_SpecificReservationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComputeInstanceTemplateReservationAffinityElSpecificReservationElRef {
-        DataComputeInstanceTemplateReservationAffinityElSpecificReservationElRef {
+    ) -> DataComputeInstanceTemplate_ReservationAffinity_SpecificReservationRef {
+        DataComputeInstanceTemplate_ReservationAffinity_SpecificReservationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeInstanceTemplateReservationAffinityElSpecificReservationElRef {
+impl DataComputeInstanceTemplate_ReservationAffinity_SpecificReservationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2092,16 +2475,16 @@ impl DataComputeInstanceTemplateReservationAffinityElSpecificReservationElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComputeInstanceTemplateReservationAffinityEl {
+pub struct DataComputeInstanceTemplate_ReservationAffinity {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     specific_reservation: std
     ::option
-    ::Option<terrars::ListField<DataComputeInstanceTemplateReservationAffinityElSpecificReservationEl>>,
+    ::Option<terrars::ListField<DataComputeInstanceTemplate_ReservationAffinity_SpecificReservation>>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataComputeInstanceTemplateReservationAffinityEl {
+impl DataComputeInstanceTemplate_ReservationAffinity {
     #[doc = "Set the field `specific_reservation`.\n"]
     pub fn set_specific_reservation(
         mut self,
@@ -2110,7 +2493,7 @@ impl DataComputeInstanceTemplateReservationAffinityEl {
 
                     std
                     ::convert
-                    ::Into<terrars::ListField<DataComputeInstanceTemplateReservationAffinityElSpecificReservationEl>>,
+                    ::Into<terrars::ListField<DataComputeInstanceTemplate_ReservationAffinity_SpecificReservation>>,
     ) -> Self {
         self.specific_reservation = std::option::Option::Some(v.into());
         self
@@ -2123,8 +2506,8 @@ impl DataComputeInstanceTemplateReservationAffinityEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeInstanceTemplateReservationAffinityEl {
-    type O = terrars::BlockAssignable<DataComputeInstanceTemplateReservationAffinityEl>;
+impl terrars::ToListMappable for DataComputeInstanceTemplate_ReservationAffinity {
+    type O = terrars::BlockAssignable<DataComputeInstanceTemplate_ReservationAffinity>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2135,35 +2518,37 @@ impl terrars::ToListMappable for DataComputeInstanceTemplateReservationAffinityE
     }
 }
 
-pub struct BuildDataComputeInstanceTemplateReservationAffinityEl {}
+pub struct BuildDataComputeInstanceTemplate_ReservationAffinity {}
 
-impl BuildDataComputeInstanceTemplateReservationAffinityEl {
-    pub fn build(self) -> DataComputeInstanceTemplateReservationAffinityEl {
-        DataComputeInstanceTemplateReservationAffinityEl {
+impl BuildDataComputeInstanceTemplate_ReservationAffinity {
+    pub fn build(self) -> DataComputeInstanceTemplate_ReservationAffinity {
+        DataComputeInstanceTemplate_ReservationAffinity {
             specific_reservation: core::default::Default::default(),
             type_: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataComputeInstanceTemplateReservationAffinityElRef {
+#[allow(dead_code)]
+pub struct DataComputeInstanceTemplate_ReservationAffinityRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeInstanceTemplateReservationAffinityElRef {
+impl terrars::Ref for DataComputeInstanceTemplate_ReservationAffinityRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComputeInstanceTemplateReservationAffinityElRef {
-        DataComputeInstanceTemplateReservationAffinityElRef {
+    ) -> DataComputeInstanceTemplate_ReservationAffinityRef {
+        DataComputeInstanceTemplate_ReservationAffinityRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeInstanceTemplateReservationAffinityElRef {
+impl DataComputeInstanceTemplate_ReservationAffinityRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2171,7 +2556,7 @@ impl DataComputeInstanceTemplateReservationAffinityElRef {
     #[doc = "Get a reference to the value of field `specific_reservation` after provisioning.\n"]
     pub fn specific_reservation(
         &self,
-    ) -> terrars::ListRef<DataComputeInstanceTemplateReservationAffinityElSpecificReservationElRef> {
+    ) -> terrars::ListRef<DataComputeInstanceTemplate_ReservationAffinity_SpecificReservationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.specific_reservation", self.base))
     }
 
@@ -2182,14 +2567,14 @@ impl DataComputeInstanceTemplateReservationAffinityElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComputeInstanceTemplateSchedulingElLocalSsdRecoveryTimeoutEl {
+pub struct DataComputeInstanceTemplate_Scheduling_LocalSsdRecoveryTimeout {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     nanos: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     seconds: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataComputeInstanceTemplateSchedulingElLocalSsdRecoveryTimeoutEl {
+impl DataComputeInstanceTemplate_Scheduling_LocalSsdRecoveryTimeout {
     #[doc = "Set the field `nanos`.\n"]
     pub fn set_nanos(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.nanos = std::option::Option::Some(v.into());
@@ -2203,8 +2588,8 @@ impl DataComputeInstanceTemplateSchedulingElLocalSsdRecoveryTimeoutEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeInstanceTemplateSchedulingElLocalSsdRecoveryTimeoutEl {
-    type O = terrars::BlockAssignable<DataComputeInstanceTemplateSchedulingElLocalSsdRecoveryTimeoutEl>;
+impl terrars::ToListMappable for DataComputeInstanceTemplate_Scheduling_LocalSsdRecoveryTimeout {
+    type O = terrars::BlockAssignable<DataComputeInstanceTemplate_Scheduling_LocalSsdRecoveryTimeout>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2215,35 +2600,37 @@ impl terrars::ToListMappable for DataComputeInstanceTemplateSchedulingElLocalSsd
     }
 }
 
-pub struct BuildDataComputeInstanceTemplateSchedulingElLocalSsdRecoveryTimeoutEl {}
+pub struct BuildDataComputeInstanceTemplate_Scheduling_LocalSsdRecoveryTimeout {}
 
-impl BuildDataComputeInstanceTemplateSchedulingElLocalSsdRecoveryTimeoutEl {
-    pub fn build(self) -> DataComputeInstanceTemplateSchedulingElLocalSsdRecoveryTimeoutEl {
-        DataComputeInstanceTemplateSchedulingElLocalSsdRecoveryTimeoutEl {
+impl BuildDataComputeInstanceTemplate_Scheduling_LocalSsdRecoveryTimeout {
+    pub fn build(self) -> DataComputeInstanceTemplate_Scheduling_LocalSsdRecoveryTimeout {
+        DataComputeInstanceTemplate_Scheduling_LocalSsdRecoveryTimeout {
             nanos: core::default::Default::default(),
             seconds: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataComputeInstanceTemplateSchedulingElLocalSsdRecoveryTimeoutElRef {
+#[allow(dead_code)]
+pub struct DataComputeInstanceTemplate_Scheduling_LocalSsdRecoveryTimeoutRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeInstanceTemplateSchedulingElLocalSsdRecoveryTimeoutElRef {
+impl terrars::Ref for DataComputeInstanceTemplate_Scheduling_LocalSsdRecoveryTimeoutRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComputeInstanceTemplateSchedulingElLocalSsdRecoveryTimeoutElRef {
-        DataComputeInstanceTemplateSchedulingElLocalSsdRecoveryTimeoutElRef {
+    ) -> DataComputeInstanceTemplate_Scheduling_LocalSsdRecoveryTimeoutRef {
+        DataComputeInstanceTemplate_Scheduling_LocalSsdRecoveryTimeoutRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeInstanceTemplateSchedulingElLocalSsdRecoveryTimeoutElRef {
+impl DataComputeInstanceTemplate_Scheduling_LocalSsdRecoveryTimeoutRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2260,7 +2647,87 @@ impl DataComputeInstanceTemplateSchedulingElLocalSsdRecoveryTimeoutElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComputeInstanceTemplateSchedulingElNodeAffinitiesEl {
+pub struct DataComputeInstanceTemplate_Scheduling_MaxRunDuration {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    nanos: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    seconds: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl DataComputeInstanceTemplate_Scheduling_MaxRunDuration {
+    #[doc = "Set the field `nanos`.\n"]
+    pub fn set_nanos(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.nanos = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `seconds`.\n"]
+    pub fn set_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.seconds = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataComputeInstanceTemplate_Scheduling_MaxRunDuration {
+    type O = terrars::BlockAssignable<DataComputeInstanceTemplate_Scheduling_MaxRunDuration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataComputeInstanceTemplate_Scheduling_MaxRunDuration {}
+
+impl BuildDataComputeInstanceTemplate_Scheduling_MaxRunDuration {
+    pub fn build(self) -> DataComputeInstanceTemplate_Scheduling_MaxRunDuration {
+        DataComputeInstanceTemplate_Scheduling_MaxRunDuration {
+            nanos: core::default::Default::default(),
+            seconds: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataComputeInstanceTemplate_Scheduling_MaxRunDurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataComputeInstanceTemplate_Scheduling_MaxRunDurationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataComputeInstanceTemplate_Scheduling_MaxRunDurationRef {
+        DataComputeInstanceTemplate_Scheduling_MaxRunDurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataComputeInstanceTemplate_Scheduling_MaxRunDurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `nanos` after provisioning.\n"]
+    pub fn nanos(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.nanos", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `seconds` after provisioning.\n"]
+    pub fn seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.seconds", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataComputeInstanceTemplate_Scheduling_NodeAffinities {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2269,7 +2736,7 @@ pub struct DataComputeInstanceTemplateSchedulingElNodeAffinitiesEl {
     values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DataComputeInstanceTemplateSchedulingElNodeAffinitiesEl {
+impl DataComputeInstanceTemplate_Scheduling_NodeAffinities {
     #[doc = "Set the field `key`.\n"]
     pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.key = std::option::Option::Some(v.into());
@@ -2292,8 +2759,8 @@ impl DataComputeInstanceTemplateSchedulingElNodeAffinitiesEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeInstanceTemplateSchedulingElNodeAffinitiesEl {
-    type O = terrars::BlockAssignable<DataComputeInstanceTemplateSchedulingElNodeAffinitiesEl>;
+impl terrars::ToListMappable for DataComputeInstanceTemplate_Scheduling_NodeAffinities {
+    type O = terrars::BlockAssignable<DataComputeInstanceTemplate_Scheduling_NodeAffinities>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2304,11 +2771,11 @@ impl terrars::ToListMappable for DataComputeInstanceTemplateSchedulingElNodeAffi
     }
 }
 
-pub struct BuildDataComputeInstanceTemplateSchedulingElNodeAffinitiesEl {}
+pub struct BuildDataComputeInstanceTemplate_Scheduling_NodeAffinities {}
 
-impl BuildDataComputeInstanceTemplateSchedulingElNodeAffinitiesEl {
-    pub fn build(self) -> DataComputeInstanceTemplateSchedulingElNodeAffinitiesEl {
-        DataComputeInstanceTemplateSchedulingElNodeAffinitiesEl {
+impl BuildDataComputeInstanceTemplate_Scheduling_NodeAffinities {
+    pub fn build(self) -> DataComputeInstanceTemplate_Scheduling_NodeAffinities {
+        DataComputeInstanceTemplate_Scheduling_NodeAffinities {
             key: core::default::Default::default(),
             operator: core::default::Default::default(),
             values: core::default::Default::default(),
@@ -2316,24 +2783,26 @@ impl BuildDataComputeInstanceTemplateSchedulingElNodeAffinitiesEl {
     }
 }
 
-pub struct DataComputeInstanceTemplateSchedulingElNodeAffinitiesElRef {
+#[allow(dead_code)]
+pub struct DataComputeInstanceTemplate_Scheduling_NodeAffinitiesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeInstanceTemplateSchedulingElNodeAffinitiesElRef {
+impl terrars::Ref for DataComputeInstanceTemplate_Scheduling_NodeAffinitiesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComputeInstanceTemplateSchedulingElNodeAffinitiesElRef {
-        DataComputeInstanceTemplateSchedulingElNodeAffinitiesElRef {
+    ) -> DataComputeInstanceTemplate_Scheduling_NodeAffinitiesRef {
+        DataComputeInstanceTemplate_Scheduling_NodeAffinitiesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeInstanceTemplateSchedulingElNodeAffinitiesElRef {
+impl DataComputeInstanceTemplate_Scheduling_NodeAffinitiesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2355,31 +2824,205 @@ impl DataComputeInstanceTemplateSchedulingElNodeAffinitiesElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComputeInstanceTemplateSchedulingEl {
+pub struct DataComputeInstanceTemplate_Scheduling_OnInstanceStopAction {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    discard_local_ssd: std::option::Option<terrars::PrimField<bool>>,
+}
+
+impl DataComputeInstanceTemplate_Scheduling_OnInstanceStopAction {
+    #[doc = "Set the field `discard_local_ssd`.\n"]
+    pub fn set_discard_local_ssd(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.discard_local_ssd = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataComputeInstanceTemplate_Scheduling_OnInstanceStopAction {
+    type O = terrars::BlockAssignable<DataComputeInstanceTemplate_Scheduling_OnInstanceStopAction>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataComputeInstanceTemplate_Scheduling_OnInstanceStopAction {}
+
+impl BuildDataComputeInstanceTemplate_Scheduling_OnInstanceStopAction {
+    pub fn build(self) -> DataComputeInstanceTemplate_Scheduling_OnInstanceStopAction {
+        DataComputeInstanceTemplate_Scheduling_OnInstanceStopAction {
+            discard_local_ssd: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataComputeInstanceTemplate_Scheduling_OnInstanceStopActionRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataComputeInstanceTemplate_Scheduling_OnInstanceStopActionRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataComputeInstanceTemplate_Scheduling_OnInstanceStopActionRef {
+        DataComputeInstanceTemplate_Scheduling_OnInstanceStopActionRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataComputeInstanceTemplate_Scheduling_OnInstanceStopActionRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `discard_local_ssd` after provisioning.\n"]
+    pub fn discard_local_ssd(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.discard_local_ssd", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataComputeInstanceTemplate_Scheduling_PreemptionNoticeDuration {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    nanos: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    seconds: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl DataComputeInstanceTemplate_Scheduling_PreemptionNoticeDuration {
+    #[doc = "Set the field `nanos`.\n"]
+    pub fn set_nanos(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.nanos = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `seconds`.\n"]
+    pub fn set_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.seconds = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataComputeInstanceTemplate_Scheduling_PreemptionNoticeDuration {
+    type O = terrars::BlockAssignable<DataComputeInstanceTemplate_Scheduling_PreemptionNoticeDuration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataComputeInstanceTemplate_Scheduling_PreemptionNoticeDuration {}
+
+impl BuildDataComputeInstanceTemplate_Scheduling_PreemptionNoticeDuration {
+    pub fn build(self) -> DataComputeInstanceTemplate_Scheduling_PreemptionNoticeDuration {
+        DataComputeInstanceTemplate_Scheduling_PreemptionNoticeDuration {
+            nanos: core::default::Default::default(),
+            seconds: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataComputeInstanceTemplate_Scheduling_PreemptionNoticeDurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataComputeInstanceTemplate_Scheduling_PreemptionNoticeDurationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataComputeInstanceTemplate_Scheduling_PreemptionNoticeDurationRef {
+        DataComputeInstanceTemplate_Scheduling_PreemptionNoticeDurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataComputeInstanceTemplate_Scheduling_PreemptionNoticeDurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `nanos` after provisioning.\n"]
+    pub fn nanos(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.nanos", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `seconds` after provisioning.\n"]
+    pub fn seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.seconds", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataComputeInstanceTemplate_Scheduling {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     automatic_restart: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    availability_domain: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    host_error_timeout_seconds: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     instance_termination_action: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     local_ssd_recovery_timeout: std
     ::option
-    ::Option<terrars::ListField<DataComputeInstanceTemplateSchedulingElLocalSsdRecoveryTimeoutEl>>,
+    ::Option<terrars::ListField<DataComputeInstanceTemplate_Scheduling_LocalSsdRecoveryTimeout>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_run_duration: std::option::Option<terrars::ListField<DataComputeInstanceTemplate_Scheduling_MaxRunDuration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min_node_cpus: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    node_affinities: std::option::Option<terrars::SetField<DataComputeInstanceTemplateSchedulingElNodeAffinitiesEl>>,
+    node_affinities: std::option::Option<terrars::SetField<DataComputeInstanceTemplate_Scheduling_NodeAffinities>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     on_host_maintenance: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    on_instance_stop_action: std
+    ::option
+    ::Option<terrars::ListField<DataComputeInstanceTemplate_Scheduling_OnInstanceStopAction>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     preemptible: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    preemption_notice_duration: std
+    ::option
+    ::Option<terrars::ListField<DataComputeInstanceTemplate_Scheduling_PreemptionNoticeDuration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     provisioning_model: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    termination_time: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataComputeInstanceTemplateSchedulingEl {
+impl DataComputeInstanceTemplate_Scheduling {
     #[doc = "Set the field `automatic_restart`.\n"]
     pub fn set_automatic_restart(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.automatic_restart = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `availability_domain`.\n"]
+    pub fn set_availability_domain(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.availability_domain = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `host_error_timeout_seconds`.\n"]
+    pub fn set_host_error_timeout_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.host_error_timeout_seconds = std::option::Option::Some(v.into());
         self
     }
 
@@ -2400,9 +3043,18 @@ impl DataComputeInstanceTemplateSchedulingEl {
 
                     std
                     ::convert
-                    ::Into<terrars::ListField<DataComputeInstanceTemplateSchedulingElLocalSsdRecoveryTimeoutEl>>,
+                    ::Into<terrars::ListField<DataComputeInstanceTemplate_Scheduling_LocalSsdRecoveryTimeout>>,
     ) -> Self {
         self.local_ssd_recovery_timeout = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `max_run_duration`.\n"]
+    pub fn set_max_run_duration(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataComputeInstanceTemplate_Scheduling_MaxRunDuration>>,
+    ) -> Self {
+        self.max_run_duration = std::option::Option::Some(v.into());
         self
     }
 
@@ -2415,7 +3067,7 @@ impl DataComputeInstanceTemplateSchedulingEl {
     #[doc = "Set the field `node_affinities`.\n"]
     pub fn set_node_affinities(
         mut self,
-        v: impl std::convert::Into<terrars::SetField<DataComputeInstanceTemplateSchedulingElNodeAffinitiesEl>>,
+        v: impl std::convert::Into<terrars::SetField<DataComputeInstanceTemplate_Scheduling_NodeAffinities>>,
     ) -> Self {
         self.node_affinities = std::option::Option::Some(v.into());
         self
@@ -2430,9 +3082,32 @@ impl DataComputeInstanceTemplateSchedulingEl {
         self
     }
 
+    #[doc = "Set the field `on_instance_stop_action`.\n"]
+    pub fn set_on_instance_stop_action(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataComputeInstanceTemplate_Scheduling_OnInstanceStopAction>>,
+    ) -> Self {
+        self.on_instance_stop_action = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `preemptible`.\n"]
     pub fn set_preemptible(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.preemptible = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `preemption_notice_duration`.\n"]
+    pub fn set_preemption_notice_duration(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::ListField<DataComputeInstanceTemplate_Scheduling_PreemptionNoticeDuration>>,
+    ) -> Self {
+        self.preemption_notice_duration = std::option::Option::Some(v.into());
         self
     }
 
@@ -2444,10 +3119,16 @@ impl DataComputeInstanceTemplateSchedulingEl {
         self.provisioning_model = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `termination_time`.\n"]
+    pub fn set_termination_time(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.termination_time = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for DataComputeInstanceTemplateSchedulingEl {
-    type O = terrars::BlockAssignable<DataComputeInstanceTemplateSchedulingEl>;
+impl terrars::ToListMappable for DataComputeInstanceTemplate_Scheduling {
+    type O = terrars::BlockAssignable<DataComputeInstanceTemplate_Scheduling>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2458,38 +3139,46 @@ impl terrars::ToListMappable for DataComputeInstanceTemplateSchedulingEl {
     }
 }
 
-pub struct BuildDataComputeInstanceTemplateSchedulingEl {}
+pub struct BuildDataComputeInstanceTemplate_Scheduling {}
 
-impl BuildDataComputeInstanceTemplateSchedulingEl {
-    pub fn build(self) -> DataComputeInstanceTemplateSchedulingEl {
-        DataComputeInstanceTemplateSchedulingEl {
+impl BuildDataComputeInstanceTemplate_Scheduling {
+    pub fn build(self) -> DataComputeInstanceTemplate_Scheduling {
+        DataComputeInstanceTemplate_Scheduling {
             automatic_restart: core::default::Default::default(),
+            availability_domain: core::default::Default::default(),
+            host_error_timeout_seconds: core::default::Default::default(),
             instance_termination_action: core::default::Default::default(),
             local_ssd_recovery_timeout: core::default::Default::default(),
+            max_run_duration: core::default::Default::default(),
             min_node_cpus: core::default::Default::default(),
             node_affinities: core::default::Default::default(),
             on_host_maintenance: core::default::Default::default(),
+            on_instance_stop_action: core::default::Default::default(),
             preemptible: core::default::Default::default(),
+            preemption_notice_duration: core::default::Default::default(),
             provisioning_model: core::default::Default::default(),
+            termination_time: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataComputeInstanceTemplateSchedulingElRef {
+#[allow(dead_code)]
+pub struct DataComputeInstanceTemplate_SchedulingRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeInstanceTemplateSchedulingElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeInstanceTemplateSchedulingElRef {
-        DataComputeInstanceTemplateSchedulingElRef {
+impl terrars::Ref for DataComputeInstanceTemplate_SchedulingRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeInstanceTemplate_SchedulingRef {
+        DataComputeInstanceTemplate_SchedulingRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeInstanceTemplateSchedulingElRef {
+impl DataComputeInstanceTemplate_SchedulingRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2497,6 +3186,16 @@ impl DataComputeInstanceTemplateSchedulingElRef {
     #[doc = "Get a reference to the value of field `automatic_restart` after provisioning.\n"]
     pub fn automatic_restart(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.automatic_restart", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `availability_domain` after provisioning.\n"]
+    pub fn availability_domain(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.availability_domain", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `host_error_timeout_seconds` after provisioning.\n"]
+    pub fn host_error_timeout_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.host_error_timeout_seconds", self.base))
     }
 
     #[doc = "Get a reference to the value of field `instance_termination_action` after provisioning.\n"]
@@ -2507,8 +3206,13 @@ impl DataComputeInstanceTemplateSchedulingElRef {
     #[doc = "Get a reference to the value of field `local_ssd_recovery_timeout` after provisioning.\n"]
     pub fn local_ssd_recovery_timeout(
         &self,
-    ) -> terrars::ListRef<DataComputeInstanceTemplateSchedulingElLocalSsdRecoveryTimeoutElRef> {
+    ) -> terrars::ListRef<DataComputeInstanceTemplate_Scheduling_LocalSsdRecoveryTimeoutRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.local_ssd_recovery_timeout", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `max_run_duration` after provisioning.\n"]
+    pub fn max_run_duration(&self) -> terrars::ListRef<DataComputeInstanceTemplate_Scheduling_MaxRunDurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.max_run_duration", self.base))
     }
 
     #[doc = "Get a reference to the value of field `min_node_cpus` after provisioning.\n"]
@@ -2517,7 +3221,7 @@ impl DataComputeInstanceTemplateSchedulingElRef {
     }
 
     #[doc = "Get a reference to the value of field `node_affinities` after provisioning.\n"]
-    pub fn node_affinities(&self) -> terrars::SetRef<DataComputeInstanceTemplateSchedulingElNodeAffinitiesElRef> {
+    pub fn node_affinities(&self) -> terrars::SetRef<DataComputeInstanceTemplate_Scheduling_NodeAffinitiesRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.node_affinities", self.base))
     }
 
@@ -2526,26 +3230,45 @@ impl DataComputeInstanceTemplateSchedulingElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.on_host_maintenance", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `on_instance_stop_action` after provisioning.\n"]
+    pub fn on_instance_stop_action(
+        &self,
+    ) -> terrars::ListRef<DataComputeInstanceTemplate_Scheduling_OnInstanceStopActionRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.on_instance_stop_action", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `preemptible` after provisioning.\n"]
     pub fn preemptible(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.preemptible", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `preemption_notice_duration` after provisioning.\n"]
+    pub fn preemption_notice_duration(
+        &self,
+    ) -> terrars::ListRef<DataComputeInstanceTemplate_Scheduling_PreemptionNoticeDurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.preemption_notice_duration", self.base))
     }
 
     #[doc = "Get a reference to the value of field `provisioning_model` after provisioning.\n"]
     pub fn provisioning_model(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.provisioning_model", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `termination_time` after provisioning.\n"]
+    pub fn termination_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.termination_time", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct DataComputeInstanceTemplateServiceAccountEl {
+pub struct DataComputeInstanceTemplate_ServiceAccount {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     email: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     scopes: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DataComputeInstanceTemplateServiceAccountEl {
+impl DataComputeInstanceTemplate_ServiceAccount {
     #[doc = "Set the field `email`.\n"]
     pub fn set_email(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.email = std::option::Option::Some(v.into());
@@ -2562,8 +3285,8 @@ impl DataComputeInstanceTemplateServiceAccountEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeInstanceTemplateServiceAccountEl {
-    type O = terrars::BlockAssignable<DataComputeInstanceTemplateServiceAccountEl>;
+impl terrars::ToListMappable for DataComputeInstanceTemplate_ServiceAccount {
+    type O = terrars::BlockAssignable<DataComputeInstanceTemplate_ServiceAccount>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2574,35 +3297,34 @@ impl terrars::ToListMappable for DataComputeInstanceTemplateServiceAccountEl {
     }
 }
 
-pub struct BuildDataComputeInstanceTemplateServiceAccountEl {}
+pub struct BuildDataComputeInstanceTemplate_ServiceAccount {}
 
-impl BuildDataComputeInstanceTemplateServiceAccountEl {
-    pub fn build(self) -> DataComputeInstanceTemplateServiceAccountEl {
-        DataComputeInstanceTemplateServiceAccountEl {
+impl BuildDataComputeInstanceTemplate_ServiceAccount {
+    pub fn build(self) -> DataComputeInstanceTemplate_ServiceAccount {
+        DataComputeInstanceTemplate_ServiceAccount {
             email: core::default::Default::default(),
             scopes: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataComputeInstanceTemplateServiceAccountElRef {
+#[allow(dead_code)]
+pub struct DataComputeInstanceTemplate_ServiceAccountRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeInstanceTemplateServiceAccountElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataComputeInstanceTemplateServiceAccountElRef {
-        DataComputeInstanceTemplateServiceAccountElRef {
+impl terrars::Ref for DataComputeInstanceTemplate_ServiceAccountRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeInstanceTemplate_ServiceAccountRef {
+        DataComputeInstanceTemplate_ServiceAccountRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeInstanceTemplateServiceAccountElRef {
+impl DataComputeInstanceTemplate_ServiceAccountRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2619,7 +3341,7 @@ impl DataComputeInstanceTemplateServiceAccountElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComputeInstanceTemplateShieldedInstanceConfigEl {
+pub struct DataComputeInstanceTemplate_ShieldedInstanceConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_integrity_monitoring: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2628,7 +3350,7 @@ pub struct DataComputeInstanceTemplateShieldedInstanceConfigEl {
     enable_vtpm: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataComputeInstanceTemplateShieldedInstanceConfigEl {
+impl DataComputeInstanceTemplate_ShieldedInstanceConfig {
     #[doc = "Set the field `enable_integrity_monitoring`.\n"]
     pub fn set_enable_integrity_monitoring(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enable_integrity_monitoring = std::option::Option::Some(v.into());
@@ -2648,8 +3370,8 @@ impl DataComputeInstanceTemplateShieldedInstanceConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeInstanceTemplateShieldedInstanceConfigEl {
-    type O = terrars::BlockAssignable<DataComputeInstanceTemplateShieldedInstanceConfigEl>;
+impl terrars::ToListMappable for DataComputeInstanceTemplate_ShieldedInstanceConfig {
+    type O = terrars::BlockAssignable<DataComputeInstanceTemplate_ShieldedInstanceConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2660,11 +3382,11 @@ impl terrars::ToListMappable for DataComputeInstanceTemplateShieldedInstanceConf
     }
 }
 
-pub struct BuildDataComputeInstanceTemplateShieldedInstanceConfigEl {}
+pub struct BuildDataComputeInstanceTemplate_ShieldedInstanceConfig {}
 
-impl BuildDataComputeInstanceTemplateShieldedInstanceConfigEl {
-    pub fn build(self) -> DataComputeInstanceTemplateShieldedInstanceConfigEl {
-        DataComputeInstanceTemplateShieldedInstanceConfigEl {
+impl BuildDataComputeInstanceTemplate_ShieldedInstanceConfig {
+    pub fn build(self) -> DataComputeInstanceTemplate_ShieldedInstanceConfig {
+        DataComputeInstanceTemplate_ShieldedInstanceConfig {
             enable_integrity_monitoring: core::default::Default::default(),
             enable_secure_boot: core::default::Default::default(),
             enable_vtpm: core::default::Default::default(),
@@ -2672,24 +3394,26 @@ impl BuildDataComputeInstanceTemplateShieldedInstanceConfigEl {
     }
 }
 
-pub struct DataComputeInstanceTemplateShieldedInstanceConfigElRef {
+#[allow(dead_code)]
+pub struct DataComputeInstanceTemplate_ShieldedInstanceConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeInstanceTemplateShieldedInstanceConfigElRef {
+impl terrars::Ref for DataComputeInstanceTemplate_ShieldedInstanceConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComputeInstanceTemplateShieldedInstanceConfigElRef {
-        DataComputeInstanceTemplateShieldedInstanceConfigElRef {
+    ) -> DataComputeInstanceTemplate_ShieldedInstanceConfigRef {
+        DataComputeInstanceTemplate_ShieldedInstanceConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeInstanceTemplateShieldedInstanceConfigElRef {
+impl DataComputeInstanceTemplate_ShieldedInstanceConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2707,5 +3431,85 @@ impl DataComputeInstanceTemplateShieldedInstanceConfigElRef {
     #[doc = "Get a reference to the value of field `enable_vtpm` after provisioning.\n"]
     pub fn enable_vtpm(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_vtpm", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataComputeInstanceTemplate_WorkloadIdentityConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    identity: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    identity_certificate_enabled: std::option::Option<terrars::PrimField<bool>>,
+}
+
+impl DataComputeInstanceTemplate_WorkloadIdentityConfig {
+    #[doc = "Set the field `identity`.\n"]
+    pub fn set_identity(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.identity = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `identity_certificate_enabled`.\n"]
+    pub fn set_identity_certificate_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.identity_certificate_enabled = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataComputeInstanceTemplate_WorkloadIdentityConfig {
+    type O = terrars::BlockAssignable<DataComputeInstanceTemplate_WorkloadIdentityConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataComputeInstanceTemplate_WorkloadIdentityConfig {}
+
+impl BuildDataComputeInstanceTemplate_WorkloadIdentityConfig {
+    pub fn build(self) -> DataComputeInstanceTemplate_WorkloadIdentityConfig {
+        DataComputeInstanceTemplate_WorkloadIdentityConfig {
+            identity: core::default::Default::default(),
+            identity_certificate_enabled: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataComputeInstanceTemplate_WorkloadIdentityConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataComputeInstanceTemplate_WorkloadIdentityConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataComputeInstanceTemplate_WorkloadIdentityConfigRef {
+        DataComputeInstanceTemplate_WorkloadIdentityConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataComputeInstanceTemplate_WorkloadIdentityConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `identity` after provisioning.\n"]
+    pub fn identity(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.identity", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `identity_certificate_enabled` after provisioning.\n"]
+    pub fn identity_certificate_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.identity_certificate_enabled", self.base))
     }
 }

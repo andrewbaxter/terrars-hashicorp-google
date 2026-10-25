@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct IamWorkloadIdentityPoolProviderData {
+struct IamWorkloadIdentityPoolProviderData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,6 +25,8 @@ struct IamWorkloadIdentityPoolProviderData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     attribute_mapping: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     disabled: std::option::Option<terrars::PrimField<bool>>,
@@ -35,20 +39,22 @@ struct IamWorkloadIdentityPoolProviderData {
     workload_identity_pool_id: terrars::PrimField<std::string::String>,
     workload_identity_pool_provider_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    aws: std::option::Option<std::vec::Vec<IamWorkloadIdentityPoolProviderAwsEl>>,
+    aws: std::option::Option<std::vec::Vec<IamWorkloadIdentityPoolProvider_Aws>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    oidc: std::option::Option<std::vec::Vec<IamWorkloadIdentityPoolProviderOidcEl>>,
+    oidc: std::option::Option<std::vec::Vec<IamWorkloadIdentityPoolProvider_Oidc>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    saml: std::option::Option<std::vec::Vec<IamWorkloadIdentityPoolProviderSamlEl>>,
+    saml: std::option::Option<std::vec::Vec<IamWorkloadIdentityPoolProvider_Saml>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<IamWorkloadIdentityPoolProviderTimeoutsEl>,
+    timeouts: std::option::Option<IamWorkloadIdentityPoolProvider_Timeouts>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    x509: std::option::Option<std::vec::Vec<IamWorkloadIdentityPoolProvider_X509>>,
     dynamic: IamWorkloadIdentityPoolProviderDynamic,
 }
 
 struct IamWorkloadIdentityPoolProvider_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<IamWorkloadIdentityPoolProviderData>,
+    data: std::cell::RefCell<IamWorkloadIdentityPoolProviderData_>,
 }
 
 #[derive(Clone)]
@@ -149,19 +155,26 @@ impl IamWorkloadIdentityPoolProvider {
     }
 
     #[doc =
-        "Set the field `attribute_condition`.\n[A Common Expression Language](https://opensource.google/projects/cel) expression, in\nplain text, to restrict what otherwise valid authentication credentials issued by the\nprovider should not be accepted.\n\nThe expression must output a boolean representing whether to allow the federation.\n\nThe following keywords may be referenced in the expressions:\n  * 'assertion': JSON representing the authentication credential issued by the provider.\n  * 'google': The Google attributes mapped from the assertion in the 'attribute_mappings'.\n  * 'attribute': The custom attributes mapped from the assertion in the 'attribute_mappings'.\n\nThe maximum length of the attribute condition expression is 4096 characters. If\nunspecified, all valid authentication credential are accepted.\n\nThe following example shows how to only allow credentials with a mapped 'google.groups'\nvalue of 'admins':\n'''\n\"'admins' in google.groups\"\n'''"]
+        "Set the field `attribute_condition`.\n[A Common Expression Language](https://github.com/google/cel-spec) expression, in\nplain text, to restrict what otherwise valid authentication credentials issued by the\nprovider should not be accepted.\n\nThe expression must output a boolean representing whether to allow the federation.\n\nThe following keywords may be referenced in the expressions:\n  * 'assertion': JSON representing the authentication credential issued by the provider.\n  * 'google': The Google attributes mapped from the assertion in the 'attribute_mappings'.\n  * 'attribute': The custom attributes mapped from the assertion in the 'attribute_mappings'.\n\nThe maximum length of the attribute condition expression is 4096 characters. If\nunspecified, all valid authentication credential are accepted.\n\nThe following example shows how to only allow credentials with a mapped 'google.groups'\nvalue of 'admins':\n'''\n\"'admins' in google.groups\"\n'''"]
     pub fn set_attribute_condition(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().attribute_condition = std::option::Option::Some(v.into());
         self
     }
 
     #[doc =
-        "Set the field `attribute_mapping`.\nMaps attributes from authentication credentials issued by an external identity provider\nto Google Cloud attributes, such as 'subject' and 'segment'.\n\nEach key must be a string specifying the Google Cloud IAM attribute to map to.\n\nThe following keys are supported:\n  * 'google.subject': The principal IAM is authenticating. You can reference this value\n    in IAM bindings. This is also the subject that appears in Cloud Logging logs.\n    Cannot exceed 127 characters.\n  * 'google.groups': Groups the external identity belongs to. You can grant groups\n    access to resources using an IAM 'principalSet' binding; access applies to all\n    members of the group.\n\nYou can also provide custom attributes by specifying 'attribute.{custom_attribute}',\nwhere '{custom_attribute}' is the name of the custom attribute to be mapped. You can\ndefine a maximum of 50 custom attributes. The maximum length of a mapped attribute key\nis 100 characters, and the key may only contain the characters [a-z0-9_].\n\nYou can reference these attributes in IAM policies to define fine-grained access for a\nworkload to Google Cloud resources. For example:\n  * 'google.subject':\n    'principal://iam.googleapis.com/projects/{project}/locations/{location}/workloadIdentityPools/{pool}/subject/{value}'\n  * 'google.groups':\n    'principalSet://iam.googleapis.com/projects/{project}/locations/{location}/workloadIdentityPools/{pool}/group/{value}'\n  * 'attribute.{custom_attribute}':\n    'principalSet://iam.googleapis.com/projects/{project}/locations/{location}/workloadIdentityPools/{pool}/attribute.{custom_attribute}/{value}'\n\nEach value must be a [Common Expression Language](https://opensource.google/projects/cel)\nfunction that maps an identity provider credential to the normalized attribute specified\nby the corresponding map key.\n\nYou can use the 'assertion' keyword in the expression to access a JSON representation of\nthe authentication credential issued by the provider.\n\nThe maximum length of an attribute mapping expression is 2048 characters. When evaluated,\nthe total size of all mapped attributes must not exceed 8KB.\n\nFor AWS providers, the following rules apply:\n  - If no attribute mapping is defined, the following default mapping applies:\n    '''\n    {\n      \"google.subject\":\"assertion.arn\",\n      \"attribute.aws_role\":\n        \"assertion.arn.contains('assumed-role')\"\n        \" ? assertion.arn.extract('{account_arn}assumed-role/')\"\n        \"   + 'assumed-role/'\"\n        \"   + assertion.arn.extract('assumed-role/{role_name}/')\"\n        \" : assertion.arn\",\n    }\n    '''\n  - If any custom attribute mappings are defined, they must include a mapping to the\n    'google.subject' attribute.\n\nFor OIDC providers, the following rules apply:\n  - Custom attribute mappings must be defined, and must include a mapping to the\n    'google.subject' attribute. For example, the following maps the 'sub' claim of the\n    incoming credential to the 'subject' attribute on a Google token.\n    '''\n    {\"google.subject\": \"assertion.sub\"}\n    '''"]
+        "Set the field `attribute_mapping`.\nMaps attributes from authentication credentials issued by an external identity provider\nto Google Cloud attributes, such as 'subject' and 'segment'.\n\nEach key must be a string specifying the Google Cloud IAM attribute to map to.\n\nThe following keys are supported:\n  * 'google.subject': The principal IAM is authenticating. You can reference this value\n    in IAM bindings. This is also the subject that appears in Cloud Logging logs.\n    Cannot exceed 127 characters.\n  * 'google.groups': Groups the external identity belongs to. You can grant groups\n    access to resources using an IAM 'principalSet' binding; access applies to all\n    members of the group.\n\nYou can also provide custom attributes by specifying 'attribute.{custom_attribute}',\nwhere '{custom_attribute}' is the name of the custom attribute to be mapped. You can\ndefine a maximum of 50 custom attributes. The maximum length of a mapped attribute key\nis 100 characters, and the key may only contain the characters [a-z0-9_].\n\nYou can reference these attributes in IAM policies to define fine-grained access for a\nworkload to Google Cloud resources. For example:\n  * 'google.subject':\n    'principal://iam.googleapis.com/projects/{project}/locations/{location}/workloadIdentityPools/{pool}/subject/{value}'\n  * 'google.groups':\n    'principalSet://iam.googleapis.com/projects/{project}/locations/{location}/workloadIdentityPools/{pool}/group/{value}'\n  * 'attribute.{custom_attribute}':\n    'principalSet://iam.googleapis.com/projects/{project}/locations/{location}/workloadIdentityPools/{pool}/attribute.{custom_attribute}/{value}'\n\nEach value must be a [Common Expression Language](https://github.com/google/cel-spec)\nfunction that maps an identity provider credential to the normalized attribute specified\nby the corresponding map key.\n\nYou can use the 'assertion' keyword in the expression to access a JSON representation of\nthe authentication credential issued by the provider.\n\nThe maximum length of an attribute mapping expression is 2048 characters. When evaluated,\nthe total size of all mapped attributes must not exceed 8KB.\n\nFor AWS providers, the following rules apply:\n  - If no attribute mapping is defined, the following default mapping applies:\n    '''\n    {\n      \"google.subject\":\"assertion.arn\",\n      \"attribute.aws_role\":\n        \"assertion.arn.contains('assumed-role')\"\n        \" ? assertion.arn.extract('{account_arn}assumed-role/')\"\n        \"   + 'assumed-role/'\"\n        \"   + assertion.arn.extract('assumed-role/{role_name}/')\"\n        \" : assertion.arn\",\n    }\n    '''\n  - If any custom attribute mappings are defined, they must include a mapping to the\n    'google.subject' attribute.\n\nFor OIDC providers, the following rules apply:\n  - Custom attribute mappings must be defined, and must include a mapping to the\n    'google.subject' attribute. For example, the following maps the 'sub' claim of the\n    incoming credential to the 'subject' attribute on a Google token.\n    '''\n    {\"google.subject\": \"assertion.sub\"}\n    '''"]
     pub fn set_attribute_mapping(
         self,
         v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
     ) -> Self {
         self.0.data.borrow_mut().attribute_mapping = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
         self
     }
 
@@ -199,7 +212,7 @@ impl IamWorkloadIdentityPoolProvider {
     #[doc = "Set the field `aws`.\n"]
     pub fn set_aws(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<IamWorkloadIdentityPoolProviderAwsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IamWorkloadIdentityPoolProvider_Aws>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -215,7 +228,7 @@ impl IamWorkloadIdentityPoolProvider {
     #[doc = "Set the field `oidc`.\n"]
     pub fn set_oidc(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<IamWorkloadIdentityPoolProviderOidcEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IamWorkloadIdentityPoolProvider_Oidc>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -231,7 +244,7 @@ impl IamWorkloadIdentityPoolProvider {
     #[doc = "Set the field `saml`.\n"]
     pub fn set_saml(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<IamWorkloadIdentityPoolProviderSamlEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IamWorkloadIdentityPoolProvider_Saml>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -245,21 +258,43 @@ impl IamWorkloadIdentityPoolProvider {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<IamWorkloadIdentityPoolProviderTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<IamWorkloadIdentityPoolProvider_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
+    #[doc = "Set the field `x509`.\n"]
+    pub fn set_x509(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<IamWorkloadIdentityPoolProvider_X509>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().x509 = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.x509 = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc =
-        "Get a reference to the value of field `attribute_condition` after provisioning.\n[A Common Expression Language](https://opensource.google/projects/cel) expression, in\nplain text, to restrict what otherwise valid authentication credentials issued by the\nprovider should not be accepted.\n\nThe expression must output a boolean representing whether to allow the federation.\n\nThe following keywords may be referenced in the expressions:\n  * 'assertion': JSON representing the authentication credential issued by the provider.\n  * 'google': The Google attributes mapped from the assertion in the 'attribute_mappings'.\n  * 'attribute': The custom attributes mapped from the assertion in the 'attribute_mappings'.\n\nThe maximum length of the attribute condition expression is 4096 characters. If\nunspecified, all valid authentication credential are accepted.\n\nThe following example shows how to only allow credentials with a mapped 'google.groups'\nvalue of 'admins':\n'''\n\"'admins' in google.groups\"\n'''"]
+        "Get a reference to the value of field `attribute_condition` after provisioning.\n[A Common Expression Language](https://github.com/google/cel-spec) expression, in\nplain text, to restrict what otherwise valid authentication credentials issued by the\nprovider should not be accepted.\n\nThe expression must output a boolean representing whether to allow the federation.\n\nThe following keywords may be referenced in the expressions:\n  * 'assertion': JSON representing the authentication credential issued by the provider.\n  * 'google': The Google attributes mapped from the assertion in the 'attribute_mappings'.\n  * 'attribute': The custom attributes mapped from the assertion in the 'attribute_mappings'.\n\nThe maximum length of the attribute condition expression is 4096 characters. If\nunspecified, all valid authentication credential are accepted.\n\nThe following example shows how to only allow credentials with a mapped 'google.groups'\nvalue of 'admins':\n'''\n\"'admins' in google.groups\"\n'''"]
     pub fn attribute_condition(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.attribute_condition", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `attribute_mapping` after provisioning.\nMaps attributes from authentication credentials issued by an external identity provider\nto Google Cloud attributes, such as 'subject' and 'segment'.\n\nEach key must be a string specifying the Google Cloud IAM attribute to map to.\n\nThe following keys are supported:\n  * 'google.subject': The principal IAM is authenticating. You can reference this value\n    in IAM bindings. This is also the subject that appears in Cloud Logging logs.\n    Cannot exceed 127 characters.\n  * 'google.groups': Groups the external identity belongs to. You can grant groups\n    access to resources using an IAM 'principalSet' binding; access applies to all\n    members of the group.\n\nYou can also provide custom attributes by specifying 'attribute.{custom_attribute}',\nwhere '{custom_attribute}' is the name of the custom attribute to be mapped. You can\ndefine a maximum of 50 custom attributes. The maximum length of a mapped attribute key\nis 100 characters, and the key may only contain the characters [a-z0-9_].\n\nYou can reference these attributes in IAM policies to define fine-grained access for a\nworkload to Google Cloud resources. For example:\n  * 'google.subject':\n    'principal://iam.googleapis.com/projects/{project}/locations/{location}/workloadIdentityPools/{pool}/subject/{value}'\n  * 'google.groups':\n    'principalSet://iam.googleapis.com/projects/{project}/locations/{location}/workloadIdentityPools/{pool}/group/{value}'\n  * 'attribute.{custom_attribute}':\n    'principalSet://iam.googleapis.com/projects/{project}/locations/{location}/workloadIdentityPools/{pool}/attribute.{custom_attribute}/{value}'\n\nEach value must be a [Common Expression Language](https://opensource.google/projects/cel)\nfunction that maps an identity provider credential to the normalized attribute specified\nby the corresponding map key.\n\nYou can use the 'assertion' keyword in the expression to access a JSON representation of\nthe authentication credential issued by the provider.\n\nThe maximum length of an attribute mapping expression is 2048 characters. When evaluated,\nthe total size of all mapped attributes must not exceed 8KB.\n\nFor AWS providers, the following rules apply:\n  - If no attribute mapping is defined, the following default mapping applies:\n    '''\n    {\n      \"google.subject\":\"assertion.arn\",\n      \"attribute.aws_role\":\n        \"assertion.arn.contains('assumed-role')\"\n        \" ? assertion.arn.extract('{account_arn}assumed-role/')\"\n        \"   + 'assumed-role/'\"\n        \"   + assertion.arn.extract('assumed-role/{role_name}/')\"\n        \" : assertion.arn\",\n    }\n    '''\n  - If any custom attribute mappings are defined, they must include a mapping to the\n    'google.subject' attribute.\n\nFor OIDC providers, the following rules apply:\n  - Custom attribute mappings must be defined, and must include a mapping to the\n    'google.subject' attribute. For example, the following maps the 'sub' claim of the\n    incoming credential to the 'subject' attribute on a Google token.\n    '''\n    {\"google.subject\": \"assertion.sub\"}\n    '''"]
+        "Get a reference to the value of field `attribute_mapping` after provisioning.\nMaps attributes from authentication credentials issued by an external identity provider\nto Google Cloud attributes, such as 'subject' and 'segment'.\n\nEach key must be a string specifying the Google Cloud IAM attribute to map to.\n\nThe following keys are supported:\n  * 'google.subject': The principal IAM is authenticating. You can reference this value\n    in IAM bindings. This is also the subject that appears in Cloud Logging logs.\n    Cannot exceed 127 characters.\n  * 'google.groups': Groups the external identity belongs to. You can grant groups\n    access to resources using an IAM 'principalSet' binding; access applies to all\n    members of the group.\n\nYou can also provide custom attributes by specifying 'attribute.{custom_attribute}',\nwhere '{custom_attribute}' is the name of the custom attribute to be mapped. You can\ndefine a maximum of 50 custom attributes. The maximum length of a mapped attribute key\nis 100 characters, and the key may only contain the characters [a-z0-9_].\n\nYou can reference these attributes in IAM policies to define fine-grained access for a\nworkload to Google Cloud resources. For example:\n  * 'google.subject':\n    'principal://iam.googleapis.com/projects/{project}/locations/{location}/workloadIdentityPools/{pool}/subject/{value}'\n  * 'google.groups':\n    'principalSet://iam.googleapis.com/projects/{project}/locations/{location}/workloadIdentityPools/{pool}/group/{value}'\n  * 'attribute.{custom_attribute}':\n    'principalSet://iam.googleapis.com/projects/{project}/locations/{location}/workloadIdentityPools/{pool}/attribute.{custom_attribute}/{value}'\n\nEach value must be a [Common Expression Language](https://github.com/google/cel-spec)\nfunction that maps an identity provider credential to the normalized attribute specified\nby the corresponding map key.\n\nYou can use the 'assertion' keyword in the expression to access a JSON representation of\nthe authentication credential issued by the provider.\n\nThe maximum length of an attribute mapping expression is 2048 characters. When evaluated,\nthe total size of all mapped attributes must not exceed 8KB.\n\nFor AWS providers, the following rules apply:\n  - If no attribute mapping is defined, the following default mapping applies:\n    '''\n    {\n      \"google.subject\":\"assertion.arn\",\n      \"attribute.aws_role\":\n        \"assertion.arn.contains('assumed-role')\"\n        \" ? assertion.arn.extract('{account_arn}assumed-role/')\"\n        \"   + 'assumed-role/'\"\n        \"   + assertion.arn.extract('assumed-role/{role_name}/')\"\n        \" : assertion.arn\",\n    }\n    '''\n  - If any custom attribute mappings are defined, they must include a mapping to the\n    'google.subject' attribute.\n\nFor OIDC providers, the following rules apply:\n  - Custom attribute mappings must be defined, and must include a mapping to the\n    'google.subject' attribute. For example, the following maps the 'sub' claim of the\n    incoming credential to the 'subject' attribute on a Google token.\n    '''\n    {\"google.subject\": \"assertion.sub\"}\n    '''"]
     pub fn attribute_mapping(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.attribute_mapping", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -318,26 +353,31 @@ impl IamWorkloadIdentityPoolProvider {
     }
 
     #[doc = "Get a reference to the value of field `aws` after provisioning.\n"]
-    pub fn aws(&self) -> terrars::ListRef<IamWorkloadIdentityPoolProviderAwsElRef> {
+    pub fn aws(&self) -> terrars::ListRef<IamWorkloadIdentityPoolProvider_AwsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.aws", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `oidc` after provisioning.\n"]
-    pub fn oidc(&self) -> terrars::ListRef<IamWorkloadIdentityPoolProviderOidcElRef> {
+    pub fn oidc(&self) -> terrars::ListRef<IamWorkloadIdentityPoolProvider_OidcRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.oidc", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `saml` after provisioning.\n"]
-    pub fn saml(&self) -> terrars::ListRef<IamWorkloadIdentityPoolProviderSamlElRef> {
+    pub fn saml(&self) -> terrars::ListRef<IamWorkloadIdentityPoolProvider_SamlRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.saml", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> IamWorkloadIdentityPoolProviderTimeoutsElRef {
-        IamWorkloadIdentityPoolProviderTimeoutsElRef::new(
+    pub fn timeouts(&self) -> IamWorkloadIdentityPoolProvider_TimeoutsRef {
+        IamWorkloadIdentityPoolProvider_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
+    }
+
+    #[doc = "Get a reference to the value of field `x509` after provisioning.\n"]
+    pub fn x509(&self) -> terrars::ListRef<IamWorkloadIdentityPoolProvider_X509Ref> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.x509", self.extract_ref()))
     }
 }
 
@@ -387,7 +427,7 @@ impl BuildIamWorkloadIdentityPoolProvider {
         let out = IamWorkloadIdentityPoolProvider(std::rc::Rc::new(IamWorkloadIdentityPoolProvider_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(IamWorkloadIdentityPoolProviderData {
+            data: std::cell::RefCell::new(IamWorkloadIdentityPoolProviderData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -395,6 +435,7 @@ impl BuildIamWorkloadIdentityPoolProvider {
                 provisioner: core::default::Default::default(),
                 attribute_condition: core::default::Default::default(),
                 attribute_mapping: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 disabled: core::default::Default::default(),
                 display_name: core::default::Default::default(),
@@ -406,6 +447,7 @@ impl BuildIamWorkloadIdentityPoolProvider {
                 oidc: core::default::Default::default(),
                 saml: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
+                x509: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -438,15 +480,21 @@ impl IamWorkloadIdentityPoolProviderRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `attribute_condition` after provisioning.\n[A Common Expression Language](https://opensource.google/projects/cel) expression, in\nplain text, to restrict what otherwise valid authentication credentials issued by the\nprovider should not be accepted.\n\nThe expression must output a boolean representing whether to allow the federation.\n\nThe following keywords may be referenced in the expressions:\n  * 'assertion': JSON representing the authentication credential issued by the provider.\n  * 'google': The Google attributes mapped from the assertion in the 'attribute_mappings'.\n  * 'attribute': The custom attributes mapped from the assertion in the 'attribute_mappings'.\n\nThe maximum length of the attribute condition expression is 4096 characters. If\nunspecified, all valid authentication credential are accepted.\n\nThe following example shows how to only allow credentials with a mapped 'google.groups'\nvalue of 'admins':\n'''\n\"'admins' in google.groups\"\n'''"]
+        "Get a reference to the value of field `attribute_condition` after provisioning.\n[A Common Expression Language](https://github.com/google/cel-spec) expression, in\nplain text, to restrict what otherwise valid authentication credentials issued by the\nprovider should not be accepted.\n\nThe expression must output a boolean representing whether to allow the federation.\n\nThe following keywords may be referenced in the expressions:\n  * 'assertion': JSON representing the authentication credential issued by the provider.\n  * 'google': The Google attributes mapped from the assertion in the 'attribute_mappings'.\n  * 'attribute': The custom attributes mapped from the assertion in the 'attribute_mappings'.\n\nThe maximum length of the attribute condition expression is 4096 characters. If\nunspecified, all valid authentication credential are accepted.\n\nThe following example shows how to only allow credentials with a mapped 'google.groups'\nvalue of 'admins':\n'''\n\"'admins' in google.groups\"\n'''"]
     pub fn attribute_condition(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.attribute_condition", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `attribute_mapping` after provisioning.\nMaps attributes from authentication credentials issued by an external identity provider\nto Google Cloud attributes, such as 'subject' and 'segment'.\n\nEach key must be a string specifying the Google Cloud IAM attribute to map to.\n\nThe following keys are supported:\n  * 'google.subject': The principal IAM is authenticating. You can reference this value\n    in IAM bindings. This is also the subject that appears in Cloud Logging logs.\n    Cannot exceed 127 characters.\n  * 'google.groups': Groups the external identity belongs to. You can grant groups\n    access to resources using an IAM 'principalSet' binding; access applies to all\n    members of the group.\n\nYou can also provide custom attributes by specifying 'attribute.{custom_attribute}',\nwhere '{custom_attribute}' is the name of the custom attribute to be mapped. You can\ndefine a maximum of 50 custom attributes. The maximum length of a mapped attribute key\nis 100 characters, and the key may only contain the characters [a-z0-9_].\n\nYou can reference these attributes in IAM policies to define fine-grained access for a\nworkload to Google Cloud resources. For example:\n  * 'google.subject':\n    'principal://iam.googleapis.com/projects/{project}/locations/{location}/workloadIdentityPools/{pool}/subject/{value}'\n  * 'google.groups':\n    'principalSet://iam.googleapis.com/projects/{project}/locations/{location}/workloadIdentityPools/{pool}/group/{value}'\n  * 'attribute.{custom_attribute}':\n    'principalSet://iam.googleapis.com/projects/{project}/locations/{location}/workloadIdentityPools/{pool}/attribute.{custom_attribute}/{value}'\n\nEach value must be a [Common Expression Language](https://opensource.google/projects/cel)\nfunction that maps an identity provider credential to the normalized attribute specified\nby the corresponding map key.\n\nYou can use the 'assertion' keyword in the expression to access a JSON representation of\nthe authentication credential issued by the provider.\n\nThe maximum length of an attribute mapping expression is 2048 characters. When evaluated,\nthe total size of all mapped attributes must not exceed 8KB.\n\nFor AWS providers, the following rules apply:\n  - If no attribute mapping is defined, the following default mapping applies:\n    '''\n    {\n      \"google.subject\":\"assertion.arn\",\n      \"attribute.aws_role\":\n        \"assertion.arn.contains('assumed-role')\"\n        \" ? assertion.arn.extract('{account_arn}assumed-role/')\"\n        \"   + 'assumed-role/'\"\n        \"   + assertion.arn.extract('assumed-role/{role_name}/')\"\n        \" : assertion.arn\",\n    }\n    '''\n  - If any custom attribute mappings are defined, they must include a mapping to the\n    'google.subject' attribute.\n\nFor OIDC providers, the following rules apply:\n  - Custom attribute mappings must be defined, and must include a mapping to the\n    'google.subject' attribute. For example, the following maps the 'sub' claim of the\n    incoming credential to the 'subject' attribute on a Google token.\n    '''\n    {\"google.subject\": \"assertion.sub\"}\n    '''"]
+        "Get a reference to the value of field `attribute_mapping` after provisioning.\nMaps attributes from authentication credentials issued by an external identity provider\nto Google Cloud attributes, such as 'subject' and 'segment'.\n\nEach key must be a string specifying the Google Cloud IAM attribute to map to.\n\nThe following keys are supported:\n  * 'google.subject': The principal IAM is authenticating. You can reference this value\n    in IAM bindings. This is also the subject that appears in Cloud Logging logs.\n    Cannot exceed 127 characters.\n  * 'google.groups': Groups the external identity belongs to. You can grant groups\n    access to resources using an IAM 'principalSet' binding; access applies to all\n    members of the group.\n\nYou can also provide custom attributes by specifying 'attribute.{custom_attribute}',\nwhere '{custom_attribute}' is the name of the custom attribute to be mapped. You can\ndefine a maximum of 50 custom attributes. The maximum length of a mapped attribute key\nis 100 characters, and the key may only contain the characters [a-z0-9_].\n\nYou can reference these attributes in IAM policies to define fine-grained access for a\nworkload to Google Cloud resources. For example:\n  * 'google.subject':\n    'principal://iam.googleapis.com/projects/{project}/locations/{location}/workloadIdentityPools/{pool}/subject/{value}'\n  * 'google.groups':\n    'principalSet://iam.googleapis.com/projects/{project}/locations/{location}/workloadIdentityPools/{pool}/group/{value}'\n  * 'attribute.{custom_attribute}':\n    'principalSet://iam.googleapis.com/projects/{project}/locations/{location}/workloadIdentityPools/{pool}/attribute.{custom_attribute}/{value}'\n\nEach value must be a [Common Expression Language](https://github.com/google/cel-spec)\nfunction that maps an identity provider credential to the normalized attribute specified\nby the corresponding map key.\n\nYou can use the 'assertion' keyword in the expression to access a JSON representation of\nthe authentication credential issued by the provider.\n\nThe maximum length of an attribute mapping expression is 2048 characters. When evaluated,\nthe total size of all mapped attributes must not exceed 8KB.\n\nFor AWS providers, the following rules apply:\n  - If no attribute mapping is defined, the following default mapping applies:\n    '''\n    {\n      \"google.subject\":\"assertion.arn\",\n      \"attribute.aws_role\":\n        \"assertion.arn.contains('assumed-role')\"\n        \" ? assertion.arn.extract('{account_arn}assumed-role/')\"\n        \"   + 'assumed-role/'\"\n        \"   + assertion.arn.extract('assumed-role/{role_name}/')\"\n        \" : assertion.arn\",\n    }\n    '''\n  - If any custom attribute mappings are defined, they must include a mapping to the\n    'google.subject' attribute.\n\nFor OIDC providers, the following rules apply:\n  - Custom attribute mappings must be defined, and must include a mapping to the\n    'google.subject' attribute. For example, the following maps the 'sub' claim of the\n    incoming credential to the 'subject' attribute on a Google token.\n    '''\n    {\"google.subject\": \"assertion.sub\"}\n    '''"]
     pub fn attribute_mapping(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.attribute_mapping", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -505,38 +553,51 @@ impl IamWorkloadIdentityPoolProviderRef {
     }
 
     #[doc = "Get a reference to the value of field `aws` after provisioning.\n"]
-    pub fn aws(&self) -> terrars::ListRef<IamWorkloadIdentityPoolProviderAwsElRef> {
+    pub fn aws(&self) -> terrars::ListRef<IamWorkloadIdentityPoolProvider_AwsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.aws", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `oidc` after provisioning.\n"]
-    pub fn oidc(&self) -> terrars::ListRef<IamWorkloadIdentityPoolProviderOidcElRef> {
+    pub fn oidc(&self) -> terrars::ListRef<IamWorkloadIdentityPoolProvider_OidcRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.oidc", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `saml` after provisioning.\n"]
-    pub fn saml(&self) -> terrars::ListRef<IamWorkloadIdentityPoolProviderSamlElRef> {
+    pub fn saml(&self) -> terrars::ListRef<IamWorkloadIdentityPoolProvider_SamlRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.saml", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> IamWorkloadIdentityPoolProviderTimeoutsElRef {
-        IamWorkloadIdentityPoolProviderTimeoutsElRef::new(
+    pub fn timeouts(&self) -> IamWorkloadIdentityPoolProvider_TimeoutsRef {
+        IamWorkloadIdentityPoolProvider_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
+
+    #[doc = "Get a reference to the value of field `x509` after provisioning.\n"]
+    pub fn x509(&self) -> terrars::ListRef<IamWorkloadIdentityPoolProvider_X509Ref> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.x509", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct IamWorkloadIdentityPoolProviderDynamic {
+    aws: std::option::Option<terrars::DynamicBlock<IamWorkloadIdentityPoolProvider_Aws>>,
+    oidc: std::option::Option<terrars::DynamicBlock<IamWorkloadIdentityPoolProvider_Oidc>>,
+    saml: std::option::Option<terrars::DynamicBlock<IamWorkloadIdentityPoolProvider_Saml>>,
+    x509: std::option::Option<terrars::DynamicBlock<IamWorkloadIdentityPoolProvider_X509>>,
 }
 
 #[derive(Serialize)]
-pub struct IamWorkloadIdentityPoolProviderAwsEl {
+pub struct IamWorkloadIdentityPoolProvider_Aws {
     account_id: terrars::PrimField<std::string::String>,
 }
 
-impl IamWorkloadIdentityPoolProviderAwsEl { }
+impl IamWorkloadIdentityPoolProvider_Aws { }
 
-impl terrars::ToListMappable for IamWorkloadIdentityPoolProviderAwsEl {
-    type O = terrars::BlockAssignable<IamWorkloadIdentityPoolProviderAwsEl>;
+impl terrars::ToListMappable for IamWorkloadIdentityPoolProvider_Aws {
+    type O = terrars::BlockAssignable<IamWorkloadIdentityPoolProvider_Aws>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -547,32 +608,34 @@ impl terrars::ToListMappable for IamWorkloadIdentityPoolProviderAwsEl {
     }
 }
 
-pub struct BuildIamWorkloadIdentityPoolProviderAwsEl {
+pub struct BuildIamWorkloadIdentityPoolProvider_Aws {
     #[doc = "The AWS account ID."]
     pub account_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildIamWorkloadIdentityPoolProviderAwsEl {
-    pub fn build(self) -> IamWorkloadIdentityPoolProviderAwsEl {
-        IamWorkloadIdentityPoolProviderAwsEl { account_id: self.account_id }
+impl BuildIamWorkloadIdentityPoolProvider_Aws {
+    pub fn build(self) -> IamWorkloadIdentityPoolProvider_Aws {
+        IamWorkloadIdentityPoolProvider_Aws { account_id: self.account_id }
     }
 }
 
-pub struct IamWorkloadIdentityPoolProviderAwsElRef {
+#[allow(dead_code)]
+pub struct IamWorkloadIdentityPoolProvider_AwsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IamWorkloadIdentityPoolProviderAwsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> IamWorkloadIdentityPoolProviderAwsElRef {
-        IamWorkloadIdentityPoolProviderAwsElRef {
+impl terrars::Ref for IamWorkloadIdentityPoolProvider_AwsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IamWorkloadIdentityPoolProvider_AwsRef {
+        IamWorkloadIdentityPoolProvider_AwsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IamWorkloadIdentityPoolProviderAwsElRef {
+impl IamWorkloadIdentityPoolProvider_AwsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -584,7 +647,7 @@ impl IamWorkloadIdentityPoolProviderAwsElRef {
 }
 
 #[derive(Serialize)]
-pub struct IamWorkloadIdentityPoolProviderOidcEl {
+pub struct IamWorkloadIdentityPoolProvider_Oidc {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allowed_audiences: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     issuer_uri: terrars::PrimField<std::string::String>,
@@ -592,7 +655,7 @@ pub struct IamWorkloadIdentityPoolProviderOidcEl {
     jwks_json: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl IamWorkloadIdentityPoolProviderOidcEl {
+impl IamWorkloadIdentityPoolProvider_Oidc {
     #[doc =
         "Set the field `allowed_audiences`.\nAcceptable values for the 'aud' field (audience) in the OIDC token. Token exchange\nrequests are rejected if the token audience does not match one of the configured\nvalues. Each audience may be at most 256 characters. A maximum of 10 audiences may\nbe configured.\n\nIf this list is empty, the OIDC token audience must be equal to the full canonical\nresource name of the WorkloadIdentityPoolProvider, with or without the HTTPS prefix.\nFor example:\n'''\n//iam.googleapis.com/projects/<project-number>/locations/<location>/workloadIdentityPools/<pool-id>/providers/<provider-id>\nhttps://iam.googleapis.com/projects/<project-number>/locations/<location>/workloadIdentityPools/<pool-id>/providers/<provider-id>\n'''"]
     pub fn set_allowed_audiences(
@@ -611,8 +674,8 @@ impl IamWorkloadIdentityPoolProviderOidcEl {
     }
 }
 
-impl terrars::ToListMappable for IamWorkloadIdentityPoolProviderOidcEl {
-    type O = terrars::BlockAssignable<IamWorkloadIdentityPoolProviderOidcEl>;
+impl terrars::ToListMappable for IamWorkloadIdentityPoolProvider_Oidc {
+    type O = terrars::BlockAssignable<IamWorkloadIdentityPoolProvider_Oidc>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -623,14 +686,14 @@ impl terrars::ToListMappable for IamWorkloadIdentityPoolProviderOidcEl {
     }
 }
 
-pub struct BuildIamWorkloadIdentityPoolProviderOidcEl {
+pub struct BuildIamWorkloadIdentityPoolProvider_Oidc {
     #[doc = "The OIDC issuer URL."]
     pub issuer_uri: terrars::PrimField<std::string::String>,
 }
 
-impl BuildIamWorkloadIdentityPoolProviderOidcEl {
-    pub fn build(self) -> IamWorkloadIdentityPoolProviderOidcEl {
-        IamWorkloadIdentityPoolProviderOidcEl {
+impl BuildIamWorkloadIdentityPoolProvider_Oidc {
+    pub fn build(self) -> IamWorkloadIdentityPoolProvider_Oidc {
+        IamWorkloadIdentityPoolProvider_Oidc {
             allowed_audiences: core::default::Default::default(),
             issuer_uri: self.issuer_uri,
             jwks_json: core::default::Default::default(),
@@ -638,21 +701,23 @@ impl BuildIamWorkloadIdentityPoolProviderOidcEl {
     }
 }
 
-pub struct IamWorkloadIdentityPoolProviderOidcElRef {
+#[allow(dead_code)]
+pub struct IamWorkloadIdentityPoolProvider_OidcRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IamWorkloadIdentityPoolProviderOidcElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> IamWorkloadIdentityPoolProviderOidcElRef {
-        IamWorkloadIdentityPoolProviderOidcElRef {
+impl terrars::Ref for IamWorkloadIdentityPoolProvider_OidcRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IamWorkloadIdentityPoolProvider_OidcRef {
+        IamWorkloadIdentityPoolProvider_OidcRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IamWorkloadIdentityPoolProviderOidcElRef {
+impl IamWorkloadIdentityPoolProvider_OidcRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -676,14 +741,14 @@ impl IamWorkloadIdentityPoolProviderOidcElRef {
 }
 
 #[derive(Serialize)]
-pub struct IamWorkloadIdentityPoolProviderSamlEl {
+pub struct IamWorkloadIdentityPoolProvider_Saml {
     idp_metadata_xml: terrars::PrimField<std::string::String>,
 }
 
-impl IamWorkloadIdentityPoolProviderSamlEl { }
+impl IamWorkloadIdentityPoolProvider_Saml { }
 
-impl terrars::ToListMappable for IamWorkloadIdentityPoolProviderSamlEl {
-    type O = terrars::BlockAssignable<IamWorkloadIdentityPoolProviderSamlEl>;
+impl terrars::ToListMappable for IamWorkloadIdentityPoolProvider_Saml {
+    type O = terrars::BlockAssignable<IamWorkloadIdentityPoolProvider_Saml>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -694,32 +759,34 @@ impl terrars::ToListMappable for IamWorkloadIdentityPoolProviderSamlEl {
     }
 }
 
-pub struct BuildIamWorkloadIdentityPoolProviderSamlEl {
+pub struct BuildIamWorkloadIdentityPoolProvider_Saml {
     #[doc = "SAML Identity provider configuration metadata xml doc."]
     pub idp_metadata_xml: terrars::PrimField<std::string::String>,
 }
 
-impl BuildIamWorkloadIdentityPoolProviderSamlEl {
-    pub fn build(self) -> IamWorkloadIdentityPoolProviderSamlEl {
-        IamWorkloadIdentityPoolProviderSamlEl { idp_metadata_xml: self.idp_metadata_xml }
+impl BuildIamWorkloadIdentityPoolProvider_Saml {
+    pub fn build(self) -> IamWorkloadIdentityPoolProvider_Saml {
+        IamWorkloadIdentityPoolProvider_Saml { idp_metadata_xml: self.idp_metadata_xml }
     }
 }
 
-pub struct IamWorkloadIdentityPoolProviderSamlElRef {
+#[allow(dead_code)]
+pub struct IamWorkloadIdentityPoolProvider_SamlRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IamWorkloadIdentityPoolProviderSamlElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> IamWorkloadIdentityPoolProviderSamlElRef {
-        IamWorkloadIdentityPoolProviderSamlElRef {
+impl terrars::Ref for IamWorkloadIdentityPoolProvider_SamlRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IamWorkloadIdentityPoolProvider_SamlRef {
+        IamWorkloadIdentityPoolProvider_SamlRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IamWorkloadIdentityPoolProviderSamlElRef {
+impl IamWorkloadIdentityPoolProvider_SamlRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -732,7 +799,7 @@ impl IamWorkloadIdentityPoolProviderSamlElRef {
 }
 
 #[derive(Serialize)]
-pub struct IamWorkloadIdentityPoolProviderTimeoutsEl {
+pub struct IamWorkloadIdentityPoolProvider_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -741,7 +808,7 @@ pub struct IamWorkloadIdentityPoolProviderTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl IamWorkloadIdentityPoolProviderTimeoutsEl {
+impl IamWorkloadIdentityPoolProvider_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -761,8 +828,8 @@ impl IamWorkloadIdentityPoolProviderTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for IamWorkloadIdentityPoolProviderTimeoutsEl {
-    type O = terrars::BlockAssignable<IamWorkloadIdentityPoolProviderTimeoutsEl>;
+impl terrars::ToListMappable for IamWorkloadIdentityPoolProvider_Timeouts {
+    type O = terrars::BlockAssignable<IamWorkloadIdentityPoolProvider_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -773,11 +840,11 @@ impl terrars::ToListMappable for IamWorkloadIdentityPoolProviderTimeoutsEl {
     }
 }
 
-pub struct BuildIamWorkloadIdentityPoolProviderTimeoutsEl {}
+pub struct BuildIamWorkloadIdentityPoolProvider_Timeouts {}
 
-impl BuildIamWorkloadIdentityPoolProviderTimeoutsEl {
-    pub fn build(self) -> IamWorkloadIdentityPoolProviderTimeoutsEl {
-        IamWorkloadIdentityPoolProviderTimeoutsEl {
+impl BuildIamWorkloadIdentityPoolProvider_Timeouts {
+    pub fn build(self) -> IamWorkloadIdentityPoolProvider_Timeouts {
+        IamWorkloadIdentityPoolProvider_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -785,21 +852,23 @@ impl BuildIamWorkloadIdentityPoolProviderTimeoutsEl {
     }
 }
 
-pub struct IamWorkloadIdentityPoolProviderTimeoutsElRef {
+#[allow(dead_code)]
+pub struct IamWorkloadIdentityPoolProvider_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IamWorkloadIdentityPoolProviderTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> IamWorkloadIdentityPoolProviderTimeoutsElRef {
-        IamWorkloadIdentityPoolProviderTimeoutsElRef {
+impl terrars::Ref for IamWorkloadIdentityPoolProvider_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IamWorkloadIdentityPoolProvider_TimeoutsRef {
+        IamWorkloadIdentityPoolProvider_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IamWorkloadIdentityPoolProviderTimeoutsElRef {
+impl IamWorkloadIdentityPoolProvider_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -820,9 +889,342 @@ impl IamWorkloadIdentityPoolProviderTimeoutsElRef {
     }
 }
 
+#[derive(Serialize)]
+pub struct IamWorkloadIdentityPoolProvider_X509_TrustStore_IntermediateCas {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    pem_certificate: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl IamWorkloadIdentityPoolProvider_X509_TrustStore_IntermediateCas {
+    #[doc =
+        "Set the field `pem_certificate`.\nPEM certificate of the PKI used for validation. Must only contain one\nca certificate(either root or intermediate cert)."]
+    pub fn set_pem_certificate(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.pem_certificate = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for IamWorkloadIdentityPoolProvider_X509_TrustStore_IntermediateCas {
+    type O = terrars::BlockAssignable<IamWorkloadIdentityPoolProvider_X509_TrustStore_IntermediateCas>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildIamWorkloadIdentityPoolProvider_X509_TrustStore_IntermediateCas {}
+
+impl BuildIamWorkloadIdentityPoolProvider_X509_TrustStore_IntermediateCas {
+    pub fn build(self) -> IamWorkloadIdentityPoolProvider_X509_TrustStore_IntermediateCas {
+        IamWorkloadIdentityPoolProvider_X509_TrustStore_IntermediateCas {
+            pem_certificate: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct IamWorkloadIdentityPoolProvider_X509_TrustStore_IntermediateCasRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for IamWorkloadIdentityPoolProvider_X509_TrustStore_IntermediateCasRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> IamWorkloadIdentityPoolProvider_X509_TrustStore_IntermediateCasRef {
+        IamWorkloadIdentityPoolProvider_X509_TrustStore_IntermediateCasRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl IamWorkloadIdentityPoolProvider_X509_TrustStore_IntermediateCasRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `pem_certificate` after provisioning.\nPEM certificate of the PKI used for validation. Must only contain one\nca certificate(either root or intermediate cert)."]
+    pub fn pem_certificate(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.pem_certificate", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct IamWorkloadIdentityPoolProvider_X509_TrustStore_TrustAnchors {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    pem_certificate: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl IamWorkloadIdentityPoolProvider_X509_TrustStore_TrustAnchors {
+    #[doc =
+        "Set the field `pem_certificate`.\nPEM certificate of the PKI used for validation. Must only contain one\nca certificate(either root or intermediate cert)."]
+    pub fn set_pem_certificate(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.pem_certificate = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for IamWorkloadIdentityPoolProvider_X509_TrustStore_TrustAnchors {
+    type O = terrars::BlockAssignable<IamWorkloadIdentityPoolProvider_X509_TrustStore_TrustAnchors>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildIamWorkloadIdentityPoolProvider_X509_TrustStore_TrustAnchors {}
+
+impl BuildIamWorkloadIdentityPoolProvider_X509_TrustStore_TrustAnchors {
+    pub fn build(self) -> IamWorkloadIdentityPoolProvider_X509_TrustStore_TrustAnchors {
+        IamWorkloadIdentityPoolProvider_X509_TrustStore_TrustAnchors {
+            pem_certificate: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct IamWorkloadIdentityPoolProvider_X509_TrustStore_TrustAnchorsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for IamWorkloadIdentityPoolProvider_X509_TrustStore_TrustAnchorsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> IamWorkloadIdentityPoolProvider_X509_TrustStore_TrustAnchorsRef {
+        IamWorkloadIdentityPoolProvider_X509_TrustStore_TrustAnchorsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl IamWorkloadIdentityPoolProvider_X509_TrustStore_TrustAnchorsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `pem_certificate` after provisioning.\nPEM certificate of the PKI used for validation. Must only contain one\nca certificate(either root or intermediate cert)."]
+    pub fn pem_certificate(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.pem_certificate", self.base))
+    }
+}
+
 #[derive(Serialize, Default)]
-struct IamWorkloadIdentityPoolProviderDynamic {
-    aws: std::option::Option<terrars::DynamicBlock<IamWorkloadIdentityPoolProviderAwsEl>>,
-    oidc: std::option::Option<terrars::DynamicBlock<IamWorkloadIdentityPoolProviderOidcEl>>,
-    saml: std::option::Option<terrars::DynamicBlock<IamWorkloadIdentityPoolProviderSamlEl>>,
+struct IamWorkloadIdentityPoolProvider_X509_TrustStoreDynamic {
+    intermediate_cas: std
+    ::option
+    ::Option<terrars::DynamicBlock<IamWorkloadIdentityPoolProvider_X509_TrustStore_IntermediateCas>>,
+    trust_anchors: std
+    ::option
+    ::Option<terrars::DynamicBlock<IamWorkloadIdentityPoolProvider_X509_TrustStore_TrustAnchors>>,
+}
+
+#[derive(Serialize)]
+pub struct IamWorkloadIdentityPoolProvider_X509_TrustStore {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    intermediate_cas: std::option::Option<std::vec::Vec<IamWorkloadIdentityPoolProvider_X509_TrustStore_IntermediateCas>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    trust_anchors: std::option::Option<std::vec::Vec<IamWorkloadIdentityPoolProvider_X509_TrustStore_TrustAnchors>>,
+    dynamic: IamWorkloadIdentityPoolProvider_X509_TrustStoreDynamic,
+}
+
+impl IamWorkloadIdentityPoolProvider_X509_TrustStore {
+    #[doc = "Set the field `intermediate_cas`.\n"]
+    pub fn set_intermediate_cas(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<IamWorkloadIdentityPoolProvider_X509_TrustStore_IntermediateCas>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.intermediate_cas = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.intermediate_cas = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `trust_anchors`.\n"]
+    pub fn set_trust_anchors(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<IamWorkloadIdentityPoolProvider_X509_TrustStore_TrustAnchors>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.trust_anchors = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.trust_anchors = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for IamWorkloadIdentityPoolProvider_X509_TrustStore {
+    type O = terrars::BlockAssignable<IamWorkloadIdentityPoolProvider_X509_TrustStore>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildIamWorkloadIdentityPoolProvider_X509_TrustStore {}
+
+impl BuildIamWorkloadIdentityPoolProvider_X509_TrustStore {
+    pub fn build(self) -> IamWorkloadIdentityPoolProvider_X509_TrustStore {
+        IamWorkloadIdentityPoolProvider_X509_TrustStore {
+            intermediate_cas: core::default::Default::default(),
+            trust_anchors: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct IamWorkloadIdentityPoolProvider_X509_TrustStoreRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for IamWorkloadIdentityPoolProvider_X509_TrustStoreRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> IamWorkloadIdentityPoolProvider_X509_TrustStoreRef {
+        IamWorkloadIdentityPoolProvider_X509_TrustStoreRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl IamWorkloadIdentityPoolProvider_X509_TrustStoreRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `intermediate_cas` after provisioning.\n"]
+    pub fn intermediate_cas(
+        &self,
+    ) -> terrars::ListRef<IamWorkloadIdentityPoolProvider_X509_TrustStore_IntermediateCasRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.intermediate_cas", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `trust_anchors` after provisioning.\n"]
+    pub fn trust_anchors(&self) -> terrars::ListRef<IamWorkloadIdentityPoolProvider_X509_TrustStore_TrustAnchorsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.trust_anchors", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct IamWorkloadIdentityPoolProvider_X509Dynamic {
+    trust_store: std::option::Option<terrars::DynamicBlock<IamWorkloadIdentityPoolProvider_X509_TrustStore>>,
+}
+
+#[derive(Serialize)]
+pub struct IamWorkloadIdentityPoolProvider_X509 {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    trust_store: std::option::Option<std::vec::Vec<IamWorkloadIdentityPoolProvider_X509_TrustStore>>,
+    dynamic: IamWorkloadIdentityPoolProvider_X509Dynamic,
+}
+
+impl IamWorkloadIdentityPoolProvider_X509 {
+    #[doc = "Set the field `trust_store`.\n"]
+    pub fn set_trust_store(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<IamWorkloadIdentityPoolProvider_X509_TrustStore>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.trust_store = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.trust_store = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for IamWorkloadIdentityPoolProvider_X509 {
+    type O = terrars::BlockAssignable<IamWorkloadIdentityPoolProvider_X509>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildIamWorkloadIdentityPoolProvider_X509 {}
+
+impl BuildIamWorkloadIdentityPoolProvider_X509 {
+    pub fn build(self) -> IamWorkloadIdentityPoolProvider_X509 {
+        IamWorkloadIdentityPoolProvider_X509 {
+            trust_store: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct IamWorkloadIdentityPoolProvider_X509Ref {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for IamWorkloadIdentityPoolProvider_X509Ref {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IamWorkloadIdentityPoolProvider_X509Ref {
+        IamWorkloadIdentityPoolProvider_X509Ref {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl IamWorkloadIdentityPoolProvider_X509Ref {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `trust_store` after provisioning.\n"]
+    pub fn trust_store(&self) -> terrars::ListRef<IamWorkloadIdentityPoolProvider_X509_TrustStoreRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.trust_store", self.base))
+    }
 }

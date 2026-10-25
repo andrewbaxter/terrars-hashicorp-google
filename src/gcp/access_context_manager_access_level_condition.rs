@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct AccessContextManagerAccessLevelConditionData {
+struct AccessContextManagerAccessLevelConditionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct AccessContextManagerAccessLevelConditionData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     access_level: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -32,18 +36,18 @@ struct AccessContextManagerAccessLevelConditionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     required_access_levels: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    device_policy: std::option::Option<std::vec::Vec<AccessContextManagerAccessLevelConditionDevicePolicyEl>>,
+    device_policy: std::option::Option<std::vec::Vec<AccessContextManagerAccessLevelCondition_DevicePolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<AccessContextManagerAccessLevelConditionTimeoutsEl>,
+    timeouts: std::option::Option<AccessContextManagerAccessLevelCondition_Timeouts>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpc_network_sources: std::option::Option<std::vec::Vec<AccessContextManagerAccessLevelConditionVpcNetworkSourcesEl>>,
+    vpc_network_sources: std::option::Option<std::vec::Vec<AccessContextManagerAccessLevelCondition_VpcNetworkSources>>,
     dynamic: AccessContextManagerAccessLevelConditionDynamic,
 }
 
 struct AccessContextManagerAccessLevelCondition_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AccessContextManagerAccessLevelConditionData>,
+    data: std::cell::RefCell<AccessContextManagerAccessLevelConditionData_>,
 }
 
 #[derive(Clone)]
@@ -143,6 +147,13 @@ impl AccessContextManagerAccessLevelCondition {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -199,7 +210,7 @@ impl AccessContextManagerAccessLevelCondition {
     #[doc = "Set the field `device_policy`.\n"]
     pub fn set_device_policy(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AccessContextManagerAccessLevelConditionDevicePolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AccessContextManagerAccessLevelCondition_DevicePolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -213,7 +224,7 @@ impl AccessContextManagerAccessLevelCondition {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<AccessContextManagerAccessLevelConditionTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<AccessContextManagerAccessLevelCondition_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -226,7 +237,7 @@ impl AccessContextManagerAccessLevelCondition {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<AccessContextManagerAccessLevelConditionVpcNetworkSourcesEl>>,
+                    ::Into<terrars::BlockAssignable<AccessContextManagerAccessLevelCondition_VpcNetworkSources>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -243,6 +254,18 @@ impl AccessContextManagerAccessLevelCondition {
         "Get a reference to the value of field `access_level` after provisioning.\nThe name of the Access Level to add this condition to."]
     pub fn access_level(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.access_level", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `access_policy_id` after provisioning.\nThe name of the Access Policy this resource belongs to."]
+    pub fn access_policy_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.access_policy_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -281,22 +304,20 @@ impl AccessContextManagerAccessLevelCondition {
     }
 
     #[doc = "Get a reference to the value of field `device_policy` after provisioning.\n"]
-    pub fn device_policy(&self) -> terrars::ListRef<AccessContextManagerAccessLevelConditionDevicePolicyElRef> {
+    pub fn device_policy(&self) -> terrars::ListRef<AccessContextManagerAccessLevelCondition_DevicePolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.device_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> AccessContextManagerAccessLevelConditionTimeoutsElRef {
-        AccessContextManagerAccessLevelConditionTimeoutsElRef::new(
+    pub fn timeouts(&self) -> AccessContextManagerAccessLevelCondition_TimeoutsRef {
+        AccessContextManagerAccessLevelCondition_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 
     #[doc = "Get a reference to the value of field `vpc_network_sources` after provisioning.\n"]
-    pub fn vpc_network_sources(
-        &self,
-    ) -> terrars::ListRef<AccessContextManagerAccessLevelConditionVpcNetworkSourcesElRef> {
+    pub fn vpc_network_sources(&self) -> terrars::ListRef<AccessContextManagerAccessLevelCondition_VpcNetworkSourcesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_network_sources", self.extract_ref()))
     }
 }
@@ -344,13 +365,14 @@ impl BuildAccessContextManagerAccessLevelCondition {
             AccessContextManagerAccessLevelCondition(std::rc::Rc::new(AccessContextManagerAccessLevelCondition_ {
                 shared: stack.shared.clone(),
                 tf_id: self.tf_id,
-                data: std::cell::RefCell::new(AccessContextManagerAccessLevelConditionData {
+                data: std::cell::RefCell::new(AccessContextManagerAccessLevelConditionData_ {
                     depends_on: core::default::Default::default(),
                     provider: std::option::Option::None,
                     lifecycle: core::default::Default::default(),
                     for_each: std::option::Option::None,
                     provisioner: core::default::Default::default(),
                     access_level: self.access_level,
+                    deletion_policy: core::default::Default::default(),
                     id: core::default::Default::default(),
                     ip_subnetworks: core::default::Default::default(),
                     members: core::default::Default::default(),
@@ -397,6 +419,18 @@ impl AccessContextManagerAccessLevelConditionRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.access_level", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `access_policy_id` after provisioning.\nThe name of the Access Policy this resource belongs to."]
+    pub fn access_policy_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.access_policy_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -433,34 +467,40 @@ impl AccessContextManagerAccessLevelConditionRef {
     }
 
     #[doc = "Get a reference to the value of field `device_policy` after provisioning.\n"]
-    pub fn device_policy(&self) -> terrars::ListRef<AccessContextManagerAccessLevelConditionDevicePolicyElRef> {
+    pub fn device_policy(&self) -> terrars::ListRef<AccessContextManagerAccessLevelCondition_DevicePolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.device_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> AccessContextManagerAccessLevelConditionTimeoutsElRef {
-        AccessContextManagerAccessLevelConditionTimeoutsElRef::new(
+    pub fn timeouts(&self) -> AccessContextManagerAccessLevelCondition_TimeoutsRef {
+        AccessContextManagerAccessLevelCondition_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 
     #[doc = "Get a reference to the value of field `vpc_network_sources` after provisioning.\n"]
-    pub fn vpc_network_sources(
-        &self,
-    ) -> terrars::ListRef<AccessContextManagerAccessLevelConditionVpcNetworkSourcesElRef> {
+    pub fn vpc_network_sources(&self) -> terrars::ListRef<AccessContextManagerAccessLevelCondition_VpcNetworkSourcesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_network_sources", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct AccessContextManagerAccessLevelConditionDynamic {
+    device_policy: std::option::Option<terrars::DynamicBlock<AccessContextManagerAccessLevelCondition_DevicePolicy>>,
+    vpc_network_sources: std
+    ::option
+    ::Option<terrars::DynamicBlock<AccessContextManagerAccessLevelCondition_VpcNetworkSources>>,
+}
+
 #[derive(Serialize)]
-pub struct AccessContextManagerAccessLevelConditionDevicePolicyElOsConstraintsEl {
+pub struct AccessContextManagerAccessLevelCondition_DevicePolicy_OsConstraints {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     minimum_version: std::option::Option<terrars::PrimField<std::string::String>>,
     os_type: terrars::PrimField<std::string::String>,
 }
 
-impl AccessContextManagerAccessLevelConditionDevicePolicyElOsConstraintsEl {
+impl AccessContextManagerAccessLevelCondition_DevicePolicy_OsConstraints {
     #[doc =
         "Set the field `minimum_version`.\nThe minimum allowed OS version. If not set, any version\nof this OS satisfies the constraint.\nFormat: \"major.minor.patch\" such as \"10.5.301\", \"9.2.1\"."]
     pub fn set_minimum_version(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -469,8 +509,8 @@ impl AccessContextManagerAccessLevelConditionDevicePolicyElOsConstraintsEl {
     }
 }
 
-impl terrars::ToListMappable for AccessContextManagerAccessLevelConditionDevicePolicyElOsConstraintsEl {
-    type O = terrars::BlockAssignable<AccessContextManagerAccessLevelConditionDevicePolicyElOsConstraintsEl>;
+impl terrars::ToListMappable for AccessContextManagerAccessLevelCondition_DevicePolicy_OsConstraints {
+    type O = terrars::BlockAssignable<AccessContextManagerAccessLevelCondition_DevicePolicy_OsConstraints>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -481,39 +521,41 @@ impl terrars::ToListMappable for AccessContextManagerAccessLevelConditionDeviceP
     }
 }
 
-pub struct BuildAccessContextManagerAccessLevelConditionDevicePolicyElOsConstraintsEl {
+pub struct BuildAccessContextManagerAccessLevelCondition_DevicePolicy_OsConstraints {
     #[doc =
         "The operating system type of the device. Possible values: [\"OS_UNSPECIFIED\", \"DESKTOP_MAC\", \"DESKTOP_WINDOWS\", \"DESKTOP_LINUX\", \"DESKTOP_CHROME_OS\", \"ANDROID\", \"IOS\"]"]
     pub os_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAccessContextManagerAccessLevelConditionDevicePolicyElOsConstraintsEl {
-    pub fn build(self) -> AccessContextManagerAccessLevelConditionDevicePolicyElOsConstraintsEl {
-        AccessContextManagerAccessLevelConditionDevicePolicyElOsConstraintsEl {
+impl BuildAccessContextManagerAccessLevelCondition_DevicePolicy_OsConstraints {
+    pub fn build(self) -> AccessContextManagerAccessLevelCondition_DevicePolicy_OsConstraints {
+        AccessContextManagerAccessLevelCondition_DevicePolicy_OsConstraints {
             minimum_version: core::default::Default::default(),
             os_type: self.os_type,
         }
     }
 }
 
-pub struct AccessContextManagerAccessLevelConditionDevicePolicyElOsConstraintsElRef {
+#[allow(dead_code)]
+pub struct AccessContextManagerAccessLevelCondition_DevicePolicy_OsConstraintsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AccessContextManagerAccessLevelConditionDevicePolicyElOsConstraintsElRef {
+impl terrars::Ref for AccessContextManagerAccessLevelCondition_DevicePolicy_OsConstraintsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AccessContextManagerAccessLevelConditionDevicePolicyElOsConstraintsElRef {
-        AccessContextManagerAccessLevelConditionDevicePolicyElOsConstraintsElRef {
+    ) -> AccessContextManagerAccessLevelCondition_DevicePolicy_OsConstraintsRef {
+        AccessContextManagerAccessLevelCondition_DevicePolicy_OsConstraintsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AccessContextManagerAccessLevelConditionDevicePolicyElOsConstraintsElRef {
+impl AccessContextManagerAccessLevelCondition_DevicePolicy_OsConstraintsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -532,14 +574,14 @@ impl AccessContextManagerAccessLevelConditionDevicePolicyElOsConstraintsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct AccessContextManagerAccessLevelConditionDevicePolicyElDynamic {
+struct AccessContextManagerAccessLevelCondition_DevicePolicyDynamic {
     os_constraints: std
     ::option
-    ::Option<terrars::DynamicBlock<AccessContextManagerAccessLevelConditionDevicePolicyElOsConstraintsEl>>,
+    ::Option<terrars::DynamicBlock<AccessContextManagerAccessLevelCondition_DevicePolicy_OsConstraints>>,
 }
 
 #[derive(Serialize)]
-pub struct AccessContextManagerAccessLevelConditionDevicePolicyEl {
+pub struct AccessContextManagerAccessLevelCondition_DevicePolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allowed_device_management_levels: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -553,11 +595,11 @@ pub struct AccessContextManagerAccessLevelConditionDevicePolicyEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     os_constraints: std
     ::option
-    ::Option<std::vec::Vec<AccessContextManagerAccessLevelConditionDevicePolicyElOsConstraintsEl>>,
-    dynamic: AccessContextManagerAccessLevelConditionDevicePolicyElDynamic,
+    ::Option<std::vec::Vec<AccessContextManagerAccessLevelCondition_DevicePolicy_OsConstraints>>,
+    dynamic: AccessContextManagerAccessLevelCondition_DevicePolicyDynamic,
 }
 
-impl AccessContextManagerAccessLevelConditionDevicePolicyEl {
+impl AccessContextManagerAccessLevelCondition_DevicePolicy {
     #[doc =
         "Set the field `allowed_device_management_levels`.\nA list of allowed device management levels.\nAn empty list allows all management levels. Possible values: [\"MANAGEMENT_UNSPECIFIED\", \"NONE\", \"BASIC\", \"COMPLETE\"]"]
     pub fn set_allowed_device_management_levels(
@@ -606,8 +648,7 @@ impl AccessContextManagerAccessLevelConditionDevicePolicyEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<AccessContextManagerAccessLevelConditionDevicePolicyElOsConstraintsEl>,
+                        terrars::BlockAssignable<AccessContextManagerAccessLevelCondition_DevicePolicy_OsConstraints>,
                     >,
     ) -> Self {
         match v.into() {
@@ -622,8 +663,8 @@ impl AccessContextManagerAccessLevelConditionDevicePolicyEl {
     }
 }
 
-impl terrars::ToListMappable for AccessContextManagerAccessLevelConditionDevicePolicyEl {
-    type O = terrars::BlockAssignable<AccessContextManagerAccessLevelConditionDevicePolicyEl>;
+impl terrars::ToListMappable for AccessContextManagerAccessLevelCondition_DevicePolicy {
+    type O = terrars::BlockAssignable<AccessContextManagerAccessLevelCondition_DevicePolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -634,11 +675,11 @@ impl terrars::ToListMappable for AccessContextManagerAccessLevelConditionDeviceP
     }
 }
 
-pub struct BuildAccessContextManagerAccessLevelConditionDevicePolicyEl {}
+pub struct BuildAccessContextManagerAccessLevelCondition_DevicePolicy {}
 
-impl BuildAccessContextManagerAccessLevelConditionDevicePolicyEl {
-    pub fn build(self) -> AccessContextManagerAccessLevelConditionDevicePolicyEl {
-        AccessContextManagerAccessLevelConditionDevicePolicyEl {
+impl BuildAccessContextManagerAccessLevelCondition_DevicePolicy {
+    pub fn build(self) -> AccessContextManagerAccessLevelCondition_DevicePolicy {
+        AccessContextManagerAccessLevelCondition_DevicePolicy {
             allowed_device_management_levels: core::default::Default::default(),
             allowed_encryption_statuses: core::default::Default::default(),
             require_admin_approval: core::default::Default::default(),
@@ -650,24 +691,26 @@ impl BuildAccessContextManagerAccessLevelConditionDevicePolicyEl {
     }
 }
 
-pub struct AccessContextManagerAccessLevelConditionDevicePolicyElRef {
+#[allow(dead_code)]
+pub struct AccessContextManagerAccessLevelCondition_DevicePolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AccessContextManagerAccessLevelConditionDevicePolicyElRef {
+impl terrars::Ref for AccessContextManagerAccessLevelCondition_DevicePolicyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AccessContextManagerAccessLevelConditionDevicePolicyElRef {
-        AccessContextManagerAccessLevelConditionDevicePolicyElRef {
+    ) -> AccessContextManagerAccessLevelCondition_DevicePolicyRef {
+        AccessContextManagerAccessLevelCondition_DevicePolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AccessContextManagerAccessLevelConditionDevicePolicyElRef {
+impl AccessContextManagerAccessLevelCondition_DevicePolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -705,20 +748,20 @@ impl AccessContextManagerAccessLevelConditionDevicePolicyElRef {
     #[doc = "Get a reference to the value of field `os_constraints` after provisioning.\n"]
     pub fn os_constraints(
         &self,
-    ) -> terrars::ListRef<AccessContextManagerAccessLevelConditionDevicePolicyElOsConstraintsElRef> {
+    ) -> terrars::ListRef<AccessContextManagerAccessLevelCondition_DevicePolicy_OsConstraintsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.os_constraints", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AccessContextManagerAccessLevelConditionTimeoutsEl {
+pub struct AccessContextManagerAccessLevelCondition_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AccessContextManagerAccessLevelConditionTimeoutsEl {
+impl AccessContextManagerAccessLevelCondition_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -732,8 +775,8 @@ impl AccessContextManagerAccessLevelConditionTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for AccessContextManagerAccessLevelConditionTimeoutsEl {
-    type O = terrars::BlockAssignable<AccessContextManagerAccessLevelConditionTimeoutsEl>;
+impl terrars::ToListMappable for AccessContextManagerAccessLevelCondition_Timeouts {
+    type O = terrars::BlockAssignable<AccessContextManagerAccessLevelCondition_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -744,35 +787,37 @@ impl terrars::ToListMappable for AccessContextManagerAccessLevelConditionTimeout
     }
 }
 
-pub struct BuildAccessContextManagerAccessLevelConditionTimeoutsEl {}
+pub struct BuildAccessContextManagerAccessLevelCondition_Timeouts {}
 
-impl BuildAccessContextManagerAccessLevelConditionTimeoutsEl {
-    pub fn build(self) -> AccessContextManagerAccessLevelConditionTimeoutsEl {
-        AccessContextManagerAccessLevelConditionTimeoutsEl {
+impl BuildAccessContextManagerAccessLevelCondition_Timeouts {
+    pub fn build(self) -> AccessContextManagerAccessLevelCondition_Timeouts {
+        AccessContextManagerAccessLevelCondition_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct AccessContextManagerAccessLevelConditionTimeoutsElRef {
+#[allow(dead_code)]
+pub struct AccessContextManagerAccessLevelCondition_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AccessContextManagerAccessLevelConditionTimeoutsElRef {
+impl terrars::Ref for AccessContextManagerAccessLevelCondition_TimeoutsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AccessContextManagerAccessLevelConditionTimeoutsElRef {
-        AccessContextManagerAccessLevelConditionTimeoutsElRef {
+    ) -> AccessContextManagerAccessLevelCondition_TimeoutsRef {
+        AccessContextManagerAccessLevelCondition_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AccessContextManagerAccessLevelConditionTimeoutsElRef {
+impl AccessContextManagerAccessLevelCondition_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -789,13 +834,13 @@ impl AccessContextManagerAccessLevelConditionTimeoutsElRef {
 }
 
 #[derive(Serialize)]
-pub struct AccessContextManagerAccessLevelConditionVpcNetworkSourcesElVpcSubnetworkEl {
+pub struct AccessContextManagerAccessLevelCondition_VpcNetworkSources_VpcSubnetwork {
     network: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_ip_subnetworks: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl AccessContextManagerAccessLevelConditionVpcNetworkSourcesElVpcSubnetworkEl {
+impl AccessContextManagerAccessLevelCondition_VpcNetworkSources_VpcSubnetwork {
     #[doc = "Set the field `vpc_ip_subnetworks`.\nCIDR block IP subnetwork specification. Must be IPv4."]
     pub fn set_vpc_ip_subnetworks(
         mut self,
@@ -806,8 +851,8 @@ impl AccessContextManagerAccessLevelConditionVpcNetworkSourcesElVpcSubnetworkEl 
     }
 }
 
-impl terrars::ToListMappable for AccessContextManagerAccessLevelConditionVpcNetworkSourcesElVpcSubnetworkEl {
-    type O = terrars::BlockAssignable<AccessContextManagerAccessLevelConditionVpcNetworkSourcesElVpcSubnetworkEl>;
+impl terrars::ToListMappable for AccessContextManagerAccessLevelCondition_VpcNetworkSources_VpcSubnetwork {
+    type O = terrars::BlockAssignable<AccessContextManagerAccessLevelCondition_VpcNetworkSources_VpcSubnetwork>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -818,39 +863,41 @@ impl terrars::ToListMappable for AccessContextManagerAccessLevelConditionVpcNetw
     }
 }
 
-pub struct BuildAccessContextManagerAccessLevelConditionVpcNetworkSourcesElVpcSubnetworkEl {
+pub struct BuildAccessContextManagerAccessLevelCondition_VpcNetworkSources_VpcSubnetwork {
     #[doc =
         "Required. Network name to be allowed by this Access Level. Networks of foreign organizations requires 'compute.network.get' permission to be granted to caller."]
     pub network: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAccessContextManagerAccessLevelConditionVpcNetworkSourcesElVpcSubnetworkEl {
-    pub fn build(self) -> AccessContextManagerAccessLevelConditionVpcNetworkSourcesElVpcSubnetworkEl {
-        AccessContextManagerAccessLevelConditionVpcNetworkSourcesElVpcSubnetworkEl {
+impl BuildAccessContextManagerAccessLevelCondition_VpcNetworkSources_VpcSubnetwork {
+    pub fn build(self) -> AccessContextManagerAccessLevelCondition_VpcNetworkSources_VpcSubnetwork {
+        AccessContextManagerAccessLevelCondition_VpcNetworkSources_VpcSubnetwork {
             network: self.network,
             vpc_ip_subnetworks: core::default::Default::default(),
         }
     }
 }
 
-pub struct AccessContextManagerAccessLevelConditionVpcNetworkSourcesElVpcSubnetworkElRef {
+#[allow(dead_code)]
+pub struct AccessContextManagerAccessLevelCondition_VpcNetworkSources_VpcSubnetworkRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AccessContextManagerAccessLevelConditionVpcNetworkSourcesElVpcSubnetworkElRef {
+impl terrars::Ref for AccessContextManagerAccessLevelCondition_VpcNetworkSources_VpcSubnetworkRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AccessContextManagerAccessLevelConditionVpcNetworkSourcesElVpcSubnetworkElRef {
-        AccessContextManagerAccessLevelConditionVpcNetworkSourcesElVpcSubnetworkElRef {
+    ) -> AccessContextManagerAccessLevelCondition_VpcNetworkSources_VpcSubnetworkRef {
+        AccessContextManagerAccessLevelCondition_VpcNetworkSources_VpcSubnetworkRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AccessContextManagerAccessLevelConditionVpcNetworkSourcesElVpcSubnetworkElRef {
+impl AccessContextManagerAccessLevelCondition_VpcNetworkSources_VpcSubnetworkRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -869,22 +916,22 @@ impl AccessContextManagerAccessLevelConditionVpcNetworkSourcesElVpcSubnetworkElR
 }
 
 #[derive(Serialize, Default)]
-struct AccessContextManagerAccessLevelConditionVpcNetworkSourcesElDynamic {
+struct AccessContextManagerAccessLevelCondition_VpcNetworkSourcesDynamic {
     vpc_subnetwork: std
     ::option
-    ::Option<terrars::DynamicBlock<AccessContextManagerAccessLevelConditionVpcNetworkSourcesElVpcSubnetworkEl>>,
+    ::Option<terrars::DynamicBlock<AccessContextManagerAccessLevelCondition_VpcNetworkSources_VpcSubnetwork>>,
 }
 
 #[derive(Serialize)]
-pub struct AccessContextManagerAccessLevelConditionVpcNetworkSourcesEl {
+pub struct AccessContextManagerAccessLevelCondition_VpcNetworkSources {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_subnetwork: std
     ::option
-    ::Option<std::vec::Vec<AccessContextManagerAccessLevelConditionVpcNetworkSourcesElVpcSubnetworkEl>>,
-    dynamic: AccessContextManagerAccessLevelConditionVpcNetworkSourcesElDynamic,
+    ::Option<std::vec::Vec<AccessContextManagerAccessLevelCondition_VpcNetworkSources_VpcSubnetwork>>,
+    dynamic: AccessContextManagerAccessLevelCondition_VpcNetworkSourcesDynamic,
 }
 
-impl AccessContextManagerAccessLevelConditionVpcNetworkSourcesEl {
+impl AccessContextManagerAccessLevelCondition_VpcNetworkSources {
     #[doc = "Set the field `vpc_subnetwork`.\n"]
     pub fn set_vpc_subnetwork(
         mut self,
@@ -895,7 +942,7 @@ impl AccessContextManagerAccessLevelConditionVpcNetworkSourcesEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<AccessContextManagerAccessLevelConditionVpcNetworkSourcesElVpcSubnetworkEl>,
+                        ::BlockAssignable<AccessContextManagerAccessLevelCondition_VpcNetworkSources_VpcSubnetwork>,
                     >,
     ) -> Self {
         match v.into() {
@@ -910,8 +957,8 @@ impl AccessContextManagerAccessLevelConditionVpcNetworkSourcesEl {
     }
 }
 
-impl terrars::ToListMappable for AccessContextManagerAccessLevelConditionVpcNetworkSourcesEl {
-    type O = terrars::BlockAssignable<AccessContextManagerAccessLevelConditionVpcNetworkSourcesEl>;
+impl terrars::ToListMappable for AccessContextManagerAccessLevelCondition_VpcNetworkSources {
+    type O = terrars::BlockAssignable<AccessContextManagerAccessLevelCondition_VpcNetworkSources>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -922,35 +969,37 @@ impl terrars::ToListMappable for AccessContextManagerAccessLevelConditionVpcNetw
     }
 }
 
-pub struct BuildAccessContextManagerAccessLevelConditionVpcNetworkSourcesEl {}
+pub struct BuildAccessContextManagerAccessLevelCondition_VpcNetworkSources {}
 
-impl BuildAccessContextManagerAccessLevelConditionVpcNetworkSourcesEl {
-    pub fn build(self) -> AccessContextManagerAccessLevelConditionVpcNetworkSourcesEl {
-        AccessContextManagerAccessLevelConditionVpcNetworkSourcesEl {
+impl BuildAccessContextManagerAccessLevelCondition_VpcNetworkSources {
+    pub fn build(self) -> AccessContextManagerAccessLevelCondition_VpcNetworkSources {
+        AccessContextManagerAccessLevelCondition_VpcNetworkSources {
             vpc_subnetwork: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct AccessContextManagerAccessLevelConditionVpcNetworkSourcesElRef {
+#[allow(dead_code)]
+pub struct AccessContextManagerAccessLevelCondition_VpcNetworkSourcesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AccessContextManagerAccessLevelConditionVpcNetworkSourcesElRef {
+impl terrars::Ref for AccessContextManagerAccessLevelCondition_VpcNetworkSourcesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AccessContextManagerAccessLevelConditionVpcNetworkSourcesElRef {
-        AccessContextManagerAccessLevelConditionVpcNetworkSourcesElRef {
+    ) -> AccessContextManagerAccessLevelCondition_VpcNetworkSourcesRef {
+        AccessContextManagerAccessLevelCondition_VpcNetworkSourcesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AccessContextManagerAccessLevelConditionVpcNetworkSourcesElRef {
+impl AccessContextManagerAccessLevelCondition_VpcNetworkSourcesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -958,15 +1007,7 @@ impl AccessContextManagerAccessLevelConditionVpcNetworkSourcesElRef {
     #[doc = "Get a reference to the value of field `vpc_subnetwork` after provisioning.\n"]
     pub fn vpc_subnetwork(
         &self,
-    ) -> terrars::ListRef<AccessContextManagerAccessLevelConditionVpcNetworkSourcesElVpcSubnetworkElRef> {
+    ) -> terrars::ListRef<AccessContextManagerAccessLevelCondition_VpcNetworkSources_VpcSubnetworkRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_subnetwork", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AccessContextManagerAccessLevelConditionDynamic {
-    device_policy: std::option::Option<terrars::DynamicBlock<AccessContextManagerAccessLevelConditionDevicePolicyEl>>,
-    vpc_network_sources: std
-    ::option
-    ::Option<terrars::DynamicBlock<AccessContextManagerAccessLevelConditionVpcNetworkSourcesEl>>,
 }

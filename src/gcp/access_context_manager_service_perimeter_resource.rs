@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct AccessContextManagerServicePerimeterResourceData {
+struct AccessContextManagerServicePerimeterResourceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,17 +21,19 @@ struct AccessContextManagerServicePerimeterResourceData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     perimeter_name: terrars::PrimField<std::string::String>,
     resource: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<AccessContextManagerServicePerimeterResourceTimeoutsEl>,
+    timeouts: std::option::Option<AccessContextManagerServicePerimeterResource_Timeouts>,
 }
 
 struct AccessContextManagerServicePerimeterResource_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AccessContextManagerServicePerimeterResourceData>,
+    data: std::cell::RefCell<AccessContextManagerServicePerimeterResourceData_>,
 }
 
 #[derive(Clone)]
@@ -129,6 +133,13 @@ impl AccessContextManagerServicePerimeterResource {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -136,12 +147,27 @@ impl AccessContextManagerServicePerimeterResource {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(
-        self,
-        v: impl std::convert::Into<AccessContextManagerServicePerimeterResourceTimeoutsEl>,
-    ) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<AccessContextManagerServicePerimeterResource_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `access_policy_id` after provisioning.\nThe name of the Access Policy this resource belongs to."]
+    pub fn access_policy_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.access_policy_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `etag` after provisioning.\nThe perimeter etag is internally used to prevent overwriting the list of perimeter resources on PATCH calls. It is retrieved from the same GET perimeter API call that's used to get the current list of resources. The resource to add or remove is merged into that list and then this etag is sent with the PATCH call along with the updated resource list."]
+    pub fn etag(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.etag", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -156,14 +182,14 @@ impl AccessContextManagerServicePerimeterResource {
     }
 
     #[doc =
-        "Get a reference to the value of field `resource` after provisioning.\nA GCP resource that is inside of the service perimeter.\nCurrently only projects are allowed.\nFormat: projects/{project_number}"]
+        "Get a reference to the value of field `resource` after provisioning.\nA GCP resource that is inside of the service perimeter.\nProjects, folders, and VPC networks are allowed.\nProject format: 'projects/{project_number}'\nFolder format: 'folders/{folder_number}'\nVPC network format: '//compute.googleapis.com/projects/{PROJECT_ID}/global/networks/{NAME}'"]
     pub fn resource(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> AccessContextManagerServicePerimeterResourceTimeoutsElRef {
-        AccessContextManagerServicePerimeterResourceTimeoutsElRef::new(
+    pub fn timeouts(&self) -> AccessContextManagerServicePerimeterResource_TimeoutsRef {
+        AccessContextManagerServicePerimeterResource_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -206,7 +232,7 @@ pub struct BuildAccessContextManagerServicePerimeterResource {
     #[doc = "The name of the Service Perimeter to add this resource to."]
     pub perimeter_name: terrars::PrimField<std::string::String>,
     #[doc =
-        "A GCP resource that is inside of the service perimeter.\nCurrently only projects are allowed.\nFormat: projects/{project_number}"]
+        "A GCP resource that is inside of the service perimeter.\nProjects, folders, and VPC networks are allowed.\nProject format: 'projects/{project_number}'\nFolder format: 'folders/{folder_number}'\nVPC network format: '//compute.googleapis.com/projects/{PROJECT_ID}/global/networks/{NAME}'"]
     pub resource: terrars::PrimField<std::string::String>,
 }
 
@@ -217,12 +243,13 @@ impl BuildAccessContextManagerServicePerimeterResource {
                 std::rc::Rc::new(AccessContextManagerServicePerimeterResource_ {
                     shared: stack.shared.clone(),
                     tf_id: self.tf_id,
-                    data: std::cell::RefCell::new(AccessContextManagerServicePerimeterResourceData {
+                    data: std::cell::RefCell::new(AccessContextManagerServicePerimeterResourceData_ {
                         depends_on: core::default::Default::default(),
                         provider: std::option::Option::None,
                         lifecycle: core::default::Default::default(),
                         for_each: std::option::Option::None,
                         provisioner: core::default::Default::default(),
+                        deletion_policy: core::default::Default::default(),
                         id: core::default::Default::default(),
                         perimeter_name: self.perimeter_name,
                         resource: self.resource,
@@ -258,6 +285,24 @@ impl AccessContextManagerServicePerimeterResourceRef {
         &self.shared
     }
 
+    #[doc =
+        "Get a reference to the value of field `access_policy_id` after provisioning.\nThe name of the Access Policy this resource belongs to."]
+    pub fn access_policy_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.access_policy_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `etag` after provisioning.\nThe perimeter etag is internally used to prevent overwriting the list of perimeter resources on PATCH calls. It is retrieved from the same GET perimeter API call that's used to get the current list of resources. The resource to add or remove is merged into that list and then this etag is sent with the PATCH call along with the updated resource list."]
+    pub fn etag(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.etag", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -270,14 +315,14 @@ impl AccessContextManagerServicePerimeterResourceRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `resource` after provisioning.\nA GCP resource that is inside of the service perimeter.\nCurrently only projects are allowed.\nFormat: projects/{project_number}"]
+        "Get a reference to the value of field `resource` after provisioning.\nA GCP resource that is inside of the service perimeter.\nProjects, folders, and VPC networks are allowed.\nProject format: 'projects/{project_number}'\nFolder format: 'folders/{folder_number}'\nVPC network format: '//compute.googleapis.com/projects/{PROJECT_ID}/global/networks/{NAME}'"]
     pub fn resource(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> AccessContextManagerServicePerimeterResourceTimeoutsElRef {
-        AccessContextManagerServicePerimeterResourceTimeoutsElRef::new(
+    pub fn timeouts(&self) -> AccessContextManagerServicePerimeterResource_TimeoutsRef {
+        AccessContextManagerServicePerimeterResource_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -285,14 +330,14 @@ impl AccessContextManagerServicePerimeterResourceRef {
 }
 
 #[derive(Serialize)]
-pub struct AccessContextManagerServicePerimeterResourceTimeoutsEl {
+pub struct AccessContextManagerServicePerimeterResource_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AccessContextManagerServicePerimeterResourceTimeoutsEl {
+impl AccessContextManagerServicePerimeterResource_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -306,8 +351,8 @@ impl AccessContextManagerServicePerimeterResourceTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for AccessContextManagerServicePerimeterResourceTimeoutsEl {
-    type O = terrars::BlockAssignable<AccessContextManagerServicePerimeterResourceTimeoutsEl>;
+impl terrars::ToListMappable for AccessContextManagerServicePerimeterResource_Timeouts {
+    type O = terrars::BlockAssignable<AccessContextManagerServicePerimeterResource_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -318,35 +363,37 @@ impl terrars::ToListMappable for AccessContextManagerServicePerimeterResourceTim
     }
 }
 
-pub struct BuildAccessContextManagerServicePerimeterResourceTimeoutsEl {}
+pub struct BuildAccessContextManagerServicePerimeterResource_Timeouts {}
 
-impl BuildAccessContextManagerServicePerimeterResourceTimeoutsEl {
-    pub fn build(self) -> AccessContextManagerServicePerimeterResourceTimeoutsEl {
-        AccessContextManagerServicePerimeterResourceTimeoutsEl {
+impl BuildAccessContextManagerServicePerimeterResource_Timeouts {
+    pub fn build(self) -> AccessContextManagerServicePerimeterResource_Timeouts {
+        AccessContextManagerServicePerimeterResource_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct AccessContextManagerServicePerimeterResourceTimeoutsElRef {
+#[allow(dead_code)]
+pub struct AccessContextManagerServicePerimeterResource_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AccessContextManagerServicePerimeterResourceTimeoutsElRef {
+impl terrars::Ref for AccessContextManagerServicePerimeterResource_TimeoutsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AccessContextManagerServicePerimeterResourceTimeoutsElRef {
-        AccessContextManagerServicePerimeterResourceTimeoutsElRef {
+    ) -> AccessContextManagerServicePerimeterResource_TimeoutsRef {
+        AccessContextManagerServicePerimeterResource_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AccessContextManagerServicePerimeterResourceTimeoutsElRef {
+impl AccessContextManagerServicePerimeterResource_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

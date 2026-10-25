@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct StorageBucketIamBindingData {
+struct StorageBucketIamBindingData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,14 +26,16 @@ struct StorageBucketIamBindingData {
     members: terrars::SetField<terrars::PrimField<std::string::String>>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<StorageBucketIamBindingConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<StorageBucketIamBinding_Condition>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<StorageBucketIamBinding_Timeouts>,
     dynamic: StorageBucketIamBindingDynamic,
 }
 
 struct StorageBucketIamBinding_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<StorageBucketIamBindingData>,
+    data: std::cell::RefCell<StorageBucketIamBindingData_>,
 }
 
 #[derive(Clone)]
@@ -140,7 +144,7 @@ impl StorageBucketIamBinding {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<StorageBucketIamBindingConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<StorageBucketIamBinding_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -150,6 +154,12 @@ impl StorageBucketIamBinding {
                 self.0.data.borrow_mut().dynamic.condition = std::option::Option::Some(d);
             },
         }
+        self
+    }
+
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<StorageBucketIamBinding_Timeouts>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
@@ -179,8 +189,13 @@ impl StorageBucketIamBinding {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<StorageBucketIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<StorageBucketIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> StorageBucketIamBinding_TimeoutsRef {
+        StorageBucketIamBinding_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -230,7 +245,7 @@ impl BuildStorageBucketIamBinding {
         let out = StorageBucketIamBinding(std::rc::Rc::new(StorageBucketIamBinding_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(StorageBucketIamBindingData {
+            data: std::cell::RefCell::new(StorageBucketIamBindingData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -241,6 +256,7 @@ impl BuildStorageBucketIamBinding {
                 members: self.members,
                 role: self.role,
                 condition: core::default::Default::default(),
+                timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -298,20 +314,30 @@ impl StorageBucketIamBindingRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<StorageBucketIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<StorageBucketIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> StorageBucketIamBinding_TimeoutsRef {
+        StorageBucketIamBinding_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct StorageBucketIamBindingDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<StorageBucketIamBinding_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct StorageBucketIamBindingConditionEl {
+pub struct StorageBucketIamBinding_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl StorageBucketIamBindingConditionEl {
+impl StorageBucketIamBinding_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -319,8 +345,8 @@ impl StorageBucketIamBindingConditionEl {
     }
 }
 
-impl terrars::ToListMappable for StorageBucketIamBindingConditionEl {
-    type O = terrars::BlockAssignable<StorageBucketIamBindingConditionEl>;
+impl terrars::ToListMappable for StorageBucketIamBinding_Condition {
+    type O = terrars::BlockAssignable<StorageBucketIamBinding_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -331,16 +357,16 @@ impl terrars::ToListMappable for StorageBucketIamBindingConditionEl {
     }
 }
 
-pub struct BuildStorageBucketIamBindingConditionEl {
+pub struct BuildStorageBucketIamBinding_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildStorageBucketIamBindingConditionEl {
-    pub fn build(self) -> StorageBucketIamBindingConditionEl {
-        StorageBucketIamBindingConditionEl {
+impl BuildStorageBucketIamBinding_Condition {
+    pub fn build(self) -> StorageBucketIamBinding_Condition {
+        StorageBucketIamBinding_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -348,21 +374,23 @@ impl BuildStorageBucketIamBindingConditionEl {
     }
 }
 
-pub struct StorageBucketIamBindingConditionElRef {
+#[allow(dead_code)]
+pub struct StorageBucketIamBinding_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for StorageBucketIamBindingConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> StorageBucketIamBindingConditionElRef {
-        StorageBucketIamBindingConditionElRef {
+impl terrars::Ref for StorageBucketIamBinding_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> StorageBucketIamBinding_ConditionRef {
+        StorageBucketIamBinding_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl StorageBucketIamBindingConditionElRef {
+impl StorageBucketIamBinding_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -383,7 +411,63 @@ impl StorageBucketIamBindingConditionElRef {
     }
 }
 
-#[derive(Serialize, Default)]
-struct StorageBucketIamBindingDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<StorageBucketIamBindingConditionEl>>,
+#[derive(Serialize)]
+pub struct StorageBucketIamBinding_Timeouts {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl StorageBucketIamBinding_Timeouts {
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for StorageBucketIamBinding_Timeouts {
+    type O = terrars::BlockAssignable<StorageBucketIamBinding_Timeouts>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildStorageBucketIamBinding_Timeouts {}
+
+impl BuildStorageBucketIamBinding_Timeouts {
+    pub fn build(self) -> StorageBucketIamBinding_Timeouts {
+        StorageBucketIamBinding_Timeouts { create: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct StorageBucketIamBinding_TimeoutsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for StorageBucketIamBinding_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> StorageBucketIamBinding_TimeoutsRef {
+        StorageBucketIamBinding_TimeoutsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl StorageBucketIamBinding_TimeoutsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    }
 }

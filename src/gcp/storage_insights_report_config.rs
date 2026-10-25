@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct StorageInsightsReportConfigData {
+struct StorageInsightsReportConfigData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,29 +21,35 @@ struct StorageInsightsReportConfigData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     display_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    force_destroy: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     location: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    csv_options: std::option::Option<std::vec::Vec<StorageInsightsReportConfigCsvOptionsEl>>,
+    csv_options: std::option::Option<std::vec::Vec<StorageInsightsReportConfig_CsvOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    frequency_options: std::option::Option<std::vec::Vec<StorageInsightsReportConfigFrequencyOptionsEl>>,
+    frequency_options: std::option::Option<std::vec::Vec<StorageInsightsReportConfig_FrequencyOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     object_metadata_report_options: std
     ::option
-    ::Option<std::vec::Vec<StorageInsightsReportConfigObjectMetadataReportOptionsEl>>,
+    ::Option<std::vec::Vec<StorageInsightsReportConfig_ObjectMetadataReportOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<StorageInsightsReportConfigTimeoutsEl>,
+    parquet_options: std::option::Option<std::vec::Vec<StorageInsightsReportConfig_ParquetOptions>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<StorageInsightsReportConfig_Timeouts>,
     dynamic: StorageInsightsReportConfigDynamic,
 }
 
 struct StorageInsightsReportConfig_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<StorageInsightsReportConfigData>,
+    data: std::cell::RefCell<StorageInsightsReportConfigData_>,
 }
 
 #[derive(Clone)]
@@ -142,9 +150,23 @@ impl StorageInsightsReportConfig {
     }
 
     #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `display_name`.\nThe editable display name of the inventory report configuration. Has a limit of 256 characters. Can be empty."]
     pub fn set_display_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().display_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `force_destroy`.\nIf set, all the inventory report details associated with this report configuration are deleted."]
+    pub fn set_force_destroy(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().force_destroy = std::option::Option::Some(v.into());
         self
     }
 
@@ -163,7 +185,7 @@ impl StorageInsightsReportConfig {
     #[doc = "Set the field `csv_options`.\n"]
     pub fn set_csv_options(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<StorageInsightsReportConfigCsvOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<StorageInsightsReportConfig_CsvOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -179,7 +201,7 @@ impl StorageInsightsReportConfig {
     #[doc = "Set the field `frequency_options`.\n"]
     pub fn set_frequency_options(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<StorageInsightsReportConfigFrequencyOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<StorageInsightsReportConfig_FrequencyOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -200,7 +222,7 @@ impl StorageInsightsReportConfig {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<StorageInsightsReportConfigObjectMetadataReportOptionsEl>>,
+                    ::Into<terrars::BlockAssignable<StorageInsightsReportConfig_ObjectMetadataReportOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -213,16 +235,44 @@ impl StorageInsightsReportConfig {
         self
     }
 
+    #[doc = "Set the field `parquet_options`.\n"]
+    pub fn set_parquet_options(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<StorageInsightsReportConfig_ParquetOptions>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().parquet_options = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.parquet_options = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<StorageInsightsReportConfigTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<StorageInsightsReportConfig_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
         "Get a reference to the value of field `display_name` after provisioning.\nThe editable display name of the inventory report configuration. Has a limit of 256 characters. Can be empty."]
     pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `force_destroy` after provisioning.\nIf set, all the inventory report details associated with this report configuration are deleted."]
+    pub fn force_destroy(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.force_destroy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -248,28 +298,33 @@ impl StorageInsightsReportConfig {
     }
 
     #[doc = "Get a reference to the value of field `csv_options` after provisioning.\n"]
-    pub fn csv_options(&self) -> terrars::ListRef<StorageInsightsReportConfigCsvOptionsElRef> {
+    pub fn csv_options(&self) -> terrars::ListRef<StorageInsightsReportConfig_CsvOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.csv_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `frequency_options` after provisioning.\n"]
-    pub fn frequency_options(&self) -> terrars::ListRef<StorageInsightsReportConfigFrequencyOptionsElRef> {
+    pub fn frequency_options(&self) -> terrars::ListRef<StorageInsightsReportConfig_FrequencyOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.frequency_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `object_metadata_report_options` after provisioning.\n"]
     pub fn object_metadata_report_options(
         &self,
-    ) -> terrars::ListRef<StorageInsightsReportConfigObjectMetadataReportOptionsElRef> {
+    ) -> terrars::ListRef<StorageInsightsReportConfig_ObjectMetadataReportOptionsRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.object_metadata_report_options", self.extract_ref()),
         )
     }
 
+    #[doc = "Get a reference to the value of field `parquet_options` after provisioning.\n"]
+    pub fn parquet_options(&self) -> terrars::ListRef<StorageInsightsReportConfig_ParquetOptionsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.parquet_options", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> StorageInsightsReportConfigTimeoutsElRef {
-        StorageInsightsReportConfigTimeoutsElRef::new(
+    pub fn timeouts(&self) -> StorageInsightsReportConfig_TimeoutsRef {
+        StorageInsightsReportConfig_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -319,19 +374,22 @@ impl BuildStorageInsightsReportConfig {
         let out = StorageInsightsReportConfig(std::rc::Rc::new(StorageInsightsReportConfig_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(StorageInsightsReportConfigData {
+            data: std::cell::RefCell::new(StorageInsightsReportConfigData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 display_name: core::default::Default::default(),
+                force_destroy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 location: self.location,
                 project: core::default::Default::default(),
                 csv_options: core::default::Default::default(),
                 frequency_options: core::default::Default::default(),
                 object_metadata_report_options: core::default::Default::default(),
+                parquet_options: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -365,9 +423,21 @@ impl StorageInsightsReportConfigRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `display_name` after provisioning.\nThe editable display name of the inventory report configuration. Has a limit of 256 characters. Can be empty."]
     pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `force_destroy` after provisioning.\nIf set, all the inventory report details associated with this report configuration are deleted."]
+    pub fn force_destroy(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.force_destroy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -393,36 +463,51 @@ impl StorageInsightsReportConfigRef {
     }
 
     #[doc = "Get a reference to the value of field `csv_options` after provisioning.\n"]
-    pub fn csv_options(&self) -> terrars::ListRef<StorageInsightsReportConfigCsvOptionsElRef> {
+    pub fn csv_options(&self) -> terrars::ListRef<StorageInsightsReportConfig_CsvOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.csv_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `frequency_options` after provisioning.\n"]
-    pub fn frequency_options(&self) -> terrars::ListRef<StorageInsightsReportConfigFrequencyOptionsElRef> {
+    pub fn frequency_options(&self) -> terrars::ListRef<StorageInsightsReportConfig_FrequencyOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.frequency_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `object_metadata_report_options` after provisioning.\n"]
     pub fn object_metadata_report_options(
         &self,
-    ) -> terrars::ListRef<StorageInsightsReportConfigObjectMetadataReportOptionsElRef> {
+    ) -> terrars::ListRef<StorageInsightsReportConfig_ObjectMetadataReportOptionsRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.object_metadata_report_options", self.extract_ref()),
         )
     }
 
+    #[doc = "Get a reference to the value of field `parquet_options` after provisioning.\n"]
+    pub fn parquet_options(&self) -> terrars::ListRef<StorageInsightsReportConfig_ParquetOptionsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.parquet_options", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> StorageInsightsReportConfigTimeoutsElRef {
-        StorageInsightsReportConfigTimeoutsElRef::new(
+    pub fn timeouts(&self) -> StorageInsightsReportConfig_TimeoutsRef {
+        StorageInsightsReportConfig_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct StorageInsightsReportConfigDynamic {
+    csv_options: std::option::Option<terrars::DynamicBlock<StorageInsightsReportConfig_CsvOptions>>,
+    frequency_options: std::option::Option<terrars::DynamicBlock<StorageInsightsReportConfig_FrequencyOptions>>,
+    object_metadata_report_options: std
+    ::option
+    ::Option<terrars::DynamicBlock<StorageInsightsReportConfig_ObjectMetadataReportOptions>>,
+    parquet_options: std::option::Option<terrars::DynamicBlock<StorageInsightsReportConfig_ParquetOptions>>,
+}
+
 #[derive(Serialize)]
-pub struct StorageInsightsReportConfigCsvOptionsEl {
+pub struct StorageInsightsReportConfig_CsvOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delimiter: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -431,7 +516,7 @@ pub struct StorageInsightsReportConfigCsvOptionsEl {
     record_separator: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl StorageInsightsReportConfigCsvOptionsEl {
+impl StorageInsightsReportConfig_CsvOptions {
     #[doc = "Set the field `delimiter`.\nThe delimiter used to separate the fields in the inventory report CSV file."]
     pub fn set_delimiter(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.delimiter = std::option::Option::Some(v.into());
@@ -453,8 +538,8 @@ impl StorageInsightsReportConfigCsvOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for StorageInsightsReportConfigCsvOptionsEl {
-    type O = terrars::BlockAssignable<StorageInsightsReportConfigCsvOptionsEl>;
+impl terrars::ToListMappable for StorageInsightsReportConfig_CsvOptions {
+    type O = terrars::BlockAssignable<StorageInsightsReportConfig_CsvOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -465,11 +550,11 @@ impl terrars::ToListMappable for StorageInsightsReportConfigCsvOptionsEl {
     }
 }
 
-pub struct BuildStorageInsightsReportConfigCsvOptionsEl {}
+pub struct BuildStorageInsightsReportConfig_CsvOptions {}
 
-impl BuildStorageInsightsReportConfigCsvOptionsEl {
-    pub fn build(self) -> StorageInsightsReportConfigCsvOptionsEl {
-        StorageInsightsReportConfigCsvOptionsEl {
+impl BuildStorageInsightsReportConfig_CsvOptions {
+    pub fn build(self) -> StorageInsightsReportConfig_CsvOptions {
+        StorageInsightsReportConfig_CsvOptions {
             delimiter: core::default::Default::default(),
             header_required: core::default::Default::default(),
             record_separator: core::default::Default::default(),
@@ -477,21 +562,23 @@ impl BuildStorageInsightsReportConfigCsvOptionsEl {
     }
 }
 
-pub struct StorageInsightsReportConfigCsvOptionsElRef {
+#[allow(dead_code)]
+pub struct StorageInsightsReportConfig_CsvOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for StorageInsightsReportConfigCsvOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> StorageInsightsReportConfigCsvOptionsElRef {
-        StorageInsightsReportConfigCsvOptionsElRef {
+impl terrars::Ref for StorageInsightsReportConfig_CsvOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> StorageInsightsReportConfig_CsvOptionsRef {
+        StorageInsightsReportConfig_CsvOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl StorageInsightsReportConfigCsvOptionsElRef {
+impl StorageInsightsReportConfig_CsvOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -516,16 +603,16 @@ impl StorageInsightsReportConfigCsvOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct StorageInsightsReportConfigFrequencyOptionsElEndDateEl {
+pub struct StorageInsightsReportConfig_FrequencyOptions_EndDate {
     day: terrars::PrimField<f64>,
     month: terrars::PrimField<f64>,
     year: terrars::PrimField<f64>,
 }
 
-impl StorageInsightsReportConfigFrequencyOptionsElEndDateEl { }
+impl StorageInsightsReportConfig_FrequencyOptions_EndDate { }
 
-impl terrars::ToListMappable for StorageInsightsReportConfigFrequencyOptionsElEndDateEl {
-    type O = terrars::BlockAssignable<StorageInsightsReportConfigFrequencyOptionsElEndDateEl>;
+impl terrars::ToListMappable for StorageInsightsReportConfig_FrequencyOptions_EndDate {
+    type O = terrars::BlockAssignable<StorageInsightsReportConfig_FrequencyOptions_EndDate>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -536,7 +623,7 @@ impl terrars::ToListMappable for StorageInsightsReportConfigFrequencyOptionsElEn
     }
 }
 
-pub struct BuildStorageInsightsReportConfigFrequencyOptionsElEndDateEl {
+pub struct BuildStorageInsightsReportConfig_FrequencyOptions_EndDate {
     #[doc = "The day of the month to stop generating inventory reports."]
     pub day: terrars::PrimField<f64>,
     #[doc = "The month to stop generating inventory reports."]
@@ -545,9 +632,9 @@ pub struct BuildStorageInsightsReportConfigFrequencyOptionsElEndDateEl {
     pub year: terrars::PrimField<f64>,
 }
 
-impl BuildStorageInsightsReportConfigFrequencyOptionsElEndDateEl {
-    pub fn build(self) -> StorageInsightsReportConfigFrequencyOptionsElEndDateEl {
-        StorageInsightsReportConfigFrequencyOptionsElEndDateEl {
+impl BuildStorageInsightsReportConfig_FrequencyOptions_EndDate {
+    pub fn build(self) -> StorageInsightsReportConfig_FrequencyOptions_EndDate {
+        StorageInsightsReportConfig_FrequencyOptions_EndDate {
             day: self.day,
             month: self.month,
             year: self.year,
@@ -555,24 +642,26 @@ impl BuildStorageInsightsReportConfigFrequencyOptionsElEndDateEl {
     }
 }
 
-pub struct StorageInsightsReportConfigFrequencyOptionsElEndDateElRef {
+#[allow(dead_code)]
+pub struct StorageInsightsReportConfig_FrequencyOptions_EndDateRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for StorageInsightsReportConfigFrequencyOptionsElEndDateElRef {
+impl terrars::Ref for StorageInsightsReportConfig_FrequencyOptions_EndDateRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> StorageInsightsReportConfigFrequencyOptionsElEndDateElRef {
-        StorageInsightsReportConfigFrequencyOptionsElEndDateElRef {
+    ) -> StorageInsightsReportConfig_FrequencyOptions_EndDateRef {
+        StorageInsightsReportConfig_FrequencyOptions_EndDateRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl StorageInsightsReportConfigFrequencyOptionsElEndDateElRef {
+impl StorageInsightsReportConfig_FrequencyOptions_EndDateRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -597,16 +686,16 @@ impl StorageInsightsReportConfigFrequencyOptionsElEndDateElRef {
 }
 
 #[derive(Serialize)]
-pub struct StorageInsightsReportConfigFrequencyOptionsElStartDateEl {
+pub struct StorageInsightsReportConfig_FrequencyOptions_StartDate {
     day: terrars::PrimField<f64>,
     month: terrars::PrimField<f64>,
     year: terrars::PrimField<f64>,
 }
 
-impl StorageInsightsReportConfigFrequencyOptionsElStartDateEl { }
+impl StorageInsightsReportConfig_FrequencyOptions_StartDate { }
 
-impl terrars::ToListMappable for StorageInsightsReportConfigFrequencyOptionsElStartDateEl {
-    type O = terrars::BlockAssignable<StorageInsightsReportConfigFrequencyOptionsElStartDateEl>;
+impl terrars::ToListMappable for StorageInsightsReportConfig_FrequencyOptions_StartDate {
+    type O = terrars::BlockAssignable<StorageInsightsReportConfig_FrequencyOptions_StartDate>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -617,7 +706,7 @@ impl terrars::ToListMappable for StorageInsightsReportConfigFrequencyOptionsElSt
     }
 }
 
-pub struct BuildStorageInsightsReportConfigFrequencyOptionsElStartDateEl {
+pub struct BuildStorageInsightsReportConfig_FrequencyOptions_StartDate {
     #[doc = "The day of the month to start generating inventory reports."]
     pub day: terrars::PrimField<f64>,
     #[doc = "The month to start generating inventory reports."]
@@ -626,9 +715,9 @@ pub struct BuildStorageInsightsReportConfigFrequencyOptionsElStartDateEl {
     pub year: terrars::PrimField<f64>,
 }
 
-impl BuildStorageInsightsReportConfigFrequencyOptionsElStartDateEl {
-    pub fn build(self) -> StorageInsightsReportConfigFrequencyOptionsElStartDateEl {
-        StorageInsightsReportConfigFrequencyOptionsElStartDateEl {
+impl BuildStorageInsightsReportConfig_FrequencyOptions_StartDate {
+    pub fn build(self) -> StorageInsightsReportConfig_FrequencyOptions_StartDate {
+        StorageInsightsReportConfig_FrequencyOptions_StartDate {
             day: self.day,
             month: self.month,
             year: self.year,
@@ -636,24 +725,26 @@ impl BuildStorageInsightsReportConfigFrequencyOptionsElStartDateEl {
     }
 }
 
-pub struct StorageInsightsReportConfigFrequencyOptionsElStartDateElRef {
+#[allow(dead_code)]
+pub struct StorageInsightsReportConfig_FrequencyOptions_StartDateRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for StorageInsightsReportConfigFrequencyOptionsElStartDateElRef {
+impl terrars::Ref for StorageInsightsReportConfig_FrequencyOptions_StartDateRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> StorageInsightsReportConfigFrequencyOptionsElStartDateElRef {
-        StorageInsightsReportConfigFrequencyOptionsElStartDateElRef {
+    ) -> StorageInsightsReportConfig_FrequencyOptions_StartDateRef {
+        StorageInsightsReportConfig_FrequencyOptions_StartDateRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl StorageInsightsReportConfigFrequencyOptionsElStartDateElRef {
+impl StorageInsightsReportConfig_FrequencyOptions_StartDateRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -678,28 +769,26 @@ impl StorageInsightsReportConfigFrequencyOptionsElStartDateElRef {
 }
 
 #[derive(Serialize, Default)]
-struct StorageInsightsReportConfigFrequencyOptionsElDynamic {
-    end_date: std::option::Option<terrars::DynamicBlock<StorageInsightsReportConfigFrequencyOptionsElEndDateEl>>,
-    start_date: std
-    ::option
-    ::Option<terrars::DynamicBlock<StorageInsightsReportConfigFrequencyOptionsElStartDateEl>>,
+struct StorageInsightsReportConfig_FrequencyOptionsDynamic {
+    end_date: std::option::Option<terrars::DynamicBlock<StorageInsightsReportConfig_FrequencyOptions_EndDate>>,
+    start_date: std::option::Option<terrars::DynamicBlock<StorageInsightsReportConfig_FrequencyOptions_StartDate>>,
 }
 
 #[derive(Serialize)]
-pub struct StorageInsightsReportConfigFrequencyOptionsEl {
+pub struct StorageInsightsReportConfig_FrequencyOptions {
     frequency: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    end_date: std::option::Option<std::vec::Vec<StorageInsightsReportConfigFrequencyOptionsElEndDateEl>>,
+    end_date: std::option::Option<std::vec::Vec<StorageInsightsReportConfig_FrequencyOptions_EndDate>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    start_date: std::option::Option<std::vec::Vec<StorageInsightsReportConfigFrequencyOptionsElStartDateEl>>,
-    dynamic: StorageInsightsReportConfigFrequencyOptionsElDynamic,
+    start_date: std::option::Option<std::vec::Vec<StorageInsightsReportConfig_FrequencyOptions_StartDate>>,
+    dynamic: StorageInsightsReportConfig_FrequencyOptionsDynamic,
 }
 
-impl StorageInsightsReportConfigFrequencyOptionsEl {
+impl StorageInsightsReportConfig_FrequencyOptions {
     #[doc = "Set the field `end_date`.\n"]
     pub fn set_end_date(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<StorageInsightsReportConfigFrequencyOptionsElEndDateEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<StorageInsightsReportConfig_FrequencyOptions_EndDate>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -715,12 +804,7 @@ impl StorageInsightsReportConfigFrequencyOptionsEl {
     #[doc = "Set the field `start_date`.\n"]
     pub fn set_start_date(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<StorageInsightsReportConfigFrequencyOptionsElStartDateEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<StorageInsightsReportConfig_FrequencyOptions_StartDate>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -734,8 +818,8 @@ impl StorageInsightsReportConfigFrequencyOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for StorageInsightsReportConfigFrequencyOptionsEl {
-    type O = terrars::BlockAssignable<StorageInsightsReportConfigFrequencyOptionsEl>;
+impl terrars::ToListMappable for StorageInsightsReportConfig_FrequencyOptions {
+    type O = terrars::BlockAssignable<StorageInsightsReportConfig_FrequencyOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -746,15 +830,15 @@ impl terrars::ToListMappable for StorageInsightsReportConfigFrequencyOptionsEl {
     }
 }
 
-pub struct BuildStorageInsightsReportConfigFrequencyOptionsEl {
+pub struct BuildStorageInsightsReportConfig_FrequencyOptions {
     #[doc =
         "The frequency in which inventory reports are generated. Values are DAILY or WEEKLY. Possible values: [\"DAILY\", \"WEEKLY\"]"]
     pub frequency: terrars::PrimField<std::string::String>,
 }
 
-impl BuildStorageInsightsReportConfigFrequencyOptionsEl {
-    pub fn build(self) -> StorageInsightsReportConfigFrequencyOptionsEl {
-        StorageInsightsReportConfigFrequencyOptionsEl {
+impl BuildStorageInsightsReportConfig_FrequencyOptions {
+    pub fn build(self) -> StorageInsightsReportConfig_FrequencyOptions {
+        StorageInsightsReportConfig_FrequencyOptions {
             frequency: self.frequency,
             end_date: core::default::Default::default(),
             start_date: core::default::Default::default(),
@@ -763,24 +847,26 @@ impl BuildStorageInsightsReportConfigFrequencyOptionsEl {
     }
 }
 
-pub struct StorageInsightsReportConfigFrequencyOptionsElRef {
+#[allow(dead_code)]
+pub struct StorageInsightsReportConfig_FrequencyOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for StorageInsightsReportConfigFrequencyOptionsElRef {
+impl terrars::Ref for StorageInsightsReportConfig_FrequencyOptionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> StorageInsightsReportConfigFrequencyOptionsElRef {
-        StorageInsightsReportConfigFrequencyOptionsElRef {
+    ) -> StorageInsightsReportConfig_FrequencyOptionsRef {
+        StorageInsightsReportConfig_FrequencyOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl StorageInsightsReportConfigFrequencyOptionsElRef {
+impl StorageInsightsReportConfig_FrequencyOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -792,24 +878,24 @@ impl StorageInsightsReportConfigFrequencyOptionsElRef {
     }
 
     #[doc = "Get a reference to the value of field `end_date` after provisioning.\n"]
-    pub fn end_date(&self) -> terrars::ListRef<StorageInsightsReportConfigFrequencyOptionsElEndDateElRef> {
+    pub fn end_date(&self) -> terrars::ListRef<StorageInsightsReportConfig_FrequencyOptions_EndDateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.end_date", self.base))
     }
 
     #[doc = "Get a reference to the value of field `start_date` after provisioning.\n"]
-    pub fn start_date(&self) -> terrars::ListRef<StorageInsightsReportConfigFrequencyOptionsElStartDateElRef> {
+    pub fn start_date(&self) -> terrars::ListRef<StorageInsightsReportConfig_FrequencyOptions_StartDateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.start_date", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct StorageInsightsReportConfigObjectMetadataReportOptionsElStorageDestinationOptionsEl {
+pub struct StorageInsightsReportConfig_ObjectMetadataReportOptions_StorageDestinationOptions {
     bucket: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     destination_path: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl StorageInsightsReportConfigObjectMetadataReportOptionsElStorageDestinationOptionsEl {
+impl StorageInsightsReportConfig_ObjectMetadataReportOptions_StorageDestinationOptions {
     #[doc =
         "Set the field `destination_path`.\nThe path within the destination bucket to store generated inventory reports."]
     pub fn set_destination_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -818,10 +904,9 @@ impl StorageInsightsReportConfigObjectMetadataReportOptionsElStorageDestinationO
     }
 }
 
-impl terrars::ToListMappable for StorageInsightsReportConfigObjectMetadataReportOptionsElStorageDestinationOptionsEl {
+impl terrars::ToListMappable for StorageInsightsReportConfig_ObjectMetadataReportOptions_StorageDestinationOptions {
     type O =
-        terrars
-        ::BlockAssignable<StorageInsightsReportConfigObjectMetadataReportOptionsElStorageDestinationOptionsEl>;
+        terrars::BlockAssignable<StorageInsightsReportConfig_ObjectMetadataReportOptions_StorageDestinationOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -832,38 +917,40 @@ impl terrars::ToListMappable for StorageInsightsReportConfigObjectMetadataReport
     }
 }
 
-pub struct BuildStorageInsightsReportConfigObjectMetadataReportOptionsElStorageDestinationOptionsEl {
+pub struct BuildStorageInsightsReportConfig_ObjectMetadataReportOptions_StorageDestinationOptions {
     #[doc = "The destination bucket that stores the generated inventory reports."]
     pub bucket: terrars::PrimField<std::string::String>,
 }
 
-impl BuildStorageInsightsReportConfigObjectMetadataReportOptionsElStorageDestinationOptionsEl {
-    pub fn build(self) -> StorageInsightsReportConfigObjectMetadataReportOptionsElStorageDestinationOptionsEl {
-        StorageInsightsReportConfigObjectMetadataReportOptionsElStorageDestinationOptionsEl {
+impl BuildStorageInsightsReportConfig_ObjectMetadataReportOptions_StorageDestinationOptions {
+    pub fn build(self) -> StorageInsightsReportConfig_ObjectMetadataReportOptions_StorageDestinationOptions {
+        StorageInsightsReportConfig_ObjectMetadataReportOptions_StorageDestinationOptions {
             bucket: self.bucket,
             destination_path: core::default::Default::default(),
         }
     }
 }
 
-pub struct StorageInsightsReportConfigObjectMetadataReportOptionsElStorageDestinationOptionsElRef {
+#[allow(dead_code)]
+pub struct StorageInsightsReportConfig_ObjectMetadataReportOptions_StorageDestinationOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for StorageInsightsReportConfigObjectMetadataReportOptionsElStorageDestinationOptionsElRef {
+impl terrars::Ref for StorageInsightsReportConfig_ObjectMetadataReportOptions_StorageDestinationOptionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> StorageInsightsReportConfigObjectMetadataReportOptionsElStorageDestinationOptionsElRef {
-        StorageInsightsReportConfigObjectMetadataReportOptionsElStorageDestinationOptionsElRef {
+    ) -> StorageInsightsReportConfig_ObjectMetadataReportOptions_StorageDestinationOptionsRef {
+        StorageInsightsReportConfig_ObjectMetadataReportOptions_StorageDestinationOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl StorageInsightsReportConfigObjectMetadataReportOptionsElStorageDestinationOptionsElRef {
+impl StorageInsightsReportConfig_ObjectMetadataReportOptions_StorageDestinationOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -882,12 +969,12 @@ impl StorageInsightsReportConfigObjectMetadataReportOptionsElStorageDestinationO
 }
 
 #[derive(Serialize)]
-pub struct StorageInsightsReportConfigObjectMetadataReportOptionsElStorageFiltersEl {
+pub struct StorageInsightsReportConfig_ObjectMetadataReportOptions_StorageFilters {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bucket: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl StorageInsightsReportConfigObjectMetadataReportOptionsElStorageFiltersEl {
+impl StorageInsightsReportConfig_ObjectMetadataReportOptions_StorageFilters {
     #[doc =
         "Set the field `bucket`.\nThe filter to use when specifying which bucket to generate inventory reports for."]
     pub fn set_bucket(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -896,8 +983,8 @@ impl StorageInsightsReportConfigObjectMetadataReportOptionsElStorageFiltersEl {
     }
 }
 
-impl terrars::ToListMappable for StorageInsightsReportConfigObjectMetadataReportOptionsElStorageFiltersEl {
-    type O = terrars::BlockAssignable<StorageInsightsReportConfigObjectMetadataReportOptionsElStorageFiltersEl>;
+impl terrars::ToListMappable for StorageInsightsReportConfig_ObjectMetadataReportOptions_StorageFilters {
+    type O = terrars::BlockAssignable<StorageInsightsReportConfig_ObjectMetadataReportOptions_StorageFilters>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -908,34 +995,36 @@ impl terrars::ToListMappable for StorageInsightsReportConfigObjectMetadataReport
     }
 }
 
-pub struct BuildStorageInsightsReportConfigObjectMetadataReportOptionsElStorageFiltersEl {}
+pub struct BuildStorageInsightsReportConfig_ObjectMetadataReportOptions_StorageFilters {}
 
-impl BuildStorageInsightsReportConfigObjectMetadataReportOptionsElStorageFiltersEl {
-    pub fn build(self) -> StorageInsightsReportConfigObjectMetadataReportOptionsElStorageFiltersEl {
-        StorageInsightsReportConfigObjectMetadataReportOptionsElStorageFiltersEl {
+impl BuildStorageInsightsReportConfig_ObjectMetadataReportOptions_StorageFilters {
+    pub fn build(self) -> StorageInsightsReportConfig_ObjectMetadataReportOptions_StorageFilters {
+        StorageInsightsReportConfig_ObjectMetadataReportOptions_StorageFilters {
             bucket: core::default::Default::default(),
         }
     }
 }
 
-pub struct StorageInsightsReportConfigObjectMetadataReportOptionsElStorageFiltersElRef {
+#[allow(dead_code)]
+pub struct StorageInsightsReportConfig_ObjectMetadataReportOptions_StorageFiltersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for StorageInsightsReportConfigObjectMetadataReportOptionsElStorageFiltersElRef {
+impl terrars::Ref for StorageInsightsReportConfig_ObjectMetadataReportOptions_StorageFiltersRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> StorageInsightsReportConfigObjectMetadataReportOptionsElStorageFiltersElRef {
-        StorageInsightsReportConfigObjectMetadataReportOptionsElStorageFiltersElRef {
+    ) -> StorageInsightsReportConfig_ObjectMetadataReportOptions_StorageFiltersRef {
+        StorageInsightsReportConfig_ObjectMetadataReportOptions_StorageFiltersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl StorageInsightsReportConfigObjectMetadataReportOptionsElStorageFiltersElRef {
+impl StorageInsightsReportConfig_ObjectMetadataReportOptions_StorageFiltersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -948,32 +1037,32 @@ impl StorageInsightsReportConfigObjectMetadataReportOptionsElStorageFiltersElRef
 }
 
 #[derive(Serialize, Default)]
-struct StorageInsightsReportConfigObjectMetadataReportOptionsElDynamic {
+struct StorageInsightsReportConfig_ObjectMetadataReportOptionsDynamic {
     storage_destination_options: std
     ::option
     ::Option<
-        terrars::DynamicBlock<StorageInsightsReportConfigObjectMetadataReportOptionsElStorageDestinationOptionsEl>,
+        terrars::DynamicBlock<StorageInsightsReportConfig_ObjectMetadataReportOptions_StorageDestinationOptions>,
     >,
     storage_filters: std
     ::option
-    ::Option<terrars::DynamicBlock<StorageInsightsReportConfigObjectMetadataReportOptionsElStorageFiltersEl>>,
+    ::Option<terrars::DynamicBlock<StorageInsightsReportConfig_ObjectMetadataReportOptions_StorageFilters>>,
 }
 
 #[derive(Serialize)]
-pub struct StorageInsightsReportConfigObjectMetadataReportOptionsEl {
+pub struct StorageInsightsReportConfig_ObjectMetadataReportOptions {
     metadata_fields: terrars::ListField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     storage_destination_options: std
     ::option
-    ::Option<std::vec::Vec<StorageInsightsReportConfigObjectMetadataReportOptionsElStorageDestinationOptionsEl>>,
+    ::Option<std::vec::Vec<StorageInsightsReportConfig_ObjectMetadataReportOptions_StorageDestinationOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     storage_filters: std
     ::option
-    ::Option<std::vec::Vec<StorageInsightsReportConfigObjectMetadataReportOptionsElStorageFiltersEl>>,
-    dynamic: StorageInsightsReportConfigObjectMetadataReportOptionsElDynamic,
+    ::Option<std::vec::Vec<StorageInsightsReportConfig_ObjectMetadataReportOptions_StorageFilters>>,
+    dynamic: StorageInsightsReportConfig_ObjectMetadataReportOptionsDynamic,
 }
 
-impl StorageInsightsReportConfigObjectMetadataReportOptionsEl {
+impl StorageInsightsReportConfig_ObjectMetadataReportOptions {
     #[doc = "Set the field `storage_destination_options`.\n"]
     pub fn set_storage_destination_options(
         mut self,
@@ -985,7 +1074,7 @@ impl StorageInsightsReportConfigObjectMetadataReportOptionsEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            StorageInsightsReportConfigObjectMetadataReportOptionsElStorageDestinationOptionsEl,
+                            StorageInsightsReportConfig_ObjectMetadataReportOptions_StorageDestinationOptions,
                         >,
                     >,
     ) -> Self {
@@ -1010,7 +1099,7 @@ impl StorageInsightsReportConfigObjectMetadataReportOptionsEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<StorageInsightsReportConfigObjectMetadataReportOptionsElStorageFiltersEl>,
+                        ::BlockAssignable<StorageInsightsReportConfig_ObjectMetadataReportOptions_StorageFilters>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1025,8 +1114,8 @@ impl StorageInsightsReportConfigObjectMetadataReportOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for StorageInsightsReportConfigObjectMetadataReportOptionsEl {
-    type O = terrars::BlockAssignable<StorageInsightsReportConfigObjectMetadataReportOptionsEl>;
+impl terrars::ToListMappable for StorageInsightsReportConfig_ObjectMetadataReportOptions {
+    type O = terrars::BlockAssignable<StorageInsightsReportConfig_ObjectMetadataReportOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1037,14 +1126,14 @@ impl terrars::ToListMappable for StorageInsightsReportConfigObjectMetadataReport
     }
 }
 
-pub struct BuildStorageInsightsReportConfigObjectMetadataReportOptionsEl {
+pub struct BuildStorageInsightsReportConfig_ObjectMetadataReportOptions {
     #[doc = "The metadata fields included in an inventory report."]
     pub metadata_fields: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildStorageInsightsReportConfigObjectMetadataReportOptionsEl {
-    pub fn build(self) -> StorageInsightsReportConfigObjectMetadataReportOptionsEl {
-        StorageInsightsReportConfigObjectMetadataReportOptionsEl {
+impl BuildStorageInsightsReportConfig_ObjectMetadataReportOptions {
+    pub fn build(self) -> StorageInsightsReportConfig_ObjectMetadataReportOptions {
+        StorageInsightsReportConfig_ObjectMetadataReportOptions {
             metadata_fields: self.metadata_fields,
             storage_destination_options: core::default::Default::default(),
             storage_filters: core::default::Default::default(),
@@ -1053,24 +1142,26 @@ impl BuildStorageInsightsReportConfigObjectMetadataReportOptionsEl {
     }
 }
 
-pub struct StorageInsightsReportConfigObjectMetadataReportOptionsElRef {
+#[allow(dead_code)]
+pub struct StorageInsightsReportConfig_ObjectMetadataReportOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for StorageInsightsReportConfigObjectMetadataReportOptionsElRef {
+impl terrars::Ref for StorageInsightsReportConfig_ObjectMetadataReportOptionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> StorageInsightsReportConfigObjectMetadataReportOptionsElRef {
-        StorageInsightsReportConfigObjectMetadataReportOptionsElRef {
+    ) -> StorageInsightsReportConfig_ObjectMetadataReportOptionsRef {
+        StorageInsightsReportConfig_ObjectMetadataReportOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl StorageInsightsReportConfigObjectMetadataReportOptionsElRef {
+impl StorageInsightsReportConfig_ObjectMetadataReportOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1084,20 +1175,67 @@ impl StorageInsightsReportConfigObjectMetadataReportOptionsElRef {
     #[doc = "Get a reference to the value of field `storage_destination_options` after provisioning.\n"]
     pub fn storage_destination_options(
         &self,
-    ) -> terrars::ListRef<StorageInsightsReportConfigObjectMetadataReportOptionsElStorageDestinationOptionsElRef> {
+    ) -> terrars::ListRef<StorageInsightsReportConfig_ObjectMetadataReportOptions_StorageDestinationOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.storage_destination_options", self.base))
     }
 
     #[doc = "Get a reference to the value of field `storage_filters` after provisioning.\n"]
     pub fn storage_filters(
         &self,
-    ) -> terrars::ListRef<StorageInsightsReportConfigObjectMetadataReportOptionsElStorageFiltersElRef> {
+    ) -> terrars::ListRef<StorageInsightsReportConfig_ObjectMetadataReportOptions_StorageFiltersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.storage_filters", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct StorageInsightsReportConfigTimeoutsEl {
+pub struct StorageInsightsReportConfig_ParquetOptions {}
+
+impl StorageInsightsReportConfig_ParquetOptions { }
+
+impl terrars::ToListMappable for StorageInsightsReportConfig_ParquetOptions {
+    type O = terrars::BlockAssignable<StorageInsightsReportConfig_ParquetOptions>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildStorageInsightsReportConfig_ParquetOptions {}
+
+impl BuildStorageInsightsReportConfig_ParquetOptions {
+    pub fn build(self) -> StorageInsightsReportConfig_ParquetOptions {
+        StorageInsightsReportConfig_ParquetOptions {}
+    }
+}
+
+#[allow(dead_code)]
+pub struct StorageInsightsReportConfig_ParquetOptionsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for StorageInsightsReportConfig_ParquetOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> StorageInsightsReportConfig_ParquetOptionsRef {
+        StorageInsightsReportConfig_ParquetOptionsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl StorageInsightsReportConfig_ParquetOptionsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+}
+
+#[derive(Serialize)]
+pub struct StorageInsightsReportConfig_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1106,7 +1244,7 @@ pub struct StorageInsightsReportConfigTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl StorageInsightsReportConfigTimeoutsEl {
+impl StorageInsightsReportConfig_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1126,8 +1264,8 @@ impl StorageInsightsReportConfigTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for StorageInsightsReportConfigTimeoutsEl {
-    type O = terrars::BlockAssignable<StorageInsightsReportConfigTimeoutsEl>;
+impl terrars::ToListMappable for StorageInsightsReportConfig_Timeouts {
+    type O = terrars::BlockAssignable<StorageInsightsReportConfig_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1138,11 +1276,11 @@ impl terrars::ToListMappable for StorageInsightsReportConfigTimeoutsEl {
     }
 }
 
-pub struct BuildStorageInsightsReportConfigTimeoutsEl {}
+pub struct BuildStorageInsightsReportConfig_Timeouts {}
 
-impl BuildStorageInsightsReportConfigTimeoutsEl {
-    pub fn build(self) -> StorageInsightsReportConfigTimeoutsEl {
-        StorageInsightsReportConfigTimeoutsEl {
+impl BuildStorageInsightsReportConfig_Timeouts {
+    pub fn build(self) -> StorageInsightsReportConfig_Timeouts {
+        StorageInsightsReportConfig_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1150,21 +1288,23 @@ impl BuildStorageInsightsReportConfigTimeoutsEl {
     }
 }
 
-pub struct StorageInsightsReportConfigTimeoutsElRef {
+#[allow(dead_code)]
+pub struct StorageInsightsReportConfig_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for StorageInsightsReportConfigTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> StorageInsightsReportConfigTimeoutsElRef {
-        StorageInsightsReportConfigTimeoutsElRef {
+impl terrars::Ref for StorageInsightsReportConfig_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> StorageInsightsReportConfig_TimeoutsRef {
+        StorageInsightsReportConfig_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl StorageInsightsReportConfigTimeoutsElRef {
+impl StorageInsightsReportConfig_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1183,13 +1323,4 @@ impl StorageInsightsReportConfigTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct StorageInsightsReportConfigDynamic {
-    csv_options: std::option::Option<terrars::DynamicBlock<StorageInsightsReportConfigCsvOptionsEl>>,
-    frequency_options: std::option::Option<terrars::DynamicBlock<StorageInsightsReportConfigFrequencyOptionsEl>>,
-    object_metadata_report_options: std
-    ::option
-    ::Option<terrars::DynamicBlock<StorageInsightsReportConfigObjectMetadataReportOptionsEl>>,
 }

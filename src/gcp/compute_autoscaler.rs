@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeAutoscalerData {
+struct ComputeAutoscalerData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct ComputeAutoscalerData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -29,16 +33,16 @@ struct ComputeAutoscalerData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     zone: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    autoscaling_policy: std::option::Option<std::vec::Vec<ComputeAutoscalerAutoscalingPolicyEl>>,
+    autoscaling_policy: std::option::Option<std::vec::Vec<ComputeAutoscaler_AutoscalingPolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComputeAutoscalerTimeoutsEl>,
+    timeouts: std::option::Option<ComputeAutoscaler_Timeouts>,
     dynamic: ComputeAutoscalerDynamic,
 }
 
 struct ComputeAutoscaler_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeAutoscalerData>,
+    data: std::cell::RefCell<ComputeAutoscalerData_>,
 }
 
 #[derive(Clone)]
@@ -138,6 +142,13 @@ impl ComputeAutoscaler {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nAn optional description of this resource."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -165,7 +176,7 @@ impl ComputeAutoscaler {
     #[doc = "Set the field `autoscaling_policy`.\n"]
     pub fn set_autoscaling_policy(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeAutoscalerAutoscalingPolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeAutoscaler_AutoscalingPolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -179,7 +190,7 @@ impl ComputeAutoscaler {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeAutoscalerTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeAutoscaler_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -188,6 +199,12 @@ impl ComputeAutoscaler {
         "Get a reference to the value of field `creation_timestamp` after provisioning.\nCreation timestamp in RFC3339 text format."]
     pub fn creation_timestamp(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_timestamp", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -230,13 +247,13 @@ impl ComputeAutoscaler {
     }
 
     #[doc = "Get a reference to the value of field `autoscaling_policy` after provisioning.\n"]
-    pub fn autoscaling_policy(&self) -> terrars::ListRef<ComputeAutoscalerAutoscalingPolicyElRef> {
+    pub fn autoscaling_policy(&self) -> terrars::ListRef<ComputeAutoscaler_AutoscalingPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.autoscaling_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeAutoscalerTimeoutsElRef {
-        ComputeAutoscalerTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeAutoscaler_TimeoutsRef {
+        ComputeAutoscaler_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -285,12 +302,13 @@ impl BuildComputeAutoscaler {
         let out = ComputeAutoscaler(std::rc::Rc::new(ComputeAutoscaler_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeAutoscalerData {
+            data: std::cell::RefCell::new(ComputeAutoscalerData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
@@ -337,6 +355,12 @@ impl ComputeAutoscalerRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nAn optional description of this resource."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -376,24 +400,29 @@ impl ComputeAutoscalerRef {
     }
 
     #[doc = "Get a reference to the value of field `autoscaling_policy` after provisioning.\n"]
-    pub fn autoscaling_policy(&self) -> terrars::ListRef<ComputeAutoscalerAutoscalingPolicyElRef> {
+    pub fn autoscaling_policy(&self) -> terrars::ListRef<ComputeAutoscaler_AutoscalingPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.autoscaling_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeAutoscalerTimeoutsElRef {
-        ComputeAutoscalerTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeAutoscaler_TimeoutsRef {
+        ComputeAutoscaler_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ComputeAutoscalerDynamic {
+    autoscaling_policy: std::option::Option<terrars::DynamicBlock<ComputeAutoscaler_AutoscalingPolicy>>,
+}
+
 #[derive(Serialize)]
-pub struct ComputeAutoscalerAutoscalingPolicyElCpuUtilizationEl {
+pub struct ComputeAutoscaler_AutoscalingPolicy_CpuUtilization {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     predictive_method: std::option::Option<terrars::PrimField<std::string::String>>,
     target: terrars::PrimField<f64>,
 }
 
-impl ComputeAutoscalerAutoscalingPolicyElCpuUtilizationEl {
+impl ComputeAutoscaler_AutoscalingPolicy_CpuUtilization {
     #[doc =
         "Set the field `predictive_method`.\nIndicates whether predictive autoscaling based on CPU metric is enabled. Valid values are:\n\n- NONE (default). No predictive method is used. The autoscaler scales the group to meet current demand based on real-time metrics.\n\n- OPTIMIZE_AVAILABILITY. Predictive autoscaling improves availability by monitoring daily and weekly load patterns and scaling out ahead of anticipated demand."]
     pub fn set_predictive_method(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -402,8 +431,8 @@ impl ComputeAutoscalerAutoscalingPolicyElCpuUtilizationEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeAutoscalerAutoscalingPolicyElCpuUtilizationEl {
-    type O = terrars::BlockAssignable<ComputeAutoscalerAutoscalingPolicyElCpuUtilizationEl>;
+impl terrars::ToListMappable for ComputeAutoscaler_AutoscalingPolicy_CpuUtilization {
+    type O = terrars::BlockAssignable<ComputeAutoscaler_AutoscalingPolicy_CpuUtilization>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -414,39 +443,41 @@ impl terrars::ToListMappable for ComputeAutoscalerAutoscalingPolicyElCpuUtilizat
     }
 }
 
-pub struct BuildComputeAutoscalerAutoscalingPolicyElCpuUtilizationEl {
+pub struct BuildComputeAutoscaler_AutoscalingPolicy_CpuUtilization {
     #[doc =
         "The target CPU utilization that the autoscaler should maintain.\nMust be a float value in the range (0, 1]. If not specified, the\ndefault is 0.6.\n\nIf the CPU level is below the target utilization, the autoscaler\nscales down the number of instances until it reaches the minimum\nnumber of instances you specified or until the average CPU of\nyour instances reaches the target utilization.\n\nIf the average CPU is above the target utilization, the autoscaler\nscales up until it reaches the maximum number of instances you\nspecified or until the average utilization reaches the target\nutilization."]
     pub target: terrars::PrimField<f64>,
 }
 
-impl BuildComputeAutoscalerAutoscalingPolicyElCpuUtilizationEl {
-    pub fn build(self) -> ComputeAutoscalerAutoscalingPolicyElCpuUtilizationEl {
-        ComputeAutoscalerAutoscalingPolicyElCpuUtilizationEl {
+impl BuildComputeAutoscaler_AutoscalingPolicy_CpuUtilization {
+    pub fn build(self) -> ComputeAutoscaler_AutoscalingPolicy_CpuUtilization {
+        ComputeAutoscaler_AutoscalingPolicy_CpuUtilization {
             predictive_method: core::default::Default::default(),
             target: self.target,
         }
     }
 }
 
-pub struct ComputeAutoscalerAutoscalingPolicyElCpuUtilizationElRef {
+#[allow(dead_code)]
+pub struct ComputeAutoscaler_AutoscalingPolicy_CpuUtilizationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeAutoscalerAutoscalingPolicyElCpuUtilizationElRef {
+impl terrars::Ref for ComputeAutoscaler_AutoscalingPolicy_CpuUtilizationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeAutoscalerAutoscalingPolicyElCpuUtilizationElRef {
-        ComputeAutoscalerAutoscalingPolicyElCpuUtilizationElRef {
+    ) -> ComputeAutoscaler_AutoscalingPolicy_CpuUtilizationRef {
+        ComputeAutoscaler_AutoscalingPolicy_CpuUtilizationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeAutoscalerAutoscalingPolicyElCpuUtilizationElRef {
+impl ComputeAutoscaler_AutoscalingPolicy_CpuUtilizationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -465,14 +496,14 @@ impl ComputeAutoscalerAutoscalingPolicyElCpuUtilizationElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeAutoscalerAutoscalingPolicyElLoadBalancingUtilizationEl {
+pub struct ComputeAutoscaler_AutoscalingPolicy_LoadBalancingUtilization {
     target: terrars::PrimField<f64>,
 }
 
-impl ComputeAutoscalerAutoscalingPolicyElLoadBalancingUtilizationEl { }
+impl ComputeAutoscaler_AutoscalingPolicy_LoadBalancingUtilization { }
 
-impl terrars::ToListMappable for ComputeAutoscalerAutoscalingPolicyElLoadBalancingUtilizationEl {
-    type O = terrars::BlockAssignable<ComputeAutoscalerAutoscalingPolicyElLoadBalancingUtilizationEl>;
+impl terrars::ToListMappable for ComputeAutoscaler_AutoscalingPolicy_LoadBalancingUtilization {
+    type O = terrars::BlockAssignable<ComputeAutoscaler_AutoscalingPolicy_LoadBalancingUtilization>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -483,36 +514,38 @@ impl terrars::ToListMappable for ComputeAutoscalerAutoscalingPolicyElLoadBalanci
     }
 }
 
-pub struct BuildComputeAutoscalerAutoscalingPolicyElLoadBalancingUtilizationEl {
+pub struct BuildComputeAutoscaler_AutoscalingPolicy_LoadBalancingUtilization {
     #[doc =
         "Fraction of backend capacity utilization (set in HTTP(s) load\nbalancing configuration) that autoscaler should maintain. Must\nbe a positive float value. If not defined, the default is 0.8."]
     pub target: terrars::PrimField<f64>,
 }
 
-impl BuildComputeAutoscalerAutoscalingPolicyElLoadBalancingUtilizationEl {
-    pub fn build(self) -> ComputeAutoscalerAutoscalingPolicyElLoadBalancingUtilizationEl {
-        ComputeAutoscalerAutoscalingPolicyElLoadBalancingUtilizationEl { target: self.target }
+impl BuildComputeAutoscaler_AutoscalingPolicy_LoadBalancingUtilization {
+    pub fn build(self) -> ComputeAutoscaler_AutoscalingPolicy_LoadBalancingUtilization {
+        ComputeAutoscaler_AutoscalingPolicy_LoadBalancingUtilization { target: self.target }
     }
 }
 
-pub struct ComputeAutoscalerAutoscalingPolicyElLoadBalancingUtilizationElRef {
+#[allow(dead_code)]
+pub struct ComputeAutoscaler_AutoscalingPolicy_LoadBalancingUtilizationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeAutoscalerAutoscalingPolicyElLoadBalancingUtilizationElRef {
+impl terrars::Ref for ComputeAutoscaler_AutoscalingPolicy_LoadBalancingUtilizationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeAutoscalerAutoscalingPolicyElLoadBalancingUtilizationElRef {
-        ComputeAutoscalerAutoscalingPolicyElLoadBalancingUtilizationElRef {
+    ) -> ComputeAutoscaler_AutoscalingPolicy_LoadBalancingUtilizationRef {
+        ComputeAutoscaler_AutoscalingPolicy_LoadBalancingUtilizationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeAutoscalerAutoscalingPolicyElLoadBalancingUtilizationElRef {
+impl ComputeAutoscaler_AutoscalingPolicy_LoadBalancingUtilizationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -525,15 +558,33 @@ impl ComputeAutoscalerAutoscalingPolicyElLoadBalancingUtilizationElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeAutoscalerAutoscalingPolicyElMetricEl {
+pub struct ComputeAutoscaler_AutoscalingPolicy_Metric {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    filter: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    single_instance_assignment: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     target: std::option::Option<terrars::PrimField<f64>>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeAutoscalerAutoscalingPolicyElMetricEl {
+impl ComputeAutoscaler_AutoscalingPolicy_Metric {
+    #[doc =
+        "Set the field `filter`.\nA filter string to be used as the filter string for\na Stackdriver Monitoring TimeSeries.list API call.\nThis filter is used to select a specific TimeSeries for\nthe purpose of autoscaling and to determine whether the metric\nis exporting per-instance or per-group data.\n\nYou can only use the AND operator for joining selectors.\nYou can only use direct equality comparison operator (=) without\nany functions for each selector.\nYou can specify the metric in both the filter string and in the\nmetric field. However, if specified in both places, the metric must\nbe identical.\n\nThe monitored resource type determines what kind of values are\nexpected for the metric. If it is a gce_instance, the autoscaler\nexpects the metric to include a separate TimeSeries for each\ninstance in a group. In such a case, you cannot filter on resource\nlabels.\n\nIf the resource type is any other value, the autoscaler expects\nthis metric to contain values that apply to the entire autoscaled\ninstance group and resource label filtering can be performed to\npoint autoscaler at the correct TimeSeries to scale upon.\nThis is called a per-group metric for the purpose of autoscaling.\n\nIf not specified, the type defaults to gce_instance.\n\nYou should provide a filter that is selective enough to pick just\none TimeSeries for the autoscaled group or for each of the instances\n(if you are using gce_instance resource type). If multiple\nTimeSeries are returned upon the query execution, the autoscaler\nwill sum their respective values to obtain its scaling value."]
+    pub fn set_filter(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.filter = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `single_instance_assignment`.\nIf scaling is based on a per-group metric value that represents the\ntotal amount of work to be done or resource usage, set this value to\nan amount assigned for a single instance of the scaled group.\nThe autoscaler will keep the number of instances proportional to the\nvalue of this metric, the metric itself should not change value due\nto group resizing.\n\nFor example, a good metric to use with the target is\n'pubsub.googleapis.com/subscription/num_undelivered_messages'\nor a custom metric exporting the total number of requests coming to\nyour instances.\n\nA bad example would be a metric exporting an average or median\nlatency, since this value can't include a chunk assignable to a\nsingle instance, it could be better used with utilization_target\ninstead."]
+    pub fn set_single_instance_assignment(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.single_instance_assignment = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc =
         "Set the field `target`.\nThe target value of the metric that autoscaler should\nmaintain. This must be a positive value. A utilization\nmetric scales number of virtual machines handling requests\nto increase or decrease proportionally to the metric.\n\nFor example, a good metric to use as a utilizationTarget is\nwww.googleapis.com/compute/instance/network/received_bytes_count.\nThe autoscaler will work to keep this value constant for each\nof the instances."]
     pub fn set_target(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -549,8 +600,8 @@ impl ComputeAutoscalerAutoscalingPolicyElMetricEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeAutoscalerAutoscalingPolicyElMetricEl {
-    type O = terrars::BlockAssignable<ComputeAutoscalerAutoscalingPolicyElMetricEl>;
+impl terrars::ToListMappable for ComputeAutoscaler_AutoscalingPolicy_Metric {
+    type O = terrars::BlockAssignable<ComputeAutoscaler_AutoscalingPolicy_Metric>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -561,48 +612,61 @@ impl terrars::ToListMappable for ComputeAutoscalerAutoscalingPolicyElMetricEl {
     }
 }
 
-pub struct BuildComputeAutoscalerAutoscalingPolicyElMetricEl {
+pub struct BuildComputeAutoscaler_AutoscalingPolicy_Metric {
     #[doc =
         "The identifier (type) of the Stackdriver Monitoring metric.\nThe metric cannot have negative values.\n\nThe metric must have a value type of INT64 or DOUBLE."]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputeAutoscalerAutoscalingPolicyElMetricEl {
-    pub fn build(self) -> ComputeAutoscalerAutoscalingPolicyElMetricEl {
-        ComputeAutoscalerAutoscalingPolicyElMetricEl {
+impl BuildComputeAutoscaler_AutoscalingPolicy_Metric {
+    pub fn build(self) -> ComputeAutoscaler_AutoscalingPolicy_Metric {
+        ComputeAutoscaler_AutoscalingPolicy_Metric {
+            filter: core::default::Default::default(),
             name: self.name,
+            single_instance_assignment: core::default::Default::default(),
             target: core::default::Default::default(),
             type_: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeAutoscalerAutoscalingPolicyElMetricElRef {
+#[allow(dead_code)]
+pub struct ComputeAutoscaler_AutoscalingPolicy_MetricRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeAutoscalerAutoscalingPolicyElMetricElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ComputeAutoscalerAutoscalingPolicyElMetricElRef {
-        ComputeAutoscalerAutoscalingPolicyElMetricElRef {
+impl terrars::Ref for ComputeAutoscaler_AutoscalingPolicy_MetricRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeAutoscaler_AutoscalingPolicy_MetricRef {
+        ComputeAutoscaler_AutoscalingPolicy_MetricRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeAutoscalerAutoscalingPolicyElMetricElRef {
+impl ComputeAutoscaler_AutoscalingPolicy_MetricRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `filter` after provisioning.\nA filter string to be used as the filter string for\na Stackdriver Monitoring TimeSeries.list API call.\nThis filter is used to select a specific TimeSeries for\nthe purpose of autoscaling and to determine whether the metric\nis exporting per-instance or per-group data.\n\nYou can only use the AND operator for joining selectors.\nYou can only use direct equality comparison operator (=) without\nany functions for each selector.\nYou can specify the metric in both the filter string and in the\nmetric field. However, if specified in both places, the metric must\nbe identical.\n\nThe monitored resource type determines what kind of values are\nexpected for the metric. If it is a gce_instance, the autoscaler\nexpects the metric to include a separate TimeSeries for each\ninstance in a group. In such a case, you cannot filter on resource\nlabels.\n\nIf the resource type is any other value, the autoscaler expects\nthis metric to contain values that apply to the entire autoscaled\ninstance group and resource label filtering can be performed to\npoint autoscaler at the correct TimeSeries to scale upon.\nThis is called a per-group metric for the purpose of autoscaling.\n\nIf not specified, the type defaults to gce_instance.\n\nYou should provide a filter that is selective enough to pick just\none TimeSeries for the autoscaled group or for each of the instances\n(if you are using gce_instance resource type). If multiple\nTimeSeries are returned upon the query execution, the autoscaler\nwill sum their respective values to obtain its scaling value."]
+    pub fn filter(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.filter", self.base))
     }
 
     #[doc =
         "Get a reference to the value of field `name` after provisioning.\nThe identifier (type) of the Stackdriver Monitoring metric.\nThe metric cannot have negative values.\n\nThe metric must have a value type of INT64 or DOUBLE."]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `single_instance_assignment` after provisioning.\nIf scaling is based on a per-group metric value that represents the\ntotal amount of work to be done or resource usage, set this value to\nan amount assigned for a single instance of the scaled group.\nThe autoscaler will keep the number of instances proportional to the\nvalue of this metric, the metric itself should not change value due\nto group resizing.\n\nFor example, a good metric to use with the target is\n'pubsub.googleapis.com/subscription/num_undelivered_messages'\nor a custom metric exporting the total number of requests coming to\nyour instances.\n\nA bad example would be a metric exporting an average or median\nlatency, since this value can't include a chunk assignable to a\nsingle instance, it could be better used with utilization_target\ninstead."]
+    pub fn single_instance_assignment(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.single_instance_assignment", self.base))
     }
 
     #[doc =
@@ -619,14 +683,14 @@ impl ComputeAutoscalerAutoscalingPolicyElMetricElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeAutoscalerAutoscalingPolicyElScaleInControlElMaxScaledInReplicasEl {
+pub struct ComputeAutoscaler_AutoscalingPolicy_ScaleInControl_MaxScaledInReplicas {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     fixed: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     percent: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl ComputeAutoscalerAutoscalingPolicyElScaleInControlElMaxScaledInReplicasEl {
+impl ComputeAutoscaler_AutoscalingPolicy_ScaleInControl_MaxScaledInReplicas {
     #[doc = "Set the field `fixed`.\nSpecifies a fixed number of VM instances. This must be a positive\ninteger."]
     pub fn set_fixed(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.fixed = std::option::Option::Some(v.into());
@@ -641,8 +705,8 @@ impl ComputeAutoscalerAutoscalingPolicyElScaleInControlElMaxScaledInReplicasEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeAutoscalerAutoscalingPolicyElScaleInControlElMaxScaledInReplicasEl {
-    type O = terrars::BlockAssignable<ComputeAutoscalerAutoscalingPolicyElScaleInControlElMaxScaledInReplicasEl>;
+impl terrars::ToListMappable for ComputeAutoscaler_AutoscalingPolicy_ScaleInControl_MaxScaledInReplicas {
+    type O = terrars::BlockAssignable<ComputeAutoscaler_AutoscalingPolicy_ScaleInControl_MaxScaledInReplicas>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -653,35 +717,37 @@ impl terrars::ToListMappable for ComputeAutoscalerAutoscalingPolicyElScaleInCont
     }
 }
 
-pub struct BuildComputeAutoscalerAutoscalingPolicyElScaleInControlElMaxScaledInReplicasEl {}
+pub struct BuildComputeAutoscaler_AutoscalingPolicy_ScaleInControl_MaxScaledInReplicas {}
 
-impl BuildComputeAutoscalerAutoscalingPolicyElScaleInControlElMaxScaledInReplicasEl {
-    pub fn build(self) -> ComputeAutoscalerAutoscalingPolicyElScaleInControlElMaxScaledInReplicasEl {
-        ComputeAutoscalerAutoscalingPolicyElScaleInControlElMaxScaledInReplicasEl {
+impl BuildComputeAutoscaler_AutoscalingPolicy_ScaleInControl_MaxScaledInReplicas {
+    pub fn build(self) -> ComputeAutoscaler_AutoscalingPolicy_ScaleInControl_MaxScaledInReplicas {
+        ComputeAutoscaler_AutoscalingPolicy_ScaleInControl_MaxScaledInReplicas {
             fixed: core::default::Default::default(),
             percent: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeAutoscalerAutoscalingPolicyElScaleInControlElMaxScaledInReplicasElRef {
+#[allow(dead_code)]
+pub struct ComputeAutoscaler_AutoscalingPolicy_ScaleInControl_MaxScaledInReplicasRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeAutoscalerAutoscalingPolicyElScaleInControlElMaxScaledInReplicasElRef {
+impl terrars::Ref for ComputeAutoscaler_AutoscalingPolicy_ScaleInControl_MaxScaledInReplicasRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeAutoscalerAutoscalingPolicyElScaleInControlElMaxScaledInReplicasElRef {
-        ComputeAutoscalerAutoscalingPolicyElScaleInControlElMaxScaledInReplicasElRef {
+    ) -> ComputeAutoscaler_AutoscalingPolicy_ScaleInControl_MaxScaledInReplicasRef {
+        ComputeAutoscaler_AutoscalingPolicy_ScaleInControl_MaxScaledInReplicasRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeAutoscalerAutoscalingPolicyElScaleInControlElMaxScaledInReplicasElRef {
+impl ComputeAutoscaler_AutoscalingPolicy_ScaleInControl_MaxScaledInReplicasRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -700,24 +766,24 @@ impl ComputeAutoscalerAutoscalingPolicyElScaleInControlElMaxScaledInReplicasElRe
 }
 
 #[derive(Serialize, Default)]
-struct ComputeAutoscalerAutoscalingPolicyElScaleInControlElDynamic {
+struct ComputeAutoscaler_AutoscalingPolicy_ScaleInControlDynamic {
     max_scaled_in_replicas: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeAutoscalerAutoscalingPolicyElScaleInControlElMaxScaledInReplicasEl>>,
+    ::Option<terrars::DynamicBlock<ComputeAutoscaler_AutoscalingPolicy_ScaleInControl_MaxScaledInReplicas>>,
 }
 
 #[derive(Serialize)]
-pub struct ComputeAutoscalerAutoscalingPolicyElScaleInControlEl {
+pub struct ComputeAutoscaler_AutoscalingPolicy_ScaleInControl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     time_window_sec: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max_scaled_in_replicas: std
     ::option
-    ::Option<std::vec::Vec<ComputeAutoscalerAutoscalingPolicyElScaleInControlElMaxScaledInReplicasEl>>,
-    dynamic: ComputeAutoscalerAutoscalingPolicyElScaleInControlElDynamic,
+    ::Option<std::vec::Vec<ComputeAutoscaler_AutoscalingPolicy_ScaleInControl_MaxScaledInReplicas>>,
+    dynamic: ComputeAutoscaler_AutoscalingPolicy_ScaleInControlDynamic,
 }
 
-impl ComputeAutoscalerAutoscalingPolicyElScaleInControlEl {
+impl ComputeAutoscaler_AutoscalingPolicy_ScaleInControl {
     #[doc =
         "Set the field `time_window_sec`.\nHow long back autoscaling should look when computing recommendations\nto include directives regarding slower scale down, as described above."]
     pub fn set_time_window_sec(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -735,7 +801,7 @@ impl ComputeAutoscalerAutoscalingPolicyElScaleInControlEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<ComputeAutoscalerAutoscalingPolicyElScaleInControlElMaxScaledInReplicasEl>,
+                        ::BlockAssignable<ComputeAutoscaler_AutoscalingPolicy_ScaleInControl_MaxScaledInReplicas>,
                     >,
     ) -> Self {
         match v.into() {
@@ -750,8 +816,8 @@ impl ComputeAutoscalerAutoscalingPolicyElScaleInControlEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeAutoscalerAutoscalingPolicyElScaleInControlEl {
-    type O = terrars::BlockAssignable<ComputeAutoscalerAutoscalingPolicyElScaleInControlEl>;
+impl terrars::ToListMappable for ComputeAutoscaler_AutoscalingPolicy_ScaleInControl {
+    type O = terrars::BlockAssignable<ComputeAutoscaler_AutoscalingPolicy_ScaleInControl>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -762,11 +828,11 @@ impl terrars::ToListMappable for ComputeAutoscalerAutoscalingPolicyElScaleInCont
     }
 }
 
-pub struct BuildComputeAutoscalerAutoscalingPolicyElScaleInControlEl {}
+pub struct BuildComputeAutoscaler_AutoscalingPolicy_ScaleInControl {}
 
-impl BuildComputeAutoscalerAutoscalingPolicyElScaleInControlEl {
-    pub fn build(self) -> ComputeAutoscalerAutoscalingPolicyElScaleInControlEl {
-        ComputeAutoscalerAutoscalingPolicyElScaleInControlEl {
+impl BuildComputeAutoscaler_AutoscalingPolicy_ScaleInControl {
+    pub fn build(self) -> ComputeAutoscaler_AutoscalingPolicy_ScaleInControl {
+        ComputeAutoscaler_AutoscalingPolicy_ScaleInControl {
             time_window_sec: core::default::Default::default(),
             max_scaled_in_replicas: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -774,24 +840,26 @@ impl BuildComputeAutoscalerAutoscalingPolicyElScaleInControlEl {
     }
 }
 
-pub struct ComputeAutoscalerAutoscalingPolicyElScaleInControlElRef {
+#[allow(dead_code)]
+pub struct ComputeAutoscaler_AutoscalingPolicy_ScaleInControlRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeAutoscalerAutoscalingPolicyElScaleInControlElRef {
+impl terrars::Ref for ComputeAutoscaler_AutoscalingPolicy_ScaleInControlRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeAutoscalerAutoscalingPolicyElScaleInControlElRef {
-        ComputeAutoscalerAutoscalingPolicyElScaleInControlElRef {
+    ) -> ComputeAutoscaler_AutoscalingPolicy_ScaleInControlRef {
+        ComputeAutoscaler_AutoscalingPolicy_ScaleInControlRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeAutoscalerAutoscalingPolicyElScaleInControlElRef {
+impl ComputeAutoscaler_AutoscalingPolicy_ScaleInControlRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -805,13 +873,13 @@ impl ComputeAutoscalerAutoscalingPolicyElScaleInControlElRef {
     #[doc = "Get a reference to the value of field `max_scaled_in_replicas` after provisioning.\n"]
     pub fn max_scaled_in_replicas(
         &self,
-    ) -> terrars::ListRef<ComputeAutoscalerAutoscalingPolicyElScaleInControlElMaxScaledInReplicasElRef> {
+    ) -> terrars::ListRef<ComputeAutoscaler_AutoscalingPolicy_ScaleInControl_MaxScaledInReplicasRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.max_scaled_in_replicas", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeAutoscalerAutoscalingPolicyElScalingSchedulesEl {
+pub struct ComputeAutoscaler_AutoscalingPolicy_ScalingSchedules {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -824,7 +892,7 @@ pub struct ComputeAutoscalerAutoscalingPolicyElScalingSchedulesEl {
     time_zone: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeAutoscalerAutoscalingPolicyElScalingSchedulesEl {
+impl ComputeAutoscaler_AutoscalingPolicy_ScalingSchedules {
     #[doc = "Set the field `description`.\nA description of a scaling schedule."]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -846,8 +914,8 @@ impl ComputeAutoscalerAutoscalingPolicyElScalingSchedulesEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeAutoscalerAutoscalingPolicyElScalingSchedulesEl {
-    type O = terrars::BlockAssignable<ComputeAutoscalerAutoscalingPolicyElScalingSchedulesEl>;
+impl terrars::ToListMappable for ComputeAutoscaler_AutoscalingPolicy_ScalingSchedules {
+    type O = terrars::BlockAssignable<ComputeAutoscaler_AutoscalingPolicy_ScalingSchedules>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -858,7 +926,7 @@ impl terrars::ToListMappable for ComputeAutoscalerAutoscalingPolicyElScalingSche
     }
 }
 
-pub struct BuildComputeAutoscalerAutoscalingPolicyElScalingSchedulesEl {
+pub struct BuildComputeAutoscaler_AutoscalingPolicy_ScalingSchedules {
     #[doc =
         "The duration of time intervals (in seconds) for which this scaling schedule will be running. The minimum allowed value is 300."]
     pub duration_sec: terrars::PrimField<f64>,
@@ -872,9 +940,9 @@ pub struct BuildComputeAutoscalerAutoscalingPolicyElScalingSchedulesEl {
     pub schedule: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputeAutoscalerAutoscalingPolicyElScalingSchedulesEl {
-    pub fn build(self) -> ComputeAutoscalerAutoscalingPolicyElScalingSchedulesEl {
-        ComputeAutoscalerAutoscalingPolicyElScalingSchedulesEl {
+impl BuildComputeAutoscaler_AutoscalingPolicy_ScalingSchedules {
+    pub fn build(self) -> ComputeAutoscaler_AutoscalingPolicy_ScalingSchedules {
+        ComputeAutoscaler_AutoscalingPolicy_ScalingSchedules {
             description: core::default::Default::default(),
             disabled: core::default::Default::default(),
             duration_sec: self.duration_sec,
@@ -886,24 +954,26 @@ impl BuildComputeAutoscalerAutoscalingPolicyElScalingSchedulesEl {
     }
 }
 
-pub struct ComputeAutoscalerAutoscalingPolicyElScalingSchedulesElRef {
+#[allow(dead_code)]
+pub struct ComputeAutoscaler_AutoscalingPolicy_ScalingSchedulesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeAutoscalerAutoscalingPolicyElScalingSchedulesElRef {
+impl terrars::Ref for ComputeAutoscaler_AutoscalingPolicy_ScalingSchedulesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeAutoscalerAutoscalingPolicyElScalingSchedulesElRef {
-        ComputeAutoscalerAutoscalingPolicyElScalingSchedulesElRef {
+    ) -> ComputeAutoscaler_AutoscalingPolicy_ScalingSchedulesRef {
+        ComputeAutoscaler_AutoscalingPolicy_ScalingSchedulesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeAutoscalerAutoscalingPolicyElScalingSchedulesElRef {
+impl ComputeAutoscaler_AutoscalingPolicy_ScalingSchedulesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -951,22 +1021,20 @@ impl ComputeAutoscalerAutoscalingPolicyElScalingSchedulesElRef {
 }
 
 #[derive(Serialize, Default)]
-struct ComputeAutoscalerAutoscalingPolicyElDynamic {
-    cpu_utilization: std::option::Option<terrars::DynamicBlock<ComputeAutoscalerAutoscalingPolicyElCpuUtilizationEl>>,
+struct ComputeAutoscaler_AutoscalingPolicyDynamic {
+    cpu_utilization: std::option::Option<terrars::DynamicBlock<ComputeAutoscaler_AutoscalingPolicy_CpuUtilization>>,
     load_balancing_utilization: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeAutoscalerAutoscalingPolicyElLoadBalancingUtilizationEl>>,
-    metric: std::option::Option<terrars::DynamicBlock<ComputeAutoscalerAutoscalingPolicyElMetricEl>>,
-    scale_in_control: std
-    ::option
-    ::Option<terrars::DynamicBlock<ComputeAutoscalerAutoscalingPolicyElScaleInControlEl>>,
+    ::Option<terrars::DynamicBlock<ComputeAutoscaler_AutoscalingPolicy_LoadBalancingUtilization>>,
+    metric: std::option::Option<terrars::DynamicBlock<ComputeAutoscaler_AutoscalingPolicy_Metric>>,
+    scale_in_control: std::option::Option<terrars::DynamicBlock<ComputeAutoscaler_AutoscalingPolicy_ScaleInControl>>,
     scaling_schedules: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeAutoscalerAutoscalingPolicyElScalingSchedulesEl>>,
+    ::Option<terrars::DynamicBlock<ComputeAutoscaler_AutoscalingPolicy_ScalingSchedules>>,
 }
 
 #[derive(Serialize)]
-pub struct ComputeAutoscalerAutoscalingPolicyEl {
+pub struct ComputeAutoscaler_AutoscalingPolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cooldown_period: std::option::Option<terrars::PrimField<f64>>,
     max_replicas: terrars::PrimField<f64>,
@@ -974,21 +1042,23 @@ pub struct ComputeAutoscalerAutoscalingPolicyEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     mode: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cpu_utilization: std::option::Option<std::vec::Vec<ComputeAutoscalerAutoscalingPolicyElCpuUtilizationEl>>,
+    stabilization_period: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cpu_utilization: std::option::Option<std::vec::Vec<ComputeAutoscaler_AutoscalingPolicy_CpuUtilization>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     load_balancing_utilization: std
     ::option
-    ::Option<std::vec::Vec<ComputeAutoscalerAutoscalingPolicyElLoadBalancingUtilizationEl>>,
+    ::Option<std::vec::Vec<ComputeAutoscaler_AutoscalingPolicy_LoadBalancingUtilization>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    metric: std::option::Option<std::vec::Vec<ComputeAutoscalerAutoscalingPolicyElMetricEl>>,
+    metric: std::option::Option<std::vec::Vec<ComputeAutoscaler_AutoscalingPolicy_Metric>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    scale_in_control: std::option::Option<std::vec::Vec<ComputeAutoscalerAutoscalingPolicyElScaleInControlEl>>,
+    scale_in_control: std::option::Option<std::vec::Vec<ComputeAutoscaler_AutoscalingPolicy_ScaleInControl>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    scaling_schedules: std::option::Option<std::vec::Vec<ComputeAutoscalerAutoscalingPolicyElScalingSchedulesEl>>,
-    dynamic: ComputeAutoscalerAutoscalingPolicyElDynamic,
+    scaling_schedules: std::option::Option<std::vec::Vec<ComputeAutoscaler_AutoscalingPolicy_ScalingSchedules>>,
+    dynamic: ComputeAutoscaler_AutoscalingPolicyDynamic,
 }
 
-impl ComputeAutoscalerAutoscalingPolicyEl {
+impl ComputeAutoscaler_AutoscalingPolicy {
     #[doc =
         "Set the field `cooldown_period`.\nThe number of seconds that the autoscaler should wait before it\nstarts collecting information from a new instance. This prevents\nthe autoscaler from collecting information when the instance is\ninitializing, during which the collected usage would not be\nreliable. The default time autoscaler waits is 60 seconds.\n\nVirtual machine initialization times might vary because of\nnumerous factors. We recommend that you test how long an\ninstance may take to initialize. To do this, create an instance\nand time the startup process."]
     pub fn set_cooldown_period(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -1002,10 +1072,17 @@ impl ComputeAutoscalerAutoscalingPolicyEl {
         self
     }
 
+    #[doc =
+        "Set the field `stabilization_period`.\nThe number of seconds that the autoscaler waits for load stabilization\nbefore making scale-in decisions.\n\nThis might appear as a delay in scaling in but it is an important mechanism\nfor your application to not have fluctuating size due to short term load\nfluctuations."]
+    pub fn set_stabilization_period(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.stabilization_period = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `cpu_utilization`.\n"]
     pub fn set_cpu_utilization(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeAutoscalerAutoscalingPolicyElCpuUtilizationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeAutoscaler_AutoscalingPolicy_CpuUtilization>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1026,7 +1103,7 @@ impl ComputeAutoscalerAutoscalingPolicyEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<ComputeAutoscalerAutoscalingPolicyElLoadBalancingUtilizationEl>>,
+                    ::Into<terrars::BlockAssignable<ComputeAutoscaler_AutoscalingPolicy_LoadBalancingUtilization>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1042,7 +1119,7 @@ impl ComputeAutoscalerAutoscalingPolicyEl {
     #[doc = "Set the field `metric`.\n"]
     pub fn set_metric(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeAutoscalerAutoscalingPolicyElMetricEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeAutoscaler_AutoscalingPolicy_Metric>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1058,7 +1135,7 @@ impl ComputeAutoscalerAutoscalingPolicyEl {
     #[doc = "Set the field `scale_in_control`.\n"]
     pub fn set_scale_in_control(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeAutoscalerAutoscalingPolicyElScaleInControlEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeAutoscaler_AutoscalingPolicy_ScaleInControl>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1074,7 +1151,7 @@ impl ComputeAutoscalerAutoscalingPolicyEl {
     #[doc = "Set the field `scaling_schedules`.\n"]
     pub fn set_scaling_schedules(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeAutoscalerAutoscalingPolicyElScalingSchedulesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeAutoscaler_AutoscalingPolicy_ScalingSchedules>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1088,8 +1165,8 @@ impl ComputeAutoscalerAutoscalingPolicyEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeAutoscalerAutoscalingPolicyEl {
-    type O = terrars::BlockAssignable<ComputeAutoscalerAutoscalingPolicyEl>;
+impl terrars::ToListMappable for ComputeAutoscaler_AutoscalingPolicy {
+    type O = terrars::BlockAssignable<ComputeAutoscaler_AutoscalingPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1100,7 +1177,7 @@ impl terrars::ToListMappable for ComputeAutoscalerAutoscalingPolicyEl {
     }
 }
 
-pub struct BuildComputeAutoscalerAutoscalingPolicyEl {
+pub struct BuildComputeAutoscaler_AutoscalingPolicy {
     #[doc =
         "The maximum number of instances that the autoscaler can scale up\nto. This is required when creating or updating an autoscaler. The\nmaximum number of replicas should not be lower than minimal number\nof replicas."]
     pub max_replicas: terrars::PrimField<f64>,
@@ -1109,13 +1186,14 @@ pub struct BuildComputeAutoscalerAutoscalingPolicyEl {
     pub min_replicas: terrars::PrimField<f64>,
 }
 
-impl BuildComputeAutoscalerAutoscalingPolicyEl {
-    pub fn build(self) -> ComputeAutoscalerAutoscalingPolicyEl {
-        ComputeAutoscalerAutoscalingPolicyEl {
+impl BuildComputeAutoscaler_AutoscalingPolicy {
+    pub fn build(self) -> ComputeAutoscaler_AutoscalingPolicy {
+        ComputeAutoscaler_AutoscalingPolicy {
             cooldown_period: core::default::Default::default(),
             max_replicas: self.max_replicas,
             min_replicas: self.min_replicas,
             mode: core::default::Default::default(),
+            stabilization_period: core::default::Default::default(),
             cpu_utilization: core::default::Default::default(),
             load_balancing_utilization: core::default::Default::default(),
             metric: core::default::Default::default(),
@@ -1126,21 +1204,23 @@ impl BuildComputeAutoscalerAutoscalingPolicyEl {
     }
 }
 
-pub struct ComputeAutoscalerAutoscalingPolicyElRef {
+#[allow(dead_code)]
+pub struct ComputeAutoscaler_AutoscalingPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeAutoscalerAutoscalingPolicyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeAutoscalerAutoscalingPolicyElRef {
-        ComputeAutoscalerAutoscalingPolicyElRef {
+impl terrars::Ref for ComputeAutoscaler_AutoscalingPolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeAutoscaler_AutoscalingPolicyRef {
+        ComputeAutoscaler_AutoscalingPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeAutoscalerAutoscalingPolicyElRef {
+impl ComputeAutoscaler_AutoscalingPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1168,31 +1248,37 @@ impl ComputeAutoscalerAutoscalingPolicyElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.mode", self.base))
     }
 
+    #[doc =
+        "Get a reference to the value of field `stabilization_period` after provisioning.\nThe number of seconds that the autoscaler waits for load stabilization\nbefore making scale-in decisions.\n\nThis might appear as a delay in scaling in but it is an important mechanism\nfor your application to not have fluctuating size due to short term load\nfluctuations."]
+    pub fn stabilization_period(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.stabilization_period", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `cpu_utilization` after provisioning.\n"]
-    pub fn cpu_utilization(&self) -> terrars::ListRef<ComputeAutoscalerAutoscalingPolicyElCpuUtilizationElRef> {
+    pub fn cpu_utilization(&self) -> terrars::ListRef<ComputeAutoscaler_AutoscalingPolicy_CpuUtilizationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cpu_utilization", self.base))
     }
 
     #[doc = "Get a reference to the value of field `load_balancing_utilization` after provisioning.\n"]
     pub fn load_balancing_utilization(
         &self,
-    ) -> terrars::ListRef<ComputeAutoscalerAutoscalingPolicyElLoadBalancingUtilizationElRef> {
+    ) -> terrars::ListRef<ComputeAutoscaler_AutoscalingPolicy_LoadBalancingUtilizationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.load_balancing_utilization", self.base))
     }
 
     #[doc = "Get a reference to the value of field `metric` after provisioning.\n"]
-    pub fn metric(&self) -> terrars::ListRef<ComputeAutoscalerAutoscalingPolicyElMetricElRef> {
+    pub fn metric(&self) -> terrars::ListRef<ComputeAutoscaler_AutoscalingPolicy_MetricRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.metric", self.base))
     }
 
     #[doc = "Get a reference to the value of field `scale_in_control` after provisioning.\n"]
-    pub fn scale_in_control(&self) -> terrars::ListRef<ComputeAutoscalerAutoscalingPolicyElScaleInControlElRef> {
+    pub fn scale_in_control(&self) -> terrars::ListRef<ComputeAutoscaler_AutoscalingPolicy_ScaleInControlRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.scale_in_control", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeAutoscalerTimeoutsEl {
+pub struct ComputeAutoscaler_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1201,7 +1287,7 @@ pub struct ComputeAutoscalerTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeAutoscalerTimeoutsEl {
+impl ComputeAutoscaler_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1221,8 +1307,8 @@ impl ComputeAutoscalerTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeAutoscalerTimeoutsEl {
-    type O = terrars::BlockAssignable<ComputeAutoscalerTimeoutsEl>;
+impl terrars::ToListMappable for ComputeAutoscaler_Timeouts {
+    type O = terrars::BlockAssignable<ComputeAutoscaler_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1233,11 +1319,11 @@ impl terrars::ToListMappable for ComputeAutoscalerTimeoutsEl {
     }
 }
 
-pub struct BuildComputeAutoscalerTimeoutsEl {}
+pub struct BuildComputeAutoscaler_Timeouts {}
 
-impl BuildComputeAutoscalerTimeoutsEl {
-    pub fn build(self) -> ComputeAutoscalerTimeoutsEl {
-        ComputeAutoscalerTimeoutsEl {
+impl BuildComputeAutoscaler_Timeouts {
+    pub fn build(self) -> ComputeAutoscaler_Timeouts {
+        ComputeAutoscaler_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1245,21 +1331,23 @@ impl BuildComputeAutoscalerTimeoutsEl {
     }
 }
 
-pub struct ComputeAutoscalerTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComputeAutoscaler_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeAutoscalerTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeAutoscalerTimeoutsElRef {
-        ComputeAutoscalerTimeoutsElRef {
+impl terrars::Ref for ComputeAutoscaler_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeAutoscaler_TimeoutsRef {
+        ComputeAutoscaler_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeAutoscalerTimeoutsElRef {
+impl ComputeAutoscaler_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1278,9 +1366,4 @@ impl ComputeAutoscalerTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ComputeAutoscalerDynamic {
-    autoscaling_policy: std::option::Option<terrars::DynamicBlock<ComputeAutoscalerAutoscalingPolicyEl>>,
 }

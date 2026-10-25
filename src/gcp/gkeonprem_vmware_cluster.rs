@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct GkeonpremVmwareClusterData {
+struct GkeonpremVmwareClusterData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,7 +24,13 @@ struct GkeonpremVmwareClusterData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     annotations: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    disable_bundled_ingress: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_advanced_cluster: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_control_plane_v2: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -33,36 +41,38 @@ struct GkeonpremVmwareClusterData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    skip_validations: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vm_tracking_enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    anti_affinity_groups: std::option::Option<std::vec::Vec<GkeonpremVmwareClusterAntiAffinityGroupsEl>>,
+    anti_affinity_groups: std::option::Option<std::vec::Vec<GkeonpremVmwareCluster_AntiAffinityGroups>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    authorization: std::option::Option<std::vec::Vec<GkeonpremVmwareClusterAuthorizationEl>>,
+    authorization: std::option::Option<std::vec::Vec<GkeonpremVmwareCluster_Authorization>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    auto_repair_config: std::option::Option<std::vec::Vec<GkeonpremVmwareClusterAutoRepairConfigEl>>,
+    auto_repair_config: std::option::Option<std::vec::Vec<GkeonpremVmwareCluster_AutoRepairConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    control_plane_node: std::option::Option<std::vec::Vec<GkeonpremVmwareClusterControlPlaneNodeEl>>,
+    control_plane_node: std::option::Option<std::vec::Vec<GkeonpremVmwareCluster_ControlPlaneNode>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    dataplane_v2: std::option::Option<std::vec::Vec<GkeonpremVmwareClusterDataplaneV2El>>,
+    dataplane_v2: std::option::Option<std::vec::Vec<GkeonpremVmwareCluster_DataplaneV2>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    load_balancer: std::option::Option<std::vec::Vec<GkeonpremVmwareClusterLoadBalancerEl>>,
+    load_balancer: std::option::Option<std::vec::Vec<GkeonpremVmwareCluster_LoadBalancer>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    network_config: std::option::Option<std::vec::Vec<GkeonpremVmwareClusterNetworkConfigEl>>,
+    network_config: std::option::Option<std::vec::Vec<GkeonpremVmwareCluster_NetworkConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    storage: std::option::Option<std::vec::Vec<GkeonpremVmwareClusterStorageEl>>,
+    storage: std::option::Option<std::vec::Vec<GkeonpremVmwareCluster_Storage>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<GkeonpremVmwareClusterTimeoutsEl>,
+    timeouts: std::option::Option<GkeonpremVmwareCluster_Timeouts>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    upgrade_policy: std::option::Option<std::vec::Vec<GkeonpremVmwareClusterUpgradePolicyEl>>,
+    upgrade_policy: std::option::Option<std::vec::Vec<GkeonpremVmwareCluster_UpgradePolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vcenter: std::option::Option<std::vec::Vec<GkeonpremVmwareClusterVcenterEl>>,
+    vcenter: std::option::Option<std::vec::Vec<GkeonpremVmwareCluster_Vcenter>>,
     dynamic: GkeonpremVmwareClusterDynamic,
 }
 
 struct GkeonpremVmwareCluster_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<GkeonpremVmwareClusterData>,
+    data: std::cell::RefCell<GkeonpremVmwareClusterData_>,
 }
 
 #[derive(Clone)]
@@ -172,9 +182,28 @@ impl GkeonpremVmwareCluster {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nA human readable description of this VMware User Cluster."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `disable_bundled_ingress`.\nDisable bundled ingress."]
+    pub fn set_disable_bundled_ingress(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().disable_bundled_ingress = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `enable_advanced_cluster`.\nEnable advanced cluster. Default to false."]
+    pub fn set_enable_advanced_cluster(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().enable_advanced_cluster = std::option::Option::Some(v.into());
         self
     }
 
@@ -196,6 +225,16 @@ impl GkeonpremVmwareCluster {
         self
     }
 
+    #[doc =
+        "Set the field `skip_validations`.\nA list of validations to skip during preflight checks. Possible values: [\"VALIDATION_SKIP_UNSPECIFIED\", \"ALL\", \"WORKSTATION\", \"CONFIG\", \"DOCKER\", \"INFRA\", \"LOAD_BALANCER\", \"VIPS\", \"NODE_IPS\", \"DNS\", \"TOD\", \"NET_CONFIG\", \"STORAGE_DRIVER\", \"PROXY\", \"INTERNET\", \"GCP\", \"GKEHUB\", \"RESERVED_IPS\", \"STACKDRIVER\", \"NODEPOOL_AUTOSCALING\", \"OS_IMAGES\", \"CLUSTER_VERSION\", \"CLUSTER_HEALTH\", \"WINDOWS\", \"HSM_SECRET_ENCRYPTION\", \"BACKUP_ADMIN\", \"CONNECTIVITY\", \"CLUSTER_SECRETS_CONFIG\", \"CSI_WORKLOAD\", \"VSPHERE_VERSION\", \"MIGRATION\"]"]
+    pub fn set_skip_validations(
+        self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().skip_validations = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `vm_tracking_enabled`.\nEnable VM tracking."]
     pub fn set_vm_tracking_enabled(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().vm_tracking_enabled = std::option::Option::Some(v.into());
@@ -205,7 +244,7 @@ impl GkeonpremVmwareCluster {
     #[doc = "Set the field `anti_affinity_groups`.\n"]
     pub fn set_anti_affinity_groups(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareClusterAntiAffinityGroupsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareCluster_AntiAffinityGroups>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -221,7 +260,7 @@ impl GkeonpremVmwareCluster {
     #[doc = "Set the field `authorization`.\n"]
     pub fn set_authorization(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareClusterAuthorizationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareCluster_Authorization>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -237,7 +276,7 @@ impl GkeonpremVmwareCluster {
     #[doc = "Set the field `auto_repair_config`.\n"]
     pub fn set_auto_repair_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareClusterAutoRepairConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareCluster_AutoRepairConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -253,7 +292,7 @@ impl GkeonpremVmwareCluster {
     #[doc = "Set the field `control_plane_node`.\n"]
     pub fn set_control_plane_node(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareClusterControlPlaneNodeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareCluster_ControlPlaneNode>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -269,7 +308,7 @@ impl GkeonpremVmwareCluster {
     #[doc = "Set the field `dataplane_v2`.\n"]
     pub fn set_dataplane_v2(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareClusterDataplaneV2El>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareCluster_DataplaneV2>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -285,7 +324,7 @@ impl GkeonpremVmwareCluster {
     #[doc = "Set the field `load_balancer`.\n"]
     pub fn set_load_balancer(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareClusterLoadBalancerEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareCluster_LoadBalancer>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -301,7 +340,7 @@ impl GkeonpremVmwareCluster {
     #[doc = "Set the field `network_config`.\n"]
     pub fn set_network_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareClusterNetworkConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareCluster_NetworkConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -317,7 +356,7 @@ impl GkeonpremVmwareCluster {
     #[doc = "Set the field `storage`.\n"]
     pub fn set_storage(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareClusterStorageEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareCluster_Storage>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -331,7 +370,7 @@ impl GkeonpremVmwareCluster {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<GkeonpremVmwareClusterTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<GkeonpremVmwareCluster_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -339,7 +378,7 @@ impl GkeonpremVmwareCluster {
     #[doc = "Set the field `upgrade_policy`.\n"]
     pub fn set_upgrade_policy(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareClusterUpgradePolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareCluster_UpgradePolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -355,7 +394,7 @@ impl GkeonpremVmwareCluster {
     #[doc = "Set the field `vcenter`.\n"]
     pub fn set_vcenter(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareClusterVcenterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareCluster_Vcenter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -393,15 +432,33 @@ impl GkeonpremVmwareCluster {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nA human readable description of this VMware User Cluster."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
     #[doc =
+        "Get a reference to the value of field `disable_bundled_ingress` after provisioning.\nDisable bundled ingress."]
+    pub fn disable_bundled_ingress(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.disable_bundled_ingress", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `effective_annotations` after provisioning.\nAll of annotations (key/value pairs) present on the resource in GCP, including the annotations configured through Terraform, other clients and services."]
     pub fn effective_annotations(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.effective_annotations", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `enable_advanced_cluster` after provisioning.\nEnable advanced cluster. Default to false."]
+    pub fn enable_advanced_cluster(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_advanced_cluster", self.extract_ref()))
     }
 
     #[doc =
@@ -423,7 +480,7 @@ impl GkeonpremVmwareCluster {
     }
 
     #[doc = "Get a reference to the value of field `fleet` after provisioning.\nFleet configuration for the cluster."]
-    pub fn fleet(&self) -> terrars::ListRef<GkeonpremVmwareClusterFleetElRef> {
+    pub fn fleet(&self) -> terrars::ListRef<GkeonpremVmwareCluster_FleetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.fleet", self.extract_ref()))
     }
 
@@ -465,6 +522,12 @@ impl GkeonpremVmwareCluster {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.reconciling", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `skip_validations` after provisioning.\nA list of validations to skip during preflight checks. Possible values: [\"VALIDATION_SKIP_UNSPECIFIED\", \"ALL\", \"WORKSTATION\", \"CONFIG\", \"DOCKER\", \"INFRA\", \"LOAD_BALANCER\", \"VIPS\", \"NODE_IPS\", \"DNS\", \"TOD\", \"NET_CONFIG\", \"STORAGE_DRIVER\", \"PROXY\", \"INTERNET\", \"GCP\", \"GKEHUB\", \"RESERVED_IPS\", \"STACKDRIVER\", \"NODEPOOL_AUTOSCALING\", \"OS_IMAGES\", \"CLUSTER_VERSION\", \"CLUSTER_HEALTH\", \"WINDOWS\", \"HSM_SECRET_ENCRYPTION\", \"BACKUP_ADMIN\", \"CONNECTIVITY\", \"CLUSTER_SECRETS_CONFIG\", \"CSI_WORKLOAD\", \"VSPHERE_VERSION\", \"MIGRATION\"]"]
+    pub fn skip_validations(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.skip_validations", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `state` after provisioning.\nThe current state of this cluster."]
     pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
@@ -472,7 +535,7 @@ impl GkeonpremVmwareCluster {
 
     #[doc =
         "Get a reference to the value of field `status` after provisioning.\nResourceStatus representing detailed cluster state."]
-    pub fn status(&self) -> terrars::ListRef<GkeonpremVmwareClusterStatusElRef> {
+    pub fn status(&self) -> terrars::ListRef<GkeonpremVmwareCluster_StatusRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
@@ -490,7 +553,7 @@ impl GkeonpremVmwareCluster {
 
     #[doc =
         "Get a reference to the value of field `validation_check` after provisioning.\nValidationCheck represents the result of the preflight check job."]
-    pub fn validation_check(&self) -> terrars::ListRef<GkeonpremVmwareClusterValidationCheckElRef> {
+    pub fn validation_check(&self) -> terrars::ListRef<GkeonpremVmwareCluster_ValidationCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.validation_check", self.extract_ref()))
     }
 
@@ -500,57 +563,57 @@ impl GkeonpremVmwareCluster {
     }
 
     #[doc = "Get a reference to the value of field `anti_affinity_groups` after provisioning.\n"]
-    pub fn anti_affinity_groups(&self) -> terrars::ListRef<GkeonpremVmwareClusterAntiAffinityGroupsElRef> {
+    pub fn anti_affinity_groups(&self) -> terrars::ListRef<GkeonpremVmwareCluster_AntiAffinityGroupsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.anti_affinity_groups", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `authorization` after provisioning.\n"]
-    pub fn authorization(&self) -> terrars::ListRef<GkeonpremVmwareClusterAuthorizationElRef> {
+    pub fn authorization(&self) -> terrars::ListRef<GkeonpremVmwareCluster_AuthorizationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.authorization", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `auto_repair_config` after provisioning.\n"]
-    pub fn auto_repair_config(&self) -> terrars::ListRef<GkeonpremVmwareClusterAutoRepairConfigElRef> {
+    pub fn auto_repair_config(&self) -> terrars::ListRef<GkeonpremVmwareCluster_AutoRepairConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.auto_repair_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `control_plane_node` after provisioning.\n"]
-    pub fn control_plane_node(&self) -> terrars::ListRef<GkeonpremVmwareClusterControlPlaneNodeElRef> {
+    pub fn control_plane_node(&self) -> terrars::ListRef<GkeonpremVmwareCluster_ControlPlaneNodeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.control_plane_node", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `dataplane_v2` after provisioning.\n"]
-    pub fn dataplane_v2(&self) -> terrars::ListRef<GkeonpremVmwareClusterDataplaneV2ElRef> {
+    pub fn dataplane_v2(&self) -> terrars::ListRef<GkeonpremVmwareCluster_DataplaneV2Ref> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dataplane_v2", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `load_balancer` after provisioning.\n"]
-    pub fn load_balancer(&self) -> terrars::ListRef<GkeonpremVmwareClusterLoadBalancerElRef> {
+    pub fn load_balancer(&self) -> terrars::ListRef<GkeonpremVmwareCluster_LoadBalancerRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.load_balancer", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `network_config` after provisioning.\n"]
-    pub fn network_config(&self) -> terrars::ListRef<GkeonpremVmwareClusterNetworkConfigElRef> {
+    pub fn network_config(&self) -> terrars::ListRef<GkeonpremVmwareCluster_NetworkConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `storage` after provisioning.\n"]
-    pub fn storage(&self) -> terrars::ListRef<GkeonpremVmwareClusterStorageElRef> {
+    pub fn storage(&self) -> terrars::ListRef<GkeonpremVmwareCluster_StorageRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.storage", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> GkeonpremVmwareClusterTimeoutsElRef {
-        GkeonpremVmwareClusterTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> GkeonpremVmwareCluster_TimeoutsRef {
+        GkeonpremVmwareCluster_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `upgrade_policy` after provisioning.\n"]
-    pub fn upgrade_policy(&self) -> terrars::ListRef<GkeonpremVmwareClusterUpgradePolicyElRef> {
+    pub fn upgrade_policy(&self) -> terrars::ListRef<GkeonpremVmwareCluster_UpgradePolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.upgrade_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `vcenter` after provisioning.\n"]
-    pub fn vcenter(&self) -> terrars::ListRef<GkeonpremVmwareClusterVcenterElRef> {
+    pub fn vcenter(&self) -> terrars::ListRef<GkeonpremVmwareCluster_VcenterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vcenter", self.extract_ref()))
     }
 }
@@ -604,7 +667,7 @@ impl BuildGkeonpremVmwareCluster {
         let out = GkeonpremVmwareCluster(std::rc::Rc::new(GkeonpremVmwareCluster_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(GkeonpremVmwareClusterData {
+            data: std::cell::RefCell::new(GkeonpremVmwareClusterData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -612,13 +675,17 @@ impl BuildGkeonpremVmwareCluster {
                 provisioner: core::default::Default::default(),
                 admin_cluster_membership: self.admin_cluster_membership,
                 annotations: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
+                disable_bundled_ingress: core::default::Default::default(),
+                enable_advanced_cluster: core::default::Default::default(),
                 enable_control_plane_v2: core::default::Default::default(),
                 id: core::default::Default::default(),
                 location: self.location,
                 name: self.name,
                 on_prem_version: self.on_prem_version,
                 project: core::default::Default::default(),
+                skip_validations: core::default::Default::default(),
                 vm_tracking_enabled: core::default::Default::default(),
                 anti_affinity_groups: core::default::Default::default(),
                 authorization: core::default::Default::default(),
@@ -687,15 +754,33 @@ impl GkeonpremVmwareClusterRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nA human readable description of this VMware User Cluster."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
     #[doc =
+        "Get a reference to the value of field `disable_bundled_ingress` after provisioning.\nDisable bundled ingress."]
+    pub fn disable_bundled_ingress(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.disable_bundled_ingress", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `effective_annotations` after provisioning.\nAll of annotations (key/value pairs) present on the resource in GCP, including the annotations configured through Terraform, other clients and services."]
     pub fn effective_annotations(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.effective_annotations", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `enable_advanced_cluster` after provisioning.\nEnable advanced cluster. Default to false."]
+    pub fn enable_advanced_cluster(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_advanced_cluster", self.extract_ref()))
     }
 
     #[doc =
@@ -717,7 +802,7 @@ impl GkeonpremVmwareClusterRef {
     }
 
     #[doc = "Get a reference to the value of field `fleet` after provisioning.\nFleet configuration for the cluster."]
-    pub fn fleet(&self) -> terrars::ListRef<GkeonpremVmwareClusterFleetElRef> {
+    pub fn fleet(&self) -> terrars::ListRef<GkeonpremVmwareCluster_FleetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.fleet", self.extract_ref()))
     }
 
@@ -759,6 +844,12 @@ impl GkeonpremVmwareClusterRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.reconciling", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `skip_validations` after provisioning.\nA list of validations to skip during preflight checks. Possible values: [\"VALIDATION_SKIP_UNSPECIFIED\", \"ALL\", \"WORKSTATION\", \"CONFIG\", \"DOCKER\", \"INFRA\", \"LOAD_BALANCER\", \"VIPS\", \"NODE_IPS\", \"DNS\", \"TOD\", \"NET_CONFIG\", \"STORAGE_DRIVER\", \"PROXY\", \"INTERNET\", \"GCP\", \"GKEHUB\", \"RESERVED_IPS\", \"STACKDRIVER\", \"NODEPOOL_AUTOSCALING\", \"OS_IMAGES\", \"CLUSTER_VERSION\", \"CLUSTER_HEALTH\", \"WINDOWS\", \"HSM_SECRET_ENCRYPTION\", \"BACKUP_ADMIN\", \"CONNECTIVITY\", \"CLUSTER_SECRETS_CONFIG\", \"CSI_WORKLOAD\", \"VSPHERE_VERSION\", \"MIGRATION\"]"]
+    pub fn skip_validations(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.skip_validations", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `state` after provisioning.\nThe current state of this cluster."]
     pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
@@ -766,7 +857,7 @@ impl GkeonpremVmwareClusterRef {
 
     #[doc =
         "Get a reference to the value of field `status` after provisioning.\nResourceStatus representing detailed cluster state."]
-    pub fn status(&self) -> terrars::ListRef<GkeonpremVmwareClusterStatusElRef> {
+    pub fn status(&self) -> terrars::ListRef<GkeonpremVmwareCluster_StatusRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
@@ -784,7 +875,7 @@ impl GkeonpremVmwareClusterRef {
 
     #[doc =
         "Get a reference to the value of field `validation_check` after provisioning.\nValidationCheck represents the result of the preflight check job."]
-    pub fn validation_check(&self) -> terrars::ListRef<GkeonpremVmwareClusterValidationCheckElRef> {
+    pub fn validation_check(&self) -> terrars::ListRef<GkeonpremVmwareCluster_ValidationCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.validation_check", self.extract_ref()))
     }
 
@@ -794,68 +885,82 @@ impl GkeonpremVmwareClusterRef {
     }
 
     #[doc = "Get a reference to the value of field `anti_affinity_groups` after provisioning.\n"]
-    pub fn anti_affinity_groups(&self) -> terrars::ListRef<GkeonpremVmwareClusterAntiAffinityGroupsElRef> {
+    pub fn anti_affinity_groups(&self) -> terrars::ListRef<GkeonpremVmwareCluster_AntiAffinityGroupsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.anti_affinity_groups", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `authorization` after provisioning.\n"]
-    pub fn authorization(&self) -> terrars::ListRef<GkeonpremVmwareClusterAuthorizationElRef> {
+    pub fn authorization(&self) -> terrars::ListRef<GkeonpremVmwareCluster_AuthorizationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.authorization", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `auto_repair_config` after provisioning.\n"]
-    pub fn auto_repair_config(&self) -> terrars::ListRef<GkeonpremVmwareClusterAutoRepairConfigElRef> {
+    pub fn auto_repair_config(&self) -> terrars::ListRef<GkeonpremVmwareCluster_AutoRepairConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.auto_repair_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `control_plane_node` after provisioning.\n"]
-    pub fn control_plane_node(&self) -> terrars::ListRef<GkeonpremVmwareClusterControlPlaneNodeElRef> {
+    pub fn control_plane_node(&self) -> terrars::ListRef<GkeonpremVmwareCluster_ControlPlaneNodeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.control_plane_node", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `dataplane_v2` after provisioning.\n"]
-    pub fn dataplane_v2(&self) -> terrars::ListRef<GkeonpremVmwareClusterDataplaneV2ElRef> {
+    pub fn dataplane_v2(&self) -> terrars::ListRef<GkeonpremVmwareCluster_DataplaneV2Ref> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dataplane_v2", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `load_balancer` after provisioning.\n"]
-    pub fn load_balancer(&self) -> terrars::ListRef<GkeonpremVmwareClusterLoadBalancerElRef> {
+    pub fn load_balancer(&self) -> terrars::ListRef<GkeonpremVmwareCluster_LoadBalancerRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.load_balancer", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `network_config` after provisioning.\n"]
-    pub fn network_config(&self) -> terrars::ListRef<GkeonpremVmwareClusterNetworkConfigElRef> {
+    pub fn network_config(&self) -> terrars::ListRef<GkeonpremVmwareCluster_NetworkConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `storage` after provisioning.\n"]
-    pub fn storage(&self) -> terrars::ListRef<GkeonpremVmwareClusterStorageElRef> {
+    pub fn storage(&self) -> terrars::ListRef<GkeonpremVmwareCluster_StorageRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.storage", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> GkeonpremVmwareClusterTimeoutsElRef {
-        GkeonpremVmwareClusterTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> GkeonpremVmwareCluster_TimeoutsRef {
+        GkeonpremVmwareCluster_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `upgrade_policy` after provisioning.\n"]
-    pub fn upgrade_policy(&self) -> terrars::ListRef<GkeonpremVmwareClusterUpgradePolicyElRef> {
+    pub fn upgrade_policy(&self) -> terrars::ListRef<GkeonpremVmwareCluster_UpgradePolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.upgrade_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `vcenter` after provisioning.\n"]
-    pub fn vcenter(&self) -> terrars::ListRef<GkeonpremVmwareClusterVcenterElRef> {
+    pub fn vcenter(&self) -> terrars::ListRef<GkeonpremVmwareCluster_VcenterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vcenter", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct GkeonpremVmwareClusterDynamic {
+    anti_affinity_groups: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareCluster_AntiAffinityGroups>>,
+    authorization: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareCluster_Authorization>>,
+    auto_repair_config: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareCluster_AutoRepairConfig>>,
+    control_plane_node: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareCluster_ControlPlaneNode>>,
+    dataplane_v2: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareCluster_DataplaneV2>>,
+    load_balancer: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareCluster_LoadBalancer>>,
+    network_config: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareCluster_NetworkConfig>>,
+    storage: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareCluster_Storage>>,
+    upgrade_policy: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareCluster_UpgradePolicy>>,
+    vcenter: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareCluster_Vcenter>>,
+}
+
 #[derive(Serialize)]
-pub struct GkeonpremVmwareClusterFleetEl {
+pub struct GkeonpremVmwareCluster_Fleet {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     membership: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeonpremVmwareClusterFleetEl {
+impl GkeonpremVmwareCluster_Fleet {
     #[doc = "Set the field `membership`.\n"]
     pub fn set_membership(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.membership = std::option::Option::Some(v.into());
@@ -863,8 +968,8 @@ impl GkeonpremVmwareClusterFleetEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremVmwareClusterFleetEl {
-    type O = terrars::BlockAssignable<GkeonpremVmwareClusterFleetEl>;
+impl terrars::ToListMappable for GkeonpremVmwareCluster_Fleet {
+    type O = terrars::BlockAssignable<GkeonpremVmwareCluster_Fleet>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -875,29 +980,31 @@ impl terrars::ToListMappable for GkeonpremVmwareClusterFleetEl {
     }
 }
 
-pub struct BuildGkeonpremVmwareClusterFleetEl {}
+pub struct BuildGkeonpremVmwareCluster_Fleet {}
 
-impl BuildGkeonpremVmwareClusterFleetEl {
-    pub fn build(self) -> GkeonpremVmwareClusterFleetEl {
-        GkeonpremVmwareClusterFleetEl { membership: core::default::Default::default() }
+impl BuildGkeonpremVmwareCluster_Fleet {
+    pub fn build(self) -> GkeonpremVmwareCluster_Fleet {
+        GkeonpremVmwareCluster_Fleet { membership: core::default::Default::default() }
     }
 }
 
-pub struct GkeonpremVmwareClusterFleetElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareCluster_FleetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareClusterFleetElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareClusterFleetElRef {
-        GkeonpremVmwareClusterFleetElRef {
+impl terrars::Ref for GkeonpremVmwareCluster_FleetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareCluster_FleetRef {
+        GkeonpremVmwareCluster_FleetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareClusterFleetElRef {
+impl GkeonpremVmwareCluster_FleetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -909,7 +1016,7 @@ impl GkeonpremVmwareClusterFleetElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremVmwareClusterStatusElConditionsEl {
+pub struct GkeonpremVmwareCluster_Status_Conditions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     last_transition_time: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -922,7 +1029,7 @@ pub struct GkeonpremVmwareClusterStatusElConditionsEl {
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeonpremVmwareClusterStatusElConditionsEl {
+impl GkeonpremVmwareCluster_Status_Conditions {
     #[doc = "Set the field `last_transition_time`.\n"]
     pub fn set_last_transition_time(
         mut self,
@@ -957,8 +1064,8 @@ impl GkeonpremVmwareClusterStatusElConditionsEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremVmwareClusterStatusElConditionsEl {
-    type O = terrars::BlockAssignable<GkeonpremVmwareClusterStatusElConditionsEl>;
+impl terrars::ToListMappable for GkeonpremVmwareCluster_Status_Conditions {
+    type O = terrars::BlockAssignable<GkeonpremVmwareCluster_Status_Conditions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -969,11 +1076,11 @@ impl terrars::ToListMappable for GkeonpremVmwareClusterStatusElConditionsEl {
     }
 }
 
-pub struct BuildGkeonpremVmwareClusterStatusElConditionsEl {}
+pub struct BuildGkeonpremVmwareCluster_Status_Conditions {}
 
-impl BuildGkeonpremVmwareClusterStatusElConditionsEl {
-    pub fn build(self) -> GkeonpremVmwareClusterStatusElConditionsEl {
-        GkeonpremVmwareClusterStatusElConditionsEl {
+impl BuildGkeonpremVmwareCluster_Status_Conditions {
+    pub fn build(self) -> GkeonpremVmwareCluster_Status_Conditions {
+        GkeonpremVmwareCluster_Status_Conditions {
             last_transition_time: core::default::Default::default(),
             message: core::default::Default::default(),
             reason: core::default::Default::default(),
@@ -983,21 +1090,23 @@ impl BuildGkeonpremVmwareClusterStatusElConditionsEl {
     }
 }
 
-pub struct GkeonpremVmwareClusterStatusElConditionsElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareCluster_Status_ConditionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareClusterStatusElConditionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareClusterStatusElConditionsElRef {
-        GkeonpremVmwareClusterStatusElConditionsElRef {
+impl terrars::Ref for GkeonpremVmwareCluster_Status_ConditionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareCluster_Status_ConditionsRef {
+        GkeonpremVmwareCluster_Status_ConditionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareClusterStatusElConditionsElRef {
+impl GkeonpremVmwareCluster_Status_ConditionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1029,18 +1138,18 @@ impl GkeonpremVmwareClusterStatusElConditionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremVmwareClusterStatusEl {
+pub struct GkeonpremVmwareCluster_Status {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    conditions: std::option::Option<terrars::ListField<GkeonpremVmwareClusterStatusElConditionsEl>>,
+    conditions: std::option::Option<terrars::ListField<GkeonpremVmwareCluster_Status_Conditions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     error_message: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeonpremVmwareClusterStatusEl {
+impl GkeonpremVmwareCluster_Status {
     #[doc = "Set the field `conditions`.\n"]
     pub fn set_conditions(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<GkeonpremVmwareClusterStatusElConditionsEl>>,
+        v: impl std::convert::Into<terrars::ListField<GkeonpremVmwareCluster_Status_Conditions>>,
     ) -> Self {
         self.conditions = std::option::Option::Some(v.into());
         self
@@ -1053,8 +1162,8 @@ impl GkeonpremVmwareClusterStatusEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremVmwareClusterStatusEl {
-    type O = terrars::BlockAssignable<GkeonpremVmwareClusterStatusEl>;
+impl terrars::ToListMappable for GkeonpremVmwareCluster_Status {
+    type O = terrars::BlockAssignable<GkeonpremVmwareCluster_Status>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1065,38 +1174,40 @@ impl terrars::ToListMappable for GkeonpremVmwareClusterStatusEl {
     }
 }
 
-pub struct BuildGkeonpremVmwareClusterStatusEl {}
+pub struct BuildGkeonpremVmwareCluster_Status {}
 
-impl BuildGkeonpremVmwareClusterStatusEl {
-    pub fn build(self) -> GkeonpremVmwareClusterStatusEl {
-        GkeonpremVmwareClusterStatusEl {
+impl BuildGkeonpremVmwareCluster_Status {
+    pub fn build(self) -> GkeonpremVmwareCluster_Status {
+        GkeonpremVmwareCluster_Status {
             conditions: core::default::Default::default(),
             error_message: core::default::Default::default(),
         }
     }
 }
 
-pub struct GkeonpremVmwareClusterStatusElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareCluster_StatusRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareClusterStatusElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareClusterStatusElRef {
-        GkeonpremVmwareClusterStatusElRef {
+impl terrars::Ref for GkeonpremVmwareCluster_StatusRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareCluster_StatusRef {
+        GkeonpremVmwareCluster_StatusRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareClusterStatusElRef {
+impl GkeonpremVmwareCluster_StatusRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `conditions` after provisioning.\n"]
-    pub fn conditions(&self) -> terrars::ListRef<GkeonpremVmwareClusterStatusElConditionsElRef> {
+    pub fn conditions(&self) -> terrars::ListRef<GkeonpremVmwareCluster_Status_ConditionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.conditions", self.base))
     }
 
@@ -1107,7 +1218,7 @@ impl GkeonpremVmwareClusterStatusElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremVmwareClusterValidationCheckElStatusElResultEl {
+pub struct GkeonpremVmwareCluster_ValidationCheck_Status_Result {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     category: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1120,7 +1231,7 @@ pub struct GkeonpremVmwareClusterValidationCheckElStatusElResultEl {
     reason: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeonpremVmwareClusterValidationCheckElStatusElResultEl {
+impl GkeonpremVmwareCluster_ValidationCheck_Status_Result {
     #[doc = "Set the field `category`.\n"]
     pub fn set_category(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.category = std::option::Option::Some(v.into());
@@ -1152,8 +1263,8 @@ impl GkeonpremVmwareClusterValidationCheckElStatusElResultEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremVmwareClusterValidationCheckElStatusElResultEl {
-    type O = terrars::BlockAssignable<GkeonpremVmwareClusterValidationCheckElStatusElResultEl>;
+impl terrars::ToListMappable for GkeonpremVmwareCluster_ValidationCheck_Status_Result {
+    type O = terrars::BlockAssignable<GkeonpremVmwareCluster_ValidationCheck_Status_Result>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1164,11 +1275,11 @@ impl terrars::ToListMappable for GkeonpremVmwareClusterValidationCheckElStatusEl
     }
 }
 
-pub struct BuildGkeonpremVmwareClusterValidationCheckElStatusElResultEl {}
+pub struct BuildGkeonpremVmwareCluster_ValidationCheck_Status_Result {}
 
-impl BuildGkeonpremVmwareClusterValidationCheckElStatusElResultEl {
-    pub fn build(self) -> GkeonpremVmwareClusterValidationCheckElStatusElResultEl {
-        GkeonpremVmwareClusterValidationCheckElStatusElResultEl {
+impl BuildGkeonpremVmwareCluster_ValidationCheck_Status_Result {
+    pub fn build(self) -> GkeonpremVmwareCluster_ValidationCheck_Status_Result {
+        GkeonpremVmwareCluster_ValidationCheck_Status_Result {
             category: core::default::Default::default(),
             description: core::default::Default::default(),
             details: core::default::Default::default(),
@@ -1178,24 +1289,26 @@ impl BuildGkeonpremVmwareClusterValidationCheckElStatusElResultEl {
     }
 }
 
-pub struct GkeonpremVmwareClusterValidationCheckElStatusElResultElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareCluster_ValidationCheck_Status_ResultRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareClusterValidationCheckElStatusElResultElRef {
+impl terrars::Ref for GkeonpremVmwareCluster_ValidationCheck_Status_ResultRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremVmwareClusterValidationCheckElStatusElResultElRef {
-        GkeonpremVmwareClusterValidationCheckElStatusElResultElRef {
+    ) -> GkeonpremVmwareCluster_ValidationCheck_Status_ResultRef {
+        GkeonpremVmwareCluster_ValidationCheck_Status_ResultRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareClusterValidationCheckElStatusElResultElRef {
+impl GkeonpremVmwareCluster_ValidationCheck_Status_ResultRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1227,24 +1340,24 @@ impl GkeonpremVmwareClusterValidationCheckElStatusElResultElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremVmwareClusterValidationCheckElStatusEl {
+pub struct GkeonpremVmwareCluster_ValidationCheck_Status {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    result: std::option::Option<terrars::ListField<GkeonpremVmwareClusterValidationCheckElStatusElResultEl>>,
+    result: std::option::Option<terrars::ListField<GkeonpremVmwareCluster_ValidationCheck_Status_Result>>,
 }
 
-impl GkeonpremVmwareClusterValidationCheckElStatusEl {
+impl GkeonpremVmwareCluster_ValidationCheck_Status {
     #[doc = "Set the field `result`.\n"]
     pub fn set_result(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<GkeonpremVmwareClusterValidationCheckElStatusElResultEl>>,
+        v: impl std::convert::Into<terrars::ListField<GkeonpremVmwareCluster_ValidationCheck_Status_Result>>,
     ) -> Self {
         self.result = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for GkeonpremVmwareClusterValidationCheckElStatusEl {
-    type O = terrars::BlockAssignable<GkeonpremVmwareClusterValidationCheckElStatusEl>;
+impl terrars::ToListMappable for GkeonpremVmwareCluster_ValidationCheck_Status {
+    type O = terrars::BlockAssignable<GkeonpremVmwareCluster_ValidationCheck_Status>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1255,53 +1368,55 @@ impl terrars::ToListMappable for GkeonpremVmwareClusterValidationCheckElStatusEl
     }
 }
 
-pub struct BuildGkeonpremVmwareClusterValidationCheckElStatusEl {}
+pub struct BuildGkeonpremVmwareCluster_ValidationCheck_Status {}
 
-impl BuildGkeonpremVmwareClusterValidationCheckElStatusEl {
-    pub fn build(self) -> GkeonpremVmwareClusterValidationCheckElStatusEl {
-        GkeonpremVmwareClusterValidationCheckElStatusEl { result: core::default::Default::default() }
+impl BuildGkeonpremVmwareCluster_ValidationCheck_Status {
+    pub fn build(self) -> GkeonpremVmwareCluster_ValidationCheck_Status {
+        GkeonpremVmwareCluster_ValidationCheck_Status { result: core::default::Default::default() }
     }
 }
 
-pub struct GkeonpremVmwareClusterValidationCheckElStatusElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareCluster_ValidationCheck_StatusRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareClusterValidationCheckElStatusElRef {
+impl terrars::Ref for GkeonpremVmwareCluster_ValidationCheck_StatusRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremVmwareClusterValidationCheckElStatusElRef {
-        GkeonpremVmwareClusterValidationCheckElStatusElRef {
+    ) -> GkeonpremVmwareCluster_ValidationCheck_StatusRef {
+        GkeonpremVmwareCluster_ValidationCheck_StatusRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareClusterValidationCheckElStatusElRef {
+impl GkeonpremVmwareCluster_ValidationCheck_StatusRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `result` after provisioning.\n"]
-    pub fn result(&self) -> terrars::ListRef<GkeonpremVmwareClusterValidationCheckElStatusElResultElRef> {
+    pub fn result(&self) -> terrars::ListRef<GkeonpremVmwareCluster_ValidationCheck_Status_ResultRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.result", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremVmwareClusterValidationCheckEl {
+pub struct GkeonpremVmwareCluster_ValidationCheck {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     options: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     scenario: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    status: std::option::Option<terrars::ListField<GkeonpremVmwareClusterValidationCheckElStatusEl>>,
+    status: std::option::Option<terrars::ListField<GkeonpremVmwareCluster_ValidationCheck_Status>>,
 }
 
-impl GkeonpremVmwareClusterValidationCheckEl {
+impl GkeonpremVmwareCluster_ValidationCheck {
     #[doc = "Set the field `options`.\n"]
     pub fn set_options(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.options = std::option::Option::Some(v.into());
@@ -1317,15 +1432,15 @@ impl GkeonpremVmwareClusterValidationCheckEl {
     #[doc = "Set the field `status`.\n"]
     pub fn set_status(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<GkeonpremVmwareClusterValidationCheckElStatusEl>>,
+        v: impl std::convert::Into<terrars::ListField<GkeonpremVmwareCluster_ValidationCheck_Status>>,
     ) -> Self {
         self.status = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for GkeonpremVmwareClusterValidationCheckEl {
-    type O = terrars::BlockAssignable<GkeonpremVmwareClusterValidationCheckEl>;
+impl terrars::ToListMappable for GkeonpremVmwareCluster_ValidationCheck {
+    type O = terrars::BlockAssignable<GkeonpremVmwareCluster_ValidationCheck>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1336,11 +1451,11 @@ impl terrars::ToListMappable for GkeonpremVmwareClusterValidationCheckEl {
     }
 }
 
-pub struct BuildGkeonpremVmwareClusterValidationCheckEl {}
+pub struct BuildGkeonpremVmwareCluster_ValidationCheck {}
 
-impl BuildGkeonpremVmwareClusterValidationCheckEl {
-    pub fn build(self) -> GkeonpremVmwareClusterValidationCheckEl {
-        GkeonpremVmwareClusterValidationCheckEl {
+impl BuildGkeonpremVmwareCluster_ValidationCheck {
+    pub fn build(self) -> GkeonpremVmwareCluster_ValidationCheck {
+        GkeonpremVmwareCluster_ValidationCheck {
             options: core::default::Default::default(),
             scenario: core::default::Default::default(),
             status: core::default::Default::default(),
@@ -1348,21 +1463,23 @@ impl BuildGkeonpremVmwareClusterValidationCheckEl {
     }
 }
 
-pub struct GkeonpremVmwareClusterValidationCheckElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareCluster_ValidationCheckRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareClusterValidationCheckElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareClusterValidationCheckElRef {
-        GkeonpremVmwareClusterValidationCheckElRef {
+impl terrars::Ref for GkeonpremVmwareCluster_ValidationCheckRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareCluster_ValidationCheckRef {
+        GkeonpremVmwareCluster_ValidationCheckRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareClusterValidationCheckElRef {
+impl GkeonpremVmwareCluster_ValidationCheckRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1378,20 +1495,20 @@ impl GkeonpremVmwareClusterValidationCheckElRef {
     }
 
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
-    pub fn status(&self) -> terrars::ListRef<GkeonpremVmwareClusterValidationCheckElStatusElRef> {
+    pub fn status(&self) -> terrars::ListRef<GkeonpremVmwareCluster_ValidationCheck_StatusRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.status", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremVmwareClusterAntiAffinityGroupsEl {
+pub struct GkeonpremVmwareCluster_AntiAffinityGroups {
     aag_config_disabled: terrars::PrimField<bool>,
 }
 
-impl GkeonpremVmwareClusterAntiAffinityGroupsEl { }
+impl GkeonpremVmwareCluster_AntiAffinityGroups { }
 
-impl terrars::ToListMappable for GkeonpremVmwareClusterAntiAffinityGroupsEl {
-    type O = terrars::BlockAssignable<GkeonpremVmwareClusterAntiAffinityGroupsEl>;
+impl terrars::ToListMappable for GkeonpremVmwareCluster_AntiAffinityGroups {
+    type O = terrars::BlockAssignable<GkeonpremVmwareCluster_AntiAffinityGroups>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1402,32 +1519,34 @@ impl terrars::ToListMappable for GkeonpremVmwareClusterAntiAffinityGroupsEl {
     }
 }
 
-pub struct BuildGkeonpremVmwareClusterAntiAffinityGroupsEl {
+pub struct BuildGkeonpremVmwareCluster_AntiAffinityGroups {
     #[doc = "Spread nodes across at least three physical hosts (requires at least three\nhosts).\nEnabled by default."]
     pub aag_config_disabled: terrars::PrimField<bool>,
 }
 
-impl BuildGkeonpremVmwareClusterAntiAffinityGroupsEl {
-    pub fn build(self) -> GkeonpremVmwareClusterAntiAffinityGroupsEl {
-        GkeonpremVmwareClusterAntiAffinityGroupsEl { aag_config_disabled: self.aag_config_disabled }
+impl BuildGkeonpremVmwareCluster_AntiAffinityGroups {
+    pub fn build(self) -> GkeonpremVmwareCluster_AntiAffinityGroups {
+        GkeonpremVmwareCluster_AntiAffinityGroups { aag_config_disabled: self.aag_config_disabled }
     }
 }
 
-pub struct GkeonpremVmwareClusterAntiAffinityGroupsElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareCluster_AntiAffinityGroupsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareClusterAntiAffinityGroupsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareClusterAntiAffinityGroupsElRef {
-        GkeonpremVmwareClusterAntiAffinityGroupsElRef {
+impl terrars::Ref for GkeonpremVmwareCluster_AntiAffinityGroupsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareCluster_AntiAffinityGroupsRef {
+        GkeonpremVmwareCluster_AntiAffinityGroupsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareClusterAntiAffinityGroupsElRef {
+impl GkeonpremVmwareCluster_AntiAffinityGroupsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1440,14 +1559,14 @@ impl GkeonpremVmwareClusterAntiAffinityGroupsElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremVmwareClusterAuthorizationElAdminUsersEl {
+pub struct GkeonpremVmwareCluster_Authorization_AdminUsers {
     username: terrars::PrimField<std::string::String>,
 }
 
-impl GkeonpremVmwareClusterAuthorizationElAdminUsersEl { }
+impl GkeonpremVmwareCluster_Authorization_AdminUsers { }
 
-impl terrars::ToListMappable for GkeonpremVmwareClusterAuthorizationElAdminUsersEl {
-    type O = terrars::BlockAssignable<GkeonpremVmwareClusterAuthorizationElAdminUsersEl>;
+impl terrars::ToListMappable for GkeonpremVmwareCluster_Authorization_AdminUsers {
+    type O = terrars::BlockAssignable<GkeonpremVmwareCluster_Authorization_AdminUsers>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1458,35 +1577,37 @@ impl terrars::ToListMappable for GkeonpremVmwareClusterAuthorizationElAdminUsers
     }
 }
 
-pub struct BuildGkeonpremVmwareClusterAuthorizationElAdminUsersEl {
+pub struct BuildGkeonpremVmwareCluster_Authorization_AdminUsers {
     #[doc = "The name of the user, e.g. 'my-gcp-id@gmail.com'."]
     pub username: terrars::PrimField<std::string::String>,
 }
 
-impl BuildGkeonpremVmwareClusterAuthorizationElAdminUsersEl {
-    pub fn build(self) -> GkeonpremVmwareClusterAuthorizationElAdminUsersEl {
-        GkeonpremVmwareClusterAuthorizationElAdminUsersEl { username: self.username }
+impl BuildGkeonpremVmwareCluster_Authorization_AdminUsers {
+    pub fn build(self) -> GkeonpremVmwareCluster_Authorization_AdminUsers {
+        GkeonpremVmwareCluster_Authorization_AdminUsers { username: self.username }
     }
 }
 
-pub struct GkeonpremVmwareClusterAuthorizationElAdminUsersElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareCluster_Authorization_AdminUsersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareClusterAuthorizationElAdminUsersElRef {
+impl terrars::Ref for GkeonpremVmwareCluster_Authorization_AdminUsersRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremVmwareClusterAuthorizationElAdminUsersElRef {
-        GkeonpremVmwareClusterAuthorizationElAdminUsersElRef {
+    ) -> GkeonpremVmwareCluster_Authorization_AdminUsersRef {
+        GkeonpremVmwareCluster_Authorization_AdminUsersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareClusterAuthorizationElAdminUsersElRef {
+impl GkeonpremVmwareCluster_Authorization_AdminUsersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1499,22 +1620,22 @@ impl GkeonpremVmwareClusterAuthorizationElAdminUsersElRef {
 }
 
 #[derive(Serialize, Default)]
-struct GkeonpremVmwareClusterAuthorizationElDynamic {
-    admin_users: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareClusterAuthorizationElAdminUsersEl>>,
+struct GkeonpremVmwareCluster_AuthorizationDynamic {
+    admin_users: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareCluster_Authorization_AdminUsers>>,
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremVmwareClusterAuthorizationEl {
+pub struct GkeonpremVmwareCluster_Authorization {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    admin_users: std::option::Option<std::vec::Vec<GkeonpremVmwareClusterAuthorizationElAdminUsersEl>>,
-    dynamic: GkeonpremVmwareClusterAuthorizationElDynamic,
+    admin_users: std::option::Option<std::vec::Vec<GkeonpremVmwareCluster_Authorization_AdminUsers>>,
+    dynamic: GkeonpremVmwareCluster_AuthorizationDynamic,
 }
 
-impl GkeonpremVmwareClusterAuthorizationEl {
+impl GkeonpremVmwareCluster_Authorization {
     #[doc = "Set the field `admin_users`.\n"]
     pub fn set_admin_users(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareClusterAuthorizationElAdminUsersEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareCluster_Authorization_AdminUsers>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1528,8 +1649,8 @@ impl GkeonpremVmwareClusterAuthorizationEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremVmwareClusterAuthorizationEl {
-    type O = terrars::BlockAssignable<GkeonpremVmwareClusterAuthorizationEl>;
+impl terrars::ToListMappable for GkeonpremVmwareCluster_Authorization {
+    type O = terrars::BlockAssignable<GkeonpremVmwareCluster_Authorization>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1540,51 +1661,53 @@ impl terrars::ToListMappable for GkeonpremVmwareClusterAuthorizationEl {
     }
 }
 
-pub struct BuildGkeonpremVmwareClusterAuthorizationEl {}
+pub struct BuildGkeonpremVmwareCluster_Authorization {}
 
-impl BuildGkeonpremVmwareClusterAuthorizationEl {
-    pub fn build(self) -> GkeonpremVmwareClusterAuthorizationEl {
-        GkeonpremVmwareClusterAuthorizationEl {
+impl BuildGkeonpremVmwareCluster_Authorization {
+    pub fn build(self) -> GkeonpremVmwareCluster_Authorization {
+        GkeonpremVmwareCluster_Authorization {
             admin_users: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct GkeonpremVmwareClusterAuthorizationElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareCluster_AuthorizationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareClusterAuthorizationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareClusterAuthorizationElRef {
-        GkeonpremVmwareClusterAuthorizationElRef {
+impl terrars::Ref for GkeonpremVmwareCluster_AuthorizationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareCluster_AuthorizationRef {
+        GkeonpremVmwareCluster_AuthorizationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareClusterAuthorizationElRef {
+impl GkeonpremVmwareCluster_AuthorizationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `admin_users` after provisioning.\n"]
-    pub fn admin_users(&self) -> terrars::ListRef<GkeonpremVmwareClusterAuthorizationElAdminUsersElRef> {
+    pub fn admin_users(&self) -> terrars::ListRef<GkeonpremVmwareCluster_Authorization_AdminUsersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.admin_users", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremVmwareClusterAutoRepairConfigEl {
+pub struct GkeonpremVmwareCluster_AutoRepairConfig {
     enabled: terrars::PrimField<bool>,
 }
 
-impl GkeonpremVmwareClusterAutoRepairConfigEl { }
+impl GkeonpremVmwareCluster_AutoRepairConfig { }
 
-impl terrars::ToListMappable for GkeonpremVmwareClusterAutoRepairConfigEl {
-    type O = terrars::BlockAssignable<GkeonpremVmwareClusterAutoRepairConfigEl>;
+impl terrars::ToListMappable for GkeonpremVmwareCluster_AutoRepairConfig {
+    type O = terrars::BlockAssignable<GkeonpremVmwareCluster_AutoRepairConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1595,32 +1718,34 @@ impl terrars::ToListMappable for GkeonpremVmwareClusterAutoRepairConfigEl {
     }
 }
 
-pub struct BuildGkeonpremVmwareClusterAutoRepairConfigEl {
+pub struct BuildGkeonpremVmwareCluster_AutoRepairConfig {
     #[doc = "Whether auto repair is enabled."]
     pub enabled: terrars::PrimField<bool>,
 }
 
-impl BuildGkeonpremVmwareClusterAutoRepairConfigEl {
-    pub fn build(self) -> GkeonpremVmwareClusterAutoRepairConfigEl {
-        GkeonpremVmwareClusterAutoRepairConfigEl { enabled: self.enabled }
+impl BuildGkeonpremVmwareCluster_AutoRepairConfig {
+    pub fn build(self) -> GkeonpremVmwareCluster_AutoRepairConfig {
+        GkeonpremVmwareCluster_AutoRepairConfig { enabled: self.enabled }
     }
 }
 
-pub struct GkeonpremVmwareClusterAutoRepairConfigElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareCluster_AutoRepairConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareClusterAutoRepairConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareClusterAutoRepairConfigElRef {
-        GkeonpremVmwareClusterAutoRepairConfigElRef {
+impl terrars::Ref for GkeonpremVmwareCluster_AutoRepairConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareCluster_AutoRepairConfigRef {
+        GkeonpremVmwareCluster_AutoRepairConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareClusterAutoRepairConfigElRef {
+impl GkeonpremVmwareCluster_AutoRepairConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1632,14 +1757,14 @@ impl GkeonpremVmwareClusterAutoRepairConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremVmwareClusterControlPlaneNodeElVsphereConfigEl {
+pub struct GkeonpremVmwareCluster_ControlPlaneNode_VsphereConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     datastore: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     storage_policy_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeonpremVmwareClusterControlPlaneNodeElVsphereConfigEl {
+impl GkeonpremVmwareCluster_ControlPlaneNode_VsphereConfig {
     #[doc = "Set the field `datastore`.\n"]
     pub fn set_datastore(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.datastore = std::option::Option::Some(v.into());
@@ -1656,8 +1781,8 @@ impl GkeonpremVmwareClusterControlPlaneNodeElVsphereConfigEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremVmwareClusterControlPlaneNodeElVsphereConfigEl {
-    type O = terrars::BlockAssignable<GkeonpremVmwareClusterControlPlaneNodeElVsphereConfigEl>;
+impl terrars::ToListMappable for GkeonpremVmwareCluster_ControlPlaneNode_VsphereConfig {
+    type O = terrars::BlockAssignable<GkeonpremVmwareCluster_ControlPlaneNode_VsphereConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1668,35 +1793,37 @@ impl terrars::ToListMappable for GkeonpremVmwareClusterControlPlaneNodeElVsphere
     }
 }
 
-pub struct BuildGkeonpremVmwareClusterControlPlaneNodeElVsphereConfigEl {}
+pub struct BuildGkeonpremVmwareCluster_ControlPlaneNode_VsphereConfig {}
 
-impl BuildGkeonpremVmwareClusterControlPlaneNodeElVsphereConfigEl {
-    pub fn build(self) -> GkeonpremVmwareClusterControlPlaneNodeElVsphereConfigEl {
-        GkeonpremVmwareClusterControlPlaneNodeElVsphereConfigEl {
+impl BuildGkeonpremVmwareCluster_ControlPlaneNode_VsphereConfig {
+    pub fn build(self) -> GkeonpremVmwareCluster_ControlPlaneNode_VsphereConfig {
+        GkeonpremVmwareCluster_ControlPlaneNode_VsphereConfig {
             datastore: core::default::Default::default(),
             storage_policy_name: core::default::Default::default(),
         }
     }
 }
 
-pub struct GkeonpremVmwareClusterControlPlaneNodeElVsphereConfigElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareCluster_ControlPlaneNode_VsphereConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareClusterControlPlaneNodeElVsphereConfigElRef {
+impl terrars::Ref for GkeonpremVmwareCluster_ControlPlaneNode_VsphereConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremVmwareClusterControlPlaneNodeElVsphereConfigElRef {
-        GkeonpremVmwareClusterControlPlaneNodeElVsphereConfigElRef {
+    ) -> GkeonpremVmwareCluster_ControlPlaneNode_VsphereConfigRef {
+        GkeonpremVmwareCluster_ControlPlaneNode_VsphereConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareClusterControlPlaneNodeElVsphereConfigElRef {
+impl GkeonpremVmwareCluster_ControlPlaneNode_VsphereConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1713,14 +1840,14 @@ impl GkeonpremVmwareClusterControlPlaneNodeElVsphereConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremVmwareClusterControlPlaneNodeElAutoResizeConfigEl {
+pub struct GkeonpremVmwareCluster_ControlPlaneNode_AutoResizeConfig {
     enabled: terrars::PrimField<bool>,
 }
 
-impl GkeonpremVmwareClusterControlPlaneNodeElAutoResizeConfigEl { }
+impl GkeonpremVmwareCluster_ControlPlaneNode_AutoResizeConfig { }
 
-impl terrars::ToListMappable for GkeonpremVmwareClusterControlPlaneNodeElAutoResizeConfigEl {
-    type O = terrars::BlockAssignable<GkeonpremVmwareClusterControlPlaneNodeElAutoResizeConfigEl>;
+impl terrars::ToListMappable for GkeonpremVmwareCluster_ControlPlaneNode_AutoResizeConfig {
+    type O = terrars::BlockAssignable<GkeonpremVmwareCluster_ControlPlaneNode_AutoResizeConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1731,35 +1858,37 @@ impl terrars::ToListMappable for GkeonpremVmwareClusterControlPlaneNodeElAutoRes
     }
 }
 
-pub struct BuildGkeonpremVmwareClusterControlPlaneNodeElAutoResizeConfigEl {
+pub struct BuildGkeonpremVmwareCluster_ControlPlaneNode_AutoResizeConfig {
     #[doc = "Whether to enable control plane node auto resizing."]
     pub enabled: terrars::PrimField<bool>,
 }
 
-impl BuildGkeonpremVmwareClusterControlPlaneNodeElAutoResizeConfigEl {
-    pub fn build(self) -> GkeonpremVmwareClusterControlPlaneNodeElAutoResizeConfigEl {
-        GkeonpremVmwareClusterControlPlaneNodeElAutoResizeConfigEl { enabled: self.enabled }
+impl BuildGkeonpremVmwareCluster_ControlPlaneNode_AutoResizeConfig {
+    pub fn build(self) -> GkeonpremVmwareCluster_ControlPlaneNode_AutoResizeConfig {
+        GkeonpremVmwareCluster_ControlPlaneNode_AutoResizeConfig { enabled: self.enabled }
     }
 }
 
-pub struct GkeonpremVmwareClusterControlPlaneNodeElAutoResizeConfigElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareCluster_ControlPlaneNode_AutoResizeConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareClusterControlPlaneNodeElAutoResizeConfigElRef {
+impl terrars::Ref for GkeonpremVmwareCluster_ControlPlaneNode_AutoResizeConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremVmwareClusterControlPlaneNodeElAutoResizeConfigElRef {
-        GkeonpremVmwareClusterControlPlaneNodeElAutoResizeConfigElRef {
+    ) -> GkeonpremVmwareCluster_ControlPlaneNode_AutoResizeConfigRef {
+        GkeonpremVmwareCluster_ControlPlaneNode_AutoResizeConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareClusterControlPlaneNodeElAutoResizeConfigElRef {
+impl GkeonpremVmwareCluster_ControlPlaneNode_AutoResizeConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1772,14 +1901,14 @@ impl GkeonpremVmwareClusterControlPlaneNodeElAutoResizeConfigElRef {
 }
 
 #[derive(Serialize, Default)]
-struct GkeonpremVmwareClusterControlPlaneNodeElDynamic {
+struct GkeonpremVmwareCluster_ControlPlaneNodeDynamic {
     auto_resize_config: std
     ::option
-    ::Option<terrars::DynamicBlock<GkeonpremVmwareClusterControlPlaneNodeElAutoResizeConfigEl>>,
+    ::Option<terrars::DynamicBlock<GkeonpremVmwareCluster_ControlPlaneNode_AutoResizeConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremVmwareClusterControlPlaneNodeEl {
+pub struct GkeonpremVmwareCluster_ControlPlaneNode {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cpus: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1787,11 +1916,11 @@ pub struct GkeonpremVmwareClusterControlPlaneNodeEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     replicas: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    auto_resize_config: std::option::Option<std::vec::Vec<GkeonpremVmwareClusterControlPlaneNodeElAutoResizeConfigEl>>,
-    dynamic: GkeonpremVmwareClusterControlPlaneNodeElDynamic,
+    auto_resize_config: std::option::Option<std::vec::Vec<GkeonpremVmwareCluster_ControlPlaneNode_AutoResizeConfig>>,
+    dynamic: GkeonpremVmwareCluster_ControlPlaneNodeDynamic,
 }
 
-impl GkeonpremVmwareClusterControlPlaneNodeEl {
+impl GkeonpremVmwareCluster_ControlPlaneNode {
     #[doc =
         "Set the field `cpus`.\nThe number of CPUs for each admin cluster node that serve as control planes\nfor this VMware User Cluster. (default: 4 CPUs)"]
     pub fn set_cpus(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -1821,7 +1950,7 @@ impl GkeonpremVmwareClusterControlPlaneNodeEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<GkeonpremVmwareClusterControlPlaneNodeElAutoResizeConfigEl>>,
+                    ::Into<terrars::BlockAssignable<GkeonpremVmwareCluster_ControlPlaneNode_AutoResizeConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1835,8 +1964,8 @@ impl GkeonpremVmwareClusterControlPlaneNodeEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremVmwareClusterControlPlaneNodeEl {
-    type O = terrars::BlockAssignable<GkeonpremVmwareClusterControlPlaneNodeEl>;
+impl terrars::ToListMappable for GkeonpremVmwareCluster_ControlPlaneNode {
+    type O = terrars::BlockAssignable<GkeonpremVmwareCluster_ControlPlaneNode>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1847,11 +1976,11 @@ impl terrars::ToListMappable for GkeonpremVmwareClusterControlPlaneNodeEl {
     }
 }
 
-pub struct BuildGkeonpremVmwareClusterControlPlaneNodeEl {}
+pub struct BuildGkeonpremVmwareCluster_ControlPlaneNode {}
 
-impl BuildGkeonpremVmwareClusterControlPlaneNodeEl {
-    pub fn build(self) -> GkeonpremVmwareClusterControlPlaneNodeEl {
-        GkeonpremVmwareClusterControlPlaneNodeEl {
+impl BuildGkeonpremVmwareCluster_ControlPlaneNode {
+    pub fn build(self) -> GkeonpremVmwareCluster_ControlPlaneNode {
+        GkeonpremVmwareCluster_ControlPlaneNode {
             cpus: core::default::Default::default(),
             memory: core::default::Default::default(),
             replicas: core::default::Default::default(),
@@ -1861,21 +1990,23 @@ impl BuildGkeonpremVmwareClusterControlPlaneNodeEl {
     }
 }
 
-pub struct GkeonpremVmwareClusterControlPlaneNodeElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareCluster_ControlPlaneNodeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareClusterControlPlaneNodeElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareClusterControlPlaneNodeElRef {
-        GkeonpremVmwareClusterControlPlaneNodeElRef {
+impl terrars::Ref for GkeonpremVmwareCluster_ControlPlaneNodeRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareCluster_ControlPlaneNodeRef {
+        GkeonpremVmwareCluster_ControlPlaneNodeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareClusterControlPlaneNodeElRef {
+impl GkeonpremVmwareCluster_ControlPlaneNodeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1899,18 +2030,18 @@ impl GkeonpremVmwareClusterControlPlaneNodeElRef {
     }
 
     #[doc = "Get a reference to the value of field `vsphere_config` after provisioning.\nVsphere-specific config."]
-    pub fn vsphere_config(&self) -> terrars::ListRef<GkeonpremVmwareClusterControlPlaneNodeElVsphereConfigElRef> {
+    pub fn vsphere_config(&self) -> terrars::ListRef<GkeonpremVmwareCluster_ControlPlaneNode_VsphereConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vsphere_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `auto_resize_config` after provisioning.\n"]
-    pub fn auto_resize_config(&self) -> terrars::ListRef<GkeonpremVmwareClusterControlPlaneNodeElAutoResizeConfigElRef> {
+    pub fn auto_resize_config(&self) -> terrars::ListRef<GkeonpremVmwareCluster_ControlPlaneNode_AutoResizeConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.auto_resize_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremVmwareClusterDataplaneV2El {
+pub struct GkeonpremVmwareCluster_DataplaneV2 {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     advanced_networking: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1919,7 +2050,7 @@ pub struct GkeonpremVmwareClusterDataplaneV2El {
     windows_dataplane_v2_enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl GkeonpremVmwareClusterDataplaneV2El {
+impl GkeonpremVmwareCluster_DataplaneV2 {
     #[doc =
         "Set the field `advanced_networking`.\nEnable advanced networking which requires dataplane_v2_enabled to be set true."]
     pub fn set_advanced_networking(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -1940,8 +2071,8 @@ impl GkeonpremVmwareClusterDataplaneV2El {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremVmwareClusterDataplaneV2El {
-    type O = terrars::BlockAssignable<GkeonpremVmwareClusterDataplaneV2El>;
+impl terrars::ToListMappable for GkeonpremVmwareCluster_DataplaneV2 {
+    type O = terrars::BlockAssignable<GkeonpremVmwareCluster_DataplaneV2>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1952,11 +2083,11 @@ impl terrars::ToListMappable for GkeonpremVmwareClusterDataplaneV2El {
     }
 }
 
-pub struct BuildGkeonpremVmwareClusterDataplaneV2El {}
+pub struct BuildGkeonpremVmwareCluster_DataplaneV2 {}
 
-impl BuildGkeonpremVmwareClusterDataplaneV2El {
-    pub fn build(self) -> GkeonpremVmwareClusterDataplaneV2El {
-        GkeonpremVmwareClusterDataplaneV2El {
+impl BuildGkeonpremVmwareCluster_DataplaneV2 {
+    pub fn build(self) -> GkeonpremVmwareCluster_DataplaneV2 {
+        GkeonpremVmwareCluster_DataplaneV2 {
             advanced_networking: core::default::Default::default(),
             dataplane_v2_enabled: core::default::Default::default(),
             windows_dataplane_v2_enabled: core::default::Default::default(),
@@ -1964,21 +2095,23 @@ impl BuildGkeonpremVmwareClusterDataplaneV2El {
     }
 }
 
-pub struct GkeonpremVmwareClusterDataplaneV2ElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareCluster_DataplaneV2Ref {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareClusterDataplaneV2ElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareClusterDataplaneV2ElRef {
-        GkeonpremVmwareClusterDataplaneV2ElRef {
+impl terrars::Ref for GkeonpremVmwareCluster_DataplaneV2Ref {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareCluster_DataplaneV2Ref {
+        GkeonpremVmwareCluster_DataplaneV2Ref {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareClusterDataplaneV2ElRef {
+impl GkeonpremVmwareCluster_DataplaneV2Ref {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2002,7 +2135,7 @@ impl GkeonpremVmwareClusterDataplaneV2ElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremVmwareClusterLoadBalancerElF5ConfigEl {
+pub struct GkeonpremVmwareCluster_LoadBalancer_F5Config {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     address: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2011,7 +2144,7 @@ pub struct GkeonpremVmwareClusterLoadBalancerElF5ConfigEl {
     snat_pool: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeonpremVmwareClusterLoadBalancerElF5ConfigEl {
+impl GkeonpremVmwareCluster_LoadBalancer_F5Config {
     #[doc = "Set the field `address`.\nThe load balancer's IP address."]
     pub fn set_address(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.address = std::option::Option::Some(v.into());
@@ -2032,8 +2165,8 @@ impl GkeonpremVmwareClusterLoadBalancerElF5ConfigEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremVmwareClusterLoadBalancerElF5ConfigEl {
-    type O = terrars::BlockAssignable<GkeonpremVmwareClusterLoadBalancerElF5ConfigEl>;
+impl terrars::ToListMappable for GkeonpremVmwareCluster_LoadBalancer_F5Config {
+    type O = terrars::BlockAssignable<GkeonpremVmwareCluster_LoadBalancer_F5Config>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2044,11 +2177,11 @@ impl terrars::ToListMappable for GkeonpremVmwareClusterLoadBalancerElF5ConfigEl 
     }
 }
 
-pub struct BuildGkeonpremVmwareClusterLoadBalancerElF5ConfigEl {}
+pub struct BuildGkeonpremVmwareCluster_LoadBalancer_F5Config {}
 
-impl BuildGkeonpremVmwareClusterLoadBalancerElF5ConfigEl {
-    pub fn build(self) -> GkeonpremVmwareClusterLoadBalancerElF5ConfigEl {
-        GkeonpremVmwareClusterLoadBalancerElF5ConfigEl {
+impl BuildGkeonpremVmwareCluster_LoadBalancer_F5Config {
+    pub fn build(self) -> GkeonpremVmwareCluster_LoadBalancer_F5Config {
+        GkeonpremVmwareCluster_LoadBalancer_F5Config {
             address: core::default::Default::default(),
             partition: core::default::Default::default(),
             snat_pool: core::default::Default::default(),
@@ -2056,24 +2189,26 @@ impl BuildGkeonpremVmwareClusterLoadBalancerElF5ConfigEl {
     }
 }
 
-pub struct GkeonpremVmwareClusterLoadBalancerElF5ConfigElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareCluster_LoadBalancer_F5ConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareClusterLoadBalancerElF5ConfigElRef {
+impl terrars::Ref for GkeonpremVmwareCluster_LoadBalancer_F5ConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremVmwareClusterLoadBalancerElF5ConfigElRef {
-        GkeonpremVmwareClusterLoadBalancerElF5ConfigElRef {
+    ) -> GkeonpremVmwareCluster_LoadBalancer_F5ConfigRef {
+        GkeonpremVmwareCluster_LoadBalancer_F5ConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareClusterLoadBalancerElF5ConfigElRef {
+impl GkeonpremVmwareCluster_LoadBalancer_F5ConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2097,7 +2232,7 @@ impl GkeonpremVmwareClusterLoadBalancerElF5ConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremVmwareClusterLoadBalancerElManualLbConfigEl {
+pub struct GkeonpremVmwareCluster_LoadBalancer_ManualLbConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     control_plane_node_port: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2108,7 +2243,7 @@ pub struct GkeonpremVmwareClusterLoadBalancerElManualLbConfigEl {
     konnectivity_server_node_port: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl GkeonpremVmwareClusterLoadBalancerElManualLbConfigEl {
+impl GkeonpremVmwareCluster_LoadBalancer_ManualLbConfig {
     #[doc =
         "Set the field `control_plane_node_port`.\nNodePort for control plane service. The Kubernetes API server in the admin\ncluster is implemented as a Service of type NodePort (ex. 30968)."]
     pub fn set_control_plane_node_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -2138,8 +2273,8 @@ impl GkeonpremVmwareClusterLoadBalancerElManualLbConfigEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremVmwareClusterLoadBalancerElManualLbConfigEl {
-    type O = terrars::BlockAssignable<GkeonpremVmwareClusterLoadBalancerElManualLbConfigEl>;
+impl terrars::ToListMappable for GkeonpremVmwareCluster_LoadBalancer_ManualLbConfig {
+    type O = terrars::BlockAssignable<GkeonpremVmwareCluster_LoadBalancer_ManualLbConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2150,11 +2285,11 @@ impl terrars::ToListMappable for GkeonpremVmwareClusterLoadBalancerElManualLbCon
     }
 }
 
-pub struct BuildGkeonpremVmwareClusterLoadBalancerElManualLbConfigEl {}
+pub struct BuildGkeonpremVmwareCluster_LoadBalancer_ManualLbConfig {}
 
-impl BuildGkeonpremVmwareClusterLoadBalancerElManualLbConfigEl {
-    pub fn build(self) -> GkeonpremVmwareClusterLoadBalancerElManualLbConfigEl {
-        GkeonpremVmwareClusterLoadBalancerElManualLbConfigEl {
+impl BuildGkeonpremVmwareCluster_LoadBalancer_ManualLbConfig {
+    pub fn build(self) -> GkeonpremVmwareCluster_LoadBalancer_ManualLbConfig {
+        GkeonpremVmwareCluster_LoadBalancer_ManualLbConfig {
             control_plane_node_port: core::default::Default::default(),
             ingress_http_node_port: core::default::Default::default(),
             ingress_https_node_port: core::default::Default::default(),
@@ -2163,24 +2298,26 @@ impl BuildGkeonpremVmwareClusterLoadBalancerElManualLbConfigEl {
     }
 }
 
-pub struct GkeonpremVmwareClusterLoadBalancerElManualLbConfigElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareCluster_LoadBalancer_ManualLbConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareClusterLoadBalancerElManualLbConfigElRef {
+impl terrars::Ref for GkeonpremVmwareCluster_LoadBalancer_ManualLbConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremVmwareClusterLoadBalancerElManualLbConfigElRef {
-        GkeonpremVmwareClusterLoadBalancerElManualLbConfigElRef {
+    ) -> GkeonpremVmwareCluster_LoadBalancer_ManualLbConfigRef {
+        GkeonpremVmwareCluster_LoadBalancer_ManualLbConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareClusterLoadBalancerElManualLbConfigElRef {
+impl GkeonpremVmwareCluster_LoadBalancer_ManualLbConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2211,7 +2348,7 @@ impl GkeonpremVmwareClusterLoadBalancerElManualLbConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremVmwareClusterLoadBalancerElMetalLbConfigElAddressPoolsEl {
+pub struct GkeonpremVmwareCluster_LoadBalancer_MetalLbConfig_AddressPools {
     addresses: terrars::ListField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     avoid_buggy_ips: std::option::Option<terrars::PrimField<bool>>,
@@ -2220,7 +2357,7 @@ pub struct GkeonpremVmwareClusterLoadBalancerElMetalLbConfigElAddressPoolsEl {
     pool: terrars::PrimField<std::string::String>,
 }
 
-impl GkeonpremVmwareClusterLoadBalancerElMetalLbConfigElAddressPoolsEl {
+impl GkeonpremVmwareCluster_LoadBalancer_MetalLbConfig_AddressPools {
     #[doc =
         "Set the field `avoid_buggy_ips`.\nIf true, avoid using IPs ending in .0 or .255.\nThis avoids buggy consumer devices mistakenly dropping IPv4 traffic for\nthose special IP addresses."]
     pub fn set_avoid_buggy_ips(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -2235,8 +2372,8 @@ impl GkeonpremVmwareClusterLoadBalancerElMetalLbConfigElAddressPoolsEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremVmwareClusterLoadBalancerElMetalLbConfigElAddressPoolsEl {
-    type O = terrars::BlockAssignable<GkeonpremVmwareClusterLoadBalancerElMetalLbConfigElAddressPoolsEl>;
+impl terrars::ToListMappable for GkeonpremVmwareCluster_LoadBalancer_MetalLbConfig_AddressPools {
+    type O = terrars::BlockAssignable<GkeonpremVmwareCluster_LoadBalancer_MetalLbConfig_AddressPools>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2247,7 +2384,7 @@ impl terrars::ToListMappable for GkeonpremVmwareClusterLoadBalancerElMetalLbConf
     }
 }
 
-pub struct BuildGkeonpremVmwareClusterLoadBalancerElMetalLbConfigElAddressPoolsEl {
+pub struct BuildGkeonpremVmwareCluster_LoadBalancer_MetalLbConfig_AddressPools {
     #[doc =
         "The addresses that are part of this pool. Each address\nmust be either in the CIDR form (1.2.3.0/24) or range\nform (1.2.3.1-1.2.3.5)."]
     pub addresses: terrars::ListField<terrars::PrimField<std::string::String>>,
@@ -2255,9 +2392,9 @@ pub struct BuildGkeonpremVmwareClusterLoadBalancerElMetalLbConfigElAddressPoolsE
     pub pool: terrars::PrimField<std::string::String>,
 }
 
-impl BuildGkeonpremVmwareClusterLoadBalancerElMetalLbConfigElAddressPoolsEl {
-    pub fn build(self) -> GkeonpremVmwareClusterLoadBalancerElMetalLbConfigElAddressPoolsEl {
-        GkeonpremVmwareClusterLoadBalancerElMetalLbConfigElAddressPoolsEl {
+impl BuildGkeonpremVmwareCluster_LoadBalancer_MetalLbConfig_AddressPools {
+    pub fn build(self) -> GkeonpremVmwareCluster_LoadBalancer_MetalLbConfig_AddressPools {
+        GkeonpremVmwareCluster_LoadBalancer_MetalLbConfig_AddressPools {
             addresses: self.addresses,
             avoid_buggy_ips: core::default::Default::default(),
             manual_assign: core::default::Default::default(),
@@ -2266,24 +2403,26 @@ impl BuildGkeonpremVmwareClusterLoadBalancerElMetalLbConfigElAddressPoolsEl {
     }
 }
 
-pub struct GkeonpremVmwareClusterLoadBalancerElMetalLbConfigElAddressPoolsElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareCluster_LoadBalancer_MetalLbConfig_AddressPoolsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareClusterLoadBalancerElMetalLbConfigElAddressPoolsElRef {
+impl terrars::Ref for GkeonpremVmwareCluster_LoadBalancer_MetalLbConfig_AddressPoolsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremVmwareClusterLoadBalancerElMetalLbConfigElAddressPoolsElRef {
-        GkeonpremVmwareClusterLoadBalancerElMetalLbConfigElAddressPoolsElRef {
+    ) -> GkeonpremVmwareCluster_LoadBalancer_MetalLbConfig_AddressPoolsRef {
+        GkeonpremVmwareCluster_LoadBalancer_MetalLbConfig_AddressPoolsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareClusterLoadBalancerElMetalLbConfigElAddressPoolsElRef {
+impl GkeonpremVmwareCluster_LoadBalancer_MetalLbConfig_AddressPoolsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2313,20 +2452,20 @@ impl GkeonpremVmwareClusterLoadBalancerElMetalLbConfigElAddressPoolsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct GkeonpremVmwareClusterLoadBalancerElMetalLbConfigElDynamic {
+struct GkeonpremVmwareCluster_LoadBalancer_MetalLbConfigDynamic {
     address_pools: std
     ::option
-    ::Option<terrars::DynamicBlock<GkeonpremVmwareClusterLoadBalancerElMetalLbConfigElAddressPoolsEl>>,
+    ::Option<terrars::DynamicBlock<GkeonpremVmwareCluster_LoadBalancer_MetalLbConfig_AddressPools>>,
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremVmwareClusterLoadBalancerElMetalLbConfigEl {
+pub struct GkeonpremVmwareCluster_LoadBalancer_MetalLbConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    address_pools: std::option::Option<std::vec::Vec<GkeonpremVmwareClusterLoadBalancerElMetalLbConfigElAddressPoolsEl>>,
-    dynamic: GkeonpremVmwareClusterLoadBalancerElMetalLbConfigElDynamic,
+    address_pools: std::option::Option<std::vec::Vec<GkeonpremVmwareCluster_LoadBalancer_MetalLbConfig_AddressPools>>,
+    dynamic: GkeonpremVmwareCluster_LoadBalancer_MetalLbConfigDynamic,
 }
 
-impl GkeonpremVmwareClusterLoadBalancerElMetalLbConfigEl {
+impl GkeonpremVmwareCluster_LoadBalancer_MetalLbConfig {
     #[doc = "Set the field `address_pools`.\n"]
     pub fn set_address_pools(
         mut self,
@@ -2335,9 +2474,7 @@ impl GkeonpremVmwareClusterLoadBalancerElMetalLbConfigEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<GkeonpremVmwareClusterLoadBalancerElMetalLbConfigElAddressPoolsEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<GkeonpremVmwareCluster_LoadBalancer_MetalLbConfig_AddressPools>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2351,8 +2488,8 @@ impl GkeonpremVmwareClusterLoadBalancerElMetalLbConfigEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremVmwareClusterLoadBalancerElMetalLbConfigEl {
-    type O = terrars::BlockAssignable<GkeonpremVmwareClusterLoadBalancerElMetalLbConfigEl>;
+impl terrars::ToListMappable for GkeonpremVmwareCluster_LoadBalancer_MetalLbConfig {
+    type O = terrars::BlockAssignable<GkeonpremVmwareCluster_LoadBalancer_MetalLbConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2363,56 +2500,56 @@ impl terrars::ToListMappable for GkeonpremVmwareClusterLoadBalancerElMetalLbConf
     }
 }
 
-pub struct BuildGkeonpremVmwareClusterLoadBalancerElMetalLbConfigEl {}
+pub struct BuildGkeonpremVmwareCluster_LoadBalancer_MetalLbConfig {}
 
-impl BuildGkeonpremVmwareClusterLoadBalancerElMetalLbConfigEl {
-    pub fn build(self) -> GkeonpremVmwareClusterLoadBalancerElMetalLbConfigEl {
-        GkeonpremVmwareClusterLoadBalancerElMetalLbConfigEl {
+impl BuildGkeonpremVmwareCluster_LoadBalancer_MetalLbConfig {
+    pub fn build(self) -> GkeonpremVmwareCluster_LoadBalancer_MetalLbConfig {
+        GkeonpremVmwareCluster_LoadBalancer_MetalLbConfig {
             address_pools: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct GkeonpremVmwareClusterLoadBalancerElMetalLbConfigElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareCluster_LoadBalancer_MetalLbConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareClusterLoadBalancerElMetalLbConfigElRef {
+impl terrars::Ref for GkeonpremVmwareCluster_LoadBalancer_MetalLbConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremVmwareClusterLoadBalancerElMetalLbConfigElRef {
-        GkeonpremVmwareClusterLoadBalancerElMetalLbConfigElRef {
+    ) -> GkeonpremVmwareCluster_LoadBalancer_MetalLbConfigRef {
+        GkeonpremVmwareCluster_LoadBalancer_MetalLbConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareClusterLoadBalancerElMetalLbConfigElRef {
+impl GkeonpremVmwareCluster_LoadBalancer_MetalLbConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `address_pools` after provisioning.\n"]
-    pub fn address_pools(
-        &self,
-    ) -> terrars::ListRef<GkeonpremVmwareClusterLoadBalancerElMetalLbConfigElAddressPoolsElRef> {
+    pub fn address_pools(&self) -> terrars::ListRef<GkeonpremVmwareCluster_LoadBalancer_MetalLbConfig_AddressPoolsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.address_pools", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremVmwareClusterLoadBalancerElVipConfigEl {
+pub struct GkeonpremVmwareCluster_LoadBalancer_VipConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     control_plane_vip: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ingress_vip: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeonpremVmwareClusterLoadBalancerElVipConfigEl {
+impl GkeonpremVmwareCluster_LoadBalancer_VipConfig {
     #[doc =
         "Set the field `control_plane_vip`.\nThe VIP which you previously set aside for the Kubernetes API of this cluster."]
     pub fn set_control_plane_vip(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -2428,8 +2565,8 @@ impl GkeonpremVmwareClusterLoadBalancerElVipConfigEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremVmwareClusterLoadBalancerElVipConfigEl {
-    type O = terrars::BlockAssignable<GkeonpremVmwareClusterLoadBalancerElVipConfigEl>;
+impl terrars::ToListMappable for GkeonpremVmwareCluster_LoadBalancer_VipConfig {
+    type O = terrars::BlockAssignable<GkeonpremVmwareCluster_LoadBalancer_VipConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2440,35 +2577,37 @@ impl terrars::ToListMappable for GkeonpremVmwareClusterLoadBalancerElVipConfigEl
     }
 }
 
-pub struct BuildGkeonpremVmwareClusterLoadBalancerElVipConfigEl {}
+pub struct BuildGkeonpremVmwareCluster_LoadBalancer_VipConfig {}
 
-impl BuildGkeonpremVmwareClusterLoadBalancerElVipConfigEl {
-    pub fn build(self) -> GkeonpremVmwareClusterLoadBalancerElVipConfigEl {
-        GkeonpremVmwareClusterLoadBalancerElVipConfigEl {
+impl BuildGkeonpremVmwareCluster_LoadBalancer_VipConfig {
+    pub fn build(self) -> GkeonpremVmwareCluster_LoadBalancer_VipConfig {
+        GkeonpremVmwareCluster_LoadBalancer_VipConfig {
             control_plane_vip: core::default::Default::default(),
             ingress_vip: core::default::Default::default(),
         }
     }
 }
 
-pub struct GkeonpremVmwareClusterLoadBalancerElVipConfigElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareCluster_LoadBalancer_VipConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareClusterLoadBalancerElVipConfigElRef {
+impl terrars::Ref for GkeonpremVmwareCluster_LoadBalancer_VipConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremVmwareClusterLoadBalancerElVipConfigElRef {
-        GkeonpremVmwareClusterLoadBalancerElVipConfigElRef {
+    ) -> GkeonpremVmwareCluster_LoadBalancer_VipConfigRef {
+        GkeonpremVmwareCluster_LoadBalancer_VipConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareClusterLoadBalancerElVipConfigElRef {
+impl GkeonpremVmwareCluster_LoadBalancer_VipConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2487,33 +2626,31 @@ impl GkeonpremVmwareClusterLoadBalancerElVipConfigElRef {
 }
 
 #[derive(Serialize, Default)]
-struct GkeonpremVmwareClusterLoadBalancerElDynamic {
-    f5_config: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareClusterLoadBalancerElF5ConfigEl>>,
-    manual_lb_config: std
-    ::option
-    ::Option<terrars::DynamicBlock<GkeonpremVmwareClusterLoadBalancerElManualLbConfigEl>>,
-    metal_lb_config: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareClusterLoadBalancerElMetalLbConfigEl>>,
-    vip_config: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareClusterLoadBalancerElVipConfigEl>>,
+struct GkeonpremVmwareCluster_LoadBalancerDynamic {
+    f5_config: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareCluster_LoadBalancer_F5Config>>,
+    manual_lb_config: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareCluster_LoadBalancer_ManualLbConfig>>,
+    metal_lb_config: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareCluster_LoadBalancer_MetalLbConfig>>,
+    vip_config: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareCluster_LoadBalancer_VipConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremVmwareClusterLoadBalancerEl {
+pub struct GkeonpremVmwareCluster_LoadBalancer {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    f5_config: std::option::Option<std::vec::Vec<GkeonpremVmwareClusterLoadBalancerElF5ConfigEl>>,
+    f5_config: std::option::Option<std::vec::Vec<GkeonpremVmwareCluster_LoadBalancer_F5Config>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    manual_lb_config: std::option::Option<std::vec::Vec<GkeonpremVmwareClusterLoadBalancerElManualLbConfigEl>>,
+    manual_lb_config: std::option::Option<std::vec::Vec<GkeonpremVmwareCluster_LoadBalancer_ManualLbConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    metal_lb_config: std::option::Option<std::vec::Vec<GkeonpremVmwareClusterLoadBalancerElMetalLbConfigEl>>,
+    metal_lb_config: std::option::Option<std::vec::Vec<GkeonpremVmwareCluster_LoadBalancer_MetalLbConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vip_config: std::option::Option<std::vec::Vec<GkeonpremVmwareClusterLoadBalancerElVipConfigEl>>,
-    dynamic: GkeonpremVmwareClusterLoadBalancerElDynamic,
+    vip_config: std::option::Option<std::vec::Vec<GkeonpremVmwareCluster_LoadBalancer_VipConfig>>,
+    dynamic: GkeonpremVmwareCluster_LoadBalancerDynamic,
 }
 
-impl GkeonpremVmwareClusterLoadBalancerEl {
+impl GkeonpremVmwareCluster_LoadBalancer {
     #[doc = "Set the field `f5_config`.\n"]
     pub fn set_f5_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareClusterLoadBalancerElF5ConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareCluster_LoadBalancer_F5Config>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2529,7 +2666,7 @@ impl GkeonpremVmwareClusterLoadBalancerEl {
     #[doc = "Set the field `manual_lb_config`.\n"]
     pub fn set_manual_lb_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareClusterLoadBalancerElManualLbConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareCluster_LoadBalancer_ManualLbConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2545,7 +2682,7 @@ impl GkeonpremVmwareClusterLoadBalancerEl {
     #[doc = "Set the field `metal_lb_config`.\n"]
     pub fn set_metal_lb_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareClusterLoadBalancerElMetalLbConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareCluster_LoadBalancer_MetalLbConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2561,7 +2698,7 @@ impl GkeonpremVmwareClusterLoadBalancerEl {
     #[doc = "Set the field `vip_config`.\n"]
     pub fn set_vip_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareClusterLoadBalancerElVipConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareCluster_LoadBalancer_VipConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2575,8 +2712,8 @@ impl GkeonpremVmwareClusterLoadBalancerEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremVmwareClusterLoadBalancerEl {
-    type O = terrars::BlockAssignable<GkeonpremVmwareClusterLoadBalancerEl>;
+impl terrars::ToListMappable for GkeonpremVmwareCluster_LoadBalancer {
+    type O = terrars::BlockAssignable<GkeonpremVmwareCluster_LoadBalancer>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2587,11 +2724,11 @@ impl terrars::ToListMappable for GkeonpremVmwareClusterLoadBalancerEl {
     }
 }
 
-pub struct BuildGkeonpremVmwareClusterLoadBalancerEl {}
+pub struct BuildGkeonpremVmwareCluster_LoadBalancer {}
 
-impl BuildGkeonpremVmwareClusterLoadBalancerEl {
-    pub fn build(self) -> GkeonpremVmwareClusterLoadBalancerEl {
-        GkeonpremVmwareClusterLoadBalancerEl {
+impl BuildGkeonpremVmwareCluster_LoadBalancer {
+    pub fn build(self) -> GkeonpremVmwareCluster_LoadBalancer {
+        GkeonpremVmwareCluster_LoadBalancer {
             f5_config: core::default::Default::default(),
             manual_lb_config: core::default::Default::default(),
             metal_lb_config: core::default::Default::default(),
@@ -2601,55 +2738,57 @@ impl BuildGkeonpremVmwareClusterLoadBalancerEl {
     }
 }
 
-pub struct GkeonpremVmwareClusterLoadBalancerElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareCluster_LoadBalancerRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareClusterLoadBalancerElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareClusterLoadBalancerElRef {
-        GkeonpremVmwareClusterLoadBalancerElRef {
+impl terrars::Ref for GkeonpremVmwareCluster_LoadBalancerRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareCluster_LoadBalancerRef {
+        GkeonpremVmwareCluster_LoadBalancerRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareClusterLoadBalancerElRef {
+impl GkeonpremVmwareCluster_LoadBalancerRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `f5_config` after provisioning.\n"]
-    pub fn f5_config(&self) -> terrars::ListRef<GkeonpremVmwareClusterLoadBalancerElF5ConfigElRef> {
+    pub fn f5_config(&self) -> terrars::ListRef<GkeonpremVmwareCluster_LoadBalancer_F5ConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.f5_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `manual_lb_config` after provisioning.\n"]
-    pub fn manual_lb_config(&self) -> terrars::ListRef<GkeonpremVmwareClusterLoadBalancerElManualLbConfigElRef> {
+    pub fn manual_lb_config(&self) -> terrars::ListRef<GkeonpremVmwareCluster_LoadBalancer_ManualLbConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.manual_lb_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `metal_lb_config` after provisioning.\n"]
-    pub fn metal_lb_config(&self) -> terrars::ListRef<GkeonpremVmwareClusterLoadBalancerElMetalLbConfigElRef> {
+    pub fn metal_lb_config(&self) -> terrars::ListRef<GkeonpremVmwareCluster_LoadBalancer_MetalLbConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.metal_lb_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `vip_config` after provisioning.\n"]
-    pub fn vip_config(&self) -> terrars::ListRef<GkeonpremVmwareClusterLoadBalancerElVipConfigElRef> {
+    pub fn vip_config(&self) -> terrars::ListRef<GkeonpremVmwareCluster_LoadBalancer_VipConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vip_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBlockElIpsEl {
+pub struct GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config_ControlPlaneIpBlock_Ips {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     hostname: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ip: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBlockElIpsEl {
+impl GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config_ControlPlaneIpBlock_Ips {
     #[doc = "Set the field `hostname`.\nHostname of the machine. VM's name will be used if this field is empty."]
     pub fn set_hostname(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.hostname = std::option::Option::Some(v.into());
@@ -2663,10 +2802,9 @@ impl GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBl
     }
 }
 
-impl terrars::ToListMappable for GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBlockElIpsEl {
+impl terrars::ToListMappable for GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config_ControlPlaneIpBlock_Ips {
     type O =
-        terrars
-        ::BlockAssignable<GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBlockElIpsEl>;
+        terrars::BlockAssignable<GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config_ControlPlaneIpBlock_Ips>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2677,35 +2815,37 @@ impl terrars::ToListMappable for GkeonpremVmwareClusterNetworkConfigElControlPla
     }
 }
 
-pub struct BuildGkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBlockElIpsEl {}
+pub struct BuildGkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config_ControlPlaneIpBlock_Ips {}
 
-impl BuildGkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBlockElIpsEl {
-    pub fn build(self) -> GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBlockElIpsEl {
-        GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBlockElIpsEl {
+impl BuildGkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config_ControlPlaneIpBlock_Ips {
+    pub fn build(self) -> GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config_ControlPlaneIpBlock_Ips {
+        GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config_ControlPlaneIpBlock_Ips {
             hostname: core::default::Default::default(),
             ip: core::default::Default::default(),
         }
     }
 }
 
-pub struct GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBlockElIpsElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config_ControlPlaneIpBlock_IpsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBlockElIpsElRef {
+impl terrars::Ref for GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config_ControlPlaneIpBlock_IpsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBlockElIpsElRef {
-        GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBlockElIpsElRef {
+    ) -> GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config_ControlPlaneIpBlock_IpsRef {
+        GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config_ControlPlaneIpBlock_IpsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBlockElIpsElRef {
+impl GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config_ControlPlaneIpBlock_IpsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2724,16 +2864,16 @@ impl GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBl
 }
 
 #[derive(Serialize, Default)]
-struct GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBlockElDynamic {
+struct GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config_ControlPlaneIpBlockDynamic {
     ips: std
     ::option
     ::Option<
-        terrars::DynamicBlock<GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBlockElIpsEl>,
+        terrars::DynamicBlock<GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config_ControlPlaneIpBlock_Ips>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBlockEl {
+pub struct GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config_ControlPlaneIpBlock {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     gateway: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2741,11 +2881,11 @@ pub struct GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPla
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ips: std
     ::option
-    ::Option<std::vec::Vec<GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBlockElIpsEl>>,
-    dynamic: GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBlockElDynamic,
+    ::Option<std::vec::Vec<GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config_ControlPlaneIpBlock_Ips>>,
+    dynamic: GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config_ControlPlaneIpBlockDynamic,
 }
 
-impl GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBlockEl {
+impl GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config_ControlPlaneIpBlock {
     #[doc = "Set the field `gateway`.\nThe network gateway used by the VMware User Cluster."]
     pub fn set_gateway(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.gateway = std::option::Option::Some(v.into());
@@ -2769,7 +2909,7 @@ impl GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBlockElIpsEl,
+                            GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config_ControlPlaneIpBlock_Ips,
                         >,
                     >,
     ) -> Self {
@@ -2785,9 +2925,8 @@ impl GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBl
     }
 }
 
-impl terrars::ToListMappable for GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBlockEl {
-    type O =
-        terrars::BlockAssignable<GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBlockEl>;
+impl terrars::ToListMappable for GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config_ControlPlaneIpBlock {
+    type O = terrars::BlockAssignable<GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config_ControlPlaneIpBlock>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2798,11 +2937,11 @@ impl terrars::ToListMappable for GkeonpremVmwareClusterNetworkConfigElControlPla
     }
 }
 
-pub struct BuildGkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBlockEl {}
+pub struct BuildGkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config_ControlPlaneIpBlock {}
 
-impl BuildGkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBlockEl {
-    pub fn build(self) -> GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBlockEl {
-        GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBlockEl {
+impl BuildGkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config_ControlPlaneIpBlock {
+    pub fn build(self) -> GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config_ControlPlaneIpBlock {
+        GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config_ControlPlaneIpBlock {
             gateway: core::default::Default::default(),
             netmask: core::default::Default::default(),
             ips: core::default::Default::default(),
@@ -2811,24 +2950,26 @@ impl BuildGkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlan
     }
 }
 
-pub struct GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBlockElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config_ControlPlaneIpBlockRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBlockElRef {
+impl terrars::Ref for GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config_ControlPlaneIpBlockRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBlockElRef {
-        GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBlockElRef {
+    ) -> GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config_ControlPlaneIpBlockRef {
+        GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config_ControlPlaneIpBlockRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBlockElRef {
+impl GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config_ControlPlaneIpBlockRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2848,30 +2989,28 @@ impl GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBl
     #[doc = "Get a reference to the value of field `ips` after provisioning.\n"]
     pub fn ips(
         &self,
-    ) -> terrars::ListRef<GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBlockElIpsElRef> {
+    ) -> terrars::ListRef<GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config_ControlPlaneIpBlock_IpsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ips", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElDynamic {
+struct GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2ConfigDynamic {
     control_plane_ip_block: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBlockEl>,
-    >,
+    ::Option<terrars::DynamicBlock<GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config_ControlPlaneIpBlock>>,
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigEl {
+pub struct GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     control_plane_ip_block: std
     ::option
-    ::Option<std::vec::Vec<GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBlockEl>>,
-    dynamic: GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElDynamic,
+    ::Option<std::vec::Vec<GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config_ControlPlaneIpBlock>>,
+    dynamic: GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2ConfigDynamic,
 }
 
-impl GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigEl {
+impl GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config {
     #[doc = "Set the field `control_plane_ip_block`.\n"]
     pub fn set_control_plane_ip_block(
         mut self,
@@ -2883,7 +3022,7 @@ impl GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBlockEl,
+                            GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config_ControlPlaneIpBlock,
                         >,
                     >,
     ) -> Self {
@@ -2899,8 +3038,8 @@ impl GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigEl {
-    type O = terrars::BlockAssignable<GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigEl>;
+impl terrars::ToListMappable for GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config {
+    type O = terrars::BlockAssignable<GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2911,35 +3050,37 @@ impl terrars::ToListMappable for GkeonpremVmwareClusterNetworkConfigElControlPla
     }
 }
 
-pub struct BuildGkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigEl {}
+pub struct BuildGkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config {}
 
-impl BuildGkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigEl {
-    pub fn build(self) -> GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigEl {
-        GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigEl {
+impl BuildGkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config {
+    pub fn build(self) -> GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config {
+        GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config {
             control_plane_ip_block: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2ConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElRef {
+impl terrars::Ref for GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2ConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElRef {
-        GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElRef {
+    ) -> GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2ConfigRef {
+        GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2ConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElRef {
+impl GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2ConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2947,20 +3088,20 @@ impl GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElRef {
     #[doc = "Get a reference to the value of field `control_plane_ip_block` after provisioning.\n"]
     pub fn control_plane_ip_block(
         &self,
-    ) -> terrars::ListRef<GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElControlPlaneIpBlockElRef> {
+    ) -> terrars::ListRef<GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config_ControlPlaneIpBlockRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.control_plane_ip_block", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremVmwareClusterNetworkConfigElDhcpIpConfigEl {
+pub struct GkeonpremVmwareCluster_NetworkConfig_DhcpIpConfig {
     enabled: terrars::PrimField<bool>,
 }
 
-impl GkeonpremVmwareClusterNetworkConfigElDhcpIpConfigEl { }
+impl GkeonpremVmwareCluster_NetworkConfig_DhcpIpConfig { }
 
-impl terrars::ToListMappable for GkeonpremVmwareClusterNetworkConfigElDhcpIpConfigEl {
-    type O = terrars::BlockAssignable<GkeonpremVmwareClusterNetworkConfigElDhcpIpConfigEl>;
+impl terrars::ToListMappable for GkeonpremVmwareCluster_NetworkConfig_DhcpIpConfig {
+    type O = terrars::BlockAssignable<GkeonpremVmwareCluster_NetworkConfig_DhcpIpConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2971,35 +3112,37 @@ impl terrars::ToListMappable for GkeonpremVmwareClusterNetworkConfigElDhcpIpConf
     }
 }
 
-pub struct BuildGkeonpremVmwareClusterNetworkConfigElDhcpIpConfigEl {
+pub struct BuildGkeonpremVmwareCluster_NetworkConfig_DhcpIpConfig {
     #[doc = "enabled is a flag to mark if DHCP IP allocation is\nused for VMware user clusters."]
     pub enabled: terrars::PrimField<bool>,
 }
 
-impl BuildGkeonpremVmwareClusterNetworkConfigElDhcpIpConfigEl {
-    pub fn build(self) -> GkeonpremVmwareClusterNetworkConfigElDhcpIpConfigEl {
-        GkeonpremVmwareClusterNetworkConfigElDhcpIpConfigEl { enabled: self.enabled }
+impl BuildGkeonpremVmwareCluster_NetworkConfig_DhcpIpConfig {
+    pub fn build(self) -> GkeonpremVmwareCluster_NetworkConfig_DhcpIpConfig {
+        GkeonpremVmwareCluster_NetworkConfig_DhcpIpConfig { enabled: self.enabled }
     }
 }
 
-pub struct GkeonpremVmwareClusterNetworkConfigElDhcpIpConfigElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareCluster_NetworkConfig_DhcpIpConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareClusterNetworkConfigElDhcpIpConfigElRef {
+impl terrars::Ref for GkeonpremVmwareCluster_NetworkConfig_DhcpIpConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremVmwareClusterNetworkConfigElDhcpIpConfigElRef {
-        GkeonpremVmwareClusterNetworkConfigElDhcpIpConfigElRef {
+    ) -> GkeonpremVmwareCluster_NetworkConfig_DhcpIpConfigRef {
+        GkeonpremVmwareCluster_NetworkConfig_DhcpIpConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareClusterNetworkConfigElDhcpIpConfigElRef {
+impl GkeonpremVmwareCluster_NetworkConfig_DhcpIpConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3012,7 +3155,7 @@ impl GkeonpremVmwareClusterNetworkConfigElDhcpIpConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremVmwareClusterNetworkConfigElHostConfigEl {
+pub struct GkeonpremVmwareCluster_NetworkConfig_HostConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dns_search_domains: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3021,7 +3164,7 @@ pub struct GkeonpremVmwareClusterNetworkConfigElHostConfigEl {
     ntp_servers: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl GkeonpremVmwareClusterNetworkConfigElHostConfigEl {
+impl GkeonpremVmwareCluster_NetworkConfig_HostConfig {
     #[doc = "Set the field `dns_search_domains`.\nDNS search domains."]
     pub fn set_dns_search_domains(
         mut self,
@@ -3050,8 +3193,8 @@ impl GkeonpremVmwareClusterNetworkConfigElHostConfigEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremVmwareClusterNetworkConfigElHostConfigEl {
-    type O = terrars::BlockAssignable<GkeonpremVmwareClusterNetworkConfigElHostConfigEl>;
+impl terrars::ToListMappable for GkeonpremVmwareCluster_NetworkConfig_HostConfig {
+    type O = terrars::BlockAssignable<GkeonpremVmwareCluster_NetworkConfig_HostConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3062,11 +3205,11 @@ impl terrars::ToListMappable for GkeonpremVmwareClusterNetworkConfigElHostConfig
     }
 }
 
-pub struct BuildGkeonpremVmwareClusterNetworkConfigElHostConfigEl {}
+pub struct BuildGkeonpremVmwareCluster_NetworkConfig_HostConfig {}
 
-impl BuildGkeonpremVmwareClusterNetworkConfigElHostConfigEl {
-    pub fn build(self) -> GkeonpremVmwareClusterNetworkConfigElHostConfigEl {
-        GkeonpremVmwareClusterNetworkConfigElHostConfigEl {
+impl BuildGkeonpremVmwareCluster_NetworkConfig_HostConfig {
+    pub fn build(self) -> GkeonpremVmwareCluster_NetworkConfig_HostConfig {
+        GkeonpremVmwareCluster_NetworkConfig_HostConfig {
             dns_search_domains: core::default::Default::default(),
             dns_servers: core::default::Default::default(),
             ntp_servers: core::default::Default::default(),
@@ -3074,24 +3217,26 @@ impl BuildGkeonpremVmwareClusterNetworkConfigElHostConfigEl {
     }
 }
 
-pub struct GkeonpremVmwareClusterNetworkConfigElHostConfigElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareCluster_NetworkConfig_HostConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareClusterNetworkConfigElHostConfigElRef {
+impl terrars::Ref for GkeonpremVmwareCluster_NetworkConfig_HostConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremVmwareClusterNetworkConfigElHostConfigElRef {
-        GkeonpremVmwareClusterNetworkConfigElHostConfigElRef {
+    ) -> GkeonpremVmwareCluster_NetworkConfig_HostConfigRef {
+        GkeonpremVmwareCluster_NetworkConfig_HostConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareClusterNetworkConfigElHostConfigElRef {
+impl GkeonpremVmwareCluster_NetworkConfig_HostConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3113,13 +3258,13 @@ impl GkeonpremVmwareClusterNetworkConfigElHostConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksElIpsEl {
+pub struct GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig_IpBlocks_Ips {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     hostname: std::option::Option<terrars::PrimField<std::string::String>>,
     ip: terrars::PrimField<std::string::String>,
 }
 
-impl GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksElIpsEl {
+impl GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig_IpBlocks_Ips {
     #[doc = "Set the field `hostname`.\nHostname of the machine. VM's name will be used if this field is empty."]
     pub fn set_hostname(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.hostname = std::option::Option::Some(v.into());
@@ -3127,8 +3272,8 @@ impl GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksElIpsEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksElIpsEl {
-    type O = terrars::BlockAssignable<GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksElIpsEl>;
+impl terrars::ToListMappable for GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig_IpBlocks_Ips {
+    type O = terrars::BlockAssignable<GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig_IpBlocks_Ips>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3139,38 +3284,40 @@ impl terrars::ToListMappable for GkeonpremVmwareClusterNetworkConfigElStaticIpCo
     }
 }
 
-pub struct BuildGkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksElIpsEl {
+pub struct BuildGkeonpremVmwareCluster_NetworkConfig_StaticIpConfig_IpBlocks_Ips {
     #[doc = "IP could be an IP address (like 1.2.3.4) or a CIDR (like 1.2.3.0/24)."]
     pub ip: terrars::PrimField<std::string::String>,
 }
 
-impl BuildGkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksElIpsEl {
-    pub fn build(self) -> GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksElIpsEl {
-        GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksElIpsEl {
+impl BuildGkeonpremVmwareCluster_NetworkConfig_StaticIpConfig_IpBlocks_Ips {
+    pub fn build(self) -> GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig_IpBlocks_Ips {
+        GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig_IpBlocks_Ips {
             hostname: core::default::Default::default(),
             ip: self.ip,
         }
     }
 }
 
-pub struct GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksElIpsElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig_IpBlocks_IpsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksElIpsElRef {
+impl terrars::Ref for GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig_IpBlocks_IpsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksElIpsElRef {
-        GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksElIpsElRef {
+    ) -> GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig_IpBlocks_IpsRef {
+        GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig_IpBlocks_IpsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksElIpsElRef {
+impl GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig_IpBlocks_IpsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3189,22 +3336,22 @@ impl GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksElIpsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksElDynamic {
+struct GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig_IpBlocksDynamic {
     ips: std
     ::option
-    ::Option<terrars::DynamicBlock<GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksElIpsEl>>,
+    ::Option<terrars::DynamicBlock<GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig_IpBlocks_Ips>>,
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksEl {
+pub struct GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig_IpBlocks {
     gateway: terrars::PrimField<std::string::String>,
     netmask: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ips: std::option::Option<std::vec::Vec<GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksElIpsEl>>,
-    dynamic: GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksElDynamic,
+    ips: std::option::Option<std::vec::Vec<GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig_IpBlocks_Ips>>,
+    dynamic: GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig_IpBlocksDynamic,
 }
 
-impl GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksEl {
+impl GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig_IpBlocks {
     #[doc = "Set the field `ips`.\n"]
     pub fn set_ips(
         mut self,
@@ -3214,7 +3361,7 @@ impl GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksElIpsEl>,
+                        terrars::BlockAssignable<GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig_IpBlocks_Ips>,
                     >,
     ) -> Self {
         match v.into() {
@@ -3229,8 +3376,8 @@ impl GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksEl {
-    type O = terrars::BlockAssignable<GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksEl>;
+impl terrars::ToListMappable for GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig_IpBlocks {
+    type O = terrars::BlockAssignable<GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig_IpBlocks>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3241,16 +3388,16 @@ impl terrars::ToListMappable for GkeonpremVmwareClusterNetworkConfigElStaticIpCo
     }
 }
 
-pub struct BuildGkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksEl {
+pub struct BuildGkeonpremVmwareCluster_NetworkConfig_StaticIpConfig_IpBlocks {
     #[doc = "The network gateway used by the VMware User Cluster."]
     pub gateway: terrars::PrimField<std::string::String>,
     #[doc = "The netmask used by the VMware User Cluster."]
     pub netmask: terrars::PrimField<std::string::String>,
 }
 
-impl BuildGkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksEl {
-    pub fn build(self) -> GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksEl {
-        GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksEl {
+impl BuildGkeonpremVmwareCluster_NetworkConfig_StaticIpConfig_IpBlocks {
+    pub fn build(self) -> GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig_IpBlocks {
+        GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig_IpBlocks {
             gateway: self.gateway,
             netmask: self.netmask,
             ips: core::default::Default::default(),
@@ -3259,24 +3406,26 @@ impl BuildGkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksEl {
     }
 }
 
-pub struct GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig_IpBlocksRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksElRef {
+impl terrars::Ref for GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig_IpBlocksRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksElRef {
-        GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksElRef {
+    ) -> GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig_IpBlocksRef {
+        GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig_IpBlocksRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksElRef {
+impl GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig_IpBlocksRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3294,26 +3443,26 @@ impl GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksElRef {
     }
 
     #[doc = "Get a reference to the value of field `ips` after provisioning.\n"]
-    pub fn ips(&self) -> terrars::ListRef<GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksElIpsElRef> {
+    pub fn ips(&self) -> terrars::ListRef<GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig_IpBlocks_IpsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ips", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElDynamic {
+struct GkeonpremVmwareCluster_NetworkConfig_StaticIpConfigDynamic {
     ip_blocks: std
     ::option
-    ::Option<terrars::DynamicBlock<GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksEl>>,
+    ::Option<terrars::DynamicBlock<GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig_IpBlocks>>,
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremVmwareClusterNetworkConfigElStaticIpConfigEl {
+pub struct GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ip_blocks: std::option::Option<std::vec::Vec<GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksEl>>,
-    dynamic: GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElDynamic,
+    ip_blocks: std::option::Option<std::vec::Vec<GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig_IpBlocks>>,
+    dynamic: GkeonpremVmwareCluster_NetworkConfig_StaticIpConfigDynamic,
 }
 
-impl GkeonpremVmwareClusterNetworkConfigElStaticIpConfigEl {
+impl GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig {
     #[doc = "Set the field `ip_blocks`.\n"]
     pub fn set_ip_blocks(
         mut self,
@@ -3322,7 +3471,7 @@ impl GkeonpremVmwareClusterNetworkConfigElStaticIpConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksEl>>,
+                    ::Into<terrars::BlockAssignable<GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig_IpBlocks>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3336,8 +3485,8 @@ impl GkeonpremVmwareClusterNetworkConfigElStaticIpConfigEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremVmwareClusterNetworkConfigElStaticIpConfigEl {
-    type O = terrars::BlockAssignable<GkeonpremVmwareClusterNetworkConfigElStaticIpConfigEl>;
+impl terrars::ToListMappable for GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig {
+    type O = terrars::BlockAssignable<GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3348,75 +3497,86 @@ impl terrars::ToListMappable for GkeonpremVmwareClusterNetworkConfigElStaticIpCo
     }
 }
 
-pub struct BuildGkeonpremVmwareClusterNetworkConfigElStaticIpConfigEl {}
+pub struct BuildGkeonpremVmwareCluster_NetworkConfig_StaticIpConfig {}
 
-impl BuildGkeonpremVmwareClusterNetworkConfigElStaticIpConfigEl {
-    pub fn build(self) -> GkeonpremVmwareClusterNetworkConfigElStaticIpConfigEl {
-        GkeonpremVmwareClusterNetworkConfigElStaticIpConfigEl {
+impl BuildGkeonpremVmwareCluster_NetworkConfig_StaticIpConfig {
+    pub fn build(self) -> GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig {
+        GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig {
             ip_blocks: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareCluster_NetworkConfig_StaticIpConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElRef {
+impl terrars::Ref for GkeonpremVmwareCluster_NetworkConfig_StaticIpConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElRef {
-        GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElRef {
+    ) -> GkeonpremVmwareCluster_NetworkConfig_StaticIpConfigRef {
+        GkeonpremVmwareCluster_NetworkConfig_StaticIpConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElRef {
+impl GkeonpremVmwareCluster_NetworkConfig_StaticIpConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `ip_blocks` after provisioning.\n"]
-    pub fn ip_blocks(&self) -> terrars::ListRef<GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElIpBlocksElRef> {
+    pub fn ip_blocks(&self) -> terrars::ListRef<GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig_IpBlocksRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ip_blocks", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct GkeonpremVmwareClusterNetworkConfigElDynamic {
+struct GkeonpremVmwareCluster_NetworkConfigDynamic {
     control_plane_v2_config: std
     ::option
-    ::Option<terrars::DynamicBlock<GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigEl>>,
-    dhcp_ip_config: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareClusterNetworkConfigElDhcpIpConfigEl>>,
-    host_config: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareClusterNetworkConfigElHostConfigEl>>,
+    ::Option<terrars::DynamicBlock<GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config>>,
+    dhcp_ip_config: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareCluster_NetworkConfig_DhcpIpConfig>>,
+    host_config: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareCluster_NetworkConfig_HostConfig>>,
     static_ip_config: std
     ::option
-    ::Option<terrars::DynamicBlock<GkeonpremVmwareClusterNetworkConfigElStaticIpConfigEl>>,
+    ::Option<terrars::DynamicBlock<GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremVmwareClusterNetworkConfigEl {
+pub struct GkeonpremVmwareCluster_NetworkConfig {
     pod_address_cidr_blocks: terrars::ListField<terrars::PrimField<std::string::String>>,
     service_address_cidr_blocks: terrars::ListField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vcenter_network: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     control_plane_v2_config: std
     ::option
-    ::Option<std::vec::Vec<GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigEl>>,
+    ::Option<std::vec::Vec<GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    dhcp_ip_config: std::option::Option<std::vec::Vec<GkeonpremVmwareClusterNetworkConfigElDhcpIpConfigEl>>,
+    dhcp_ip_config: std::option::Option<std::vec::Vec<GkeonpremVmwareCluster_NetworkConfig_DhcpIpConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    host_config: std::option::Option<std::vec::Vec<GkeonpremVmwareClusterNetworkConfigElHostConfigEl>>,
+    host_config: std::option::Option<std::vec::Vec<GkeonpremVmwareCluster_NetworkConfig_HostConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    static_ip_config: std::option::Option<std::vec::Vec<GkeonpremVmwareClusterNetworkConfigElStaticIpConfigEl>>,
-    dynamic: GkeonpremVmwareClusterNetworkConfigElDynamic,
+    static_ip_config: std::option::Option<std::vec::Vec<GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig>>,
+    dynamic: GkeonpremVmwareCluster_NetworkConfigDynamic,
 }
 
-impl GkeonpremVmwareClusterNetworkConfigEl {
+impl GkeonpremVmwareCluster_NetworkConfig {
+    #[doc =
+        "Set the field `vcenter_network`.\nvcenter_network specifies vCenter network name. Inherited from the admin cluster."]
+    pub fn set_vcenter_network(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.vcenter_network = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `control_plane_v2_config`.\n"]
     pub fn set_control_plane_v2_config(
         mut self,
@@ -3425,7 +3585,7 @@ impl GkeonpremVmwareClusterNetworkConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigEl>>,
+                    ::Into<terrars::BlockAssignable<GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2Config>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3441,7 +3601,7 @@ impl GkeonpremVmwareClusterNetworkConfigEl {
     #[doc = "Set the field `dhcp_ip_config`.\n"]
     pub fn set_dhcp_ip_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareClusterNetworkConfigElDhcpIpConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareCluster_NetworkConfig_DhcpIpConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3457,7 +3617,7 @@ impl GkeonpremVmwareClusterNetworkConfigEl {
     #[doc = "Set the field `host_config`.\n"]
     pub fn set_host_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareClusterNetworkConfigElHostConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareCluster_NetworkConfig_HostConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3473,7 +3633,7 @@ impl GkeonpremVmwareClusterNetworkConfigEl {
     #[doc = "Set the field `static_ip_config`.\n"]
     pub fn set_static_ip_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareClusterNetworkConfigElStaticIpConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareCluster_NetworkConfig_StaticIpConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3487,8 +3647,8 @@ impl GkeonpremVmwareClusterNetworkConfigEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremVmwareClusterNetworkConfigEl {
-    type O = terrars::BlockAssignable<GkeonpremVmwareClusterNetworkConfigEl>;
+impl terrars::ToListMappable for GkeonpremVmwareCluster_NetworkConfig {
+    type O = terrars::BlockAssignable<GkeonpremVmwareCluster_NetworkConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3499,7 +3659,7 @@ impl terrars::ToListMappable for GkeonpremVmwareClusterNetworkConfigEl {
     }
 }
 
-pub struct BuildGkeonpremVmwareClusterNetworkConfigEl {
+pub struct BuildGkeonpremVmwareCluster_NetworkConfig {
     #[doc =
         "All pods in the cluster are assigned an RFC1918 IPv4 address from these ranges.\nOnly a single range is supported. This field cannot be changed after creation."]
     pub pod_address_cidr_blocks: terrars::ListField<terrars::PrimField<std::string::String>>,
@@ -3508,11 +3668,12 @@ pub struct BuildGkeonpremVmwareClusterNetworkConfigEl {
     pub service_address_cidr_blocks: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildGkeonpremVmwareClusterNetworkConfigEl {
-    pub fn build(self) -> GkeonpremVmwareClusterNetworkConfigEl {
-        GkeonpremVmwareClusterNetworkConfigEl {
+impl BuildGkeonpremVmwareCluster_NetworkConfig {
+    pub fn build(self) -> GkeonpremVmwareCluster_NetworkConfig {
+        GkeonpremVmwareCluster_NetworkConfig {
             pod_address_cidr_blocks: self.pod_address_cidr_blocks,
             service_address_cidr_blocks: self.service_address_cidr_blocks,
+            vcenter_network: core::default::Default::default(),
             control_plane_v2_config: core::default::Default::default(),
             dhcp_ip_config: core::default::Default::default(),
             host_config: core::default::Default::default(),
@@ -3522,21 +3683,23 @@ impl BuildGkeonpremVmwareClusterNetworkConfigEl {
     }
 }
 
-pub struct GkeonpremVmwareClusterNetworkConfigElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareCluster_NetworkConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareClusterNetworkConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareClusterNetworkConfigElRef {
-        GkeonpremVmwareClusterNetworkConfigElRef {
+impl terrars::Ref for GkeonpremVmwareCluster_NetworkConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareCluster_NetworkConfigRef {
+        GkeonpremVmwareCluster_NetworkConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareClusterNetworkConfigElRef {
+impl GkeonpremVmwareCluster_NetworkConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3562,35 +3725,35 @@ impl GkeonpremVmwareClusterNetworkConfigElRef {
     #[doc = "Get a reference to the value of field `control_plane_v2_config` after provisioning.\n"]
     pub fn control_plane_v2_config(
         &self,
-    ) -> terrars::ListRef<GkeonpremVmwareClusterNetworkConfigElControlPlaneV2ConfigElRef> {
+    ) -> terrars::ListRef<GkeonpremVmwareCluster_NetworkConfig_ControlPlaneV2ConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.control_plane_v2_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `dhcp_ip_config` after provisioning.\n"]
-    pub fn dhcp_ip_config(&self) -> terrars::ListRef<GkeonpremVmwareClusterNetworkConfigElDhcpIpConfigElRef> {
+    pub fn dhcp_ip_config(&self) -> terrars::ListRef<GkeonpremVmwareCluster_NetworkConfig_DhcpIpConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dhcp_ip_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `host_config` after provisioning.\n"]
-    pub fn host_config(&self) -> terrars::ListRef<GkeonpremVmwareClusterNetworkConfigElHostConfigElRef> {
+    pub fn host_config(&self) -> terrars::ListRef<GkeonpremVmwareCluster_NetworkConfig_HostConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.host_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `static_ip_config` after provisioning.\n"]
-    pub fn static_ip_config(&self) -> terrars::ListRef<GkeonpremVmwareClusterNetworkConfigElStaticIpConfigElRef> {
+    pub fn static_ip_config(&self) -> terrars::ListRef<GkeonpremVmwareCluster_NetworkConfig_StaticIpConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.static_ip_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremVmwareClusterStorageEl {
+pub struct GkeonpremVmwareCluster_Storage {
     vsphere_csi_disabled: terrars::PrimField<bool>,
 }
 
-impl GkeonpremVmwareClusterStorageEl { }
+impl GkeonpremVmwareCluster_Storage { }
 
-impl terrars::ToListMappable for GkeonpremVmwareClusterStorageEl {
-    type O = terrars::BlockAssignable<GkeonpremVmwareClusterStorageEl>;
+impl terrars::ToListMappable for GkeonpremVmwareCluster_Storage {
+    type O = terrars::BlockAssignable<GkeonpremVmwareCluster_Storage>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3601,32 +3764,34 @@ impl terrars::ToListMappable for GkeonpremVmwareClusterStorageEl {
     }
 }
 
-pub struct BuildGkeonpremVmwareClusterStorageEl {
+pub struct BuildGkeonpremVmwareCluster_Storage {
     #[doc = "Whether or not to deploy vSphere CSI components in the VMware User Cluster.\nEnabled by default."]
     pub vsphere_csi_disabled: terrars::PrimField<bool>,
 }
 
-impl BuildGkeonpremVmwareClusterStorageEl {
-    pub fn build(self) -> GkeonpremVmwareClusterStorageEl {
-        GkeonpremVmwareClusterStorageEl { vsphere_csi_disabled: self.vsphere_csi_disabled }
+impl BuildGkeonpremVmwareCluster_Storage {
+    pub fn build(self) -> GkeonpremVmwareCluster_Storage {
+        GkeonpremVmwareCluster_Storage { vsphere_csi_disabled: self.vsphere_csi_disabled }
     }
 }
 
-pub struct GkeonpremVmwareClusterStorageElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareCluster_StorageRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareClusterStorageElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareClusterStorageElRef {
-        GkeonpremVmwareClusterStorageElRef {
+impl terrars::Ref for GkeonpremVmwareCluster_StorageRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareCluster_StorageRef {
+        GkeonpremVmwareCluster_StorageRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareClusterStorageElRef {
+impl GkeonpremVmwareCluster_StorageRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3639,7 +3804,7 @@ impl GkeonpremVmwareClusterStorageElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremVmwareClusterTimeoutsEl {
+pub struct GkeonpremVmwareCluster_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3648,7 +3813,7 @@ pub struct GkeonpremVmwareClusterTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeonpremVmwareClusterTimeoutsEl {
+impl GkeonpremVmwareCluster_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -3668,8 +3833,8 @@ impl GkeonpremVmwareClusterTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremVmwareClusterTimeoutsEl {
-    type O = terrars::BlockAssignable<GkeonpremVmwareClusterTimeoutsEl>;
+impl terrars::ToListMappable for GkeonpremVmwareCluster_Timeouts {
+    type O = terrars::BlockAssignable<GkeonpremVmwareCluster_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3680,11 +3845,11 @@ impl terrars::ToListMappable for GkeonpremVmwareClusterTimeoutsEl {
     }
 }
 
-pub struct BuildGkeonpremVmwareClusterTimeoutsEl {}
+pub struct BuildGkeonpremVmwareCluster_Timeouts {}
 
-impl BuildGkeonpremVmwareClusterTimeoutsEl {
-    pub fn build(self) -> GkeonpremVmwareClusterTimeoutsEl {
-        GkeonpremVmwareClusterTimeoutsEl {
+impl BuildGkeonpremVmwareCluster_Timeouts {
+    pub fn build(self) -> GkeonpremVmwareCluster_Timeouts {
+        GkeonpremVmwareCluster_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -3692,21 +3857,23 @@ impl BuildGkeonpremVmwareClusterTimeoutsEl {
     }
 }
 
-pub struct GkeonpremVmwareClusterTimeoutsElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareCluster_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareClusterTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareClusterTimeoutsElRef {
-        GkeonpremVmwareClusterTimeoutsElRef {
+impl terrars::Ref for GkeonpremVmwareCluster_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareCluster_TimeoutsRef {
+        GkeonpremVmwareCluster_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareClusterTimeoutsElRef {
+impl GkeonpremVmwareCluster_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3728,12 +3895,12 @@ impl GkeonpremVmwareClusterTimeoutsElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremVmwareClusterUpgradePolicyEl {
+pub struct GkeonpremVmwareCluster_UpgradePolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     control_plane_only: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl GkeonpremVmwareClusterUpgradePolicyEl {
+impl GkeonpremVmwareCluster_UpgradePolicy {
     #[doc = "Set the field `control_plane_only`.\nControls whether the upgrade applies to the control plane only."]
     pub fn set_control_plane_only(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.control_plane_only = std::option::Option::Some(v.into());
@@ -3741,8 +3908,8 @@ impl GkeonpremVmwareClusterUpgradePolicyEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremVmwareClusterUpgradePolicyEl {
-    type O = terrars::BlockAssignable<GkeonpremVmwareClusterUpgradePolicyEl>;
+impl terrars::ToListMappable for GkeonpremVmwareCluster_UpgradePolicy {
+    type O = terrars::BlockAssignable<GkeonpremVmwareCluster_UpgradePolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3753,29 +3920,31 @@ impl terrars::ToListMappable for GkeonpremVmwareClusterUpgradePolicyEl {
     }
 }
 
-pub struct BuildGkeonpremVmwareClusterUpgradePolicyEl {}
+pub struct BuildGkeonpremVmwareCluster_UpgradePolicy {}
 
-impl BuildGkeonpremVmwareClusterUpgradePolicyEl {
-    pub fn build(self) -> GkeonpremVmwareClusterUpgradePolicyEl {
-        GkeonpremVmwareClusterUpgradePolicyEl { control_plane_only: core::default::Default::default() }
+impl BuildGkeonpremVmwareCluster_UpgradePolicy {
+    pub fn build(self) -> GkeonpremVmwareCluster_UpgradePolicy {
+        GkeonpremVmwareCluster_UpgradePolicy { control_plane_only: core::default::Default::default() }
     }
 }
 
-pub struct GkeonpremVmwareClusterUpgradePolicyElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareCluster_UpgradePolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareClusterUpgradePolicyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareClusterUpgradePolicyElRef {
-        GkeonpremVmwareClusterUpgradePolicyElRef {
+impl terrars::Ref for GkeonpremVmwareCluster_UpgradePolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareCluster_UpgradePolicyRef {
+        GkeonpremVmwareCluster_UpgradePolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareClusterUpgradePolicyElRef {
+impl GkeonpremVmwareCluster_UpgradePolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3788,7 +3957,7 @@ impl GkeonpremVmwareClusterUpgradePolicyElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremVmwareClusterVcenterEl {
+pub struct GkeonpremVmwareCluster_Vcenter {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ca_cert_data: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3805,7 +3974,7 @@ pub struct GkeonpremVmwareClusterVcenterEl {
     storage_policy_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeonpremVmwareClusterVcenterEl {
+impl GkeonpremVmwareCluster_Vcenter {
     #[doc = "Set the field `ca_cert_data`.\nContains the vCenter CA certificate public key for SSL verification."]
     pub fn set_ca_cert_data(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.ca_cert_data = std::option::Option::Some(v.into());
@@ -3852,8 +4021,8 @@ impl GkeonpremVmwareClusterVcenterEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremVmwareClusterVcenterEl {
-    type O = terrars::BlockAssignable<GkeonpremVmwareClusterVcenterEl>;
+impl terrars::ToListMappable for GkeonpremVmwareCluster_Vcenter {
+    type O = terrars::BlockAssignable<GkeonpremVmwareCluster_Vcenter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3864,11 +4033,11 @@ impl terrars::ToListMappable for GkeonpremVmwareClusterVcenterEl {
     }
 }
 
-pub struct BuildGkeonpremVmwareClusterVcenterEl {}
+pub struct BuildGkeonpremVmwareCluster_Vcenter {}
 
-impl BuildGkeonpremVmwareClusterVcenterEl {
-    pub fn build(self) -> GkeonpremVmwareClusterVcenterEl {
-        GkeonpremVmwareClusterVcenterEl {
+impl BuildGkeonpremVmwareCluster_Vcenter {
+    pub fn build(self) -> GkeonpremVmwareCluster_Vcenter {
+        GkeonpremVmwareCluster_Vcenter {
             ca_cert_data: core::default::Default::default(),
             cluster: core::default::Default::default(),
             datacenter: core::default::Default::default(),
@@ -3880,21 +4049,23 @@ impl BuildGkeonpremVmwareClusterVcenterEl {
     }
 }
 
-pub struct GkeonpremVmwareClusterVcenterElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareCluster_VcenterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareClusterVcenterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareClusterVcenterElRef {
-        GkeonpremVmwareClusterVcenterElRef {
+impl terrars::Ref for GkeonpremVmwareCluster_VcenterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareCluster_VcenterRef {
+        GkeonpremVmwareCluster_VcenterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareClusterVcenterElRef {
+impl GkeonpremVmwareCluster_VcenterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3945,18 +4116,4 @@ impl GkeonpremVmwareClusterVcenterElRef {
     pub fn storage_policy_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.storage_policy_name", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct GkeonpremVmwareClusterDynamic {
-    anti_affinity_groups: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareClusterAntiAffinityGroupsEl>>,
-    authorization: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareClusterAuthorizationEl>>,
-    auto_repair_config: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareClusterAutoRepairConfigEl>>,
-    control_plane_node: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareClusterControlPlaneNodeEl>>,
-    dataplane_v2: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareClusterDataplaneV2El>>,
-    load_balancer: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareClusterLoadBalancerEl>>,
-    network_config: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareClusterNetworkConfigEl>>,
-    storage: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareClusterStorageEl>>,
-    upgrade_policy: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareClusterUpgradePolicyEl>>,
-    vcenter: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareClusterVcenterEl>>,
 }

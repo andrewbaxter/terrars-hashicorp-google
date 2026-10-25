@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct MonitoringSloData {
+struct MonitoringSloData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,6 +22,8 @@ struct MonitoringSloData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     calendar_period: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     display_name: std::option::Option<terrars::PrimField<std::string::String>>,
     goal: terrars::PrimField<f64>,
@@ -35,20 +39,20 @@ struct MonitoringSloData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     user_labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    basic_sli: std::option::Option<std::vec::Vec<MonitoringSloBasicSliEl>>,
+    basic_sli: std::option::Option<std::vec::Vec<MonitoringSlo_BasicSli>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    request_based_sli: std::option::Option<std::vec::Vec<MonitoringSloRequestBasedSliEl>>,
+    request_based_sli: std::option::Option<std::vec::Vec<MonitoringSlo_RequestBasedSli>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<MonitoringSloTimeoutsEl>,
+    timeouts: std::option::Option<MonitoringSlo_Timeouts>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    windows_based_sli: std::option::Option<std::vec::Vec<MonitoringSloWindowsBasedSliEl>>,
+    windows_based_sli: std::option::Option<std::vec::Vec<MonitoringSlo_WindowsBasedSli>>,
     dynamic: MonitoringSloDynamic,
 }
 
 struct MonitoringSlo_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<MonitoringSloData>,
+    data: std::cell::RefCell<MonitoringSloData_>,
 }
 
 #[derive(Clone)]
@@ -155,6 +159,13 @@ impl MonitoringSlo {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `display_name`.\nName used for UI elements listing this SLO."]
     pub fn set_display_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().display_name = std::option::Option::Some(v.into());
@@ -198,7 +209,7 @@ impl MonitoringSlo {
     }
 
     #[doc = "Set the field `basic_sli`.\n"]
-    pub fn set_basic_sli(self, v: impl std::convert::Into<terrars::BlockAssignable<MonitoringSloBasicSliEl>>) -> Self {
+    pub fn set_basic_sli(self, v: impl std::convert::Into<terrars::BlockAssignable<MonitoringSlo_BasicSli>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().basic_sli = std::option::Option::Some(v);
@@ -213,7 +224,7 @@ impl MonitoringSlo {
     #[doc = "Set the field `request_based_sli`.\n"]
     pub fn set_request_based_sli(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringSloRequestBasedSliEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringSlo_RequestBasedSli>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -227,7 +238,7 @@ impl MonitoringSlo {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<MonitoringSloTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<MonitoringSlo_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -235,7 +246,7 @@ impl MonitoringSlo {
     #[doc = "Set the field `windows_based_sli`.\n"]
     pub fn set_windows_based_sli(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringSloWindowsBasedSliEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringSlo_WindowsBasedSli>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -252,6 +263,12 @@ impl MonitoringSlo {
         "Get a reference to the value of field `calendar_period` after provisioning.\nA calendar period, semantically \"since the start of the current\n<calendarPeriod>\". Possible values: [\"DAY\", \"WEEK\", \"FORTNIGHT\", \"MONTH\"]"]
     pub fn calendar_period(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.calendar_period", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -307,22 +324,22 @@ impl MonitoringSlo {
     }
 
     #[doc = "Get a reference to the value of field `basic_sli` after provisioning.\n"]
-    pub fn basic_sli(&self) -> terrars::ListRef<MonitoringSloBasicSliElRef> {
+    pub fn basic_sli(&self) -> terrars::ListRef<MonitoringSlo_BasicSliRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.basic_sli", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `request_based_sli` after provisioning.\n"]
-    pub fn request_based_sli(&self) -> terrars::ListRef<MonitoringSloRequestBasedSliElRef> {
+    pub fn request_based_sli(&self) -> terrars::ListRef<MonitoringSlo_RequestBasedSliRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.request_based_sli", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> MonitoringSloTimeoutsElRef {
-        MonitoringSloTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> MonitoringSlo_TimeoutsRef {
+        MonitoringSlo_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `windows_based_sli` after provisioning.\n"]
-    pub fn windows_based_sli(&self) -> terrars::ListRef<MonitoringSloWindowsBasedSliElRef> {
+    pub fn windows_based_sli(&self) -> terrars::ListRef<MonitoringSlo_WindowsBasedSliRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.windows_based_sli", self.extract_ref()))
     }
 }
@@ -371,13 +388,14 @@ impl BuildMonitoringSlo {
         let out = MonitoringSlo(std::rc::Rc::new(MonitoringSlo_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(MonitoringSloData {
+            data: std::cell::RefCell::new(MonitoringSloData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 calendar_period: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 display_name: core::default::Default::default(),
                 goal: self.goal,
                 id: core::default::Default::default(),
@@ -428,6 +446,12 @@ impl MonitoringSloRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `display_name` after provisioning.\nName used for UI elements listing this SLO."]
     pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
@@ -480,33 +504,40 @@ impl MonitoringSloRef {
     }
 
     #[doc = "Get a reference to the value of field `basic_sli` after provisioning.\n"]
-    pub fn basic_sli(&self) -> terrars::ListRef<MonitoringSloBasicSliElRef> {
+    pub fn basic_sli(&self) -> terrars::ListRef<MonitoringSlo_BasicSliRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.basic_sli", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `request_based_sli` after provisioning.\n"]
-    pub fn request_based_sli(&self) -> terrars::ListRef<MonitoringSloRequestBasedSliElRef> {
+    pub fn request_based_sli(&self) -> terrars::ListRef<MonitoringSlo_RequestBasedSliRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.request_based_sli", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> MonitoringSloTimeoutsElRef {
-        MonitoringSloTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> MonitoringSlo_TimeoutsRef {
+        MonitoringSlo_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `windows_based_sli` after provisioning.\n"]
-    pub fn windows_based_sli(&self) -> terrars::ListRef<MonitoringSloWindowsBasedSliElRef> {
+    pub fn windows_based_sli(&self) -> terrars::ListRef<MonitoringSlo_WindowsBasedSliRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.windows_based_sli", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct MonitoringSloDynamic {
+    basic_sli: std::option::Option<terrars::DynamicBlock<MonitoringSlo_BasicSli>>,
+    request_based_sli: std::option::Option<terrars::DynamicBlock<MonitoringSlo_RequestBasedSli>>,
+    windows_based_sli: std::option::Option<terrars::DynamicBlock<MonitoringSlo_WindowsBasedSli>>,
+}
+
 #[derive(Serialize)]
-pub struct MonitoringSloBasicSliElAvailabilityEl {
+pub struct MonitoringSlo_BasicSli_Availability {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl MonitoringSloBasicSliElAvailabilityEl {
+impl MonitoringSlo_BasicSli_Availability {
     #[doc =
         "Set the field `enabled`.\nWhether an availability SLI is enabled or not. Must be set to true. Defaults to 'true'."]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -515,8 +546,8 @@ impl MonitoringSloBasicSliElAvailabilityEl {
     }
 }
 
-impl terrars::ToListMappable for MonitoringSloBasicSliElAvailabilityEl {
-    type O = terrars::BlockAssignable<MonitoringSloBasicSliElAvailabilityEl>;
+impl terrars::ToListMappable for MonitoringSlo_BasicSli_Availability {
+    type O = terrars::BlockAssignable<MonitoringSlo_BasicSli_Availability>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -527,29 +558,31 @@ impl terrars::ToListMappable for MonitoringSloBasicSliElAvailabilityEl {
     }
 }
 
-pub struct BuildMonitoringSloBasicSliElAvailabilityEl {}
+pub struct BuildMonitoringSlo_BasicSli_Availability {}
 
-impl BuildMonitoringSloBasicSliElAvailabilityEl {
-    pub fn build(self) -> MonitoringSloBasicSliElAvailabilityEl {
-        MonitoringSloBasicSliElAvailabilityEl { enabled: core::default::Default::default() }
+impl BuildMonitoringSlo_BasicSli_Availability {
+    pub fn build(self) -> MonitoringSlo_BasicSli_Availability {
+        MonitoringSlo_BasicSli_Availability { enabled: core::default::Default::default() }
     }
 }
 
-pub struct MonitoringSloBasicSliElAvailabilityElRef {
+#[allow(dead_code)]
+pub struct MonitoringSlo_BasicSli_AvailabilityRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MonitoringSloBasicSliElAvailabilityElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitoringSloBasicSliElAvailabilityElRef {
-        MonitoringSloBasicSliElAvailabilityElRef {
+impl terrars::Ref for MonitoringSlo_BasicSli_AvailabilityRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitoringSlo_BasicSli_AvailabilityRef {
+        MonitoringSlo_BasicSli_AvailabilityRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MonitoringSloBasicSliElAvailabilityElRef {
+impl MonitoringSlo_BasicSli_AvailabilityRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -562,14 +595,14 @@ impl MonitoringSloBasicSliElAvailabilityElRef {
 }
 
 #[derive(Serialize)]
-pub struct MonitoringSloBasicSliElLatencyEl {
+pub struct MonitoringSlo_BasicSli_Latency {
     threshold: terrars::PrimField<std::string::String>,
 }
 
-impl MonitoringSloBasicSliElLatencyEl { }
+impl MonitoringSlo_BasicSli_Latency { }
 
-impl terrars::ToListMappable for MonitoringSloBasicSliElLatencyEl {
-    type O = terrars::BlockAssignable<MonitoringSloBasicSliElLatencyEl>;
+impl terrars::ToListMappable for MonitoringSlo_BasicSli_Latency {
+    type O = terrars::BlockAssignable<MonitoringSlo_BasicSli_Latency>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -580,33 +613,35 @@ impl terrars::ToListMappable for MonitoringSloBasicSliElLatencyEl {
     }
 }
 
-pub struct BuildMonitoringSloBasicSliElLatencyEl {
+pub struct BuildMonitoringSlo_BasicSli_Latency {
     #[doc =
         "A duration string, e.g. 10s.\nGood service is defined to be the count of requests made to\nthis service that return in no more than threshold."]
     pub threshold: terrars::PrimField<std::string::String>,
 }
 
-impl BuildMonitoringSloBasicSliElLatencyEl {
-    pub fn build(self) -> MonitoringSloBasicSliElLatencyEl {
-        MonitoringSloBasicSliElLatencyEl { threshold: self.threshold }
+impl BuildMonitoringSlo_BasicSli_Latency {
+    pub fn build(self) -> MonitoringSlo_BasicSli_Latency {
+        MonitoringSlo_BasicSli_Latency { threshold: self.threshold }
     }
 }
 
-pub struct MonitoringSloBasicSliElLatencyElRef {
+#[allow(dead_code)]
+pub struct MonitoringSlo_BasicSli_LatencyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MonitoringSloBasicSliElLatencyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitoringSloBasicSliElLatencyElRef {
-        MonitoringSloBasicSliElLatencyElRef {
+impl terrars::Ref for MonitoringSlo_BasicSli_LatencyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitoringSlo_BasicSli_LatencyRef {
+        MonitoringSlo_BasicSli_LatencyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MonitoringSloBasicSliElLatencyElRef {
+impl MonitoringSlo_BasicSli_LatencyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -619,13 +654,13 @@ impl MonitoringSloBasicSliElLatencyElRef {
 }
 
 #[derive(Serialize, Default)]
-struct MonitoringSloBasicSliElDynamic {
-    availability: std::option::Option<terrars::DynamicBlock<MonitoringSloBasicSliElAvailabilityEl>>,
-    latency: std::option::Option<terrars::DynamicBlock<MonitoringSloBasicSliElLatencyEl>>,
+struct MonitoringSlo_BasicSliDynamic {
+    availability: std::option::Option<terrars::DynamicBlock<MonitoringSlo_BasicSli_Availability>>,
+    latency: std::option::Option<terrars::DynamicBlock<MonitoringSlo_BasicSli_Latency>>,
 }
 
 #[derive(Serialize)]
-pub struct MonitoringSloBasicSliEl {
+pub struct MonitoringSlo_BasicSli {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     location: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -633,13 +668,13 @@ pub struct MonitoringSloBasicSliEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     version: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    availability: std::option::Option<std::vec::Vec<MonitoringSloBasicSliElAvailabilityEl>>,
+    availability: std::option::Option<std::vec::Vec<MonitoringSlo_BasicSli_Availability>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    latency: std::option::Option<std::vec::Vec<MonitoringSloBasicSliElLatencyEl>>,
-    dynamic: MonitoringSloBasicSliElDynamic,
+    latency: std::option::Option<std::vec::Vec<MonitoringSlo_BasicSli_Latency>>,
+    dynamic: MonitoringSlo_BasicSliDynamic,
 }
 
-impl MonitoringSloBasicSliEl {
+impl MonitoringSlo_BasicSli {
     #[doc =
         "Set the field `location`.\nAn optional set of locations to which this SLI is relevant.\nTelemetry from other locations will not be used to calculate\nperformance for this SLI. If omitted, this SLI applies to all\nlocations in which the Service has activity. For service types\nthat don't support breaking down by location, setting this\nfield will result in an error."]
     pub fn set_location(
@@ -673,7 +708,7 @@ impl MonitoringSloBasicSliEl {
     #[doc = "Set the field `availability`.\n"]
     pub fn set_availability(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringSloBasicSliElAvailabilityEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringSlo_BasicSli_Availability>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -689,7 +724,7 @@ impl MonitoringSloBasicSliEl {
     #[doc = "Set the field `latency`.\n"]
     pub fn set_latency(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringSloBasicSliElLatencyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringSlo_BasicSli_Latency>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -703,8 +738,8 @@ impl MonitoringSloBasicSliEl {
     }
 }
 
-impl terrars::ToListMappable for MonitoringSloBasicSliEl {
-    type O = terrars::BlockAssignable<MonitoringSloBasicSliEl>;
+impl terrars::ToListMappable for MonitoringSlo_BasicSli {
+    type O = terrars::BlockAssignable<MonitoringSlo_BasicSli>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -715,11 +750,11 @@ impl terrars::ToListMappable for MonitoringSloBasicSliEl {
     }
 }
 
-pub struct BuildMonitoringSloBasicSliEl {}
+pub struct BuildMonitoringSlo_BasicSli {}
 
-impl BuildMonitoringSloBasicSliEl {
-    pub fn build(self) -> MonitoringSloBasicSliEl {
-        MonitoringSloBasicSliEl {
+impl BuildMonitoringSlo_BasicSli {
+    pub fn build(self) -> MonitoringSlo_BasicSli {
+        MonitoringSlo_BasicSli {
             location: core::default::Default::default(),
             method: core::default::Default::default(),
             version: core::default::Default::default(),
@@ -730,21 +765,23 @@ impl BuildMonitoringSloBasicSliEl {
     }
 }
 
-pub struct MonitoringSloBasicSliElRef {
+#[allow(dead_code)]
+pub struct MonitoringSlo_BasicSliRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MonitoringSloBasicSliElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitoringSloBasicSliElRef {
-        MonitoringSloBasicSliElRef {
+impl terrars::Ref for MonitoringSlo_BasicSliRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitoringSlo_BasicSliRef {
+        MonitoringSlo_BasicSliRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MonitoringSloBasicSliElRef {
+impl MonitoringSlo_BasicSliRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -768,25 +805,25 @@ impl MonitoringSloBasicSliElRef {
     }
 
     #[doc = "Get a reference to the value of field `availability` after provisioning.\n"]
-    pub fn availability(&self) -> terrars::ListRef<MonitoringSloBasicSliElAvailabilityElRef> {
+    pub fn availability(&self) -> terrars::ListRef<MonitoringSlo_BasicSli_AvailabilityRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.availability", self.base))
     }
 
     #[doc = "Get a reference to the value of field `latency` after provisioning.\n"]
-    pub fn latency(&self) -> terrars::ListRef<MonitoringSloBasicSliElLatencyElRef> {
+    pub fn latency(&self) -> terrars::ListRef<MonitoringSlo_BasicSli_LatencyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.latency", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct MonitoringSloRequestBasedSliElDistributionCutElRangeEl {
+pub struct MonitoringSlo_RequestBasedSli_DistributionCut_Range {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl MonitoringSloRequestBasedSliElDistributionCutElRangeEl {
+impl MonitoringSlo_RequestBasedSli_DistributionCut_Range {
     #[doc = "Set the field `max`.\nmax value for the range (inclusive). If not given,\nwill be set to 0"]
     pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max = std::option::Option::Some(v.into());
@@ -800,8 +837,8 @@ impl MonitoringSloRequestBasedSliElDistributionCutElRangeEl {
     }
 }
 
-impl terrars::ToListMappable for MonitoringSloRequestBasedSliElDistributionCutElRangeEl {
-    type O = terrars::BlockAssignable<MonitoringSloRequestBasedSliElDistributionCutElRangeEl>;
+impl terrars::ToListMappable for MonitoringSlo_RequestBasedSli_DistributionCut_Range {
+    type O = terrars::BlockAssignable<MonitoringSlo_RequestBasedSli_DistributionCut_Range>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -812,35 +849,37 @@ impl terrars::ToListMappable for MonitoringSloRequestBasedSliElDistributionCutEl
     }
 }
 
-pub struct BuildMonitoringSloRequestBasedSliElDistributionCutElRangeEl {}
+pub struct BuildMonitoringSlo_RequestBasedSli_DistributionCut_Range {}
 
-impl BuildMonitoringSloRequestBasedSliElDistributionCutElRangeEl {
-    pub fn build(self) -> MonitoringSloRequestBasedSliElDistributionCutElRangeEl {
-        MonitoringSloRequestBasedSliElDistributionCutElRangeEl {
+impl BuildMonitoringSlo_RequestBasedSli_DistributionCut_Range {
+    pub fn build(self) -> MonitoringSlo_RequestBasedSli_DistributionCut_Range {
+        MonitoringSlo_RequestBasedSli_DistributionCut_Range {
             max: core::default::Default::default(),
             min: core::default::Default::default(),
         }
     }
 }
 
-pub struct MonitoringSloRequestBasedSliElDistributionCutElRangeElRef {
+#[allow(dead_code)]
+pub struct MonitoringSlo_RequestBasedSli_DistributionCut_RangeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MonitoringSloRequestBasedSliElDistributionCutElRangeElRef {
+impl terrars::Ref for MonitoringSlo_RequestBasedSli_DistributionCut_RangeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> MonitoringSloRequestBasedSliElDistributionCutElRangeElRef {
-        MonitoringSloRequestBasedSliElDistributionCutElRangeElRef {
+    ) -> MonitoringSlo_RequestBasedSli_DistributionCut_RangeRef {
+        MonitoringSlo_RequestBasedSli_DistributionCut_RangeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MonitoringSloRequestBasedSliElDistributionCutElRangeElRef {
+impl MonitoringSlo_RequestBasedSli_DistributionCut_RangeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -859,23 +898,23 @@ impl MonitoringSloRequestBasedSliElDistributionCutElRangeElRef {
 }
 
 #[derive(Serialize, Default)]
-struct MonitoringSloRequestBasedSliElDistributionCutElDynamic {
-    range: std::option::Option<terrars::DynamicBlock<MonitoringSloRequestBasedSliElDistributionCutElRangeEl>>,
+struct MonitoringSlo_RequestBasedSli_DistributionCutDynamic {
+    range: std::option::Option<terrars::DynamicBlock<MonitoringSlo_RequestBasedSli_DistributionCut_Range>>,
 }
 
 #[derive(Serialize)]
-pub struct MonitoringSloRequestBasedSliElDistributionCutEl {
+pub struct MonitoringSlo_RequestBasedSli_DistributionCut {
     distribution_filter: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    range: std::option::Option<std::vec::Vec<MonitoringSloRequestBasedSliElDistributionCutElRangeEl>>,
-    dynamic: MonitoringSloRequestBasedSliElDistributionCutElDynamic,
+    range: std::option::Option<std::vec::Vec<MonitoringSlo_RequestBasedSli_DistributionCut_Range>>,
+    dynamic: MonitoringSlo_RequestBasedSli_DistributionCutDynamic,
 }
 
-impl MonitoringSloRequestBasedSliElDistributionCutEl {
+impl MonitoringSlo_RequestBasedSli_DistributionCut {
     #[doc = "Set the field `range`.\n"]
     pub fn set_range(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringSloRequestBasedSliElDistributionCutElRangeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringSlo_RequestBasedSli_DistributionCut_Range>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -889,8 +928,8 @@ impl MonitoringSloRequestBasedSliElDistributionCutEl {
     }
 }
 
-impl terrars::ToListMappable for MonitoringSloRequestBasedSliElDistributionCutEl {
-    type O = terrars::BlockAssignable<MonitoringSloRequestBasedSliElDistributionCutEl>;
+impl terrars::ToListMappable for MonitoringSlo_RequestBasedSli_DistributionCut {
+    type O = terrars::BlockAssignable<MonitoringSlo_RequestBasedSli_DistributionCut>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -901,15 +940,15 @@ impl terrars::ToListMappable for MonitoringSloRequestBasedSliElDistributionCutEl
     }
 }
 
-pub struct BuildMonitoringSloRequestBasedSliElDistributionCutEl {
+pub struct BuildMonitoringSlo_RequestBasedSli_DistributionCut {
     #[doc =
         "A TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\naggregating values to quantify the good service provided.\n\nMust have ValueType = DISTRIBUTION and\nMetricKind = DELTA or MetricKind = CUMULATIVE."]
     pub distribution_filter: terrars::PrimField<std::string::String>,
 }
 
-impl BuildMonitoringSloRequestBasedSliElDistributionCutEl {
-    pub fn build(self) -> MonitoringSloRequestBasedSliElDistributionCutEl {
-        MonitoringSloRequestBasedSliElDistributionCutEl {
+impl BuildMonitoringSlo_RequestBasedSli_DistributionCut {
+    pub fn build(self) -> MonitoringSlo_RequestBasedSli_DistributionCut {
+        MonitoringSlo_RequestBasedSli_DistributionCut {
             distribution_filter: self.distribution_filter,
             range: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -917,24 +956,26 @@ impl BuildMonitoringSloRequestBasedSliElDistributionCutEl {
     }
 }
 
-pub struct MonitoringSloRequestBasedSliElDistributionCutElRef {
+#[allow(dead_code)]
+pub struct MonitoringSlo_RequestBasedSli_DistributionCutRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MonitoringSloRequestBasedSliElDistributionCutElRef {
+impl terrars::Ref for MonitoringSlo_RequestBasedSli_DistributionCutRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> MonitoringSloRequestBasedSliElDistributionCutElRef {
-        MonitoringSloRequestBasedSliElDistributionCutElRef {
+    ) -> MonitoringSlo_RequestBasedSli_DistributionCutRef {
+        MonitoringSlo_RequestBasedSli_DistributionCutRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MonitoringSloRequestBasedSliElDistributionCutElRef {
+impl MonitoringSlo_RequestBasedSli_DistributionCutRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -946,13 +987,13 @@ impl MonitoringSloRequestBasedSliElDistributionCutElRef {
     }
 
     #[doc = "Get a reference to the value of field `range` after provisioning.\n"]
-    pub fn range(&self) -> terrars::ListRef<MonitoringSloRequestBasedSliElDistributionCutElRangeElRef> {
+    pub fn range(&self) -> terrars::ListRef<MonitoringSlo_RequestBasedSli_DistributionCut_RangeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.range", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct MonitoringSloRequestBasedSliElGoodTotalRatioEl {
+pub struct MonitoringSlo_RequestBasedSli_GoodTotalRatio {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bad_service_filter: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -961,7 +1002,7 @@ pub struct MonitoringSloRequestBasedSliElGoodTotalRatioEl {
     total_service_filter: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl MonitoringSloRequestBasedSliElGoodTotalRatioEl {
+impl MonitoringSlo_RequestBasedSli_GoodTotalRatio {
     #[doc =
         "Set the field `bad_service_filter`.\nA TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nquantifying bad service provided, either demanded service that\nwas not provided or demanded service that was of inadequate\nquality.\n\nMust have ValueType = DOUBLE or ValueType = INT64 and\nmust have MetricKind = DELTA or MetricKind = CUMULATIVE.\n\nExactly two of 'good_service_filter','bad_service_filter','total_service_filter'\nmust be set (good + bad = total is assumed)."]
     pub fn set_bad_service_filter(
@@ -993,8 +1034,8 @@ impl MonitoringSloRequestBasedSliElGoodTotalRatioEl {
     }
 }
 
-impl terrars::ToListMappable for MonitoringSloRequestBasedSliElGoodTotalRatioEl {
-    type O = terrars::BlockAssignable<MonitoringSloRequestBasedSliElGoodTotalRatioEl>;
+impl terrars::ToListMappable for MonitoringSlo_RequestBasedSli_GoodTotalRatio {
+    type O = terrars::BlockAssignable<MonitoringSlo_RequestBasedSli_GoodTotalRatio>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1005,11 +1046,11 @@ impl terrars::ToListMappable for MonitoringSloRequestBasedSliElGoodTotalRatioEl 
     }
 }
 
-pub struct BuildMonitoringSloRequestBasedSliElGoodTotalRatioEl {}
+pub struct BuildMonitoringSlo_RequestBasedSli_GoodTotalRatio {}
 
-impl BuildMonitoringSloRequestBasedSliElGoodTotalRatioEl {
-    pub fn build(self) -> MonitoringSloRequestBasedSliElGoodTotalRatioEl {
-        MonitoringSloRequestBasedSliElGoodTotalRatioEl {
+impl BuildMonitoringSlo_RequestBasedSli_GoodTotalRatio {
+    pub fn build(self) -> MonitoringSlo_RequestBasedSli_GoodTotalRatio {
+        MonitoringSlo_RequestBasedSli_GoodTotalRatio {
             bad_service_filter: core::default::Default::default(),
             good_service_filter: core::default::Default::default(),
             total_service_filter: core::default::Default::default(),
@@ -1017,24 +1058,26 @@ impl BuildMonitoringSloRequestBasedSliElGoodTotalRatioEl {
     }
 }
 
-pub struct MonitoringSloRequestBasedSliElGoodTotalRatioElRef {
+#[allow(dead_code)]
+pub struct MonitoringSlo_RequestBasedSli_GoodTotalRatioRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MonitoringSloRequestBasedSliElGoodTotalRatioElRef {
+impl terrars::Ref for MonitoringSlo_RequestBasedSli_GoodTotalRatioRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> MonitoringSloRequestBasedSliElGoodTotalRatioElRef {
-        MonitoringSloRequestBasedSliElGoodTotalRatioElRef {
+    ) -> MonitoringSlo_RequestBasedSli_GoodTotalRatioRef {
+        MonitoringSlo_RequestBasedSli_GoodTotalRatioRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MonitoringSloRequestBasedSliElGoodTotalRatioElRef {
+impl MonitoringSlo_RequestBasedSli_GoodTotalRatioRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1059,25 +1102,25 @@ impl MonitoringSloRequestBasedSliElGoodTotalRatioElRef {
 }
 
 #[derive(Serialize, Default)]
-struct MonitoringSloRequestBasedSliElDynamic {
-    distribution_cut: std::option::Option<terrars::DynamicBlock<MonitoringSloRequestBasedSliElDistributionCutEl>>,
-    good_total_ratio: std::option::Option<terrars::DynamicBlock<MonitoringSloRequestBasedSliElGoodTotalRatioEl>>,
+struct MonitoringSlo_RequestBasedSliDynamic {
+    distribution_cut: std::option::Option<terrars::DynamicBlock<MonitoringSlo_RequestBasedSli_DistributionCut>>,
+    good_total_ratio: std::option::Option<terrars::DynamicBlock<MonitoringSlo_RequestBasedSli_GoodTotalRatio>>,
 }
 
 #[derive(Serialize)]
-pub struct MonitoringSloRequestBasedSliEl {
+pub struct MonitoringSlo_RequestBasedSli {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    distribution_cut: std::option::Option<std::vec::Vec<MonitoringSloRequestBasedSliElDistributionCutEl>>,
+    distribution_cut: std::option::Option<std::vec::Vec<MonitoringSlo_RequestBasedSli_DistributionCut>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    good_total_ratio: std::option::Option<std::vec::Vec<MonitoringSloRequestBasedSliElGoodTotalRatioEl>>,
-    dynamic: MonitoringSloRequestBasedSliElDynamic,
+    good_total_ratio: std::option::Option<std::vec::Vec<MonitoringSlo_RequestBasedSli_GoodTotalRatio>>,
+    dynamic: MonitoringSlo_RequestBasedSliDynamic,
 }
 
-impl MonitoringSloRequestBasedSliEl {
+impl MonitoringSlo_RequestBasedSli {
     #[doc = "Set the field `distribution_cut`.\n"]
     pub fn set_distribution_cut(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringSloRequestBasedSliElDistributionCutEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringSlo_RequestBasedSli_DistributionCut>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1093,7 +1136,7 @@ impl MonitoringSloRequestBasedSliEl {
     #[doc = "Set the field `good_total_ratio`.\n"]
     pub fn set_good_total_ratio(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringSloRequestBasedSliElGoodTotalRatioEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringSlo_RequestBasedSli_GoodTotalRatio>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1107,8 +1150,8 @@ impl MonitoringSloRequestBasedSliEl {
     }
 }
 
-impl terrars::ToListMappable for MonitoringSloRequestBasedSliEl {
-    type O = terrars::BlockAssignable<MonitoringSloRequestBasedSliEl>;
+impl terrars::ToListMappable for MonitoringSlo_RequestBasedSli {
+    type O = terrars::BlockAssignable<MonitoringSlo_RequestBasedSli>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1119,11 +1162,11 @@ impl terrars::ToListMappable for MonitoringSloRequestBasedSliEl {
     }
 }
 
-pub struct BuildMonitoringSloRequestBasedSliEl {}
+pub struct BuildMonitoringSlo_RequestBasedSli {}
 
-impl BuildMonitoringSloRequestBasedSliEl {
-    pub fn build(self) -> MonitoringSloRequestBasedSliEl {
-        MonitoringSloRequestBasedSliEl {
+impl BuildMonitoringSlo_RequestBasedSli {
+    pub fn build(self) -> MonitoringSlo_RequestBasedSli {
+        MonitoringSlo_RequestBasedSli {
             distribution_cut: core::default::Default::default(),
             good_total_ratio: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1131,38 +1174,40 @@ impl BuildMonitoringSloRequestBasedSliEl {
     }
 }
 
-pub struct MonitoringSloRequestBasedSliElRef {
+#[allow(dead_code)]
+pub struct MonitoringSlo_RequestBasedSliRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MonitoringSloRequestBasedSliElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitoringSloRequestBasedSliElRef {
-        MonitoringSloRequestBasedSliElRef {
+impl terrars::Ref for MonitoringSlo_RequestBasedSliRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitoringSlo_RequestBasedSliRef {
+        MonitoringSlo_RequestBasedSliRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MonitoringSloRequestBasedSliElRef {
+impl MonitoringSlo_RequestBasedSliRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `distribution_cut` after provisioning.\n"]
-    pub fn distribution_cut(&self) -> terrars::ListRef<MonitoringSloRequestBasedSliElDistributionCutElRef> {
+    pub fn distribution_cut(&self) -> terrars::ListRef<MonitoringSlo_RequestBasedSli_DistributionCutRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.distribution_cut", self.base))
     }
 
     #[doc = "Get a reference to the value of field `good_total_ratio` after provisioning.\n"]
-    pub fn good_total_ratio(&self) -> terrars::ListRef<MonitoringSloRequestBasedSliElGoodTotalRatioElRef> {
+    pub fn good_total_ratio(&self) -> terrars::ListRef<MonitoringSlo_RequestBasedSli_GoodTotalRatioRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.good_total_ratio", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct MonitoringSloTimeoutsEl {
+pub struct MonitoringSlo_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1171,7 +1216,7 @@ pub struct MonitoringSloTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl MonitoringSloTimeoutsEl {
+impl MonitoringSlo_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1191,8 +1236,8 @@ impl MonitoringSloTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for MonitoringSloTimeoutsEl {
-    type O = terrars::BlockAssignable<MonitoringSloTimeoutsEl>;
+impl terrars::ToListMappable for MonitoringSlo_Timeouts {
+    type O = terrars::BlockAssignable<MonitoringSlo_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1203,11 +1248,11 @@ impl terrars::ToListMappable for MonitoringSloTimeoutsEl {
     }
 }
 
-pub struct BuildMonitoringSloTimeoutsEl {}
+pub struct BuildMonitoringSlo_Timeouts {}
 
-impl BuildMonitoringSloTimeoutsEl {
-    pub fn build(self) -> MonitoringSloTimeoutsEl {
-        MonitoringSloTimeoutsEl {
+impl BuildMonitoringSlo_Timeouts {
+    pub fn build(self) -> MonitoringSlo_Timeouts {
+        MonitoringSlo_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1215,21 +1260,23 @@ impl BuildMonitoringSloTimeoutsEl {
     }
 }
 
-pub struct MonitoringSloTimeoutsElRef {
+#[allow(dead_code)]
+pub struct MonitoringSlo_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MonitoringSloTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitoringSloTimeoutsElRef {
-        MonitoringSloTimeoutsElRef {
+impl terrars::Ref for MonitoringSlo_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitoringSlo_TimeoutsRef {
+        MonitoringSlo_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MonitoringSloTimeoutsElRef {
+impl MonitoringSlo_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1251,12 +1298,12 @@ impl MonitoringSloTimeoutsElRef {
 }
 
 #[derive(Serialize)]
-pub struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElAvailabilityEl {
+pub struct MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_BasicSliPerformance_Availability {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElAvailabilityEl {
+impl MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_BasicSliPerformance_Availability {
     #[doc =
         "Set the field `enabled`.\nWhether an availability SLI is enabled or not. Must be set to 'true. Defaults to 'true'."]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -1266,10 +1313,10 @@ impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceE
 }
 
 impl terrars
-::ToListMappable for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElAvailabilityEl {
+::ToListMappable for MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_BasicSliPerformance_Availability {
     type O =
         terrars
-        ::BlockAssignable<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElAvailabilityEl>;
+        ::BlockAssignable<MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_BasicSliPerformance_Availability>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1280,34 +1327,36 @@ impl terrars
     }
 }
 
-pub struct BuildMonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElAvailabilityEl {}
+pub struct BuildMonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_BasicSliPerformance_Availability {}
 
-impl BuildMonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElAvailabilityEl {
-    pub fn build(self) -> MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElAvailabilityEl {
-        MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElAvailabilityEl {
+impl BuildMonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_BasicSliPerformance_Availability {
+    pub fn build(self) -> MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_BasicSliPerformance_Availability {
+        MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_BasicSliPerformance_Availability {
             enabled: core::default::Default::default(),
         }
     }
 }
 
-pub struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElAvailabilityElRef {
+#[allow(dead_code)]
+pub struct MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_BasicSliPerformance_AvailabilityRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElAvailabilityElRef {
+impl terrars::Ref for MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_BasicSliPerformance_AvailabilityRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElAvailabilityElRef {
-        MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElAvailabilityElRef {
+    ) -> MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_BasicSliPerformance_AvailabilityRef {
+        MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_BasicSliPerformance_AvailabilityRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElAvailabilityElRef {
+impl MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_BasicSliPerformance_AvailabilityRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1319,87 +1368,18 @@ impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceE
     }
 }
 
-#[derive(Serialize)]
-pub struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElLatencyEl {
-    threshold: terrars::PrimField<std::string::String>,
-}
-
-impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElLatencyEl { }
-
-impl terrars::ToListMappable for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElLatencyEl {
-    type O =
-        terrars
-        ::BlockAssignable<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElLatencyEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildMonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElLatencyEl {
-    #[doc =
-        "A duration string, e.g. 10s.\nGood service is defined to be the count of requests made to\nthis service that return in no more than threshold."]
-    pub threshold: terrars::PrimField<std::string::String>,
-}
-
-impl BuildMonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElLatencyEl {
-    pub fn build(self) -> MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElLatencyEl {
-        MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElLatencyEl {
-            threshold: self.threshold,
-        }
-    }
-}
-
-pub struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElLatencyElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElLatencyElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElLatencyElRef {
-        MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElLatencyElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElLatencyElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `threshold` after provisioning.\nA duration string, e.g. 10s.\nGood service is defined to be the count of requests made to\nthis service that return in no more than threshold."]
-    pub fn threshold(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.threshold", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElDynamic {
+struct MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_BasicSliPerformanceDynamic {
     availability: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElAvailabilityEl>,
+        terrars::DynamicBlock<MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_BasicSliPerformance_Availability>,
     >,
-    latency: std
-    ::option
-    ::Option<
-        terrars::DynamicBlock<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElLatencyEl>,
-    >,
+    latency: std::option::Option<terrars::DynamicBlock<MonitoringSlo_BasicSli_Latency>>,
 }
 
 #[derive(Serialize)]
-pub struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceEl {
+pub struct MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_BasicSliPerformance {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     location: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1409,17 +1389,13 @@ pub struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerfor
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     availability: std
     ::option
-    ::Option<
-        std::vec::Vec<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElAvailabilityEl>,
-    >,
+    ::Option<std::vec::Vec<MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_BasicSliPerformance_Availability>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    latency: std
-    ::option
-    ::Option<std::vec::Vec<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElLatencyEl>>,
-    dynamic: MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElDynamic,
+    latency: std::option::Option<std::vec::Vec<MonitoringSlo_BasicSli_Latency>>,
+    dynamic: MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_BasicSliPerformanceDynamic,
 }
 
-impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceEl {
+impl MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_BasicSliPerformance {
     #[doc =
         "Set the field `location`.\nAn optional set of locations to which this SLI is relevant.\nTelemetry from other locations will not be used to calculate\nperformance for this SLI. If omitted, this SLI applies to all\nlocations in which the Service has activity. For service types\nthat don't support breaking down by location, setting this\nfield will result in an error."]
     pub fn set_location(
@@ -1461,7 +1437,7 @@ impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElAvailabilityEl,
+                            MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_BasicSliPerformance_Availability,
                         >,
                     >,
     ) -> Self {
@@ -1479,17 +1455,7 @@ impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceE
     #[doc = "Set the field `latency`.\n"]
     pub fn set_latency(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElLatencyEl,
-                        >,
-                    >,
+        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringSlo_BasicSli_Latency>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1503,8 +1469,8 @@ impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceE
     }
 }
 
-impl terrars::ToListMappable for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceEl {
-    type O = terrars::BlockAssignable<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceEl>;
+impl terrars::ToListMappable for MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_BasicSliPerformance {
+    type O = terrars::BlockAssignable<MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_BasicSliPerformance>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1515,11 +1481,11 @@ impl terrars::ToListMappable for MonitoringSloWindowsBasedSliElGoodTotalRatioThr
     }
 }
 
-pub struct BuildMonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceEl {}
+pub struct BuildMonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_BasicSliPerformance {}
 
-impl BuildMonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceEl {
-    pub fn build(self) -> MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceEl {
-        MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceEl {
+impl BuildMonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_BasicSliPerformance {
+    pub fn build(self) -> MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_BasicSliPerformance {
+        MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_BasicSliPerformance {
             location: core::default::Default::default(),
             method: core::default::Default::default(),
             version: core::default::Default::default(),
@@ -1530,24 +1496,26 @@ impl BuildMonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerform
     }
 }
 
-pub struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElRef {
+#[allow(dead_code)]
+pub struct MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_BasicSliPerformanceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElRef {
+impl terrars::Ref for MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_BasicSliPerformanceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElRef {
-        MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElRef {
+    ) -> MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_BasicSliPerformanceRef {
+        MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_BasicSliPerformanceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElRef {
+impl MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_BasicSliPerformanceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1573,225 +1541,18 @@ impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceE
     #[doc = "Get a reference to the value of field `availability` after provisioning.\n"]
     pub fn availability(
         &self,
-    ) -> terrars
-    ::ListRef<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElAvailabilityElRef> {
+    ) -> terrars::ListRef<MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_BasicSliPerformance_AvailabilityRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.availability", self.base))
     }
 
     #[doc = "Get a reference to the value of field `latency` after provisioning.\n"]
-    pub fn latency(
-        &self,
-    ) -> terrars::ListRef<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElLatencyElRef> {
+    pub fn latency(&self) -> terrars::ListRef<MonitoringSlo_BasicSli_LatencyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.latency", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRangeEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    max: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    min: std::option::Option<terrars::PrimField<f64>>,
-}
-
-impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRangeEl {
-    #[doc = "Set the field `max`.\nmax value for the range (inclusive). If not given,\nwill be set to 0"]
-    pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.max = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `min`.\nMin value for the range (inclusive). If not given,\nwill be set to 0"]
-    pub fn set_min(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.min = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRangeEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRangeEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildMonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRangeEl {}
-
-impl BuildMonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRangeEl {
-    pub fn build(
-        self,
-    ) -> MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRangeEl {
-        MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRangeEl {
-            max: core::default::Default::default(),
-            min: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRangeElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRangeElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRangeElRef {
-        MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRangeElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRangeElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `max` after provisioning.\nmax value for the range (inclusive). If not given,\nwill be set to 0"]
-    pub fn max(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `min` after provisioning.\nMin value for the range (inclusive). If not given,\nwill be set to 0"]
-    pub fn min(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElDynamic {
-    range: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRangeEl>,
-    >,
-}
-
-#[derive(Serialize)]
-pub struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutEl {
-    distribution_filter: terrars::PrimField<std::string::String>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    range: std
-    ::option
-    ::Option<
-        std::vec::Vec<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRangeEl>,
-    >,
-    dynamic: MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElDynamic,
-}
-
-impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutEl {
-    #[doc = "Set the field `range`.\n"]
-    pub fn set_range(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRangeEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.range = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.range = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutEl {
-    type O =
-        terrars
-        ::BlockAssignable<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildMonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutEl {
-    #[doc =
-        "A TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\naggregating values to quantify the good service provided.\n\nMust have ValueType = DISTRIBUTION and\nMetricKind = DELTA or MetricKind = CUMULATIVE."]
-    pub distribution_filter: terrars::PrimField<std::string::String>,
-}
-
-impl BuildMonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutEl {
-    pub fn build(self) -> MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutEl {
-        MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutEl {
-            distribution_filter: self.distribution_filter,
-            range: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRef {
-        MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `distribution_filter` after provisioning.\nA TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\naggregating values to quantify the good service provided.\n\nMust have ValueType = DISTRIBUTION and\nMetricKind = DELTA or MetricKind = CUMULATIVE."]
-    pub fn distribution_filter(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.distribution_filter", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `range` after provisioning.\n"]
-    pub fn range(
-        &self,
-    ) -> terrars
-    ::ListRef<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRangeElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.range", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGoodTotalRatioEl {
+pub struct MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_Performance_GoodTotalRatio {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bad_service_filter: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1800,7 +1561,7 @@ pub struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElG
     total_service_filter: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGoodTotalRatioEl {
+impl MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_Performance_GoodTotalRatio {
     #[doc =
         "Set the field `bad_service_filter`.\nA TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nquantifying bad service provided, either demanded service that\nwas not provided or demanded service that was of inadequate\nquality. Exactly two of\ngood, bad, or total service filter must be defined (where\ngood + bad = total is assumed)\n\nMust have ValueType = DOUBLE or ValueType = INT64 and\nmust have MetricKind = DELTA or MetricKind = CUMULATIVE."]
     pub fn set_bad_service_filter(
@@ -1832,10 +1593,9 @@ impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGoodTot
     }
 }
 
-impl terrars::ToListMappable for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGoodTotalRatioEl {
+impl terrars::ToListMappable for MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_Performance_GoodTotalRatio {
     type O =
-        terrars
-        ::BlockAssignable<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGoodTotalRatioEl>;
+        terrars::BlockAssignable<MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_Performance_GoodTotalRatio>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1846,11 +1606,11 @@ impl terrars::ToListMappable for MonitoringSloWindowsBasedSliElGoodTotalRatioThr
     }
 }
 
-pub struct BuildMonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGoodTotalRatioEl {}
+pub struct BuildMonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_Performance_GoodTotalRatio {}
 
-impl BuildMonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGoodTotalRatioEl {
-    pub fn build(self) -> MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGoodTotalRatioEl {
-        MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGoodTotalRatioEl {
+impl BuildMonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_Performance_GoodTotalRatio {
+    pub fn build(self) -> MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_Performance_GoodTotalRatio {
+        MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_Performance_GoodTotalRatio {
             bad_service_filter: core::default::Default::default(),
             good_service_filter: core::default::Default::default(),
             total_service_filter: core::default::Default::default(),
@@ -1858,24 +1618,26 @@ impl BuildMonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGo
     }
 }
 
-pub struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGoodTotalRatioElRef {
+#[allow(dead_code)]
+pub struct MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_Performance_GoodTotalRatioRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGoodTotalRatioElRef {
+impl terrars::Ref for MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_Performance_GoodTotalRatioRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGoodTotalRatioElRef {
-        MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGoodTotalRatioElRef {
+    ) -> MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_Performance_GoodTotalRatioRef {
+        MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_Performance_GoodTotalRatioRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGoodTotalRatioElRef {
+impl MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_Performance_GoodTotalRatioRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1900,47 +1662,31 @@ impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGoodTot
 }
 
 #[derive(Serialize, Default)]
-struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDynamic {
-    distribution_cut: std
-    ::option
-    ::Option<
-        terrars::DynamicBlock<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutEl>,
-    >,
+struct MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_PerformanceDynamic {
+    distribution_cut: std::option::Option<terrars::DynamicBlock<MonitoringSlo_RequestBasedSli_DistributionCut>>,
     good_total_ratio: std
     ::option
     ::Option<
-        terrars::DynamicBlock<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGoodTotalRatioEl>,
+        terrars::DynamicBlock<MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_Performance_GoodTotalRatio>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceEl {
+pub struct MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_Performance {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    distribution_cut: std
-    ::option
-    ::Option<std::vec::Vec<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutEl>>,
+    distribution_cut: std::option::Option<std::vec::Vec<MonitoringSlo_RequestBasedSli_DistributionCut>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     good_total_ratio: std
     ::option
-    ::Option<std::vec::Vec<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGoodTotalRatioEl>>,
-    dynamic: MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDynamic,
+    ::Option<std::vec::Vec<MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_Performance_GoodTotalRatio>>,
+    dynamic: MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_PerformanceDynamic,
 }
 
-impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceEl {
+impl MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_Performance {
     #[doc = "Set the field `distribution_cut`.\n"]
     pub fn set_distribution_cut(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutEl,
-                        >,
-                    >,
+        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringSlo_RequestBasedSli_DistributionCut>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1964,7 +1710,7 @@ impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGoodTotalRatioEl,
+                            MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_Performance_GoodTotalRatio,
                         >,
                     >,
     ) -> Self {
@@ -1980,8 +1726,8 @@ impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceEl {
     }
 }
 
-impl terrars::ToListMappable for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceEl {
-    type O = terrars::BlockAssignable<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceEl>;
+impl terrars::ToListMappable for MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_Performance {
+    type O = terrars::BlockAssignable<MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_Performance>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1992,11 +1738,11 @@ impl terrars::ToListMappable for MonitoringSloWindowsBasedSliElGoodTotalRatioThr
     }
 }
 
-pub struct BuildMonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceEl {}
+pub struct BuildMonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_Performance {}
 
-impl BuildMonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceEl {
-    pub fn build(self) -> MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceEl {
-        MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceEl {
+impl BuildMonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_Performance {
+    pub fn build(self) -> MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_Performance {
+        MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_Performance {
             distribution_cut: core::default::Default::default(),
             good_total_ratio: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -2004,67 +1750,67 @@ impl BuildMonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceEl {
     }
 }
 
-pub struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElRef {
+#[allow(dead_code)]
+pub struct MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_PerformanceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElRef {
+impl terrars::Ref for MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_PerformanceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElRef {
-        MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElRef {
+    ) -> MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_PerformanceRef {
+        MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_PerformanceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElRef {
+impl MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_PerformanceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `distribution_cut` after provisioning.\n"]
-    pub fn distribution_cut(
-        &self,
-    ) -> terrars::ListRef<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElDistributionCutElRef> {
+    pub fn distribution_cut(&self) -> terrars::ListRef<MonitoringSlo_RequestBasedSli_DistributionCutRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.distribution_cut", self.base))
     }
 
     #[doc = "Get a reference to the value of field `good_total_ratio` after provisioning.\n"]
     pub fn good_total_ratio(
         &self,
-    ) -> terrars::ListRef<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElGoodTotalRatioElRef> {
+    ) -> terrars::ListRef<MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_Performance_GoodTotalRatioRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.good_total_ratio", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElDynamic {
+struct MonitoringSlo_WindowsBasedSli_GoodTotalRatioThresholdDynamic {
     basic_sli_performance: std
     ::option
-    ::Option<terrars::DynamicBlock<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceEl>>,
+    ::Option<terrars::DynamicBlock<MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_BasicSliPerformance>>,
     performance: std
     ::option
-    ::Option<terrars::DynamicBlock<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceEl>>,
+    ::Option<terrars::DynamicBlock<MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_Performance>>,
 }
 
 #[derive(Serialize)]
-pub struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdEl {
+pub struct MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     threshold: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     basic_sli_performance: std
     ::option
-    ::Option<std::vec::Vec<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceEl>>,
+    ::Option<std::vec::Vec<MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_BasicSliPerformance>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    performance: std::option::Option<std::vec::Vec<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceEl>>,
-    dynamic: MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElDynamic,
+    performance: std::option::Option<std::vec::Vec<MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_Performance>>,
+    dynamic: MonitoringSlo_WindowsBasedSli_GoodTotalRatioThresholdDynamic,
 }
 
-impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdEl {
+impl MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold {
     #[doc = "Set the field `threshold`.\nIf window performance >= threshold, the window is counted\nas good."]
     pub fn set_threshold(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.threshold = std::option::Option::Some(v.into());
@@ -2081,9 +1827,7 @@ impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceEl,
-                        >,
+                        ::BlockAssignable<MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_BasicSliPerformance>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2106,7 +1850,7 @@ impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceEl>,
+                        terrars::BlockAssignable<MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_Performance>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2121,8 +1865,8 @@ impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdEl {
     }
 }
 
-impl terrars::ToListMappable for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdEl {
-    type O = terrars::BlockAssignable<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdEl>;
+impl terrars::ToListMappable for MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold {
+    type O = terrars::BlockAssignable<MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2133,11 +1877,11 @@ impl terrars::ToListMappable for MonitoringSloWindowsBasedSliElGoodTotalRatioThr
     }
 }
 
-pub struct BuildMonitoringSloWindowsBasedSliElGoodTotalRatioThresholdEl {}
+pub struct BuildMonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold {}
 
-impl BuildMonitoringSloWindowsBasedSliElGoodTotalRatioThresholdEl {
-    pub fn build(self) -> MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdEl {
-        MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdEl {
+impl BuildMonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold {
+    pub fn build(self) -> MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold {
+        MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold {
             threshold: core::default::Default::default(),
             basic_sli_performance: core::default::Default::default(),
             performance: core::default::Default::default(),
@@ -2146,24 +1890,26 @@ impl BuildMonitoringSloWindowsBasedSliElGoodTotalRatioThresholdEl {
     }
 }
 
-pub struct MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElRef {
+#[allow(dead_code)]
+pub struct MonitoringSlo_WindowsBasedSli_GoodTotalRatioThresholdRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElRef {
+impl terrars::Ref for MonitoringSlo_WindowsBasedSli_GoodTotalRatioThresholdRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElRef {
-        MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElRef {
+    ) -> MonitoringSlo_WindowsBasedSli_GoodTotalRatioThresholdRef {
+        MonitoringSlo_WindowsBasedSli_GoodTotalRatioThresholdRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElRef {
+impl MonitoringSlo_WindowsBasedSli_GoodTotalRatioThresholdRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2177,27 +1923,25 @@ impl MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElRef {
     #[doc = "Get a reference to the value of field `basic_sli_performance` after provisioning.\n"]
     pub fn basic_sli_performance(
         &self,
-    ) -> terrars::ListRef<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElBasicSliPerformanceElRef> {
+    ) -> terrars::ListRef<MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_BasicSliPerformanceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.basic_sli_performance", self.base))
     }
 
     #[doc = "Get a reference to the value of field `performance` after provisioning.\n"]
-    pub fn performance(
-        &self,
-    ) -> terrars::ListRef<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElPerformanceElRef> {
+    pub fn performance(&self) -> terrars::ListRef<MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold_PerformanceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.performance", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeEl {
+pub struct MonitoringSlo_WindowsBasedSli_MetricSumInRange_Range {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeEl {
+impl MonitoringSlo_WindowsBasedSli_MetricSumInRange_Range {
     #[doc =
         "Set the field `max`.\nmax value for the range (inclusive). If not given,\nwill be set to \"infinity\", defining an open range\n\">= range.min\""]
     pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -2213,8 +1957,8 @@ impl MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeEl {
     }
 }
 
-impl terrars::ToListMappable for MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeEl {
-    type O = terrars::BlockAssignable<MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeEl>;
+impl terrars::ToListMappable for MonitoringSlo_WindowsBasedSli_MetricSumInRange_Range {
+    type O = terrars::BlockAssignable<MonitoringSlo_WindowsBasedSli_MetricSumInRange_Range>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2225,35 +1969,37 @@ impl terrars::ToListMappable for MonitoringSloWindowsBasedSliElMetricMeanInRange
     }
 }
 
-pub struct BuildMonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeEl {}
+pub struct BuildMonitoringSlo_WindowsBasedSli_MetricSumInRange_Range {}
 
-impl BuildMonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeEl {
-    pub fn build(self) -> MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeEl {
-        MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeEl {
+impl BuildMonitoringSlo_WindowsBasedSli_MetricSumInRange_Range {
+    pub fn build(self) -> MonitoringSlo_WindowsBasedSli_MetricSumInRange_Range {
+        MonitoringSlo_WindowsBasedSli_MetricSumInRange_Range {
             max: core::default::Default::default(),
             min: core::default::Default::default(),
         }
     }
 }
 
-pub struct MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeElRef {
+#[allow(dead_code)]
+pub struct MonitoringSlo_WindowsBasedSli_MetricSumInRange_RangeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeElRef {
+impl terrars::Ref for MonitoringSlo_WindowsBasedSli_MetricSumInRange_RangeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeElRef {
-        MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeElRef {
+    ) -> MonitoringSlo_WindowsBasedSli_MetricSumInRange_RangeRef {
+        MonitoringSlo_WindowsBasedSli_MetricSumInRange_RangeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeElRef {
+impl MonitoringSlo_WindowsBasedSli_MetricSumInRange_RangeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2272,28 +2018,23 @@ impl MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeElRef {
 }
 
 #[derive(Serialize, Default)]
-struct MonitoringSloWindowsBasedSliElMetricMeanInRangeElDynamic {
-    range: std::option::Option<terrars::DynamicBlock<MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeEl>>,
+struct MonitoringSlo_WindowsBasedSli_MetricMeanInRangeDynamic {
+    range: std::option::Option<terrars::DynamicBlock<MonitoringSlo_WindowsBasedSli_MetricSumInRange_Range>>,
 }
 
 #[derive(Serialize)]
-pub struct MonitoringSloWindowsBasedSliElMetricMeanInRangeEl {
+pub struct MonitoringSlo_WindowsBasedSli_MetricMeanInRange {
     time_series: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    range: std::option::Option<std::vec::Vec<MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeEl>>,
-    dynamic: MonitoringSloWindowsBasedSliElMetricMeanInRangeElDynamic,
+    range: std::option::Option<std::vec::Vec<MonitoringSlo_WindowsBasedSli_MetricSumInRange_Range>>,
+    dynamic: MonitoringSlo_WindowsBasedSli_MetricMeanInRangeDynamic,
 }
 
-impl MonitoringSloWindowsBasedSliElMetricMeanInRangeEl {
+impl MonitoringSlo_WindowsBasedSli_MetricMeanInRange {
     #[doc = "Set the field `range`.\n"]
     pub fn set_range(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringSlo_WindowsBasedSli_MetricSumInRange_Range>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2307,8 +2048,8 @@ impl MonitoringSloWindowsBasedSliElMetricMeanInRangeEl {
     }
 }
 
-impl terrars::ToListMappable for MonitoringSloWindowsBasedSliElMetricMeanInRangeEl {
-    type O = terrars::BlockAssignable<MonitoringSloWindowsBasedSliElMetricMeanInRangeEl>;
+impl terrars::ToListMappable for MonitoringSlo_WindowsBasedSli_MetricMeanInRange {
+    type O = terrars::BlockAssignable<MonitoringSlo_WindowsBasedSli_MetricMeanInRange>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2319,15 +2060,15 @@ impl terrars::ToListMappable for MonitoringSloWindowsBasedSliElMetricMeanInRange
     }
 }
 
-pub struct BuildMonitoringSloWindowsBasedSliElMetricMeanInRangeEl {
+pub struct BuildMonitoringSlo_WindowsBasedSli_MetricMeanInRange {
     #[doc =
         "A [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nspecifying the TimeSeries to use for evaluating window\nThe provided TimeSeries must have ValueType = INT64 or\nValueType = DOUBLE and MetricKind = GAUGE. Mean value 'X'\nshould satisfy 'range.min <= X <= range.max'\nunder good service."]
     pub time_series: terrars::PrimField<std::string::String>,
 }
 
-impl BuildMonitoringSloWindowsBasedSliElMetricMeanInRangeEl {
-    pub fn build(self) -> MonitoringSloWindowsBasedSliElMetricMeanInRangeEl {
-        MonitoringSloWindowsBasedSliElMetricMeanInRangeEl {
+impl BuildMonitoringSlo_WindowsBasedSli_MetricMeanInRange {
+    pub fn build(self) -> MonitoringSlo_WindowsBasedSli_MetricMeanInRange {
+        MonitoringSlo_WindowsBasedSli_MetricMeanInRange {
             time_series: self.time_series,
             range: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -2335,24 +2076,26 @@ impl BuildMonitoringSloWindowsBasedSliElMetricMeanInRangeEl {
     }
 }
 
-pub struct MonitoringSloWindowsBasedSliElMetricMeanInRangeElRef {
+#[allow(dead_code)]
+pub struct MonitoringSlo_WindowsBasedSli_MetricMeanInRangeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MonitoringSloWindowsBasedSliElMetricMeanInRangeElRef {
+impl terrars::Ref for MonitoringSlo_WindowsBasedSli_MetricMeanInRangeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> MonitoringSloWindowsBasedSliElMetricMeanInRangeElRef {
-        MonitoringSloWindowsBasedSliElMetricMeanInRangeElRef {
+    ) -> MonitoringSlo_WindowsBasedSli_MetricMeanInRangeRef {
+        MonitoringSlo_WindowsBasedSli_MetricMeanInRangeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MonitoringSloWindowsBasedSliElMetricMeanInRangeElRef {
+impl MonitoringSlo_WindowsBasedSli_MetricMeanInRangeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2364,116 +2107,29 @@ impl MonitoringSloWindowsBasedSliElMetricMeanInRangeElRef {
     }
 
     #[doc = "Get a reference to the value of field `range` after provisioning.\n"]
-    pub fn range(&self) -> terrars::ListRef<MonitoringSloWindowsBasedSliElMetricMeanInRangeElRangeElRef> {
+    pub fn range(&self) -> terrars::ListRef<MonitoringSlo_WindowsBasedSli_MetricSumInRange_RangeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.range", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct MonitoringSloWindowsBasedSliElMetricSumInRangeElRangeEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    max: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    min: std::option::Option<terrars::PrimField<f64>>,
-}
-
-impl MonitoringSloWindowsBasedSliElMetricSumInRangeElRangeEl {
-    #[doc =
-        "Set the field `max`.\nmax value for the range (inclusive). If not given,\nwill be set to \"infinity\", defining an open range\n\">= range.min\""]
-    pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.max = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `min`.\nMin value for the range (inclusive). If not given,\nwill be set to \"-infinity\", defining an open range\n\"< range.max\""]
-    pub fn set_min(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.min = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for MonitoringSloWindowsBasedSliElMetricSumInRangeElRangeEl {
-    type O = terrars::BlockAssignable<MonitoringSloWindowsBasedSliElMetricSumInRangeElRangeEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildMonitoringSloWindowsBasedSliElMetricSumInRangeElRangeEl {}
-
-impl BuildMonitoringSloWindowsBasedSliElMetricSumInRangeElRangeEl {
-    pub fn build(self) -> MonitoringSloWindowsBasedSliElMetricSumInRangeElRangeEl {
-        MonitoringSloWindowsBasedSliElMetricSumInRangeElRangeEl {
-            max: core::default::Default::default(),
-            min: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct MonitoringSloWindowsBasedSliElMetricSumInRangeElRangeElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for MonitoringSloWindowsBasedSliElMetricSumInRangeElRangeElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> MonitoringSloWindowsBasedSliElMetricSumInRangeElRangeElRef {
-        MonitoringSloWindowsBasedSliElMetricSumInRangeElRangeElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl MonitoringSloWindowsBasedSliElMetricSumInRangeElRangeElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `max` after provisioning.\nmax value for the range (inclusive). If not given,\nwill be set to \"infinity\", defining an open range\n\">= range.min\""]
-    pub fn max(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `min` after provisioning.\nMin value for the range (inclusive). If not given,\nwill be set to \"-infinity\", defining an open range\n\"< range.max\""]
-    pub fn min(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct MonitoringSloWindowsBasedSliElMetricSumInRangeElDynamic {
-    range: std::option::Option<terrars::DynamicBlock<MonitoringSloWindowsBasedSliElMetricSumInRangeElRangeEl>>,
+struct MonitoringSlo_WindowsBasedSli_MetricSumInRangeDynamic {
+    range: std::option::Option<terrars::DynamicBlock<MonitoringSlo_WindowsBasedSli_MetricSumInRange_Range>>,
 }
 
 #[derive(Serialize)]
-pub struct MonitoringSloWindowsBasedSliElMetricSumInRangeEl {
+pub struct MonitoringSlo_WindowsBasedSli_MetricSumInRange {
     time_series: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    range: std::option::Option<std::vec::Vec<MonitoringSloWindowsBasedSliElMetricSumInRangeElRangeEl>>,
-    dynamic: MonitoringSloWindowsBasedSliElMetricSumInRangeElDynamic,
+    range: std::option::Option<std::vec::Vec<MonitoringSlo_WindowsBasedSli_MetricSumInRange_Range>>,
+    dynamic: MonitoringSlo_WindowsBasedSli_MetricSumInRangeDynamic,
 }
 
-impl MonitoringSloWindowsBasedSliElMetricSumInRangeEl {
+impl MonitoringSlo_WindowsBasedSli_MetricSumInRange {
     #[doc = "Set the field `range`.\n"]
     pub fn set_range(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<MonitoringSloWindowsBasedSliElMetricSumInRangeElRangeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringSlo_WindowsBasedSli_MetricSumInRange_Range>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2487,8 +2143,8 @@ impl MonitoringSloWindowsBasedSliElMetricSumInRangeEl {
     }
 }
 
-impl terrars::ToListMappable for MonitoringSloWindowsBasedSliElMetricSumInRangeEl {
-    type O = terrars::BlockAssignable<MonitoringSloWindowsBasedSliElMetricSumInRangeEl>;
+impl terrars::ToListMappable for MonitoringSlo_WindowsBasedSli_MetricSumInRange {
+    type O = terrars::BlockAssignable<MonitoringSlo_WindowsBasedSli_MetricSumInRange>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2499,15 +2155,15 @@ impl terrars::ToListMappable for MonitoringSloWindowsBasedSliElMetricSumInRangeE
     }
 }
 
-pub struct BuildMonitoringSloWindowsBasedSliElMetricSumInRangeEl {
+pub struct BuildMonitoringSlo_WindowsBasedSli_MetricSumInRange {
     #[doc =
         "A [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nspecifying the TimeSeries to use for evaluating window\nquality. The provided TimeSeries must have\nValueType = INT64 or ValueType = DOUBLE and\nMetricKind = GAUGE.\n\nSummed value 'X' should satisfy\n'range.min <= X <= range.max' for a good window."]
     pub time_series: terrars::PrimField<std::string::String>,
 }
 
-impl BuildMonitoringSloWindowsBasedSliElMetricSumInRangeEl {
-    pub fn build(self) -> MonitoringSloWindowsBasedSliElMetricSumInRangeEl {
-        MonitoringSloWindowsBasedSliElMetricSumInRangeEl {
+impl BuildMonitoringSlo_WindowsBasedSli_MetricSumInRange {
+    pub fn build(self) -> MonitoringSlo_WindowsBasedSli_MetricSumInRange {
+        MonitoringSlo_WindowsBasedSli_MetricSumInRange {
             time_series: self.time_series,
             range: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -2515,24 +2171,26 @@ impl BuildMonitoringSloWindowsBasedSliElMetricSumInRangeEl {
     }
 }
 
-pub struct MonitoringSloWindowsBasedSliElMetricSumInRangeElRef {
+#[allow(dead_code)]
+pub struct MonitoringSlo_WindowsBasedSli_MetricSumInRangeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MonitoringSloWindowsBasedSliElMetricSumInRangeElRef {
+impl terrars::Ref for MonitoringSlo_WindowsBasedSli_MetricSumInRangeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> MonitoringSloWindowsBasedSliElMetricSumInRangeElRef {
-        MonitoringSloWindowsBasedSliElMetricSumInRangeElRef {
+    ) -> MonitoringSlo_WindowsBasedSli_MetricSumInRangeRef {
+        MonitoringSlo_WindowsBasedSli_MetricSumInRangeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MonitoringSloWindowsBasedSliElMetricSumInRangeElRef {
+impl MonitoringSlo_WindowsBasedSli_MetricSumInRangeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2544,42 +2202,38 @@ impl MonitoringSloWindowsBasedSliElMetricSumInRangeElRef {
     }
 
     #[doc = "Get a reference to the value of field `range` after provisioning.\n"]
-    pub fn range(&self) -> terrars::ListRef<MonitoringSloWindowsBasedSliElMetricSumInRangeElRangeElRef> {
+    pub fn range(&self) -> terrars::ListRef<MonitoringSlo_WindowsBasedSli_MetricSumInRange_RangeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.range", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct MonitoringSloWindowsBasedSliElDynamic {
+struct MonitoringSlo_WindowsBasedSliDynamic {
     good_total_ratio_threshold: std
     ::option
-    ::Option<terrars::DynamicBlock<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdEl>>,
+    ::Option<terrars::DynamicBlock<MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold>>,
     metric_mean_in_range: std
     ::option
-    ::Option<terrars::DynamicBlock<MonitoringSloWindowsBasedSliElMetricMeanInRangeEl>>,
-    metric_sum_in_range: std
-    ::option
-    ::Option<terrars::DynamicBlock<MonitoringSloWindowsBasedSliElMetricSumInRangeEl>>,
+    ::Option<terrars::DynamicBlock<MonitoringSlo_WindowsBasedSli_MetricMeanInRange>>,
+    metric_sum_in_range: std::option::Option<terrars::DynamicBlock<MonitoringSlo_WindowsBasedSli_MetricSumInRange>>,
 }
 
 #[derive(Serialize)]
-pub struct MonitoringSloWindowsBasedSliEl {
+pub struct MonitoringSlo_WindowsBasedSli {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     good_bad_metric_filter: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     window_period: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    good_total_ratio_threshold: std
-    ::option
-    ::Option<std::vec::Vec<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdEl>>,
+    good_total_ratio_threshold: std::option::Option<std::vec::Vec<MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    metric_mean_in_range: std::option::Option<std::vec::Vec<MonitoringSloWindowsBasedSliElMetricMeanInRangeEl>>,
+    metric_mean_in_range: std::option::Option<std::vec::Vec<MonitoringSlo_WindowsBasedSli_MetricMeanInRange>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    metric_sum_in_range: std::option::Option<std::vec::Vec<MonitoringSloWindowsBasedSliElMetricSumInRangeEl>>,
-    dynamic: MonitoringSloWindowsBasedSliElDynamic,
+    metric_sum_in_range: std::option::Option<std::vec::Vec<MonitoringSlo_WindowsBasedSli_MetricSumInRange>>,
+    dynamic: MonitoringSlo_WindowsBasedSliDynamic,
 }
 
-impl MonitoringSloWindowsBasedSliEl {
+impl MonitoringSlo_WindowsBasedSli {
     #[doc =
         "Set the field `good_bad_metric_filter`.\nA TimeSeries [monitoring filter](https://cloud.google.com/monitoring/api/v3/filters)\nwith ValueType = BOOL. The window is good if any true values\nappear in the window. One of 'good_bad_metric_filter',\n'good_total_ratio_threshold', 'metric_mean_in_range',\n'metric_sum_in_range' must be set for 'windows_based_sli'."]
     pub fn set_good_bad_metric_filter(
@@ -2600,12 +2254,7 @@ impl MonitoringSloWindowsBasedSliEl {
     #[doc = "Set the field `good_total_ratio_threshold`.\n"]
     pub fn set_good_total_ratio_threshold(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringSlo_WindowsBasedSli_GoodTotalRatioThreshold>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2621,7 +2270,7 @@ impl MonitoringSloWindowsBasedSliEl {
     #[doc = "Set the field `metric_mean_in_range`.\n"]
     pub fn set_metric_mean_in_range(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringSloWindowsBasedSliElMetricMeanInRangeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringSlo_WindowsBasedSli_MetricMeanInRange>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2637,7 +2286,7 @@ impl MonitoringSloWindowsBasedSliEl {
     #[doc = "Set the field `metric_sum_in_range`.\n"]
     pub fn set_metric_sum_in_range(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringSloWindowsBasedSliElMetricSumInRangeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringSlo_WindowsBasedSli_MetricSumInRange>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2651,8 +2300,8 @@ impl MonitoringSloWindowsBasedSliEl {
     }
 }
 
-impl terrars::ToListMappable for MonitoringSloWindowsBasedSliEl {
-    type O = terrars::BlockAssignable<MonitoringSloWindowsBasedSliEl>;
+impl terrars::ToListMappable for MonitoringSlo_WindowsBasedSli {
+    type O = terrars::BlockAssignable<MonitoringSlo_WindowsBasedSli>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2663,11 +2312,11 @@ impl terrars::ToListMappable for MonitoringSloWindowsBasedSliEl {
     }
 }
 
-pub struct BuildMonitoringSloWindowsBasedSliEl {}
+pub struct BuildMonitoringSlo_WindowsBasedSli {}
 
-impl BuildMonitoringSloWindowsBasedSliEl {
-    pub fn build(self) -> MonitoringSloWindowsBasedSliEl {
-        MonitoringSloWindowsBasedSliEl {
+impl BuildMonitoringSlo_WindowsBasedSli {
+    pub fn build(self) -> MonitoringSlo_WindowsBasedSli {
+        MonitoringSlo_WindowsBasedSli {
             good_bad_metric_filter: core::default::Default::default(),
             window_period: core::default::Default::default(),
             good_total_ratio_threshold: core::default::Default::default(),
@@ -2678,21 +2327,23 @@ impl BuildMonitoringSloWindowsBasedSliEl {
     }
 }
 
-pub struct MonitoringSloWindowsBasedSliElRef {
+#[allow(dead_code)]
+pub struct MonitoringSlo_WindowsBasedSliRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MonitoringSloWindowsBasedSliElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitoringSloWindowsBasedSliElRef {
-        MonitoringSloWindowsBasedSliElRef {
+impl terrars::Ref for MonitoringSlo_WindowsBasedSliRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitoringSlo_WindowsBasedSliRef {
+        MonitoringSlo_WindowsBasedSliRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MonitoringSloWindowsBasedSliElRef {
+impl MonitoringSlo_WindowsBasedSliRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2712,24 +2363,17 @@ impl MonitoringSloWindowsBasedSliElRef {
     #[doc = "Get a reference to the value of field `good_total_ratio_threshold` after provisioning.\n"]
     pub fn good_total_ratio_threshold(
         &self,
-    ) -> terrars::ListRef<MonitoringSloWindowsBasedSliElGoodTotalRatioThresholdElRef> {
+    ) -> terrars::ListRef<MonitoringSlo_WindowsBasedSli_GoodTotalRatioThresholdRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.good_total_ratio_threshold", self.base))
     }
 
     #[doc = "Get a reference to the value of field `metric_mean_in_range` after provisioning.\n"]
-    pub fn metric_mean_in_range(&self) -> terrars::ListRef<MonitoringSloWindowsBasedSliElMetricMeanInRangeElRef> {
+    pub fn metric_mean_in_range(&self) -> terrars::ListRef<MonitoringSlo_WindowsBasedSli_MetricMeanInRangeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.metric_mean_in_range", self.base))
     }
 
     #[doc = "Get a reference to the value of field `metric_sum_in_range` after provisioning.\n"]
-    pub fn metric_sum_in_range(&self) -> terrars::ListRef<MonitoringSloWindowsBasedSliElMetricSumInRangeElRef> {
+    pub fn metric_sum_in_range(&self) -> terrars::ListRef<MonitoringSlo_WindowsBasedSli_MetricSumInRangeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.metric_sum_in_range", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct MonitoringSloDynamic {
-    basic_sli: std::option::Option<terrars::DynamicBlock<MonitoringSloBasicSliEl>>,
-    request_based_sli: std::option::Option<terrars::DynamicBlock<MonitoringSloRequestBasedSliEl>>,
-    windows_based_sli: std::option::Option<terrars::DynamicBlock<MonitoringSloWindowsBasedSliEl>>,
 }

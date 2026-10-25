@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct GkeHubScopeData {
+struct GkeHubScopeData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,20 +21,24 @@ struct GkeHubScopeData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    namespace_labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     scope_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<GkeHubScopeTimeoutsEl>,
+    timeouts: std::option::Option<GkeHubScope_Timeouts>,
 }
 
 struct GkeHubScope_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<GkeHubScopeData>,
+    data: std::cell::RefCell<GkeHubScopeData_>,
 }
 
 #[derive(Clone)]
@@ -132,6 +138,13 @@ impl GkeHubScope {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -148,6 +161,16 @@ impl GkeHubScope {
         self
     }
 
+    #[doc =
+        "Set the field `namespace_labels`.\nScope-level cluster namespace labels. For the member clusters bound\nto the Scope, these labels are applied to each namespace under the\nScope. Scope-level labels take precedence over Namespace-level\nlabels ('namespace_labels' in the Fleet Namespace resource) if they\nshare a key. Keys and values must be Kubernetes-conformant."]
+    pub fn set_namespace_labels(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().namespace_labels = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `project`.\n"]
     pub fn set_project(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().project = std::option::Option::Some(v.into());
@@ -155,7 +178,7 @@ impl GkeHubScope {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<GkeHubScopeTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<GkeHubScope_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -170,6 +193,12 @@ impl GkeHubScope {
         "Get a reference to the value of field `delete_time` after provisioning.\nTime the Scope was deleted in UTC."]
     pub fn delete_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -194,6 +223,12 @@ impl GkeHubScope {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `namespace_labels` after provisioning.\nScope-level cluster namespace labels. For the member clusters bound\nto the Scope, these labels are applied to each namespace under the\nScope. Scope-level labels take precedence over Namespace-level\nlabels ('namespace_labels' in the Fleet Namespace resource) if they\nshare a key. Keys and values must be Kubernetes-conformant."]
+    pub fn namespace_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.namespace_labels", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
     pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
@@ -206,7 +241,7 @@ impl GkeHubScope {
     }
 
     #[doc = "Get a reference to the value of field `state` after provisioning.\nState of the scope resource."]
-    pub fn state(&self) -> terrars::ListRef<GkeHubScopeStateElRef> {
+    pub fn state(&self) -> terrars::ListRef<GkeHubScope_StateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
     }
 
@@ -228,8 +263,8 @@ impl GkeHubScope {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> GkeHubScopeTimeoutsElRef {
-        GkeHubScopeTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> GkeHubScope_TimeoutsRef {
+        GkeHubScope_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -275,14 +310,16 @@ impl BuildGkeHubScope {
         let out = GkeHubScope(std::rc::Rc::new(GkeHubScope_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(GkeHubScopeData {
+            data: std::cell::RefCell::new(GkeHubScopeData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 labels: core::default::Default::default(),
+                namespace_labels: core::default::Default::default(),
                 project: core::default::Default::default(),
                 scope_id: self.scope_id,
                 timeouts: core::default::Default::default(),
@@ -329,6 +366,12 @@ impl GkeHubScopeRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
     pub fn effective_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
@@ -350,6 +393,12 @@ impl GkeHubScopeRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `namespace_labels` after provisioning.\nScope-level cluster namespace labels. For the member clusters bound\nto the Scope, these labels are applied to each namespace under the\nScope. Scope-level labels take precedence over Namespace-level\nlabels ('namespace_labels' in the Fleet Namespace resource) if they\nshare a key. Keys and values must be Kubernetes-conformant."]
+    pub fn namespace_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.namespace_labels", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
     pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
@@ -362,7 +411,7 @@ impl GkeHubScopeRef {
     }
 
     #[doc = "Get a reference to the value of field `state` after provisioning.\nState of the scope resource."]
-    pub fn state(&self) -> terrars::ListRef<GkeHubScopeStateElRef> {
+    pub fn state(&self) -> terrars::ListRef<GkeHubScope_StateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
     }
 
@@ -384,18 +433,18 @@ impl GkeHubScopeRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> GkeHubScopeTimeoutsElRef {
-        GkeHubScopeTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> GkeHubScope_TimeoutsRef {
+        GkeHubScope_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct GkeHubScopeStateEl {
+pub struct GkeHubScope_State {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     code: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeHubScopeStateEl {
+impl GkeHubScope_State {
     #[doc = "Set the field `code`.\n"]
     pub fn set_code(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.code = std::option::Option::Some(v.into());
@@ -403,8 +452,8 @@ impl GkeHubScopeStateEl {
     }
 }
 
-impl terrars::ToListMappable for GkeHubScopeStateEl {
-    type O = terrars::BlockAssignable<GkeHubScopeStateEl>;
+impl terrars::ToListMappable for GkeHubScope_State {
+    type O = terrars::BlockAssignable<GkeHubScope_State>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -415,29 +464,31 @@ impl terrars::ToListMappable for GkeHubScopeStateEl {
     }
 }
 
-pub struct BuildGkeHubScopeStateEl {}
+pub struct BuildGkeHubScope_State {}
 
-impl BuildGkeHubScopeStateEl {
-    pub fn build(self) -> GkeHubScopeStateEl {
-        GkeHubScopeStateEl { code: core::default::Default::default() }
+impl BuildGkeHubScope_State {
+    pub fn build(self) -> GkeHubScope_State {
+        GkeHubScope_State { code: core::default::Default::default() }
     }
 }
 
-pub struct GkeHubScopeStateElRef {
+#[allow(dead_code)]
+pub struct GkeHubScope_StateRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeHubScopeStateElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeHubScopeStateElRef {
-        GkeHubScopeStateElRef {
+impl terrars::Ref for GkeHubScope_StateRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeHubScope_StateRef {
+        GkeHubScope_StateRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeHubScopeStateElRef {
+impl GkeHubScope_StateRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -449,7 +500,7 @@ impl GkeHubScopeStateElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeHubScopeTimeoutsEl {
+pub struct GkeHubScope_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -458,7 +509,7 @@ pub struct GkeHubScopeTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeHubScopeTimeoutsEl {
+impl GkeHubScope_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -478,8 +529,8 @@ impl GkeHubScopeTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for GkeHubScopeTimeoutsEl {
-    type O = terrars::BlockAssignable<GkeHubScopeTimeoutsEl>;
+impl terrars::ToListMappable for GkeHubScope_Timeouts {
+    type O = terrars::BlockAssignable<GkeHubScope_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -490,11 +541,11 @@ impl terrars::ToListMappable for GkeHubScopeTimeoutsEl {
     }
 }
 
-pub struct BuildGkeHubScopeTimeoutsEl {}
+pub struct BuildGkeHubScope_Timeouts {}
 
-impl BuildGkeHubScopeTimeoutsEl {
-    pub fn build(self) -> GkeHubScopeTimeoutsEl {
-        GkeHubScopeTimeoutsEl {
+impl BuildGkeHubScope_Timeouts {
+    pub fn build(self) -> GkeHubScope_Timeouts {
+        GkeHubScope_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -502,21 +553,23 @@ impl BuildGkeHubScopeTimeoutsEl {
     }
 }
 
-pub struct GkeHubScopeTimeoutsElRef {
+#[allow(dead_code)]
+pub struct GkeHubScope_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeHubScopeTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeHubScopeTimeoutsElRef {
-        GkeHubScopeTimeoutsElRef {
+impl terrars::Ref for GkeHubScope_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeHubScope_TimeoutsRef {
+        GkeHubScope_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeHubScopeTimeoutsElRef {
+impl GkeHubScope_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

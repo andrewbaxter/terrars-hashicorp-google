@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeSnapshotIamMemberData {
+struct ComputeSnapshotIamMemberData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,14 +28,14 @@ struct ComputeSnapshotIamMemberData {
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<ComputeSnapshotIamMemberConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<ComputeSnapshotIamMember_Condition>>,
     dynamic: ComputeSnapshotIamMemberDynamic,
 }
 
 struct ComputeSnapshotIamMember_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeSnapshotIamMemberData>,
+    data: std::cell::RefCell<ComputeSnapshotIamMemberData_>,
 }
 
 #[derive(Clone)]
@@ -148,7 +150,7 @@ impl ComputeSnapshotIamMember {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeSnapshotIamMemberConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeSnapshotIamMember_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -192,7 +194,7 @@ impl ComputeSnapshotIamMember {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<ComputeSnapshotIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<ComputeSnapshotIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -243,7 +245,7 @@ impl BuildComputeSnapshotIamMember {
         let out = ComputeSnapshotIamMember(std::rc::Rc::new(ComputeSnapshotIamMember_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeSnapshotIamMemberData {
+            data: std::cell::RefCell::new(ComputeSnapshotIamMemberData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -317,20 +319,25 @@ impl ComputeSnapshotIamMemberRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<ComputeSnapshotIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<ComputeSnapshotIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ComputeSnapshotIamMemberDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<ComputeSnapshotIamMember_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct ComputeSnapshotIamMemberConditionEl {
+pub struct ComputeSnapshotIamMember_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl ComputeSnapshotIamMemberConditionEl {
+impl ComputeSnapshotIamMember_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -338,8 +345,8 @@ impl ComputeSnapshotIamMemberConditionEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeSnapshotIamMemberConditionEl {
-    type O = terrars::BlockAssignable<ComputeSnapshotIamMemberConditionEl>;
+impl terrars::ToListMappable for ComputeSnapshotIamMember_Condition {
+    type O = terrars::BlockAssignable<ComputeSnapshotIamMember_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -350,16 +357,16 @@ impl terrars::ToListMappable for ComputeSnapshotIamMemberConditionEl {
     }
 }
 
-pub struct BuildComputeSnapshotIamMemberConditionEl {
+pub struct BuildComputeSnapshotIamMember_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputeSnapshotIamMemberConditionEl {
-    pub fn build(self) -> ComputeSnapshotIamMemberConditionEl {
-        ComputeSnapshotIamMemberConditionEl {
+impl BuildComputeSnapshotIamMember_Condition {
+    pub fn build(self) -> ComputeSnapshotIamMember_Condition {
+        ComputeSnapshotIamMember_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -367,21 +374,23 @@ impl BuildComputeSnapshotIamMemberConditionEl {
     }
 }
 
-pub struct ComputeSnapshotIamMemberConditionElRef {
+#[allow(dead_code)]
+pub struct ComputeSnapshotIamMember_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeSnapshotIamMemberConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeSnapshotIamMemberConditionElRef {
-        ComputeSnapshotIamMemberConditionElRef {
+impl terrars::Ref for ComputeSnapshotIamMember_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeSnapshotIamMember_ConditionRef {
+        ComputeSnapshotIamMember_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeSnapshotIamMemberConditionElRef {
+impl ComputeSnapshotIamMember_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -400,9 +409,4 @@ impl ComputeSnapshotIamMemberConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ComputeSnapshotIamMemberDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<ComputeSnapshotIamMemberConditionEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct IapTunnelIamMemberData {
+struct IapTunnelIamMemberData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,14 +27,14 @@ struct IapTunnelIamMemberData {
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<IapTunnelIamMemberConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<IapTunnelIamMember_Condition>>,
     dynamic: IapTunnelIamMemberDynamic,
 }
 
 struct IapTunnelIamMember_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<IapTunnelIamMemberData>,
+    data: std::cell::RefCell<IapTunnelIamMemberData_>,
 }
 
 #[derive(Clone)]
@@ -147,7 +149,7 @@ impl IapTunnelIamMember {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<IapTunnelIamMemberConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IapTunnelIamMember_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -186,7 +188,7 @@ impl IapTunnelIamMember {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<IapTunnelIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<IapTunnelIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -235,7 +237,7 @@ impl BuildIapTunnelIamMember {
         let out = IapTunnelIamMember(std::rc::Rc::new(IapTunnelIamMember_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(IapTunnelIamMemberData {
+            data: std::cell::RefCell::new(IapTunnelIamMemberData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -303,20 +305,25 @@ impl IapTunnelIamMemberRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<IapTunnelIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<IapTunnelIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct IapTunnelIamMemberDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<IapTunnelIamMember_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct IapTunnelIamMemberConditionEl {
+pub struct IapTunnelIamMember_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl IapTunnelIamMemberConditionEl {
+impl IapTunnelIamMember_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -324,8 +331,8 @@ impl IapTunnelIamMemberConditionEl {
     }
 }
 
-impl terrars::ToListMappable for IapTunnelIamMemberConditionEl {
-    type O = terrars::BlockAssignable<IapTunnelIamMemberConditionEl>;
+impl terrars::ToListMappable for IapTunnelIamMember_Condition {
+    type O = terrars::BlockAssignable<IapTunnelIamMember_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -336,16 +343,16 @@ impl terrars::ToListMappable for IapTunnelIamMemberConditionEl {
     }
 }
 
-pub struct BuildIapTunnelIamMemberConditionEl {
+pub struct BuildIapTunnelIamMember_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildIapTunnelIamMemberConditionEl {
-    pub fn build(self) -> IapTunnelIamMemberConditionEl {
-        IapTunnelIamMemberConditionEl {
+impl BuildIapTunnelIamMember_Condition {
+    pub fn build(self) -> IapTunnelIamMember_Condition {
+        IapTunnelIamMember_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -353,21 +360,23 @@ impl BuildIapTunnelIamMemberConditionEl {
     }
 }
 
-pub struct IapTunnelIamMemberConditionElRef {
+#[allow(dead_code)]
+pub struct IapTunnelIamMember_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IapTunnelIamMemberConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> IapTunnelIamMemberConditionElRef {
-        IapTunnelIamMemberConditionElRef {
+impl terrars::Ref for IapTunnelIamMember_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IapTunnelIamMember_ConditionRef {
+        IapTunnelIamMember_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IapTunnelIamMemberConditionElRef {
+impl IapTunnelIamMember_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -386,9 +395,4 @@ impl IapTunnelIamMemberConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct IapTunnelIamMemberDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<IapTunnelIamMemberConditionEl>>,
 }

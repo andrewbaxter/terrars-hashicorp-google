@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataWorkbenchInstanceIamPolicyData {
+struct DataWorkbenchInstanceIamPolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -28,7 +30,7 @@ struct DataWorkbenchInstanceIamPolicyData {
 struct DataWorkbenchInstanceIamPolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataWorkbenchInstanceIamPolicyData>,
+    data: std::cell::RefCell<DataWorkbenchInstanceIamPolicyData_>,
 }
 
 #[derive(Clone)]
@@ -164,7 +166,7 @@ impl BuildDataWorkbenchInstanceIamPolicy {
         let out = DataWorkbenchInstanceIamPolicy(std::rc::Rc::new(DataWorkbenchInstanceIamPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataWorkbenchInstanceIamPolicyData {
+            data: std::cell::RefCell::new(DataWorkbenchInstanceIamPolicyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),

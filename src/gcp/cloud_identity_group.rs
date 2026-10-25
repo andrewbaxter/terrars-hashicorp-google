@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct CloudIdentityGroupData {
+struct CloudIdentityGroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct CloudIdentityGroupData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     display_name: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -29,16 +33,16 @@ struct CloudIdentityGroupData {
     labels: terrars::RecField<terrars::PrimField<std::string::String>>,
     parent: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    group_key: std::option::Option<std::vec::Vec<CloudIdentityGroupGroupKeyEl>>,
+    group_key: std::option::Option<std::vec::Vec<CloudIdentityGroup_GroupKey>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<CloudIdentityGroupTimeoutsEl>,
+    timeouts: std::option::Option<CloudIdentityGroup_Timeouts>,
     dynamic: CloudIdentityGroupDynamic,
 }
 
 struct CloudIdentityGroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CloudIdentityGroupData>,
+    data: std::cell::RefCell<CloudIdentityGroupData_>,
 }
 
 #[derive(Clone)]
@@ -139,6 +143,13 @@ impl CloudIdentityGroup {
     }
 
     #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `description`.\nAn extended description to help users determine the purpose of a Group.\nMust not be longer than 4,096 characters."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -167,7 +178,7 @@ impl CloudIdentityGroup {
     #[doc = "Set the field `group_key`.\n"]
     pub fn set_group_key(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudIdentityGroupGroupKeyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudIdentityGroup_GroupKey>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -181,14 +192,14 @@ impl CloudIdentityGroup {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<CloudIdentityGroupTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<CloudIdentityGroup_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
     #[doc =
         "Get a reference to the value of field `additional_group_keys` after provisioning.\nAdditional group keys associated with the Group"]
-    pub fn additional_group_keys(&self) -> terrars::ListRef<CloudIdentityGroupAdditionalGroupKeysElRef> {
+    pub fn additional_group_keys(&self) -> terrars::ListRef<CloudIdentityGroup_AdditionalGroupKeysRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.additional_group_keys", self.extract_ref()))
     }
 
@@ -196,6 +207,12 @@ impl CloudIdentityGroup {
         "Get a reference to the value of field `create_time` after provisioning.\nThe time when the Group was created."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -245,13 +262,13 @@ impl CloudIdentityGroup {
     }
 
     #[doc = "Get a reference to the value of field `group_key` after provisioning.\n"]
-    pub fn group_key(&self) -> terrars::ListRef<CloudIdentityGroupGroupKeyElRef> {
+    pub fn group_key(&self) -> terrars::ListRef<CloudIdentityGroup_GroupKeyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.group_key", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> CloudIdentityGroupTimeoutsElRef {
-        CloudIdentityGroupTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> CloudIdentityGroup_TimeoutsRef {
+        CloudIdentityGroup_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -301,12 +318,13 @@ impl BuildCloudIdentityGroup {
         let out = CloudIdentityGroup(std::rc::Rc::new(CloudIdentityGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CloudIdentityGroupData {
+            data: std::cell::RefCell::new(CloudIdentityGroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 display_name: core::default::Default::default(),
                 id: core::default::Default::default(),
@@ -348,7 +366,7 @@ impl CloudIdentityGroupRef {
 
     #[doc =
         "Get a reference to the value of field `additional_group_keys` after provisioning.\nAdditional group keys associated with the Group"]
-    pub fn additional_group_keys(&self) -> terrars::ListRef<CloudIdentityGroupAdditionalGroupKeysElRef> {
+    pub fn additional_group_keys(&self) -> terrars::ListRef<CloudIdentityGroup_AdditionalGroupKeysRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.additional_group_keys", self.extract_ref()))
     }
 
@@ -356,6 +374,12 @@ impl CloudIdentityGroupRef {
         "Get a reference to the value of field `create_time` after provisioning.\nThe time when the Group was created."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -405,25 +429,30 @@ impl CloudIdentityGroupRef {
     }
 
     #[doc = "Get a reference to the value of field `group_key` after provisioning.\n"]
-    pub fn group_key(&self) -> terrars::ListRef<CloudIdentityGroupGroupKeyElRef> {
+    pub fn group_key(&self) -> terrars::ListRef<CloudIdentityGroup_GroupKeyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.group_key", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> CloudIdentityGroupTimeoutsElRef {
-        CloudIdentityGroupTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> CloudIdentityGroup_TimeoutsRef {
+        CloudIdentityGroup_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct CloudIdentityGroupDynamic {
+    group_key: std::option::Option<terrars::DynamicBlock<CloudIdentityGroup_GroupKey>>,
+}
+
 #[derive(Serialize)]
-pub struct CloudIdentityGroupAdditionalGroupKeysEl {
+pub struct CloudIdentityGroup_AdditionalGroupKeys {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     namespace: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CloudIdentityGroupAdditionalGroupKeysEl {
+impl CloudIdentityGroup_AdditionalGroupKeys {
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.id = std::option::Option::Some(v.into());
@@ -437,8 +466,8 @@ impl CloudIdentityGroupAdditionalGroupKeysEl {
     }
 }
 
-impl terrars::ToListMappable for CloudIdentityGroupAdditionalGroupKeysEl {
-    type O = terrars::BlockAssignable<CloudIdentityGroupAdditionalGroupKeysEl>;
+impl terrars::ToListMappable for CloudIdentityGroup_AdditionalGroupKeys {
+    type O = terrars::BlockAssignable<CloudIdentityGroup_AdditionalGroupKeys>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -449,32 +478,34 @@ impl terrars::ToListMappable for CloudIdentityGroupAdditionalGroupKeysEl {
     }
 }
 
-pub struct BuildCloudIdentityGroupAdditionalGroupKeysEl {}
+pub struct BuildCloudIdentityGroup_AdditionalGroupKeys {}
 
-impl BuildCloudIdentityGroupAdditionalGroupKeysEl {
-    pub fn build(self) -> CloudIdentityGroupAdditionalGroupKeysEl {
-        CloudIdentityGroupAdditionalGroupKeysEl {
+impl BuildCloudIdentityGroup_AdditionalGroupKeys {
+    pub fn build(self) -> CloudIdentityGroup_AdditionalGroupKeys {
+        CloudIdentityGroup_AdditionalGroupKeys {
             id: core::default::Default::default(),
             namespace: core::default::Default::default(),
         }
     }
 }
 
-pub struct CloudIdentityGroupAdditionalGroupKeysElRef {
+#[allow(dead_code)]
+pub struct CloudIdentityGroup_AdditionalGroupKeysRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudIdentityGroupAdditionalGroupKeysElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudIdentityGroupAdditionalGroupKeysElRef {
-        CloudIdentityGroupAdditionalGroupKeysElRef {
+impl terrars::Ref for CloudIdentityGroup_AdditionalGroupKeysRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudIdentityGroup_AdditionalGroupKeysRef {
+        CloudIdentityGroup_AdditionalGroupKeysRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudIdentityGroupAdditionalGroupKeysElRef {
+impl CloudIdentityGroup_AdditionalGroupKeysRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -491,13 +522,13 @@ impl CloudIdentityGroupAdditionalGroupKeysElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudIdentityGroupGroupKeyEl {
+pub struct CloudIdentityGroup_GroupKey {
     id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     namespace: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CloudIdentityGroupGroupKeyEl {
+impl CloudIdentityGroup_GroupKey {
     #[doc =
         "Set the field `namespace`.\nThe namespace in which the entity exists.\n\nIf not specified, the EntityKey represents a Google-managed entity\nsuch as a Google user or a Google Group.\n\nIf specified, the EntityKey represents an external-identity-mapped group.\nThe namespace must correspond to an identity source created in Admin Console\nand must be in the form of 'identitysources/{identity_source_id}'."]
     pub fn set_namespace(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -506,8 +537,8 @@ impl CloudIdentityGroupGroupKeyEl {
     }
 }
 
-impl terrars::ToListMappable for CloudIdentityGroupGroupKeyEl {
-    type O = terrars::BlockAssignable<CloudIdentityGroupGroupKeyEl>;
+impl terrars::ToListMappable for CloudIdentityGroup_GroupKey {
+    type O = terrars::BlockAssignable<CloudIdentityGroup_GroupKey>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -518,36 +549,38 @@ impl terrars::ToListMappable for CloudIdentityGroupGroupKeyEl {
     }
 }
 
-pub struct BuildCloudIdentityGroupGroupKeyEl {
+pub struct BuildCloudIdentityGroup_GroupKey {
     #[doc =
         "The ID of the entity.\n\nFor Google-managed entities, the id must be the email address of an existing\ngroup or user.\n\nFor external-identity-mapped entities, the id must be a string conforming\nto the Identity Source's requirements.\n\nMust be unique within a namespace."]
     pub id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudIdentityGroupGroupKeyEl {
-    pub fn build(self) -> CloudIdentityGroupGroupKeyEl {
-        CloudIdentityGroupGroupKeyEl {
+impl BuildCloudIdentityGroup_GroupKey {
+    pub fn build(self) -> CloudIdentityGroup_GroupKey {
+        CloudIdentityGroup_GroupKey {
             id: self.id,
             namespace: core::default::Default::default(),
         }
     }
 }
 
-pub struct CloudIdentityGroupGroupKeyElRef {
+#[allow(dead_code)]
+pub struct CloudIdentityGroup_GroupKeyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudIdentityGroupGroupKeyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudIdentityGroupGroupKeyElRef {
-        CloudIdentityGroupGroupKeyElRef {
+impl terrars::Ref for CloudIdentityGroup_GroupKeyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudIdentityGroup_GroupKeyRef {
+        CloudIdentityGroup_GroupKeyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudIdentityGroupGroupKeyElRef {
+impl CloudIdentityGroup_GroupKeyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -566,7 +599,7 @@ impl CloudIdentityGroupGroupKeyElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudIdentityGroupTimeoutsEl {
+pub struct CloudIdentityGroup_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -575,7 +608,7 @@ pub struct CloudIdentityGroupTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CloudIdentityGroupTimeoutsEl {
+impl CloudIdentityGroup_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -595,8 +628,8 @@ impl CloudIdentityGroupTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for CloudIdentityGroupTimeoutsEl {
-    type O = terrars::BlockAssignable<CloudIdentityGroupTimeoutsEl>;
+impl terrars::ToListMappable for CloudIdentityGroup_Timeouts {
+    type O = terrars::BlockAssignable<CloudIdentityGroup_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -607,11 +640,11 @@ impl terrars::ToListMappable for CloudIdentityGroupTimeoutsEl {
     }
 }
 
-pub struct BuildCloudIdentityGroupTimeoutsEl {}
+pub struct BuildCloudIdentityGroup_Timeouts {}
 
-impl BuildCloudIdentityGroupTimeoutsEl {
-    pub fn build(self) -> CloudIdentityGroupTimeoutsEl {
-        CloudIdentityGroupTimeoutsEl {
+impl BuildCloudIdentityGroup_Timeouts {
+    pub fn build(self) -> CloudIdentityGroup_Timeouts {
+        CloudIdentityGroup_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -619,21 +652,23 @@ impl BuildCloudIdentityGroupTimeoutsEl {
     }
 }
 
-pub struct CloudIdentityGroupTimeoutsElRef {
+#[allow(dead_code)]
+pub struct CloudIdentityGroup_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudIdentityGroupTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudIdentityGroupTimeoutsElRef {
-        CloudIdentityGroupTimeoutsElRef {
+impl terrars::Ref for CloudIdentityGroup_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudIdentityGroup_TimeoutsRef {
+        CloudIdentityGroup_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudIdentityGroupTimeoutsElRef {
+impl CloudIdentityGroup_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -652,9 +687,4 @@ impl CloudIdentityGroupTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct CloudIdentityGroupDynamic {
-    group_key: std::option::Option<terrars::DynamicBlock<CloudIdentityGroupGroupKeyEl>>,
 }

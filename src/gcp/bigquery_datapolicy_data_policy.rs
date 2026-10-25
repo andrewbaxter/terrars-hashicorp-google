@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct BigqueryDatapolicyDataPolicyData {
+struct BigqueryDatapolicyDataPolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,22 +23,24 @@ struct BigqueryDatapolicyDataPolicyData {
     data_policy_id: terrars::PrimField<std::string::String>,
     data_policy_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     location: terrars::PrimField<std::string::String>,
     policy_tag: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    data_masking_policy: std::option::Option<std::vec::Vec<BigqueryDatapolicyDataPolicyDataMaskingPolicyEl>>,
+    data_masking_policy: std::option::Option<std::vec::Vec<BigqueryDatapolicyDataPolicy_DataMaskingPolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<BigqueryDatapolicyDataPolicyTimeoutsEl>,
+    timeouts: std::option::Option<BigqueryDatapolicyDataPolicy_Timeouts>,
     dynamic: BigqueryDatapolicyDataPolicyDynamic,
 }
 
 struct BigqueryDatapolicyDataPolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<BigqueryDatapolicyDataPolicyData>,
+    data: std::cell::RefCell<BigqueryDatapolicyDataPolicyData_>,
 }
 
 #[derive(Clone)]
@@ -136,6 +140,13 @@ impl BigqueryDatapolicyDataPolicy {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -151,7 +162,7 @@ impl BigqueryDatapolicyDataPolicy {
     #[doc = "Set the field `data_masking_policy`.\n"]
     pub fn set_data_masking_policy(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryDatapolicyDataPolicyDataMaskingPolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryDatapolicyDataPolicy_DataMaskingPolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -165,7 +176,7 @@ impl BigqueryDatapolicyDataPolicy {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<BigqueryDatapolicyDataPolicyTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<BigqueryDatapolicyDataPolicy_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -180,6 +191,12 @@ impl BigqueryDatapolicyDataPolicy {
         "Get a reference to the value of field `data_policy_type` after provisioning.\nThe enrollment level of the service. Possible values: [\"COLUMN_LEVEL_SECURITY_POLICY\", \"DATA_MASKING_POLICY\"]"]
     pub fn data_policy_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.data_policy_type", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -211,13 +228,13 @@ impl BigqueryDatapolicyDataPolicy {
     }
 
     #[doc = "Get a reference to the value of field `data_masking_policy` after provisioning.\n"]
-    pub fn data_masking_policy(&self) -> terrars::ListRef<BigqueryDatapolicyDataPolicyDataMaskingPolicyElRef> {
+    pub fn data_masking_policy(&self) -> terrars::ListRef<BigqueryDatapolicyDataPolicy_DataMaskingPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.data_masking_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> BigqueryDatapolicyDataPolicyTimeoutsElRef {
-        BigqueryDatapolicyDataPolicyTimeoutsElRef::new(
+    pub fn timeouts(&self) -> BigqueryDatapolicyDataPolicy_TimeoutsRef {
+        BigqueryDatapolicyDataPolicy_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -275,7 +292,7 @@ impl BuildBigqueryDatapolicyDataPolicy {
         let out = BigqueryDatapolicyDataPolicy(std::rc::Rc::new(BigqueryDatapolicyDataPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(BigqueryDatapolicyDataPolicyData {
+            data: std::cell::RefCell::new(BigqueryDatapolicyDataPolicyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -283,6 +300,7 @@ impl BuildBigqueryDatapolicyDataPolicy {
                 provisioner: core::default::Default::default(),
                 data_policy_id: self.data_policy_id,
                 data_policy_type: self.data_policy_type,
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 location: self.location,
                 policy_tag: self.policy_tag,
@@ -332,6 +350,12 @@ impl BigqueryDatapolicyDataPolicyRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.data_policy_type", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -361,28 +385,53 @@ impl BigqueryDatapolicyDataPolicyRef {
     }
 
     #[doc = "Get a reference to the value of field `data_masking_policy` after provisioning.\n"]
-    pub fn data_masking_policy(&self) -> terrars::ListRef<BigqueryDatapolicyDataPolicyDataMaskingPolicyElRef> {
+    pub fn data_masking_policy(&self) -> terrars::ListRef<BigqueryDatapolicyDataPolicy_DataMaskingPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.data_masking_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> BigqueryDatapolicyDataPolicyTimeoutsElRef {
-        BigqueryDatapolicyDataPolicyTimeoutsElRef::new(
+    pub fn timeouts(&self) -> BigqueryDatapolicyDataPolicy_TimeoutsRef {
+        BigqueryDatapolicyDataPolicy_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
-#[derive(Serialize)]
-pub struct BigqueryDatapolicyDataPolicyDataMaskingPolicyEl {
-    predefined_expression: terrars::PrimField<std::string::String>,
+#[derive(Serialize, Default)]
+struct BigqueryDatapolicyDataPolicyDynamic {
+    data_masking_policy: std::option::Option<terrars::DynamicBlock<BigqueryDatapolicyDataPolicy_DataMaskingPolicy>>,
 }
 
-impl BigqueryDatapolicyDataPolicyDataMaskingPolicyEl { }
+#[derive(Serialize)]
+pub struct BigqueryDatapolicyDataPolicy_DataMaskingPolicy {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    predefined_expression: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    routine: std::option::Option<terrars::PrimField<std::string::String>>,
+}
 
-impl terrars::ToListMappable for BigqueryDatapolicyDataPolicyDataMaskingPolicyEl {
-    type O = terrars::BlockAssignable<BigqueryDatapolicyDataPolicyDataMaskingPolicyEl>;
+impl BigqueryDatapolicyDataPolicy_DataMaskingPolicy {
+    #[doc =
+        "Set the field `predefined_expression`.\nThe available masking rules. Learn more here: https://cloud.google.com/bigquery/docs/column-data-masking-intro#masking_options. Possible values: [\"SHA256\", \"ALWAYS_NULL\", \"DEFAULT_MASKING_VALUE\", \"LAST_FOUR_CHARACTERS\", \"FIRST_FOUR_CHARACTERS\", \"EMAIL_MASK\", \"DATE_YEAR_MASK\"]"]
+    pub fn set_predefined_expression(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.predefined_expression = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `routine`.\nThe name of the BigQuery routine that contains the custom masking routine, in the format of projects/{projectNumber}/datasets/{dataset_id}/routines/{routine_id}."]
+    pub fn set_routine(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.routine = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for BigqueryDatapolicyDataPolicy_DataMaskingPolicy {
+    type O = terrars::BlockAssignable<BigqueryDatapolicyDataPolicy_DataMaskingPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -393,36 +442,37 @@ impl terrars::ToListMappable for BigqueryDatapolicyDataPolicyDataMaskingPolicyEl
     }
 }
 
-pub struct BuildBigqueryDatapolicyDataPolicyDataMaskingPolicyEl {
-    #[doc =
-        "The available masking rules. Learn more here: https://cloud.google.com/bigquery/docs/column-data-masking-intro#masking_options. Possible values: [\"SHA256\", \"ALWAYS_NULL\", \"DEFAULT_MASKING_VALUE\", \"LAST_FOUR_CHARACTERS\", \"FIRST_FOUR_CHARACTERS\", \"EMAIL_MASK\", \"DATE_YEAR_MASK\"]"]
-    pub predefined_expression: terrars::PrimField<std::string::String>,
-}
+pub struct BuildBigqueryDatapolicyDataPolicy_DataMaskingPolicy {}
 
-impl BuildBigqueryDatapolicyDataPolicyDataMaskingPolicyEl {
-    pub fn build(self) -> BigqueryDatapolicyDataPolicyDataMaskingPolicyEl {
-        BigqueryDatapolicyDataPolicyDataMaskingPolicyEl { predefined_expression: self.predefined_expression }
+impl BuildBigqueryDatapolicyDataPolicy_DataMaskingPolicy {
+    pub fn build(self) -> BigqueryDatapolicyDataPolicy_DataMaskingPolicy {
+        BigqueryDatapolicyDataPolicy_DataMaskingPolicy {
+            predefined_expression: core::default::Default::default(),
+            routine: core::default::Default::default(),
+        }
     }
 }
 
-pub struct BigqueryDatapolicyDataPolicyDataMaskingPolicyElRef {
+#[allow(dead_code)]
+pub struct BigqueryDatapolicyDataPolicy_DataMaskingPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryDatapolicyDataPolicyDataMaskingPolicyElRef {
+impl terrars::Ref for BigqueryDatapolicyDataPolicy_DataMaskingPolicyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> BigqueryDatapolicyDataPolicyDataMaskingPolicyElRef {
-        BigqueryDatapolicyDataPolicyDataMaskingPolicyElRef {
+    ) -> BigqueryDatapolicyDataPolicy_DataMaskingPolicyRef {
+        BigqueryDatapolicyDataPolicy_DataMaskingPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryDatapolicyDataPolicyDataMaskingPolicyElRef {
+impl BigqueryDatapolicyDataPolicy_DataMaskingPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -432,10 +482,16 @@ impl BigqueryDatapolicyDataPolicyDataMaskingPolicyElRef {
     pub fn predefined_expression(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.predefined_expression", self.base))
     }
+
+    #[doc =
+        "Get a reference to the value of field `routine` after provisioning.\nThe name of the BigQuery routine that contains the custom masking routine, in the format of projects/{projectNumber}/datasets/{dataset_id}/routines/{routine_id}."]
+    pub fn routine(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.routine", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct BigqueryDatapolicyDataPolicyTimeoutsEl {
+pub struct BigqueryDatapolicyDataPolicy_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -444,7 +500,7 @@ pub struct BigqueryDatapolicyDataPolicyTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl BigqueryDatapolicyDataPolicyTimeoutsEl {
+impl BigqueryDatapolicyDataPolicy_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -464,8 +520,8 @@ impl BigqueryDatapolicyDataPolicyTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for BigqueryDatapolicyDataPolicyTimeoutsEl {
-    type O = terrars::BlockAssignable<BigqueryDatapolicyDataPolicyTimeoutsEl>;
+impl terrars::ToListMappable for BigqueryDatapolicyDataPolicy_Timeouts {
+    type O = terrars::BlockAssignable<BigqueryDatapolicyDataPolicy_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -476,11 +532,11 @@ impl terrars::ToListMappable for BigqueryDatapolicyDataPolicyTimeoutsEl {
     }
 }
 
-pub struct BuildBigqueryDatapolicyDataPolicyTimeoutsEl {}
+pub struct BuildBigqueryDatapolicyDataPolicy_Timeouts {}
 
-impl BuildBigqueryDatapolicyDataPolicyTimeoutsEl {
-    pub fn build(self) -> BigqueryDatapolicyDataPolicyTimeoutsEl {
-        BigqueryDatapolicyDataPolicyTimeoutsEl {
+impl BuildBigqueryDatapolicyDataPolicy_Timeouts {
+    pub fn build(self) -> BigqueryDatapolicyDataPolicy_Timeouts {
+        BigqueryDatapolicyDataPolicy_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -488,21 +544,23 @@ impl BuildBigqueryDatapolicyDataPolicyTimeoutsEl {
     }
 }
 
-pub struct BigqueryDatapolicyDataPolicyTimeoutsElRef {
+#[allow(dead_code)]
+pub struct BigqueryDatapolicyDataPolicy_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryDatapolicyDataPolicyTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryDatapolicyDataPolicyTimeoutsElRef {
-        BigqueryDatapolicyDataPolicyTimeoutsElRef {
+impl terrars::Ref for BigqueryDatapolicyDataPolicy_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryDatapolicyDataPolicy_TimeoutsRef {
+        BigqueryDatapolicyDataPolicy_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryDatapolicyDataPolicyTimeoutsElRef {
+impl BigqueryDatapolicyDataPolicy_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -521,9 +579,4 @@ impl BigqueryDatapolicyDataPolicyTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct BigqueryDatapolicyDataPolicyDynamic {
-    data_masking_policy: std::option::Option<terrars::DynamicBlock<BigqueryDatapolicyDataPolicyDataMaskingPolicyEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct Cloudbuildv2ConnectionData {
+struct Cloudbuildv2ConnectionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,6 +23,8 @@ struct Cloudbuildv2ConnectionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     annotations: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     disabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -29,20 +33,24 @@ struct Cloudbuildv2ConnectionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    github_config: std::option::Option<std::vec::Vec<Cloudbuildv2ConnectionGithubConfigEl>>,
+    bitbucket_cloud_config: std::option::Option<std::vec::Vec<Cloudbuildv2Connection_BitbucketCloudConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    github_enterprise_config: std::option::Option<std::vec::Vec<Cloudbuildv2ConnectionGithubEnterpriseConfigEl>>,
+    bitbucket_data_center_config: std::option::Option<std::vec::Vec<Cloudbuildv2Connection_BitbucketDataCenterConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    gitlab_config: std::option::Option<std::vec::Vec<Cloudbuildv2ConnectionGitlabConfigEl>>,
+    github_config: std::option::Option<std::vec::Vec<Cloudbuildv2Connection_GithubConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<Cloudbuildv2ConnectionTimeoutsEl>,
+    github_enterprise_config: std::option::Option<std::vec::Vec<Cloudbuildv2Connection_GithubEnterpriseConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gitlab_config: std::option::Option<std::vec::Vec<Cloudbuildv2Connection_GitlabConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<Cloudbuildv2Connection_Timeouts>,
     dynamic: Cloudbuildv2ConnectionDynamic,
 }
 
 struct Cloudbuildv2Connection_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Cloudbuildv2ConnectionData>,
+    data: std::cell::RefCell<Cloudbuildv2ConnectionData_>,
 }
 
 #[derive(Clone)]
@@ -143,12 +151,19 @@ impl Cloudbuildv2Connection {
     }
 
     #[doc =
-        "Set the field `annotations`.\nAllows clients to store small amounts of arbitrary data.\n\n**Note**: This field is non-authoritative, and will only manage the annotations present in your configuration.\nPlease refer to the field `effective_annotations` for all of the annotations present on the resource."]
+        "Set the field `annotations`.\nAllows clients to store small amounts of arbitrary data.\n\n**Note**: This field is non-authoritative, and will only manage the annotations present in your configuration.\nPlease refer to the field 'effective_annotations' for all of the annotations present on the resource."]
     pub fn set_annotations(
         self,
         v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
     ) -> Self {
         self.0.data.borrow_mut().annotations = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
         self
     }
 
@@ -165,16 +180,48 @@ impl Cloudbuildv2Connection {
         self
     }
 
-    #[doc = "Set the field `project`.\nThe project for the resource"]
+    #[doc = "Set the field `project`.\n"]
     pub fn set_project(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().project = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `bitbucket_cloud_config`.\n"]
+    pub fn set_bitbucket_cloud_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<Cloudbuildv2Connection_BitbucketCloudConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().bitbucket_cloud_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.bitbucket_cloud_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `bitbucket_data_center_config`.\n"]
+    pub fn set_bitbucket_data_center_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<Cloudbuildv2Connection_BitbucketDataCenterConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().bitbucket_data_center_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.bitbucket_data_center_config = std::option::Option::Some(d);
+            },
+        }
         self
     }
 
     #[doc = "Set the field `github_config`.\n"]
     pub fn set_github_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Cloudbuildv2ConnectionGithubConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Cloudbuildv2Connection_GithubConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -190,7 +237,7 @@ impl Cloudbuildv2Connection {
     #[doc = "Set the field `github_enterprise_config`.\n"]
     pub fn set_github_enterprise_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Cloudbuildv2ConnectionGithubEnterpriseConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Cloudbuildv2Connection_GithubEnterpriseConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -206,7 +253,7 @@ impl Cloudbuildv2Connection {
     #[doc = "Set the field `gitlab_config`.\n"]
     pub fn set_gitlab_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Cloudbuildv2ConnectionGitlabConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Cloudbuildv2Connection_GitlabConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -220,13 +267,13 @@ impl Cloudbuildv2Connection {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<Cloudbuildv2ConnectionTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<Cloudbuildv2Connection_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
     #[doc =
-        "Get a reference to the value of field `annotations` after provisioning.\nAllows clients to store small amounts of arbitrary data.\n\n**Note**: This field is non-authoritative, and will only manage the annotations present in your configuration.\nPlease refer to the field `effective_annotations` for all of the annotations present on the resource."]
+        "Get a reference to the value of field `annotations` after provisioning.\nAllows clients to store small amounts of arbitrary data.\n\n**Note**: This field is non-authoritative, and will only manage the annotations present in your configuration.\nPlease refer to the field 'effective_annotations' for all of the annotations present on the resource."]
     pub fn annotations(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.annotations", self.extract_ref()))
     }
@@ -235,6 +282,12 @@ impl Cloudbuildv2Connection {
         "Get a reference to the value of field `create_time` after provisioning.\nOutput only. Server assigned timestamp for when the connection was created."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -262,7 +315,7 @@ impl Cloudbuildv2Connection {
 
     #[doc =
         "Get a reference to the value of field `installation_state` after provisioning.\nOutput only. Installation state of the Connection."]
-    pub fn installation_state(&self) -> terrars::ListRef<Cloudbuildv2ConnectionInstallationStateElRef> {
+    pub fn installation_state(&self) -> terrars::ListRef<Cloudbuildv2Connection_InstallationStateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.installation_state", self.extract_ref()))
     }
 
@@ -272,12 +325,12 @@ impl Cloudbuildv2Connection {
     }
 
     #[doc =
-        "Get a reference to the value of field `name` after provisioning.\nImmutable. The resource name of the connection, in the format `projects/{project}/locations/{location}/connections/{connection_id}`."]
+        "Get a reference to the value of field `name` after provisioning.\nImmutable. The resource name of the connection."]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `project` after provisioning.\nThe project for the resource"]
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
     pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
@@ -294,24 +347,34 @@ impl Cloudbuildv2Connection {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update_time", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `bitbucket_cloud_config` after provisioning.\n"]
+    pub fn bitbucket_cloud_config(&self) -> terrars::ListRef<Cloudbuildv2Connection_BitbucketCloudConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.bitbucket_cloud_config", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `bitbucket_data_center_config` after provisioning.\n"]
+    pub fn bitbucket_data_center_config(&self) -> terrars::ListRef<Cloudbuildv2Connection_BitbucketDataCenterConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.bitbucket_data_center_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `github_config` after provisioning.\n"]
-    pub fn github_config(&self) -> terrars::ListRef<Cloudbuildv2ConnectionGithubConfigElRef> {
+    pub fn github_config(&self) -> terrars::ListRef<Cloudbuildv2Connection_GithubConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.github_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `github_enterprise_config` after provisioning.\n"]
-    pub fn github_enterprise_config(&self) -> terrars::ListRef<Cloudbuildv2ConnectionGithubEnterpriseConfigElRef> {
+    pub fn github_enterprise_config(&self) -> terrars::ListRef<Cloudbuildv2Connection_GithubEnterpriseConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.github_enterprise_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `gitlab_config` after provisioning.\n"]
-    pub fn gitlab_config(&self) -> terrars::ListRef<Cloudbuildv2ConnectionGitlabConfigElRef> {
+    pub fn gitlab_config(&self) -> terrars::ListRef<Cloudbuildv2Connection_GitlabConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.gitlab_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> Cloudbuildv2ConnectionTimeoutsElRef {
-        Cloudbuildv2ConnectionTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> Cloudbuildv2Connection_TimeoutsRef {
+        Cloudbuildv2Connection_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -350,8 +413,7 @@ pub struct BuildCloudbuildv2Connection {
     pub tf_id: std::string::String,
     #[doc = "The location for the resource"]
     pub location: terrars::PrimField<std::string::String>,
-    #[doc =
-        "Immutable. The resource name of the connection, in the format `projects/{project}/locations/{location}/connections/{connection_id}`."]
+    #[doc = "Immutable. The resource name of the connection."]
     pub name: terrars::PrimField<std::string::String>,
 }
 
@@ -360,18 +422,21 @@ impl BuildCloudbuildv2Connection {
         let out = Cloudbuildv2Connection(std::rc::Rc::new(Cloudbuildv2Connection_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Cloudbuildv2ConnectionData {
+            data: std::cell::RefCell::new(Cloudbuildv2ConnectionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 annotations: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 disabled: core::default::Default::default(),
                 id: core::default::Default::default(),
                 location: self.location,
                 name: self.name,
                 project: core::default::Default::default(),
+                bitbucket_cloud_config: core::default::Default::default(),
+                bitbucket_data_center_config: core::default::Default::default(),
                 github_config: core::default::Default::default(),
                 github_enterprise_config: core::default::Default::default(),
                 gitlab_config: core::default::Default::default(),
@@ -408,7 +473,7 @@ impl Cloudbuildv2ConnectionRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `annotations` after provisioning.\nAllows clients to store small amounts of arbitrary data.\n\n**Note**: This field is non-authoritative, and will only manage the annotations present in your configuration.\nPlease refer to the field `effective_annotations` for all of the annotations present on the resource."]
+        "Get a reference to the value of field `annotations` after provisioning.\nAllows clients to store small amounts of arbitrary data.\n\n**Note**: This field is non-authoritative, and will only manage the annotations present in your configuration.\nPlease refer to the field 'effective_annotations' for all of the annotations present on the resource."]
     pub fn annotations(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.annotations", self.extract_ref()))
     }
@@ -417,6 +482,12 @@ impl Cloudbuildv2ConnectionRef {
         "Get a reference to the value of field `create_time` after provisioning.\nOutput only. Server assigned timestamp for when the connection was created."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -444,7 +515,7 @@ impl Cloudbuildv2ConnectionRef {
 
     #[doc =
         "Get a reference to the value of field `installation_state` after provisioning.\nOutput only. Installation state of the Connection."]
-    pub fn installation_state(&self) -> terrars::ListRef<Cloudbuildv2ConnectionInstallationStateElRef> {
+    pub fn installation_state(&self) -> terrars::ListRef<Cloudbuildv2Connection_InstallationStateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.installation_state", self.extract_ref()))
     }
 
@@ -454,12 +525,12 @@ impl Cloudbuildv2ConnectionRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `name` after provisioning.\nImmutable. The resource name of the connection, in the format `projects/{project}/locations/{location}/connections/{connection_id}`."]
+        "Get a reference to the value of field `name` after provisioning.\nImmutable. The resource name of the connection."]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `project` after provisioning.\nThe project for the resource"]
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
     pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
@@ -476,29 +547,52 @@ impl Cloudbuildv2ConnectionRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update_time", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `bitbucket_cloud_config` after provisioning.\n"]
+    pub fn bitbucket_cloud_config(&self) -> terrars::ListRef<Cloudbuildv2Connection_BitbucketCloudConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.bitbucket_cloud_config", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `bitbucket_data_center_config` after provisioning.\n"]
+    pub fn bitbucket_data_center_config(&self) -> terrars::ListRef<Cloudbuildv2Connection_BitbucketDataCenterConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.bitbucket_data_center_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `github_config` after provisioning.\n"]
-    pub fn github_config(&self) -> terrars::ListRef<Cloudbuildv2ConnectionGithubConfigElRef> {
+    pub fn github_config(&self) -> terrars::ListRef<Cloudbuildv2Connection_GithubConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.github_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `github_enterprise_config` after provisioning.\n"]
-    pub fn github_enterprise_config(&self) -> terrars::ListRef<Cloudbuildv2ConnectionGithubEnterpriseConfigElRef> {
+    pub fn github_enterprise_config(&self) -> terrars::ListRef<Cloudbuildv2Connection_GithubEnterpriseConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.github_enterprise_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `gitlab_config` after provisioning.\n"]
-    pub fn gitlab_config(&self) -> terrars::ListRef<Cloudbuildv2ConnectionGitlabConfigElRef> {
+    pub fn gitlab_config(&self) -> terrars::ListRef<Cloudbuildv2Connection_GitlabConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.gitlab_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> Cloudbuildv2ConnectionTimeoutsElRef {
-        Cloudbuildv2ConnectionTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> Cloudbuildv2Connection_TimeoutsRef {
+        Cloudbuildv2Connection_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct Cloudbuildv2ConnectionDynamic {
+    bitbucket_cloud_config: std::option::Option<terrars::DynamicBlock<Cloudbuildv2Connection_BitbucketCloudConfig>>,
+    bitbucket_data_center_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<Cloudbuildv2Connection_BitbucketDataCenterConfig>>,
+    github_config: std::option::Option<terrars::DynamicBlock<Cloudbuildv2Connection_GithubConfig>>,
+    github_enterprise_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<Cloudbuildv2Connection_GithubEnterpriseConfig>>,
+    gitlab_config: std::option::Option<terrars::DynamicBlock<Cloudbuildv2Connection_GitlabConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct Cloudbuildv2ConnectionInstallationStateEl {
+pub struct Cloudbuildv2Connection_InstallationState {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     action_uri: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -507,7 +601,7 @@ pub struct Cloudbuildv2ConnectionInstallationStateEl {
     stage: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl Cloudbuildv2ConnectionInstallationStateEl {
+impl Cloudbuildv2Connection_InstallationState {
     #[doc = "Set the field `action_uri`.\n"]
     pub fn set_action_uri(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.action_uri = std::option::Option::Some(v.into());
@@ -527,8 +621,8 @@ impl Cloudbuildv2ConnectionInstallationStateEl {
     }
 }
 
-impl terrars::ToListMappable for Cloudbuildv2ConnectionInstallationStateEl {
-    type O = terrars::BlockAssignable<Cloudbuildv2ConnectionInstallationStateEl>;
+impl terrars::ToListMappable for Cloudbuildv2Connection_InstallationState {
+    type O = terrars::BlockAssignable<Cloudbuildv2Connection_InstallationState>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -539,11 +633,11 @@ impl terrars::ToListMappable for Cloudbuildv2ConnectionInstallationStateEl {
     }
 }
 
-pub struct BuildCloudbuildv2ConnectionInstallationStateEl {}
+pub struct BuildCloudbuildv2Connection_InstallationState {}
 
-impl BuildCloudbuildv2ConnectionInstallationStateEl {
-    pub fn build(self) -> Cloudbuildv2ConnectionInstallationStateEl {
-        Cloudbuildv2ConnectionInstallationStateEl {
+impl BuildCloudbuildv2Connection_InstallationState {
+    pub fn build(self) -> Cloudbuildv2Connection_InstallationState {
+        Cloudbuildv2Connection_InstallationState {
             action_uri: core::default::Default::default(),
             message: core::default::Default::default(),
             stage: core::default::Default::default(),
@@ -551,21 +645,23 @@ impl BuildCloudbuildv2ConnectionInstallationStateEl {
     }
 }
 
-pub struct Cloudbuildv2ConnectionInstallationStateElRef {
+#[allow(dead_code)]
+pub struct Cloudbuildv2Connection_InstallationStateRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Cloudbuildv2ConnectionInstallationStateElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Cloudbuildv2ConnectionInstallationStateElRef {
-        Cloudbuildv2ConnectionInstallationStateElRef {
+impl terrars::Ref for Cloudbuildv2Connection_InstallationStateRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Cloudbuildv2Connection_InstallationStateRef {
+        Cloudbuildv2Connection_InstallationStateRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Cloudbuildv2ConnectionInstallationStateElRef {
+impl Cloudbuildv2Connection_InstallationStateRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -587,25 +683,14 @@ impl Cloudbuildv2ConnectionInstallationStateElRef {
 }
 
 #[derive(Serialize)]
-pub struct Cloudbuildv2ConnectionGithubConfigElAuthorizerCredentialEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    oauth_token_secret_version: std::option::Option<terrars::PrimField<std::string::String>>,
+pub struct Cloudbuildv2Connection_GitlabConfig_AuthorizerCredential {
+    user_token_secret_version: terrars::PrimField<std::string::String>,
 }
 
-impl Cloudbuildv2ConnectionGithubConfigElAuthorizerCredentialEl {
-    #[doc =
-        "Set the field `oauth_token_secret_version`.\nA SecretManager resource containing the OAuth token that authorizes the Cloud Build connection. Format: `projects/*/secrets/*/versions/*`."]
-    pub fn set_oauth_token_secret_version(
-        mut self,
-        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
-    ) -> Self {
-        self.oauth_token_secret_version = std::option::Option::Some(v.into());
-        self
-    }
-}
+impl Cloudbuildv2Connection_GitlabConfig_AuthorizerCredential { }
 
-impl terrars::ToListMappable for Cloudbuildv2ConnectionGithubConfigElAuthorizerCredentialEl {
-    type O = terrars::BlockAssignable<Cloudbuildv2ConnectionGithubConfigElAuthorizerCredentialEl>;
+impl terrars::ToListMappable for Cloudbuildv2Connection_GitlabConfig_AuthorizerCredential {
+    type O = terrars::BlockAssignable<Cloudbuildv2Connection_GitlabConfig_AuthorizerCredential>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -616,40 +701,608 @@ impl terrars::ToListMappable for Cloudbuildv2ConnectionGithubConfigElAuthorizerC
     }
 }
 
-pub struct BuildCloudbuildv2ConnectionGithubConfigElAuthorizerCredentialEl {}
+pub struct BuildCloudbuildv2Connection_GitlabConfig_AuthorizerCredential {
+    #[doc =
+        "Required. A SecretManager resource containing the user token that authorizes the Cloud Build connection. Format: 'projects/*/secrets/*/versions/*'."]
+    pub user_token_secret_version: terrars::PrimField<std::string::String>,
+}
 
-impl BuildCloudbuildv2ConnectionGithubConfigElAuthorizerCredentialEl {
-    pub fn build(self) -> Cloudbuildv2ConnectionGithubConfigElAuthorizerCredentialEl {
-        Cloudbuildv2ConnectionGithubConfigElAuthorizerCredentialEl {
-            oauth_token_secret_version: core::default::Default::default(),
+impl BuildCloudbuildv2Connection_GitlabConfig_AuthorizerCredential {
+    pub fn build(self) -> Cloudbuildv2Connection_GitlabConfig_AuthorizerCredential {
+        Cloudbuildv2Connection_GitlabConfig_AuthorizerCredential {
+            user_token_secret_version: self.user_token_secret_version,
         }
     }
 }
 
-pub struct Cloudbuildv2ConnectionGithubConfigElAuthorizerCredentialElRef {
+#[allow(dead_code)]
+pub struct Cloudbuildv2Connection_GitlabConfig_AuthorizerCredentialRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Cloudbuildv2ConnectionGithubConfigElAuthorizerCredentialElRef {
+impl terrars::Ref for Cloudbuildv2Connection_GitlabConfig_AuthorizerCredentialRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Cloudbuildv2ConnectionGithubConfigElAuthorizerCredentialElRef {
-        Cloudbuildv2ConnectionGithubConfigElAuthorizerCredentialElRef {
+    ) -> Cloudbuildv2Connection_GitlabConfig_AuthorizerCredentialRef {
+        Cloudbuildv2Connection_GitlabConfig_AuthorizerCredentialRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Cloudbuildv2ConnectionGithubConfigElAuthorizerCredentialElRef {
+impl Cloudbuildv2Connection_GitlabConfig_AuthorizerCredentialRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `oauth_token_secret_version` after provisioning.\nA SecretManager resource containing the OAuth token that authorizes the Cloud Build connection. Format: `projects/*/secrets/*/versions/*`."]
+        "Get a reference to the value of field `user_token_secret_version` after provisioning.\nRequired. A SecretManager resource containing the user token that authorizes the Cloud Build connection. Format: 'projects/*/secrets/*/versions/*'."]
+    pub fn user_token_secret_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_token_secret_version", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `username` after provisioning.\nOutput only. The username associated to this token."]
+    pub fn username(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.username", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct Cloudbuildv2Connection_GitlabConfig_ReadAuthorizerCredential {
+    user_token_secret_version: terrars::PrimField<std::string::String>,
+}
+
+impl Cloudbuildv2Connection_GitlabConfig_ReadAuthorizerCredential { }
+
+impl terrars::ToListMappable for Cloudbuildv2Connection_GitlabConfig_ReadAuthorizerCredential {
+    type O = terrars::BlockAssignable<Cloudbuildv2Connection_GitlabConfig_ReadAuthorizerCredential>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCloudbuildv2Connection_GitlabConfig_ReadAuthorizerCredential {
+    #[doc =
+        "Required. A SecretManager resource containing the user token that authorizes the Cloud Build connection. Format: 'projects/*/secrets/*/versions/*'."]
+    pub user_token_secret_version: terrars::PrimField<std::string::String>,
+}
+
+impl BuildCloudbuildv2Connection_GitlabConfig_ReadAuthorizerCredential {
+    pub fn build(self) -> Cloudbuildv2Connection_GitlabConfig_ReadAuthorizerCredential {
+        Cloudbuildv2Connection_GitlabConfig_ReadAuthorizerCredential {
+            user_token_secret_version: self.user_token_secret_version,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct Cloudbuildv2Connection_GitlabConfig_ReadAuthorizerCredentialRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for Cloudbuildv2Connection_GitlabConfig_ReadAuthorizerCredentialRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> Cloudbuildv2Connection_GitlabConfig_ReadAuthorizerCredentialRef {
+        Cloudbuildv2Connection_GitlabConfig_ReadAuthorizerCredentialRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl Cloudbuildv2Connection_GitlabConfig_ReadAuthorizerCredentialRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `user_token_secret_version` after provisioning.\nRequired. A SecretManager resource containing the user token that authorizes the Cloud Build connection. Format: 'projects/*/secrets/*/versions/*'."]
+    pub fn user_token_secret_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_token_secret_version", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `username` after provisioning.\nOutput only. The username associated to this token."]
+    pub fn username(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.username", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct Cloudbuildv2Connection_BitbucketCloudConfigDynamic {
+    authorizer_credential: std
+    ::option
+    ::Option<terrars::DynamicBlock<Cloudbuildv2Connection_GitlabConfig_AuthorizerCredential>>,
+    read_authorizer_credential: std
+    ::option
+    ::Option<terrars::DynamicBlock<Cloudbuildv2Connection_GitlabConfig_ReadAuthorizerCredential>>,
+}
+
+#[derive(Serialize)]
+pub struct Cloudbuildv2Connection_BitbucketCloudConfig {
+    webhook_secret_secret_version: terrars::PrimField<std::string::String>,
+    workspace: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    authorizer_credential: std::option::Option<std::vec::Vec<Cloudbuildv2Connection_GitlabConfig_AuthorizerCredential>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    read_authorizer_credential: std
+    ::option
+    ::Option<std::vec::Vec<Cloudbuildv2Connection_GitlabConfig_ReadAuthorizerCredential>>,
+    dynamic: Cloudbuildv2Connection_BitbucketCloudConfigDynamic,
+}
+
+impl Cloudbuildv2Connection_BitbucketCloudConfig {
+    #[doc = "Set the field `authorizer_credential`.\n"]
+    pub fn set_authorizer_credential(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<Cloudbuildv2Connection_GitlabConfig_AuthorizerCredential>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.authorizer_credential = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.authorizer_credential = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `read_authorizer_credential`.\n"]
+    pub fn set_read_authorizer_credential(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<Cloudbuildv2Connection_GitlabConfig_ReadAuthorizerCredential>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.read_authorizer_credential = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.read_authorizer_credential = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for Cloudbuildv2Connection_BitbucketCloudConfig {
+    type O = terrars::BlockAssignable<Cloudbuildv2Connection_BitbucketCloudConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCloudbuildv2Connection_BitbucketCloudConfig {
+    #[doc =
+        "Required. Immutable. SecretManager resource containing the webhook secret used to verify webhook events, formatted as 'projects/*/secrets/*/versions/*'."]
+    pub webhook_secret_secret_version: terrars::PrimField<std::string::String>,
+    #[doc = "The Bitbucket Cloud Workspace ID to be connected to Google Cloud Platform."]
+    pub workspace: terrars::PrimField<std::string::String>,
+}
+
+impl BuildCloudbuildv2Connection_BitbucketCloudConfig {
+    pub fn build(self) -> Cloudbuildv2Connection_BitbucketCloudConfig {
+        Cloudbuildv2Connection_BitbucketCloudConfig {
+            webhook_secret_secret_version: self.webhook_secret_secret_version,
+            workspace: self.workspace,
+            authorizer_credential: core::default::Default::default(),
+            read_authorizer_credential: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct Cloudbuildv2Connection_BitbucketCloudConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for Cloudbuildv2Connection_BitbucketCloudConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> Cloudbuildv2Connection_BitbucketCloudConfigRef {
+        Cloudbuildv2Connection_BitbucketCloudConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl Cloudbuildv2Connection_BitbucketCloudConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `webhook_secret_secret_version` after provisioning.\nRequired. Immutable. SecretManager resource containing the webhook secret used to verify webhook events, formatted as 'projects/*/secrets/*/versions/*'."]
+    pub fn webhook_secret_secret_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.webhook_secret_secret_version", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `workspace` after provisioning.\nThe Bitbucket Cloud Workspace ID to be connected to Google Cloud Platform."]
+    pub fn workspace(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.workspace", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `authorizer_credential` after provisioning.\n"]
+    pub fn authorizer_credential(&self) -> terrars::ListRef<Cloudbuildv2Connection_GitlabConfig_AuthorizerCredentialRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.authorizer_credential", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `read_authorizer_credential` after provisioning.\n"]
+    pub fn read_authorizer_credential(
+        &self,
+    ) -> terrars::ListRef<Cloudbuildv2Connection_GitlabConfig_ReadAuthorizerCredentialRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.read_authorizer_credential", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct Cloudbuildv2Connection_GitlabConfig_ServiceDirectoryConfig {
+    service: terrars::PrimField<std::string::String>,
+}
+
+impl Cloudbuildv2Connection_GitlabConfig_ServiceDirectoryConfig { }
+
+impl terrars::ToListMappable for Cloudbuildv2Connection_GitlabConfig_ServiceDirectoryConfig {
+    type O = terrars::BlockAssignable<Cloudbuildv2Connection_GitlabConfig_ServiceDirectoryConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCloudbuildv2Connection_GitlabConfig_ServiceDirectoryConfig {
+    #[doc =
+        "Required. The Service Directory service name. Format: projects/{project}/locations/{location}/namespaces/{namespace}/services/{service}."]
+    pub service: terrars::PrimField<std::string::String>,
+}
+
+impl BuildCloudbuildv2Connection_GitlabConfig_ServiceDirectoryConfig {
+    pub fn build(self) -> Cloudbuildv2Connection_GitlabConfig_ServiceDirectoryConfig {
+        Cloudbuildv2Connection_GitlabConfig_ServiceDirectoryConfig { service: self.service }
+    }
+}
+
+#[allow(dead_code)]
+pub struct Cloudbuildv2Connection_GitlabConfig_ServiceDirectoryConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for Cloudbuildv2Connection_GitlabConfig_ServiceDirectoryConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> Cloudbuildv2Connection_GitlabConfig_ServiceDirectoryConfigRef {
+        Cloudbuildv2Connection_GitlabConfig_ServiceDirectoryConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl Cloudbuildv2Connection_GitlabConfig_ServiceDirectoryConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `service` after provisioning.\nRequired. The Service Directory service name. Format: projects/{project}/locations/{location}/namespaces/{namespace}/services/{service}."]
+    pub fn service(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct Cloudbuildv2Connection_BitbucketDataCenterConfigDynamic {
+    authorizer_credential: std
+    ::option
+    ::Option<terrars::DynamicBlock<Cloudbuildv2Connection_GitlabConfig_AuthorizerCredential>>,
+    read_authorizer_credential: std
+    ::option
+    ::Option<terrars::DynamicBlock<Cloudbuildv2Connection_GitlabConfig_ReadAuthorizerCredential>>,
+    service_directory_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<Cloudbuildv2Connection_GitlabConfig_ServiceDirectoryConfig>>,
+}
+
+#[derive(Serialize)]
+pub struct Cloudbuildv2Connection_BitbucketDataCenterConfig {
+    host_uri: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ssl_ca: std::option::Option<terrars::PrimField<std::string::String>>,
+    webhook_secret_secret_version: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    authorizer_credential: std::option::Option<std::vec::Vec<Cloudbuildv2Connection_GitlabConfig_AuthorizerCredential>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    read_authorizer_credential: std
+    ::option
+    ::Option<std::vec::Vec<Cloudbuildv2Connection_GitlabConfig_ReadAuthorizerCredential>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    service_directory_config: std
+    ::option
+    ::Option<std::vec::Vec<Cloudbuildv2Connection_GitlabConfig_ServiceDirectoryConfig>>,
+    dynamic: Cloudbuildv2Connection_BitbucketDataCenterConfigDynamic,
+}
+
+impl Cloudbuildv2Connection_BitbucketDataCenterConfig {
+    #[doc = "Set the field `ssl_ca`.\nSSL certificate to use for requests to the Bitbucket Data Center."]
+    pub fn set_ssl_ca(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.ssl_ca = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `authorizer_credential`.\n"]
+    pub fn set_authorizer_credential(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<Cloudbuildv2Connection_GitlabConfig_AuthorizerCredential>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.authorizer_credential = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.authorizer_credential = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `read_authorizer_credential`.\n"]
+    pub fn set_read_authorizer_credential(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<Cloudbuildv2Connection_GitlabConfig_ReadAuthorizerCredential>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.read_authorizer_credential = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.read_authorizer_credential = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `service_directory_config`.\n"]
+    pub fn set_service_directory_config(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<Cloudbuildv2Connection_GitlabConfig_ServiceDirectoryConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.service_directory_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.service_directory_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for Cloudbuildv2Connection_BitbucketDataCenterConfig {
+    type O = terrars::BlockAssignable<Cloudbuildv2Connection_BitbucketDataCenterConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCloudbuildv2Connection_BitbucketDataCenterConfig {
+    #[doc = "The URI of the Bitbucket Data Center host this connection is for."]
+    pub host_uri: terrars::PrimField<std::string::String>,
+    #[doc =
+        "Required. Immutable. SecretManager resource containing the webhook secret used to verify webhook events, formatted as 'projects/*/secrets/*/versions/*'."]
+    pub webhook_secret_secret_version: terrars::PrimField<std::string::String>,
+}
+
+impl BuildCloudbuildv2Connection_BitbucketDataCenterConfig {
+    pub fn build(self) -> Cloudbuildv2Connection_BitbucketDataCenterConfig {
+        Cloudbuildv2Connection_BitbucketDataCenterConfig {
+            host_uri: self.host_uri,
+            ssl_ca: core::default::Default::default(),
+            webhook_secret_secret_version: self.webhook_secret_secret_version,
+            authorizer_credential: core::default::Default::default(),
+            read_authorizer_credential: core::default::Default::default(),
+            service_directory_config: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct Cloudbuildv2Connection_BitbucketDataCenterConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for Cloudbuildv2Connection_BitbucketDataCenterConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> Cloudbuildv2Connection_BitbucketDataCenterConfigRef {
+        Cloudbuildv2Connection_BitbucketDataCenterConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl Cloudbuildv2Connection_BitbucketDataCenterConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `host_uri` after provisioning.\nThe URI of the Bitbucket Data Center host this connection is for."]
+    pub fn host_uri(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.host_uri", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `server_version` after provisioning.\nOutput only. Version of the Bitbucket Data Center running on the 'host_uri'."]
+    pub fn server_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.server_version", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `ssl_ca` after provisioning.\nSSL certificate to use for requests to the Bitbucket Data Center."]
+    pub fn ssl_ca(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ssl_ca", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `webhook_secret_secret_version` after provisioning.\nRequired. Immutable. SecretManager resource containing the webhook secret used to verify webhook events, formatted as 'projects/*/secrets/*/versions/*'."]
+    pub fn webhook_secret_secret_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.webhook_secret_secret_version", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `authorizer_credential` after provisioning.\n"]
+    pub fn authorizer_credential(&self) -> terrars::ListRef<Cloudbuildv2Connection_GitlabConfig_AuthorizerCredentialRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.authorizer_credential", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `read_authorizer_credential` after provisioning.\n"]
+    pub fn read_authorizer_credential(
+        &self,
+    ) -> terrars::ListRef<Cloudbuildv2Connection_GitlabConfig_ReadAuthorizerCredentialRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.read_authorizer_credential", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `service_directory_config` after provisioning.\n"]
+    pub fn service_directory_config(
+        &self,
+    ) -> terrars::ListRef<Cloudbuildv2Connection_GitlabConfig_ServiceDirectoryConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.service_directory_config", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct Cloudbuildv2Connection_GithubConfig_AuthorizerCredential {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    oauth_token_secret_version: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl Cloudbuildv2Connection_GithubConfig_AuthorizerCredential {
+    #[doc =
+        "Set the field `oauth_token_secret_version`.\nA SecretManager resource containing the OAuth token that authorizes the Cloud Build connection. Format: 'projects/*/secrets/*/versions/*'."]
+    pub fn set_oauth_token_secret_version(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.oauth_token_secret_version = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for Cloudbuildv2Connection_GithubConfig_AuthorizerCredential {
+    type O = terrars::BlockAssignable<Cloudbuildv2Connection_GithubConfig_AuthorizerCredential>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCloudbuildv2Connection_GithubConfig_AuthorizerCredential {}
+
+impl BuildCloudbuildv2Connection_GithubConfig_AuthorizerCredential {
+    pub fn build(self) -> Cloudbuildv2Connection_GithubConfig_AuthorizerCredential {
+        Cloudbuildv2Connection_GithubConfig_AuthorizerCredential {
+            oauth_token_secret_version: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct Cloudbuildv2Connection_GithubConfig_AuthorizerCredentialRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for Cloudbuildv2Connection_GithubConfig_AuthorizerCredentialRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> Cloudbuildv2Connection_GithubConfig_AuthorizerCredentialRef {
+        Cloudbuildv2Connection_GithubConfig_AuthorizerCredentialRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl Cloudbuildv2Connection_GithubConfig_AuthorizerCredentialRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `oauth_token_secret_version` after provisioning.\nA SecretManager resource containing the OAuth token that authorizes the Cloud Build connection. Format: 'projects/*/secrets/*/versions/*'."]
     pub fn oauth_token_secret_version(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.oauth_token_secret_version", self.base))
     }
@@ -662,22 +1315,22 @@ impl Cloudbuildv2ConnectionGithubConfigElAuthorizerCredentialElRef {
 }
 
 #[derive(Serialize, Default)]
-struct Cloudbuildv2ConnectionGithubConfigElDynamic {
+struct Cloudbuildv2Connection_GithubConfigDynamic {
     authorizer_credential: std
     ::option
-    ::Option<terrars::DynamicBlock<Cloudbuildv2ConnectionGithubConfigElAuthorizerCredentialEl>>,
+    ::Option<terrars::DynamicBlock<Cloudbuildv2Connection_GithubConfig_AuthorizerCredential>>,
 }
 
 #[derive(Serialize)]
-pub struct Cloudbuildv2ConnectionGithubConfigEl {
+pub struct Cloudbuildv2Connection_GithubConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     app_installation_id: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    authorizer_credential: std::option::Option<std::vec::Vec<Cloudbuildv2ConnectionGithubConfigElAuthorizerCredentialEl>>,
-    dynamic: Cloudbuildv2ConnectionGithubConfigElDynamic,
+    authorizer_credential: std::option::Option<std::vec::Vec<Cloudbuildv2Connection_GithubConfig_AuthorizerCredential>>,
+    dynamic: Cloudbuildv2Connection_GithubConfigDynamic,
 }
 
-impl Cloudbuildv2ConnectionGithubConfigEl {
+impl Cloudbuildv2Connection_GithubConfig {
     #[doc = "Set the field `app_installation_id`.\nGitHub App installation id."]
     pub fn set_app_installation_id(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.app_installation_id = std::option::Option::Some(v.into());
@@ -692,7 +1345,7 @@ impl Cloudbuildv2ConnectionGithubConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<Cloudbuildv2ConnectionGithubConfigElAuthorizerCredentialEl>>,
+                    ::Into<terrars::BlockAssignable<Cloudbuildv2Connection_GithubConfig_AuthorizerCredential>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -706,8 +1359,8 @@ impl Cloudbuildv2ConnectionGithubConfigEl {
     }
 }
 
-impl terrars::ToListMappable for Cloudbuildv2ConnectionGithubConfigEl {
-    type O = terrars::BlockAssignable<Cloudbuildv2ConnectionGithubConfigEl>;
+impl terrars::ToListMappable for Cloudbuildv2Connection_GithubConfig {
+    type O = terrars::BlockAssignable<Cloudbuildv2Connection_GithubConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -718,11 +1371,11 @@ impl terrars::ToListMappable for Cloudbuildv2ConnectionGithubConfigEl {
     }
 }
 
-pub struct BuildCloudbuildv2ConnectionGithubConfigEl {}
+pub struct BuildCloudbuildv2Connection_GithubConfig {}
 
-impl BuildCloudbuildv2ConnectionGithubConfigEl {
-    pub fn build(self) -> Cloudbuildv2ConnectionGithubConfigEl {
-        Cloudbuildv2ConnectionGithubConfigEl {
+impl BuildCloudbuildv2Connection_GithubConfig {
+    pub fn build(self) -> Cloudbuildv2Connection_GithubConfig {
+        Cloudbuildv2Connection_GithubConfig {
             app_installation_id: core::default::Default::default(),
             authorizer_credential: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -730,21 +1383,23 @@ impl BuildCloudbuildv2ConnectionGithubConfigEl {
     }
 }
 
-pub struct Cloudbuildv2ConnectionGithubConfigElRef {
+#[allow(dead_code)]
+pub struct Cloudbuildv2Connection_GithubConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Cloudbuildv2ConnectionGithubConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Cloudbuildv2ConnectionGithubConfigElRef {
-        Cloudbuildv2ConnectionGithubConfigElRef {
+impl terrars::Ref for Cloudbuildv2Connection_GithubConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Cloudbuildv2Connection_GithubConfigRef {
+        Cloudbuildv2Connection_GithubConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Cloudbuildv2ConnectionGithubConfigElRef {
+impl Cloudbuildv2Connection_GithubConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -756,82 +1411,20 @@ impl Cloudbuildv2ConnectionGithubConfigElRef {
     }
 
     #[doc = "Get a reference to the value of field `authorizer_credential` after provisioning.\n"]
-    pub fn authorizer_credential(
-        &self,
-    ) -> terrars::ListRef<Cloudbuildv2ConnectionGithubConfigElAuthorizerCredentialElRef> {
+    pub fn authorizer_credential(&self) -> terrars::ListRef<Cloudbuildv2Connection_GithubConfig_AuthorizerCredentialRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.authorizer_credential", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct Cloudbuildv2ConnectionGithubEnterpriseConfigElServiceDirectoryConfigEl {
-    service: terrars::PrimField<std::string::String>,
-}
-
-impl Cloudbuildv2ConnectionGithubEnterpriseConfigElServiceDirectoryConfigEl { }
-
-impl terrars::ToListMappable for Cloudbuildv2ConnectionGithubEnterpriseConfigElServiceDirectoryConfigEl {
-    type O = terrars::BlockAssignable<Cloudbuildv2ConnectionGithubEnterpriseConfigElServiceDirectoryConfigEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildCloudbuildv2ConnectionGithubEnterpriseConfigElServiceDirectoryConfigEl {
-    #[doc =
-        "Required. The Service Directory service name. Format: projects/{project}/locations/{location}/namespaces/{namespace}/services/{service}."]
-    pub service: terrars::PrimField<std::string::String>,
-}
-
-impl BuildCloudbuildv2ConnectionGithubEnterpriseConfigElServiceDirectoryConfigEl {
-    pub fn build(self) -> Cloudbuildv2ConnectionGithubEnterpriseConfigElServiceDirectoryConfigEl {
-        Cloudbuildv2ConnectionGithubEnterpriseConfigElServiceDirectoryConfigEl { service: self.service }
-    }
-}
-
-pub struct Cloudbuildv2ConnectionGithubEnterpriseConfigElServiceDirectoryConfigElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for Cloudbuildv2ConnectionGithubEnterpriseConfigElServiceDirectoryConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> Cloudbuildv2ConnectionGithubEnterpriseConfigElServiceDirectoryConfigElRef {
-        Cloudbuildv2ConnectionGithubEnterpriseConfigElServiceDirectoryConfigElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl Cloudbuildv2ConnectionGithubEnterpriseConfigElServiceDirectoryConfigElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `service` after provisioning.\nRequired. The Service Directory service name. Format: projects/{project}/locations/{location}/namespaces/{namespace}/services/{service}."]
-    pub fn service(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct Cloudbuildv2ConnectionGithubEnterpriseConfigElDynamic {
+struct Cloudbuildv2Connection_GithubEnterpriseConfigDynamic {
     service_directory_config: std
     ::option
-    ::Option<terrars::DynamicBlock<Cloudbuildv2ConnectionGithubEnterpriseConfigElServiceDirectoryConfigEl>>,
+    ::Option<terrars::DynamicBlock<Cloudbuildv2Connection_GitlabConfig_ServiceDirectoryConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct Cloudbuildv2ConnectionGithubEnterpriseConfigEl {
+pub struct Cloudbuildv2Connection_GithubEnterpriseConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     app_id: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -848,11 +1441,11 @@ pub struct Cloudbuildv2ConnectionGithubEnterpriseConfigEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     service_directory_config: std
     ::option
-    ::Option<std::vec::Vec<Cloudbuildv2ConnectionGithubEnterpriseConfigElServiceDirectoryConfigEl>>,
-    dynamic: Cloudbuildv2ConnectionGithubEnterpriseConfigElDynamic,
+    ::Option<std::vec::Vec<Cloudbuildv2Connection_GitlabConfig_ServiceDirectoryConfig>>,
+    dynamic: Cloudbuildv2Connection_GithubEnterpriseConfigDynamic,
 }
 
-impl Cloudbuildv2ConnectionGithubEnterpriseConfigEl {
+impl Cloudbuildv2Connection_GithubEnterpriseConfig {
     #[doc = "Set the field `app_id`.\nId of the GitHub App created from the manifest."]
     pub fn set_app_id(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.app_id = std::option::Option::Some(v.into());
@@ -872,7 +1465,7 @@ impl Cloudbuildv2ConnectionGithubEnterpriseConfigEl {
     }
 
     #[doc =
-        "Set the field `private_key_secret_version`.\nSecretManager resource containing the private key of the GitHub App, formatted as `projects/*/secrets/*/versions/*`."]
+        "Set the field `private_key_secret_version`.\nSecretManager resource containing the private key of the GitHub App, formatted as 'projects/*/secrets/*/versions/*'."]
     pub fn set_private_key_secret_version(
         mut self,
         v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
@@ -888,7 +1481,7 @@ impl Cloudbuildv2ConnectionGithubEnterpriseConfigEl {
     }
 
     #[doc =
-        "Set the field `webhook_secret_secret_version`.\nSecretManager resource containing the webhook secret of the GitHub App, formatted as `projects/*/secrets/*/versions/*`."]
+        "Set the field `webhook_secret_secret_version`.\nSecretManager resource containing the webhook secret of the GitHub App, formatted as 'projects/*/secrets/*/versions/*'."]
     pub fn set_webhook_secret_secret_version(
         mut self,
         v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
@@ -905,10 +1498,7 @@ impl Cloudbuildv2ConnectionGithubEnterpriseConfigEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<Cloudbuildv2ConnectionGithubEnterpriseConfigElServiceDirectoryConfigEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<Cloudbuildv2Connection_GitlabConfig_ServiceDirectoryConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -922,8 +1512,8 @@ impl Cloudbuildv2ConnectionGithubEnterpriseConfigEl {
     }
 }
 
-impl terrars::ToListMappable for Cloudbuildv2ConnectionGithubEnterpriseConfigEl {
-    type O = terrars::BlockAssignable<Cloudbuildv2ConnectionGithubEnterpriseConfigEl>;
+impl terrars::ToListMappable for Cloudbuildv2Connection_GithubEnterpriseConfig {
+    type O = terrars::BlockAssignable<Cloudbuildv2Connection_GithubEnterpriseConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -934,14 +1524,14 @@ impl terrars::ToListMappable for Cloudbuildv2ConnectionGithubEnterpriseConfigEl 
     }
 }
 
-pub struct BuildCloudbuildv2ConnectionGithubEnterpriseConfigEl {
+pub struct BuildCloudbuildv2Connection_GithubEnterpriseConfig {
     #[doc = "Required. The URI of the GitHub Enterprise host this connection is for."]
     pub host_uri: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudbuildv2ConnectionGithubEnterpriseConfigEl {
-    pub fn build(self) -> Cloudbuildv2ConnectionGithubEnterpriseConfigEl {
-        Cloudbuildv2ConnectionGithubEnterpriseConfigEl {
+impl BuildCloudbuildv2Connection_GithubEnterpriseConfig {
+    pub fn build(self) -> Cloudbuildv2Connection_GithubEnterpriseConfig {
+        Cloudbuildv2Connection_GithubEnterpriseConfig {
             app_id: core::default::Default::default(),
             app_installation_id: core::default::Default::default(),
             app_slug: core::default::Default::default(),
@@ -955,24 +1545,26 @@ impl BuildCloudbuildv2ConnectionGithubEnterpriseConfigEl {
     }
 }
 
-pub struct Cloudbuildv2ConnectionGithubEnterpriseConfigElRef {
+#[allow(dead_code)]
+pub struct Cloudbuildv2Connection_GithubEnterpriseConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Cloudbuildv2ConnectionGithubEnterpriseConfigElRef {
+impl terrars::Ref for Cloudbuildv2Connection_GithubEnterpriseConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Cloudbuildv2ConnectionGithubEnterpriseConfigElRef {
-        Cloudbuildv2ConnectionGithubEnterpriseConfigElRef {
+    ) -> Cloudbuildv2Connection_GithubEnterpriseConfigRef {
+        Cloudbuildv2Connection_GithubEnterpriseConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Cloudbuildv2ConnectionGithubEnterpriseConfigElRef {
+impl Cloudbuildv2Connection_GithubEnterpriseConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1002,7 +1594,7 @@ impl Cloudbuildv2ConnectionGithubEnterpriseConfigElRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `private_key_secret_version` after provisioning.\nSecretManager resource containing the private key of the GitHub App, formatted as `projects/*/secrets/*/versions/*`."]
+        "Get a reference to the value of field `private_key_secret_version` after provisioning.\nSecretManager resource containing the private key of the GitHub App, formatted as 'projects/*/secrets/*/versions/*'."]
     pub fn private_key_secret_version(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_key_secret_version", self.base))
     }
@@ -1014,7 +1606,7 @@ impl Cloudbuildv2ConnectionGithubEnterpriseConfigElRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `webhook_secret_secret_version` after provisioning.\nSecretManager resource containing the webhook secret of the GitHub App, formatted as `projects/*/secrets/*/versions/*`."]
+        "Get a reference to the value of field `webhook_secret_secret_version` after provisioning.\nSecretManager resource containing the webhook secret of the GitHub App, formatted as 'projects/*/secrets/*/versions/*'."]
     pub fn webhook_secret_secret_version(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.webhook_secret_secret_version", self.base))
     }
@@ -1022,241 +1614,45 @@ impl Cloudbuildv2ConnectionGithubEnterpriseConfigElRef {
     #[doc = "Get a reference to the value of field `service_directory_config` after provisioning.\n"]
     pub fn service_directory_config(
         &self,
-    ) -> terrars::ListRef<Cloudbuildv2ConnectionGithubEnterpriseConfigElServiceDirectoryConfigElRef> {
+    ) -> terrars::ListRef<Cloudbuildv2Connection_GitlabConfig_ServiceDirectoryConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.service_directory_config", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct Cloudbuildv2ConnectionGitlabConfigElAuthorizerCredentialEl {
-    user_token_secret_version: terrars::PrimField<std::string::String>,
-}
-
-impl Cloudbuildv2ConnectionGitlabConfigElAuthorizerCredentialEl { }
-
-impl terrars::ToListMappable for Cloudbuildv2ConnectionGitlabConfigElAuthorizerCredentialEl {
-    type O = terrars::BlockAssignable<Cloudbuildv2ConnectionGitlabConfigElAuthorizerCredentialEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildCloudbuildv2ConnectionGitlabConfigElAuthorizerCredentialEl {
-    #[doc =
-        "Required. A SecretManager resource containing the user token that authorizes the Cloud Build connection. Format: `projects/*/secrets/*/versions/*`."]
-    pub user_token_secret_version: terrars::PrimField<std::string::String>,
-}
-
-impl BuildCloudbuildv2ConnectionGitlabConfigElAuthorizerCredentialEl {
-    pub fn build(self) -> Cloudbuildv2ConnectionGitlabConfigElAuthorizerCredentialEl {
-        Cloudbuildv2ConnectionGitlabConfigElAuthorizerCredentialEl {
-            user_token_secret_version: self.user_token_secret_version,
-        }
-    }
-}
-
-pub struct Cloudbuildv2ConnectionGitlabConfigElAuthorizerCredentialElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for Cloudbuildv2ConnectionGitlabConfigElAuthorizerCredentialElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> Cloudbuildv2ConnectionGitlabConfigElAuthorizerCredentialElRef {
-        Cloudbuildv2ConnectionGitlabConfigElAuthorizerCredentialElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl Cloudbuildv2ConnectionGitlabConfigElAuthorizerCredentialElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `user_token_secret_version` after provisioning.\nRequired. A SecretManager resource containing the user token that authorizes the Cloud Build connection. Format: `projects/*/secrets/*/versions/*`."]
-    pub fn user_token_secret_version(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_token_secret_version", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `username` after provisioning.\nOutput only. The username associated to this token."]
-    pub fn username(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.username", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct Cloudbuildv2ConnectionGitlabConfigElReadAuthorizerCredentialEl {
-    user_token_secret_version: terrars::PrimField<std::string::String>,
-}
-
-impl Cloudbuildv2ConnectionGitlabConfigElReadAuthorizerCredentialEl { }
-
-impl terrars::ToListMappable for Cloudbuildv2ConnectionGitlabConfigElReadAuthorizerCredentialEl {
-    type O = terrars::BlockAssignable<Cloudbuildv2ConnectionGitlabConfigElReadAuthorizerCredentialEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildCloudbuildv2ConnectionGitlabConfigElReadAuthorizerCredentialEl {
-    #[doc =
-        "Required. A SecretManager resource containing the user token that authorizes the Cloud Build connection. Format: `projects/*/secrets/*/versions/*`."]
-    pub user_token_secret_version: terrars::PrimField<std::string::String>,
-}
-
-impl BuildCloudbuildv2ConnectionGitlabConfigElReadAuthorizerCredentialEl {
-    pub fn build(self) -> Cloudbuildv2ConnectionGitlabConfigElReadAuthorizerCredentialEl {
-        Cloudbuildv2ConnectionGitlabConfigElReadAuthorizerCredentialEl {
-            user_token_secret_version: self.user_token_secret_version,
-        }
-    }
-}
-
-pub struct Cloudbuildv2ConnectionGitlabConfigElReadAuthorizerCredentialElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for Cloudbuildv2ConnectionGitlabConfigElReadAuthorizerCredentialElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> Cloudbuildv2ConnectionGitlabConfigElReadAuthorizerCredentialElRef {
-        Cloudbuildv2ConnectionGitlabConfigElReadAuthorizerCredentialElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl Cloudbuildv2ConnectionGitlabConfigElReadAuthorizerCredentialElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `user_token_secret_version` after provisioning.\nRequired. A SecretManager resource containing the user token that authorizes the Cloud Build connection. Format: `projects/*/secrets/*/versions/*`."]
-    pub fn user_token_secret_version(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_token_secret_version", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `username` after provisioning.\nOutput only. The username associated to this token."]
-    pub fn username(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.username", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct Cloudbuildv2ConnectionGitlabConfigElServiceDirectoryConfigEl {
-    service: terrars::PrimField<std::string::String>,
-}
-
-impl Cloudbuildv2ConnectionGitlabConfigElServiceDirectoryConfigEl { }
-
-impl terrars::ToListMappable for Cloudbuildv2ConnectionGitlabConfigElServiceDirectoryConfigEl {
-    type O = terrars::BlockAssignable<Cloudbuildv2ConnectionGitlabConfigElServiceDirectoryConfigEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildCloudbuildv2ConnectionGitlabConfigElServiceDirectoryConfigEl {
-    #[doc =
-        "Required. The Service Directory service name. Format: projects/{project}/locations/{location}/namespaces/{namespace}/services/{service}."]
-    pub service: terrars::PrimField<std::string::String>,
-}
-
-impl BuildCloudbuildv2ConnectionGitlabConfigElServiceDirectoryConfigEl {
-    pub fn build(self) -> Cloudbuildv2ConnectionGitlabConfigElServiceDirectoryConfigEl {
-        Cloudbuildv2ConnectionGitlabConfigElServiceDirectoryConfigEl { service: self.service }
-    }
-}
-
-pub struct Cloudbuildv2ConnectionGitlabConfigElServiceDirectoryConfigElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for Cloudbuildv2ConnectionGitlabConfigElServiceDirectoryConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> Cloudbuildv2ConnectionGitlabConfigElServiceDirectoryConfigElRef {
-        Cloudbuildv2ConnectionGitlabConfigElServiceDirectoryConfigElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl Cloudbuildv2ConnectionGitlabConfigElServiceDirectoryConfigElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `service` after provisioning.\nRequired. The Service Directory service name. Format: projects/{project}/locations/{location}/namespaces/{namespace}/services/{service}."]
-    pub fn service(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct Cloudbuildv2ConnectionGitlabConfigElDynamic {
+struct Cloudbuildv2Connection_GitlabConfigDynamic {
     authorizer_credential: std
     ::option
-    ::Option<terrars::DynamicBlock<Cloudbuildv2ConnectionGitlabConfigElAuthorizerCredentialEl>>,
+    ::Option<terrars::DynamicBlock<Cloudbuildv2Connection_GitlabConfig_AuthorizerCredential>>,
     read_authorizer_credential: std
     ::option
-    ::Option<terrars::DynamicBlock<Cloudbuildv2ConnectionGitlabConfigElReadAuthorizerCredentialEl>>,
+    ::Option<terrars::DynamicBlock<Cloudbuildv2Connection_GitlabConfig_ReadAuthorizerCredential>>,
     service_directory_config: std
     ::option
-    ::Option<terrars::DynamicBlock<Cloudbuildv2ConnectionGitlabConfigElServiceDirectoryConfigEl>>,
+    ::Option<terrars::DynamicBlock<Cloudbuildv2Connection_GitlabConfig_ServiceDirectoryConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct Cloudbuildv2ConnectionGitlabConfigEl {
+pub struct Cloudbuildv2Connection_GitlabConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     host_uri: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ssl_ca: std::option::Option<terrars::PrimField<std::string::String>>,
     webhook_secret_secret_version: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    authorizer_credential: std::option::Option<std::vec::Vec<Cloudbuildv2ConnectionGitlabConfigElAuthorizerCredentialEl>>,
+    authorizer_credential: std::option::Option<std::vec::Vec<Cloudbuildv2Connection_GitlabConfig_AuthorizerCredential>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     read_authorizer_credential: std
     ::option
-    ::Option<std::vec::Vec<Cloudbuildv2ConnectionGitlabConfigElReadAuthorizerCredentialEl>>,
+    ::Option<std::vec::Vec<Cloudbuildv2Connection_GitlabConfig_ReadAuthorizerCredential>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     service_directory_config: std
     ::option
-    ::Option<std::vec::Vec<Cloudbuildv2ConnectionGitlabConfigElServiceDirectoryConfigEl>>,
-    dynamic: Cloudbuildv2ConnectionGitlabConfigElDynamic,
+    ::Option<std::vec::Vec<Cloudbuildv2Connection_GitlabConfig_ServiceDirectoryConfig>>,
+    dynamic: Cloudbuildv2Connection_GitlabConfigDynamic,
 }
 
-impl Cloudbuildv2ConnectionGitlabConfigEl {
+impl Cloudbuildv2Connection_GitlabConfig {
     #[doc =
         "Set the field `host_uri`.\nThe URI of the GitLab Enterprise host this connection is for. If not specified, the default value is https://gitlab.com."]
     pub fn set_host_uri(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1278,7 +1674,7 @@ impl Cloudbuildv2ConnectionGitlabConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<Cloudbuildv2ConnectionGitlabConfigElAuthorizerCredentialEl>>,
+                    ::Into<terrars::BlockAssignable<Cloudbuildv2Connection_GitlabConfig_AuthorizerCredential>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1299,7 +1695,7 @@ impl Cloudbuildv2ConnectionGitlabConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<Cloudbuildv2ConnectionGitlabConfigElReadAuthorizerCredentialEl>>,
+                    ::Into<terrars::BlockAssignable<Cloudbuildv2Connection_GitlabConfig_ReadAuthorizerCredential>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1320,7 +1716,7 @@ impl Cloudbuildv2ConnectionGitlabConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<Cloudbuildv2ConnectionGitlabConfigElServiceDirectoryConfigEl>>,
+                    ::Into<terrars::BlockAssignable<Cloudbuildv2Connection_GitlabConfig_ServiceDirectoryConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1334,8 +1730,8 @@ impl Cloudbuildv2ConnectionGitlabConfigEl {
     }
 }
 
-impl terrars::ToListMappable for Cloudbuildv2ConnectionGitlabConfigEl {
-    type O = terrars::BlockAssignable<Cloudbuildv2ConnectionGitlabConfigEl>;
+impl terrars::ToListMappable for Cloudbuildv2Connection_GitlabConfig {
+    type O = terrars::BlockAssignable<Cloudbuildv2Connection_GitlabConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1346,15 +1742,15 @@ impl terrars::ToListMappable for Cloudbuildv2ConnectionGitlabConfigEl {
     }
 }
 
-pub struct BuildCloudbuildv2ConnectionGitlabConfigEl {
+pub struct BuildCloudbuildv2Connection_GitlabConfig {
     #[doc =
-        "Required. Immutable. SecretManager resource containing the webhook secret of a GitLab Enterprise project, formatted as `projects/*/secrets/*/versions/*`."]
+        "Required. Immutable. SecretManager resource containing the webhook secret of a GitLab Enterprise project, formatted as 'projects/*/secrets/*/versions/*'."]
     pub webhook_secret_secret_version: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudbuildv2ConnectionGitlabConfigEl {
-    pub fn build(self) -> Cloudbuildv2ConnectionGitlabConfigEl {
-        Cloudbuildv2ConnectionGitlabConfigEl {
+impl BuildCloudbuildv2Connection_GitlabConfig {
+    pub fn build(self) -> Cloudbuildv2Connection_GitlabConfig {
+        Cloudbuildv2Connection_GitlabConfig {
             host_uri: core::default::Default::default(),
             ssl_ca: core::default::Default::default(),
             webhook_secret_secret_version: self.webhook_secret_secret_version,
@@ -1366,21 +1762,23 @@ impl BuildCloudbuildv2ConnectionGitlabConfigEl {
     }
 }
 
-pub struct Cloudbuildv2ConnectionGitlabConfigElRef {
+#[allow(dead_code)]
+pub struct Cloudbuildv2Connection_GitlabConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Cloudbuildv2ConnectionGitlabConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Cloudbuildv2ConnectionGitlabConfigElRef {
-        Cloudbuildv2ConnectionGitlabConfigElRef {
+impl terrars::Ref for Cloudbuildv2Connection_GitlabConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Cloudbuildv2Connection_GitlabConfigRef {
+        Cloudbuildv2Connection_GitlabConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Cloudbuildv2ConnectionGitlabConfigElRef {
+impl Cloudbuildv2Connection_GitlabConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1392,7 +1790,7 @@ impl Cloudbuildv2ConnectionGitlabConfigElRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `server_version` after provisioning.\nOutput only. Version of the GitLab Enterprise server running on the `host_uri`."]
+        "Get a reference to the value of field `server_version` after provisioning.\nOutput only. Version of the GitLab Enterprise server running on the 'host_uri'."]
     pub fn server_version(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.server_version", self.base))
     }
@@ -1404,35 +1802,33 @@ impl Cloudbuildv2ConnectionGitlabConfigElRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `webhook_secret_secret_version` after provisioning.\nRequired. Immutable. SecretManager resource containing the webhook secret of a GitLab Enterprise project, formatted as `projects/*/secrets/*/versions/*`."]
+        "Get a reference to the value of field `webhook_secret_secret_version` after provisioning.\nRequired. Immutable. SecretManager resource containing the webhook secret of a GitLab Enterprise project, formatted as 'projects/*/secrets/*/versions/*'."]
     pub fn webhook_secret_secret_version(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.webhook_secret_secret_version", self.base))
     }
 
     #[doc = "Get a reference to the value of field `authorizer_credential` after provisioning.\n"]
-    pub fn authorizer_credential(
-        &self,
-    ) -> terrars::ListRef<Cloudbuildv2ConnectionGitlabConfigElAuthorizerCredentialElRef> {
+    pub fn authorizer_credential(&self) -> terrars::ListRef<Cloudbuildv2Connection_GitlabConfig_AuthorizerCredentialRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.authorizer_credential", self.base))
     }
 
     #[doc = "Get a reference to the value of field `read_authorizer_credential` after provisioning.\n"]
     pub fn read_authorizer_credential(
         &self,
-    ) -> terrars::ListRef<Cloudbuildv2ConnectionGitlabConfigElReadAuthorizerCredentialElRef> {
+    ) -> terrars::ListRef<Cloudbuildv2Connection_GitlabConfig_ReadAuthorizerCredentialRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.read_authorizer_credential", self.base))
     }
 
     #[doc = "Get a reference to the value of field `service_directory_config` after provisioning.\n"]
     pub fn service_directory_config(
         &self,
-    ) -> terrars::ListRef<Cloudbuildv2ConnectionGitlabConfigElServiceDirectoryConfigElRef> {
+    ) -> terrars::ListRef<Cloudbuildv2Connection_GitlabConfig_ServiceDirectoryConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.service_directory_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct Cloudbuildv2ConnectionTimeoutsEl {
+pub struct Cloudbuildv2Connection_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1441,7 +1837,7 @@ pub struct Cloudbuildv2ConnectionTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl Cloudbuildv2ConnectionTimeoutsEl {
+impl Cloudbuildv2Connection_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1461,8 +1857,8 @@ impl Cloudbuildv2ConnectionTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for Cloudbuildv2ConnectionTimeoutsEl {
-    type O = terrars::BlockAssignable<Cloudbuildv2ConnectionTimeoutsEl>;
+impl terrars::ToListMappable for Cloudbuildv2Connection_Timeouts {
+    type O = terrars::BlockAssignable<Cloudbuildv2Connection_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1473,11 +1869,11 @@ impl terrars::ToListMappable for Cloudbuildv2ConnectionTimeoutsEl {
     }
 }
 
-pub struct BuildCloudbuildv2ConnectionTimeoutsEl {}
+pub struct BuildCloudbuildv2Connection_Timeouts {}
 
-impl BuildCloudbuildv2ConnectionTimeoutsEl {
-    pub fn build(self) -> Cloudbuildv2ConnectionTimeoutsEl {
-        Cloudbuildv2ConnectionTimeoutsEl {
+impl BuildCloudbuildv2Connection_Timeouts {
+    pub fn build(self) -> Cloudbuildv2Connection_Timeouts {
+        Cloudbuildv2Connection_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1485,21 +1881,23 @@ impl BuildCloudbuildv2ConnectionTimeoutsEl {
     }
 }
 
-pub struct Cloudbuildv2ConnectionTimeoutsElRef {
+#[allow(dead_code)]
+pub struct Cloudbuildv2Connection_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Cloudbuildv2ConnectionTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Cloudbuildv2ConnectionTimeoutsElRef {
-        Cloudbuildv2ConnectionTimeoutsElRef {
+impl terrars::Ref for Cloudbuildv2Connection_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Cloudbuildv2Connection_TimeoutsRef {
+        Cloudbuildv2Connection_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Cloudbuildv2ConnectionTimeoutsElRef {
+impl Cloudbuildv2Connection_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1518,13 +1916,4 @@ impl Cloudbuildv2ConnectionTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct Cloudbuildv2ConnectionDynamic {
-    github_config: std::option::Option<terrars::DynamicBlock<Cloudbuildv2ConnectionGithubConfigEl>>,
-    github_enterprise_config: std
-    ::option
-    ::Option<terrars::DynamicBlock<Cloudbuildv2ConnectionGithubEnterpriseConfigEl>>,
-    gitlab_config: std::option::Option<terrars::DynamicBlock<Cloudbuildv2ConnectionGitlabConfigEl>>,
 }

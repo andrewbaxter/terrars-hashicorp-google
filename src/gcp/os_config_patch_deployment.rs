@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct OsConfigPatchDeploymentData {
+struct OsConfigPatchDeploymentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct OsConfigPatchDeploymentData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     duration: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -28,24 +32,24 @@ struct OsConfigPatchDeploymentData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    instance_filter: std::option::Option<std::vec::Vec<OsConfigPatchDeploymentInstanceFilterEl>>,
+    instance_filter: std::option::Option<std::vec::Vec<OsConfigPatchDeployment_InstanceFilter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    one_time_schedule: std::option::Option<std::vec::Vec<OsConfigPatchDeploymentOneTimeScheduleEl>>,
+    one_time_schedule: std::option::Option<std::vec::Vec<OsConfigPatchDeployment_OneTimeSchedule>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    patch_config: std::option::Option<std::vec::Vec<OsConfigPatchDeploymentPatchConfigEl>>,
+    patch_config: std::option::Option<std::vec::Vec<OsConfigPatchDeployment_PatchConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    recurring_schedule: std::option::Option<std::vec::Vec<OsConfigPatchDeploymentRecurringScheduleEl>>,
+    recurring_schedule: std::option::Option<std::vec::Vec<OsConfigPatchDeployment_RecurringSchedule>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    rollout: std::option::Option<std::vec::Vec<OsConfigPatchDeploymentRolloutEl>>,
+    rollout: std::option::Option<std::vec::Vec<OsConfigPatchDeployment_Rollout>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<OsConfigPatchDeploymentTimeoutsEl>,
+    timeouts: std::option::Option<OsConfigPatchDeployment_Timeouts>,
     dynamic: OsConfigPatchDeploymentDynamic,
 }
 
 struct OsConfigPatchDeployment_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<OsConfigPatchDeploymentData>,
+    data: std::cell::RefCell<OsConfigPatchDeploymentData_>,
 }
 
 #[derive(Clone)]
@@ -146,6 +150,13 @@ impl OsConfigPatchDeployment {
     }
 
     #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `description`.\nDescription of the patch deployment. Length of the description is limited to 1024 characters."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -174,7 +185,7 @@ impl OsConfigPatchDeployment {
     #[doc = "Set the field `instance_filter`.\n"]
     pub fn set_instance_filter(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigPatchDeploymentInstanceFilterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigPatchDeployment_InstanceFilter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -190,7 +201,7 @@ impl OsConfigPatchDeployment {
     #[doc = "Set the field `one_time_schedule`.\n"]
     pub fn set_one_time_schedule(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigPatchDeploymentOneTimeScheduleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigPatchDeployment_OneTimeSchedule>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -206,7 +217,7 @@ impl OsConfigPatchDeployment {
     #[doc = "Set the field `patch_config`.\n"]
     pub fn set_patch_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigPatchDeploymentPatchConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigPatchDeployment_PatchConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -222,7 +233,7 @@ impl OsConfigPatchDeployment {
     #[doc = "Set the field `recurring_schedule`.\n"]
     pub fn set_recurring_schedule(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigPatchDeploymentRecurringScheduleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigPatchDeployment_RecurringSchedule>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -238,7 +249,7 @@ impl OsConfigPatchDeployment {
     #[doc = "Set the field `rollout`.\n"]
     pub fn set_rollout(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigPatchDeploymentRolloutEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigPatchDeployment_Rollout>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -252,7 +263,7 @@ impl OsConfigPatchDeployment {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<OsConfigPatchDeploymentTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<OsConfigPatchDeployment_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -261,6 +272,12 @@ impl OsConfigPatchDeployment {
         "Get a reference to the value of field `create_time` after provisioning.\nTime the patch deployment was created. Timestamp is in RFC3339 text format.\nA timestamp in RFC3339 UTC \"Zulu\" format, accurate to nanoseconds. Example: \"2014-10-02T15:01:23.045123456Z\"."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -310,33 +327,33 @@ impl OsConfigPatchDeployment {
     }
 
     #[doc = "Get a reference to the value of field `instance_filter` after provisioning.\n"]
-    pub fn instance_filter(&self) -> terrars::ListRef<OsConfigPatchDeploymentInstanceFilterElRef> {
+    pub fn instance_filter(&self) -> terrars::ListRef<OsConfigPatchDeployment_InstanceFilterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.instance_filter", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `one_time_schedule` after provisioning.\n"]
-    pub fn one_time_schedule(&self) -> terrars::ListRef<OsConfigPatchDeploymentOneTimeScheduleElRef> {
+    pub fn one_time_schedule(&self) -> terrars::ListRef<OsConfigPatchDeployment_OneTimeScheduleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.one_time_schedule", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `patch_config` after provisioning.\n"]
-    pub fn patch_config(&self) -> terrars::ListRef<OsConfigPatchDeploymentPatchConfigElRef> {
+    pub fn patch_config(&self) -> terrars::ListRef<OsConfigPatchDeployment_PatchConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.patch_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `recurring_schedule` after provisioning.\n"]
-    pub fn recurring_schedule(&self) -> terrars::ListRef<OsConfigPatchDeploymentRecurringScheduleElRef> {
+    pub fn recurring_schedule(&self) -> terrars::ListRef<OsConfigPatchDeployment_RecurringScheduleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.recurring_schedule", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `rollout` after provisioning.\n"]
-    pub fn rollout(&self) -> terrars::ListRef<OsConfigPatchDeploymentRolloutElRef> {
+    pub fn rollout(&self) -> terrars::ListRef<OsConfigPatchDeployment_RolloutRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.rollout", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> OsConfigPatchDeploymentTimeoutsElRef {
-        OsConfigPatchDeploymentTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> OsConfigPatchDeployment_TimeoutsRef {
+        OsConfigPatchDeployment_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -383,12 +400,13 @@ impl BuildOsConfigPatchDeployment {
         let out = OsConfigPatchDeployment(std::rc::Rc::new(OsConfigPatchDeployment_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(OsConfigPatchDeploymentData {
+            data: std::cell::RefCell::new(OsConfigPatchDeploymentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 duration: core::default::Default::default(),
                 id: core::default::Default::default(),
@@ -438,6 +456,12 @@ impl OsConfigPatchDeploymentRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nDescription of the patch deployment. Length of the description is limited to 1024 characters."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -484,45 +508,54 @@ impl OsConfigPatchDeploymentRef {
     }
 
     #[doc = "Get a reference to the value of field `instance_filter` after provisioning.\n"]
-    pub fn instance_filter(&self) -> terrars::ListRef<OsConfigPatchDeploymentInstanceFilterElRef> {
+    pub fn instance_filter(&self) -> terrars::ListRef<OsConfigPatchDeployment_InstanceFilterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.instance_filter", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `one_time_schedule` after provisioning.\n"]
-    pub fn one_time_schedule(&self) -> terrars::ListRef<OsConfigPatchDeploymentOneTimeScheduleElRef> {
+    pub fn one_time_schedule(&self) -> terrars::ListRef<OsConfigPatchDeployment_OneTimeScheduleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.one_time_schedule", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `patch_config` after provisioning.\n"]
-    pub fn patch_config(&self) -> terrars::ListRef<OsConfigPatchDeploymentPatchConfigElRef> {
+    pub fn patch_config(&self) -> terrars::ListRef<OsConfigPatchDeployment_PatchConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.patch_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `recurring_schedule` after provisioning.\n"]
-    pub fn recurring_schedule(&self) -> terrars::ListRef<OsConfigPatchDeploymentRecurringScheduleElRef> {
+    pub fn recurring_schedule(&self) -> terrars::ListRef<OsConfigPatchDeployment_RecurringScheduleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.recurring_schedule", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `rollout` after provisioning.\n"]
-    pub fn rollout(&self) -> terrars::ListRef<OsConfigPatchDeploymentRolloutElRef> {
+    pub fn rollout(&self) -> terrars::ListRef<OsConfigPatchDeployment_RolloutRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.rollout", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> OsConfigPatchDeploymentTimeoutsElRef {
-        OsConfigPatchDeploymentTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> OsConfigPatchDeployment_TimeoutsRef {
+        OsConfigPatchDeployment_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct OsConfigPatchDeploymentDynamic {
+    instance_filter: std::option::Option<terrars::DynamicBlock<OsConfigPatchDeployment_InstanceFilter>>,
+    one_time_schedule: std::option::Option<terrars::DynamicBlock<OsConfigPatchDeployment_OneTimeSchedule>>,
+    patch_config: std::option::Option<terrars::DynamicBlock<OsConfigPatchDeployment_PatchConfig>>,
+    recurring_schedule: std::option::Option<terrars::DynamicBlock<OsConfigPatchDeployment_RecurringSchedule>>,
+    rollout: std::option::Option<terrars::DynamicBlock<OsConfigPatchDeployment_Rollout>>,
+}
+
 #[derive(Serialize)]
-pub struct OsConfigPatchDeploymentInstanceFilterElGroupLabelsEl {
+pub struct OsConfigPatchDeployment_InstanceFilter_GroupLabels {
     labels: terrars::RecField<terrars::PrimField<std::string::String>>,
 }
 
-impl OsConfigPatchDeploymentInstanceFilterElGroupLabelsEl { }
+impl OsConfigPatchDeployment_InstanceFilter_GroupLabels { }
 
-impl terrars::ToListMappable for OsConfigPatchDeploymentInstanceFilterElGroupLabelsEl {
-    type O = terrars::BlockAssignable<OsConfigPatchDeploymentInstanceFilterElGroupLabelsEl>;
+impl terrars::ToListMappable for OsConfigPatchDeployment_InstanceFilter_GroupLabels {
+    type O = terrars::BlockAssignable<OsConfigPatchDeployment_InstanceFilter_GroupLabels>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -533,35 +566,37 @@ impl terrars::ToListMappable for OsConfigPatchDeploymentInstanceFilterElGroupLab
     }
 }
 
-pub struct BuildOsConfigPatchDeploymentInstanceFilterElGroupLabelsEl {
+pub struct BuildOsConfigPatchDeployment_InstanceFilter_GroupLabels {
     #[doc = "Compute Engine instance labels that must be present for a VM instance to be targeted by this filter"]
     pub labels: terrars::RecField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildOsConfigPatchDeploymentInstanceFilterElGroupLabelsEl {
-    pub fn build(self) -> OsConfigPatchDeploymentInstanceFilterElGroupLabelsEl {
-        OsConfigPatchDeploymentInstanceFilterElGroupLabelsEl { labels: self.labels }
+impl BuildOsConfigPatchDeployment_InstanceFilter_GroupLabels {
+    pub fn build(self) -> OsConfigPatchDeployment_InstanceFilter_GroupLabels {
+        OsConfigPatchDeployment_InstanceFilter_GroupLabels { labels: self.labels }
     }
 }
 
-pub struct OsConfigPatchDeploymentInstanceFilterElGroupLabelsElRef {
+#[allow(dead_code)]
+pub struct OsConfigPatchDeployment_InstanceFilter_GroupLabelsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigPatchDeploymentInstanceFilterElGroupLabelsElRef {
+impl terrars::Ref for OsConfigPatchDeployment_InstanceFilter_GroupLabelsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigPatchDeploymentInstanceFilterElGroupLabelsElRef {
-        OsConfigPatchDeploymentInstanceFilterElGroupLabelsElRef {
+    ) -> OsConfigPatchDeployment_InstanceFilter_GroupLabelsRef {
+        OsConfigPatchDeployment_InstanceFilter_GroupLabelsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigPatchDeploymentInstanceFilterElGroupLabelsElRef {
+impl OsConfigPatchDeployment_InstanceFilter_GroupLabelsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -574,12 +609,12 @@ impl OsConfigPatchDeploymentInstanceFilterElGroupLabelsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct OsConfigPatchDeploymentInstanceFilterElDynamic {
-    group_labels: std::option::Option<terrars::DynamicBlock<OsConfigPatchDeploymentInstanceFilterElGroupLabelsEl>>,
+struct OsConfigPatchDeployment_InstanceFilterDynamic {
+    group_labels: std::option::Option<terrars::DynamicBlock<OsConfigPatchDeployment_InstanceFilter_GroupLabels>>,
 }
 
 #[derive(Serialize)]
-pub struct OsConfigPatchDeploymentInstanceFilterEl {
+pub struct OsConfigPatchDeployment_InstanceFilter {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     all: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -589,11 +624,11 @@ pub struct OsConfigPatchDeploymentInstanceFilterEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     zones: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    group_labels: std::option::Option<std::vec::Vec<OsConfigPatchDeploymentInstanceFilterElGroupLabelsEl>>,
-    dynamic: OsConfigPatchDeploymentInstanceFilterElDynamic,
+    group_labels: std::option::Option<std::vec::Vec<OsConfigPatchDeployment_InstanceFilter_GroupLabels>>,
+    dynamic: OsConfigPatchDeployment_InstanceFilterDynamic,
 }
 
-impl OsConfigPatchDeploymentInstanceFilterEl {
+impl OsConfigPatchDeployment_InstanceFilter {
     #[doc = "Set the field `all`.\nTarget all VM instances in the project. If true, no other criteria is permitted."]
     pub fn set_all(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.all = std::option::Option::Some(v.into());
@@ -633,7 +668,7 @@ impl OsConfigPatchDeploymentInstanceFilterEl {
     #[doc = "Set the field `group_labels`.\n"]
     pub fn set_group_labels(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigPatchDeploymentInstanceFilterElGroupLabelsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigPatchDeployment_InstanceFilter_GroupLabels>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -647,8 +682,8 @@ impl OsConfigPatchDeploymentInstanceFilterEl {
     }
 }
 
-impl terrars::ToListMappable for OsConfigPatchDeploymentInstanceFilterEl {
-    type O = terrars::BlockAssignable<OsConfigPatchDeploymentInstanceFilterEl>;
+impl terrars::ToListMappable for OsConfigPatchDeployment_InstanceFilter {
+    type O = terrars::BlockAssignable<OsConfigPatchDeployment_InstanceFilter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -659,11 +694,11 @@ impl terrars::ToListMappable for OsConfigPatchDeploymentInstanceFilterEl {
     }
 }
 
-pub struct BuildOsConfigPatchDeploymentInstanceFilterEl {}
+pub struct BuildOsConfigPatchDeployment_InstanceFilter {}
 
-impl BuildOsConfigPatchDeploymentInstanceFilterEl {
-    pub fn build(self) -> OsConfigPatchDeploymentInstanceFilterEl {
-        OsConfigPatchDeploymentInstanceFilterEl {
+impl BuildOsConfigPatchDeployment_InstanceFilter {
+    pub fn build(self) -> OsConfigPatchDeployment_InstanceFilter {
+        OsConfigPatchDeployment_InstanceFilter {
             all: core::default::Default::default(),
             instance_name_prefixes: core::default::Default::default(),
             instances: core::default::Default::default(),
@@ -674,21 +709,23 @@ impl BuildOsConfigPatchDeploymentInstanceFilterEl {
     }
 }
 
-pub struct OsConfigPatchDeploymentInstanceFilterElRef {
+#[allow(dead_code)]
+pub struct OsConfigPatchDeployment_InstanceFilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigPatchDeploymentInstanceFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> OsConfigPatchDeploymentInstanceFilterElRef {
-        OsConfigPatchDeploymentInstanceFilterElRef {
+impl terrars::Ref for OsConfigPatchDeployment_InstanceFilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> OsConfigPatchDeployment_InstanceFilterRef {
+        OsConfigPatchDeployment_InstanceFilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigPatchDeploymentInstanceFilterElRef {
+impl OsConfigPatchDeployment_InstanceFilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -718,20 +755,20 @@ impl OsConfigPatchDeploymentInstanceFilterElRef {
     }
 
     #[doc = "Get a reference to the value of field `group_labels` after provisioning.\n"]
-    pub fn group_labels(&self) -> terrars::ListRef<OsConfigPatchDeploymentInstanceFilterElGroupLabelsElRef> {
+    pub fn group_labels(&self) -> terrars::ListRef<OsConfigPatchDeployment_InstanceFilter_GroupLabelsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.group_labels", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct OsConfigPatchDeploymentOneTimeScheduleEl {
+pub struct OsConfigPatchDeployment_OneTimeSchedule {
     execute_time: terrars::PrimField<std::string::String>,
 }
 
-impl OsConfigPatchDeploymentOneTimeScheduleEl { }
+impl OsConfigPatchDeployment_OneTimeSchedule { }
 
-impl terrars::ToListMappable for OsConfigPatchDeploymentOneTimeScheduleEl {
-    type O = terrars::BlockAssignable<OsConfigPatchDeploymentOneTimeScheduleEl>;
+impl terrars::ToListMappable for OsConfigPatchDeployment_OneTimeSchedule {
+    type O = terrars::BlockAssignable<OsConfigPatchDeployment_OneTimeSchedule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -742,33 +779,35 @@ impl terrars::ToListMappable for OsConfigPatchDeploymentOneTimeScheduleEl {
     }
 }
 
-pub struct BuildOsConfigPatchDeploymentOneTimeScheduleEl {
+pub struct BuildOsConfigPatchDeployment_OneTimeSchedule {
     #[doc =
         "The desired patch job execution time. A timestamp in RFC3339 UTC \"Zulu\" format,\naccurate to nanoseconds. Example: \"2014-10-02T15:01:23.045123456Z\"."]
     pub execute_time: terrars::PrimField<std::string::String>,
 }
 
-impl BuildOsConfigPatchDeploymentOneTimeScheduleEl {
-    pub fn build(self) -> OsConfigPatchDeploymentOneTimeScheduleEl {
-        OsConfigPatchDeploymentOneTimeScheduleEl { execute_time: self.execute_time }
+impl BuildOsConfigPatchDeployment_OneTimeSchedule {
+    pub fn build(self) -> OsConfigPatchDeployment_OneTimeSchedule {
+        OsConfigPatchDeployment_OneTimeSchedule { execute_time: self.execute_time }
     }
 }
 
-pub struct OsConfigPatchDeploymentOneTimeScheduleElRef {
+#[allow(dead_code)]
+pub struct OsConfigPatchDeployment_OneTimeScheduleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigPatchDeploymentOneTimeScheduleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> OsConfigPatchDeploymentOneTimeScheduleElRef {
-        OsConfigPatchDeploymentOneTimeScheduleElRef {
+impl terrars::Ref for OsConfigPatchDeployment_OneTimeScheduleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> OsConfigPatchDeployment_OneTimeScheduleRef {
+        OsConfigPatchDeployment_OneTimeScheduleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigPatchDeploymentOneTimeScheduleElRef {
+impl OsConfigPatchDeployment_OneTimeScheduleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -781,7 +820,7 @@ impl OsConfigPatchDeploymentOneTimeScheduleElRef {
 }
 
 #[derive(Serialize)]
-pub struct OsConfigPatchDeploymentPatchConfigElAptEl {
+pub struct OsConfigPatchDeployment_PatchConfig_Apt {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     excludes: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -790,7 +829,7 @@ pub struct OsConfigPatchDeploymentPatchConfigElAptEl {
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl OsConfigPatchDeploymentPatchConfigElAptEl {
+impl OsConfigPatchDeployment_PatchConfig_Apt {
     #[doc = "Set the field `excludes`.\nList of packages to exclude from update. These packages will be excluded."]
     pub fn set_excludes(
         mut self,
@@ -818,8 +857,8 @@ impl OsConfigPatchDeploymentPatchConfigElAptEl {
     }
 }
 
-impl terrars::ToListMappable for OsConfigPatchDeploymentPatchConfigElAptEl {
-    type O = terrars::BlockAssignable<OsConfigPatchDeploymentPatchConfigElAptEl>;
+impl terrars::ToListMappable for OsConfigPatchDeployment_PatchConfig_Apt {
+    type O = terrars::BlockAssignable<OsConfigPatchDeployment_PatchConfig_Apt>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -830,11 +869,11 @@ impl terrars::ToListMappable for OsConfigPatchDeploymentPatchConfigElAptEl {
     }
 }
 
-pub struct BuildOsConfigPatchDeploymentPatchConfigElAptEl {}
+pub struct BuildOsConfigPatchDeployment_PatchConfig_Apt {}
 
-impl BuildOsConfigPatchDeploymentPatchConfigElAptEl {
-    pub fn build(self) -> OsConfigPatchDeploymentPatchConfigElAptEl {
-        OsConfigPatchDeploymentPatchConfigElAptEl {
+impl BuildOsConfigPatchDeployment_PatchConfig_Apt {
+    pub fn build(self) -> OsConfigPatchDeployment_PatchConfig_Apt {
+        OsConfigPatchDeployment_PatchConfig_Apt {
             excludes: core::default::Default::default(),
             exclusive_packages: core::default::Default::default(),
             type_: core::default::Default::default(),
@@ -842,21 +881,23 @@ impl BuildOsConfigPatchDeploymentPatchConfigElAptEl {
     }
 }
 
-pub struct OsConfigPatchDeploymentPatchConfigElAptElRef {
+#[allow(dead_code)]
+pub struct OsConfigPatchDeployment_PatchConfig_AptRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigPatchDeploymentPatchConfigElAptElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> OsConfigPatchDeploymentPatchConfigElAptElRef {
-        OsConfigPatchDeploymentPatchConfigElAptElRef {
+impl terrars::Ref for OsConfigPatchDeployment_PatchConfig_AptRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> OsConfigPatchDeployment_PatchConfig_AptRef {
+        OsConfigPatchDeployment_PatchConfig_AptRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigPatchDeploymentPatchConfigElAptElRef {
+impl OsConfigPatchDeployment_PatchConfig_AptRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -881,14 +922,14 @@ impl OsConfigPatchDeploymentPatchConfigElAptElRef {
 }
 
 #[derive(Serialize)]
-pub struct OsConfigPatchDeploymentPatchConfigElGooEl {
+pub struct OsConfigPatchDeployment_PatchConfig_Goo {
     enabled: terrars::PrimField<bool>,
 }
 
-impl OsConfigPatchDeploymentPatchConfigElGooEl { }
+impl OsConfigPatchDeployment_PatchConfig_Goo { }
 
-impl terrars::ToListMappable for OsConfigPatchDeploymentPatchConfigElGooEl {
-    type O = terrars::BlockAssignable<OsConfigPatchDeploymentPatchConfigElGooEl>;
+impl terrars::ToListMappable for OsConfigPatchDeployment_PatchConfig_Goo {
+    type O = terrars::BlockAssignable<OsConfigPatchDeployment_PatchConfig_Goo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -899,32 +940,34 @@ impl terrars::ToListMappable for OsConfigPatchDeploymentPatchConfigElGooEl {
     }
 }
 
-pub struct BuildOsConfigPatchDeploymentPatchConfigElGooEl {
+pub struct BuildOsConfigPatchDeployment_PatchConfig_Goo {
     #[doc = "goo update settings. Use this setting to override the default goo patch rules."]
     pub enabled: terrars::PrimField<bool>,
 }
 
-impl BuildOsConfigPatchDeploymentPatchConfigElGooEl {
-    pub fn build(self) -> OsConfigPatchDeploymentPatchConfigElGooEl {
-        OsConfigPatchDeploymentPatchConfigElGooEl { enabled: self.enabled }
+impl BuildOsConfigPatchDeployment_PatchConfig_Goo {
+    pub fn build(self) -> OsConfigPatchDeployment_PatchConfig_Goo {
+        OsConfigPatchDeployment_PatchConfig_Goo { enabled: self.enabled }
     }
 }
 
-pub struct OsConfigPatchDeploymentPatchConfigElGooElRef {
+#[allow(dead_code)]
+pub struct OsConfigPatchDeployment_PatchConfig_GooRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigPatchDeploymentPatchConfigElGooElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> OsConfigPatchDeploymentPatchConfigElGooElRef {
-        OsConfigPatchDeploymentPatchConfigElGooElRef {
+impl terrars::Ref for OsConfigPatchDeployment_PatchConfig_GooRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> OsConfigPatchDeployment_PatchConfig_GooRef {
+        OsConfigPatchDeployment_PatchConfig_GooRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigPatchDeploymentPatchConfigElGooElRef {
+impl OsConfigPatchDeployment_PatchConfig_GooRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -937,17 +980,16 @@ impl OsConfigPatchDeploymentPatchConfigElGooElRef {
 }
 
 #[derive(Serialize)]
-pub struct OsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigElGcsObjectEl {
+pub struct OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfig_GcsObject {
     bucket: terrars::PrimField<std::string::String>,
     generation_number: terrars::PrimField<std::string::String>,
     object: terrars::PrimField<std::string::String>,
 }
 
-impl OsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigElGcsObjectEl { }
+impl OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfig_GcsObject { }
 
-impl terrars::ToListMappable for OsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigElGcsObjectEl {
-    type O =
-        terrars::BlockAssignable<OsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigElGcsObjectEl>;
+impl terrars::ToListMappable for OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfig_GcsObject {
+    type O = terrars::BlockAssignable<OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfig_GcsObject>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -958,7 +1000,7 @@ impl terrars::ToListMappable for OsConfigPatchDeploymentPatchConfigElPostStepElL
     }
 }
 
-pub struct BuildOsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigElGcsObjectEl {
+pub struct BuildOsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfig_GcsObject {
     #[doc = "Bucket of the Cloud Storage object."]
     pub bucket: terrars::PrimField<std::string::String>,
     #[doc =
@@ -968,9 +1010,9 @@ pub struct BuildOsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfi
     pub object: terrars::PrimField<std::string::String>,
 }
 
-impl BuildOsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigElGcsObjectEl {
-    pub fn build(self) -> OsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigElGcsObjectEl {
-        OsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigElGcsObjectEl {
+impl BuildOsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfig_GcsObject {
+    pub fn build(self) -> OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfig_GcsObject {
+        OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfig_GcsObject {
             bucket: self.bucket,
             generation_number: self.generation_number,
             object: self.object,
@@ -978,24 +1020,26 @@ impl BuildOsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigElGcs
     }
 }
 
-pub struct OsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigElGcsObjectElRef {
+#[allow(dead_code)]
+pub struct OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfig_GcsObjectRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigElGcsObjectElRef {
+impl terrars::Ref for OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfig_GcsObjectRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigElGcsObjectElRef {
-        OsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigElGcsObjectElRef {
+    ) -> OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfig_GcsObjectRef {
+        OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfig_GcsObjectRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigElGcsObjectElRef {
+impl OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfig_GcsObjectRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1018,14 +1062,14 @@ impl OsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigElGcsObjec
 }
 
 #[derive(Serialize, Default)]
-struct OsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigElDynamic {
+struct OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfigDynamic {
     gcs_object: std
     ::option
-    ::Option<terrars::DynamicBlock<OsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigElGcsObjectEl>>,
+    ::Option<terrars::DynamicBlock<OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfig_GcsObject>>,
 }
 
 #[derive(Serialize)]
-pub struct OsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigEl {
+pub struct OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allowed_success_codes: std::option::Option<terrars::ListField<terrars::PrimField<f64>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1035,11 +1079,11 @@ pub struct OsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     gcs_object: std
     ::option
-    ::Option<std::vec::Vec<OsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigElGcsObjectEl>>,
-    dynamic: OsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigElDynamic,
+    ::Option<std::vec::Vec<OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfig_GcsObject>>,
+    dynamic: OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfigDynamic,
 }
 
-impl OsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigEl {
+impl OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfig {
     #[doc =
         "Set the field `allowed_success_codes`.\nDefaults to [0]. A list of possible return values that the execution can return to indicate a success."]
     pub fn set_allowed_success_codes(
@@ -1073,9 +1117,7 @@ impl OsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            OsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigElGcsObjectEl,
-                        >,
+                        ::BlockAssignable<OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfig_GcsObject>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1090,8 +1132,8 @@ impl OsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigEl {
     }
 }
 
-impl terrars::ToListMappable for OsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigEl {
-    type O = terrars::BlockAssignable<OsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigEl>;
+impl terrars::ToListMappable for OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfig {
+    type O = terrars::BlockAssignable<OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1102,11 +1144,11 @@ impl terrars::ToListMappable for OsConfigPatchDeploymentPatchConfigElPostStepElL
     }
 }
 
-pub struct BuildOsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigEl {}
+pub struct BuildOsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfig {}
 
-impl BuildOsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigEl {
-    pub fn build(self) -> OsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigEl {
-        OsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigEl {
+impl BuildOsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfig {
+    pub fn build(self) -> OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfig {
+        OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfig {
             allowed_success_codes: core::default::Default::default(),
             interpreter: core::default::Default::default(),
             local_path: core::default::Default::default(),
@@ -1116,24 +1158,26 @@ impl BuildOsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigEl {
     }
 }
 
-pub struct OsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigElRef {
+#[allow(dead_code)]
+pub struct OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigElRef {
+impl terrars::Ref for OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigElRef {
-        OsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigElRef {
+    ) -> OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfigRef {
+        OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigElRef {
+impl OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1159,103 +1203,20 @@ impl OsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigElRef {
     #[doc = "Get a reference to the value of field `gcs_object` after provisioning.\n"]
     pub fn gcs_object(
         &self,
-    ) -> terrars::ListRef<OsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigElGcsObjectElRef> {
+    ) -> terrars::ListRef<OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfig_GcsObjectRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.gcs_object", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct OsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigElGcsObjectEl {
-    bucket: terrars::PrimField<std::string::String>,
-    generation_number: terrars::PrimField<std::string::String>,
-    object: terrars::PrimField<std::string::String>,
-}
-
-impl OsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigElGcsObjectEl { }
-
-impl terrars::ToListMappable for OsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigElGcsObjectEl {
-    type O =
-        terrars::BlockAssignable<OsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigElGcsObjectEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildOsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigElGcsObjectEl {
-    #[doc = "Bucket of the Cloud Storage object."]
-    pub bucket: terrars::PrimField<std::string::String>,
-    #[doc =
-        "Generation number of the Cloud Storage object. This is used to ensure that the ExecStep specified by this PatchJob does not change."]
-    pub generation_number: terrars::PrimField<std::string::String>,
-    #[doc = "Name of the Cloud Storage object."]
-    pub object: terrars::PrimField<std::string::String>,
-}
-
-impl BuildOsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigElGcsObjectEl {
-    pub fn build(self) -> OsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigElGcsObjectEl {
-        OsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigElGcsObjectEl {
-            bucket: self.bucket,
-            generation_number: self.generation_number,
-            object: self.object,
-        }
-    }
-}
-
-pub struct OsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigElGcsObjectElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for OsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigElGcsObjectElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> OsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigElGcsObjectElRef {
-        OsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigElGcsObjectElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl OsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigElGcsObjectElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `bucket` after provisioning.\nBucket of the Cloud Storage object."]
-    pub fn bucket(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `generation_number` after provisioning.\nGeneration number of the Cloud Storage object. This is used to ensure that the ExecStep specified by this PatchJob does not change."]
-    pub fn generation_number(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.generation_number", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `object` after provisioning.\nName of the Cloud Storage object."]
-    pub fn object(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.object", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct OsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigElDynamic {
+struct OsConfigPatchDeployment_PatchConfig_PreStep_WindowsExecStepConfigDynamic {
     gcs_object: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<OsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigElGcsObjectEl>,
-    >,
+    ::Option<terrars::DynamicBlock<OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfig_GcsObject>>,
 }
 
 #[derive(Serialize)]
-pub struct OsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigEl {
+pub struct OsConfigPatchDeployment_PatchConfig_PreStep_WindowsExecStepConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allowed_success_codes: std::option::Option<terrars::ListField<terrars::PrimField<f64>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1265,11 +1226,11 @@ pub struct OsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigEl
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     gcs_object: std
     ::option
-    ::Option<std::vec::Vec<OsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigElGcsObjectEl>>,
-    dynamic: OsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigElDynamic,
+    ::Option<std::vec::Vec<OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfig_GcsObject>>,
+    dynamic: OsConfigPatchDeployment_PatchConfig_PreStep_WindowsExecStepConfigDynamic,
 }
 
-impl OsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigEl {
+impl OsConfigPatchDeployment_PatchConfig_PreStep_WindowsExecStepConfig {
     #[doc =
         "Set the field `allowed_success_codes`.\nDefaults to [0]. A list of possible return values that the execution can return to indicate a success."]
     pub fn set_allowed_success_codes(
@@ -1303,9 +1264,7 @@ impl OsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            OsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigElGcsObjectEl,
-                        >,
+                        ::BlockAssignable<OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfig_GcsObject>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1320,8 +1279,8 @@ impl OsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigEl {
     }
 }
 
-impl terrars::ToListMappable for OsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigEl {
-    type O = terrars::BlockAssignable<OsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigEl>;
+impl terrars::ToListMappable for OsConfigPatchDeployment_PatchConfig_PreStep_WindowsExecStepConfig {
+    type O = terrars::BlockAssignable<OsConfigPatchDeployment_PatchConfig_PreStep_WindowsExecStepConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1332,11 +1291,11 @@ impl terrars::ToListMappable for OsConfigPatchDeploymentPatchConfigElPostStepElW
     }
 }
 
-pub struct BuildOsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigEl {}
+pub struct BuildOsConfigPatchDeployment_PatchConfig_PreStep_WindowsExecStepConfig {}
 
-impl BuildOsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigEl {
-    pub fn build(self) -> OsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigEl {
-        OsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigEl {
+impl BuildOsConfigPatchDeployment_PatchConfig_PreStep_WindowsExecStepConfig {
+    pub fn build(self) -> OsConfigPatchDeployment_PatchConfig_PreStep_WindowsExecStepConfig {
+        OsConfigPatchDeployment_PatchConfig_PreStep_WindowsExecStepConfig {
             allowed_success_codes: core::default::Default::default(),
             interpreter: core::default::Default::default(),
             local_path: core::default::Default::default(),
@@ -1346,24 +1305,26 @@ impl BuildOsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigEl 
     }
 }
 
-pub struct OsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigElRef {
+#[allow(dead_code)]
+pub struct OsConfigPatchDeployment_PatchConfig_PreStep_WindowsExecStepConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigElRef {
+impl terrars::Ref for OsConfigPatchDeployment_PatchConfig_PreStep_WindowsExecStepConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigElRef {
-        OsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigElRef {
+    ) -> OsConfigPatchDeployment_PatchConfig_PreStep_WindowsExecStepConfigRef {
+        OsConfigPatchDeployment_PatchConfig_PreStep_WindowsExecStepConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigElRef {
+impl OsConfigPatchDeployment_PatchConfig_PreStep_WindowsExecStepConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1389,35 +1350,35 @@ impl OsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigElRef {
     #[doc = "Get a reference to the value of field `gcs_object` after provisioning.\n"]
     pub fn gcs_object(
         &self,
-    ) -> terrars::ListRef<OsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigElGcsObjectElRef> {
+    ) -> terrars::ListRef<OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfig_GcsObjectRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.gcs_object", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct OsConfigPatchDeploymentPatchConfigElPostStepElDynamic {
+struct OsConfigPatchDeployment_PatchConfig_PostStepDynamic {
     linux_exec_step_config: std
     ::option
-    ::Option<terrars::DynamicBlock<OsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigEl>>,
+    ::Option<terrars::DynamicBlock<OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfig>>,
     windows_exec_step_config: std
     ::option
-    ::Option<terrars::DynamicBlock<OsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigEl>>,
+    ::Option<terrars::DynamicBlock<OsConfigPatchDeployment_PatchConfig_PreStep_WindowsExecStepConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct OsConfigPatchDeploymentPatchConfigElPostStepEl {
+pub struct OsConfigPatchDeployment_PatchConfig_PostStep {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     linux_exec_step_config: std
     ::option
-    ::Option<std::vec::Vec<OsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigEl>>,
+    ::Option<std::vec::Vec<OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     windows_exec_step_config: std
     ::option
-    ::Option<std::vec::Vec<OsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigEl>>,
-    dynamic: OsConfigPatchDeploymentPatchConfigElPostStepElDynamic,
+    ::Option<std::vec::Vec<OsConfigPatchDeployment_PatchConfig_PreStep_WindowsExecStepConfig>>,
+    dynamic: OsConfigPatchDeployment_PatchConfig_PostStepDynamic,
 }
 
-impl OsConfigPatchDeploymentPatchConfigElPostStepEl {
+impl OsConfigPatchDeployment_PatchConfig_PostStep {
     #[doc = "Set the field `linux_exec_step_config`.\n"]
     pub fn set_linux_exec_step_config(
         mut self,
@@ -1426,9 +1387,7 @@ impl OsConfigPatchDeploymentPatchConfigElPostStepEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<OsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1450,8 +1409,7 @@ impl OsConfigPatchDeploymentPatchConfigElPostStepEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<OsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigEl>,
+                        terrars::BlockAssignable<OsConfigPatchDeployment_PatchConfig_PreStep_WindowsExecStepConfig>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1466,8 +1424,8 @@ impl OsConfigPatchDeploymentPatchConfigElPostStepEl {
     }
 }
 
-impl terrars::ToListMappable for OsConfigPatchDeploymentPatchConfigElPostStepEl {
-    type O = terrars::BlockAssignable<OsConfigPatchDeploymentPatchConfigElPostStepEl>;
+impl terrars::ToListMappable for OsConfigPatchDeployment_PatchConfig_PostStep {
+    type O = terrars::BlockAssignable<OsConfigPatchDeployment_PatchConfig_PostStep>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1478,11 +1436,11 @@ impl terrars::ToListMappable for OsConfigPatchDeploymentPatchConfigElPostStepEl 
     }
 }
 
-pub struct BuildOsConfigPatchDeploymentPatchConfigElPostStepEl {}
+pub struct BuildOsConfigPatchDeployment_PatchConfig_PostStep {}
 
-impl BuildOsConfigPatchDeploymentPatchConfigElPostStepEl {
-    pub fn build(self) -> OsConfigPatchDeploymentPatchConfigElPostStepEl {
-        OsConfigPatchDeploymentPatchConfigElPostStepEl {
+impl BuildOsConfigPatchDeployment_PatchConfig_PostStep {
+    pub fn build(self) -> OsConfigPatchDeployment_PatchConfig_PostStep {
+        OsConfigPatchDeployment_PatchConfig_PostStep {
             linux_exec_step_config: core::default::Default::default(),
             windows_exec_step_config: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1490,24 +1448,26 @@ impl BuildOsConfigPatchDeploymentPatchConfigElPostStepEl {
     }
 }
 
-pub struct OsConfigPatchDeploymentPatchConfigElPostStepElRef {
+#[allow(dead_code)]
+pub struct OsConfigPatchDeployment_PatchConfig_PostStepRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigPatchDeploymentPatchConfigElPostStepElRef {
+impl terrars::Ref for OsConfigPatchDeployment_PatchConfig_PostStepRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigPatchDeploymentPatchConfigElPostStepElRef {
-        OsConfigPatchDeploymentPatchConfigElPostStepElRef {
+    ) -> OsConfigPatchDeployment_PatchConfig_PostStepRef {
+        OsConfigPatchDeployment_PatchConfig_PostStepRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigPatchDeploymentPatchConfigElPostStepElRef {
+impl OsConfigPatchDeployment_PatchConfig_PostStepRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1515,497 +1475,42 @@ impl OsConfigPatchDeploymentPatchConfigElPostStepElRef {
     #[doc = "Get a reference to the value of field `linux_exec_step_config` after provisioning.\n"]
     pub fn linux_exec_step_config(
         &self,
-    ) -> terrars::ListRef<OsConfigPatchDeploymentPatchConfigElPostStepElLinuxExecStepConfigElRef> {
+    ) -> terrars::ListRef<OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.linux_exec_step_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `windows_exec_step_config` after provisioning.\n"]
     pub fn windows_exec_step_config(
         &self,
-    ) -> terrars::ListRef<OsConfigPatchDeploymentPatchConfigElPostStepElWindowsExecStepConfigElRef> {
+    ) -> terrars::ListRef<OsConfigPatchDeployment_PatchConfig_PreStep_WindowsExecStepConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.windows_exec_step_config", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct OsConfigPatchDeploymentPatchConfigElPreStepElLinuxExecStepConfigElGcsObjectEl {
-    bucket: terrars::PrimField<std::string::String>,
-    generation_number: terrars::PrimField<std::string::String>,
-    object: terrars::PrimField<std::string::String>,
-}
-
-impl OsConfigPatchDeploymentPatchConfigElPreStepElLinuxExecStepConfigElGcsObjectEl { }
-
-impl terrars::ToListMappable for OsConfigPatchDeploymentPatchConfigElPreStepElLinuxExecStepConfigElGcsObjectEl {
-    type O = terrars::BlockAssignable<OsConfigPatchDeploymentPatchConfigElPreStepElLinuxExecStepConfigElGcsObjectEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildOsConfigPatchDeploymentPatchConfigElPreStepElLinuxExecStepConfigElGcsObjectEl {
-    #[doc = "Bucket of the Cloud Storage object."]
-    pub bucket: terrars::PrimField<std::string::String>,
-    #[doc =
-        "Generation number of the Cloud Storage object. This is used to ensure that the ExecStep specified by this PatchJob does not change."]
-    pub generation_number: terrars::PrimField<std::string::String>,
-    #[doc = "Name of the Cloud Storage object."]
-    pub object: terrars::PrimField<std::string::String>,
-}
-
-impl BuildOsConfigPatchDeploymentPatchConfigElPreStepElLinuxExecStepConfigElGcsObjectEl {
-    pub fn build(self) -> OsConfigPatchDeploymentPatchConfigElPreStepElLinuxExecStepConfigElGcsObjectEl {
-        OsConfigPatchDeploymentPatchConfigElPreStepElLinuxExecStepConfigElGcsObjectEl {
-            bucket: self.bucket,
-            generation_number: self.generation_number,
-            object: self.object,
-        }
-    }
-}
-
-pub struct OsConfigPatchDeploymentPatchConfigElPreStepElLinuxExecStepConfigElGcsObjectElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for OsConfigPatchDeploymentPatchConfigElPreStepElLinuxExecStepConfigElGcsObjectElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> OsConfigPatchDeploymentPatchConfigElPreStepElLinuxExecStepConfigElGcsObjectElRef {
-        OsConfigPatchDeploymentPatchConfigElPreStepElLinuxExecStepConfigElGcsObjectElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl OsConfigPatchDeploymentPatchConfigElPreStepElLinuxExecStepConfigElGcsObjectElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `bucket` after provisioning.\nBucket of the Cloud Storage object."]
-    pub fn bucket(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `generation_number` after provisioning.\nGeneration number of the Cloud Storage object. This is used to ensure that the ExecStep specified by this PatchJob does not change."]
-    pub fn generation_number(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.generation_number", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `object` after provisioning.\nName of the Cloud Storage object."]
-    pub fn object(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.object", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct OsConfigPatchDeploymentPatchConfigElPreStepElLinuxExecStepConfigElDynamic {
-    gcs_object: std
-    ::option
-    ::Option<terrars::DynamicBlock<OsConfigPatchDeploymentPatchConfigElPreStepElLinuxExecStepConfigElGcsObjectEl>>,
-}
-
-#[derive(Serialize)]
-pub struct OsConfigPatchDeploymentPatchConfigElPreStepElLinuxExecStepConfigEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    allowed_success_codes: std::option::Option<terrars::ListField<terrars::PrimField<f64>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    interpreter: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    local_path: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    gcs_object: std
-    ::option
-    ::Option<std::vec::Vec<OsConfigPatchDeploymentPatchConfigElPreStepElLinuxExecStepConfigElGcsObjectEl>>,
-    dynamic: OsConfigPatchDeploymentPatchConfigElPreStepElLinuxExecStepConfigElDynamic,
-}
-
-impl OsConfigPatchDeploymentPatchConfigElPreStepElLinuxExecStepConfigEl {
-    #[doc =
-        "Set the field `allowed_success_codes`.\nDefaults to [0]. A list of possible return values that the execution can return to indicate a success."]
-    pub fn set_allowed_success_codes(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<f64>>>,
-    ) -> Self {
-        self.allowed_success_codes = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `interpreter`.\nThe script interpreter to use to run the script. If no interpreter is specified the script will\nbe executed directly, which will likely only succeed for scripts with shebang lines. Possible values: [\"SHELL\", \"POWERSHELL\"]"]
-    pub fn set_interpreter(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.interpreter = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `local_path`.\nAn absolute path to the executable on the VM."]
-    pub fn set_local_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.local_path = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `gcs_object`.\n"]
-    pub fn set_gcs_object(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            OsConfigPatchDeploymentPatchConfigElPreStepElLinuxExecStepConfigElGcsObjectEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.gcs_object = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.gcs_object = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for OsConfigPatchDeploymentPatchConfigElPreStepElLinuxExecStepConfigEl {
-    type O = terrars::BlockAssignable<OsConfigPatchDeploymentPatchConfigElPreStepElLinuxExecStepConfigEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildOsConfigPatchDeploymentPatchConfigElPreStepElLinuxExecStepConfigEl {}
-
-impl BuildOsConfigPatchDeploymentPatchConfigElPreStepElLinuxExecStepConfigEl {
-    pub fn build(self) -> OsConfigPatchDeploymentPatchConfigElPreStepElLinuxExecStepConfigEl {
-        OsConfigPatchDeploymentPatchConfigElPreStepElLinuxExecStepConfigEl {
-            allowed_success_codes: core::default::Default::default(),
-            interpreter: core::default::Default::default(),
-            local_path: core::default::Default::default(),
-            gcs_object: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct OsConfigPatchDeploymentPatchConfigElPreStepElLinuxExecStepConfigElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for OsConfigPatchDeploymentPatchConfigElPreStepElLinuxExecStepConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> OsConfigPatchDeploymentPatchConfigElPreStepElLinuxExecStepConfigElRef {
-        OsConfigPatchDeploymentPatchConfigElPreStepElLinuxExecStepConfigElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl OsConfigPatchDeploymentPatchConfigElPreStepElLinuxExecStepConfigElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `allowed_success_codes` after provisioning.\nDefaults to [0]. A list of possible return values that the execution can return to indicate a success."]
-    pub fn allowed_success_codes(&self) -> terrars::ListRef<terrars::PrimExpr<f64>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.allowed_success_codes", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `interpreter` after provisioning.\nThe script interpreter to use to run the script. If no interpreter is specified the script will\nbe executed directly, which will likely only succeed for scripts with shebang lines. Possible values: [\"SHELL\", \"POWERSHELL\"]"]
-    pub fn interpreter(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.interpreter", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `local_path` after provisioning.\nAn absolute path to the executable on the VM."]
-    pub fn local_path(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.local_path", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `gcs_object` after provisioning.\n"]
-    pub fn gcs_object(
-        &self,
-    ) -> terrars::ListRef<OsConfigPatchDeploymentPatchConfigElPreStepElLinuxExecStepConfigElGcsObjectElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.gcs_object", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct OsConfigPatchDeploymentPatchConfigElPreStepElWindowsExecStepConfigElGcsObjectEl {
-    bucket: terrars::PrimField<std::string::String>,
-    generation_number: terrars::PrimField<std::string::String>,
-    object: terrars::PrimField<std::string::String>,
-}
-
-impl OsConfigPatchDeploymentPatchConfigElPreStepElWindowsExecStepConfigElGcsObjectEl { }
-
-impl terrars::ToListMappable for OsConfigPatchDeploymentPatchConfigElPreStepElWindowsExecStepConfigElGcsObjectEl {
-    type O =
-        terrars::BlockAssignable<OsConfigPatchDeploymentPatchConfigElPreStepElWindowsExecStepConfigElGcsObjectEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildOsConfigPatchDeploymentPatchConfigElPreStepElWindowsExecStepConfigElGcsObjectEl {
-    #[doc = "Bucket of the Cloud Storage object."]
-    pub bucket: terrars::PrimField<std::string::String>,
-    #[doc =
-        "Generation number of the Cloud Storage object. This is used to ensure that the ExecStep specified by this PatchJob does not change."]
-    pub generation_number: terrars::PrimField<std::string::String>,
-    #[doc = "Name of the Cloud Storage object."]
-    pub object: terrars::PrimField<std::string::String>,
-}
-
-impl BuildOsConfigPatchDeploymentPatchConfigElPreStepElWindowsExecStepConfigElGcsObjectEl {
-    pub fn build(self) -> OsConfigPatchDeploymentPatchConfigElPreStepElWindowsExecStepConfigElGcsObjectEl {
-        OsConfigPatchDeploymentPatchConfigElPreStepElWindowsExecStepConfigElGcsObjectEl {
-            bucket: self.bucket,
-            generation_number: self.generation_number,
-            object: self.object,
-        }
-    }
-}
-
-pub struct OsConfigPatchDeploymentPatchConfigElPreStepElWindowsExecStepConfigElGcsObjectElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for OsConfigPatchDeploymentPatchConfigElPreStepElWindowsExecStepConfigElGcsObjectElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> OsConfigPatchDeploymentPatchConfigElPreStepElWindowsExecStepConfigElGcsObjectElRef {
-        OsConfigPatchDeploymentPatchConfigElPreStepElWindowsExecStepConfigElGcsObjectElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl OsConfigPatchDeploymentPatchConfigElPreStepElWindowsExecStepConfigElGcsObjectElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `bucket` after provisioning.\nBucket of the Cloud Storage object."]
-    pub fn bucket(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `generation_number` after provisioning.\nGeneration number of the Cloud Storage object. This is used to ensure that the ExecStep specified by this PatchJob does not change."]
-    pub fn generation_number(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.generation_number", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `object` after provisioning.\nName of the Cloud Storage object."]
-    pub fn object(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.object", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct OsConfigPatchDeploymentPatchConfigElPreStepElWindowsExecStepConfigElDynamic {
-    gcs_object: std
-    ::option
-    ::Option<terrars::DynamicBlock<OsConfigPatchDeploymentPatchConfigElPreStepElWindowsExecStepConfigElGcsObjectEl>>,
-}
-
-#[derive(Serialize)]
-pub struct OsConfigPatchDeploymentPatchConfigElPreStepElWindowsExecStepConfigEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    allowed_success_codes: std::option::Option<terrars::ListField<terrars::PrimField<f64>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    interpreter: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    local_path: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    gcs_object: std
-    ::option
-    ::Option<std::vec::Vec<OsConfigPatchDeploymentPatchConfigElPreStepElWindowsExecStepConfigElGcsObjectEl>>,
-    dynamic: OsConfigPatchDeploymentPatchConfigElPreStepElWindowsExecStepConfigElDynamic,
-}
-
-impl OsConfigPatchDeploymentPatchConfigElPreStepElWindowsExecStepConfigEl {
-    #[doc =
-        "Set the field `allowed_success_codes`.\nDefaults to [0]. A list of possible return values that the execution can return to indicate a success."]
-    pub fn set_allowed_success_codes(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<f64>>>,
-    ) -> Self {
-        self.allowed_success_codes = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `interpreter`.\nThe script interpreter to use to run the script. If no interpreter is specified the script will\nbe executed directly, which will likely only succeed for scripts with shebang lines. Possible values: [\"SHELL\", \"POWERSHELL\"]"]
-    pub fn set_interpreter(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.interpreter = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `local_path`.\nAn absolute path to the executable on the VM."]
-    pub fn set_local_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.local_path = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `gcs_object`.\n"]
-    pub fn set_gcs_object(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            OsConfigPatchDeploymentPatchConfigElPreStepElWindowsExecStepConfigElGcsObjectEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.gcs_object = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.gcs_object = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for OsConfigPatchDeploymentPatchConfigElPreStepElWindowsExecStepConfigEl {
-    type O = terrars::BlockAssignable<OsConfigPatchDeploymentPatchConfigElPreStepElWindowsExecStepConfigEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildOsConfigPatchDeploymentPatchConfigElPreStepElWindowsExecStepConfigEl {}
-
-impl BuildOsConfigPatchDeploymentPatchConfigElPreStepElWindowsExecStepConfigEl {
-    pub fn build(self) -> OsConfigPatchDeploymentPatchConfigElPreStepElWindowsExecStepConfigEl {
-        OsConfigPatchDeploymentPatchConfigElPreStepElWindowsExecStepConfigEl {
-            allowed_success_codes: core::default::Default::default(),
-            interpreter: core::default::Default::default(),
-            local_path: core::default::Default::default(),
-            gcs_object: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct OsConfigPatchDeploymentPatchConfigElPreStepElWindowsExecStepConfigElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for OsConfigPatchDeploymentPatchConfigElPreStepElWindowsExecStepConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> OsConfigPatchDeploymentPatchConfigElPreStepElWindowsExecStepConfigElRef {
-        OsConfigPatchDeploymentPatchConfigElPreStepElWindowsExecStepConfigElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl OsConfigPatchDeploymentPatchConfigElPreStepElWindowsExecStepConfigElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `allowed_success_codes` after provisioning.\nDefaults to [0]. A list of possible return values that the execution can return to indicate a success."]
-    pub fn allowed_success_codes(&self) -> terrars::ListRef<terrars::PrimExpr<f64>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.allowed_success_codes", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `interpreter` after provisioning.\nThe script interpreter to use to run the script. If no interpreter is specified the script will\nbe executed directly, which will likely only succeed for scripts with shebang lines. Possible values: [\"SHELL\", \"POWERSHELL\"]"]
-    pub fn interpreter(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.interpreter", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `local_path` after provisioning.\nAn absolute path to the executable on the VM."]
-    pub fn local_path(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.local_path", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `gcs_object` after provisioning.\n"]
-    pub fn gcs_object(
-        &self,
-    ) -> terrars::ListRef<OsConfigPatchDeploymentPatchConfigElPreStepElWindowsExecStepConfigElGcsObjectElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.gcs_object", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct OsConfigPatchDeploymentPatchConfigElPreStepElDynamic {
+struct OsConfigPatchDeployment_PatchConfig_PreStepDynamic {
     linux_exec_step_config: std
     ::option
-    ::Option<terrars::DynamicBlock<OsConfigPatchDeploymentPatchConfigElPreStepElLinuxExecStepConfigEl>>,
+    ::Option<terrars::DynamicBlock<OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfig>>,
     windows_exec_step_config: std
     ::option
-    ::Option<terrars::DynamicBlock<OsConfigPatchDeploymentPatchConfigElPreStepElWindowsExecStepConfigEl>>,
+    ::Option<terrars::DynamicBlock<OsConfigPatchDeployment_PatchConfig_PreStep_WindowsExecStepConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct OsConfigPatchDeploymentPatchConfigElPreStepEl {
+pub struct OsConfigPatchDeployment_PatchConfig_PreStep {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     linux_exec_step_config: std
     ::option
-    ::Option<std::vec::Vec<OsConfigPatchDeploymentPatchConfigElPreStepElLinuxExecStepConfigEl>>,
+    ::Option<std::vec::Vec<OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     windows_exec_step_config: std
     ::option
-    ::Option<std::vec::Vec<OsConfigPatchDeploymentPatchConfigElPreStepElWindowsExecStepConfigEl>>,
-    dynamic: OsConfigPatchDeploymentPatchConfigElPreStepElDynamic,
+    ::Option<std::vec::Vec<OsConfigPatchDeployment_PatchConfig_PreStep_WindowsExecStepConfig>>,
+    dynamic: OsConfigPatchDeployment_PatchConfig_PreStepDynamic,
 }
 
-impl OsConfigPatchDeploymentPatchConfigElPreStepEl {
+impl OsConfigPatchDeployment_PatchConfig_PreStep {
     #[doc = "Set the field `linux_exec_step_config`.\n"]
     pub fn set_linux_exec_step_config(
         mut self,
@@ -2014,9 +1519,7 @@ impl OsConfigPatchDeploymentPatchConfigElPreStepEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<OsConfigPatchDeploymentPatchConfigElPreStepElLinuxExecStepConfigEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2038,7 +1541,7 @@ impl OsConfigPatchDeploymentPatchConfigElPreStepEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<OsConfigPatchDeploymentPatchConfigElPreStepElWindowsExecStepConfigEl>,
+                        terrars::BlockAssignable<OsConfigPatchDeployment_PatchConfig_PreStep_WindowsExecStepConfig>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2053,8 +1556,8 @@ impl OsConfigPatchDeploymentPatchConfigElPreStepEl {
     }
 }
 
-impl terrars::ToListMappable for OsConfigPatchDeploymentPatchConfigElPreStepEl {
-    type O = terrars::BlockAssignable<OsConfigPatchDeploymentPatchConfigElPreStepEl>;
+impl terrars::ToListMappable for OsConfigPatchDeployment_PatchConfig_PreStep {
+    type O = terrars::BlockAssignable<OsConfigPatchDeployment_PatchConfig_PreStep>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2065,11 +1568,11 @@ impl terrars::ToListMappable for OsConfigPatchDeploymentPatchConfigElPreStepEl {
     }
 }
 
-pub struct BuildOsConfigPatchDeploymentPatchConfigElPreStepEl {}
+pub struct BuildOsConfigPatchDeployment_PatchConfig_PreStep {}
 
-impl BuildOsConfigPatchDeploymentPatchConfigElPreStepEl {
-    pub fn build(self) -> OsConfigPatchDeploymentPatchConfigElPreStepEl {
-        OsConfigPatchDeploymentPatchConfigElPreStepEl {
+impl BuildOsConfigPatchDeployment_PatchConfig_PreStep {
+    pub fn build(self) -> OsConfigPatchDeployment_PatchConfig_PreStep {
+        OsConfigPatchDeployment_PatchConfig_PreStep {
             linux_exec_step_config: core::default::Default::default(),
             windows_exec_step_config: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -2077,24 +1580,26 @@ impl BuildOsConfigPatchDeploymentPatchConfigElPreStepEl {
     }
 }
 
-pub struct OsConfigPatchDeploymentPatchConfigElPreStepElRef {
+#[allow(dead_code)]
+pub struct OsConfigPatchDeployment_PatchConfig_PreStepRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigPatchDeploymentPatchConfigElPreStepElRef {
+impl terrars::Ref for OsConfigPatchDeployment_PatchConfig_PreStepRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigPatchDeploymentPatchConfigElPreStepElRef {
-        OsConfigPatchDeploymentPatchConfigElPreStepElRef {
+    ) -> OsConfigPatchDeployment_PatchConfig_PreStepRef {
+        OsConfigPatchDeployment_PatchConfig_PreStepRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigPatchDeploymentPatchConfigElPreStepElRef {
+impl OsConfigPatchDeployment_PatchConfig_PreStepRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2102,20 +1607,20 @@ impl OsConfigPatchDeploymentPatchConfigElPreStepElRef {
     #[doc = "Get a reference to the value of field `linux_exec_step_config` after provisioning.\n"]
     pub fn linux_exec_step_config(
         &self,
-    ) -> terrars::ListRef<OsConfigPatchDeploymentPatchConfigElPreStepElLinuxExecStepConfigElRef> {
+    ) -> terrars::ListRef<OsConfigPatchDeployment_PatchConfig_PreStep_LinuxExecStepConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.linux_exec_step_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `windows_exec_step_config` after provisioning.\n"]
     pub fn windows_exec_step_config(
         &self,
-    ) -> terrars::ListRef<OsConfigPatchDeploymentPatchConfigElPreStepElWindowsExecStepConfigElRef> {
+    ) -> terrars::ListRef<OsConfigPatchDeployment_PatchConfig_PreStep_WindowsExecStepConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.windows_exec_step_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct OsConfigPatchDeploymentPatchConfigElWindowsUpdateEl {
+pub struct OsConfigPatchDeployment_PatchConfig_WindowsUpdate {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     classifications: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2124,7 +1629,7 @@ pub struct OsConfigPatchDeploymentPatchConfigElWindowsUpdateEl {
     exclusive_patches: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl OsConfigPatchDeploymentPatchConfigElWindowsUpdateEl {
+impl OsConfigPatchDeployment_PatchConfig_WindowsUpdate {
     #[doc =
         "Set the field `classifications`.\nOnly apply updates of these windows update classifications. If empty, all updates are applied. Possible values: [\"CRITICAL\", \"SECURITY\", \"DEFINITION\", \"DRIVER\", \"FEATURE_PACK\", \"SERVICE_PACK\", \"TOOL\", \"UPDATE_ROLLUP\", \"UPDATE\"]"]
     pub fn set_classifications(
@@ -2155,8 +1660,8 @@ impl OsConfigPatchDeploymentPatchConfigElWindowsUpdateEl {
     }
 }
 
-impl terrars::ToListMappable for OsConfigPatchDeploymentPatchConfigElWindowsUpdateEl {
-    type O = terrars::BlockAssignable<OsConfigPatchDeploymentPatchConfigElWindowsUpdateEl>;
+impl terrars::ToListMappable for OsConfigPatchDeployment_PatchConfig_WindowsUpdate {
+    type O = terrars::BlockAssignable<OsConfigPatchDeployment_PatchConfig_WindowsUpdate>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2167,11 +1672,11 @@ impl terrars::ToListMappable for OsConfigPatchDeploymentPatchConfigElWindowsUpda
     }
 }
 
-pub struct BuildOsConfigPatchDeploymentPatchConfigElWindowsUpdateEl {}
+pub struct BuildOsConfigPatchDeployment_PatchConfig_WindowsUpdate {}
 
-impl BuildOsConfigPatchDeploymentPatchConfigElWindowsUpdateEl {
-    pub fn build(self) -> OsConfigPatchDeploymentPatchConfigElWindowsUpdateEl {
-        OsConfigPatchDeploymentPatchConfigElWindowsUpdateEl {
+impl BuildOsConfigPatchDeployment_PatchConfig_WindowsUpdate {
+    pub fn build(self) -> OsConfigPatchDeployment_PatchConfig_WindowsUpdate {
+        OsConfigPatchDeployment_PatchConfig_WindowsUpdate {
             classifications: core::default::Default::default(),
             excludes: core::default::Default::default(),
             exclusive_patches: core::default::Default::default(),
@@ -2179,24 +1684,26 @@ impl BuildOsConfigPatchDeploymentPatchConfigElWindowsUpdateEl {
     }
 }
 
-pub struct OsConfigPatchDeploymentPatchConfigElWindowsUpdateElRef {
+#[allow(dead_code)]
+pub struct OsConfigPatchDeployment_PatchConfig_WindowsUpdateRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigPatchDeploymentPatchConfigElWindowsUpdateElRef {
+impl terrars::Ref for OsConfigPatchDeployment_PatchConfig_WindowsUpdateRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigPatchDeploymentPatchConfigElWindowsUpdateElRef {
-        OsConfigPatchDeploymentPatchConfigElWindowsUpdateElRef {
+    ) -> OsConfigPatchDeployment_PatchConfig_WindowsUpdateRef {
+        OsConfigPatchDeployment_PatchConfig_WindowsUpdateRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigPatchDeploymentPatchConfigElWindowsUpdateElRef {
+impl OsConfigPatchDeployment_PatchConfig_WindowsUpdateRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2220,7 +1727,7 @@ impl OsConfigPatchDeploymentPatchConfigElWindowsUpdateElRef {
 }
 
 #[derive(Serialize)]
-pub struct OsConfigPatchDeploymentPatchConfigElYumEl {
+pub struct OsConfigPatchDeployment_PatchConfig_Yum {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     excludes: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2231,7 +1738,7 @@ pub struct OsConfigPatchDeploymentPatchConfigElYumEl {
     security: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl OsConfigPatchDeploymentPatchConfigElYumEl {
+impl OsConfigPatchDeployment_PatchConfig_Yum {
     #[doc = "Set the field `excludes`.\nList of packages to exclude from update. These packages will be excluded."]
     pub fn set_excludes(
         mut self,
@@ -2264,8 +1771,8 @@ impl OsConfigPatchDeploymentPatchConfigElYumEl {
     }
 }
 
-impl terrars::ToListMappable for OsConfigPatchDeploymentPatchConfigElYumEl {
-    type O = terrars::BlockAssignable<OsConfigPatchDeploymentPatchConfigElYumEl>;
+impl terrars::ToListMappable for OsConfigPatchDeployment_PatchConfig_Yum {
+    type O = terrars::BlockAssignable<OsConfigPatchDeployment_PatchConfig_Yum>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2276,11 +1783,11 @@ impl terrars::ToListMappable for OsConfigPatchDeploymentPatchConfigElYumEl {
     }
 }
 
-pub struct BuildOsConfigPatchDeploymentPatchConfigElYumEl {}
+pub struct BuildOsConfigPatchDeployment_PatchConfig_Yum {}
 
-impl BuildOsConfigPatchDeploymentPatchConfigElYumEl {
-    pub fn build(self) -> OsConfigPatchDeploymentPatchConfigElYumEl {
-        OsConfigPatchDeploymentPatchConfigElYumEl {
+impl BuildOsConfigPatchDeployment_PatchConfig_Yum {
+    pub fn build(self) -> OsConfigPatchDeployment_PatchConfig_Yum {
+        OsConfigPatchDeployment_PatchConfig_Yum {
             excludes: core::default::Default::default(),
             exclusive_packages: core::default::Default::default(),
             minimal: core::default::Default::default(),
@@ -2289,21 +1796,23 @@ impl BuildOsConfigPatchDeploymentPatchConfigElYumEl {
     }
 }
 
-pub struct OsConfigPatchDeploymentPatchConfigElYumElRef {
+#[allow(dead_code)]
+pub struct OsConfigPatchDeployment_PatchConfig_YumRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigPatchDeploymentPatchConfigElYumElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> OsConfigPatchDeploymentPatchConfigElYumElRef {
-        OsConfigPatchDeploymentPatchConfigElYumElRef {
+impl terrars::Ref for OsConfigPatchDeployment_PatchConfig_YumRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> OsConfigPatchDeployment_PatchConfig_YumRef {
+        OsConfigPatchDeployment_PatchConfig_YumRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigPatchDeploymentPatchConfigElYumElRef {
+impl OsConfigPatchDeployment_PatchConfig_YumRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2334,7 +1843,7 @@ impl OsConfigPatchDeploymentPatchConfigElYumElRef {
 }
 
 #[derive(Serialize)]
-pub struct OsConfigPatchDeploymentPatchConfigElZypperEl {
+pub struct OsConfigPatchDeployment_PatchConfig_Zypper {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     categories: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2349,7 +1858,7 @@ pub struct OsConfigPatchDeploymentPatchConfigElZypperEl {
     with_update: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl OsConfigPatchDeploymentPatchConfigElZypperEl {
+impl OsConfigPatchDeployment_PatchConfig_Zypper {
     #[doc =
         "Set the field `categories`.\nInstall only patches with these categories. Common categories include security, recommended, and feature."]
     pub fn set_categories(
@@ -2402,8 +1911,8 @@ impl OsConfigPatchDeploymentPatchConfigElZypperEl {
     }
 }
 
-impl terrars::ToListMappable for OsConfigPatchDeploymentPatchConfigElZypperEl {
-    type O = terrars::BlockAssignable<OsConfigPatchDeploymentPatchConfigElZypperEl>;
+impl terrars::ToListMappable for OsConfigPatchDeployment_PatchConfig_Zypper {
+    type O = terrars::BlockAssignable<OsConfigPatchDeployment_PatchConfig_Zypper>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2414,11 +1923,11 @@ impl terrars::ToListMappable for OsConfigPatchDeploymentPatchConfigElZypperEl {
     }
 }
 
-pub struct BuildOsConfigPatchDeploymentPatchConfigElZypperEl {}
+pub struct BuildOsConfigPatchDeployment_PatchConfig_Zypper {}
 
-impl BuildOsConfigPatchDeploymentPatchConfigElZypperEl {
-    pub fn build(self) -> OsConfigPatchDeploymentPatchConfigElZypperEl {
-        OsConfigPatchDeploymentPatchConfigElZypperEl {
+impl BuildOsConfigPatchDeployment_PatchConfig_Zypper {
+    pub fn build(self) -> OsConfigPatchDeployment_PatchConfig_Zypper {
+        OsConfigPatchDeployment_PatchConfig_Zypper {
             categories: core::default::Default::default(),
             excludes: core::default::Default::default(),
             exclusive_patches: core::default::Default::default(),
@@ -2429,24 +1938,23 @@ impl BuildOsConfigPatchDeploymentPatchConfigElZypperEl {
     }
 }
 
-pub struct OsConfigPatchDeploymentPatchConfigElZypperElRef {
+#[allow(dead_code)]
+pub struct OsConfigPatchDeployment_PatchConfig_ZypperRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigPatchDeploymentPatchConfigElZypperElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> OsConfigPatchDeploymentPatchConfigElZypperElRef {
-        OsConfigPatchDeploymentPatchConfigElZypperElRef {
+impl terrars::Ref for OsConfigPatchDeployment_PatchConfig_ZypperRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> OsConfigPatchDeployment_PatchConfig_ZypperRef {
+        OsConfigPatchDeployment_PatchConfig_ZypperRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigPatchDeploymentPatchConfigElZypperElRef {
+impl OsConfigPatchDeployment_PatchConfig_ZypperRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2489,40 +1997,42 @@ impl OsConfigPatchDeploymentPatchConfigElZypperElRef {
 }
 
 #[derive(Serialize, Default)]
-struct OsConfigPatchDeploymentPatchConfigElDynamic {
-    apt: std::option::Option<terrars::DynamicBlock<OsConfigPatchDeploymentPatchConfigElAptEl>>,
-    goo: std::option::Option<terrars::DynamicBlock<OsConfigPatchDeploymentPatchConfigElGooEl>>,
-    post_step: std::option::Option<terrars::DynamicBlock<OsConfigPatchDeploymentPatchConfigElPostStepEl>>,
-    pre_step: std::option::Option<terrars::DynamicBlock<OsConfigPatchDeploymentPatchConfigElPreStepEl>>,
-    windows_update: std::option::Option<terrars::DynamicBlock<OsConfigPatchDeploymentPatchConfigElWindowsUpdateEl>>,
-    yum: std::option::Option<terrars::DynamicBlock<OsConfigPatchDeploymentPatchConfigElYumEl>>,
-    zypper: std::option::Option<terrars::DynamicBlock<OsConfigPatchDeploymentPatchConfigElZypperEl>>,
+struct OsConfigPatchDeployment_PatchConfigDynamic {
+    apt: std::option::Option<terrars::DynamicBlock<OsConfigPatchDeployment_PatchConfig_Apt>>,
+    goo: std::option::Option<terrars::DynamicBlock<OsConfigPatchDeployment_PatchConfig_Goo>>,
+    post_step: std::option::Option<terrars::DynamicBlock<OsConfigPatchDeployment_PatchConfig_PostStep>>,
+    pre_step: std::option::Option<terrars::DynamicBlock<OsConfigPatchDeployment_PatchConfig_PreStep>>,
+    windows_update: std::option::Option<terrars::DynamicBlock<OsConfigPatchDeployment_PatchConfig_WindowsUpdate>>,
+    yum: std::option::Option<terrars::DynamicBlock<OsConfigPatchDeployment_PatchConfig_Yum>>,
+    zypper: std::option::Option<terrars::DynamicBlock<OsConfigPatchDeployment_PatchConfig_Zypper>>,
 }
 
 #[derive(Serialize)]
-pub struct OsConfigPatchDeploymentPatchConfigEl {
+pub struct OsConfigPatchDeployment_PatchConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     mig_instances_allowed: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     reboot_config: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    apt: std::option::Option<std::vec::Vec<OsConfigPatchDeploymentPatchConfigElAptEl>>,
+    skip_unpatchable_vms: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    goo: std::option::Option<std::vec::Vec<OsConfigPatchDeploymentPatchConfigElGooEl>>,
+    apt: std::option::Option<std::vec::Vec<OsConfigPatchDeployment_PatchConfig_Apt>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    post_step: std::option::Option<std::vec::Vec<OsConfigPatchDeploymentPatchConfigElPostStepEl>>,
+    goo: std::option::Option<std::vec::Vec<OsConfigPatchDeployment_PatchConfig_Goo>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    pre_step: std::option::Option<std::vec::Vec<OsConfigPatchDeploymentPatchConfigElPreStepEl>>,
+    post_step: std::option::Option<std::vec::Vec<OsConfigPatchDeployment_PatchConfig_PostStep>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    windows_update: std::option::Option<std::vec::Vec<OsConfigPatchDeploymentPatchConfigElWindowsUpdateEl>>,
+    pre_step: std::option::Option<std::vec::Vec<OsConfigPatchDeployment_PatchConfig_PreStep>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    yum: std::option::Option<std::vec::Vec<OsConfigPatchDeploymentPatchConfigElYumEl>>,
+    windows_update: std::option::Option<std::vec::Vec<OsConfigPatchDeployment_PatchConfig_WindowsUpdate>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    zypper: std::option::Option<std::vec::Vec<OsConfigPatchDeploymentPatchConfigElZypperEl>>,
-    dynamic: OsConfigPatchDeploymentPatchConfigElDynamic,
+    yum: std::option::Option<std::vec::Vec<OsConfigPatchDeployment_PatchConfig_Yum>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    zypper: std::option::Option<std::vec::Vec<OsConfigPatchDeployment_PatchConfig_Zypper>>,
+    dynamic: OsConfigPatchDeployment_PatchConfigDynamic,
 }
 
-impl OsConfigPatchDeploymentPatchConfigEl {
+impl OsConfigPatchDeployment_PatchConfig {
     #[doc = "Set the field `mig_instances_allowed`.\nAllows the patch job to run on Managed instance groups (MIGs)."]
     pub fn set_mig_instances_allowed(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.mig_instances_allowed = std::option::Option::Some(v.into());
@@ -2536,10 +2046,17 @@ impl OsConfigPatchDeploymentPatchConfigEl {
         self
     }
 
+    #[doc =
+        "Set the field `skip_unpatchable_vms`.\nEnables enhanced reporting for the patch job:\n\n1. The patch job skips instances that cannot be patched and reports them as 'SKIPPED'. An instance cannot be patched for two reasons:\n    * The instance runs Container-Optimized OS (COS), which cannot be patched.\n    * The instance is part of a managed instance group (MIG), and patching MIG instances is disabled in the patch job's configuration ('mig_instances_allowed' is false).\n2. The patch job is reported as 'SUCCEEDED' if it completes without errors, even if some instances are 'SKIPPED'.\n3. The patch job is reported as 'COMPLETED_WITH_INACTIVE_VMS' if it completes without errors, but does not patch instances that are 'INACTIVE'."]
+    pub fn set_skip_unpatchable_vms(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.skip_unpatchable_vms = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `apt`.\n"]
     pub fn set_apt(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigPatchDeploymentPatchConfigElAptEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigPatchDeployment_PatchConfig_Apt>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2555,7 +2072,7 @@ impl OsConfigPatchDeploymentPatchConfigEl {
     #[doc = "Set the field `goo`.\n"]
     pub fn set_goo(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigPatchDeploymentPatchConfigElGooEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigPatchDeployment_PatchConfig_Goo>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2571,7 +2088,7 @@ impl OsConfigPatchDeploymentPatchConfigEl {
     #[doc = "Set the field `post_step`.\n"]
     pub fn set_post_step(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigPatchDeploymentPatchConfigElPostStepEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigPatchDeployment_PatchConfig_PostStep>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2587,7 +2104,7 @@ impl OsConfigPatchDeploymentPatchConfigEl {
     #[doc = "Set the field `pre_step`.\n"]
     pub fn set_pre_step(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigPatchDeploymentPatchConfigElPreStepEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigPatchDeployment_PatchConfig_PreStep>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2603,7 +2120,7 @@ impl OsConfigPatchDeploymentPatchConfigEl {
     #[doc = "Set the field `windows_update`.\n"]
     pub fn set_windows_update(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigPatchDeploymentPatchConfigElWindowsUpdateEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigPatchDeployment_PatchConfig_WindowsUpdate>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2619,7 +2136,7 @@ impl OsConfigPatchDeploymentPatchConfigEl {
     #[doc = "Set the field `yum`.\n"]
     pub fn set_yum(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigPatchDeploymentPatchConfigElYumEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigPatchDeployment_PatchConfig_Yum>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2635,7 +2152,7 @@ impl OsConfigPatchDeploymentPatchConfigEl {
     #[doc = "Set the field `zypper`.\n"]
     pub fn set_zypper(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigPatchDeploymentPatchConfigElZypperEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigPatchDeployment_PatchConfig_Zypper>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2649,8 +2166,8 @@ impl OsConfigPatchDeploymentPatchConfigEl {
     }
 }
 
-impl terrars::ToListMappable for OsConfigPatchDeploymentPatchConfigEl {
-    type O = terrars::BlockAssignable<OsConfigPatchDeploymentPatchConfigEl>;
+impl terrars::ToListMappable for OsConfigPatchDeployment_PatchConfig {
+    type O = terrars::BlockAssignable<OsConfigPatchDeployment_PatchConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2661,13 +2178,14 @@ impl terrars::ToListMappable for OsConfigPatchDeploymentPatchConfigEl {
     }
 }
 
-pub struct BuildOsConfigPatchDeploymentPatchConfigEl {}
+pub struct BuildOsConfigPatchDeployment_PatchConfig {}
 
-impl BuildOsConfigPatchDeploymentPatchConfigEl {
-    pub fn build(self) -> OsConfigPatchDeploymentPatchConfigEl {
-        OsConfigPatchDeploymentPatchConfigEl {
+impl BuildOsConfigPatchDeployment_PatchConfig {
+    pub fn build(self) -> OsConfigPatchDeployment_PatchConfig {
+        OsConfigPatchDeployment_PatchConfig {
             mig_instances_allowed: core::default::Default::default(),
             reboot_config: core::default::Default::default(),
+            skip_unpatchable_vms: core::default::Default::default(),
             apt: core::default::Default::default(),
             goo: core::default::Default::default(),
             post_step: core::default::Default::default(),
@@ -2680,21 +2198,23 @@ impl BuildOsConfigPatchDeploymentPatchConfigEl {
     }
 }
 
-pub struct OsConfigPatchDeploymentPatchConfigElRef {
+#[allow(dead_code)]
+pub struct OsConfigPatchDeployment_PatchConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigPatchDeploymentPatchConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> OsConfigPatchDeploymentPatchConfigElRef {
-        OsConfigPatchDeploymentPatchConfigElRef {
+impl terrars::Ref for OsConfigPatchDeployment_PatchConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> OsConfigPatchDeployment_PatchConfigRef {
+        OsConfigPatchDeployment_PatchConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigPatchDeploymentPatchConfigElRef {
+impl OsConfigPatchDeployment_PatchConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2711,51 +2231,57 @@ impl OsConfigPatchDeploymentPatchConfigElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.reboot_config", self.base))
     }
 
+    #[doc =
+        "Get a reference to the value of field `skip_unpatchable_vms` after provisioning.\nEnables enhanced reporting for the patch job:\n\n1. The patch job skips instances that cannot be patched and reports them as 'SKIPPED'. An instance cannot be patched for two reasons:\n    * The instance runs Container-Optimized OS (COS), which cannot be patched.\n    * The instance is part of a managed instance group (MIG), and patching MIG instances is disabled in the patch job's configuration ('mig_instances_allowed' is false).\n2. The patch job is reported as 'SUCCEEDED' if it completes without errors, even if some instances are 'SKIPPED'.\n3. The patch job is reported as 'COMPLETED_WITH_INACTIVE_VMS' if it completes without errors, but does not patch instances that are 'INACTIVE'."]
+    pub fn skip_unpatchable_vms(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.skip_unpatchable_vms", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `apt` after provisioning.\n"]
-    pub fn apt(&self) -> terrars::ListRef<OsConfigPatchDeploymentPatchConfigElAptElRef> {
+    pub fn apt(&self) -> terrars::ListRef<OsConfigPatchDeployment_PatchConfig_AptRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.apt", self.base))
     }
 
     #[doc = "Get a reference to the value of field `goo` after provisioning.\n"]
-    pub fn goo(&self) -> terrars::ListRef<OsConfigPatchDeploymentPatchConfigElGooElRef> {
+    pub fn goo(&self) -> terrars::ListRef<OsConfigPatchDeployment_PatchConfig_GooRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.goo", self.base))
     }
 
     #[doc = "Get a reference to the value of field `post_step` after provisioning.\n"]
-    pub fn post_step(&self) -> terrars::ListRef<OsConfigPatchDeploymentPatchConfigElPostStepElRef> {
+    pub fn post_step(&self) -> terrars::ListRef<OsConfigPatchDeployment_PatchConfig_PostStepRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.post_step", self.base))
     }
 
     #[doc = "Get a reference to the value of field `pre_step` after provisioning.\n"]
-    pub fn pre_step(&self) -> terrars::ListRef<OsConfigPatchDeploymentPatchConfigElPreStepElRef> {
+    pub fn pre_step(&self) -> terrars::ListRef<OsConfigPatchDeployment_PatchConfig_PreStepRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.pre_step", self.base))
     }
 
     #[doc = "Get a reference to the value of field `windows_update` after provisioning.\n"]
-    pub fn windows_update(&self) -> terrars::ListRef<OsConfigPatchDeploymentPatchConfigElWindowsUpdateElRef> {
+    pub fn windows_update(&self) -> terrars::ListRef<OsConfigPatchDeployment_PatchConfig_WindowsUpdateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.windows_update", self.base))
     }
 
     #[doc = "Get a reference to the value of field `yum` after provisioning.\n"]
-    pub fn yum(&self) -> terrars::ListRef<OsConfigPatchDeploymentPatchConfigElYumElRef> {
+    pub fn yum(&self) -> terrars::ListRef<OsConfigPatchDeployment_PatchConfig_YumRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.yum", self.base))
     }
 
     #[doc = "Get a reference to the value of field `zypper` after provisioning.\n"]
-    pub fn zypper(&self) -> terrars::ListRef<OsConfigPatchDeploymentPatchConfigElZypperElRef> {
+    pub fn zypper(&self) -> terrars::ListRef<OsConfigPatchDeployment_PatchConfig_ZypperRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.zypper", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct OsConfigPatchDeploymentRecurringScheduleElMonthlyElWeekDayOfMonthEl {
+pub struct OsConfigPatchDeployment_RecurringSchedule_Monthly_WeekDayOfMonth {
     day_of_week: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     day_offset: std::option::Option<terrars::PrimField<f64>>,
     week_ordinal: terrars::PrimField<f64>,
 }
 
-impl OsConfigPatchDeploymentRecurringScheduleElMonthlyElWeekDayOfMonthEl {
+impl OsConfigPatchDeployment_RecurringSchedule_Monthly_WeekDayOfMonth {
     #[doc =
         "Set the field `day_offset`.\nRepresents the number of days before or after the given week day of month that the patch deployment is scheduled for."]
     pub fn set_day_offset(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -2764,8 +2290,8 @@ impl OsConfigPatchDeploymentRecurringScheduleElMonthlyElWeekDayOfMonthEl {
     }
 }
 
-impl terrars::ToListMappable for OsConfigPatchDeploymentRecurringScheduleElMonthlyElWeekDayOfMonthEl {
-    type O = terrars::BlockAssignable<OsConfigPatchDeploymentRecurringScheduleElMonthlyElWeekDayOfMonthEl>;
+impl terrars::ToListMappable for OsConfigPatchDeployment_RecurringSchedule_Monthly_WeekDayOfMonth {
+    type O = terrars::BlockAssignable<OsConfigPatchDeployment_RecurringSchedule_Monthly_WeekDayOfMonth>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2776,7 +2302,7 @@ impl terrars::ToListMappable for OsConfigPatchDeploymentRecurringScheduleElMonth
     }
 }
 
-pub struct BuildOsConfigPatchDeploymentRecurringScheduleElMonthlyElWeekDayOfMonthEl {
+pub struct BuildOsConfigPatchDeployment_RecurringSchedule_Monthly_WeekDayOfMonth {
     #[doc =
         "A day of the week. Possible values: [\"MONDAY\", \"TUESDAY\", \"WEDNESDAY\", \"THURSDAY\", \"FRIDAY\", \"SATURDAY\", \"SUNDAY\"]"]
     pub day_of_week: terrars::PrimField<std::string::String>,
@@ -2785,9 +2311,9 @@ pub struct BuildOsConfigPatchDeploymentRecurringScheduleElMonthlyElWeekDayOfMont
     pub week_ordinal: terrars::PrimField<f64>,
 }
 
-impl BuildOsConfigPatchDeploymentRecurringScheduleElMonthlyElWeekDayOfMonthEl {
-    pub fn build(self) -> OsConfigPatchDeploymentRecurringScheduleElMonthlyElWeekDayOfMonthEl {
-        OsConfigPatchDeploymentRecurringScheduleElMonthlyElWeekDayOfMonthEl {
+impl BuildOsConfigPatchDeployment_RecurringSchedule_Monthly_WeekDayOfMonth {
+    pub fn build(self) -> OsConfigPatchDeployment_RecurringSchedule_Monthly_WeekDayOfMonth {
+        OsConfigPatchDeployment_RecurringSchedule_Monthly_WeekDayOfMonth {
             day_of_week: self.day_of_week,
             day_offset: core::default::Default::default(),
             week_ordinal: self.week_ordinal,
@@ -2795,24 +2321,26 @@ impl BuildOsConfigPatchDeploymentRecurringScheduleElMonthlyElWeekDayOfMonthEl {
     }
 }
 
-pub struct OsConfigPatchDeploymentRecurringScheduleElMonthlyElWeekDayOfMonthElRef {
+#[allow(dead_code)]
+pub struct OsConfigPatchDeployment_RecurringSchedule_Monthly_WeekDayOfMonthRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigPatchDeploymentRecurringScheduleElMonthlyElWeekDayOfMonthElRef {
+impl terrars::Ref for OsConfigPatchDeployment_RecurringSchedule_Monthly_WeekDayOfMonthRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigPatchDeploymentRecurringScheduleElMonthlyElWeekDayOfMonthElRef {
-        OsConfigPatchDeploymentRecurringScheduleElMonthlyElWeekDayOfMonthElRef {
+    ) -> OsConfigPatchDeployment_RecurringSchedule_Monthly_WeekDayOfMonthRef {
+        OsConfigPatchDeployment_RecurringSchedule_Monthly_WeekDayOfMonthRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigPatchDeploymentRecurringScheduleElMonthlyElWeekDayOfMonthElRef {
+impl OsConfigPatchDeployment_RecurringSchedule_Monthly_WeekDayOfMonthRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2837,24 +2365,24 @@ impl OsConfigPatchDeploymentRecurringScheduleElMonthlyElWeekDayOfMonthElRef {
 }
 
 #[derive(Serialize, Default)]
-struct OsConfigPatchDeploymentRecurringScheduleElMonthlyElDynamic {
+struct OsConfigPatchDeployment_RecurringSchedule_MonthlyDynamic {
     week_day_of_month: std
     ::option
-    ::Option<terrars::DynamicBlock<OsConfigPatchDeploymentRecurringScheduleElMonthlyElWeekDayOfMonthEl>>,
+    ::Option<terrars::DynamicBlock<OsConfigPatchDeployment_RecurringSchedule_Monthly_WeekDayOfMonth>>,
 }
 
 #[derive(Serialize)]
-pub struct OsConfigPatchDeploymentRecurringScheduleElMonthlyEl {
+pub struct OsConfigPatchDeployment_RecurringSchedule_Monthly {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     month_day: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     week_day_of_month: std
     ::option
-    ::Option<std::vec::Vec<OsConfigPatchDeploymentRecurringScheduleElMonthlyElWeekDayOfMonthEl>>,
-    dynamic: OsConfigPatchDeploymentRecurringScheduleElMonthlyElDynamic,
+    ::Option<std::vec::Vec<OsConfigPatchDeployment_RecurringSchedule_Monthly_WeekDayOfMonth>>,
+    dynamic: OsConfigPatchDeployment_RecurringSchedule_MonthlyDynamic,
 }
 
-impl OsConfigPatchDeploymentRecurringScheduleElMonthlyEl {
+impl OsConfigPatchDeployment_RecurringSchedule_Monthly {
     #[doc =
         "Set the field `month_day`.\nOne day of the month. 1-31 indicates the 1st to the 31st day. -1 indicates the last day of the month.\nMonths without the target day will be skipped. For example, a schedule to run \"every month on the 31st\"\nwill not run in February, April, June, etc."]
     pub fn set_month_day(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -2871,7 +2399,7 @@ impl OsConfigPatchDeploymentRecurringScheduleElMonthlyEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<OsConfigPatchDeploymentRecurringScheduleElMonthlyElWeekDayOfMonthEl>,
+                        terrars::BlockAssignable<OsConfigPatchDeployment_RecurringSchedule_Monthly_WeekDayOfMonth>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2886,8 +2414,8 @@ impl OsConfigPatchDeploymentRecurringScheduleElMonthlyEl {
     }
 }
 
-impl terrars::ToListMappable for OsConfigPatchDeploymentRecurringScheduleElMonthlyEl {
-    type O = terrars::BlockAssignable<OsConfigPatchDeploymentRecurringScheduleElMonthlyEl>;
+impl terrars::ToListMappable for OsConfigPatchDeployment_RecurringSchedule_Monthly {
+    type O = terrars::BlockAssignable<OsConfigPatchDeployment_RecurringSchedule_Monthly>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2898,11 +2426,11 @@ impl terrars::ToListMappable for OsConfigPatchDeploymentRecurringScheduleElMonth
     }
 }
 
-pub struct BuildOsConfigPatchDeploymentRecurringScheduleElMonthlyEl {}
+pub struct BuildOsConfigPatchDeployment_RecurringSchedule_Monthly {}
 
-impl BuildOsConfigPatchDeploymentRecurringScheduleElMonthlyEl {
-    pub fn build(self) -> OsConfigPatchDeploymentRecurringScheduleElMonthlyEl {
-        OsConfigPatchDeploymentRecurringScheduleElMonthlyEl {
+impl BuildOsConfigPatchDeployment_RecurringSchedule_Monthly {
+    pub fn build(self) -> OsConfigPatchDeployment_RecurringSchedule_Monthly {
+        OsConfigPatchDeployment_RecurringSchedule_Monthly {
             month_day: core::default::Default::default(),
             week_day_of_month: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -2910,24 +2438,26 @@ impl BuildOsConfigPatchDeploymentRecurringScheduleElMonthlyEl {
     }
 }
 
-pub struct OsConfigPatchDeploymentRecurringScheduleElMonthlyElRef {
+#[allow(dead_code)]
+pub struct OsConfigPatchDeployment_RecurringSchedule_MonthlyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigPatchDeploymentRecurringScheduleElMonthlyElRef {
+impl terrars::Ref for OsConfigPatchDeployment_RecurringSchedule_MonthlyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigPatchDeploymentRecurringScheduleElMonthlyElRef {
-        OsConfigPatchDeploymentRecurringScheduleElMonthlyElRef {
+    ) -> OsConfigPatchDeployment_RecurringSchedule_MonthlyRef {
+        OsConfigPatchDeployment_RecurringSchedule_MonthlyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigPatchDeploymentRecurringScheduleElMonthlyElRef {
+impl OsConfigPatchDeployment_RecurringSchedule_MonthlyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2941,13 +2471,13 @@ impl OsConfigPatchDeploymentRecurringScheduleElMonthlyElRef {
     #[doc = "Get a reference to the value of field `week_day_of_month` after provisioning.\n"]
     pub fn week_day_of_month(
         &self,
-    ) -> terrars::ListRef<OsConfigPatchDeploymentRecurringScheduleElMonthlyElWeekDayOfMonthElRef> {
+    ) -> terrars::ListRef<OsConfigPatchDeployment_RecurringSchedule_Monthly_WeekDayOfMonthRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.week_day_of_month", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct OsConfigPatchDeploymentRecurringScheduleElTimeOfDayEl {
+pub struct OsConfigPatchDeployment_RecurringSchedule_TimeOfDay {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     hours: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2958,7 +2488,7 @@ pub struct OsConfigPatchDeploymentRecurringScheduleElTimeOfDayEl {
     seconds: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl OsConfigPatchDeploymentRecurringScheduleElTimeOfDayEl {
+impl OsConfigPatchDeployment_RecurringSchedule_TimeOfDay {
     #[doc =
         "Set the field `hours`.\nHours of day in 24 hour format. Should be from 0 to 23.\nAn API may choose to allow the value \"24:00:00\" for scenarios like business closing time."]
     pub fn set_hours(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -2986,8 +2516,8 @@ impl OsConfigPatchDeploymentRecurringScheduleElTimeOfDayEl {
     }
 }
 
-impl terrars::ToListMappable for OsConfigPatchDeploymentRecurringScheduleElTimeOfDayEl {
-    type O = terrars::BlockAssignable<OsConfigPatchDeploymentRecurringScheduleElTimeOfDayEl>;
+impl terrars::ToListMappable for OsConfigPatchDeployment_RecurringSchedule_TimeOfDay {
+    type O = terrars::BlockAssignable<OsConfigPatchDeployment_RecurringSchedule_TimeOfDay>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2998,11 +2528,11 @@ impl terrars::ToListMappable for OsConfigPatchDeploymentRecurringScheduleElTimeO
     }
 }
 
-pub struct BuildOsConfigPatchDeploymentRecurringScheduleElTimeOfDayEl {}
+pub struct BuildOsConfigPatchDeployment_RecurringSchedule_TimeOfDay {}
 
-impl BuildOsConfigPatchDeploymentRecurringScheduleElTimeOfDayEl {
-    pub fn build(self) -> OsConfigPatchDeploymentRecurringScheduleElTimeOfDayEl {
-        OsConfigPatchDeploymentRecurringScheduleElTimeOfDayEl {
+impl BuildOsConfigPatchDeployment_RecurringSchedule_TimeOfDay {
+    pub fn build(self) -> OsConfigPatchDeployment_RecurringSchedule_TimeOfDay {
+        OsConfigPatchDeployment_RecurringSchedule_TimeOfDay {
             hours: core::default::Default::default(),
             minutes: core::default::Default::default(),
             nanos: core::default::Default::default(),
@@ -3011,24 +2541,26 @@ impl BuildOsConfigPatchDeploymentRecurringScheduleElTimeOfDayEl {
     }
 }
 
-pub struct OsConfigPatchDeploymentRecurringScheduleElTimeOfDayElRef {
+#[allow(dead_code)]
+pub struct OsConfigPatchDeployment_RecurringSchedule_TimeOfDayRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigPatchDeploymentRecurringScheduleElTimeOfDayElRef {
+impl terrars::Ref for OsConfigPatchDeployment_RecurringSchedule_TimeOfDayRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigPatchDeploymentRecurringScheduleElTimeOfDayElRef {
-        OsConfigPatchDeploymentRecurringScheduleElTimeOfDayElRef {
+    ) -> OsConfigPatchDeployment_RecurringSchedule_TimeOfDayRef {
+        OsConfigPatchDeployment_RecurringSchedule_TimeOfDayRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigPatchDeploymentRecurringScheduleElTimeOfDayElRef {
+impl OsConfigPatchDeployment_RecurringSchedule_TimeOfDayRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3059,13 +2591,13 @@ impl OsConfigPatchDeploymentRecurringScheduleElTimeOfDayElRef {
 }
 
 #[derive(Serialize)]
-pub struct OsConfigPatchDeploymentRecurringScheduleElTimeZoneEl {
+pub struct OsConfigPatchDeployment_RecurringSchedule_TimeZone {
     id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     version: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl OsConfigPatchDeploymentRecurringScheduleElTimeZoneEl {
+impl OsConfigPatchDeployment_RecurringSchedule_TimeZone {
     #[doc = "Set the field `version`.\nIANA Time Zone Database version number, e.g. \"2019a\"."]
     pub fn set_version(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.version = std::option::Option::Some(v.into());
@@ -3073,8 +2605,8 @@ impl OsConfigPatchDeploymentRecurringScheduleElTimeZoneEl {
     }
 }
 
-impl terrars::ToListMappable for OsConfigPatchDeploymentRecurringScheduleElTimeZoneEl {
-    type O = terrars::BlockAssignable<OsConfigPatchDeploymentRecurringScheduleElTimeZoneEl>;
+impl terrars::ToListMappable for OsConfigPatchDeployment_RecurringSchedule_TimeZone {
+    type O = terrars::BlockAssignable<OsConfigPatchDeployment_RecurringSchedule_TimeZone>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3085,38 +2617,40 @@ impl terrars::ToListMappable for OsConfigPatchDeploymentRecurringScheduleElTimeZ
     }
 }
 
-pub struct BuildOsConfigPatchDeploymentRecurringScheduleElTimeZoneEl {
+pub struct BuildOsConfigPatchDeployment_RecurringSchedule_TimeZone {
     #[doc = "IANA Time Zone Database time zone, e.g. \"America/New_York\"."]
     pub id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildOsConfigPatchDeploymentRecurringScheduleElTimeZoneEl {
-    pub fn build(self) -> OsConfigPatchDeploymentRecurringScheduleElTimeZoneEl {
-        OsConfigPatchDeploymentRecurringScheduleElTimeZoneEl {
+impl BuildOsConfigPatchDeployment_RecurringSchedule_TimeZone {
+    pub fn build(self) -> OsConfigPatchDeployment_RecurringSchedule_TimeZone {
+        OsConfigPatchDeployment_RecurringSchedule_TimeZone {
             id: self.id,
             version: core::default::Default::default(),
         }
     }
 }
 
-pub struct OsConfigPatchDeploymentRecurringScheduleElTimeZoneElRef {
+#[allow(dead_code)]
+pub struct OsConfigPatchDeployment_RecurringSchedule_TimeZoneRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigPatchDeploymentRecurringScheduleElTimeZoneElRef {
+impl terrars::Ref for OsConfigPatchDeployment_RecurringSchedule_TimeZoneRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigPatchDeploymentRecurringScheduleElTimeZoneElRef {
-        OsConfigPatchDeploymentRecurringScheduleElTimeZoneElRef {
+    ) -> OsConfigPatchDeployment_RecurringSchedule_TimeZoneRef {
+        OsConfigPatchDeployment_RecurringSchedule_TimeZoneRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigPatchDeploymentRecurringScheduleElTimeZoneElRef {
+impl OsConfigPatchDeployment_RecurringSchedule_TimeZoneRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3135,14 +2669,14 @@ impl OsConfigPatchDeploymentRecurringScheduleElTimeZoneElRef {
 }
 
 #[derive(Serialize)]
-pub struct OsConfigPatchDeploymentRecurringScheduleElWeeklyEl {
+pub struct OsConfigPatchDeployment_RecurringSchedule_Weekly {
     day_of_week: terrars::PrimField<std::string::String>,
 }
 
-impl OsConfigPatchDeploymentRecurringScheduleElWeeklyEl { }
+impl OsConfigPatchDeployment_RecurringSchedule_Weekly { }
 
-impl terrars::ToListMappable for OsConfigPatchDeploymentRecurringScheduleElWeeklyEl {
-    type O = terrars::BlockAssignable<OsConfigPatchDeploymentRecurringScheduleElWeeklyEl>;
+impl terrars::ToListMappable for OsConfigPatchDeployment_RecurringSchedule_Weekly {
+    type O = terrars::BlockAssignable<OsConfigPatchDeployment_RecurringSchedule_Weekly>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3153,36 +2687,38 @@ impl terrars::ToListMappable for OsConfigPatchDeploymentRecurringScheduleElWeekl
     }
 }
 
-pub struct BuildOsConfigPatchDeploymentRecurringScheduleElWeeklyEl {
+pub struct BuildOsConfigPatchDeployment_RecurringSchedule_Weekly {
     #[doc =
         "IANA Time Zone Database time zone, e.g. \"America/New_York\". Possible values: [\"MONDAY\", \"TUESDAY\", \"WEDNESDAY\", \"THURSDAY\", \"FRIDAY\", \"SATURDAY\", \"SUNDAY\"]"]
     pub day_of_week: terrars::PrimField<std::string::String>,
 }
 
-impl BuildOsConfigPatchDeploymentRecurringScheduleElWeeklyEl {
-    pub fn build(self) -> OsConfigPatchDeploymentRecurringScheduleElWeeklyEl {
-        OsConfigPatchDeploymentRecurringScheduleElWeeklyEl { day_of_week: self.day_of_week }
+impl BuildOsConfigPatchDeployment_RecurringSchedule_Weekly {
+    pub fn build(self) -> OsConfigPatchDeployment_RecurringSchedule_Weekly {
+        OsConfigPatchDeployment_RecurringSchedule_Weekly { day_of_week: self.day_of_week }
     }
 }
 
-pub struct OsConfigPatchDeploymentRecurringScheduleElWeeklyElRef {
+#[allow(dead_code)]
+pub struct OsConfigPatchDeployment_RecurringSchedule_WeeklyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigPatchDeploymentRecurringScheduleElWeeklyElRef {
+impl terrars::Ref for OsConfigPatchDeployment_RecurringSchedule_WeeklyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigPatchDeploymentRecurringScheduleElWeeklyElRef {
-        OsConfigPatchDeploymentRecurringScheduleElWeeklyElRef {
+    ) -> OsConfigPatchDeployment_RecurringSchedule_WeeklyRef {
+        OsConfigPatchDeployment_RecurringSchedule_WeeklyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigPatchDeploymentRecurringScheduleElWeeklyElRef {
+impl OsConfigPatchDeployment_RecurringSchedule_WeeklyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3195,31 +2731,31 @@ impl OsConfigPatchDeploymentRecurringScheduleElWeeklyElRef {
 }
 
 #[derive(Serialize, Default)]
-struct OsConfigPatchDeploymentRecurringScheduleElDynamic {
-    monthly: std::option::Option<terrars::DynamicBlock<OsConfigPatchDeploymentRecurringScheduleElMonthlyEl>>,
-    time_of_day: std::option::Option<terrars::DynamicBlock<OsConfigPatchDeploymentRecurringScheduleElTimeOfDayEl>>,
-    time_zone: std::option::Option<terrars::DynamicBlock<OsConfigPatchDeploymentRecurringScheduleElTimeZoneEl>>,
-    weekly: std::option::Option<terrars::DynamicBlock<OsConfigPatchDeploymentRecurringScheduleElWeeklyEl>>,
+struct OsConfigPatchDeployment_RecurringScheduleDynamic {
+    monthly: std::option::Option<terrars::DynamicBlock<OsConfigPatchDeployment_RecurringSchedule_Monthly>>,
+    time_of_day: std::option::Option<terrars::DynamicBlock<OsConfigPatchDeployment_RecurringSchedule_TimeOfDay>>,
+    time_zone: std::option::Option<terrars::DynamicBlock<OsConfigPatchDeployment_RecurringSchedule_TimeZone>>,
+    weekly: std::option::Option<terrars::DynamicBlock<OsConfigPatchDeployment_RecurringSchedule_Weekly>>,
 }
 
 #[derive(Serialize)]
-pub struct OsConfigPatchDeploymentRecurringScheduleEl {
+pub struct OsConfigPatchDeployment_RecurringSchedule {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     end_time: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     start_time: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    monthly: std::option::Option<std::vec::Vec<OsConfigPatchDeploymentRecurringScheduleElMonthlyEl>>,
+    monthly: std::option::Option<std::vec::Vec<OsConfigPatchDeployment_RecurringSchedule_Monthly>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    time_of_day: std::option::Option<std::vec::Vec<OsConfigPatchDeploymentRecurringScheduleElTimeOfDayEl>>,
+    time_of_day: std::option::Option<std::vec::Vec<OsConfigPatchDeployment_RecurringSchedule_TimeOfDay>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    time_zone: std::option::Option<std::vec::Vec<OsConfigPatchDeploymentRecurringScheduleElTimeZoneEl>>,
+    time_zone: std::option::Option<std::vec::Vec<OsConfigPatchDeployment_RecurringSchedule_TimeZone>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    weekly: std::option::Option<std::vec::Vec<OsConfigPatchDeploymentRecurringScheduleElWeeklyEl>>,
-    dynamic: OsConfigPatchDeploymentRecurringScheduleElDynamic,
+    weekly: std::option::Option<std::vec::Vec<OsConfigPatchDeployment_RecurringSchedule_Weekly>>,
+    dynamic: OsConfigPatchDeployment_RecurringScheduleDynamic,
 }
 
-impl OsConfigPatchDeploymentRecurringScheduleEl {
+impl OsConfigPatchDeployment_RecurringSchedule {
     #[doc =
         "Set the field `end_time`.\nThe end time at which a recurring patch deployment schedule is no longer active.\nA timestamp in RFC3339 UTC \"Zulu\" format, accurate to nanoseconds. Example: \"2014-10-02T15:01:23.045123456Z\"."]
     pub fn set_end_time(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -3237,7 +2773,7 @@ impl OsConfigPatchDeploymentRecurringScheduleEl {
     #[doc = "Set the field `monthly`.\n"]
     pub fn set_monthly(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigPatchDeploymentRecurringScheduleElMonthlyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigPatchDeployment_RecurringSchedule_Monthly>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3253,7 +2789,7 @@ impl OsConfigPatchDeploymentRecurringScheduleEl {
     #[doc = "Set the field `time_of_day`.\n"]
     pub fn set_time_of_day(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigPatchDeploymentRecurringScheduleElTimeOfDayEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigPatchDeployment_RecurringSchedule_TimeOfDay>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3269,7 +2805,7 @@ impl OsConfigPatchDeploymentRecurringScheduleEl {
     #[doc = "Set the field `time_zone`.\n"]
     pub fn set_time_zone(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigPatchDeploymentRecurringScheduleElTimeZoneEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigPatchDeployment_RecurringSchedule_TimeZone>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3285,7 +2821,7 @@ impl OsConfigPatchDeploymentRecurringScheduleEl {
     #[doc = "Set the field `weekly`.\n"]
     pub fn set_weekly(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigPatchDeploymentRecurringScheduleElWeeklyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigPatchDeployment_RecurringSchedule_Weekly>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3299,8 +2835,8 @@ impl OsConfigPatchDeploymentRecurringScheduleEl {
     }
 }
 
-impl terrars::ToListMappable for OsConfigPatchDeploymentRecurringScheduleEl {
-    type O = terrars::BlockAssignable<OsConfigPatchDeploymentRecurringScheduleEl>;
+impl terrars::ToListMappable for OsConfigPatchDeployment_RecurringSchedule {
+    type O = terrars::BlockAssignable<OsConfigPatchDeployment_RecurringSchedule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3311,11 +2847,11 @@ impl terrars::ToListMappable for OsConfigPatchDeploymentRecurringScheduleEl {
     }
 }
 
-pub struct BuildOsConfigPatchDeploymentRecurringScheduleEl {}
+pub struct BuildOsConfigPatchDeployment_RecurringSchedule {}
 
-impl BuildOsConfigPatchDeploymentRecurringScheduleEl {
-    pub fn build(self) -> OsConfigPatchDeploymentRecurringScheduleEl {
-        OsConfigPatchDeploymentRecurringScheduleEl {
+impl BuildOsConfigPatchDeployment_RecurringSchedule {
+    pub fn build(self) -> OsConfigPatchDeployment_RecurringSchedule {
+        OsConfigPatchDeployment_RecurringSchedule {
             end_time: core::default::Default::default(),
             start_time: core::default::Default::default(),
             monthly: core::default::Default::default(),
@@ -3327,21 +2863,23 @@ impl BuildOsConfigPatchDeploymentRecurringScheduleEl {
     }
 }
 
-pub struct OsConfigPatchDeploymentRecurringScheduleElRef {
+#[allow(dead_code)]
+pub struct OsConfigPatchDeployment_RecurringScheduleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigPatchDeploymentRecurringScheduleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> OsConfigPatchDeploymentRecurringScheduleElRef {
-        OsConfigPatchDeploymentRecurringScheduleElRef {
+impl terrars::Ref for OsConfigPatchDeployment_RecurringScheduleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> OsConfigPatchDeployment_RecurringScheduleRef {
+        OsConfigPatchDeployment_RecurringScheduleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigPatchDeploymentRecurringScheduleElRef {
+impl OsConfigPatchDeployment_RecurringScheduleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3371,35 +2909,35 @@ impl OsConfigPatchDeploymentRecurringScheduleElRef {
     }
 
     #[doc = "Get a reference to the value of field `monthly` after provisioning.\n"]
-    pub fn monthly(&self) -> terrars::ListRef<OsConfigPatchDeploymentRecurringScheduleElMonthlyElRef> {
+    pub fn monthly(&self) -> terrars::ListRef<OsConfigPatchDeployment_RecurringSchedule_MonthlyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.monthly", self.base))
     }
 
     #[doc = "Get a reference to the value of field `time_of_day` after provisioning.\n"]
-    pub fn time_of_day(&self) -> terrars::ListRef<OsConfigPatchDeploymentRecurringScheduleElTimeOfDayElRef> {
+    pub fn time_of_day(&self) -> terrars::ListRef<OsConfigPatchDeployment_RecurringSchedule_TimeOfDayRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.time_of_day", self.base))
     }
 
     #[doc = "Get a reference to the value of field `time_zone` after provisioning.\n"]
-    pub fn time_zone(&self) -> terrars::ListRef<OsConfigPatchDeploymentRecurringScheduleElTimeZoneElRef> {
+    pub fn time_zone(&self) -> terrars::ListRef<OsConfigPatchDeployment_RecurringSchedule_TimeZoneRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.time_zone", self.base))
     }
 
     #[doc = "Get a reference to the value of field `weekly` after provisioning.\n"]
-    pub fn weekly(&self) -> terrars::ListRef<OsConfigPatchDeploymentRecurringScheduleElWeeklyElRef> {
+    pub fn weekly(&self) -> terrars::ListRef<OsConfigPatchDeployment_RecurringSchedule_WeeklyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.weekly", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct OsConfigPatchDeploymentRolloutElDisruptionBudgetEl {
+pub struct OsConfigPatchDeployment_Rollout_DisruptionBudget {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     fixed: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     percentage: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl OsConfigPatchDeploymentRolloutElDisruptionBudgetEl {
+impl OsConfigPatchDeployment_Rollout_DisruptionBudget {
     #[doc = "Set the field `fixed`.\nSpecifies a fixed value."]
     pub fn set_fixed(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.fixed = std::option::Option::Some(v.into());
@@ -3414,8 +2952,8 @@ impl OsConfigPatchDeploymentRolloutElDisruptionBudgetEl {
     }
 }
 
-impl terrars::ToListMappable for OsConfigPatchDeploymentRolloutElDisruptionBudgetEl {
-    type O = terrars::BlockAssignable<OsConfigPatchDeploymentRolloutElDisruptionBudgetEl>;
+impl terrars::ToListMappable for OsConfigPatchDeployment_Rollout_DisruptionBudget {
+    type O = terrars::BlockAssignable<OsConfigPatchDeployment_Rollout_DisruptionBudget>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3426,35 +2964,37 @@ impl terrars::ToListMappable for OsConfigPatchDeploymentRolloutElDisruptionBudge
     }
 }
 
-pub struct BuildOsConfigPatchDeploymentRolloutElDisruptionBudgetEl {}
+pub struct BuildOsConfigPatchDeployment_Rollout_DisruptionBudget {}
 
-impl BuildOsConfigPatchDeploymentRolloutElDisruptionBudgetEl {
-    pub fn build(self) -> OsConfigPatchDeploymentRolloutElDisruptionBudgetEl {
-        OsConfigPatchDeploymentRolloutElDisruptionBudgetEl {
+impl BuildOsConfigPatchDeployment_Rollout_DisruptionBudget {
+    pub fn build(self) -> OsConfigPatchDeployment_Rollout_DisruptionBudget {
+        OsConfigPatchDeployment_Rollout_DisruptionBudget {
             fixed: core::default::Default::default(),
             percentage: core::default::Default::default(),
         }
     }
 }
 
-pub struct OsConfigPatchDeploymentRolloutElDisruptionBudgetElRef {
+#[allow(dead_code)]
+pub struct OsConfigPatchDeployment_Rollout_DisruptionBudgetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigPatchDeploymentRolloutElDisruptionBudgetElRef {
+impl terrars::Ref for OsConfigPatchDeployment_Rollout_DisruptionBudgetRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigPatchDeploymentRolloutElDisruptionBudgetElRef {
-        OsConfigPatchDeploymentRolloutElDisruptionBudgetElRef {
+    ) -> OsConfigPatchDeployment_Rollout_DisruptionBudgetRef {
+        OsConfigPatchDeployment_Rollout_DisruptionBudgetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigPatchDeploymentRolloutElDisruptionBudgetElRef {
+impl OsConfigPatchDeployment_Rollout_DisruptionBudgetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3472,25 +3012,23 @@ impl OsConfigPatchDeploymentRolloutElDisruptionBudgetElRef {
 }
 
 #[derive(Serialize, Default)]
-struct OsConfigPatchDeploymentRolloutElDynamic {
-    disruption_budget: std
-    ::option
-    ::Option<terrars::DynamicBlock<OsConfigPatchDeploymentRolloutElDisruptionBudgetEl>>,
+struct OsConfigPatchDeployment_RolloutDynamic {
+    disruption_budget: std::option::Option<terrars::DynamicBlock<OsConfigPatchDeployment_Rollout_DisruptionBudget>>,
 }
 
 #[derive(Serialize)]
-pub struct OsConfigPatchDeploymentRolloutEl {
+pub struct OsConfigPatchDeployment_Rollout {
     mode: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    disruption_budget: std::option::Option<std::vec::Vec<OsConfigPatchDeploymentRolloutElDisruptionBudgetEl>>,
-    dynamic: OsConfigPatchDeploymentRolloutElDynamic,
+    disruption_budget: std::option::Option<std::vec::Vec<OsConfigPatchDeployment_Rollout_DisruptionBudget>>,
+    dynamic: OsConfigPatchDeployment_RolloutDynamic,
 }
 
-impl OsConfigPatchDeploymentRolloutEl {
+impl OsConfigPatchDeployment_Rollout {
     #[doc = "Set the field `disruption_budget`.\n"]
     pub fn set_disruption_budget(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigPatchDeploymentRolloutElDisruptionBudgetEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigPatchDeployment_Rollout_DisruptionBudget>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3504,8 +3042,8 @@ impl OsConfigPatchDeploymentRolloutEl {
     }
 }
 
-impl terrars::ToListMappable for OsConfigPatchDeploymentRolloutEl {
-    type O = terrars::BlockAssignable<OsConfigPatchDeploymentRolloutEl>;
+impl terrars::ToListMappable for OsConfigPatchDeployment_Rollout {
+    type O = terrars::BlockAssignable<OsConfigPatchDeployment_Rollout>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3516,14 +3054,14 @@ impl terrars::ToListMappable for OsConfigPatchDeploymentRolloutEl {
     }
 }
 
-pub struct BuildOsConfigPatchDeploymentRolloutEl {
+pub struct BuildOsConfigPatchDeployment_Rollout {
     #[doc = "Mode of the patch rollout. Possible values: [\"ZONE_BY_ZONE\", \"CONCURRENT_ZONES\"]"]
     pub mode: terrars::PrimField<std::string::String>,
 }
 
-impl BuildOsConfigPatchDeploymentRolloutEl {
-    pub fn build(self) -> OsConfigPatchDeploymentRolloutEl {
-        OsConfigPatchDeploymentRolloutEl {
+impl BuildOsConfigPatchDeployment_Rollout {
+    pub fn build(self) -> OsConfigPatchDeployment_Rollout {
+        OsConfigPatchDeployment_Rollout {
             mode: self.mode,
             disruption_budget: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -3531,21 +3069,23 @@ impl BuildOsConfigPatchDeploymentRolloutEl {
     }
 }
 
-pub struct OsConfigPatchDeploymentRolloutElRef {
+#[allow(dead_code)]
+pub struct OsConfigPatchDeployment_RolloutRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigPatchDeploymentRolloutElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> OsConfigPatchDeploymentRolloutElRef {
-        OsConfigPatchDeploymentRolloutElRef {
+impl terrars::Ref for OsConfigPatchDeployment_RolloutRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> OsConfigPatchDeployment_RolloutRef {
+        OsConfigPatchDeployment_RolloutRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigPatchDeploymentRolloutElRef {
+impl OsConfigPatchDeployment_RolloutRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3557,20 +3097,20 @@ impl OsConfigPatchDeploymentRolloutElRef {
     }
 
     #[doc = "Get a reference to the value of field `disruption_budget` after provisioning.\n"]
-    pub fn disruption_budget(&self) -> terrars::ListRef<OsConfigPatchDeploymentRolloutElDisruptionBudgetElRef> {
+    pub fn disruption_budget(&self) -> terrars::ListRef<OsConfigPatchDeployment_Rollout_DisruptionBudgetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.disruption_budget", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct OsConfigPatchDeploymentTimeoutsEl {
+pub struct OsConfigPatchDeployment_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl OsConfigPatchDeploymentTimeoutsEl {
+impl OsConfigPatchDeployment_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -3584,8 +3124,8 @@ impl OsConfigPatchDeploymentTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for OsConfigPatchDeploymentTimeoutsEl {
-    type O = terrars::BlockAssignable<OsConfigPatchDeploymentTimeoutsEl>;
+impl terrars::ToListMappable for OsConfigPatchDeployment_Timeouts {
+    type O = terrars::BlockAssignable<OsConfigPatchDeployment_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3596,32 +3136,34 @@ impl terrars::ToListMappable for OsConfigPatchDeploymentTimeoutsEl {
     }
 }
 
-pub struct BuildOsConfigPatchDeploymentTimeoutsEl {}
+pub struct BuildOsConfigPatchDeployment_Timeouts {}
 
-impl BuildOsConfigPatchDeploymentTimeoutsEl {
-    pub fn build(self) -> OsConfigPatchDeploymentTimeoutsEl {
-        OsConfigPatchDeploymentTimeoutsEl {
+impl BuildOsConfigPatchDeployment_Timeouts {
+    pub fn build(self) -> OsConfigPatchDeployment_Timeouts {
+        OsConfigPatchDeployment_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct OsConfigPatchDeploymentTimeoutsElRef {
+#[allow(dead_code)]
+pub struct OsConfigPatchDeployment_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigPatchDeploymentTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> OsConfigPatchDeploymentTimeoutsElRef {
-        OsConfigPatchDeploymentTimeoutsElRef {
+impl terrars::Ref for OsConfigPatchDeployment_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> OsConfigPatchDeployment_TimeoutsRef {
+        OsConfigPatchDeployment_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigPatchDeploymentTimeoutsElRef {
+impl OsConfigPatchDeployment_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3635,13 +3177,4 @@ impl OsConfigPatchDeploymentTimeoutsElRef {
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct OsConfigPatchDeploymentDynamic {
-    instance_filter: std::option::Option<terrars::DynamicBlock<OsConfigPatchDeploymentInstanceFilterEl>>,
-    one_time_schedule: std::option::Option<terrars::DynamicBlock<OsConfigPatchDeploymentOneTimeScheduleEl>>,
-    patch_config: std::option::Option<terrars::DynamicBlock<OsConfigPatchDeploymentPatchConfigEl>>,
-    recurring_schedule: std::option::Option<terrars::DynamicBlock<OsConfigPatchDeploymentRecurringScheduleEl>>,
-    rollout: std::option::Option<terrars::DynamicBlock<OsConfigPatchDeploymentRolloutEl>>,
 }

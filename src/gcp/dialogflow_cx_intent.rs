@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DialogflowCxIntentData {
+struct DialogflowCxIntentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct DialogflowCxIntentData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     display_name: terrars::PrimField<std::string::String>,
@@ -38,18 +42,18 @@ struct DialogflowCxIntentData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     priority: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    parameters: std::option::Option<std::vec::Vec<DialogflowCxIntentParametersEl>>,
+    parameters: std::option::Option<std::vec::Vec<DialogflowCxIntent_Parameters>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DialogflowCxIntentTimeoutsEl>,
+    timeouts: std::option::Option<DialogflowCxIntent_Timeouts>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    training_phrases: std::option::Option<std::vec::Vec<DialogflowCxIntentTrainingPhrasesEl>>,
+    training_phrases: std::option::Option<std::vec::Vec<DialogflowCxIntent_TrainingPhrases>>,
     dynamic: DialogflowCxIntentDynamic,
 }
 
 struct DialogflowCxIntent_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DialogflowCxIntentData>,
+    data: std::cell::RefCell<DialogflowCxIntentData_>,
 }
 
 #[derive(Clone)]
@@ -150,6 +154,13 @@ impl DialogflowCxIntent {
     }
 
     #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `description`.\nHuman readable description for better understanding an intent like its scope, content, result etc. Maximum character limit: 140 characters."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -217,7 +228,7 @@ impl DialogflowCxIntent {
     #[doc = "Set the field `parameters`.\n"]
     pub fn set_parameters(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxIntentParametersEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxIntent_Parameters>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -231,7 +242,7 @@ impl DialogflowCxIntent {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DialogflowCxIntentTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DialogflowCxIntent_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -239,7 +250,7 @@ impl DialogflowCxIntent {
     #[doc = "Set the field `training_phrases`.\n"]
     pub fn set_training_phrases(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxIntentTrainingPhrasesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxIntent_TrainingPhrases>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -250,6 +261,12 @@ impl DialogflowCxIntent {
             },
         }
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -330,17 +347,17 @@ impl DialogflowCxIntent {
     }
 
     #[doc = "Get a reference to the value of field `parameters` after provisioning.\n"]
-    pub fn parameters(&self) -> terrars::ListRef<DialogflowCxIntentParametersElRef> {
+    pub fn parameters(&self) -> terrars::ListRef<DialogflowCxIntent_ParametersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.parameters", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DialogflowCxIntentTimeoutsElRef {
-        DialogflowCxIntentTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DialogflowCxIntent_TimeoutsRef {
+        DialogflowCxIntent_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `training_phrases` after provisioning.\n"]
-    pub fn training_phrases(&self) -> terrars::ListRef<DialogflowCxIntentTrainingPhrasesElRef> {
+    pub fn training_phrases(&self) -> terrars::ListRef<DialogflowCxIntent_TrainingPhrasesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.training_phrases", self.extract_ref()))
     }
 }
@@ -387,12 +404,13 @@ impl BuildDialogflowCxIntent {
         let out = DialogflowCxIntent(std::rc::Rc::new(DialogflowCxIntent_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DialogflowCxIntentData {
+            data: std::cell::RefCell::new(DialogflowCxIntentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 display_name: self.display_name,
                 id: core::default::Default::default(),
@@ -435,6 +453,12 @@ impl DialogflowCxIntentRef {
 
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -515,23 +539,29 @@ impl DialogflowCxIntentRef {
     }
 
     #[doc = "Get a reference to the value of field `parameters` after provisioning.\n"]
-    pub fn parameters(&self) -> terrars::ListRef<DialogflowCxIntentParametersElRef> {
+    pub fn parameters(&self) -> terrars::ListRef<DialogflowCxIntent_ParametersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.parameters", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DialogflowCxIntentTimeoutsElRef {
-        DialogflowCxIntentTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DialogflowCxIntent_TimeoutsRef {
+        DialogflowCxIntent_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `training_phrases` after provisioning.\n"]
-    pub fn training_phrases(&self) -> terrars::ListRef<DialogflowCxIntentTrainingPhrasesElRef> {
+    pub fn training_phrases(&self) -> terrars::ListRef<DialogflowCxIntent_TrainingPhrasesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.training_phrases", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DialogflowCxIntentDynamic {
+    parameters: std::option::Option<terrars::DynamicBlock<DialogflowCxIntent_Parameters>>,
+    training_phrases: std::option::Option<terrars::DynamicBlock<DialogflowCxIntent_TrainingPhrases>>,
+}
+
 #[derive(Serialize)]
-pub struct DialogflowCxIntentParametersEl {
+pub struct DialogflowCxIntent_Parameters {
     entity_type: terrars::PrimField<std::string::String>,
     id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -540,7 +570,7 @@ pub struct DialogflowCxIntentParametersEl {
     redact: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DialogflowCxIntentParametersEl {
+impl DialogflowCxIntent_Parameters {
     #[doc = "Set the field `is_list`.\nIndicates whether the parameter represents a list of values."]
     pub fn set_is_list(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.is_list = std::option::Option::Some(v.into());
@@ -555,8 +585,8 @@ impl DialogflowCxIntentParametersEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxIntentParametersEl {
-    type O = terrars::BlockAssignable<DialogflowCxIntentParametersEl>;
+impl terrars::ToListMappable for DialogflowCxIntent_Parameters {
+    type O = terrars::BlockAssignable<DialogflowCxIntent_Parameters>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -567,7 +597,7 @@ impl terrars::ToListMappable for DialogflowCxIntentParametersEl {
     }
 }
 
-pub struct BuildDialogflowCxIntentParametersEl {
+pub struct BuildDialogflowCxIntent_Parameters {
     #[doc =
         "The entity type of the parameter.\nFormat: projects/-/locations/-/agents/-/entityTypes/<System Entity Type ID> for system entity types (for example, projects/-/locations/-/agents/-/entityTypes/sys.date), or projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/entityTypes/<Entity Type ID> for developer entity types."]
     pub entity_type: terrars::PrimField<std::string::String>,
@@ -575,9 +605,9 @@ pub struct BuildDialogflowCxIntentParametersEl {
     pub id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDialogflowCxIntentParametersEl {
-    pub fn build(self) -> DialogflowCxIntentParametersEl {
-        DialogflowCxIntentParametersEl {
+impl BuildDialogflowCxIntent_Parameters {
+    pub fn build(self) -> DialogflowCxIntent_Parameters {
+        DialogflowCxIntent_Parameters {
             entity_type: self.entity_type,
             id: self.id,
             is_list: core::default::Default::default(),
@@ -586,21 +616,23 @@ impl BuildDialogflowCxIntentParametersEl {
     }
 }
 
-pub struct DialogflowCxIntentParametersElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxIntent_ParametersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxIntentParametersElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxIntentParametersElRef {
-        DialogflowCxIntentParametersElRef {
+impl terrars::Ref for DialogflowCxIntent_ParametersRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxIntent_ParametersRef {
+        DialogflowCxIntent_ParametersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxIntentParametersElRef {
+impl DialogflowCxIntent_ParametersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -631,7 +663,7 @@ impl DialogflowCxIntentParametersElRef {
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxIntentTimeoutsEl {
+pub struct DialogflowCxIntent_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -640,7 +672,7 @@ pub struct DialogflowCxIntentTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DialogflowCxIntentTimeoutsEl {
+impl DialogflowCxIntent_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -660,8 +692,8 @@ impl DialogflowCxIntentTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxIntentTimeoutsEl {
-    type O = terrars::BlockAssignable<DialogflowCxIntentTimeoutsEl>;
+impl terrars::ToListMappable for DialogflowCxIntent_Timeouts {
+    type O = terrars::BlockAssignable<DialogflowCxIntent_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -672,11 +704,11 @@ impl terrars::ToListMappable for DialogflowCxIntentTimeoutsEl {
     }
 }
 
-pub struct BuildDialogflowCxIntentTimeoutsEl {}
+pub struct BuildDialogflowCxIntent_Timeouts {}
 
-impl BuildDialogflowCxIntentTimeoutsEl {
-    pub fn build(self) -> DialogflowCxIntentTimeoutsEl {
-        DialogflowCxIntentTimeoutsEl {
+impl BuildDialogflowCxIntent_Timeouts {
+    pub fn build(self) -> DialogflowCxIntent_Timeouts {
+        DialogflowCxIntent_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -684,21 +716,23 @@ impl BuildDialogflowCxIntentTimeoutsEl {
     }
 }
 
-pub struct DialogflowCxIntentTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxIntent_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxIntentTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxIntentTimeoutsElRef {
-        DialogflowCxIntentTimeoutsElRef {
+impl terrars::Ref for DialogflowCxIntent_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxIntent_TimeoutsRef {
+        DialogflowCxIntent_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxIntentTimeoutsElRef {
+impl DialogflowCxIntent_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -720,13 +754,13 @@ impl DialogflowCxIntentTimeoutsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxIntentTrainingPhrasesElPartsEl {
+pub struct DialogflowCxIntent_TrainingPhrases_Parts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     parameter_id: std::option::Option<terrars::PrimField<std::string::String>>,
     text: terrars::PrimField<std::string::String>,
 }
 
-impl DialogflowCxIntentTrainingPhrasesElPartsEl {
+impl DialogflowCxIntent_TrainingPhrases_Parts {
     #[doc =
         "Set the field `parameter_id`.\nThe parameter used to annotate this part of the training phrase. This field is required for annotated parts of the training phrase."]
     pub fn set_parameter_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -735,8 +769,8 @@ impl DialogflowCxIntentTrainingPhrasesElPartsEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxIntentTrainingPhrasesElPartsEl {
-    type O = terrars::BlockAssignable<DialogflowCxIntentTrainingPhrasesElPartsEl>;
+impl terrars::ToListMappable for DialogflowCxIntent_TrainingPhrases_Parts {
+    type O = terrars::BlockAssignable<DialogflowCxIntent_TrainingPhrases_Parts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -747,35 +781,37 @@ impl terrars::ToListMappable for DialogflowCxIntentTrainingPhrasesElPartsEl {
     }
 }
 
-pub struct BuildDialogflowCxIntentTrainingPhrasesElPartsEl {
+pub struct BuildDialogflowCxIntent_TrainingPhrases_Parts {
     #[doc = "The text for this part."]
     pub text: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDialogflowCxIntentTrainingPhrasesElPartsEl {
-    pub fn build(self) -> DialogflowCxIntentTrainingPhrasesElPartsEl {
-        DialogflowCxIntentTrainingPhrasesElPartsEl {
+impl BuildDialogflowCxIntent_TrainingPhrases_Parts {
+    pub fn build(self) -> DialogflowCxIntent_TrainingPhrases_Parts {
+        DialogflowCxIntent_TrainingPhrases_Parts {
             parameter_id: core::default::Default::default(),
             text: self.text,
         }
     }
 }
 
-pub struct DialogflowCxIntentTrainingPhrasesElPartsElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxIntent_TrainingPhrases_PartsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxIntentTrainingPhrasesElPartsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxIntentTrainingPhrasesElPartsElRef {
-        DialogflowCxIntentTrainingPhrasesElPartsElRef {
+impl terrars::Ref for DialogflowCxIntent_TrainingPhrases_PartsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxIntent_TrainingPhrases_PartsRef {
+        DialogflowCxIntent_TrainingPhrases_PartsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxIntentTrainingPhrasesElPartsElRef {
+impl DialogflowCxIntent_TrainingPhrases_PartsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -793,20 +829,20 @@ impl DialogflowCxIntentTrainingPhrasesElPartsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct DialogflowCxIntentTrainingPhrasesElDynamic {
-    parts: std::option::Option<terrars::DynamicBlock<DialogflowCxIntentTrainingPhrasesElPartsEl>>,
+struct DialogflowCxIntent_TrainingPhrasesDynamic {
+    parts: std::option::Option<terrars::DynamicBlock<DialogflowCxIntent_TrainingPhrases_Parts>>,
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxIntentTrainingPhrasesEl {
+pub struct DialogflowCxIntent_TrainingPhrases {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     repeat_count: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    parts: std::option::Option<std::vec::Vec<DialogflowCxIntentTrainingPhrasesElPartsEl>>,
-    dynamic: DialogflowCxIntentTrainingPhrasesElDynamic,
+    parts: std::option::Option<std::vec::Vec<DialogflowCxIntent_TrainingPhrases_Parts>>,
+    dynamic: DialogflowCxIntent_TrainingPhrasesDynamic,
 }
 
-impl DialogflowCxIntentTrainingPhrasesEl {
+impl DialogflowCxIntent_TrainingPhrases {
     #[doc = "Set the field `repeat_count`.\nIndicates how many times this example was added to the intent."]
     pub fn set_repeat_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.repeat_count = std::option::Option::Some(v.into());
@@ -816,7 +852,7 @@ impl DialogflowCxIntentTrainingPhrasesEl {
     #[doc = "Set the field `parts`.\n"]
     pub fn set_parts(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxIntentTrainingPhrasesElPartsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxIntent_TrainingPhrases_Parts>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -830,8 +866,8 @@ impl DialogflowCxIntentTrainingPhrasesEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxIntentTrainingPhrasesEl {
-    type O = terrars::BlockAssignable<DialogflowCxIntentTrainingPhrasesEl>;
+impl terrars::ToListMappable for DialogflowCxIntent_TrainingPhrases {
+    type O = terrars::BlockAssignable<DialogflowCxIntent_TrainingPhrases>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -842,11 +878,11 @@ impl terrars::ToListMappable for DialogflowCxIntentTrainingPhrasesEl {
     }
 }
 
-pub struct BuildDialogflowCxIntentTrainingPhrasesEl {}
+pub struct BuildDialogflowCxIntent_TrainingPhrases {}
 
-impl BuildDialogflowCxIntentTrainingPhrasesEl {
-    pub fn build(self) -> DialogflowCxIntentTrainingPhrasesEl {
-        DialogflowCxIntentTrainingPhrasesEl {
+impl BuildDialogflowCxIntent_TrainingPhrases {
+    pub fn build(self) -> DialogflowCxIntent_TrainingPhrases {
+        DialogflowCxIntent_TrainingPhrases {
             repeat_count: core::default::Default::default(),
             parts: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -854,21 +890,23 @@ impl BuildDialogflowCxIntentTrainingPhrasesEl {
     }
 }
 
-pub struct DialogflowCxIntentTrainingPhrasesElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxIntent_TrainingPhrasesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxIntentTrainingPhrasesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxIntentTrainingPhrasesElRef {
-        DialogflowCxIntentTrainingPhrasesElRef {
+impl terrars::Ref for DialogflowCxIntent_TrainingPhrasesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxIntent_TrainingPhrasesRef {
+        DialogflowCxIntent_TrainingPhrasesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxIntentTrainingPhrasesElRef {
+impl DialogflowCxIntent_TrainingPhrasesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -886,13 +924,7 @@ impl DialogflowCxIntentTrainingPhrasesElRef {
     }
 
     #[doc = "Get a reference to the value of field `parts` after provisioning.\n"]
-    pub fn parts(&self) -> terrars::ListRef<DialogflowCxIntentTrainingPhrasesElPartsElRef> {
+    pub fn parts(&self) -> terrars::ListRef<DialogflowCxIntent_TrainingPhrases_PartsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.parts", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DialogflowCxIntentDynamic {
-    parameters: std::option::Option<terrars::DynamicBlock<DialogflowCxIntentParametersEl>>,
-    training_phrases: std::option::Option<terrars::DynamicBlock<DialogflowCxIntentTrainingPhrasesEl>>,
 }

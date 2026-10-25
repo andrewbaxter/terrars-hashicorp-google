@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct VertexAiFeaturestoreEntitytypeFeatureData {
+struct VertexAiFeaturestoreEntitytypeFeatureData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct VertexAiFeaturestoreEntitytypeFeatureData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     entitytype: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -29,13 +33,13 @@ struct VertexAiFeaturestoreEntitytypeFeatureData {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     value_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<VertexAiFeaturestoreEntitytypeFeatureTimeoutsEl>,
+    timeouts: std::option::Option<VertexAiFeaturestoreEntitytypeFeature_Timeouts>,
 }
 
 struct VertexAiFeaturestoreEntitytypeFeature_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<VertexAiFeaturestoreEntitytypeFeatureData>,
+    data: std::cell::RefCell<VertexAiFeaturestoreEntitytypeFeatureData_>,
 }
 
 #[derive(Clone)]
@@ -135,6 +139,13 @@ impl VertexAiFeaturestoreEntitytypeFeature {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nDescription of the feature."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -165,7 +176,7 @@ impl VertexAiFeaturestoreEntitytypeFeature {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<VertexAiFeaturestoreEntitytypeFeatureTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<VertexAiFeaturestoreEntitytypeFeature_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -174,6 +185,12 @@ impl VertexAiFeaturestoreEntitytypeFeature {
         "Get a reference to the value of field `create_time` after provisioning.\nThe timestamp of when the entity type was created in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `description` after provisioning.\nDescription of the feature."]
@@ -240,8 +257,8 @@ impl VertexAiFeaturestoreEntitytypeFeature {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> VertexAiFeaturestoreEntitytypeFeatureTimeoutsElRef {
-        VertexAiFeaturestoreEntitytypeFeatureTimeoutsElRef::new(
+    pub fn timeouts(&self) -> VertexAiFeaturestoreEntitytypeFeature_TimeoutsRef {
+        VertexAiFeaturestoreEntitytypeFeature_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -294,12 +311,13 @@ impl BuildVertexAiFeaturestoreEntitytypeFeature {
         let out = VertexAiFeaturestoreEntitytypeFeature(std::rc::Rc::new(VertexAiFeaturestoreEntitytypeFeature_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(VertexAiFeaturestoreEntitytypeFeatureData {
+            data: std::cell::RefCell::new(VertexAiFeaturestoreEntitytypeFeatureData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 entitytype: self.entitytype,
                 id: core::default::Default::default(),
@@ -341,6 +359,12 @@ impl VertexAiFeaturestoreEntitytypeFeatureRef {
         "Get a reference to the value of field `create_time` after provisioning.\nThe timestamp of when the entity type was created in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `description` after provisioning.\nDescription of the feature."]
@@ -407,8 +431,8 @@ impl VertexAiFeaturestoreEntitytypeFeatureRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> VertexAiFeaturestoreEntitytypeFeatureTimeoutsElRef {
-        VertexAiFeaturestoreEntitytypeFeatureTimeoutsElRef::new(
+    pub fn timeouts(&self) -> VertexAiFeaturestoreEntitytypeFeature_TimeoutsRef {
+        VertexAiFeaturestoreEntitytypeFeature_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -416,7 +440,7 @@ impl VertexAiFeaturestoreEntitytypeFeatureRef {
 }
 
 #[derive(Serialize)]
-pub struct VertexAiFeaturestoreEntitytypeFeatureTimeoutsEl {
+pub struct VertexAiFeaturestoreEntitytypeFeature_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -425,7 +449,7 @@ pub struct VertexAiFeaturestoreEntitytypeFeatureTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl VertexAiFeaturestoreEntitytypeFeatureTimeoutsEl {
+impl VertexAiFeaturestoreEntitytypeFeature_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -445,8 +469,8 @@ impl VertexAiFeaturestoreEntitytypeFeatureTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for VertexAiFeaturestoreEntitytypeFeatureTimeoutsEl {
-    type O = terrars::BlockAssignable<VertexAiFeaturestoreEntitytypeFeatureTimeoutsEl>;
+impl terrars::ToListMappable for VertexAiFeaturestoreEntitytypeFeature_Timeouts {
+    type O = terrars::BlockAssignable<VertexAiFeaturestoreEntitytypeFeature_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -457,11 +481,11 @@ impl terrars::ToListMappable for VertexAiFeaturestoreEntitytypeFeatureTimeoutsEl
     }
 }
 
-pub struct BuildVertexAiFeaturestoreEntitytypeFeatureTimeoutsEl {}
+pub struct BuildVertexAiFeaturestoreEntitytypeFeature_Timeouts {}
 
-impl BuildVertexAiFeaturestoreEntitytypeFeatureTimeoutsEl {
-    pub fn build(self) -> VertexAiFeaturestoreEntitytypeFeatureTimeoutsEl {
-        VertexAiFeaturestoreEntitytypeFeatureTimeoutsEl {
+impl BuildVertexAiFeaturestoreEntitytypeFeature_Timeouts {
+    pub fn build(self) -> VertexAiFeaturestoreEntitytypeFeature_Timeouts {
+        VertexAiFeaturestoreEntitytypeFeature_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -469,24 +493,26 @@ impl BuildVertexAiFeaturestoreEntitytypeFeatureTimeoutsEl {
     }
 }
 
-pub struct VertexAiFeaturestoreEntitytypeFeatureTimeoutsElRef {
+#[allow(dead_code)]
+pub struct VertexAiFeaturestoreEntitytypeFeature_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for VertexAiFeaturestoreEntitytypeFeatureTimeoutsElRef {
+impl terrars::Ref for VertexAiFeaturestoreEntitytypeFeature_TimeoutsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> VertexAiFeaturestoreEntitytypeFeatureTimeoutsElRef {
-        VertexAiFeaturestoreEntitytypeFeatureTimeoutsElRef {
+    ) -> VertexAiFeaturestoreEntitytypeFeature_TimeoutsRef {
+        VertexAiFeaturestoreEntitytypeFeature_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl VertexAiFeaturestoreEntitytypeFeatureTimeoutsElRef {
+impl VertexAiFeaturestoreEntitytypeFeature_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

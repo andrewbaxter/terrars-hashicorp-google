@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct HealthcareFhirStoreIamMemberData {
+struct HealthcareFhirStoreIamMemberData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,14 +26,14 @@ struct HealthcareFhirStoreIamMemberData {
     member: terrars::PrimField<std::string::String>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<HealthcareFhirStoreIamMemberConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<HealthcareFhirStoreIamMember_Condition>>,
     dynamic: HealthcareFhirStoreIamMemberDynamic,
 }
 
 struct HealthcareFhirStoreIamMember_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<HealthcareFhirStoreIamMemberData>,
+    data: std::cell::RefCell<HealthcareFhirStoreIamMemberData_>,
 }
 
 #[derive(Clone)]
@@ -140,7 +142,7 @@ impl HealthcareFhirStoreIamMember {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<HealthcareFhirStoreIamMemberConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<HealthcareFhirStoreIamMember_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -179,7 +181,7 @@ impl HealthcareFhirStoreIamMember {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<HealthcareFhirStoreIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<HealthcareFhirStoreIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -230,7 +232,7 @@ impl BuildHealthcareFhirStoreIamMember {
         let out = HealthcareFhirStoreIamMember(std::rc::Rc::new(HealthcareFhirStoreIamMember_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(HealthcareFhirStoreIamMemberData {
+            data: std::cell::RefCell::new(HealthcareFhirStoreIamMemberData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -298,20 +300,25 @@ impl HealthcareFhirStoreIamMemberRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<HealthcareFhirStoreIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<HealthcareFhirStoreIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct HealthcareFhirStoreIamMemberDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<HealthcareFhirStoreIamMember_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct HealthcareFhirStoreIamMemberConditionEl {
+pub struct HealthcareFhirStoreIamMember_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl HealthcareFhirStoreIamMemberConditionEl {
+impl HealthcareFhirStoreIamMember_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -319,8 +326,8 @@ impl HealthcareFhirStoreIamMemberConditionEl {
     }
 }
 
-impl terrars::ToListMappable for HealthcareFhirStoreIamMemberConditionEl {
-    type O = terrars::BlockAssignable<HealthcareFhirStoreIamMemberConditionEl>;
+impl terrars::ToListMappable for HealthcareFhirStoreIamMember_Condition {
+    type O = terrars::BlockAssignable<HealthcareFhirStoreIamMember_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -331,16 +338,16 @@ impl terrars::ToListMappable for HealthcareFhirStoreIamMemberConditionEl {
     }
 }
 
-pub struct BuildHealthcareFhirStoreIamMemberConditionEl {
+pub struct BuildHealthcareFhirStoreIamMember_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildHealthcareFhirStoreIamMemberConditionEl {
-    pub fn build(self) -> HealthcareFhirStoreIamMemberConditionEl {
-        HealthcareFhirStoreIamMemberConditionEl {
+impl BuildHealthcareFhirStoreIamMember_Condition {
+    pub fn build(self) -> HealthcareFhirStoreIamMember_Condition {
+        HealthcareFhirStoreIamMember_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -348,21 +355,23 @@ impl BuildHealthcareFhirStoreIamMemberConditionEl {
     }
 }
 
-pub struct HealthcareFhirStoreIamMemberConditionElRef {
+#[allow(dead_code)]
+pub struct HealthcareFhirStoreIamMember_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for HealthcareFhirStoreIamMemberConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> HealthcareFhirStoreIamMemberConditionElRef {
-        HealthcareFhirStoreIamMemberConditionElRef {
+impl terrars::Ref for HealthcareFhirStoreIamMember_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> HealthcareFhirStoreIamMember_ConditionRef {
+        HealthcareFhirStoreIamMember_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl HealthcareFhirStoreIamMemberConditionElRef {
+impl HealthcareFhirStoreIamMember_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -381,9 +390,4 @@ impl HealthcareFhirStoreIamMemberConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct HealthcareFhirStoreIamMemberDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<HealthcareFhirStoreIamMemberConditionEl>>,
 }

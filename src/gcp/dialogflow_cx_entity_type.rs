@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DialogflowCxEntityTypeData {
+struct DialogflowCxEntityTypeData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,6 +22,8 @@ struct DialogflowCxEntityTypeData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     auto_expansion_mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     display_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_fuzzy_extraction: std::option::Option<terrars::PrimField<bool>>,
@@ -33,18 +37,18 @@ struct DialogflowCxEntityTypeData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     redact: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    entities: std::option::Option<std::vec::Vec<DialogflowCxEntityTypeEntitiesEl>>,
+    entities: std::option::Option<std::vec::Vec<DialogflowCxEntityType_Entities>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    excluded_phrases: std::option::Option<std::vec::Vec<DialogflowCxEntityTypeExcludedPhrasesEl>>,
+    excluded_phrases: std::option::Option<std::vec::Vec<DialogflowCxEntityType_ExcludedPhrases>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DialogflowCxEntityTypeTimeoutsEl>,
+    timeouts: std::option::Option<DialogflowCxEntityType_Timeouts>,
     dynamic: DialogflowCxEntityTypeDynamic,
 }
 
 struct DialogflowCxEntityType_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DialogflowCxEntityTypeData>,
+    data: std::cell::RefCell<DialogflowCxEntityTypeData_>,
 }
 
 #[derive(Clone)]
@@ -151,6 +155,13 @@ impl DialogflowCxEntityType {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `enable_fuzzy_extraction`.\nEnables fuzzy entity extraction during classification."]
     pub fn set_enable_fuzzy_extraction(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().enable_fuzzy_extraction = std::option::Option::Some(v.into());
@@ -187,7 +198,7 @@ impl DialogflowCxEntityType {
     #[doc = "Set the field `entities`.\n"]
     pub fn set_entities(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxEntityTypeEntitiesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxEntityType_Entities>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -203,7 +214,7 @@ impl DialogflowCxEntityType {
     #[doc = "Set the field `excluded_phrases`.\n"]
     pub fn set_excluded_phrases(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxEntityTypeExcludedPhrasesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxEntityType_ExcludedPhrases>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -217,7 +228,7 @@ impl DialogflowCxEntityType {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DialogflowCxEntityTypeTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DialogflowCxEntityType_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -226,6 +237,12 @@ impl DialogflowCxEntityType {
         "Get a reference to the value of field `auto_expansion_mode` after provisioning.\nRepresents kinds of entities.\n* AUTO_EXPANSION_MODE_UNSPECIFIED: Auto expansion disabled for the entity.\n* AUTO_EXPANSION_MODE_DEFAULT: Allows an agent to recognize values that have not been explicitly listed in the entity. Possible values: [\"AUTO_EXPANSION_MODE_DEFAULT\", \"AUTO_EXPANSION_MODE_UNSPECIFIED\"]"]
     pub fn auto_expansion_mode(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.auto_expansion_mode", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -276,18 +293,18 @@ impl DialogflowCxEntityType {
     }
 
     #[doc = "Get a reference to the value of field `entities` after provisioning.\n"]
-    pub fn entities(&self) -> terrars::ListRef<DialogflowCxEntityTypeEntitiesElRef> {
+    pub fn entities(&self) -> terrars::ListRef<DialogflowCxEntityType_EntitiesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.entities", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `excluded_phrases` after provisioning.\n"]
-    pub fn excluded_phrases(&self) -> terrars::ListRef<DialogflowCxEntityTypeExcludedPhrasesElRef> {
+    pub fn excluded_phrases(&self) -> terrars::ListRef<DialogflowCxEntityType_ExcludedPhrasesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.excluded_phrases", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DialogflowCxEntityTypeTimeoutsElRef {
-        DialogflowCxEntityTypeTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DialogflowCxEntityType_TimeoutsRef {
+        DialogflowCxEntityType_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -336,13 +353,14 @@ impl BuildDialogflowCxEntityType {
         let out = DialogflowCxEntityType(std::rc::Rc::new(DialogflowCxEntityType_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DialogflowCxEntityTypeData {
+            data: std::cell::RefCell::new(DialogflowCxEntityTypeData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 auto_expansion_mode: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 display_name: self.display_name,
                 enable_fuzzy_extraction: core::default::Default::default(),
                 id: core::default::Default::default(),
@@ -388,6 +406,12 @@ impl DialogflowCxEntityTypeRef {
         "Get a reference to the value of field `auto_expansion_mode` after provisioning.\nRepresents kinds of entities.\n* AUTO_EXPANSION_MODE_UNSPECIFIED: Auto expansion disabled for the entity.\n* AUTO_EXPANSION_MODE_DEFAULT: Allows an agent to recognize values that have not been explicitly listed in the entity. Possible values: [\"AUTO_EXPANSION_MODE_DEFAULT\", \"AUTO_EXPANSION_MODE_UNSPECIFIED\"]"]
     pub fn auto_expansion_mode(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.auto_expansion_mode", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -438,30 +462,36 @@ impl DialogflowCxEntityTypeRef {
     }
 
     #[doc = "Get a reference to the value of field `entities` after provisioning.\n"]
-    pub fn entities(&self) -> terrars::ListRef<DialogflowCxEntityTypeEntitiesElRef> {
+    pub fn entities(&self) -> terrars::ListRef<DialogflowCxEntityType_EntitiesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.entities", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `excluded_phrases` after provisioning.\n"]
-    pub fn excluded_phrases(&self) -> terrars::ListRef<DialogflowCxEntityTypeExcludedPhrasesElRef> {
+    pub fn excluded_phrases(&self) -> terrars::ListRef<DialogflowCxEntityType_ExcludedPhrasesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.excluded_phrases", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DialogflowCxEntityTypeTimeoutsElRef {
-        DialogflowCxEntityTypeTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DialogflowCxEntityType_TimeoutsRef {
+        DialogflowCxEntityType_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DialogflowCxEntityTypeDynamic {
+    entities: std::option::Option<terrars::DynamicBlock<DialogflowCxEntityType_Entities>>,
+    excluded_phrases: std::option::Option<terrars::DynamicBlock<DialogflowCxEntityType_ExcludedPhrases>>,
+}
+
 #[derive(Serialize)]
-pub struct DialogflowCxEntityTypeEntitiesEl {
+pub struct DialogflowCxEntityType_Entities {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     synonyms: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DialogflowCxEntityTypeEntitiesEl {
+impl DialogflowCxEntityType_Entities {
     #[doc =
         "Set the field `synonyms`.\nA collection of value synonyms. For example, if the entity type is vegetable, and value is scallions, a synonym could be green onions.\nFor KIND_LIST entity types: This collection must contain exactly one synonym equal to value."]
     pub fn set_synonyms(
@@ -480,8 +510,8 @@ impl DialogflowCxEntityTypeEntitiesEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxEntityTypeEntitiesEl {
-    type O = terrars::BlockAssignable<DialogflowCxEntityTypeEntitiesEl>;
+impl terrars::ToListMappable for DialogflowCxEntityType_Entities {
+    type O = terrars::BlockAssignable<DialogflowCxEntityType_Entities>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -492,32 +522,34 @@ impl terrars::ToListMappable for DialogflowCxEntityTypeEntitiesEl {
     }
 }
 
-pub struct BuildDialogflowCxEntityTypeEntitiesEl {}
+pub struct BuildDialogflowCxEntityType_Entities {}
 
-impl BuildDialogflowCxEntityTypeEntitiesEl {
-    pub fn build(self) -> DialogflowCxEntityTypeEntitiesEl {
-        DialogflowCxEntityTypeEntitiesEl {
+impl BuildDialogflowCxEntityType_Entities {
+    pub fn build(self) -> DialogflowCxEntityType_Entities {
+        DialogflowCxEntityType_Entities {
             synonyms: core::default::Default::default(),
             value: core::default::Default::default(),
         }
     }
 }
 
-pub struct DialogflowCxEntityTypeEntitiesElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxEntityType_EntitiesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxEntityTypeEntitiesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxEntityTypeEntitiesElRef {
-        DialogflowCxEntityTypeEntitiesElRef {
+impl terrars::Ref for DialogflowCxEntityType_EntitiesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxEntityType_EntitiesRef {
+        DialogflowCxEntityType_EntitiesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxEntityTypeEntitiesElRef {
+impl DialogflowCxEntityType_EntitiesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -536,12 +568,12 @@ impl DialogflowCxEntityTypeEntitiesElRef {
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxEntityTypeExcludedPhrasesEl {
+pub struct DialogflowCxEntityType_ExcludedPhrases {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DialogflowCxEntityTypeExcludedPhrasesEl {
+impl DialogflowCxEntityType_ExcludedPhrases {
     #[doc = "Set the field `value`.\nThe word or phrase to be excluded."]
     pub fn set_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.value = std::option::Option::Some(v.into());
@@ -549,8 +581,8 @@ impl DialogflowCxEntityTypeExcludedPhrasesEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxEntityTypeExcludedPhrasesEl {
-    type O = terrars::BlockAssignable<DialogflowCxEntityTypeExcludedPhrasesEl>;
+impl terrars::ToListMappable for DialogflowCxEntityType_ExcludedPhrases {
+    type O = terrars::BlockAssignable<DialogflowCxEntityType_ExcludedPhrases>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -561,29 +593,31 @@ impl terrars::ToListMappable for DialogflowCxEntityTypeExcludedPhrasesEl {
     }
 }
 
-pub struct BuildDialogflowCxEntityTypeExcludedPhrasesEl {}
+pub struct BuildDialogflowCxEntityType_ExcludedPhrases {}
 
-impl BuildDialogflowCxEntityTypeExcludedPhrasesEl {
-    pub fn build(self) -> DialogflowCxEntityTypeExcludedPhrasesEl {
-        DialogflowCxEntityTypeExcludedPhrasesEl { value: core::default::Default::default() }
+impl BuildDialogflowCxEntityType_ExcludedPhrases {
+    pub fn build(self) -> DialogflowCxEntityType_ExcludedPhrases {
+        DialogflowCxEntityType_ExcludedPhrases { value: core::default::Default::default() }
     }
 }
 
-pub struct DialogflowCxEntityTypeExcludedPhrasesElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxEntityType_ExcludedPhrasesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxEntityTypeExcludedPhrasesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxEntityTypeExcludedPhrasesElRef {
-        DialogflowCxEntityTypeExcludedPhrasesElRef {
+impl terrars::Ref for DialogflowCxEntityType_ExcludedPhrasesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxEntityType_ExcludedPhrasesRef {
+        DialogflowCxEntityType_ExcludedPhrasesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxEntityTypeExcludedPhrasesElRef {
+impl DialogflowCxEntityType_ExcludedPhrasesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -595,7 +629,7 @@ impl DialogflowCxEntityTypeExcludedPhrasesElRef {
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxEntityTypeTimeoutsEl {
+pub struct DialogflowCxEntityType_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -604,7 +638,7 @@ pub struct DialogflowCxEntityTypeTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DialogflowCxEntityTypeTimeoutsEl {
+impl DialogflowCxEntityType_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -624,8 +658,8 @@ impl DialogflowCxEntityTypeTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxEntityTypeTimeoutsEl {
-    type O = terrars::BlockAssignable<DialogflowCxEntityTypeTimeoutsEl>;
+impl terrars::ToListMappable for DialogflowCxEntityType_Timeouts {
+    type O = terrars::BlockAssignable<DialogflowCxEntityType_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -636,11 +670,11 @@ impl terrars::ToListMappable for DialogflowCxEntityTypeTimeoutsEl {
     }
 }
 
-pub struct BuildDialogflowCxEntityTypeTimeoutsEl {}
+pub struct BuildDialogflowCxEntityType_Timeouts {}
 
-impl BuildDialogflowCxEntityTypeTimeoutsEl {
-    pub fn build(self) -> DialogflowCxEntityTypeTimeoutsEl {
-        DialogflowCxEntityTypeTimeoutsEl {
+impl BuildDialogflowCxEntityType_Timeouts {
+    pub fn build(self) -> DialogflowCxEntityType_Timeouts {
+        DialogflowCxEntityType_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -648,21 +682,23 @@ impl BuildDialogflowCxEntityTypeTimeoutsEl {
     }
 }
 
-pub struct DialogflowCxEntityTypeTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxEntityType_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxEntityTypeTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxEntityTypeTimeoutsElRef {
-        DialogflowCxEntityTypeTimeoutsElRef {
+impl terrars::Ref for DialogflowCxEntityType_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxEntityType_TimeoutsRef {
+        DialogflowCxEntityType_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxEntityTypeTimeoutsElRef {
+impl DialogflowCxEntityType_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -681,10 +717,4 @@ impl DialogflowCxEntityTypeTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DialogflowCxEntityTypeDynamic {
-    entities: std::option::Option<terrars::DynamicBlock<DialogflowCxEntityTypeEntitiesEl>>,
-    excluded_phrases: std::option::Option<terrars::DynamicBlock<DialogflowCxEntityTypeExcludedPhrasesEl>>,
 }

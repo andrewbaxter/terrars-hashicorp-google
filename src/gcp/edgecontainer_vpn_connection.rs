@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct EdgecontainerVpnConnectionData {
+struct EdgecontainerVpnConnectionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct EdgecontainerVpnConnectionData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     cluster: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_high_availability: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -36,16 +40,16 @@ struct EdgecontainerVpnConnectionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<EdgecontainerVpnConnectionTimeoutsEl>,
+    timeouts: std::option::Option<EdgecontainerVpnConnection_Timeouts>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpc_project: std::option::Option<std::vec::Vec<EdgecontainerVpnConnectionVpcProjectEl>>,
+    vpc_project: std::option::Option<std::vec::Vec<EdgecontainerVpnConnection_VpcProject>>,
     dynamic: EdgecontainerVpnConnectionDynamic,
 }
 
 struct EdgecontainerVpnConnection_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<EdgecontainerVpnConnectionData>,
+    data: std::cell::RefCell<EdgecontainerVpnConnectionData_>,
 }
 
 #[derive(Clone)]
@@ -146,6 +150,13 @@ impl EdgecontainerVpnConnection {
     }
 
     #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `enable_high_availability`.\nWhether this VPN connection has HA enabled on cluster side. If enabled, when creating VPN connection we will attempt to use 2 ANG floating IPs."]
     pub fn set_enable_high_availability(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().enable_high_availability = std::option::Option::Some(v.into());
@@ -194,7 +205,7 @@ impl EdgecontainerVpnConnection {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<EdgecontainerVpnConnectionTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<EdgecontainerVpnConnection_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -202,7 +213,7 @@ impl EdgecontainerVpnConnection {
     #[doc = "Set the field `vpc_project`.\n"]
     pub fn set_vpc_project(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EdgecontainerVpnConnectionVpcProjectEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EdgecontainerVpnConnection_VpcProject>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -227,8 +238,14 @@ impl EdgecontainerVpnConnection {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `details` after provisioning.\nA nested object resource"]
-    pub fn details(&self) -> terrars::ListRef<EdgecontainerVpnConnectionDetailsElRef> {
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `details` after provisioning.\nA nested object resource."]
+    pub fn details(&self) -> terrars::ListRef<EdgecontainerVpnConnection_DetailsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.details", self.extract_ref()))
     }
 
@@ -299,15 +316,15 @@ impl EdgecontainerVpnConnection {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> EdgecontainerVpnConnectionTimeoutsElRef {
-        EdgecontainerVpnConnectionTimeoutsElRef::new(
+    pub fn timeouts(&self) -> EdgecontainerVpnConnection_TimeoutsRef {
+        EdgecontainerVpnConnection_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 
     #[doc = "Get a reference to the value of field `vpc_project` after provisioning.\n"]
-    pub fn vpc_project(&self) -> terrars::ListRef<EdgecontainerVpnConnectionVpcProjectElRef> {
+    pub fn vpc_project(&self) -> terrars::ListRef<EdgecontainerVpnConnection_VpcProjectRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_project", self.extract_ref()))
     }
 }
@@ -359,13 +376,14 @@ impl BuildEdgecontainerVpnConnection {
         let out = EdgecontainerVpnConnection(std::rc::Rc::new(EdgecontainerVpnConnection_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(EdgecontainerVpnConnectionData {
+            data: std::cell::RefCell::new(EdgecontainerVpnConnectionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 cluster: self.cluster,
+                deletion_policy: core::default::Default::default(),
                 enable_high_availability: core::default::Default::default(),
                 id: core::default::Default::default(),
                 labels: core::default::Default::default(),
@@ -420,8 +438,14 @@ impl EdgecontainerVpnConnectionRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `details` after provisioning.\nA nested object resource"]
-    pub fn details(&self) -> terrars::ListRef<EdgecontainerVpnConnectionDetailsElRef> {
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `details` after provisioning.\nA nested object resource."]
+    pub fn details(&self) -> terrars::ListRef<EdgecontainerVpnConnection_DetailsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.details", self.extract_ref()))
     }
 
@@ -492,26 +516,31 @@ impl EdgecontainerVpnConnectionRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> EdgecontainerVpnConnectionTimeoutsElRef {
-        EdgecontainerVpnConnectionTimeoutsElRef::new(
+    pub fn timeouts(&self) -> EdgecontainerVpnConnection_TimeoutsRef {
+        EdgecontainerVpnConnection_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 
     #[doc = "Get a reference to the value of field `vpc_project` after provisioning.\n"]
-    pub fn vpc_project(&self) -> terrars::ListRef<EdgecontainerVpnConnectionVpcProjectElRef> {
+    pub fn vpc_project(&self) -> terrars::ListRef<EdgecontainerVpnConnection_VpcProjectRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_project", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct EdgecontainerVpnConnectionDynamic {
+    vpc_project: std::option::Option<terrars::DynamicBlock<EdgecontainerVpnConnection_VpcProject>>,
+}
+
 #[derive(Serialize)]
-pub struct EdgecontainerVpnConnectionDetailsElCloudRouterEl {
+pub struct EdgecontainerVpnConnection_Details_CloudRouter {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EdgecontainerVpnConnectionDetailsElCloudRouterEl {
+impl EdgecontainerVpnConnection_Details_CloudRouter {
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
@@ -519,8 +548,8 @@ impl EdgecontainerVpnConnectionDetailsElCloudRouterEl {
     }
 }
 
-impl terrars::ToListMappable for EdgecontainerVpnConnectionDetailsElCloudRouterEl {
-    type O = terrars::BlockAssignable<EdgecontainerVpnConnectionDetailsElCloudRouterEl>;
+impl terrars::ToListMappable for EdgecontainerVpnConnection_Details_CloudRouter {
+    type O = terrars::BlockAssignable<EdgecontainerVpnConnection_Details_CloudRouter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -531,32 +560,34 @@ impl terrars::ToListMappable for EdgecontainerVpnConnectionDetailsElCloudRouterE
     }
 }
 
-pub struct BuildEdgecontainerVpnConnectionDetailsElCloudRouterEl {}
+pub struct BuildEdgecontainerVpnConnection_Details_CloudRouter {}
 
-impl BuildEdgecontainerVpnConnectionDetailsElCloudRouterEl {
-    pub fn build(self) -> EdgecontainerVpnConnectionDetailsElCloudRouterEl {
-        EdgecontainerVpnConnectionDetailsElCloudRouterEl { name: core::default::Default::default() }
+impl BuildEdgecontainerVpnConnection_Details_CloudRouter {
+    pub fn build(self) -> EdgecontainerVpnConnection_Details_CloudRouter {
+        EdgecontainerVpnConnection_Details_CloudRouter { name: core::default::Default::default() }
     }
 }
 
-pub struct EdgecontainerVpnConnectionDetailsElCloudRouterElRef {
+#[allow(dead_code)]
+pub struct EdgecontainerVpnConnection_Details_CloudRouterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EdgecontainerVpnConnectionDetailsElCloudRouterElRef {
+impl terrars::Ref for EdgecontainerVpnConnection_Details_CloudRouterRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> EdgecontainerVpnConnectionDetailsElCloudRouterElRef {
-        EdgecontainerVpnConnectionDetailsElCloudRouterElRef {
+    ) -> EdgecontainerVpnConnection_Details_CloudRouterRef {
+        EdgecontainerVpnConnection_Details_CloudRouterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EdgecontainerVpnConnectionDetailsElCloudRouterElRef {
+impl EdgecontainerVpnConnection_Details_CloudRouterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -568,12 +599,12 @@ impl EdgecontainerVpnConnectionDetailsElCloudRouterElRef {
 }
 
 #[derive(Serialize)]
-pub struct EdgecontainerVpnConnectionDetailsElCloudVpnsEl {
+pub struct EdgecontainerVpnConnection_Details_CloudVpns {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     gateway: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EdgecontainerVpnConnectionDetailsElCloudVpnsEl {
+impl EdgecontainerVpnConnection_Details_CloudVpns {
     #[doc = "Set the field `gateway`.\n"]
     pub fn set_gateway(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.gateway = std::option::Option::Some(v.into());
@@ -581,8 +612,8 @@ impl EdgecontainerVpnConnectionDetailsElCloudVpnsEl {
     }
 }
 
-impl terrars::ToListMappable for EdgecontainerVpnConnectionDetailsElCloudVpnsEl {
-    type O = terrars::BlockAssignable<EdgecontainerVpnConnectionDetailsElCloudVpnsEl>;
+impl terrars::ToListMappable for EdgecontainerVpnConnection_Details_CloudVpns {
+    type O = terrars::BlockAssignable<EdgecontainerVpnConnection_Details_CloudVpns>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -593,32 +624,34 @@ impl terrars::ToListMappable for EdgecontainerVpnConnectionDetailsElCloudVpnsEl 
     }
 }
 
-pub struct BuildEdgecontainerVpnConnectionDetailsElCloudVpnsEl {}
+pub struct BuildEdgecontainerVpnConnection_Details_CloudVpns {}
 
-impl BuildEdgecontainerVpnConnectionDetailsElCloudVpnsEl {
-    pub fn build(self) -> EdgecontainerVpnConnectionDetailsElCloudVpnsEl {
-        EdgecontainerVpnConnectionDetailsElCloudVpnsEl { gateway: core::default::Default::default() }
+impl BuildEdgecontainerVpnConnection_Details_CloudVpns {
+    pub fn build(self) -> EdgecontainerVpnConnection_Details_CloudVpns {
+        EdgecontainerVpnConnection_Details_CloudVpns { gateway: core::default::Default::default() }
     }
 }
 
-pub struct EdgecontainerVpnConnectionDetailsElCloudVpnsElRef {
+#[allow(dead_code)]
+pub struct EdgecontainerVpnConnection_Details_CloudVpnsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EdgecontainerVpnConnectionDetailsElCloudVpnsElRef {
+impl terrars::Ref for EdgecontainerVpnConnection_Details_CloudVpnsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> EdgecontainerVpnConnectionDetailsElCloudVpnsElRef {
-        EdgecontainerVpnConnectionDetailsElCloudVpnsElRef {
+    ) -> EdgecontainerVpnConnection_Details_CloudVpnsRef {
+        EdgecontainerVpnConnection_Details_CloudVpnsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EdgecontainerVpnConnectionDetailsElCloudVpnsElRef {
+impl EdgecontainerVpnConnection_Details_CloudVpnsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -630,22 +663,22 @@ impl EdgecontainerVpnConnectionDetailsElCloudVpnsElRef {
 }
 
 #[derive(Serialize)]
-pub struct EdgecontainerVpnConnectionDetailsEl {
+pub struct EdgecontainerVpnConnection_Details {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cloud_router: std::option::Option<terrars::ListField<EdgecontainerVpnConnectionDetailsElCloudRouterEl>>,
+    cloud_router: std::option::Option<terrars::ListField<EdgecontainerVpnConnection_Details_CloudRouter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cloud_vpns: std::option::Option<terrars::ListField<EdgecontainerVpnConnectionDetailsElCloudVpnsEl>>,
+    cloud_vpns: std::option::Option<terrars::ListField<EdgecontainerVpnConnection_Details_CloudVpns>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     error: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     state: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EdgecontainerVpnConnectionDetailsEl {
+impl EdgecontainerVpnConnection_Details {
     #[doc = "Set the field `cloud_router`.\n"]
     pub fn set_cloud_router(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<EdgecontainerVpnConnectionDetailsElCloudRouterEl>>,
+        v: impl std::convert::Into<terrars::ListField<EdgecontainerVpnConnection_Details_CloudRouter>>,
     ) -> Self {
         self.cloud_router = std::option::Option::Some(v.into());
         self
@@ -654,7 +687,7 @@ impl EdgecontainerVpnConnectionDetailsEl {
     #[doc = "Set the field `cloud_vpns`.\n"]
     pub fn set_cloud_vpns(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<EdgecontainerVpnConnectionDetailsElCloudVpnsEl>>,
+        v: impl std::convert::Into<terrars::ListField<EdgecontainerVpnConnection_Details_CloudVpns>>,
     ) -> Self {
         self.cloud_vpns = std::option::Option::Some(v.into());
         self
@@ -673,8 +706,8 @@ impl EdgecontainerVpnConnectionDetailsEl {
     }
 }
 
-impl terrars::ToListMappable for EdgecontainerVpnConnectionDetailsEl {
-    type O = terrars::BlockAssignable<EdgecontainerVpnConnectionDetailsEl>;
+impl terrars::ToListMappable for EdgecontainerVpnConnection_Details {
+    type O = terrars::BlockAssignable<EdgecontainerVpnConnection_Details>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -685,11 +718,11 @@ impl terrars::ToListMappable for EdgecontainerVpnConnectionDetailsEl {
     }
 }
 
-pub struct BuildEdgecontainerVpnConnectionDetailsEl {}
+pub struct BuildEdgecontainerVpnConnection_Details {}
 
-impl BuildEdgecontainerVpnConnectionDetailsEl {
-    pub fn build(self) -> EdgecontainerVpnConnectionDetailsEl {
-        EdgecontainerVpnConnectionDetailsEl {
+impl BuildEdgecontainerVpnConnection_Details {
+    pub fn build(self) -> EdgecontainerVpnConnection_Details {
+        EdgecontainerVpnConnection_Details {
             cloud_router: core::default::Default::default(),
             cloud_vpns: core::default::Default::default(),
             error: core::default::Default::default(),
@@ -698,32 +731,34 @@ impl BuildEdgecontainerVpnConnectionDetailsEl {
     }
 }
 
-pub struct EdgecontainerVpnConnectionDetailsElRef {
+#[allow(dead_code)]
+pub struct EdgecontainerVpnConnection_DetailsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EdgecontainerVpnConnectionDetailsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EdgecontainerVpnConnectionDetailsElRef {
-        EdgecontainerVpnConnectionDetailsElRef {
+impl terrars::Ref for EdgecontainerVpnConnection_DetailsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EdgecontainerVpnConnection_DetailsRef {
+        EdgecontainerVpnConnection_DetailsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EdgecontainerVpnConnectionDetailsElRef {
+impl EdgecontainerVpnConnection_DetailsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `cloud_router` after provisioning.\n"]
-    pub fn cloud_router(&self) -> terrars::ListRef<EdgecontainerVpnConnectionDetailsElCloudRouterElRef> {
+    pub fn cloud_router(&self) -> terrars::ListRef<EdgecontainerVpnConnection_Details_CloudRouterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cloud_router", self.base))
     }
 
     #[doc = "Get a reference to the value of field `cloud_vpns` after provisioning.\n"]
-    pub fn cloud_vpns(&self) -> terrars::ListRef<EdgecontainerVpnConnectionDetailsElCloudVpnsElRef> {
+    pub fn cloud_vpns(&self) -> terrars::ListRef<EdgecontainerVpnConnection_Details_CloudVpnsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cloud_vpns", self.base))
     }
 
@@ -739,7 +774,7 @@ impl EdgecontainerVpnConnectionDetailsElRef {
 }
 
 #[derive(Serialize)]
-pub struct EdgecontainerVpnConnectionTimeoutsEl {
+pub struct EdgecontainerVpnConnection_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -748,7 +783,7 @@ pub struct EdgecontainerVpnConnectionTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EdgecontainerVpnConnectionTimeoutsEl {
+impl EdgecontainerVpnConnection_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -768,8 +803,8 @@ impl EdgecontainerVpnConnectionTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for EdgecontainerVpnConnectionTimeoutsEl {
-    type O = terrars::BlockAssignable<EdgecontainerVpnConnectionTimeoutsEl>;
+impl terrars::ToListMappable for EdgecontainerVpnConnection_Timeouts {
+    type O = terrars::BlockAssignable<EdgecontainerVpnConnection_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -780,11 +815,11 @@ impl terrars::ToListMappable for EdgecontainerVpnConnectionTimeoutsEl {
     }
 }
 
-pub struct BuildEdgecontainerVpnConnectionTimeoutsEl {}
+pub struct BuildEdgecontainerVpnConnection_Timeouts {}
 
-impl BuildEdgecontainerVpnConnectionTimeoutsEl {
-    pub fn build(self) -> EdgecontainerVpnConnectionTimeoutsEl {
-        EdgecontainerVpnConnectionTimeoutsEl {
+impl BuildEdgecontainerVpnConnection_Timeouts {
+    pub fn build(self) -> EdgecontainerVpnConnection_Timeouts {
+        EdgecontainerVpnConnection_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -792,21 +827,23 @@ impl BuildEdgecontainerVpnConnectionTimeoutsEl {
     }
 }
 
-pub struct EdgecontainerVpnConnectionTimeoutsElRef {
+#[allow(dead_code)]
+pub struct EdgecontainerVpnConnection_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EdgecontainerVpnConnectionTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EdgecontainerVpnConnectionTimeoutsElRef {
-        EdgecontainerVpnConnectionTimeoutsElRef {
+impl terrars::Ref for EdgecontainerVpnConnection_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EdgecontainerVpnConnection_TimeoutsRef {
+        EdgecontainerVpnConnection_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EdgecontainerVpnConnectionTimeoutsElRef {
+impl EdgecontainerVpnConnection_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -828,12 +865,12 @@ impl EdgecontainerVpnConnectionTimeoutsElRef {
 }
 
 #[derive(Serialize)]
-pub struct EdgecontainerVpnConnectionVpcProjectEl {
+pub struct EdgecontainerVpnConnection_VpcProject {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EdgecontainerVpnConnectionVpcProjectEl {
+impl EdgecontainerVpnConnection_VpcProject {
     #[doc =
         "Set the field `project_id`.\nThe project of the VPC to connect to. If not specified, it is the same as the cluster project."]
     pub fn set_project_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -842,8 +879,8 @@ impl EdgecontainerVpnConnectionVpcProjectEl {
     }
 }
 
-impl terrars::ToListMappable for EdgecontainerVpnConnectionVpcProjectEl {
-    type O = terrars::BlockAssignable<EdgecontainerVpnConnectionVpcProjectEl>;
+impl terrars::ToListMappable for EdgecontainerVpnConnection_VpcProject {
+    type O = terrars::BlockAssignable<EdgecontainerVpnConnection_VpcProject>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -854,29 +891,31 @@ impl terrars::ToListMappable for EdgecontainerVpnConnectionVpcProjectEl {
     }
 }
 
-pub struct BuildEdgecontainerVpnConnectionVpcProjectEl {}
+pub struct BuildEdgecontainerVpnConnection_VpcProject {}
 
-impl BuildEdgecontainerVpnConnectionVpcProjectEl {
-    pub fn build(self) -> EdgecontainerVpnConnectionVpcProjectEl {
-        EdgecontainerVpnConnectionVpcProjectEl { project_id: core::default::Default::default() }
+impl BuildEdgecontainerVpnConnection_VpcProject {
+    pub fn build(self) -> EdgecontainerVpnConnection_VpcProject {
+        EdgecontainerVpnConnection_VpcProject { project_id: core::default::Default::default() }
     }
 }
 
-pub struct EdgecontainerVpnConnectionVpcProjectElRef {
+#[allow(dead_code)]
+pub struct EdgecontainerVpnConnection_VpcProjectRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EdgecontainerVpnConnectionVpcProjectElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EdgecontainerVpnConnectionVpcProjectElRef {
-        EdgecontainerVpnConnectionVpcProjectElRef {
+impl terrars::Ref for EdgecontainerVpnConnection_VpcProjectRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EdgecontainerVpnConnection_VpcProjectRef {
+        EdgecontainerVpnConnection_VpcProjectRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EdgecontainerVpnConnectionVpcProjectElRef {
+impl EdgecontainerVpnConnection_VpcProjectRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -886,9 +925,4 @@ impl EdgecontainerVpnConnectionVpcProjectElRef {
     pub fn project_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project_id", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct EdgecontainerVpnConnectionDynamic {
-    vpc_project: std::option::Option<terrars::DynamicBlock<EdgecontainerVpnConnectionVpcProjectEl>>,
 }

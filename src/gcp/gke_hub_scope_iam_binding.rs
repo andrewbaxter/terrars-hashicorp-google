@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct GkeHubScopeIamBindingData {
+struct GkeHubScopeIamBindingData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,14 +28,14 @@ struct GkeHubScopeIamBindingData {
     role: terrars::PrimField<std::string::String>,
     scope_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<GkeHubScopeIamBindingConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<GkeHubScopeIamBinding_Condition>>,
     dynamic: GkeHubScopeIamBindingDynamic,
 }
 
 struct GkeHubScopeIamBinding_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<GkeHubScopeIamBindingData>,
+    data: std::cell::RefCell<GkeHubScopeIamBindingData_>,
 }
 
 #[derive(Clone)]
@@ -148,7 +150,7 @@ impl GkeHubScopeIamBinding {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeHubScopeIamBindingConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeHubScopeIamBinding_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -192,7 +194,7 @@ impl GkeHubScopeIamBinding {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<GkeHubScopeIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<GkeHubScopeIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -243,7 +245,7 @@ impl BuildGkeHubScopeIamBinding {
         let out = GkeHubScopeIamBinding(std::rc::Rc::new(GkeHubScopeIamBinding_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(GkeHubScopeIamBindingData {
+            data: std::cell::RefCell::new(GkeHubScopeIamBindingData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -317,20 +319,25 @@ impl GkeHubScopeIamBindingRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<GkeHubScopeIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<GkeHubScopeIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct GkeHubScopeIamBindingDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<GkeHubScopeIamBinding_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct GkeHubScopeIamBindingConditionEl {
+pub struct GkeHubScopeIamBinding_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl GkeHubScopeIamBindingConditionEl {
+impl GkeHubScopeIamBinding_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -338,8 +345,8 @@ impl GkeHubScopeIamBindingConditionEl {
     }
 }
 
-impl terrars::ToListMappable for GkeHubScopeIamBindingConditionEl {
-    type O = terrars::BlockAssignable<GkeHubScopeIamBindingConditionEl>;
+impl terrars::ToListMappable for GkeHubScopeIamBinding_Condition {
+    type O = terrars::BlockAssignable<GkeHubScopeIamBinding_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -350,16 +357,16 @@ impl terrars::ToListMappable for GkeHubScopeIamBindingConditionEl {
     }
 }
 
-pub struct BuildGkeHubScopeIamBindingConditionEl {
+pub struct BuildGkeHubScopeIamBinding_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildGkeHubScopeIamBindingConditionEl {
-    pub fn build(self) -> GkeHubScopeIamBindingConditionEl {
-        GkeHubScopeIamBindingConditionEl {
+impl BuildGkeHubScopeIamBinding_Condition {
+    pub fn build(self) -> GkeHubScopeIamBinding_Condition {
+        GkeHubScopeIamBinding_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -367,21 +374,23 @@ impl BuildGkeHubScopeIamBindingConditionEl {
     }
 }
 
-pub struct GkeHubScopeIamBindingConditionElRef {
+#[allow(dead_code)]
+pub struct GkeHubScopeIamBinding_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeHubScopeIamBindingConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeHubScopeIamBindingConditionElRef {
-        GkeHubScopeIamBindingConditionElRef {
+impl terrars::Ref for GkeHubScopeIamBinding_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeHubScopeIamBinding_ConditionRef {
+        GkeHubScopeIamBinding_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeHubScopeIamBindingConditionElRef {
+impl GkeHubScopeIamBinding_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -400,9 +409,4 @@ impl GkeHubScopeIamBindingConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct GkeHubScopeIamBindingDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<GkeHubScopeIamBindingConditionEl>>,
 }

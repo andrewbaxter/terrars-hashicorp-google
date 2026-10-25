@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct LoggingProjectSinkData {
+struct LoggingProjectSinkData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,6 +22,8 @@ struct LoggingProjectSinkData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     custom_writer_identity: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     destination: terrars::PrimField<std::string::String>,
@@ -35,16 +39,16 @@ struct LoggingProjectSinkData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     unique_writer_identity: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    bigquery_options: std::option::Option<std::vec::Vec<LoggingProjectSinkBigqueryOptionsEl>>,
+    bigquery_options: std::option::Option<std::vec::Vec<LoggingProjectSink_BigqueryOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    exclusions: std::option::Option<std::vec::Vec<LoggingProjectSinkExclusionsEl>>,
+    exclusions: std::option::Option<std::vec::Vec<LoggingProjectSink_Exclusions>>,
     dynamic: LoggingProjectSinkDynamic,
 }
 
 struct LoggingProjectSink_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<LoggingProjectSinkData>,
+    data: std::cell::RefCell<LoggingProjectSinkData_>,
 }
 
 #[derive(Clone)]
@@ -155,6 +159,13 @@ impl LoggingProjectSink {
     }
 
     #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `description`.\nA description of this sink. The maximum length of the description is 8000 characters."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -189,7 +200,7 @@ impl LoggingProjectSink {
     }
 
     #[doc =
-        "Set the field `unique_writer_identity`.\nWhether or not to create a unique identity associated with this sink. If false (the legacy behavior), then the writer_identity used is serviceAccount:cloud-logs@system.gserviceaccount.com. If true (default), then a unique service account is created and used for this sink. If you wish to publish logs across projects, you must set unique_writer_identity to true."]
+        "Set the field `unique_writer_identity`.\nWhether to use a service agent as the writer_identity for this sink. If false (the legacy behavior), writer_identity is serviceAccount:cloud-logs@system.gserviceaccount.com and the sink's destination must be in the same project as the sink. If true (the default), writer_identity is a service agent shared by sinks with the same parent. You must set unique_writer_identity to true to publish logs across projects or use bigquery_options."]
     pub fn set_unique_writer_identity(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().unique_writer_identity = std::option::Option::Some(v.into());
         self
@@ -198,7 +209,7 @@ impl LoggingProjectSink {
     #[doc = "Set the field `bigquery_options`.\n"]
     pub fn set_bigquery_options(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LoggingProjectSinkBigqueryOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LoggingProjectSink_BigqueryOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -214,7 +225,7 @@ impl LoggingProjectSink {
     #[doc = "Set the field `exclusions`.\n"]
     pub fn set_exclusions(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LoggingProjectSinkExclusionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LoggingProjectSink_Exclusions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -231,6 +242,12 @@ impl LoggingProjectSink {
         "Get a reference to the value of field `custom_writer_identity` after provisioning.\nA service account provided by the caller that will be used to write the log entries. The format must be serviceAccount:some@email. This field can only be specified if you are routing logs to a destination outside this sink's project. If not specified, a Logging service account will automatically be generated."]
     pub fn custom_writer_identity(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.custom_writer_identity", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -274,7 +291,7 @@ impl LoggingProjectSink {
     }
 
     #[doc =
-        "Get a reference to the value of field `unique_writer_identity` after provisioning.\nWhether or not to create a unique identity associated with this sink. If false (the legacy behavior), then the writer_identity used is serviceAccount:cloud-logs@system.gserviceaccount.com. If true (default), then a unique service account is created and used for this sink. If you wish to publish logs across projects, you must set unique_writer_identity to true."]
+        "Get a reference to the value of field `unique_writer_identity` after provisioning.\nWhether to use a service agent as the writer_identity for this sink. If false (the legacy behavior), writer_identity is serviceAccount:cloud-logs@system.gserviceaccount.com and the sink's destination must be in the same project as the sink. If true (the default), writer_identity is a service agent shared by sinks with the same parent. You must set unique_writer_identity to true to publish logs across projects or use bigquery_options."]
     pub fn unique_writer_identity(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.unique_writer_identity", self.extract_ref()))
     }
@@ -286,12 +303,12 @@ impl LoggingProjectSink {
     }
 
     #[doc = "Get a reference to the value of field `bigquery_options` after provisioning.\n"]
-    pub fn bigquery_options(&self) -> terrars::ListRef<LoggingProjectSinkBigqueryOptionsElRef> {
+    pub fn bigquery_options(&self) -> terrars::ListRef<LoggingProjectSink_BigqueryOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.bigquery_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `exclusions` after provisioning.\n"]
-    pub fn exclusions(&self) -> terrars::ListRef<LoggingProjectSinkExclusionsElRef> {
+    pub fn exclusions(&self) -> terrars::ListRef<LoggingProjectSink_ExclusionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.exclusions", self.extract_ref()))
     }
 }
@@ -341,13 +358,14 @@ impl BuildLoggingProjectSink {
         let out = LoggingProjectSink(std::rc::Rc::new(LoggingProjectSink_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(LoggingProjectSinkData {
+            data: std::cell::RefCell::new(LoggingProjectSinkData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 custom_writer_identity: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 destination: self.destination,
                 disabled: core::default::Default::default(),
@@ -396,6 +414,12 @@ impl LoggingProjectSinkRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nA description of this sink. The maximum length of the description is 8000 characters."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -436,7 +460,7 @@ impl LoggingProjectSinkRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `unique_writer_identity` after provisioning.\nWhether or not to create a unique identity associated with this sink. If false (the legacy behavior), then the writer_identity used is serviceAccount:cloud-logs@system.gserviceaccount.com. If true (default), then a unique service account is created and used for this sink. If you wish to publish logs across projects, you must set unique_writer_identity to true."]
+        "Get a reference to the value of field `unique_writer_identity` after provisioning.\nWhether to use a service agent as the writer_identity for this sink. If false (the legacy behavior), writer_identity is serviceAccount:cloud-logs@system.gserviceaccount.com and the sink's destination must be in the same project as the sink. If true (the default), writer_identity is a service agent shared by sinks with the same parent. You must set unique_writer_identity to true to publish logs across projects or use bigquery_options."]
     pub fn unique_writer_identity(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.unique_writer_identity", self.extract_ref()))
     }
@@ -448,25 +472,31 @@ impl LoggingProjectSinkRef {
     }
 
     #[doc = "Get a reference to the value of field `bigquery_options` after provisioning.\n"]
-    pub fn bigquery_options(&self) -> terrars::ListRef<LoggingProjectSinkBigqueryOptionsElRef> {
+    pub fn bigquery_options(&self) -> terrars::ListRef<LoggingProjectSink_BigqueryOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.bigquery_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `exclusions` after provisioning.\n"]
-    pub fn exclusions(&self) -> terrars::ListRef<LoggingProjectSinkExclusionsElRef> {
+    pub fn exclusions(&self) -> terrars::ListRef<LoggingProjectSink_ExclusionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.exclusions", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct LoggingProjectSinkDynamic {
+    bigquery_options: std::option::Option<terrars::DynamicBlock<LoggingProjectSink_BigqueryOptions>>,
+    exclusions: std::option::Option<terrars::DynamicBlock<LoggingProjectSink_Exclusions>>,
+}
+
 #[derive(Serialize)]
-pub struct LoggingProjectSinkBigqueryOptionsEl {
+pub struct LoggingProjectSink_BigqueryOptions {
     use_partitioned_tables: terrars::PrimField<bool>,
 }
 
-impl LoggingProjectSinkBigqueryOptionsEl { }
+impl LoggingProjectSink_BigqueryOptions { }
 
-impl terrars::ToListMappable for LoggingProjectSinkBigqueryOptionsEl {
-    type O = terrars::BlockAssignable<LoggingProjectSinkBigqueryOptionsEl>;
+impl terrars::ToListMappable for LoggingProjectSink_BigqueryOptions {
+    type O = terrars::BlockAssignable<LoggingProjectSink_BigqueryOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -477,33 +507,35 @@ impl terrars::ToListMappable for LoggingProjectSinkBigqueryOptionsEl {
     }
 }
 
-pub struct BuildLoggingProjectSinkBigqueryOptionsEl {
+pub struct BuildLoggingProjectSink_BigqueryOptions {
     #[doc =
         "Whether to use BigQuery's partition tables. By default, Logging creates dated tables based on the log entries' timestamps, e.g. syslog_20170523. With partitioned tables the date suffix is no longer present and special query syntax has to be used instead. In both cases, tables are sharded based on UTC timezone."]
     pub use_partitioned_tables: terrars::PrimField<bool>,
 }
 
-impl BuildLoggingProjectSinkBigqueryOptionsEl {
-    pub fn build(self) -> LoggingProjectSinkBigqueryOptionsEl {
-        LoggingProjectSinkBigqueryOptionsEl { use_partitioned_tables: self.use_partitioned_tables }
+impl BuildLoggingProjectSink_BigqueryOptions {
+    pub fn build(self) -> LoggingProjectSink_BigqueryOptions {
+        LoggingProjectSink_BigqueryOptions { use_partitioned_tables: self.use_partitioned_tables }
     }
 }
 
-pub struct LoggingProjectSinkBigqueryOptionsElRef {
+#[allow(dead_code)]
+pub struct LoggingProjectSink_BigqueryOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LoggingProjectSinkBigqueryOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LoggingProjectSinkBigqueryOptionsElRef {
-        LoggingProjectSinkBigqueryOptionsElRef {
+impl terrars::Ref for LoggingProjectSink_BigqueryOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LoggingProjectSink_BigqueryOptionsRef {
+        LoggingProjectSink_BigqueryOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LoggingProjectSinkBigqueryOptionsElRef {
+impl LoggingProjectSink_BigqueryOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -516,7 +548,7 @@ impl LoggingProjectSinkBigqueryOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct LoggingProjectSinkExclusionsEl {
+pub struct LoggingProjectSink_Exclusions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -525,7 +557,7 @@ pub struct LoggingProjectSinkExclusionsEl {
     name: terrars::PrimField<std::string::String>,
 }
 
-impl LoggingProjectSinkExclusionsEl {
+impl LoggingProjectSink_Exclusions {
     #[doc = "Set the field `description`.\nA description of this exclusion."]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -540,8 +572,8 @@ impl LoggingProjectSinkExclusionsEl {
     }
 }
 
-impl terrars::ToListMappable for LoggingProjectSinkExclusionsEl {
-    type O = terrars::BlockAssignable<LoggingProjectSinkExclusionsEl>;
+impl terrars::ToListMappable for LoggingProjectSink_Exclusions {
+    type O = terrars::BlockAssignable<LoggingProjectSink_Exclusions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -552,7 +584,7 @@ impl terrars::ToListMappable for LoggingProjectSinkExclusionsEl {
     }
 }
 
-pub struct BuildLoggingProjectSinkExclusionsEl {
+pub struct BuildLoggingProjectSink_Exclusions {
     #[doc =
         "An advanced logs filter that matches the log entries to be excluded. By using the sample function, you can exclude less than 100% of the matching log entries"]
     pub filter: terrars::PrimField<std::string::String>,
@@ -561,9 +593,9 @@ pub struct BuildLoggingProjectSinkExclusionsEl {
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLoggingProjectSinkExclusionsEl {
-    pub fn build(self) -> LoggingProjectSinkExclusionsEl {
-        LoggingProjectSinkExclusionsEl {
+impl BuildLoggingProjectSink_Exclusions {
+    pub fn build(self) -> LoggingProjectSink_Exclusions {
+        LoggingProjectSink_Exclusions {
             description: core::default::Default::default(),
             disabled: core::default::Default::default(),
             filter: self.filter,
@@ -572,21 +604,23 @@ impl BuildLoggingProjectSinkExclusionsEl {
     }
 }
 
-pub struct LoggingProjectSinkExclusionsElRef {
+#[allow(dead_code)]
+pub struct LoggingProjectSink_ExclusionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LoggingProjectSinkExclusionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LoggingProjectSinkExclusionsElRef {
-        LoggingProjectSinkExclusionsElRef {
+impl terrars::Ref for LoggingProjectSink_ExclusionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LoggingProjectSink_ExclusionsRef {
+        LoggingProjectSink_ExclusionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LoggingProjectSinkExclusionsElRef {
+impl LoggingProjectSink_ExclusionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -613,10 +647,4 @@ impl LoggingProjectSinkExclusionsElRef {
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct LoggingProjectSinkDynamic {
-    bigquery_options: std::option::Option<terrars::DynamicBlock<LoggingProjectSinkBigqueryOptionsEl>>,
-    exclusions: std::option::Option<terrars::DynamicBlock<LoggingProjectSinkExclusionsEl>>,
 }

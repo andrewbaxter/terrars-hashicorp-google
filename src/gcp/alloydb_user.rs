@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct AlloydbUserData {
+struct AlloydbUserData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,19 +24,25 @@ struct AlloydbUserData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     database_roles: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     password: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    password_wo: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    password_wo_version: std::option::Option<terrars::PrimField<std::string::String>>,
     user_id: terrars::PrimField<std::string::String>,
     user_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<AlloydbUserTimeoutsEl>,
+    timeouts: std::option::Option<AlloydbUser_Timeouts>,
 }
 
 struct AlloydbUser_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AlloydbUserData>,
+    data: std::cell::RefCell<AlloydbUserData_>,
 }
 
 #[derive(Clone)]
@@ -143,6 +151,13 @@ impl AlloydbUser {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -155,8 +170,21 @@ impl AlloydbUser {
         self
     }
 
+    #[doc = "Set the field `password_wo`.\nPassword for this database user."]
+    pub fn set_password_wo(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().password_wo = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `password_wo_version`.\nTriggers update of 'password_wo' write-only. Increment this value when an update to 'password_wo' is needed. For more info see [updating write-only arguments](/docs/providers/google/guides/using_write_only_arguments.html#updating-write-only-arguments)"]
+    pub fn set_password_wo_version(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().password_wo_version = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<AlloydbUserTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<AlloydbUser_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -171,6 +199,12 @@ impl AlloydbUser {
         "Get a reference to the value of field `database_roles` after provisioning.\nList of database roles this database user has."]
     pub fn database_roles(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.database_roles", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -189,20 +223,31 @@ impl AlloydbUser {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.password", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `password_wo` after provisioning.\nPassword for this database user."]
+    pub fn password_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.password_wo", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `password_wo_version` after provisioning.\nTriggers update of 'password_wo' write-only. Increment this value when an update to 'password_wo' is needed. For more info see [updating write-only arguments](/docs/providers/google/guides/using_write_only_arguments.html#updating-write-only-arguments)"]
+    pub fn password_wo_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.password_wo_version", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `user_id` after provisioning.\nThe database role name of the user."]
     pub fn user_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_id", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `user_type` after provisioning.\nThe type of this user. Possible values: [\"ALLOYDB_BUILT_IN\", \"ALLOYDB_IAM_USER\"]"]
+        "Get a reference to the value of field `user_type` after provisioning.\nThe type of this user. Note that 'ALLOYDB_IAM_GROUP' is currently only supported by\nthe google-beta provider (which uses the v1beta alloydb API). Only new or Google-whitelisted\nAlloyDB clusters support IAM group authentication. See\nhttps://docs.cloud.google.com/alloydb/docs/database-users/manage-iam-auth for details. Possible values: [\"ALLOYDB_BUILT_IN\", \"ALLOYDB_IAM_USER\", \"ALLOYDB_IAM_GROUP\"]"]
     pub fn user_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_type", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> AlloydbUserTimeoutsElRef {
-        AlloydbUserTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> AlloydbUser_TimeoutsRef {
+        AlloydbUser_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -244,7 +289,8 @@ pub struct BuildAlloydbUser {
     pub cluster: terrars::PrimField<std::string::String>,
     #[doc = "The database role name of the user."]
     pub user_id: terrars::PrimField<std::string::String>,
-    #[doc = "The type of this user. Possible values: [\"ALLOYDB_BUILT_IN\", \"ALLOYDB_IAM_USER\"]"]
+    #[doc =
+        "The type of this user. Note that 'ALLOYDB_IAM_GROUP' is currently only supported by\nthe google-beta provider (which uses the v1beta alloydb API). Only new or Google-whitelisted\nAlloyDB clusters support IAM group authentication. See\nhttps://docs.cloud.google.com/alloydb/docs/database-users/manage-iam-auth for details. Possible values: [\"ALLOYDB_BUILT_IN\", \"ALLOYDB_IAM_USER\", \"ALLOYDB_IAM_GROUP\"]"]
     pub user_type: terrars::PrimField<std::string::String>,
 }
 
@@ -253,7 +299,7 @@ impl BuildAlloydbUser {
         let out = AlloydbUser(std::rc::Rc::new(AlloydbUser_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AlloydbUserData {
+            data: std::cell::RefCell::new(AlloydbUserData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -261,8 +307,11 @@ impl BuildAlloydbUser {
                 provisioner: core::default::Default::default(),
                 cluster: self.cluster,
                 database_roles: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 password: core::default::Default::default(),
+                password_wo: core::default::Default::default(),
+                password_wo_version: core::default::Default::default(),
                 user_id: self.user_id,
                 user_type: self.user_type,
                 timeouts: core::default::Default::default(),
@@ -308,6 +357,12 @@ impl AlloydbUserRef {
         terrars::ListRef::new(self.shared().clone(), format!("{}.database_roles", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -324,25 +379,36 @@ impl AlloydbUserRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.password", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `password_wo` after provisioning.\nPassword for this database user."]
+    pub fn password_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.password_wo", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `password_wo_version` after provisioning.\nTriggers update of 'password_wo' write-only. Increment this value when an update to 'password_wo' is needed. For more info see [updating write-only arguments](/docs/providers/google/guides/using_write_only_arguments.html#updating-write-only-arguments)"]
+    pub fn password_wo_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.password_wo_version", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `user_id` after provisioning.\nThe database role name of the user."]
     pub fn user_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_id", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `user_type` after provisioning.\nThe type of this user. Possible values: [\"ALLOYDB_BUILT_IN\", \"ALLOYDB_IAM_USER\"]"]
+        "Get a reference to the value of field `user_type` after provisioning.\nThe type of this user. Note that 'ALLOYDB_IAM_GROUP' is currently only supported by\nthe google-beta provider (which uses the v1beta alloydb API). Only new or Google-whitelisted\nAlloyDB clusters support IAM group authentication. See\nhttps://docs.cloud.google.com/alloydb/docs/database-users/manage-iam-auth for details. Possible values: [\"ALLOYDB_BUILT_IN\", \"ALLOYDB_IAM_USER\", \"ALLOYDB_IAM_GROUP\"]"]
     pub fn user_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_type", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> AlloydbUserTimeoutsElRef {
-        AlloydbUserTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> AlloydbUser_TimeoutsRef {
+        AlloydbUser_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct AlloydbUserTimeoutsEl {
+pub struct AlloydbUser_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -351,7 +417,7 @@ pub struct AlloydbUserTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AlloydbUserTimeoutsEl {
+impl AlloydbUser_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -371,8 +437,8 @@ impl AlloydbUserTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for AlloydbUserTimeoutsEl {
-    type O = terrars::BlockAssignable<AlloydbUserTimeoutsEl>;
+impl terrars::ToListMappable for AlloydbUser_Timeouts {
+    type O = terrars::BlockAssignable<AlloydbUser_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -383,11 +449,11 @@ impl terrars::ToListMappable for AlloydbUserTimeoutsEl {
     }
 }
 
-pub struct BuildAlloydbUserTimeoutsEl {}
+pub struct BuildAlloydbUser_Timeouts {}
 
-impl BuildAlloydbUserTimeoutsEl {
-    pub fn build(self) -> AlloydbUserTimeoutsEl {
-        AlloydbUserTimeoutsEl {
+impl BuildAlloydbUser_Timeouts {
+    pub fn build(self) -> AlloydbUser_Timeouts {
+        AlloydbUser_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -395,21 +461,23 @@ impl BuildAlloydbUserTimeoutsEl {
     }
 }
 
-pub struct AlloydbUserTimeoutsElRef {
+#[allow(dead_code)]
+pub struct AlloydbUser_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AlloydbUserTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AlloydbUserTimeoutsElRef {
-        AlloydbUserTimeoutsElRef {
+impl terrars::Ref for AlloydbUser_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AlloydbUser_TimeoutsRef {
+        AlloydbUser_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AlloydbUserTimeoutsElRef {
+impl AlloydbUser_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

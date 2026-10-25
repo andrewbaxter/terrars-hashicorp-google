@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataCloudfunctions2FunctionData {
+struct DataCloudfunctions2FunctionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -27,7 +29,7 @@ struct DataCloudfunctions2FunctionData {
 struct DataCloudfunctions2Function_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataCloudfunctions2FunctionData>,
+    data: std::cell::RefCell<DataCloudfunctions2FunctionData_>,
 }
 
 #[derive(Clone)]
@@ -86,8 +88,14 @@ impl DataCloudfunctions2Function {
 
     #[doc =
         "Get a reference to the value of field `build_config` after provisioning.\nDescribes the Build step of the function that builds a container\nfrom the given source."]
-    pub fn build_config(&self) -> terrars::ListRef<DataCloudfunctions2FunctionBuildConfigElRef> {
+    pub fn build_config(&self) -> terrars::ListRef<DataCloudfunctions2Function_BuildConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.build_config", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -110,7 +118,7 @@ impl DataCloudfunctions2Function {
 
     #[doc =
         "Get a reference to the value of field `event_trigger` after provisioning.\nAn Eventarc trigger managed by Google Cloud Functions that fires events in\nresponse to a condition in another service."]
-    pub fn event_trigger(&self) -> terrars::ListRef<DataCloudfunctions2FunctionEventTriggerElRef> {
+    pub fn event_trigger(&self) -> terrars::ListRef<DataCloudfunctions2Function_EventTriggerRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.event_trigger", self.extract_ref()))
     }
 
@@ -150,7 +158,7 @@ impl DataCloudfunctions2Function {
 
     #[doc =
         "Get a reference to the value of field `service_config` after provisioning.\nDescribes the Service being deployed."]
-    pub fn service_config(&self) -> terrars::ListRef<DataCloudfunctions2FunctionServiceConfigElRef> {
+    pub fn service_config(&self) -> terrars::ListRef<DataCloudfunctions2Function_ServiceConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.service_config", self.extract_ref()))
     }
 
@@ -224,7 +232,7 @@ impl BuildDataCloudfunctions2Function {
         let out = DataCloudfunctions2Function(std::rc::Rc::new(DataCloudfunctions2Function_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataCloudfunctions2FunctionData {
+            data: std::cell::RefCell::new(DataCloudfunctions2FunctionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -265,8 +273,14 @@ impl DataCloudfunctions2FunctionRef {
 
     #[doc =
         "Get a reference to the value of field `build_config` after provisioning.\nDescribes the Build step of the function that builds a container\nfrom the given source."]
-    pub fn build_config(&self) -> terrars::ListRef<DataCloudfunctions2FunctionBuildConfigElRef> {
+    pub fn build_config(&self) -> terrars::ListRef<DataCloudfunctions2Function_BuildConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.build_config", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -289,7 +303,7 @@ impl DataCloudfunctions2FunctionRef {
 
     #[doc =
         "Get a reference to the value of field `event_trigger` after provisioning.\nAn Eventarc trigger managed by Google Cloud Functions that fires events in\nresponse to a condition in another service."]
-    pub fn event_trigger(&self) -> terrars::ListRef<DataCloudfunctions2FunctionEventTriggerElRef> {
+    pub fn event_trigger(&self) -> terrars::ListRef<DataCloudfunctions2Function_EventTriggerRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.event_trigger", self.extract_ref()))
     }
 
@@ -329,7 +343,7 @@ impl DataCloudfunctions2FunctionRef {
 
     #[doc =
         "Get a reference to the value of field `service_config` after provisioning.\nDescribes the Service being deployed."]
-    pub fn service_config(&self) -> terrars::ListRef<DataCloudfunctions2FunctionServiceConfigElRef> {
+    pub fn service_config(&self) -> terrars::ListRef<DataCloudfunctions2Function_ServiceConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.service_config", self.extract_ref()))
     }
 
@@ -359,7 +373,123 @@ impl DataCloudfunctions2FunctionRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCloudfunctions2FunctionBuildConfigElSourceElRepoSourceEl {
+pub struct DataCloudfunctions2Function_BuildConfig_AutomaticUpdatePolicy {}
+
+impl DataCloudfunctions2Function_BuildConfig_AutomaticUpdatePolicy { }
+
+impl terrars::ToListMappable for DataCloudfunctions2Function_BuildConfig_AutomaticUpdatePolicy {
+    type O = terrars::BlockAssignable<DataCloudfunctions2Function_BuildConfig_AutomaticUpdatePolicy>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataCloudfunctions2Function_BuildConfig_AutomaticUpdatePolicy {}
+
+impl BuildDataCloudfunctions2Function_BuildConfig_AutomaticUpdatePolicy {
+    pub fn build(self) -> DataCloudfunctions2Function_BuildConfig_AutomaticUpdatePolicy {
+        DataCloudfunctions2Function_BuildConfig_AutomaticUpdatePolicy {}
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataCloudfunctions2Function_BuildConfig_AutomaticUpdatePolicyRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataCloudfunctions2Function_BuildConfig_AutomaticUpdatePolicyRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataCloudfunctions2Function_BuildConfig_AutomaticUpdatePolicyRef {
+        DataCloudfunctions2Function_BuildConfig_AutomaticUpdatePolicyRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataCloudfunctions2Function_BuildConfig_AutomaticUpdatePolicyRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataCloudfunctions2Function_BuildConfig_OnDeployUpdatePolicy {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    runtime_version: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataCloudfunctions2Function_BuildConfig_OnDeployUpdatePolicy {
+    #[doc = "Set the field `runtime_version`.\n"]
+    pub fn set_runtime_version(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.runtime_version = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataCloudfunctions2Function_BuildConfig_OnDeployUpdatePolicy {
+    type O = terrars::BlockAssignable<DataCloudfunctions2Function_BuildConfig_OnDeployUpdatePolicy>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataCloudfunctions2Function_BuildConfig_OnDeployUpdatePolicy {}
+
+impl BuildDataCloudfunctions2Function_BuildConfig_OnDeployUpdatePolicy {
+    pub fn build(self) -> DataCloudfunctions2Function_BuildConfig_OnDeployUpdatePolicy {
+        DataCloudfunctions2Function_BuildConfig_OnDeployUpdatePolicy {
+            runtime_version: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataCloudfunctions2Function_BuildConfig_OnDeployUpdatePolicyRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataCloudfunctions2Function_BuildConfig_OnDeployUpdatePolicyRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataCloudfunctions2Function_BuildConfig_OnDeployUpdatePolicyRef {
+        DataCloudfunctions2Function_BuildConfig_OnDeployUpdatePolicyRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataCloudfunctions2Function_BuildConfig_OnDeployUpdatePolicyRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `runtime_version` after provisioning.\n"]
+    pub fn runtime_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.runtime_version", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataCloudfunctions2Function_BuildConfig_Source_RepoSource {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     branch_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -376,7 +506,7 @@ pub struct DataCloudfunctions2FunctionBuildConfigElSourceElRepoSourceEl {
     tag_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCloudfunctions2FunctionBuildConfigElSourceElRepoSourceEl {
+impl DataCloudfunctions2Function_BuildConfig_Source_RepoSource {
     #[doc = "Set the field `branch_name`.\n"]
     pub fn set_branch_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.branch_name = std::option::Option::Some(v.into());
@@ -420,8 +550,8 @@ impl DataCloudfunctions2FunctionBuildConfigElSourceElRepoSourceEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudfunctions2FunctionBuildConfigElSourceElRepoSourceEl {
-    type O = terrars::BlockAssignable<DataCloudfunctions2FunctionBuildConfigElSourceElRepoSourceEl>;
+impl terrars::ToListMappable for DataCloudfunctions2Function_BuildConfig_Source_RepoSource {
+    type O = terrars::BlockAssignable<DataCloudfunctions2Function_BuildConfig_Source_RepoSource>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -432,11 +562,11 @@ impl terrars::ToListMappable for DataCloudfunctions2FunctionBuildConfigElSourceE
     }
 }
 
-pub struct BuildDataCloudfunctions2FunctionBuildConfigElSourceElRepoSourceEl {}
+pub struct BuildDataCloudfunctions2Function_BuildConfig_Source_RepoSource {}
 
-impl BuildDataCloudfunctions2FunctionBuildConfigElSourceElRepoSourceEl {
-    pub fn build(self) -> DataCloudfunctions2FunctionBuildConfigElSourceElRepoSourceEl {
-        DataCloudfunctions2FunctionBuildConfigElSourceElRepoSourceEl {
+impl BuildDataCloudfunctions2Function_BuildConfig_Source_RepoSource {
+    pub fn build(self) -> DataCloudfunctions2Function_BuildConfig_Source_RepoSource {
+        DataCloudfunctions2Function_BuildConfig_Source_RepoSource {
             branch_name: core::default::Default::default(),
             commit_sha: core::default::Default::default(),
             dir: core::default::Default::default(),
@@ -448,24 +578,26 @@ impl BuildDataCloudfunctions2FunctionBuildConfigElSourceElRepoSourceEl {
     }
 }
 
-pub struct DataCloudfunctions2FunctionBuildConfigElSourceElRepoSourceElRef {
+#[allow(dead_code)]
+pub struct DataCloudfunctions2Function_BuildConfig_Source_RepoSourceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudfunctions2FunctionBuildConfigElSourceElRepoSourceElRef {
+impl terrars::Ref for DataCloudfunctions2Function_BuildConfig_Source_RepoSourceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCloudfunctions2FunctionBuildConfigElSourceElRepoSourceElRef {
-        DataCloudfunctions2FunctionBuildConfigElSourceElRepoSourceElRef {
+    ) -> DataCloudfunctions2Function_BuildConfig_Source_RepoSourceRef {
+        DataCloudfunctions2Function_BuildConfig_Source_RepoSourceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudfunctions2FunctionBuildConfigElSourceElRepoSourceElRef {
+impl DataCloudfunctions2Function_BuildConfig_Source_RepoSourceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -507,7 +639,7 @@ impl DataCloudfunctions2FunctionBuildConfigElSourceElRepoSourceElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCloudfunctions2FunctionBuildConfigElSourceElStorageSourceEl {
+pub struct DataCloudfunctions2Function_BuildConfig_Source_StorageSource {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bucket: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -516,7 +648,7 @@ pub struct DataCloudfunctions2FunctionBuildConfigElSourceElStorageSourceEl {
     object: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCloudfunctions2FunctionBuildConfigElSourceElStorageSourceEl {
+impl DataCloudfunctions2Function_BuildConfig_Source_StorageSource {
     #[doc = "Set the field `bucket`.\n"]
     pub fn set_bucket(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.bucket = std::option::Option::Some(v.into());
@@ -536,8 +668,8 @@ impl DataCloudfunctions2FunctionBuildConfigElSourceElStorageSourceEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudfunctions2FunctionBuildConfigElSourceElStorageSourceEl {
-    type O = terrars::BlockAssignable<DataCloudfunctions2FunctionBuildConfigElSourceElStorageSourceEl>;
+impl terrars::ToListMappable for DataCloudfunctions2Function_BuildConfig_Source_StorageSource {
+    type O = terrars::BlockAssignable<DataCloudfunctions2Function_BuildConfig_Source_StorageSource>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -548,11 +680,11 @@ impl terrars::ToListMappable for DataCloudfunctions2FunctionBuildConfigElSourceE
     }
 }
 
-pub struct BuildDataCloudfunctions2FunctionBuildConfigElSourceElStorageSourceEl {}
+pub struct BuildDataCloudfunctions2Function_BuildConfig_Source_StorageSource {}
 
-impl BuildDataCloudfunctions2FunctionBuildConfigElSourceElStorageSourceEl {
-    pub fn build(self) -> DataCloudfunctions2FunctionBuildConfigElSourceElStorageSourceEl {
-        DataCloudfunctions2FunctionBuildConfigElSourceElStorageSourceEl {
+impl BuildDataCloudfunctions2Function_BuildConfig_Source_StorageSource {
+    pub fn build(self) -> DataCloudfunctions2Function_BuildConfig_Source_StorageSource {
+        DataCloudfunctions2Function_BuildConfig_Source_StorageSource {
             bucket: core::default::Default::default(),
             generation: core::default::Default::default(),
             object: core::default::Default::default(),
@@ -560,24 +692,26 @@ impl BuildDataCloudfunctions2FunctionBuildConfigElSourceElStorageSourceEl {
     }
 }
 
-pub struct DataCloudfunctions2FunctionBuildConfigElSourceElStorageSourceElRef {
+#[allow(dead_code)]
+pub struct DataCloudfunctions2Function_BuildConfig_Source_StorageSourceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudfunctions2FunctionBuildConfigElSourceElStorageSourceElRef {
+impl terrars::Ref for DataCloudfunctions2Function_BuildConfig_Source_StorageSourceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCloudfunctions2FunctionBuildConfigElSourceElStorageSourceElRef {
-        DataCloudfunctions2FunctionBuildConfigElSourceElStorageSourceElRef {
+    ) -> DataCloudfunctions2Function_BuildConfig_Source_StorageSourceRef {
+        DataCloudfunctions2Function_BuildConfig_Source_StorageSourceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudfunctions2FunctionBuildConfigElSourceElStorageSourceElRef {
+impl DataCloudfunctions2Function_BuildConfig_Source_StorageSourceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -599,20 +733,20 @@ impl DataCloudfunctions2FunctionBuildConfigElSourceElStorageSourceElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCloudfunctions2FunctionBuildConfigElSourceEl {
+pub struct DataCloudfunctions2Function_BuildConfig_Source {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    repo_source: std::option::Option<terrars::ListField<DataCloudfunctions2FunctionBuildConfigElSourceElRepoSourceEl>>,
+    repo_source: std::option::Option<terrars::ListField<DataCloudfunctions2Function_BuildConfig_Source_RepoSource>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     storage_source: std
     ::option
-    ::Option<terrars::ListField<DataCloudfunctions2FunctionBuildConfigElSourceElStorageSourceEl>>,
+    ::Option<terrars::ListField<DataCloudfunctions2Function_BuildConfig_Source_StorageSource>>,
 }
 
-impl DataCloudfunctions2FunctionBuildConfigElSourceEl {
+impl DataCloudfunctions2Function_BuildConfig_Source {
     #[doc = "Set the field `repo_source`.\n"]
     pub fn set_repo_source(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataCloudfunctions2FunctionBuildConfigElSourceElRepoSourceEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataCloudfunctions2Function_BuildConfig_Source_RepoSource>>,
     ) -> Self {
         self.repo_source = std::option::Option::Some(v.into());
         self
@@ -621,20 +755,15 @@ impl DataCloudfunctions2FunctionBuildConfigElSourceEl {
     #[doc = "Set the field `storage_source`.\n"]
     pub fn set_storage_source(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::ListField<DataCloudfunctions2FunctionBuildConfigElSourceElStorageSourceEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataCloudfunctions2Function_BuildConfig_Source_StorageSource>>,
     ) -> Self {
         self.storage_source = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataCloudfunctions2FunctionBuildConfigElSourceEl {
-    type O = terrars::BlockAssignable<DataCloudfunctions2FunctionBuildConfigElSourceEl>;
+impl terrars::ToListMappable for DataCloudfunctions2Function_BuildConfig_Source {
+    type O = terrars::BlockAssignable<DataCloudfunctions2Function_BuildConfig_Source>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -645,52 +774,58 @@ impl terrars::ToListMappable for DataCloudfunctions2FunctionBuildConfigElSourceE
     }
 }
 
-pub struct BuildDataCloudfunctions2FunctionBuildConfigElSourceEl {}
+pub struct BuildDataCloudfunctions2Function_BuildConfig_Source {}
 
-impl BuildDataCloudfunctions2FunctionBuildConfigElSourceEl {
-    pub fn build(self) -> DataCloudfunctions2FunctionBuildConfigElSourceEl {
-        DataCloudfunctions2FunctionBuildConfigElSourceEl {
+impl BuildDataCloudfunctions2Function_BuildConfig_Source {
+    pub fn build(self) -> DataCloudfunctions2Function_BuildConfig_Source {
+        DataCloudfunctions2Function_BuildConfig_Source {
             repo_source: core::default::Default::default(),
             storage_source: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataCloudfunctions2FunctionBuildConfigElSourceElRef {
+#[allow(dead_code)]
+pub struct DataCloudfunctions2Function_BuildConfig_SourceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudfunctions2FunctionBuildConfigElSourceElRef {
+impl terrars::Ref for DataCloudfunctions2Function_BuildConfig_SourceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCloudfunctions2FunctionBuildConfigElSourceElRef {
-        DataCloudfunctions2FunctionBuildConfigElSourceElRef {
+    ) -> DataCloudfunctions2Function_BuildConfig_SourceRef {
+        DataCloudfunctions2Function_BuildConfig_SourceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudfunctions2FunctionBuildConfigElSourceElRef {
+impl DataCloudfunctions2Function_BuildConfig_SourceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `repo_source` after provisioning.\n"]
-    pub fn repo_source(&self) -> terrars::ListRef<DataCloudfunctions2FunctionBuildConfigElSourceElRepoSourceElRef> {
+    pub fn repo_source(&self) -> terrars::ListRef<DataCloudfunctions2Function_BuildConfig_Source_RepoSourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.repo_source", self.base))
     }
 
     #[doc = "Get a reference to the value of field `storage_source` after provisioning.\n"]
-    pub fn storage_source(&self) -> terrars::ListRef<DataCloudfunctions2FunctionBuildConfigElSourceElStorageSourceElRef> {
+    pub fn storage_source(&self) -> terrars::ListRef<DataCloudfunctions2Function_BuildConfig_Source_StorageSourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.storage_source", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataCloudfunctions2FunctionBuildConfigEl {
+pub struct DataCloudfunctions2Function_BuildConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    automatic_update_policy: std
+    ::option
+    ::Option<terrars::ListField<DataCloudfunctions2Function_BuildConfig_AutomaticUpdatePolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     build: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -700,14 +835,34 @@ pub struct DataCloudfunctions2FunctionBuildConfigEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     environment_variables: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    on_deploy_update_policy: std
+    ::option
+    ::Option<terrars::ListField<DataCloudfunctions2Function_BuildConfig_OnDeployUpdatePolicy>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     runtime: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    source: std::option::Option<terrars::ListField<DataCloudfunctions2FunctionBuildConfigElSourceEl>>,
+    service_account: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source: std::option::Option<terrars::ListField<DataCloudfunctions2Function_BuildConfig_Source>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     worker_pool: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCloudfunctions2FunctionBuildConfigEl {
+impl DataCloudfunctions2Function_BuildConfig {
+    #[doc = "Set the field `automatic_update_policy`.\n"]
+    pub fn set_automatic_update_policy(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::ListField<DataCloudfunctions2Function_BuildConfig_AutomaticUpdatePolicy>>,
+    ) -> Self {
+        self.automatic_update_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `build`.\n"]
     pub fn set_build(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.build = std::option::Option::Some(v.into());
@@ -735,16 +890,31 @@ impl DataCloudfunctions2FunctionBuildConfigEl {
         self
     }
 
+    #[doc = "Set the field `on_deploy_update_policy`.\n"]
+    pub fn set_on_deploy_update_policy(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataCloudfunctions2Function_BuildConfig_OnDeployUpdatePolicy>>,
+    ) -> Self {
+        self.on_deploy_update_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `runtime`.\n"]
     pub fn set_runtime(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.runtime = std::option::Option::Some(v.into());
         self
     }
 
+    #[doc = "Set the field `service_account`.\n"]
+    pub fn set_service_account(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.service_account = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `source`.\n"]
     pub fn set_source(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataCloudfunctions2FunctionBuildConfigElSourceEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataCloudfunctions2Function_BuildConfig_Source>>,
     ) -> Self {
         self.source = std::option::Option::Some(v.into());
         self
@@ -757,8 +927,8 @@ impl DataCloudfunctions2FunctionBuildConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudfunctions2FunctionBuildConfigEl {
-    type O = terrars::BlockAssignable<DataCloudfunctions2FunctionBuildConfigEl>;
+impl terrars::ToListMappable for DataCloudfunctions2Function_BuildConfig {
+    type O = terrars::BlockAssignable<DataCloudfunctions2Function_BuildConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -769,39 +939,51 @@ impl terrars::ToListMappable for DataCloudfunctions2FunctionBuildConfigEl {
     }
 }
 
-pub struct BuildDataCloudfunctions2FunctionBuildConfigEl {}
+pub struct BuildDataCloudfunctions2Function_BuildConfig {}
 
-impl BuildDataCloudfunctions2FunctionBuildConfigEl {
-    pub fn build(self) -> DataCloudfunctions2FunctionBuildConfigEl {
-        DataCloudfunctions2FunctionBuildConfigEl {
+impl BuildDataCloudfunctions2Function_BuildConfig {
+    pub fn build(self) -> DataCloudfunctions2Function_BuildConfig {
+        DataCloudfunctions2Function_BuildConfig {
+            automatic_update_policy: core::default::Default::default(),
             build: core::default::Default::default(),
             docker_repository: core::default::Default::default(),
             entry_point: core::default::Default::default(),
             environment_variables: core::default::Default::default(),
+            on_deploy_update_policy: core::default::Default::default(),
             runtime: core::default::Default::default(),
+            service_account: core::default::Default::default(),
             source: core::default::Default::default(),
             worker_pool: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataCloudfunctions2FunctionBuildConfigElRef {
+#[allow(dead_code)]
+pub struct DataCloudfunctions2Function_BuildConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudfunctions2FunctionBuildConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudfunctions2FunctionBuildConfigElRef {
-        DataCloudfunctions2FunctionBuildConfigElRef {
+impl terrars::Ref for DataCloudfunctions2Function_BuildConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudfunctions2Function_BuildConfigRef {
+        DataCloudfunctions2Function_BuildConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudfunctions2FunctionBuildConfigElRef {
+impl DataCloudfunctions2Function_BuildConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `automatic_update_policy` after provisioning.\n"]
+    pub fn automatic_update_policy(
+        &self,
+    ) -> terrars::ListRef<DataCloudfunctions2Function_BuildConfig_AutomaticUpdatePolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.automatic_update_policy", self.base))
     }
 
     #[doc = "Get a reference to the value of field `build` after provisioning.\n"]
@@ -824,13 +1006,25 @@ impl DataCloudfunctions2FunctionBuildConfigElRef {
         terrars::RecRef::new(self.shared().clone(), format!("{}.environment_variables", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `on_deploy_update_policy` after provisioning.\n"]
+    pub fn on_deploy_update_policy(
+        &self,
+    ) -> terrars::ListRef<DataCloudfunctions2Function_BuildConfig_OnDeployUpdatePolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.on_deploy_update_policy", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `runtime` after provisioning.\n"]
     pub fn runtime(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.runtime", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `service_account` after provisioning.\n"]
+    pub fn service_account(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_account", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `source` after provisioning.\n"]
-    pub fn source(&self) -> terrars::ListRef<DataCloudfunctions2FunctionBuildConfigElSourceElRef> {
+    pub fn source(&self) -> terrars::ListRef<DataCloudfunctions2Function_BuildConfig_SourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source", self.base))
     }
 
@@ -841,7 +1035,7 @@ impl DataCloudfunctions2FunctionBuildConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCloudfunctions2FunctionEventTriggerElEventFiltersEl {
+pub struct DataCloudfunctions2Function_EventTrigger_EventFilters {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     attribute: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -850,7 +1044,7 @@ pub struct DataCloudfunctions2FunctionEventTriggerElEventFiltersEl {
     value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCloudfunctions2FunctionEventTriggerElEventFiltersEl {
+impl DataCloudfunctions2Function_EventTrigger_EventFilters {
     #[doc = "Set the field `attribute`.\n"]
     pub fn set_attribute(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.attribute = std::option::Option::Some(v.into());
@@ -870,8 +1064,8 @@ impl DataCloudfunctions2FunctionEventTriggerElEventFiltersEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudfunctions2FunctionEventTriggerElEventFiltersEl {
-    type O = terrars::BlockAssignable<DataCloudfunctions2FunctionEventTriggerElEventFiltersEl>;
+impl terrars::ToListMappable for DataCloudfunctions2Function_EventTrigger_EventFilters {
+    type O = terrars::BlockAssignable<DataCloudfunctions2Function_EventTrigger_EventFilters>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -882,11 +1076,11 @@ impl terrars::ToListMappable for DataCloudfunctions2FunctionEventTriggerElEventF
     }
 }
 
-pub struct BuildDataCloudfunctions2FunctionEventTriggerElEventFiltersEl {}
+pub struct BuildDataCloudfunctions2Function_EventTrigger_EventFilters {}
 
-impl BuildDataCloudfunctions2FunctionEventTriggerElEventFiltersEl {
-    pub fn build(self) -> DataCloudfunctions2FunctionEventTriggerElEventFiltersEl {
-        DataCloudfunctions2FunctionEventTriggerElEventFiltersEl {
+impl BuildDataCloudfunctions2Function_EventTrigger_EventFilters {
+    pub fn build(self) -> DataCloudfunctions2Function_EventTrigger_EventFilters {
+        DataCloudfunctions2Function_EventTrigger_EventFilters {
             attribute: core::default::Default::default(),
             operator: core::default::Default::default(),
             value: core::default::Default::default(),
@@ -894,24 +1088,26 @@ impl BuildDataCloudfunctions2FunctionEventTriggerElEventFiltersEl {
     }
 }
 
-pub struct DataCloudfunctions2FunctionEventTriggerElEventFiltersElRef {
+#[allow(dead_code)]
+pub struct DataCloudfunctions2Function_EventTrigger_EventFiltersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudfunctions2FunctionEventTriggerElEventFiltersElRef {
+impl terrars::Ref for DataCloudfunctions2Function_EventTrigger_EventFiltersRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCloudfunctions2FunctionEventTriggerElEventFiltersElRef {
-        DataCloudfunctions2FunctionEventTriggerElEventFiltersElRef {
+    ) -> DataCloudfunctions2Function_EventTrigger_EventFiltersRef {
+        DataCloudfunctions2Function_EventTrigger_EventFiltersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudfunctions2FunctionEventTriggerElEventFiltersElRef {
+impl DataCloudfunctions2Function_EventTrigger_EventFiltersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -933,9 +1129,9 @@ impl DataCloudfunctions2FunctionEventTriggerElEventFiltersElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCloudfunctions2FunctionEventTriggerEl {
+pub struct DataCloudfunctions2Function_EventTrigger {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    event_filters: std::option::Option<terrars::SetField<DataCloudfunctions2FunctionEventTriggerElEventFiltersEl>>,
+    event_filters: std::option::Option<terrars::SetField<DataCloudfunctions2Function_EventTrigger_EventFilters>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     event_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -950,11 +1146,11 @@ pub struct DataCloudfunctions2FunctionEventTriggerEl {
     trigger_region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCloudfunctions2FunctionEventTriggerEl {
+impl DataCloudfunctions2Function_EventTrigger {
     #[doc = "Set the field `event_filters`.\n"]
     pub fn set_event_filters(
         mut self,
-        v: impl std::convert::Into<terrars::SetField<DataCloudfunctions2FunctionEventTriggerElEventFiltersEl>>,
+        v: impl std::convert::Into<terrars::SetField<DataCloudfunctions2Function_EventTrigger_EventFilters>>,
     ) -> Self {
         self.event_filters = std::option::Option::Some(v.into());
         self
@@ -1000,8 +1196,8 @@ impl DataCloudfunctions2FunctionEventTriggerEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudfunctions2FunctionEventTriggerEl {
-    type O = terrars::BlockAssignable<DataCloudfunctions2FunctionEventTriggerEl>;
+impl terrars::ToListMappable for DataCloudfunctions2Function_EventTrigger {
+    type O = terrars::BlockAssignable<DataCloudfunctions2Function_EventTrigger>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1012,11 +1208,11 @@ impl terrars::ToListMappable for DataCloudfunctions2FunctionEventTriggerEl {
     }
 }
 
-pub struct BuildDataCloudfunctions2FunctionEventTriggerEl {}
+pub struct BuildDataCloudfunctions2Function_EventTrigger {}
 
-impl BuildDataCloudfunctions2FunctionEventTriggerEl {
-    pub fn build(self) -> DataCloudfunctions2FunctionEventTriggerEl {
-        DataCloudfunctions2FunctionEventTriggerEl {
+impl BuildDataCloudfunctions2Function_EventTrigger {
+    pub fn build(self) -> DataCloudfunctions2Function_EventTrigger {
+        DataCloudfunctions2Function_EventTrigger {
             event_filters: core::default::Default::default(),
             event_type: core::default::Default::default(),
             pubsub_topic: core::default::Default::default(),
@@ -1028,27 +1224,29 @@ impl BuildDataCloudfunctions2FunctionEventTriggerEl {
     }
 }
 
-pub struct DataCloudfunctions2FunctionEventTriggerElRef {
+#[allow(dead_code)]
+pub struct DataCloudfunctions2Function_EventTriggerRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudfunctions2FunctionEventTriggerElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudfunctions2FunctionEventTriggerElRef {
-        DataCloudfunctions2FunctionEventTriggerElRef {
+impl terrars::Ref for DataCloudfunctions2Function_EventTriggerRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudfunctions2Function_EventTriggerRef {
+        DataCloudfunctions2Function_EventTriggerRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudfunctions2FunctionEventTriggerElRef {
+impl DataCloudfunctions2Function_EventTriggerRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `event_filters` after provisioning.\n"]
-    pub fn event_filters(&self) -> terrars::SetRef<DataCloudfunctions2FunctionEventTriggerElEventFiltersElRef> {
+    pub fn event_filters(&self) -> terrars::SetRef<DataCloudfunctions2Function_EventTrigger_EventFiltersRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.event_filters", self.base))
     }
 
@@ -1084,7 +1282,104 @@ impl DataCloudfunctions2FunctionEventTriggerElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesEl {
+pub struct DataCloudfunctions2Function_ServiceConfig_DirectVpcNetworkInterface {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    subnetwork: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+}
+
+impl DataCloudfunctions2Function_ServiceConfig_DirectVpcNetworkInterface {
+    #[doc = "Set the field `network`.\n"]
+    pub fn set_network(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.network = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `subnetwork`.\n"]
+    pub fn set_subnetwork(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.subnetwork = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.tags = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataCloudfunctions2Function_ServiceConfig_DirectVpcNetworkInterface {
+    type O = terrars::BlockAssignable<DataCloudfunctions2Function_ServiceConfig_DirectVpcNetworkInterface>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataCloudfunctions2Function_ServiceConfig_DirectVpcNetworkInterface {}
+
+impl BuildDataCloudfunctions2Function_ServiceConfig_DirectVpcNetworkInterface {
+    pub fn build(self) -> DataCloudfunctions2Function_ServiceConfig_DirectVpcNetworkInterface {
+        DataCloudfunctions2Function_ServiceConfig_DirectVpcNetworkInterface {
+            network: core::default::Default::default(),
+            subnetwork: core::default::Default::default(),
+            tags: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataCloudfunctions2Function_ServiceConfig_DirectVpcNetworkInterfaceRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataCloudfunctions2Function_ServiceConfig_DirectVpcNetworkInterfaceRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataCloudfunctions2Function_ServiceConfig_DirectVpcNetworkInterfaceRef {
+        DataCloudfunctions2Function_ServiceConfig_DirectVpcNetworkInterfaceRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataCloudfunctions2Function_ServiceConfig_DirectVpcNetworkInterfaceRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `network` after provisioning.\n"]
+    pub fn network(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `subnetwork` after provisioning.\n"]
+    pub fn subnetwork(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.subnetwork", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.tags", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataCloudfunctions2Function_ServiceConfig_SecretEnvironmentVariables {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1095,7 +1390,7 @@ pub struct DataCloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesE
     version: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesEl {
+impl DataCloudfunctions2Function_ServiceConfig_SecretEnvironmentVariables {
     #[doc = "Set the field `key`.\n"]
     pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.key = std::option::Option::Some(v.into());
@@ -1121,8 +1416,8 @@ impl DataCloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesEl {
-    type O = terrars::BlockAssignable<DataCloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesEl>;
+impl terrars::ToListMappable for DataCloudfunctions2Function_ServiceConfig_SecretEnvironmentVariables {
+    type O = terrars::BlockAssignable<DataCloudfunctions2Function_ServiceConfig_SecretEnvironmentVariables>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1133,11 +1428,11 @@ impl terrars::ToListMappable for DataCloudfunctions2FunctionServiceConfigElSecre
     }
 }
 
-pub struct BuildDataCloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesEl {}
+pub struct BuildDataCloudfunctions2Function_ServiceConfig_SecretEnvironmentVariables {}
 
-impl BuildDataCloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesEl {
-    pub fn build(self) -> DataCloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesEl {
-        DataCloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesEl {
+impl BuildDataCloudfunctions2Function_ServiceConfig_SecretEnvironmentVariables {
+    pub fn build(self) -> DataCloudfunctions2Function_ServiceConfig_SecretEnvironmentVariables {
+        DataCloudfunctions2Function_ServiceConfig_SecretEnvironmentVariables {
             key: core::default::Default::default(),
             project_id: core::default::Default::default(),
             secret: core::default::Default::default(),
@@ -1146,24 +1441,26 @@ impl BuildDataCloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesEl
     }
 }
 
-pub struct DataCloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesElRef {
+#[allow(dead_code)]
+pub struct DataCloudfunctions2Function_ServiceConfig_SecretEnvironmentVariablesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesElRef {
+impl terrars::Ref for DataCloudfunctions2Function_ServiceConfig_SecretEnvironmentVariablesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesElRef {
-        DataCloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesElRef {
+    ) -> DataCloudfunctions2Function_ServiceConfig_SecretEnvironmentVariablesRef {
+        DataCloudfunctions2Function_ServiceConfig_SecretEnvironmentVariablesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesElRef {
+impl DataCloudfunctions2Function_ServiceConfig_SecretEnvironmentVariablesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1190,14 +1487,14 @@ impl DataCloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsEl {
+pub struct DataCloudfunctions2Function_ServiceConfig_SecretVolumes_Versions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     path: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     version: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsEl {
+impl DataCloudfunctions2Function_ServiceConfig_SecretVolumes_Versions {
     #[doc = "Set the field `path`.\n"]
     pub fn set_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.path = std::option::Option::Some(v.into());
@@ -1211,8 +1508,8 @@ impl DataCloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsEl {
-    type O = terrars::BlockAssignable<DataCloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsEl>;
+impl terrars::ToListMappable for DataCloudfunctions2Function_ServiceConfig_SecretVolumes_Versions {
+    type O = terrars::BlockAssignable<DataCloudfunctions2Function_ServiceConfig_SecretVolumes_Versions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1223,35 +1520,37 @@ impl terrars::ToListMappable for DataCloudfunctions2FunctionServiceConfigElSecre
     }
 }
 
-pub struct BuildDataCloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsEl {}
+pub struct BuildDataCloudfunctions2Function_ServiceConfig_SecretVolumes_Versions {}
 
-impl BuildDataCloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsEl {
-    pub fn build(self) -> DataCloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsEl {
-        DataCloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsEl {
+impl BuildDataCloudfunctions2Function_ServiceConfig_SecretVolumes_Versions {
+    pub fn build(self) -> DataCloudfunctions2Function_ServiceConfig_SecretVolumes_Versions {
+        DataCloudfunctions2Function_ServiceConfig_SecretVolumes_Versions {
             path: core::default::Default::default(),
             version: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataCloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsElRef {
+#[allow(dead_code)]
+pub struct DataCloudfunctions2Function_ServiceConfig_SecretVolumes_VersionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsElRef {
+impl terrars::Ref for DataCloudfunctions2Function_ServiceConfig_SecretVolumes_VersionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsElRef {
-        DataCloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsElRef {
+    ) -> DataCloudfunctions2Function_ServiceConfig_SecretVolumes_VersionsRef {
+        DataCloudfunctions2Function_ServiceConfig_SecretVolumes_VersionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsElRef {
+impl DataCloudfunctions2Function_ServiceConfig_SecretVolumes_VersionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1268,7 +1567,7 @@ impl DataCloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCloudfunctions2FunctionServiceConfigElSecretVolumesEl {
+pub struct DataCloudfunctions2Function_ServiceConfig_SecretVolumes {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     mount_path: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1276,12 +1575,10 @@ pub struct DataCloudfunctions2FunctionServiceConfigElSecretVolumesEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     secret: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    versions: std
-    ::option
-    ::Option<terrars::ListField<DataCloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsEl>>,
+    versions: std::option::Option<terrars::ListField<DataCloudfunctions2Function_ServiceConfig_SecretVolumes_Versions>>,
 }
 
-impl DataCloudfunctions2FunctionServiceConfigElSecretVolumesEl {
+impl DataCloudfunctions2Function_ServiceConfig_SecretVolumes {
     #[doc = "Set the field `mount_path`.\n"]
     pub fn set_mount_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.mount_path = std::option::Option::Some(v.into());
@@ -1308,15 +1605,15 @@ impl DataCloudfunctions2FunctionServiceConfigElSecretVolumesEl {
 
                     std
                     ::convert
-                    ::Into<terrars::ListField<DataCloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsEl>>,
+                    ::Into<terrars::ListField<DataCloudfunctions2Function_ServiceConfig_SecretVolumes_Versions>>,
     ) -> Self {
         self.versions = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataCloudfunctions2FunctionServiceConfigElSecretVolumesEl {
-    type O = terrars::BlockAssignable<DataCloudfunctions2FunctionServiceConfigElSecretVolumesEl>;
+impl terrars::ToListMappable for DataCloudfunctions2Function_ServiceConfig_SecretVolumes {
+    type O = terrars::BlockAssignable<DataCloudfunctions2Function_ServiceConfig_SecretVolumes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1327,11 +1624,11 @@ impl terrars::ToListMappable for DataCloudfunctions2FunctionServiceConfigElSecre
     }
 }
 
-pub struct BuildDataCloudfunctions2FunctionServiceConfigElSecretVolumesEl {}
+pub struct BuildDataCloudfunctions2Function_ServiceConfig_SecretVolumes {}
 
-impl BuildDataCloudfunctions2FunctionServiceConfigElSecretVolumesEl {
-    pub fn build(self) -> DataCloudfunctions2FunctionServiceConfigElSecretVolumesEl {
-        DataCloudfunctions2FunctionServiceConfigElSecretVolumesEl {
+impl BuildDataCloudfunctions2Function_ServiceConfig_SecretVolumes {
+    pub fn build(self) -> DataCloudfunctions2Function_ServiceConfig_SecretVolumes {
+        DataCloudfunctions2Function_ServiceConfig_SecretVolumes {
             mount_path: core::default::Default::default(),
             project_id: core::default::Default::default(),
             secret: core::default::Default::default(),
@@ -1340,24 +1637,26 @@ impl BuildDataCloudfunctions2FunctionServiceConfigElSecretVolumesEl {
     }
 }
 
-pub struct DataCloudfunctions2FunctionServiceConfigElSecretVolumesElRef {
+#[allow(dead_code)]
+pub struct DataCloudfunctions2Function_ServiceConfig_SecretVolumesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudfunctions2FunctionServiceConfigElSecretVolumesElRef {
+impl terrars::Ref for DataCloudfunctions2Function_ServiceConfig_SecretVolumesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCloudfunctions2FunctionServiceConfigElSecretVolumesElRef {
-        DataCloudfunctions2FunctionServiceConfigElSecretVolumesElRef {
+    ) -> DataCloudfunctions2Function_ServiceConfig_SecretVolumesRef {
+        DataCloudfunctions2Function_ServiceConfig_SecretVolumesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudfunctions2FunctionServiceConfigElSecretVolumesElRef {
+impl DataCloudfunctions2Function_ServiceConfig_SecretVolumesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1378,19 +1677,27 @@ impl DataCloudfunctions2FunctionServiceConfigElSecretVolumesElRef {
     }
 
     #[doc = "Get a reference to the value of field `versions` after provisioning.\n"]
-    pub fn versions(&self) -> terrars::ListRef<DataCloudfunctions2FunctionServiceConfigElSecretVolumesElVersionsElRef> {
+    pub fn versions(&self) -> terrars::ListRef<DataCloudfunctions2Function_ServiceConfig_SecretVolumes_VersionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.versions", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataCloudfunctions2FunctionServiceConfigEl {
+pub struct DataCloudfunctions2Function_ServiceConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     all_traffic_on_latest_revision: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     available_cpu: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     available_memory: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    binary_authorization_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    direct_vpc_egress: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    direct_vpc_network_interface: std
+    ::option
+    ::Option<terrars::ListField<DataCloudfunctions2Function_ServiceConfig_DirectVpcNetworkInterface>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     environment_variables: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1406,9 +1713,9 @@ pub struct DataCloudfunctions2FunctionServiceConfigEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     secret_environment_variables: std
     ::option
-    ::Option<terrars::ListField<DataCloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesEl>>,
+    ::Option<terrars::ListField<DataCloudfunctions2Function_ServiceConfig_SecretEnvironmentVariables>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    secret_volumes: std::option::Option<terrars::ListField<DataCloudfunctions2FunctionServiceConfigElSecretVolumesEl>>,
+    secret_volumes: std::option::Option<terrars::ListField<DataCloudfunctions2Function_ServiceConfig_SecretVolumes>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     service: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1423,7 +1730,7 @@ pub struct DataCloudfunctions2FunctionServiceConfigEl {
     vpc_connector_egress_settings: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCloudfunctions2FunctionServiceConfigEl {
+impl DataCloudfunctions2Function_ServiceConfig {
     #[doc = "Set the field `all_traffic_on_latest_revision`.\n"]
     pub fn set_all_traffic_on_latest_revision(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.all_traffic_on_latest_revision = std::option::Option::Some(v.into());
@@ -1439,6 +1746,35 @@ impl DataCloudfunctions2FunctionServiceConfigEl {
     #[doc = "Set the field `available_memory`.\n"]
     pub fn set_available_memory(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.available_memory = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `binary_authorization_policy`.\n"]
+    pub fn set_binary_authorization_policy(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.binary_authorization_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `direct_vpc_egress`.\n"]
+    pub fn set_direct_vpc_egress(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.direct_vpc_egress = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `direct_vpc_network_interface`.\n"]
+    pub fn set_direct_vpc_network_interface(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::ListField<DataCloudfunctions2Function_ServiceConfig_DirectVpcNetworkInterface>>,
+    ) -> Self {
+        self.direct_vpc_network_interface = std::option::Option::Some(v.into());
         self
     }
 
@@ -1489,9 +1825,7 @@ impl DataCloudfunctions2FunctionServiceConfigEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::ListField<DataCloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesEl>,
-                    >,
+                    ::Into<terrars::ListField<DataCloudfunctions2Function_ServiceConfig_SecretEnvironmentVariables>>,
     ) -> Self {
         self.secret_environment_variables = std::option::Option::Some(v.into());
         self
@@ -1500,7 +1834,7 @@ impl DataCloudfunctions2FunctionServiceConfigEl {
     #[doc = "Set the field `secret_volumes`.\n"]
     pub fn set_secret_volumes(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataCloudfunctions2FunctionServiceConfigElSecretVolumesEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataCloudfunctions2Function_ServiceConfig_SecretVolumes>>,
     ) -> Self {
         self.secret_volumes = std::option::Option::Some(v.into());
         self
@@ -1549,8 +1883,8 @@ impl DataCloudfunctions2FunctionServiceConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudfunctions2FunctionServiceConfigEl {
-    type O = terrars::BlockAssignable<DataCloudfunctions2FunctionServiceConfigEl>;
+impl terrars::ToListMappable for DataCloudfunctions2Function_ServiceConfig {
+    type O = terrars::BlockAssignable<DataCloudfunctions2Function_ServiceConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1561,14 +1895,17 @@ impl terrars::ToListMappable for DataCloudfunctions2FunctionServiceConfigEl {
     }
 }
 
-pub struct BuildDataCloudfunctions2FunctionServiceConfigEl {}
+pub struct BuildDataCloudfunctions2Function_ServiceConfig {}
 
-impl BuildDataCloudfunctions2FunctionServiceConfigEl {
-    pub fn build(self) -> DataCloudfunctions2FunctionServiceConfigEl {
-        DataCloudfunctions2FunctionServiceConfigEl {
+impl BuildDataCloudfunctions2Function_ServiceConfig {
+    pub fn build(self) -> DataCloudfunctions2Function_ServiceConfig {
+        DataCloudfunctions2Function_ServiceConfig {
             all_traffic_on_latest_revision: core::default::Default::default(),
             available_cpu: core::default::Default::default(),
             available_memory: core::default::Default::default(),
+            binary_authorization_policy: core::default::Default::default(),
+            direct_vpc_egress: core::default::Default::default(),
+            direct_vpc_network_interface: core::default::Default::default(),
             environment_variables: core::default::Default::default(),
             gcf_uri: core::default::Default::default(),
             ingress_settings: core::default::Default::default(),
@@ -1587,21 +1924,23 @@ impl BuildDataCloudfunctions2FunctionServiceConfigEl {
     }
 }
 
-pub struct DataCloudfunctions2FunctionServiceConfigElRef {
+#[allow(dead_code)]
+pub struct DataCloudfunctions2Function_ServiceConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudfunctions2FunctionServiceConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudfunctions2FunctionServiceConfigElRef {
-        DataCloudfunctions2FunctionServiceConfigElRef {
+impl terrars::Ref for DataCloudfunctions2Function_ServiceConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudfunctions2Function_ServiceConfigRef {
+        DataCloudfunctions2Function_ServiceConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudfunctions2FunctionServiceConfigElRef {
+impl DataCloudfunctions2Function_ServiceConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1619,6 +1958,23 @@ impl DataCloudfunctions2FunctionServiceConfigElRef {
     #[doc = "Get a reference to the value of field `available_memory` after provisioning.\n"]
     pub fn available_memory(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.available_memory", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `binary_authorization_policy` after provisioning.\n"]
+    pub fn binary_authorization_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.binary_authorization_policy", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `direct_vpc_egress` after provisioning.\n"]
+    pub fn direct_vpc_egress(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.direct_vpc_egress", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `direct_vpc_network_interface` after provisioning.\n"]
+    pub fn direct_vpc_network_interface(
+        &self,
+    ) -> terrars::ListRef<DataCloudfunctions2Function_ServiceConfig_DirectVpcNetworkInterfaceRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.direct_vpc_network_interface", self.base))
     }
 
     #[doc = "Get a reference to the value of field `environment_variables` after provisioning.\n"]
@@ -1654,12 +2010,12 @@ impl DataCloudfunctions2FunctionServiceConfigElRef {
     #[doc = "Get a reference to the value of field `secret_environment_variables` after provisioning.\n"]
     pub fn secret_environment_variables(
         &self,
-    ) -> terrars::ListRef<DataCloudfunctions2FunctionServiceConfigElSecretEnvironmentVariablesElRef> {
+    ) -> terrars::ListRef<DataCloudfunctions2Function_ServiceConfig_SecretEnvironmentVariablesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.secret_environment_variables", self.base))
     }
 
     #[doc = "Get a reference to the value of field `secret_volumes` after provisioning.\n"]
-    pub fn secret_volumes(&self) -> terrars::ListRef<DataCloudfunctions2FunctionServiceConfigElSecretVolumesElRef> {
+    pub fn secret_volumes(&self) -> terrars::ListRef<DataCloudfunctions2Function_ServiceConfig_SecretVolumesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.secret_volumes", self.base))
     }
 

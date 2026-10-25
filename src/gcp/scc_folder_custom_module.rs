@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct SccFolderCustomModuleData {
+struct SccFolderCustomModuleData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,22 +20,24 @@ struct SccFolderCustomModuleData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     display_name: terrars::PrimField<std::string::String>,
     enablement_state: terrars::PrimField<std::string::String>,
     folder: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    custom_config: std::option::Option<std::vec::Vec<SccFolderCustomModuleCustomConfigEl>>,
+    custom_config: std::option::Option<std::vec::Vec<SccFolderCustomModule_CustomConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<SccFolderCustomModuleTimeoutsEl>,
+    timeouts: std::option::Option<SccFolderCustomModule_Timeouts>,
     dynamic: SccFolderCustomModuleDynamic,
 }
 
 struct SccFolderCustomModule_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SccFolderCustomModuleData>,
+    data: std::cell::RefCell<SccFolderCustomModuleData_>,
 }
 
 #[derive(Clone)]
@@ -133,6 +137,13 @@ impl SccFolderCustomModule {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -142,7 +153,7 @@ impl SccFolderCustomModule {
     #[doc = "Set the field `custom_config`.\n"]
     pub fn set_custom_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SccFolderCustomModuleCustomConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SccFolderCustomModule_CustomConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -156,7 +167,7 @@ impl SccFolderCustomModule {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<SccFolderCustomModuleTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<SccFolderCustomModule_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -165,6 +176,12 @@ impl SccFolderCustomModule {
         "Get a reference to the value of field `ancestor_module` after provisioning.\nIf empty, indicates that the custom module was created in the organization, folder,\nor project in which you are viewing the custom module. Otherwise, ancestor_module\nspecifies the organization or folder from which the custom module is inherited."]
     pub fn ancestor_module(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ancestor_module", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -208,13 +225,13 @@ impl SccFolderCustomModule {
     }
 
     #[doc = "Get a reference to the value of field `custom_config` after provisioning.\n"]
-    pub fn custom_config(&self) -> terrars::ListRef<SccFolderCustomModuleCustomConfigElRef> {
+    pub fn custom_config(&self) -> terrars::ListRef<SccFolderCustomModule_CustomConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.custom_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> SccFolderCustomModuleTimeoutsElRef {
-        SccFolderCustomModuleTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> SccFolderCustomModule_TimeoutsRef {
+        SccFolderCustomModule_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -265,12 +282,13 @@ impl BuildSccFolderCustomModule {
         let out = SccFolderCustomModule(std::rc::Rc::new(SccFolderCustomModule_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SccFolderCustomModuleData {
+            data: std::cell::RefCell::new(SccFolderCustomModuleData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 display_name: self.display_name,
                 enablement_state: self.enablement_state,
                 folder: self.folder,
@@ -315,6 +333,12 @@ impl SccFolderCustomModuleRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `display_name` after provisioning.\nThe display name of the Security Health Analytics custom module. This\ndisplay name becomes the finding category for all findings that are\nreturned by this custom module. The display name must be between 1 and\n128 characters, start with a lowercase letter, and contain alphanumeric\ncharacters or underscores only."]
     pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
@@ -355,18 +379,23 @@ impl SccFolderCustomModuleRef {
     }
 
     #[doc = "Get a reference to the value of field `custom_config` after provisioning.\n"]
-    pub fn custom_config(&self) -> terrars::ListRef<SccFolderCustomModuleCustomConfigElRef> {
+    pub fn custom_config(&self) -> terrars::ListRef<SccFolderCustomModule_CustomConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.custom_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> SccFolderCustomModuleTimeoutsElRef {
-        SccFolderCustomModuleTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> SccFolderCustomModule_TimeoutsRef {
+        SccFolderCustomModule_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct SccFolderCustomModuleDynamic {
+    custom_config: std::option::Option<terrars::DynamicBlock<SccFolderCustomModule_CustomConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct SccFolderCustomModuleCustomConfigElCustomOutputElPropertiesElValueExpressionEl {
+pub struct SccFolderCustomModule_CustomConfig_CustomOutput_Properties_ValueExpression {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
@@ -376,7 +405,7 @@ pub struct SccFolderCustomModuleCustomConfigElCustomOutputElPropertiesElValueExp
     title: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SccFolderCustomModuleCustomConfigElCustomOutputElPropertiesElValueExpressionEl {
+impl SccFolderCustomModule_CustomConfig_CustomOutput_Properties_ValueExpression {
     #[doc =
         "Set the field `description`.\nDescription of the expression. This is a longer text which describes the\nexpression, e.g. when hovered over it in a UI."]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -399,9 +428,8 @@ impl SccFolderCustomModuleCustomConfigElCustomOutputElPropertiesElValueExpressio
     }
 }
 
-impl terrars::ToListMappable for SccFolderCustomModuleCustomConfigElCustomOutputElPropertiesElValueExpressionEl {
-    type O =
-        terrars::BlockAssignable<SccFolderCustomModuleCustomConfigElCustomOutputElPropertiesElValueExpressionEl>;
+impl terrars::ToListMappable for SccFolderCustomModule_CustomConfig_CustomOutput_Properties_ValueExpression {
+    type O = terrars::BlockAssignable<SccFolderCustomModule_CustomConfig_CustomOutput_Properties_ValueExpression>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -412,14 +440,14 @@ impl terrars::ToListMappable for SccFolderCustomModuleCustomConfigElCustomOutput
     }
 }
 
-pub struct BuildSccFolderCustomModuleCustomConfigElCustomOutputElPropertiesElValueExpressionEl {
+pub struct BuildSccFolderCustomModule_CustomConfig_CustomOutput_Properties_ValueExpression {
     #[doc = "Textual representation of an expression in Common Expression Language syntax."]
     pub expression: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSccFolderCustomModuleCustomConfigElCustomOutputElPropertiesElValueExpressionEl {
-    pub fn build(self) -> SccFolderCustomModuleCustomConfigElCustomOutputElPropertiesElValueExpressionEl {
-        SccFolderCustomModuleCustomConfigElCustomOutputElPropertiesElValueExpressionEl {
+impl BuildSccFolderCustomModule_CustomConfig_CustomOutput_Properties_ValueExpression {
+    pub fn build(self) -> SccFolderCustomModule_CustomConfig_CustomOutput_Properties_ValueExpression {
+        SccFolderCustomModule_CustomConfig_CustomOutput_Properties_ValueExpression {
             description: core::default::Default::default(),
             expression: self.expression,
             location: core::default::Default::default(),
@@ -428,24 +456,26 @@ impl BuildSccFolderCustomModuleCustomConfigElCustomOutputElPropertiesElValueExpr
     }
 }
 
-pub struct SccFolderCustomModuleCustomConfigElCustomOutputElPropertiesElValueExpressionElRef {
+#[allow(dead_code)]
+pub struct SccFolderCustomModule_CustomConfig_CustomOutput_Properties_ValueExpressionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SccFolderCustomModuleCustomConfigElCustomOutputElPropertiesElValueExpressionElRef {
+impl terrars::Ref for SccFolderCustomModule_CustomConfig_CustomOutput_Properties_ValueExpressionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SccFolderCustomModuleCustomConfigElCustomOutputElPropertiesElValueExpressionElRef {
-        SccFolderCustomModuleCustomConfigElCustomOutputElPropertiesElValueExpressionElRef {
+    ) -> SccFolderCustomModule_CustomConfig_CustomOutput_Properties_ValueExpressionRef {
+        SccFolderCustomModule_CustomConfig_CustomOutput_Properties_ValueExpressionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SccFolderCustomModuleCustomConfigElCustomOutputElPropertiesElValueExpressionElRef {
+impl SccFolderCustomModule_CustomConfig_CustomOutput_Properties_ValueExpressionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -476,24 +506,24 @@ impl SccFolderCustomModuleCustomConfigElCustomOutputElPropertiesElValueExpressio
 }
 
 #[derive(Serialize, Default)]
-struct SccFolderCustomModuleCustomConfigElCustomOutputElPropertiesElDynamic {
+struct SccFolderCustomModule_CustomConfig_CustomOutput_PropertiesDynamic {
     value_expression: std
     ::option
-    ::Option<terrars::DynamicBlock<SccFolderCustomModuleCustomConfigElCustomOutputElPropertiesElValueExpressionEl>>,
+    ::Option<terrars::DynamicBlock<SccFolderCustomModule_CustomConfig_CustomOutput_Properties_ValueExpression>>,
 }
 
 #[derive(Serialize)]
-pub struct SccFolderCustomModuleCustomConfigElCustomOutputElPropertiesEl {
+pub struct SccFolderCustomModule_CustomConfig_CustomOutput_Properties {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     value_expression: std
     ::option
-    ::Option<std::vec::Vec<SccFolderCustomModuleCustomConfigElCustomOutputElPropertiesElValueExpressionEl>>,
-    dynamic: SccFolderCustomModuleCustomConfigElCustomOutputElPropertiesElDynamic,
+    ::Option<std::vec::Vec<SccFolderCustomModule_CustomConfig_CustomOutput_Properties_ValueExpression>>,
+    dynamic: SccFolderCustomModule_CustomConfig_CustomOutput_PropertiesDynamic,
 }
 
-impl SccFolderCustomModuleCustomConfigElCustomOutputElPropertiesEl {
+impl SccFolderCustomModule_CustomConfig_CustomOutput_Properties {
     #[doc = "Set the field `name`.\nName of the property for the custom output."]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
@@ -510,9 +540,7 @@ impl SccFolderCustomModuleCustomConfigElCustomOutputElPropertiesEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            SccFolderCustomModuleCustomConfigElCustomOutputElPropertiesElValueExpressionEl,
-                        >,
+                        ::BlockAssignable<SccFolderCustomModule_CustomConfig_CustomOutput_Properties_ValueExpression>,
                     >,
     ) -> Self {
         match v.into() {
@@ -527,8 +555,8 @@ impl SccFolderCustomModuleCustomConfigElCustomOutputElPropertiesEl {
     }
 }
 
-impl terrars::ToListMappable for SccFolderCustomModuleCustomConfigElCustomOutputElPropertiesEl {
-    type O = terrars::BlockAssignable<SccFolderCustomModuleCustomConfigElCustomOutputElPropertiesEl>;
+impl terrars::ToListMappable for SccFolderCustomModule_CustomConfig_CustomOutput_Properties {
+    type O = terrars::BlockAssignable<SccFolderCustomModule_CustomConfig_CustomOutput_Properties>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -539,11 +567,11 @@ impl terrars::ToListMappable for SccFolderCustomModuleCustomConfigElCustomOutput
     }
 }
 
-pub struct BuildSccFolderCustomModuleCustomConfigElCustomOutputElPropertiesEl {}
+pub struct BuildSccFolderCustomModule_CustomConfig_CustomOutput_Properties {}
 
-impl BuildSccFolderCustomModuleCustomConfigElCustomOutputElPropertiesEl {
-    pub fn build(self) -> SccFolderCustomModuleCustomConfigElCustomOutputElPropertiesEl {
-        SccFolderCustomModuleCustomConfigElCustomOutputElPropertiesEl {
+impl BuildSccFolderCustomModule_CustomConfig_CustomOutput_Properties {
+    pub fn build(self) -> SccFolderCustomModule_CustomConfig_CustomOutput_Properties {
+        SccFolderCustomModule_CustomConfig_CustomOutput_Properties {
             name: core::default::Default::default(),
             value_expression: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -551,24 +579,26 @@ impl BuildSccFolderCustomModuleCustomConfigElCustomOutputElPropertiesEl {
     }
 }
 
-pub struct SccFolderCustomModuleCustomConfigElCustomOutputElPropertiesElRef {
+#[allow(dead_code)]
+pub struct SccFolderCustomModule_CustomConfig_CustomOutput_PropertiesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SccFolderCustomModuleCustomConfigElCustomOutputElPropertiesElRef {
+impl terrars::Ref for SccFolderCustomModule_CustomConfig_CustomOutput_PropertiesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SccFolderCustomModuleCustomConfigElCustomOutputElPropertiesElRef {
-        SccFolderCustomModuleCustomConfigElCustomOutputElPropertiesElRef {
+    ) -> SccFolderCustomModule_CustomConfig_CustomOutput_PropertiesRef {
+        SccFolderCustomModule_CustomConfig_CustomOutput_PropertiesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SccFolderCustomModuleCustomConfigElCustomOutputElPropertiesElRef {
+impl SccFolderCustomModule_CustomConfig_CustomOutput_PropertiesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -582,26 +612,26 @@ impl SccFolderCustomModuleCustomConfigElCustomOutputElPropertiesElRef {
     #[doc = "Get a reference to the value of field `value_expression` after provisioning.\n"]
     pub fn value_expression(
         &self,
-    ) -> terrars::ListRef<SccFolderCustomModuleCustomConfigElCustomOutputElPropertiesElValueExpressionElRef> {
+    ) -> terrars::ListRef<SccFolderCustomModule_CustomConfig_CustomOutput_Properties_ValueExpressionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.value_expression", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct SccFolderCustomModuleCustomConfigElCustomOutputElDynamic {
+struct SccFolderCustomModule_CustomConfig_CustomOutputDynamic {
     properties: std
     ::option
-    ::Option<terrars::DynamicBlock<SccFolderCustomModuleCustomConfigElCustomOutputElPropertiesEl>>,
+    ::Option<terrars::DynamicBlock<SccFolderCustomModule_CustomConfig_CustomOutput_Properties>>,
 }
 
 #[derive(Serialize)]
-pub struct SccFolderCustomModuleCustomConfigElCustomOutputEl {
+pub struct SccFolderCustomModule_CustomConfig_CustomOutput {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    properties: std::option::Option<std::vec::Vec<SccFolderCustomModuleCustomConfigElCustomOutputElPropertiesEl>>,
-    dynamic: SccFolderCustomModuleCustomConfigElCustomOutputElDynamic,
+    properties: std::option::Option<std::vec::Vec<SccFolderCustomModule_CustomConfig_CustomOutput_Properties>>,
+    dynamic: SccFolderCustomModule_CustomConfig_CustomOutputDynamic,
 }
 
-impl SccFolderCustomModuleCustomConfigElCustomOutputEl {
+impl SccFolderCustomModule_CustomConfig_CustomOutput {
     #[doc = "Set the field `properties`.\n"]
     pub fn set_properties(
         mut self,
@@ -610,7 +640,7 @@ impl SccFolderCustomModuleCustomConfigElCustomOutputEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<SccFolderCustomModuleCustomConfigElCustomOutputElPropertiesEl>>,
+                    ::Into<terrars::BlockAssignable<SccFolderCustomModule_CustomConfig_CustomOutput_Properties>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -624,8 +654,8 @@ impl SccFolderCustomModuleCustomConfigElCustomOutputEl {
     }
 }
 
-impl terrars::ToListMappable for SccFolderCustomModuleCustomConfigElCustomOutputEl {
-    type O = terrars::BlockAssignable<SccFolderCustomModuleCustomConfigElCustomOutputEl>;
+impl terrars::ToListMappable for SccFolderCustomModule_CustomConfig_CustomOutput {
+    type O = terrars::BlockAssignable<SccFolderCustomModule_CustomConfig_CustomOutput>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -636,47 +666,49 @@ impl terrars::ToListMappable for SccFolderCustomModuleCustomConfigElCustomOutput
     }
 }
 
-pub struct BuildSccFolderCustomModuleCustomConfigElCustomOutputEl {}
+pub struct BuildSccFolderCustomModule_CustomConfig_CustomOutput {}
 
-impl BuildSccFolderCustomModuleCustomConfigElCustomOutputEl {
-    pub fn build(self) -> SccFolderCustomModuleCustomConfigElCustomOutputEl {
-        SccFolderCustomModuleCustomConfigElCustomOutputEl {
+impl BuildSccFolderCustomModule_CustomConfig_CustomOutput {
+    pub fn build(self) -> SccFolderCustomModule_CustomConfig_CustomOutput {
+        SccFolderCustomModule_CustomConfig_CustomOutput {
             properties: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct SccFolderCustomModuleCustomConfigElCustomOutputElRef {
+#[allow(dead_code)]
+pub struct SccFolderCustomModule_CustomConfig_CustomOutputRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SccFolderCustomModuleCustomConfigElCustomOutputElRef {
+impl terrars::Ref for SccFolderCustomModule_CustomConfig_CustomOutputRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SccFolderCustomModuleCustomConfigElCustomOutputElRef {
-        SccFolderCustomModuleCustomConfigElCustomOutputElRef {
+    ) -> SccFolderCustomModule_CustomConfig_CustomOutputRef {
+        SccFolderCustomModule_CustomConfig_CustomOutputRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SccFolderCustomModuleCustomConfigElCustomOutputElRef {
+impl SccFolderCustomModule_CustomConfig_CustomOutputRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `properties` after provisioning.\n"]
-    pub fn properties(&self) -> terrars::ListRef<SccFolderCustomModuleCustomConfigElCustomOutputElPropertiesElRef> {
+    pub fn properties(&self) -> terrars::ListRef<SccFolderCustomModule_CustomConfig_CustomOutput_PropertiesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.properties", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct SccFolderCustomModuleCustomConfigElPredicateEl {
+pub struct SccFolderCustomModule_CustomConfig_Predicate {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
@@ -686,7 +718,7 @@ pub struct SccFolderCustomModuleCustomConfigElPredicateEl {
     title: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SccFolderCustomModuleCustomConfigElPredicateEl {
+impl SccFolderCustomModule_CustomConfig_Predicate {
     #[doc =
         "Set the field `description`.\nDescription of the expression. This is a longer text which describes the\nexpression, e.g. when hovered over it in a UI."]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -709,8 +741,8 @@ impl SccFolderCustomModuleCustomConfigElPredicateEl {
     }
 }
 
-impl terrars::ToListMappable for SccFolderCustomModuleCustomConfigElPredicateEl {
-    type O = terrars::BlockAssignable<SccFolderCustomModuleCustomConfigElPredicateEl>;
+impl terrars::ToListMappable for SccFolderCustomModule_CustomConfig_Predicate {
+    type O = terrars::BlockAssignable<SccFolderCustomModule_CustomConfig_Predicate>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -721,14 +753,14 @@ impl terrars::ToListMappable for SccFolderCustomModuleCustomConfigElPredicateEl 
     }
 }
 
-pub struct BuildSccFolderCustomModuleCustomConfigElPredicateEl {
+pub struct BuildSccFolderCustomModule_CustomConfig_Predicate {
     #[doc = "Textual representation of an expression in Common Expression Language syntax."]
     pub expression: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSccFolderCustomModuleCustomConfigElPredicateEl {
-    pub fn build(self) -> SccFolderCustomModuleCustomConfigElPredicateEl {
-        SccFolderCustomModuleCustomConfigElPredicateEl {
+impl BuildSccFolderCustomModule_CustomConfig_Predicate {
+    pub fn build(self) -> SccFolderCustomModule_CustomConfig_Predicate {
+        SccFolderCustomModule_CustomConfig_Predicate {
             description: core::default::Default::default(),
             expression: self.expression,
             location: core::default::Default::default(),
@@ -737,24 +769,26 @@ impl BuildSccFolderCustomModuleCustomConfigElPredicateEl {
     }
 }
 
-pub struct SccFolderCustomModuleCustomConfigElPredicateElRef {
+#[allow(dead_code)]
+pub struct SccFolderCustomModule_CustomConfig_PredicateRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SccFolderCustomModuleCustomConfigElPredicateElRef {
+impl terrars::Ref for SccFolderCustomModule_CustomConfig_PredicateRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SccFolderCustomModuleCustomConfigElPredicateElRef {
-        SccFolderCustomModuleCustomConfigElPredicateElRef {
+    ) -> SccFolderCustomModule_CustomConfig_PredicateRef {
+        SccFolderCustomModule_CustomConfig_PredicateRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SccFolderCustomModuleCustomConfigElPredicateElRef {
+impl SccFolderCustomModule_CustomConfig_PredicateRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -785,14 +819,14 @@ impl SccFolderCustomModuleCustomConfigElPredicateElRef {
 }
 
 #[derive(Serialize)]
-pub struct SccFolderCustomModuleCustomConfigElResourceSelectorEl {
+pub struct SccFolderCustomModule_CustomConfig_ResourceSelector {
     resource_types: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl SccFolderCustomModuleCustomConfigElResourceSelectorEl { }
+impl SccFolderCustomModule_CustomConfig_ResourceSelector { }
 
-impl terrars::ToListMappable for SccFolderCustomModuleCustomConfigElResourceSelectorEl {
-    type O = terrars::BlockAssignable<SccFolderCustomModuleCustomConfigElResourceSelectorEl>;
+impl terrars::ToListMappable for SccFolderCustomModule_CustomConfig_ResourceSelector {
+    type O = terrars::BlockAssignable<SccFolderCustomModule_CustomConfig_ResourceSelector>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -803,35 +837,37 @@ impl terrars::ToListMappable for SccFolderCustomModuleCustomConfigElResourceSele
     }
 }
 
-pub struct BuildSccFolderCustomModuleCustomConfigElResourceSelectorEl {
+pub struct BuildSccFolderCustomModule_CustomConfig_ResourceSelector {
     #[doc = "The resource types to run the detector on."]
     pub resource_types: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildSccFolderCustomModuleCustomConfigElResourceSelectorEl {
-    pub fn build(self) -> SccFolderCustomModuleCustomConfigElResourceSelectorEl {
-        SccFolderCustomModuleCustomConfigElResourceSelectorEl { resource_types: self.resource_types }
+impl BuildSccFolderCustomModule_CustomConfig_ResourceSelector {
+    pub fn build(self) -> SccFolderCustomModule_CustomConfig_ResourceSelector {
+        SccFolderCustomModule_CustomConfig_ResourceSelector { resource_types: self.resource_types }
     }
 }
 
-pub struct SccFolderCustomModuleCustomConfigElResourceSelectorElRef {
+#[allow(dead_code)]
+pub struct SccFolderCustomModule_CustomConfig_ResourceSelectorRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SccFolderCustomModuleCustomConfigElResourceSelectorElRef {
+impl terrars::Ref for SccFolderCustomModule_CustomConfig_ResourceSelectorRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SccFolderCustomModuleCustomConfigElResourceSelectorElRef {
-        SccFolderCustomModuleCustomConfigElResourceSelectorElRef {
+    ) -> SccFolderCustomModule_CustomConfig_ResourceSelectorRef {
+        SccFolderCustomModule_CustomConfig_ResourceSelectorRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SccFolderCustomModuleCustomConfigElResourceSelectorElRef {
+impl SccFolderCustomModule_CustomConfig_ResourceSelectorRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -844,30 +880,30 @@ impl SccFolderCustomModuleCustomConfigElResourceSelectorElRef {
 }
 
 #[derive(Serialize, Default)]
-struct SccFolderCustomModuleCustomConfigElDynamic {
-    custom_output: std::option::Option<terrars::DynamicBlock<SccFolderCustomModuleCustomConfigElCustomOutputEl>>,
-    predicate: std::option::Option<terrars::DynamicBlock<SccFolderCustomModuleCustomConfigElPredicateEl>>,
+struct SccFolderCustomModule_CustomConfigDynamic {
+    custom_output: std::option::Option<terrars::DynamicBlock<SccFolderCustomModule_CustomConfig_CustomOutput>>,
+    predicate: std::option::Option<terrars::DynamicBlock<SccFolderCustomModule_CustomConfig_Predicate>>,
     resource_selector: std
     ::option
-    ::Option<terrars::DynamicBlock<SccFolderCustomModuleCustomConfigElResourceSelectorEl>>,
+    ::Option<terrars::DynamicBlock<SccFolderCustomModule_CustomConfig_ResourceSelector>>,
 }
 
 #[derive(Serialize)]
-pub struct SccFolderCustomModuleCustomConfigEl {
+pub struct SccFolderCustomModule_CustomConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     recommendation: terrars::PrimField<std::string::String>,
     severity: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    custom_output: std::option::Option<std::vec::Vec<SccFolderCustomModuleCustomConfigElCustomOutputEl>>,
+    custom_output: std::option::Option<std::vec::Vec<SccFolderCustomModule_CustomConfig_CustomOutput>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    predicate: std::option::Option<std::vec::Vec<SccFolderCustomModuleCustomConfigElPredicateEl>>,
+    predicate: std::option::Option<std::vec::Vec<SccFolderCustomModule_CustomConfig_Predicate>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    resource_selector: std::option::Option<std::vec::Vec<SccFolderCustomModuleCustomConfigElResourceSelectorEl>>,
-    dynamic: SccFolderCustomModuleCustomConfigElDynamic,
+    resource_selector: std::option::Option<std::vec::Vec<SccFolderCustomModule_CustomConfig_ResourceSelector>>,
+    dynamic: SccFolderCustomModule_CustomConfigDynamic,
 }
 
-impl SccFolderCustomModuleCustomConfigEl {
+impl SccFolderCustomModule_CustomConfig {
     #[doc =
         "Set the field `description`.\nText that describes the vulnerability or misconfiguration that the custom\nmodule detects. This explanation is returned with each finding instance to\nhelp investigators understand the detected issue. The text must be enclosed in quotation marks."]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -878,7 +914,7 @@ impl SccFolderCustomModuleCustomConfigEl {
     #[doc = "Set the field `custom_output`.\n"]
     pub fn set_custom_output(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SccFolderCustomModuleCustomConfigElCustomOutputEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SccFolderCustomModule_CustomConfig_CustomOutput>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -894,7 +930,7 @@ impl SccFolderCustomModuleCustomConfigEl {
     #[doc = "Set the field `predicate`.\n"]
     pub fn set_predicate(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SccFolderCustomModuleCustomConfigElPredicateEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SccFolderCustomModule_CustomConfig_Predicate>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -910,7 +946,7 @@ impl SccFolderCustomModuleCustomConfigEl {
     #[doc = "Set the field `resource_selector`.\n"]
     pub fn set_resource_selector(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SccFolderCustomModuleCustomConfigElResourceSelectorEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SccFolderCustomModule_CustomConfig_ResourceSelector>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -924,8 +960,8 @@ impl SccFolderCustomModuleCustomConfigEl {
     }
 }
 
-impl terrars::ToListMappable for SccFolderCustomModuleCustomConfigEl {
-    type O = terrars::BlockAssignable<SccFolderCustomModuleCustomConfigEl>;
+impl terrars::ToListMappable for SccFolderCustomModule_CustomConfig {
+    type O = terrars::BlockAssignable<SccFolderCustomModule_CustomConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -936,7 +972,7 @@ impl terrars::ToListMappable for SccFolderCustomModuleCustomConfigEl {
     }
 }
 
-pub struct BuildSccFolderCustomModuleCustomConfigEl {
+pub struct BuildSccFolderCustomModule_CustomConfig {
     #[doc =
         "An explanation of the recommended steps that security teams can take to resolve\nthe detected issue. This explanation is returned with each finding generated by\nthis module in the nextSteps property of the finding JSON."]
     pub recommendation: terrars::PrimField<std::string::String>,
@@ -945,9 +981,9 @@ pub struct BuildSccFolderCustomModuleCustomConfigEl {
     pub severity: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSccFolderCustomModuleCustomConfigEl {
-    pub fn build(self) -> SccFolderCustomModuleCustomConfigEl {
-        SccFolderCustomModuleCustomConfigEl {
+impl BuildSccFolderCustomModule_CustomConfig {
+    pub fn build(self) -> SccFolderCustomModule_CustomConfig {
+        SccFolderCustomModule_CustomConfig {
             description: core::default::Default::default(),
             recommendation: self.recommendation,
             severity: self.severity,
@@ -959,21 +995,23 @@ impl BuildSccFolderCustomModuleCustomConfigEl {
     }
 }
 
-pub struct SccFolderCustomModuleCustomConfigElRef {
+#[allow(dead_code)]
+pub struct SccFolderCustomModule_CustomConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SccFolderCustomModuleCustomConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SccFolderCustomModuleCustomConfigElRef {
-        SccFolderCustomModuleCustomConfigElRef {
+impl terrars::Ref for SccFolderCustomModule_CustomConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SccFolderCustomModule_CustomConfigRef {
+        SccFolderCustomModule_CustomConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SccFolderCustomModuleCustomConfigElRef {
+impl SccFolderCustomModule_CustomConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -997,23 +1035,23 @@ impl SccFolderCustomModuleCustomConfigElRef {
     }
 
     #[doc = "Get a reference to the value of field `custom_output` after provisioning.\n"]
-    pub fn custom_output(&self) -> terrars::ListRef<SccFolderCustomModuleCustomConfigElCustomOutputElRef> {
+    pub fn custom_output(&self) -> terrars::ListRef<SccFolderCustomModule_CustomConfig_CustomOutputRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.custom_output", self.base))
     }
 
     #[doc = "Get a reference to the value of field `predicate` after provisioning.\n"]
-    pub fn predicate(&self) -> terrars::ListRef<SccFolderCustomModuleCustomConfigElPredicateElRef> {
+    pub fn predicate(&self) -> terrars::ListRef<SccFolderCustomModule_CustomConfig_PredicateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.predicate", self.base))
     }
 
     #[doc = "Get a reference to the value of field `resource_selector` after provisioning.\n"]
-    pub fn resource_selector(&self) -> terrars::ListRef<SccFolderCustomModuleCustomConfigElResourceSelectorElRef> {
+    pub fn resource_selector(&self) -> terrars::ListRef<SccFolderCustomModule_CustomConfig_ResourceSelectorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.resource_selector", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct SccFolderCustomModuleTimeoutsEl {
+pub struct SccFolderCustomModule_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1022,7 +1060,7 @@ pub struct SccFolderCustomModuleTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SccFolderCustomModuleTimeoutsEl {
+impl SccFolderCustomModule_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1042,8 +1080,8 @@ impl SccFolderCustomModuleTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for SccFolderCustomModuleTimeoutsEl {
-    type O = terrars::BlockAssignable<SccFolderCustomModuleTimeoutsEl>;
+impl terrars::ToListMappable for SccFolderCustomModule_Timeouts {
+    type O = terrars::BlockAssignable<SccFolderCustomModule_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1054,11 +1092,11 @@ impl terrars::ToListMappable for SccFolderCustomModuleTimeoutsEl {
     }
 }
 
-pub struct BuildSccFolderCustomModuleTimeoutsEl {}
+pub struct BuildSccFolderCustomModule_Timeouts {}
 
-impl BuildSccFolderCustomModuleTimeoutsEl {
-    pub fn build(self) -> SccFolderCustomModuleTimeoutsEl {
-        SccFolderCustomModuleTimeoutsEl {
+impl BuildSccFolderCustomModule_Timeouts {
+    pub fn build(self) -> SccFolderCustomModule_Timeouts {
+        SccFolderCustomModule_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1066,21 +1104,23 @@ impl BuildSccFolderCustomModuleTimeoutsEl {
     }
 }
 
-pub struct SccFolderCustomModuleTimeoutsElRef {
+#[allow(dead_code)]
+pub struct SccFolderCustomModule_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SccFolderCustomModuleTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SccFolderCustomModuleTimeoutsElRef {
-        SccFolderCustomModuleTimeoutsElRef {
+impl terrars::Ref for SccFolderCustomModule_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SccFolderCustomModule_TimeoutsRef {
+        SccFolderCustomModule_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SccFolderCustomModuleTimeoutsElRef {
+impl SccFolderCustomModule_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1099,9 +1139,4 @@ impl SccFolderCustomModuleTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct SccFolderCustomModuleDynamic {
-    custom_config: std::option::Option<terrars::DynamicBlock<SccFolderCustomModuleCustomConfigEl>>,
 }

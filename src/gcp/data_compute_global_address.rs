@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataComputeGlobalAddressData {
+struct DataComputeGlobalAddressData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -26,7 +28,7 @@ struct DataComputeGlobalAddressData {
 struct DataComputeGlobalAddress_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataComputeGlobalAddressData>,
+    data: std::cell::RefCell<DataComputeGlobalAddressData_>,
 }
 
 #[derive(Clone)]
@@ -191,7 +193,7 @@ impl BuildDataComputeGlobalAddress {
         let out = DataComputeGlobalAddress(std::rc::Rc::new(DataComputeGlobalAddress_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataComputeGlobalAddressData {
+            data: std::cell::RefCell::new(DataComputeGlobalAddressData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),

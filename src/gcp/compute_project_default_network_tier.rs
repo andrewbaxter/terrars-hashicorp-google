@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeProjectDefaultNetworkTierData {
+struct ComputeProjectDefaultNetworkTierData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,13 +26,13 @@ struct ComputeProjectDefaultNetworkTierData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComputeProjectDefaultNetworkTierTimeoutsEl>,
+    timeouts: std::option::Option<ComputeProjectDefaultNetworkTier_Timeouts>,
 }
 
 struct ComputeProjectDefaultNetworkTier_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeProjectDefaultNetworkTierData>,
+    data: std::cell::RefCell<ComputeProjectDefaultNetworkTierData_>,
 }
 
 #[derive(Clone)]
@@ -144,7 +146,7 @@ impl ComputeProjectDefaultNetworkTier {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeProjectDefaultNetworkTierTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeProjectDefaultNetworkTier_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -167,8 +169,8 @@ impl ComputeProjectDefaultNetworkTier {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeProjectDefaultNetworkTierTimeoutsElRef {
-        ComputeProjectDefaultNetworkTierTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ComputeProjectDefaultNetworkTier_TimeoutsRef {
+        ComputeProjectDefaultNetworkTier_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -218,7 +220,7 @@ impl BuildComputeProjectDefaultNetworkTier {
         let out = ComputeProjectDefaultNetworkTier(std::rc::Rc::new(ComputeProjectDefaultNetworkTier_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeProjectDefaultNetworkTierData {
+            data: std::cell::RefCell::new(ComputeProjectDefaultNetworkTierData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -276,8 +278,8 @@ impl ComputeProjectDefaultNetworkTierRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeProjectDefaultNetworkTierTimeoutsElRef {
-        ComputeProjectDefaultNetworkTierTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ComputeProjectDefaultNetworkTier_TimeoutsRef {
+        ComputeProjectDefaultNetworkTier_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -285,12 +287,12 @@ impl ComputeProjectDefaultNetworkTierRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeProjectDefaultNetworkTierTimeoutsEl {
+pub struct ComputeProjectDefaultNetworkTier_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeProjectDefaultNetworkTierTimeoutsEl {
+impl ComputeProjectDefaultNetworkTier_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -298,8 +300,8 @@ impl ComputeProjectDefaultNetworkTierTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeProjectDefaultNetworkTierTimeoutsEl {
-    type O = terrars::BlockAssignable<ComputeProjectDefaultNetworkTierTimeoutsEl>;
+impl terrars::ToListMappable for ComputeProjectDefaultNetworkTier_Timeouts {
+    type O = terrars::BlockAssignable<ComputeProjectDefaultNetworkTier_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -310,29 +312,31 @@ impl terrars::ToListMappable for ComputeProjectDefaultNetworkTierTimeoutsEl {
     }
 }
 
-pub struct BuildComputeProjectDefaultNetworkTierTimeoutsEl {}
+pub struct BuildComputeProjectDefaultNetworkTier_Timeouts {}
 
-impl BuildComputeProjectDefaultNetworkTierTimeoutsEl {
-    pub fn build(self) -> ComputeProjectDefaultNetworkTierTimeoutsEl {
-        ComputeProjectDefaultNetworkTierTimeoutsEl { create: core::default::Default::default() }
+impl BuildComputeProjectDefaultNetworkTier_Timeouts {
+    pub fn build(self) -> ComputeProjectDefaultNetworkTier_Timeouts {
+        ComputeProjectDefaultNetworkTier_Timeouts { create: core::default::Default::default() }
     }
 }
 
-pub struct ComputeProjectDefaultNetworkTierTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComputeProjectDefaultNetworkTier_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeProjectDefaultNetworkTierTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeProjectDefaultNetworkTierTimeoutsElRef {
-        ComputeProjectDefaultNetworkTierTimeoutsElRef {
+impl terrars::Ref for ComputeProjectDefaultNetworkTier_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeProjectDefaultNetworkTier_TimeoutsRef {
+        ComputeProjectDefaultNetworkTier_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeProjectDefaultNetworkTierTimeoutsElRef {
+impl ComputeProjectDefaultNetworkTier_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

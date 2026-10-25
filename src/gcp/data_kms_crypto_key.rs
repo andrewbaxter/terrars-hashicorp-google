@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataKmsCryptoKeyData {
+struct DataKmsCryptoKeyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -25,7 +27,7 @@ struct DataKmsCryptoKeyData {
 struct DataKmsCryptoKey_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataKmsCryptoKeyData>,
+    data: std::cell::RefCell<DataKmsCryptoKeyData_>,
 }
 
 #[derive(Clone)]
@@ -77,7 +79,19 @@ impl DataKmsCryptoKey {
     }
 
     #[doc =
-        "Get a reference to the value of field `destroy_scheduled_duration` after provisioning.\nThe period of time that versions of this key spend in the DESTROY_SCHEDULED state before transitioning to DESTROYED.\nIf not specified at creation time, the default duration is 24 hours."]
+        "Get a reference to the value of field `crypto_key_backend` after provisioning.\nThe resource name of the backend environment associated with all CryptoKeyVersions within this CryptoKey.\nThe resource name is in the format \"projects/*/locations/*/ekmConnections/*\" and only applies to \"EXTERNAL_VPC\" keys."]
+    pub fn crypto_key_backend(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.crypto_key_backend", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `destroy_scheduled_duration` after provisioning.\nThe period of time that versions of this key spend in the DESTROY_SCHEDULED state before transitioning to DESTROYED.\nIf not specified at creation time, the default duration is 30 days."]
     pub fn destroy_scheduled_duration(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.destroy_scheduled_duration", self.extract_ref()))
     }
@@ -117,6 +131,12 @@ impl DataKmsCryptoKey {
     }
 
     #[doc =
+        "Get a reference to the value of field `primary` after provisioning.\nA copy of the primary CryptoKeyVersion that will be used by cryptoKeys.encrypt when this CryptoKey is given in EncryptRequest.name.\nKeys with purpose ENCRYPT_DECRYPT may have a primary. For other keys, this field will be unset."]
+    pub fn primary(&self) -> terrars::ListRef<DataKmsCryptoKey_PrimaryRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.primary", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `purpose` after provisioning.\nThe immutable purpose of this CryptoKey. See the\n[purpose reference](https://cloud.google.com/kms/docs/reference/rest/v1/projects.locations.keyRings.cryptoKeys#CryptoKeyPurpose)\nfor possible inputs.\nDefault value is \"ENCRYPT_DECRYPT\"."]
     pub fn purpose(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.purpose", self.extract_ref()))
@@ -129,7 +149,7 @@ impl DataKmsCryptoKey {
     }
 
     #[doc =
-        "Get a reference to the value of field `skip_initial_version_creation` after provisioning.\nIf set to true, the request will create a CryptoKey without any CryptoKeyVersions.\nYou must use the 'google_kms_key_ring_import_job' resource to import the CryptoKeyVersion."]
+        "Get a reference to the value of field `skip_initial_version_creation` after provisioning.\nIf set to true, the request will create a CryptoKey without any CryptoKeyVersions.\nYou must use the 'google_kms_crypto_key_version' resource to create a new CryptoKeyVersion\nor 'google_kms_key_ring_import_job' resource to import the CryptoKeyVersion.\nThis field is only applicable during initial CryptoKey creation."]
     pub fn skip_initial_version_creation(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(
             self.shared().clone(),
@@ -145,7 +165,7 @@ impl DataKmsCryptoKey {
 
     #[doc =
         "Get a reference to the value of field `version_template` after provisioning.\nA template describing settings for new crypto key versions."]
-    pub fn version_template(&self) -> terrars::ListRef<DataKmsCryptoKeyVersionTemplateElRef> {
+    pub fn version_template(&self) -> terrars::ListRef<DataKmsCryptoKey_VersionTemplateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.version_template", self.extract_ref()))
     }
 }
@@ -195,7 +215,7 @@ impl BuildDataKmsCryptoKey {
         let out = DataKmsCryptoKey(std::rc::Rc::new(DataKmsCryptoKey_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataKmsCryptoKeyData {
+            data: std::cell::RefCell::new(DataKmsCryptoKeyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -234,7 +254,19 @@ impl DataKmsCryptoKeyRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `destroy_scheduled_duration` after provisioning.\nThe period of time that versions of this key spend in the DESTROY_SCHEDULED state before transitioning to DESTROYED.\nIf not specified at creation time, the default duration is 24 hours."]
+        "Get a reference to the value of field `crypto_key_backend` after provisioning.\nThe resource name of the backend environment associated with all CryptoKeyVersions within this CryptoKey.\nThe resource name is in the format \"projects/*/locations/*/ekmConnections/*\" and only applies to \"EXTERNAL_VPC\" keys."]
+    pub fn crypto_key_backend(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.crypto_key_backend", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `destroy_scheduled_duration` after provisioning.\nThe period of time that versions of this key spend in the DESTROY_SCHEDULED state before transitioning to DESTROYED.\nIf not specified at creation time, the default duration is 30 days."]
     pub fn destroy_scheduled_duration(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.destroy_scheduled_duration", self.extract_ref()))
     }
@@ -274,6 +306,12 @@ impl DataKmsCryptoKeyRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `primary` after provisioning.\nA copy of the primary CryptoKeyVersion that will be used by cryptoKeys.encrypt when this CryptoKey is given in EncryptRequest.name.\nKeys with purpose ENCRYPT_DECRYPT may have a primary. For other keys, this field will be unset."]
+    pub fn primary(&self) -> terrars::ListRef<DataKmsCryptoKey_PrimaryRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.primary", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `purpose` after provisioning.\nThe immutable purpose of this CryptoKey. See the\n[purpose reference](https://cloud.google.com/kms/docs/reference/rest/v1/projects.locations.keyRings.cryptoKeys#CryptoKeyPurpose)\nfor possible inputs.\nDefault value is \"ENCRYPT_DECRYPT\"."]
     pub fn purpose(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.purpose", self.extract_ref()))
@@ -286,7 +324,7 @@ impl DataKmsCryptoKeyRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `skip_initial_version_creation` after provisioning.\nIf set to true, the request will create a CryptoKey without any CryptoKeyVersions.\nYou must use the 'google_kms_key_ring_import_job' resource to import the CryptoKeyVersion."]
+        "Get a reference to the value of field `skip_initial_version_creation` after provisioning.\nIf set to true, the request will create a CryptoKey without any CryptoKeyVersions.\nYou must use the 'google_kms_crypto_key_version' resource to create a new CryptoKeyVersion\nor 'google_kms_key_ring_import_job' resource to import the CryptoKeyVersion.\nThis field is only applicable during initial CryptoKey creation."]
     pub fn skip_initial_version_creation(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(
             self.shared().clone(),
@@ -302,20 +340,97 @@ impl DataKmsCryptoKeyRef {
 
     #[doc =
         "Get a reference to the value of field `version_template` after provisioning.\nA template describing settings for new crypto key versions."]
-    pub fn version_template(&self) -> terrars::ListRef<DataKmsCryptoKeyVersionTemplateElRef> {
+    pub fn version_template(&self) -> terrars::ListRef<DataKmsCryptoKey_VersionTemplateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.version_template", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataKmsCryptoKeyVersionTemplateEl {
+pub struct DataKmsCryptoKey_Primary {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    state: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataKmsCryptoKey_Primary {
+    #[doc = "Set the field `name`.\n"]
+    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `state`.\n"]
+    pub fn set_state(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.state = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataKmsCryptoKey_Primary {
+    type O = terrars::BlockAssignable<DataKmsCryptoKey_Primary>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataKmsCryptoKey_Primary {}
+
+impl BuildDataKmsCryptoKey_Primary {
+    pub fn build(self) -> DataKmsCryptoKey_Primary {
+        DataKmsCryptoKey_Primary {
+            name: core::default::Default::default(),
+            state: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataKmsCryptoKey_PrimaryRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataKmsCryptoKey_PrimaryRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataKmsCryptoKey_PrimaryRef {
+        DataKmsCryptoKey_PrimaryRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataKmsCryptoKey_PrimaryRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataKmsCryptoKey_VersionTemplate {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     algorithm: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     protection_level: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataKmsCryptoKeyVersionTemplateEl {
+impl DataKmsCryptoKey_VersionTemplate {
     #[doc = "Set the field `algorithm`.\n"]
     pub fn set_algorithm(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.algorithm = std::option::Option::Some(v.into());
@@ -329,8 +444,8 @@ impl DataKmsCryptoKeyVersionTemplateEl {
     }
 }
 
-impl terrars::ToListMappable for DataKmsCryptoKeyVersionTemplateEl {
-    type O = terrars::BlockAssignable<DataKmsCryptoKeyVersionTemplateEl>;
+impl terrars::ToListMappable for DataKmsCryptoKey_VersionTemplate {
+    type O = terrars::BlockAssignable<DataKmsCryptoKey_VersionTemplate>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -341,32 +456,34 @@ impl terrars::ToListMappable for DataKmsCryptoKeyVersionTemplateEl {
     }
 }
 
-pub struct BuildDataKmsCryptoKeyVersionTemplateEl {}
+pub struct BuildDataKmsCryptoKey_VersionTemplate {}
 
-impl BuildDataKmsCryptoKeyVersionTemplateEl {
-    pub fn build(self) -> DataKmsCryptoKeyVersionTemplateEl {
-        DataKmsCryptoKeyVersionTemplateEl {
+impl BuildDataKmsCryptoKey_VersionTemplate {
+    pub fn build(self) -> DataKmsCryptoKey_VersionTemplate {
+        DataKmsCryptoKey_VersionTemplate {
             algorithm: core::default::Default::default(),
             protection_level: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataKmsCryptoKeyVersionTemplateElRef {
+#[allow(dead_code)]
+pub struct DataKmsCryptoKey_VersionTemplateRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataKmsCryptoKeyVersionTemplateElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataKmsCryptoKeyVersionTemplateElRef {
-        DataKmsCryptoKeyVersionTemplateElRef {
+impl terrars::Ref for DataKmsCryptoKey_VersionTemplateRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataKmsCryptoKey_VersionTemplateRef {
+        DataKmsCryptoKey_VersionTemplateRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataKmsCryptoKeyVersionTemplateElRef {
+impl DataKmsCryptoKey_VersionTemplateRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

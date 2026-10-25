@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataBillingAccountData {
+struct DataBillingAccountData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -31,7 +33,7 @@ struct DataBillingAccountData {
 struct DataBillingAccount_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataBillingAccountData>,
+    data: std::cell::RefCell<DataBillingAccountData_>,
 }
 
 #[derive(Clone)]
@@ -111,6 +113,11 @@ impl DataBillingAccount {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.billing_account", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `currency_code` after provisioning.\n"]
+    pub fn currency_code(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.currency_code", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `display_name` after provisioning.\n"]
     pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
@@ -182,7 +189,7 @@ impl BuildDataBillingAccount {
         let out = DataBillingAccount(std::rc::Rc::new(DataBillingAccount_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataBillingAccountData {
+            data: std::cell::RefCell::new(DataBillingAccountData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -225,6 +232,11 @@ impl DataBillingAccountRef {
     #[doc = "Get a reference to the value of field `billing_account` after provisioning.\n"]
     pub fn billing_account(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.billing_account", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `currency_code` after provisioning.\n"]
+    pub fn currency_code(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.currency_code", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `display_name` after provisioning.\n"]

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct CloudbuildBitbucketServerConfigData {
+struct CloudbuildBitbucketServerConfigData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,6 +22,8 @@ struct CloudbuildBitbucketServerConfigData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     api_key: terrars::PrimField<std::string::String>,
     config_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     host_uri: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -32,18 +36,18 @@ struct CloudbuildBitbucketServerConfigData {
     ssl_ca: std::option::Option<terrars::PrimField<std::string::String>>,
     username: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    connected_repositories: std::option::Option<std::vec::Vec<CloudbuildBitbucketServerConfigConnectedRepositoriesEl>>,
+    connected_repositories: std::option::Option<std::vec::Vec<CloudbuildBitbucketServerConfig_ConnectedRepositories>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    secrets: std::option::Option<std::vec::Vec<CloudbuildBitbucketServerConfigSecretsEl>>,
+    secrets: std::option::Option<std::vec::Vec<CloudbuildBitbucketServerConfig_Secrets>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<CloudbuildBitbucketServerConfigTimeoutsEl>,
+    timeouts: std::option::Option<CloudbuildBitbucketServerConfig_Timeouts>,
     dynamic: CloudbuildBitbucketServerConfigDynamic,
 }
 
 struct CloudbuildBitbucketServerConfig_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CloudbuildBitbucketServerConfigData>,
+    data: std::cell::RefCell<CloudbuildBitbucketServerConfigData_>,
 }
 
 #[derive(Clone)]
@@ -143,6 +147,13 @@ impl CloudbuildBitbucketServerConfig {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -172,7 +183,7 @@ impl CloudbuildBitbucketServerConfig {
     #[doc = "Set the field `connected_repositories`.\n"]
     pub fn set_connected_repositories(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudbuildBitbucketServerConfigConnectedRepositoriesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudbuildBitbucketServerConfig_ConnectedRepositories>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -188,7 +199,7 @@ impl CloudbuildBitbucketServerConfig {
     #[doc = "Set the field `secrets`.\n"]
     pub fn set_secrets(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudbuildBitbucketServerConfigSecretsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudbuildBitbucketServerConfig_Secrets>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -202,7 +213,7 @@ impl CloudbuildBitbucketServerConfig {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<CloudbuildBitbucketServerConfigTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<CloudbuildBitbucketServerConfig_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -217,6 +228,12 @@ impl CloudbuildBitbucketServerConfig {
         "Get a reference to the value of field `config_id` after provisioning.\nThe ID to use for the BitbucketServerConfig, which will become the final component of the BitbucketServerConfig's resource name."]
     pub fn config_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.config_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -271,13 +288,13 @@ impl CloudbuildBitbucketServerConfig {
     }
 
     #[doc = "Get a reference to the value of field `secrets` after provisioning.\n"]
-    pub fn secrets(&self) -> terrars::ListRef<CloudbuildBitbucketServerConfigSecretsElRef> {
+    pub fn secrets(&self) -> terrars::ListRef<CloudbuildBitbucketServerConfig_SecretsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.secrets", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> CloudbuildBitbucketServerConfigTimeoutsElRef {
-        CloudbuildBitbucketServerConfigTimeoutsElRef::new(
+    pub fn timeouts(&self) -> CloudbuildBitbucketServerConfig_TimeoutsRef {
+        CloudbuildBitbucketServerConfig_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -337,7 +354,7 @@ impl BuildCloudbuildBitbucketServerConfig {
         let out = CloudbuildBitbucketServerConfig(std::rc::Rc::new(CloudbuildBitbucketServerConfig_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CloudbuildBitbucketServerConfigData {
+            data: std::cell::RefCell::new(CloudbuildBitbucketServerConfigData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -345,6 +362,7 @@ impl BuildCloudbuildBitbucketServerConfig {
                 provisioner: core::default::Default::default(),
                 api_key: self.api_key,
                 config_id: self.config_id,
+                deletion_policy: core::default::Default::default(),
                 host_uri: self.host_uri,
                 id: core::default::Default::default(),
                 location: self.location,
@@ -399,6 +417,12 @@ impl CloudbuildBitbucketServerConfigRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `host_uri` after provisioning.\nImmutable. The URI of the Bitbucket Server host. Once this field has been set, it cannot be changed.\nIf you need to change it, please create another BitbucketServerConfig."]
     pub fn host_uri(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.host_uri", self.extract_ref()))
@@ -450,29 +474,37 @@ impl CloudbuildBitbucketServerConfigRef {
     }
 
     #[doc = "Get a reference to the value of field `secrets` after provisioning.\n"]
-    pub fn secrets(&self) -> terrars::ListRef<CloudbuildBitbucketServerConfigSecretsElRef> {
+    pub fn secrets(&self) -> terrars::ListRef<CloudbuildBitbucketServerConfig_SecretsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.secrets", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> CloudbuildBitbucketServerConfigTimeoutsElRef {
-        CloudbuildBitbucketServerConfigTimeoutsElRef::new(
+    pub fn timeouts(&self) -> CloudbuildBitbucketServerConfig_TimeoutsRef {
+        CloudbuildBitbucketServerConfig_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct CloudbuildBitbucketServerConfigDynamic {
+    connected_repositories: std
+    ::option
+    ::Option<terrars::DynamicBlock<CloudbuildBitbucketServerConfig_ConnectedRepositories>>,
+    secrets: std::option::Option<terrars::DynamicBlock<CloudbuildBitbucketServerConfig_Secrets>>,
+}
+
 #[derive(Serialize)]
-pub struct CloudbuildBitbucketServerConfigConnectedRepositoriesEl {
+pub struct CloudbuildBitbucketServerConfig_ConnectedRepositories {
     project_key: terrars::PrimField<std::string::String>,
     repo_slug: terrars::PrimField<std::string::String>,
 }
 
-impl CloudbuildBitbucketServerConfigConnectedRepositoriesEl { }
+impl CloudbuildBitbucketServerConfig_ConnectedRepositories { }
 
-impl terrars::ToListMappable for CloudbuildBitbucketServerConfigConnectedRepositoriesEl {
-    type O = terrars::BlockAssignable<CloudbuildBitbucketServerConfigConnectedRepositoriesEl>;
+impl terrars::ToListMappable for CloudbuildBitbucketServerConfig_ConnectedRepositories {
+    type O = terrars::BlockAssignable<CloudbuildBitbucketServerConfig_ConnectedRepositories>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -483,40 +515,42 @@ impl terrars::ToListMappable for CloudbuildBitbucketServerConfigConnectedReposit
     }
 }
 
-pub struct BuildCloudbuildBitbucketServerConfigConnectedRepositoriesEl {
+pub struct BuildCloudbuildBitbucketServerConfig_ConnectedRepositories {
     #[doc = "Identifier for the project storing the repository."]
     pub project_key: terrars::PrimField<std::string::String>,
     #[doc = "Identifier for the repository."]
     pub repo_slug: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudbuildBitbucketServerConfigConnectedRepositoriesEl {
-    pub fn build(self) -> CloudbuildBitbucketServerConfigConnectedRepositoriesEl {
-        CloudbuildBitbucketServerConfigConnectedRepositoriesEl {
+impl BuildCloudbuildBitbucketServerConfig_ConnectedRepositories {
+    pub fn build(self) -> CloudbuildBitbucketServerConfig_ConnectedRepositories {
+        CloudbuildBitbucketServerConfig_ConnectedRepositories {
             project_key: self.project_key,
             repo_slug: self.repo_slug,
         }
     }
 }
 
-pub struct CloudbuildBitbucketServerConfigConnectedRepositoriesElRef {
+#[allow(dead_code)]
+pub struct CloudbuildBitbucketServerConfig_ConnectedRepositoriesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudbuildBitbucketServerConfigConnectedRepositoriesElRef {
+impl terrars::Ref for CloudbuildBitbucketServerConfig_ConnectedRepositoriesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudbuildBitbucketServerConfigConnectedRepositoriesElRef {
-        CloudbuildBitbucketServerConfigConnectedRepositoriesElRef {
+    ) -> CloudbuildBitbucketServerConfig_ConnectedRepositoriesRef {
+        CloudbuildBitbucketServerConfig_ConnectedRepositoriesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudbuildBitbucketServerConfigConnectedRepositoriesElRef {
+impl CloudbuildBitbucketServerConfig_ConnectedRepositoriesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -534,16 +568,16 @@ impl CloudbuildBitbucketServerConfigConnectedRepositoriesElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudbuildBitbucketServerConfigSecretsEl {
+pub struct CloudbuildBitbucketServerConfig_Secrets {
     admin_access_token_version_name: terrars::PrimField<std::string::String>,
     read_access_token_version_name: terrars::PrimField<std::string::String>,
     webhook_secret_version_name: terrars::PrimField<std::string::String>,
 }
 
-impl CloudbuildBitbucketServerConfigSecretsEl { }
+impl CloudbuildBitbucketServerConfig_Secrets { }
 
-impl terrars::ToListMappable for CloudbuildBitbucketServerConfigSecretsEl {
-    type O = terrars::BlockAssignable<CloudbuildBitbucketServerConfigSecretsEl>;
+impl terrars::ToListMappable for CloudbuildBitbucketServerConfig_Secrets {
+    type O = terrars::BlockAssignable<CloudbuildBitbucketServerConfig_Secrets>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -554,7 +588,7 @@ impl terrars::ToListMappable for CloudbuildBitbucketServerConfigSecretsEl {
     }
 }
 
-pub struct BuildCloudbuildBitbucketServerConfigSecretsEl {
+pub struct BuildCloudbuildBitbucketServerConfig_Secrets {
     #[doc = "The resource name for the admin access token's secret version."]
     pub admin_access_token_version_name: terrars::PrimField<std::string::String>,
     #[doc = "The resource name for the read access token's secret version."]
@@ -564,9 +598,9 @@ pub struct BuildCloudbuildBitbucketServerConfigSecretsEl {
     pub webhook_secret_version_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudbuildBitbucketServerConfigSecretsEl {
-    pub fn build(self) -> CloudbuildBitbucketServerConfigSecretsEl {
-        CloudbuildBitbucketServerConfigSecretsEl {
+impl BuildCloudbuildBitbucketServerConfig_Secrets {
+    pub fn build(self) -> CloudbuildBitbucketServerConfig_Secrets {
+        CloudbuildBitbucketServerConfig_Secrets {
             admin_access_token_version_name: self.admin_access_token_version_name,
             read_access_token_version_name: self.read_access_token_version_name,
             webhook_secret_version_name: self.webhook_secret_version_name,
@@ -574,21 +608,23 @@ impl BuildCloudbuildBitbucketServerConfigSecretsEl {
     }
 }
 
-pub struct CloudbuildBitbucketServerConfigSecretsElRef {
+#[allow(dead_code)]
+pub struct CloudbuildBitbucketServerConfig_SecretsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudbuildBitbucketServerConfigSecretsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudbuildBitbucketServerConfigSecretsElRef {
-        CloudbuildBitbucketServerConfigSecretsElRef {
+impl terrars::Ref for CloudbuildBitbucketServerConfig_SecretsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudbuildBitbucketServerConfig_SecretsRef {
+        CloudbuildBitbucketServerConfig_SecretsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudbuildBitbucketServerConfigSecretsElRef {
+impl CloudbuildBitbucketServerConfig_SecretsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -613,7 +649,7 @@ impl CloudbuildBitbucketServerConfigSecretsElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudbuildBitbucketServerConfigTimeoutsEl {
+pub struct CloudbuildBitbucketServerConfig_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -622,7 +658,7 @@ pub struct CloudbuildBitbucketServerConfigTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CloudbuildBitbucketServerConfigTimeoutsEl {
+impl CloudbuildBitbucketServerConfig_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -642,8 +678,8 @@ impl CloudbuildBitbucketServerConfigTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for CloudbuildBitbucketServerConfigTimeoutsEl {
-    type O = terrars::BlockAssignable<CloudbuildBitbucketServerConfigTimeoutsEl>;
+impl terrars::ToListMappable for CloudbuildBitbucketServerConfig_Timeouts {
+    type O = terrars::BlockAssignable<CloudbuildBitbucketServerConfig_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -654,11 +690,11 @@ impl terrars::ToListMappable for CloudbuildBitbucketServerConfigTimeoutsEl {
     }
 }
 
-pub struct BuildCloudbuildBitbucketServerConfigTimeoutsEl {}
+pub struct BuildCloudbuildBitbucketServerConfig_Timeouts {}
 
-impl BuildCloudbuildBitbucketServerConfigTimeoutsEl {
-    pub fn build(self) -> CloudbuildBitbucketServerConfigTimeoutsEl {
-        CloudbuildBitbucketServerConfigTimeoutsEl {
+impl BuildCloudbuildBitbucketServerConfig_Timeouts {
+    pub fn build(self) -> CloudbuildBitbucketServerConfig_Timeouts {
+        CloudbuildBitbucketServerConfig_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -666,21 +702,23 @@ impl BuildCloudbuildBitbucketServerConfigTimeoutsEl {
     }
 }
 
-pub struct CloudbuildBitbucketServerConfigTimeoutsElRef {
+#[allow(dead_code)]
+pub struct CloudbuildBitbucketServerConfig_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudbuildBitbucketServerConfigTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudbuildBitbucketServerConfigTimeoutsElRef {
-        CloudbuildBitbucketServerConfigTimeoutsElRef {
+impl terrars::Ref for CloudbuildBitbucketServerConfig_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudbuildBitbucketServerConfig_TimeoutsRef {
+        CloudbuildBitbucketServerConfig_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudbuildBitbucketServerConfigTimeoutsElRef {
+impl CloudbuildBitbucketServerConfig_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -699,12 +737,4 @@ impl CloudbuildBitbucketServerConfigTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct CloudbuildBitbucketServerConfigDynamic {
-    connected_repositories: std
-    ::option
-    ::Option<terrars::DynamicBlock<CloudbuildBitbucketServerConfigConnectedRepositoriesEl>>,
-    secrets: std::option::Option<terrars::DynamicBlock<CloudbuildBitbucketServerConfigSecretsEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ApigeeKeystoresAliasesSelfSignedCertData {
+struct ApigeeKeystoresAliasesSelfSignedCertData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,6 +23,8 @@ struct ApigeeKeystoresAliasesSelfSignedCertData {
     alias: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cert_validity_in_days: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     environment: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -30,20 +34,20 @@ struct ApigeeKeystoresAliasesSelfSignedCertData {
     org_id: terrars::PrimField<std::string::String>,
     sig_alg: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    subject: std::option::Option<std::vec::Vec<ApigeeKeystoresAliasesSelfSignedCertSubjectEl>>,
+    subject: std::option::Option<std::vec::Vec<ApigeeKeystoresAliasesSelfSignedCert_Subject>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     subject_alternative_dns_names: std
     ::option
-    ::Option<std::vec::Vec<ApigeeKeystoresAliasesSelfSignedCertSubjectAlternativeDnsNamesEl>>,
+    ::Option<std::vec::Vec<ApigeeKeystoresAliasesSelfSignedCert_SubjectAlternativeDnsNames>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ApigeeKeystoresAliasesSelfSignedCertTimeoutsEl>,
+    timeouts: std::option::Option<ApigeeKeystoresAliasesSelfSignedCert_Timeouts>,
     dynamic: ApigeeKeystoresAliasesSelfSignedCertDynamic,
 }
 
 struct ApigeeKeystoresAliasesSelfSignedCert_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ApigeeKeystoresAliasesSelfSignedCertData>,
+    data: std::cell::RefCell<ApigeeKeystoresAliasesSelfSignedCertData_>,
 }
 
 #[derive(Clone)]
@@ -150,6 +154,13 @@ impl ApigeeKeystoresAliasesSelfSignedCert {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -165,7 +176,7 @@ impl ApigeeKeystoresAliasesSelfSignedCert {
     #[doc = "Set the field `subject`.\n"]
     pub fn set_subject(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ApigeeKeystoresAliasesSelfSignedCertSubjectEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApigeeKeystoresAliasesSelfSignedCert_Subject>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -186,9 +197,7 @@ impl ApigeeKeystoresAliasesSelfSignedCert {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<ApigeeKeystoresAliasesSelfSignedCertSubjectAlternativeDnsNamesEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<ApigeeKeystoresAliasesSelfSignedCert_SubjectAlternativeDnsNames>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -202,7 +211,7 @@ impl ApigeeKeystoresAliasesSelfSignedCert {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ApigeeKeystoresAliasesSelfSignedCertTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ApigeeKeystoresAliasesSelfSignedCert_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -221,8 +230,14 @@ impl ApigeeKeystoresAliasesSelfSignedCert {
 
     #[doc =
         "Get a reference to the value of field `certs_info` after provisioning.\nChain of certificates under this alias."]
-    pub fn certs_info(&self) -> terrars::ListRef<ApigeeKeystoresAliasesSelfSignedCertCertsInfoElRef> {
+    pub fn certs_info(&self) -> terrars::ListRef<ApigeeKeystoresAliasesSelfSignedCert_CertsInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.certs_info", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `environment` after provisioning.\nThe Apigee environment name"]
@@ -265,20 +280,20 @@ impl ApigeeKeystoresAliasesSelfSignedCert {
     }
 
     #[doc = "Get a reference to the value of field `subject` after provisioning.\n"]
-    pub fn subject(&self) -> terrars::ListRef<ApigeeKeystoresAliasesSelfSignedCertSubjectElRef> {
+    pub fn subject(&self) -> terrars::ListRef<ApigeeKeystoresAliasesSelfSignedCert_SubjectRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.subject", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `subject_alternative_dns_names` after provisioning.\n"]
     pub fn subject_alternative_dns_names(
         &self,
-    ) -> terrars::ListRef<ApigeeKeystoresAliasesSelfSignedCertSubjectAlternativeDnsNamesElRef> {
+    ) -> terrars::ListRef<ApigeeKeystoresAliasesSelfSignedCert_SubjectAlternativeDnsNamesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.subject_alternative_dns_names", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ApigeeKeystoresAliasesSelfSignedCertTimeoutsElRef {
-        ApigeeKeystoresAliasesSelfSignedCertTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ApigeeKeystoresAliasesSelfSignedCert_TimeoutsRef {
+        ApigeeKeystoresAliasesSelfSignedCert_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -337,7 +352,7 @@ impl BuildApigeeKeystoresAliasesSelfSignedCert {
         let out = ApigeeKeystoresAliasesSelfSignedCert(std::rc::Rc::new(ApigeeKeystoresAliasesSelfSignedCert_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ApigeeKeystoresAliasesSelfSignedCertData {
+            data: std::cell::RefCell::new(ApigeeKeystoresAliasesSelfSignedCertData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -345,6 +360,7 @@ impl BuildApigeeKeystoresAliasesSelfSignedCert {
                 provisioner: core::default::Default::default(),
                 alias: self.alias,
                 cert_validity_in_days: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 environment: self.environment,
                 id: core::default::Default::default(),
                 key_size: core::default::Default::default(),
@@ -399,8 +415,14 @@ impl ApigeeKeystoresAliasesSelfSignedCertRef {
 
     #[doc =
         "Get a reference to the value of field `certs_info` after provisioning.\nChain of certificates under this alias."]
-    pub fn certs_info(&self) -> terrars::ListRef<ApigeeKeystoresAliasesSelfSignedCertCertsInfoElRef> {
+    pub fn certs_info(&self) -> terrars::ListRef<ApigeeKeystoresAliasesSelfSignedCert_CertsInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.certs_info", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `environment` after provisioning.\nThe Apigee environment name"]
@@ -443,28 +465,36 @@ impl ApigeeKeystoresAliasesSelfSignedCertRef {
     }
 
     #[doc = "Get a reference to the value of field `subject` after provisioning.\n"]
-    pub fn subject(&self) -> terrars::ListRef<ApigeeKeystoresAliasesSelfSignedCertSubjectElRef> {
+    pub fn subject(&self) -> terrars::ListRef<ApigeeKeystoresAliasesSelfSignedCert_SubjectRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.subject", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `subject_alternative_dns_names` after provisioning.\n"]
     pub fn subject_alternative_dns_names(
         &self,
-    ) -> terrars::ListRef<ApigeeKeystoresAliasesSelfSignedCertSubjectAlternativeDnsNamesElRef> {
+    ) -> terrars::ListRef<ApigeeKeystoresAliasesSelfSignedCert_SubjectAlternativeDnsNamesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.subject_alternative_dns_names", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ApigeeKeystoresAliasesSelfSignedCertTimeoutsElRef {
-        ApigeeKeystoresAliasesSelfSignedCertTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ApigeeKeystoresAliasesSelfSignedCert_TimeoutsRef {
+        ApigeeKeystoresAliasesSelfSignedCert_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct ApigeeKeystoresAliasesSelfSignedCertDynamic {
+    subject: std::option::Option<terrars::DynamicBlock<ApigeeKeystoresAliasesSelfSignedCert_Subject>>,
+    subject_alternative_dns_names: std
+    ::option
+    ::Option<terrars::DynamicBlock<ApigeeKeystoresAliasesSelfSignedCert_SubjectAlternativeDnsNames>>,
+}
+
 #[derive(Serialize)]
-pub struct ApigeeKeystoresAliasesSelfSignedCertCertsInfoElCertInfoEl {
+pub struct ApigeeKeystoresAliasesSelfSignedCert_CertsInfo_CertInfo {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     basic_constraints: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -489,7 +519,7 @@ pub struct ApigeeKeystoresAliasesSelfSignedCertCertsInfoElCertInfoEl {
     version: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl ApigeeKeystoresAliasesSelfSignedCertCertsInfoElCertInfoEl {
+impl ApigeeKeystoresAliasesSelfSignedCert_CertsInfo_CertInfo {
     #[doc = "Set the field `basic_constraints`.\n"]
     pub fn set_basic_constraints(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.basic_constraints = std::option::Option::Some(v.into());
@@ -560,8 +590,8 @@ impl ApigeeKeystoresAliasesSelfSignedCertCertsInfoElCertInfoEl {
     }
 }
 
-impl terrars::ToListMappable for ApigeeKeystoresAliasesSelfSignedCertCertsInfoElCertInfoEl {
-    type O = terrars::BlockAssignable<ApigeeKeystoresAliasesSelfSignedCertCertsInfoElCertInfoEl>;
+impl terrars::ToListMappable for ApigeeKeystoresAliasesSelfSignedCert_CertsInfo_CertInfo {
+    type O = terrars::BlockAssignable<ApigeeKeystoresAliasesSelfSignedCert_CertsInfo_CertInfo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -572,11 +602,11 @@ impl terrars::ToListMappable for ApigeeKeystoresAliasesSelfSignedCertCertsInfoEl
     }
 }
 
-pub struct BuildApigeeKeystoresAliasesSelfSignedCertCertsInfoElCertInfoEl {}
+pub struct BuildApigeeKeystoresAliasesSelfSignedCert_CertsInfo_CertInfo {}
 
-impl BuildApigeeKeystoresAliasesSelfSignedCertCertsInfoElCertInfoEl {
-    pub fn build(self) -> ApigeeKeystoresAliasesSelfSignedCertCertsInfoElCertInfoEl {
-        ApigeeKeystoresAliasesSelfSignedCertCertsInfoElCertInfoEl {
+impl BuildApigeeKeystoresAliasesSelfSignedCert_CertsInfo_CertInfo {
+    pub fn build(self) -> ApigeeKeystoresAliasesSelfSignedCert_CertsInfo_CertInfo {
+        ApigeeKeystoresAliasesSelfSignedCert_CertsInfo_CertInfo {
             basic_constraints: core::default::Default::default(),
             expiry_date: core::default::Default::default(),
             is_valid: core::default::Default::default(),
@@ -592,24 +622,26 @@ impl BuildApigeeKeystoresAliasesSelfSignedCertCertsInfoElCertInfoEl {
     }
 }
 
-pub struct ApigeeKeystoresAliasesSelfSignedCertCertsInfoElCertInfoElRef {
+#[allow(dead_code)]
+pub struct ApigeeKeystoresAliasesSelfSignedCert_CertsInfo_CertInfoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApigeeKeystoresAliasesSelfSignedCertCertsInfoElCertInfoElRef {
+impl terrars::Ref for ApigeeKeystoresAliasesSelfSignedCert_CertsInfo_CertInfoRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ApigeeKeystoresAliasesSelfSignedCertCertsInfoElCertInfoElRef {
-        ApigeeKeystoresAliasesSelfSignedCertCertsInfoElCertInfoElRef {
+    ) -> ApigeeKeystoresAliasesSelfSignedCert_CertsInfo_CertInfoRef {
+        ApigeeKeystoresAliasesSelfSignedCert_CertsInfo_CertInfoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApigeeKeystoresAliasesSelfSignedCertCertsInfoElCertInfoElRef {
+impl ApigeeKeystoresAliasesSelfSignedCert_CertsInfo_CertInfoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -671,24 +703,24 @@ impl ApigeeKeystoresAliasesSelfSignedCertCertsInfoElCertInfoElRef {
 }
 
 #[derive(Serialize)]
-pub struct ApigeeKeystoresAliasesSelfSignedCertCertsInfoEl {
+pub struct ApigeeKeystoresAliasesSelfSignedCert_CertsInfo {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cert_info: std::option::Option<terrars::ListField<ApigeeKeystoresAliasesSelfSignedCertCertsInfoElCertInfoEl>>,
+    cert_info: std::option::Option<terrars::ListField<ApigeeKeystoresAliasesSelfSignedCert_CertsInfo_CertInfo>>,
 }
 
-impl ApigeeKeystoresAliasesSelfSignedCertCertsInfoEl {
+impl ApigeeKeystoresAliasesSelfSignedCert_CertsInfo {
     #[doc = "Set the field `cert_info`.\n"]
     pub fn set_cert_info(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<ApigeeKeystoresAliasesSelfSignedCertCertsInfoElCertInfoEl>>,
+        v: impl std::convert::Into<terrars::ListField<ApigeeKeystoresAliasesSelfSignedCert_CertsInfo_CertInfo>>,
     ) -> Self {
         self.cert_info = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for ApigeeKeystoresAliasesSelfSignedCertCertsInfoEl {
-    type O = terrars::BlockAssignable<ApigeeKeystoresAliasesSelfSignedCertCertsInfoEl>;
+impl terrars::ToListMappable for ApigeeKeystoresAliasesSelfSignedCert_CertsInfo {
+    type O = terrars::BlockAssignable<ApigeeKeystoresAliasesSelfSignedCert_CertsInfo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -699,44 +731,46 @@ impl terrars::ToListMappable for ApigeeKeystoresAliasesSelfSignedCertCertsInfoEl
     }
 }
 
-pub struct BuildApigeeKeystoresAliasesSelfSignedCertCertsInfoEl {}
+pub struct BuildApigeeKeystoresAliasesSelfSignedCert_CertsInfo {}
 
-impl BuildApigeeKeystoresAliasesSelfSignedCertCertsInfoEl {
-    pub fn build(self) -> ApigeeKeystoresAliasesSelfSignedCertCertsInfoEl {
-        ApigeeKeystoresAliasesSelfSignedCertCertsInfoEl { cert_info: core::default::Default::default() }
+impl BuildApigeeKeystoresAliasesSelfSignedCert_CertsInfo {
+    pub fn build(self) -> ApigeeKeystoresAliasesSelfSignedCert_CertsInfo {
+        ApigeeKeystoresAliasesSelfSignedCert_CertsInfo { cert_info: core::default::Default::default() }
     }
 }
 
-pub struct ApigeeKeystoresAliasesSelfSignedCertCertsInfoElRef {
+#[allow(dead_code)]
+pub struct ApigeeKeystoresAliasesSelfSignedCert_CertsInfoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApigeeKeystoresAliasesSelfSignedCertCertsInfoElRef {
+impl terrars::Ref for ApigeeKeystoresAliasesSelfSignedCert_CertsInfoRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ApigeeKeystoresAliasesSelfSignedCertCertsInfoElRef {
-        ApigeeKeystoresAliasesSelfSignedCertCertsInfoElRef {
+    ) -> ApigeeKeystoresAliasesSelfSignedCert_CertsInfoRef {
+        ApigeeKeystoresAliasesSelfSignedCert_CertsInfoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApigeeKeystoresAliasesSelfSignedCertCertsInfoElRef {
+impl ApigeeKeystoresAliasesSelfSignedCert_CertsInfoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `cert_info` after provisioning.\n"]
-    pub fn cert_info(&self) -> terrars::ListRef<ApigeeKeystoresAliasesSelfSignedCertCertsInfoElCertInfoElRef> {
+    pub fn cert_info(&self) -> terrars::ListRef<ApigeeKeystoresAliasesSelfSignedCert_CertsInfo_CertInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cert_info", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ApigeeKeystoresAliasesSelfSignedCertSubjectEl {
+pub struct ApigeeKeystoresAliasesSelfSignedCert_Subject {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     common_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -753,7 +787,7 @@ pub struct ApigeeKeystoresAliasesSelfSignedCertSubjectEl {
     state: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ApigeeKeystoresAliasesSelfSignedCertSubjectEl {
+impl ApigeeKeystoresAliasesSelfSignedCert_Subject {
     #[doc = "Set the field `common_name`.\nCommon name of the organization. Maximum length is 64 characters."]
     pub fn set_common_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.common_name = std::option::Option::Some(v.into());
@@ -798,8 +832,8 @@ impl ApigeeKeystoresAliasesSelfSignedCertSubjectEl {
     }
 }
 
-impl terrars::ToListMappable for ApigeeKeystoresAliasesSelfSignedCertSubjectEl {
-    type O = terrars::BlockAssignable<ApigeeKeystoresAliasesSelfSignedCertSubjectEl>;
+impl terrars::ToListMappable for ApigeeKeystoresAliasesSelfSignedCert_Subject {
+    type O = terrars::BlockAssignable<ApigeeKeystoresAliasesSelfSignedCert_Subject>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -810,11 +844,11 @@ impl terrars::ToListMappable for ApigeeKeystoresAliasesSelfSignedCertSubjectEl {
     }
 }
 
-pub struct BuildApigeeKeystoresAliasesSelfSignedCertSubjectEl {}
+pub struct BuildApigeeKeystoresAliasesSelfSignedCert_Subject {}
 
-impl BuildApigeeKeystoresAliasesSelfSignedCertSubjectEl {
-    pub fn build(self) -> ApigeeKeystoresAliasesSelfSignedCertSubjectEl {
-        ApigeeKeystoresAliasesSelfSignedCertSubjectEl {
+impl BuildApigeeKeystoresAliasesSelfSignedCert_Subject {
+    pub fn build(self) -> ApigeeKeystoresAliasesSelfSignedCert_Subject {
+        ApigeeKeystoresAliasesSelfSignedCert_Subject {
             common_name: core::default::Default::default(),
             country_code: core::default::Default::default(),
             email: core::default::Default::default(),
@@ -826,24 +860,26 @@ impl BuildApigeeKeystoresAliasesSelfSignedCertSubjectEl {
     }
 }
 
-pub struct ApigeeKeystoresAliasesSelfSignedCertSubjectElRef {
+#[allow(dead_code)]
+pub struct ApigeeKeystoresAliasesSelfSignedCert_SubjectRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApigeeKeystoresAliasesSelfSignedCertSubjectElRef {
+impl terrars::Ref for ApigeeKeystoresAliasesSelfSignedCert_SubjectRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ApigeeKeystoresAliasesSelfSignedCertSubjectElRef {
-        ApigeeKeystoresAliasesSelfSignedCertSubjectElRef {
+    ) -> ApigeeKeystoresAliasesSelfSignedCert_SubjectRef {
+        ApigeeKeystoresAliasesSelfSignedCert_SubjectRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApigeeKeystoresAliasesSelfSignedCertSubjectElRef {
+impl ApigeeKeystoresAliasesSelfSignedCert_SubjectRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -891,12 +927,12 @@ impl ApigeeKeystoresAliasesSelfSignedCertSubjectElRef {
 }
 
 #[derive(Serialize)]
-pub struct ApigeeKeystoresAliasesSelfSignedCertSubjectAlternativeDnsNamesEl {
+pub struct ApigeeKeystoresAliasesSelfSignedCert_SubjectAlternativeDnsNames {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     subject_alternative_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ApigeeKeystoresAliasesSelfSignedCertSubjectAlternativeDnsNamesEl {
+impl ApigeeKeystoresAliasesSelfSignedCert_SubjectAlternativeDnsNames {
     #[doc = "Set the field `subject_alternative_name`.\nSubject Alternative Name"]
     pub fn set_subject_alternative_name(
         mut self,
@@ -907,8 +943,8 @@ impl ApigeeKeystoresAliasesSelfSignedCertSubjectAlternativeDnsNamesEl {
     }
 }
 
-impl terrars::ToListMappable for ApigeeKeystoresAliasesSelfSignedCertSubjectAlternativeDnsNamesEl {
-    type O = terrars::BlockAssignable<ApigeeKeystoresAliasesSelfSignedCertSubjectAlternativeDnsNamesEl>;
+impl terrars::ToListMappable for ApigeeKeystoresAliasesSelfSignedCert_SubjectAlternativeDnsNames {
+    type O = terrars::BlockAssignable<ApigeeKeystoresAliasesSelfSignedCert_SubjectAlternativeDnsNames>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -919,34 +955,36 @@ impl terrars::ToListMappable for ApigeeKeystoresAliasesSelfSignedCertSubjectAlte
     }
 }
 
-pub struct BuildApigeeKeystoresAliasesSelfSignedCertSubjectAlternativeDnsNamesEl {}
+pub struct BuildApigeeKeystoresAliasesSelfSignedCert_SubjectAlternativeDnsNames {}
 
-impl BuildApigeeKeystoresAliasesSelfSignedCertSubjectAlternativeDnsNamesEl {
-    pub fn build(self) -> ApigeeKeystoresAliasesSelfSignedCertSubjectAlternativeDnsNamesEl {
-        ApigeeKeystoresAliasesSelfSignedCertSubjectAlternativeDnsNamesEl {
+impl BuildApigeeKeystoresAliasesSelfSignedCert_SubjectAlternativeDnsNames {
+    pub fn build(self) -> ApigeeKeystoresAliasesSelfSignedCert_SubjectAlternativeDnsNames {
+        ApigeeKeystoresAliasesSelfSignedCert_SubjectAlternativeDnsNames {
             subject_alternative_name: core::default::Default::default(),
         }
     }
 }
 
-pub struct ApigeeKeystoresAliasesSelfSignedCertSubjectAlternativeDnsNamesElRef {
+#[allow(dead_code)]
+pub struct ApigeeKeystoresAliasesSelfSignedCert_SubjectAlternativeDnsNamesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApigeeKeystoresAliasesSelfSignedCertSubjectAlternativeDnsNamesElRef {
+impl terrars::Ref for ApigeeKeystoresAliasesSelfSignedCert_SubjectAlternativeDnsNamesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ApigeeKeystoresAliasesSelfSignedCertSubjectAlternativeDnsNamesElRef {
-        ApigeeKeystoresAliasesSelfSignedCertSubjectAlternativeDnsNamesElRef {
+    ) -> ApigeeKeystoresAliasesSelfSignedCert_SubjectAlternativeDnsNamesRef {
+        ApigeeKeystoresAliasesSelfSignedCert_SubjectAlternativeDnsNamesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApigeeKeystoresAliasesSelfSignedCertSubjectAlternativeDnsNamesElRef {
+impl ApigeeKeystoresAliasesSelfSignedCert_SubjectAlternativeDnsNamesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -959,14 +997,14 @@ impl ApigeeKeystoresAliasesSelfSignedCertSubjectAlternativeDnsNamesElRef {
 }
 
 #[derive(Serialize)]
-pub struct ApigeeKeystoresAliasesSelfSignedCertTimeoutsEl {
+pub struct ApigeeKeystoresAliasesSelfSignedCert_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ApigeeKeystoresAliasesSelfSignedCertTimeoutsEl {
+impl ApigeeKeystoresAliasesSelfSignedCert_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -980,8 +1018,8 @@ impl ApigeeKeystoresAliasesSelfSignedCertTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ApigeeKeystoresAliasesSelfSignedCertTimeoutsEl {
-    type O = terrars::BlockAssignable<ApigeeKeystoresAliasesSelfSignedCertTimeoutsEl>;
+impl terrars::ToListMappable for ApigeeKeystoresAliasesSelfSignedCert_Timeouts {
+    type O = terrars::BlockAssignable<ApigeeKeystoresAliasesSelfSignedCert_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -992,35 +1030,37 @@ impl terrars::ToListMappable for ApigeeKeystoresAliasesSelfSignedCertTimeoutsEl 
     }
 }
 
-pub struct BuildApigeeKeystoresAliasesSelfSignedCertTimeoutsEl {}
+pub struct BuildApigeeKeystoresAliasesSelfSignedCert_Timeouts {}
 
-impl BuildApigeeKeystoresAliasesSelfSignedCertTimeoutsEl {
-    pub fn build(self) -> ApigeeKeystoresAliasesSelfSignedCertTimeoutsEl {
-        ApigeeKeystoresAliasesSelfSignedCertTimeoutsEl {
+impl BuildApigeeKeystoresAliasesSelfSignedCert_Timeouts {
+    pub fn build(self) -> ApigeeKeystoresAliasesSelfSignedCert_Timeouts {
+        ApigeeKeystoresAliasesSelfSignedCert_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct ApigeeKeystoresAliasesSelfSignedCertTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ApigeeKeystoresAliasesSelfSignedCert_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApigeeKeystoresAliasesSelfSignedCertTimeoutsElRef {
+impl terrars::Ref for ApigeeKeystoresAliasesSelfSignedCert_TimeoutsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ApigeeKeystoresAliasesSelfSignedCertTimeoutsElRef {
-        ApigeeKeystoresAliasesSelfSignedCertTimeoutsElRef {
+    ) -> ApigeeKeystoresAliasesSelfSignedCert_TimeoutsRef {
+        ApigeeKeystoresAliasesSelfSignedCert_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApigeeKeystoresAliasesSelfSignedCertTimeoutsElRef {
+impl ApigeeKeystoresAliasesSelfSignedCert_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1034,12 +1074,4 @@ impl ApigeeKeystoresAliasesSelfSignedCertTimeoutsElRef {
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ApigeeKeystoresAliasesSelfSignedCertDynamic {
-    subject: std::option::Option<terrars::DynamicBlock<ApigeeKeystoresAliasesSelfSignedCertSubjectEl>>,
-    subject_alternative_dns_names: std
-    ::option
-    ::Option<terrars::DynamicBlock<ApigeeKeystoresAliasesSelfSignedCertSubjectAlternativeDnsNamesEl>>,
 }

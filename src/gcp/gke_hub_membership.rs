@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct GkeHubMembershipData {
+struct GkeHubMembershipData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct GkeHubMembershipData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -28,18 +32,18 @@ struct GkeHubMembershipData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    authority: std::option::Option<std::vec::Vec<GkeHubMembershipAuthorityEl>>,
+    authority: std::option::Option<std::vec::Vec<GkeHubMembership_Authority>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    endpoint: std::option::Option<std::vec::Vec<GkeHubMembershipEndpointEl>>,
+    endpoint: std::option::Option<std::vec::Vec<GkeHubMembership_Endpoint>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<GkeHubMembershipTimeoutsEl>,
+    timeouts: std::option::Option<GkeHubMembership_Timeouts>,
     dynamic: GkeHubMembershipDynamic,
 }
 
 struct GkeHubMembership_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<GkeHubMembershipData>,
+    data: std::cell::RefCell<GkeHubMembershipData_>,
 }
 
 #[derive(Clone)]
@@ -139,6 +143,13 @@ impl GkeHubMembership {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -170,7 +181,7 @@ impl GkeHubMembership {
     #[doc = "Set the field `authority`.\n"]
     pub fn set_authority(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeHubMembershipAuthorityEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeHubMembership_Authority>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -184,7 +195,7 @@ impl GkeHubMembership {
     }
 
     #[doc = "Set the field `endpoint`.\n"]
-    pub fn set_endpoint(self, v: impl std::convert::Into<terrars::BlockAssignable<GkeHubMembershipEndpointEl>>) -> Self {
+    pub fn set_endpoint(self, v: impl std::convert::Into<terrars::BlockAssignable<GkeHubMembership_Endpoint>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().endpoint = std::option::Option::Some(v);
@@ -197,9 +208,15 @@ impl GkeHubMembership {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<GkeHubMembershipTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<GkeHubMembership_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -249,18 +266,18 @@ impl GkeHubMembership {
     }
 
     #[doc = "Get a reference to the value of field `authority` after provisioning.\n"]
-    pub fn authority(&self) -> terrars::ListRef<GkeHubMembershipAuthorityElRef> {
+    pub fn authority(&self) -> terrars::ListRef<GkeHubMembership_AuthorityRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.authority", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `endpoint` after provisioning.\n"]
-    pub fn endpoint(&self) -> terrars::ListRef<GkeHubMembershipEndpointElRef> {
+    pub fn endpoint(&self) -> terrars::ListRef<GkeHubMembership_EndpointRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.endpoint", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> GkeHubMembershipTimeoutsElRef {
-        GkeHubMembershipTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> GkeHubMembership_TimeoutsRef {
+        GkeHubMembership_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -306,12 +323,13 @@ impl BuildGkeHubMembership {
         let out = GkeHubMembership(std::rc::Rc::new(GkeHubMembership_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(GkeHubMembershipData {
+            data: std::cell::RefCell::new(GkeHubMembershipData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 labels: core::default::Default::default(),
                 location: core::default::Default::default(),
@@ -349,6 +367,12 @@ impl GkeHubMembershipRef {
 
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -398,30 +422,36 @@ impl GkeHubMembershipRef {
     }
 
     #[doc = "Get a reference to the value of field `authority` after provisioning.\n"]
-    pub fn authority(&self) -> terrars::ListRef<GkeHubMembershipAuthorityElRef> {
+    pub fn authority(&self) -> terrars::ListRef<GkeHubMembership_AuthorityRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.authority", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `endpoint` after provisioning.\n"]
-    pub fn endpoint(&self) -> terrars::ListRef<GkeHubMembershipEndpointElRef> {
+    pub fn endpoint(&self) -> terrars::ListRef<GkeHubMembership_EndpointRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.endpoint", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> GkeHubMembershipTimeoutsElRef {
-        GkeHubMembershipTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> GkeHubMembership_TimeoutsRef {
+        GkeHubMembership_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct GkeHubMembershipDynamic {
+    authority: std::option::Option<terrars::DynamicBlock<GkeHubMembership_Authority>>,
+    endpoint: std::option::Option<terrars::DynamicBlock<GkeHubMembership_Endpoint>>,
+}
+
 #[derive(Serialize)]
-pub struct GkeHubMembershipAuthorityEl {
+pub struct GkeHubMembership_Authority {
     issuer: terrars::PrimField<std::string::String>,
 }
 
-impl GkeHubMembershipAuthorityEl { }
+impl GkeHubMembership_Authority { }
 
-impl terrars::ToListMappable for GkeHubMembershipAuthorityEl {
-    type O = terrars::BlockAssignable<GkeHubMembershipAuthorityEl>;
+impl terrars::ToListMappable for GkeHubMembership_Authority {
+    type O = terrars::BlockAssignable<GkeHubMembership_Authority>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -432,53 +462,55 @@ impl terrars::ToListMappable for GkeHubMembershipAuthorityEl {
     }
 }
 
-pub struct BuildGkeHubMembershipAuthorityEl {
+pub struct BuildGkeHubMembership_Authority {
     #[doc =
-        "A JSON Web Token (JWT) issuer URI. 'issuer' must start with 'https://' and // be a valid\nwith length <2000 characters. For example: 'https://container.googleapis.com/v1/projects/my-project/locations/us-west1/clusters/my-cluster' (must be 'locations' rather than 'zones'). If the cluster is provisioned with Terraform, this is '\"https://container.googleapis.com/v1/${google_container_cluster.my-cluster.id}\"'."]
+        "A JSON Web Token (JWT) issuer URI. 'issuer' must start with 'https://' and // be a valid\nwith length <2000 characters. For example: 'https://container.googleapis.com/v1/projects/my-project/locations/us-west1/clusters/my-cluster'. If the cluster is provisioned with Terraform, this is '\"https://container.googleapis.com/v1/${google_container_cluster.my-cluster.id}\"'."]
     pub issuer: terrars::PrimField<std::string::String>,
 }
 
-impl BuildGkeHubMembershipAuthorityEl {
-    pub fn build(self) -> GkeHubMembershipAuthorityEl {
-        GkeHubMembershipAuthorityEl { issuer: self.issuer }
+impl BuildGkeHubMembership_Authority {
+    pub fn build(self) -> GkeHubMembership_Authority {
+        GkeHubMembership_Authority { issuer: self.issuer }
     }
 }
 
-pub struct GkeHubMembershipAuthorityElRef {
+#[allow(dead_code)]
+pub struct GkeHubMembership_AuthorityRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeHubMembershipAuthorityElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeHubMembershipAuthorityElRef {
-        GkeHubMembershipAuthorityElRef {
+impl terrars::Ref for GkeHubMembership_AuthorityRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeHubMembership_AuthorityRef {
+        GkeHubMembership_AuthorityRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeHubMembershipAuthorityElRef {
+impl GkeHubMembership_AuthorityRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `issuer` after provisioning.\nA JSON Web Token (JWT) issuer URI. 'issuer' must start with 'https://' and // be a valid\nwith length <2000 characters. For example: 'https://container.googleapis.com/v1/projects/my-project/locations/us-west1/clusters/my-cluster' (must be 'locations' rather than 'zones'). If the cluster is provisioned with Terraform, this is '\"https://container.googleapis.com/v1/${google_container_cluster.my-cluster.id}\"'."]
+        "Get a reference to the value of field `issuer` after provisioning.\nA JSON Web Token (JWT) issuer URI. 'issuer' must start with 'https://' and // be a valid\nwith length <2000 characters. For example: 'https://container.googleapis.com/v1/projects/my-project/locations/us-west1/clusters/my-cluster'. If the cluster is provisioned with Terraform, this is '\"https://container.googleapis.com/v1/${google_container_cluster.my-cluster.id}\"'."]
     pub fn issuer(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.issuer", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct GkeHubMembershipEndpointElGkeClusterEl {
+pub struct GkeHubMembership_Endpoint_GkeCluster {
     resource_link: terrars::PrimField<std::string::String>,
 }
 
-impl GkeHubMembershipEndpointElGkeClusterEl { }
+impl GkeHubMembership_Endpoint_GkeCluster { }
 
-impl terrars::ToListMappable for GkeHubMembershipEndpointElGkeClusterEl {
-    type O = terrars::BlockAssignable<GkeHubMembershipEndpointElGkeClusterEl>;
+impl terrars::ToListMappable for GkeHubMembership_Endpoint_GkeCluster {
+    type O = terrars::BlockAssignable<GkeHubMembership_Endpoint_GkeCluster>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -489,61 +521,63 @@ impl terrars::ToListMappable for GkeHubMembershipEndpointElGkeClusterEl {
     }
 }
 
-pub struct BuildGkeHubMembershipEndpointElGkeClusterEl {
+pub struct BuildGkeHubMembership_Endpoint_GkeCluster {
     #[doc =
-        "Self-link of the GCP resource for the GKE cluster.\nFor example: '//container.googleapis.com/projects/my-project/zones/us-west1-a/clusters/my-cluster'.\nIt can be at the most 1000 characters in length. If the cluster is provisioned with Terraform,\nthis can be '\"//container.googleapis.com/${google_container_cluster.my-cluster.id}\"' or\n'google_container_cluster.my-cluster.id'."]
+        "Self-link of the GCP resource for the GKE cluster.\nFor example: '//container.googleapis.com/projects/my-project/locations/us-west1-a/clusters/my-cluster'.\nIt can be at the most 1000 characters in length. If the cluster is provisioned with Terraform,\nthis can be '\"//container.googleapis.com/${google_container_cluster.my-cluster.id}\"' or\n'google_container_cluster.my-cluster.id'."]
     pub resource_link: terrars::PrimField<std::string::String>,
 }
 
-impl BuildGkeHubMembershipEndpointElGkeClusterEl {
-    pub fn build(self) -> GkeHubMembershipEndpointElGkeClusterEl {
-        GkeHubMembershipEndpointElGkeClusterEl { resource_link: self.resource_link }
+impl BuildGkeHubMembership_Endpoint_GkeCluster {
+    pub fn build(self) -> GkeHubMembership_Endpoint_GkeCluster {
+        GkeHubMembership_Endpoint_GkeCluster { resource_link: self.resource_link }
     }
 }
 
-pub struct GkeHubMembershipEndpointElGkeClusterElRef {
+#[allow(dead_code)]
+pub struct GkeHubMembership_Endpoint_GkeClusterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeHubMembershipEndpointElGkeClusterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeHubMembershipEndpointElGkeClusterElRef {
-        GkeHubMembershipEndpointElGkeClusterElRef {
+impl terrars::Ref for GkeHubMembership_Endpoint_GkeClusterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeHubMembership_Endpoint_GkeClusterRef {
+        GkeHubMembership_Endpoint_GkeClusterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeHubMembershipEndpointElGkeClusterElRef {
+impl GkeHubMembership_Endpoint_GkeClusterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `resource_link` after provisioning.\nSelf-link of the GCP resource for the GKE cluster.\nFor example: '//container.googleapis.com/projects/my-project/zones/us-west1-a/clusters/my-cluster'.\nIt can be at the most 1000 characters in length. If the cluster is provisioned with Terraform,\nthis can be '\"//container.googleapis.com/${google_container_cluster.my-cluster.id}\"' or\n'google_container_cluster.my-cluster.id'."]
+        "Get a reference to the value of field `resource_link` after provisioning.\nSelf-link of the GCP resource for the GKE cluster.\nFor example: '//container.googleapis.com/projects/my-project/locations/us-west1-a/clusters/my-cluster'.\nIt can be at the most 1000 characters in length. If the cluster is provisioned with Terraform,\nthis can be '\"//container.googleapis.com/${google_container_cluster.my-cluster.id}\"' or\n'google_container_cluster.my-cluster.id'."]
     pub fn resource_link(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_link", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct GkeHubMembershipEndpointElDynamic {
-    gke_cluster: std::option::Option<terrars::DynamicBlock<GkeHubMembershipEndpointElGkeClusterEl>>,
+struct GkeHubMembership_EndpointDynamic {
+    gke_cluster: std::option::Option<terrars::DynamicBlock<GkeHubMembership_Endpoint_GkeCluster>>,
 }
 
 #[derive(Serialize)]
-pub struct GkeHubMembershipEndpointEl {
+pub struct GkeHubMembership_Endpoint {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    gke_cluster: std::option::Option<std::vec::Vec<GkeHubMembershipEndpointElGkeClusterEl>>,
-    dynamic: GkeHubMembershipEndpointElDynamic,
+    gke_cluster: std::option::Option<std::vec::Vec<GkeHubMembership_Endpoint_GkeCluster>>,
+    dynamic: GkeHubMembership_EndpointDynamic,
 }
 
-impl GkeHubMembershipEndpointEl {
+impl GkeHubMembership_Endpoint {
     #[doc = "Set the field `gke_cluster`.\n"]
     pub fn set_gke_cluster(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeHubMembershipEndpointElGkeClusterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeHubMembership_Endpoint_GkeCluster>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -557,8 +591,8 @@ impl GkeHubMembershipEndpointEl {
     }
 }
 
-impl terrars::ToListMappable for GkeHubMembershipEndpointEl {
-    type O = terrars::BlockAssignable<GkeHubMembershipEndpointEl>;
+impl terrars::ToListMappable for GkeHubMembership_Endpoint {
+    type O = terrars::BlockAssignable<GkeHubMembership_Endpoint>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -569,44 +603,46 @@ impl terrars::ToListMappable for GkeHubMembershipEndpointEl {
     }
 }
 
-pub struct BuildGkeHubMembershipEndpointEl {}
+pub struct BuildGkeHubMembership_Endpoint {}
 
-impl BuildGkeHubMembershipEndpointEl {
-    pub fn build(self) -> GkeHubMembershipEndpointEl {
-        GkeHubMembershipEndpointEl {
+impl BuildGkeHubMembership_Endpoint {
+    pub fn build(self) -> GkeHubMembership_Endpoint {
+        GkeHubMembership_Endpoint {
             gke_cluster: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct GkeHubMembershipEndpointElRef {
+#[allow(dead_code)]
+pub struct GkeHubMembership_EndpointRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeHubMembershipEndpointElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeHubMembershipEndpointElRef {
-        GkeHubMembershipEndpointElRef {
+impl terrars::Ref for GkeHubMembership_EndpointRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeHubMembership_EndpointRef {
+        GkeHubMembership_EndpointRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeHubMembershipEndpointElRef {
+impl GkeHubMembership_EndpointRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `gke_cluster` after provisioning.\n"]
-    pub fn gke_cluster(&self) -> terrars::ListRef<GkeHubMembershipEndpointElGkeClusterElRef> {
+    pub fn gke_cluster(&self) -> terrars::ListRef<GkeHubMembership_Endpoint_GkeClusterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.gke_cluster", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct GkeHubMembershipTimeoutsEl {
+pub struct GkeHubMembership_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -615,7 +651,7 @@ pub struct GkeHubMembershipTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeHubMembershipTimeoutsEl {
+impl GkeHubMembership_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -635,8 +671,8 @@ impl GkeHubMembershipTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for GkeHubMembershipTimeoutsEl {
-    type O = terrars::BlockAssignable<GkeHubMembershipTimeoutsEl>;
+impl terrars::ToListMappable for GkeHubMembership_Timeouts {
+    type O = terrars::BlockAssignable<GkeHubMembership_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -647,11 +683,11 @@ impl terrars::ToListMappable for GkeHubMembershipTimeoutsEl {
     }
 }
 
-pub struct BuildGkeHubMembershipTimeoutsEl {}
+pub struct BuildGkeHubMembership_Timeouts {}
 
-impl BuildGkeHubMembershipTimeoutsEl {
-    pub fn build(self) -> GkeHubMembershipTimeoutsEl {
-        GkeHubMembershipTimeoutsEl {
+impl BuildGkeHubMembership_Timeouts {
+    pub fn build(self) -> GkeHubMembership_Timeouts {
+        GkeHubMembership_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -659,21 +695,23 @@ impl BuildGkeHubMembershipTimeoutsEl {
     }
 }
 
-pub struct GkeHubMembershipTimeoutsElRef {
+#[allow(dead_code)]
+pub struct GkeHubMembership_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeHubMembershipTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeHubMembershipTimeoutsElRef {
-        GkeHubMembershipTimeoutsElRef {
+impl terrars::Ref for GkeHubMembership_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeHubMembership_TimeoutsRef {
+        GkeHubMembership_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeHubMembershipTimeoutsElRef {
+impl GkeHubMembership_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -692,10 +730,4 @@ impl GkeHubMembershipTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct GkeHubMembershipDynamic {
-    authority: std::option::Option<terrars::DynamicBlock<GkeHubMembershipAuthorityEl>>,
-    endpoint: std::option::Option<terrars::DynamicBlock<GkeHubMembershipEndpointEl>>,
 }

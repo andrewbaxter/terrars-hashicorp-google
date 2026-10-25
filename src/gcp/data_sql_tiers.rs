@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataSqlTiersData {
+struct DataSqlTiersData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -25,7 +27,7 @@ struct DataSqlTiersData {
 struct DataSqlTiers_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataSqlTiersData>,
+    data: std::cell::RefCell<DataSqlTiersData_>,
 }
 
 #[derive(Clone)]
@@ -94,7 +96,7 @@ impl DataSqlTiers {
     }
 
     #[doc = "Get a reference to the value of field `tiers` after provisioning.\n"]
-    pub fn tiers(&self) -> terrars::ListRef<DataSqlTiersTiersElRef> {
+    pub fn tiers(&self) -> terrars::ListRef<DataSqlTiers_TiersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tiers", self.extract_ref()))
     }
 }
@@ -139,7 +141,7 @@ impl BuildDataSqlTiers {
         let out = DataSqlTiers(std::rc::Rc::new(DataSqlTiers_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataSqlTiersData {
+            data: std::cell::RefCell::new(DataSqlTiersData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -188,13 +190,13 @@ impl DataSqlTiersRef {
     }
 
     #[doc = "Get a reference to the value of field `tiers` after provisioning.\n"]
-    pub fn tiers(&self) -> terrars::ListRef<DataSqlTiersTiersElRef> {
+    pub fn tiers(&self) -> terrars::ListRef<DataSqlTiers_TiersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tiers", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataSqlTiersTiersEl {
+pub struct DataSqlTiers_Tiers {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     disk_quota: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -205,7 +207,7 @@ pub struct DataSqlTiersTiersEl {
     tier: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataSqlTiersTiersEl {
+impl DataSqlTiers_Tiers {
     #[doc = "Set the field `disk_quota`.\n"]
     pub fn set_disk_quota(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.disk_quota = std::option::Option::Some(v.into());
@@ -234,8 +236,8 @@ impl DataSqlTiersTiersEl {
     }
 }
 
-impl terrars::ToListMappable for DataSqlTiersTiersEl {
-    type O = terrars::BlockAssignable<DataSqlTiersTiersEl>;
+impl terrars::ToListMappable for DataSqlTiers_Tiers {
+    type O = terrars::BlockAssignable<DataSqlTiers_Tiers>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -246,11 +248,11 @@ impl terrars::ToListMappable for DataSqlTiersTiersEl {
     }
 }
 
-pub struct BuildDataSqlTiersTiersEl {}
+pub struct BuildDataSqlTiers_Tiers {}
 
-impl BuildDataSqlTiersTiersEl {
-    pub fn build(self) -> DataSqlTiersTiersEl {
-        DataSqlTiersTiersEl {
+impl BuildDataSqlTiers_Tiers {
+    pub fn build(self) -> DataSqlTiers_Tiers {
+        DataSqlTiers_Tiers {
             disk_quota: core::default::Default::default(),
             ram: core::default::Default::default(),
             region: core::default::Default::default(),
@@ -259,21 +261,23 @@ impl BuildDataSqlTiersTiersEl {
     }
 }
 
-pub struct DataSqlTiersTiersElRef {
+#[allow(dead_code)]
+pub struct DataSqlTiers_TiersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSqlTiersTiersElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSqlTiersTiersElRef {
-        DataSqlTiersTiersElRef {
+impl terrars::Ref for DataSqlTiers_TiersRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSqlTiers_TiersRef {
+        DataSqlTiers_TiersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSqlTiersTiersElRef {
+impl DataSqlTiers_TiersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

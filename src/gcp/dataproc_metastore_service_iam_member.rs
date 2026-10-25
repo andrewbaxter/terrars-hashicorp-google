@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataprocMetastoreServiceIamMemberData {
+struct DataprocMetastoreServiceIamMemberData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,14 +30,14 @@ struct DataprocMetastoreServiceIamMemberData {
     role: terrars::PrimField<std::string::String>,
     service_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<DataprocMetastoreServiceIamMemberConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<DataprocMetastoreServiceIamMember_Condition>>,
     dynamic: DataprocMetastoreServiceIamMemberDynamic,
 }
 
 struct DataprocMetastoreServiceIamMember_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataprocMetastoreServiceIamMemberData>,
+    data: std::cell::RefCell<DataprocMetastoreServiceIamMemberData_>,
 }
 
 #[derive(Clone)]
@@ -156,7 +158,7 @@ impl DataprocMetastoreServiceIamMember {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataprocMetastoreServiceIamMemberConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocMetastoreServiceIamMember_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -205,7 +207,7 @@ impl DataprocMetastoreServiceIamMember {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<DataprocMetastoreServiceIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<DataprocMetastoreServiceIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -256,7 +258,7 @@ impl BuildDataprocMetastoreServiceIamMember {
         let out = DataprocMetastoreServiceIamMember(std::rc::Rc::new(DataprocMetastoreServiceIamMember_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataprocMetastoreServiceIamMemberData {
+            data: std::cell::RefCell::new(DataprocMetastoreServiceIamMemberData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -336,20 +338,25 @@ impl DataprocMetastoreServiceIamMemberRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<DataprocMetastoreServiceIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<DataprocMetastoreServiceIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataprocMetastoreServiceIamMemberDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<DataprocMetastoreServiceIamMember_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct DataprocMetastoreServiceIamMemberConditionEl {
+pub struct DataprocMetastoreServiceIamMember_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl DataprocMetastoreServiceIamMemberConditionEl {
+impl DataprocMetastoreServiceIamMember_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -357,8 +364,8 @@ impl DataprocMetastoreServiceIamMemberConditionEl {
     }
 }
 
-impl terrars::ToListMappable for DataprocMetastoreServiceIamMemberConditionEl {
-    type O = terrars::BlockAssignable<DataprocMetastoreServiceIamMemberConditionEl>;
+impl terrars::ToListMappable for DataprocMetastoreServiceIamMember_Condition {
+    type O = terrars::BlockAssignable<DataprocMetastoreServiceIamMember_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -369,16 +376,16 @@ impl terrars::ToListMappable for DataprocMetastoreServiceIamMemberConditionEl {
     }
 }
 
-pub struct BuildDataprocMetastoreServiceIamMemberConditionEl {
+pub struct BuildDataprocMetastoreServiceIamMember_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataprocMetastoreServiceIamMemberConditionEl {
-    pub fn build(self) -> DataprocMetastoreServiceIamMemberConditionEl {
-        DataprocMetastoreServiceIamMemberConditionEl {
+impl BuildDataprocMetastoreServiceIamMember_Condition {
+    pub fn build(self) -> DataprocMetastoreServiceIamMember_Condition {
+        DataprocMetastoreServiceIamMember_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -386,24 +393,26 @@ impl BuildDataprocMetastoreServiceIamMemberConditionEl {
     }
 }
 
-pub struct DataprocMetastoreServiceIamMemberConditionElRef {
+#[allow(dead_code)]
+pub struct DataprocMetastoreServiceIamMember_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocMetastoreServiceIamMemberConditionElRef {
+impl terrars::Ref for DataprocMetastoreServiceIamMember_ConditionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataprocMetastoreServiceIamMemberConditionElRef {
-        DataprocMetastoreServiceIamMemberConditionElRef {
+    ) -> DataprocMetastoreServiceIamMember_ConditionRef {
+        DataprocMetastoreServiceIamMember_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocMetastoreServiceIamMemberConditionElRef {
+impl DataprocMetastoreServiceIamMember_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -422,9 +431,4 @@ impl DataprocMetastoreServiceIamMemberConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataprocMetastoreServiceIamMemberDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<DataprocMetastoreServiceIamMemberConditionEl>>,
 }

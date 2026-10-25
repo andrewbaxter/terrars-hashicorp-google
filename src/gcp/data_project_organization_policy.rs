@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataProjectOrganizationPolicyData {
+struct DataProjectOrganizationPolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -25,7 +27,7 @@ struct DataProjectOrganizationPolicyData {
 struct DataProjectOrganizationPolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataProjectOrganizationPolicyData>,
+    data: std::cell::RefCell<DataProjectOrganizationPolicyData_>,
 }
 
 #[derive(Clone)]
@@ -78,7 +80,7 @@ impl DataProjectOrganizationPolicy {
 
     #[doc =
         "Get a reference to the value of field `boolean_policy` after provisioning.\nA boolean policy is a constraint that is either enforced or not."]
-    pub fn boolean_policy(&self) -> terrars::ListRef<DataProjectOrganizationPolicyBooleanPolicyElRef> {
+    pub fn boolean_policy(&self) -> terrars::ListRef<DataProjectOrganizationPolicy_BooleanPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.boolean_policy", self.extract_ref()))
     }
 
@@ -86,6 +88,12 @@ impl DataProjectOrganizationPolicy {
         "Get a reference to the value of field `constraint` after provisioning.\nThe name of the Constraint the Policy is configuring, for example, serviceuser.services."]
     pub fn constraint(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.constraint", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -101,7 +109,7 @@ impl DataProjectOrganizationPolicy {
 
     #[doc =
         "Get a reference to the value of field `list_policy` after provisioning.\nA policy that can define specific values that are allowed or denied for the given constraint. It can also be used to allow or deny all values. "]
-    pub fn list_policy(&self) -> terrars::ListRef<DataProjectOrganizationPolicyListPolicyElRef> {
+    pub fn list_policy(&self) -> terrars::ListRef<DataProjectOrganizationPolicy_ListPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.list_policy", self.extract_ref()))
     }
 
@@ -112,7 +120,7 @@ impl DataProjectOrganizationPolicy {
 
     #[doc =
         "Get a reference to the value of field `restore_policy` after provisioning.\nA restore policy is a constraint to restore the default policy."]
-    pub fn restore_policy(&self) -> terrars::ListRef<DataProjectOrganizationPolicyRestorePolicyElRef> {
+    pub fn restore_policy(&self) -> terrars::ListRef<DataProjectOrganizationPolicy_RestorePolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.restore_policy", self.extract_ref()))
     }
 
@@ -173,7 +181,7 @@ impl BuildDataProjectOrganizationPolicy {
         let out = DataProjectOrganizationPolicy(std::rc::Rc::new(DataProjectOrganizationPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataProjectOrganizationPolicyData {
+            data: std::cell::RefCell::new(DataProjectOrganizationPolicyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -213,7 +221,7 @@ impl DataProjectOrganizationPolicyRef {
 
     #[doc =
         "Get a reference to the value of field `boolean_policy` after provisioning.\nA boolean policy is a constraint that is either enforced or not."]
-    pub fn boolean_policy(&self) -> terrars::ListRef<DataProjectOrganizationPolicyBooleanPolicyElRef> {
+    pub fn boolean_policy(&self) -> terrars::ListRef<DataProjectOrganizationPolicy_BooleanPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.boolean_policy", self.extract_ref()))
     }
 
@@ -221,6 +229,12 @@ impl DataProjectOrganizationPolicyRef {
         "Get a reference to the value of field `constraint` after provisioning.\nThe name of the Constraint the Policy is configuring, for example, serviceuser.services."]
     pub fn constraint(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.constraint", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -236,7 +250,7 @@ impl DataProjectOrganizationPolicyRef {
 
     #[doc =
         "Get a reference to the value of field `list_policy` after provisioning.\nA policy that can define specific values that are allowed or denied for the given constraint. It can also be used to allow or deny all values. "]
-    pub fn list_policy(&self) -> terrars::ListRef<DataProjectOrganizationPolicyListPolicyElRef> {
+    pub fn list_policy(&self) -> terrars::ListRef<DataProjectOrganizationPolicy_ListPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.list_policy", self.extract_ref()))
     }
 
@@ -247,7 +261,7 @@ impl DataProjectOrganizationPolicyRef {
 
     #[doc =
         "Get a reference to the value of field `restore_policy` after provisioning.\nA restore policy is a constraint to restore the default policy."]
-    pub fn restore_policy(&self) -> terrars::ListRef<DataProjectOrganizationPolicyRestorePolicyElRef> {
+    pub fn restore_policy(&self) -> terrars::ListRef<DataProjectOrganizationPolicy_RestorePolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.restore_policy", self.extract_ref()))
     }
 
@@ -265,12 +279,12 @@ impl DataProjectOrganizationPolicyRef {
 }
 
 #[derive(Serialize)]
-pub struct DataProjectOrganizationPolicyBooleanPolicyEl {
+pub struct DataProjectOrganizationPolicy_BooleanPolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enforced: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataProjectOrganizationPolicyBooleanPolicyEl {
+impl DataProjectOrganizationPolicy_BooleanPolicy {
     #[doc = "Set the field `enforced`.\n"]
     pub fn set_enforced(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enforced = std::option::Option::Some(v.into());
@@ -278,8 +292,8 @@ impl DataProjectOrganizationPolicyBooleanPolicyEl {
     }
 }
 
-impl terrars::ToListMappable for DataProjectOrganizationPolicyBooleanPolicyEl {
-    type O = terrars::BlockAssignable<DataProjectOrganizationPolicyBooleanPolicyEl>;
+impl terrars::ToListMappable for DataProjectOrganizationPolicy_BooleanPolicy {
+    type O = terrars::BlockAssignable<DataProjectOrganizationPolicy_BooleanPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -290,32 +304,34 @@ impl terrars::ToListMappable for DataProjectOrganizationPolicyBooleanPolicyEl {
     }
 }
 
-pub struct BuildDataProjectOrganizationPolicyBooleanPolicyEl {}
+pub struct BuildDataProjectOrganizationPolicy_BooleanPolicy {}
 
-impl BuildDataProjectOrganizationPolicyBooleanPolicyEl {
-    pub fn build(self) -> DataProjectOrganizationPolicyBooleanPolicyEl {
-        DataProjectOrganizationPolicyBooleanPolicyEl { enforced: core::default::Default::default() }
+impl BuildDataProjectOrganizationPolicy_BooleanPolicy {
+    pub fn build(self) -> DataProjectOrganizationPolicy_BooleanPolicy {
+        DataProjectOrganizationPolicy_BooleanPolicy { enforced: core::default::Default::default() }
     }
 }
 
-pub struct DataProjectOrganizationPolicyBooleanPolicyElRef {
+#[allow(dead_code)]
+pub struct DataProjectOrganizationPolicy_BooleanPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataProjectOrganizationPolicyBooleanPolicyElRef {
+impl terrars::Ref for DataProjectOrganizationPolicy_BooleanPolicyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataProjectOrganizationPolicyBooleanPolicyElRef {
-        DataProjectOrganizationPolicyBooleanPolicyElRef {
+    ) -> DataProjectOrganizationPolicy_BooleanPolicyRef {
+        DataProjectOrganizationPolicy_BooleanPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataProjectOrganizationPolicyBooleanPolicyElRef {
+impl DataProjectOrganizationPolicy_BooleanPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -327,14 +343,14 @@ impl DataProjectOrganizationPolicyBooleanPolicyElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataProjectOrganizationPolicyListPolicyElAllowEl {
+pub struct DataProjectOrganizationPolicy_ListPolicy_Allow {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     all: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DataProjectOrganizationPolicyListPolicyElAllowEl {
+impl DataProjectOrganizationPolicy_ListPolicy_Allow {
     #[doc = "Set the field `all`.\n"]
     pub fn set_all(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.all = std::option::Option::Some(v.into());
@@ -351,8 +367,8 @@ impl DataProjectOrganizationPolicyListPolicyElAllowEl {
     }
 }
 
-impl terrars::ToListMappable for DataProjectOrganizationPolicyListPolicyElAllowEl {
-    type O = terrars::BlockAssignable<DataProjectOrganizationPolicyListPolicyElAllowEl>;
+impl terrars::ToListMappable for DataProjectOrganizationPolicy_ListPolicy_Allow {
+    type O = terrars::BlockAssignable<DataProjectOrganizationPolicy_ListPolicy_Allow>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -363,35 +379,37 @@ impl terrars::ToListMappable for DataProjectOrganizationPolicyListPolicyElAllowE
     }
 }
 
-pub struct BuildDataProjectOrganizationPolicyListPolicyElAllowEl {}
+pub struct BuildDataProjectOrganizationPolicy_ListPolicy_Allow {}
 
-impl BuildDataProjectOrganizationPolicyListPolicyElAllowEl {
-    pub fn build(self) -> DataProjectOrganizationPolicyListPolicyElAllowEl {
-        DataProjectOrganizationPolicyListPolicyElAllowEl {
+impl BuildDataProjectOrganizationPolicy_ListPolicy_Allow {
+    pub fn build(self) -> DataProjectOrganizationPolicy_ListPolicy_Allow {
+        DataProjectOrganizationPolicy_ListPolicy_Allow {
             all: core::default::Default::default(),
             values: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataProjectOrganizationPolicyListPolicyElAllowElRef {
+#[allow(dead_code)]
+pub struct DataProjectOrganizationPolicy_ListPolicy_AllowRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataProjectOrganizationPolicyListPolicyElAllowElRef {
+impl terrars::Ref for DataProjectOrganizationPolicy_ListPolicy_AllowRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataProjectOrganizationPolicyListPolicyElAllowElRef {
-        DataProjectOrganizationPolicyListPolicyElAllowElRef {
+    ) -> DataProjectOrganizationPolicy_ListPolicy_AllowRef {
+        DataProjectOrganizationPolicy_ListPolicy_AllowRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataProjectOrganizationPolicyListPolicyElAllowElRef {
+impl DataProjectOrganizationPolicy_ListPolicy_AllowRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -408,14 +426,14 @@ impl DataProjectOrganizationPolicyListPolicyElAllowElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataProjectOrganizationPolicyListPolicyElDenyEl {
+pub struct DataProjectOrganizationPolicy_ListPolicy_Deny {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     all: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DataProjectOrganizationPolicyListPolicyElDenyEl {
+impl DataProjectOrganizationPolicy_ListPolicy_Deny {
     #[doc = "Set the field `all`.\n"]
     pub fn set_all(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.all = std::option::Option::Some(v.into());
@@ -432,8 +450,8 @@ impl DataProjectOrganizationPolicyListPolicyElDenyEl {
     }
 }
 
-impl terrars::ToListMappable for DataProjectOrganizationPolicyListPolicyElDenyEl {
-    type O = terrars::BlockAssignable<DataProjectOrganizationPolicyListPolicyElDenyEl>;
+impl terrars::ToListMappable for DataProjectOrganizationPolicy_ListPolicy_Deny {
+    type O = terrars::BlockAssignable<DataProjectOrganizationPolicy_ListPolicy_Deny>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -444,35 +462,37 @@ impl terrars::ToListMappable for DataProjectOrganizationPolicyListPolicyElDenyEl
     }
 }
 
-pub struct BuildDataProjectOrganizationPolicyListPolicyElDenyEl {}
+pub struct BuildDataProjectOrganizationPolicy_ListPolicy_Deny {}
 
-impl BuildDataProjectOrganizationPolicyListPolicyElDenyEl {
-    pub fn build(self) -> DataProjectOrganizationPolicyListPolicyElDenyEl {
-        DataProjectOrganizationPolicyListPolicyElDenyEl {
+impl BuildDataProjectOrganizationPolicy_ListPolicy_Deny {
+    pub fn build(self) -> DataProjectOrganizationPolicy_ListPolicy_Deny {
+        DataProjectOrganizationPolicy_ListPolicy_Deny {
             all: core::default::Default::default(),
             values: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataProjectOrganizationPolicyListPolicyElDenyElRef {
+#[allow(dead_code)]
+pub struct DataProjectOrganizationPolicy_ListPolicy_DenyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataProjectOrganizationPolicyListPolicyElDenyElRef {
+impl terrars::Ref for DataProjectOrganizationPolicy_ListPolicy_DenyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataProjectOrganizationPolicyListPolicyElDenyElRef {
-        DataProjectOrganizationPolicyListPolicyElDenyElRef {
+    ) -> DataProjectOrganizationPolicy_ListPolicy_DenyRef {
+        DataProjectOrganizationPolicy_ListPolicy_DenyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataProjectOrganizationPolicyListPolicyElDenyElRef {
+impl DataProjectOrganizationPolicy_ListPolicy_DenyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -489,22 +509,22 @@ impl DataProjectOrganizationPolicyListPolicyElDenyElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataProjectOrganizationPolicyListPolicyEl {
+pub struct DataProjectOrganizationPolicy_ListPolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    allow: std::option::Option<terrars::ListField<DataProjectOrganizationPolicyListPolicyElAllowEl>>,
+    allow: std::option::Option<terrars::ListField<DataProjectOrganizationPolicy_ListPolicy_Allow>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    deny: std::option::Option<terrars::ListField<DataProjectOrganizationPolicyListPolicyElDenyEl>>,
+    deny: std::option::Option<terrars::ListField<DataProjectOrganizationPolicy_ListPolicy_Deny>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     inherit_from_parent: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     suggested_value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataProjectOrganizationPolicyListPolicyEl {
+impl DataProjectOrganizationPolicy_ListPolicy {
     #[doc = "Set the field `allow`.\n"]
     pub fn set_allow(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataProjectOrganizationPolicyListPolicyElAllowEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataProjectOrganizationPolicy_ListPolicy_Allow>>,
     ) -> Self {
         self.allow = std::option::Option::Some(v.into());
         self
@@ -513,7 +533,7 @@ impl DataProjectOrganizationPolicyListPolicyEl {
     #[doc = "Set the field `deny`.\n"]
     pub fn set_deny(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataProjectOrganizationPolicyListPolicyElDenyEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataProjectOrganizationPolicy_ListPolicy_Deny>>,
     ) -> Self {
         self.deny = std::option::Option::Some(v.into());
         self
@@ -532,8 +552,8 @@ impl DataProjectOrganizationPolicyListPolicyEl {
     }
 }
 
-impl terrars::ToListMappable for DataProjectOrganizationPolicyListPolicyEl {
-    type O = terrars::BlockAssignable<DataProjectOrganizationPolicyListPolicyEl>;
+impl terrars::ToListMappable for DataProjectOrganizationPolicy_ListPolicy {
+    type O = terrars::BlockAssignable<DataProjectOrganizationPolicy_ListPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -544,11 +564,11 @@ impl terrars::ToListMappable for DataProjectOrganizationPolicyListPolicyEl {
     }
 }
 
-pub struct BuildDataProjectOrganizationPolicyListPolicyEl {}
+pub struct BuildDataProjectOrganizationPolicy_ListPolicy {}
 
-impl BuildDataProjectOrganizationPolicyListPolicyEl {
-    pub fn build(self) -> DataProjectOrganizationPolicyListPolicyEl {
-        DataProjectOrganizationPolicyListPolicyEl {
+impl BuildDataProjectOrganizationPolicy_ListPolicy {
+    pub fn build(self) -> DataProjectOrganizationPolicy_ListPolicy {
+        DataProjectOrganizationPolicy_ListPolicy {
             allow: core::default::Default::default(),
             deny: core::default::Default::default(),
             inherit_from_parent: core::default::Default::default(),
@@ -557,32 +577,34 @@ impl BuildDataProjectOrganizationPolicyListPolicyEl {
     }
 }
 
-pub struct DataProjectOrganizationPolicyListPolicyElRef {
+#[allow(dead_code)]
+pub struct DataProjectOrganizationPolicy_ListPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataProjectOrganizationPolicyListPolicyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataProjectOrganizationPolicyListPolicyElRef {
-        DataProjectOrganizationPolicyListPolicyElRef {
+impl terrars::Ref for DataProjectOrganizationPolicy_ListPolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataProjectOrganizationPolicy_ListPolicyRef {
+        DataProjectOrganizationPolicy_ListPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataProjectOrganizationPolicyListPolicyElRef {
+impl DataProjectOrganizationPolicy_ListPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `allow` after provisioning.\n"]
-    pub fn allow(&self) -> terrars::ListRef<DataProjectOrganizationPolicyListPolicyElAllowElRef> {
+    pub fn allow(&self) -> terrars::ListRef<DataProjectOrganizationPolicy_ListPolicy_AllowRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.allow", self.base))
     }
 
     #[doc = "Get a reference to the value of field `deny` after provisioning.\n"]
-    pub fn deny(&self) -> terrars::ListRef<DataProjectOrganizationPolicyListPolicyElDenyElRef> {
+    pub fn deny(&self) -> terrars::ListRef<DataProjectOrganizationPolicy_ListPolicy_DenyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.deny", self.base))
     }
 
@@ -598,12 +620,12 @@ impl DataProjectOrganizationPolicyListPolicyElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataProjectOrganizationPolicyRestorePolicyEl {
+pub struct DataProjectOrganizationPolicy_RestorePolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     default: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataProjectOrganizationPolicyRestorePolicyEl {
+impl DataProjectOrganizationPolicy_RestorePolicy {
     #[doc = "Set the field `default`.\n"]
     pub fn set_default(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.default = std::option::Option::Some(v.into());
@@ -611,8 +633,8 @@ impl DataProjectOrganizationPolicyRestorePolicyEl {
     }
 }
 
-impl terrars::ToListMappable for DataProjectOrganizationPolicyRestorePolicyEl {
-    type O = terrars::BlockAssignable<DataProjectOrganizationPolicyRestorePolicyEl>;
+impl terrars::ToListMappable for DataProjectOrganizationPolicy_RestorePolicy {
+    type O = terrars::BlockAssignable<DataProjectOrganizationPolicy_RestorePolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -623,32 +645,34 @@ impl terrars::ToListMappable for DataProjectOrganizationPolicyRestorePolicyEl {
     }
 }
 
-pub struct BuildDataProjectOrganizationPolicyRestorePolicyEl {}
+pub struct BuildDataProjectOrganizationPolicy_RestorePolicy {}
 
-impl BuildDataProjectOrganizationPolicyRestorePolicyEl {
-    pub fn build(self) -> DataProjectOrganizationPolicyRestorePolicyEl {
-        DataProjectOrganizationPolicyRestorePolicyEl { default: core::default::Default::default() }
+impl BuildDataProjectOrganizationPolicy_RestorePolicy {
+    pub fn build(self) -> DataProjectOrganizationPolicy_RestorePolicy {
+        DataProjectOrganizationPolicy_RestorePolicy { default: core::default::Default::default() }
     }
 }
 
-pub struct DataProjectOrganizationPolicyRestorePolicyElRef {
+#[allow(dead_code)]
+pub struct DataProjectOrganizationPolicy_RestorePolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataProjectOrganizationPolicyRestorePolicyElRef {
+impl terrars::Ref for DataProjectOrganizationPolicy_RestorePolicyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataProjectOrganizationPolicyRestorePolicyElRef {
-        DataProjectOrganizationPolicyRestorePolicyElRef {
+    ) -> DataProjectOrganizationPolicy_RestorePolicyRef {
+        DataProjectOrganizationPolicy_RestorePolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataProjectOrganizationPolicyRestorePolicyElRef {
+impl DataProjectOrganizationPolicy_RestorePolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

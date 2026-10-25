@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct MemcacheInstanceData {
+struct MemcacheInstanceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,6 +22,10 @@ struct MemcacheInstanceData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     authorized_network: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_protection: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     display_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -35,22 +41,24 @@ struct MemcacheInstanceData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    reserved_ip_range_id: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     zones: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    maintenance_policy: std::option::Option<std::vec::Vec<MemcacheInstanceMaintenancePolicyEl>>,
+    maintenance_policy: std::option::Option<std::vec::Vec<MemcacheInstance_MaintenancePolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    memcache_parameters: std::option::Option<std::vec::Vec<MemcacheInstanceMemcacheParametersEl>>,
+    memcache_parameters: std::option::Option<std::vec::Vec<MemcacheInstance_MemcacheParameters>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    node_config: std::option::Option<std::vec::Vec<MemcacheInstanceNodeConfigEl>>,
+    node_config: std::option::Option<std::vec::Vec<MemcacheInstance_NodeConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<MemcacheInstanceTimeoutsEl>,
+    timeouts: std::option::Option<MemcacheInstance_Timeouts>,
     dynamic: MemcacheInstanceDynamic,
 }
 
 struct MemcacheInstance_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<MemcacheInstanceData>,
+    data: std::cell::RefCell<MemcacheInstanceData_>,
 }
 
 #[derive(Clone)]
@@ -157,6 +165,20 @@ impl MemcacheInstance {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `deletion_protection`.\nWhether Terraform will be prevented from destroying the instance.\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is not set to false in Terraform state.\nWhen the field is set to true or unset in Terraform state, a 'terraform apply'\nor 'terraform destroy' that would delete the instance will fail.\nWhen the field is set to false, deleting the instance is allowed."]
+    pub fn set_deletion_protection(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().deletion_protection = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `display_name`.\nA user-visible name for the instance."]
     pub fn set_display_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().display_name = std::option::Option::Some(v.into());
@@ -200,6 +222,16 @@ impl MemcacheInstance {
     }
 
     #[doc =
+        "Set the field `reserved_ip_range_id`.\nContains the name of allocated IP address ranges associated with\nthe private service access connection for example, \"test-default\"\nassociated with IP range 10.0.0.0/29."]
+    pub fn set_reserved_ip_range_id(
+        self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().reserved_ip_range_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `zones`.\nZones where memcache nodes should be provisioned.  If not\nprovided, all zones will be used."]
     pub fn set_zones(
         self,
@@ -212,7 +244,7 @@ impl MemcacheInstance {
     #[doc = "Set the field `maintenance_policy`.\n"]
     pub fn set_maintenance_policy(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MemcacheInstanceMaintenancePolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MemcacheInstance_MaintenancePolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -228,7 +260,7 @@ impl MemcacheInstance {
     #[doc = "Set the field `memcache_parameters`.\n"]
     pub fn set_memcache_parameters(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MemcacheInstanceMemcacheParametersEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MemcacheInstance_MemcacheParameters>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -244,7 +276,7 @@ impl MemcacheInstance {
     #[doc = "Set the field `node_config`.\n"]
     pub fn set_node_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MemcacheInstanceNodeConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MemcacheInstance_NodeConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -258,7 +290,7 @@ impl MemcacheInstance {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<MemcacheInstanceTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<MemcacheInstance_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -273,6 +305,18 @@ impl MemcacheInstance {
         "Get a reference to the value of field `create_time` after provisioning.\nCreation timestamp in RFC3339 text format."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_protection` after provisioning.\nWhether Terraform will be prevented from destroying the instance.\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is not set to false in Terraform state.\nWhen the field is set to true or unset in Terraform state, a 'terraform apply'\nor 'terraform destroy' that would delete the instance will fail.\nWhen the field is set to false, deleting the instance is allowed."]
+    pub fn deletion_protection(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_protection", self.extract_ref()))
     }
 
     #[doc =
@@ -306,7 +350,7 @@ impl MemcacheInstance {
 
     #[doc =
         "Get a reference to the value of field `maintenance_schedule` after provisioning.\nOutput only. Published maintenance schedule."]
-    pub fn maintenance_schedule(&self) -> terrars::ListRef<MemcacheInstanceMaintenanceScheduleElRef> {
+    pub fn maintenance_schedule(&self) -> terrars::ListRef<MemcacheInstance_MaintenanceScheduleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.maintenance_schedule", self.extract_ref()))
     }
 
@@ -318,7 +362,7 @@ impl MemcacheInstance {
 
     #[doc =
         "Get a reference to the value of field `memcache_nodes` after provisioning.\nAdditional information about the instance state, if available."]
-    pub fn memcache_nodes(&self) -> terrars::ListRef<MemcacheInstanceMemcacheNodesElRef> {
+    pub fn memcache_nodes(&self) -> terrars::ListRef<MemcacheInstance_MemcacheNodesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.memcache_nodes", self.extract_ref()))
     }
 
@@ -351,6 +395,12 @@ impl MemcacheInstance {
     }
 
     #[doc =
+        "Get a reference to the value of field `reserved_ip_range_id` after provisioning.\nContains the name of allocated IP address ranges associated with\nthe private service access connection for example, \"test-default\"\nassociated with IP range 10.0.0.0/29."]
+    pub fn reserved_ip_range_id(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.reserved_ip_range_id", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
     pub fn terraform_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
@@ -363,23 +413,23 @@ impl MemcacheInstance {
     }
 
     #[doc = "Get a reference to the value of field `maintenance_policy` after provisioning.\n"]
-    pub fn maintenance_policy(&self) -> terrars::ListRef<MemcacheInstanceMaintenancePolicyElRef> {
+    pub fn maintenance_policy(&self) -> terrars::ListRef<MemcacheInstance_MaintenancePolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.maintenance_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `memcache_parameters` after provisioning.\n"]
-    pub fn memcache_parameters(&self) -> terrars::ListRef<MemcacheInstanceMemcacheParametersElRef> {
+    pub fn memcache_parameters(&self) -> terrars::ListRef<MemcacheInstance_MemcacheParametersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.memcache_parameters", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `node_config` after provisioning.\n"]
-    pub fn node_config(&self) -> terrars::ListRef<MemcacheInstanceNodeConfigElRef> {
+    pub fn node_config(&self) -> terrars::ListRef<MemcacheInstance_NodeConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.node_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> MemcacheInstanceTimeoutsElRef {
-        MemcacheInstanceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> MemcacheInstance_TimeoutsRef {
+        MemcacheInstance_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -427,13 +477,15 @@ impl BuildMemcacheInstance {
         let out = MemcacheInstance(std::rc::Rc::new(MemcacheInstance_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(MemcacheInstanceData {
+            data: std::cell::RefCell::new(MemcacheInstanceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 authorized_network: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
+                deletion_protection: core::default::Default::default(),
                 display_name: core::default::Default::default(),
                 id: core::default::Default::default(),
                 labels: core::default::Default::default(),
@@ -442,6 +494,7 @@ impl BuildMemcacheInstance {
                 node_count: self.node_count,
                 project: core::default::Default::default(),
                 region: core::default::Default::default(),
+                reserved_ip_range_id: core::default::Default::default(),
                 zones: core::default::Default::default(),
                 maintenance_policy: core::default::Default::default(),
                 memcache_parameters: core::default::Default::default(),
@@ -491,6 +544,18 @@ impl MemcacheInstanceRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_protection` after provisioning.\nWhether Terraform will be prevented from destroying the instance.\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is not set to false in Terraform state.\nWhen the field is set to true or unset in Terraform state, a 'terraform apply'\nor 'terraform destroy' that would delete the instance will fail.\nWhen the field is set to false, deleting the instance is allowed."]
+    pub fn deletion_protection(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_protection", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `discovery_endpoint` after provisioning.\nEndpoint for Discovery API"]
     pub fn discovery_endpoint(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.discovery_endpoint", self.extract_ref()))
@@ -521,7 +586,7 @@ impl MemcacheInstanceRef {
 
     #[doc =
         "Get a reference to the value of field `maintenance_schedule` after provisioning.\nOutput only. Published maintenance schedule."]
-    pub fn maintenance_schedule(&self) -> terrars::ListRef<MemcacheInstanceMaintenanceScheduleElRef> {
+    pub fn maintenance_schedule(&self) -> terrars::ListRef<MemcacheInstance_MaintenanceScheduleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.maintenance_schedule", self.extract_ref()))
     }
 
@@ -533,7 +598,7 @@ impl MemcacheInstanceRef {
 
     #[doc =
         "Get a reference to the value of field `memcache_nodes` after provisioning.\nAdditional information about the instance state, if available."]
-    pub fn memcache_nodes(&self) -> terrars::ListRef<MemcacheInstanceMemcacheNodesElRef> {
+    pub fn memcache_nodes(&self) -> terrars::ListRef<MemcacheInstance_MemcacheNodesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.memcache_nodes", self.extract_ref()))
     }
 
@@ -566,6 +631,12 @@ impl MemcacheInstanceRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `reserved_ip_range_id` after provisioning.\nContains the name of allocated IP address ranges associated with\nthe private service access connection for example, \"test-default\"\nassociated with IP range 10.0.0.0/29."]
+    pub fn reserved_ip_range_id(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.reserved_ip_range_id", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
     pub fn terraform_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
@@ -578,28 +649,35 @@ impl MemcacheInstanceRef {
     }
 
     #[doc = "Get a reference to the value of field `maintenance_policy` after provisioning.\n"]
-    pub fn maintenance_policy(&self) -> terrars::ListRef<MemcacheInstanceMaintenancePolicyElRef> {
+    pub fn maintenance_policy(&self) -> terrars::ListRef<MemcacheInstance_MaintenancePolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.maintenance_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `memcache_parameters` after provisioning.\n"]
-    pub fn memcache_parameters(&self) -> terrars::ListRef<MemcacheInstanceMemcacheParametersElRef> {
+    pub fn memcache_parameters(&self) -> terrars::ListRef<MemcacheInstance_MemcacheParametersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.memcache_parameters", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `node_config` after provisioning.\n"]
-    pub fn node_config(&self) -> terrars::ListRef<MemcacheInstanceNodeConfigElRef> {
+    pub fn node_config(&self) -> terrars::ListRef<MemcacheInstance_NodeConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.node_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> MemcacheInstanceTimeoutsElRef {
-        MemcacheInstanceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> MemcacheInstance_TimeoutsRef {
+        MemcacheInstance_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct MemcacheInstanceDynamic {
+    maintenance_policy: std::option::Option<terrars::DynamicBlock<MemcacheInstance_MaintenancePolicy>>,
+    memcache_parameters: std::option::Option<terrars::DynamicBlock<MemcacheInstance_MemcacheParameters>>,
+    node_config: std::option::Option<terrars::DynamicBlock<MemcacheInstance_NodeConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct MemcacheInstanceMaintenanceScheduleEl {
+pub struct MemcacheInstance_MaintenanceSchedule {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     end_time: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -608,7 +686,7 @@ pub struct MemcacheInstanceMaintenanceScheduleEl {
     start_time: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl MemcacheInstanceMaintenanceScheduleEl {
+impl MemcacheInstance_MaintenanceSchedule {
     #[doc = "Set the field `end_time`.\n"]
     pub fn set_end_time(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.end_time = std::option::Option::Some(v.into());
@@ -631,8 +709,8 @@ impl MemcacheInstanceMaintenanceScheduleEl {
     }
 }
 
-impl terrars::ToListMappable for MemcacheInstanceMaintenanceScheduleEl {
-    type O = terrars::BlockAssignable<MemcacheInstanceMaintenanceScheduleEl>;
+impl terrars::ToListMappable for MemcacheInstance_MaintenanceSchedule {
+    type O = terrars::BlockAssignable<MemcacheInstance_MaintenanceSchedule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -643,11 +721,11 @@ impl terrars::ToListMappable for MemcacheInstanceMaintenanceScheduleEl {
     }
 }
 
-pub struct BuildMemcacheInstanceMaintenanceScheduleEl {}
+pub struct BuildMemcacheInstance_MaintenanceSchedule {}
 
-impl BuildMemcacheInstanceMaintenanceScheduleEl {
-    pub fn build(self) -> MemcacheInstanceMaintenanceScheduleEl {
-        MemcacheInstanceMaintenanceScheduleEl {
+impl BuildMemcacheInstance_MaintenanceSchedule {
+    pub fn build(self) -> MemcacheInstance_MaintenanceSchedule {
+        MemcacheInstance_MaintenanceSchedule {
             end_time: core::default::Default::default(),
             schedule_deadline_time: core::default::Default::default(),
             start_time: core::default::Default::default(),
@@ -655,21 +733,23 @@ impl BuildMemcacheInstanceMaintenanceScheduleEl {
     }
 }
 
-pub struct MemcacheInstanceMaintenanceScheduleElRef {
+#[allow(dead_code)]
+pub struct MemcacheInstance_MaintenanceScheduleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MemcacheInstanceMaintenanceScheduleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MemcacheInstanceMaintenanceScheduleElRef {
-        MemcacheInstanceMaintenanceScheduleElRef {
+impl terrars::Ref for MemcacheInstance_MaintenanceScheduleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MemcacheInstance_MaintenanceScheduleRef {
+        MemcacheInstance_MaintenanceScheduleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MemcacheInstanceMaintenanceScheduleElRef {
+impl MemcacheInstance_MaintenanceScheduleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -691,7 +771,7 @@ impl MemcacheInstanceMaintenanceScheduleElRef {
 }
 
 #[derive(Serialize)]
-pub struct MemcacheInstanceMemcacheNodesEl {
+pub struct MemcacheInstance_MemcacheNodes {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     host: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -704,7 +784,7 @@ pub struct MemcacheInstanceMemcacheNodesEl {
     zone: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl MemcacheInstanceMemcacheNodesEl {
+impl MemcacheInstance_MemcacheNodes {
     #[doc = "Set the field `host`.\n"]
     pub fn set_host(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.host = std::option::Option::Some(v.into());
@@ -736,8 +816,8 @@ impl MemcacheInstanceMemcacheNodesEl {
     }
 }
 
-impl terrars::ToListMappable for MemcacheInstanceMemcacheNodesEl {
-    type O = terrars::BlockAssignable<MemcacheInstanceMemcacheNodesEl>;
+impl terrars::ToListMappable for MemcacheInstance_MemcacheNodes {
+    type O = terrars::BlockAssignable<MemcacheInstance_MemcacheNodes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -748,11 +828,11 @@ impl terrars::ToListMappable for MemcacheInstanceMemcacheNodesEl {
     }
 }
 
-pub struct BuildMemcacheInstanceMemcacheNodesEl {}
+pub struct BuildMemcacheInstance_MemcacheNodes {}
 
-impl BuildMemcacheInstanceMemcacheNodesEl {
-    pub fn build(self) -> MemcacheInstanceMemcacheNodesEl {
-        MemcacheInstanceMemcacheNodesEl {
+impl BuildMemcacheInstance_MemcacheNodes {
+    pub fn build(self) -> MemcacheInstance_MemcacheNodes {
+        MemcacheInstance_MemcacheNodes {
             host: core::default::Default::default(),
             node_id: core::default::Default::default(),
             port: core::default::Default::default(),
@@ -762,21 +842,23 @@ impl BuildMemcacheInstanceMemcacheNodesEl {
     }
 }
 
-pub struct MemcacheInstanceMemcacheNodesElRef {
+#[allow(dead_code)]
+pub struct MemcacheInstance_MemcacheNodesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MemcacheInstanceMemcacheNodesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MemcacheInstanceMemcacheNodesElRef {
-        MemcacheInstanceMemcacheNodesElRef {
+impl terrars::Ref for MemcacheInstance_MemcacheNodesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MemcacheInstance_MemcacheNodesRef {
+        MemcacheInstance_MemcacheNodesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MemcacheInstanceMemcacheNodesElRef {
+impl MemcacheInstance_MemcacheNodesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -808,7 +890,7 @@ impl MemcacheInstanceMemcacheNodesElRef {
 }
 
 #[derive(Serialize)]
-pub struct MemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTimeEl {
+pub struct MemcacheInstance_MaintenancePolicy_WeeklyMaintenanceWindow_StartTime {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     hours: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -819,7 +901,7 @@ pub struct MemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTime
     seconds: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl MemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTimeEl {
+impl MemcacheInstance_MaintenancePolicy_WeeklyMaintenanceWindow_StartTime {
     #[doc =
         "Set the field `hours`.\nHours of day in 24 hour format. Should be from 0 to 23.\nAn API may choose to allow the value \"24:00:00\" for scenarios like business closing time."]
     pub fn set_hours(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -847,8 +929,8 @@ impl MemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTimeEl {
     }
 }
 
-impl terrars::ToListMappable for MemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTimeEl {
-    type O = terrars::BlockAssignable<MemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTimeEl>;
+impl terrars::ToListMappable for MemcacheInstance_MaintenancePolicy_WeeklyMaintenanceWindow_StartTime {
+    type O = terrars::BlockAssignable<MemcacheInstance_MaintenancePolicy_WeeklyMaintenanceWindow_StartTime>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -859,11 +941,11 @@ impl terrars::ToListMappable for MemcacheInstanceMaintenancePolicyElWeeklyMainte
     }
 }
 
-pub struct BuildMemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTimeEl {}
+pub struct BuildMemcacheInstance_MaintenancePolicy_WeeklyMaintenanceWindow_StartTime {}
 
-impl BuildMemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTimeEl {
-    pub fn build(self) -> MemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTimeEl {
-        MemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTimeEl {
+impl BuildMemcacheInstance_MaintenancePolicy_WeeklyMaintenanceWindow_StartTime {
+    pub fn build(self) -> MemcacheInstance_MaintenancePolicy_WeeklyMaintenanceWindow_StartTime {
+        MemcacheInstance_MaintenancePolicy_WeeklyMaintenanceWindow_StartTime {
             hours: core::default::Default::default(),
             minutes: core::default::Default::default(),
             nanos: core::default::Default::default(),
@@ -872,24 +954,26 @@ impl BuildMemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTimeE
     }
 }
 
-pub struct MemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTimeElRef {
+#[allow(dead_code)]
+pub struct MemcacheInstance_MaintenancePolicy_WeeklyMaintenanceWindow_StartTimeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTimeElRef {
+impl terrars::Ref for MemcacheInstance_MaintenancePolicy_WeeklyMaintenanceWindow_StartTimeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> MemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTimeElRef {
-        MemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTimeElRef {
+    ) -> MemcacheInstance_MaintenancePolicy_WeeklyMaintenanceWindow_StartTimeRef {
+        MemcacheInstance_MaintenancePolicy_WeeklyMaintenanceWindow_StartTimeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTimeElRef {
+impl MemcacheInstance_MaintenancePolicy_WeeklyMaintenanceWindow_StartTimeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -920,24 +1004,22 @@ impl MemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTimeElRef 
 }
 
 #[derive(Serialize, Default)]
-struct MemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowElDynamic {
+struct MemcacheInstance_MaintenancePolicy_WeeklyMaintenanceWindowDynamic {
     start_time: std
     ::option
-    ::Option<terrars::DynamicBlock<MemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTimeEl>>,
+    ::Option<terrars::DynamicBlock<MemcacheInstance_MaintenancePolicy_WeeklyMaintenanceWindow_StartTime>>,
 }
 
 #[derive(Serialize)]
-pub struct MemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowEl {
+pub struct MemcacheInstance_MaintenancePolicy_WeeklyMaintenanceWindow {
     day: terrars::PrimField<std::string::String>,
     duration: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    start_time: std
-    ::option
-    ::Option<std::vec::Vec<MemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTimeEl>>,
-    dynamic: MemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowElDynamic,
+    start_time: std::option::Option<std::vec::Vec<MemcacheInstance_MaintenancePolicy_WeeklyMaintenanceWindow_StartTime>>,
+    dynamic: MemcacheInstance_MaintenancePolicy_WeeklyMaintenanceWindowDynamic,
 }
 
-impl MemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowEl {
+impl MemcacheInstance_MaintenancePolicy_WeeklyMaintenanceWindow {
     #[doc = "Set the field `start_time`.\n"]
     pub fn set_start_time(
         mut self,
@@ -947,8 +1029,7 @@ impl MemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<MemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTimeEl>,
+                        terrars::BlockAssignable<MemcacheInstance_MaintenancePolicy_WeeklyMaintenanceWindow_StartTime>,
                     >,
     ) -> Self {
         match v.into() {
@@ -963,8 +1044,8 @@ impl MemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowEl {
     }
 }
 
-impl terrars::ToListMappable for MemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowEl {
-    type O = terrars::BlockAssignable<MemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowEl>;
+impl terrars::ToListMappable for MemcacheInstance_MaintenancePolicy_WeeklyMaintenanceWindow {
+    type O = terrars::BlockAssignable<MemcacheInstance_MaintenancePolicy_WeeklyMaintenanceWindow>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -975,7 +1056,7 @@ impl terrars::ToListMappable for MemcacheInstanceMaintenancePolicyElWeeklyMainte
     }
 }
 
-pub struct BuildMemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowEl {
+pub struct BuildMemcacheInstance_MaintenancePolicy_WeeklyMaintenanceWindow {
     #[doc =
         "Required. The day of week that maintenance updates occur.\n- DAY_OF_WEEK_UNSPECIFIED: The day of the week is unspecified.\n- MONDAY: Monday\n- TUESDAY: Tuesday\n- WEDNESDAY: Wednesday\n- THURSDAY: Thursday\n- FRIDAY: Friday\n- SATURDAY: Saturday\n- SUNDAY: Sunday Possible values: [\"DAY_OF_WEEK_UNSPECIFIED\", \"MONDAY\", \"TUESDAY\", \"WEDNESDAY\", \"THURSDAY\", \"FRIDAY\", \"SATURDAY\", \"SUNDAY\"]"]
     pub day: terrars::PrimField<std::string::String>,
@@ -984,9 +1065,9 @@ pub struct BuildMemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowEl {
     pub duration: terrars::PrimField<std::string::String>,
 }
 
-impl BuildMemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowEl {
-    pub fn build(self) -> MemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowEl {
-        MemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowEl {
+impl BuildMemcacheInstance_MaintenancePolicy_WeeklyMaintenanceWindow {
+    pub fn build(self) -> MemcacheInstance_MaintenancePolicy_WeeklyMaintenanceWindow {
+        MemcacheInstance_MaintenancePolicy_WeeklyMaintenanceWindow {
             day: self.day,
             duration: self.duration,
             start_time: core::default::Default::default(),
@@ -995,24 +1076,26 @@ impl BuildMemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowEl {
     }
 }
 
-pub struct MemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowElRef {
+#[allow(dead_code)]
+pub struct MemcacheInstance_MaintenancePolicy_WeeklyMaintenanceWindowRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowElRef {
+impl terrars::Ref for MemcacheInstance_MaintenancePolicy_WeeklyMaintenanceWindowRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> MemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowElRef {
-        MemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowElRef {
+    ) -> MemcacheInstance_MaintenancePolicy_WeeklyMaintenanceWindowRef {
+        MemcacheInstance_MaintenancePolicy_WeeklyMaintenanceWindowRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowElRef {
+impl MemcacheInstance_MaintenancePolicy_WeeklyMaintenanceWindowRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1032,30 +1115,30 @@ impl MemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowElRef {
     #[doc = "Get a reference to the value of field `start_time` after provisioning.\n"]
     pub fn start_time(
         &self,
-    ) -> terrars::ListRef<MemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTimeElRef> {
+    ) -> terrars::ListRef<MemcacheInstance_MaintenancePolicy_WeeklyMaintenanceWindow_StartTimeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.start_time", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct MemcacheInstanceMaintenancePolicyElDynamic {
+struct MemcacheInstance_MaintenancePolicyDynamic {
     weekly_maintenance_window: std
     ::option
-    ::Option<terrars::DynamicBlock<MemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowEl>>,
+    ::Option<terrars::DynamicBlock<MemcacheInstance_MaintenancePolicy_WeeklyMaintenanceWindow>>,
 }
 
 #[derive(Serialize)]
-pub struct MemcacheInstanceMaintenancePolicyEl {
+pub struct MemcacheInstance_MaintenancePolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     weekly_maintenance_window: std
     ::option
-    ::Option<std::vec::Vec<MemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowEl>>,
-    dynamic: MemcacheInstanceMaintenancePolicyElDynamic,
+    ::Option<std::vec::Vec<MemcacheInstance_MaintenancePolicy_WeeklyMaintenanceWindow>>,
+    dynamic: MemcacheInstance_MaintenancePolicyDynamic,
 }
 
-impl MemcacheInstanceMaintenancePolicyEl {
+impl MemcacheInstance_MaintenancePolicy {
     #[doc =
         "Set the field `description`.\nOptional. Description of what this policy is for.\nCreate/Update methods return INVALID_ARGUMENT if the\nlength is greater than 512."]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1071,7 +1154,7 @@ impl MemcacheInstanceMaintenancePolicyEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<MemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowEl>>,
+                    ::Into<terrars::BlockAssignable<MemcacheInstance_MaintenancePolicy_WeeklyMaintenanceWindow>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1085,8 +1168,8 @@ impl MemcacheInstanceMaintenancePolicyEl {
     }
 }
 
-impl terrars::ToListMappable for MemcacheInstanceMaintenancePolicyEl {
-    type O = terrars::BlockAssignable<MemcacheInstanceMaintenancePolicyEl>;
+impl terrars::ToListMappable for MemcacheInstance_MaintenancePolicy {
+    type O = terrars::BlockAssignable<MemcacheInstance_MaintenancePolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1097,11 +1180,11 @@ impl terrars::ToListMappable for MemcacheInstanceMaintenancePolicyEl {
     }
 }
 
-pub struct BuildMemcacheInstanceMaintenancePolicyEl {}
+pub struct BuildMemcacheInstance_MaintenancePolicy {}
 
-impl BuildMemcacheInstanceMaintenancePolicyEl {
-    pub fn build(self) -> MemcacheInstanceMaintenancePolicyEl {
-        MemcacheInstanceMaintenancePolicyEl {
+impl BuildMemcacheInstance_MaintenancePolicy {
+    pub fn build(self) -> MemcacheInstance_MaintenancePolicy {
+        MemcacheInstance_MaintenancePolicy {
             description: core::default::Default::default(),
             weekly_maintenance_window: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1109,21 +1192,23 @@ impl BuildMemcacheInstanceMaintenancePolicyEl {
     }
 }
 
-pub struct MemcacheInstanceMaintenancePolicyElRef {
+#[allow(dead_code)]
+pub struct MemcacheInstance_MaintenancePolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MemcacheInstanceMaintenancePolicyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MemcacheInstanceMaintenancePolicyElRef {
-        MemcacheInstanceMaintenancePolicyElRef {
+impl terrars::Ref for MemcacheInstance_MaintenancePolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MemcacheInstance_MaintenancePolicyRef {
+        MemcacheInstance_MaintenancePolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MemcacheInstanceMaintenancePolicyElRef {
+impl MemcacheInstance_MaintenancePolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1149,18 +1234,18 @@ impl MemcacheInstanceMaintenancePolicyElRef {
     #[doc = "Get a reference to the value of field `weekly_maintenance_window` after provisioning.\n"]
     pub fn weekly_maintenance_window(
         &self,
-    ) -> terrars::ListRef<MemcacheInstanceMaintenancePolicyElWeeklyMaintenanceWindowElRef> {
+    ) -> terrars::ListRef<MemcacheInstance_MaintenancePolicy_WeeklyMaintenanceWindowRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.weekly_maintenance_window", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct MemcacheInstanceMemcacheParametersEl {
+pub struct MemcacheInstance_MemcacheParameters {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     params: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
-impl MemcacheInstanceMemcacheParametersEl {
+impl MemcacheInstance_MemcacheParameters {
     #[doc = "Set the field `params`.\nUser-defined set of parameters to use in the memcache process."]
     pub fn set_params(
         mut self,
@@ -1171,8 +1256,8 @@ impl MemcacheInstanceMemcacheParametersEl {
     }
 }
 
-impl terrars::ToListMappable for MemcacheInstanceMemcacheParametersEl {
-    type O = terrars::BlockAssignable<MemcacheInstanceMemcacheParametersEl>;
+impl terrars::ToListMappable for MemcacheInstance_MemcacheParameters {
+    type O = terrars::BlockAssignable<MemcacheInstance_MemcacheParameters>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1183,29 +1268,31 @@ impl terrars::ToListMappable for MemcacheInstanceMemcacheParametersEl {
     }
 }
 
-pub struct BuildMemcacheInstanceMemcacheParametersEl {}
+pub struct BuildMemcacheInstance_MemcacheParameters {}
 
-impl BuildMemcacheInstanceMemcacheParametersEl {
-    pub fn build(self) -> MemcacheInstanceMemcacheParametersEl {
-        MemcacheInstanceMemcacheParametersEl { params: core::default::Default::default() }
+impl BuildMemcacheInstance_MemcacheParameters {
+    pub fn build(self) -> MemcacheInstance_MemcacheParameters {
+        MemcacheInstance_MemcacheParameters { params: core::default::Default::default() }
     }
 }
 
-pub struct MemcacheInstanceMemcacheParametersElRef {
+#[allow(dead_code)]
+pub struct MemcacheInstance_MemcacheParametersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MemcacheInstanceMemcacheParametersElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MemcacheInstanceMemcacheParametersElRef {
-        MemcacheInstanceMemcacheParametersElRef {
+impl terrars::Ref for MemcacheInstance_MemcacheParametersRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MemcacheInstance_MemcacheParametersRef {
+        MemcacheInstance_MemcacheParametersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MemcacheInstanceMemcacheParametersElRef {
+impl MemcacheInstance_MemcacheParametersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1224,15 +1311,15 @@ impl MemcacheInstanceMemcacheParametersElRef {
 }
 
 #[derive(Serialize)]
-pub struct MemcacheInstanceNodeConfigEl {
+pub struct MemcacheInstance_NodeConfig {
     cpu_count: terrars::PrimField<f64>,
     memory_size_mb: terrars::PrimField<f64>,
 }
 
-impl MemcacheInstanceNodeConfigEl { }
+impl MemcacheInstance_NodeConfig { }
 
-impl terrars::ToListMappable for MemcacheInstanceNodeConfigEl {
-    type O = terrars::BlockAssignable<MemcacheInstanceNodeConfigEl>;
+impl terrars::ToListMappable for MemcacheInstance_NodeConfig {
+    type O = terrars::BlockAssignable<MemcacheInstance_NodeConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1243,37 +1330,39 @@ impl terrars::ToListMappable for MemcacheInstanceNodeConfigEl {
     }
 }
 
-pub struct BuildMemcacheInstanceNodeConfigEl {
+pub struct BuildMemcacheInstance_NodeConfig {
     #[doc = "Number of CPUs per node."]
     pub cpu_count: terrars::PrimField<f64>,
     #[doc = "Memory size in Mebibytes for each memcache node."]
     pub memory_size_mb: terrars::PrimField<f64>,
 }
 
-impl BuildMemcacheInstanceNodeConfigEl {
-    pub fn build(self) -> MemcacheInstanceNodeConfigEl {
-        MemcacheInstanceNodeConfigEl {
+impl BuildMemcacheInstance_NodeConfig {
+    pub fn build(self) -> MemcacheInstance_NodeConfig {
+        MemcacheInstance_NodeConfig {
             cpu_count: self.cpu_count,
             memory_size_mb: self.memory_size_mb,
         }
     }
 }
 
-pub struct MemcacheInstanceNodeConfigElRef {
+#[allow(dead_code)]
+pub struct MemcacheInstance_NodeConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MemcacheInstanceNodeConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MemcacheInstanceNodeConfigElRef {
-        MemcacheInstanceNodeConfigElRef {
+impl terrars::Ref for MemcacheInstance_NodeConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MemcacheInstance_NodeConfigRef {
+        MemcacheInstance_NodeConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MemcacheInstanceNodeConfigElRef {
+impl MemcacheInstance_NodeConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1291,7 +1380,7 @@ impl MemcacheInstanceNodeConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct MemcacheInstanceTimeoutsEl {
+pub struct MemcacheInstance_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1300,7 +1389,7 @@ pub struct MemcacheInstanceTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl MemcacheInstanceTimeoutsEl {
+impl MemcacheInstance_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1320,8 +1409,8 @@ impl MemcacheInstanceTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for MemcacheInstanceTimeoutsEl {
-    type O = terrars::BlockAssignable<MemcacheInstanceTimeoutsEl>;
+impl terrars::ToListMappable for MemcacheInstance_Timeouts {
+    type O = terrars::BlockAssignable<MemcacheInstance_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1332,11 +1421,11 @@ impl terrars::ToListMappable for MemcacheInstanceTimeoutsEl {
     }
 }
 
-pub struct BuildMemcacheInstanceTimeoutsEl {}
+pub struct BuildMemcacheInstance_Timeouts {}
 
-impl BuildMemcacheInstanceTimeoutsEl {
-    pub fn build(self) -> MemcacheInstanceTimeoutsEl {
-        MemcacheInstanceTimeoutsEl {
+impl BuildMemcacheInstance_Timeouts {
+    pub fn build(self) -> MemcacheInstance_Timeouts {
+        MemcacheInstance_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1344,21 +1433,23 @@ impl BuildMemcacheInstanceTimeoutsEl {
     }
 }
 
-pub struct MemcacheInstanceTimeoutsElRef {
+#[allow(dead_code)]
+pub struct MemcacheInstance_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MemcacheInstanceTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MemcacheInstanceTimeoutsElRef {
-        MemcacheInstanceTimeoutsElRef {
+impl terrars::Ref for MemcacheInstance_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MemcacheInstance_TimeoutsRef {
+        MemcacheInstance_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MemcacheInstanceTimeoutsElRef {
+impl MemcacheInstance_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1377,11 +1468,4 @@ impl MemcacheInstanceTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct MemcacheInstanceDynamic {
-    maintenance_policy: std::option::Option<terrars::DynamicBlock<MemcacheInstanceMaintenancePolicyEl>>,
-    memcache_parameters: std::option::Option<terrars::DynamicBlock<MemcacheInstanceMemcacheParametersEl>>,
-    node_config: std::option::Option<terrars::DynamicBlock<MemcacheInstanceNodeConfigEl>>,
 }

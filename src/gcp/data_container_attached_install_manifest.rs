@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataContainerAttachedInstallManifestData {
+struct DataContainerAttachedInstallManifestData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -27,7 +29,7 @@ struct DataContainerAttachedInstallManifestData {
 struct DataContainerAttachedInstallManifest_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataContainerAttachedInstallManifestData>,
+    data: std::cell::RefCell<DataContainerAttachedInstallManifestData_>,
 }
 
 #[derive(Clone)]
@@ -157,7 +159,7 @@ impl BuildDataContainerAttachedInstallManifest {
         let out = DataContainerAttachedInstallManifest(std::rc::Rc::new(DataContainerAttachedInstallManifest_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataContainerAttachedInstallManifestData {
+            data: std::cell::RefCell::new(DataContainerAttachedInstallManifestData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),

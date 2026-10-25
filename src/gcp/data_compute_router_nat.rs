@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataComputeRouterNatData {
+struct DataComputeRouterNatData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -29,7 +31,7 @@ struct DataComputeRouterNatData {
 struct DataComputeRouterNat_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataComputeRouterNatData>,
+    data: std::cell::RefCell<DataComputeRouterNatData_>,
 }
 
 #[derive(Clone)]
@@ -93,6 +95,18 @@ impl DataComputeRouterNat {
     }
 
     #[doc =
+        "Get a reference to the value of field `auto_network_tier` after provisioning.\nThe network tier to use when automatically reserving NAT IP addresses.\nMust be one of: PREMIUM, STANDARD. If not specified, then the current\nproject-level default tier is used. Possible values: [\"PREMIUM\", \"STANDARD\"]"]
+    pub fn auto_network_tier(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auto_network_tier", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `drain_nat_ips` after provisioning.\nA list of URLs of the IP resources to be drained. These IPs must be\nvalid static external IPs that have been assigned to the NAT."]
     pub fn drain_nat_ips(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.drain_nat_ips", self.extract_ref()))
@@ -108,12 +122,18 @@ impl DataComputeRouterNat {
     }
 
     #[doc =
-        "Get a reference to the value of field `enable_endpoint_independent_mapping` after provisioning.\nEnable endpoint independent mapping.\nFor more information see the [official documentation](https://cloud.google.com/nat/docs/overview#specs-rfcs)."]
+        "Get a reference to the value of field `enable_endpoint_independent_mapping` after provisioning.\nEnable endpoint independent mapping.\nFor more information see the [official documentation](https://docs.cloud.google.com/nat/docs/public-nat#specs-rfcs)."]
     pub fn enable_endpoint_independent_mapping(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(
             self.shared().clone(),
             format!("{}.enable_endpoint_independent_mapping", self.extract_ref()),
         )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `endpoint_types` after provisioning.\nSpecifies the endpoint Types supported by the NAT Gateway.\nSupported values include:\n      'ENDPOINT_TYPE_VM', 'ENDPOINT_TYPE_SWG',\n      'ENDPOINT_TYPE_MANAGED_PROXY_LB'."]
+    pub fn endpoint_types(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.endpoint_types", self.extract_ref()))
     }
 
     #[doc =
@@ -127,8 +147,14 @@ impl DataComputeRouterNat {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `initial_nat_ips` after provisioning.\nSelf-links of NAT IPs to be used as initial value for creation alongside a RouterNatAddress resource.\nConflicts with natIps and drainNatIps. Only valid if natIpAllocateOption is set to MANUAL_ONLY."]
+    pub fn initial_nat_ips(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.initial_nat_ips", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `log_config` after provisioning.\nConfiguration for logging on NAT"]
-    pub fn log_config(&self) -> terrars::ListRef<DataComputeRouterNatLogConfigElRef> {
+    pub fn log_config(&self) -> terrars::ListRef<DataComputeRouterNat_LogConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.log_config", self.extract_ref()))
     }
 
@@ -139,7 +165,7 @@ impl DataComputeRouterNat {
     }
 
     #[doc =
-        "Get a reference to the value of field `min_ports_per_vm` after provisioning.\nMinimum number of ports allocated to a VM from this NAT."]
+        "Get a reference to the value of field `min_ports_per_vm` after provisioning.\nMinimum number of ports allocated to a VM from this NAT. Defaults to 64 for static port allocation and 32 dynamic port allocation if not set."]
     pub fn min_ports_per_vm(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_ports_per_vm", self.extract_ref()))
     }
@@ -151,13 +177,19 @@ impl DataComputeRouterNat {
     }
 
     #[doc =
+        "Get a reference to the value of field `nat64_subnetwork` after provisioning.\nOne or more subnetwork NAT configurations whose traffic should be translated by NAT64 Gateway.\nOnly used if 'source_subnetwork_ip_ranges_to_nat64' is set to 'LIST_OF_IPV6_SUBNETWORKS'"]
+    pub fn nat64_subnetwork(&self) -> terrars::SetRef<DataComputeRouterNat_Nat64SubnetworkRef> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.nat64_subnetwork", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `nat_ip_allocate_option` after provisioning.\nHow external IPs should be allocated for this NAT. Valid values are\n'AUTO_ONLY' for only allowing NAT IPs allocated by Google Cloud\nPlatform, or 'MANUAL_ONLY' for only user-allocated NAT IP addresses. Possible values: [\"MANUAL_ONLY\", \"AUTO_ONLY\"]"]
     pub fn nat_ip_allocate_option(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.nat_ip_allocate_option", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `nat_ips` after provisioning.\nSelf-links of NAT IPs. Only valid if natIpAllocateOption\nis set to MANUAL_ONLY."]
+        "Get a reference to the value of field `nat_ips` after provisioning.\nSelf-links of NAT IPs. Only valid if natIpAllocateOption\nis set to MANUAL_ONLY.\nIf this field is used alongside with a count created list of address resources 'google_compute_address.foobar.*.self_link',\nthe access level resource for the address resource must have a 'lifecycle' block with 'create_before_destroy = true' so\nthe number of resources can be increased/decreased without triggering the 'resourceInUseByAnotherResource' error."]
     pub fn nat_ips(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.nat_ips", self.extract_ref()))
     }
@@ -181,7 +213,7 @@ impl DataComputeRouterNat {
 
     #[doc =
         "Get a reference to the value of field `rules` after provisioning.\nA list of rules associated with this NAT."]
-    pub fn rules(&self) -> terrars::SetRef<DataComputeRouterNatRulesElRef> {
+    pub fn rules(&self) -> terrars::SetRef<DataComputeRouterNat_RulesRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.rules", self.extract_ref()))
     }
 
@@ -195,8 +227,17 @@ impl DataComputeRouterNat {
     }
 
     #[doc =
+        "Get a reference to the value of field `source_subnetwork_ip_ranges_to_nat64` after provisioning.\nSpecify the Nat option for NAT64, which can take one of the following values:\nALL_IPV6_SUBNETWORKS: All of the IP ranges in every Subnetwork are allowed to Nat.\nLIST_OF_IPV6_SUBNETWORKS: A list of Subnetworks are allowed to Nat (specified in the field nat64Subnetwork below).\nNote that if this field contains NAT64_ALL_V6_SUBNETWORKS no other Router.Nat section in this region can also enable NAT64 for any Subnetworks in this network.\nOther Router.Nat sections can still be present to enable NAT44 only. Possible values: [\"ALL_IPV6_SUBNETWORKS\", \"LIST_OF_IPV6_SUBNETWORKS\"]"]
+    pub fn source_subnetwork_ip_ranges_to_nat64(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.source_subnetwork_ip_ranges_to_nat64", self.extract_ref()),
+        )
+    }
+
+    #[doc =
         "Get a reference to the value of field `subnetwork` after provisioning.\nOne or more subnetwork NAT configurations. Only used if\n'source_subnetwork_ip_ranges_to_nat' is set to 'LIST_OF_SUBNETWORKS'"]
-    pub fn subnetwork(&self) -> terrars::SetRef<DataComputeRouterNatSubnetworkElRef> {
+    pub fn subnetwork(&self) -> terrars::SetRef<DataComputeRouterNat_SubnetworkRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.subnetwork", self.extract_ref()))
     }
 
@@ -222,6 +263,12 @@ impl DataComputeRouterNat {
             self.shared().clone(),
             format!("{}.tcp_transitory_idle_timeout_sec", self.extract_ref()),
         )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `type_` after provisioning.\nIndicates whether this NAT is used for public or private IP translation.\nIf unspecified, it defaults to PUBLIC.\nIf 'PUBLIC' NAT used for public IP translation.\nIf 'PRIVATE' NAT used for private IP translation. Default value: \"PUBLIC\" Possible values: [\"PUBLIC\", \"PRIVATE\"]"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
     }
 
     #[doc =
@@ -275,7 +322,7 @@ impl BuildDataComputeRouterNat {
         let out = DataComputeRouterNat(std::rc::Rc::new(DataComputeRouterNat_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataComputeRouterNatData {
+            data: std::cell::RefCell::new(DataComputeRouterNatData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -316,6 +363,18 @@ impl DataComputeRouterNatRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `auto_network_tier` after provisioning.\nThe network tier to use when automatically reserving NAT IP addresses.\nMust be one of: PREMIUM, STANDARD. If not specified, then the current\nproject-level default tier is used. Possible values: [\"PREMIUM\", \"STANDARD\"]"]
+    pub fn auto_network_tier(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auto_network_tier", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `drain_nat_ips` after provisioning.\nA list of URLs of the IP resources to be drained. These IPs must be\nvalid static external IPs that have been assigned to the NAT."]
     pub fn drain_nat_ips(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.drain_nat_ips", self.extract_ref()))
@@ -331,12 +390,18 @@ impl DataComputeRouterNatRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `enable_endpoint_independent_mapping` after provisioning.\nEnable endpoint independent mapping.\nFor more information see the [official documentation](https://cloud.google.com/nat/docs/overview#specs-rfcs)."]
+        "Get a reference to the value of field `enable_endpoint_independent_mapping` after provisioning.\nEnable endpoint independent mapping.\nFor more information see the [official documentation](https://docs.cloud.google.com/nat/docs/public-nat#specs-rfcs)."]
     pub fn enable_endpoint_independent_mapping(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(
             self.shared().clone(),
             format!("{}.enable_endpoint_independent_mapping", self.extract_ref()),
         )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `endpoint_types` after provisioning.\nSpecifies the endpoint Types supported by the NAT Gateway.\nSupported values include:\n      'ENDPOINT_TYPE_VM', 'ENDPOINT_TYPE_SWG',\n      'ENDPOINT_TYPE_MANAGED_PROXY_LB'."]
+    pub fn endpoint_types(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.endpoint_types", self.extract_ref()))
     }
 
     #[doc =
@@ -350,8 +415,14 @@ impl DataComputeRouterNatRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `initial_nat_ips` after provisioning.\nSelf-links of NAT IPs to be used as initial value for creation alongside a RouterNatAddress resource.\nConflicts with natIps and drainNatIps. Only valid if natIpAllocateOption is set to MANUAL_ONLY."]
+    pub fn initial_nat_ips(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.initial_nat_ips", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `log_config` after provisioning.\nConfiguration for logging on NAT"]
-    pub fn log_config(&self) -> terrars::ListRef<DataComputeRouterNatLogConfigElRef> {
+    pub fn log_config(&self) -> terrars::ListRef<DataComputeRouterNat_LogConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.log_config", self.extract_ref()))
     }
 
@@ -362,7 +433,7 @@ impl DataComputeRouterNatRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `min_ports_per_vm` after provisioning.\nMinimum number of ports allocated to a VM from this NAT."]
+        "Get a reference to the value of field `min_ports_per_vm` after provisioning.\nMinimum number of ports allocated to a VM from this NAT. Defaults to 64 for static port allocation and 32 dynamic port allocation if not set."]
     pub fn min_ports_per_vm(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_ports_per_vm", self.extract_ref()))
     }
@@ -374,13 +445,19 @@ impl DataComputeRouterNatRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `nat64_subnetwork` after provisioning.\nOne or more subnetwork NAT configurations whose traffic should be translated by NAT64 Gateway.\nOnly used if 'source_subnetwork_ip_ranges_to_nat64' is set to 'LIST_OF_IPV6_SUBNETWORKS'"]
+    pub fn nat64_subnetwork(&self) -> terrars::SetRef<DataComputeRouterNat_Nat64SubnetworkRef> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.nat64_subnetwork", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `nat_ip_allocate_option` after provisioning.\nHow external IPs should be allocated for this NAT. Valid values are\n'AUTO_ONLY' for only allowing NAT IPs allocated by Google Cloud\nPlatform, or 'MANUAL_ONLY' for only user-allocated NAT IP addresses. Possible values: [\"MANUAL_ONLY\", \"AUTO_ONLY\"]"]
     pub fn nat_ip_allocate_option(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.nat_ip_allocate_option", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `nat_ips` after provisioning.\nSelf-links of NAT IPs. Only valid if natIpAllocateOption\nis set to MANUAL_ONLY."]
+        "Get a reference to the value of field `nat_ips` after provisioning.\nSelf-links of NAT IPs. Only valid if natIpAllocateOption\nis set to MANUAL_ONLY.\nIf this field is used alongside with a count created list of address resources 'google_compute_address.foobar.*.self_link',\nthe access level resource for the address resource must have a 'lifecycle' block with 'create_before_destroy = true' so\nthe number of resources can be increased/decreased without triggering the 'resourceInUseByAnotherResource' error."]
     pub fn nat_ips(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.nat_ips", self.extract_ref()))
     }
@@ -404,7 +481,7 @@ impl DataComputeRouterNatRef {
 
     #[doc =
         "Get a reference to the value of field `rules` after provisioning.\nA list of rules associated with this NAT."]
-    pub fn rules(&self) -> terrars::SetRef<DataComputeRouterNatRulesElRef> {
+    pub fn rules(&self) -> terrars::SetRef<DataComputeRouterNat_RulesRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.rules", self.extract_ref()))
     }
 
@@ -418,8 +495,17 @@ impl DataComputeRouterNatRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `source_subnetwork_ip_ranges_to_nat64` after provisioning.\nSpecify the Nat option for NAT64, which can take one of the following values:\nALL_IPV6_SUBNETWORKS: All of the IP ranges in every Subnetwork are allowed to Nat.\nLIST_OF_IPV6_SUBNETWORKS: A list of Subnetworks are allowed to Nat (specified in the field nat64Subnetwork below).\nNote that if this field contains NAT64_ALL_V6_SUBNETWORKS no other Router.Nat section in this region can also enable NAT64 for any Subnetworks in this network.\nOther Router.Nat sections can still be present to enable NAT44 only. Possible values: [\"ALL_IPV6_SUBNETWORKS\", \"LIST_OF_IPV6_SUBNETWORKS\"]"]
+    pub fn source_subnetwork_ip_ranges_to_nat64(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.source_subnetwork_ip_ranges_to_nat64", self.extract_ref()),
+        )
+    }
+
+    #[doc =
         "Get a reference to the value of field `subnetwork` after provisioning.\nOne or more subnetwork NAT configurations. Only used if\n'source_subnetwork_ip_ranges_to_nat' is set to 'LIST_OF_SUBNETWORKS'"]
-    pub fn subnetwork(&self) -> terrars::SetRef<DataComputeRouterNatSubnetworkElRef> {
+    pub fn subnetwork(&self) -> terrars::SetRef<DataComputeRouterNat_SubnetworkRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.subnetwork", self.extract_ref()))
     }
 
@@ -448,6 +534,12 @@ impl DataComputeRouterNatRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `type_` after provisioning.\nIndicates whether this NAT is used for public or private IP translation.\nIf unspecified, it defaults to PUBLIC.\nIf 'PUBLIC' NAT used for public IP translation.\nIf 'PRIVATE' NAT used for private IP translation. Default value: \"PUBLIC\" Possible values: [\"PUBLIC\", \"PRIVATE\"]"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `udp_idle_timeout_sec` after provisioning.\nTimeout (in seconds) for UDP connections. Defaults to 30s if not set."]
     pub fn udp_idle_timeout_sec(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.udp_idle_timeout_sec", self.extract_ref()))
@@ -455,14 +547,14 @@ impl DataComputeRouterNatRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComputeRouterNatLogConfigEl {
+pub struct DataComputeRouterNat_LogConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     filter: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataComputeRouterNatLogConfigEl {
+impl DataComputeRouterNat_LogConfig {
     #[doc = "Set the field `enable`.\n"]
     pub fn set_enable(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enable = std::option::Option::Some(v.into());
@@ -476,8 +568,8 @@ impl DataComputeRouterNatLogConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeRouterNatLogConfigEl {
-    type O = terrars::BlockAssignable<DataComputeRouterNatLogConfigEl>;
+impl terrars::ToListMappable for DataComputeRouterNat_LogConfig {
+    type O = terrars::BlockAssignable<DataComputeRouterNat_LogConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -488,32 +580,34 @@ impl terrars::ToListMappable for DataComputeRouterNatLogConfigEl {
     }
 }
 
-pub struct BuildDataComputeRouterNatLogConfigEl {}
+pub struct BuildDataComputeRouterNat_LogConfig {}
 
-impl BuildDataComputeRouterNatLogConfigEl {
-    pub fn build(self) -> DataComputeRouterNatLogConfigEl {
-        DataComputeRouterNatLogConfigEl {
+impl BuildDataComputeRouterNat_LogConfig {
+    pub fn build(self) -> DataComputeRouterNat_LogConfig {
+        DataComputeRouterNat_LogConfig {
             enable: core::default::Default::default(),
             filter: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataComputeRouterNatLogConfigElRef {
+#[allow(dead_code)]
+pub struct DataComputeRouterNat_LogConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeRouterNatLogConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeRouterNatLogConfigElRef {
-        DataComputeRouterNatLogConfigElRef {
+impl terrars::Ref for DataComputeRouterNat_LogConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeRouterNat_LogConfigRef {
+        DataComputeRouterNat_LogConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeRouterNatLogConfigElRef {
+impl DataComputeRouterNat_LogConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -530,20 +624,94 @@ impl DataComputeRouterNatLogConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComputeRouterNatRulesElActionEl {
+pub struct DataComputeRouterNat_Nat64Subnetwork {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataComputeRouterNat_Nat64Subnetwork {
+    #[doc = "Set the field `name`.\n"]
+    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.name = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataComputeRouterNat_Nat64Subnetwork {
+    type O = terrars::BlockAssignable<DataComputeRouterNat_Nat64Subnetwork>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataComputeRouterNat_Nat64Subnetwork {}
+
+impl BuildDataComputeRouterNat_Nat64Subnetwork {
+    pub fn build(self) -> DataComputeRouterNat_Nat64Subnetwork {
+        DataComputeRouterNat_Nat64Subnetwork { name: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataComputeRouterNat_Nat64SubnetworkRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataComputeRouterNat_Nat64SubnetworkRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeRouterNat_Nat64SubnetworkRef {
+        DataComputeRouterNat_Nat64SubnetworkRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataComputeRouterNat_Nat64SubnetworkRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataComputeRouterNat_Rules_Action {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     source_nat_active_ips: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source_nat_active_ranges: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     source_nat_drain_ips: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source_nat_drain_ranges: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DataComputeRouterNatRulesElActionEl {
+impl DataComputeRouterNat_Rules_Action {
     #[doc = "Set the field `source_nat_active_ips`.\n"]
     pub fn set_source_nat_active_ips(
         mut self,
         v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
     ) -> Self {
         self.source_nat_active_ips = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `source_nat_active_ranges`.\n"]
+    pub fn set_source_nat_active_ranges(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.source_nat_active_ranges = std::option::Option::Some(v.into());
         self
     }
 
@@ -555,10 +723,19 @@ impl DataComputeRouterNatRulesElActionEl {
         self.source_nat_drain_ips = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `source_nat_drain_ranges`.\n"]
+    pub fn set_source_nat_drain_ranges(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.source_nat_drain_ranges = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for DataComputeRouterNatRulesElActionEl {
-    type O = terrars::BlockAssignable<DataComputeRouterNatRulesElActionEl>;
+impl terrars::ToListMappable for DataComputeRouterNat_Rules_Action {
+    type O = terrars::BlockAssignable<DataComputeRouterNat_Rules_Action>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -569,32 +746,36 @@ impl terrars::ToListMappable for DataComputeRouterNatRulesElActionEl {
     }
 }
 
-pub struct BuildDataComputeRouterNatRulesElActionEl {}
+pub struct BuildDataComputeRouterNat_Rules_Action {}
 
-impl BuildDataComputeRouterNatRulesElActionEl {
-    pub fn build(self) -> DataComputeRouterNatRulesElActionEl {
-        DataComputeRouterNatRulesElActionEl {
+impl BuildDataComputeRouterNat_Rules_Action {
+    pub fn build(self) -> DataComputeRouterNat_Rules_Action {
+        DataComputeRouterNat_Rules_Action {
             source_nat_active_ips: core::default::Default::default(),
+            source_nat_active_ranges: core::default::Default::default(),
             source_nat_drain_ips: core::default::Default::default(),
+            source_nat_drain_ranges: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataComputeRouterNatRulesElActionElRef {
+#[allow(dead_code)]
+pub struct DataComputeRouterNat_Rules_ActionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeRouterNatRulesElActionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeRouterNatRulesElActionElRef {
-        DataComputeRouterNatRulesElActionElRef {
+impl terrars::Ref for DataComputeRouterNat_Rules_ActionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeRouterNat_Rules_ActionRef {
+        DataComputeRouterNat_Rules_ActionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeRouterNatRulesElActionElRef {
+impl DataComputeRouterNat_Rules_ActionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -604,16 +785,26 @@ impl DataComputeRouterNatRulesElActionElRef {
         terrars::SetRef::new(self.shared().clone(), format!("{}.source_nat_active_ips", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `source_nat_active_ranges` after provisioning.\n"]
+    pub fn source_nat_active_ranges(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.source_nat_active_ranges", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `source_nat_drain_ips` after provisioning.\n"]
     pub fn source_nat_drain_ips(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.source_nat_drain_ips", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `source_nat_drain_ranges` after provisioning.\n"]
+    pub fn source_nat_drain_ranges(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.source_nat_drain_ranges", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct DataComputeRouterNatRulesEl {
+pub struct DataComputeRouterNat_Rules {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    action: std::option::Option<terrars::ListField<DataComputeRouterNatRulesElActionEl>>,
+    action: std::option::Option<terrars::ListField<DataComputeRouterNat_Rules_Action>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "match", skip_serializing_if = "std::option::Option::is_none")]
@@ -622,11 +813,11 @@ pub struct DataComputeRouterNatRulesEl {
     rule_number: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataComputeRouterNatRulesEl {
+impl DataComputeRouterNat_Rules {
     #[doc = "Set the field `action`.\n"]
     pub fn set_action(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataComputeRouterNatRulesElActionEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataComputeRouterNat_Rules_Action>>,
     ) -> Self {
         self.action = std::option::Option::Some(v.into());
         self
@@ -651,8 +842,8 @@ impl DataComputeRouterNatRulesEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeRouterNatRulesEl {
-    type O = terrars::BlockAssignable<DataComputeRouterNatRulesEl>;
+impl terrars::ToListMappable for DataComputeRouterNat_Rules {
+    type O = terrars::BlockAssignable<DataComputeRouterNat_Rules>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -663,11 +854,11 @@ impl terrars::ToListMappable for DataComputeRouterNatRulesEl {
     }
 }
 
-pub struct BuildDataComputeRouterNatRulesEl {}
+pub struct BuildDataComputeRouterNat_Rules {}
 
-impl BuildDataComputeRouterNatRulesEl {
-    pub fn build(self) -> DataComputeRouterNatRulesEl {
-        DataComputeRouterNatRulesEl {
+impl BuildDataComputeRouterNat_Rules {
+    pub fn build(self) -> DataComputeRouterNat_Rules {
+        DataComputeRouterNat_Rules {
             action: core::default::Default::default(),
             description: core::default::Default::default(),
             match_: core::default::Default::default(),
@@ -676,27 +867,29 @@ impl BuildDataComputeRouterNatRulesEl {
     }
 }
 
-pub struct DataComputeRouterNatRulesElRef {
+#[allow(dead_code)]
+pub struct DataComputeRouterNat_RulesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeRouterNatRulesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeRouterNatRulesElRef {
-        DataComputeRouterNatRulesElRef {
+impl terrars::Ref for DataComputeRouterNat_RulesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeRouterNat_RulesRef {
+        DataComputeRouterNat_RulesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeRouterNatRulesElRef {
+impl DataComputeRouterNat_RulesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `action` after provisioning.\n"]
-    pub fn action(&self) -> terrars::ListRef<DataComputeRouterNatRulesElActionElRef> {
+    pub fn action(&self) -> terrars::ListRef<DataComputeRouterNat_Rules_ActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.action", self.base))
     }
 
@@ -717,7 +910,7 @@ impl DataComputeRouterNatRulesElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComputeRouterNatSubnetworkEl {
+pub struct DataComputeRouterNat_Subnetwork {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -726,7 +919,7 @@ pub struct DataComputeRouterNatSubnetworkEl {
     source_ip_ranges_to_nat: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DataComputeRouterNatSubnetworkEl {
+impl DataComputeRouterNat_Subnetwork {
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
@@ -752,8 +945,8 @@ impl DataComputeRouterNatSubnetworkEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeRouterNatSubnetworkEl {
-    type O = terrars::BlockAssignable<DataComputeRouterNatSubnetworkEl>;
+impl terrars::ToListMappable for DataComputeRouterNat_Subnetwork {
+    type O = terrars::BlockAssignable<DataComputeRouterNat_Subnetwork>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -764,11 +957,11 @@ impl terrars::ToListMappable for DataComputeRouterNatSubnetworkEl {
     }
 }
 
-pub struct BuildDataComputeRouterNatSubnetworkEl {}
+pub struct BuildDataComputeRouterNat_Subnetwork {}
 
-impl BuildDataComputeRouterNatSubnetworkEl {
-    pub fn build(self) -> DataComputeRouterNatSubnetworkEl {
-        DataComputeRouterNatSubnetworkEl {
+impl BuildDataComputeRouterNat_Subnetwork {
+    pub fn build(self) -> DataComputeRouterNat_Subnetwork {
+        DataComputeRouterNat_Subnetwork {
             name: core::default::Default::default(),
             secondary_ip_range_names: core::default::Default::default(),
             source_ip_ranges_to_nat: core::default::Default::default(),
@@ -776,21 +969,23 @@ impl BuildDataComputeRouterNatSubnetworkEl {
     }
 }
 
-pub struct DataComputeRouterNatSubnetworkElRef {
+#[allow(dead_code)]
+pub struct DataComputeRouterNat_SubnetworkRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeRouterNatSubnetworkElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeRouterNatSubnetworkElRef {
-        DataComputeRouterNatSubnetworkElRef {
+impl terrars::Ref for DataComputeRouterNat_SubnetworkRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeRouterNat_SubnetworkRef {
+        DataComputeRouterNat_SubnetworkRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeRouterNatSubnetworkElRef {
+impl DataComputeRouterNat_SubnetworkRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

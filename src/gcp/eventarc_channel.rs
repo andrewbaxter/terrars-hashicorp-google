@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct EventarcChannelData {
+struct EventarcChannelData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,7 +23,11 @@ struct EventarcChannelData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     crypto_key_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     location: terrars::PrimField<std::string::String>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -29,13 +35,13 @@ struct EventarcChannelData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     third_party_provider: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<EventarcChannelTimeoutsEl>,
+    timeouts: std::option::Option<EventarcChannel_Timeouts>,
 }
 
 struct EventarcChannel_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<EventarcChannelData>,
+    data: std::cell::RefCell<EventarcChannelData_>,
 }
 
 #[derive(Clone)]
@@ -136,9 +142,16 @@ impl EventarcChannel {
     }
 
     #[doc =
-        "Set the field `crypto_key_name`.\nOptional. Resource name of a KMS crypto key (managed by the user) used to encrypt/decrypt their event data. It must match the pattern `projects/*/locations/*/keyRings/*/cryptoKeys/*`."]
+        "Set the field `crypto_key_name`.\nResource name of a KMS crypto key (managed by the user) used to encrypt/decrypt their event data. It must match the pattern 'projects/*/locations/*/keyRings/*/cryptoKeys/*'."]
     pub fn set_crypto_key_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().crypto_key_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
         self
     }
 
@@ -148,45 +161,73 @@ impl EventarcChannel {
         self
     }
 
-    #[doc = "Set the field `project`.\nThe project for the resource"]
+    #[doc =
+        "Set the field `labels`.\nUser-defined labels for the channel.\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
+    pub fn set_labels(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().labels = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `project`.\n"]
     pub fn set_project(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().project = std::option::Option::Some(v.into());
         self
     }
 
     #[doc =
-        "Set the field `third_party_provider`.\nThe name of the event provider (e.g. Eventarc SaaS partner) associated with the channel. This provider will be granted permissions to publish events to the channel. Format: `projects/{project}/locations/{location}/providers/{provider_id}`."]
+        "Set the field `third_party_provider`.\nThe name of the event provider (e.g. Eventarc SaaS partner) associated with the channel. This provider will be granted permissions to publish events to the channel. Format: 'projects/{project}/locations/{location}/providers/{provider_id}'."]
     pub fn set_third_party_provider(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().third_party_provider = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<EventarcChannelTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<EventarcChannel_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
     #[doc =
-        "Get a reference to the value of field `activation_token` after provisioning.\nOutput only. The activation token for the channel. The token must be used by the provider to register the channel for publishing."]
+        "Get a reference to the value of field `activation_token` after provisioning.\nThe activation token for the channel. The token must be used by the provider to register the channel for publishing."]
     pub fn activation_token(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.activation_token", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `create_time` after provisioning.\nOutput only. The creation time."]
+    #[doc = "Get a reference to the value of field `create_time` after provisioning.\nThe creation time."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `crypto_key_name` after provisioning.\nOptional. Resource name of a KMS crypto key (managed by the user) used to encrypt/decrypt their event data. It must match the pattern `projects/*/locations/*/keyRings/*/cryptoKeys/*`."]
+        "Get a reference to the value of field `crypto_key_name` after provisioning.\nResource name of a KMS crypto key (managed by the user) used to encrypt/decrypt their event data. It must match the pattern 'projects/*/locations/*/keyRings/*/cryptoKeys/*'."]
     pub fn crypto_key_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.crypto_key_name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
+    pub fn effective_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `labels` after provisioning.\nUser-defined labels for the channel.\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
+    pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `location` after provisioning.\nThe location for the resource"]
@@ -195,49 +236,53 @@ impl EventarcChannel {
     }
 
     #[doc =
-        "Get a reference to the value of field `name` after provisioning.\nRequired. The resource name of the channel. Must be unique within the location on the project."]
+        "Get a reference to the value of field `name` after provisioning.\nThe resource name of the channel. Must be unique within the location on the project."]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `project` after provisioning.\nThe project for the resource"]
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
     pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `pubsub_topic` after provisioning.\nOutput only. The name of the Pub/Sub topic created and managed by Eventarc system as a transport for the event delivery. Format: `projects/{project}/topics/{topic_id}`."]
+        "Get a reference to the value of field `pubsub_topic` after provisioning.\nThe name of the Pub/Sub topic created and managed by Eventarc system as a transport for the event delivery. Format: 'projects/{project}/topics/{topic_id}'."]
     pub fn pubsub_topic(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.pubsub_topic", self.extract_ref()))
     }
 
-    #[doc =
-        "Get a reference to the value of field `state` after provisioning.\nOutput only. The state of a Channel. Possible values: STATE_UNSPECIFIED, PENDING, ACTIVE, INACTIVE"]
+    #[doc = "Get a reference to the value of field `state` after provisioning.\nThe state of a Channel."]
     pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `third_party_provider` after provisioning.\nThe name of the event provider (e.g. Eventarc SaaS partner) associated with the channel. This provider will be granted permissions to publish events to the channel. Format: `projects/{project}/locations/{location}/providers/{provider_id}`."]
+        "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
+    pub fn terraform_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `third_party_provider` after provisioning.\nThe name of the event provider (e.g. Eventarc SaaS partner) associated with the channel. This provider will be granted permissions to publish events to the channel. Format: 'projects/{project}/locations/{location}/providers/{provider_id}'."]
     pub fn third_party_provider(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.third_party_provider", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `uid` after provisioning.\nOutput only. Server assigned unique identifier for the channel. The value is a UUID4 string and guaranteed to remain unchanged until the resource is deleted."]
+        "Get a reference to the value of field `uid` after provisioning.\nServer assigned unique identifier for the channel. The value is a UUID4 string and guaranteed to remain unchanged until the resource is deleted."]
     pub fn uid(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.uid", self.extract_ref()))
     }
 
-    #[doc =
-        "Get a reference to the value of field `update_time` after provisioning.\nOutput only. The last-modified time."]
+    #[doc = "Get a reference to the value of field `update_time` after provisioning.\nThe last-modified time."]
     pub fn update_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update_time", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> EventarcChannelTimeoutsElRef {
-        EventarcChannelTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> EventarcChannel_TimeoutsRef {
+        EventarcChannel_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -276,7 +321,7 @@ pub struct BuildEventarcChannel {
     pub tf_id: std::string::String,
     #[doc = "The location for the resource"]
     pub location: terrars::PrimField<std::string::String>,
-    #[doc = "Required. The resource name of the channel. Must be unique within the location on the project."]
+    #[doc = "The resource name of the channel. Must be unique within the location on the project."]
     pub name: terrars::PrimField<std::string::String>,
 }
 
@@ -285,14 +330,16 @@ impl BuildEventarcChannel {
         let out = EventarcChannel(std::rc::Rc::new(EventarcChannel_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(EventarcChannelData {
+            data: std::cell::RefCell::new(EventarcChannelData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 crypto_key_name: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
+                labels: core::default::Default::default(),
                 location: self.location,
                 name: self.name,
                 project: core::default::Default::default(),
@@ -329,25 +376,43 @@ impl EventarcChannelRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `activation_token` after provisioning.\nOutput only. The activation token for the channel. The token must be used by the provider to register the channel for publishing."]
+        "Get a reference to the value of field `activation_token` after provisioning.\nThe activation token for the channel. The token must be used by the provider to register the channel for publishing."]
     pub fn activation_token(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.activation_token", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `create_time` after provisioning.\nOutput only. The creation time."]
+    #[doc = "Get a reference to the value of field `create_time` after provisioning.\nThe creation time."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `crypto_key_name` after provisioning.\nOptional. Resource name of a KMS crypto key (managed by the user) used to encrypt/decrypt their event data. It must match the pattern `projects/*/locations/*/keyRings/*/cryptoKeys/*`."]
+        "Get a reference to the value of field `crypto_key_name` after provisioning.\nResource name of a KMS crypto key (managed by the user) used to encrypt/decrypt their event data. It must match the pattern 'projects/*/locations/*/keyRings/*/cryptoKeys/*'."]
     pub fn crypto_key_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.crypto_key_name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
+    pub fn effective_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `labels` after provisioning.\nUser-defined labels for the channel.\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
+    pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `location` after provisioning.\nThe location for the resource"]
@@ -356,54 +421,58 @@ impl EventarcChannelRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `name` after provisioning.\nRequired. The resource name of the channel. Must be unique within the location on the project."]
+        "Get a reference to the value of field `name` after provisioning.\nThe resource name of the channel. Must be unique within the location on the project."]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `project` after provisioning.\nThe project for the resource"]
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
     pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `pubsub_topic` after provisioning.\nOutput only. The name of the Pub/Sub topic created and managed by Eventarc system as a transport for the event delivery. Format: `projects/{project}/topics/{topic_id}`."]
+        "Get a reference to the value of field `pubsub_topic` after provisioning.\nThe name of the Pub/Sub topic created and managed by Eventarc system as a transport for the event delivery. Format: 'projects/{project}/topics/{topic_id}'."]
     pub fn pubsub_topic(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.pubsub_topic", self.extract_ref()))
     }
 
-    #[doc =
-        "Get a reference to the value of field `state` after provisioning.\nOutput only. The state of a Channel. Possible values: STATE_UNSPECIFIED, PENDING, ACTIVE, INACTIVE"]
+    #[doc = "Get a reference to the value of field `state` after provisioning.\nThe state of a Channel."]
     pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `third_party_provider` after provisioning.\nThe name of the event provider (e.g. Eventarc SaaS partner) associated with the channel. This provider will be granted permissions to publish events to the channel. Format: `projects/{project}/locations/{location}/providers/{provider_id}`."]
+        "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
+    pub fn terraform_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `third_party_provider` after provisioning.\nThe name of the event provider (e.g. Eventarc SaaS partner) associated with the channel. This provider will be granted permissions to publish events to the channel. Format: 'projects/{project}/locations/{location}/providers/{provider_id}'."]
     pub fn third_party_provider(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.third_party_provider", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `uid` after provisioning.\nOutput only. Server assigned unique identifier for the channel. The value is a UUID4 string and guaranteed to remain unchanged until the resource is deleted."]
+        "Get a reference to the value of field `uid` after provisioning.\nServer assigned unique identifier for the channel. The value is a UUID4 string and guaranteed to remain unchanged until the resource is deleted."]
     pub fn uid(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.uid", self.extract_ref()))
     }
 
-    #[doc =
-        "Get a reference to the value of field `update_time` after provisioning.\nOutput only. The last-modified time."]
+    #[doc = "Get a reference to the value of field `update_time` after provisioning.\nThe last-modified time."]
     pub fn update_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update_time", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> EventarcChannelTimeoutsElRef {
-        EventarcChannelTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> EventarcChannel_TimeoutsRef {
+        EventarcChannel_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct EventarcChannelTimeoutsEl {
+pub struct EventarcChannel_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -412,7 +481,7 @@ pub struct EventarcChannelTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EventarcChannelTimeoutsEl {
+impl EventarcChannel_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -432,8 +501,8 @@ impl EventarcChannelTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for EventarcChannelTimeoutsEl {
-    type O = terrars::BlockAssignable<EventarcChannelTimeoutsEl>;
+impl terrars::ToListMappable for EventarcChannel_Timeouts {
+    type O = terrars::BlockAssignable<EventarcChannel_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -444,11 +513,11 @@ impl terrars::ToListMappable for EventarcChannelTimeoutsEl {
     }
 }
 
-pub struct BuildEventarcChannelTimeoutsEl {}
+pub struct BuildEventarcChannel_Timeouts {}
 
-impl BuildEventarcChannelTimeoutsEl {
-    pub fn build(self) -> EventarcChannelTimeoutsEl {
-        EventarcChannelTimeoutsEl {
+impl BuildEventarcChannel_Timeouts {
+    pub fn build(self) -> EventarcChannel_Timeouts {
+        EventarcChannel_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -456,21 +525,23 @@ impl BuildEventarcChannelTimeoutsEl {
     }
 }
 
-pub struct EventarcChannelTimeoutsElRef {
+#[allow(dead_code)]
+pub struct EventarcChannel_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EventarcChannelTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EventarcChannelTimeoutsElRef {
-        EventarcChannelTimeoutsElRef {
+impl terrars::Ref for EventarcChannel_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EventarcChannel_TimeoutsRef {
+        EventarcChannel_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EventarcChannelTimeoutsElRef {
+impl EventarcChannel_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

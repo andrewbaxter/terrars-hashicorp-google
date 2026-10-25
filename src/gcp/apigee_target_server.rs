@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ApigeeTargetServerData {
+struct ApigeeTargetServerData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct ApigeeTargetServerData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     env_id: terrars::PrimField<std::string::String>,
@@ -31,16 +35,16 @@ struct ApigeeTargetServerData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     protocol: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    s_sl_info: std::option::Option<std::vec::Vec<ApigeeTargetServerSSlInfoEl>>,
+    s_sl_info: std::option::Option<std::vec::Vec<ApigeeTargetServer_SSlInfo>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ApigeeTargetServerTimeoutsEl>,
+    timeouts: std::option::Option<ApigeeTargetServer_Timeouts>,
     dynamic: ApigeeTargetServerDynamic,
 }
 
 struct ApigeeTargetServer_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ApigeeTargetServerData>,
+    data: std::cell::RefCell<ApigeeTargetServerData_>,
 }
 
 #[derive(Clone)]
@@ -140,6 +144,13 @@ impl ApigeeTargetServer {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nA human-readable description of this TargetServer."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -169,7 +180,7 @@ impl ApigeeTargetServer {
     #[doc = "Set the field `s_sl_info`.\n"]
     pub fn set_s_sl_info(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ApigeeTargetServerSSlInfoEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApigeeTargetServer_SSlInfo>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -183,9 +194,15 @@ impl ApigeeTargetServer {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ApigeeTargetServerTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ApigeeTargetServer_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -236,13 +253,13 @@ impl ApigeeTargetServer {
     }
 
     #[doc = "Get a reference to the value of field `s_sl_info` after provisioning.\n"]
-    pub fn s_sl_info(&self) -> terrars::ListRef<ApigeeTargetServerSSlInfoElRef> {
+    pub fn s_sl_info(&self) -> terrars::ListRef<ApigeeTargetServer_SSlInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s_sl_info", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ApigeeTargetServerTimeoutsElRef {
-        ApigeeTargetServerTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ApigeeTargetServer_TimeoutsRef {
+        ApigeeTargetServer_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -295,12 +312,13 @@ impl BuildApigeeTargetServer {
         let out = ApigeeTargetServer(std::rc::Rc::new(ApigeeTargetServer_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ApigeeTargetServerData {
+            data: std::cell::RefCell::new(ApigeeTargetServerData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 env_id: self.env_id,
                 host: self.host,
@@ -340,6 +358,12 @@ impl ApigeeTargetServerRef {
 
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -390,25 +414,30 @@ impl ApigeeTargetServerRef {
     }
 
     #[doc = "Get a reference to the value of field `s_sl_info` after provisioning.\n"]
-    pub fn s_sl_info(&self) -> terrars::ListRef<ApigeeTargetServerSSlInfoElRef> {
+    pub fn s_sl_info(&self) -> terrars::ListRef<ApigeeTargetServer_SSlInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s_sl_info", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ApigeeTargetServerTimeoutsElRef {
-        ApigeeTargetServerTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ApigeeTargetServer_TimeoutsRef {
+        ApigeeTargetServer_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ApigeeTargetServerDynamic {
+    s_sl_info: std::option::Option<terrars::DynamicBlock<ApigeeTargetServer_SSlInfo>>,
+}
+
 #[derive(Serialize)]
-pub struct ApigeeTargetServerSSlInfoElCommonNameEl {
+pub struct ApigeeTargetServer_SSlInfo_CommonName {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     value: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     wildcard_match: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl ApigeeTargetServerSSlInfoElCommonNameEl {
+impl ApigeeTargetServer_SSlInfo_CommonName {
     #[doc = "Set the field `value`.\nThe TLS Common Name string of the certificate."]
     pub fn set_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.value = std::option::Option::Some(v.into());
@@ -422,8 +451,8 @@ impl ApigeeTargetServerSSlInfoElCommonNameEl {
     }
 }
 
-impl terrars::ToListMappable for ApigeeTargetServerSSlInfoElCommonNameEl {
-    type O = terrars::BlockAssignable<ApigeeTargetServerSSlInfoElCommonNameEl>;
+impl terrars::ToListMappable for ApigeeTargetServer_SSlInfo_CommonName {
+    type O = terrars::BlockAssignable<ApigeeTargetServer_SSlInfo_CommonName>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -434,32 +463,34 @@ impl terrars::ToListMappable for ApigeeTargetServerSSlInfoElCommonNameEl {
     }
 }
 
-pub struct BuildApigeeTargetServerSSlInfoElCommonNameEl {}
+pub struct BuildApigeeTargetServer_SSlInfo_CommonName {}
 
-impl BuildApigeeTargetServerSSlInfoElCommonNameEl {
-    pub fn build(self) -> ApigeeTargetServerSSlInfoElCommonNameEl {
-        ApigeeTargetServerSSlInfoElCommonNameEl {
+impl BuildApigeeTargetServer_SSlInfo_CommonName {
+    pub fn build(self) -> ApigeeTargetServer_SSlInfo_CommonName {
+        ApigeeTargetServer_SSlInfo_CommonName {
             value: core::default::Default::default(),
             wildcard_match: core::default::Default::default(),
         }
     }
 }
 
-pub struct ApigeeTargetServerSSlInfoElCommonNameElRef {
+#[allow(dead_code)]
+pub struct ApigeeTargetServer_SSlInfo_CommonNameRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApigeeTargetServerSSlInfoElCommonNameElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ApigeeTargetServerSSlInfoElCommonNameElRef {
-        ApigeeTargetServerSSlInfoElCommonNameElRef {
+impl terrars::Ref for ApigeeTargetServer_SSlInfo_CommonNameRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApigeeTargetServer_SSlInfo_CommonNameRef {
+        ApigeeTargetServer_SSlInfo_CommonNameRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApigeeTargetServerSSlInfoElCommonNameElRef {
+impl ApigeeTargetServer_SSlInfo_CommonNameRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -478,17 +509,19 @@ impl ApigeeTargetServerSSlInfoElCommonNameElRef {
 }
 
 #[derive(Serialize, Default)]
-struct ApigeeTargetServerSSlInfoElDynamic {
-    common_name: std::option::Option<terrars::DynamicBlock<ApigeeTargetServerSSlInfoElCommonNameEl>>,
+struct ApigeeTargetServer_SSlInfoDynamic {
+    common_name: std::option::Option<terrars::DynamicBlock<ApigeeTargetServer_SSlInfo_CommonName>>,
 }
 
 #[derive(Serialize)]
-pub struct ApigeeTargetServerSSlInfoEl {
+pub struct ApigeeTargetServer_SSlInfo {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ciphers: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     client_auth_enabled: std::option::Option<terrars::PrimField<bool>>,
     enabled: terrars::PrimField<bool>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enforce: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ignore_validation_errors: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -500,11 +533,11 @@ pub struct ApigeeTargetServerSSlInfoEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     trust_store: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    common_name: std::option::Option<std::vec::Vec<ApigeeTargetServerSSlInfoElCommonNameEl>>,
-    dynamic: ApigeeTargetServerSSlInfoElDynamic,
+    common_name: std::option::Option<std::vec::Vec<ApigeeTargetServer_SSlInfo_CommonName>>,
+    dynamic: ApigeeTargetServer_SSlInfoDynamic,
 }
 
-impl ApigeeTargetServerSSlInfoEl {
+impl ApigeeTargetServer_SSlInfo {
     #[doc =
         "Set the field `ciphers`.\nThe SSL/TLS cipher suites to be used. For programmable proxies, it must be one of the cipher suite names listed in: http://docs.oracle.com/javase/8/docs/technotes/guides/security/StandardNames.html#ciphersuites. For configurable proxies, it must follow the configuration specified in: https://commondatastorage.googleapis.com/chromium-boringssl-docs/ssl.h.html#Cipher-suite-configuration. This setting has no effect for configurable proxies when negotiating TLS 1.3."]
     pub fn set_ciphers(
@@ -518,6 +551,12 @@ impl ApigeeTargetServerSSlInfoEl {
     #[doc = "Set the field `client_auth_enabled`.\nEnables two-way TLS."]
     pub fn set_client_auth_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.client_auth_enabled = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `enforce`.\nIf true, TLS is strictly enforced."]
+    pub fn set_enforce(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enforce = std::option::Option::Some(v.into());
         self
     }
 
@@ -559,7 +598,7 @@ impl ApigeeTargetServerSSlInfoEl {
     #[doc = "Set the field `common_name`.\n"]
     pub fn set_common_name(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ApigeeTargetServerSSlInfoElCommonNameEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApigeeTargetServer_SSlInfo_CommonName>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -573,8 +612,8 @@ impl ApigeeTargetServerSSlInfoEl {
     }
 }
 
-impl terrars::ToListMappable for ApigeeTargetServerSSlInfoEl {
-    type O = terrars::BlockAssignable<ApigeeTargetServerSSlInfoEl>;
+impl terrars::ToListMappable for ApigeeTargetServer_SSlInfo {
+    type O = terrars::BlockAssignable<ApigeeTargetServer_SSlInfo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -585,17 +624,18 @@ impl terrars::ToListMappable for ApigeeTargetServerSSlInfoEl {
     }
 }
 
-pub struct BuildApigeeTargetServerSSlInfoEl {
+pub struct BuildApigeeTargetServer_SSlInfo {
     #[doc = "Enables TLS. If false, neither one-way nor two-way TLS will be enabled."]
     pub enabled: terrars::PrimField<bool>,
 }
 
-impl BuildApigeeTargetServerSSlInfoEl {
-    pub fn build(self) -> ApigeeTargetServerSSlInfoEl {
-        ApigeeTargetServerSSlInfoEl {
+impl BuildApigeeTargetServer_SSlInfo {
+    pub fn build(self) -> ApigeeTargetServer_SSlInfo {
+        ApigeeTargetServer_SSlInfo {
             ciphers: core::default::Default::default(),
             client_auth_enabled: core::default::Default::default(),
             enabled: self.enabled,
+            enforce: core::default::Default::default(),
             ignore_validation_errors: core::default::Default::default(),
             key_alias: core::default::Default::default(),
             key_store: core::default::Default::default(),
@@ -607,21 +647,23 @@ impl BuildApigeeTargetServerSSlInfoEl {
     }
 }
 
-pub struct ApigeeTargetServerSSlInfoElRef {
+#[allow(dead_code)]
+pub struct ApigeeTargetServer_SSlInfoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApigeeTargetServerSSlInfoElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ApigeeTargetServerSSlInfoElRef {
-        ApigeeTargetServerSSlInfoElRef {
+impl terrars::Ref for ApigeeTargetServer_SSlInfoRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApigeeTargetServer_SSlInfoRef {
+        ApigeeTargetServer_SSlInfoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApigeeTargetServerSSlInfoElRef {
+impl ApigeeTargetServer_SSlInfoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -641,6 +683,11 @@ impl ApigeeTargetServerSSlInfoElRef {
         "Get a reference to the value of field `enabled` after provisioning.\nEnables TLS. If false, neither one-way nor two-way TLS will be enabled."]
     pub fn enabled(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `enforce` after provisioning.\nIf true, TLS is strictly enforced."]
+    pub fn enforce(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enforce", self.base))
     }
 
     #[doc =
@@ -673,13 +720,13 @@ impl ApigeeTargetServerSSlInfoElRef {
     }
 
     #[doc = "Get a reference to the value of field `common_name` after provisioning.\n"]
-    pub fn common_name(&self) -> terrars::ListRef<ApigeeTargetServerSSlInfoElCommonNameElRef> {
+    pub fn common_name(&self) -> terrars::ListRef<ApigeeTargetServer_SSlInfo_CommonNameRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.common_name", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ApigeeTargetServerTimeoutsEl {
+pub struct ApigeeTargetServer_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -688,7 +735,7 @@ pub struct ApigeeTargetServerTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ApigeeTargetServerTimeoutsEl {
+impl ApigeeTargetServer_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -708,8 +755,8 @@ impl ApigeeTargetServerTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ApigeeTargetServerTimeoutsEl {
-    type O = terrars::BlockAssignable<ApigeeTargetServerTimeoutsEl>;
+impl terrars::ToListMappable for ApigeeTargetServer_Timeouts {
+    type O = terrars::BlockAssignable<ApigeeTargetServer_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -720,11 +767,11 @@ impl terrars::ToListMappable for ApigeeTargetServerTimeoutsEl {
     }
 }
 
-pub struct BuildApigeeTargetServerTimeoutsEl {}
+pub struct BuildApigeeTargetServer_Timeouts {}
 
-impl BuildApigeeTargetServerTimeoutsEl {
-    pub fn build(self) -> ApigeeTargetServerTimeoutsEl {
-        ApigeeTargetServerTimeoutsEl {
+impl BuildApigeeTargetServer_Timeouts {
+    pub fn build(self) -> ApigeeTargetServer_Timeouts {
+        ApigeeTargetServer_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -732,21 +779,23 @@ impl BuildApigeeTargetServerTimeoutsEl {
     }
 }
 
-pub struct ApigeeTargetServerTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ApigeeTargetServer_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApigeeTargetServerTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ApigeeTargetServerTimeoutsElRef {
-        ApigeeTargetServerTimeoutsElRef {
+impl terrars::Ref for ApigeeTargetServer_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApigeeTargetServer_TimeoutsRef {
+        ApigeeTargetServer_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApigeeTargetServerTimeoutsElRef {
+impl ApigeeTargetServer_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -765,9 +814,4 @@ impl ApigeeTargetServerTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ApigeeTargetServerDynamic {
-    s_sl_info: std::option::Option<terrars::DynamicBlock<ApigeeTargetServerSSlInfoEl>>,
 }

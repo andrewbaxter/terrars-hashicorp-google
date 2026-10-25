@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct Cloudbuildv2ConnectionIamBindingData {
+struct Cloudbuildv2ConnectionIamBindingData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,14 +30,14 @@ struct Cloudbuildv2ConnectionIamBindingData {
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<Cloudbuildv2ConnectionIamBindingConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<Cloudbuildv2ConnectionIamBinding_Condition>>,
     dynamic: Cloudbuildv2ConnectionIamBindingDynamic,
 }
 
 struct Cloudbuildv2ConnectionIamBinding_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Cloudbuildv2ConnectionIamBindingData>,
+    data: std::cell::RefCell<Cloudbuildv2ConnectionIamBindingData_>,
 }
 
 #[derive(Clone)]
@@ -156,7 +158,7 @@ impl Cloudbuildv2ConnectionIamBinding {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Cloudbuildv2ConnectionIamBindingConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Cloudbuildv2ConnectionIamBinding_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -205,7 +207,7 @@ impl Cloudbuildv2ConnectionIamBinding {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<Cloudbuildv2ConnectionIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<Cloudbuildv2ConnectionIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -256,7 +258,7 @@ impl BuildCloudbuildv2ConnectionIamBinding {
         let out = Cloudbuildv2ConnectionIamBinding(std::rc::Rc::new(Cloudbuildv2ConnectionIamBinding_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Cloudbuildv2ConnectionIamBindingData {
+            data: std::cell::RefCell::new(Cloudbuildv2ConnectionIamBindingData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -336,20 +338,25 @@ impl Cloudbuildv2ConnectionIamBindingRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<Cloudbuildv2ConnectionIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<Cloudbuildv2ConnectionIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct Cloudbuildv2ConnectionIamBindingDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<Cloudbuildv2ConnectionIamBinding_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct Cloudbuildv2ConnectionIamBindingConditionEl {
+pub struct Cloudbuildv2ConnectionIamBinding_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl Cloudbuildv2ConnectionIamBindingConditionEl {
+impl Cloudbuildv2ConnectionIamBinding_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -357,8 +364,8 @@ impl Cloudbuildv2ConnectionIamBindingConditionEl {
     }
 }
 
-impl terrars::ToListMappable for Cloudbuildv2ConnectionIamBindingConditionEl {
-    type O = terrars::BlockAssignable<Cloudbuildv2ConnectionIamBindingConditionEl>;
+impl terrars::ToListMappable for Cloudbuildv2ConnectionIamBinding_Condition {
+    type O = terrars::BlockAssignable<Cloudbuildv2ConnectionIamBinding_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -369,16 +376,16 @@ impl terrars::ToListMappable for Cloudbuildv2ConnectionIamBindingConditionEl {
     }
 }
 
-pub struct BuildCloudbuildv2ConnectionIamBindingConditionEl {
+pub struct BuildCloudbuildv2ConnectionIamBinding_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudbuildv2ConnectionIamBindingConditionEl {
-    pub fn build(self) -> Cloudbuildv2ConnectionIamBindingConditionEl {
-        Cloudbuildv2ConnectionIamBindingConditionEl {
+impl BuildCloudbuildv2ConnectionIamBinding_Condition {
+    pub fn build(self) -> Cloudbuildv2ConnectionIamBinding_Condition {
+        Cloudbuildv2ConnectionIamBinding_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -386,24 +393,23 @@ impl BuildCloudbuildv2ConnectionIamBindingConditionEl {
     }
 }
 
-pub struct Cloudbuildv2ConnectionIamBindingConditionElRef {
+#[allow(dead_code)]
+pub struct Cloudbuildv2ConnectionIamBinding_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Cloudbuildv2ConnectionIamBindingConditionElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> Cloudbuildv2ConnectionIamBindingConditionElRef {
-        Cloudbuildv2ConnectionIamBindingConditionElRef {
+impl terrars::Ref for Cloudbuildv2ConnectionIamBinding_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Cloudbuildv2ConnectionIamBinding_ConditionRef {
+        Cloudbuildv2ConnectionIamBinding_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Cloudbuildv2ConnectionIamBindingConditionElRef {
+impl Cloudbuildv2ConnectionIamBinding_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -422,9 +428,4 @@ impl Cloudbuildv2ConnectionIamBindingConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct Cloudbuildv2ConnectionIamBindingDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<Cloudbuildv2ConnectionIamBindingConditionEl>>,
 }

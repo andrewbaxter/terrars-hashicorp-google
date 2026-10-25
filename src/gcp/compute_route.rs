@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeRouteData {
+struct ComputeRouteData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct ComputeRouteData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     dest_range: terrars::PrimField<std::string::String>,
@@ -44,13 +48,16 @@ struct ComputeRouteData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComputeRouteTimeoutsEl>,
+    params: std::option::Option<std::vec::Vec<ComputeRoute_Params>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<ComputeRoute_Timeouts>,
+    dynamic: ComputeRouteDynamic,
 }
 
 struct ComputeRoute_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeRouteData>,
+    data: std::cell::RefCell<ComputeRouteData_>,
 }
 
 #[derive(Clone)]
@@ -151,6 +158,13 @@ impl ComputeRoute {
     }
 
     #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `description`.\nAn optional description of this resource. Provide this property\nwhen you create the resource."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -228,10 +242,40 @@ impl ComputeRoute {
         self
     }
 
+    #[doc = "Set the field `params`.\n"]
+    pub fn set_params(self, v: impl std::convert::Into<terrars::BlockAssignable<ComputeRoute_Params>>) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().params = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.params = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeRouteTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeRoute_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc = "Get a reference to the value of field `as_paths` after provisioning.\n"]
+    pub fn as_paths(&self) -> terrars::ListRef<ComputeRoute_AsPathsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.as_paths", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `creation_timestamp` after provisioning.\nCreation timestamp in RFC3339 text format."]
+    pub fn creation_timestamp(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_timestamp", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -270,6 +314,12 @@ impl ComputeRoute {
     }
 
     #[doc =
+        "Get a reference to the value of field `next_hop_hub` after provisioning.\nThe hub network that should handle matching packets, which should conform to RFC1035."]
+    pub fn next_hop_hub(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.next_hop_hub", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `next_hop_ilb` after provisioning.\nThe IP address or URL to a forwarding rule of type\nloadBalancingScheme=INTERNAL that should handle matching\npackets.\n\nWith the GA provider you can only specify the forwarding\nrule as a partial or full URL. For example, the following\nare all valid values:\n* 10.128.0.56\n* https://www.googleapis.com/compute/v1/projects/project/regions/region/forwardingRules/forwardingRule\n* regions/region/forwardingRules/forwardingRule\n\nWhen the beta provider, you can also specify the IP address\nof a forwarding rule from the same VPC or any peered VPC.\n\nNote that this can only be used when the destinationRange is\na public (non-RFC 1918) IP CIDR range."]
     pub fn next_hop_ilb(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.next_hop_ilb", self.extract_ref()))
@@ -288,15 +338,39 @@ impl ComputeRoute {
     }
 
     #[doc =
+        "Get a reference to the value of field `next_hop_inter_region_cost` after provisioning.\nInternal fixed region-to-region cost that Google Cloud calculates based on factors such as network performance, distance, and available bandwidth between regions."]
+    pub fn next_hop_inter_region_cost(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.next_hop_inter_region_cost", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `next_hop_ip` after provisioning.\nNetwork IP address of an instance that should handle matching packets."]
     pub fn next_hop_ip(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.next_hop_ip", self.extract_ref()))
     }
 
     #[doc =
+        "Get a reference to the value of field `next_hop_med` after provisioning.\nMulti-Exit Discriminator, a BGP route metric that indicates the desirability of a particular route in a network."]
+    pub fn next_hop_med(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.next_hop_med", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `next_hop_network` after provisioning.\nURL to a Network that should handle matching packets."]
     pub fn next_hop_network(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.next_hop_network", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `next_hop_origin` after provisioning.\nIndicates the origin of the route. Can be IGP (Interior Gateway Protocol), EGP (Exterior Gateway Protocol), or INCOMPLETE."]
+    pub fn next_hop_origin(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.next_hop_origin", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `next_hop_peering` after provisioning.\nThe network peering name that should handle matching packets, which should conform to RFC1035."]
+    pub fn next_hop_peering(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.next_hop_peering", self.extract_ref()))
     }
 
     #[doc =
@@ -316,6 +390,18 @@ impl ComputeRoute {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `route_status` after provisioning.\nThe status of the route, which can be one of the following values:\n- 'ACTIVE' for an active route\n- 'INACTIVE' for an inactive route"]
+    pub fn route_status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.route_status", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `route_type` after provisioning.\nThe type of this route, which can be one of the following values:\n- 'TRANSIT' for a transit route that this router learned from another Cloud Router and will readvertise to one of its BGP peers\n- 'SUBNET' for a route from a subnet of the VPC\n- 'BGP' for a route learned from a BGP peer of this router\n- 'STATIC' for a static route"]
+    pub fn route_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.route_type", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `self_link` after provisioning.\n"]
     pub fn self_link(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.extract_ref()))
@@ -327,9 +413,20 @@ impl ComputeRoute {
         terrars::SetRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `warnings` after provisioning.\nIf potential misconfigurations are detected for this route, this field will be populated with warning messages."]
+    pub fn warnings(&self) -> terrars::ListRef<ComputeRoute_WarningsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.warnings", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `params` after provisioning.\n"]
+    pub fn params(&self) -> terrars::ListRef<ComputeRoute_ParamsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.params", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeRouteTimeoutsElRef {
-        ComputeRouteTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeRoute_TimeoutsRef {
+        ComputeRoute_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -380,12 +477,13 @@ impl BuildComputeRoute {
         let out = ComputeRoute(std::rc::Rc::new(ComputeRoute_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeRouteData {
+            data: std::cell::RefCell::new(ComputeRouteData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 dest_range: self.dest_range,
                 id: core::default::Default::default(),
@@ -400,7 +498,9 @@ impl BuildComputeRoute {
                 priority: core::default::Default::default(),
                 project: core::default::Default::default(),
                 tags: core::default::Default::default(),
+                params: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -429,6 +529,23 @@ impl ComputeRouteRef {
 
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `as_paths` after provisioning.\n"]
+    pub fn as_paths(&self) -> terrars::ListRef<ComputeRoute_AsPathsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.as_paths", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `creation_timestamp` after provisioning.\nCreation timestamp in RFC3339 text format."]
+    pub fn creation_timestamp(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_timestamp", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -467,6 +584,12 @@ impl ComputeRouteRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `next_hop_hub` after provisioning.\nThe hub network that should handle matching packets, which should conform to RFC1035."]
+    pub fn next_hop_hub(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.next_hop_hub", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `next_hop_ilb` after provisioning.\nThe IP address or URL to a forwarding rule of type\nloadBalancingScheme=INTERNAL that should handle matching\npackets.\n\nWith the GA provider you can only specify the forwarding\nrule as a partial or full URL. For example, the following\nare all valid values:\n* 10.128.0.56\n* https://www.googleapis.com/compute/v1/projects/project/regions/region/forwardingRules/forwardingRule\n* regions/region/forwardingRules/forwardingRule\n\nWhen the beta provider, you can also specify the IP address\nof a forwarding rule from the same VPC or any peered VPC.\n\nNote that this can only be used when the destinationRange is\na public (non-RFC 1918) IP CIDR range."]
     pub fn next_hop_ilb(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.next_hop_ilb", self.extract_ref()))
@@ -485,15 +608,39 @@ impl ComputeRouteRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `next_hop_inter_region_cost` after provisioning.\nInternal fixed region-to-region cost that Google Cloud calculates based on factors such as network performance, distance, and available bandwidth between regions."]
+    pub fn next_hop_inter_region_cost(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.next_hop_inter_region_cost", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `next_hop_ip` after provisioning.\nNetwork IP address of an instance that should handle matching packets."]
     pub fn next_hop_ip(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.next_hop_ip", self.extract_ref()))
     }
 
     #[doc =
+        "Get a reference to the value of field `next_hop_med` after provisioning.\nMulti-Exit Discriminator, a BGP route metric that indicates the desirability of a particular route in a network."]
+    pub fn next_hop_med(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.next_hop_med", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `next_hop_network` after provisioning.\nURL to a Network that should handle matching packets."]
     pub fn next_hop_network(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.next_hop_network", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `next_hop_origin` after provisioning.\nIndicates the origin of the route. Can be IGP (Interior Gateway Protocol), EGP (Exterior Gateway Protocol), or INCOMPLETE."]
+    pub fn next_hop_origin(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.next_hop_origin", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `next_hop_peering` after provisioning.\nThe network peering name that should handle matching packets, which should conform to RFC1035."]
+    pub fn next_hop_peering(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.next_hop_peering", self.extract_ref()))
     }
 
     #[doc =
@@ -513,6 +660,18 @@ impl ComputeRouteRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `route_status` after provisioning.\nThe status of the route, which can be one of the following values:\n- 'ACTIVE' for an active route\n- 'INACTIVE' for an inactive route"]
+    pub fn route_status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.route_status", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `route_type` after provisioning.\nThe type of this route, which can be one of the following values:\n- 'TRANSIT' for a transit route that this router learned from another Cloud Router and will readvertise to one of its BGP peers\n- 'SUBNET' for a route from a subnet of the VPC\n- 'BGP' for a route learned from a BGP peer of this router\n- 'STATIC' for a static route"]
+    pub fn route_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.route_type", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `self_link` after provisioning.\n"]
     pub fn self_link(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.extract_ref()))
@@ -524,21 +683,348 @@ impl ComputeRouteRef {
         terrars::SetRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `warnings` after provisioning.\nIf potential misconfigurations are detected for this route, this field will be populated with warning messages."]
+    pub fn warnings(&self) -> terrars::ListRef<ComputeRoute_WarningsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.warnings", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `params` after provisioning.\n"]
+    pub fn params(&self) -> terrars::ListRef<ComputeRoute_ParamsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.params", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeRouteTimeoutsElRef {
-        ComputeRouteTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeRoute_TimeoutsRef {
+        ComputeRoute_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct ComputeRouteDynamic {
+    params: std::option::Option<terrars::DynamicBlock<ComputeRoute_Params>>,
+}
+
+#[derive(Serialize)]
+pub struct ComputeRoute_AsPaths {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    as_lists: std::option::Option<terrars::ListField<terrars::PrimField<f64>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    path_segment_type: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl ComputeRoute_AsPaths {
+    #[doc = "Set the field `as_lists`.\n"]
+    pub fn set_as_lists(mut self, v: impl std::convert::Into<terrars::ListField<terrars::PrimField<f64>>>) -> Self {
+        self.as_lists = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `path_segment_type`.\n"]
+    pub fn set_path_segment_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.path_segment_type = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeRoute_AsPaths {
+    type O = terrars::BlockAssignable<ComputeRoute_AsPaths>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeRoute_AsPaths {}
+
+impl BuildComputeRoute_AsPaths {
+    pub fn build(self) -> ComputeRoute_AsPaths {
+        ComputeRoute_AsPaths {
+            as_lists: core::default::Default::default(),
+            path_segment_type: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeRoute_AsPathsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeRoute_AsPathsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRoute_AsPathsRef {
+        ComputeRoute_AsPathsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeRoute_AsPathsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `as_lists` after provisioning.\n"]
+    pub fn as_lists(&self) -> terrars::ListRef<terrars::PrimExpr<f64>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.as_lists", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `path_segment_type` after provisioning.\n"]
+    pub fn path_segment_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.path_segment_type", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeRouteTimeoutsEl {
+pub struct ComputeRoute_Warnings_Data {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    value: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl ComputeRoute_Warnings_Data {
+    #[doc = "Set the field `key`.\n"]
+    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.key = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `value`.\n"]
+    pub fn set_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.value = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeRoute_Warnings_Data {
+    type O = terrars::BlockAssignable<ComputeRoute_Warnings_Data>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeRoute_Warnings_Data {}
+
+impl BuildComputeRoute_Warnings_Data {
+    pub fn build(self) -> ComputeRoute_Warnings_Data {
+        ComputeRoute_Warnings_Data {
+            key: core::default::Default::default(),
+            value: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeRoute_Warnings_DataRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeRoute_Warnings_DataRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRoute_Warnings_DataRef {
+        ComputeRoute_Warnings_DataRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeRoute_Warnings_DataRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ComputeRoute_Warnings {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    code: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    data: std::option::Option<terrars::ListField<ComputeRoute_Warnings_Data>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    message: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl ComputeRoute_Warnings {
+    #[doc = "Set the field `code`.\n"]
+    pub fn set_code(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.code = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `data`.\n"]
+    pub fn set_data(mut self, v: impl std::convert::Into<terrars::ListField<ComputeRoute_Warnings_Data>>) -> Self {
+        self.data = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `message`.\n"]
+    pub fn set_message(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.message = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeRoute_Warnings {
+    type O = terrars::BlockAssignable<ComputeRoute_Warnings>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeRoute_Warnings {}
+
+impl BuildComputeRoute_Warnings {
+    pub fn build(self) -> ComputeRoute_Warnings {
+        ComputeRoute_Warnings {
+            code: core::default::Default::default(),
+            data: core::default::Default::default(),
+            message: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeRoute_WarningsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeRoute_WarningsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRoute_WarningsRef {
+        ComputeRoute_WarningsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeRoute_WarningsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `code` after provisioning.\n"]
+    pub fn code(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.code", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `data` after provisioning.\n"]
+    pub fn data(&self) -> terrars::ListRef<ComputeRoute_Warnings_DataRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.data", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `message` after provisioning.\n"]
+    pub fn message(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.message", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ComputeRoute_Params {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_manager_tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+}
+
+impl ComputeRoute_Params {
+    #[doc =
+        "Set the field `resource_manager_tags`.\nResource manager tags to be bound to the route. Tag keys and values have the\nsame definition as resource manager tags. Keys must be in the format tagKeys/{tag_key_id},\nand values are in the format tagValues/456. The field is ignored when empty.\nThe field is immutable and causes resource replacement when mutated. This field is only\nset at create time and modifying this field after creation will trigger recreation.\nTo apply tags to an existing resource, see the google_tags_tag_binding resource."]
+    pub fn set_resource_manager_tags(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.resource_manager_tags = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeRoute_Params {
+    type O = terrars::BlockAssignable<ComputeRoute_Params>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeRoute_Params {}
+
+impl BuildComputeRoute_Params {
+    pub fn build(self) -> ComputeRoute_Params {
+        ComputeRoute_Params { resource_manager_tags: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeRoute_ParamsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeRoute_ParamsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRoute_ParamsRef {
+        ComputeRoute_ParamsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeRoute_ParamsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `resource_manager_tags` after provisioning.\nResource manager tags to be bound to the route. Tag keys and values have the\nsame definition as resource manager tags. Keys must be in the format tagKeys/{tag_key_id},\nand values are in the format tagValues/456. The field is ignored when empty.\nThe field is immutable and causes resource replacement when mutated. This field is only\nset at create time and modifying this field after creation will trigger recreation.\nTo apply tags to an existing resource, see the google_tags_tag_binding resource."]
+    pub fn resource_manager_tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.resource_manager_tags", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ComputeRoute_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeRouteTimeoutsEl {
+impl ComputeRoute_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -552,8 +1038,8 @@ impl ComputeRouteTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeRouteTimeoutsEl {
-    type O = terrars::BlockAssignable<ComputeRouteTimeoutsEl>;
+impl terrars::ToListMappable for ComputeRoute_Timeouts {
+    type O = terrars::BlockAssignable<ComputeRoute_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -564,32 +1050,34 @@ impl terrars::ToListMappable for ComputeRouteTimeoutsEl {
     }
 }
 
-pub struct BuildComputeRouteTimeoutsEl {}
+pub struct BuildComputeRoute_Timeouts {}
 
-impl BuildComputeRouteTimeoutsEl {
-    pub fn build(self) -> ComputeRouteTimeoutsEl {
-        ComputeRouteTimeoutsEl {
+impl BuildComputeRoute_Timeouts {
+    pub fn build(self) -> ComputeRoute_Timeouts {
+        ComputeRoute_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeRouteTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComputeRoute_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeRouteTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRouteTimeoutsElRef {
-        ComputeRouteTimeoutsElRef {
+impl terrars::Ref for ComputeRoute_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRoute_TimeoutsRef {
+        ComputeRoute_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeRouteTimeoutsElRef {
+impl ComputeRoute_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

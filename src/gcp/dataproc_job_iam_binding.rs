@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataprocJobIamBindingData {
+struct DataprocJobIamBindingData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,14 +30,14 @@ struct DataprocJobIamBindingData {
     region: std::option::Option<terrars::PrimField<std::string::String>>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<DataprocJobIamBindingConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<DataprocJobIamBinding_Condition>>,
     dynamic: DataprocJobIamBindingDynamic,
 }
 
 struct DataprocJobIamBinding_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataprocJobIamBindingData>,
+    data: std::cell::RefCell<DataprocJobIamBindingData_>,
 }
 
 #[derive(Clone)]
@@ -156,7 +158,7 @@ impl DataprocJobIamBinding {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataprocJobIamBindingConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocJobIamBinding_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -205,7 +207,7 @@ impl DataprocJobIamBinding {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<DataprocJobIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<DataprocJobIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -256,7 +258,7 @@ impl BuildDataprocJobIamBinding {
         let out = DataprocJobIamBinding(std::rc::Rc::new(DataprocJobIamBinding_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataprocJobIamBindingData {
+            data: std::cell::RefCell::new(DataprocJobIamBindingData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -336,20 +338,25 @@ impl DataprocJobIamBindingRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<DataprocJobIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<DataprocJobIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataprocJobIamBindingDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<DataprocJobIamBinding_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct DataprocJobIamBindingConditionEl {
+pub struct DataprocJobIamBinding_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl DataprocJobIamBindingConditionEl {
+impl DataprocJobIamBinding_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -357,8 +364,8 @@ impl DataprocJobIamBindingConditionEl {
     }
 }
 
-impl terrars::ToListMappable for DataprocJobIamBindingConditionEl {
-    type O = terrars::BlockAssignable<DataprocJobIamBindingConditionEl>;
+impl terrars::ToListMappable for DataprocJobIamBinding_Condition {
+    type O = terrars::BlockAssignable<DataprocJobIamBinding_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -369,16 +376,16 @@ impl terrars::ToListMappable for DataprocJobIamBindingConditionEl {
     }
 }
 
-pub struct BuildDataprocJobIamBindingConditionEl {
+pub struct BuildDataprocJobIamBinding_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataprocJobIamBindingConditionEl {
-    pub fn build(self) -> DataprocJobIamBindingConditionEl {
-        DataprocJobIamBindingConditionEl {
+impl BuildDataprocJobIamBinding_Condition {
+    pub fn build(self) -> DataprocJobIamBinding_Condition {
+        DataprocJobIamBinding_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -386,21 +393,23 @@ impl BuildDataprocJobIamBindingConditionEl {
     }
 }
 
-pub struct DataprocJobIamBindingConditionElRef {
+#[allow(dead_code)]
+pub struct DataprocJobIamBinding_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocJobIamBindingConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocJobIamBindingConditionElRef {
-        DataprocJobIamBindingConditionElRef {
+impl terrars::Ref for DataprocJobIamBinding_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocJobIamBinding_ConditionRef {
+        DataprocJobIamBinding_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocJobIamBindingConditionElRef {
+impl DataprocJobIamBinding_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -419,9 +428,4 @@ impl DataprocJobIamBindingConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataprocJobIamBindingDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<DataprocJobIamBindingConditionEl>>,
 }

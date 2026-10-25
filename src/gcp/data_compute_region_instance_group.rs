@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataComputeRegionInstanceGroupData {
+struct DataComputeRegionInstanceGroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -31,7 +33,7 @@ struct DataComputeRegionInstanceGroupData {
 struct DataComputeRegionInstanceGroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataComputeRegionInstanceGroupData>,
+    data: std::cell::RefCell<DataComputeRegionInstanceGroupData_>,
 }
 
 #[derive(Clone)]
@@ -112,7 +114,7 @@ impl DataComputeRegionInstanceGroup {
     }
 
     #[doc = "Get a reference to the value of field `instances` after provisioning.\n"]
-    pub fn instances(&self) -> terrars::ListRef<DataComputeRegionInstanceGroupInstancesElRef> {
+    pub fn instances(&self) -> terrars::ListRef<DataComputeRegionInstanceGroup_InstancesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.instances", self.extract_ref()))
     }
 
@@ -182,7 +184,7 @@ impl BuildDataComputeRegionInstanceGroup {
         let out = DataComputeRegionInstanceGroup(std::rc::Rc::new(DataComputeRegionInstanceGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataComputeRegionInstanceGroupData {
+            data: std::cell::RefCell::new(DataComputeRegionInstanceGroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -228,7 +230,7 @@ impl DataComputeRegionInstanceGroupRef {
     }
 
     #[doc = "Get a reference to the value of field `instances` after provisioning.\n"]
-    pub fn instances(&self) -> terrars::ListRef<DataComputeRegionInstanceGroupInstancesElRef> {
+    pub fn instances(&self) -> terrars::ListRef<DataComputeRegionInstanceGroup_InstancesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.instances", self.extract_ref()))
     }
 
@@ -259,14 +261,14 @@ impl DataComputeRegionInstanceGroupRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComputeRegionInstanceGroupInstancesElNamedPortsEl {
+pub struct DataComputeRegionInstanceGroup_Instances_NamedPorts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     port: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataComputeRegionInstanceGroupInstancesElNamedPortsEl {
+impl DataComputeRegionInstanceGroup_Instances_NamedPorts {
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
@@ -280,8 +282,8 @@ impl DataComputeRegionInstanceGroupInstancesElNamedPortsEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeRegionInstanceGroupInstancesElNamedPortsEl {
-    type O = terrars::BlockAssignable<DataComputeRegionInstanceGroupInstancesElNamedPortsEl>;
+impl terrars::ToListMappable for DataComputeRegionInstanceGroup_Instances_NamedPorts {
+    type O = terrars::BlockAssignable<DataComputeRegionInstanceGroup_Instances_NamedPorts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -292,35 +294,37 @@ impl terrars::ToListMappable for DataComputeRegionInstanceGroupInstancesElNamedP
     }
 }
 
-pub struct BuildDataComputeRegionInstanceGroupInstancesElNamedPortsEl {}
+pub struct BuildDataComputeRegionInstanceGroup_Instances_NamedPorts {}
 
-impl BuildDataComputeRegionInstanceGroupInstancesElNamedPortsEl {
-    pub fn build(self) -> DataComputeRegionInstanceGroupInstancesElNamedPortsEl {
-        DataComputeRegionInstanceGroupInstancesElNamedPortsEl {
+impl BuildDataComputeRegionInstanceGroup_Instances_NamedPorts {
+    pub fn build(self) -> DataComputeRegionInstanceGroup_Instances_NamedPorts {
+        DataComputeRegionInstanceGroup_Instances_NamedPorts {
             name: core::default::Default::default(),
             port: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataComputeRegionInstanceGroupInstancesElNamedPortsElRef {
+#[allow(dead_code)]
+pub struct DataComputeRegionInstanceGroup_Instances_NamedPortsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeRegionInstanceGroupInstancesElNamedPortsElRef {
+impl terrars::Ref for DataComputeRegionInstanceGroup_Instances_NamedPortsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComputeRegionInstanceGroupInstancesElNamedPortsElRef {
-        DataComputeRegionInstanceGroupInstancesElNamedPortsElRef {
+    ) -> DataComputeRegionInstanceGroup_Instances_NamedPortsRef {
+        DataComputeRegionInstanceGroup_Instances_NamedPortsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeRegionInstanceGroupInstancesElNamedPortsElRef {
+impl DataComputeRegionInstanceGroup_Instances_NamedPortsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -337,16 +341,16 @@ impl DataComputeRegionInstanceGroupInstancesElNamedPortsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComputeRegionInstanceGroupInstancesEl {
+pub struct DataComputeRegionInstanceGroup_Instances {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     instance: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    named_ports: std::option::Option<terrars::ListField<DataComputeRegionInstanceGroupInstancesElNamedPortsEl>>,
+    named_ports: std::option::Option<terrars::ListField<DataComputeRegionInstanceGroup_Instances_NamedPorts>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     status: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataComputeRegionInstanceGroupInstancesEl {
+impl DataComputeRegionInstanceGroup_Instances {
     #[doc = "Set the field `instance`.\n"]
     pub fn set_instance(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.instance = std::option::Option::Some(v.into());
@@ -356,7 +360,7 @@ impl DataComputeRegionInstanceGroupInstancesEl {
     #[doc = "Set the field `named_ports`.\n"]
     pub fn set_named_ports(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataComputeRegionInstanceGroupInstancesElNamedPortsEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataComputeRegionInstanceGroup_Instances_NamedPorts>>,
     ) -> Self {
         self.named_ports = std::option::Option::Some(v.into());
         self
@@ -369,8 +373,8 @@ impl DataComputeRegionInstanceGroupInstancesEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeRegionInstanceGroupInstancesEl {
-    type O = terrars::BlockAssignable<DataComputeRegionInstanceGroupInstancesEl>;
+impl terrars::ToListMappable for DataComputeRegionInstanceGroup_Instances {
+    type O = terrars::BlockAssignable<DataComputeRegionInstanceGroup_Instances>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -381,11 +385,11 @@ impl terrars::ToListMappable for DataComputeRegionInstanceGroupInstancesEl {
     }
 }
 
-pub struct BuildDataComputeRegionInstanceGroupInstancesEl {}
+pub struct BuildDataComputeRegionInstanceGroup_Instances {}
 
-impl BuildDataComputeRegionInstanceGroupInstancesEl {
-    pub fn build(self) -> DataComputeRegionInstanceGroupInstancesEl {
-        DataComputeRegionInstanceGroupInstancesEl {
+impl BuildDataComputeRegionInstanceGroup_Instances {
+    pub fn build(self) -> DataComputeRegionInstanceGroup_Instances {
+        DataComputeRegionInstanceGroup_Instances {
             instance: core::default::Default::default(),
             named_ports: core::default::Default::default(),
             status: core::default::Default::default(),
@@ -393,21 +397,23 @@ impl BuildDataComputeRegionInstanceGroupInstancesEl {
     }
 }
 
-pub struct DataComputeRegionInstanceGroupInstancesElRef {
+#[allow(dead_code)]
+pub struct DataComputeRegionInstanceGroup_InstancesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeRegionInstanceGroupInstancesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeRegionInstanceGroupInstancesElRef {
-        DataComputeRegionInstanceGroupInstancesElRef {
+impl terrars::Ref for DataComputeRegionInstanceGroup_InstancesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeRegionInstanceGroup_InstancesRef {
+        DataComputeRegionInstanceGroup_InstancesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeRegionInstanceGroupInstancesElRef {
+impl DataComputeRegionInstanceGroup_InstancesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -418,7 +424,7 @@ impl DataComputeRegionInstanceGroupInstancesElRef {
     }
 
     #[doc = "Get a reference to the value of field `named_ports` after provisioning.\n"]
-    pub fn named_ports(&self) -> terrars::ListRef<DataComputeRegionInstanceGroupInstancesElNamedPortsElRef> {
+    pub fn named_ports(&self) -> terrars::ListRef<DataComputeRegionInstanceGroup_Instances_NamedPortsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.named_ports", self.base))
     }
 

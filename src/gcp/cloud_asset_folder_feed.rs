@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct CloudAssetFolderFeedData {
+struct CloudAssetFolderFeedData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,23 +27,25 @@ struct CloudAssetFolderFeedData {
     billing_project: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     content_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     feed_id: terrars::PrimField<std::string::String>,
     folder: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<CloudAssetFolderFeedConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<CloudAssetFolderFeed_Condition>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    feed_output_config: std::option::Option<std::vec::Vec<CloudAssetFolderFeedFeedOutputConfigEl>>,
+    feed_output_config: std::option::Option<std::vec::Vec<CloudAssetFolderFeed_FeedOutputConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<CloudAssetFolderFeedTimeoutsEl>,
+    timeouts: std::option::Option<CloudAssetFolderFeed_Timeouts>,
     dynamic: CloudAssetFolderFeedDynamic,
 }
 
 struct CloudAssetFolderFeed_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CloudAssetFolderFeedData>,
+    data: std::cell::RefCell<CloudAssetFolderFeedData_>,
 }
 
 #[derive(Clone)]
@@ -168,6 +172,13 @@ impl CloudAssetFolderFeed {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -177,7 +188,7 @@ impl CloudAssetFolderFeed {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudAssetFolderFeedConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudAssetFolderFeed_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -193,7 +204,7 @@ impl CloudAssetFolderFeed {
     #[doc = "Set the field `feed_output_config`.\n"]
     pub fn set_feed_output_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudAssetFolderFeedFeedOutputConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudAssetFolderFeed_FeedOutputConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -207,7 +218,7 @@ impl CloudAssetFolderFeed {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<CloudAssetFolderFeedTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<CloudAssetFolderFeed_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -234,6 +245,12 @@ impl CloudAssetFolderFeed {
         "Get a reference to the value of field `content_type` after provisioning.\nAsset content type. If not specified, no content but the asset name and type will be returned. Possible values: [\"CONTENT_TYPE_UNSPECIFIED\", \"RESOURCE\", \"IAM_POLICY\", \"ORG_POLICY\", \"OS_INVENTORY\", \"ACCESS_POLICY\"]"]
     pub fn content_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.content_type", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -266,18 +283,18 @@ impl CloudAssetFolderFeed {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<CloudAssetFolderFeedConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<CloudAssetFolderFeed_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `feed_output_config` after provisioning.\n"]
-    pub fn feed_output_config(&self) -> terrars::ListRef<CloudAssetFolderFeedFeedOutputConfigElRef> {
+    pub fn feed_output_config(&self) -> terrars::ListRef<CloudAssetFolderFeed_FeedOutputConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.feed_output_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> CloudAssetFolderFeedTimeoutsElRef {
-        CloudAssetFolderFeedTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> CloudAssetFolderFeed_TimeoutsRef {
+        CloudAssetFolderFeed_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -328,7 +345,7 @@ impl BuildCloudAssetFolderFeed {
         let out = CloudAssetFolderFeed(std::rc::Rc::new(CloudAssetFolderFeed_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CloudAssetFolderFeedData {
+            data: std::cell::RefCell::new(CloudAssetFolderFeedData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -338,6 +355,7 @@ impl BuildCloudAssetFolderFeed {
                 asset_types: core::default::Default::default(),
                 billing_project: self.billing_project,
                 content_type: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 feed_id: self.feed_id,
                 folder: self.folder,
                 id: core::default::Default::default(),
@@ -400,6 +418,12 @@ impl CloudAssetFolderFeedRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `feed_id` after provisioning.\nThis is the client-assigned asset feed identifier and it needs to be unique under a specific parent."]
     pub fn feed_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.feed_id", self.extract_ref()))
@@ -429,23 +453,29 @@ impl CloudAssetFolderFeedRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<CloudAssetFolderFeedConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<CloudAssetFolderFeed_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `feed_output_config` after provisioning.\n"]
-    pub fn feed_output_config(&self) -> terrars::ListRef<CloudAssetFolderFeedFeedOutputConfigElRef> {
+    pub fn feed_output_config(&self) -> terrars::ListRef<CloudAssetFolderFeed_FeedOutputConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.feed_output_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> CloudAssetFolderFeedTimeoutsElRef {
-        CloudAssetFolderFeedTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> CloudAssetFolderFeed_TimeoutsRef {
+        CloudAssetFolderFeed_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct CloudAssetFolderFeedDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<CloudAssetFolderFeed_Condition>>,
+    feed_output_config: std::option::Option<terrars::DynamicBlock<CloudAssetFolderFeed_FeedOutputConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct CloudAssetFolderFeedConditionEl {
+pub struct CloudAssetFolderFeed_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
@@ -455,7 +485,7 @@ pub struct CloudAssetFolderFeedConditionEl {
     title: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CloudAssetFolderFeedConditionEl {
+impl CloudAssetFolderFeed_Condition {
     #[doc =
         "Set the field `description`.\nDescription of the expression. This is a longer text which describes the expression,\ne.g. when hovered over it in a UI."]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -478,8 +508,8 @@ impl CloudAssetFolderFeedConditionEl {
     }
 }
 
-impl terrars::ToListMappable for CloudAssetFolderFeedConditionEl {
-    type O = terrars::BlockAssignable<CloudAssetFolderFeedConditionEl>;
+impl terrars::ToListMappable for CloudAssetFolderFeed_Condition {
+    type O = terrars::BlockAssignable<CloudAssetFolderFeed_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -490,14 +520,14 @@ impl terrars::ToListMappable for CloudAssetFolderFeedConditionEl {
     }
 }
 
-pub struct BuildCloudAssetFolderFeedConditionEl {
+pub struct BuildCloudAssetFolderFeed_Condition {
     #[doc = "Textual representation of an expression in Common Expression Language syntax."]
     pub expression: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudAssetFolderFeedConditionEl {
-    pub fn build(self) -> CloudAssetFolderFeedConditionEl {
-        CloudAssetFolderFeedConditionEl {
+impl BuildCloudAssetFolderFeed_Condition {
+    pub fn build(self) -> CloudAssetFolderFeed_Condition {
+        CloudAssetFolderFeed_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             location: core::default::Default::default(),
@@ -506,21 +536,23 @@ impl BuildCloudAssetFolderFeedConditionEl {
     }
 }
 
-pub struct CloudAssetFolderFeedConditionElRef {
+#[allow(dead_code)]
+pub struct CloudAssetFolderFeed_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudAssetFolderFeedConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudAssetFolderFeedConditionElRef {
-        CloudAssetFolderFeedConditionElRef {
+impl terrars::Ref for CloudAssetFolderFeed_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudAssetFolderFeed_ConditionRef {
+        CloudAssetFolderFeed_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudAssetFolderFeedConditionElRef {
+impl CloudAssetFolderFeed_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -551,14 +583,14 @@ impl CloudAssetFolderFeedConditionElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudAssetFolderFeedFeedOutputConfigElPubsubDestinationEl {
+pub struct CloudAssetFolderFeed_FeedOutputConfig_PubsubDestination {
     topic: terrars::PrimField<std::string::String>,
 }
 
-impl CloudAssetFolderFeedFeedOutputConfigElPubsubDestinationEl { }
+impl CloudAssetFolderFeed_FeedOutputConfig_PubsubDestination { }
 
-impl terrars::ToListMappable for CloudAssetFolderFeedFeedOutputConfigElPubsubDestinationEl {
-    type O = terrars::BlockAssignable<CloudAssetFolderFeedFeedOutputConfigElPubsubDestinationEl>;
+impl terrars::ToListMappable for CloudAssetFolderFeed_FeedOutputConfig_PubsubDestination {
+    type O = terrars::BlockAssignable<CloudAssetFolderFeed_FeedOutputConfig_PubsubDestination>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -569,35 +601,37 @@ impl terrars::ToListMappable for CloudAssetFolderFeedFeedOutputConfigElPubsubDes
     }
 }
 
-pub struct BuildCloudAssetFolderFeedFeedOutputConfigElPubsubDestinationEl {
+pub struct BuildCloudAssetFolderFeed_FeedOutputConfig_PubsubDestination {
     #[doc = "Destination on Cloud Pubsub topic."]
     pub topic: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudAssetFolderFeedFeedOutputConfigElPubsubDestinationEl {
-    pub fn build(self) -> CloudAssetFolderFeedFeedOutputConfigElPubsubDestinationEl {
-        CloudAssetFolderFeedFeedOutputConfigElPubsubDestinationEl { topic: self.topic }
+impl BuildCloudAssetFolderFeed_FeedOutputConfig_PubsubDestination {
+    pub fn build(self) -> CloudAssetFolderFeed_FeedOutputConfig_PubsubDestination {
+        CloudAssetFolderFeed_FeedOutputConfig_PubsubDestination { topic: self.topic }
     }
 }
 
-pub struct CloudAssetFolderFeedFeedOutputConfigElPubsubDestinationElRef {
+#[allow(dead_code)]
+pub struct CloudAssetFolderFeed_FeedOutputConfig_PubsubDestinationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudAssetFolderFeedFeedOutputConfigElPubsubDestinationElRef {
+impl terrars::Ref for CloudAssetFolderFeed_FeedOutputConfig_PubsubDestinationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudAssetFolderFeedFeedOutputConfigElPubsubDestinationElRef {
-        CloudAssetFolderFeedFeedOutputConfigElPubsubDestinationElRef {
+    ) -> CloudAssetFolderFeed_FeedOutputConfig_PubsubDestinationRef {
+        CloudAssetFolderFeed_FeedOutputConfig_PubsubDestinationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudAssetFolderFeedFeedOutputConfigElPubsubDestinationElRef {
+impl CloudAssetFolderFeed_FeedOutputConfig_PubsubDestinationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -609,20 +643,20 @@ impl CloudAssetFolderFeedFeedOutputConfigElPubsubDestinationElRef {
 }
 
 #[derive(Serialize, Default)]
-struct CloudAssetFolderFeedFeedOutputConfigElDynamic {
+struct CloudAssetFolderFeed_FeedOutputConfigDynamic {
     pubsub_destination: std
     ::option
-    ::Option<terrars::DynamicBlock<CloudAssetFolderFeedFeedOutputConfigElPubsubDestinationEl>>,
+    ::Option<terrars::DynamicBlock<CloudAssetFolderFeed_FeedOutputConfig_PubsubDestination>>,
 }
 
 #[derive(Serialize)]
-pub struct CloudAssetFolderFeedFeedOutputConfigEl {
+pub struct CloudAssetFolderFeed_FeedOutputConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    pubsub_destination: std::option::Option<std::vec::Vec<CloudAssetFolderFeedFeedOutputConfigElPubsubDestinationEl>>,
-    dynamic: CloudAssetFolderFeedFeedOutputConfigElDynamic,
+    pubsub_destination: std::option::Option<std::vec::Vec<CloudAssetFolderFeed_FeedOutputConfig_PubsubDestination>>,
+    dynamic: CloudAssetFolderFeed_FeedOutputConfigDynamic,
 }
 
-impl CloudAssetFolderFeedFeedOutputConfigEl {
+impl CloudAssetFolderFeed_FeedOutputConfig {
     #[doc = "Set the field `pubsub_destination`.\n"]
     pub fn set_pubsub_destination(
         mut self,
@@ -631,7 +665,7 @@ impl CloudAssetFolderFeedFeedOutputConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<CloudAssetFolderFeedFeedOutputConfigElPubsubDestinationEl>>,
+                    ::Into<terrars::BlockAssignable<CloudAssetFolderFeed_FeedOutputConfig_PubsubDestination>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -645,8 +679,8 @@ impl CloudAssetFolderFeedFeedOutputConfigEl {
     }
 }
 
-impl terrars::ToListMappable for CloudAssetFolderFeedFeedOutputConfigEl {
-    type O = terrars::BlockAssignable<CloudAssetFolderFeedFeedOutputConfigEl>;
+impl terrars::ToListMappable for CloudAssetFolderFeed_FeedOutputConfig {
+    type O = terrars::BlockAssignable<CloudAssetFolderFeed_FeedOutputConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -657,44 +691,46 @@ impl terrars::ToListMappable for CloudAssetFolderFeedFeedOutputConfigEl {
     }
 }
 
-pub struct BuildCloudAssetFolderFeedFeedOutputConfigEl {}
+pub struct BuildCloudAssetFolderFeed_FeedOutputConfig {}
 
-impl BuildCloudAssetFolderFeedFeedOutputConfigEl {
-    pub fn build(self) -> CloudAssetFolderFeedFeedOutputConfigEl {
-        CloudAssetFolderFeedFeedOutputConfigEl {
+impl BuildCloudAssetFolderFeed_FeedOutputConfig {
+    pub fn build(self) -> CloudAssetFolderFeed_FeedOutputConfig {
+        CloudAssetFolderFeed_FeedOutputConfig {
             pubsub_destination: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct CloudAssetFolderFeedFeedOutputConfigElRef {
+#[allow(dead_code)]
+pub struct CloudAssetFolderFeed_FeedOutputConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudAssetFolderFeedFeedOutputConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudAssetFolderFeedFeedOutputConfigElRef {
-        CloudAssetFolderFeedFeedOutputConfigElRef {
+impl terrars::Ref for CloudAssetFolderFeed_FeedOutputConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudAssetFolderFeed_FeedOutputConfigRef {
+        CloudAssetFolderFeed_FeedOutputConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudAssetFolderFeedFeedOutputConfigElRef {
+impl CloudAssetFolderFeed_FeedOutputConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `pubsub_destination` after provisioning.\n"]
-    pub fn pubsub_destination(&self) -> terrars::ListRef<CloudAssetFolderFeedFeedOutputConfigElPubsubDestinationElRef> {
+    pub fn pubsub_destination(&self) -> terrars::ListRef<CloudAssetFolderFeed_FeedOutputConfig_PubsubDestinationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.pubsub_destination", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct CloudAssetFolderFeedTimeoutsEl {
+pub struct CloudAssetFolderFeed_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -703,7 +739,7 @@ pub struct CloudAssetFolderFeedTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CloudAssetFolderFeedTimeoutsEl {
+impl CloudAssetFolderFeed_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -723,8 +759,8 @@ impl CloudAssetFolderFeedTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for CloudAssetFolderFeedTimeoutsEl {
-    type O = terrars::BlockAssignable<CloudAssetFolderFeedTimeoutsEl>;
+impl terrars::ToListMappable for CloudAssetFolderFeed_Timeouts {
+    type O = terrars::BlockAssignable<CloudAssetFolderFeed_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -735,11 +771,11 @@ impl terrars::ToListMappable for CloudAssetFolderFeedTimeoutsEl {
     }
 }
 
-pub struct BuildCloudAssetFolderFeedTimeoutsEl {}
+pub struct BuildCloudAssetFolderFeed_Timeouts {}
 
-impl BuildCloudAssetFolderFeedTimeoutsEl {
-    pub fn build(self) -> CloudAssetFolderFeedTimeoutsEl {
-        CloudAssetFolderFeedTimeoutsEl {
+impl BuildCloudAssetFolderFeed_Timeouts {
+    pub fn build(self) -> CloudAssetFolderFeed_Timeouts {
+        CloudAssetFolderFeed_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -747,21 +783,23 @@ impl BuildCloudAssetFolderFeedTimeoutsEl {
     }
 }
 
-pub struct CloudAssetFolderFeedTimeoutsElRef {
+#[allow(dead_code)]
+pub struct CloudAssetFolderFeed_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudAssetFolderFeedTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudAssetFolderFeedTimeoutsElRef {
-        CloudAssetFolderFeedTimeoutsElRef {
+impl terrars::Ref for CloudAssetFolderFeed_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudAssetFolderFeed_TimeoutsRef {
+        CloudAssetFolderFeed_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudAssetFolderFeedTimeoutsElRef {
+impl CloudAssetFolderFeed_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -780,10 +818,4 @@ impl CloudAssetFolderFeedTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct CloudAssetFolderFeedDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<CloudAssetFolderFeedConditionEl>>,
-    feed_output_config: std::option::Option<terrars::DynamicBlock<CloudAssetFolderFeedFeedOutputConfigEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct NetworkSecurityGatewaySecurityPolicyData {
+struct NetworkSecurityGatewaySecurityPolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct NetworkSecurityGatewaySecurityPolicyData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -28,13 +32,15 @@ struct NetworkSecurityGatewaySecurityPolicyData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<NetworkSecurityGatewaySecurityPolicyTimeoutsEl>,
+    tls_inspection_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<NetworkSecurityGatewaySecurityPolicy_Timeouts>,
 }
 
 struct NetworkSecurityGatewaySecurityPolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<NetworkSecurityGatewaySecurityPolicyData>,
+    data: std::cell::RefCell<NetworkSecurityGatewaySecurityPolicyData_>,
 }
 
 #[derive(Clone)]
@@ -134,6 +140,13 @@ impl NetworkSecurityGatewaySecurityPolicy {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nA free-text description of the resource. Max length 1024 characters."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -158,8 +171,15 @@ impl NetworkSecurityGatewaySecurityPolicy {
         self
     }
 
+    #[doc =
+        "Set the field `tls_inspection_policy`.\nName of a TlsInspectionPolicy resource that defines how TLS inspection is performed for any rule that enables it."]
+    pub fn set_tls_inspection_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().tls_inspection_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<NetworkSecurityGatewaySecurityPolicyTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<NetworkSecurityGatewaySecurityPolicy_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -168,6 +188,12 @@ impl NetworkSecurityGatewaySecurityPolicy {
         "Get a reference to the value of field `create_time` after provisioning.\nThe timestamp when the resource was created.\nA timestamp in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\""]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -205,14 +231,20 @@ impl NetworkSecurityGatewaySecurityPolicy {
     }
 
     #[doc =
+        "Get a reference to the value of field `tls_inspection_policy` after provisioning.\nName of a TlsInspectionPolicy resource that defines how TLS inspection is performed for any rule that enables it."]
+    pub fn tls_inspection_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tls_inspection_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `update_time` after provisioning.\nThe timestamp when the resource was updated.\nA timestamp in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
     pub fn update_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update_time", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NetworkSecurityGatewaySecurityPolicyTimeoutsElRef {
-        NetworkSecurityGatewaySecurityPolicyTimeoutsElRef::new(
+    pub fn timeouts(&self) -> NetworkSecurityGatewaySecurityPolicy_TimeoutsRef {
+        NetworkSecurityGatewaySecurityPolicy_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -262,17 +294,19 @@ impl BuildNetworkSecurityGatewaySecurityPolicy {
         let out = NetworkSecurityGatewaySecurityPolicy(std::rc::Rc::new(NetworkSecurityGatewaySecurityPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(NetworkSecurityGatewaySecurityPolicyData {
+            data: std::cell::RefCell::new(NetworkSecurityGatewaySecurityPolicyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 location: core::default::Default::default(),
                 name: self.name,
                 project: core::default::Default::default(),
+                tls_inspection_policy: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
             }),
         }));
@@ -311,6 +345,12 @@ impl NetworkSecurityGatewaySecurityPolicyRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nA free-text description of the resource. Max length 1024 characters."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -345,14 +385,20 @@ impl NetworkSecurityGatewaySecurityPolicyRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `tls_inspection_policy` after provisioning.\nName of a TlsInspectionPolicy resource that defines how TLS inspection is performed for any rule that enables it."]
+    pub fn tls_inspection_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tls_inspection_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `update_time` after provisioning.\nThe timestamp when the resource was updated.\nA timestamp in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
     pub fn update_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update_time", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NetworkSecurityGatewaySecurityPolicyTimeoutsElRef {
-        NetworkSecurityGatewaySecurityPolicyTimeoutsElRef::new(
+    pub fn timeouts(&self) -> NetworkSecurityGatewaySecurityPolicy_TimeoutsRef {
+        NetworkSecurityGatewaySecurityPolicy_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -360,7 +406,7 @@ impl NetworkSecurityGatewaySecurityPolicyRef {
 }
 
 #[derive(Serialize)]
-pub struct NetworkSecurityGatewaySecurityPolicyTimeoutsEl {
+pub struct NetworkSecurityGatewaySecurityPolicy_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -369,7 +415,7 @@ pub struct NetworkSecurityGatewaySecurityPolicyTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl NetworkSecurityGatewaySecurityPolicyTimeoutsEl {
+impl NetworkSecurityGatewaySecurityPolicy_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -389,8 +435,8 @@ impl NetworkSecurityGatewaySecurityPolicyTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkSecurityGatewaySecurityPolicyTimeoutsEl {
-    type O = terrars::BlockAssignable<NetworkSecurityGatewaySecurityPolicyTimeoutsEl>;
+impl terrars::ToListMappable for NetworkSecurityGatewaySecurityPolicy_Timeouts {
+    type O = terrars::BlockAssignable<NetworkSecurityGatewaySecurityPolicy_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -401,11 +447,11 @@ impl terrars::ToListMappable for NetworkSecurityGatewaySecurityPolicyTimeoutsEl 
     }
 }
 
-pub struct BuildNetworkSecurityGatewaySecurityPolicyTimeoutsEl {}
+pub struct BuildNetworkSecurityGatewaySecurityPolicy_Timeouts {}
 
-impl BuildNetworkSecurityGatewaySecurityPolicyTimeoutsEl {
-    pub fn build(self) -> NetworkSecurityGatewaySecurityPolicyTimeoutsEl {
-        NetworkSecurityGatewaySecurityPolicyTimeoutsEl {
+impl BuildNetworkSecurityGatewaySecurityPolicy_Timeouts {
+    pub fn build(self) -> NetworkSecurityGatewaySecurityPolicy_Timeouts {
+        NetworkSecurityGatewaySecurityPolicy_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -413,24 +459,26 @@ impl BuildNetworkSecurityGatewaySecurityPolicyTimeoutsEl {
     }
 }
 
-pub struct NetworkSecurityGatewaySecurityPolicyTimeoutsElRef {
+#[allow(dead_code)]
+pub struct NetworkSecurityGatewaySecurityPolicy_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkSecurityGatewaySecurityPolicyTimeoutsElRef {
+impl terrars::Ref for NetworkSecurityGatewaySecurityPolicy_TimeoutsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkSecurityGatewaySecurityPolicyTimeoutsElRef {
-        NetworkSecurityGatewaySecurityPolicyTimeoutsElRef {
+    ) -> NetworkSecurityGatewaySecurityPolicy_TimeoutsRef {
+        NetworkSecurityGatewaySecurityPolicy_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkSecurityGatewaySecurityPolicyTimeoutsElRef {
+impl NetworkSecurityGatewaySecurityPolicy_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

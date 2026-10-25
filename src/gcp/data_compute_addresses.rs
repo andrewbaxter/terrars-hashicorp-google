@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataComputeAddressesData {
+struct DataComputeAddressesData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -29,7 +31,7 @@ struct DataComputeAddressesData {
 struct DataComputeAddresses_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataComputeAddressesData>,
+    data: std::cell::RefCell<DataComputeAddressesData_>,
 }
 
 #[derive(Clone)]
@@ -102,7 +104,7 @@ impl DataComputeAddresses {
     }
 
     #[doc = "Get a reference to the value of field `addresses` after provisioning.\n"]
-    pub fn addresses(&self) -> terrars::ListRef<DataComputeAddressesAddressesElRef> {
+    pub fn addresses(&self) -> terrars::ListRef<DataComputeAddresses_AddressesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.addresses", self.extract_ref()))
     }
 
@@ -170,7 +172,7 @@ impl BuildDataComputeAddresses {
         let out = DataComputeAddresses(std::rc::Rc::new(DataComputeAddresses_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataComputeAddressesData {
+            data: std::cell::RefCell::new(DataComputeAddressesData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -210,7 +212,7 @@ impl DataComputeAddressesRef {
     }
 
     #[doc = "Get a reference to the value of field `addresses` after provisioning.\n"]
-    pub fn addresses(&self) -> terrars::ListRef<DataComputeAddressesAddressesElRef> {
+    pub fn addresses(&self) -> terrars::ListRef<DataComputeAddresses_AddressesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.addresses", self.extract_ref()))
     }
 
@@ -239,7 +241,7 @@ impl DataComputeAddressesRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComputeAddressesAddressesEl {
+pub struct DataComputeAddresses_Addresses {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     address: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -249,6 +251,8 @@ pub struct DataComputeAddressesAddressesEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    prefix_length: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     self_link: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -256,7 +260,7 @@ pub struct DataComputeAddressesAddressesEl {
     status: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataComputeAddressesAddressesEl {
+impl DataComputeAddresses_Addresses {
     #[doc = "Set the field `address`.\n"]
     pub fn set_address(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.address = std::option::Option::Some(v.into());
@@ -281,6 +285,12 @@ impl DataComputeAddressesAddressesEl {
         self
     }
 
+    #[doc = "Set the field `prefix_length`.\n"]
+    pub fn set_prefix_length(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.prefix_length = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `region`.\n"]
     pub fn set_region(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.region = std::option::Option::Some(v.into());
@@ -300,8 +310,8 @@ impl DataComputeAddressesAddressesEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeAddressesAddressesEl {
-    type O = terrars::BlockAssignable<DataComputeAddressesAddressesEl>;
+impl terrars::ToListMappable for DataComputeAddresses_Addresses {
+    type O = terrars::BlockAssignable<DataComputeAddresses_Addresses>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -312,15 +322,16 @@ impl terrars::ToListMappable for DataComputeAddressesAddressesEl {
     }
 }
 
-pub struct BuildDataComputeAddressesAddressesEl {}
+pub struct BuildDataComputeAddresses_Addresses {}
 
-impl BuildDataComputeAddressesAddressesEl {
-    pub fn build(self) -> DataComputeAddressesAddressesEl {
-        DataComputeAddressesAddressesEl {
+impl BuildDataComputeAddresses_Addresses {
+    pub fn build(self) -> DataComputeAddresses_Addresses {
+        DataComputeAddresses_Addresses {
             address: core::default::Default::default(),
             address_type: core::default::Default::default(),
             description: core::default::Default::default(),
             name: core::default::Default::default(),
+            prefix_length: core::default::Default::default(),
             region: core::default::Default::default(),
             self_link: core::default::Default::default(),
             status: core::default::Default::default(),
@@ -328,21 +339,23 @@ impl BuildDataComputeAddressesAddressesEl {
     }
 }
 
-pub struct DataComputeAddressesAddressesElRef {
+#[allow(dead_code)]
+pub struct DataComputeAddresses_AddressesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeAddressesAddressesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeAddressesAddressesElRef {
-        DataComputeAddressesAddressesElRef {
+impl terrars::Ref for DataComputeAddresses_AddressesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeAddresses_AddressesRef {
+        DataComputeAddresses_AddressesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeAddressesAddressesElRef {
+impl DataComputeAddresses_AddressesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -365,6 +378,11 @@ impl DataComputeAddressesAddressesElRef {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `prefix_length` after provisioning.\n"]
+    pub fn prefix_length(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.prefix_length", self.base))
     }
 
     #[doc = "Get a reference to the value of field `region` after provisioning.\n"]

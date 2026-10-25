@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeTargetSslProxyData {
+struct ComputeTargetSslProxyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,6 +24,8 @@ struct ComputeTargetSslProxyData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     certificate_map: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -35,13 +39,13 @@ struct ComputeTargetSslProxyData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ssl_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComputeTargetSslProxyTimeoutsEl>,
+    timeouts: std::option::Option<ComputeTargetSslProxy_Timeouts>,
 }
 
 struct ComputeTargetSslProxy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeTargetSslProxyData>,
+    data: std::cell::RefCell<ComputeTargetSslProxyData_>,
 }
 
 #[derive(Clone)]
@@ -148,6 +152,13 @@ impl ComputeTargetSslProxy {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nAn optional description of this resource."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -191,7 +202,7 @@ impl ComputeTargetSslProxy {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeTargetSslProxyTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeTargetSslProxy_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -212,6 +223,12 @@ impl ComputeTargetSslProxy {
         "Get a reference to the value of field `creation_timestamp` after provisioning.\nCreation timestamp in RFC3339 text format."]
     pub fn creation_timestamp(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_timestamp", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -266,8 +283,8 @@ impl ComputeTargetSslProxy {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeTargetSslProxyTimeoutsElRef {
-        ComputeTargetSslProxyTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeTargetSslProxy_TimeoutsRef {
+        ComputeTargetSslProxy_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -316,7 +333,7 @@ impl BuildComputeTargetSslProxy {
         let out = ComputeTargetSslProxy(std::rc::Rc::new(ComputeTargetSslProxy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeTargetSslProxyData {
+            data: std::cell::RefCell::new(ComputeTargetSslProxyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -324,6 +341,7 @@ impl BuildComputeTargetSslProxy {
                 provisioner: core::default::Default::default(),
                 backend_service: self.backend_service,
                 certificate_map: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
@@ -381,6 +399,12 @@ impl ComputeTargetSslProxyRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nAn optional description of this resource."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -432,13 +456,13 @@ impl ComputeTargetSslProxyRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeTargetSslProxyTimeoutsElRef {
-        ComputeTargetSslProxyTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeTargetSslProxy_TimeoutsRef {
+        ComputeTargetSslProxy_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeTargetSslProxyTimeoutsEl {
+pub struct ComputeTargetSslProxy_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -447,7 +471,7 @@ pub struct ComputeTargetSslProxyTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeTargetSslProxyTimeoutsEl {
+impl ComputeTargetSslProxy_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -467,8 +491,8 @@ impl ComputeTargetSslProxyTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeTargetSslProxyTimeoutsEl {
-    type O = terrars::BlockAssignable<ComputeTargetSslProxyTimeoutsEl>;
+impl terrars::ToListMappable for ComputeTargetSslProxy_Timeouts {
+    type O = terrars::BlockAssignable<ComputeTargetSslProxy_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -479,11 +503,11 @@ impl terrars::ToListMappable for ComputeTargetSslProxyTimeoutsEl {
     }
 }
 
-pub struct BuildComputeTargetSslProxyTimeoutsEl {}
+pub struct BuildComputeTargetSslProxy_Timeouts {}
 
-impl BuildComputeTargetSslProxyTimeoutsEl {
-    pub fn build(self) -> ComputeTargetSslProxyTimeoutsEl {
-        ComputeTargetSslProxyTimeoutsEl {
+impl BuildComputeTargetSslProxy_Timeouts {
+    pub fn build(self) -> ComputeTargetSslProxy_Timeouts {
+        ComputeTargetSslProxy_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -491,21 +515,23 @@ impl BuildComputeTargetSslProxyTimeoutsEl {
     }
 }
 
-pub struct ComputeTargetSslProxyTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComputeTargetSslProxy_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeTargetSslProxyTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeTargetSslProxyTimeoutsElRef {
-        ComputeTargetSslProxyTimeoutsElRef {
+impl terrars::Ref for ComputeTargetSslProxy_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeTargetSslProxy_TimeoutsRef {
+        ComputeTargetSslProxy_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeTargetSslProxyTimeoutsElRef {
+impl ComputeTargetSslProxy_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

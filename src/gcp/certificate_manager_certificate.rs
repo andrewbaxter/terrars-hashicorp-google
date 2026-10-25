@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct CertificateManagerCertificateData {
+struct CertificateManagerCertificateData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct CertificateManagerCertificateData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -32,18 +36,18 @@ struct CertificateManagerCertificateData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     scope: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    managed: std::option::Option<std::vec::Vec<CertificateManagerCertificateManagedEl>>,
+    managed: std::option::Option<std::vec::Vec<CertificateManagerCertificate_Managed>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    self_managed: std::option::Option<std::vec::Vec<CertificateManagerCertificateSelfManagedEl>>,
+    self_managed: std::option::Option<std::vec::Vec<CertificateManagerCertificate_SelfManaged>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<CertificateManagerCertificateTimeoutsEl>,
+    timeouts: std::option::Option<CertificateManagerCertificate_Timeouts>,
     dynamic: CertificateManagerCertificateDynamic,
 }
 
 struct CertificateManagerCertificate_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CertificateManagerCertificateData>,
+    data: std::cell::RefCell<CertificateManagerCertificateData_>,
 }
 
 #[derive(Clone)]
@@ -143,6 +147,13 @@ impl CertificateManagerCertificate {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nA human-readable description of the resource."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -178,7 +189,7 @@ impl CertificateManagerCertificate {
     }
 
     #[doc =
-        "Set the field `scope`.\nThe scope of the certificate.\n\nDEFAULT: Certificates with default scope are served from core Google data centers.\nIf unsure, choose this option.\n\nEDGE_CACHE: Certificates with scope EDGE_CACHE are special-purposed certificates, served from Edge Points of Presence.\nSee https://cloud.google.com/vpc/docs/edge-locations.\n\nALL_REGIONS: Certificates with ALL_REGIONS scope are served from all GCP regions (You can only use ALL_REGIONS with global certs).\nSee https://cloud.google.com/compute/docs/regions-zones"]
+        "Set the field `scope`.\nThe scope of the certificate.\n\nDEFAULT: Certificates with default scope are served from core Google data centers.\nIf unsure, choose this option.\n\nEDGE_CACHE: Certificates with scope EDGE_CACHE are special-purposed certificates, served from Edge Points of Presence.\nSee https://cloud.google.com/vpc/docs/edge-locations.\n\nALL_REGIONS: Certificates with ALL_REGIONS scope are served from all GCP regions (You can only use ALL_REGIONS with global certs).\nSee https://cloud.google.com/compute/docs/regions-zones.\n\nCLIENT_AUTH: Certificates with CLIENT_AUTH scope are used by a load balancer (TLS client) to be presented to the backend (TLS server) when backend mTLS is configured.\nSee https://cloud.google.com/load-balancing/docs/backend-authenticated-tls-backend-mtls#client-certificate."]
     pub fn set_scope(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().scope = std::option::Option::Some(v.into());
         self
@@ -187,7 +198,7 @@ impl CertificateManagerCertificate {
     #[doc = "Set the field `managed`.\n"]
     pub fn set_managed(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CertificateManagerCertificateManagedEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CertificateManagerCertificate_Managed>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -203,7 +214,7 @@ impl CertificateManagerCertificate {
     #[doc = "Set the field `self_managed`.\n"]
     pub fn set_self_managed(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CertificateManagerCertificateSelfManagedEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CertificateManagerCertificate_SelfManaged>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -217,9 +228,15 @@ impl CertificateManagerCertificate {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<CertificateManagerCertificateTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<CertificateManagerCertificate_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -263,7 +280,13 @@ impl CertificateManagerCertificate {
     }
 
     #[doc =
-        "Get a reference to the value of field `scope` after provisioning.\nThe scope of the certificate.\n\nDEFAULT: Certificates with default scope are served from core Google data centers.\nIf unsure, choose this option.\n\nEDGE_CACHE: Certificates with scope EDGE_CACHE are special-purposed certificates, served from Edge Points of Presence.\nSee https://cloud.google.com/vpc/docs/edge-locations.\n\nALL_REGIONS: Certificates with ALL_REGIONS scope are served from all GCP regions (You can only use ALL_REGIONS with global certs).\nSee https://cloud.google.com/compute/docs/regions-zones"]
+        "Get a reference to the value of field `san_dnsnames` after provisioning.\nThe list of Subject Alternative Names of dnsName type defined in the certificate (see RFC 5280 4.2.1.6)"]
+    pub fn san_dnsnames(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.san_dnsnames", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `scope` after provisioning.\nThe scope of the certificate.\n\nDEFAULT: Certificates with default scope are served from core Google data centers.\nIf unsure, choose this option.\n\nEDGE_CACHE: Certificates with scope EDGE_CACHE are special-purposed certificates, served from Edge Points of Presence.\nSee https://cloud.google.com/vpc/docs/edge-locations.\n\nALL_REGIONS: Certificates with ALL_REGIONS scope are served from all GCP regions (You can only use ALL_REGIONS with global certs).\nSee https://cloud.google.com/compute/docs/regions-zones.\n\nCLIENT_AUTH: Certificates with CLIENT_AUTH scope are used by a load balancer (TLS client) to be presented to the backend (TLS server) when backend mTLS is configured.\nSee https://cloud.google.com/load-balancing/docs/backend-authenticated-tls-backend-mtls#client-certificate."]
     pub fn scope(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.scope", self.extract_ref()))
     }
@@ -275,18 +298,18 @@ impl CertificateManagerCertificate {
     }
 
     #[doc = "Get a reference to the value of field `managed` after provisioning.\n"]
-    pub fn managed(&self) -> terrars::ListRef<CertificateManagerCertificateManagedElRef> {
+    pub fn managed(&self) -> terrars::ListRef<CertificateManagerCertificate_ManagedRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.managed", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `self_managed` after provisioning.\n"]
-    pub fn self_managed(&self) -> terrars::ListRef<CertificateManagerCertificateSelfManagedElRef> {
+    pub fn self_managed(&self) -> terrars::ListRef<CertificateManagerCertificate_SelfManagedRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.self_managed", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> CertificateManagerCertificateTimeoutsElRef {
-        CertificateManagerCertificateTimeoutsElRef::new(
+    pub fn timeouts(&self) -> CertificateManagerCertificate_TimeoutsRef {
+        CertificateManagerCertificate_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -336,12 +359,13 @@ impl BuildCertificateManagerCertificate {
         let out = CertificateManagerCertificate(std::rc::Rc::new(CertificateManagerCertificate_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CertificateManagerCertificateData {
+            data: std::cell::RefCell::new(CertificateManagerCertificateData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 labels: core::default::Default::default(),
@@ -381,6 +405,12 @@ impl CertificateManagerCertificateRef {
 
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -424,7 +454,13 @@ impl CertificateManagerCertificateRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `scope` after provisioning.\nThe scope of the certificate.\n\nDEFAULT: Certificates with default scope are served from core Google data centers.\nIf unsure, choose this option.\n\nEDGE_CACHE: Certificates with scope EDGE_CACHE are special-purposed certificates, served from Edge Points of Presence.\nSee https://cloud.google.com/vpc/docs/edge-locations.\n\nALL_REGIONS: Certificates with ALL_REGIONS scope are served from all GCP regions (You can only use ALL_REGIONS with global certs).\nSee https://cloud.google.com/compute/docs/regions-zones"]
+        "Get a reference to the value of field `san_dnsnames` after provisioning.\nThe list of Subject Alternative Names of dnsName type defined in the certificate (see RFC 5280 4.2.1.6)"]
+    pub fn san_dnsnames(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.san_dnsnames", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `scope` after provisioning.\nThe scope of the certificate.\n\nDEFAULT: Certificates with default scope are served from core Google data centers.\nIf unsure, choose this option.\n\nEDGE_CACHE: Certificates with scope EDGE_CACHE are special-purposed certificates, served from Edge Points of Presence.\nSee https://cloud.google.com/vpc/docs/edge-locations.\n\nALL_REGIONS: Certificates with ALL_REGIONS scope are served from all GCP regions (You can only use ALL_REGIONS with global certs).\nSee https://cloud.google.com/compute/docs/regions-zones.\n\nCLIENT_AUTH: Certificates with CLIENT_AUTH scope are used by a load balancer (TLS client) to be presented to the backend (TLS server) when backend mTLS is configured.\nSee https://cloud.google.com/load-balancing/docs/backend-authenticated-tls-backend-mtls#client-certificate."]
     pub fn scope(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.scope", self.extract_ref()))
     }
@@ -436,26 +472,32 @@ impl CertificateManagerCertificateRef {
     }
 
     #[doc = "Get a reference to the value of field `managed` after provisioning.\n"]
-    pub fn managed(&self) -> terrars::ListRef<CertificateManagerCertificateManagedElRef> {
+    pub fn managed(&self) -> terrars::ListRef<CertificateManagerCertificate_ManagedRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.managed", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `self_managed` after provisioning.\n"]
-    pub fn self_managed(&self) -> terrars::ListRef<CertificateManagerCertificateSelfManagedElRef> {
+    pub fn self_managed(&self) -> terrars::ListRef<CertificateManagerCertificate_SelfManagedRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.self_managed", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> CertificateManagerCertificateTimeoutsElRef {
-        CertificateManagerCertificateTimeoutsElRef::new(
+    pub fn timeouts(&self) -> CertificateManagerCertificate_TimeoutsRef {
+        CertificateManagerCertificate_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct CertificateManagerCertificateDynamic {
+    managed: std::option::Option<terrars::DynamicBlock<CertificateManagerCertificate_Managed>>,
+    self_managed: std::option::Option<terrars::DynamicBlock<CertificateManagerCertificate_SelfManaged>>,
+}
+
 #[derive(Serialize)]
-pub struct CertificateManagerCertificateManagedElAuthorizationAttemptInfoEl {
+pub struct CertificateManagerCertificate_Managed_AuthorizationAttemptInfo {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     details: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -466,7 +508,7 @@ pub struct CertificateManagerCertificateManagedElAuthorizationAttemptInfoEl {
     state: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CertificateManagerCertificateManagedElAuthorizationAttemptInfoEl {
+impl CertificateManagerCertificate_Managed_AuthorizationAttemptInfo {
     #[doc = "Set the field `details`.\n"]
     pub fn set_details(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.details = std::option::Option::Some(v.into());
@@ -492,8 +534,8 @@ impl CertificateManagerCertificateManagedElAuthorizationAttemptInfoEl {
     }
 }
 
-impl terrars::ToListMappable for CertificateManagerCertificateManagedElAuthorizationAttemptInfoEl {
-    type O = terrars::BlockAssignable<CertificateManagerCertificateManagedElAuthorizationAttemptInfoEl>;
+impl terrars::ToListMappable for CertificateManagerCertificate_Managed_AuthorizationAttemptInfo {
+    type O = terrars::BlockAssignable<CertificateManagerCertificate_Managed_AuthorizationAttemptInfo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -504,11 +546,11 @@ impl terrars::ToListMappable for CertificateManagerCertificateManagedElAuthoriza
     }
 }
 
-pub struct BuildCertificateManagerCertificateManagedElAuthorizationAttemptInfoEl {}
+pub struct BuildCertificateManagerCertificate_Managed_AuthorizationAttemptInfo {}
 
-impl BuildCertificateManagerCertificateManagedElAuthorizationAttemptInfoEl {
-    pub fn build(self) -> CertificateManagerCertificateManagedElAuthorizationAttemptInfoEl {
-        CertificateManagerCertificateManagedElAuthorizationAttemptInfoEl {
+impl BuildCertificateManagerCertificate_Managed_AuthorizationAttemptInfo {
+    pub fn build(self) -> CertificateManagerCertificate_Managed_AuthorizationAttemptInfo {
+        CertificateManagerCertificate_Managed_AuthorizationAttemptInfo {
             details: core::default::Default::default(),
             domain: core::default::Default::default(),
             failure_reason: core::default::Default::default(),
@@ -517,24 +559,26 @@ impl BuildCertificateManagerCertificateManagedElAuthorizationAttemptInfoEl {
     }
 }
 
-pub struct CertificateManagerCertificateManagedElAuthorizationAttemptInfoElRef {
+#[allow(dead_code)]
+pub struct CertificateManagerCertificate_Managed_AuthorizationAttemptInfoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CertificateManagerCertificateManagedElAuthorizationAttemptInfoElRef {
+impl terrars::Ref for CertificateManagerCertificate_Managed_AuthorizationAttemptInfoRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CertificateManagerCertificateManagedElAuthorizationAttemptInfoElRef {
-        CertificateManagerCertificateManagedElAuthorizationAttemptInfoElRef {
+    ) -> CertificateManagerCertificate_Managed_AuthorizationAttemptInfoRef {
+        CertificateManagerCertificate_Managed_AuthorizationAttemptInfoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CertificateManagerCertificateManagedElAuthorizationAttemptInfoElRef {
+impl CertificateManagerCertificate_Managed_AuthorizationAttemptInfoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -561,14 +605,14 @@ impl CertificateManagerCertificateManagedElAuthorizationAttemptInfoElRef {
 }
 
 #[derive(Serialize)]
-pub struct CertificateManagerCertificateManagedElProvisioningIssueEl {
+pub struct CertificateManagerCertificate_Managed_ProvisioningIssue {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     details: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     reason: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CertificateManagerCertificateManagedElProvisioningIssueEl {
+impl CertificateManagerCertificate_Managed_ProvisioningIssue {
     #[doc = "Set the field `details`.\n"]
     pub fn set_details(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.details = std::option::Option::Some(v.into());
@@ -582,8 +626,8 @@ impl CertificateManagerCertificateManagedElProvisioningIssueEl {
     }
 }
 
-impl terrars::ToListMappable for CertificateManagerCertificateManagedElProvisioningIssueEl {
-    type O = terrars::BlockAssignable<CertificateManagerCertificateManagedElProvisioningIssueEl>;
+impl terrars::ToListMappable for CertificateManagerCertificate_Managed_ProvisioningIssue {
+    type O = terrars::BlockAssignable<CertificateManagerCertificate_Managed_ProvisioningIssue>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -594,35 +638,37 @@ impl terrars::ToListMappable for CertificateManagerCertificateManagedElProvision
     }
 }
 
-pub struct BuildCertificateManagerCertificateManagedElProvisioningIssueEl {}
+pub struct BuildCertificateManagerCertificate_Managed_ProvisioningIssue {}
 
-impl BuildCertificateManagerCertificateManagedElProvisioningIssueEl {
-    pub fn build(self) -> CertificateManagerCertificateManagedElProvisioningIssueEl {
-        CertificateManagerCertificateManagedElProvisioningIssueEl {
+impl BuildCertificateManagerCertificate_Managed_ProvisioningIssue {
+    pub fn build(self) -> CertificateManagerCertificate_Managed_ProvisioningIssue {
+        CertificateManagerCertificate_Managed_ProvisioningIssue {
             details: core::default::Default::default(),
             reason: core::default::Default::default(),
         }
     }
 }
 
-pub struct CertificateManagerCertificateManagedElProvisioningIssueElRef {
+#[allow(dead_code)]
+pub struct CertificateManagerCertificate_Managed_ProvisioningIssueRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CertificateManagerCertificateManagedElProvisioningIssueElRef {
+impl terrars::Ref for CertificateManagerCertificate_Managed_ProvisioningIssueRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CertificateManagerCertificateManagedElProvisioningIssueElRef {
-        CertificateManagerCertificateManagedElProvisioningIssueElRef {
+    ) -> CertificateManagerCertificate_Managed_ProvisioningIssueRef {
+        CertificateManagerCertificate_Managed_ProvisioningIssueRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CertificateManagerCertificateManagedElProvisioningIssueElRef {
+impl CertificateManagerCertificate_Managed_ProvisioningIssueRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -639,7 +685,7 @@ impl CertificateManagerCertificateManagedElProvisioningIssueElRef {
 }
 
 #[derive(Serialize)]
-pub struct CertificateManagerCertificateManagedEl {
+pub struct CertificateManagerCertificate_Managed {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dns_authorizations: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -648,7 +694,7 @@ pub struct CertificateManagerCertificateManagedEl {
     issuance_config: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CertificateManagerCertificateManagedEl {
+impl CertificateManagerCertificate_Managed {
     #[doc =
         "Set the field `dns_authorizations`.\nAuthorizations that will be used for performing domain authorization. Either issuanceConfig or dnsAuthorizations should be specificed, but not both."]
     pub fn set_dns_authorizations(
@@ -677,8 +723,8 @@ impl CertificateManagerCertificateManagedEl {
     }
 }
 
-impl terrars::ToListMappable for CertificateManagerCertificateManagedEl {
-    type O = terrars::BlockAssignable<CertificateManagerCertificateManagedEl>;
+impl terrars::ToListMappable for CertificateManagerCertificate_Managed {
+    type O = terrars::BlockAssignable<CertificateManagerCertificate_Managed>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -689,11 +735,11 @@ impl terrars::ToListMappable for CertificateManagerCertificateManagedEl {
     }
 }
 
-pub struct BuildCertificateManagerCertificateManagedEl {}
+pub struct BuildCertificateManagerCertificate_Managed {}
 
-impl BuildCertificateManagerCertificateManagedEl {
-    pub fn build(self) -> CertificateManagerCertificateManagedEl {
-        CertificateManagerCertificateManagedEl {
+impl BuildCertificateManagerCertificate_Managed {
+    pub fn build(self) -> CertificateManagerCertificate_Managed {
+        CertificateManagerCertificate_Managed {
             dns_authorizations: core::default::Default::default(),
             domains: core::default::Default::default(),
             issuance_config: core::default::Default::default(),
@@ -701,21 +747,23 @@ impl BuildCertificateManagerCertificateManagedEl {
     }
 }
 
-pub struct CertificateManagerCertificateManagedElRef {
+#[allow(dead_code)]
+pub struct CertificateManagerCertificate_ManagedRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CertificateManagerCertificateManagedElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CertificateManagerCertificateManagedElRef {
-        CertificateManagerCertificateManagedElRef {
+impl terrars::Ref for CertificateManagerCertificate_ManagedRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CertificateManagerCertificate_ManagedRef {
+        CertificateManagerCertificate_ManagedRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CertificateManagerCertificateManagedElRef {
+impl CertificateManagerCertificate_ManagedRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -724,7 +772,7 @@ impl CertificateManagerCertificateManagedElRef {
         "Get a reference to the value of field `authorization_attempt_info` after provisioning.\nDetailed state of the latest authorization attempt for each domain\nspecified for this Managed Certificate."]
     pub fn authorization_attempt_info(
         &self,
-    ) -> terrars::ListRef<CertificateManagerCertificateManagedElAuthorizationAttemptInfoElRef> {
+    ) -> terrars::ListRef<CertificateManagerCertificate_Managed_AuthorizationAttemptInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.authorization_attempt_info", self.base))
     }
 
@@ -748,7 +796,7 @@ impl CertificateManagerCertificateManagedElRef {
 
     #[doc =
         "Get a reference to the value of field `provisioning_issue` after provisioning.\nInformation about issues with provisioning this Managed Certificate."]
-    pub fn provisioning_issue(&self) -> terrars::ListRef<CertificateManagerCertificateManagedElProvisioningIssueElRef> {
+    pub fn provisioning_issue(&self) -> terrars::ListRef<CertificateManagerCertificate_Managed_ProvisioningIssueRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.provisioning_issue", self.base))
     }
 
@@ -759,7 +807,7 @@ impl CertificateManagerCertificateManagedElRef {
 }
 
 #[derive(Serialize)]
-pub struct CertificateManagerCertificateSelfManagedEl {
+pub struct CertificateManagerCertificate_SelfManaged {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     certificate_pem: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -767,10 +815,14 @@ pub struct CertificateManagerCertificateSelfManagedEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     pem_private_key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    pem_private_key_wo: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    pem_private_key_wo_version: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     private_key_pem: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CertificateManagerCertificateSelfManagedEl {
+impl CertificateManagerCertificate_SelfManaged {
     #[doc =
         "Set the field `certificate_pem`.\nThe certificate chain in PEM-encoded form.\n\nLeaf certificate comes first, followed by intermediate ones if any."]
     pub fn set_certificate_pem(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -791,6 +843,25 @@ impl CertificateManagerCertificateSelfManagedEl {
         self
     }
 
+    #[doc = "Set the field `pem_private_key_wo`.\nThe private key of the leaf certificate in PEM-encoded form."]
+    pub fn set_pem_private_key_wo(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.pem_private_key_wo = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `pem_private_key_wo_version`.\nTriggers update of 'pem_private_key_wo' write-only. Increment this value when an update to 'pem_private_key_wo' is needed. For more info see [updating write-only arguments](/docs/providers/google/guides/using_write_only_arguments.html#updating-write-only-arguments)"]
+    pub fn set_pem_private_key_wo_version(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.pem_private_key_wo_version = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `private_key_pem`.\nThe private key of the leaf certificate in PEM-encoded form."]
     pub fn set_private_key_pem(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.private_key_pem = std::option::Option::Some(v.into());
@@ -798,8 +869,8 @@ impl CertificateManagerCertificateSelfManagedEl {
     }
 }
 
-impl terrars::ToListMappable for CertificateManagerCertificateSelfManagedEl {
-    type O = terrars::BlockAssignable<CertificateManagerCertificateSelfManagedEl>;
+impl terrars::ToListMappable for CertificateManagerCertificate_SelfManaged {
+    type O = terrars::BlockAssignable<CertificateManagerCertificate_SelfManaged>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -810,34 +881,38 @@ impl terrars::ToListMappable for CertificateManagerCertificateSelfManagedEl {
     }
 }
 
-pub struct BuildCertificateManagerCertificateSelfManagedEl {}
+pub struct BuildCertificateManagerCertificate_SelfManaged {}
 
-impl BuildCertificateManagerCertificateSelfManagedEl {
-    pub fn build(self) -> CertificateManagerCertificateSelfManagedEl {
-        CertificateManagerCertificateSelfManagedEl {
+impl BuildCertificateManagerCertificate_SelfManaged {
+    pub fn build(self) -> CertificateManagerCertificate_SelfManaged {
+        CertificateManagerCertificate_SelfManaged {
             certificate_pem: core::default::Default::default(),
             pem_certificate: core::default::Default::default(),
             pem_private_key: core::default::Default::default(),
+            pem_private_key_wo: core::default::Default::default(),
+            pem_private_key_wo_version: core::default::Default::default(),
             private_key_pem: core::default::Default::default(),
         }
     }
 }
 
-pub struct CertificateManagerCertificateSelfManagedElRef {
+#[allow(dead_code)]
+pub struct CertificateManagerCertificate_SelfManagedRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CertificateManagerCertificateSelfManagedElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CertificateManagerCertificateSelfManagedElRef {
-        CertificateManagerCertificateSelfManagedElRef {
+impl terrars::Ref for CertificateManagerCertificate_SelfManagedRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CertificateManagerCertificate_SelfManagedRef {
+        CertificateManagerCertificate_SelfManagedRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CertificateManagerCertificateSelfManagedElRef {
+impl CertificateManagerCertificate_SelfManagedRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -861,6 +936,18 @@ impl CertificateManagerCertificateSelfManagedElRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `pem_private_key_wo` after provisioning.\nThe private key of the leaf certificate in PEM-encoded form."]
+    pub fn pem_private_key_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.pem_private_key_wo", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `pem_private_key_wo_version` after provisioning.\nTriggers update of 'pem_private_key_wo' write-only. Increment this value when an update to 'pem_private_key_wo' is needed. For more info see [updating write-only arguments](/docs/providers/google/guides/using_write_only_arguments.html#updating-write-only-arguments)"]
+    pub fn pem_private_key_wo_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.pem_private_key_wo_version", self.base))
+    }
+
+    #[doc =
         "Get a reference to the value of field `private_key_pem` after provisioning.\nThe private key of the leaf certificate in PEM-encoded form."]
     pub fn private_key_pem(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_key_pem", self.base))
@@ -868,7 +955,7 @@ impl CertificateManagerCertificateSelfManagedElRef {
 }
 
 #[derive(Serialize)]
-pub struct CertificateManagerCertificateTimeoutsEl {
+pub struct CertificateManagerCertificate_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -877,7 +964,7 @@ pub struct CertificateManagerCertificateTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CertificateManagerCertificateTimeoutsEl {
+impl CertificateManagerCertificate_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -897,8 +984,8 @@ impl CertificateManagerCertificateTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for CertificateManagerCertificateTimeoutsEl {
-    type O = terrars::BlockAssignable<CertificateManagerCertificateTimeoutsEl>;
+impl terrars::ToListMappable for CertificateManagerCertificate_Timeouts {
+    type O = terrars::BlockAssignable<CertificateManagerCertificate_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -909,11 +996,11 @@ impl terrars::ToListMappable for CertificateManagerCertificateTimeoutsEl {
     }
 }
 
-pub struct BuildCertificateManagerCertificateTimeoutsEl {}
+pub struct BuildCertificateManagerCertificate_Timeouts {}
 
-impl BuildCertificateManagerCertificateTimeoutsEl {
-    pub fn build(self) -> CertificateManagerCertificateTimeoutsEl {
-        CertificateManagerCertificateTimeoutsEl {
+impl BuildCertificateManagerCertificate_Timeouts {
+    pub fn build(self) -> CertificateManagerCertificate_Timeouts {
+        CertificateManagerCertificate_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -921,21 +1008,23 @@ impl BuildCertificateManagerCertificateTimeoutsEl {
     }
 }
 
-pub struct CertificateManagerCertificateTimeoutsElRef {
+#[allow(dead_code)]
+pub struct CertificateManagerCertificate_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CertificateManagerCertificateTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CertificateManagerCertificateTimeoutsElRef {
-        CertificateManagerCertificateTimeoutsElRef {
+impl terrars::Ref for CertificateManagerCertificate_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CertificateManagerCertificate_TimeoutsRef {
+        CertificateManagerCertificate_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CertificateManagerCertificateTimeoutsElRef {
+impl CertificateManagerCertificate_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -954,10 +1043,4 @@ impl CertificateManagerCertificateTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct CertificateManagerCertificateDynamic {
-    managed: std::option::Option<terrars::DynamicBlock<CertificateManagerCertificateManagedEl>>,
-    self_managed: std::option::Option<terrars::DynamicBlock<CertificateManagerCertificateSelfManagedEl>>,
 }

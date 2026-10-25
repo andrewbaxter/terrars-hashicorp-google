@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataLoggingProjectCmekSettingsData {
+struct DataLoggingProjectCmekSettingsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -26,7 +28,7 @@ struct DataLoggingProjectCmekSettingsData {
 struct DataLoggingProjectCmekSettings_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataLoggingProjectCmekSettingsData>,
+    data: std::cell::RefCell<DataLoggingProjectCmekSettingsData_>,
 }
 
 #[derive(Clone)]
@@ -160,7 +162,7 @@ impl BuildDataLoggingProjectCmekSettings {
         let out = DataLoggingProjectCmekSettings(std::rc::Rc::new(DataLoggingProjectCmekSettings_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataLoggingProjectCmekSettingsData {
+            data: std::cell::RefCell::new(DataLoggingProjectCmekSettingsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),

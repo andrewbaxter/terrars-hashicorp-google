@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ContainerAwsClusterData {
+struct ContainerAwsClusterData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,6 +24,8 @@ struct ContainerAwsClusterData {
     annotations: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     aws_region: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -30,24 +34,24 @@ struct ContainerAwsClusterData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    authorization: std::option::Option<std::vec::Vec<ContainerAwsClusterAuthorizationEl>>,
+    authorization: std::option::Option<std::vec::Vec<ContainerAwsCluster_Authorization>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    binary_authorization: std::option::Option<std::vec::Vec<ContainerAwsClusterBinaryAuthorizationEl>>,
+    binary_authorization: std::option::Option<std::vec::Vec<ContainerAwsCluster_BinaryAuthorization>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    control_plane: std::option::Option<std::vec::Vec<ContainerAwsClusterControlPlaneEl>>,
+    control_plane: std::option::Option<std::vec::Vec<ContainerAwsCluster_ControlPlane>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    fleet: std::option::Option<std::vec::Vec<ContainerAwsClusterFleetEl>>,
+    fleet: std::option::Option<std::vec::Vec<ContainerAwsCluster_Fleet>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    networking: std::option::Option<std::vec::Vec<ContainerAwsClusterNetworkingEl>>,
+    networking: std::option::Option<std::vec::Vec<ContainerAwsCluster_Networking>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ContainerAwsClusterTimeoutsEl>,
+    timeouts: std::option::Option<ContainerAwsCluster_Timeouts>,
     dynamic: ContainerAwsClusterDynamic,
 }
 
 struct ContainerAwsCluster_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ContainerAwsClusterData>,
+    data: std::cell::RefCell<ContainerAwsClusterData_>,
 }
 
 #[derive(Clone)]
@@ -158,6 +162,13 @@ impl ContainerAwsCluster {
     }
 
     #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `description`.\nOptional. A human readable description of this cluster. Cannot be longer than 255 UTF-8 encoded bytes."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -179,7 +190,7 @@ impl ContainerAwsCluster {
     #[doc = "Set the field `authorization`.\n"]
     pub fn set_authorization(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsClusterAuthorizationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsCluster_Authorization>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -195,7 +206,7 @@ impl ContainerAwsCluster {
     #[doc = "Set the field `binary_authorization`.\n"]
     pub fn set_binary_authorization(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsClusterBinaryAuthorizationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsCluster_BinaryAuthorization>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -211,7 +222,7 @@ impl ContainerAwsCluster {
     #[doc = "Set the field `control_plane`.\n"]
     pub fn set_control_plane(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsClusterControlPlaneEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsCluster_ControlPlane>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -225,7 +236,7 @@ impl ContainerAwsCluster {
     }
 
     #[doc = "Set the field `fleet`.\n"]
-    pub fn set_fleet(self, v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsClusterFleetEl>>) -> Self {
+    pub fn set_fleet(self, v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsCluster_Fleet>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().fleet = std::option::Option::Some(v);
@@ -240,7 +251,7 @@ impl ContainerAwsCluster {
     #[doc = "Set the field `networking`.\n"]
     pub fn set_networking(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsClusterNetworkingEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsCluster_Networking>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -254,7 +265,7 @@ impl ContainerAwsCluster {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ContainerAwsClusterTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ContainerAwsCluster_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -275,6 +286,12 @@ impl ContainerAwsCluster {
         "Get a reference to the value of field `create_time` after provisioning.\nOutput only. The time at which this cluster was created."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -347,38 +364,38 @@ impl ContainerAwsCluster {
 
     #[doc =
         "Get a reference to the value of field `workload_identity_config` after provisioning.\nOutput only. Workload Identity settings."]
-    pub fn workload_identity_config(&self) -> terrars::ListRef<ContainerAwsClusterWorkloadIdentityConfigElRef> {
+    pub fn workload_identity_config(&self) -> terrars::ListRef<ContainerAwsCluster_WorkloadIdentityConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.workload_identity_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `authorization` after provisioning.\n"]
-    pub fn authorization(&self) -> terrars::ListRef<ContainerAwsClusterAuthorizationElRef> {
+    pub fn authorization(&self) -> terrars::ListRef<ContainerAwsCluster_AuthorizationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.authorization", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `binary_authorization` after provisioning.\n"]
-    pub fn binary_authorization(&self) -> terrars::ListRef<ContainerAwsClusterBinaryAuthorizationElRef> {
+    pub fn binary_authorization(&self) -> terrars::ListRef<ContainerAwsCluster_BinaryAuthorizationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.binary_authorization", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `control_plane` after provisioning.\n"]
-    pub fn control_plane(&self) -> terrars::ListRef<ContainerAwsClusterControlPlaneElRef> {
+    pub fn control_plane(&self) -> terrars::ListRef<ContainerAwsCluster_ControlPlaneRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.control_plane", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `fleet` after provisioning.\n"]
-    pub fn fleet(&self) -> terrars::ListRef<ContainerAwsClusterFleetElRef> {
+    pub fn fleet(&self) -> terrars::ListRef<ContainerAwsCluster_FleetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.fleet", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `networking` after provisioning.\n"]
-    pub fn networking(&self) -> terrars::ListRef<ContainerAwsClusterNetworkingElRef> {
+    pub fn networking(&self) -> terrars::ListRef<ContainerAwsCluster_NetworkingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.networking", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ContainerAwsClusterTimeoutsElRef {
-        ContainerAwsClusterTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ContainerAwsCluster_TimeoutsRef {
+        ContainerAwsCluster_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -429,7 +446,7 @@ impl BuildContainerAwsCluster {
         let out = ContainerAwsCluster(std::rc::Rc::new(ContainerAwsCluster_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ContainerAwsClusterData {
+            data: std::cell::RefCell::new(ContainerAwsClusterData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -437,6 +454,7 @@ impl BuildContainerAwsCluster {
                 provisioner: core::default::Default::default(),
                 annotations: core::default::Default::default(),
                 aws_region: self.aws_region,
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 location: self.location,
@@ -498,6 +516,12 @@ impl ContainerAwsClusterRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nOptional. A human readable description of this cluster. Cannot be longer than 255 UTF-8 encoded bytes."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -567,43 +591,52 @@ impl ContainerAwsClusterRef {
 
     #[doc =
         "Get a reference to the value of field `workload_identity_config` after provisioning.\nOutput only. Workload Identity settings."]
-    pub fn workload_identity_config(&self) -> terrars::ListRef<ContainerAwsClusterWorkloadIdentityConfigElRef> {
+    pub fn workload_identity_config(&self) -> terrars::ListRef<ContainerAwsCluster_WorkloadIdentityConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.workload_identity_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `authorization` after provisioning.\n"]
-    pub fn authorization(&self) -> terrars::ListRef<ContainerAwsClusterAuthorizationElRef> {
+    pub fn authorization(&self) -> terrars::ListRef<ContainerAwsCluster_AuthorizationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.authorization", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `binary_authorization` after provisioning.\n"]
-    pub fn binary_authorization(&self) -> terrars::ListRef<ContainerAwsClusterBinaryAuthorizationElRef> {
+    pub fn binary_authorization(&self) -> terrars::ListRef<ContainerAwsCluster_BinaryAuthorizationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.binary_authorization", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `control_plane` after provisioning.\n"]
-    pub fn control_plane(&self) -> terrars::ListRef<ContainerAwsClusterControlPlaneElRef> {
+    pub fn control_plane(&self) -> terrars::ListRef<ContainerAwsCluster_ControlPlaneRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.control_plane", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `fleet` after provisioning.\n"]
-    pub fn fleet(&self) -> terrars::ListRef<ContainerAwsClusterFleetElRef> {
+    pub fn fleet(&self) -> terrars::ListRef<ContainerAwsCluster_FleetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.fleet", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `networking` after provisioning.\n"]
-    pub fn networking(&self) -> terrars::ListRef<ContainerAwsClusterNetworkingElRef> {
+    pub fn networking(&self) -> terrars::ListRef<ContainerAwsCluster_NetworkingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.networking", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ContainerAwsClusterTimeoutsElRef {
-        ContainerAwsClusterTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ContainerAwsCluster_TimeoutsRef {
+        ContainerAwsCluster_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ContainerAwsClusterDynamic {
+    authorization: std::option::Option<terrars::DynamicBlock<ContainerAwsCluster_Authorization>>,
+    binary_authorization: std::option::Option<terrars::DynamicBlock<ContainerAwsCluster_BinaryAuthorization>>,
+    control_plane: std::option::Option<terrars::DynamicBlock<ContainerAwsCluster_ControlPlane>>,
+    fleet: std::option::Option<terrars::DynamicBlock<ContainerAwsCluster_Fleet>>,
+    networking: std::option::Option<terrars::DynamicBlock<ContainerAwsCluster_Networking>>,
+}
+
 #[derive(Serialize)]
-pub struct ContainerAwsClusterWorkloadIdentityConfigEl {
+pub struct ContainerAwsCluster_WorkloadIdentityConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     identity_provider: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -612,7 +645,7 @@ pub struct ContainerAwsClusterWorkloadIdentityConfigEl {
     workload_pool: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ContainerAwsClusterWorkloadIdentityConfigEl {
+impl ContainerAwsCluster_WorkloadIdentityConfig {
     #[doc = "Set the field `identity_provider`.\n"]
     pub fn set_identity_provider(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.identity_provider = std::option::Option::Some(v.into());
@@ -632,8 +665,8 @@ impl ContainerAwsClusterWorkloadIdentityConfigEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAwsClusterWorkloadIdentityConfigEl {
-    type O = terrars::BlockAssignable<ContainerAwsClusterWorkloadIdentityConfigEl>;
+impl terrars::ToListMappable for ContainerAwsCluster_WorkloadIdentityConfig {
+    type O = terrars::BlockAssignable<ContainerAwsCluster_WorkloadIdentityConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -644,11 +677,11 @@ impl terrars::ToListMappable for ContainerAwsClusterWorkloadIdentityConfigEl {
     }
 }
 
-pub struct BuildContainerAwsClusterWorkloadIdentityConfigEl {}
+pub struct BuildContainerAwsCluster_WorkloadIdentityConfig {}
 
-impl BuildContainerAwsClusterWorkloadIdentityConfigEl {
-    pub fn build(self) -> ContainerAwsClusterWorkloadIdentityConfigEl {
-        ContainerAwsClusterWorkloadIdentityConfigEl {
+impl BuildContainerAwsCluster_WorkloadIdentityConfig {
+    pub fn build(self) -> ContainerAwsCluster_WorkloadIdentityConfig {
+        ContainerAwsCluster_WorkloadIdentityConfig {
             identity_provider: core::default::Default::default(),
             issuer_uri: core::default::Default::default(),
             workload_pool: core::default::Default::default(),
@@ -656,24 +689,23 @@ impl BuildContainerAwsClusterWorkloadIdentityConfigEl {
     }
 }
 
-pub struct ContainerAwsClusterWorkloadIdentityConfigElRef {
+#[allow(dead_code)]
+pub struct ContainerAwsCluster_WorkloadIdentityConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAwsClusterWorkloadIdentityConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ContainerAwsClusterWorkloadIdentityConfigElRef {
-        ContainerAwsClusterWorkloadIdentityConfigElRef {
+impl terrars::Ref for ContainerAwsCluster_WorkloadIdentityConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAwsCluster_WorkloadIdentityConfigRef {
+        ContainerAwsCluster_WorkloadIdentityConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAwsClusterWorkloadIdentityConfigElRef {
+impl ContainerAwsCluster_WorkloadIdentityConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -695,14 +727,14 @@ impl ContainerAwsClusterWorkloadIdentityConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAwsClusterAuthorizationElAdminGroupsEl {
+pub struct ContainerAwsCluster_Authorization_AdminGroups {
     group: terrars::PrimField<std::string::String>,
 }
 
-impl ContainerAwsClusterAuthorizationElAdminGroupsEl { }
+impl ContainerAwsCluster_Authorization_AdminGroups { }
 
-impl terrars::ToListMappable for ContainerAwsClusterAuthorizationElAdminGroupsEl {
-    type O = terrars::BlockAssignable<ContainerAwsClusterAuthorizationElAdminGroupsEl>;
+impl terrars::ToListMappable for ContainerAwsCluster_Authorization_AdminGroups {
+    type O = terrars::BlockAssignable<ContainerAwsCluster_Authorization_AdminGroups>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -713,35 +745,37 @@ impl terrars::ToListMappable for ContainerAwsClusterAuthorizationElAdminGroupsEl
     }
 }
 
-pub struct BuildContainerAwsClusterAuthorizationElAdminGroupsEl {
+pub struct BuildContainerAwsCluster_Authorization_AdminGroups {
     #[doc = "The name of the group, e.g. `my-group@domain.com`."]
     pub group: terrars::PrimField<std::string::String>,
 }
 
-impl BuildContainerAwsClusterAuthorizationElAdminGroupsEl {
-    pub fn build(self) -> ContainerAwsClusterAuthorizationElAdminGroupsEl {
-        ContainerAwsClusterAuthorizationElAdminGroupsEl { group: self.group }
+impl BuildContainerAwsCluster_Authorization_AdminGroups {
+    pub fn build(self) -> ContainerAwsCluster_Authorization_AdminGroups {
+        ContainerAwsCluster_Authorization_AdminGroups { group: self.group }
     }
 }
 
-pub struct ContainerAwsClusterAuthorizationElAdminGroupsElRef {
+#[allow(dead_code)]
+pub struct ContainerAwsCluster_Authorization_AdminGroupsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAwsClusterAuthorizationElAdminGroupsElRef {
+impl terrars::Ref for ContainerAwsCluster_Authorization_AdminGroupsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ContainerAwsClusterAuthorizationElAdminGroupsElRef {
-        ContainerAwsClusterAuthorizationElAdminGroupsElRef {
+    ) -> ContainerAwsCluster_Authorization_AdminGroupsRef {
+        ContainerAwsCluster_Authorization_AdminGroupsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAwsClusterAuthorizationElAdminGroupsElRef {
+impl ContainerAwsCluster_Authorization_AdminGroupsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -754,14 +788,14 @@ impl ContainerAwsClusterAuthorizationElAdminGroupsElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAwsClusterAuthorizationElAdminUsersEl {
+pub struct ContainerAwsCluster_Authorization_AdminUsers {
     username: terrars::PrimField<std::string::String>,
 }
 
-impl ContainerAwsClusterAuthorizationElAdminUsersEl { }
+impl ContainerAwsCluster_Authorization_AdminUsers { }
 
-impl terrars::ToListMappable for ContainerAwsClusterAuthorizationElAdminUsersEl {
-    type O = terrars::BlockAssignable<ContainerAwsClusterAuthorizationElAdminUsersEl>;
+impl terrars::ToListMappable for ContainerAwsCluster_Authorization_AdminUsers {
+    type O = terrars::BlockAssignable<ContainerAwsCluster_Authorization_AdminUsers>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -772,35 +806,37 @@ impl terrars::ToListMappable for ContainerAwsClusterAuthorizationElAdminUsersEl 
     }
 }
 
-pub struct BuildContainerAwsClusterAuthorizationElAdminUsersEl {
+pub struct BuildContainerAwsCluster_Authorization_AdminUsers {
     #[doc = "The name of the user, e.g. `my-gcp-id@gmail.com`."]
     pub username: terrars::PrimField<std::string::String>,
 }
 
-impl BuildContainerAwsClusterAuthorizationElAdminUsersEl {
-    pub fn build(self) -> ContainerAwsClusterAuthorizationElAdminUsersEl {
-        ContainerAwsClusterAuthorizationElAdminUsersEl { username: self.username }
+impl BuildContainerAwsCluster_Authorization_AdminUsers {
+    pub fn build(self) -> ContainerAwsCluster_Authorization_AdminUsers {
+        ContainerAwsCluster_Authorization_AdminUsers { username: self.username }
     }
 }
 
-pub struct ContainerAwsClusterAuthorizationElAdminUsersElRef {
+#[allow(dead_code)]
+pub struct ContainerAwsCluster_Authorization_AdminUsersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAwsClusterAuthorizationElAdminUsersElRef {
+impl terrars::Ref for ContainerAwsCluster_Authorization_AdminUsersRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ContainerAwsClusterAuthorizationElAdminUsersElRef {
-        ContainerAwsClusterAuthorizationElAdminUsersElRef {
+    ) -> ContainerAwsCluster_Authorization_AdminUsersRef {
+        ContainerAwsCluster_Authorization_AdminUsersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAwsClusterAuthorizationElAdminUsersElRef {
+impl ContainerAwsCluster_Authorization_AdminUsersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -813,25 +849,25 @@ impl ContainerAwsClusterAuthorizationElAdminUsersElRef {
 }
 
 #[derive(Serialize, Default)]
-struct ContainerAwsClusterAuthorizationElDynamic {
-    admin_groups: std::option::Option<terrars::DynamicBlock<ContainerAwsClusterAuthorizationElAdminGroupsEl>>,
-    admin_users: std::option::Option<terrars::DynamicBlock<ContainerAwsClusterAuthorizationElAdminUsersEl>>,
+struct ContainerAwsCluster_AuthorizationDynamic {
+    admin_groups: std::option::Option<terrars::DynamicBlock<ContainerAwsCluster_Authorization_AdminGroups>>,
+    admin_users: std::option::Option<terrars::DynamicBlock<ContainerAwsCluster_Authorization_AdminUsers>>,
 }
 
 #[derive(Serialize)]
-pub struct ContainerAwsClusterAuthorizationEl {
+pub struct ContainerAwsCluster_Authorization {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    admin_groups: std::option::Option<std::vec::Vec<ContainerAwsClusterAuthorizationElAdminGroupsEl>>,
+    admin_groups: std::option::Option<std::vec::Vec<ContainerAwsCluster_Authorization_AdminGroups>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    admin_users: std::option::Option<std::vec::Vec<ContainerAwsClusterAuthorizationElAdminUsersEl>>,
-    dynamic: ContainerAwsClusterAuthorizationElDynamic,
+    admin_users: std::option::Option<std::vec::Vec<ContainerAwsCluster_Authorization_AdminUsers>>,
+    dynamic: ContainerAwsCluster_AuthorizationDynamic,
 }
 
-impl ContainerAwsClusterAuthorizationEl {
+impl ContainerAwsCluster_Authorization {
     #[doc = "Set the field `admin_groups`.\n"]
     pub fn set_admin_groups(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsClusterAuthorizationElAdminGroupsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsCluster_Authorization_AdminGroups>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -847,7 +883,7 @@ impl ContainerAwsClusterAuthorizationEl {
     #[doc = "Set the field `admin_users`.\n"]
     pub fn set_admin_users(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsClusterAuthorizationElAdminUsersEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsCluster_Authorization_AdminUsers>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -861,8 +897,8 @@ impl ContainerAwsClusterAuthorizationEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAwsClusterAuthorizationEl {
-    type O = terrars::BlockAssignable<ContainerAwsClusterAuthorizationEl>;
+impl terrars::ToListMappable for ContainerAwsCluster_Authorization {
+    type O = terrars::BlockAssignable<ContainerAwsCluster_Authorization>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -873,11 +909,11 @@ impl terrars::ToListMappable for ContainerAwsClusterAuthorizationEl {
     }
 }
 
-pub struct BuildContainerAwsClusterAuthorizationEl {}
+pub struct BuildContainerAwsCluster_Authorization {}
 
-impl BuildContainerAwsClusterAuthorizationEl {
-    pub fn build(self) -> ContainerAwsClusterAuthorizationEl {
-        ContainerAwsClusterAuthorizationEl {
+impl BuildContainerAwsCluster_Authorization {
+    pub fn build(self) -> ContainerAwsCluster_Authorization {
+        ContainerAwsCluster_Authorization {
             admin_groups: core::default::Default::default(),
             admin_users: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -885,43 +921,45 @@ impl BuildContainerAwsClusterAuthorizationEl {
     }
 }
 
-pub struct ContainerAwsClusterAuthorizationElRef {
+#[allow(dead_code)]
+pub struct ContainerAwsCluster_AuthorizationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAwsClusterAuthorizationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAwsClusterAuthorizationElRef {
-        ContainerAwsClusterAuthorizationElRef {
+impl terrars::Ref for ContainerAwsCluster_AuthorizationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAwsCluster_AuthorizationRef {
+        ContainerAwsCluster_AuthorizationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAwsClusterAuthorizationElRef {
+impl ContainerAwsCluster_AuthorizationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `admin_groups` after provisioning.\n"]
-    pub fn admin_groups(&self) -> terrars::ListRef<ContainerAwsClusterAuthorizationElAdminGroupsElRef> {
+    pub fn admin_groups(&self) -> terrars::ListRef<ContainerAwsCluster_Authorization_AdminGroupsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.admin_groups", self.base))
     }
 
     #[doc = "Get a reference to the value of field `admin_users` after provisioning.\n"]
-    pub fn admin_users(&self) -> terrars::ListRef<ContainerAwsClusterAuthorizationElAdminUsersElRef> {
+    pub fn admin_users(&self) -> terrars::ListRef<ContainerAwsCluster_Authorization_AdminUsersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.admin_users", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ContainerAwsClusterBinaryAuthorizationEl {
+pub struct ContainerAwsCluster_BinaryAuthorization {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     evaluation_mode: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ContainerAwsClusterBinaryAuthorizationEl {
+impl ContainerAwsCluster_BinaryAuthorization {
     #[doc =
         "Set the field `evaluation_mode`.\nMode of operation for Binary Authorization policy evaluation. Possible values: DISABLED, PROJECT_SINGLETON_POLICY_ENFORCE"]
     pub fn set_evaluation_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -930,8 +968,8 @@ impl ContainerAwsClusterBinaryAuthorizationEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAwsClusterBinaryAuthorizationEl {
-    type O = terrars::BlockAssignable<ContainerAwsClusterBinaryAuthorizationEl>;
+impl terrars::ToListMappable for ContainerAwsCluster_BinaryAuthorization {
+    type O = terrars::BlockAssignable<ContainerAwsCluster_BinaryAuthorization>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -942,29 +980,31 @@ impl terrars::ToListMappable for ContainerAwsClusterBinaryAuthorizationEl {
     }
 }
 
-pub struct BuildContainerAwsClusterBinaryAuthorizationEl {}
+pub struct BuildContainerAwsCluster_BinaryAuthorization {}
 
-impl BuildContainerAwsClusterBinaryAuthorizationEl {
-    pub fn build(self) -> ContainerAwsClusterBinaryAuthorizationEl {
-        ContainerAwsClusterBinaryAuthorizationEl { evaluation_mode: core::default::Default::default() }
+impl BuildContainerAwsCluster_BinaryAuthorization {
+    pub fn build(self) -> ContainerAwsCluster_BinaryAuthorization {
+        ContainerAwsCluster_BinaryAuthorization { evaluation_mode: core::default::Default::default() }
     }
 }
 
-pub struct ContainerAwsClusterBinaryAuthorizationElRef {
+#[allow(dead_code)]
+pub struct ContainerAwsCluster_BinaryAuthorizationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAwsClusterBinaryAuthorizationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAwsClusterBinaryAuthorizationElRef {
-        ContainerAwsClusterBinaryAuthorizationElRef {
+impl terrars::Ref for ContainerAwsCluster_BinaryAuthorizationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAwsCluster_BinaryAuthorizationRef {
+        ContainerAwsCluster_BinaryAuthorizationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAwsClusterBinaryAuthorizationElRef {
+impl ContainerAwsCluster_BinaryAuthorizationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -977,13 +1017,13 @@ impl ContainerAwsClusterBinaryAuthorizationElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAwsClusterControlPlaneElAwsServicesAuthenticationEl {
+pub struct ContainerAwsCluster_ControlPlane_AwsServicesAuthentication {
     role_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     role_session_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ContainerAwsClusterControlPlaneElAwsServicesAuthenticationEl {
+impl ContainerAwsCluster_ControlPlane_AwsServicesAuthentication {
     #[doc =
         "Set the field `role_session_name`.\nOptional. An identifier for the assumed role session. When unspecified, it defaults to `multicloud-service-agent`."]
     pub fn set_role_session_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -992,8 +1032,8 @@ impl ContainerAwsClusterControlPlaneElAwsServicesAuthenticationEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAwsClusterControlPlaneElAwsServicesAuthenticationEl {
-    type O = terrars::BlockAssignable<ContainerAwsClusterControlPlaneElAwsServicesAuthenticationEl>;
+impl terrars::ToListMappable for ContainerAwsCluster_ControlPlane_AwsServicesAuthentication {
+    type O = terrars::BlockAssignable<ContainerAwsCluster_ControlPlane_AwsServicesAuthentication>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1004,39 +1044,41 @@ impl terrars::ToListMappable for ContainerAwsClusterControlPlaneElAwsServicesAut
     }
 }
 
-pub struct BuildContainerAwsClusterControlPlaneElAwsServicesAuthenticationEl {
+pub struct BuildContainerAwsCluster_ControlPlane_AwsServicesAuthentication {
     #[doc =
         "The Amazon Resource Name (ARN) of the role that the Anthos Multi-Cloud API will assume when managing AWS resources on your account."]
     pub role_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildContainerAwsClusterControlPlaneElAwsServicesAuthenticationEl {
-    pub fn build(self) -> ContainerAwsClusterControlPlaneElAwsServicesAuthenticationEl {
-        ContainerAwsClusterControlPlaneElAwsServicesAuthenticationEl {
+impl BuildContainerAwsCluster_ControlPlane_AwsServicesAuthentication {
+    pub fn build(self) -> ContainerAwsCluster_ControlPlane_AwsServicesAuthentication {
+        ContainerAwsCluster_ControlPlane_AwsServicesAuthentication {
             role_arn: self.role_arn,
             role_session_name: core::default::Default::default(),
         }
     }
 }
 
-pub struct ContainerAwsClusterControlPlaneElAwsServicesAuthenticationElRef {
+#[allow(dead_code)]
+pub struct ContainerAwsCluster_ControlPlane_AwsServicesAuthenticationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAwsClusterControlPlaneElAwsServicesAuthenticationElRef {
+impl terrars::Ref for ContainerAwsCluster_ControlPlane_AwsServicesAuthenticationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ContainerAwsClusterControlPlaneElAwsServicesAuthenticationElRef {
-        ContainerAwsClusterControlPlaneElAwsServicesAuthenticationElRef {
+    ) -> ContainerAwsCluster_ControlPlane_AwsServicesAuthenticationRef {
+        ContainerAwsCluster_ControlPlane_AwsServicesAuthenticationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAwsClusterControlPlaneElAwsServicesAuthenticationElRef {
+impl ContainerAwsCluster_ControlPlane_AwsServicesAuthenticationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1055,14 +1097,14 @@ impl ContainerAwsClusterControlPlaneElAwsServicesAuthenticationElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAwsClusterControlPlaneElConfigEncryptionEl {
+pub struct ContainerAwsCluster_ControlPlane_ConfigEncryption {
     kms_key_arn: terrars::PrimField<std::string::String>,
 }
 
-impl ContainerAwsClusterControlPlaneElConfigEncryptionEl { }
+impl ContainerAwsCluster_ControlPlane_ConfigEncryption { }
 
-impl terrars::ToListMappable for ContainerAwsClusterControlPlaneElConfigEncryptionEl {
-    type O = terrars::BlockAssignable<ContainerAwsClusterControlPlaneElConfigEncryptionEl>;
+impl terrars::ToListMappable for ContainerAwsCluster_ControlPlane_ConfigEncryption {
+    type O = terrars::BlockAssignable<ContainerAwsCluster_ControlPlane_ConfigEncryption>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1073,35 +1115,37 @@ impl terrars::ToListMappable for ContainerAwsClusterControlPlaneElConfigEncrypti
     }
 }
 
-pub struct BuildContainerAwsClusterControlPlaneElConfigEncryptionEl {
+pub struct BuildContainerAwsCluster_ControlPlane_ConfigEncryption {
     #[doc = "The ARN of the AWS KMS key used to encrypt cluster configuration."]
     pub kms_key_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildContainerAwsClusterControlPlaneElConfigEncryptionEl {
-    pub fn build(self) -> ContainerAwsClusterControlPlaneElConfigEncryptionEl {
-        ContainerAwsClusterControlPlaneElConfigEncryptionEl { kms_key_arn: self.kms_key_arn }
+impl BuildContainerAwsCluster_ControlPlane_ConfigEncryption {
+    pub fn build(self) -> ContainerAwsCluster_ControlPlane_ConfigEncryption {
+        ContainerAwsCluster_ControlPlane_ConfigEncryption { kms_key_arn: self.kms_key_arn }
     }
 }
 
-pub struct ContainerAwsClusterControlPlaneElConfigEncryptionElRef {
+#[allow(dead_code)]
+pub struct ContainerAwsCluster_ControlPlane_ConfigEncryptionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAwsClusterControlPlaneElConfigEncryptionElRef {
+impl terrars::Ref for ContainerAwsCluster_ControlPlane_ConfigEncryptionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ContainerAwsClusterControlPlaneElConfigEncryptionElRef {
-        ContainerAwsClusterControlPlaneElConfigEncryptionElRef {
+    ) -> ContainerAwsCluster_ControlPlane_ConfigEncryptionRef {
+        ContainerAwsCluster_ControlPlane_ConfigEncryptionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAwsClusterControlPlaneElConfigEncryptionElRef {
+impl ContainerAwsCluster_ControlPlane_ConfigEncryptionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1114,14 +1158,14 @@ impl ContainerAwsClusterControlPlaneElConfigEncryptionElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAwsClusterControlPlaneElDatabaseEncryptionEl {
+pub struct ContainerAwsCluster_ControlPlane_DatabaseEncryption {
     kms_key_arn: terrars::PrimField<std::string::String>,
 }
 
-impl ContainerAwsClusterControlPlaneElDatabaseEncryptionEl { }
+impl ContainerAwsCluster_ControlPlane_DatabaseEncryption { }
 
-impl terrars::ToListMappable for ContainerAwsClusterControlPlaneElDatabaseEncryptionEl {
-    type O = terrars::BlockAssignable<ContainerAwsClusterControlPlaneElDatabaseEncryptionEl>;
+impl terrars::ToListMappable for ContainerAwsCluster_ControlPlane_DatabaseEncryption {
+    type O = terrars::BlockAssignable<ContainerAwsCluster_ControlPlane_DatabaseEncryption>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1132,35 +1176,37 @@ impl terrars::ToListMappable for ContainerAwsClusterControlPlaneElDatabaseEncryp
     }
 }
 
-pub struct BuildContainerAwsClusterControlPlaneElDatabaseEncryptionEl {
+pub struct BuildContainerAwsCluster_ControlPlane_DatabaseEncryption {
     #[doc = "The ARN of the AWS KMS key used to encrypt cluster secrets."]
     pub kms_key_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildContainerAwsClusterControlPlaneElDatabaseEncryptionEl {
-    pub fn build(self) -> ContainerAwsClusterControlPlaneElDatabaseEncryptionEl {
-        ContainerAwsClusterControlPlaneElDatabaseEncryptionEl { kms_key_arn: self.kms_key_arn }
+impl BuildContainerAwsCluster_ControlPlane_DatabaseEncryption {
+    pub fn build(self) -> ContainerAwsCluster_ControlPlane_DatabaseEncryption {
+        ContainerAwsCluster_ControlPlane_DatabaseEncryption { kms_key_arn: self.kms_key_arn }
     }
 }
 
-pub struct ContainerAwsClusterControlPlaneElDatabaseEncryptionElRef {
+#[allow(dead_code)]
+pub struct ContainerAwsCluster_ControlPlane_DatabaseEncryptionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAwsClusterControlPlaneElDatabaseEncryptionElRef {
+impl terrars::Ref for ContainerAwsCluster_ControlPlane_DatabaseEncryptionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ContainerAwsClusterControlPlaneElDatabaseEncryptionElRef {
-        ContainerAwsClusterControlPlaneElDatabaseEncryptionElRef {
+    ) -> ContainerAwsCluster_ControlPlane_DatabaseEncryptionRef {
+        ContainerAwsCluster_ControlPlane_DatabaseEncryptionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAwsClusterControlPlaneElDatabaseEncryptionElRef {
+impl ContainerAwsCluster_ControlPlane_DatabaseEncryptionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1173,7 +1219,7 @@ impl ContainerAwsClusterControlPlaneElDatabaseEncryptionElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAwsClusterControlPlaneElMainVolumeEl {
+pub struct ContainerAwsCluster_ControlPlane_MainVolume {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     iops: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1186,7 +1232,7 @@ pub struct ContainerAwsClusterControlPlaneElMainVolumeEl {
     volume_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ContainerAwsClusterControlPlaneElMainVolumeEl {
+impl ContainerAwsCluster_ControlPlane_MainVolume {
     #[doc =
         "Set the field `iops`.\nOptional. The number of I/O operations per second (IOPS) to provision for GP3 volume."]
     pub fn set_iops(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -1223,8 +1269,8 @@ impl ContainerAwsClusterControlPlaneElMainVolumeEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAwsClusterControlPlaneElMainVolumeEl {
-    type O = terrars::BlockAssignable<ContainerAwsClusterControlPlaneElMainVolumeEl>;
+impl terrars::ToListMappable for ContainerAwsCluster_ControlPlane_MainVolume {
+    type O = terrars::BlockAssignable<ContainerAwsCluster_ControlPlane_MainVolume>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1235,11 +1281,11 @@ impl terrars::ToListMappable for ContainerAwsClusterControlPlaneElMainVolumeEl {
     }
 }
 
-pub struct BuildContainerAwsClusterControlPlaneElMainVolumeEl {}
+pub struct BuildContainerAwsCluster_ControlPlane_MainVolume {}
 
-impl BuildContainerAwsClusterControlPlaneElMainVolumeEl {
-    pub fn build(self) -> ContainerAwsClusterControlPlaneElMainVolumeEl {
-        ContainerAwsClusterControlPlaneElMainVolumeEl {
+impl BuildContainerAwsCluster_ControlPlane_MainVolume {
+    pub fn build(self) -> ContainerAwsCluster_ControlPlane_MainVolume {
+        ContainerAwsCluster_ControlPlane_MainVolume {
             iops: core::default::Default::default(),
             kms_key_arn: core::default::Default::default(),
             size_gib: core::default::Default::default(),
@@ -1249,24 +1295,26 @@ impl BuildContainerAwsClusterControlPlaneElMainVolumeEl {
     }
 }
 
-pub struct ContainerAwsClusterControlPlaneElMainVolumeElRef {
+#[allow(dead_code)]
+pub struct ContainerAwsCluster_ControlPlane_MainVolumeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAwsClusterControlPlaneElMainVolumeElRef {
+impl terrars::Ref for ContainerAwsCluster_ControlPlane_MainVolumeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ContainerAwsClusterControlPlaneElMainVolumeElRef {
-        ContainerAwsClusterControlPlaneElMainVolumeElRef {
+    ) -> ContainerAwsCluster_ControlPlane_MainVolumeRef {
+        ContainerAwsCluster_ControlPlane_MainVolumeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAwsClusterControlPlaneElMainVolumeElRef {
+impl ContainerAwsCluster_ControlPlane_MainVolumeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1303,15 +1351,15 @@ impl ContainerAwsClusterControlPlaneElMainVolumeElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAwsClusterControlPlaneElProxyConfigEl {
+pub struct ContainerAwsCluster_ControlPlane_ProxyConfig {
     secret_arn: terrars::PrimField<std::string::String>,
     secret_version: terrars::PrimField<std::string::String>,
 }
 
-impl ContainerAwsClusterControlPlaneElProxyConfigEl { }
+impl ContainerAwsCluster_ControlPlane_ProxyConfig { }
 
-impl terrars::ToListMappable for ContainerAwsClusterControlPlaneElProxyConfigEl {
-    type O = terrars::BlockAssignable<ContainerAwsClusterControlPlaneElProxyConfigEl>;
+impl terrars::ToListMappable for ContainerAwsCluster_ControlPlane_ProxyConfig {
+    type O = terrars::BlockAssignable<ContainerAwsCluster_ControlPlane_ProxyConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1322,40 +1370,42 @@ impl terrars::ToListMappable for ContainerAwsClusterControlPlaneElProxyConfigEl 
     }
 }
 
-pub struct BuildContainerAwsClusterControlPlaneElProxyConfigEl {
+pub struct BuildContainerAwsCluster_ControlPlane_ProxyConfig {
     #[doc = "The ARN of the AWS Secret Manager secret that contains the HTTP(S) proxy configuration."]
     pub secret_arn: terrars::PrimField<std::string::String>,
     #[doc = "The version string of the AWS Secret Manager secret that contains the HTTP(S) proxy configuration."]
     pub secret_version: terrars::PrimField<std::string::String>,
 }
 
-impl BuildContainerAwsClusterControlPlaneElProxyConfigEl {
-    pub fn build(self) -> ContainerAwsClusterControlPlaneElProxyConfigEl {
-        ContainerAwsClusterControlPlaneElProxyConfigEl {
+impl BuildContainerAwsCluster_ControlPlane_ProxyConfig {
+    pub fn build(self) -> ContainerAwsCluster_ControlPlane_ProxyConfig {
+        ContainerAwsCluster_ControlPlane_ProxyConfig {
             secret_arn: self.secret_arn,
             secret_version: self.secret_version,
         }
     }
 }
 
-pub struct ContainerAwsClusterControlPlaneElProxyConfigElRef {
+#[allow(dead_code)]
+pub struct ContainerAwsCluster_ControlPlane_ProxyConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAwsClusterControlPlaneElProxyConfigElRef {
+impl terrars::Ref for ContainerAwsCluster_ControlPlane_ProxyConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ContainerAwsClusterControlPlaneElProxyConfigElRef {
-        ContainerAwsClusterControlPlaneElProxyConfigElRef {
+    ) -> ContainerAwsCluster_ControlPlane_ProxyConfigRef {
+        ContainerAwsCluster_ControlPlane_ProxyConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAwsClusterControlPlaneElProxyConfigElRef {
+impl ContainerAwsCluster_ControlPlane_ProxyConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1374,7 +1424,7 @@ impl ContainerAwsClusterControlPlaneElProxyConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAwsClusterControlPlaneElRootVolumeEl {
+pub struct ContainerAwsCluster_ControlPlane_RootVolume {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     iops: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1387,7 +1437,7 @@ pub struct ContainerAwsClusterControlPlaneElRootVolumeEl {
     volume_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ContainerAwsClusterControlPlaneElRootVolumeEl {
+impl ContainerAwsCluster_ControlPlane_RootVolume {
     #[doc =
         "Set the field `iops`.\nOptional. The number of I/O operations per second (IOPS) to provision for GP3 volume."]
     pub fn set_iops(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -1424,8 +1474,8 @@ impl ContainerAwsClusterControlPlaneElRootVolumeEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAwsClusterControlPlaneElRootVolumeEl {
-    type O = terrars::BlockAssignable<ContainerAwsClusterControlPlaneElRootVolumeEl>;
+impl terrars::ToListMappable for ContainerAwsCluster_ControlPlane_RootVolume {
+    type O = terrars::BlockAssignable<ContainerAwsCluster_ControlPlane_RootVolume>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1436,11 +1486,11 @@ impl terrars::ToListMappable for ContainerAwsClusterControlPlaneElRootVolumeEl {
     }
 }
 
-pub struct BuildContainerAwsClusterControlPlaneElRootVolumeEl {}
+pub struct BuildContainerAwsCluster_ControlPlane_RootVolume {}
 
-impl BuildContainerAwsClusterControlPlaneElRootVolumeEl {
-    pub fn build(self) -> ContainerAwsClusterControlPlaneElRootVolumeEl {
-        ContainerAwsClusterControlPlaneElRootVolumeEl {
+impl BuildContainerAwsCluster_ControlPlane_RootVolume {
+    pub fn build(self) -> ContainerAwsCluster_ControlPlane_RootVolume {
+        ContainerAwsCluster_ControlPlane_RootVolume {
             iops: core::default::Default::default(),
             kms_key_arn: core::default::Default::default(),
             size_gib: core::default::Default::default(),
@@ -1450,24 +1500,26 @@ impl BuildContainerAwsClusterControlPlaneElRootVolumeEl {
     }
 }
 
-pub struct ContainerAwsClusterControlPlaneElRootVolumeElRef {
+#[allow(dead_code)]
+pub struct ContainerAwsCluster_ControlPlane_RootVolumeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAwsClusterControlPlaneElRootVolumeElRef {
+impl terrars::Ref for ContainerAwsCluster_ControlPlane_RootVolumeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ContainerAwsClusterControlPlaneElRootVolumeElRef {
-        ContainerAwsClusterControlPlaneElRootVolumeElRef {
+    ) -> ContainerAwsCluster_ControlPlane_RootVolumeRef {
+        ContainerAwsCluster_ControlPlane_RootVolumeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAwsClusterControlPlaneElRootVolumeElRef {
+impl ContainerAwsCluster_ControlPlane_RootVolumeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1504,14 +1556,14 @@ impl ContainerAwsClusterControlPlaneElRootVolumeElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAwsClusterControlPlaneElSshConfigEl {
+pub struct ContainerAwsCluster_ControlPlane_SshConfig {
     ec2_key_pair: terrars::PrimField<std::string::String>,
 }
 
-impl ContainerAwsClusterControlPlaneElSshConfigEl { }
+impl ContainerAwsCluster_ControlPlane_SshConfig { }
 
-impl terrars::ToListMappable for ContainerAwsClusterControlPlaneElSshConfigEl {
-    type O = terrars::BlockAssignable<ContainerAwsClusterControlPlaneElSshConfigEl>;
+impl terrars::ToListMappable for ContainerAwsCluster_ControlPlane_SshConfig {
+    type O = terrars::BlockAssignable<ContainerAwsCluster_ControlPlane_SshConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1522,35 +1574,34 @@ impl terrars::ToListMappable for ContainerAwsClusterControlPlaneElSshConfigEl {
     }
 }
 
-pub struct BuildContainerAwsClusterControlPlaneElSshConfigEl {
+pub struct BuildContainerAwsCluster_ControlPlane_SshConfig {
     #[doc = "The name of the EC2 key pair used to login into cluster machines."]
     pub ec2_key_pair: terrars::PrimField<std::string::String>,
 }
 
-impl BuildContainerAwsClusterControlPlaneElSshConfigEl {
-    pub fn build(self) -> ContainerAwsClusterControlPlaneElSshConfigEl {
-        ContainerAwsClusterControlPlaneElSshConfigEl { ec2_key_pair: self.ec2_key_pair }
+impl BuildContainerAwsCluster_ControlPlane_SshConfig {
+    pub fn build(self) -> ContainerAwsCluster_ControlPlane_SshConfig {
+        ContainerAwsCluster_ControlPlane_SshConfig { ec2_key_pair: self.ec2_key_pair }
     }
 }
 
-pub struct ContainerAwsClusterControlPlaneElSshConfigElRef {
+#[allow(dead_code)]
+pub struct ContainerAwsCluster_ControlPlane_SshConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAwsClusterControlPlaneElSshConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ContainerAwsClusterControlPlaneElSshConfigElRef {
-        ContainerAwsClusterControlPlaneElSshConfigElRef {
+impl terrars::Ref for ContainerAwsCluster_ControlPlane_SshConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAwsCluster_ControlPlane_SshConfigRef {
+        ContainerAwsCluster_ControlPlane_SshConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAwsClusterControlPlaneElSshConfigElRef {
+impl ContainerAwsCluster_ControlPlane_SshConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1563,24 +1614,22 @@ impl ContainerAwsClusterControlPlaneElSshConfigElRef {
 }
 
 #[derive(Serialize, Default)]
-struct ContainerAwsClusterControlPlaneElDynamic {
+struct ContainerAwsCluster_ControlPlaneDynamic {
     aws_services_authentication: std
     ::option
-    ::Option<terrars::DynamicBlock<ContainerAwsClusterControlPlaneElAwsServicesAuthenticationEl>>,
-    config_encryption: std
-    ::option
-    ::Option<terrars::DynamicBlock<ContainerAwsClusterControlPlaneElConfigEncryptionEl>>,
+    ::Option<terrars::DynamicBlock<ContainerAwsCluster_ControlPlane_AwsServicesAuthentication>>,
+    config_encryption: std::option::Option<terrars::DynamicBlock<ContainerAwsCluster_ControlPlane_ConfigEncryption>>,
     database_encryption: std
     ::option
-    ::Option<terrars::DynamicBlock<ContainerAwsClusterControlPlaneElDatabaseEncryptionEl>>,
-    main_volume: std::option::Option<terrars::DynamicBlock<ContainerAwsClusterControlPlaneElMainVolumeEl>>,
-    proxy_config: std::option::Option<terrars::DynamicBlock<ContainerAwsClusterControlPlaneElProxyConfigEl>>,
-    root_volume: std::option::Option<terrars::DynamicBlock<ContainerAwsClusterControlPlaneElRootVolumeEl>>,
-    ssh_config: std::option::Option<terrars::DynamicBlock<ContainerAwsClusterControlPlaneElSshConfigEl>>,
+    ::Option<terrars::DynamicBlock<ContainerAwsCluster_ControlPlane_DatabaseEncryption>>,
+    main_volume: std::option::Option<terrars::DynamicBlock<ContainerAwsCluster_ControlPlane_MainVolume>>,
+    proxy_config: std::option::Option<terrars::DynamicBlock<ContainerAwsCluster_ControlPlane_ProxyConfig>>,
+    root_volume: std::option::Option<terrars::DynamicBlock<ContainerAwsCluster_ControlPlane_RootVolume>>,
+    ssh_config: std::option::Option<terrars::DynamicBlock<ContainerAwsCluster_ControlPlane_SshConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct ContainerAwsClusterControlPlaneEl {
+pub struct ContainerAwsCluster_ControlPlane {
     iam_instance_profile: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     instance_type: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -1593,23 +1642,23 @@ pub struct ContainerAwsClusterControlPlaneEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     aws_services_authentication: std
     ::option
-    ::Option<std::vec::Vec<ContainerAwsClusterControlPlaneElAwsServicesAuthenticationEl>>,
+    ::Option<std::vec::Vec<ContainerAwsCluster_ControlPlane_AwsServicesAuthentication>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    config_encryption: std::option::Option<std::vec::Vec<ContainerAwsClusterControlPlaneElConfigEncryptionEl>>,
+    config_encryption: std::option::Option<std::vec::Vec<ContainerAwsCluster_ControlPlane_ConfigEncryption>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    database_encryption: std::option::Option<std::vec::Vec<ContainerAwsClusterControlPlaneElDatabaseEncryptionEl>>,
+    database_encryption: std::option::Option<std::vec::Vec<ContainerAwsCluster_ControlPlane_DatabaseEncryption>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    main_volume: std::option::Option<std::vec::Vec<ContainerAwsClusterControlPlaneElMainVolumeEl>>,
+    main_volume: std::option::Option<std::vec::Vec<ContainerAwsCluster_ControlPlane_MainVolume>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    proxy_config: std::option::Option<std::vec::Vec<ContainerAwsClusterControlPlaneElProxyConfigEl>>,
+    proxy_config: std::option::Option<std::vec::Vec<ContainerAwsCluster_ControlPlane_ProxyConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    root_volume: std::option::Option<std::vec::Vec<ContainerAwsClusterControlPlaneElRootVolumeEl>>,
+    root_volume: std::option::Option<std::vec::Vec<ContainerAwsCluster_ControlPlane_RootVolume>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ssh_config: std::option::Option<std::vec::Vec<ContainerAwsClusterControlPlaneElSshConfigEl>>,
-    dynamic: ContainerAwsClusterControlPlaneElDynamic,
+    ssh_config: std::option::Option<std::vec::Vec<ContainerAwsCluster_ControlPlane_SshConfig>>,
+    dynamic: ContainerAwsCluster_ControlPlaneDynamic,
 }
 
-impl ContainerAwsClusterControlPlaneEl {
+impl ContainerAwsCluster_ControlPlane {
     #[doc =
         "Set the field `instance_type`.\nOptional. The AWS instance type. When unspecified, it defaults to `m5.large`."]
     pub fn set_instance_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1645,7 +1694,7 @@ impl ContainerAwsClusterControlPlaneEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<ContainerAwsClusterControlPlaneElAwsServicesAuthenticationEl>>,
+                    ::Into<terrars::BlockAssignable<ContainerAwsCluster_ControlPlane_AwsServicesAuthentication>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1661,7 +1710,7 @@ impl ContainerAwsClusterControlPlaneEl {
     #[doc = "Set the field `config_encryption`.\n"]
     pub fn set_config_encryption(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsClusterControlPlaneElConfigEncryptionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsCluster_ControlPlane_ConfigEncryption>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1677,7 +1726,7 @@ impl ContainerAwsClusterControlPlaneEl {
     #[doc = "Set the field `database_encryption`.\n"]
     pub fn set_database_encryption(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsClusterControlPlaneElDatabaseEncryptionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsCluster_ControlPlane_DatabaseEncryption>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1693,7 +1742,7 @@ impl ContainerAwsClusterControlPlaneEl {
     #[doc = "Set the field `main_volume`.\n"]
     pub fn set_main_volume(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsClusterControlPlaneElMainVolumeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsCluster_ControlPlane_MainVolume>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1709,7 +1758,7 @@ impl ContainerAwsClusterControlPlaneEl {
     #[doc = "Set the field `proxy_config`.\n"]
     pub fn set_proxy_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsClusterControlPlaneElProxyConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsCluster_ControlPlane_ProxyConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1725,7 +1774,7 @@ impl ContainerAwsClusterControlPlaneEl {
     #[doc = "Set the field `root_volume`.\n"]
     pub fn set_root_volume(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsClusterControlPlaneElRootVolumeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsCluster_ControlPlane_RootVolume>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1741,7 +1790,7 @@ impl ContainerAwsClusterControlPlaneEl {
     #[doc = "Set the field `ssh_config`.\n"]
     pub fn set_ssh_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsClusterControlPlaneElSshConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAwsCluster_ControlPlane_SshConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1755,8 +1804,8 @@ impl ContainerAwsClusterControlPlaneEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAwsClusterControlPlaneEl {
-    type O = terrars::BlockAssignable<ContainerAwsClusterControlPlaneEl>;
+impl terrars::ToListMappable for ContainerAwsCluster_ControlPlane {
+    type O = terrars::BlockAssignable<ContainerAwsCluster_ControlPlane>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1767,7 +1816,7 @@ impl terrars::ToListMappable for ContainerAwsClusterControlPlaneEl {
     }
 }
 
-pub struct BuildContainerAwsClusterControlPlaneEl {
+pub struct BuildContainerAwsCluster_ControlPlane {
     #[doc = "The name of the AWS IAM instance pofile to assign to each control plane replica."]
     pub iam_instance_profile: terrars::PrimField<std::string::String>,
     #[doc =
@@ -1778,9 +1827,9 @@ pub struct BuildContainerAwsClusterControlPlaneEl {
     pub version: terrars::PrimField<std::string::String>,
 }
 
-impl BuildContainerAwsClusterControlPlaneEl {
-    pub fn build(self) -> ContainerAwsClusterControlPlaneEl {
-        ContainerAwsClusterControlPlaneEl {
+impl BuildContainerAwsCluster_ControlPlane {
+    pub fn build(self) -> ContainerAwsCluster_ControlPlane {
+        ContainerAwsCluster_ControlPlane {
             iam_instance_profile: self.iam_instance_profile,
             instance_type: core::default::Default::default(),
             security_group_ids: core::default::Default::default(),
@@ -1799,21 +1848,23 @@ impl BuildContainerAwsClusterControlPlaneEl {
     }
 }
 
-pub struct ContainerAwsClusterControlPlaneElRef {
+#[allow(dead_code)]
+pub struct ContainerAwsCluster_ControlPlaneRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAwsClusterControlPlaneElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAwsClusterControlPlaneElRef {
-        ContainerAwsClusterControlPlaneElRef {
+impl terrars::Ref for ContainerAwsCluster_ControlPlaneRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAwsCluster_ControlPlaneRef {
+        ContainerAwsCluster_ControlPlaneRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAwsClusterControlPlaneElRef {
+impl ContainerAwsCluster_ControlPlaneRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1857,48 +1908,48 @@ impl ContainerAwsClusterControlPlaneElRef {
     #[doc = "Get a reference to the value of field `aws_services_authentication` after provisioning.\n"]
     pub fn aws_services_authentication(
         &self,
-    ) -> terrars::ListRef<ContainerAwsClusterControlPlaneElAwsServicesAuthenticationElRef> {
+    ) -> terrars::ListRef<ContainerAwsCluster_ControlPlane_AwsServicesAuthenticationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.aws_services_authentication", self.base))
     }
 
     #[doc = "Get a reference to the value of field `config_encryption` after provisioning.\n"]
-    pub fn config_encryption(&self) -> terrars::ListRef<ContainerAwsClusterControlPlaneElConfigEncryptionElRef> {
+    pub fn config_encryption(&self) -> terrars::ListRef<ContainerAwsCluster_ControlPlane_ConfigEncryptionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.config_encryption", self.base))
     }
 
     #[doc = "Get a reference to the value of field `database_encryption` after provisioning.\n"]
-    pub fn database_encryption(&self) -> terrars::ListRef<ContainerAwsClusterControlPlaneElDatabaseEncryptionElRef> {
+    pub fn database_encryption(&self) -> terrars::ListRef<ContainerAwsCluster_ControlPlane_DatabaseEncryptionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.database_encryption", self.base))
     }
 
     #[doc = "Get a reference to the value of field `main_volume` after provisioning.\n"]
-    pub fn main_volume(&self) -> terrars::ListRef<ContainerAwsClusterControlPlaneElMainVolumeElRef> {
+    pub fn main_volume(&self) -> terrars::ListRef<ContainerAwsCluster_ControlPlane_MainVolumeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.main_volume", self.base))
     }
 
     #[doc = "Get a reference to the value of field `proxy_config` after provisioning.\n"]
-    pub fn proxy_config(&self) -> terrars::ListRef<ContainerAwsClusterControlPlaneElProxyConfigElRef> {
+    pub fn proxy_config(&self) -> terrars::ListRef<ContainerAwsCluster_ControlPlane_ProxyConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.proxy_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `root_volume` after provisioning.\n"]
-    pub fn root_volume(&self) -> terrars::ListRef<ContainerAwsClusterControlPlaneElRootVolumeElRef> {
+    pub fn root_volume(&self) -> terrars::ListRef<ContainerAwsCluster_ControlPlane_RootVolumeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.root_volume", self.base))
     }
 
     #[doc = "Get a reference to the value of field `ssh_config` after provisioning.\n"]
-    pub fn ssh_config(&self) -> terrars::ListRef<ContainerAwsClusterControlPlaneElSshConfigElRef> {
+    pub fn ssh_config(&self) -> terrars::ListRef<ContainerAwsCluster_ControlPlane_SshConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ssh_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ContainerAwsClusterFleetEl {
+pub struct ContainerAwsCluster_Fleet {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ContainerAwsClusterFleetEl {
+impl ContainerAwsCluster_Fleet {
     #[doc = "Set the field `project`.\nThe number of the Fleet host project where this cluster will be registered."]
     pub fn set_project(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.project = std::option::Option::Some(v.into());
@@ -1906,8 +1957,8 @@ impl ContainerAwsClusterFleetEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAwsClusterFleetEl {
-    type O = terrars::BlockAssignable<ContainerAwsClusterFleetEl>;
+impl terrars::ToListMappable for ContainerAwsCluster_Fleet {
+    type O = terrars::BlockAssignable<ContainerAwsCluster_Fleet>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1918,29 +1969,31 @@ impl terrars::ToListMappable for ContainerAwsClusterFleetEl {
     }
 }
 
-pub struct BuildContainerAwsClusterFleetEl {}
+pub struct BuildContainerAwsCluster_Fleet {}
 
-impl BuildContainerAwsClusterFleetEl {
-    pub fn build(self) -> ContainerAwsClusterFleetEl {
-        ContainerAwsClusterFleetEl { project: core::default::Default::default() }
+impl BuildContainerAwsCluster_Fleet {
+    pub fn build(self) -> ContainerAwsCluster_Fleet {
+        ContainerAwsCluster_Fleet { project: core::default::Default::default() }
     }
 }
 
-pub struct ContainerAwsClusterFleetElRef {
+#[allow(dead_code)]
+pub struct ContainerAwsCluster_FleetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAwsClusterFleetElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAwsClusterFleetElRef {
-        ContainerAwsClusterFleetElRef {
+impl terrars::Ref for ContainerAwsCluster_FleetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAwsCluster_FleetRef {
+        ContainerAwsCluster_FleetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAwsClusterFleetElRef {
+impl ContainerAwsCluster_FleetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1959,7 +2012,7 @@ impl ContainerAwsClusterFleetElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAwsClusterNetworkingEl {
+pub struct ContainerAwsCluster_Networking {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     per_node_pool_sg_rules_disabled: std::option::Option<terrars::PrimField<bool>>,
     pod_address_cidr_blocks: terrars::ListField<terrars::PrimField<std::string::String>>,
@@ -1967,7 +2020,7 @@ pub struct ContainerAwsClusterNetworkingEl {
     vpc_id: terrars::PrimField<std::string::String>,
 }
 
-impl ContainerAwsClusterNetworkingEl {
+impl ContainerAwsCluster_Networking {
     #[doc =
         "Set the field `per_node_pool_sg_rules_disabled`.\nDisable the per node pool subnet security group rules on the control plane security group. When set to true, you must also provide one or more security groups that ensure node pools are able to send requests to the control plane on TCP/443 and TCP/8132. Failure to do so may result in unavailable node pools."]
     pub fn set_per_node_pool_sg_rules_disabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -1976,8 +2029,8 @@ impl ContainerAwsClusterNetworkingEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAwsClusterNetworkingEl {
-    type O = terrars::BlockAssignable<ContainerAwsClusterNetworkingEl>;
+impl terrars::ToListMappable for ContainerAwsCluster_Networking {
+    type O = terrars::BlockAssignable<ContainerAwsCluster_Networking>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1988,7 +2041,7 @@ impl terrars::ToListMappable for ContainerAwsClusterNetworkingEl {
     }
 }
 
-pub struct BuildContainerAwsClusterNetworkingEl {
+pub struct BuildContainerAwsCluster_Networking {
     #[doc =
         "All pods in the cluster are assigned an RFC1918 IPv4 address from these ranges. Only a single range is supported. This field cannot be changed after creation."]
     pub pod_address_cidr_blocks: terrars::ListField<terrars::PrimField<std::string::String>>,
@@ -2000,9 +2053,9 @@ pub struct BuildContainerAwsClusterNetworkingEl {
     pub vpc_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildContainerAwsClusterNetworkingEl {
-    pub fn build(self) -> ContainerAwsClusterNetworkingEl {
-        ContainerAwsClusterNetworkingEl {
+impl BuildContainerAwsCluster_Networking {
+    pub fn build(self) -> ContainerAwsCluster_Networking {
+        ContainerAwsCluster_Networking {
             per_node_pool_sg_rules_disabled: core::default::Default::default(),
             pod_address_cidr_blocks: self.pod_address_cidr_blocks,
             service_address_cidr_blocks: self.service_address_cidr_blocks,
@@ -2011,21 +2064,23 @@ impl BuildContainerAwsClusterNetworkingEl {
     }
 }
 
-pub struct ContainerAwsClusterNetworkingElRef {
+#[allow(dead_code)]
+pub struct ContainerAwsCluster_NetworkingRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAwsClusterNetworkingElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAwsClusterNetworkingElRef {
-        ContainerAwsClusterNetworkingElRef {
+impl terrars::Ref for ContainerAwsCluster_NetworkingRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAwsCluster_NetworkingRef {
+        ContainerAwsCluster_NetworkingRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAwsClusterNetworkingElRef {
+impl ContainerAwsCluster_NetworkingRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2056,7 +2111,7 @@ impl ContainerAwsClusterNetworkingElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAwsClusterTimeoutsEl {
+pub struct ContainerAwsCluster_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2065,7 +2120,7 @@ pub struct ContainerAwsClusterTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ContainerAwsClusterTimeoutsEl {
+impl ContainerAwsCluster_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -2085,8 +2140,8 @@ impl ContainerAwsClusterTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAwsClusterTimeoutsEl {
-    type O = terrars::BlockAssignable<ContainerAwsClusterTimeoutsEl>;
+impl terrars::ToListMappable for ContainerAwsCluster_Timeouts {
+    type O = terrars::BlockAssignable<ContainerAwsCluster_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2097,11 +2152,11 @@ impl terrars::ToListMappable for ContainerAwsClusterTimeoutsEl {
     }
 }
 
-pub struct BuildContainerAwsClusterTimeoutsEl {}
+pub struct BuildContainerAwsCluster_Timeouts {}
 
-impl BuildContainerAwsClusterTimeoutsEl {
-    pub fn build(self) -> ContainerAwsClusterTimeoutsEl {
-        ContainerAwsClusterTimeoutsEl {
+impl BuildContainerAwsCluster_Timeouts {
+    pub fn build(self) -> ContainerAwsCluster_Timeouts {
+        ContainerAwsCluster_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -2109,21 +2164,23 @@ impl BuildContainerAwsClusterTimeoutsEl {
     }
 }
 
-pub struct ContainerAwsClusterTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ContainerAwsCluster_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAwsClusterTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAwsClusterTimeoutsElRef {
-        ContainerAwsClusterTimeoutsElRef {
+impl terrars::Ref for ContainerAwsCluster_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAwsCluster_TimeoutsRef {
+        ContainerAwsCluster_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAwsClusterTimeoutsElRef {
+impl ContainerAwsCluster_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2142,13 +2199,4 @@ impl ContainerAwsClusterTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ContainerAwsClusterDynamic {
-    authorization: std::option::Option<terrars::DynamicBlock<ContainerAwsClusterAuthorizationEl>>,
-    binary_authorization: std::option::Option<terrars::DynamicBlock<ContainerAwsClusterBinaryAuthorizationEl>>,
-    control_plane: std::option::Option<terrars::DynamicBlock<ContainerAwsClusterControlPlaneEl>>,
-    fleet: std::option::Option<terrars::DynamicBlock<ContainerAwsClusterFleetEl>>,
-    networking: std::option::Option<terrars::DynamicBlock<ContainerAwsClusterNetworkingEl>>,
 }

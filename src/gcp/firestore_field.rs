@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct FirestoreFieldData {
+struct FirestoreFieldData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,24 +23,28 @@ struct FirestoreFieldData {
     collection: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     database: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     field: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    index_config: std::option::Option<std::vec::Vec<FirestoreFieldIndexConfigEl>>,
+    skip_wait: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<FirestoreFieldTimeoutsEl>,
+    index_config: std::option::Option<std::vec::Vec<FirestoreField_IndexConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ttl_config: std::option::Option<std::vec::Vec<FirestoreFieldTtlConfigEl>>,
+    timeouts: std::option::Option<FirestoreField_Timeouts>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ttl_config: std::option::Option<std::vec::Vec<FirestoreField_TtlConfig>>,
     dynamic: FirestoreFieldDynamic,
 }
 
 struct FirestoreField_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<FirestoreFieldData>,
+    data: std::cell::RefCell<FirestoreFieldData_>,
 }
 
 #[derive(Clone)]
@@ -144,6 +150,13 @@ impl FirestoreField {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -156,10 +169,16 @@ impl FirestoreField {
         self
     }
 
+    #[doc = "Set the field `skip_wait`.\nWhether to skip waiting for the field operation to complete."]
+    pub fn set_skip_wait(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().skip_wait = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `index_config`.\n"]
     pub fn set_index_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<FirestoreFieldIndexConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<FirestoreField_IndexConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -173,16 +192,13 @@ impl FirestoreField {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<FirestoreFieldTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<FirestoreField_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `ttl_config`.\n"]
-    pub fn set_ttl_config(
-        self,
-        v: impl std::convert::Into<terrars::BlockAssignable<FirestoreFieldTtlConfigEl>>,
-    ) -> Self {
+    pub fn set_ttl_config(self, v: impl std::convert::Into<terrars::BlockAssignable<FirestoreField_TtlConfig>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().ttl_config = std::option::Option::Some(v);
@@ -206,6 +222,12 @@ impl FirestoreField {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.database", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `field` after provisioning.\nThe id of the field to configure."]
     pub fn field(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.field", self.extract_ref()))
@@ -227,18 +249,24 @@ impl FirestoreField {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `skip_wait` after provisioning.\nWhether to skip waiting for the field operation to complete."]
+    pub fn skip_wait(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.skip_wait", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `index_config` after provisioning.\n"]
-    pub fn index_config(&self) -> terrars::ListRef<FirestoreFieldIndexConfigElRef> {
+    pub fn index_config(&self) -> terrars::ListRef<FirestoreField_IndexConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.index_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> FirestoreFieldTimeoutsElRef {
-        FirestoreFieldTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> FirestoreField_TimeoutsRef {
+        FirestoreField_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `ttl_config` after provisioning.\n"]
-    pub fn ttl_config(&self) -> terrars::ListRef<FirestoreFieldTtlConfigElRef> {
+    pub fn ttl_config(&self) -> terrars::ListRef<FirestoreField_TtlConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ttl_config", self.extract_ref()))
     }
 }
@@ -287,7 +315,7 @@ impl BuildFirestoreField {
         let out = FirestoreField(std::rc::Rc::new(FirestoreField_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(FirestoreFieldData {
+            data: std::cell::RefCell::new(FirestoreFieldData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -295,9 +323,11 @@ impl BuildFirestoreField {
                 provisioner: core::default::Default::default(),
                 collection: self.collection,
                 database: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 field: self.field,
                 id: core::default::Default::default(),
                 project: core::default::Default::default(),
+                skip_wait: core::default::Default::default(),
                 index_config: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 ttl_config: core::default::Default::default(),
@@ -344,6 +374,12 @@ impl FirestoreFieldRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.database", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `field` after provisioning.\nThe id of the field to configure."]
     pub fn field(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.field", self.extract_ref()))
@@ -365,24 +401,36 @@ impl FirestoreFieldRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `skip_wait` after provisioning.\nWhether to skip waiting for the field operation to complete."]
+    pub fn skip_wait(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.skip_wait", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `index_config` after provisioning.\n"]
-    pub fn index_config(&self) -> terrars::ListRef<FirestoreFieldIndexConfigElRef> {
+    pub fn index_config(&self) -> terrars::ListRef<FirestoreField_IndexConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.index_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> FirestoreFieldTimeoutsElRef {
-        FirestoreFieldTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> FirestoreField_TimeoutsRef {
+        FirestoreField_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `ttl_config` after provisioning.\n"]
-    pub fn ttl_config(&self) -> terrars::ListRef<FirestoreFieldTtlConfigElRef> {
+    pub fn ttl_config(&self) -> terrars::ListRef<FirestoreField_TtlConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ttl_config", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct FirestoreFieldDynamic {
+    index_config: std::option::Option<terrars::DynamicBlock<FirestoreField_IndexConfig>>,
+    ttl_config: std::option::Option<terrars::DynamicBlock<FirestoreField_TtlConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct FirestoreFieldIndexConfigElIndexesEl {
+pub struct FirestoreField_IndexConfig_Indexes {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     array_config: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -391,7 +439,7 @@ pub struct FirestoreFieldIndexConfigElIndexesEl {
     query_scope: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl FirestoreFieldIndexConfigElIndexesEl {
+impl FirestoreField_IndexConfig_Indexes {
     #[doc =
         "Set the field `array_config`.\nIndicates that this field supports operations on arrayValues. Only one of 'order' and 'arrayConfig' can\nbe specified. Possible values: [\"CONTAINS\"]"]
     pub fn set_array_config(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -414,8 +462,8 @@ impl FirestoreFieldIndexConfigElIndexesEl {
     }
 }
 
-impl terrars::ToListMappable for FirestoreFieldIndexConfigElIndexesEl {
-    type O = terrars::BlockAssignable<FirestoreFieldIndexConfigElIndexesEl>;
+impl terrars::ToListMappable for FirestoreField_IndexConfig_Indexes {
+    type O = terrars::BlockAssignable<FirestoreField_IndexConfig_Indexes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -426,11 +474,11 @@ impl terrars::ToListMappable for FirestoreFieldIndexConfigElIndexesEl {
     }
 }
 
-pub struct BuildFirestoreFieldIndexConfigElIndexesEl {}
+pub struct BuildFirestoreField_IndexConfig_Indexes {}
 
-impl BuildFirestoreFieldIndexConfigElIndexesEl {
-    pub fn build(self) -> FirestoreFieldIndexConfigElIndexesEl {
-        FirestoreFieldIndexConfigElIndexesEl {
+impl BuildFirestoreField_IndexConfig_Indexes {
+    pub fn build(self) -> FirestoreField_IndexConfig_Indexes {
+        FirestoreField_IndexConfig_Indexes {
             array_config: core::default::Default::default(),
             order: core::default::Default::default(),
             query_scope: core::default::Default::default(),
@@ -438,21 +486,23 @@ impl BuildFirestoreFieldIndexConfigElIndexesEl {
     }
 }
 
-pub struct FirestoreFieldIndexConfigElIndexesElRef {
+#[allow(dead_code)]
+pub struct FirestoreField_IndexConfig_IndexesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FirestoreFieldIndexConfigElIndexesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FirestoreFieldIndexConfigElIndexesElRef {
-        FirestoreFieldIndexConfigElIndexesElRef {
+impl terrars::Ref for FirestoreField_IndexConfig_IndexesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FirestoreField_IndexConfig_IndexesRef {
+        FirestoreField_IndexConfig_IndexesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FirestoreFieldIndexConfigElIndexesElRef {
+impl FirestoreField_IndexConfig_IndexesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -477,22 +527,22 @@ impl FirestoreFieldIndexConfigElIndexesElRef {
 }
 
 #[derive(Serialize, Default)]
-struct FirestoreFieldIndexConfigElDynamic {
-    indexes: std::option::Option<terrars::DynamicBlock<FirestoreFieldIndexConfigElIndexesEl>>,
+struct FirestoreField_IndexConfigDynamic {
+    indexes: std::option::Option<terrars::DynamicBlock<FirestoreField_IndexConfig_Indexes>>,
 }
 
 #[derive(Serialize)]
-pub struct FirestoreFieldIndexConfigEl {
+pub struct FirestoreField_IndexConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    indexes: std::option::Option<std::vec::Vec<FirestoreFieldIndexConfigElIndexesEl>>,
-    dynamic: FirestoreFieldIndexConfigElDynamic,
+    indexes: std::option::Option<std::vec::Vec<FirestoreField_IndexConfig_Indexes>>,
+    dynamic: FirestoreField_IndexConfigDynamic,
 }
 
-impl FirestoreFieldIndexConfigEl {
+impl FirestoreField_IndexConfig {
     #[doc = "Set the field `indexes`.\n"]
     pub fn set_indexes(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<FirestoreFieldIndexConfigElIndexesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<FirestoreField_IndexConfig_Indexes>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -506,8 +556,8 @@ impl FirestoreFieldIndexConfigEl {
     }
 }
 
-impl terrars::ToListMappable for FirestoreFieldIndexConfigEl {
-    type O = terrars::BlockAssignable<FirestoreFieldIndexConfigEl>;
+impl terrars::ToListMappable for FirestoreField_IndexConfig {
+    type O = terrars::BlockAssignable<FirestoreField_IndexConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -518,39 +568,41 @@ impl terrars::ToListMappable for FirestoreFieldIndexConfigEl {
     }
 }
 
-pub struct BuildFirestoreFieldIndexConfigEl {}
+pub struct BuildFirestoreField_IndexConfig {}
 
-impl BuildFirestoreFieldIndexConfigEl {
-    pub fn build(self) -> FirestoreFieldIndexConfigEl {
-        FirestoreFieldIndexConfigEl {
+impl BuildFirestoreField_IndexConfig {
+    pub fn build(self) -> FirestoreField_IndexConfig {
+        FirestoreField_IndexConfig {
             indexes: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct FirestoreFieldIndexConfigElRef {
+#[allow(dead_code)]
+pub struct FirestoreField_IndexConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FirestoreFieldIndexConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FirestoreFieldIndexConfigElRef {
-        FirestoreFieldIndexConfigElRef {
+impl terrars::Ref for FirestoreField_IndexConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FirestoreField_IndexConfigRef {
+        FirestoreField_IndexConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FirestoreFieldIndexConfigElRef {
+impl FirestoreField_IndexConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize)]
-pub struct FirestoreFieldTimeoutsEl {
+pub struct FirestoreField_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -559,7 +611,7 @@ pub struct FirestoreFieldTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl FirestoreFieldTimeoutsEl {
+impl FirestoreField_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -579,8 +631,8 @@ impl FirestoreFieldTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for FirestoreFieldTimeoutsEl {
-    type O = terrars::BlockAssignable<FirestoreFieldTimeoutsEl>;
+impl terrars::ToListMappable for FirestoreField_Timeouts {
+    type O = terrars::BlockAssignable<FirestoreField_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -591,11 +643,11 @@ impl terrars::ToListMappable for FirestoreFieldTimeoutsEl {
     }
 }
 
-pub struct BuildFirestoreFieldTimeoutsEl {}
+pub struct BuildFirestoreField_Timeouts {}
 
-impl BuildFirestoreFieldTimeoutsEl {
-    pub fn build(self) -> FirestoreFieldTimeoutsEl {
-        FirestoreFieldTimeoutsEl {
+impl BuildFirestoreField_Timeouts {
+    pub fn build(self) -> FirestoreField_Timeouts {
+        FirestoreField_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -603,21 +655,23 @@ impl BuildFirestoreFieldTimeoutsEl {
     }
 }
 
-pub struct FirestoreFieldTimeoutsElRef {
+#[allow(dead_code)]
+pub struct FirestoreField_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FirestoreFieldTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FirestoreFieldTimeoutsElRef {
-        FirestoreFieldTimeoutsElRef {
+impl terrars::Ref for FirestoreField_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FirestoreField_TimeoutsRef {
+        FirestoreField_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FirestoreFieldTimeoutsElRef {
+impl FirestoreField_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -639,12 +693,22 @@ impl FirestoreFieldTimeoutsElRef {
 }
 
 #[derive(Serialize)]
-pub struct FirestoreFieldTtlConfigEl {}
+pub struct FirestoreField_TtlConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    expiration_offset: std::option::Option<terrars::PrimField<std::string::String>>,
+}
 
-impl FirestoreFieldTtlConfigEl { }
+impl FirestoreField_TtlConfig {
+    #[doc =
+        "Set the field `expiration_offset`.\nThe offset, relative to the timestamp value from the field, used to determine the document's expiration time. Formatted as the number of seconds followed by 's'. For example, \"60s\" represents an offset of one minute. The number of seconds must be between 1 and 2147483647 inclusive. To configure no offset, omit this field."]
+    pub fn set_expiration_offset(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.expiration_offset = std::option::Option::Some(v.into());
+        self
+    }
+}
 
-impl terrars::ToListMappable for FirestoreFieldTtlConfigEl {
-    type O = terrars::BlockAssignable<FirestoreFieldTtlConfigEl>;
+impl terrars::ToListMappable for FirestoreField_TtlConfig {
+    type O = terrars::BlockAssignable<FirestoreField_TtlConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -655,31 +719,39 @@ impl terrars::ToListMappable for FirestoreFieldTtlConfigEl {
     }
 }
 
-pub struct BuildFirestoreFieldTtlConfigEl {}
+pub struct BuildFirestoreField_TtlConfig {}
 
-impl BuildFirestoreFieldTtlConfigEl {
-    pub fn build(self) -> FirestoreFieldTtlConfigEl {
-        FirestoreFieldTtlConfigEl {}
+impl BuildFirestoreField_TtlConfig {
+    pub fn build(self) -> FirestoreField_TtlConfig {
+        FirestoreField_TtlConfig { expiration_offset: core::default::Default::default() }
     }
 }
 
-pub struct FirestoreFieldTtlConfigElRef {
+#[allow(dead_code)]
+pub struct FirestoreField_TtlConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FirestoreFieldTtlConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FirestoreFieldTtlConfigElRef {
-        FirestoreFieldTtlConfigElRef {
+impl terrars::Ref for FirestoreField_TtlConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FirestoreField_TtlConfigRef {
+        FirestoreField_TtlConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FirestoreFieldTtlConfigElRef {
+impl FirestoreField_TtlConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `expiration_offset` after provisioning.\nThe offset, relative to the timestamp value from the field, used to determine the document's expiration time. Formatted as the number of seconds followed by 's'. For example, \"60s\" represents an offset of one minute. The number of seconds must be between 1 and 2147483647 inclusive. To configure no offset, omit this field."]
+    pub fn expiration_offset(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.expiration_offset", self.base))
     }
 
     #[doc =
@@ -687,10 +759,4 @@ impl FirestoreFieldTtlConfigElRef {
     pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct FirestoreFieldDynamic {
-    index_config: std::option::Option<terrars::DynamicBlock<FirestoreFieldIndexConfigEl>>,
-    ttl_config: std::option::Option<terrars::DynamicBlock<FirestoreFieldTtlConfigEl>>,
 }

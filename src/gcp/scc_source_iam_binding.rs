@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct SccSourceIamBindingData {
+struct SccSourceIamBindingData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,14 +27,14 @@ struct SccSourceIamBindingData {
     role: terrars::PrimField<std::string::String>,
     source: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<SccSourceIamBindingConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<SccSourceIamBinding_Condition>>,
     dynamic: SccSourceIamBindingDynamic,
 }
 
 struct SccSourceIamBinding_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SccSourceIamBindingData>,
+    data: std::cell::RefCell<SccSourceIamBindingData_>,
 }
 
 #[derive(Clone)]
@@ -141,7 +143,7 @@ impl SccSourceIamBinding {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SccSourceIamBindingConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SccSourceIamBinding_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -185,7 +187,7 @@ impl SccSourceIamBinding {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<SccSourceIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<SccSourceIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -238,7 +240,7 @@ impl BuildSccSourceIamBinding {
         let out = SccSourceIamBinding(std::rc::Rc::new(SccSourceIamBinding_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SccSourceIamBindingData {
+            data: std::cell::RefCell::new(SccSourceIamBindingData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -312,20 +314,25 @@ impl SccSourceIamBindingRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<SccSourceIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<SccSourceIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct SccSourceIamBindingDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<SccSourceIamBinding_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct SccSourceIamBindingConditionEl {
+pub struct SccSourceIamBinding_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl SccSourceIamBindingConditionEl {
+impl SccSourceIamBinding_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -333,8 +340,8 @@ impl SccSourceIamBindingConditionEl {
     }
 }
 
-impl terrars::ToListMappable for SccSourceIamBindingConditionEl {
-    type O = terrars::BlockAssignable<SccSourceIamBindingConditionEl>;
+impl terrars::ToListMappable for SccSourceIamBinding_Condition {
+    type O = terrars::BlockAssignable<SccSourceIamBinding_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -345,16 +352,16 @@ impl terrars::ToListMappable for SccSourceIamBindingConditionEl {
     }
 }
 
-pub struct BuildSccSourceIamBindingConditionEl {
+pub struct BuildSccSourceIamBinding_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSccSourceIamBindingConditionEl {
-    pub fn build(self) -> SccSourceIamBindingConditionEl {
-        SccSourceIamBindingConditionEl {
+impl BuildSccSourceIamBinding_Condition {
+    pub fn build(self) -> SccSourceIamBinding_Condition {
+        SccSourceIamBinding_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -362,21 +369,23 @@ impl BuildSccSourceIamBindingConditionEl {
     }
 }
 
-pub struct SccSourceIamBindingConditionElRef {
+#[allow(dead_code)]
+pub struct SccSourceIamBinding_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SccSourceIamBindingConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SccSourceIamBindingConditionElRef {
-        SccSourceIamBindingConditionElRef {
+impl terrars::Ref for SccSourceIamBinding_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SccSourceIamBinding_ConditionRef {
+        SccSourceIamBinding_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SccSourceIamBindingConditionElRef {
+impl SccSourceIamBinding_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -395,9 +404,4 @@ impl SccSourceIamBindingConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct SccSourceIamBindingDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<SccSourceIamBindingConditionEl>>,
 }

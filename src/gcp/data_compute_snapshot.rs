@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataComputeSnapshotData {
+struct DataComputeSnapshotData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -31,7 +33,7 @@ struct DataComputeSnapshotData {
 struct DataComputeSnapshot_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataComputeSnapshotData>,
+    data: std::cell::RefCell<DataComputeSnapshotData_>,
 }
 
 #[derive(Clone)]
@@ -120,6 +122,12 @@ impl DataComputeSnapshot {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nAn optional description of this resource."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -176,6 +184,12 @@ impl DataComputeSnapshot {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `params` after provisioning.\nAdditional params passed with the request, but not persisted as part of resource payload"]
+    pub fn params(&self) -> terrars::ListRef<DataComputeSnapshot_ParamsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.params", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
     pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
@@ -187,8 +201,8 @@ impl DataComputeSnapshot {
     }
 
     #[doc =
-        "Get a reference to the value of field `snapshot_encryption_key` after provisioning.\nEncrypts the snapshot using a customer-supplied encryption key.\n\nAfter you encrypt a snapshot using a customer-supplied key, you must\nprovide the same key if you use the snapshot later. For example, you\nmust provide the encryption key when you create a disk from the\nencrypted snapshot in a future request.\n\nCustomer-supplied encryption keys do not protect access to metadata of\nthe snapshot.\n\nIf you do not provide an encryption key when creating the snapshot,\nthen the snapshot will be encrypted using an automatically generated\nkey and you do not need to provide a key to use the snapshot later."]
-    pub fn snapshot_encryption_key(&self) -> terrars::ListRef<DataComputeSnapshotSnapshotEncryptionKeyElRef> {
+        "Get a reference to the value of field `snapshot_encryption_key` after provisioning.\nEncrypts the snapshot using a customer-supplied encryption key.\n\nAfter you encrypt a snapshot using a customer-supplied key, you must\nprovide the same key if you use the snapshot later. For example, you\nmust provide the encryption key when you create a disk from the\nencrypted snapshot in a future request.\n\nCustomer-supplied encryption keys do not protect access to metadata of\nthe snapshot.\n\nIf you do not provide an encryption key when creating the snapshot,\nthen the snapshot will be encrypted using an automatically generated\nkey and you do not need to provide a key to use the snapshot later.\n\n~>**NOTE** Only changing 'kms_key_self_link' between Cloud KMS keys is\ndone in place; other changes to this block recreate the snapshot."]
+    pub fn snapshot_encryption_key(&self) -> terrars::ListRef<DataComputeSnapshot_SnapshotEncryptionKeyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.snapshot_encryption_key", self.extract_ref()))
     }
 
@@ -199,6 +213,12 @@ impl DataComputeSnapshot {
     }
 
     #[doc =
+        "Get a reference to the value of field `snapshot_type` after provisioning.\nIndicates the type of the snapshot. Possible values: [\"ARCHIVE\", \"STANDARD\"]"]
+    pub fn snapshot_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.snapshot_type", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `source_disk` after provisioning.\nA reference to the disk used to create this snapshot."]
     pub fn source_disk(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_disk", self.extract_ref()))
@@ -206,8 +226,14 @@ impl DataComputeSnapshot {
 
     #[doc =
         "Get a reference to the value of field `source_disk_encryption_key` after provisioning.\nThe customer-supplied encryption key of the source snapshot. Required\nif the source snapshot is protected by a customer-supplied encryption\nkey."]
-    pub fn source_disk_encryption_key(&self) -> terrars::ListRef<DataComputeSnapshotSourceDiskEncryptionKeyElRef> {
+    pub fn source_disk_encryption_key(&self) -> terrars::ListRef<DataComputeSnapshot_SourceDiskEncryptionKeyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source_disk_encryption_key", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `source_instant_snapshot` after provisioning.\nA reference to the instant snapshot used to create this snapshot."]
+    pub fn source_instant_snapshot(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_instant_snapshot", self.extract_ref()))
     }
 
     #[doc =
@@ -275,7 +301,7 @@ impl BuildDataComputeSnapshot {
         let out = DataComputeSnapshot(std::rc::Rc::new(DataComputeSnapshot_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataComputeSnapshotData {
+            data: std::cell::RefCell::new(DataComputeSnapshotData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -325,6 +351,12 @@ impl DataComputeSnapshotRef {
         "Get a reference to the value of field `creation_timestamp` after provisioning.\nCreation timestamp in RFC3339 text format."]
     pub fn creation_timestamp(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_timestamp", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -384,6 +416,12 @@ impl DataComputeSnapshotRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `params` after provisioning.\nAdditional params passed with the request, but not persisted as part of resource payload"]
+    pub fn params(&self) -> terrars::ListRef<DataComputeSnapshot_ParamsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.params", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
     pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
@@ -395,8 +433,8 @@ impl DataComputeSnapshotRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `snapshot_encryption_key` after provisioning.\nEncrypts the snapshot using a customer-supplied encryption key.\n\nAfter you encrypt a snapshot using a customer-supplied key, you must\nprovide the same key if you use the snapshot later. For example, you\nmust provide the encryption key when you create a disk from the\nencrypted snapshot in a future request.\n\nCustomer-supplied encryption keys do not protect access to metadata of\nthe snapshot.\n\nIf you do not provide an encryption key when creating the snapshot,\nthen the snapshot will be encrypted using an automatically generated\nkey and you do not need to provide a key to use the snapshot later."]
-    pub fn snapshot_encryption_key(&self) -> terrars::ListRef<DataComputeSnapshotSnapshotEncryptionKeyElRef> {
+        "Get a reference to the value of field `snapshot_encryption_key` after provisioning.\nEncrypts the snapshot using a customer-supplied encryption key.\n\nAfter you encrypt a snapshot using a customer-supplied key, you must\nprovide the same key if you use the snapshot later. For example, you\nmust provide the encryption key when you create a disk from the\nencrypted snapshot in a future request.\n\nCustomer-supplied encryption keys do not protect access to metadata of\nthe snapshot.\n\nIf you do not provide an encryption key when creating the snapshot,\nthen the snapshot will be encrypted using an automatically generated\nkey and you do not need to provide a key to use the snapshot later.\n\n~>**NOTE** Only changing 'kms_key_self_link' between Cloud KMS keys is\ndone in place; other changes to this block recreate the snapshot."]
+    pub fn snapshot_encryption_key(&self) -> terrars::ListRef<DataComputeSnapshot_SnapshotEncryptionKeyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.snapshot_encryption_key", self.extract_ref()))
     }
 
@@ -407,6 +445,12 @@ impl DataComputeSnapshotRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `snapshot_type` after provisioning.\nIndicates the type of the snapshot. Possible values: [\"ARCHIVE\", \"STANDARD\"]"]
+    pub fn snapshot_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.snapshot_type", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `source_disk` after provisioning.\nA reference to the disk used to create this snapshot."]
     pub fn source_disk(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_disk", self.extract_ref()))
@@ -414,8 +458,14 @@ impl DataComputeSnapshotRef {
 
     #[doc =
         "Get a reference to the value of field `source_disk_encryption_key` after provisioning.\nThe customer-supplied encryption key of the source snapshot. Required\nif the source snapshot is protected by a customer-supplied encryption\nkey."]
-    pub fn source_disk_encryption_key(&self) -> terrars::ListRef<DataComputeSnapshotSourceDiskEncryptionKeyElRef> {
+    pub fn source_disk_encryption_key(&self) -> terrars::ListRef<DataComputeSnapshot_SourceDiskEncryptionKeyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source_disk_encryption_key", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `source_instant_snapshot` after provisioning.\nA reference to the instant snapshot used to create this snapshot."]
+    pub fn source_instant_snapshot(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_instant_snapshot", self.extract_ref()))
     }
 
     #[doc =
@@ -444,7 +494,71 @@ impl DataComputeSnapshotRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComputeSnapshotSnapshotEncryptionKeyEl {
+pub struct DataComputeSnapshot_Params {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_manager_tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+}
+
+impl DataComputeSnapshot_Params {
+    #[doc = "Set the field `resource_manager_tags`.\n"]
+    pub fn set_resource_manager_tags(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.resource_manager_tags = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataComputeSnapshot_Params {
+    type O = terrars::BlockAssignable<DataComputeSnapshot_Params>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataComputeSnapshot_Params {}
+
+impl BuildDataComputeSnapshot_Params {
+    pub fn build(self) -> DataComputeSnapshot_Params {
+        DataComputeSnapshot_Params { resource_manager_tags: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataComputeSnapshot_ParamsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataComputeSnapshot_ParamsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeSnapshot_ParamsRef {
+        DataComputeSnapshot_ParamsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataComputeSnapshot_ParamsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `resource_manager_tags` after provisioning.\n"]
+    pub fn resource_manager_tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.resource_manager_tags", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataComputeSnapshot_SnapshotEncryptionKey {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_self_link: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -452,10 +566,12 @@ pub struct DataComputeSnapshotSnapshotEncryptionKeyEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     raw_key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    rsa_encrypted_key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sha256: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataComputeSnapshotSnapshotEncryptionKeyEl {
+impl DataComputeSnapshot_SnapshotEncryptionKey {
     #[doc = "Set the field `kms_key_self_link`.\n"]
     pub fn set_kms_key_self_link(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.kms_key_self_link = std::option::Option::Some(v.into());
@@ -477,6 +593,12 @@ impl DataComputeSnapshotSnapshotEncryptionKeyEl {
         self
     }
 
+    #[doc = "Set the field `rsa_encrypted_key`.\n"]
+    pub fn set_rsa_encrypted_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.rsa_encrypted_key = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `sha256`.\n"]
     pub fn set_sha256(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.sha256 = std::option::Option::Some(v.into());
@@ -484,8 +606,8 @@ impl DataComputeSnapshotSnapshotEncryptionKeyEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeSnapshotSnapshotEncryptionKeyEl {
-    type O = terrars::BlockAssignable<DataComputeSnapshotSnapshotEncryptionKeyEl>;
+impl terrars::ToListMappable for DataComputeSnapshot_SnapshotEncryptionKey {
+    type O = terrars::BlockAssignable<DataComputeSnapshot_SnapshotEncryptionKey>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -496,34 +618,37 @@ impl terrars::ToListMappable for DataComputeSnapshotSnapshotEncryptionKeyEl {
     }
 }
 
-pub struct BuildDataComputeSnapshotSnapshotEncryptionKeyEl {}
+pub struct BuildDataComputeSnapshot_SnapshotEncryptionKey {}
 
-impl BuildDataComputeSnapshotSnapshotEncryptionKeyEl {
-    pub fn build(self) -> DataComputeSnapshotSnapshotEncryptionKeyEl {
-        DataComputeSnapshotSnapshotEncryptionKeyEl {
+impl BuildDataComputeSnapshot_SnapshotEncryptionKey {
+    pub fn build(self) -> DataComputeSnapshot_SnapshotEncryptionKey {
+        DataComputeSnapshot_SnapshotEncryptionKey {
             kms_key_self_link: core::default::Default::default(),
             kms_key_service_account: core::default::Default::default(),
             raw_key: core::default::Default::default(),
+            rsa_encrypted_key: core::default::Default::default(),
             sha256: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataComputeSnapshotSnapshotEncryptionKeyElRef {
+#[allow(dead_code)]
+pub struct DataComputeSnapshot_SnapshotEncryptionKeyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeSnapshotSnapshotEncryptionKeyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeSnapshotSnapshotEncryptionKeyElRef {
-        DataComputeSnapshotSnapshotEncryptionKeyElRef {
+impl terrars::Ref for DataComputeSnapshot_SnapshotEncryptionKeyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeSnapshot_SnapshotEncryptionKeyRef {
+        DataComputeSnapshot_SnapshotEncryptionKeyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeSnapshotSnapshotEncryptionKeyElRef {
+impl DataComputeSnapshot_SnapshotEncryptionKeyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -543,6 +668,11 @@ impl DataComputeSnapshotSnapshotEncryptionKeyElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.raw_key", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `rsa_encrypted_key` after provisioning.\n"]
+    pub fn rsa_encrypted_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rsa_encrypted_key", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `sha256` after provisioning.\n"]
     pub fn sha256(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.sha256", self.base))
@@ -550,14 +680,24 @@ impl DataComputeSnapshotSnapshotEncryptionKeyElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComputeSnapshotSourceDiskEncryptionKeyEl {
+pub struct DataComputeSnapshot_SourceDiskEncryptionKey {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_self_link: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_service_account: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     raw_key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    rsa_encrypted_key: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataComputeSnapshotSourceDiskEncryptionKeyEl {
+impl DataComputeSnapshot_SourceDiskEncryptionKey {
+    #[doc = "Set the field `kms_key_self_link`.\n"]
+    pub fn set_kms_key_self_link(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.kms_key_self_link = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `kms_key_service_account`.\n"]
     pub fn set_kms_key_service_account(
         mut self,
@@ -572,10 +712,16 @@ impl DataComputeSnapshotSourceDiskEncryptionKeyEl {
         self.raw_key = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `rsa_encrypted_key`.\n"]
+    pub fn set_rsa_encrypted_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.rsa_encrypted_key = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for DataComputeSnapshotSourceDiskEncryptionKeyEl {
-    type O = terrars::BlockAssignable<DataComputeSnapshotSourceDiskEncryptionKeyEl>;
+impl terrars::ToListMappable for DataComputeSnapshot_SourceDiskEncryptionKey {
+    type O = terrars::BlockAssignable<DataComputeSnapshot_SourceDiskEncryptionKey>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -586,37 +732,46 @@ impl terrars::ToListMappable for DataComputeSnapshotSourceDiskEncryptionKeyEl {
     }
 }
 
-pub struct BuildDataComputeSnapshotSourceDiskEncryptionKeyEl {}
+pub struct BuildDataComputeSnapshot_SourceDiskEncryptionKey {}
 
-impl BuildDataComputeSnapshotSourceDiskEncryptionKeyEl {
-    pub fn build(self) -> DataComputeSnapshotSourceDiskEncryptionKeyEl {
-        DataComputeSnapshotSourceDiskEncryptionKeyEl {
+impl BuildDataComputeSnapshot_SourceDiskEncryptionKey {
+    pub fn build(self) -> DataComputeSnapshot_SourceDiskEncryptionKey {
+        DataComputeSnapshot_SourceDiskEncryptionKey {
+            kms_key_self_link: core::default::Default::default(),
             kms_key_service_account: core::default::Default::default(),
             raw_key: core::default::Default::default(),
+            rsa_encrypted_key: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataComputeSnapshotSourceDiskEncryptionKeyElRef {
+#[allow(dead_code)]
+pub struct DataComputeSnapshot_SourceDiskEncryptionKeyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeSnapshotSourceDiskEncryptionKeyElRef {
+impl terrars::Ref for DataComputeSnapshot_SourceDiskEncryptionKeyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComputeSnapshotSourceDiskEncryptionKeyElRef {
-        DataComputeSnapshotSourceDiskEncryptionKeyElRef {
+    ) -> DataComputeSnapshot_SourceDiskEncryptionKeyRef {
+        DataComputeSnapshot_SourceDiskEncryptionKeyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeSnapshotSourceDiskEncryptionKeyElRef {
+impl DataComputeSnapshot_SourceDiskEncryptionKeyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `kms_key_self_link` after provisioning.\n"]
+    pub fn kms_key_self_link(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_self_link", self.base))
     }
 
     #[doc = "Get a reference to the value of field `kms_key_service_account` after provisioning.\n"]
@@ -627,5 +782,10 @@ impl DataComputeSnapshotSourceDiskEncryptionKeyElRef {
     #[doc = "Get a reference to the value of field `raw_key` after provisioning.\n"]
     pub fn raw_key(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.raw_key", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `rsa_encrypted_key` after provisioning.\n"]
+    pub fn rsa_encrypted_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rsa_encrypted_key", self.base))
     }
 }

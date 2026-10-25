@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataKmsCryptoKeyVersionData {
+struct DataKmsCryptoKeyVersionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -26,7 +28,7 @@ struct DataKmsCryptoKeyVersionData {
 struct DataKmsCryptoKeyVersion_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataKmsCryptoKeyVersionData>,
+    data: std::cell::RefCell<DataKmsCryptoKeyVersionData_>,
 }
 
 #[derive(Clone)]
@@ -109,7 +111,7 @@ impl DataKmsCryptoKeyVersion {
     }
 
     #[doc = "Get a reference to the value of field `public_key` after provisioning.\n"]
-    pub fn public_key(&self) -> terrars::ListRef<DataKmsCryptoKeyVersionPublicKeyElRef> {
+    pub fn public_key(&self) -> terrars::ListRef<DataKmsCryptoKeyVersion_PublicKeyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.public_key", self.extract_ref()))
     }
 
@@ -166,7 +168,7 @@ impl BuildDataKmsCryptoKeyVersion {
         let out = DataKmsCryptoKeyVersion(std::rc::Rc::new(DataKmsCryptoKeyVersion_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataKmsCryptoKeyVersionData {
+            data: std::cell::RefCell::new(DataKmsCryptoKeyVersionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -230,7 +232,7 @@ impl DataKmsCryptoKeyVersionRef {
     }
 
     #[doc = "Get a reference to the value of field `public_key` after provisioning.\n"]
-    pub fn public_key(&self) -> terrars::ListRef<DataKmsCryptoKeyVersionPublicKeyElRef> {
+    pub fn public_key(&self) -> terrars::ListRef<DataKmsCryptoKeyVersion_PublicKeyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.public_key", self.extract_ref()))
     }
 
@@ -246,14 +248,14 @@ impl DataKmsCryptoKeyVersionRef {
 }
 
 #[derive(Serialize)]
-pub struct DataKmsCryptoKeyVersionPublicKeyEl {
+pub struct DataKmsCryptoKeyVersion_PublicKey {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     algorithm: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     pem: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataKmsCryptoKeyVersionPublicKeyEl {
+impl DataKmsCryptoKeyVersion_PublicKey {
     #[doc = "Set the field `algorithm`.\n"]
     pub fn set_algorithm(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.algorithm = std::option::Option::Some(v.into());
@@ -267,8 +269,8 @@ impl DataKmsCryptoKeyVersionPublicKeyEl {
     }
 }
 
-impl terrars::ToListMappable for DataKmsCryptoKeyVersionPublicKeyEl {
-    type O = terrars::BlockAssignable<DataKmsCryptoKeyVersionPublicKeyEl>;
+impl terrars::ToListMappable for DataKmsCryptoKeyVersion_PublicKey {
+    type O = terrars::BlockAssignable<DataKmsCryptoKeyVersion_PublicKey>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -279,32 +281,34 @@ impl terrars::ToListMappable for DataKmsCryptoKeyVersionPublicKeyEl {
     }
 }
 
-pub struct BuildDataKmsCryptoKeyVersionPublicKeyEl {}
+pub struct BuildDataKmsCryptoKeyVersion_PublicKey {}
 
-impl BuildDataKmsCryptoKeyVersionPublicKeyEl {
-    pub fn build(self) -> DataKmsCryptoKeyVersionPublicKeyEl {
-        DataKmsCryptoKeyVersionPublicKeyEl {
+impl BuildDataKmsCryptoKeyVersion_PublicKey {
+    pub fn build(self) -> DataKmsCryptoKeyVersion_PublicKey {
+        DataKmsCryptoKeyVersion_PublicKey {
             algorithm: core::default::Default::default(),
             pem: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataKmsCryptoKeyVersionPublicKeyElRef {
+#[allow(dead_code)]
+pub struct DataKmsCryptoKeyVersion_PublicKeyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataKmsCryptoKeyVersionPublicKeyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataKmsCryptoKeyVersionPublicKeyElRef {
-        DataKmsCryptoKeyVersionPublicKeyElRef {
+impl terrars::Ref for DataKmsCryptoKeyVersion_PublicKeyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataKmsCryptoKeyVersion_PublicKeyRef {
+        DataKmsCryptoKeyVersion_PublicKeyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataKmsCryptoKeyVersionPublicKeyElRef {
+impl DataKmsCryptoKeyVersion_PublicKeyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

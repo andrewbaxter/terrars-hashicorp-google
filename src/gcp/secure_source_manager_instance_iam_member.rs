@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct SecureSourceManagerInstanceIamMemberData {
+struct SecureSourceManagerInstanceIamMemberData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,14 +30,14 @@ struct SecureSourceManagerInstanceIamMemberData {
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<SecureSourceManagerInstanceIamMemberConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<SecureSourceManagerInstanceIamMember_Condition>>,
     dynamic: SecureSourceManagerInstanceIamMemberDynamic,
 }
 
 struct SecureSourceManagerInstanceIamMember_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SecureSourceManagerInstanceIamMemberData>,
+    data: std::cell::RefCell<SecureSourceManagerInstanceIamMemberData_>,
 }
 
 #[derive(Clone)]
@@ -156,7 +158,7 @@ impl SecureSourceManagerInstanceIamMember {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SecureSourceManagerInstanceIamMemberConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecureSourceManagerInstanceIamMember_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -205,7 +207,7 @@ impl SecureSourceManagerInstanceIamMember {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<SecureSourceManagerInstanceIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<SecureSourceManagerInstanceIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -256,7 +258,7 @@ impl BuildSecureSourceManagerInstanceIamMember {
         let out = SecureSourceManagerInstanceIamMember(std::rc::Rc::new(SecureSourceManagerInstanceIamMember_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SecureSourceManagerInstanceIamMemberData {
+            data: std::cell::RefCell::new(SecureSourceManagerInstanceIamMemberData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -336,20 +338,25 @@ impl SecureSourceManagerInstanceIamMemberRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<SecureSourceManagerInstanceIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<SecureSourceManagerInstanceIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct SecureSourceManagerInstanceIamMemberDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<SecureSourceManagerInstanceIamMember_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct SecureSourceManagerInstanceIamMemberConditionEl {
+pub struct SecureSourceManagerInstanceIamMember_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl SecureSourceManagerInstanceIamMemberConditionEl {
+impl SecureSourceManagerInstanceIamMember_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -357,8 +364,8 @@ impl SecureSourceManagerInstanceIamMemberConditionEl {
     }
 }
 
-impl terrars::ToListMappable for SecureSourceManagerInstanceIamMemberConditionEl {
-    type O = terrars::BlockAssignable<SecureSourceManagerInstanceIamMemberConditionEl>;
+impl terrars::ToListMappable for SecureSourceManagerInstanceIamMember_Condition {
+    type O = terrars::BlockAssignable<SecureSourceManagerInstanceIamMember_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -369,16 +376,16 @@ impl terrars::ToListMappable for SecureSourceManagerInstanceIamMemberConditionEl
     }
 }
 
-pub struct BuildSecureSourceManagerInstanceIamMemberConditionEl {
+pub struct BuildSecureSourceManagerInstanceIamMember_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSecureSourceManagerInstanceIamMemberConditionEl {
-    pub fn build(self) -> SecureSourceManagerInstanceIamMemberConditionEl {
-        SecureSourceManagerInstanceIamMemberConditionEl {
+impl BuildSecureSourceManagerInstanceIamMember_Condition {
+    pub fn build(self) -> SecureSourceManagerInstanceIamMember_Condition {
+        SecureSourceManagerInstanceIamMember_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -386,24 +393,26 @@ impl BuildSecureSourceManagerInstanceIamMemberConditionEl {
     }
 }
 
-pub struct SecureSourceManagerInstanceIamMemberConditionElRef {
+#[allow(dead_code)]
+pub struct SecureSourceManagerInstanceIamMember_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SecureSourceManagerInstanceIamMemberConditionElRef {
+impl terrars::Ref for SecureSourceManagerInstanceIamMember_ConditionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SecureSourceManagerInstanceIamMemberConditionElRef {
-        SecureSourceManagerInstanceIamMemberConditionElRef {
+    ) -> SecureSourceManagerInstanceIamMember_ConditionRef {
+        SecureSourceManagerInstanceIamMember_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SecureSourceManagerInstanceIamMemberConditionElRef {
+impl SecureSourceManagerInstanceIamMember_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -422,9 +431,4 @@ impl SecureSourceManagerInstanceIamMemberConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct SecureSourceManagerInstanceIamMemberDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<SecureSourceManagerInstanceIamMemberConditionEl>>,
 }

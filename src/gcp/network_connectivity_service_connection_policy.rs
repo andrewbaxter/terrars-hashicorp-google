@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct NetworkConnectivityServiceConnectionPolicyData {
+struct NetworkConnectivityServiceConnectionPolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct NetworkConnectivityServiceConnectionPolicyData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -31,16 +35,16 @@ struct NetworkConnectivityServiceConnectionPolicyData {
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     service_class: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    psc_config: std::option::Option<std::vec::Vec<NetworkConnectivityServiceConnectionPolicyPscConfigEl>>,
+    psc_config: std::option::Option<std::vec::Vec<NetworkConnectivityServiceConnectionPolicy_PscConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<NetworkConnectivityServiceConnectionPolicyTimeoutsEl>,
+    timeouts: std::option::Option<NetworkConnectivityServiceConnectionPolicy_Timeouts>,
     dynamic: NetworkConnectivityServiceConnectionPolicyDynamic,
 }
 
 struct NetworkConnectivityServiceConnectionPolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<NetworkConnectivityServiceConnectionPolicyData>,
+    data: std::cell::RefCell<NetworkConnectivityServiceConnectionPolicyData_>,
 }
 
 #[derive(Clone)]
@@ -140,6 +144,13 @@ impl NetworkConnectivityServiceConnectionPolicy {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nFree-text description of the resource."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -171,7 +182,7 @@ impl NetworkConnectivityServiceConnectionPolicy {
     #[doc = "Set the field `psc_config`.\n"]
     pub fn set_psc_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<NetworkConnectivityServiceConnectionPolicyPscConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<NetworkConnectivityServiceConnectionPolicy_PscConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -185,7 +196,7 @@ impl NetworkConnectivityServiceConnectionPolicy {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<NetworkConnectivityServiceConnectionPolicyTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<NetworkConnectivityServiceConnectionPolicy_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -194,6 +205,12 @@ impl NetworkConnectivityServiceConnectionPolicy {
         "Get a reference to the value of field `create_time` after provisioning.\nThe timestamp when the resource was created."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -256,12 +273,12 @@ impl NetworkConnectivityServiceConnectionPolicy {
 
     #[doc =
         "Get a reference to the value of field `psc_connections` after provisioning.\nInformation about each Private Service Connect connection."]
-    pub fn psc_connections(&self) -> terrars::ListRef<NetworkConnectivityServiceConnectionPolicyPscConnectionsElRef> {
+    pub fn psc_connections(&self) -> terrars::ListRef<NetworkConnectivityServiceConnectionPolicy_PscConnectionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.psc_connections", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `service_class` after provisioning.\nThe service class identifier for which this ServiceConnectionPolicy is for. The service class identifier is a unique, symbolic representation of a ServiceClass.\nIt is provided by the Service Producer. Google services have a prefix of gcp. For example, gcp-cloud-sql. 3rd party services do not. For example, test-service-a3dfcx."]
+        "Get a reference to the value of field `service_class` after provisioning.\nThe service class identifier for which this ServiceConnectionPolicy is for. The service class identifier is a unique, symbolic representation of a ServiceClass.\nIt is provided by the Service Producer. Google services have a prefix of gcp. For example, google-cloud-sql. 3rd party services do not. For example, test-service-a3dfcx.\n\nFor a list of supported services, see [Supported Services](https://docs.cloud.google.com/vpc/docs/about-service-connectivity-automation#supported-services)."]
     pub fn service_class(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_class", self.extract_ref()))
     }
@@ -279,13 +296,13 @@ impl NetworkConnectivityServiceConnectionPolicy {
     }
 
     #[doc = "Get a reference to the value of field `psc_config` after provisioning.\n"]
-    pub fn psc_config(&self) -> terrars::ListRef<NetworkConnectivityServiceConnectionPolicyPscConfigElRef> {
+    pub fn psc_config(&self) -> terrars::ListRef<NetworkConnectivityServiceConnectionPolicy_PscConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.psc_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NetworkConnectivityServiceConnectionPolicyTimeoutsElRef {
-        NetworkConnectivityServiceConnectionPolicyTimeoutsElRef::new(
+    pub fn timeouts(&self) -> NetworkConnectivityServiceConnectionPolicy_TimeoutsRef {
+        NetworkConnectivityServiceConnectionPolicy_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -334,7 +351,7 @@ pub struct BuildNetworkConnectivityServiceConnectionPolicy {
         "The resource path of the consumer network. Example: - projects/{projectNumOrId}/global/networks/{resourceId}."]
     pub network: terrars::PrimField<std::string::String>,
     #[doc =
-        "The service class identifier for which this ServiceConnectionPolicy is for. The service class identifier is a unique, symbolic representation of a ServiceClass.\nIt is provided by the Service Producer. Google services have a prefix of gcp. For example, gcp-cloud-sql. 3rd party services do not. For example, test-service-a3dfcx."]
+        "The service class identifier for which this ServiceConnectionPolicy is for. The service class identifier is a unique, symbolic representation of a ServiceClass.\nIt is provided by the Service Producer. Google services have a prefix of gcp. For example, google-cloud-sql. 3rd party services do not. For example, test-service-a3dfcx.\n\nFor a list of supported services, see [Supported Services](https://docs.cloud.google.com/vpc/docs/about-service-connectivity-automation#supported-services)."]
     pub service_class: terrars::PrimField<std::string::String>,
 }
 
@@ -344,12 +361,13 @@ impl BuildNetworkConnectivityServiceConnectionPolicy {
             NetworkConnectivityServiceConnectionPolicy(std::rc::Rc::new(NetworkConnectivityServiceConnectionPolicy_ {
                 shared: stack.shared.clone(),
                 tf_id: self.tf_id,
-                data: std::cell::RefCell::new(NetworkConnectivityServiceConnectionPolicyData {
+                data: std::cell::RefCell::new(NetworkConnectivityServiceConnectionPolicyData_ {
                     depends_on: core::default::Default::default(),
                     provider: std::option::Option::None,
                     lifecycle: core::default::Default::default(),
                     for_each: std::option::Option::None,
                     provisioner: core::default::Default::default(),
+                    deletion_policy: core::default::Default::default(),
                     description: core::default::Default::default(),
                     id: core::default::Default::default(),
                     labels: core::default::Default::default(),
@@ -395,6 +413,12 @@ impl NetworkConnectivityServiceConnectionPolicyRef {
         "Get a reference to the value of field `create_time` after provisioning.\nThe timestamp when the resource was created."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -457,12 +481,12 @@ impl NetworkConnectivityServiceConnectionPolicyRef {
 
     #[doc =
         "Get a reference to the value of field `psc_connections` after provisioning.\nInformation about each Private Service Connect connection."]
-    pub fn psc_connections(&self) -> terrars::ListRef<NetworkConnectivityServiceConnectionPolicyPscConnectionsElRef> {
+    pub fn psc_connections(&self) -> terrars::ListRef<NetworkConnectivityServiceConnectionPolicy_PscConnectionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.psc_connections", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `service_class` after provisioning.\nThe service class identifier for which this ServiceConnectionPolicy is for. The service class identifier is a unique, symbolic representation of a ServiceClass.\nIt is provided by the Service Producer. Google services have a prefix of gcp. For example, gcp-cloud-sql. 3rd party services do not. For example, test-service-a3dfcx."]
+        "Get a reference to the value of field `service_class` after provisioning.\nThe service class identifier for which this ServiceConnectionPolicy is for. The service class identifier is a unique, symbolic representation of a ServiceClass.\nIt is provided by the Service Producer. Google services have a prefix of gcp. For example, google-cloud-sql. 3rd party services do not. For example, test-service-a3dfcx.\n\nFor a list of supported services, see [Supported Services](https://docs.cloud.google.com/vpc/docs/about-service-connectivity-automation#supported-services)."]
     pub fn service_class(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_class", self.extract_ref()))
     }
@@ -480,21 +504,26 @@ impl NetworkConnectivityServiceConnectionPolicyRef {
     }
 
     #[doc = "Get a reference to the value of field `psc_config` after provisioning.\n"]
-    pub fn psc_config(&self) -> terrars::ListRef<NetworkConnectivityServiceConnectionPolicyPscConfigElRef> {
+    pub fn psc_config(&self) -> terrars::ListRef<NetworkConnectivityServiceConnectionPolicy_PscConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.psc_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NetworkConnectivityServiceConnectionPolicyTimeoutsElRef {
-        NetworkConnectivityServiceConnectionPolicyTimeoutsElRef::new(
+    pub fn timeouts(&self) -> NetworkConnectivityServiceConnectionPolicy_TimeoutsRef {
+        NetworkConnectivityServiceConnectionPolicy_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct NetworkConnectivityServiceConnectionPolicyDynamic {
+    psc_config: std::option::Option<terrars::DynamicBlock<NetworkConnectivityServiceConnectionPolicy_PscConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct NetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorEl {
+pub struct NetworkConnectivityServiceConnectionPolicy_PscConnections_Error {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     code: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -503,7 +532,7 @@ pub struct NetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorEl {
     message: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl NetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorEl {
+impl NetworkConnectivityServiceConnectionPolicy_PscConnections_Error {
     #[doc = "Set the field `code`.\n"]
     pub fn set_code(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.code = std::option::Option::Some(v.into());
@@ -526,8 +555,8 @@ impl NetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorEl {
-    type O = terrars::BlockAssignable<NetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorEl>;
+impl terrars::ToListMappable for NetworkConnectivityServiceConnectionPolicy_PscConnections_Error {
+    type O = terrars::BlockAssignable<NetworkConnectivityServiceConnectionPolicy_PscConnections_Error>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -538,11 +567,11 @@ impl terrars::ToListMappable for NetworkConnectivityServiceConnectionPolicyPscCo
     }
 }
 
-pub struct BuildNetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorEl {}
+pub struct BuildNetworkConnectivityServiceConnectionPolicy_PscConnections_Error {}
 
-impl BuildNetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorEl {
-    pub fn build(self) -> NetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorEl {
-        NetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorEl {
+impl BuildNetworkConnectivityServiceConnectionPolicy_PscConnections_Error {
+    pub fn build(self) -> NetworkConnectivityServiceConnectionPolicy_PscConnections_Error {
+        NetworkConnectivityServiceConnectionPolicy_PscConnections_Error {
             code: core::default::Default::default(),
             details: core::default::Default::default(),
             message: core::default::Default::default(),
@@ -550,24 +579,26 @@ impl BuildNetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorEl {
     }
 }
 
-pub struct NetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorElRef {
+#[allow(dead_code)]
+pub struct NetworkConnectivityServiceConnectionPolicy_PscConnections_ErrorRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorElRef {
+impl terrars::Ref for NetworkConnectivityServiceConnectionPolicy_PscConnections_ErrorRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorElRef {
-        NetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorElRef {
+    ) -> NetworkConnectivityServiceConnectionPolicy_PscConnections_ErrorRef {
+        NetworkConnectivityServiceConnectionPolicy_PscConnections_ErrorRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorElRef {
+impl NetworkConnectivityServiceConnectionPolicy_PscConnections_ErrorRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -589,7 +620,7 @@ impl NetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorElRef {
 }
 
 #[derive(Serialize)]
-pub struct NetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorInfoEl {
+pub struct NetworkConnectivityServiceConnectionPolicy_PscConnections_ErrorInfo {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     domain: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -598,7 +629,7 @@ pub struct NetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorInfoEl
     reason: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl NetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorInfoEl {
+impl NetworkConnectivityServiceConnectionPolicy_PscConnections_ErrorInfo {
     #[doc = "Set the field `domain`.\n"]
     pub fn set_domain(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.domain = std::option::Option::Some(v.into());
@@ -621,8 +652,8 @@ impl NetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorInfoEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorInfoEl {
-    type O = terrars::BlockAssignable<NetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorInfoEl>;
+impl terrars::ToListMappable for NetworkConnectivityServiceConnectionPolicy_PscConnections_ErrorInfo {
+    type O = terrars::BlockAssignable<NetworkConnectivityServiceConnectionPolicy_PscConnections_ErrorInfo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -633,11 +664,11 @@ impl terrars::ToListMappable for NetworkConnectivityServiceConnectionPolicyPscCo
     }
 }
 
-pub struct BuildNetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorInfoEl {}
+pub struct BuildNetworkConnectivityServiceConnectionPolicy_PscConnections_ErrorInfo {}
 
-impl BuildNetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorInfoEl {
-    pub fn build(self) -> NetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorInfoEl {
-        NetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorInfoEl {
+impl BuildNetworkConnectivityServiceConnectionPolicy_PscConnections_ErrorInfo {
+    pub fn build(self) -> NetworkConnectivityServiceConnectionPolicy_PscConnections_ErrorInfo {
+        NetworkConnectivityServiceConnectionPolicy_PscConnections_ErrorInfo {
             domain: core::default::Default::default(),
             metadata: core::default::Default::default(),
             reason: core::default::Default::default(),
@@ -645,24 +676,26 @@ impl BuildNetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorInfoEl 
     }
 }
 
-pub struct NetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorInfoElRef {
+#[allow(dead_code)]
+pub struct NetworkConnectivityServiceConnectionPolicy_PscConnections_ErrorInfoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorInfoElRef {
+impl terrars::Ref for NetworkConnectivityServiceConnectionPolicy_PscConnections_ErrorInfoRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorInfoElRef {
-        NetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorInfoElRef {
+    ) -> NetworkConnectivityServiceConnectionPolicy_PscConnections_ErrorInfoRef {
+        NetworkConnectivityServiceConnectionPolicy_PscConnections_ErrorInfoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorInfoElRef {
+impl NetworkConnectivityServiceConnectionPolicy_PscConnections_ErrorInfoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -684,7 +717,7 @@ impl NetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorInfoElRef {
 }
 
 #[derive(Serialize)]
-pub struct NetworkConnectivityServiceConnectionPolicyPscConnectionsEl {
+pub struct NetworkConnectivityServiceConnectionPolicy_PscConnections {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     consumer_address: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -692,11 +725,11 @@ pub struct NetworkConnectivityServiceConnectionPolicyPscConnectionsEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     consumer_target_project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    error: std::option::Option<terrars::ListField<NetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorEl>>,
+    error: std::option::Option<terrars::ListField<NetworkConnectivityServiceConnectionPolicy_PscConnections_Error>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     error_info: std
     ::option
-    ::Option<terrars::ListField<NetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorInfoEl>>,
+    ::Option<terrars::ListField<NetworkConnectivityServiceConnectionPolicy_PscConnections_ErrorInfo>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     error_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -707,7 +740,7 @@ pub struct NetworkConnectivityServiceConnectionPolicyPscConnectionsEl {
     state: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl NetworkConnectivityServiceConnectionPolicyPscConnectionsEl {
+impl NetworkConnectivityServiceConnectionPolicy_PscConnections {
     #[doc = "Set the field `consumer_address`.\n"]
     pub fn set_consumer_address(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.consumer_address = std::option::Option::Some(v.into());
@@ -740,7 +773,7 @@ impl NetworkConnectivityServiceConnectionPolicyPscConnectionsEl {
 
                     std
                     ::convert
-                    ::Into<terrars::ListField<NetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorEl>>,
+                    ::Into<terrars::ListField<NetworkConnectivityServiceConnectionPolicy_PscConnections_Error>>,
     ) -> Self {
         self.error = std::option::Option::Some(v.into());
         self
@@ -754,7 +787,7 @@ impl NetworkConnectivityServiceConnectionPolicyPscConnectionsEl {
 
                     std
                     ::convert
-                    ::Into<terrars::ListField<NetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorInfoEl>>,
+                    ::Into<terrars::ListField<NetworkConnectivityServiceConnectionPolicy_PscConnections_ErrorInfo>>,
     ) -> Self {
         self.error_info = std::option::Option::Some(v.into());
         self
@@ -785,8 +818,8 @@ impl NetworkConnectivityServiceConnectionPolicyPscConnectionsEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkConnectivityServiceConnectionPolicyPscConnectionsEl {
-    type O = terrars::BlockAssignable<NetworkConnectivityServiceConnectionPolicyPscConnectionsEl>;
+impl terrars::ToListMappable for NetworkConnectivityServiceConnectionPolicy_PscConnections {
+    type O = terrars::BlockAssignable<NetworkConnectivityServiceConnectionPolicy_PscConnections>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -797,11 +830,11 @@ impl terrars::ToListMappable for NetworkConnectivityServiceConnectionPolicyPscCo
     }
 }
 
-pub struct BuildNetworkConnectivityServiceConnectionPolicyPscConnectionsEl {}
+pub struct BuildNetworkConnectivityServiceConnectionPolicy_PscConnections {}
 
-impl BuildNetworkConnectivityServiceConnectionPolicyPscConnectionsEl {
-    pub fn build(self) -> NetworkConnectivityServiceConnectionPolicyPscConnectionsEl {
-        NetworkConnectivityServiceConnectionPolicyPscConnectionsEl {
+impl BuildNetworkConnectivityServiceConnectionPolicy_PscConnections {
+    pub fn build(self) -> NetworkConnectivityServiceConnectionPolicy_PscConnections {
+        NetworkConnectivityServiceConnectionPolicy_PscConnections {
             consumer_address: core::default::Default::default(),
             consumer_forwarding_rule: core::default::Default::default(),
             consumer_target_project: core::default::Default::default(),
@@ -815,24 +848,26 @@ impl BuildNetworkConnectivityServiceConnectionPolicyPscConnectionsEl {
     }
 }
 
-pub struct NetworkConnectivityServiceConnectionPolicyPscConnectionsElRef {
+#[allow(dead_code)]
+pub struct NetworkConnectivityServiceConnectionPolicy_PscConnectionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkConnectivityServiceConnectionPolicyPscConnectionsElRef {
+impl terrars::Ref for NetworkConnectivityServiceConnectionPolicy_PscConnectionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkConnectivityServiceConnectionPolicyPscConnectionsElRef {
-        NetworkConnectivityServiceConnectionPolicyPscConnectionsElRef {
+    ) -> NetworkConnectivityServiceConnectionPolicy_PscConnectionsRef {
+        NetworkConnectivityServiceConnectionPolicy_PscConnectionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkConnectivityServiceConnectionPolicyPscConnectionsElRef {
+impl NetworkConnectivityServiceConnectionPolicy_PscConnectionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -853,14 +888,12 @@ impl NetworkConnectivityServiceConnectionPolicyPscConnectionsElRef {
     }
 
     #[doc = "Get a reference to the value of field `error` after provisioning.\n"]
-    pub fn error(&self) -> terrars::ListRef<NetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorElRef> {
+    pub fn error(&self) -> terrars::ListRef<NetworkConnectivityServiceConnectionPolicy_PscConnections_ErrorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.error", self.base))
     }
 
     #[doc = "Get a reference to the value of field `error_info` after provisioning.\n"]
-    pub fn error_info(
-        &self,
-    ) -> terrars::ListRef<NetworkConnectivityServiceConnectionPolicyPscConnectionsElErrorInfoElRef> {
+    pub fn error_info(&self) -> terrars::ListRef<NetworkConnectivityServiceConnectionPolicy_PscConnections_ErrorInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.error_info", self.base))
     }
 
@@ -886,22 +919,48 @@ impl NetworkConnectivityServiceConnectionPolicyPscConnectionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct NetworkConnectivityServiceConnectionPolicyPscConfigEl {
+pub struct NetworkConnectivityServiceConnectionPolicy_PscConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    allowed_google_producers_resource_hierarchy_level: std
+    ::option
+    ::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     limit: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    producer_instance_location: std::option::Option<terrars::PrimField<std::string::String>>,
     subnetworks: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl NetworkConnectivityServiceConnectionPolicyPscConfigEl {
+impl NetworkConnectivityServiceConnectionPolicy_PscConfig {
+    #[doc =
+        "Set the field `allowed_google_producers_resource_hierarchy_level`.\nList of Projects, Folders, or Organizations from where the Producer instance can be within. For example,\na network administrator can provide both 'organizations/foo' and 'projects/bar' as\nallowed_google_producers_resource_hierarchy_levels. This allowlists this network to connect with any Producer\ninstance within the 'foo' organization or the 'bar' project. By default,\nallowedGoogleProducersResourceHierarchyLevel is empty. The format for each\nallowedGoogleProducersResourceHierarchyLevel is / where is one of 'projects', 'folders', or 'organizations'\nand is either the ID or the number of the resource type. Format for each\nallowedGoogleProducersResourceHierarchyLevel value: 'projects/' or 'folders/' or 'organizations/' Eg.\n[projects/my-project-id, projects/567, folders/891, organizations/123]"]
+    pub fn set_allowed_google_producers_resource_hierarchy_level(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.allowed_google_producers_resource_hierarchy_level = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `limit`.\nMax number of PSC connections for this policy."]
     pub fn set_limit(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.limit = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc =
+        "Set the field `producer_instance_location`.\nProducerInstanceLocation is used to specify which authorization mechanism to use to determine which projects\nthe Producer instance can be within. Possible values: [\"PRODUCER_INSTANCE_LOCATION_UNSPECIFIED\", \"CUSTOM_RESOURCE_HIERARCHY_LEVELS\"]"]
+    pub fn set_producer_instance_location(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.producer_instance_location = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for NetworkConnectivityServiceConnectionPolicyPscConfigEl {
-    type O = terrars::BlockAssignable<NetworkConnectivityServiceConnectionPolicyPscConfigEl>;
+impl terrars::ToListMappable for NetworkConnectivityServiceConnectionPolicy_PscConfig {
+    type O = terrars::BlockAssignable<NetworkConnectivityServiceConnectionPolicy_PscConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -912,46 +971,67 @@ impl terrars::ToListMappable for NetworkConnectivityServiceConnectionPolicyPscCo
     }
 }
 
-pub struct BuildNetworkConnectivityServiceConnectionPolicyPscConfigEl {
+pub struct BuildNetworkConnectivityServiceConnectionPolicy_PscConfig {
     #[doc = "IDs of the subnetworks or fully qualified identifiers for the subnetworks"]
     pub subnetworks: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildNetworkConnectivityServiceConnectionPolicyPscConfigEl {
-    pub fn build(self) -> NetworkConnectivityServiceConnectionPolicyPscConfigEl {
-        NetworkConnectivityServiceConnectionPolicyPscConfigEl {
+impl BuildNetworkConnectivityServiceConnectionPolicy_PscConfig {
+    pub fn build(self) -> NetworkConnectivityServiceConnectionPolicy_PscConfig {
+        NetworkConnectivityServiceConnectionPolicy_PscConfig {
+            allowed_google_producers_resource_hierarchy_level: core::default::Default::default(),
             limit: core::default::Default::default(),
+            producer_instance_location: core::default::Default::default(),
             subnetworks: self.subnetworks,
         }
     }
 }
 
-pub struct NetworkConnectivityServiceConnectionPolicyPscConfigElRef {
+#[allow(dead_code)]
+pub struct NetworkConnectivityServiceConnectionPolicy_PscConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkConnectivityServiceConnectionPolicyPscConfigElRef {
+impl terrars::Ref for NetworkConnectivityServiceConnectionPolicy_PscConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkConnectivityServiceConnectionPolicyPscConfigElRef {
-        NetworkConnectivityServiceConnectionPolicyPscConfigElRef {
+    ) -> NetworkConnectivityServiceConnectionPolicy_PscConfigRef {
+        NetworkConnectivityServiceConnectionPolicy_PscConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkConnectivityServiceConnectionPolicyPscConfigElRef {
+impl NetworkConnectivityServiceConnectionPolicy_PscConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `allowed_google_producers_resource_hierarchy_level` after provisioning.\nList of Projects, Folders, or Organizations from where the Producer instance can be within. For example,\na network administrator can provide both 'organizations/foo' and 'projects/bar' as\nallowed_google_producers_resource_hierarchy_levels. This allowlists this network to connect with any Producer\ninstance within the 'foo' organization or the 'bar' project. By default,\nallowedGoogleProducersResourceHierarchyLevel is empty. The format for each\nallowedGoogleProducersResourceHierarchyLevel is / where is one of 'projects', 'folders', or 'organizations'\nand is either the ID or the number of the resource type. Format for each\nallowedGoogleProducersResourceHierarchyLevel value: 'projects/' or 'folders/' or 'organizations/' Eg.\n[projects/my-project-id, projects/567, folders/891, organizations/123]"]
+    pub fn allowed_google_producers_resource_hierarchy_level(
+        &self,
+    ) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.allowed_google_producers_resource_hierarchy_level", self.base),
+        )
     }
 
     #[doc =
         "Get a reference to the value of field `limit` after provisioning.\nMax number of PSC connections for this policy."]
     pub fn limit(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.limit", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `producer_instance_location` after provisioning.\nProducerInstanceLocation is used to specify which authorization mechanism to use to determine which projects\nthe Producer instance can be within. Possible values: [\"PRODUCER_INSTANCE_LOCATION_UNSPECIFIED\", \"CUSTOM_RESOURCE_HIERARCHY_LEVELS\"]"]
+    pub fn producer_instance_location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.producer_instance_location", self.base))
     }
 
     #[doc =
@@ -962,7 +1042,7 @@ impl NetworkConnectivityServiceConnectionPolicyPscConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct NetworkConnectivityServiceConnectionPolicyTimeoutsEl {
+pub struct NetworkConnectivityServiceConnectionPolicy_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -971,7 +1051,7 @@ pub struct NetworkConnectivityServiceConnectionPolicyTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl NetworkConnectivityServiceConnectionPolicyTimeoutsEl {
+impl NetworkConnectivityServiceConnectionPolicy_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -991,8 +1071,8 @@ impl NetworkConnectivityServiceConnectionPolicyTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkConnectivityServiceConnectionPolicyTimeoutsEl {
-    type O = terrars::BlockAssignable<NetworkConnectivityServiceConnectionPolicyTimeoutsEl>;
+impl terrars::ToListMappable for NetworkConnectivityServiceConnectionPolicy_Timeouts {
+    type O = terrars::BlockAssignable<NetworkConnectivityServiceConnectionPolicy_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1003,11 +1083,11 @@ impl terrars::ToListMappable for NetworkConnectivityServiceConnectionPolicyTimeo
     }
 }
 
-pub struct BuildNetworkConnectivityServiceConnectionPolicyTimeoutsEl {}
+pub struct BuildNetworkConnectivityServiceConnectionPolicy_Timeouts {}
 
-impl BuildNetworkConnectivityServiceConnectionPolicyTimeoutsEl {
-    pub fn build(self) -> NetworkConnectivityServiceConnectionPolicyTimeoutsEl {
-        NetworkConnectivityServiceConnectionPolicyTimeoutsEl {
+impl BuildNetworkConnectivityServiceConnectionPolicy_Timeouts {
+    pub fn build(self) -> NetworkConnectivityServiceConnectionPolicy_Timeouts {
+        NetworkConnectivityServiceConnectionPolicy_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1015,24 +1095,26 @@ impl BuildNetworkConnectivityServiceConnectionPolicyTimeoutsEl {
     }
 }
 
-pub struct NetworkConnectivityServiceConnectionPolicyTimeoutsElRef {
+#[allow(dead_code)]
+pub struct NetworkConnectivityServiceConnectionPolicy_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkConnectivityServiceConnectionPolicyTimeoutsElRef {
+impl terrars::Ref for NetworkConnectivityServiceConnectionPolicy_TimeoutsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkConnectivityServiceConnectionPolicyTimeoutsElRef {
-        NetworkConnectivityServiceConnectionPolicyTimeoutsElRef {
+    ) -> NetworkConnectivityServiceConnectionPolicy_TimeoutsRef {
+        NetworkConnectivityServiceConnectionPolicy_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkConnectivityServiceConnectionPolicyTimeoutsElRef {
+impl NetworkConnectivityServiceConnectionPolicy_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1051,9 +1133,4 @@ impl NetworkConnectivityServiceConnectionPolicyTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct NetworkConnectivityServiceConnectionPolicyDynamic {
-    psc_config: std::option::Option<terrars::DynamicBlock<NetworkConnectivityServiceConnectionPolicyPscConfigEl>>,
 }

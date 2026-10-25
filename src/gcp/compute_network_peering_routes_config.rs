@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeNetworkPeeringRoutesConfigData {
+struct ComputeNetworkPeeringRoutesConfigData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,20 +22,24 @@ struct ComputeNetworkPeeringRoutesConfigData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     export_custom_routes: terrars::PrimField<bool>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    export_subnet_routes_with_public_ip: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     import_custom_routes: terrars::PrimField<bool>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    import_subnet_routes_with_public_ip: std::option::Option<terrars::PrimField<bool>>,
     network: terrars::PrimField<std::string::String>,
     peering: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComputeNetworkPeeringRoutesConfigTimeoutsEl>,
+    timeouts: std::option::Option<ComputeNetworkPeeringRoutesConfig_Timeouts>,
 }
 
 struct ComputeNetworkPeeringRoutesConfig_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeNetworkPeeringRoutesConfigData>,
+    data: std::cell::RefCell<ComputeNetworkPeeringRoutesConfigData_>,
 }
 
 #[derive(Clone)]
@@ -133,9 +139,23 @@ impl ComputeNetworkPeeringRoutesConfig {
         self
     }
 
+    #[doc =
+        "Set the field `export_subnet_routes_with_public_ip`.\nWhether subnet routes with public IP range are exported.\nIPv4 special-use ranges are always exported to peers and\nare not controlled by this field."]
+    pub fn set_export_subnet_routes_with_public_ip(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().export_subnet_routes_with_public_ip = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `import_subnet_routes_with_public_ip`.\nWhether subnet routes with public IP range are imported.\nIPv4 special-use ranges are always imported from peers and\nare not controlled by this field."]
+    pub fn set_import_subnet_routes_with_public_ip(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().import_subnet_routes_with_public_ip = std::option::Option::Some(v.into());
         self
     }
 
@@ -146,7 +166,7 @@ impl ComputeNetworkPeeringRoutesConfig {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeNetworkPeeringRoutesConfigTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeNetworkPeeringRoutesConfig_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -155,6 +175,15 @@ impl ComputeNetworkPeeringRoutesConfig {
         "Get a reference to the value of field `export_custom_routes` after provisioning.\nWhether to export the custom routes to the peer network."]
     pub fn export_custom_routes(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.export_custom_routes", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `export_subnet_routes_with_public_ip` after provisioning.\nWhether subnet routes with public IP range are exported.\nIPv4 special-use ranges are always exported to peers and\nare not controlled by this field."]
+    pub fn export_subnet_routes_with_public_ip(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.export_subnet_routes_with_public_ip", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -166,6 +195,15 @@ impl ComputeNetworkPeeringRoutesConfig {
         "Get a reference to the value of field `import_custom_routes` after provisioning.\nWhether to import the custom routes to the peer network."]
     pub fn import_custom_routes(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.import_custom_routes", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `import_subnet_routes_with_public_ip` after provisioning.\nWhether subnet routes with public IP range are imported.\nIPv4 special-use ranges are always imported from peers and\nare not controlled by this field."]
+    pub fn import_subnet_routes_with_public_ip(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.import_subnet_routes_with_public_ip", self.extract_ref()),
+        )
     }
 
     #[doc =
@@ -185,8 +223,8 @@ impl ComputeNetworkPeeringRoutesConfig {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeNetworkPeeringRoutesConfigTimeoutsElRef {
-        ComputeNetworkPeeringRoutesConfigTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ComputeNetworkPeeringRoutesConfig_TimeoutsRef {
+        ComputeNetworkPeeringRoutesConfig_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -241,15 +279,17 @@ impl BuildComputeNetworkPeeringRoutesConfig {
         let out = ComputeNetworkPeeringRoutesConfig(std::rc::Rc::new(ComputeNetworkPeeringRoutesConfig_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeNetworkPeeringRoutesConfigData {
+            data: std::cell::RefCell::new(ComputeNetworkPeeringRoutesConfigData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 export_custom_routes: self.export_custom_routes,
+                export_subnet_routes_with_public_ip: core::default::Default::default(),
                 id: core::default::Default::default(),
                 import_custom_routes: self.import_custom_routes,
+                import_subnet_routes_with_public_ip: core::default::Default::default(),
                 network: self.network,
                 peering: self.peering,
                 project: core::default::Default::default(),
@@ -290,6 +330,15 @@ impl ComputeNetworkPeeringRoutesConfigRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.export_custom_routes", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `export_subnet_routes_with_public_ip` after provisioning.\nWhether subnet routes with public IP range are exported.\nIPv4 special-use ranges are always exported to peers and\nare not controlled by this field."]
+    pub fn export_subnet_routes_with_public_ip(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.export_subnet_routes_with_public_ip", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -299,6 +348,15 @@ impl ComputeNetworkPeeringRoutesConfigRef {
         "Get a reference to the value of field `import_custom_routes` after provisioning.\nWhether to import the custom routes to the peer network."]
     pub fn import_custom_routes(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.import_custom_routes", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `import_subnet_routes_with_public_ip` after provisioning.\nWhether subnet routes with public IP range are imported.\nIPv4 special-use ranges are always imported from peers and\nare not controlled by this field."]
+    pub fn import_subnet_routes_with_public_ip(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.import_subnet_routes_with_public_ip", self.extract_ref()),
+        )
     }
 
     #[doc =
@@ -318,8 +376,8 @@ impl ComputeNetworkPeeringRoutesConfigRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeNetworkPeeringRoutesConfigTimeoutsElRef {
-        ComputeNetworkPeeringRoutesConfigTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ComputeNetworkPeeringRoutesConfig_TimeoutsRef {
+        ComputeNetworkPeeringRoutesConfig_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -327,7 +385,7 @@ impl ComputeNetworkPeeringRoutesConfigRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeNetworkPeeringRoutesConfigTimeoutsEl {
+pub struct ComputeNetworkPeeringRoutesConfig_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -336,7 +394,7 @@ pub struct ComputeNetworkPeeringRoutesConfigTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeNetworkPeeringRoutesConfigTimeoutsEl {
+impl ComputeNetworkPeeringRoutesConfig_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -356,8 +414,8 @@ impl ComputeNetworkPeeringRoutesConfigTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeNetworkPeeringRoutesConfigTimeoutsEl {
-    type O = terrars::BlockAssignable<ComputeNetworkPeeringRoutesConfigTimeoutsEl>;
+impl terrars::ToListMappable for ComputeNetworkPeeringRoutesConfig_Timeouts {
+    type O = terrars::BlockAssignable<ComputeNetworkPeeringRoutesConfig_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -368,11 +426,11 @@ impl terrars::ToListMappable for ComputeNetworkPeeringRoutesConfigTimeoutsEl {
     }
 }
 
-pub struct BuildComputeNetworkPeeringRoutesConfigTimeoutsEl {}
+pub struct BuildComputeNetworkPeeringRoutesConfig_Timeouts {}
 
-impl BuildComputeNetworkPeeringRoutesConfigTimeoutsEl {
-    pub fn build(self) -> ComputeNetworkPeeringRoutesConfigTimeoutsEl {
-        ComputeNetworkPeeringRoutesConfigTimeoutsEl {
+impl BuildComputeNetworkPeeringRoutesConfig_Timeouts {
+    pub fn build(self) -> ComputeNetworkPeeringRoutesConfig_Timeouts {
+        ComputeNetworkPeeringRoutesConfig_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -380,24 +438,23 @@ impl BuildComputeNetworkPeeringRoutesConfigTimeoutsEl {
     }
 }
 
-pub struct ComputeNetworkPeeringRoutesConfigTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComputeNetworkPeeringRoutesConfig_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeNetworkPeeringRoutesConfigTimeoutsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ComputeNetworkPeeringRoutesConfigTimeoutsElRef {
-        ComputeNetworkPeeringRoutesConfigTimeoutsElRef {
+impl terrars::Ref for ComputeNetworkPeeringRoutesConfig_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeNetworkPeeringRoutesConfig_TimeoutsRef {
+        ComputeNetworkPeeringRoutesConfig_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeNetworkPeeringRoutesConfigTimeoutsElRef {
+impl ComputeNetworkPeeringRoutesConfig_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

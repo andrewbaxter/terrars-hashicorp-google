@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct IapWebTypeComputeIamMemberData {
+struct IapWebTypeComputeIamMemberData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,14 +27,14 @@ struct IapWebTypeComputeIamMemberData {
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<IapWebTypeComputeIamMemberConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<IapWebTypeComputeIamMember_Condition>>,
     dynamic: IapWebTypeComputeIamMemberDynamic,
 }
 
 struct IapWebTypeComputeIamMember_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<IapWebTypeComputeIamMemberData>,
+    data: std::cell::RefCell<IapWebTypeComputeIamMemberData_>,
 }
 
 #[derive(Clone)]
@@ -147,7 +149,7 @@ impl IapWebTypeComputeIamMember {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<IapWebTypeComputeIamMemberConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IapWebTypeComputeIamMember_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -186,7 +188,7 @@ impl IapWebTypeComputeIamMember {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<IapWebTypeComputeIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<IapWebTypeComputeIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -235,7 +237,7 @@ impl BuildIapWebTypeComputeIamMember {
         let out = IapWebTypeComputeIamMember(std::rc::Rc::new(IapWebTypeComputeIamMember_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(IapWebTypeComputeIamMemberData {
+            data: std::cell::RefCell::new(IapWebTypeComputeIamMemberData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -303,20 +305,25 @@ impl IapWebTypeComputeIamMemberRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<IapWebTypeComputeIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<IapWebTypeComputeIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct IapWebTypeComputeIamMemberDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<IapWebTypeComputeIamMember_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct IapWebTypeComputeIamMemberConditionEl {
+pub struct IapWebTypeComputeIamMember_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl IapWebTypeComputeIamMemberConditionEl {
+impl IapWebTypeComputeIamMember_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -324,8 +331,8 @@ impl IapWebTypeComputeIamMemberConditionEl {
     }
 }
 
-impl terrars::ToListMappable for IapWebTypeComputeIamMemberConditionEl {
-    type O = terrars::BlockAssignable<IapWebTypeComputeIamMemberConditionEl>;
+impl terrars::ToListMappable for IapWebTypeComputeIamMember_Condition {
+    type O = terrars::BlockAssignable<IapWebTypeComputeIamMember_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -336,16 +343,16 @@ impl terrars::ToListMappable for IapWebTypeComputeIamMemberConditionEl {
     }
 }
 
-pub struct BuildIapWebTypeComputeIamMemberConditionEl {
+pub struct BuildIapWebTypeComputeIamMember_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildIapWebTypeComputeIamMemberConditionEl {
-    pub fn build(self) -> IapWebTypeComputeIamMemberConditionEl {
-        IapWebTypeComputeIamMemberConditionEl {
+impl BuildIapWebTypeComputeIamMember_Condition {
+    pub fn build(self) -> IapWebTypeComputeIamMember_Condition {
+        IapWebTypeComputeIamMember_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -353,21 +360,23 @@ impl BuildIapWebTypeComputeIamMemberConditionEl {
     }
 }
 
-pub struct IapWebTypeComputeIamMemberConditionElRef {
+#[allow(dead_code)]
+pub struct IapWebTypeComputeIamMember_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IapWebTypeComputeIamMemberConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> IapWebTypeComputeIamMemberConditionElRef {
-        IapWebTypeComputeIamMemberConditionElRef {
+impl terrars::Ref for IapWebTypeComputeIamMember_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IapWebTypeComputeIamMember_ConditionRef {
+        IapWebTypeComputeIamMember_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IapWebTypeComputeIamMemberConditionElRef {
+impl IapWebTypeComputeIamMember_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -386,9 +395,4 @@ impl IapWebTypeComputeIamMemberConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct IapWebTypeComputeIamMemberDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<IapWebTypeComputeIamMemberConditionEl>>,
 }

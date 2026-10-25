@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ContainerAttachedClusterData {
+struct ContainerAttachedClusterData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -33,28 +35,30 @@ struct ContainerAttachedClusterData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    authorization: std::option::Option<std::vec::Vec<ContainerAttachedClusterAuthorizationEl>>,
+    authorization: std::option::Option<std::vec::Vec<ContainerAttachedCluster_Authorization>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    binary_authorization: std::option::Option<std::vec::Vec<ContainerAttachedClusterBinaryAuthorizationEl>>,
+    binary_authorization: std::option::Option<std::vec::Vec<ContainerAttachedCluster_BinaryAuthorization>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    fleet: std::option::Option<std::vec::Vec<ContainerAttachedClusterFleetEl>>,
+    fleet: std::option::Option<std::vec::Vec<ContainerAttachedCluster_Fleet>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    logging_config: std::option::Option<std::vec::Vec<ContainerAttachedClusterLoggingConfigEl>>,
+    logging_config: std::option::Option<std::vec::Vec<ContainerAttachedCluster_LoggingConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    monitoring_config: std::option::Option<std::vec::Vec<ContainerAttachedClusterMonitoringConfigEl>>,
+    monitoring_config: std::option::Option<std::vec::Vec<ContainerAttachedCluster_MonitoringConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    oidc_config: std::option::Option<std::vec::Vec<ContainerAttachedClusterOidcConfigEl>>,
+    oidc_config: std::option::Option<std::vec::Vec<ContainerAttachedCluster_OidcConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    proxy_config: std::option::Option<std::vec::Vec<ContainerAttachedClusterProxyConfigEl>>,
+    proxy_config: std::option::Option<std::vec::Vec<ContainerAttachedCluster_ProxyConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ContainerAttachedClusterTimeoutsEl>,
+    security_posture_config: std::option::Option<std::vec::Vec<ContainerAttachedCluster_SecurityPostureConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<ContainerAttachedCluster_Timeouts>,
     dynamic: ContainerAttachedClusterDynamic,
 }
 
 struct ContainerAttachedCluster_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ContainerAttachedClusterData>,
+    data: std::cell::RefCell<ContainerAttachedClusterData_>,
 }
 
 #[derive(Clone)]
@@ -164,7 +168,8 @@ impl ContainerAttachedCluster {
         self
     }
 
-    #[doc = "Set the field `deletion_policy`.\nPolicy to determine what flags to send on delete."]
+    #[doc =
+        "Set the field `deletion_policy`.\nThis field uses a custom implementation please refer to documentation under /hashicorp/terraform-provider-google-beta/website/docs/r/container_attached_cluster.html.markdown for specifics"]
     pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
         self
@@ -192,7 +197,7 @@ impl ContainerAttachedCluster {
     #[doc = "Set the field `authorization`.\n"]
     pub fn set_authorization(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAttachedClusterAuthorizationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAttachedCluster_Authorization>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -208,7 +213,7 @@ impl ContainerAttachedCluster {
     #[doc = "Set the field `binary_authorization`.\n"]
     pub fn set_binary_authorization(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAttachedClusterBinaryAuthorizationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAttachedCluster_BinaryAuthorization>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -224,7 +229,7 @@ impl ContainerAttachedCluster {
     #[doc = "Set the field `fleet`.\n"]
     pub fn set_fleet(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAttachedClusterFleetEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAttachedCluster_Fleet>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -240,7 +245,7 @@ impl ContainerAttachedCluster {
     #[doc = "Set the field `logging_config`.\n"]
     pub fn set_logging_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAttachedClusterLoggingConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAttachedCluster_LoggingConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -256,7 +261,7 @@ impl ContainerAttachedCluster {
     #[doc = "Set the field `monitoring_config`.\n"]
     pub fn set_monitoring_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAttachedClusterMonitoringConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAttachedCluster_MonitoringConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -272,7 +277,7 @@ impl ContainerAttachedCluster {
     #[doc = "Set the field `oidc_config`.\n"]
     pub fn set_oidc_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAttachedClusterOidcConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAttachedCluster_OidcConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -288,7 +293,7 @@ impl ContainerAttachedCluster {
     #[doc = "Set the field `proxy_config`.\n"]
     pub fn set_proxy_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAttachedClusterProxyConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAttachedCluster_ProxyConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -301,8 +306,24 @@ impl ContainerAttachedCluster {
         self
     }
 
+    #[doc = "Set the field `security_posture_config`.\n"]
+    pub fn set_security_posture_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAttachedCluster_SecurityPostureConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().security_posture_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.security_posture_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ContainerAttachedClusterTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ContainerAttachedCluster_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -326,7 +347,7 @@ impl ContainerAttachedCluster {
     }
 
     #[doc =
-        "Get a reference to the value of field `deletion_policy` after provisioning.\nPolicy to determine what flags to send on delete."]
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nThis field uses a custom implementation please refer to documentation under /hashicorp/terraform-provider-google-beta/website/docs/r/container_attached_cluster.html.markdown for specifics"]
     pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
@@ -338,7 +359,7 @@ impl ContainerAttachedCluster {
     }
 
     #[doc =
-        "Get a reference to the value of field `distribution` after provisioning.\nThe Kubernetes distribution of the underlying attached cluster. Supported values:\n\"eks\", \"aks\"."]
+        "Get a reference to the value of field `distribution` after provisioning.\nThe Kubernetes distribution of the underlying attached cluster. Supported values:\n\"eks\", \"aks\", \"generic\". The generic distribution provides the ability to register\nor migrate any CNCF conformant cluster."]
     pub fn distribution(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.distribution", self.extract_ref()))
     }
@@ -350,7 +371,7 @@ impl ContainerAttachedCluster {
     }
 
     #[doc = "Get a reference to the value of field `errors` after provisioning.\nA set of errors found in the cluster."]
-    pub fn errors(&self) -> terrars::ListRef<ContainerAttachedClusterErrorsElRef> {
+    pub fn errors(&self) -> terrars::ListRef<ContainerAttachedCluster_ErrorsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.errors", self.extract_ref()))
     }
 
@@ -412,48 +433,53 @@ impl ContainerAttachedCluster {
 
     #[doc =
         "Get a reference to the value of field `workload_identity_config` after provisioning.\nWorkload Identity settings."]
-    pub fn workload_identity_config(&self) -> terrars::ListRef<ContainerAttachedClusterWorkloadIdentityConfigElRef> {
+    pub fn workload_identity_config(&self) -> terrars::ListRef<ContainerAttachedCluster_WorkloadIdentityConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.workload_identity_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `authorization` after provisioning.\n"]
-    pub fn authorization(&self) -> terrars::ListRef<ContainerAttachedClusterAuthorizationElRef> {
+    pub fn authorization(&self) -> terrars::ListRef<ContainerAttachedCluster_AuthorizationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.authorization", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `binary_authorization` after provisioning.\n"]
-    pub fn binary_authorization(&self) -> terrars::ListRef<ContainerAttachedClusterBinaryAuthorizationElRef> {
+    pub fn binary_authorization(&self) -> terrars::ListRef<ContainerAttachedCluster_BinaryAuthorizationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.binary_authorization", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `fleet` after provisioning.\n"]
-    pub fn fleet(&self) -> terrars::ListRef<ContainerAttachedClusterFleetElRef> {
+    pub fn fleet(&self) -> terrars::ListRef<ContainerAttachedCluster_FleetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.fleet", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `logging_config` after provisioning.\n"]
-    pub fn logging_config(&self) -> terrars::ListRef<ContainerAttachedClusterLoggingConfigElRef> {
+    pub fn logging_config(&self) -> terrars::ListRef<ContainerAttachedCluster_LoggingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `monitoring_config` after provisioning.\n"]
-    pub fn monitoring_config(&self) -> terrars::ListRef<ContainerAttachedClusterMonitoringConfigElRef> {
+    pub fn monitoring_config(&self) -> terrars::ListRef<ContainerAttachedCluster_MonitoringConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.monitoring_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `oidc_config` after provisioning.\n"]
-    pub fn oidc_config(&self) -> terrars::ListRef<ContainerAttachedClusterOidcConfigElRef> {
+    pub fn oidc_config(&self) -> terrars::ListRef<ContainerAttachedCluster_OidcConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.oidc_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `proxy_config` after provisioning.\n"]
-    pub fn proxy_config(&self) -> terrars::ListRef<ContainerAttachedClusterProxyConfigElRef> {
+    pub fn proxy_config(&self) -> terrars::ListRef<ContainerAttachedCluster_ProxyConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.proxy_config", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `security_posture_config` after provisioning.\n"]
+    pub fn security_posture_config(&self) -> terrars::ListRef<ContainerAttachedCluster_SecurityPostureConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.security_posture_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ContainerAttachedClusterTimeoutsElRef {
-        ContainerAttachedClusterTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ContainerAttachedCluster_TimeoutsRef {
+        ContainerAttachedCluster_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -490,7 +516,8 @@ impl terrars::Resource_ for ContainerAttachedCluster_ {
 
 pub struct BuildContainerAttachedCluster {
     pub tf_id: std::string::String,
-    #[doc = "The Kubernetes distribution of the underlying attached cluster. Supported values:\n\"eks\", \"aks\"."]
+    #[doc =
+        "The Kubernetes distribution of the underlying attached cluster. Supported values:\n\"eks\", \"aks\", \"generic\". The generic distribution provides the ability to register\nor migrate any CNCF conformant cluster."]
     pub distribution: terrars::PrimField<std::string::String>,
     #[doc = "The location for the resource"]
     pub location: terrars::PrimField<std::string::String>,
@@ -505,7 +532,7 @@ impl BuildContainerAttachedCluster {
         let out = ContainerAttachedCluster(std::rc::Rc::new(ContainerAttachedCluster_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ContainerAttachedClusterData {
+            data: std::cell::RefCell::new(ContainerAttachedClusterData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -527,6 +554,7 @@ impl BuildContainerAttachedCluster {
                 monitoring_config: core::default::Default::default(),
                 oidc_config: core::default::Default::default(),
                 proxy_config: core::default::Default::default(),
+                security_posture_config: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -578,7 +606,7 @@ impl ContainerAttachedClusterRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `deletion_policy` after provisioning.\nPolicy to determine what flags to send on delete."]
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nThis field uses a custom implementation please refer to documentation under /hashicorp/terraform-provider-google-beta/website/docs/r/container_attached_cluster.html.markdown for specifics"]
     pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
@@ -590,7 +618,7 @@ impl ContainerAttachedClusterRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `distribution` after provisioning.\nThe Kubernetes distribution of the underlying attached cluster. Supported values:\n\"eks\", \"aks\"."]
+        "Get a reference to the value of field `distribution` after provisioning.\nThe Kubernetes distribution of the underlying attached cluster. Supported values:\n\"eks\", \"aks\", \"generic\". The generic distribution provides the ability to register\nor migrate any CNCF conformant cluster."]
     pub fn distribution(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.distribution", self.extract_ref()))
     }
@@ -602,7 +630,7 @@ impl ContainerAttachedClusterRef {
     }
 
     #[doc = "Get a reference to the value of field `errors` after provisioning.\nA set of errors found in the cluster."]
-    pub fn errors(&self) -> terrars::ListRef<ContainerAttachedClusterErrorsElRef> {
+    pub fn errors(&self) -> terrars::ListRef<ContainerAttachedCluster_ErrorsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.errors", self.extract_ref()))
     }
 
@@ -664,58 +692,77 @@ impl ContainerAttachedClusterRef {
 
     #[doc =
         "Get a reference to the value of field `workload_identity_config` after provisioning.\nWorkload Identity settings."]
-    pub fn workload_identity_config(&self) -> terrars::ListRef<ContainerAttachedClusterWorkloadIdentityConfigElRef> {
+    pub fn workload_identity_config(&self) -> terrars::ListRef<ContainerAttachedCluster_WorkloadIdentityConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.workload_identity_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `authorization` after provisioning.\n"]
-    pub fn authorization(&self) -> terrars::ListRef<ContainerAttachedClusterAuthorizationElRef> {
+    pub fn authorization(&self) -> terrars::ListRef<ContainerAttachedCluster_AuthorizationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.authorization", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `binary_authorization` after provisioning.\n"]
-    pub fn binary_authorization(&self) -> terrars::ListRef<ContainerAttachedClusterBinaryAuthorizationElRef> {
+    pub fn binary_authorization(&self) -> terrars::ListRef<ContainerAttachedCluster_BinaryAuthorizationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.binary_authorization", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `fleet` after provisioning.\n"]
-    pub fn fleet(&self) -> terrars::ListRef<ContainerAttachedClusterFleetElRef> {
+    pub fn fleet(&self) -> terrars::ListRef<ContainerAttachedCluster_FleetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.fleet", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `logging_config` after provisioning.\n"]
-    pub fn logging_config(&self) -> terrars::ListRef<ContainerAttachedClusterLoggingConfigElRef> {
+    pub fn logging_config(&self) -> terrars::ListRef<ContainerAttachedCluster_LoggingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `monitoring_config` after provisioning.\n"]
-    pub fn monitoring_config(&self) -> terrars::ListRef<ContainerAttachedClusterMonitoringConfigElRef> {
+    pub fn monitoring_config(&self) -> terrars::ListRef<ContainerAttachedCluster_MonitoringConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.monitoring_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `oidc_config` after provisioning.\n"]
-    pub fn oidc_config(&self) -> terrars::ListRef<ContainerAttachedClusterOidcConfigElRef> {
+    pub fn oidc_config(&self) -> terrars::ListRef<ContainerAttachedCluster_OidcConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.oidc_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `proxy_config` after provisioning.\n"]
-    pub fn proxy_config(&self) -> terrars::ListRef<ContainerAttachedClusterProxyConfigElRef> {
+    pub fn proxy_config(&self) -> terrars::ListRef<ContainerAttachedCluster_ProxyConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.proxy_config", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `security_posture_config` after provisioning.\n"]
+    pub fn security_posture_config(&self) -> terrars::ListRef<ContainerAttachedCluster_SecurityPostureConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.security_posture_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ContainerAttachedClusterTimeoutsElRef {
-        ContainerAttachedClusterTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ContainerAttachedCluster_TimeoutsRef {
+        ContainerAttachedCluster_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ContainerAttachedClusterDynamic {
+    authorization: std::option::Option<terrars::DynamicBlock<ContainerAttachedCluster_Authorization>>,
+    binary_authorization: std::option::Option<terrars::DynamicBlock<ContainerAttachedCluster_BinaryAuthorization>>,
+    fleet: std::option::Option<terrars::DynamicBlock<ContainerAttachedCluster_Fleet>>,
+    logging_config: std::option::Option<terrars::DynamicBlock<ContainerAttachedCluster_LoggingConfig>>,
+    monitoring_config: std::option::Option<terrars::DynamicBlock<ContainerAttachedCluster_MonitoringConfig>>,
+    oidc_config: std::option::Option<terrars::DynamicBlock<ContainerAttachedCluster_OidcConfig>>,
+    proxy_config: std::option::Option<terrars::DynamicBlock<ContainerAttachedCluster_ProxyConfig>>,
+    security_posture_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerAttachedCluster_SecurityPostureConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct ContainerAttachedClusterErrorsEl {
+pub struct ContainerAttachedCluster_Errors {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     message: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ContainerAttachedClusterErrorsEl {
+impl ContainerAttachedCluster_Errors {
     #[doc = "Set the field `message`.\n"]
     pub fn set_message(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.message = std::option::Option::Some(v.into());
@@ -723,8 +770,8 @@ impl ContainerAttachedClusterErrorsEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAttachedClusterErrorsEl {
-    type O = terrars::BlockAssignable<ContainerAttachedClusterErrorsEl>;
+impl terrars::ToListMappable for ContainerAttachedCluster_Errors {
+    type O = terrars::BlockAssignable<ContainerAttachedCluster_Errors>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -735,29 +782,31 @@ impl terrars::ToListMappable for ContainerAttachedClusterErrorsEl {
     }
 }
 
-pub struct BuildContainerAttachedClusterErrorsEl {}
+pub struct BuildContainerAttachedCluster_Errors {}
 
-impl BuildContainerAttachedClusterErrorsEl {
-    pub fn build(self) -> ContainerAttachedClusterErrorsEl {
-        ContainerAttachedClusterErrorsEl { message: core::default::Default::default() }
+impl BuildContainerAttachedCluster_Errors {
+    pub fn build(self) -> ContainerAttachedCluster_Errors {
+        ContainerAttachedCluster_Errors { message: core::default::Default::default() }
     }
 }
 
-pub struct ContainerAttachedClusterErrorsElRef {
+#[allow(dead_code)]
+pub struct ContainerAttachedCluster_ErrorsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAttachedClusterErrorsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAttachedClusterErrorsElRef {
-        ContainerAttachedClusterErrorsElRef {
+impl terrars::Ref for ContainerAttachedCluster_ErrorsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAttachedCluster_ErrorsRef {
+        ContainerAttachedCluster_ErrorsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAttachedClusterErrorsElRef {
+impl ContainerAttachedCluster_ErrorsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -769,7 +818,7 @@ impl ContainerAttachedClusterErrorsElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAttachedClusterWorkloadIdentityConfigEl {
+pub struct ContainerAttachedCluster_WorkloadIdentityConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     identity_provider: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -778,7 +827,7 @@ pub struct ContainerAttachedClusterWorkloadIdentityConfigEl {
     workload_pool: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ContainerAttachedClusterWorkloadIdentityConfigEl {
+impl ContainerAttachedCluster_WorkloadIdentityConfig {
     #[doc = "Set the field `identity_provider`.\n"]
     pub fn set_identity_provider(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.identity_provider = std::option::Option::Some(v.into());
@@ -798,8 +847,8 @@ impl ContainerAttachedClusterWorkloadIdentityConfigEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAttachedClusterWorkloadIdentityConfigEl {
-    type O = terrars::BlockAssignable<ContainerAttachedClusterWorkloadIdentityConfigEl>;
+impl terrars::ToListMappable for ContainerAttachedCluster_WorkloadIdentityConfig {
+    type O = terrars::BlockAssignable<ContainerAttachedCluster_WorkloadIdentityConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -810,11 +859,11 @@ impl terrars::ToListMappable for ContainerAttachedClusterWorkloadIdentityConfigE
     }
 }
 
-pub struct BuildContainerAttachedClusterWorkloadIdentityConfigEl {}
+pub struct BuildContainerAttachedCluster_WorkloadIdentityConfig {}
 
-impl BuildContainerAttachedClusterWorkloadIdentityConfigEl {
-    pub fn build(self) -> ContainerAttachedClusterWorkloadIdentityConfigEl {
-        ContainerAttachedClusterWorkloadIdentityConfigEl {
+impl BuildContainerAttachedCluster_WorkloadIdentityConfig {
+    pub fn build(self) -> ContainerAttachedCluster_WorkloadIdentityConfig {
+        ContainerAttachedCluster_WorkloadIdentityConfig {
             identity_provider: core::default::Default::default(),
             issuer_uri: core::default::Default::default(),
             workload_pool: core::default::Default::default(),
@@ -822,24 +871,26 @@ impl BuildContainerAttachedClusterWorkloadIdentityConfigEl {
     }
 }
 
-pub struct ContainerAttachedClusterWorkloadIdentityConfigElRef {
+#[allow(dead_code)]
+pub struct ContainerAttachedCluster_WorkloadIdentityConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAttachedClusterWorkloadIdentityConfigElRef {
+impl terrars::Ref for ContainerAttachedCluster_WorkloadIdentityConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ContainerAttachedClusterWorkloadIdentityConfigElRef {
-        ContainerAttachedClusterWorkloadIdentityConfigElRef {
+    ) -> ContainerAttachedCluster_WorkloadIdentityConfigRef {
+        ContainerAttachedCluster_WorkloadIdentityConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAttachedClusterWorkloadIdentityConfigElRef {
+impl ContainerAttachedCluster_WorkloadIdentityConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -861,14 +912,14 @@ impl ContainerAttachedClusterWorkloadIdentityConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAttachedClusterAuthorizationEl {
+pub struct ContainerAttachedCluster_Authorization {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     admin_groups: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     admin_users: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl ContainerAttachedClusterAuthorizationEl {
+impl ContainerAttachedCluster_Authorization {
     #[doc =
         "Set the field `admin_groups`.\nGroups that can perform operations as a cluster admin. A managed\nClusterRoleBinding will be created to grant the 'cluster-admin' ClusterRole\nto the groups. Up to ten admin groups can be provided.\n\nFor more info on RBAC, see\nhttps://kubernetes.io/docs/reference/access-authn-authz/rbac/#user-facing-roles"]
     pub fn set_admin_groups(
@@ -890,8 +941,8 @@ impl ContainerAttachedClusterAuthorizationEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAttachedClusterAuthorizationEl {
-    type O = terrars::BlockAssignable<ContainerAttachedClusterAuthorizationEl>;
+impl terrars::ToListMappable for ContainerAttachedCluster_Authorization {
+    type O = terrars::BlockAssignable<ContainerAttachedCluster_Authorization>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -902,32 +953,34 @@ impl terrars::ToListMappable for ContainerAttachedClusterAuthorizationEl {
     }
 }
 
-pub struct BuildContainerAttachedClusterAuthorizationEl {}
+pub struct BuildContainerAttachedCluster_Authorization {}
 
-impl BuildContainerAttachedClusterAuthorizationEl {
-    pub fn build(self) -> ContainerAttachedClusterAuthorizationEl {
-        ContainerAttachedClusterAuthorizationEl {
+impl BuildContainerAttachedCluster_Authorization {
+    pub fn build(self) -> ContainerAttachedCluster_Authorization {
+        ContainerAttachedCluster_Authorization {
             admin_groups: core::default::Default::default(),
             admin_users: core::default::Default::default(),
         }
     }
 }
 
-pub struct ContainerAttachedClusterAuthorizationElRef {
+#[allow(dead_code)]
+pub struct ContainerAttachedCluster_AuthorizationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAttachedClusterAuthorizationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAttachedClusterAuthorizationElRef {
-        ContainerAttachedClusterAuthorizationElRef {
+impl terrars::Ref for ContainerAttachedCluster_AuthorizationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAttachedCluster_AuthorizationRef {
+        ContainerAttachedCluster_AuthorizationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAttachedClusterAuthorizationElRef {
+impl ContainerAttachedCluster_AuthorizationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -946,12 +999,12 @@ impl ContainerAttachedClusterAuthorizationElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAttachedClusterBinaryAuthorizationEl {
+pub struct ContainerAttachedCluster_BinaryAuthorization {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     evaluation_mode: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ContainerAttachedClusterBinaryAuthorizationEl {
+impl ContainerAttachedCluster_BinaryAuthorization {
     #[doc =
         "Set the field `evaluation_mode`.\nConfigure Binary Authorization evaluation mode. Possible values: [\"DISABLED\", \"PROJECT_SINGLETON_POLICY_ENFORCE\"]"]
     pub fn set_evaluation_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -960,8 +1013,8 @@ impl ContainerAttachedClusterBinaryAuthorizationEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAttachedClusterBinaryAuthorizationEl {
-    type O = terrars::BlockAssignable<ContainerAttachedClusterBinaryAuthorizationEl>;
+impl terrars::ToListMappable for ContainerAttachedCluster_BinaryAuthorization {
+    type O = terrars::BlockAssignable<ContainerAttachedCluster_BinaryAuthorization>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -972,32 +1025,34 @@ impl terrars::ToListMappable for ContainerAttachedClusterBinaryAuthorizationEl {
     }
 }
 
-pub struct BuildContainerAttachedClusterBinaryAuthorizationEl {}
+pub struct BuildContainerAttachedCluster_BinaryAuthorization {}
 
-impl BuildContainerAttachedClusterBinaryAuthorizationEl {
-    pub fn build(self) -> ContainerAttachedClusterBinaryAuthorizationEl {
-        ContainerAttachedClusterBinaryAuthorizationEl { evaluation_mode: core::default::Default::default() }
+impl BuildContainerAttachedCluster_BinaryAuthorization {
+    pub fn build(self) -> ContainerAttachedCluster_BinaryAuthorization {
+        ContainerAttachedCluster_BinaryAuthorization { evaluation_mode: core::default::Default::default() }
     }
 }
 
-pub struct ContainerAttachedClusterBinaryAuthorizationElRef {
+#[allow(dead_code)]
+pub struct ContainerAttachedCluster_BinaryAuthorizationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAttachedClusterBinaryAuthorizationElRef {
+impl terrars::Ref for ContainerAttachedCluster_BinaryAuthorizationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ContainerAttachedClusterBinaryAuthorizationElRef {
-        ContainerAttachedClusterBinaryAuthorizationElRef {
+    ) -> ContainerAttachedCluster_BinaryAuthorizationRef {
+        ContainerAttachedCluster_BinaryAuthorizationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAttachedClusterBinaryAuthorizationElRef {
+impl ContainerAttachedCluster_BinaryAuthorizationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1010,14 +1065,14 @@ impl ContainerAttachedClusterBinaryAuthorizationElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAttachedClusterFleetEl {
+pub struct ContainerAttachedCluster_Fleet {
     project: terrars::PrimField<std::string::String>,
 }
 
-impl ContainerAttachedClusterFleetEl { }
+impl ContainerAttachedCluster_Fleet { }
 
-impl terrars::ToListMappable for ContainerAttachedClusterFleetEl {
-    type O = terrars::BlockAssignable<ContainerAttachedClusterFleetEl>;
+impl terrars::ToListMappable for ContainerAttachedCluster_Fleet {
+    type O = terrars::BlockAssignable<ContainerAttachedCluster_Fleet>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1028,32 +1083,34 @@ impl terrars::ToListMappable for ContainerAttachedClusterFleetEl {
     }
 }
 
-pub struct BuildContainerAttachedClusterFleetEl {
+pub struct BuildContainerAttachedCluster_Fleet {
     #[doc = "The number of the Fleet host project where this cluster will be registered."]
     pub project: terrars::PrimField<std::string::String>,
 }
 
-impl BuildContainerAttachedClusterFleetEl {
-    pub fn build(self) -> ContainerAttachedClusterFleetEl {
-        ContainerAttachedClusterFleetEl { project: self.project }
+impl BuildContainerAttachedCluster_Fleet {
+    pub fn build(self) -> ContainerAttachedCluster_Fleet {
+        ContainerAttachedCluster_Fleet { project: self.project }
     }
 }
 
-pub struct ContainerAttachedClusterFleetElRef {
+#[allow(dead_code)]
+pub struct ContainerAttachedCluster_FleetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAttachedClusterFleetElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAttachedClusterFleetElRef {
-        ContainerAttachedClusterFleetElRef {
+impl terrars::Ref for ContainerAttachedCluster_FleetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAttachedCluster_FleetRef {
+        ContainerAttachedCluster_FleetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAttachedClusterFleetElRef {
+impl ContainerAttachedCluster_FleetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1072,12 +1129,12 @@ impl ContainerAttachedClusterFleetElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAttachedClusterLoggingConfigElComponentConfigEl {
+pub struct ContainerAttachedCluster_LoggingConfig_ComponentConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_components: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl ContainerAttachedClusterLoggingConfigElComponentConfigEl {
+impl ContainerAttachedCluster_LoggingConfig_ComponentConfig {
     #[doc =
         "Set the field `enable_components`.\nThe components to be enabled. Possible values: [\"SYSTEM_COMPONENTS\", \"WORKLOADS\"]"]
     pub fn set_enable_components(
@@ -1089,8 +1146,8 @@ impl ContainerAttachedClusterLoggingConfigElComponentConfigEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAttachedClusterLoggingConfigElComponentConfigEl {
-    type O = terrars::BlockAssignable<ContainerAttachedClusterLoggingConfigElComponentConfigEl>;
+impl terrars::ToListMappable for ContainerAttachedCluster_LoggingConfig_ComponentConfig {
+    type O = terrars::BlockAssignable<ContainerAttachedCluster_LoggingConfig_ComponentConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1101,34 +1158,36 @@ impl terrars::ToListMappable for ContainerAttachedClusterLoggingConfigElComponen
     }
 }
 
-pub struct BuildContainerAttachedClusterLoggingConfigElComponentConfigEl {}
+pub struct BuildContainerAttachedCluster_LoggingConfig_ComponentConfig {}
 
-impl BuildContainerAttachedClusterLoggingConfigElComponentConfigEl {
-    pub fn build(self) -> ContainerAttachedClusterLoggingConfigElComponentConfigEl {
-        ContainerAttachedClusterLoggingConfigElComponentConfigEl {
+impl BuildContainerAttachedCluster_LoggingConfig_ComponentConfig {
+    pub fn build(self) -> ContainerAttachedCluster_LoggingConfig_ComponentConfig {
+        ContainerAttachedCluster_LoggingConfig_ComponentConfig {
             enable_components: core::default::Default::default(),
         }
     }
 }
 
-pub struct ContainerAttachedClusterLoggingConfigElComponentConfigElRef {
+#[allow(dead_code)]
+pub struct ContainerAttachedCluster_LoggingConfig_ComponentConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAttachedClusterLoggingConfigElComponentConfigElRef {
+impl terrars::Ref for ContainerAttachedCluster_LoggingConfig_ComponentConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ContainerAttachedClusterLoggingConfigElComponentConfigElRef {
-        ContainerAttachedClusterLoggingConfigElComponentConfigElRef {
+    ) -> ContainerAttachedCluster_LoggingConfig_ComponentConfigRef {
+        ContainerAttachedCluster_LoggingConfig_ComponentConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAttachedClusterLoggingConfigElComponentConfigElRef {
+impl ContainerAttachedCluster_LoggingConfig_ComponentConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1141,29 +1200,24 @@ impl ContainerAttachedClusterLoggingConfigElComponentConfigElRef {
 }
 
 #[derive(Serialize, Default)]
-struct ContainerAttachedClusterLoggingConfigElDynamic {
+struct ContainerAttachedCluster_LoggingConfigDynamic {
     component_config: std
     ::option
-    ::Option<terrars::DynamicBlock<ContainerAttachedClusterLoggingConfigElComponentConfigEl>>,
+    ::Option<terrars::DynamicBlock<ContainerAttachedCluster_LoggingConfig_ComponentConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct ContainerAttachedClusterLoggingConfigEl {
+pub struct ContainerAttachedCluster_LoggingConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    component_config: std::option::Option<std::vec::Vec<ContainerAttachedClusterLoggingConfigElComponentConfigEl>>,
-    dynamic: ContainerAttachedClusterLoggingConfigElDynamic,
+    component_config: std::option::Option<std::vec::Vec<ContainerAttachedCluster_LoggingConfig_ComponentConfig>>,
+    dynamic: ContainerAttachedCluster_LoggingConfigDynamic,
 }
 
-impl ContainerAttachedClusterLoggingConfigEl {
+impl ContainerAttachedCluster_LoggingConfig {
     #[doc = "Set the field `component_config`.\n"]
     pub fn set_component_config(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<ContainerAttachedClusterLoggingConfigElComponentConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAttachedCluster_LoggingConfig_ComponentConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1177,8 +1231,8 @@ impl ContainerAttachedClusterLoggingConfigEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAttachedClusterLoggingConfigEl {
-    type O = terrars::BlockAssignable<ContainerAttachedClusterLoggingConfigEl>;
+impl terrars::ToListMappable for ContainerAttachedCluster_LoggingConfig {
+    type O = terrars::BlockAssignable<ContainerAttachedCluster_LoggingConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1189,49 +1243,51 @@ impl terrars::ToListMappable for ContainerAttachedClusterLoggingConfigEl {
     }
 }
 
-pub struct BuildContainerAttachedClusterLoggingConfigEl {}
+pub struct BuildContainerAttachedCluster_LoggingConfig {}
 
-impl BuildContainerAttachedClusterLoggingConfigEl {
-    pub fn build(self) -> ContainerAttachedClusterLoggingConfigEl {
-        ContainerAttachedClusterLoggingConfigEl {
+impl BuildContainerAttachedCluster_LoggingConfig {
+    pub fn build(self) -> ContainerAttachedCluster_LoggingConfig {
+        ContainerAttachedCluster_LoggingConfig {
             component_config: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct ContainerAttachedClusterLoggingConfigElRef {
+#[allow(dead_code)]
+pub struct ContainerAttachedCluster_LoggingConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAttachedClusterLoggingConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAttachedClusterLoggingConfigElRef {
-        ContainerAttachedClusterLoggingConfigElRef {
+impl terrars::Ref for ContainerAttachedCluster_LoggingConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAttachedCluster_LoggingConfigRef {
+        ContainerAttachedCluster_LoggingConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAttachedClusterLoggingConfigElRef {
+impl ContainerAttachedCluster_LoggingConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `component_config` after provisioning.\n"]
-    pub fn component_config(&self) -> terrars::ListRef<ContainerAttachedClusterLoggingConfigElComponentConfigElRef> {
+    pub fn component_config(&self) -> terrars::ListRef<ContainerAttachedCluster_LoggingConfig_ComponentConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.component_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ContainerAttachedClusterMonitoringConfigElManagedPrometheusConfigEl {
+pub struct ContainerAttachedCluster_MonitoringConfig_ManagedPrometheusConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl ContainerAttachedClusterMonitoringConfigElManagedPrometheusConfigEl {
+impl ContainerAttachedCluster_MonitoringConfig_ManagedPrometheusConfig {
     #[doc = "Set the field `enabled`.\nEnable Managed Collection."]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -1239,8 +1295,8 @@ impl ContainerAttachedClusterMonitoringConfigElManagedPrometheusConfigEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAttachedClusterMonitoringConfigElManagedPrometheusConfigEl {
-    type O = terrars::BlockAssignable<ContainerAttachedClusterMonitoringConfigElManagedPrometheusConfigEl>;
+impl terrars::ToListMappable for ContainerAttachedCluster_MonitoringConfig_ManagedPrometheusConfig {
+    type O = terrars::BlockAssignable<ContainerAttachedCluster_MonitoringConfig_ManagedPrometheusConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1251,34 +1307,36 @@ impl terrars::ToListMappable for ContainerAttachedClusterMonitoringConfigElManag
     }
 }
 
-pub struct BuildContainerAttachedClusterMonitoringConfigElManagedPrometheusConfigEl {}
+pub struct BuildContainerAttachedCluster_MonitoringConfig_ManagedPrometheusConfig {}
 
-impl BuildContainerAttachedClusterMonitoringConfigElManagedPrometheusConfigEl {
-    pub fn build(self) -> ContainerAttachedClusterMonitoringConfigElManagedPrometheusConfigEl {
-        ContainerAttachedClusterMonitoringConfigElManagedPrometheusConfigEl {
+impl BuildContainerAttachedCluster_MonitoringConfig_ManagedPrometheusConfig {
+    pub fn build(self) -> ContainerAttachedCluster_MonitoringConfig_ManagedPrometheusConfig {
+        ContainerAttachedCluster_MonitoringConfig_ManagedPrometheusConfig {
             enabled: core::default::Default::default(),
         }
     }
 }
 
-pub struct ContainerAttachedClusterMonitoringConfigElManagedPrometheusConfigElRef {
+#[allow(dead_code)]
+pub struct ContainerAttachedCluster_MonitoringConfig_ManagedPrometheusConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAttachedClusterMonitoringConfigElManagedPrometheusConfigElRef {
+impl terrars::Ref for ContainerAttachedCluster_MonitoringConfig_ManagedPrometheusConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ContainerAttachedClusterMonitoringConfigElManagedPrometheusConfigElRef {
-        ContainerAttachedClusterMonitoringConfigElManagedPrometheusConfigElRef {
+    ) -> ContainerAttachedCluster_MonitoringConfig_ManagedPrometheusConfigRef {
+        ContainerAttachedCluster_MonitoringConfig_ManagedPrometheusConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAttachedClusterMonitoringConfigElManagedPrometheusConfigElRef {
+impl ContainerAttachedCluster_MonitoringConfig_ManagedPrometheusConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1290,22 +1348,22 @@ impl ContainerAttachedClusterMonitoringConfigElManagedPrometheusConfigElRef {
 }
 
 #[derive(Serialize, Default)]
-struct ContainerAttachedClusterMonitoringConfigElDynamic {
+struct ContainerAttachedCluster_MonitoringConfigDynamic {
     managed_prometheus_config: std
     ::option
-    ::Option<terrars::DynamicBlock<ContainerAttachedClusterMonitoringConfigElManagedPrometheusConfigEl>>,
+    ::Option<terrars::DynamicBlock<ContainerAttachedCluster_MonitoringConfig_ManagedPrometheusConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct ContainerAttachedClusterMonitoringConfigEl {
+pub struct ContainerAttachedCluster_MonitoringConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     managed_prometheus_config: std
     ::option
-    ::Option<std::vec::Vec<ContainerAttachedClusterMonitoringConfigElManagedPrometheusConfigEl>>,
-    dynamic: ContainerAttachedClusterMonitoringConfigElDynamic,
+    ::Option<std::vec::Vec<ContainerAttachedCluster_MonitoringConfig_ManagedPrometheusConfig>>,
+    dynamic: ContainerAttachedCluster_MonitoringConfigDynamic,
 }
 
-impl ContainerAttachedClusterMonitoringConfigEl {
+impl ContainerAttachedCluster_MonitoringConfig {
     #[doc = "Set the field `managed_prometheus_config`.\n"]
     pub fn set_managed_prometheus_config(
         mut self,
@@ -1315,7 +1373,7 @@ impl ContainerAttachedClusterMonitoringConfigEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<ContainerAttachedClusterMonitoringConfigElManagedPrometheusConfigEl>,
+                        terrars::BlockAssignable<ContainerAttachedCluster_MonitoringConfig_ManagedPrometheusConfig>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1330,8 +1388,8 @@ impl ContainerAttachedClusterMonitoringConfigEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAttachedClusterMonitoringConfigEl {
-    type O = terrars::BlockAssignable<ContainerAttachedClusterMonitoringConfigEl>;
+impl terrars::ToListMappable for ContainerAttachedCluster_MonitoringConfig {
+    type O = terrars::BlockAssignable<ContainerAttachedCluster_MonitoringConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1342,32 +1400,34 @@ impl terrars::ToListMappable for ContainerAttachedClusterMonitoringConfigEl {
     }
 }
 
-pub struct BuildContainerAttachedClusterMonitoringConfigEl {}
+pub struct BuildContainerAttachedCluster_MonitoringConfig {}
 
-impl BuildContainerAttachedClusterMonitoringConfigEl {
-    pub fn build(self) -> ContainerAttachedClusterMonitoringConfigEl {
-        ContainerAttachedClusterMonitoringConfigEl {
+impl BuildContainerAttachedCluster_MonitoringConfig {
+    pub fn build(self) -> ContainerAttachedCluster_MonitoringConfig {
+        ContainerAttachedCluster_MonitoringConfig {
             managed_prometheus_config: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct ContainerAttachedClusterMonitoringConfigElRef {
+#[allow(dead_code)]
+pub struct ContainerAttachedCluster_MonitoringConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAttachedClusterMonitoringConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAttachedClusterMonitoringConfigElRef {
-        ContainerAttachedClusterMonitoringConfigElRef {
+impl terrars::Ref for ContainerAttachedCluster_MonitoringConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAttachedCluster_MonitoringConfigRef {
+        ContainerAttachedCluster_MonitoringConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAttachedClusterMonitoringConfigElRef {
+impl ContainerAttachedCluster_MonitoringConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1375,19 +1435,19 @@ impl ContainerAttachedClusterMonitoringConfigElRef {
     #[doc = "Get a reference to the value of field `managed_prometheus_config` after provisioning.\n"]
     pub fn managed_prometheus_config(
         &self,
-    ) -> terrars::ListRef<ContainerAttachedClusterMonitoringConfigElManagedPrometheusConfigElRef> {
+    ) -> terrars::ListRef<ContainerAttachedCluster_MonitoringConfig_ManagedPrometheusConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.managed_prometheus_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ContainerAttachedClusterOidcConfigEl {
+pub struct ContainerAttachedCluster_OidcConfig {
     issuer_url: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     jwks: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ContainerAttachedClusterOidcConfigEl {
+impl ContainerAttachedCluster_OidcConfig {
     #[doc = "Set the field `jwks`.\nOIDC verification keys in JWKS format (RFC 7517)."]
     pub fn set_jwks(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.jwks = std::option::Option::Some(v.into());
@@ -1395,8 +1455,8 @@ impl ContainerAttachedClusterOidcConfigEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAttachedClusterOidcConfigEl {
-    type O = terrars::BlockAssignable<ContainerAttachedClusterOidcConfigEl>;
+impl terrars::ToListMappable for ContainerAttachedCluster_OidcConfig {
+    type O = terrars::BlockAssignable<ContainerAttachedCluster_OidcConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1407,35 +1467,37 @@ impl terrars::ToListMappable for ContainerAttachedClusterOidcConfigEl {
     }
 }
 
-pub struct BuildContainerAttachedClusterOidcConfigEl {
+pub struct BuildContainerAttachedCluster_OidcConfig {
     #[doc = "A JSON Web Token (JWT) issuer URI. 'issuer' must start with 'https://'"]
     pub issuer_url: terrars::PrimField<std::string::String>,
 }
 
-impl BuildContainerAttachedClusterOidcConfigEl {
-    pub fn build(self) -> ContainerAttachedClusterOidcConfigEl {
-        ContainerAttachedClusterOidcConfigEl {
+impl BuildContainerAttachedCluster_OidcConfig {
+    pub fn build(self) -> ContainerAttachedCluster_OidcConfig {
+        ContainerAttachedCluster_OidcConfig {
             issuer_url: self.issuer_url,
             jwks: core::default::Default::default(),
         }
     }
 }
 
-pub struct ContainerAttachedClusterOidcConfigElRef {
+#[allow(dead_code)]
+pub struct ContainerAttachedCluster_OidcConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAttachedClusterOidcConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAttachedClusterOidcConfigElRef {
-        ContainerAttachedClusterOidcConfigElRef {
+impl terrars::Ref for ContainerAttachedCluster_OidcConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAttachedCluster_OidcConfigRef {
+        ContainerAttachedCluster_OidcConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAttachedClusterOidcConfigElRef {
+impl ContainerAttachedCluster_OidcConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1454,15 +1516,15 @@ impl ContainerAttachedClusterOidcConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAttachedClusterProxyConfigElKubernetesSecretEl {
+pub struct ContainerAttachedCluster_ProxyConfig_KubernetesSecret {
     name: terrars::PrimField<std::string::String>,
     namespace: terrars::PrimField<std::string::String>,
 }
 
-impl ContainerAttachedClusterProxyConfigElKubernetesSecretEl { }
+impl ContainerAttachedCluster_ProxyConfig_KubernetesSecret { }
 
-impl terrars::ToListMappable for ContainerAttachedClusterProxyConfigElKubernetesSecretEl {
-    type O = terrars::BlockAssignable<ContainerAttachedClusterProxyConfigElKubernetesSecretEl>;
+impl terrars::ToListMappable for ContainerAttachedCluster_ProxyConfig_KubernetesSecret {
+    type O = terrars::BlockAssignable<ContainerAttachedCluster_ProxyConfig_KubernetesSecret>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1473,40 +1535,42 @@ impl terrars::ToListMappable for ContainerAttachedClusterProxyConfigElKubernetes
     }
 }
 
-pub struct BuildContainerAttachedClusterProxyConfigElKubernetesSecretEl {
+pub struct BuildContainerAttachedCluster_ProxyConfig_KubernetesSecret {
     #[doc = "Name of the kubernetes secret containing the proxy config."]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = "Namespace of the kubernetes secret containing the proxy config."]
     pub namespace: terrars::PrimField<std::string::String>,
 }
 
-impl BuildContainerAttachedClusterProxyConfigElKubernetesSecretEl {
-    pub fn build(self) -> ContainerAttachedClusterProxyConfigElKubernetesSecretEl {
-        ContainerAttachedClusterProxyConfigElKubernetesSecretEl {
+impl BuildContainerAttachedCluster_ProxyConfig_KubernetesSecret {
+    pub fn build(self) -> ContainerAttachedCluster_ProxyConfig_KubernetesSecret {
+        ContainerAttachedCluster_ProxyConfig_KubernetesSecret {
             name: self.name,
             namespace: self.namespace,
         }
     }
 }
 
-pub struct ContainerAttachedClusterProxyConfigElKubernetesSecretElRef {
+#[allow(dead_code)]
+pub struct ContainerAttachedCluster_ProxyConfig_KubernetesSecretRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAttachedClusterProxyConfigElKubernetesSecretElRef {
+impl terrars::Ref for ContainerAttachedCluster_ProxyConfig_KubernetesSecretRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ContainerAttachedClusterProxyConfigElKubernetesSecretElRef {
-        ContainerAttachedClusterProxyConfigElKubernetesSecretElRef {
+    ) -> ContainerAttachedCluster_ProxyConfig_KubernetesSecretRef {
+        ContainerAttachedCluster_ProxyConfig_KubernetesSecretRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAttachedClusterProxyConfigElKubernetesSecretElRef {
+impl ContainerAttachedCluster_ProxyConfig_KubernetesSecretRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1525,29 +1589,24 @@ impl ContainerAttachedClusterProxyConfigElKubernetesSecretElRef {
 }
 
 #[derive(Serialize, Default)]
-struct ContainerAttachedClusterProxyConfigElDynamic {
+struct ContainerAttachedCluster_ProxyConfigDynamic {
     kubernetes_secret: std
     ::option
-    ::Option<terrars::DynamicBlock<ContainerAttachedClusterProxyConfigElKubernetesSecretEl>>,
+    ::Option<terrars::DynamicBlock<ContainerAttachedCluster_ProxyConfig_KubernetesSecret>>,
 }
 
 #[derive(Serialize)]
-pub struct ContainerAttachedClusterProxyConfigEl {
+pub struct ContainerAttachedCluster_ProxyConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    kubernetes_secret: std::option::Option<std::vec::Vec<ContainerAttachedClusterProxyConfigElKubernetesSecretEl>>,
-    dynamic: ContainerAttachedClusterProxyConfigElDynamic,
+    kubernetes_secret: std::option::Option<std::vec::Vec<ContainerAttachedCluster_ProxyConfig_KubernetesSecret>>,
+    dynamic: ContainerAttachedCluster_ProxyConfigDynamic,
 }
 
-impl ContainerAttachedClusterProxyConfigEl {
+impl ContainerAttachedCluster_ProxyConfig {
     #[doc = "Set the field `kubernetes_secret`.\n"]
     pub fn set_kubernetes_secret(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<ContainerAttachedClusterProxyConfigElKubernetesSecretEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAttachedCluster_ProxyConfig_KubernetesSecret>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1561,8 +1620,8 @@ impl ContainerAttachedClusterProxyConfigEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAttachedClusterProxyConfigEl {
-    type O = terrars::BlockAssignable<ContainerAttachedClusterProxyConfigEl>;
+impl terrars::ToListMappable for ContainerAttachedCluster_ProxyConfig {
+    type O = terrars::BlockAssignable<ContainerAttachedCluster_ProxyConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1573,44 +1632,108 @@ impl terrars::ToListMappable for ContainerAttachedClusterProxyConfigEl {
     }
 }
 
-pub struct BuildContainerAttachedClusterProxyConfigEl {}
+pub struct BuildContainerAttachedCluster_ProxyConfig {}
 
-impl BuildContainerAttachedClusterProxyConfigEl {
-    pub fn build(self) -> ContainerAttachedClusterProxyConfigEl {
-        ContainerAttachedClusterProxyConfigEl {
+impl BuildContainerAttachedCluster_ProxyConfig {
+    pub fn build(self) -> ContainerAttachedCluster_ProxyConfig {
+        ContainerAttachedCluster_ProxyConfig {
             kubernetes_secret: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct ContainerAttachedClusterProxyConfigElRef {
+#[allow(dead_code)]
+pub struct ContainerAttachedCluster_ProxyConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAttachedClusterProxyConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAttachedClusterProxyConfigElRef {
-        ContainerAttachedClusterProxyConfigElRef {
+impl terrars::Ref for ContainerAttachedCluster_ProxyConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAttachedCluster_ProxyConfigRef {
+        ContainerAttachedCluster_ProxyConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAttachedClusterProxyConfigElRef {
+impl ContainerAttachedCluster_ProxyConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `kubernetes_secret` after provisioning.\n"]
-    pub fn kubernetes_secret(&self) -> terrars::ListRef<ContainerAttachedClusterProxyConfigElKubernetesSecretElRef> {
+    pub fn kubernetes_secret(&self) -> terrars::ListRef<ContainerAttachedCluster_ProxyConfig_KubernetesSecretRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.kubernetes_secret", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ContainerAttachedClusterTimeoutsEl {
+pub struct ContainerAttachedCluster_SecurityPostureConfig {
+    vulnerability_mode: terrars::PrimField<std::string::String>,
+}
+
+impl ContainerAttachedCluster_SecurityPostureConfig { }
+
+impl terrars::ToListMappable for ContainerAttachedCluster_SecurityPostureConfig {
+    type O = terrars::BlockAssignable<ContainerAttachedCluster_SecurityPostureConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildContainerAttachedCluster_SecurityPostureConfig {
+    #[doc =
+        "Sets the mode of the Kubernetes security posture API's workload vulnerability scanning. Possible values: [\"VULNERABILITY_DISABLED\", \"VULNERABILITY_ENTERPRISE\"]"]
+    pub vulnerability_mode: terrars::PrimField<std::string::String>,
+}
+
+impl BuildContainerAttachedCluster_SecurityPostureConfig {
+    pub fn build(self) -> ContainerAttachedCluster_SecurityPostureConfig {
+        ContainerAttachedCluster_SecurityPostureConfig { vulnerability_mode: self.vulnerability_mode }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ContainerAttachedCluster_SecurityPostureConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ContainerAttachedCluster_SecurityPostureConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ContainerAttachedCluster_SecurityPostureConfigRef {
+        ContainerAttachedCluster_SecurityPostureConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ContainerAttachedCluster_SecurityPostureConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `vulnerability_mode` after provisioning.\nSets the mode of the Kubernetes security posture API's workload vulnerability scanning. Possible values: [\"VULNERABILITY_DISABLED\", \"VULNERABILITY_ENTERPRISE\"]"]
+    pub fn vulnerability_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vulnerability_mode", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ContainerAttachedCluster_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1619,7 +1742,7 @@ pub struct ContainerAttachedClusterTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ContainerAttachedClusterTimeoutsEl {
+impl ContainerAttachedCluster_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1639,8 +1762,8 @@ impl ContainerAttachedClusterTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAttachedClusterTimeoutsEl {
-    type O = terrars::BlockAssignable<ContainerAttachedClusterTimeoutsEl>;
+impl terrars::ToListMappable for ContainerAttachedCluster_Timeouts {
+    type O = terrars::BlockAssignable<ContainerAttachedCluster_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1651,11 +1774,11 @@ impl terrars::ToListMappable for ContainerAttachedClusterTimeoutsEl {
     }
 }
 
-pub struct BuildContainerAttachedClusterTimeoutsEl {}
+pub struct BuildContainerAttachedCluster_Timeouts {}
 
-impl BuildContainerAttachedClusterTimeoutsEl {
-    pub fn build(self) -> ContainerAttachedClusterTimeoutsEl {
-        ContainerAttachedClusterTimeoutsEl {
+impl BuildContainerAttachedCluster_Timeouts {
+    pub fn build(self) -> ContainerAttachedCluster_Timeouts {
+        ContainerAttachedCluster_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1663,21 +1786,23 @@ impl BuildContainerAttachedClusterTimeoutsEl {
     }
 }
 
-pub struct ContainerAttachedClusterTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ContainerAttachedCluster_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAttachedClusterTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAttachedClusterTimeoutsElRef {
-        ContainerAttachedClusterTimeoutsElRef {
+impl terrars::Ref for ContainerAttachedCluster_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAttachedCluster_TimeoutsRef {
+        ContainerAttachedCluster_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAttachedClusterTimeoutsElRef {
+impl ContainerAttachedCluster_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1696,15 +1821,4 @@ impl ContainerAttachedClusterTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ContainerAttachedClusterDynamic {
-    authorization: std::option::Option<terrars::DynamicBlock<ContainerAttachedClusterAuthorizationEl>>,
-    binary_authorization: std::option::Option<terrars::DynamicBlock<ContainerAttachedClusterBinaryAuthorizationEl>>,
-    fleet: std::option::Option<terrars::DynamicBlock<ContainerAttachedClusterFleetEl>>,
-    logging_config: std::option::Option<terrars::DynamicBlock<ContainerAttachedClusterLoggingConfigEl>>,
-    monitoring_config: std::option::Option<terrars::DynamicBlock<ContainerAttachedClusterMonitoringConfigEl>>,
-    oidc_config: std::option::Option<terrars::DynamicBlock<ContainerAttachedClusterOidcConfigEl>>,
-    proxy_config: std::option::Option<terrars::DynamicBlock<ContainerAttachedClusterProxyConfigEl>>,
 }

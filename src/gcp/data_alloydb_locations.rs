@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataAlloydbLocationsData {
+struct DataAlloydbLocationsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -25,7 +27,7 @@ struct DataAlloydbLocationsData {
 struct DataAlloydbLocations_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataAlloydbLocationsData>,
+    data: std::cell::RefCell<DataAlloydbLocationsData_>,
 }
 
 #[derive(Clone)]
@@ -88,7 +90,7 @@ impl DataAlloydbLocations {
     }
 
     #[doc = "Get a reference to the value of field `locations` after provisioning.\n"]
-    pub fn locations(&self) -> terrars::ListRef<DataAlloydbLocationsLocationsElRef> {
+    pub fn locations(&self) -> terrars::ListRef<DataAlloydbLocations_LocationsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.locations", self.extract_ref()))
     }
 
@@ -138,7 +140,7 @@ impl BuildDataAlloydbLocations {
         let out = DataAlloydbLocations(std::rc::Rc::new(DataAlloydbLocations_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataAlloydbLocationsData {
+            data: std::cell::RefCell::new(DataAlloydbLocationsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -181,7 +183,7 @@ impl DataAlloydbLocationsRef {
     }
 
     #[doc = "Get a reference to the value of field `locations` after provisioning.\n"]
-    pub fn locations(&self) -> terrars::ListRef<DataAlloydbLocationsLocationsElRef> {
+    pub fn locations(&self) -> terrars::ListRef<DataAlloydbLocations_LocationsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.locations", self.extract_ref()))
     }
 
@@ -192,7 +194,7 @@ impl DataAlloydbLocationsRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAlloydbLocationsLocationsEl {
+pub struct DataAlloydbLocations_Locations {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     display_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -205,7 +207,7 @@ pub struct DataAlloydbLocationsLocationsEl {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAlloydbLocationsLocationsEl {
+impl DataAlloydbLocations_Locations {
     #[doc = "Set the field `display_name`.\n"]
     pub fn set_display_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.display_name = std::option::Option::Some(v.into());
@@ -243,8 +245,8 @@ impl DataAlloydbLocationsLocationsEl {
     }
 }
 
-impl terrars::ToListMappable for DataAlloydbLocationsLocationsEl {
-    type O = terrars::BlockAssignable<DataAlloydbLocationsLocationsEl>;
+impl terrars::ToListMappable for DataAlloydbLocations_Locations {
+    type O = terrars::BlockAssignable<DataAlloydbLocations_Locations>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -255,11 +257,11 @@ impl terrars::ToListMappable for DataAlloydbLocationsLocationsEl {
     }
 }
 
-pub struct BuildDataAlloydbLocationsLocationsEl {}
+pub struct BuildDataAlloydbLocations_Locations {}
 
-impl BuildDataAlloydbLocationsLocationsEl {
-    pub fn build(self) -> DataAlloydbLocationsLocationsEl {
-        DataAlloydbLocationsLocationsEl {
+impl BuildDataAlloydbLocations_Locations {
+    pub fn build(self) -> DataAlloydbLocations_Locations {
+        DataAlloydbLocations_Locations {
             display_name: core::default::Default::default(),
             labels: core::default::Default::default(),
             location_id: core::default::Default::default(),
@@ -269,21 +271,23 @@ impl BuildDataAlloydbLocationsLocationsEl {
     }
 }
 
-pub struct DataAlloydbLocationsLocationsElRef {
+#[allow(dead_code)]
+pub struct DataAlloydbLocations_LocationsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAlloydbLocationsLocationsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAlloydbLocationsLocationsElRef {
-        DataAlloydbLocationsLocationsElRef {
+impl terrars::Ref for DataAlloydbLocations_LocationsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAlloydbLocations_LocationsRef {
+        DataAlloydbLocations_LocationsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAlloydbLocationsLocationsElRef {
+impl DataAlloydbLocations_LocationsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

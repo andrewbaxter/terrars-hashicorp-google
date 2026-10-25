@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct AccessContextManagerIngressPolicyData {
+struct AccessContextManagerIngressPolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,17 +21,19 @@ struct AccessContextManagerIngressPolicyData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     ingress_policy_name: terrars::PrimField<std::string::String>,
     resource: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<AccessContextManagerIngressPolicyTimeoutsEl>,
+    timeouts: std::option::Option<AccessContextManagerIngressPolicy_Timeouts>,
 }
 
 struct AccessContextManagerIngressPolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AccessContextManagerIngressPolicyData>,
+    data: std::cell::RefCell<AccessContextManagerIngressPolicyData_>,
 }
 
 #[derive(Clone)]
@@ -129,6 +133,13 @@ impl AccessContextManagerIngressPolicy {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -136,9 +147,21 @@ impl AccessContextManagerIngressPolicy {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<AccessContextManagerIngressPolicyTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<AccessContextManagerIngressPolicy_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `access_policy_id` after provisioning.\nThe name of the Access Policy this resource belongs to."]
+    pub fn access_policy_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.access_policy_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -159,8 +182,8 @@ impl AccessContextManagerIngressPolicy {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> AccessContextManagerIngressPolicyTimeoutsElRef {
-        AccessContextManagerIngressPolicyTimeoutsElRef::new(
+    pub fn timeouts(&self) -> AccessContextManagerIngressPolicy_TimeoutsRef {
+        AccessContextManagerIngressPolicy_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -211,12 +234,13 @@ impl BuildAccessContextManagerIngressPolicy {
         let out = AccessContextManagerIngressPolicy(std::rc::Rc::new(AccessContextManagerIngressPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AccessContextManagerIngressPolicyData {
+            data: std::cell::RefCell::new(AccessContextManagerIngressPolicyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 ingress_policy_name: self.ingress_policy_name,
                 resource: self.resource,
@@ -251,6 +275,18 @@ impl AccessContextManagerIngressPolicyRef {
         &self.shared
     }
 
+    #[doc =
+        "Get a reference to the value of field `access_policy_id` after provisioning.\nThe name of the Access Policy this resource belongs to."]
+    pub fn access_policy_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.access_policy_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -269,8 +305,8 @@ impl AccessContextManagerIngressPolicyRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> AccessContextManagerIngressPolicyTimeoutsElRef {
-        AccessContextManagerIngressPolicyTimeoutsElRef::new(
+    pub fn timeouts(&self) -> AccessContextManagerIngressPolicy_TimeoutsRef {
+        AccessContextManagerIngressPolicy_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -278,14 +314,14 @@ impl AccessContextManagerIngressPolicyRef {
 }
 
 #[derive(Serialize)]
-pub struct AccessContextManagerIngressPolicyTimeoutsEl {
+pub struct AccessContextManagerIngressPolicy_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AccessContextManagerIngressPolicyTimeoutsEl {
+impl AccessContextManagerIngressPolicy_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -299,8 +335,8 @@ impl AccessContextManagerIngressPolicyTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for AccessContextManagerIngressPolicyTimeoutsEl {
-    type O = terrars::BlockAssignable<AccessContextManagerIngressPolicyTimeoutsEl>;
+impl terrars::ToListMappable for AccessContextManagerIngressPolicy_Timeouts {
+    type O = terrars::BlockAssignable<AccessContextManagerIngressPolicy_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -311,35 +347,34 @@ impl terrars::ToListMappable for AccessContextManagerIngressPolicyTimeoutsEl {
     }
 }
 
-pub struct BuildAccessContextManagerIngressPolicyTimeoutsEl {}
+pub struct BuildAccessContextManagerIngressPolicy_Timeouts {}
 
-impl BuildAccessContextManagerIngressPolicyTimeoutsEl {
-    pub fn build(self) -> AccessContextManagerIngressPolicyTimeoutsEl {
-        AccessContextManagerIngressPolicyTimeoutsEl {
+impl BuildAccessContextManagerIngressPolicy_Timeouts {
+    pub fn build(self) -> AccessContextManagerIngressPolicy_Timeouts {
+        AccessContextManagerIngressPolicy_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct AccessContextManagerIngressPolicyTimeoutsElRef {
+#[allow(dead_code)]
+pub struct AccessContextManagerIngressPolicy_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AccessContextManagerIngressPolicyTimeoutsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AccessContextManagerIngressPolicyTimeoutsElRef {
-        AccessContextManagerIngressPolicyTimeoutsElRef {
+impl terrars::Ref for AccessContextManagerIngressPolicy_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AccessContextManagerIngressPolicy_TimeoutsRef {
+        AccessContextManagerIngressPolicy_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AccessContextManagerIngressPolicyTimeoutsElRef {
+impl AccessContextManagerIngressPolicy_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

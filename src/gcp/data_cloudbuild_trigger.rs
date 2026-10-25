@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataCloudbuildTriggerData {
+struct DataCloudbuildTriggerData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -27,7 +29,7 @@ struct DataCloudbuildTriggerData {
 struct DataCloudbuildTrigger_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataCloudbuildTriggerData>,
+    data: std::cell::RefCell<DataCloudbuildTriggerData_>,
 }
 
 #[derive(Clone)]
@@ -86,7 +88,7 @@ impl DataCloudbuildTrigger {
 
     #[doc =
         "Get a reference to the value of field `approval_config` after provisioning.\nConfiguration for manual approval to start a build invocation of this BuildTrigger.\nBuilds created by this trigger will require approval before they execute.\nAny user with a Cloud Build Approver role for the project can approve a build."]
-    pub fn approval_config(&self) -> terrars::ListRef<DataCloudbuildTriggerApprovalConfigElRef> {
+    pub fn approval_config(&self) -> terrars::ListRef<DataCloudbuildTrigger_ApprovalConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.approval_config", self.extract_ref()))
     }
 
@@ -94,7 +96,7 @@ impl DataCloudbuildTrigger {
         "Get a reference to the value of field `bitbucket_server_trigger_config` after provisioning.\nBitbucketServerTriggerConfig describes the configuration of a trigger that creates a build whenever a Bitbucket Server event is received."]
     pub fn bitbucket_server_trigger_config(
         &self,
-    ) -> terrars::ListRef<DataCloudbuildTriggerBitbucketServerTriggerConfigElRef> {
+    ) -> terrars::ListRef<DataCloudbuildTrigger_BitbucketServerTriggerConfigRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.bitbucket_server_trigger_config", self.extract_ref()),
@@ -103,7 +105,7 @@ impl DataCloudbuildTrigger {
 
     #[doc =
         "Get a reference to the value of field `build` after provisioning.\nContents of the build template. Either a filename or build template must be provided."]
-    pub fn build(&self) -> terrars::ListRef<DataCloudbuildTriggerBuildElRef> {
+    pub fn build(&self) -> terrars::ListRef<DataCloudbuildTrigger_BuildRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.build", self.extract_ref()))
     }
 
@@ -114,9 +116,26 @@ impl DataCloudbuildTrigger {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nHuman-readable description of the trigger."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `developer_connect_event_config` after provisioning.\nConfiguration for triggers that respond to Developer Connect events."]
+    pub fn developer_connect_event_config(
+        &self,
+    ) -> terrars::ListRef<DataCloudbuildTrigger_DeveloperConnectEventConfigRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.developer_connect_event_config", self.extract_ref()),
+        )
     }
 
     #[doc =
@@ -139,13 +158,13 @@ impl DataCloudbuildTrigger {
 
     #[doc =
         "Get a reference to the value of field `git_file_source` after provisioning.\nThe file source describing the local or remote Build template."]
-    pub fn git_file_source(&self) -> terrars::ListRef<DataCloudbuildTriggerGitFileSourceElRef> {
+    pub fn git_file_source(&self) -> terrars::ListRef<DataCloudbuildTrigger_GitFileSourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.git_file_source", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `github` after provisioning.\nDescribes the configuration of a trigger that creates a build whenever a GitHub event is received.\n\nOne of 'trigger_template', 'github', 'pubsub_config' or 'webhook_config' must be provided."]
-    pub fn github(&self) -> terrars::ListRef<DataCloudbuildTriggerGithubElRef> {
+        "Get a reference to the value of field `github` after provisioning.\nDescribes the configuration of a trigger that creates a build whenever a GitHub event is received."]
+    pub fn github(&self) -> terrars::ListRef<DataCloudbuildTrigger_GithubRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.github", self.extract_ref()))
     }
 
@@ -190,14 +209,14 @@ impl DataCloudbuildTrigger {
     }
 
     #[doc =
-        "Get a reference to the value of field `pubsub_config` after provisioning.\nPubsubConfig describes the configuration of a trigger that creates\na build whenever a Pub/Sub message is published.\n\nOne of 'trigger_template', 'github', 'pubsub_config' 'webhook_config' or 'source_to_build' must be provided."]
-    pub fn pubsub_config(&self) -> terrars::ListRef<DataCloudbuildTriggerPubsubConfigElRef> {
+        "Get a reference to the value of field `pubsub_config` after provisioning.\nPubsubConfig describes the configuration of a trigger that creates\na build whenever a Pub/Sub message is published."]
+    pub fn pubsub_config(&self) -> terrars::ListRef<DataCloudbuildTrigger_PubsubConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.pubsub_config", self.extract_ref()))
     }
 
     #[doc =
         "Get a reference to the value of field `repository_event_config` after provisioning.\nThe configuration of a trigger that creates a build whenever an event from Repo API is received."]
-    pub fn repository_event_config(&self) -> terrars::ListRef<DataCloudbuildTriggerRepositoryEventConfigElRef> {
+    pub fn repository_event_config(&self) -> terrars::ListRef<DataCloudbuildTrigger_RepositoryEventConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.repository_event_config", self.extract_ref()))
     }
 
@@ -208,8 +227,8 @@ impl DataCloudbuildTrigger {
     }
 
     #[doc =
-        "Get a reference to the value of field `source_to_build` after provisioning.\nThe repo and ref of the repository from which to build.\nThis field is used only for those triggers that do not respond to SCM events.\nTriggers that respond to such events build source at whatever commit caused the event.\nThis field is currently only used by Webhook, Pub/Sub, Manual, and Cron triggers.\n\nOne of 'trigger_template', 'github', 'pubsub_config' 'webhook_config' or 'source_to_build' must be provided."]
-    pub fn source_to_build(&self) -> terrars::ListRef<DataCloudbuildTriggerSourceToBuildElRef> {
+        "Get a reference to the value of field `source_to_build` after provisioning.\nThe repo and ref of the repository from which to build.\nThis field is used only for those triggers that do not respond to SCM events.\nTriggers that respond to such events build source at whatever commit caused the event.\nThis field is currently only used by Webhook, Pub/Sub, Manual, and Cron triggers."]
+    pub fn source_to_build(&self) -> terrars::ListRef<DataCloudbuildTrigger_SourceToBuildRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source_to_build", self.extract_ref()))
     }
 
@@ -231,14 +250,14 @@ impl DataCloudbuildTrigger {
     }
 
     #[doc =
-        "Get a reference to the value of field `trigger_template` after provisioning.\nTemplate describing the types of source changes to trigger a build.\n\nBranch and tag names in trigger templates are interpreted as regular\nexpressions. Any branch or tag change that matches that regular\nexpression will trigger a build.\n\nOne of 'trigger_template', 'github', 'pubsub_config', 'webhook_config' or 'source_to_build' must be provided."]
-    pub fn trigger_template(&self) -> terrars::ListRef<DataCloudbuildTriggerTriggerTemplateElRef> {
+        "Get a reference to the value of field `trigger_template` after provisioning.\nTemplate describing the types of source changes to trigger a build.\n\nBranch and tag names in trigger templates are interpreted as regular\nexpressions. Any branch or tag change that matches that regular\nexpression will trigger a build."]
+    pub fn trigger_template(&self) -> terrars::ListRef<DataCloudbuildTrigger_TriggerTemplateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.trigger_template", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `webhook_config` after provisioning.\nWebhookConfig describes the configuration of a trigger that creates\na build whenever a webhook is sent to a trigger's webhook URL.\n\nOne of 'trigger_template', 'github', 'pubsub_config' 'webhook_config' or 'source_to_build' must be provided."]
-    pub fn webhook_config(&self) -> terrars::ListRef<DataCloudbuildTriggerWebhookConfigElRef> {
+        "Get a reference to the value of field `webhook_config` after provisioning.\nWebhookConfig describes the configuration of a trigger that creates\na build whenever a webhook is sent to a trigger's webhook URL."]
+    pub fn webhook_config(&self) -> terrars::ListRef<DataCloudbuildTrigger_WebhookConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.webhook_config", self.extract_ref()))
     }
 }
@@ -288,7 +307,7 @@ impl BuildDataCloudbuildTrigger {
         let out = DataCloudbuildTrigger(std::rc::Rc::new(DataCloudbuildTrigger_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataCloudbuildTriggerData {
+            data: std::cell::RefCell::new(DataCloudbuildTriggerData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -329,7 +348,7 @@ impl DataCloudbuildTriggerRef {
 
     #[doc =
         "Get a reference to the value of field `approval_config` after provisioning.\nConfiguration for manual approval to start a build invocation of this BuildTrigger.\nBuilds created by this trigger will require approval before they execute.\nAny user with a Cloud Build Approver role for the project can approve a build."]
-    pub fn approval_config(&self) -> terrars::ListRef<DataCloudbuildTriggerApprovalConfigElRef> {
+    pub fn approval_config(&self) -> terrars::ListRef<DataCloudbuildTrigger_ApprovalConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.approval_config", self.extract_ref()))
     }
 
@@ -337,7 +356,7 @@ impl DataCloudbuildTriggerRef {
         "Get a reference to the value of field `bitbucket_server_trigger_config` after provisioning.\nBitbucketServerTriggerConfig describes the configuration of a trigger that creates a build whenever a Bitbucket Server event is received."]
     pub fn bitbucket_server_trigger_config(
         &self,
-    ) -> terrars::ListRef<DataCloudbuildTriggerBitbucketServerTriggerConfigElRef> {
+    ) -> terrars::ListRef<DataCloudbuildTrigger_BitbucketServerTriggerConfigRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.bitbucket_server_trigger_config", self.extract_ref()),
@@ -346,7 +365,7 @@ impl DataCloudbuildTriggerRef {
 
     #[doc =
         "Get a reference to the value of field `build` after provisioning.\nContents of the build template. Either a filename or build template must be provided."]
-    pub fn build(&self) -> terrars::ListRef<DataCloudbuildTriggerBuildElRef> {
+    pub fn build(&self) -> terrars::ListRef<DataCloudbuildTrigger_BuildRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.build", self.extract_ref()))
     }
 
@@ -357,9 +376,26 @@ impl DataCloudbuildTriggerRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nHuman-readable description of the trigger."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `developer_connect_event_config` after provisioning.\nConfiguration for triggers that respond to Developer Connect events."]
+    pub fn developer_connect_event_config(
+        &self,
+    ) -> terrars::ListRef<DataCloudbuildTrigger_DeveloperConnectEventConfigRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.developer_connect_event_config", self.extract_ref()),
+        )
     }
 
     #[doc =
@@ -382,13 +418,13 @@ impl DataCloudbuildTriggerRef {
 
     #[doc =
         "Get a reference to the value of field `git_file_source` after provisioning.\nThe file source describing the local or remote Build template."]
-    pub fn git_file_source(&self) -> terrars::ListRef<DataCloudbuildTriggerGitFileSourceElRef> {
+    pub fn git_file_source(&self) -> terrars::ListRef<DataCloudbuildTrigger_GitFileSourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.git_file_source", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `github` after provisioning.\nDescribes the configuration of a trigger that creates a build whenever a GitHub event is received.\n\nOne of 'trigger_template', 'github', 'pubsub_config' or 'webhook_config' must be provided."]
-    pub fn github(&self) -> terrars::ListRef<DataCloudbuildTriggerGithubElRef> {
+        "Get a reference to the value of field `github` after provisioning.\nDescribes the configuration of a trigger that creates a build whenever a GitHub event is received."]
+    pub fn github(&self) -> terrars::ListRef<DataCloudbuildTrigger_GithubRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.github", self.extract_ref()))
     }
 
@@ -433,14 +469,14 @@ impl DataCloudbuildTriggerRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `pubsub_config` after provisioning.\nPubsubConfig describes the configuration of a trigger that creates\na build whenever a Pub/Sub message is published.\n\nOne of 'trigger_template', 'github', 'pubsub_config' 'webhook_config' or 'source_to_build' must be provided."]
-    pub fn pubsub_config(&self) -> terrars::ListRef<DataCloudbuildTriggerPubsubConfigElRef> {
+        "Get a reference to the value of field `pubsub_config` after provisioning.\nPubsubConfig describes the configuration of a trigger that creates\na build whenever a Pub/Sub message is published."]
+    pub fn pubsub_config(&self) -> terrars::ListRef<DataCloudbuildTrigger_PubsubConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.pubsub_config", self.extract_ref()))
     }
 
     #[doc =
         "Get a reference to the value of field `repository_event_config` after provisioning.\nThe configuration of a trigger that creates a build whenever an event from Repo API is received."]
-    pub fn repository_event_config(&self) -> terrars::ListRef<DataCloudbuildTriggerRepositoryEventConfigElRef> {
+    pub fn repository_event_config(&self) -> terrars::ListRef<DataCloudbuildTrigger_RepositoryEventConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.repository_event_config", self.extract_ref()))
     }
 
@@ -451,8 +487,8 @@ impl DataCloudbuildTriggerRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `source_to_build` after provisioning.\nThe repo and ref of the repository from which to build.\nThis field is used only for those triggers that do not respond to SCM events.\nTriggers that respond to such events build source at whatever commit caused the event.\nThis field is currently only used by Webhook, Pub/Sub, Manual, and Cron triggers.\n\nOne of 'trigger_template', 'github', 'pubsub_config' 'webhook_config' or 'source_to_build' must be provided."]
-    pub fn source_to_build(&self) -> terrars::ListRef<DataCloudbuildTriggerSourceToBuildElRef> {
+        "Get a reference to the value of field `source_to_build` after provisioning.\nThe repo and ref of the repository from which to build.\nThis field is used only for those triggers that do not respond to SCM events.\nTriggers that respond to such events build source at whatever commit caused the event.\nThis field is currently only used by Webhook, Pub/Sub, Manual, and Cron triggers."]
+    pub fn source_to_build(&self) -> terrars::ListRef<DataCloudbuildTrigger_SourceToBuildRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source_to_build", self.extract_ref()))
     }
 
@@ -474,25 +510,25 @@ impl DataCloudbuildTriggerRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `trigger_template` after provisioning.\nTemplate describing the types of source changes to trigger a build.\n\nBranch and tag names in trigger templates are interpreted as regular\nexpressions. Any branch or tag change that matches that regular\nexpression will trigger a build.\n\nOne of 'trigger_template', 'github', 'pubsub_config', 'webhook_config' or 'source_to_build' must be provided."]
-    pub fn trigger_template(&self) -> terrars::ListRef<DataCloudbuildTriggerTriggerTemplateElRef> {
+        "Get a reference to the value of field `trigger_template` after provisioning.\nTemplate describing the types of source changes to trigger a build.\n\nBranch and tag names in trigger templates are interpreted as regular\nexpressions. Any branch or tag change that matches that regular\nexpression will trigger a build."]
+    pub fn trigger_template(&self) -> terrars::ListRef<DataCloudbuildTrigger_TriggerTemplateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.trigger_template", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `webhook_config` after provisioning.\nWebhookConfig describes the configuration of a trigger that creates\na build whenever a webhook is sent to a trigger's webhook URL.\n\nOne of 'trigger_template', 'github', 'pubsub_config' 'webhook_config' or 'source_to_build' must be provided."]
-    pub fn webhook_config(&self) -> terrars::ListRef<DataCloudbuildTriggerWebhookConfigElRef> {
+        "Get a reference to the value of field `webhook_config` after provisioning.\nWebhookConfig describes the configuration of a trigger that creates\na build whenever a webhook is sent to a trigger's webhook URL."]
+    pub fn webhook_config(&self) -> terrars::ListRef<DataCloudbuildTrigger_WebhookConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.webhook_config", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataCloudbuildTriggerApprovalConfigEl {
+pub struct DataCloudbuildTrigger_ApprovalConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     approval_required: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataCloudbuildTriggerApprovalConfigEl {
+impl DataCloudbuildTrigger_ApprovalConfig {
     #[doc = "Set the field `approval_required`.\n"]
     pub fn set_approval_required(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.approval_required = std::option::Option::Some(v.into());
@@ -500,8 +536,8 @@ impl DataCloudbuildTriggerApprovalConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudbuildTriggerApprovalConfigEl {
-    type O = terrars::BlockAssignable<DataCloudbuildTriggerApprovalConfigEl>;
+impl terrars::ToListMappable for DataCloudbuildTrigger_ApprovalConfig {
+    type O = terrars::BlockAssignable<DataCloudbuildTrigger_ApprovalConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -512,29 +548,31 @@ impl terrars::ToListMappable for DataCloudbuildTriggerApprovalConfigEl {
     }
 }
 
-pub struct BuildDataCloudbuildTriggerApprovalConfigEl {}
+pub struct BuildDataCloudbuildTrigger_ApprovalConfig {}
 
-impl BuildDataCloudbuildTriggerApprovalConfigEl {
-    pub fn build(self) -> DataCloudbuildTriggerApprovalConfigEl {
-        DataCloudbuildTriggerApprovalConfigEl { approval_required: core::default::Default::default() }
+impl BuildDataCloudbuildTrigger_ApprovalConfig {
+    pub fn build(self) -> DataCloudbuildTrigger_ApprovalConfig {
+        DataCloudbuildTrigger_ApprovalConfig { approval_required: core::default::Default::default() }
     }
 }
 
-pub struct DataCloudbuildTriggerApprovalConfigElRef {
+#[allow(dead_code)]
+pub struct DataCloudbuildTrigger_ApprovalConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudbuildTriggerApprovalConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudbuildTriggerApprovalConfigElRef {
-        DataCloudbuildTriggerApprovalConfigElRef {
+impl terrars::Ref for DataCloudbuildTrigger_ApprovalConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudbuildTrigger_ApprovalConfigRef {
+        DataCloudbuildTrigger_ApprovalConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudbuildTriggerApprovalConfigElRef {
+impl DataCloudbuildTrigger_ApprovalConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -546,7 +584,7 @@ impl DataCloudbuildTriggerApprovalConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCloudbuildTriggerBitbucketServerTriggerConfigElPullRequestEl {
+pub struct DataCloudbuildTrigger_Github_PullRequest {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     branch: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -555,7 +593,7 @@ pub struct DataCloudbuildTriggerBitbucketServerTriggerConfigElPullRequestEl {
     invert_regex: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataCloudbuildTriggerBitbucketServerTriggerConfigElPullRequestEl {
+impl DataCloudbuildTrigger_Github_PullRequest {
     #[doc = "Set the field `branch`.\n"]
     pub fn set_branch(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.branch = std::option::Option::Some(v.into());
@@ -575,8 +613,8 @@ impl DataCloudbuildTriggerBitbucketServerTriggerConfigElPullRequestEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudbuildTriggerBitbucketServerTriggerConfigElPullRequestEl {
-    type O = terrars::BlockAssignable<DataCloudbuildTriggerBitbucketServerTriggerConfigElPullRequestEl>;
+impl terrars::ToListMappable for DataCloudbuildTrigger_Github_PullRequest {
+    type O = terrars::BlockAssignable<DataCloudbuildTrigger_Github_PullRequest>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -587,11 +625,11 @@ impl terrars::ToListMappable for DataCloudbuildTriggerBitbucketServerTriggerConf
     }
 }
 
-pub struct BuildDataCloudbuildTriggerBitbucketServerTriggerConfigElPullRequestEl {}
+pub struct BuildDataCloudbuildTrigger_Github_PullRequest {}
 
-impl BuildDataCloudbuildTriggerBitbucketServerTriggerConfigElPullRequestEl {
-    pub fn build(self) -> DataCloudbuildTriggerBitbucketServerTriggerConfigElPullRequestEl {
-        DataCloudbuildTriggerBitbucketServerTriggerConfigElPullRequestEl {
+impl BuildDataCloudbuildTrigger_Github_PullRequest {
+    pub fn build(self) -> DataCloudbuildTrigger_Github_PullRequest {
+        DataCloudbuildTrigger_Github_PullRequest {
             branch: core::default::Default::default(),
             comment_control: core::default::Default::default(),
             invert_regex: core::default::Default::default(),
@@ -599,24 +637,23 @@ impl BuildDataCloudbuildTriggerBitbucketServerTriggerConfigElPullRequestEl {
     }
 }
 
-pub struct DataCloudbuildTriggerBitbucketServerTriggerConfigElPullRequestElRef {
+#[allow(dead_code)]
+pub struct DataCloudbuildTrigger_Github_PullRequestRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudbuildTriggerBitbucketServerTriggerConfigElPullRequestElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataCloudbuildTriggerBitbucketServerTriggerConfigElPullRequestElRef {
-        DataCloudbuildTriggerBitbucketServerTriggerConfigElPullRequestElRef {
+impl terrars::Ref for DataCloudbuildTrigger_Github_PullRequestRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudbuildTrigger_Github_PullRequestRef {
+        DataCloudbuildTrigger_Github_PullRequestRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudbuildTriggerBitbucketServerTriggerConfigElPullRequestElRef {
+impl DataCloudbuildTrigger_Github_PullRequestRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -638,7 +675,7 @@ impl DataCloudbuildTriggerBitbucketServerTriggerConfigElPullRequestElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCloudbuildTriggerBitbucketServerTriggerConfigElPushEl {
+pub struct DataCloudbuildTrigger_Github_Push {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     branch: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -647,7 +684,7 @@ pub struct DataCloudbuildTriggerBitbucketServerTriggerConfigElPushEl {
     tag: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCloudbuildTriggerBitbucketServerTriggerConfigElPushEl {
+impl DataCloudbuildTrigger_Github_Push {
     #[doc = "Set the field `branch`.\n"]
     pub fn set_branch(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.branch = std::option::Option::Some(v.into());
@@ -667,8 +704,8 @@ impl DataCloudbuildTriggerBitbucketServerTriggerConfigElPushEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudbuildTriggerBitbucketServerTriggerConfigElPushEl {
-    type O = terrars::BlockAssignable<DataCloudbuildTriggerBitbucketServerTriggerConfigElPushEl>;
+impl terrars::ToListMappable for DataCloudbuildTrigger_Github_Push {
+    type O = terrars::BlockAssignable<DataCloudbuildTrigger_Github_Push>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -679,11 +716,11 @@ impl terrars::ToListMappable for DataCloudbuildTriggerBitbucketServerTriggerConf
     }
 }
 
-pub struct BuildDataCloudbuildTriggerBitbucketServerTriggerConfigElPushEl {}
+pub struct BuildDataCloudbuildTrigger_Github_Push {}
 
-impl BuildDataCloudbuildTriggerBitbucketServerTriggerConfigElPushEl {
-    pub fn build(self) -> DataCloudbuildTriggerBitbucketServerTriggerConfigElPushEl {
-        DataCloudbuildTriggerBitbucketServerTriggerConfigElPushEl {
+impl BuildDataCloudbuildTrigger_Github_Push {
+    pub fn build(self) -> DataCloudbuildTrigger_Github_Push {
+        DataCloudbuildTrigger_Github_Push {
             branch: core::default::Default::default(),
             invert_regex: core::default::Default::default(),
             tag: core::default::Default::default(),
@@ -691,24 +728,23 @@ impl BuildDataCloudbuildTriggerBitbucketServerTriggerConfigElPushEl {
     }
 }
 
-pub struct DataCloudbuildTriggerBitbucketServerTriggerConfigElPushElRef {
+#[allow(dead_code)]
+pub struct DataCloudbuildTrigger_Github_PushRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudbuildTriggerBitbucketServerTriggerConfigElPushElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataCloudbuildTriggerBitbucketServerTriggerConfigElPushElRef {
-        DataCloudbuildTriggerBitbucketServerTriggerConfigElPushElRef {
+impl terrars::Ref for DataCloudbuildTrigger_Github_PushRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudbuildTrigger_Github_PushRef {
+        DataCloudbuildTrigger_Github_PushRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudbuildTriggerBitbucketServerTriggerConfigElPushElRef {
+impl DataCloudbuildTrigger_Github_PushRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -730,22 +766,20 @@ impl DataCloudbuildTriggerBitbucketServerTriggerConfigElPushElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCloudbuildTriggerBitbucketServerTriggerConfigEl {
+pub struct DataCloudbuildTrigger_BitbucketServerTriggerConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bitbucket_server_config_resource: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project_key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    pull_request: std
-    ::option
-    ::Option<terrars::ListField<DataCloudbuildTriggerBitbucketServerTriggerConfigElPullRequestEl>>,
+    pull_request: std::option::Option<terrars::ListField<DataCloudbuildTrigger_Github_PullRequest>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    push: std::option::Option<terrars::ListField<DataCloudbuildTriggerBitbucketServerTriggerConfigElPushEl>>,
+    push: std::option::Option<terrars::ListField<DataCloudbuildTrigger_Github_Push>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     repo_slug: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCloudbuildTriggerBitbucketServerTriggerConfigEl {
+impl DataCloudbuildTrigger_BitbucketServerTriggerConfig {
     #[doc = "Set the field `bitbucket_server_config_resource`.\n"]
     pub fn set_bitbucket_server_config_resource(
         mut self,
@@ -764,12 +798,7 @@ impl DataCloudbuildTriggerBitbucketServerTriggerConfigEl {
     #[doc = "Set the field `pull_request`.\n"]
     pub fn set_pull_request(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::ListField<DataCloudbuildTriggerBitbucketServerTriggerConfigElPullRequestEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTrigger_Github_PullRequest>>,
     ) -> Self {
         self.pull_request = std::option::Option::Some(v.into());
         self
@@ -778,7 +807,7 @@ impl DataCloudbuildTriggerBitbucketServerTriggerConfigEl {
     #[doc = "Set the field `push`.\n"]
     pub fn set_push(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTriggerBitbucketServerTriggerConfigElPushEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTrigger_Github_Push>>,
     ) -> Self {
         self.push = std::option::Option::Some(v.into());
         self
@@ -791,8 +820,8 @@ impl DataCloudbuildTriggerBitbucketServerTriggerConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudbuildTriggerBitbucketServerTriggerConfigEl {
-    type O = terrars::BlockAssignable<DataCloudbuildTriggerBitbucketServerTriggerConfigEl>;
+impl terrars::ToListMappable for DataCloudbuildTrigger_BitbucketServerTriggerConfig {
+    type O = terrars::BlockAssignable<DataCloudbuildTrigger_BitbucketServerTriggerConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -803,11 +832,11 @@ impl terrars::ToListMappable for DataCloudbuildTriggerBitbucketServerTriggerConf
     }
 }
 
-pub struct BuildDataCloudbuildTriggerBitbucketServerTriggerConfigEl {}
+pub struct BuildDataCloudbuildTrigger_BitbucketServerTriggerConfig {}
 
-impl BuildDataCloudbuildTriggerBitbucketServerTriggerConfigEl {
-    pub fn build(self) -> DataCloudbuildTriggerBitbucketServerTriggerConfigEl {
-        DataCloudbuildTriggerBitbucketServerTriggerConfigEl {
+impl BuildDataCloudbuildTrigger_BitbucketServerTriggerConfig {
+    pub fn build(self) -> DataCloudbuildTrigger_BitbucketServerTriggerConfig {
+        DataCloudbuildTrigger_BitbucketServerTriggerConfig {
             bitbucket_server_config_resource: core::default::Default::default(),
             project_key: core::default::Default::default(),
             pull_request: core::default::Default::default(),
@@ -817,24 +846,26 @@ impl BuildDataCloudbuildTriggerBitbucketServerTriggerConfigEl {
     }
 }
 
-pub struct DataCloudbuildTriggerBitbucketServerTriggerConfigElRef {
+#[allow(dead_code)]
+pub struct DataCloudbuildTrigger_BitbucketServerTriggerConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudbuildTriggerBitbucketServerTriggerConfigElRef {
+impl terrars::Ref for DataCloudbuildTrigger_BitbucketServerTriggerConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCloudbuildTriggerBitbucketServerTriggerConfigElRef {
-        DataCloudbuildTriggerBitbucketServerTriggerConfigElRef {
+    ) -> DataCloudbuildTrigger_BitbucketServerTriggerConfigRef {
+        DataCloudbuildTrigger_BitbucketServerTriggerConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudbuildTriggerBitbucketServerTriggerConfigElRef {
+impl DataCloudbuildTrigger_BitbucketServerTriggerConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -850,12 +881,12 @@ impl DataCloudbuildTriggerBitbucketServerTriggerConfigElRef {
     }
 
     #[doc = "Get a reference to the value of field `pull_request` after provisioning.\n"]
-    pub fn pull_request(&self) -> terrars::ListRef<DataCloudbuildTriggerBitbucketServerTriggerConfigElPullRequestElRef> {
+    pub fn pull_request(&self) -> terrars::ListRef<DataCloudbuildTrigger_Github_PullRequestRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.pull_request", self.base))
     }
 
     #[doc = "Get a reference to the value of field `push` after provisioning.\n"]
-    pub fn push(&self) -> terrars::ListRef<DataCloudbuildTriggerBitbucketServerTriggerConfigElPushElRef> {
+    pub fn push(&self) -> terrars::ListRef<DataCloudbuildTrigger_Github_PushRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.push", self.base))
     }
 
@@ -866,7 +897,7 @@ impl DataCloudbuildTriggerBitbucketServerTriggerConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCloudbuildTriggerBuildElArtifactsElMavenArtifactsEl {
+pub struct DataCloudbuildTrigger_Build_Artifacts_MavenArtifacts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     artifact_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -879,7 +910,7 @@ pub struct DataCloudbuildTriggerBuildElArtifactsElMavenArtifactsEl {
     version: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCloudbuildTriggerBuildElArtifactsElMavenArtifactsEl {
+impl DataCloudbuildTrigger_Build_Artifacts_MavenArtifacts {
     #[doc = "Set the field `artifact_id`.\n"]
     pub fn set_artifact_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.artifact_id = std::option::Option::Some(v.into());
@@ -911,8 +942,8 @@ impl DataCloudbuildTriggerBuildElArtifactsElMavenArtifactsEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudbuildTriggerBuildElArtifactsElMavenArtifactsEl {
-    type O = terrars::BlockAssignable<DataCloudbuildTriggerBuildElArtifactsElMavenArtifactsEl>;
+impl terrars::ToListMappable for DataCloudbuildTrigger_Build_Artifacts_MavenArtifacts {
+    type O = terrars::BlockAssignable<DataCloudbuildTrigger_Build_Artifacts_MavenArtifacts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -923,11 +954,11 @@ impl terrars::ToListMappable for DataCloudbuildTriggerBuildElArtifactsElMavenArt
     }
 }
 
-pub struct BuildDataCloudbuildTriggerBuildElArtifactsElMavenArtifactsEl {}
+pub struct BuildDataCloudbuildTrigger_Build_Artifacts_MavenArtifacts {}
 
-impl BuildDataCloudbuildTriggerBuildElArtifactsElMavenArtifactsEl {
-    pub fn build(self) -> DataCloudbuildTriggerBuildElArtifactsElMavenArtifactsEl {
-        DataCloudbuildTriggerBuildElArtifactsElMavenArtifactsEl {
+impl BuildDataCloudbuildTrigger_Build_Artifacts_MavenArtifacts {
+    pub fn build(self) -> DataCloudbuildTrigger_Build_Artifacts_MavenArtifacts {
+        DataCloudbuildTrigger_Build_Artifacts_MavenArtifacts {
             artifact_id: core::default::Default::default(),
             group_id: core::default::Default::default(),
             path: core::default::Default::default(),
@@ -937,24 +968,26 @@ impl BuildDataCloudbuildTriggerBuildElArtifactsElMavenArtifactsEl {
     }
 }
 
-pub struct DataCloudbuildTriggerBuildElArtifactsElMavenArtifactsElRef {
+#[allow(dead_code)]
+pub struct DataCloudbuildTrigger_Build_Artifacts_MavenArtifactsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudbuildTriggerBuildElArtifactsElMavenArtifactsElRef {
+impl terrars::Ref for DataCloudbuildTrigger_Build_Artifacts_MavenArtifactsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCloudbuildTriggerBuildElArtifactsElMavenArtifactsElRef {
-        DataCloudbuildTriggerBuildElArtifactsElMavenArtifactsElRef {
+    ) -> DataCloudbuildTrigger_Build_Artifacts_MavenArtifactsRef {
+        DataCloudbuildTrigger_Build_Artifacts_MavenArtifactsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudbuildTriggerBuildElArtifactsElMavenArtifactsElRef {
+impl DataCloudbuildTrigger_Build_Artifacts_MavenArtifactsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -986,14 +1019,14 @@ impl DataCloudbuildTriggerBuildElArtifactsElMavenArtifactsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCloudbuildTriggerBuildElArtifactsElNpmPackagesEl {
+pub struct DataCloudbuildTrigger_Build_Artifacts_NpmPackages {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     package_path: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     repository: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCloudbuildTriggerBuildElArtifactsElNpmPackagesEl {
+impl DataCloudbuildTrigger_Build_Artifacts_NpmPackages {
     #[doc = "Set the field `package_path`.\n"]
     pub fn set_package_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.package_path = std::option::Option::Some(v.into());
@@ -1007,8 +1040,8 @@ impl DataCloudbuildTriggerBuildElArtifactsElNpmPackagesEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudbuildTriggerBuildElArtifactsElNpmPackagesEl {
-    type O = terrars::BlockAssignable<DataCloudbuildTriggerBuildElArtifactsElNpmPackagesEl>;
+impl terrars::ToListMappable for DataCloudbuildTrigger_Build_Artifacts_NpmPackages {
+    type O = terrars::BlockAssignable<DataCloudbuildTrigger_Build_Artifacts_NpmPackages>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1019,35 +1052,37 @@ impl terrars::ToListMappable for DataCloudbuildTriggerBuildElArtifactsElNpmPacka
     }
 }
 
-pub struct BuildDataCloudbuildTriggerBuildElArtifactsElNpmPackagesEl {}
+pub struct BuildDataCloudbuildTrigger_Build_Artifacts_NpmPackages {}
 
-impl BuildDataCloudbuildTriggerBuildElArtifactsElNpmPackagesEl {
-    pub fn build(self) -> DataCloudbuildTriggerBuildElArtifactsElNpmPackagesEl {
-        DataCloudbuildTriggerBuildElArtifactsElNpmPackagesEl {
+impl BuildDataCloudbuildTrigger_Build_Artifacts_NpmPackages {
+    pub fn build(self) -> DataCloudbuildTrigger_Build_Artifacts_NpmPackages {
+        DataCloudbuildTrigger_Build_Artifacts_NpmPackages {
             package_path: core::default::Default::default(),
             repository: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataCloudbuildTriggerBuildElArtifactsElNpmPackagesElRef {
+#[allow(dead_code)]
+pub struct DataCloudbuildTrigger_Build_Artifacts_NpmPackagesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudbuildTriggerBuildElArtifactsElNpmPackagesElRef {
+impl terrars::Ref for DataCloudbuildTrigger_Build_Artifacts_NpmPackagesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCloudbuildTriggerBuildElArtifactsElNpmPackagesElRef {
-        DataCloudbuildTriggerBuildElArtifactsElNpmPackagesElRef {
+    ) -> DataCloudbuildTrigger_Build_Artifacts_NpmPackagesRef {
+        DataCloudbuildTrigger_Build_Artifacts_NpmPackagesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudbuildTriggerBuildElArtifactsElNpmPackagesElRef {
+impl DataCloudbuildTrigger_Build_Artifacts_NpmPackagesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1064,14 +1099,14 @@ impl DataCloudbuildTriggerBuildElArtifactsElNpmPackagesElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCloudbuildTriggerBuildElArtifactsElObjectsElTimingEl {
+pub struct DataCloudbuildTrigger_Build_Artifacts_Objects_Timing {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     end_time: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     start_time: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCloudbuildTriggerBuildElArtifactsElObjectsElTimingEl {
+impl DataCloudbuildTrigger_Build_Artifacts_Objects_Timing {
     #[doc = "Set the field `end_time`.\n"]
     pub fn set_end_time(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.end_time = std::option::Option::Some(v.into());
@@ -1085,8 +1120,8 @@ impl DataCloudbuildTriggerBuildElArtifactsElObjectsElTimingEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudbuildTriggerBuildElArtifactsElObjectsElTimingEl {
-    type O = terrars::BlockAssignable<DataCloudbuildTriggerBuildElArtifactsElObjectsElTimingEl>;
+impl terrars::ToListMappable for DataCloudbuildTrigger_Build_Artifacts_Objects_Timing {
+    type O = terrars::BlockAssignable<DataCloudbuildTrigger_Build_Artifacts_Objects_Timing>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1097,35 +1132,37 @@ impl terrars::ToListMappable for DataCloudbuildTriggerBuildElArtifactsElObjectsE
     }
 }
 
-pub struct BuildDataCloudbuildTriggerBuildElArtifactsElObjectsElTimingEl {}
+pub struct BuildDataCloudbuildTrigger_Build_Artifacts_Objects_Timing {}
 
-impl BuildDataCloudbuildTriggerBuildElArtifactsElObjectsElTimingEl {
-    pub fn build(self) -> DataCloudbuildTriggerBuildElArtifactsElObjectsElTimingEl {
-        DataCloudbuildTriggerBuildElArtifactsElObjectsElTimingEl {
+impl BuildDataCloudbuildTrigger_Build_Artifacts_Objects_Timing {
+    pub fn build(self) -> DataCloudbuildTrigger_Build_Artifacts_Objects_Timing {
+        DataCloudbuildTrigger_Build_Artifacts_Objects_Timing {
             end_time: core::default::Default::default(),
             start_time: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataCloudbuildTriggerBuildElArtifactsElObjectsElTimingElRef {
+#[allow(dead_code)]
+pub struct DataCloudbuildTrigger_Build_Artifacts_Objects_TimingRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudbuildTriggerBuildElArtifactsElObjectsElTimingElRef {
+impl terrars::Ref for DataCloudbuildTrigger_Build_Artifacts_Objects_TimingRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCloudbuildTriggerBuildElArtifactsElObjectsElTimingElRef {
-        DataCloudbuildTriggerBuildElArtifactsElObjectsElTimingElRef {
+    ) -> DataCloudbuildTrigger_Build_Artifacts_Objects_TimingRef {
+        DataCloudbuildTrigger_Build_Artifacts_Objects_TimingRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudbuildTriggerBuildElArtifactsElObjectsElTimingElRef {
+impl DataCloudbuildTrigger_Build_Artifacts_Objects_TimingRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1142,16 +1179,16 @@ impl DataCloudbuildTriggerBuildElArtifactsElObjectsElTimingElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCloudbuildTriggerBuildElArtifactsElObjectsEl {
+pub struct DataCloudbuildTrigger_Build_Artifacts_Objects {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     location: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     paths: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timing: std::option::Option<terrars::ListField<DataCloudbuildTriggerBuildElArtifactsElObjectsElTimingEl>>,
+    timing: std::option::Option<terrars::ListField<DataCloudbuildTrigger_Build_Artifacts_Objects_Timing>>,
 }
 
-impl DataCloudbuildTriggerBuildElArtifactsElObjectsEl {
+impl DataCloudbuildTrigger_Build_Artifacts_Objects {
     #[doc = "Set the field `location`.\n"]
     pub fn set_location(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.location = std::option::Option::Some(v.into());
@@ -1170,15 +1207,15 @@ impl DataCloudbuildTriggerBuildElArtifactsElObjectsEl {
     #[doc = "Set the field `timing`.\n"]
     pub fn set_timing(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTriggerBuildElArtifactsElObjectsElTimingEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTrigger_Build_Artifacts_Objects_Timing>>,
     ) -> Self {
         self.timing = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataCloudbuildTriggerBuildElArtifactsElObjectsEl {
-    type O = terrars::BlockAssignable<DataCloudbuildTriggerBuildElArtifactsElObjectsEl>;
+impl terrars::ToListMappable for DataCloudbuildTrigger_Build_Artifacts_Objects {
+    type O = terrars::BlockAssignable<DataCloudbuildTrigger_Build_Artifacts_Objects>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1189,11 +1226,11 @@ impl terrars::ToListMappable for DataCloudbuildTriggerBuildElArtifactsElObjectsE
     }
 }
 
-pub struct BuildDataCloudbuildTriggerBuildElArtifactsElObjectsEl {}
+pub struct BuildDataCloudbuildTrigger_Build_Artifacts_Objects {}
 
-impl BuildDataCloudbuildTriggerBuildElArtifactsElObjectsEl {
-    pub fn build(self) -> DataCloudbuildTriggerBuildElArtifactsElObjectsEl {
-        DataCloudbuildTriggerBuildElArtifactsElObjectsEl {
+impl BuildDataCloudbuildTrigger_Build_Artifacts_Objects {
+    pub fn build(self) -> DataCloudbuildTrigger_Build_Artifacts_Objects {
+        DataCloudbuildTrigger_Build_Artifacts_Objects {
             location: core::default::Default::default(),
             paths: core::default::Default::default(),
             timing: core::default::Default::default(),
@@ -1201,24 +1238,26 @@ impl BuildDataCloudbuildTriggerBuildElArtifactsElObjectsEl {
     }
 }
 
-pub struct DataCloudbuildTriggerBuildElArtifactsElObjectsElRef {
+#[allow(dead_code)]
+pub struct DataCloudbuildTrigger_Build_Artifacts_ObjectsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudbuildTriggerBuildElArtifactsElObjectsElRef {
+impl terrars::Ref for DataCloudbuildTrigger_Build_Artifacts_ObjectsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCloudbuildTriggerBuildElArtifactsElObjectsElRef {
-        DataCloudbuildTriggerBuildElArtifactsElObjectsElRef {
+    ) -> DataCloudbuildTrigger_Build_Artifacts_ObjectsRef {
+        DataCloudbuildTrigger_Build_Artifacts_ObjectsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudbuildTriggerBuildElArtifactsElObjectsElRef {
+impl DataCloudbuildTrigger_Build_Artifacts_ObjectsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1234,20 +1273,20 @@ impl DataCloudbuildTriggerBuildElArtifactsElObjectsElRef {
     }
 
     #[doc = "Get a reference to the value of field `timing` after provisioning.\n"]
-    pub fn timing(&self) -> terrars::ListRef<DataCloudbuildTriggerBuildElArtifactsElObjectsElTimingElRef> {
+    pub fn timing(&self) -> terrars::ListRef<DataCloudbuildTrigger_Build_Artifacts_Objects_TimingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.timing", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataCloudbuildTriggerBuildElArtifactsElPythonPackagesEl {
+pub struct DataCloudbuildTrigger_Build_Artifacts_PythonPackages {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     paths: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     repository: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCloudbuildTriggerBuildElArtifactsElPythonPackagesEl {
+impl DataCloudbuildTrigger_Build_Artifacts_PythonPackages {
     #[doc = "Set the field `paths`.\n"]
     pub fn set_paths(
         mut self,
@@ -1264,8 +1303,8 @@ impl DataCloudbuildTriggerBuildElArtifactsElPythonPackagesEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudbuildTriggerBuildElArtifactsElPythonPackagesEl {
-    type O = terrars::BlockAssignable<DataCloudbuildTriggerBuildElArtifactsElPythonPackagesEl>;
+impl terrars::ToListMappable for DataCloudbuildTrigger_Build_Artifacts_PythonPackages {
+    type O = terrars::BlockAssignable<DataCloudbuildTrigger_Build_Artifacts_PythonPackages>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1276,35 +1315,37 @@ impl terrars::ToListMappable for DataCloudbuildTriggerBuildElArtifactsElPythonPa
     }
 }
 
-pub struct BuildDataCloudbuildTriggerBuildElArtifactsElPythonPackagesEl {}
+pub struct BuildDataCloudbuildTrigger_Build_Artifacts_PythonPackages {}
 
-impl BuildDataCloudbuildTriggerBuildElArtifactsElPythonPackagesEl {
-    pub fn build(self) -> DataCloudbuildTriggerBuildElArtifactsElPythonPackagesEl {
-        DataCloudbuildTriggerBuildElArtifactsElPythonPackagesEl {
+impl BuildDataCloudbuildTrigger_Build_Artifacts_PythonPackages {
+    pub fn build(self) -> DataCloudbuildTrigger_Build_Artifacts_PythonPackages {
+        DataCloudbuildTrigger_Build_Artifacts_PythonPackages {
             paths: core::default::Default::default(),
             repository: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataCloudbuildTriggerBuildElArtifactsElPythonPackagesElRef {
+#[allow(dead_code)]
+pub struct DataCloudbuildTrigger_Build_Artifacts_PythonPackagesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudbuildTriggerBuildElArtifactsElPythonPackagesElRef {
+impl terrars::Ref for DataCloudbuildTrigger_Build_Artifacts_PythonPackagesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCloudbuildTriggerBuildElArtifactsElPythonPackagesElRef {
-        DataCloudbuildTriggerBuildElArtifactsElPythonPackagesElRef {
+    ) -> DataCloudbuildTrigger_Build_Artifacts_PythonPackagesRef {
+        DataCloudbuildTrigger_Build_Artifacts_PythonPackagesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudbuildTriggerBuildElArtifactsElPythonPackagesElRef {
+impl DataCloudbuildTrigger_Build_Artifacts_PythonPackagesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1321,20 +1362,20 @@ impl DataCloudbuildTriggerBuildElArtifactsElPythonPackagesElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCloudbuildTriggerBuildElArtifactsEl {
+pub struct DataCloudbuildTrigger_Build_Artifacts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     images: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    maven_artifacts: std::option::Option<terrars::ListField<DataCloudbuildTriggerBuildElArtifactsElMavenArtifactsEl>>,
+    maven_artifacts: std::option::Option<terrars::ListField<DataCloudbuildTrigger_Build_Artifacts_MavenArtifacts>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    npm_packages: std::option::Option<terrars::ListField<DataCloudbuildTriggerBuildElArtifactsElNpmPackagesEl>>,
+    npm_packages: std::option::Option<terrars::ListField<DataCloudbuildTrigger_Build_Artifacts_NpmPackages>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    objects: std::option::Option<terrars::ListField<DataCloudbuildTriggerBuildElArtifactsElObjectsEl>>,
+    objects: std::option::Option<terrars::ListField<DataCloudbuildTrigger_Build_Artifacts_Objects>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    python_packages: std::option::Option<terrars::ListField<DataCloudbuildTriggerBuildElArtifactsElPythonPackagesEl>>,
+    python_packages: std::option::Option<terrars::ListField<DataCloudbuildTrigger_Build_Artifacts_PythonPackages>>,
 }
 
-impl DataCloudbuildTriggerBuildElArtifactsEl {
+impl DataCloudbuildTrigger_Build_Artifacts {
     #[doc = "Set the field `images`.\n"]
     pub fn set_images(
         mut self,
@@ -1347,7 +1388,7 @@ impl DataCloudbuildTriggerBuildElArtifactsEl {
     #[doc = "Set the field `maven_artifacts`.\n"]
     pub fn set_maven_artifacts(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTriggerBuildElArtifactsElMavenArtifactsEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTrigger_Build_Artifacts_MavenArtifacts>>,
     ) -> Self {
         self.maven_artifacts = std::option::Option::Some(v.into());
         self
@@ -1356,7 +1397,7 @@ impl DataCloudbuildTriggerBuildElArtifactsEl {
     #[doc = "Set the field `npm_packages`.\n"]
     pub fn set_npm_packages(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTriggerBuildElArtifactsElNpmPackagesEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTrigger_Build_Artifacts_NpmPackages>>,
     ) -> Self {
         self.npm_packages = std::option::Option::Some(v.into());
         self
@@ -1365,7 +1406,7 @@ impl DataCloudbuildTriggerBuildElArtifactsEl {
     #[doc = "Set the field `objects`.\n"]
     pub fn set_objects(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTriggerBuildElArtifactsElObjectsEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTrigger_Build_Artifacts_Objects>>,
     ) -> Self {
         self.objects = std::option::Option::Some(v.into());
         self
@@ -1374,15 +1415,15 @@ impl DataCloudbuildTriggerBuildElArtifactsEl {
     #[doc = "Set the field `python_packages`.\n"]
     pub fn set_python_packages(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTriggerBuildElArtifactsElPythonPackagesEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTrigger_Build_Artifacts_PythonPackages>>,
     ) -> Self {
         self.python_packages = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataCloudbuildTriggerBuildElArtifactsEl {
-    type O = terrars::BlockAssignable<DataCloudbuildTriggerBuildElArtifactsEl>;
+impl terrars::ToListMappable for DataCloudbuildTrigger_Build_Artifacts {
+    type O = terrars::BlockAssignable<DataCloudbuildTrigger_Build_Artifacts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1393,11 +1434,11 @@ impl terrars::ToListMappable for DataCloudbuildTriggerBuildElArtifactsEl {
     }
 }
 
-pub struct BuildDataCloudbuildTriggerBuildElArtifactsEl {}
+pub struct BuildDataCloudbuildTrigger_Build_Artifacts {}
 
-impl BuildDataCloudbuildTriggerBuildElArtifactsEl {
-    pub fn build(self) -> DataCloudbuildTriggerBuildElArtifactsEl {
-        DataCloudbuildTriggerBuildElArtifactsEl {
+impl BuildDataCloudbuildTrigger_Build_Artifacts {
+    pub fn build(self) -> DataCloudbuildTrigger_Build_Artifacts {
+        DataCloudbuildTrigger_Build_Artifacts {
             images: core::default::Default::default(),
             maven_artifacts: core::default::Default::default(),
             npm_packages: core::default::Default::default(),
@@ -1407,21 +1448,23 @@ impl BuildDataCloudbuildTriggerBuildElArtifactsEl {
     }
 }
 
-pub struct DataCloudbuildTriggerBuildElArtifactsElRef {
+#[allow(dead_code)]
+pub struct DataCloudbuildTrigger_Build_ArtifactsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudbuildTriggerBuildElArtifactsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudbuildTriggerBuildElArtifactsElRef {
-        DataCloudbuildTriggerBuildElArtifactsElRef {
+impl terrars::Ref for DataCloudbuildTrigger_Build_ArtifactsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudbuildTrigger_Build_ArtifactsRef {
+        DataCloudbuildTrigger_Build_ArtifactsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudbuildTriggerBuildElArtifactsElRef {
+impl DataCloudbuildTrigger_Build_ArtifactsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1432,35 +1475,35 @@ impl DataCloudbuildTriggerBuildElArtifactsElRef {
     }
 
     #[doc = "Get a reference to the value of field `maven_artifacts` after provisioning.\n"]
-    pub fn maven_artifacts(&self) -> terrars::ListRef<DataCloudbuildTriggerBuildElArtifactsElMavenArtifactsElRef> {
+    pub fn maven_artifacts(&self) -> terrars::ListRef<DataCloudbuildTrigger_Build_Artifacts_MavenArtifactsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.maven_artifacts", self.base))
     }
 
     #[doc = "Get a reference to the value of field `npm_packages` after provisioning.\n"]
-    pub fn npm_packages(&self) -> terrars::ListRef<DataCloudbuildTriggerBuildElArtifactsElNpmPackagesElRef> {
+    pub fn npm_packages(&self) -> terrars::ListRef<DataCloudbuildTrigger_Build_Artifacts_NpmPackagesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.npm_packages", self.base))
     }
 
     #[doc = "Get a reference to the value of field `objects` after provisioning.\n"]
-    pub fn objects(&self) -> terrars::ListRef<DataCloudbuildTriggerBuildElArtifactsElObjectsElRef> {
+    pub fn objects(&self) -> terrars::ListRef<DataCloudbuildTrigger_Build_Artifacts_ObjectsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.objects", self.base))
     }
 
     #[doc = "Get a reference to the value of field `python_packages` after provisioning.\n"]
-    pub fn python_packages(&self) -> terrars::ListRef<DataCloudbuildTriggerBuildElArtifactsElPythonPackagesElRef> {
+    pub fn python_packages(&self) -> terrars::ListRef<DataCloudbuildTrigger_Build_Artifacts_PythonPackagesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.python_packages", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataCloudbuildTriggerBuildElAvailableSecretsElSecretManagerEl {
+pub struct DataCloudbuildTrigger_Build_AvailableSecrets_SecretManager {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     env: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     version_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCloudbuildTriggerBuildElAvailableSecretsElSecretManagerEl {
+impl DataCloudbuildTrigger_Build_AvailableSecrets_SecretManager {
     #[doc = "Set the field `env`.\n"]
     pub fn set_env(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.env = std::option::Option::Some(v.into());
@@ -1474,8 +1517,8 @@ impl DataCloudbuildTriggerBuildElAvailableSecretsElSecretManagerEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudbuildTriggerBuildElAvailableSecretsElSecretManagerEl {
-    type O = terrars::BlockAssignable<DataCloudbuildTriggerBuildElAvailableSecretsElSecretManagerEl>;
+impl terrars::ToListMappable for DataCloudbuildTrigger_Build_AvailableSecrets_SecretManager {
+    type O = terrars::BlockAssignable<DataCloudbuildTrigger_Build_AvailableSecrets_SecretManager>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1486,35 +1529,37 @@ impl terrars::ToListMappable for DataCloudbuildTriggerBuildElAvailableSecretsElS
     }
 }
 
-pub struct BuildDataCloudbuildTriggerBuildElAvailableSecretsElSecretManagerEl {}
+pub struct BuildDataCloudbuildTrigger_Build_AvailableSecrets_SecretManager {}
 
-impl BuildDataCloudbuildTriggerBuildElAvailableSecretsElSecretManagerEl {
-    pub fn build(self) -> DataCloudbuildTriggerBuildElAvailableSecretsElSecretManagerEl {
-        DataCloudbuildTriggerBuildElAvailableSecretsElSecretManagerEl {
+impl BuildDataCloudbuildTrigger_Build_AvailableSecrets_SecretManager {
+    pub fn build(self) -> DataCloudbuildTrigger_Build_AvailableSecrets_SecretManager {
+        DataCloudbuildTrigger_Build_AvailableSecrets_SecretManager {
             env: core::default::Default::default(),
             version_name: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataCloudbuildTriggerBuildElAvailableSecretsElSecretManagerElRef {
+#[allow(dead_code)]
+pub struct DataCloudbuildTrigger_Build_AvailableSecrets_SecretManagerRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudbuildTriggerBuildElAvailableSecretsElSecretManagerElRef {
+impl terrars::Ref for DataCloudbuildTrigger_Build_AvailableSecrets_SecretManagerRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCloudbuildTriggerBuildElAvailableSecretsElSecretManagerElRef {
-        DataCloudbuildTriggerBuildElAvailableSecretsElSecretManagerElRef {
+    ) -> DataCloudbuildTrigger_Build_AvailableSecrets_SecretManagerRef {
+        DataCloudbuildTrigger_Build_AvailableSecrets_SecretManagerRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudbuildTriggerBuildElAvailableSecretsElSecretManagerElRef {
+impl DataCloudbuildTrigger_Build_AvailableSecrets_SecretManagerRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1531,31 +1576,24 @@ impl DataCloudbuildTriggerBuildElAvailableSecretsElSecretManagerElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCloudbuildTriggerBuildElAvailableSecretsEl {
+pub struct DataCloudbuildTrigger_Build_AvailableSecrets {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    secret_manager: std
-    ::option
-    ::Option<terrars::ListField<DataCloudbuildTriggerBuildElAvailableSecretsElSecretManagerEl>>,
+    secret_manager: std::option::Option<terrars::ListField<DataCloudbuildTrigger_Build_AvailableSecrets_SecretManager>>,
 }
 
-impl DataCloudbuildTriggerBuildElAvailableSecretsEl {
+impl DataCloudbuildTrigger_Build_AvailableSecrets {
     #[doc = "Set the field `secret_manager`.\n"]
     pub fn set_secret_manager(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::ListField<DataCloudbuildTriggerBuildElAvailableSecretsElSecretManagerEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTrigger_Build_AvailableSecrets_SecretManager>>,
     ) -> Self {
         self.secret_manager = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataCloudbuildTriggerBuildElAvailableSecretsEl {
-    type O = terrars::BlockAssignable<DataCloudbuildTriggerBuildElAvailableSecretsEl>;
+impl terrars::ToListMappable for DataCloudbuildTrigger_Build_AvailableSecrets {
+    type O = terrars::BlockAssignable<DataCloudbuildTrigger_Build_AvailableSecrets>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1566,51 +1604,53 @@ impl terrars::ToListMappable for DataCloudbuildTriggerBuildElAvailableSecretsEl 
     }
 }
 
-pub struct BuildDataCloudbuildTriggerBuildElAvailableSecretsEl {}
+pub struct BuildDataCloudbuildTrigger_Build_AvailableSecrets {}
 
-impl BuildDataCloudbuildTriggerBuildElAvailableSecretsEl {
-    pub fn build(self) -> DataCloudbuildTriggerBuildElAvailableSecretsEl {
-        DataCloudbuildTriggerBuildElAvailableSecretsEl { secret_manager: core::default::Default::default() }
+impl BuildDataCloudbuildTrigger_Build_AvailableSecrets {
+    pub fn build(self) -> DataCloudbuildTrigger_Build_AvailableSecrets {
+        DataCloudbuildTrigger_Build_AvailableSecrets { secret_manager: core::default::Default::default() }
     }
 }
 
-pub struct DataCloudbuildTriggerBuildElAvailableSecretsElRef {
+#[allow(dead_code)]
+pub struct DataCloudbuildTrigger_Build_AvailableSecretsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudbuildTriggerBuildElAvailableSecretsElRef {
+impl terrars::Ref for DataCloudbuildTrigger_Build_AvailableSecretsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCloudbuildTriggerBuildElAvailableSecretsElRef {
-        DataCloudbuildTriggerBuildElAvailableSecretsElRef {
+    ) -> DataCloudbuildTrigger_Build_AvailableSecretsRef {
+        DataCloudbuildTrigger_Build_AvailableSecretsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudbuildTriggerBuildElAvailableSecretsElRef {
+impl DataCloudbuildTrigger_Build_AvailableSecretsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `secret_manager` after provisioning.\n"]
-    pub fn secret_manager(&self) -> terrars::ListRef<DataCloudbuildTriggerBuildElAvailableSecretsElSecretManagerElRef> {
+    pub fn secret_manager(&self) -> terrars::ListRef<DataCloudbuildTrigger_Build_AvailableSecrets_SecretManagerRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.secret_manager", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataCloudbuildTriggerBuildElOptionsElVolumesEl {
+pub struct DataCloudbuildTrigger_Build_Step_Volumes {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     path: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCloudbuildTriggerBuildElOptionsElVolumesEl {
+impl DataCloudbuildTrigger_Build_Step_Volumes {
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
@@ -1624,8 +1664,8 @@ impl DataCloudbuildTriggerBuildElOptionsElVolumesEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudbuildTriggerBuildElOptionsElVolumesEl {
-    type O = terrars::BlockAssignable<DataCloudbuildTriggerBuildElOptionsElVolumesEl>;
+impl terrars::ToListMappable for DataCloudbuildTrigger_Build_Step_Volumes {
+    type O = terrars::BlockAssignable<DataCloudbuildTrigger_Build_Step_Volumes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1636,35 +1676,34 @@ impl terrars::ToListMappable for DataCloudbuildTriggerBuildElOptionsElVolumesEl 
     }
 }
 
-pub struct BuildDataCloudbuildTriggerBuildElOptionsElVolumesEl {}
+pub struct BuildDataCloudbuildTrigger_Build_Step_Volumes {}
 
-impl BuildDataCloudbuildTriggerBuildElOptionsElVolumesEl {
-    pub fn build(self) -> DataCloudbuildTriggerBuildElOptionsElVolumesEl {
-        DataCloudbuildTriggerBuildElOptionsElVolumesEl {
+impl BuildDataCloudbuildTrigger_Build_Step_Volumes {
+    pub fn build(self) -> DataCloudbuildTrigger_Build_Step_Volumes {
+        DataCloudbuildTrigger_Build_Step_Volumes {
             name: core::default::Default::default(),
             path: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataCloudbuildTriggerBuildElOptionsElVolumesElRef {
+#[allow(dead_code)]
+pub struct DataCloudbuildTrigger_Build_Step_VolumesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudbuildTriggerBuildElOptionsElVolumesElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataCloudbuildTriggerBuildElOptionsElVolumesElRef {
-        DataCloudbuildTriggerBuildElOptionsElVolumesElRef {
+impl terrars::Ref for DataCloudbuildTrigger_Build_Step_VolumesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudbuildTrigger_Build_Step_VolumesRef {
+        DataCloudbuildTrigger_Build_Step_VolumesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudbuildTriggerBuildElOptionsElVolumesElRef {
+impl DataCloudbuildTrigger_Build_Step_VolumesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1681,7 +1720,7 @@ impl DataCloudbuildTriggerBuildElOptionsElVolumesElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCloudbuildTriggerBuildElOptionsEl {
+pub struct DataCloudbuildTrigger_Build_Options {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     disk_size_gb: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1703,12 +1742,12 @@ pub struct DataCloudbuildTriggerBuildElOptionsEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     substitution_option: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    volumes: std::option::Option<terrars::ListField<DataCloudbuildTriggerBuildElOptionsElVolumesEl>>,
+    volumes: std::option::Option<terrars::ListField<DataCloudbuildTrigger_Build_Step_Volumes>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     worker_pool: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCloudbuildTriggerBuildElOptionsEl {
+impl DataCloudbuildTrigger_Build_Options {
     #[doc = "Set the field `disk_size_gb`.\n"]
     pub fn set_disk_size_gb(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.disk_size_gb = std::option::Option::Some(v.into());
@@ -1790,7 +1829,7 @@ impl DataCloudbuildTriggerBuildElOptionsEl {
     #[doc = "Set the field `volumes`.\n"]
     pub fn set_volumes(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTriggerBuildElOptionsElVolumesEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTrigger_Build_Step_Volumes>>,
     ) -> Self {
         self.volumes = std::option::Option::Some(v.into());
         self
@@ -1803,8 +1842,8 @@ impl DataCloudbuildTriggerBuildElOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudbuildTriggerBuildElOptionsEl {
-    type O = terrars::BlockAssignable<DataCloudbuildTriggerBuildElOptionsEl>;
+impl terrars::ToListMappable for DataCloudbuildTrigger_Build_Options {
+    type O = terrars::BlockAssignable<DataCloudbuildTrigger_Build_Options>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1815,11 +1854,11 @@ impl terrars::ToListMappable for DataCloudbuildTriggerBuildElOptionsEl {
     }
 }
 
-pub struct BuildDataCloudbuildTriggerBuildElOptionsEl {}
+pub struct BuildDataCloudbuildTrigger_Build_Options {}
 
-impl BuildDataCloudbuildTriggerBuildElOptionsEl {
-    pub fn build(self) -> DataCloudbuildTriggerBuildElOptionsEl {
-        DataCloudbuildTriggerBuildElOptionsEl {
+impl BuildDataCloudbuildTrigger_Build_Options {
+    pub fn build(self) -> DataCloudbuildTrigger_Build_Options {
+        DataCloudbuildTrigger_Build_Options {
             disk_size_gb: core::default::Default::default(),
             dynamic_substitutions: core::default::Default::default(),
             env: core::default::Default::default(),
@@ -1836,21 +1875,23 @@ impl BuildDataCloudbuildTriggerBuildElOptionsEl {
     }
 }
 
-pub struct DataCloudbuildTriggerBuildElOptionsElRef {
+#[allow(dead_code)]
+pub struct DataCloudbuildTrigger_Build_OptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudbuildTriggerBuildElOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudbuildTriggerBuildElOptionsElRef {
-        DataCloudbuildTriggerBuildElOptionsElRef {
+impl terrars::Ref for DataCloudbuildTrigger_Build_OptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudbuildTrigger_Build_OptionsRef {
+        DataCloudbuildTrigger_Build_OptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudbuildTriggerBuildElOptionsElRef {
+impl DataCloudbuildTrigger_Build_OptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1906,7 +1947,7 @@ impl DataCloudbuildTriggerBuildElOptionsElRef {
     }
 
     #[doc = "Get a reference to the value of field `volumes` after provisioning.\n"]
-    pub fn volumes(&self) -> terrars::ListRef<DataCloudbuildTriggerBuildElOptionsElVolumesElRef> {
+    pub fn volumes(&self) -> terrars::ListRef<DataCloudbuildTrigger_Build_Step_VolumesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.volumes", self.base))
     }
 
@@ -1917,14 +1958,14 @@ impl DataCloudbuildTriggerBuildElOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCloudbuildTriggerBuildElSecretEl {
+pub struct DataCloudbuildTrigger_Build_Secret {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     secret_env: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DataCloudbuildTriggerBuildElSecretEl {
+impl DataCloudbuildTrigger_Build_Secret {
     #[doc = "Set the field `kms_key_name`.\n"]
     pub fn set_kms_key_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.kms_key_name = std::option::Option::Some(v.into());
@@ -1941,8 +1982,8 @@ impl DataCloudbuildTriggerBuildElSecretEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudbuildTriggerBuildElSecretEl {
-    type O = terrars::BlockAssignable<DataCloudbuildTriggerBuildElSecretEl>;
+impl terrars::ToListMappable for DataCloudbuildTrigger_Build_Secret {
+    type O = terrars::BlockAssignable<DataCloudbuildTrigger_Build_Secret>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1953,32 +1994,34 @@ impl terrars::ToListMappable for DataCloudbuildTriggerBuildElSecretEl {
     }
 }
 
-pub struct BuildDataCloudbuildTriggerBuildElSecretEl {}
+pub struct BuildDataCloudbuildTrigger_Build_Secret {}
 
-impl BuildDataCloudbuildTriggerBuildElSecretEl {
-    pub fn build(self) -> DataCloudbuildTriggerBuildElSecretEl {
-        DataCloudbuildTriggerBuildElSecretEl {
+impl BuildDataCloudbuildTrigger_Build_Secret {
+    pub fn build(self) -> DataCloudbuildTrigger_Build_Secret {
+        DataCloudbuildTrigger_Build_Secret {
             kms_key_name: core::default::Default::default(),
             secret_env: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataCloudbuildTriggerBuildElSecretElRef {
+#[allow(dead_code)]
+pub struct DataCloudbuildTrigger_Build_SecretRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudbuildTriggerBuildElSecretElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudbuildTriggerBuildElSecretElRef {
-        DataCloudbuildTriggerBuildElSecretElRef {
+impl terrars::Ref for DataCloudbuildTrigger_Build_SecretRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudbuildTrigger_Build_SecretRef {
+        DataCloudbuildTrigger_Build_SecretRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudbuildTriggerBuildElSecretElRef {
+impl DataCloudbuildTrigger_Build_SecretRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1995,7 +2038,7 @@ impl DataCloudbuildTriggerBuildElSecretElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCloudbuildTriggerBuildElSourceElRepoSourceEl {
+pub struct DataCloudbuildTrigger_Build_Source_RepoSource {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     branch_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2014,7 +2057,7 @@ pub struct DataCloudbuildTriggerBuildElSourceElRepoSourceEl {
     tag_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCloudbuildTriggerBuildElSourceElRepoSourceEl {
+impl DataCloudbuildTrigger_Build_Source_RepoSource {
     #[doc = "Set the field `branch_name`.\n"]
     pub fn set_branch_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.branch_name = std::option::Option::Some(v.into());
@@ -2067,8 +2110,8 @@ impl DataCloudbuildTriggerBuildElSourceElRepoSourceEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudbuildTriggerBuildElSourceElRepoSourceEl {
-    type O = terrars::BlockAssignable<DataCloudbuildTriggerBuildElSourceElRepoSourceEl>;
+impl terrars::ToListMappable for DataCloudbuildTrigger_Build_Source_RepoSource {
+    type O = terrars::BlockAssignable<DataCloudbuildTrigger_Build_Source_RepoSource>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2079,11 +2122,11 @@ impl terrars::ToListMappable for DataCloudbuildTriggerBuildElSourceElRepoSourceE
     }
 }
 
-pub struct BuildDataCloudbuildTriggerBuildElSourceElRepoSourceEl {}
+pub struct BuildDataCloudbuildTrigger_Build_Source_RepoSource {}
 
-impl BuildDataCloudbuildTriggerBuildElSourceElRepoSourceEl {
-    pub fn build(self) -> DataCloudbuildTriggerBuildElSourceElRepoSourceEl {
-        DataCloudbuildTriggerBuildElSourceElRepoSourceEl {
+impl BuildDataCloudbuildTrigger_Build_Source_RepoSource {
+    pub fn build(self) -> DataCloudbuildTrigger_Build_Source_RepoSource {
+        DataCloudbuildTrigger_Build_Source_RepoSource {
             branch_name: core::default::Default::default(),
             commit_sha: core::default::Default::default(),
             dir: core::default::Default::default(),
@@ -2096,24 +2139,26 @@ impl BuildDataCloudbuildTriggerBuildElSourceElRepoSourceEl {
     }
 }
 
-pub struct DataCloudbuildTriggerBuildElSourceElRepoSourceElRef {
+#[allow(dead_code)]
+pub struct DataCloudbuildTrigger_Build_Source_RepoSourceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudbuildTriggerBuildElSourceElRepoSourceElRef {
+impl terrars::Ref for DataCloudbuildTrigger_Build_Source_RepoSourceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCloudbuildTriggerBuildElSourceElRepoSourceElRef {
-        DataCloudbuildTriggerBuildElSourceElRepoSourceElRef {
+    ) -> DataCloudbuildTrigger_Build_Source_RepoSourceRef {
+        DataCloudbuildTrigger_Build_Source_RepoSourceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudbuildTriggerBuildElSourceElRepoSourceElRef {
+impl DataCloudbuildTrigger_Build_Source_RepoSourceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2160,7 +2205,7 @@ impl DataCloudbuildTriggerBuildElSourceElRepoSourceElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCloudbuildTriggerBuildElSourceElStorageSourceEl {
+pub struct DataCloudbuildTrigger_Build_Source_StorageSource {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bucket: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2169,7 +2214,7 @@ pub struct DataCloudbuildTriggerBuildElSourceElStorageSourceEl {
     object: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCloudbuildTriggerBuildElSourceElStorageSourceEl {
+impl DataCloudbuildTrigger_Build_Source_StorageSource {
     #[doc = "Set the field `bucket`.\n"]
     pub fn set_bucket(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.bucket = std::option::Option::Some(v.into());
@@ -2189,8 +2234,8 @@ impl DataCloudbuildTriggerBuildElSourceElStorageSourceEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudbuildTriggerBuildElSourceElStorageSourceEl {
-    type O = terrars::BlockAssignable<DataCloudbuildTriggerBuildElSourceElStorageSourceEl>;
+impl terrars::ToListMappable for DataCloudbuildTrigger_Build_Source_StorageSource {
+    type O = terrars::BlockAssignable<DataCloudbuildTrigger_Build_Source_StorageSource>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2201,11 +2246,11 @@ impl terrars::ToListMappable for DataCloudbuildTriggerBuildElSourceElStorageSour
     }
 }
 
-pub struct BuildDataCloudbuildTriggerBuildElSourceElStorageSourceEl {}
+pub struct BuildDataCloudbuildTrigger_Build_Source_StorageSource {}
 
-impl BuildDataCloudbuildTriggerBuildElSourceElStorageSourceEl {
-    pub fn build(self) -> DataCloudbuildTriggerBuildElSourceElStorageSourceEl {
-        DataCloudbuildTriggerBuildElSourceElStorageSourceEl {
+impl BuildDataCloudbuildTrigger_Build_Source_StorageSource {
+    pub fn build(self) -> DataCloudbuildTrigger_Build_Source_StorageSource {
+        DataCloudbuildTrigger_Build_Source_StorageSource {
             bucket: core::default::Default::default(),
             generation: core::default::Default::default(),
             object: core::default::Default::default(),
@@ -2213,24 +2258,26 @@ impl BuildDataCloudbuildTriggerBuildElSourceElStorageSourceEl {
     }
 }
 
-pub struct DataCloudbuildTriggerBuildElSourceElStorageSourceElRef {
+#[allow(dead_code)]
+pub struct DataCloudbuildTrigger_Build_Source_StorageSourceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudbuildTriggerBuildElSourceElStorageSourceElRef {
+impl terrars::Ref for DataCloudbuildTrigger_Build_Source_StorageSourceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCloudbuildTriggerBuildElSourceElStorageSourceElRef {
-        DataCloudbuildTriggerBuildElSourceElStorageSourceElRef {
+    ) -> DataCloudbuildTrigger_Build_Source_StorageSourceRef {
+        DataCloudbuildTrigger_Build_Source_StorageSourceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudbuildTriggerBuildElSourceElStorageSourceElRef {
+impl DataCloudbuildTrigger_Build_Source_StorageSourceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2252,18 +2299,18 @@ impl DataCloudbuildTriggerBuildElSourceElStorageSourceElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCloudbuildTriggerBuildElSourceEl {
+pub struct DataCloudbuildTrigger_Build_Source {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    repo_source: std::option::Option<terrars::ListField<DataCloudbuildTriggerBuildElSourceElRepoSourceEl>>,
+    repo_source: std::option::Option<terrars::ListField<DataCloudbuildTrigger_Build_Source_RepoSource>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    storage_source: std::option::Option<terrars::ListField<DataCloudbuildTriggerBuildElSourceElStorageSourceEl>>,
+    storage_source: std::option::Option<terrars::ListField<DataCloudbuildTrigger_Build_Source_StorageSource>>,
 }
 
-impl DataCloudbuildTriggerBuildElSourceEl {
+impl DataCloudbuildTrigger_Build_Source {
     #[doc = "Set the field `repo_source`.\n"]
     pub fn set_repo_source(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTriggerBuildElSourceElRepoSourceEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTrigger_Build_Source_RepoSource>>,
     ) -> Self {
         self.repo_source = std::option::Option::Some(v.into());
         self
@@ -2272,15 +2319,15 @@ impl DataCloudbuildTriggerBuildElSourceEl {
     #[doc = "Set the field `storage_source`.\n"]
     pub fn set_storage_source(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTriggerBuildElSourceElStorageSourceEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTrigger_Build_Source_StorageSource>>,
     ) -> Self {
         self.storage_source = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataCloudbuildTriggerBuildElSourceEl {
-    type O = terrars::BlockAssignable<DataCloudbuildTriggerBuildElSourceEl>;
+impl terrars::ToListMappable for DataCloudbuildTrigger_Build_Source {
+    type O = terrars::BlockAssignable<DataCloudbuildTrigger_Build_Source>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2291,127 +2338,51 @@ impl terrars::ToListMappable for DataCloudbuildTriggerBuildElSourceEl {
     }
 }
 
-pub struct BuildDataCloudbuildTriggerBuildElSourceEl {}
+pub struct BuildDataCloudbuildTrigger_Build_Source {}
 
-impl BuildDataCloudbuildTriggerBuildElSourceEl {
-    pub fn build(self) -> DataCloudbuildTriggerBuildElSourceEl {
-        DataCloudbuildTriggerBuildElSourceEl {
+impl BuildDataCloudbuildTrigger_Build_Source {
+    pub fn build(self) -> DataCloudbuildTrigger_Build_Source {
+        DataCloudbuildTrigger_Build_Source {
             repo_source: core::default::Default::default(),
             storage_source: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataCloudbuildTriggerBuildElSourceElRef {
+#[allow(dead_code)]
+pub struct DataCloudbuildTrigger_Build_SourceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudbuildTriggerBuildElSourceElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudbuildTriggerBuildElSourceElRef {
-        DataCloudbuildTriggerBuildElSourceElRef {
+impl terrars::Ref for DataCloudbuildTrigger_Build_SourceRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudbuildTrigger_Build_SourceRef {
+        DataCloudbuildTrigger_Build_SourceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudbuildTriggerBuildElSourceElRef {
+impl DataCloudbuildTrigger_Build_SourceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `repo_source` after provisioning.\n"]
-    pub fn repo_source(&self) -> terrars::ListRef<DataCloudbuildTriggerBuildElSourceElRepoSourceElRef> {
+    pub fn repo_source(&self) -> terrars::ListRef<DataCloudbuildTrigger_Build_Source_RepoSourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.repo_source", self.base))
     }
 
     #[doc = "Get a reference to the value of field `storage_source` after provisioning.\n"]
-    pub fn storage_source(&self) -> terrars::ListRef<DataCloudbuildTriggerBuildElSourceElStorageSourceElRef> {
+    pub fn storage_source(&self) -> terrars::ListRef<DataCloudbuildTrigger_Build_Source_StorageSourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.storage_source", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataCloudbuildTriggerBuildElStepElVolumesEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    name: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    path: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DataCloudbuildTriggerBuildElStepElVolumesEl {
-    #[doc = "Set the field `name`.\n"]
-    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.name = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `path`.\n"]
-    pub fn set_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.path = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataCloudbuildTriggerBuildElStepElVolumesEl {
-    type O = terrars::BlockAssignable<DataCloudbuildTriggerBuildElStepElVolumesEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataCloudbuildTriggerBuildElStepElVolumesEl {}
-
-impl BuildDataCloudbuildTriggerBuildElStepElVolumesEl {
-    pub fn build(self) -> DataCloudbuildTriggerBuildElStepElVolumesEl {
-        DataCloudbuildTriggerBuildElStepElVolumesEl {
-            name: core::default::Default::default(),
-            path: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataCloudbuildTriggerBuildElStepElVolumesElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataCloudbuildTriggerBuildElStepElVolumesElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataCloudbuildTriggerBuildElStepElVolumesElRef {
-        DataCloudbuildTriggerBuildElStepElVolumesElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataCloudbuildTriggerBuildElStepElVolumesElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `path` after provisioning.\n"]
-    pub fn path(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.path", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataCloudbuildTriggerBuildElStepEl {
+pub struct DataCloudbuildTrigger_Build_Step {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allow_exit_codes: std::option::Option<terrars::ListField<terrars::PrimField<f64>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2437,12 +2408,12 @@ pub struct DataCloudbuildTriggerBuildElStepEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     timing: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    volumes: std::option::Option<terrars::ListField<DataCloudbuildTriggerBuildElStepElVolumesEl>>,
+    volumes: std::option::Option<terrars::ListField<DataCloudbuildTrigger_Build_Step_Volumes>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     wait_for: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DataCloudbuildTriggerBuildElStepEl {
+impl DataCloudbuildTrigger_Build_Step {
     #[doc = "Set the field `allow_exit_codes`.\n"]
     pub fn set_allow_exit_codes(
         mut self,
@@ -2530,7 +2501,7 @@ impl DataCloudbuildTriggerBuildElStepEl {
     #[doc = "Set the field `volumes`.\n"]
     pub fn set_volumes(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTriggerBuildElStepElVolumesEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTrigger_Build_Step_Volumes>>,
     ) -> Self {
         self.volumes = std::option::Option::Some(v.into());
         self
@@ -2546,8 +2517,8 @@ impl DataCloudbuildTriggerBuildElStepEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudbuildTriggerBuildElStepEl {
-    type O = terrars::BlockAssignable<DataCloudbuildTriggerBuildElStepEl>;
+impl terrars::ToListMappable for DataCloudbuildTrigger_Build_Step {
+    type O = terrars::BlockAssignable<DataCloudbuildTrigger_Build_Step>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2558,11 +2529,11 @@ impl terrars::ToListMappable for DataCloudbuildTriggerBuildElStepEl {
     }
 }
 
-pub struct BuildDataCloudbuildTriggerBuildElStepEl {}
+pub struct BuildDataCloudbuildTrigger_Build_Step {}
 
-impl BuildDataCloudbuildTriggerBuildElStepEl {
-    pub fn build(self) -> DataCloudbuildTriggerBuildElStepEl {
-        DataCloudbuildTriggerBuildElStepEl {
+impl BuildDataCloudbuildTrigger_Build_Step {
+    pub fn build(self) -> DataCloudbuildTrigger_Build_Step {
+        DataCloudbuildTrigger_Build_Step {
             allow_exit_codes: core::default::Default::default(),
             allow_failure: core::default::Default::default(),
             args: core::default::Default::default(),
@@ -2581,21 +2552,23 @@ impl BuildDataCloudbuildTriggerBuildElStepEl {
     }
 }
 
-pub struct DataCloudbuildTriggerBuildElStepElRef {
+#[allow(dead_code)]
+pub struct DataCloudbuildTrigger_Build_StepRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudbuildTriggerBuildElStepElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudbuildTriggerBuildElStepElRef {
-        DataCloudbuildTriggerBuildElStepElRef {
+impl terrars::Ref for DataCloudbuildTrigger_Build_StepRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudbuildTrigger_Build_StepRef {
+        DataCloudbuildTrigger_Build_StepRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudbuildTriggerBuildElStepElRef {
+impl DataCloudbuildTrigger_Build_StepRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2661,7 +2634,7 @@ impl DataCloudbuildTriggerBuildElStepElRef {
     }
 
     #[doc = "Get a reference to the value of field `volumes` after provisioning.\n"]
-    pub fn volumes(&self) -> terrars::ListRef<DataCloudbuildTriggerBuildElStepElVolumesElRef> {
+    pub fn volumes(&self) -> terrars::ListRef<DataCloudbuildTrigger_Build_Step_VolumesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.volumes", self.base))
     }
 
@@ -2672,25 +2645,25 @@ impl DataCloudbuildTriggerBuildElStepElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCloudbuildTriggerBuildEl {
+pub struct DataCloudbuildTrigger_Build {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    artifacts: std::option::Option<terrars::ListField<DataCloudbuildTriggerBuildElArtifactsEl>>,
+    artifacts: std::option::Option<terrars::ListField<DataCloudbuildTrigger_Build_Artifacts>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    available_secrets: std::option::Option<terrars::ListField<DataCloudbuildTriggerBuildElAvailableSecretsEl>>,
+    available_secrets: std::option::Option<terrars::ListField<DataCloudbuildTrigger_Build_AvailableSecrets>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     images: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     logs_bucket: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    options: std::option::Option<terrars::ListField<DataCloudbuildTriggerBuildElOptionsEl>>,
+    options: std::option::Option<terrars::ListField<DataCloudbuildTrigger_Build_Options>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     queue_ttl: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    secret: std::option::Option<terrars::ListField<DataCloudbuildTriggerBuildElSecretEl>>,
+    secret: std::option::Option<terrars::ListField<DataCloudbuildTrigger_Build_Secret>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    source: std::option::Option<terrars::ListField<DataCloudbuildTriggerBuildElSourceEl>>,
+    source: std::option::Option<terrars::ListField<DataCloudbuildTrigger_Build_Source>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    step: std::option::Option<terrars::ListField<DataCloudbuildTriggerBuildElStepEl>>,
+    step: std::option::Option<terrars::ListField<DataCloudbuildTrigger_Build_Step>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     substitutions: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2699,11 +2672,11 @@ pub struct DataCloudbuildTriggerBuildEl {
     timeout: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCloudbuildTriggerBuildEl {
+impl DataCloudbuildTrigger_Build {
     #[doc = "Set the field `artifacts`.\n"]
     pub fn set_artifacts(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTriggerBuildElArtifactsEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTrigger_Build_Artifacts>>,
     ) -> Self {
         self.artifacts = std::option::Option::Some(v.into());
         self
@@ -2712,7 +2685,7 @@ impl DataCloudbuildTriggerBuildEl {
     #[doc = "Set the field `available_secrets`.\n"]
     pub fn set_available_secrets(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTriggerBuildElAvailableSecretsEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTrigger_Build_AvailableSecrets>>,
     ) -> Self {
         self.available_secrets = std::option::Option::Some(v.into());
         self
@@ -2736,7 +2709,7 @@ impl DataCloudbuildTriggerBuildEl {
     #[doc = "Set the field `options`.\n"]
     pub fn set_options(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTriggerBuildElOptionsEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTrigger_Build_Options>>,
     ) -> Self {
         self.options = std::option::Option::Some(v.into());
         self
@@ -2751,7 +2724,7 @@ impl DataCloudbuildTriggerBuildEl {
     #[doc = "Set the field `secret`.\n"]
     pub fn set_secret(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTriggerBuildElSecretEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTrigger_Build_Secret>>,
     ) -> Self {
         self.secret = std::option::Option::Some(v.into());
         self
@@ -2760,17 +2733,14 @@ impl DataCloudbuildTriggerBuildEl {
     #[doc = "Set the field `source`.\n"]
     pub fn set_source(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTriggerBuildElSourceEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTrigger_Build_Source>>,
     ) -> Self {
         self.source = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `step`.\n"]
-    pub fn set_step(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTriggerBuildElStepEl>>,
-    ) -> Self {
+    pub fn set_step(mut self, v: impl std::convert::Into<terrars::ListField<DataCloudbuildTrigger_Build_Step>>) -> Self {
         self.step = std::option::Option::Some(v.into());
         self
     }
@@ -2800,8 +2770,8 @@ impl DataCloudbuildTriggerBuildEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudbuildTriggerBuildEl {
-    type O = terrars::BlockAssignable<DataCloudbuildTriggerBuildEl>;
+impl terrars::ToListMappable for DataCloudbuildTrigger_Build {
+    type O = terrars::BlockAssignable<DataCloudbuildTrigger_Build>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2812,11 +2782,11 @@ impl terrars::ToListMappable for DataCloudbuildTriggerBuildEl {
     }
 }
 
-pub struct BuildDataCloudbuildTriggerBuildEl {}
+pub struct BuildDataCloudbuildTrigger_Build {}
 
-impl BuildDataCloudbuildTriggerBuildEl {
-    pub fn build(self) -> DataCloudbuildTriggerBuildEl {
-        DataCloudbuildTriggerBuildEl {
+impl BuildDataCloudbuildTrigger_Build {
+    pub fn build(self) -> DataCloudbuildTrigger_Build {
+        DataCloudbuildTrigger_Build {
             artifacts: core::default::Default::default(),
             available_secrets: core::default::Default::default(),
             images: core::default::Default::default(),
@@ -2833,32 +2803,34 @@ impl BuildDataCloudbuildTriggerBuildEl {
     }
 }
 
-pub struct DataCloudbuildTriggerBuildElRef {
+#[allow(dead_code)]
+pub struct DataCloudbuildTrigger_BuildRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudbuildTriggerBuildElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudbuildTriggerBuildElRef {
-        DataCloudbuildTriggerBuildElRef {
+impl terrars::Ref for DataCloudbuildTrigger_BuildRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudbuildTrigger_BuildRef {
+        DataCloudbuildTrigger_BuildRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudbuildTriggerBuildElRef {
+impl DataCloudbuildTrigger_BuildRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `artifacts` after provisioning.\n"]
-    pub fn artifacts(&self) -> terrars::ListRef<DataCloudbuildTriggerBuildElArtifactsElRef> {
+    pub fn artifacts(&self) -> terrars::ListRef<DataCloudbuildTrigger_Build_ArtifactsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.artifacts", self.base))
     }
 
     #[doc = "Get a reference to the value of field `available_secrets` after provisioning.\n"]
-    pub fn available_secrets(&self) -> terrars::ListRef<DataCloudbuildTriggerBuildElAvailableSecretsElRef> {
+    pub fn available_secrets(&self) -> terrars::ListRef<DataCloudbuildTrigger_Build_AvailableSecretsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.available_secrets", self.base))
     }
 
@@ -2873,7 +2845,7 @@ impl DataCloudbuildTriggerBuildElRef {
     }
 
     #[doc = "Get a reference to the value of field `options` after provisioning.\n"]
-    pub fn options(&self) -> terrars::ListRef<DataCloudbuildTriggerBuildElOptionsElRef> {
+    pub fn options(&self) -> terrars::ListRef<DataCloudbuildTrigger_Build_OptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.options", self.base))
     }
 
@@ -2883,17 +2855,17 @@ impl DataCloudbuildTriggerBuildElRef {
     }
 
     #[doc = "Get a reference to the value of field `secret` after provisioning.\n"]
-    pub fn secret(&self) -> terrars::ListRef<DataCloudbuildTriggerBuildElSecretElRef> {
+    pub fn secret(&self) -> terrars::ListRef<DataCloudbuildTrigger_Build_SecretRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.secret", self.base))
     }
 
     #[doc = "Get a reference to the value of field `source` after provisioning.\n"]
-    pub fn source(&self) -> terrars::ListRef<DataCloudbuildTriggerBuildElSourceElRef> {
+    pub fn source(&self) -> terrars::ListRef<DataCloudbuildTrigger_Build_SourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source", self.base))
     }
 
     #[doc = "Get a reference to the value of field `step` after provisioning.\n"]
-    pub fn step(&self) -> terrars::ListRef<DataCloudbuildTriggerBuildElStepElRef> {
+    pub fn step(&self) -> terrars::ListRef<DataCloudbuildTrigger_Build_StepRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.step", self.base))
     }
 
@@ -2914,7 +2886,127 @@ impl DataCloudbuildTriggerBuildElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCloudbuildTriggerGitFileSourceEl {
+pub struct DataCloudbuildTrigger_DeveloperConnectEventConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    git_repository_link: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    git_repository_link_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    pull_request: std::option::Option<terrars::ListField<DataCloudbuildTrigger_Github_PullRequest>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    push: std::option::Option<terrars::ListField<DataCloudbuildTrigger_Github_Push>>,
+}
+
+impl DataCloudbuildTrigger_DeveloperConnectEventConfig {
+    #[doc = "Set the field `git_repository_link`.\n"]
+    pub fn set_git_repository_link(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.git_repository_link = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `git_repository_link_type`.\n"]
+    pub fn set_git_repository_link_type(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.git_repository_link_type = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `pull_request`.\n"]
+    pub fn set_pull_request(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTrigger_Github_PullRequest>>,
+    ) -> Self {
+        self.pull_request = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `push`.\n"]
+    pub fn set_push(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTrigger_Github_Push>>,
+    ) -> Self {
+        self.push = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataCloudbuildTrigger_DeveloperConnectEventConfig {
+    type O = terrars::BlockAssignable<DataCloudbuildTrigger_DeveloperConnectEventConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataCloudbuildTrigger_DeveloperConnectEventConfig {}
+
+impl BuildDataCloudbuildTrigger_DeveloperConnectEventConfig {
+    pub fn build(self) -> DataCloudbuildTrigger_DeveloperConnectEventConfig {
+        DataCloudbuildTrigger_DeveloperConnectEventConfig {
+            git_repository_link: core::default::Default::default(),
+            git_repository_link_type: core::default::Default::default(),
+            pull_request: core::default::Default::default(),
+            push: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataCloudbuildTrigger_DeveloperConnectEventConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataCloudbuildTrigger_DeveloperConnectEventConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataCloudbuildTrigger_DeveloperConnectEventConfigRef {
+        DataCloudbuildTrigger_DeveloperConnectEventConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataCloudbuildTrigger_DeveloperConnectEventConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `git_repository_link` after provisioning.\n"]
+    pub fn git_repository_link(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.git_repository_link", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `git_repository_link_type` after provisioning.\n"]
+    pub fn git_repository_link_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.git_repository_link_type", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `pull_request` after provisioning.\n"]
+    pub fn pull_request(&self) -> terrars::ListRef<DataCloudbuildTrigger_Github_PullRequestRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.pull_request", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `push` after provisioning.\n"]
+    pub fn push(&self) -> terrars::ListRef<DataCloudbuildTrigger_Github_PushRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.push", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataCloudbuildTrigger_GitFileSource {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bitbucket_server_config: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2931,7 +3023,7 @@ pub struct DataCloudbuildTriggerGitFileSourceEl {
     uri: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCloudbuildTriggerGitFileSourceEl {
+impl DataCloudbuildTrigger_GitFileSource {
     #[doc = "Set the field `bitbucket_server_config`.\n"]
     pub fn set_bitbucket_server_config(
         mut self,
@@ -2981,8 +3073,8 @@ impl DataCloudbuildTriggerGitFileSourceEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudbuildTriggerGitFileSourceEl {
-    type O = terrars::BlockAssignable<DataCloudbuildTriggerGitFileSourceEl>;
+impl terrars::ToListMappable for DataCloudbuildTrigger_GitFileSource {
+    type O = terrars::BlockAssignable<DataCloudbuildTrigger_GitFileSource>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2993,11 +3085,11 @@ impl terrars::ToListMappable for DataCloudbuildTriggerGitFileSourceEl {
     }
 }
 
-pub struct BuildDataCloudbuildTriggerGitFileSourceEl {}
+pub struct BuildDataCloudbuildTrigger_GitFileSource {}
 
-impl BuildDataCloudbuildTriggerGitFileSourceEl {
-    pub fn build(self) -> DataCloudbuildTriggerGitFileSourceEl {
-        DataCloudbuildTriggerGitFileSourceEl {
+impl BuildDataCloudbuildTrigger_GitFileSource {
+    pub fn build(self) -> DataCloudbuildTrigger_GitFileSource {
+        DataCloudbuildTrigger_GitFileSource {
             bitbucket_server_config: core::default::Default::default(),
             github_enterprise_config: core::default::Default::default(),
             path: core::default::Default::default(),
@@ -3009,21 +3101,23 @@ impl BuildDataCloudbuildTriggerGitFileSourceEl {
     }
 }
 
-pub struct DataCloudbuildTriggerGitFileSourceElRef {
+#[allow(dead_code)]
+pub struct DataCloudbuildTrigger_GitFileSourceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudbuildTriggerGitFileSourceElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudbuildTriggerGitFileSourceElRef {
-        DataCloudbuildTriggerGitFileSourceElRef {
+impl terrars::Ref for DataCloudbuildTrigger_GitFileSourceRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudbuildTrigger_GitFileSourceRef {
+        DataCloudbuildTrigger_GitFileSourceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudbuildTriggerGitFileSourceElRef {
+impl DataCloudbuildTrigger_GitFileSourceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3065,185 +3159,7 @@ impl DataCloudbuildTriggerGitFileSourceElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCloudbuildTriggerGithubElPullRequestEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    branch: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    comment_control: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    invert_regex: std::option::Option<terrars::PrimField<bool>>,
-}
-
-impl DataCloudbuildTriggerGithubElPullRequestEl {
-    #[doc = "Set the field `branch`.\n"]
-    pub fn set_branch(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.branch = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `comment_control`.\n"]
-    pub fn set_comment_control(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.comment_control = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `invert_regex`.\n"]
-    pub fn set_invert_regex(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.invert_regex = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataCloudbuildTriggerGithubElPullRequestEl {
-    type O = terrars::BlockAssignable<DataCloudbuildTriggerGithubElPullRequestEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataCloudbuildTriggerGithubElPullRequestEl {}
-
-impl BuildDataCloudbuildTriggerGithubElPullRequestEl {
-    pub fn build(self) -> DataCloudbuildTriggerGithubElPullRequestEl {
-        DataCloudbuildTriggerGithubElPullRequestEl {
-            branch: core::default::Default::default(),
-            comment_control: core::default::Default::default(),
-            invert_regex: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataCloudbuildTriggerGithubElPullRequestElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataCloudbuildTriggerGithubElPullRequestElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudbuildTriggerGithubElPullRequestElRef {
-        DataCloudbuildTriggerGithubElPullRequestElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataCloudbuildTriggerGithubElPullRequestElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `branch` after provisioning.\n"]
-    pub fn branch(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.branch", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `comment_control` after provisioning.\n"]
-    pub fn comment_control(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comment_control", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `invert_regex` after provisioning.\n"]
-    pub fn invert_regex(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.invert_regex", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataCloudbuildTriggerGithubElPushEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    branch: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    invert_regex: std::option::Option<terrars::PrimField<bool>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tag: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DataCloudbuildTriggerGithubElPushEl {
-    #[doc = "Set the field `branch`.\n"]
-    pub fn set_branch(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.branch = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `invert_regex`.\n"]
-    pub fn set_invert_regex(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.invert_regex = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `tag`.\n"]
-    pub fn set_tag(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.tag = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataCloudbuildTriggerGithubElPushEl {
-    type O = terrars::BlockAssignable<DataCloudbuildTriggerGithubElPushEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataCloudbuildTriggerGithubElPushEl {}
-
-impl BuildDataCloudbuildTriggerGithubElPushEl {
-    pub fn build(self) -> DataCloudbuildTriggerGithubElPushEl {
-        DataCloudbuildTriggerGithubElPushEl {
-            branch: core::default::Default::default(),
-            invert_regex: core::default::Default::default(),
-            tag: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataCloudbuildTriggerGithubElPushElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataCloudbuildTriggerGithubElPushElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudbuildTriggerGithubElPushElRef {
-        DataCloudbuildTriggerGithubElPushElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataCloudbuildTriggerGithubElPushElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `branch` after provisioning.\n"]
-    pub fn branch(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.branch", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `invert_regex` after provisioning.\n"]
-    pub fn invert_regex(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.invert_regex", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `tag` after provisioning.\n"]
-    pub fn tag(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tag", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataCloudbuildTriggerGithubEl {
+pub struct DataCloudbuildTrigger_Github {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enterprise_config_resource_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3251,12 +3167,12 @@ pub struct DataCloudbuildTriggerGithubEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     owner: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    pull_request: std::option::Option<terrars::ListField<DataCloudbuildTriggerGithubElPullRequestEl>>,
+    pull_request: std::option::Option<terrars::ListField<DataCloudbuildTrigger_Github_PullRequest>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    push: std::option::Option<terrars::ListField<DataCloudbuildTriggerGithubElPushEl>>,
+    push: std::option::Option<terrars::ListField<DataCloudbuildTrigger_Github_Push>>,
 }
 
-impl DataCloudbuildTriggerGithubEl {
+impl DataCloudbuildTrigger_Github {
     #[doc = "Set the field `enterprise_config_resource_name`.\n"]
     pub fn set_enterprise_config_resource_name(
         mut self,
@@ -3281,7 +3197,7 @@ impl DataCloudbuildTriggerGithubEl {
     #[doc = "Set the field `pull_request`.\n"]
     pub fn set_pull_request(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTriggerGithubElPullRequestEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTrigger_Github_PullRequest>>,
     ) -> Self {
         self.pull_request = std::option::Option::Some(v.into());
         self
@@ -3290,15 +3206,15 @@ impl DataCloudbuildTriggerGithubEl {
     #[doc = "Set the field `push`.\n"]
     pub fn set_push(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTriggerGithubElPushEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTrigger_Github_Push>>,
     ) -> Self {
         self.push = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataCloudbuildTriggerGithubEl {
-    type O = terrars::BlockAssignable<DataCloudbuildTriggerGithubEl>;
+impl terrars::ToListMappable for DataCloudbuildTrigger_Github {
+    type O = terrars::BlockAssignable<DataCloudbuildTrigger_Github>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3309,11 +3225,11 @@ impl terrars::ToListMappable for DataCloudbuildTriggerGithubEl {
     }
 }
 
-pub struct BuildDataCloudbuildTriggerGithubEl {}
+pub struct BuildDataCloudbuildTrigger_Github {}
 
-impl BuildDataCloudbuildTriggerGithubEl {
-    pub fn build(self) -> DataCloudbuildTriggerGithubEl {
-        DataCloudbuildTriggerGithubEl {
+impl BuildDataCloudbuildTrigger_Github {
+    pub fn build(self) -> DataCloudbuildTrigger_Github {
+        DataCloudbuildTrigger_Github {
             enterprise_config_resource_name: core::default::Default::default(),
             name: core::default::Default::default(),
             owner: core::default::Default::default(),
@@ -3323,21 +3239,23 @@ impl BuildDataCloudbuildTriggerGithubEl {
     }
 }
 
-pub struct DataCloudbuildTriggerGithubElRef {
+#[allow(dead_code)]
+pub struct DataCloudbuildTrigger_GithubRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudbuildTriggerGithubElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudbuildTriggerGithubElRef {
-        DataCloudbuildTriggerGithubElRef {
+impl terrars::Ref for DataCloudbuildTrigger_GithubRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudbuildTrigger_GithubRef {
+        DataCloudbuildTrigger_GithubRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudbuildTriggerGithubElRef {
+impl DataCloudbuildTrigger_GithubRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3358,18 +3276,18 @@ impl DataCloudbuildTriggerGithubElRef {
     }
 
     #[doc = "Get a reference to the value of field `pull_request` after provisioning.\n"]
-    pub fn pull_request(&self) -> terrars::ListRef<DataCloudbuildTriggerGithubElPullRequestElRef> {
+    pub fn pull_request(&self) -> terrars::ListRef<DataCloudbuildTrigger_Github_PullRequestRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.pull_request", self.base))
     }
 
     #[doc = "Get a reference to the value of field `push` after provisioning.\n"]
-    pub fn push(&self) -> terrars::ListRef<DataCloudbuildTriggerGithubElPushElRef> {
+    pub fn push(&self) -> terrars::ListRef<DataCloudbuildTrigger_Github_PushRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.push", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataCloudbuildTriggerPubsubConfigEl {
+pub struct DataCloudbuildTrigger_PubsubConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     service_account_email: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3380,7 +3298,7 @@ pub struct DataCloudbuildTriggerPubsubConfigEl {
     topic: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCloudbuildTriggerPubsubConfigEl {
+impl DataCloudbuildTrigger_PubsubConfig {
     #[doc = "Set the field `service_account_email`.\n"]
     pub fn set_service_account_email(
         mut self,
@@ -3409,8 +3327,8 @@ impl DataCloudbuildTriggerPubsubConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudbuildTriggerPubsubConfigEl {
-    type O = terrars::BlockAssignable<DataCloudbuildTriggerPubsubConfigEl>;
+impl terrars::ToListMappable for DataCloudbuildTrigger_PubsubConfig {
+    type O = terrars::BlockAssignable<DataCloudbuildTrigger_PubsubConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3421,11 +3339,11 @@ impl terrars::ToListMappable for DataCloudbuildTriggerPubsubConfigEl {
     }
 }
 
-pub struct BuildDataCloudbuildTriggerPubsubConfigEl {}
+pub struct BuildDataCloudbuildTrigger_PubsubConfig {}
 
-impl BuildDataCloudbuildTriggerPubsubConfigEl {
-    pub fn build(self) -> DataCloudbuildTriggerPubsubConfigEl {
-        DataCloudbuildTriggerPubsubConfigEl {
+impl BuildDataCloudbuildTrigger_PubsubConfig {
+    pub fn build(self) -> DataCloudbuildTrigger_PubsubConfig {
+        DataCloudbuildTrigger_PubsubConfig {
             service_account_email: core::default::Default::default(),
             state: core::default::Default::default(),
             subscription: core::default::Default::default(),
@@ -3434,21 +3352,23 @@ impl BuildDataCloudbuildTriggerPubsubConfigEl {
     }
 }
 
-pub struct DataCloudbuildTriggerPubsubConfigElRef {
+#[allow(dead_code)]
+pub struct DataCloudbuildTrigger_PubsubConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudbuildTriggerPubsubConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudbuildTriggerPubsubConfigElRef {
-        DataCloudbuildTriggerPubsubConfigElRef {
+impl terrars::Ref for DataCloudbuildTrigger_PubsubConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudbuildTrigger_PubsubConfigRef {
+        DataCloudbuildTrigger_PubsubConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudbuildTriggerPubsubConfigElRef {
+impl DataCloudbuildTrigger_PubsubConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3475,204 +3395,20 @@ impl DataCloudbuildTriggerPubsubConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCloudbuildTriggerRepositoryEventConfigElPullRequestEl {
+pub struct DataCloudbuildTrigger_RepositoryEventConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    branch: std::option::Option<terrars::PrimField<std::string::String>>,
+    pull_request: std::option::Option<terrars::ListField<DataCloudbuildTrigger_Github_PullRequest>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    comment_control: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    invert_regex: std::option::Option<terrars::PrimField<bool>>,
-}
-
-impl DataCloudbuildTriggerRepositoryEventConfigElPullRequestEl {
-    #[doc = "Set the field `branch`.\n"]
-    pub fn set_branch(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.branch = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `comment_control`.\n"]
-    pub fn set_comment_control(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.comment_control = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `invert_regex`.\n"]
-    pub fn set_invert_regex(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.invert_regex = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataCloudbuildTriggerRepositoryEventConfigElPullRequestEl {
-    type O = terrars::BlockAssignable<DataCloudbuildTriggerRepositoryEventConfigElPullRequestEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataCloudbuildTriggerRepositoryEventConfigElPullRequestEl {}
-
-impl BuildDataCloudbuildTriggerRepositoryEventConfigElPullRequestEl {
-    pub fn build(self) -> DataCloudbuildTriggerRepositoryEventConfigElPullRequestEl {
-        DataCloudbuildTriggerRepositoryEventConfigElPullRequestEl {
-            branch: core::default::Default::default(),
-            comment_control: core::default::Default::default(),
-            invert_regex: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataCloudbuildTriggerRepositoryEventConfigElPullRequestElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataCloudbuildTriggerRepositoryEventConfigElPullRequestElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataCloudbuildTriggerRepositoryEventConfigElPullRequestElRef {
-        DataCloudbuildTriggerRepositoryEventConfigElPullRequestElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataCloudbuildTriggerRepositoryEventConfigElPullRequestElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `branch` after provisioning.\n"]
-    pub fn branch(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.branch", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `comment_control` after provisioning.\n"]
-    pub fn comment_control(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comment_control", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `invert_regex` after provisioning.\n"]
-    pub fn invert_regex(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.invert_regex", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataCloudbuildTriggerRepositoryEventConfigElPushEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    branch: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    invert_regex: std::option::Option<terrars::PrimField<bool>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tag: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DataCloudbuildTriggerRepositoryEventConfigElPushEl {
-    #[doc = "Set the field `branch`.\n"]
-    pub fn set_branch(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.branch = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `invert_regex`.\n"]
-    pub fn set_invert_regex(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.invert_regex = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `tag`.\n"]
-    pub fn set_tag(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.tag = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataCloudbuildTriggerRepositoryEventConfigElPushEl {
-    type O = terrars::BlockAssignable<DataCloudbuildTriggerRepositoryEventConfigElPushEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataCloudbuildTriggerRepositoryEventConfigElPushEl {}
-
-impl BuildDataCloudbuildTriggerRepositoryEventConfigElPushEl {
-    pub fn build(self) -> DataCloudbuildTriggerRepositoryEventConfigElPushEl {
-        DataCloudbuildTriggerRepositoryEventConfigElPushEl {
-            branch: core::default::Default::default(),
-            invert_regex: core::default::Default::default(),
-            tag: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataCloudbuildTriggerRepositoryEventConfigElPushElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataCloudbuildTriggerRepositoryEventConfigElPushElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataCloudbuildTriggerRepositoryEventConfigElPushElRef {
-        DataCloudbuildTriggerRepositoryEventConfigElPushElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataCloudbuildTriggerRepositoryEventConfigElPushElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `branch` after provisioning.\n"]
-    pub fn branch(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.branch", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `invert_regex` after provisioning.\n"]
-    pub fn invert_regex(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.invert_regex", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `tag` after provisioning.\n"]
-    pub fn tag(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tag", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataCloudbuildTriggerRepositoryEventConfigEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    pull_request: std::option::Option<terrars::ListField<DataCloudbuildTriggerRepositoryEventConfigElPullRequestEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    push: std::option::Option<terrars::ListField<DataCloudbuildTriggerRepositoryEventConfigElPushEl>>,
+    push: std::option::Option<terrars::ListField<DataCloudbuildTrigger_Github_Push>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     repository: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCloudbuildTriggerRepositoryEventConfigEl {
+impl DataCloudbuildTrigger_RepositoryEventConfig {
     #[doc = "Set the field `pull_request`.\n"]
     pub fn set_pull_request(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTriggerRepositoryEventConfigElPullRequestEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTrigger_Github_PullRequest>>,
     ) -> Self {
         self.pull_request = std::option::Option::Some(v.into());
         self
@@ -3681,7 +3417,7 @@ impl DataCloudbuildTriggerRepositoryEventConfigEl {
     #[doc = "Set the field `push`.\n"]
     pub fn set_push(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTriggerRepositoryEventConfigElPushEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataCloudbuildTrigger_Github_Push>>,
     ) -> Self {
         self.push = std::option::Option::Some(v.into());
         self
@@ -3694,8 +3430,8 @@ impl DataCloudbuildTriggerRepositoryEventConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudbuildTriggerRepositoryEventConfigEl {
-    type O = terrars::BlockAssignable<DataCloudbuildTriggerRepositoryEventConfigEl>;
+impl terrars::ToListMappable for DataCloudbuildTrigger_RepositoryEventConfig {
+    type O = terrars::BlockAssignable<DataCloudbuildTrigger_RepositoryEventConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3706,11 +3442,11 @@ impl terrars::ToListMappable for DataCloudbuildTriggerRepositoryEventConfigEl {
     }
 }
 
-pub struct BuildDataCloudbuildTriggerRepositoryEventConfigEl {}
+pub struct BuildDataCloudbuildTrigger_RepositoryEventConfig {}
 
-impl BuildDataCloudbuildTriggerRepositoryEventConfigEl {
-    pub fn build(self) -> DataCloudbuildTriggerRepositoryEventConfigEl {
-        DataCloudbuildTriggerRepositoryEventConfigEl {
+impl BuildDataCloudbuildTrigger_RepositoryEventConfig {
+    pub fn build(self) -> DataCloudbuildTrigger_RepositoryEventConfig {
+        DataCloudbuildTrigger_RepositoryEventConfig {
             pull_request: core::default::Default::default(),
             push: core::default::Default::default(),
             repository: core::default::Default::default(),
@@ -3718,35 +3454,37 @@ impl BuildDataCloudbuildTriggerRepositoryEventConfigEl {
     }
 }
 
-pub struct DataCloudbuildTriggerRepositoryEventConfigElRef {
+#[allow(dead_code)]
+pub struct DataCloudbuildTrigger_RepositoryEventConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudbuildTriggerRepositoryEventConfigElRef {
+impl terrars::Ref for DataCloudbuildTrigger_RepositoryEventConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCloudbuildTriggerRepositoryEventConfigElRef {
-        DataCloudbuildTriggerRepositoryEventConfigElRef {
+    ) -> DataCloudbuildTrigger_RepositoryEventConfigRef {
+        DataCloudbuildTrigger_RepositoryEventConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudbuildTriggerRepositoryEventConfigElRef {
+impl DataCloudbuildTrigger_RepositoryEventConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `pull_request` after provisioning.\n"]
-    pub fn pull_request(&self) -> terrars::ListRef<DataCloudbuildTriggerRepositoryEventConfigElPullRequestElRef> {
+    pub fn pull_request(&self) -> terrars::ListRef<DataCloudbuildTrigger_Github_PullRequestRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.pull_request", self.base))
     }
 
     #[doc = "Get a reference to the value of field `push` after provisioning.\n"]
-    pub fn push(&self) -> terrars::ListRef<DataCloudbuildTriggerRepositoryEventConfigElPushElRef> {
+    pub fn push(&self) -> terrars::ListRef<DataCloudbuildTrigger_Github_PushRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.push", self.base))
     }
 
@@ -3757,7 +3495,7 @@ impl DataCloudbuildTriggerRepositoryEventConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCloudbuildTriggerSourceToBuildEl {
+pub struct DataCloudbuildTrigger_SourceToBuild {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bitbucket_server_config: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3772,7 +3510,7 @@ pub struct DataCloudbuildTriggerSourceToBuildEl {
     uri: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCloudbuildTriggerSourceToBuildEl {
+impl DataCloudbuildTrigger_SourceToBuild {
     #[doc = "Set the field `bitbucket_server_config`.\n"]
     pub fn set_bitbucket_server_config(
         mut self,
@@ -3816,8 +3554,8 @@ impl DataCloudbuildTriggerSourceToBuildEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudbuildTriggerSourceToBuildEl {
-    type O = terrars::BlockAssignable<DataCloudbuildTriggerSourceToBuildEl>;
+impl terrars::ToListMappable for DataCloudbuildTrigger_SourceToBuild {
+    type O = terrars::BlockAssignable<DataCloudbuildTrigger_SourceToBuild>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3828,11 +3566,11 @@ impl terrars::ToListMappable for DataCloudbuildTriggerSourceToBuildEl {
     }
 }
 
-pub struct BuildDataCloudbuildTriggerSourceToBuildEl {}
+pub struct BuildDataCloudbuildTrigger_SourceToBuild {}
 
-impl BuildDataCloudbuildTriggerSourceToBuildEl {
-    pub fn build(self) -> DataCloudbuildTriggerSourceToBuildEl {
-        DataCloudbuildTriggerSourceToBuildEl {
+impl BuildDataCloudbuildTrigger_SourceToBuild {
+    pub fn build(self) -> DataCloudbuildTrigger_SourceToBuild {
+        DataCloudbuildTrigger_SourceToBuild {
             bitbucket_server_config: core::default::Default::default(),
             github_enterprise_config: core::default::Default::default(),
             ref_: core::default::Default::default(),
@@ -3843,21 +3581,23 @@ impl BuildDataCloudbuildTriggerSourceToBuildEl {
     }
 }
 
-pub struct DataCloudbuildTriggerSourceToBuildElRef {
+#[allow(dead_code)]
+pub struct DataCloudbuildTrigger_SourceToBuildRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudbuildTriggerSourceToBuildElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudbuildTriggerSourceToBuildElRef {
-        DataCloudbuildTriggerSourceToBuildElRef {
+impl terrars::Ref for DataCloudbuildTrigger_SourceToBuildRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudbuildTrigger_SourceToBuildRef {
+        DataCloudbuildTrigger_SourceToBuildRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudbuildTriggerSourceToBuildElRef {
+impl DataCloudbuildTrigger_SourceToBuildRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3894,7 +3634,7 @@ impl DataCloudbuildTriggerSourceToBuildElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCloudbuildTriggerTriggerTemplateEl {
+pub struct DataCloudbuildTrigger_TriggerTemplate {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     branch_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3911,7 +3651,7 @@ pub struct DataCloudbuildTriggerTriggerTemplateEl {
     tag_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCloudbuildTriggerTriggerTemplateEl {
+impl DataCloudbuildTrigger_TriggerTemplate {
     #[doc = "Set the field `branch_name`.\n"]
     pub fn set_branch_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.branch_name = std::option::Option::Some(v.into());
@@ -3955,8 +3695,8 @@ impl DataCloudbuildTriggerTriggerTemplateEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudbuildTriggerTriggerTemplateEl {
-    type O = terrars::BlockAssignable<DataCloudbuildTriggerTriggerTemplateEl>;
+impl terrars::ToListMappable for DataCloudbuildTrigger_TriggerTemplate {
+    type O = terrars::BlockAssignable<DataCloudbuildTrigger_TriggerTemplate>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3967,11 +3707,11 @@ impl terrars::ToListMappable for DataCloudbuildTriggerTriggerTemplateEl {
     }
 }
 
-pub struct BuildDataCloudbuildTriggerTriggerTemplateEl {}
+pub struct BuildDataCloudbuildTrigger_TriggerTemplate {}
 
-impl BuildDataCloudbuildTriggerTriggerTemplateEl {
-    pub fn build(self) -> DataCloudbuildTriggerTriggerTemplateEl {
-        DataCloudbuildTriggerTriggerTemplateEl {
+impl BuildDataCloudbuildTrigger_TriggerTemplate {
+    pub fn build(self) -> DataCloudbuildTrigger_TriggerTemplate {
+        DataCloudbuildTrigger_TriggerTemplate {
             branch_name: core::default::Default::default(),
             commit_sha: core::default::Default::default(),
             dir: core::default::Default::default(),
@@ -3983,21 +3723,23 @@ impl BuildDataCloudbuildTriggerTriggerTemplateEl {
     }
 }
 
-pub struct DataCloudbuildTriggerTriggerTemplateElRef {
+#[allow(dead_code)]
+pub struct DataCloudbuildTrigger_TriggerTemplateRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudbuildTriggerTriggerTemplateElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudbuildTriggerTriggerTemplateElRef {
-        DataCloudbuildTriggerTriggerTemplateElRef {
+impl terrars::Ref for DataCloudbuildTrigger_TriggerTemplateRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudbuildTrigger_TriggerTemplateRef {
+        DataCloudbuildTrigger_TriggerTemplateRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudbuildTriggerTriggerTemplateElRef {
+impl DataCloudbuildTrigger_TriggerTemplateRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4039,14 +3781,14 @@ impl DataCloudbuildTriggerTriggerTemplateElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCloudbuildTriggerWebhookConfigEl {
+pub struct DataCloudbuildTrigger_WebhookConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     secret: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     state: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCloudbuildTriggerWebhookConfigEl {
+impl DataCloudbuildTrigger_WebhookConfig {
     #[doc = "Set the field `secret`.\n"]
     pub fn set_secret(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.secret = std::option::Option::Some(v.into());
@@ -4060,8 +3802,8 @@ impl DataCloudbuildTriggerWebhookConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudbuildTriggerWebhookConfigEl {
-    type O = terrars::BlockAssignable<DataCloudbuildTriggerWebhookConfigEl>;
+impl terrars::ToListMappable for DataCloudbuildTrigger_WebhookConfig {
+    type O = terrars::BlockAssignable<DataCloudbuildTrigger_WebhookConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4072,32 +3814,34 @@ impl terrars::ToListMappable for DataCloudbuildTriggerWebhookConfigEl {
     }
 }
 
-pub struct BuildDataCloudbuildTriggerWebhookConfigEl {}
+pub struct BuildDataCloudbuildTrigger_WebhookConfig {}
 
-impl BuildDataCloudbuildTriggerWebhookConfigEl {
-    pub fn build(self) -> DataCloudbuildTriggerWebhookConfigEl {
-        DataCloudbuildTriggerWebhookConfigEl {
+impl BuildDataCloudbuildTrigger_WebhookConfig {
+    pub fn build(self) -> DataCloudbuildTrigger_WebhookConfig {
+        DataCloudbuildTrigger_WebhookConfig {
             secret: core::default::Default::default(),
             state: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataCloudbuildTriggerWebhookConfigElRef {
+#[allow(dead_code)]
+pub struct DataCloudbuildTrigger_WebhookConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudbuildTriggerWebhookConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudbuildTriggerWebhookConfigElRef {
-        DataCloudbuildTriggerWebhookConfigElRef {
+impl terrars::Ref for DataCloudbuildTrigger_WebhookConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudbuildTrigger_WebhookConfigRef {
+        DataCloudbuildTrigger_WebhookConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudbuildTriggerWebhookConfigElRef {
+impl DataCloudbuildTrigger_WebhookConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

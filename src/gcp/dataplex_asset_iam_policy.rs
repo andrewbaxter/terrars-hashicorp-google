@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataplexAssetIamPolicyData {
+struct DataplexAssetIamPolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -33,7 +35,7 @@ struct DataplexAssetIamPolicyData {
 struct DataplexAssetIamPolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataplexAssetIamPolicyData>,
+    data: std::cell::RefCell<DataplexAssetIamPolicyData_>,
 }
 
 #[derive(Clone)]
@@ -240,7 +242,7 @@ impl BuildDataplexAssetIamPolicy {
         let out = DataplexAssetIamPolicy(std::rc::Rc::new(DataplexAssetIamPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataplexAssetIamPolicyData {
+            data: std::cell::RefCell::new(DataplexAssetIamPolicyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct VertexAiTensorboardData {
+struct VertexAiTensorboardData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct VertexAiTensorboardData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     display_name: terrars::PrimField<std::string::String>,
@@ -30,16 +34,16 @@ struct VertexAiTensorboardData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    encryption_spec: std::option::Option<std::vec::Vec<VertexAiTensorboardEncryptionSpecEl>>,
+    encryption_spec: std::option::Option<std::vec::Vec<VertexAiTensorboard_EncryptionSpec>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<VertexAiTensorboardTimeoutsEl>,
+    timeouts: std::option::Option<VertexAiTensorboard_Timeouts>,
     dynamic: VertexAiTensorboardDynamic,
 }
 
 struct VertexAiTensorboard_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<VertexAiTensorboardData>,
+    data: std::cell::RefCell<VertexAiTensorboardData_>,
 }
 
 #[derive(Clone)]
@@ -139,6 +143,13 @@ impl VertexAiTensorboard {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nDescription of this Tensorboard."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -176,7 +187,7 @@ impl VertexAiTensorboard {
     #[doc = "Set the field `encryption_spec`.\n"]
     pub fn set_encryption_spec(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<VertexAiTensorboardEncryptionSpecEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<VertexAiTensorboard_EncryptionSpec>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -190,7 +201,7 @@ impl VertexAiTensorboard {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<VertexAiTensorboardTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<VertexAiTensorboard_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -205,6 +216,12 @@ impl VertexAiTensorboard {
         "Get a reference to the value of field `create_time` after provisioning.\nThe timestamp of when the Tensorboard was created in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `description` after provisioning.\nDescription of this Tensorboard."]
@@ -270,13 +287,13 @@ impl VertexAiTensorboard {
     }
 
     #[doc = "Get a reference to the value of field `encryption_spec` after provisioning.\n"]
-    pub fn encryption_spec(&self) -> terrars::ListRef<VertexAiTensorboardEncryptionSpecElRef> {
+    pub fn encryption_spec(&self) -> terrars::ListRef<VertexAiTensorboard_EncryptionSpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_spec", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> VertexAiTensorboardTimeoutsElRef {
-        VertexAiTensorboardTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> VertexAiTensorboard_TimeoutsRef {
+        VertexAiTensorboard_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -322,12 +339,13 @@ impl BuildVertexAiTensorboard {
         let out = VertexAiTensorboard(std::rc::Rc::new(VertexAiTensorboard_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(VertexAiTensorboardData {
+            data: std::cell::RefCell::new(VertexAiTensorboardData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 display_name: self.display_name,
                 id: core::default::Default::default(),
@@ -379,6 +397,12 @@ impl VertexAiTensorboardRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `description` after provisioning.\nDescription of this Tensorboard."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -442,25 +466,30 @@ impl VertexAiTensorboardRef {
     }
 
     #[doc = "Get a reference to the value of field `encryption_spec` after provisioning.\n"]
-    pub fn encryption_spec(&self) -> terrars::ListRef<VertexAiTensorboardEncryptionSpecElRef> {
+    pub fn encryption_spec(&self) -> terrars::ListRef<VertexAiTensorboard_EncryptionSpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_spec", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> VertexAiTensorboardTimeoutsElRef {
-        VertexAiTensorboardTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> VertexAiTensorboard_TimeoutsRef {
+        VertexAiTensorboard_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct VertexAiTensorboardDynamic {
+    encryption_spec: std::option::Option<terrars::DynamicBlock<VertexAiTensorboard_EncryptionSpec>>,
+}
+
 #[derive(Serialize)]
-pub struct VertexAiTensorboardEncryptionSpecEl {
+pub struct VertexAiTensorboard_EncryptionSpec {
     kms_key_name: terrars::PrimField<std::string::String>,
 }
 
-impl VertexAiTensorboardEncryptionSpecEl { }
+impl VertexAiTensorboard_EncryptionSpec { }
 
-impl terrars::ToListMappable for VertexAiTensorboardEncryptionSpecEl {
-    type O = terrars::BlockAssignable<VertexAiTensorboardEncryptionSpecEl>;
+impl terrars::ToListMappable for VertexAiTensorboard_EncryptionSpec {
+    type O = terrars::BlockAssignable<VertexAiTensorboard_EncryptionSpec>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -471,33 +500,35 @@ impl terrars::ToListMappable for VertexAiTensorboardEncryptionSpecEl {
     }
 }
 
-pub struct BuildVertexAiTensorboardEncryptionSpecEl {
+pub struct BuildVertexAiTensorboard_EncryptionSpec {
     #[doc =
         "The Cloud KMS resource identifier of the customer managed encryption key used to protect a resource.\nHas the form: projects/my-project/locations/my-region/keyRings/my-kr/cryptoKeys/my-key. The key needs to be in the same region as where the resource is created."]
     pub kms_key_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildVertexAiTensorboardEncryptionSpecEl {
-    pub fn build(self) -> VertexAiTensorboardEncryptionSpecEl {
-        VertexAiTensorboardEncryptionSpecEl { kms_key_name: self.kms_key_name }
+impl BuildVertexAiTensorboard_EncryptionSpec {
+    pub fn build(self) -> VertexAiTensorboard_EncryptionSpec {
+        VertexAiTensorboard_EncryptionSpec { kms_key_name: self.kms_key_name }
     }
 }
 
-pub struct VertexAiTensorboardEncryptionSpecElRef {
+#[allow(dead_code)]
+pub struct VertexAiTensorboard_EncryptionSpecRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for VertexAiTensorboardEncryptionSpecElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> VertexAiTensorboardEncryptionSpecElRef {
-        VertexAiTensorboardEncryptionSpecElRef {
+impl terrars::Ref for VertexAiTensorboard_EncryptionSpecRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> VertexAiTensorboard_EncryptionSpecRef {
+        VertexAiTensorboard_EncryptionSpecRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl VertexAiTensorboardEncryptionSpecElRef {
+impl VertexAiTensorboard_EncryptionSpecRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -510,7 +541,7 @@ impl VertexAiTensorboardEncryptionSpecElRef {
 }
 
 #[derive(Serialize)]
-pub struct VertexAiTensorboardTimeoutsEl {
+pub struct VertexAiTensorboard_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -519,7 +550,7 @@ pub struct VertexAiTensorboardTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl VertexAiTensorboardTimeoutsEl {
+impl VertexAiTensorboard_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -539,8 +570,8 @@ impl VertexAiTensorboardTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for VertexAiTensorboardTimeoutsEl {
-    type O = terrars::BlockAssignable<VertexAiTensorboardTimeoutsEl>;
+impl terrars::ToListMappable for VertexAiTensorboard_Timeouts {
+    type O = terrars::BlockAssignable<VertexAiTensorboard_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -551,11 +582,11 @@ impl terrars::ToListMappable for VertexAiTensorboardTimeoutsEl {
     }
 }
 
-pub struct BuildVertexAiTensorboardTimeoutsEl {}
+pub struct BuildVertexAiTensorboard_Timeouts {}
 
-impl BuildVertexAiTensorboardTimeoutsEl {
-    pub fn build(self) -> VertexAiTensorboardTimeoutsEl {
-        VertexAiTensorboardTimeoutsEl {
+impl BuildVertexAiTensorboard_Timeouts {
+    pub fn build(self) -> VertexAiTensorboard_Timeouts {
+        VertexAiTensorboard_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -563,21 +594,23 @@ impl BuildVertexAiTensorboardTimeoutsEl {
     }
 }
 
-pub struct VertexAiTensorboardTimeoutsElRef {
+#[allow(dead_code)]
+pub struct VertexAiTensorboard_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for VertexAiTensorboardTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> VertexAiTensorboardTimeoutsElRef {
-        VertexAiTensorboardTimeoutsElRef {
+impl terrars::Ref for VertexAiTensorboard_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> VertexAiTensorboard_TimeoutsRef {
+        VertexAiTensorboard_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl VertexAiTensorboardTimeoutsElRef {
+impl VertexAiTensorboard_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -596,9 +629,4 @@ impl VertexAiTensorboardTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct VertexAiTensorboardDynamic {
-    encryption_spec: std::option::Option<terrars::DynamicBlock<VertexAiTensorboardEncryptionSpecEl>>,
 }

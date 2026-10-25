@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeBackendBucketSignedUrlKeyData {
+struct ComputeBackendBucketSignedUrlKeyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,19 +22,21 @@ struct ComputeBackendBucketSignedUrlKeyData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     backend_bucket: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     key_value: terrars::PrimField<std::string::String>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComputeBackendBucketSignedUrlKeyTimeoutsEl>,
+    timeouts: std::option::Option<ComputeBackendBucketSignedUrlKey_Timeouts>,
 }
 
 struct ComputeBackendBucketSignedUrlKey_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeBackendBucketSignedUrlKeyData>,
+    data: std::cell::RefCell<ComputeBackendBucketSignedUrlKeyData_>,
 }
 
 #[derive(Clone)]
@@ -132,6 +136,13 @@ impl ComputeBackendBucketSignedUrlKey {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -145,7 +156,7 @@ impl ComputeBackendBucketSignedUrlKey {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeBackendBucketSignedUrlKeyTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeBackendBucketSignedUrlKey_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -154,6 +165,12 @@ impl ComputeBackendBucketSignedUrlKey {
         "Get a reference to the value of field `backend_bucket` after provisioning.\nThe backend bucket this signed URL key belongs."]
     pub fn backend_bucket(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.backend_bucket", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -178,8 +195,8 @@ impl ComputeBackendBucketSignedUrlKey {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeBackendBucketSignedUrlKeyTimeoutsElRef {
-        ComputeBackendBucketSignedUrlKeyTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ComputeBackendBucketSignedUrlKey_TimeoutsRef {
+        ComputeBackendBucketSignedUrlKey_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -233,13 +250,14 @@ impl BuildComputeBackendBucketSignedUrlKey {
         let out = ComputeBackendBucketSignedUrlKey(std::rc::Rc::new(ComputeBackendBucketSignedUrlKey_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeBackendBucketSignedUrlKeyData {
+            data: std::cell::RefCell::new(ComputeBackendBucketSignedUrlKeyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 backend_bucket: self.backend_bucket,
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 key_value: self.key_value,
                 name: self.name,
@@ -281,6 +299,12 @@ impl ComputeBackendBucketSignedUrlKeyRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.backend_bucket", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -303,8 +327,8 @@ impl ComputeBackendBucketSignedUrlKeyRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeBackendBucketSignedUrlKeyTimeoutsElRef {
-        ComputeBackendBucketSignedUrlKeyTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ComputeBackendBucketSignedUrlKey_TimeoutsRef {
+        ComputeBackendBucketSignedUrlKey_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -312,14 +336,14 @@ impl ComputeBackendBucketSignedUrlKeyRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeBackendBucketSignedUrlKeyTimeoutsEl {
+pub struct ComputeBackendBucketSignedUrlKey_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeBackendBucketSignedUrlKeyTimeoutsEl {
+impl ComputeBackendBucketSignedUrlKey_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -333,8 +357,8 @@ impl ComputeBackendBucketSignedUrlKeyTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeBackendBucketSignedUrlKeyTimeoutsEl {
-    type O = terrars::BlockAssignable<ComputeBackendBucketSignedUrlKeyTimeoutsEl>;
+impl terrars::ToListMappable for ComputeBackendBucketSignedUrlKey_Timeouts {
+    type O = terrars::BlockAssignable<ComputeBackendBucketSignedUrlKey_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -345,32 +369,34 @@ impl terrars::ToListMappable for ComputeBackendBucketSignedUrlKeyTimeoutsEl {
     }
 }
 
-pub struct BuildComputeBackendBucketSignedUrlKeyTimeoutsEl {}
+pub struct BuildComputeBackendBucketSignedUrlKey_Timeouts {}
 
-impl BuildComputeBackendBucketSignedUrlKeyTimeoutsEl {
-    pub fn build(self) -> ComputeBackendBucketSignedUrlKeyTimeoutsEl {
-        ComputeBackendBucketSignedUrlKeyTimeoutsEl {
+impl BuildComputeBackendBucketSignedUrlKey_Timeouts {
+    pub fn build(self) -> ComputeBackendBucketSignedUrlKey_Timeouts {
+        ComputeBackendBucketSignedUrlKey_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeBackendBucketSignedUrlKeyTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComputeBackendBucketSignedUrlKey_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeBackendBucketSignedUrlKeyTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeBackendBucketSignedUrlKeyTimeoutsElRef {
-        ComputeBackendBucketSignedUrlKeyTimeoutsElRef {
+impl terrars::Ref for ComputeBackendBucketSignedUrlKey_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeBackendBucketSignedUrlKey_TimeoutsRef {
+        ComputeBackendBucketSignedUrlKey_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeBackendBucketSignedUrlKeyTimeoutsElRef {
+impl ComputeBackendBucketSignedUrlKey_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

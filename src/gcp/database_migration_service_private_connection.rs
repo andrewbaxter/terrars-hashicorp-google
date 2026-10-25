@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DatabaseMigrationServicePrivateConnectionData {
+struct DatabaseMigrationServicePrivateConnectionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,10 @@ struct DatabaseMigrationServicePrivateConnectionData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create_without_validation: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     display_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -29,16 +35,24 @@ struct DatabaseMigrationServicePrivateConnectionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DatabaseMigrationServicePrivateConnectionTimeoutsEl>,
+    psc_interface_config: std
+    ::option
+    ::Option<std::vec::Vec<DatabaseMigrationServicePrivateConnection_PscInterfaceConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpc_peering_config: std::option::Option<std::vec::Vec<DatabaseMigrationServicePrivateConnectionVpcPeeringConfigEl>>,
+    reserved_public_ip_config: std
+    ::option
+    ::Option<std::vec::Vec<DatabaseMigrationServicePrivateConnection_ReservedPublicIpConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<DatabaseMigrationServicePrivateConnection_Timeouts>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vpc_peering_config: std::option::Option<std::vec::Vec<DatabaseMigrationServicePrivateConnection_VpcPeeringConfig>>,
     dynamic: DatabaseMigrationServicePrivateConnectionDynamic,
 }
 
 struct DatabaseMigrationServicePrivateConnection_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DatabaseMigrationServicePrivateConnectionData>,
+    data: std::cell::RefCell<DatabaseMigrationServicePrivateConnectionData_>,
 }
 
 #[derive(Clone)]
@@ -138,6 +152,19 @@ impl DatabaseMigrationServicePrivateConnection {
         self
     }
 
+    #[doc = "Set the field `create_without_validation`.\nIf set to true, will skip validations."]
+    pub fn set_create_without_validation(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().create_without_validation = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `display_name`.\nDisplay name."]
     pub fn set_display_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().display_name = std::option::Option::Some(v.into());
@@ -166,8 +193,52 @@ impl DatabaseMigrationServicePrivateConnection {
         self
     }
 
+    #[doc = "Set the field `psc_interface_config`.\n"]
+    pub fn set_psc_interface_config(
+        self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<DatabaseMigrationServicePrivateConnection_PscInterfaceConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().psc_interface_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.psc_interface_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `reserved_public_ip_config`.\n"]
+    pub fn set_reserved_public_ip_config(
+        self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<DatabaseMigrationServicePrivateConnection_ReservedPublicIpConfig>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().reserved_public_ip_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.reserved_public_ip_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DatabaseMigrationServicePrivateConnectionTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DatabaseMigrationServicePrivateConnection_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -180,7 +251,7 @@ impl DatabaseMigrationServicePrivateConnection {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<DatabaseMigrationServicePrivateConnectionVpcPeeringConfigEl>>,
+                    ::Into<terrars::BlockAssignable<DatabaseMigrationServicePrivateConnection_VpcPeeringConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -191,6 +262,18 @@ impl DatabaseMigrationServicePrivateConnection {
             },
         }
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `create_without_validation` after provisioning.\nIf set to true, will skip validations."]
+    pub fn create_without_validation(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_without_validation", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `display_name` after provisioning.\nDisplay name."]
@@ -206,7 +289,7 @@ impl DatabaseMigrationServicePrivateConnection {
 
     #[doc =
         "Get a reference to the value of field `error` after provisioning.\nThe PrivateConnection error in case of failure."]
-    pub fn error(&self) -> terrars::ListRef<DatabaseMigrationServicePrivateConnectionErrorElRef> {
+    pub fn error(&self) -> terrars::ListRef<DatabaseMigrationServicePrivateConnection_ErrorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.error", self.extract_ref()))
     }
 
@@ -254,16 +337,30 @@ impl DatabaseMigrationServicePrivateConnection {
         terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `psc_interface_config` after provisioning.\n"]
+    pub fn psc_interface_config(
+        &self,
+    ) -> terrars::ListRef<DatabaseMigrationServicePrivateConnection_PscInterfaceConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.psc_interface_config", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `reserved_public_ip_config` after provisioning.\n"]
+    pub fn reserved_public_ip_config(
+        &self,
+    ) -> terrars::ListRef<DatabaseMigrationServicePrivateConnection_ReservedPublicIpConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.reserved_public_ip_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DatabaseMigrationServicePrivateConnectionTimeoutsElRef {
-        DatabaseMigrationServicePrivateConnectionTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DatabaseMigrationServicePrivateConnection_TimeoutsRef {
+        DatabaseMigrationServicePrivateConnection_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 
     #[doc = "Get a reference to the value of field `vpc_peering_config` after provisioning.\n"]
-    pub fn vpc_peering_config(&self) -> terrars::ListRef<DatabaseMigrationServicePrivateConnectionVpcPeeringConfigElRef> {
+    pub fn vpc_peering_config(&self) -> terrars::ListRef<DatabaseMigrationServicePrivateConnection_VpcPeeringConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_peering_config", self.extract_ref()))
     }
 }
@@ -313,18 +410,22 @@ impl BuildDatabaseMigrationServicePrivateConnection {
             DatabaseMigrationServicePrivateConnection(std::rc::Rc::new(DatabaseMigrationServicePrivateConnection_ {
                 shared: stack.shared.clone(),
                 tf_id: self.tf_id,
-                data: std::cell::RefCell::new(DatabaseMigrationServicePrivateConnectionData {
+                data: std::cell::RefCell::new(DatabaseMigrationServicePrivateConnectionData_ {
                     depends_on: core::default::Default::default(),
                     provider: std::option::Option::None,
                     lifecycle: core::default::Default::default(),
                     for_each: std::option::Option::None,
                     provisioner: core::default::Default::default(),
+                    create_without_validation: core::default::Default::default(),
+                    deletion_policy: core::default::Default::default(),
                     display_name: core::default::Default::default(),
                     id: core::default::Default::default(),
                     labels: core::default::Default::default(),
                     location: self.location,
                     private_connection_id: self.private_connection_id,
                     project: core::default::Default::default(),
+                    psc_interface_config: core::default::Default::default(),
+                    reserved_public_ip_config: core::default::Default::default(),
                     timeouts: core::default::Default::default(),
                     vpc_peering_config: core::default::Default::default(),
                     dynamic: core::default::Default::default(),
@@ -358,6 +459,18 @@ impl DatabaseMigrationServicePrivateConnectionRef {
         &self.shared
     }
 
+    #[doc =
+        "Get a reference to the value of field `create_without_validation` after provisioning.\nIf set to true, will skip validations."]
+    pub fn create_without_validation(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_without_validation", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `display_name` after provisioning.\nDisplay name."]
     pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
@@ -371,7 +484,7 @@ impl DatabaseMigrationServicePrivateConnectionRef {
 
     #[doc =
         "Get a reference to the value of field `error` after provisioning.\nThe PrivateConnection error in case of failure."]
-    pub fn error(&self) -> terrars::ListRef<DatabaseMigrationServicePrivateConnectionErrorElRef> {
+    pub fn error(&self) -> terrars::ListRef<DatabaseMigrationServicePrivateConnection_ErrorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.error", self.extract_ref()))
     }
 
@@ -419,29 +532,56 @@ impl DatabaseMigrationServicePrivateConnectionRef {
         terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `psc_interface_config` after provisioning.\n"]
+    pub fn psc_interface_config(
+        &self,
+    ) -> terrars::ListRef<DatabaseMigrationServicePrivateConnection_PscInterfaceConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.psc_interface_config", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `reserved_public_ip_config` after provisioning.\n"]
+    pub fn reserved_public_ip_config(
+        &self,
+    ) -> terrars::ListRef<DatabaseMigrationServicePrivateConnection_ReservedPublicIpConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.reserved_public_ip_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DatabaseMigrationServicePrivateConnectionTimeoutsElRef {
-        DatabaseMigrationServicePrivateConnectionTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DatabaseMigrationServicePrivateConnection_TimeoutsRef {
+        DatabaseMigrationServicePrivateConnection_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 
     #[doc = "Get a reference to the value of field `vpc_peering_config` after provisioning.\n"]
-    pub fn vpc_peering_config(&self) -> terrars::ListRef<DatabaseMigrationServicePrivateConnectionVpcPeeringConfigElRef> {
+    pub fn vpc_peering_config(&self) -> terrars::ListRef<DatabaseMigrationServicePrivateConnection_VpcPeeringConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_peering_config", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DatabaseMigrationServicePrivateConnectionDynamic {
+    psc_interface_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<DatabaseMigrationServicePrivateConnection_PscInterfaceConfig>>,
+    reserved_public_ip_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<DatabaseMigrationServicePrivateConnection_ReservedPublicIpConfig>>,
+    vpc_peering_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<DatabaseMigrationServicePrivateConnection_VpcPeeringConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct DatabaseMigrationServicePrivateConnectionErrorEl {
+pub struct DatabaseMigrationServicePrivateConnection_Error {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     details: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     message: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DatabaseMigrationServicePrivateConnectionErrorEl {
+impl DatabaseMigrationServicePrivateConnection_Error {
     #[doc = "Set the field `details`.\n"]
     pub fn set_details(
         mut self,
@@ -458,8 +598,8 @@ impl DatabaseMigrationServicePrivateConnectionErrorEl {
     }
 }
 
-impl terrars::ToListMappable for DatabaseMigrationServicePrivateConnectionErrorEl {
-    type O = terrars::BlockAssignable<DatabaseMigrationServicePrivateConnectionErrorEl>;
+impl terrars::ToListMappable for DatabaseMigrationServicePrivateConnection_Error {
+    type O = terrars::BlockAssignable<DatabaseMigrationServicePrivateConnection_Error>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -470,35 +610,37 @@ impl terrars::ToListMappable for DatabaseMigrationServicePrivateConnectionErrorE
     }
 }
 
-pub struct BuildDatabaseMigrationServicePrivateConnectionErrorEl {}
+pub struct BuildDatabaseMigrationServicePrivateConnection_Error {}
 
-impl BuildDatabaseMigrationServicePrivateConnectionErrorEl {
-    pub fn build(self) -> DatabaseMigrationServicePrivateConnectionErrorEl {
-        DatabaseMigrationServicePrivateConnectionErrorEl {
+impl BuildDatabaseMigrationServicePrivateConnection_Error {
+    pub fn build(self) -> DatabaseMigrationServicePrivateConnection_Error {
+        DatabaseMigrationServicePrivateConnection_Error {
             details: core::default::Default::default(),
             message: core::default::Default::default(),
         }
     }
 }
 
-pub struct DatabaseMigrationServicePrivateConnectionErrorElRef {
+#[allow(dead_code)]
+pub struct DatabaseMigrationServicePrivateConnection_ErrorRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DatabaseMigrationServicePrivateConnectionErrorElRef {
+impl terrars::Ref for DatabaseMigrationServicePrivateConnection_ErrorRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DatabaseMigrationServicePrivateConnectionErrorElRef {
-        DatabaseMigrationServicePrivateConnectionErrorElRef {
+    ) -> DatabaseMigrationServicePrivateConnection_ErrorRef {
+        DatabaseMigrationServicePrivateConnection_ErrorRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DatabaseMigrationServicePrivateConnectionErrorElRef {
+impl DatabaseMigrationServicePrivateConnection_ErrorRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -515,14 +657,151 @@ impl DatabaseMigrationServicePrivateConnectionErrorElRef {
 }
 
 #[derive(Serialize)]
-pub struct DatabaseMigrationServicePrivateConnectionTimeoutsEl {
+pub struct DatabaseMigrationServicePrivateConnection_PscInterfaceConfig {
+    network_attachment: terrars::PrimField<std::string::String>,
+}
+
+impl DatabaseMigrationServicePrivateConnection_PscInterfaceConfig { }
+
+impl terrars::ToListMappable for DatabaseMigrationServicePrivateConnection_PscInterfaceConfig {
+    type O = terrars::BlockAssignable<DatabaseMigrationServicePrivateConnection_PscInterfaceConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDatabaseMigrationServicePrivateConnection_PscInterfaceConfig {
+    #[doc =
+        "Fully qualified name of the Network Attachment that DMS will connect to.\nFormat: projects/{project}/regions/{region}/networkAttachments/{name}"]
+    pub network_attachment: terrars::PrimField<std::string::String>,
+}
+
+impl BuildDatabaseMigrationServicePrivateConnection_PscInterfaceConfig {
+    pub fn build(self) -> DatabaseMigrationServicePrivateConnection_PscInterfaceConfig {
+        DatabaseMigrationServicePrivateConnection_PscInterfaceConfig { network_attachment: self.network_attachment }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DatabaseMigrationServicePrivateConnection_PscInterfaceConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DatabaseMigrationServicePrivateConnection_PscInterfaceConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DatabaseMigrationServicePrivateConnection_PscInterfaceConfigRef {
+        DatabaseMigrationServicePrivateConnection_PscInterfaceConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DatabaseMigrationServicePrivateConnection_PscInterfaceConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `network_attachment` after provisioning.\nFully qualified name of the Network Attachment that DMS will connect to.\nFormat: projects/{project}/regions/{region}/networkAttachments/{name}"]
+    pub fn network_attachment(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_attachment", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DatabaseMigrationServicePrivateConnection_ReservedPublicIpConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    nat_ips_count: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl DatabaseMigrationServicePrivateConnection_ReservedPublicIpConfig {
+    #[doc = "Set the field `nat_ips_count`.\nOptional. Number of static public IP addresses to reserve."]
+    pub fn set_nat_ips_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.nat_ips_count = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DatabaseMigrationServicePrivateConnection_ReservedPublicIpConfig {
+    type O = terrars::BlockAssignable<DatabaseMigrationServicePrivateConnection_ReservedPublicIpConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDatabaseMigrationServicePrivateConnection_ReservedPublicIpConfig {}
+
+impl BuildDatabaseMigrationServicePrivateConnection_ReservedPublicIpConfig {
+    pub fn build(self) -> DatabaseMigrationServicePrivateConnection_ReservedPublicIpConfig {
+        DatabaseMigrationServicePrivateConnection_ReservedPublicIpConfig {
+            nat_ips_count: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DatabaseMigrationServicePrivateConnection_ReservedPublicIpConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DatabaseMigrationServicePrivateConnection_ReservedPublicIpConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DatabaseMigrationServicePrivateConnection_ReservedPublicIpConfigRef {
+        DatabaseMigrationServicePrivateConnection_ReservedPublicIpConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DatabaseMigrationServicePrivateConnection_ReservedPublicIpConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `egress_public_ips` after provisioning.\nOutput only. The reserved public IPs."]
+    pub fn egress_public_ips(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.egress_public_ips", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `nat_ips_count` after provisioning.\nOptional. Number of static public IP addresses to reserve."]
+    pub fn nat_ips_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.nat_ips_count", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DatabaseMigrationServicePrivateConnection_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DatabaseMigrationServicePrivateConnectionTimeoutsEl {
+impl DatabaseMigrationServicePrivateConnection_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -534,10 +813,16 @@ impl DatabaseMigrationServicePrivateConnectionTimeoutsEl {
         self.delete = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for DatabaseMigrationServicePrivateConnectionTimeoutsEl {
-    type O = terrars::BlockAssignable<DatabaseMigrationServicePrivateConnectionTimeoutsEl>;
+impl terrars::ToListMappable for DatabaseMigrationServicePrivateConnection_Timeouts {
+    type O = terrars::BlockAssignable<DatabaseMigrationServicePrivateConnection_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -548,35 +833,38 @@ impl terrars::ToListMappable for DatabaseMigrationServicePrivateConnectionTimeou
     }
 }
 
-pub struct BuildDatabaseMigrationServicePrivateConnectionTimeoutsEl {}
+pub struct BuildDatabaseMigrationServicePrivateConnection_Timeouts {}
 
-impl BuildDatabaseMigrationServicePrivateConnectionTimeoutsEl {
-    pub fn build(self) -> DatabaseMigrationServicePrivateConnectionTimeoutsEl {
-        DatabaseMigrationServicePrivateConnectionTimeoutsEl {
+impl BuildDatabaseMigrationServicePrivateConnection_Timeouts {
+    pub fn build(self) -> DatabaseMigrationServicePrivateConnection_Timeouts {
+        DatabaseMigrationServicePrivateConnection_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
+            update: core::default::Default::default(),
         }
     }
 }
 
-pub struct DatabaseMigrationServicePrivateConnectionTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DatabaseMigrationServicePrivateConnection_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DatabaseMigrationServicePrivateConnectionTimeoutsElRef {
+impl terrars::Ref for DatabaseMigrationServicePrivateConnection_TimeoutsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DatabaseMigrationServicePrivateConnectionTimeoutsElRef {
-        DatabaseMigrationServicePrivateConnectionTimeoutsElRef {
+    ) -> DatabaseMigrationServicePrivateConnection_TimeoutsRef {
+        DatabaseMigrationServicePrivateConnection_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DatabaseMigrationServicePrivateConnectionTimeoutsElRef {
+impl DatabaseMigrationServicePrivateConnection_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -590,18 +878,23 @@ impl DatabaseMigrationServicePrivateConnectionTimeoutsElRef {
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct DatabaseMigrationServicePrivateConnectionVpcPeeringConfigEl {
+pub struct DatabaseMigrationServicePrivateConnection_VpcPeeringConfig {
     subnet: terrars::PrimField<std::string::String>,
     vpc_name: terrars::PrimField<std::string::String>,
 }
 
-impl DatabaseMigrationServicePrivateConnectionVpcPeeringConfigEl { }
+impl DatabaseMigrationServicePrivateConnection_VpcPeeringConfig { }
 
-impl terrars::ToListMappable for DatabaseMigrationServicePrivateConnectionVpcPeeringConfigEl {
-    type O = terrars::BlockAssignable<DatabaseMigrationServicePrivateConnectionVpcPeeringConfigEl>;
+impl terrars::ToListMappable for DatabaseMigrationServicePrivateConnection_VpcPeeringConfig {
+    type O = terrars::BlockAssignable<DatabaseMigrationServicePrivateConnection_VpcPeeringConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -612,7 +905,7 @@ impl terrars::ToListMappable for DatabaseMigrationServicePrivateConnectionVpcPee
     }
 }
 
-pub struct BuildDatabaseMigrationServicePrivateConnectionVpcPeeringConfigEl {
+pub struct BuildDatabaseMigrationServicePrivateConnection_VpcPeeringConfig {
     #[doc = "A free subnet for peering. (CIDR of /29)"]
     pub subnet: terrars::PrimField<std::string::String>,
     #[doc =
@@ -620,33 +913,35 @@ pub struct BuildDatabaseMigrationServicePrivateConnectionVpcPeeringConfigEl {
     pub vpc_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDatabaseMigrationServicePrivateConnectionVpcPeeringConfigEl {
-    pub fn build(self) -> DatabaseMigrationServicePrivateConnectionVpcPeeringConfigEl {
-        DatabaseMigrationServicePrivateConnectionVpcPeeringConfigEl {
+impl BuildDatabaseMigrationServicePrivateConnection_VpcPeeringConfig {
+    pub fn build(self) -> DatabaseMigrationServicePrivateConnection_VpcPeeringConfig {
+        DatabaseMigrationServicePrivateConnection_VpcPeeringConfig {
             subnet: self.subnet,
             vpc_name: self.vpc_name,
         }
     }
 }
 
-pub struct DatabaseMigrationServicePrivateConnectionVpcPeeringConfigElRef {
+#[allow(dead_code)]
+pub struct DatabaseMigrationServicePrivateConnection_VpcPeeringConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DatabaseMigrationServicePrivateConnectionVpcPeeringConfigElRef {
+impl terrars::Ref for DatabaseMigrationServicePrivateConnection_VpcPeeringConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DatabaseMigrationServicePrivateConnectionVpcPeeringConfigElRef {
-        DatabaseMigrationServicePrivateConnectionVpcPeeringConfigElRef {
+    ) -> DatabaseMigrationServicePrivateConnection_VpcPeeringConfigRef {
+        DatabaseMigrationServicePrivateConnection_VpcPeeringConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DatabaseMigrationServicePrivateConnectionVpcPeeringConfigElRef {
+impl DatabaseMigrationServicePrivateConnection_VpcPeeringConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -662,11 +957,4 @@ impl DatabaseMigrationServicePrivateConnectionVpcPeeringConfigElRef {
     pub fn vpc_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_name", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DatabaseMigrationServicePrivateConnectionDynamic {
-    vpc_peering_config: std
-    ::option
-    ::Option<terrars::DynamicBlock<DatabaseMigrationServicePrivateConnectionVpcPeeringConfigEl>>,
 }

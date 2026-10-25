@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataSqlDatabaseInstanceLatestRecoveryTimeData {
+struct DataSqlDatabaseInstanceLatestRecoveryTimeData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -21,12 +23,14 @@ struct DataSqlDatabaseInstanceLatestRecoveryTimeData {
     instance: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source_instance_deletion_time: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct DataSqlDatabaseInstanceLatestRecoveryTime_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataSqlDatabaseInstanceLatestRecoveryTimeData>,
+    data: std::cell::RefCell<DataSqlDatabaseInstanceLatestRecoveryTimeData_>,
 }
 
 #[derive(Clone)]
@@ -83,6 +87,16 @@ impl DataSqlDatabaseInstanceLatestRecoveryTime {
         self
     }
 
+    #[doc =
+        "Set the field `source_instance_deletion_time`.\nTimestamp, identifies when the source instance was deleted. If this instance is deleted, then you must set the timestamp."]
+    pub fn set_source_instance_deletion_time(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().source_instance_deletion_time = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -102,6 +116,15 @@ impl DataSqlDatabaseInstanceLatestRecoveryTime {
     #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
     pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `source_instance_deletion_time` after provisioning.\nTimestamp, identifies when the source instance was deleted. If this instance is deleted, then you must set the timestamp."]
+    pub fn source_instance_deletion_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.source_instance_deletion_time", self.extract_ref()),
+        )
     }
 }
 
@@ -148,7 +171,7 @@ impl BuildDataSqlDatabaseInstanceLatestRecoveryTime {
             DataSqlDatabaseInstanceLatestRecoveryTime(std::rc::Rc::new(DataSqlDatabaseInstanceLatestRecoveryTime_ {
                 shared: stack.shared.clone(),
                 tf_id: self.tf_id,
-                data: std::cell::RefCell::new(DataSqlDatabaseInstanceLatestRecoveryTimeData {
+                data: std::cell::RefCell::new(DataSqlDatabaseInstanceLatestRecoveryTimeData_ {
                     depends_on: core::default::Default::default(),
                     provider: std::option::Option::None,
                     lifecycle: core::default::Default::default(),
@@ -156,6 +179,7 @@ impl BuildDataSqlDatabaseInstanceLatestRecoveryTime {
                     id: core::default::Default::default(),
                     instance: self.instance,
                     project: core::default::Default::default(),
+                    source_instance_deletion_time: core::default::Default::default(),
                 }),
             }));
         stack.add_datasource(out.0.clone());
@@ -205,5 +229,14 @@ impl DataSqlDatabaseInstanceLatestRecoveryTimeRef {
     #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
     pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `source_instance_deletion_time` after provisioning.\nTimestamp, identifies when the source instance was deleted. If this instance is deleted, then you must set the timestamp."]
+    pub fn source_instance_deletion_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.source_instance_deletion_time", self.extract_ref()),
+        )
     }
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeRouterInterfaceData {
+struct ComputeRouterInterfaceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,11 +21,15 @@ struct ComputeRouterInterfaceData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     interconnect_attachment: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ip_range: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ip_version: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     private_ip_address: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -39,13 +45,13 @@ struct ComputeRouterInterfaceData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpn_tunnel: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComputeRouterInterfaceTimeoutsEl>,
+    timeouts: std::option::Option<ComputeRouterInterface_Timeouts>,
 }
 
 struct ComputeRouterInterface_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeRouterInterfaceData>,
+    data: std::cell::RefCell<ComputeRouterInterfaceData_>,
 }
 
 #[derive(Clone)]
@@ -145,6 +151,13 @@ impl ComputeRouterInterface {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -165,6 +178,12 @@ impl ComputeRouterInterface {
         "Set the field `ip_range`.\nThe IP address and range of the interface. The IP range must be in the RFC3927 link-local IP space. Changing this forces a new interface to be created."]
     pub fn set_ip_range(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().ip_range = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `ip_version`.\nIP version of this interface."]
+    pub fn set_ip_version(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().ip_version = std::option::Option::Some(v.into());
         self
     }
 
@@ -211,9 +230,15 @@ impl ComputeRouterInterface {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeRouterInterfaceTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeRouterInterface_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -231,6 +256,11 @@ impl ComputeRouterInterface {
         "Get a reference to the value of field `ip_range` after provisioning.\nThe IP address and range of the interface. The IP range must be in the RFC3927 link-local IP space. Changing this forces a new interface to be created."]
     pub fn ip_range(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_range", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ip_version` after provisioning.\nIP version of this interface."]
+    pub fn ip_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_version", self.extract_ref()))
     }
 
     #[doc =
@@ -282,8 +312,8 @@ impl ComputeRouterInterface {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeRouterInterfaceTimeoutsElRef {
-        ComputeRouterInterfaceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeRouterInterface_TimeoutsRef {
+        ComputeRouterInterface_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -332,15 +362,17 @@ impl BuildComputeRouterInterface {
         let out = ComputeRouterInterface(std::rc::Rc::new(ComputeRouterInterface_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeRouterInterfaceData {
+            data: std::cell::RefCell::new(ComputeRouterInterfaceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 interconnect_attachment: core::default::Default::default(),
                 ip_range: core::default::Default::default(),
+                ip_version: core::default::Default::default(),
                 name: self.name,
                 private_ip_address: core::default::Default::default(),
                 project: core::default::Default::default(),
@@ -380,6 +412,12 @@ impl ComputeRouterInterfaceRef {
         &self.shared
     }
 
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -395,6 +433,11 @@ impl ComputeRouterInterfaceRef {
         "Get a reference to the value of field `ip_range` after provisioning.\nThe IP address and range of the interface. The IP range must be in the RFC3927 link-local IP space. Changing this forces a new interface to be created."]
     pub fn ip_range(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_range", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ip_version` after provisioning.\nIP version of this interface."]
+    pub fn ip_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_version", self.extract_ref()))
     }
 
     #[doc =
@@ -446,20 +489,20 @@ impl ComputeRouterInterfaceRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeRouterInterfaceTimeoutsElRef {
-        ComputeRouterInterfaceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeRouterInterface_TimeoutsRef {
+        ComputeRouterInterface_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeRouterInterfaceTimeoutsEl {
+pub struct ComputeRouterInterface_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeRouterInterfaceTimeoutsEl {
+impl ComputeRouterInterface_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -473,8 +516,8 @@ impl ComputeRouterInterfaceTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeRouterInterfaceTimeoutsEl {
-    type O = terrars::BlockAssignable<ComputeRouterInterfaceTimeoutsEl>;
+impl terrars::ToListMappable for ComputeRouterInterface_Timeouts {
+    type O = terrars::BlockAssignable<ComputeRouterInterface_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -485,32 +528,34 @@ impl terrars::ToListMappable for ComputeRouterInterfaceTimeoutsEl {
     }
 }
 
-pub struct BuildComputeRouterInterfaceTimeoutsEl {}
+pub struct BuildComputeRouterInterface_Timeouts {}
 
-impl BuildComputeRouterInterfaceTimeoutsEl {
-    pub fn build(self) -> ComputeRouterInterfaceTimeoutsEl {
-        ComputeRouterInterfaceTimeoutsEl {
+impl BuildComputeRouterInterface_Timeouts {
+    pub fn build(self) -> ComputeRouterInterface_Timeouts {
+        ComputeRouterInterface_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeRouterInterfaceTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComputeRouterInterface_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeRouterInterfaceTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRouterInterfaceTimeoutsElRef {
-        ComputeRouterInterfaceTimeoutsElRef {
+impl terrars::Ref for ComputeRouterInterface_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRouterInterface_TimeoutsRef {
+        ComputeRouterInterface_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeRouterInterfaceTimeoutsElRef {
+impl ComputeRouterInterface_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

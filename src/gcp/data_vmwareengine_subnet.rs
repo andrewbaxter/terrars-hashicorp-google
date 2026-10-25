@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataVmwareengineSubnetData {
+struct DataVmwareengineSubnetData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -25,7 +27,7 @@ struct DataVmwareengineSubnetData {
 struct DataVmwareengineSubnet_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataVmwareengineSubnetData>,
+    data: std::cell::RefCell<DataVmwareengineSubnetData_>,
 }
 
 #[derive(Clone)]
@@ -83,7 +85,7 @@ impl DataVmwareengineSubnet {
     }
 
     #[doc = "Get a reference to the value of field `dhcp_address_ranges` after provisioning.\nDHCP address ranges."]
-    pub fn dhcp_address_ranges(&self) -> terrars::ListRef<DataVmwareengineSubnetDhcpAddressRangesElRef> {
+    pub fn dhcp_address_ranges(&self) -> terrars::ListRef<DataVmwareengineSubnet_DhcpAddressRangesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dhcp_address_ranges", self.extract_ref()))
     }
 
@@ -203,7 +205,7 @@ impl BuildDataVmwareengineSubnet {
         let out = DataVmwareengineSubnet(std::rc::Rc::new(DataVmwareengineSubnet_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataVmwareengineSubnetData {
+            data: std::cell::RefCell::new(DataVmwareengineSubnetData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -248,7 +250,7 @@ impl DataVmwareengineSubnetRef {
     }
 
     #[doc = "Get a reference to the value of field `dhcp_address_ranges` after provisioning.\nDHCP address ranges."]
-    pub fn dhcp_address_ranges(&self) -> terrars::ListRef<DataVmwareengineSubnetDhcpAddressRangesElRef> {
+    pub fn dhcp_address_ranges(&self) -> terrars::ListRef<DataVmwareengineSubnet_DhcpAddressRangesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dhcp_address_ranges", self.extract_ref()))
     }
 
@@ -323,14 +325,14 @@ impl DataVmwareengineSubnetRef {
 }
 
 #[derive(Serialize)]
-pub struct DataVmwareengineSubnetDhcpAddressRangesEl {
+pub struct DataVmwareengineSubnet_DhcpAddressRanges {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     first_address: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     last_address: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataVmwareengineSubnetDhcpAddressRangesEl {
+impl DataVmwareengineSubnet_DhcpAddressRanges {
     #[doc = "Set the field `first_address`.\n"]
     pub fn set_first_address(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.first_address = std::option::Option::Some(v.into());
@@ -344,8 +346,8 @@ impl DataVmwareengineSubnetDhcpAddressRangesEl {
     }
 }
 
-impl terrars::ToListMappable for DataVmwareengineSubnetDhcpAddressRangesEl {
-    type O = terrars::BlockAssignable<DataVmwareengineSubnetDhcpAddressRangesEl>;
+impl terrars::ToListMappable for DataVmwareengineSubnet_DhcpAddressRanges {
+    type O = terrars::BlockAssignable<DataVmwareengineSubnet_DhcpAddressRanges>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -356,32 +358,34 @@ impl terrars::ToListMappable for DataVmwareengineSubnetDhcpAddressRangesEl {
     }
 }
 
-pub struct BuildDataVmwareengineSubnetDhcpAddressRangesEl {}
+pub struct BuildDataVmwareengineSubnet_DhcpAddressRanges {}
 
-impl BuildDataVmwareengineSubnetDhcpAddressRangesEl {
-    pub fn build(self) -> DataVmwareengineSubnetDhcpAddressRangesEl {
-        DataVmwareengineSubnetDhcpAddressRangesEl {
+impl BuildDataVmwareengineSubnet_DhcpAddressRanges {
+    pub fn build(self) -> DataVmwareengineSubnet_DhcpAddressRanges {
+        DataVmwareengineSubnet_DhcpAddressRanges {
             first_address: core::default::Default::default(),
             last_address: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataVmwareengineSubnetDhcpAddressRangesElRef {
+#[allow(dead_code)]
+pub struct DataVmwareengineSubnet_DhcpAddressRangesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataVmwareengineSubnetDhcpAddressRangesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVmwareengineSubnetDhcpAddressRangesElRef {
-        DataVmwareengineSubnetDhcpAddressRangesElRef {
+impl terrars::Ref for DataVmwareengineSubnet_DhcpAddressRangesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVmwareengineSubnet_DhcpAddressRangesRef {
+        DataVmwareengineSubnet_DhcpAddressRangesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataVmwareengineSubnetDhcpAddressRangesElRef {
+impl DataVmwareengineSubnet_DhcpAddressRangesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

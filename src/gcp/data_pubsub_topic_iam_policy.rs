@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataPubsubTopicIamPolicyData {
+struct DataPubsubTopicIamPolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -26,7 +28,7 @@ struct DataPubsubTopicIamPolicyData {
 struct DataPubsubTopicIamPolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataPubsubTopicIamPolicyData>,
+    data: std::cell::RefCell<DataPubsubTopicIamPolicyData_>,
 }
 
 #[derive(Clone)]
@@ -151,7 +153,7 @@ impl BuildDataPubsubTopicIamPolicy {
         let out = DataPubsubTopicIamPolicy(std::rc::Rc::new(DataPubsubTopicIamPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataPubsubTopicIamPolicyData {
+            data: std::cell::RefCell::new(DataPubsubTopicIamPolicyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),

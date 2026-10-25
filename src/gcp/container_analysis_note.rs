@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ContainerAnalysisNoteData {
+struct ContainerAnalysisNoteData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct ContainerAnalysisNoteData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     expiration_time: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -32,18 +36,18 @@ struct ContainerAnalysisNoteData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     short_description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    attestation_authority: std::option::Option<std::vec::Vec<ContainerAnalysisNoteAttestationAuthorityEl>>,
+    attestation_authority: std::option::Option<std::vec::Vec<ContainerAnalysisNote_AttestationAuthority>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    related_url: std::option::Option<std::vec::Vec<ContainerAnalysisNoteRelatedUrlEl>>,
+    related_url: std::option::Option<std::vec::Vec<ContainerAnalysisNote_RelatedUrl>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ContainerAnalysisNoteTimeoutsEl>,
+    timeouts: std::option::Option<ContainerAnalysisNote_Timeouts>,
     dynamic: ContainerAnalysisNoteDynamic,
 }
 
 struct ContainerAnalysisNote_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ContainerAnalysisNoteData>,
+    data: std::cell::RefCell<ContainerAnalysisNoteData_>,
 }
 
 #[derive(Clone)]
@@ -143,6 +147,13 @@ impl ContainerAnalysisNote {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `expiration_time`.\nTime of expiration for this note. Leave empty if note does not expire."]
     pub fn set_expiration_time(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().expiration_time = std::option::Option::Some(v.into());
@@ -185,7 +196,7 @@ impl ContainerAnalysisNote {
     #[doc = "Set the field `attestation_authority`.\n"]
     pub fn set_attestation_authority(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAnalysisNoteAttestationAuthorityEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAnalysisNote_AttestationAuthority>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -201,7 +212,7 @@ impl ContainerAnalysisNote {
     #[doc = "Set the field `related_url`.\n"]
     pub fn set_related_url(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAnalysisNoteRelatedUrlEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAnalysisNote_RelatedUrl>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -215,7 +226,7 @@ impl ContainerAnalysisNote {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ContainerAnalysisNoteTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ContainerAnalysisNote_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -223,6 +234,12 @@ impl ContainerAnalysisNote {
     #[doc = "Get a reference to the value of field `create_time` after provisioning.\nThe time this note was created."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -277,13 +294,13 @@ impl ContainerAnalysisNote {
     }
 
     #[doc = "Get a reference to the value of field `attestation_authority` after provisioning.\n"]
-    pub fn attestation_authority(&self) -> terrars::ListRef<ContainerAnalysisNoteAttestationAuthorityElRef> {
+    pub fn attestation_authority(&self) -> terrars::ListRef<ContainerAnalysisNote_AttestationAuthorityRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.attestation_authority", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ContainerAnalysisNoteTimeoutsElRef {
-        ContainerAnalysisNoteTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ContainerAnalysisNote_TimeoutsRef {
+        ContainerAnalysisNote_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -329,12 +346,13 @@ impl BuildContainerAnalysisNote {
         let out = ContainerAnalysisNote(std::rc::Rc::new(ContainerAnalysisNote_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ContainerAnalysisNoteData {
+            data: std::cell::RefCell::new(ContainerAnalysisNoteData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 expiration_time: core::default::Default::default(),
                 id: core::default::Default::default(),
                 long_description: core::default::Default::default(),
@@ -382,6 +400,12 @@ impl ContainerAnalysisNoteRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `expiration_time` after provisioning.\nTime of expiration for this note. Leave empty if note does not expire."]
     pub fn expiration_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.expiration_time", self.extract_ref()))
@@ -433,25 +457,31 @@ impl ContainerAnalysisNoteRef {
     }
 
     #[doc = "Get a reference to the value of field `attestation_authority` after provisioning.\n"]
-    pub fn attestation_authority(&self) -> terrars::ListRef<ContainerAnalysisNoteAttestationAuthorityElRef> {
+    pub fn attestation_authority(&self) -> terrars::ListRef<ContainerAnalysisNote_AttestationAuthorityRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.attestation_authority", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ContainerAnalysisNoteTimeoutsElRef {
-        ContainerAnalysisNoteTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ContainerAnalysisNote_TimeoutsRef {
+        ContainerAnalysisNote_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ContainerAnalysisNoteDynamic {
+    attestation_authority: std::option::Option<terrars::DynamicBlock<ContainerAnalysisNote_AttestationAuthority>>,
+    related_url: std::option::Option<terrars::DynamicBlock<ContainerAnalysisNote_RelatedUrl>>,
+}
+
 #[derive(Serialize)]
-pub struct ContainerAnalysisNoteAttestationAuthorityElHintEl {
+pub struct ContainerAnalysisNote_AttestationAuthority_Hint {
     human_readable_name: terrars::PrimField<std::string::String>,
 }
 
-impl ContainerAnalysisNoteAttestationAuthorityElHintEl { }
+impl ContainerAnalysisNote_AttestationAuthority_Hint { }
 
-impl terrars::ToListMappable for ContainerAnalysisNoteAttestationAuthorityElHintEl {
-    type O = terrars::BlockAssignable<ContainerAnalysisNoteAttestationAuthorityElHintEl>;
+impl terrars::ToListMappable for ContainerAnalysisNote_AttestationAuthority_Hint {
+    type O = terrars::BlockAssignable<ContainerAnalysisNote_AttestationAuthority_Hint>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -462,35 +492,37 @@ impl terrars::ToListMappable for ContainerAnalysisNoteAttestationAuthorityElHint
     }
 }
 
-pub struct BuildContainerAnalysisNoteAttestationAuthorityElHintEl {
+pub struct BuildContainerAnalysisNote_AttestationAuthority_Hint {
     #[doc = "The human readable name of this Attestation Authority, for\nexample \"qa\"."]
     pub human_readable_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildContainerAnalysisNoteAttestationAuthorityElHintEl {
-    pub fn build(self) -> ContainerAnalysisNoteAttestationAuthorityElHintEl {
-        ContainerAnalysisNoteAttestationAuthorityElHintEl { human_readable_name: self.human_readable_name }
+impl BuildContainerAnalysisNote_AttestationAuthority_Hint {
+    pub fn build(self) -> ContainerAnalysisNote_AttestationAuthority_Hint {
+        ContainerAnalysisNote_AttestationAuthority_Hint { human_readable_name: self.human_readable_name }
     }
 }
 
-pub struct ContainerAnalysisNoteAttestationAuthorityElHintElRef {
+#[allow(dead_code)]
+pub struct ContainerAnalysisNote_AttestationAuthority_HintRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAnalysisNoteAttestationAuthorityElHintElRef {
+impl terrars::Ref for ContainerAnalysisNote_AttestationAuthority_HintRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ContainerAnalysisNoteAttestationAuthorityElHintElRef {
-        ContainerAnalysisNoteAttestationAuthorityElHintElRef {
+    ) -> ContainerAnalysisNote_AttestationAuthority_HintRef {
+        ContainerAnalysisNote_AttestationAuthority_HintRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAnalysisNoteAttestationAuthorityElHintElRef {
+impl ContainerAnalysisNote_AttestationAuthority_HintRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -503,22 +535,22 @@ impl ContainerAnalysisNoteAttestationAuthorityElHintElRef {
 }
 
 #[derive(Serialize, Default)]
-struct ContainerAnalysisNoteAttestationAuthorityElDynamic {
-    hint: std::option::Option<terrars::DynamicBlock<ContainerAnalysisNoteAttestationAuthorityElHintEl>>,
+struct ContainerAnalysisNote_AttestationAuthorityDynamic {
+    hint: std::option::Option<terrars::DynamicBlock<ContainerAnalysisNote_AttestationAuthority_Hint>>,
 }
 
 #[derive(Serialize)]
-pub struct ContainerAnalysisNoteAttestationAuthorityEl {
+pub struct ContainerAnalysisNote_AttestationAuthority {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    hint: std::option::Option<std::vec::Vec<ContainerAnalysisNoteAttestationAuthorityElHintEl>>,
-    dynamic: ContainerAnalysisNoteAttestationAuthorityElDynamic,
+    hint: std::option::Option<std::vec::Vec<ContainerAnalysisNote_AttestationAuthority_Hint>>,
+    dynamic: ContainerAnalysisNote_AttestationAuthorityDynamic,
 }
 
-impl ContainerAnalysisNoteAttestationAuthorityEl {
+impl ContainerAnalysisNote_AttestationAuthority {
     #[doc = "Set the field `hint`.\n"]
     pub fn set_hint(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAnalysisNoteAttestationAuthorityElHintEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAnalysisNote_AttestationAuthority_Hint>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -532,8 +564,8 @@ impl ContainerAnalysisNoteAttestationAuthorityEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAnalysisNoteAttestationAuthorityEl {
-    type O = terrars::BlockAssignable<ContainerAnalysisNoteAttestationAuthorityEl>;
+impl terrars::ToListMappable for ContainerAnalysisNote_AttestationAuthority {
+    type O = terrars::BlockAssignable<ContainerAnalysisNote_AttestationAuthority>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -544,53 +576,52 @@ impl terrars::ToListMappable for ContainerAnalysisNoteAttestationAuthorityEl {
     }
 }
 
-pub struct BuildContainerAnalysisNoteAttestationAuthorityEl {}
+pub struct BuildContainerAnalysisNote_AttestationAuthority {}
 
-impl BuildContainerAnalysisNoteAttestationAuthorityEl {
-    pub fn build(self) -> ContainerAnalysisNoteAttestationAuthorityEl {
-        ContainerAnalysisNoteAttestationAuthorityEl {
+impl BuildContainerAnalysisNote_AttestationAuthority {
+    pub fn build(self) -> ContainerAnalysisNote_AttestationAuthority {
+        ContainerAnalysisNote_AttestationAuthority {
             hint: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct ContainerAnalysisNoteAttestationAuthorityElRef {
+#[allow(dead_code)]
+pub struct ContainerAnalysisNote_AttestationAuthorityRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAnalysisNoteAttestationAuthorityElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ContainerAnalysisNoteAttestationAuthorityElRef {
-        ContainerAnalysisNoteAttestationAuthorityElRef {
+impl terrars::Ref for ContainerAnalysisNote_AttestationAuthorityRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAnalysisNote_AttestationAuthorityRef {
+        ContainerAnalysisNote_AttestationAuthorityRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAnalysisNoteAttestationAuthorityElRef {
+impl ContainerAnalysisNote_AttestationAuthorityRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `hint` after provisioning.\n"]
-    pub fn hint(&self) -> terrars::ListRef<ContainerAnalysisNoteAttestationAuthorityElHintElRef> {
+    pub fn hint(&self) -> terrars::ListRef<ContainerAnalysisNote_AttestationAuthority_HintRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.hint", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ContainerAnalysisNoteRelatedUrlEl {
+pub struct ContainerAnalysisNote_RelatedUrl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     label: std::option::Option<terrars::PrimField<std::string::String>>,
     url: terrars::PrimField<std::string::String>,
 }
 
-impl ContainerAnalysisNoteRelatedUrlEl {
+impl ContainerAnalysisNote_RelatedUrl {
     #[doc = "Set the field `label`.\nLabel to describe usage of the URL"]
     pub fn set_label(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.label = std::option::Option::Some(v.into());
@@ -598,8 +629,8 @@ impl ContainerAnalysisNoteRelatedUrlEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAnalysisNoteRelatedUrlEl {
-    type O = terrars::BlockAssignable<ContainerAnalysisNoteRelatedUrlEl>;
+impl terrars::ToListMappable for ContainerAnalysisNote_RelatedUrl {
+    type O = terrars::BlockAssignable<ContainerAnalysisNote_RelatedUrl>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -610,35 +641,37 @@ impl terrars::ToListMappable for ContainerAnalysisNoteRelatedUrlEl {
     }
 }
 
-pub struct BuildContainerAnalysisNoteRelatedUrlEl {
+pub struct BuildContainerAnalysisNote_RelatedUrl {
     #[doc = "Specific URL associated with the resource."]
     pub url: terrars::PrimField<std::string::String>,
 }
 
-impl BuildContainerAnalysisNoteRelatedUrlEl {
-    pub fn build(self) -> ContainerAnalysisNoteRelatedUrlEl {
-        ContainerAnalysisNoteRelatedUrlEl {
+impl BuildContainerAnalysisNote_RelatedUrl {
+    pub fn build(self) -> ContainerAnalysisNote_RelatedUrl {
+        ContainerAnalysisNote_RelatedUrl {
             label: core::default::Default::default(),
             url: self.url,
         }
     }
 }
 
-pub struct ContainerAnalysisNoteRelatedUrlElRef {
+#[allow(dead_code)]
+pub struct ContainerAnalysisNote_RelatedUrlRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAnalysisNoteRelatedUrlElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAnalysisNoteRelatedUrlElRef {
-        ContainerAnalysisNoteRelatedUrlElRef {
+impl terrars::Ref for ContainerAnalysisNote_RelatedUrlRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAnalysisNote_RelatedUrlRef {
+        ContainerAnalysisNote_RelatedUrlRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAnalysisNoteRelatedUrlElRef {
+impl ContainerAnalysisNote_RelatedUrlRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -656,7 +689,7 @@ impl ContainerAnalysisNoteRelatedUrlElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAnalysisNoteTimeoutsEl {
+pub struct ContainerAnalysisNote_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -665,7 +698,7 @@ pub struct ContainerAnalysisNoteTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ContainerAnalysisNoteTimeoutsEl {
+impl ContainerAnalysisNote_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -685,8 +718,8 @@ impl ContainerAnalysisNoteTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAnalysisNoteTimeoutsEl {
-    type O = terrars::BlockAssignable<ContainerAnalysisNoteTimeoutsEl>;
+impl terrars::ToListMappable for ContainerAnalysisNote_Timeouts {
+    type O = terrars::BlockAssignable<ContainerAnalysisNote_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -697,11 +730,11 @@ impl terrars::ToListMappable for ContainerAnalysisNoteTimeoutsEl {
     }
 }
 
-pub struct BuildContainerAnalysisNoteTimeoutsEl {}
+pub struct BuildContainerAnalysisNote_Timeouts {}
 
-impl BuildContainerAnalysisNoteTimeoutsEl {
-    pub fn build(self) -> ContainerAnalysisNoteTimeoutsEl {
-        ContainerAnalysisNoteTimeoutsEl {
+impl BuildContainerAnalysisNote_Timeouts {
+    pub fn build(self) -> ContainerAnalysisNote_Timeouts {
+        ContainerAnalysisNote_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -709,21 +742,23 @@ impl BuildContainerAnalysisNoteTimeoutsEl {
     }
 }
 
-pub struct ContainerAnalysisNoteTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ContainerAnalysisNote_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAnalysisNoteTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAnalysisNoteTimeoutsElRef {
-        ContainerAnalysisNoteTimeoutsElRef {
+impl terrars::Ref for ContainerAnalysisNote_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAnalysisNote_TimeoutsRef {
+        ContainerAnalysisNote_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAnalysisNoteTimeoutsElRef {
+impl ContainerAnalysisNote_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -742,10 +777,4 @@ impl ContainerAnalysisNoteTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ContainerAnalysisNoteDynamic {
-    attestation_authority: std::option::Option<terrars::DynamicBlock<ContainerAnalysisNoteAttestationAuthorityEl>>,
-    related_url: std::option::Option<terrars::DynamicBlock<ContainerAnalysisNoteRelatedUrlEl>>,
 }

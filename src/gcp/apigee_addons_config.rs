@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ApigeeAddonsConfigData {
+struct ApigeeAddonsConfigData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,19 +21,21 @@ struct ApigeeAddonsConfigData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     org: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    addons_config: std::option::Option<std::vec::Vec<ApigeeAddonsConfigAddonsConfigEl>>,
+    addons_config: std::option::Option<std::vec::Vec<ApigeeAddonsConfig_AddonsConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ApigeeAddonsConfigTimeoutsEl>,
+    timeouts: std::option::Option<ApigeeAddonsConfig_Timeouts>,
     dynamic: ApigeeAddonsConfigDynamic,
 }
 
 struct ApigeeAddonsConfig_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ApigeeAddonsConfigData>,
+    data: std::cell::RefCell<ApigeeAddonsConfigData_>,
 }
 
 #[derive(Clone)]
@@ -131,6 +135,13 @@ impl ApigeeAddonsConfig {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -140,7 +151,7 @@ impl ApigeeAddonsConfig {
     #[doc = "Set the field `addons_config`.\n"]
     pub fn set_addons_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ApigeeAddonsConfigAddonsConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApigeeAddonsConfig_AddonsConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -154,9 +165,15 @@ impl ApigeeAddonsConfig {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ApigeeAddonsConfigTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ApigeeAddonsConfig_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -170,13 +187,13 @@ impl ApigeeAddonsConfig {
     }
 
     #[doc = "Get a reference to the value of field `addons_config` after provisioning.\n"]
-    pub fn addons_config(&self) -> terrars::ListRef<ApigeeAddonsConfigAddonsConfigElRef> {
+    pub fn addons_config(&self) -> terrars::ListRef<ApigeeAddonsConfig_AddonsConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.addons_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ApigeeAddonsConfigTimeoutsElRef {
-        ApigeeAddonsConfigTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ApigeeAddonsConfig_TimeoutsRef {
+        ApigeeAddonsConfig_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -222,12 +239,13 @@ impl BuildApigeeAddonsConfig {
         let out = ApigeeAddonsConfig(std::rc::Rc::new(ApigeeAddonsConfig_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ApigeeAddonsConfigData {
+            data: std::cell::RefCell::new(ApigeeAddonsConfigData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 org: self.org,
                 addons_config: core::default::Default::default(),
@@ -263,6 +281,12 @@ impl ApigeeAddonsConfigRef {
         &self.shared
     }
 
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -274,23 +298,28 @@ impl ApigeeAddonsConfigRef {
     }
 
     #[doc = "Get a reference to the value of field `addons_config` after provisioning.\n"]
-    pub fn addons_config(&self) -> terrars::ListRef<ApigeeAddonsConfigAddonsConfigElRef> {
+    pub fn addons_config(&self) -> terrars::ListRef<ApigeeAddonsConfig_AddonsConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.addons_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ApigeeAddonsConfigTimeoutsElRef {
-        ApigeeAddonsConfigTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ApigeeAddonsConfig_TimeoutsRef {
+        ApigeeAddonsConfig_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ApigeeAddonsConfigDynamic {
+    addons_config: std::option::Option<terrars::DynamicBlock<ApigeeAddonsConfig_AddonsConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct ApigeeAddonsConfigAddonsConfigElAdvancedApiOpsConfigEl {
+pub struct ApigeeAddonsConfig_AddonsConfig_AdvancedApiOpsConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl ApigeeAddonsConfigAddonsConfigElAdvancedApiOpsConfigEl {
+impl ApigeeAddonsConfig_AddonsConfig_AdvancedApiOpsConfig {
     #[doc = "Set the field `enabled`.\nFlag that specifies whether the Advanced API Ops add-on is enabled."]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -298,8 +327,8 @@ impl ApigeeAddonsConfigAddonsConfigElAdvancedApiOpsConfigEl {
     }
 }
 
-impl terrars::ToListMappable for ApigeeAddonsConfigAddonsConfigElAdvancedApiOpsConfigEl {
-    type O = terrars::BlockAssignable<ApigeeAddonsConfigAddonsConfigElAdvancedApiOpsConfigEl>;
+impl terrars::ToListMappable for ApigeeAddonsConfig_AddonsConfig_AdvancedApiOpsConfig {
+    type O = terrars::BlockAssignable<ApigeeAddonsConfig_AddonsConfig_AdvancedApiOpsConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -310,32 +339,34 @@ impl terrars::ToListMappable for ApigeeAddonsConfigAddonsConfigElAdvancedApiOpsC
     }
 }
 
-pub struct BuildApigeeAddonsConfigAddonsConfigElAdvancedApiOpsConfigEl {}
+pub struct BuildApigeeAddonsConfig_AddonsConfig_AdvancedApiOpsConfig {}
 
-impl BuildApigeeAddonsConfigAddonsConfigElAdvancedApiOpsConfigEl {
-    pub fn build(self) -> ApigeeAddonsConfigAddonsConfigElAdvancedApiOpsConfigEl {
-        ApigeeAddonsConfigAddonsConfigElAdvancedApiOpsConfigEl { enabled: core::default::Default::default() }
+impl BuildApigeeAddonsConfig_AddonsConfig_AdvancedApiOpsConfig {
+    pub fn build(self) -> ApigeeAddonsConfig_AddonsConfig_AdvancedApiOpsConfig {
+        ApigeeAddonsConfig_AddonsConfig_AdvancedApiOpsConfig { enabled: core::default::Default::default() }
     }
 }
 
-pub struct ApigeeAddonsConfigAddonsConfigElAdvancedApiOpsConfigElRef {
+#[allow(dead_code)]
+pub struct ApigeeAddonsConfig_AddonsConfig_AdvancedApiOpsConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApigeeAddonsConfigAddonsConfigElAdvancedApiOpsConfigElRef {
+impl terrars::Ref for ApigeeAddonsConfig_AddonsConfig_AdvancedApiOpsConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ApigeeAddonsConfigAddonsConfigElAdvancedApiOpsConfigElRef {
-        ApigeeAddonsConfigAddonsConfigElAdvancedApiOpsConfigElRef {
+    ) -> ApigeeAddonsConfig_AddonsConfig_AdvancedApiOpsConfigRef {
+        ApigeeAddonsConfig_AddonsConfig_AdvancedApiOpsConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApigeeAddonsConfigAddonsConfigElAdvancedApiOpsConfigElRef {
+impl ApigeeAddonsConfig_AddonsConfig_AdvancedApiOpsConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -348,21 +379,21 @@ impl ApigeeAddonsConfigAddonsConfigElAdvancedApiOpsConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct ApigeeAddonsConfigAddonsConfigElApiSecurityConfigEl {
+pub struct ApigeeAddonsConfig_AddonsConfig_ApiSecurityConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl ApigeeAddonsConfigAddonsConfigElApiSecurityConfigEl {
-    #[doc = "Set the field `enabled`.\nFlag that specifies whether the Advanced API Ops add-on is enabled."]
+impl ApigeeAddonsConfig_AddonsConfig_ApiSecurityConfig {
+    #[doc = "Set the field `enabled`.\nFlag that specifies whether the API security add-on is enabled."]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for ApigeeAddonsConfigAddonsConfigElApiSecurityConfigEl {
-    type O = terrars::BlockAssignable<ApigeeAddonsConfigAddonsConfigElApiSecurityConfigEl>;
+impl terrars::ToListMappable for ApigeeAddonsConfig_AddonsConfig_ApiSecurityConfig {
+    type O = terrars::BlockAssignable<ApigeeAddonsConfig_AddonsConfig_ApiSecurityConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -373,65 +404,67 @@ impl terrars::ToListMappable for ApigeeAddonsConfigAddonsConfigElApiSecurityConf
     }
 }
 
-pub struct BuildApigeeAddonsConfigAddonsConfigElApiSecurityConfigEl {}
+pub struct BuildApigeeAddonsConfig_AddonsConfig_ApiSecurityConfig {}
 
-impl BuildApigeeAddonsConfigAddonsConfigElApiSecurityConfigEl {
-    pub fn build(self) -> ApigeeAddonsConfigAddonsConfigElApiSecurityConfigEl {
-        ApigeeAddonsConfigAddonsConfigElApiSecurityConfigEl { enabled: core::default::Default::default() }
+impl BuildApigeeAddonsConfig_AddonsConfig_ApiSecurityConfig {
+    pub fn build(self) -> ApigeeAddonsConfig_AddonsConfig_ApiSecurityConfig {
+        ApigeeAddonsConfig_AddonsConfig_ApiSecurityConfig { enabled: core::default::Default::default() }
     }
 }
 
-pub struct ApigeeAddonsConfigAddonsConfigElApiSecurityConfigElRef {
+#[allow(dead_code)]
+pub struct ApigeeAddonsConfig_AddonsConfig_ApiSecurityConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApigeeAddonsConfigAddonsConfigElApiSecurityConfigElRef {
+impl terrars::Ref for ApigeeAddonsConfig_AddonsConfig_ApiSecurityConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ApigeeAddonsConfigAddonsConfigElApiSecurityConfigElRef {
-        ApigeeAddonsConfigAddonsConfigElApiSecurityConfigElRef {
+    ) -> ApigeeAddonsConfig_AddonsConfig_ApiSecurityConfigRef {
+        ApigeeAddonsConfig_AddonsConfig_ApiSecurityConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApigeeAddonsConfigAddonsConfigElApiSecurityConfigElRef {
+impl ApigeeAddonsConfig_AddonsConfig_ApiSecurityConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `enabled` after provisioning.\nFlag that specifies whether the Advanced API Ops add-on is enabled."]
+        "Get a reference to the value of field `enabled` after provisioning.\nFlag that specifies whether the API security add-on is enabled."]
     pub fn enabled(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 
     #[doc =
-        "Get a reference to the value of field `expires_at` after provisioning.\nFlag that specifies whether the Advanced API Ops add-on is enabled."]
+        "Get a reference to the value of field `expires_at` after provisioning.\nTime at which the API Security add-on expires in in milliseconds since epoch. If unspecified, the add-on will never expire."]
     pub fn expires_at(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.expires_at", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ApigeeAddonsConfigAddonsConfigElConnectorsPlatformConfigEl {
+pub struct ApigeeAddonsConfig_AddonsConfig_ConnectorsPlatformConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl ApigeeAddonsConfigAddonsConfigElConnectorsPlatformConfigEl {
-    #[doc = "Set the field `enabled`.\nFlag that specifies whether the Advanced API Ops add-on is enabled."]
+impl ApigeeAddonsConfig_AddonsConfig_ConnectorsPlatformConfig {
+    #[doc = "Set the field `enabled`.\nFlag that specifies whether the Connectors Platform add-on is enabled."]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for ApigeeAddonsConfigAddonsConfigElConnectorsPlatformConfigEl {
-    type O = terrars::BlockAssignable<ApigeeAddonsConfigAddonsConfigElConnectorsPlatformConfigEl>;
+impl terrars::ToListMappable for ApigeeAddonsConfig_AddonsConfig_ConnectorsPlatformConfig {
+    type O = terrars::BlockAssignable<ApigeeAddonsConfig_AddonsConfig_ConnectorsPlatformConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -442,65 +475,67 @@ impl terrars::ToListMappable for ApigeeAddonsConfigAddonsConfigElConnectorsPlatf
     }
 }
 
-pub struct BuildApigeeAddonsConfigAddonsConfigElConnectorsPlatformConfigEl {}
+pub struct BuildApigeeAddonsConfig_AddonsConfig_ConnectorsPlatformConfig {}
 
-impl BuildApigeeAddonsConfigAddonsConfigElConnectorsPlatformConfigEl {
-    pub fn build(self) -> ApigeeAddonsConfigAddonsConfigElConnectorsPlatformConfigEl {
-        ApigeeAddonsConfigAddonsConfigElConnectorsPlatformConfigEl { enabled: core::default::Default::default() }
+impl BuildApigeeAddonsConfig_AddonsConfig_ConnectorsPlatformConfig {
+    pub fn build(self) -> ApigeeAddonsConfig_AddonsConfig_ConnectorsPlatformConfig {
+        ApigeeAddonsConfig_AddonsConfig_ConnectorsPlatformConfig { enabled: core::default::Default::default() }
     }
 }
 
-pub struct ApigeeAddonsConfigAddonsConfigElConnectorsPlatformConfigElRef {
+#[allow(dead_code)]
+pub struct ApigeeAddonsConfig_AddonsConfig_ConnectorsPlatformConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApigeeAddonsConfigAddonsConfigElConnectorsPlatformConfigElRef {
+impl terrars::Ref for ApigeeAddonsConfig_AddonsConfig_ConnectorsPlatformConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ApigeeAddonsConfigAddonsConfigElConnectorsPlatformConfigElRef {
-        ApigeeAddonsConfigAddonsConfigElConnectorsPlatformConfigElRef {
+    ) -> ApigeeAddonsConfig_AddonsConfig_ConnectorsPlatformConfigRef {
+        ApigeeAddonsConfig_AddonsConfig_ConnectorsPlatformConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApigeeAddonsConfigAddonsConfigElConnectorsPlatformConfigElRef {
+impl ApigeeAddonsConfig_AddonsConfig_ConnectorsPlatformConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `enabled` after provisioning.\nFlag that specifies whether the Advanced API Ops add-on is enabled."]
+        "Get a reference to the value of field `enabled` after provisioning.\nFlag that specifies whether the Connectors Platform add-on is enabled."]
     pub fn enabled(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 
     #[doc =
-        "Get a reference to the value of field `expires_at` after provisioning.\nFlag that specifies whether the Advanced API Ops add-on is enabled."]
+        "Get a reference to the value of field `expires_at` after provisioning.\nTime at which the Connectors Platform add-on expires in milliseconds since epoch. If unspecified, the add-on will never expire."]
     pub fn expires_at(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.expires_at", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ApigeeAddonsConfigAddonsConfigElIntegrationConfigEl {
+pub struct ApigeeAddonsConfig_AddonsConfig_IntegrationConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl ApigeeAddonsConfigAddonsConfigElIntegrationConfigEl {
-    #[doc = "Set the field `enabled`.\nFlag that specifies whether the Advanced API Ops add-on is enabled."]
+impl ApigeeAddonsConfig_AddonsConfig_IntegrationConfig {
+    #[doc = "Set the field `enabled`.\nFlag that specifies whether the Integration add-on is enabled."]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for ApigeeAddonsConfigAddonsConfigElIntegrationConfigEl {
-    type O = terrars::BlockAssignable<ApigeeAddonsConfigAddonsConfigElIntegrationConfigEl>;
+impl terrars::ToListMappable for ApigeeAddonsConfig_AddonsConfig_IntegrationConfig {
+    type O = terrars::BlockAssignable<ApigeeAddonsConfig_AddonsConfig_IntegrationConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -511,59 +546,61 @@ impl terrars::ToListMappable for ApigeeAddonsConfigAddonsConfigElIntegrationConf
     }
 }
 
-pub struct BuildApigeeAddonsConfigAddonsConfigElIntegrationConfigEl {}
+pub struct BuildApigeeAddonsConfig_AddonsConfig_IntegrationConfig {}
 
-impl BuildApigeeAddonsConfigAddonsConfigElIntegrationConfigEl {
-    pub fn build(self) -> ApigeeAddonsConfigAddonsConfigElIntegrationConfigEl {
-        ApigeeAddonsConfigAddonsConfigElIntegrationConfigEl { enabled: core::default::Default::default() }
+impl BuildApigeeAddonsConfig_AddonsConfig_IntegrationConfig {
+    pub fn build(self) -> ApigeeAddonsConfig_AddonsConfig_IntegrationConfig {
+        ApigeeAddonsConfig_AddonsConfig_IntegrationConfig { enabled: core::default::Default::default() }
     }
 }
 
-pub struct ApigeeAddonsConfigAddonsConfigElIntegrationConfigElRef {
+#[allow(dead_code)]
+pub struct ApigeeAddonsConfig_AddonsConfig_IntegrationConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApigeeAddonsConfigAddonsConfigElIntegrationConfigElRef {
+impl terrars::Ref for ApigeeAddonsConfig_AddonsConfig_IntegrationConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ApigeeAddonsConfigAddonsConfigElIntegrationConfigElRef {
-        ApigeeAddonsConfigAddonsConfigElIntegrationConfigElRef {
+    ) -> ApigeeAddonsConfig_AddonsConfig_IntegrationConfigRef {
+        ApigeeAddonsConfig_AddonsConfig_IntegrationConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApigeeAddonsConfigAddonsConfigElIntegrationConfigElRef {
+impl ApigeeAddonsConfig_AddonsConfig_IntegrationConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `enabled` after provisioning.\nFlag that specifies whether the Advanced API Ops add-on is enabled."]
+        "Get a reference to the value of field `enabled` after provisioning.\nFlag that specifies whether the Integration add-on is enabled."]
     pub fn enabled(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ApigeeAddonsConfigAddonsConfigElMonetizationConfigEl {
+pub struct ApigeeAddonsConfig_AddonsConfig_MonetizationConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl ApigeeAddonsConfigAddonsConfigElMonetizationConfigEl {
-    #[doc = "Set the field `enabled`.\nFlag that specifies whether the Advanced API Ops add-on is enabled."]
+impl ApigeeAddonsConfig_AddonsConfig_MonetizationConfig {
+    #[doc = "Set the field `enabled`.\nFlag that specifies whether the Monetization add-on is enabled."]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for ApigeeAddonsConfigAddonsConfigElMonetizationConfigEl {
-    type O = terrars::BlockAssignable<ApigeeAddonsConfigAddonsConfigElMonetizationConfigEl>;
+impl terrars::ToListMappable for ApigeeAddonsConfig_AddonsConfig_MonetizationConfig {
+    type O = terrars::BlockAssignable<ApigeeAddonsConfig_AddonsConfig_MonetizationConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -574,84 +611,86 @@ impl terrars::ToListMappable for ApigeeAddonsConfigAddonsConfigElMonetizationCon
     }
 }
 
-pub struct BuildApigeeAddonsConfigAddonsConfigElMonetizationConfigEl {}
+pub struct BuildApigeeAddonsConfig_AddonsConfig_MonetizationConfig {}
 
-impl BuildApigeeAddonsConfigAddonsConfigElMonetizationConfigEl {
-    pub fn build(self) -> ApigeeAddonsConfigAddonsConfigElMonetizationConfigEl {
-        ApigeeAddonsConfigAddonsConfigElMonetizationConfigEl { enabled: core::default::Default::default() }
+impl BuildApigeeAddonsConfig_AddonsConfig_MonetizationConfig {
+    pub fn build(self) -> ApigeeAddonsConfig_AddonsConfig_MonetizationConfig {
+        ApigeeAddonsConfig_AddonsConfig_MonetizationConfig { enabled: core::default::Default::default() }
     }
 }
 
-pub struct ApigeeAddonsConfigAddonsConfigElMonetizationConfigElRef {
+#[allow(dead_code)]
+pub struct ApigeeAddonsConfig_AddonsConfig_MonetizationConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApigeeAddonsConfigAddonsConfigElMonetizationConfigElRef {
+impl terrars::Ref for ApigeeAddonsConfig_AddonsConfig_MonetizationConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ApigeeAddonsConfigAddonsConfigElMonetizationConfigElRef {
-        ApigeeAddonsConfigAddonsConfigElMonetizationConfigElRef {
+    ) -> ApigeeAddonsConfig_AddonsConfig_MonetizationConfigRef {
+        ApigeeAddonsConfig_AddonsConfig_MonetizationConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApigeeAddonsConfigAddonsConfigElMonetizationConfigElRef {
+impl ApigeeAddonsConfig_AddonsConfig_MonetizationConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `enabled` after provisioning.\nFlag that specifies whether the Advanced API Ops add-on is enabled."]
+        "Get a reference to the value of field `enabled` after provisioning.\nFlag that specifies whether the Monetization add-on is enabled."]
     pub fn enabled(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct ApigeeAddonsConfigAddonsConfigElDynamic {
+struct ApigeeAddonsConfig_AddonsConfigDynamic {
     advanced_api_ops_config: std
     ::option
-    ::Option<terrars::DynamicBlock<ApigeeAddonsConfigAddonsConfigElAdvancedApiOpsConfigEl>>,
+    ::Option<terrars::DynamicBlock<ApigeeAddonsConfig_AddonsConfig_AdvancedApiOpsConfig>>,
     api_security_config: std
     ::option
-    ::Option<terrars::DynamicBlock<ApigeeAddonsConfigAddonsConfigElApiSecurityConfigEl>>,
+    ::Option<terrars::DynamicBlock<ApigeeAddonsConfig_AddonsConfig_ApiSecurityConfig>>,
     connectors_platform_config: std
     ::option
-    ::Option<terrars::DynamicBlock<ApigeeAddonsConfigAddonsConfigElConnectorsPlatformConfigEl>>,
+    ::Option<terrars::DynamicBlock<ApigeeAddonsConfig_AddonsConfig_ConnectorsPlatformConfig>>,
     integration_config: std
     ::option
-    ::Option<terrars::DynamicBlock<ApigeeAddonsConfigAddonsConfigElIntegrationConfigEl>>,
+    ::Option<terrars::DynamicBlock<ApigeeAddonsConfig_AddonsConfig_IntegrationConfig>>,
     monetization_config: std
     ::option
-    ::Option<terrars::DynamicBlock<ApigeeAddonsConfigAddonsConfigElMonetizationConfigEl>>,
+    ::Option<terrars::DynamicBlock<ApigeeAddonsConfig_AddonsConfig_MonetizationConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct ApigeeAddonsConfigAddonsConfigEl {
+pub struct ApigeeAddonsConfig_AddonsConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    advanced_api_ops_config: std::option::Option<std::vec::Vec<ApigeeAddonsConfigAddonsConfigElAdvancedApiOpsConfigEl>>,
+    advanced_api_ops_config: std::option::Option<std::vec::Vec<ApigeeAddonsConfig_AddonsConfig_AdvancedApiOpsConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    api_security_config: std::option::Option<std::vec::Vec<ApigeeAddonsConfigAddonsConfigElApiSecurityConfigEl>>,
+    api_security_config: std::option::Option<std::vec::Vec<ApigeeAddonsConfig_AddonsConfig_ApiSecurityConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     connectors_platform_config: std
     ::option
-    ::Option<std::vec::Vec<ApigeeAddonsConfigAddonsConfigElConnectorsPlatformConfigEl>>,
+    ::Option<std::vec::Vec<ApigeeAddonsConfig_AddonsConfig_ConnectorsPlatformConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    integration_config: std::option::Option<std::vec::Vec<ApigeeAddonsConfigAddonsConfigElIntegrationConfigEl>>,
+    integration_config: std::option::Option<std::vec::Vec<ApigeeAddonsConfig_AddonsConfig_IntegrationConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    monetization_config: std::option::Option<std::vec::Vec<ApigeeAddonsConfigAddonsConfigElMonetizationConfigEl>>,
-    dynamic: ApigeeAddonsConfigAddonsConfigElDynamic,
+    monetization_config: std::option::Option<std::vec::Vec<ApigeeAddonsConfig_AddonsConfig_MonetizationConfig>>,
+    dynamic: ApigeeAddonsConfig_AddonsConfigDynamic,
 }
 
-impl ApigeeAddonsConfigAddonsConfigEl {
+impl ApigeeAddonsConfig_AddonsConfig {
     #[doc = "Set the field `advanced_api_ops_config`.\n"]
     pub fn set_advanced_api_ops_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ApigeeAddonsConfigAddonsConfigElAdvancedApiOpsConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApigeeAddonsConfig_AddonsConfig_AdvancedApiOpsConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -667,7 +706,7 @@ impl ApigeeAddonsConfigAddonsConfigEl {
     #[doc = "Set the field `api_security_config`.\n"]
     pub fn set_api_security_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ApigeeAddonsConfigAddonsConfigElApiSecurityConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApigeeAddonsConfig_AddonsConfig_ApiSecurityConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -688,7 +727,7 @@ impl ApigeeAddonsConfigAddonsConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<ApigeeAddonsConfigAddonsConfigElConnectorsPlatformConfigEl>>,
+                    ::Into<terrars::BlockAssignable<ApigeeAddonsConfig_AddonsConfig_ConnectorsPlatformConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -704,7 +743,7 @@ impl ApigeeAddonsConfigAddonsConfigEl {
     #[doc = "Set the field `integration_config`.\n"]
     pub fn set_integration_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ApigeeAddonsConfigAddonsConfigElIntegrationConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApigeeAddonsConfig_AddonsConfig_IntegrationConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -720,7 +759,7 @@ impl ApigeeAddonsConfigAddonsConfigEl {
     #[doc = "Set the field `monetization_config`.\n"]
     pub fn set_monetization_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ApigeeAddonsConfigAddonsConfigElMonetizationConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApigeeAddonsConfig_AddonsConfig_MonetizationConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -734,8 +773,8 @@ impl ApigeeAddonsConfigAddonsConfigEl {
     }
 }
 
-impl terrars::ToListMappable for ApigeeAddonsConfigAddonsConfigEl {
-    type O = terrars::BlockAssignable<ApigeeAddonsConfigAddonsConfigEl>;
+impl terrars::ToListMappable for ApigeeAddonsConfig_AddonsConfig {
+    type O = terrars::BlockAssignable<ApigeeAddonsConfig_AddonsConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -746,11 +785,11 @@ impl terrars::ToListMappable for ApigeeAddonsConfigAddonsConfigEl {
     }
 }
 
-pub struct BuildApigeeAddonsConfigAddonsConfigEl {}
+pub struct BuildApigeeAddonsConfig_AddonsConfig {}
 
-impl BuildApigeeAddonsConfigAddonsConfigEl {
-    pub fn build(self) -> ApigeeAddonsConfigAddonsConfigEl {
-        ApigeeAddonsConfigAddonsConfigEl {
+impl BuildApigeeAddonsConfig_AddonsConfig {
+    pub fn build(self) -> ApigeeAddonsConfig_AddonsConfig {
+        ApigeeAddonsConfig_AddonsConfig {
             advanced_api_ops_config: core::default::Default::default(),
             api_security_config: core::default::Default::default(),
             connectors_platform_config: core::default::Default::default(),
@@ -761,55 +800,57 @@ impl BuildApigeeAddonsConfigAddonsConfigEl {
     }
 }
 
-pub struct ApigeeAddonsConfigAddonsConfigElRef {
+#[allow(dead_code)]
+pub struct ApigeeAddonsConfig_AddonsConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApigeeAddonsConfigAddonsConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ApigeeAddonsConfigAddonsConfigElRef {
-        ApigeeAddonsConfigAddonsConfigElRef {
+impl terrars::Ref for ApigeeAddonsConfig_AddonsConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApigeeAddonsConfig_AddonsConfigRef {
+        ApigeeAddonsConfig_AddonsConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApigeeAddonsConfigAddonsConfigElRef {
+impl ApigeeAddonsConfig_AddonsConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `advanced_api_ops_config` after provisioning.\n"]
-    pub fn advanced_api_ops_config(&self) -> terrars::ListRef<ApigeeAddonsConfigAddonsConfigElAdvancedApiOpsConfigElRef> {
+    pub fn advanced_api_ops_config(&self) -> terrars::ListRef<ApigeeAddonsConfig_AddonsConfig_AdvancedApiOpsConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.advanced_api_ops_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `api_security_config` after provisioning.\n"]
-    pub fn api_security_config(&self) -> terrars::ListRef<ApigeeAddonsConfigAddonsConfigElApiSecurityConfigElRef> {
+    pub fn api_security_config(&self) -> terrars::ListRef<ApigeeAddonsConfig_AddonsConfig_ApiSecurityConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.api_security_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `connectors_platform_config` after provisioning.\n"]
     pub fn connectors_platform_config(
         &self,
-    ) -> terrars::ListRef<ApigeeAddonsConfigAddonsConfigElConnectorsPlatformConfigElRef> {
+    ) -> terrars::ListRef<ApigeeAddonsConfig_AddonsConfig_ConnectorsPlatformConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.connectors_platform_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `integration_config` after provisioning.\n"]
-    pub fn integration_config(&self) -> terrars::ListRef<ApigeeAddonsConfigAddonsConfigElIntegrationConfigElRef> {
+    pub fn integration_config(&self) -> terrars::ListRef<ApigeeAddonsConfig_AddonsConfig_IntegrationConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.integration_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `monetization_config` after provisioning.\n"]
-    pub fn monetization_config(&self) -> terrars::ListRef<ApigeeAddonsConfigAddonsConfigElMonetizationConfigElRef> {
+    pub fn monetization_config(&self) -> terrars::ListRef<ApigeeAddonsConfig_AddonsConfig_MonetizationConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.monetization_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ApigeeAddonsConfigTimeoutsEl {
+pub struct ApigeeAddonsConfig_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -818,7 +859,7 @@ pub struct ApigeeAddonsConfigTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ApigeeAddonsConfigTimeoutsEl {
+impl ApigeeAddonsConfig_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -838,8 +879,8 @@ impl ApigeeAddonsConfigTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ApigeeAddonsConfigTimeoutsEl {
-    type O = terrars::BlockAssignable<ApigeeAddonsConfigTimeoutsEl>;
+impl terrars::ToListMappable for ApigeeAddonsConfig_Timeouts {
+    type O = terrars::BlockAssignable<ApigeeAddonsConfig_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -850,11 +891,11 @@ impl terrars::ToListMappable for ApigeeAddonsConfigTimeoutsEl {
     }
 }
 
-pub struct BuildApigeeAddonsConfigTimeoutsEl {}
+pub struct BuildApigeeAddonsConfig_Timeouts {}
 
-impl BuildApigeeAddonsConfigTimeoutsEl {
-    pub fn build(self) -> ApigeeAddonsConfigTimeoutsEl {
-        ApigeeAddonsConfigTimeoutsEl {
+impl BuildApigeeAddonsConfig_Timeouts {
+    pub fn build(self) -> ApigeeAddonsConfig_Timeouts {
+        ApigeeAddonsConfig_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -862,21 +903,23 @@ impl BuildApigeeAddonsConfigTimeoutsEl {
     }
 }
 
-pub struct ApigeeAddonsConfigTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ApigeeAddonsConfig_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApigeeAddonsConfigTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ApigeeAddonsConfigTimeoutsElRef {
-        ApigeeAddonsConfigTimeoutsElRef {
+impl terrars::Ref for ApigeeAddonsConfig_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApigeeAddonsConfig_TimeoutsRef {
+        ApigeeAddonsConfig_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApigeeAddonsConfigTimeoutsElRef {
+impl ApigeeAddonsConfig_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -895,9 +938,4 @@ impl ApigeeAddonsConfigTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ApigeeAddonsConfigDynamic {
-    addons_config: std::option::Option<terrars::DynamicBlock<ApigeeAddonsConfigAddonsConfigEl>>,
 }

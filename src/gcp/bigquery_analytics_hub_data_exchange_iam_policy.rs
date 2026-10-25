@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct BigqueryAnalyticsHubDataExchangeIamPolicyData {
+struct BigqueryAnalyticsHubDataExchangeIamPolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -31,7 +33,7 @@ struct BigqueryAnalyticsHubDataExchangeIamPolicyData {
 struct BigqueryAnalyticsHubDataExchangeIamPolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<BigqueryAnalyticsHubDataExchangeIamPolicyData>,
+    data: std::cell::RefCell<BigqueryAnalyticsHubDataExchangeIamPolicyData_>,
 }
 
 #[derive(Clone)]
@@ -225,7 +227,7 @@ impl BuildBigqueryAnalyticsHubDataExchangeIamPolicy {
             BigqueryAnalyticsHubDataExchangeIamPolicy(std::rc::Rc::new(BigqueryAnalyticsHubDataExchangeIamPolicy_ {
                 shared: stack.shared.clone(),
                 tf_id: self.tf_id,
-                data: std::cell::RefCell::new(BigqueryAnalyticsHubDataExchangeIamPolicyData {
+                data: std::cell::RefCell::new(BigqueryAnalyticsHubDataExchangeIamPolicyData_ {
                     depends_on: core::default::Default::default(),
                     provider: std::option::Option::None,
                     lifecycle: core::default::Default::default(),

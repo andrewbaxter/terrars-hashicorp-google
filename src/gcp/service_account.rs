@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ServiceAccountData {
+struct ServiceAccountData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,6 +22,10 @@ struct ServiceAccountData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     account_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create_ignore_already_exists: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     disabled: std::option::Option<terrars::PrimField<bool>>,
@@ -30,13 +36,13 @@ struct ServiceAccountData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ServiceAccountTimeoutsEl>,
+    timeouts: std::option::Option<ServiceAccount_Timeouts>,
 }
 
 struct ServiceAccount_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ServiceAccountData>,
+    data: std::cell::RefCell<ServiceAccountData_>,
 }
 
 #[derive(Clone)]
@@ -137,6 +143,20 @@ impl ServiceAccount {
     }
 
     #[doc =
+        "Set the field `create_ignore_already_exists`.\nIf set to true, skip service account creation if a service account with the same email already exists."]
+    pub fn set_create_ignore_already_exists(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().create_ignore_already_exists = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `description`.\nA text description of the service account. Must be less than or equal to 256 UTF-8 bytes."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -170,7 +190,7 @@ impl ServiceAccount {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ServiceAccountTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ServiceAccount_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -179,6 +199,18 @@ impl ServiceAccount {
         "Get a reference to the value of field `account_id` after provisioning.\nThe account id that is used to generate the service account email address and a stable unique id. It is unique within a project, must be 6-30 characters long, and match the regular expression [a-z]([-a-z0-9]*[a-z0-9]) to comply with RFC1035. Changing this forces a new service account to be created."]
     pub fn account_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.account_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `create_ignore_already_exists` after provisioning.\nIf set to true, skip service account creation if a service account with the same email already exists."]
+    pub fn create_ignore_already_exists(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_ignore_already_exists", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -235,8 +267,8 @@ impl ServiceAccount {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ServiceAccountTimeoutsElRef {
-        ServiceAccountTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ServiceAccount_TimeoutsRef {
+        ServiceAccount_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -283,13 +315,15 @@ impl BuildServiceAccount {
         let out = ServiceAccount(std::rc::Rc::new(ServiceAccount_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ServiceAccountData {
+            data: std::cell::RefCell::new(ServiceAccountData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 account_id: self.account_id,
+                create_ignore_already_exists: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 disabled: core::default::Default::default(),
                 display_name: core::default::Default::default(),
@@ -330,6 +364,18 @@ impl ServiceAccountRef {
         "Get a reference to the value of field `account_id` after provisioning.\nThe account id that is used to generate the service account email address and a stable unique id. It is unique within a project, must be 6-30 characters long, and match the regular expression [a-z]([-a-z0-9]*[a-z0-9]) to comply with RFC1035. Changing this forces a new service account to be created."]
     pub fn account_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.account_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `create_ignore_already_exists` after provisioning.\nIf set to true, skip service account creation if a service account with the same email already exists."]
+    pub fn create_ignore_already_exists(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_ignore_already_exists", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -386,18 +432,18 @@ impl ServiceAccountRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ServiceAccountTimeoutsElRef {
-        ServiceAccountTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ServiceAccount_TimeoutsRef {
+        ServiceAccount_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct ServiceAccountTimeoutsEl {
+pub struct ServiceAccount_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ServiceAccountTimeoutsEl {
+impl ServiceAccount_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -405,8 +451,8 @@ impl ServiceAccountTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ServiceAccountTimeoutsEl {
-    type O = terrars::BlockAssignable<ServiceAccountTimeoutsEl>;
+impl terrars::ToListMappable for ServiceAccount_Timeouts {
+    type O = terrars::BlockAssignable<ServiceAccount_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -417,29 +463,31 @@ impl terrars::ToListMappable for ServiceAccountTimeoutsEl {
     }
 }
 
-pub struct BuildServiceAccountTimeoutsEl {}
+pub struct BuildServiceAccount_Timeouts {}
 
-impl BuildServiceAccountTimeoutsEl {
-    pub fn build(self) -> ServiceAccountTimeoutsEl {
-        ServiceAccountTimeoutsEl { create: core::default::Default::default() }
+impl BuildServiceAccount_Timeouts {
+    pub fn build(self) -> ServiceAccount_Timeouts {
+        ServiceAccount_Timeouts { create: core::default::Default::default() }
     }
 }
 
-pub struct ServiceAccountTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ServiceAccount_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ServiceAccountTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ServiceAccountTimeoutsElRef {
-        ServiceAccountTimeoutsElRef {
+impl terrars::Ref for ServiceAccount_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ServiceAccount_TimeoutsRef {
+        ServiceAccount_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ServiceAccountTimeoutsElRef {
+impl ServiceAccount_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

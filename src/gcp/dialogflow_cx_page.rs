@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DialogflowCxPageData {
+struct DialogflowCxPageData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct DialogflowCxPageData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     display_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -28,24 +32,26 @@ struct DialogflowCxPageData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     transition_route_groups: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    advanced_settings: std::option::Option<std::vec::Vec<DialogflowCxPageAdvancedSettingsEl>>,
+    advanced_settings: std::option::Option<std::vec::Vec<DialogflowCxPage_AdvancedSettings>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    entry_fulfillment: std::option::Option<std::vec::Vec<DialogflowCxPageEntryFulfillmentEl>>,
+    entry_fulfillment: std::option::Option<std::vec::Vec<DialogflowCxPage_EntryFulfillment>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    event_handlers: std::option::Option<std::vec::Vec<DialogflowCxPageEventHandlersEl>>,
+    event_handlers: std::option::Option<std::vec::Vec<DialogflowCxPage_EventHandlers>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    form: std::option::Option<std::vec::Vec<DialogflowCxPageFormEl>>,
+    form: std::option::Option<std::vec::Vec<DialogflowCxPage_Form>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DialogflowCxPageTimeoutsEl>,
+    knowledge_connector_settings: std::option::Option<std::vec::Vec<DialogflowCxPage_KnowledgeConnectorSettings>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    transition_routes: std::option::Option<std::vec::Vec<DialogflowCxPageTransitionRoutesEl>>,
+    timeouts: std::option::Option<DialogflowCxPage_Timeouts>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    transition_routes: std::option::Option<std::vec::Vec<DialogflowCxPage_TransitionRoutes>>,
     dynamic: DialogflowCxPageDynamic,
 }
 
 struct DialogflowCxPage_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DialogflowCxPageData>,
+    data: std::cell::RefCell<DialogflowCxPageData_>,
 }
 
 #[derive(Clone)]
@@ -145,6 +151,13 @@ impl DialogflowCxPage {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -178,7 +191,7 @@ impl DialogflowCxPage {
     #[doc = "Set the field `advanced_settings`.\n"]
     pub fn set_advanced_settings(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPageAdvancedSettingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPage_AdvancedSettings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -194,7 +207,7 @@ impl DialogflowCxPage {
     #[doc = "Set the field `entry_fulfillment`.\n"]
     pub fn set_entry_fulfillment(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPageEntryFulfillmentEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPage_EntryFulfillment>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -210,7 +223,7 @@ impl DialogflowCxPage {
     #[doc = "Set the field `event_handlers`.\n"]
     pub fn set_event_handlers(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPageEventHandlersEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPage_EventHandlers>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -224,7 +237,7 @@ impl DialogflowCxPage {
     }
 
     #[doc = "Set the field `form`.\n"]
-    pub fn set_form(self, v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPageFormEl>>) -> Self {
+    pub fn set_form(self, v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPage_Form>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().form = std::option::Option::Some(v);
@@ -236,8 +249,24 @@ impl DialogflowCxPage {
         self
     }
 
+    #[doc = "Set the field `knowledge_connector_settings`.\n"]
+    pub fn set_knowledge_connector_settings(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPage_KnowledgeConnectorSettings>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().knowledge_connector_settings = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.knowledge_connector_settings = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DialogflowCxPageTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DialogflowCxPage_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -245,7 +274,7 @@ impl DialogflowCxPage {
     #[doc = "Set the field `transition_routes`.\n"]
     pub fn set_transition_routes(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPageTransitionRoutesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPage_TransitionRoutes>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -256,6 +285,12 @@ impl DialogflowCxPage {
             },
         }
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -294,32 +329,37 @@ impl DialogflowCxPage {
     }
 
     #[doc = "Get a reference to the value of field `advanced_settings` after provisioning.\n"]
-    pub fn advanced_settings(&self) -> terrars::ListRef<DialogflowCxPageAdvancedSettingsElRef> {
+    pub fn advanced_settings(&self) -> terrars::ListRef<DialogflowCxPage_AdvancedSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.advanced_settings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `entry_fulfillment` after provisioning.\n"]
-    pub fn entry_fulfillment(&self) -> terrars::ListRef<DialogflowCxPageEntryFulfillmentElRef> {
+    pub fn entry_fulfillment(&self) -> terrars::ListRef<DialogflowCxPage_EntryFulfillmentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.entry_fulfillment", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `event_handlers` after provisioning.\n"]
-    pub fn event_handlers(&self) -> terrars::ListRef<DialogflowCxPageEventHandlersElRef> {
+    pub fn event_handlers(&self) -> terrars::ListRef<DialogflowCxPage_EventHandlersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.event_handlers", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `form` after provisioning.\n"]
-    pub fn form(&self) -> terrars::ListRef<DialogflowCxPageFormElRef> {
+    pub fn form(&self) -> terrars::ListRef<DialogflowCxPage_FormRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.form", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `knowledge_connector_settings` after provisioning.\n"]
+    pub fn knowledge_connector_settings(&self) -> terrars::ListRef<DialogflowCxPage_KnowledgeConnectorSettingsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.knowledge_connector_settings", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DialogflowCxPageTimeoutsElRef {
-        DialogflowCxPageTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DialogflowCxPage_TimeoutsRef {
+        DialogflowCxPage_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `transition_routes` after provisioning.\n"]
-    pub fn transition_routes(&self) -> terrars::ListRef<DialogflowCxPageTransitionRoutesElRef> {
+    pub fn transition_routes(&self) -> terrars::ListRef<DialogflowCxPage_TransitionRoutesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.transition_routes", self.extract_ref()))
     }
 }
@@ -366,12 +406,13 @@ impl BuildDialogflowCxPage {
         let out = DialogflowCxPage(std::rc::Rc::new(DialogflowCxPage_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DialogflowCxPageData {
+            data: std::cell::RefCell::new(DialogflowCxPageData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 display_name: self.display_name,
                 id: core::default::Default::default(),
                 language_code: core::default::Default::default(),
@@ -381,6 +422,7 @@ impl BuildDialogflowCxPage {
                 entry_fulfillment: core::default::Default::default(),
                 event_handlers: core::default::Default::default(),
                 form: core::default::Default::default(),
+                knowledge_connector_settings: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 transition_routes: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -412,6 +454,12 @@ impl DialogflowCxPageRef {
 
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -450,38 +498,55 @@ impl DialogflowCxPageRef {
     }
 
     #[doc = "Get a reference to the value of field `advanced_settings` after provisioning.\n"]
-    pub fn advanced_settings(&self) -> terrars::ListRef<DialogflowCxPageAdvancedSettingsElRef> {
+    pub fn advanced_settings(&self) -> terrars::ListRef<DialogflowCxPage_AdvancedSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.advanced_settings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `entry_fulfillment` after provisioning.\n"]
-    pub fn entry_fulfillment(&self) -> terrars::ListRef<DialogflowCxPageEntryFulfillmentElRef> {
+    pub fn entry_fulfillment(&self) -> terrars::ListRef<DialogflowCxPage_EntryFulfillmentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.entry_fulfillment", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `event_handlers` after provisioning.\n"]
-    pub fn event_handlers(&self) -> terrars::ListRef<DialogflowCxPageEventHandlersElRef> {
+    pub fn event_handlers(&self) -> terrars::ListRef<DialogflowCxPage_EventHandlersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.event_handlers", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `form` after provisioning.\n"]
-    pub fn form(&self) -> terrars::ListRef<DialogflowCxPageFormElRef> {
+    pub fn form(&self) -> terrars::ListRef<DialogflowCxPage_FormRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.form", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `knowledge_connector_settings` after provisioning.\n"]
+    pub fn knowledge_connector_settings(&self) -> terrars::ListRef<DialogflowCxPage_KnowledgeConnectorSettingsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.knowledge_connector_settings", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DialogflowCxPageTimeoutsElRef {
-        DialogflowCxPageTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DialogflowCxPage_TimeoutsRef {
+        DialogflowCxPage_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `transition_routes` after provisioning.\n"]
-    pub fn transition_routes(&self) -> terrars::ListRef<DialogflowCxPageTransitionRoutesElRef> {
+    pub fn transition_routes(&self) -> terrars::ListRef<DialogflowCxPage_TransitionRoutesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.transition_routes", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DialogflowCxPageDynamic {
+    advanced_settings: std::option::Option<terrars::DynamicBlock<DialogflowCxPage_AdvancedSettings>>,
+    entry_fulfillment: std::option::Option<terrars::DynamicBlock<DialogflowCxPage_EntryFulfillment>>,
+    event_handlers: std::option::Option<terrars::DynamicBlock<DialogflowCxPage_EventHandlers>>,
+    form: std::option::Option<terrars::DynamicBlock<DialogflowCxPage_Form>>,
+    knowledge_connector_settings: std
+    ::option
+    ::Option<terrars::DynamicBlock<DialogflowCxPage_KnowledgeConnectorSettings>>,
+    transition_routes: std::option::Option<terrars::DynamicBlock<DialogflowCxPage_TransitionRoutes>>,
+}
+
 #[derive(Serialize)]
-pub struct DialogflowCxPageAdvancedSettingsElDtmfSettingsEl {
+pub struct DialogflowCxPage_AdvancedSettings_DtmfSettings {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -490,7 +555,7 @@ pub struct DialogflowCxPageAdvancedSettingsElDtmfSettingsEl {
     max_digits: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DialogflowCxPageAdvancedSettingsElDtmfSettingsEl {
+impl DialogflowCxPage_AdvancedSettings_DtmfSettings {
     #[doc =
         "Set the field `enabled`.\nIf true, incoming audio is processed for DTMF (dual tone multi frequency) events. For example, if the caller presses a button on their telephone keypad and DTMF processing is enabled, Dialogflow will detect the event (e.g. a \"3\" was pressed) in the incoming audio and pass the event to the bot to drive business logic (e.g. when 3 is pressed, return the account balance)."]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -511,8 +576,8 @@ impl DialogflowCxPageAdvancedSettingsElDtmfSettingsEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxPageAdvancedSettingsElDtmfSettingsEl {
-    type O = terrars::BlockAssignable<DialogflowCxPageAdvancedSettingsElDtmfSettingsEl>;
+impl terrars::ToListMappable for DialogflowCxPage_AdvancedSettings_DtmfSettings {
+    type O = terrars::BlockAssignable<DialogflowCxPage_AdvancedSettings_DtmfSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -523,11 +588,11 @@ impl terrars::ToListMappable for DialogflowCxPageAdvancedSettingsElDtmfSettingsE
     }
 }
 
-pub struct BuildDialogflowCxPageAdvancedSettingsElDtmfSettingsEl {}
+pub struct BuildDialogflowCxPage_AdvancedSettings_DtmfSettings {}
 
-impl BuildDialogflowCxPageAdvancedSettingsElDtmfSettingsEl {
-    pub fn build(self) -> DialogflowCxPageAdvancedSettingsElDtmfSettingsEl {
-        DialogflowCxPageAdvancedSettingsElDtmfSettingsEl {
+impl BuildDialogflowCxPage_AdvancedSettings_DtmfSettings {
+    pub fn build(self) -> DialogflowCxPage_AdvancedSettings_DtmfSettings {
+        DialogflowCxPage_AdvancedSettings_DtmfSettings {
             enabled: core::default::Default::default(),
             finish_digit: core::default::Default::default(),
             max_digits: core::default::Default::default(),
@@ -535,24 +600,26 @@ impl BuildDialogflowCxPageAdvancedSettingsElDtmfSettingsEl {
     }
 }
 
-pub struct DialogflowCxPageAdvancedSettingsElDtmfSettingsElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxPage_AdvancedSettings_DtmfSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxPageAdvancedSettingsElDtmfSettingsElRef {
+impl terrars::Ref for DialogflowCxPage_AdvancedSettings_DtmfSettingsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxPageAdvancedSettingsElDtmfSettingsElRef {
-        DialogflowCxPageAdvancedSettingsElDtmfSettingsElRef {
+    ) -> DialogflowCxPage_AdvancedSettings_DtmfSettingsRef {
+        DialogflowCxPage_AdvancedSettings_DtmfSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxPageAdvancedSettingsElDtmfSettingsElRef {
+impl DialogflowCxPage_AdvancedSettings_DtmfSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -576,22 +643,22 @@ impl DialogflowCxPageAdvancedSettingsElDtmfSettingsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct DialogflowCxPageAdvancedSettingsElDynamic {
-    dtmf_settings: std::option::Option<terrars::DynamicBlock<DialogflowCxPageAdvancedSettingsElDtmfSettingsEl>>,
+struct DialogflowCxPage_AdvancedSettingsDynamic {
+    dtmf_settings: std::option::Option<terrars::DynamicBlock<DialogflowCxPage_AdvancedSettings_DtmfSettings>>,
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxPageAdvancedSettingsEl {
+pub struct DialogflowCxPage_AdvancedSettings {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    dtmf_settings: std::option::Option<std::vec::Vec<DialogflowCxPageAdvancedSettingsElDtmfSettingsEl>>,
-    dynamic: DialogflowCxPageAdvancedSettingsElDynamic,
+    dtmf_settings: std::option::Option<std::vec::Vec<DialogflowCxPage_AdvancedSettings_DtmfSettings>>,
+    dynamic: DialogflowCxPage_AdvancedSettingsDynamic,
 }
 
-impl DialogflowCxPageAdvancedSettingsEl {
+impl DialogflowCxPage_AdvancedSettings {
     #[doc = "Set the field `dtmf_settings`.\n"]
     pub fn set_dtmf_settings(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPageAdvancedSettingsElDtmfSettingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPage_AdvancedSettings_DtmfSettings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -605,8 +672,8 @@ impl DialogflowCxPageAdvancedSettingsEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxPageAdvancedSettingsEl {
-    type O = terrars::BlockAssignable<DialogflowCxPageAdvancedSettingsEl>;
+impl terrars::ToListMappable for DialogflowCxPage_AdvancedSettings {
+    type O = terrars::BlockAssignable<DialogflowCxPage_AdvancedSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -617,49 +684,51 @@ impl terrars::ToListMappable for DialogflowCxPageAdvancedSettingsEl {
     }
 }
 
-pub struct BuildDialogflowCxPageAdvancedSettingsEl {}
+pub struct BuildDialogflowCxPage_AdvancedSettings {}
 
-impl BuildDialogflowCxPageAdvancedSettingsEl {
-    pub fn build(self) -> DialogflowCxPageAdvancedSettingsEl {
-        DialogflowCxPageAdvancedSettingsEl {
+impl BuildDialogflowCxPage_AdvancedSettings {
+    pub fn build(self) -> DialogflowCxPage_AdvancedSettings {
+        DialogflowCxPage_AdvancedSettings {
             dtmf_settings: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct DialogflowCxPageAdvancedSettingsElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxPage_AdvancedSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxPageAdvancedSettingsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxPageAdvancedSettingsElRef {
-        DialogflowCxPageAdvancedSettingsElRef {
+impl terrars::Ref for DialogflowCxPage_AdvancedSettingsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxPage_AdvancedSettingsRef {
+        DialogflowCxPage_AdvancedSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxPageAdvancedSettingsElRef {
+impl DialogflowCxPage_AdvancedSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `dtmf_settings` after provisioning.\n"]
-    pub fn dtmf_settings(&self) -> terrars::ListRef<DialogflowCxPageAdvancedSettingsElDtmfSettingsElRef> {
+    pub fn dtmf_settings(&self) -> terrars::ListRef<DialogflowCxPage_AdvancedSettings_DtmfSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dtmf_settings", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxPageEntryFulfillmentElConditionalCasesEl {
+pub struct DialogflowCxPage_EntryFulfillment_ConditionalCases {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cases: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DialogflowCxPageEntryFulfillmentElConditionalCasesEl {
+impl DialogflowCxPage_EntryFulfillment_ConditionalCases {
     #[doc =
         "Set the field `cases`.\nA JSON encoded list of cascading if-else conditions. Cases are mutually exclusive. The first one with a matching condition is selected, all the rest ignored.\nSee [Case](https://cloud.google.com/dialogflow/cx/docs/reference/rest/v3/Fulfillment#case) for the schema."]
     pub fn set_cases(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -668,8 +737,8 @@ impl DialogflowCxPageEntryFulfillmentElConditionalCasesEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxPageEntryFulfillmentElConditionalCasesEl {
-    type O = terrars::BlockAssignable<DialogflowCxPageEntryFulfillmentElConditionalCasesEl>;
+impl terrars::ToListMappable for DialogflowCxPage_EntryFulfillment_ConditionalCases {
+    type O = terrars::BlockAssignable<DialogflowCxPage_EntryFulfillment_ConditionalCases>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -680,32 +749,34 @@ impl terrars::ToListMappable for DialogflowCxPageEntryFulfillmentElConditionalCa
     }
 }
 
-pub struct BuildDialogflowCxPageEntryFulfillmentElConditionalCasesEl {}
+pub struct BuildDialogflowCxPage_EntryFulfillment_ConditionalCases {}
 
-impl BuildDialogflowCxPageEntryFulfillmentElConditionalCasesEl {
-    pub fn build(self) -> DialogflowCxPageEntryFulfillmentElConditionalCasesEl {
-        DialogflowCxPageEntryFulfillmentElConditionalCasesEl { cases: core::default::Default::default() }
+impl BuildDialogflowCxPage_EntryFulfillment_ConditionalCases {
+    pub fn build(self) -> DialogflowCxPage_EntryFulfillment_ConditionalCases {
+        DialogflowCxPage_EntryFulfillment_ConditionalCases { cases: core::default::Default::default() }
     }
 }
 
-pub struct DialogflowCxPageEntryFulfillmentElConditionalCasesElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxPage_EntryFulfillment_ConditionalCasesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxPageEntryFulfillmentElConditionalCasesElRef {
+impl terrars::Ref for DialogflowCxPage_EntryFulfillment_ConditionalCasesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxPageEntryFulfillmentElConditionalCasesElRef {
-        DialogflowCxPageEntryFulfillmentElConditionalCasesElRef {
+    ) -> DialogflowCxPage_EntryFulfillment_ConditionalCasesRef {
+        DialogflowCxPage_EntryFulfillment_ConditionalCasesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxPageEntryFulfillmentElConditionalCasesElRef {
+impl DialogflowCxPage_EntryFulfillment_ConditionalCasesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -718,12 +789,12 @@ impl DialogflowCxPageEntryFulfillmentElConditionalCasesElRef {
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxPageEntryFulfillmentElMessagesElConversationSuccessEl {
+pub struct DialogflowCxPage_EntryFulfillment_Messages_ConversationSuccess {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     metadata: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DialogflowCxPageEntryFulfillmentElMessagesElConversationSuccessEl {
+impl DialogflowCxPage_EntryFulfillment_Messages_ConversationSuccess {
     #[doc = "Set the field `metadata`.\nCustom metadata. Dialogflow doesn't impose any structure on this."]
     pub fn set_metadata(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.metadata = std::option::Option::Some(v.into());
@@ -731,8 +802,8 @@ impl DialogflowCxPageEntryFulfillmentElMessagesElConversationSuccessEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxPageEntryFulfillmentElMessagesElConversationSuccessEl {
-    type O = terrars::BlockAssignable<DialogflowCxPageEntryFulfillmentElMessagesElConversationSuccessEl>;
+impl terrars::ToListMappable for DialogflowCxPage_EntryFulfillment_Messages_ConversationSuccess {
+    type O = terrars::BlockAssignable<DialogflowCxPage_EntryFulfillment_Messages_ConversationSuccess>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -743,34 +814,36 @@ impl terrars::ToListMappable for DialogflowCxPageEntryFulfillmentElMessagesElCon
     }
 }
 
-pub struct BuildDialogflowCxPageEntryFulfillmentElMessagesElConversationSuccessEl {}
+pub struct BuildDialogflowCxPage_EntryFulfillment_Messages_ConversationSuccess {}
 
-impl BuildDialogflowCxPageEntryFulfillmentElMessagesElConversationSuccessEl {
-    pub fn build(self) -> DialogflowCxPageEntryFulfillmentElMessagesElConversationSuccessEl {
-        DialogflowCxPageEntryFulfillmentElMessagesElConversationSuccessEl {
+impl BuildDialogflowCxPage_EntryFulfillment_Messages_ConversationSuccess {
+    pub fn build(self) -> DialogflowCxPage_EntryFulfillment_Messages_ConversationSuccess {
+        DialogflowCxPage_EntryFulfillment_Messages_ConversationSuccess {
             metadata: core::default::Default::default(),
         }
     }
 }
 
-pub struct DialogflowCxPageEntryFulfillmentElMessagesElConversationSuccessElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxPage_EntryFulfillment_Messages_ConversationSuccessRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxPageEntryFulfillmentElMessagesElConversationSuccessElRef {
+impl terrars::Ref for DialogflowCxPage_EntryFulfillment_Messages_ConversationSuccessRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxPageEntryFulfillmentElMessagesElConversationSuccessElRef {
-        DialogflowCxPageEntryFulfillmentElMessagesElConversationSuccessElRef {
+    ) -> DialogflowCxPage_EntryFulfillment_Messages_ConversationSuccessRef {
+        DialogflowCxPage_EntryFulfillment_Messages_ConversationSuccessRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxPageEntryFulfillmentElMessagesElConversationSuccessElRef {
+impl DialogflowCxPage_EntryFulfillment_Messages_ConversationSuccessRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -783,12 +856,12 @@ impl DialogflowCxPageEntryFulfillmentElMessagesElConversationSuccessElRef {
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxPageEntryFulfillmentElMessagesElLiveAgentHandoffEl {
+pub struct DialogflowCxPage_EntryFulfillment_Messages_LiveAgentHandoff {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     metadata: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DialogflowCxPageEntryFulfillmentElMessagesElLiveAgentHandoffEl {
+impl DialogflowCxPage_EntryFulfillment_Messages_LiveAgentHandoff {
     #[doc = "Set the field `metadata`.\nCustom metadata. Dialogflow doesn't impose any structure on this."]
     pub fn set_metadata(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.metadata = std::option::Option::Some(v.into());
@@ -796,8 +869,8 @@ impl DialogflowCxPageEntryFulfillmentElMessagesElLiveAgentHandoffEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxPageEntryFulfillmentElMessagesElLiveAgentHandoffEl {
-    type O = terrars::BlockAssignable<DialogflowCxPageEntryFulfillmentElMessagesElLiveAgentHandoffEl>;
+impl terrars::ToListMappable for DialogflowCxPage_EntryFulfillment_Messages_LiveAgentHandoff {
+    type O = terrars::BlockAssignable<DialogflowCxPage_EntryFulfillment_Messages_LiveAgentHandoff>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -808,34 +881,34 @@ impl terrars::ToListMappable for DialogflowCxPageEntryFulfillmentElMessagesElLiv
     }
 }
 
-pub struct BuildDialogflowCxPageEntryFulfillmentElMessagesElLiveAgentHandoffEl {}
+pub struct BuildDialogflowCxPage_EntryFulfillment_Messages_LiveAgentHandoff {}
 
-impl BuildDialogflowCxPageEntryFulfillmentElMessagesElLiveAgentHandoffEl {
-    pub fn build(self) -> DialogflowCxPageEntryFulfillmentElMessagesElLiveAgentHandoffEl {
-        DialogflowCxPageEntryFulfillmentElMessagesElLiveAgentHandoffEl {
-            metadata: core::default::Default::default(),
-        }
+impl BuildDialogflowCxPage_EntryFulfillment_Messages_LiveAgentHandoff {
+    pub fn build(self) -> DialogflowCxPage_EntryFulfillment_Messages_LiveAgentHandoff {
+        DialogflowCxPage_EntryFulfillment_Messages_LiveAgentHandoff { metadata: core::default::Default::default() }
     }
 }
 
-pub struct DialogflowCxPageEntryFulfillmentElMessagesElLiveAgentHandoffElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxPage_EntryFulfillment_Messages_LiveAgentHandoffRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxPageEntryFulfillmentElMessagesElLiveAgentHandoffElRef {
+impl terrars::Ref for DialogflowCxPage_EntryFulfillment_Messages_LiveAgentHandoffRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxPageEntryFulfillmentElMessagesElLiveAgentHandoffElRef {
-        DialogflowCxPageEntryFulfillmentElMessagesElLiveAgentHandoffElRef {
+    ) -> DialogflowCxPage_EntryFulfillment_Messages_LiveAgentHandoffRef {
+        DialogflowCxPage_EntryFulfillment_Messages_LiveAgentHandoffRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxPageEntryFulfillmentElMessagesElLiveAgentHandoffElRef {
+impl DialogflowCxPage_EntryFulfillment_Messages_LiveAgentHandoffRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -848,14 +921,14 @@ impl DialogflowCxPageEntryFulfillmentElMessagesElLiveAgentHandoffElRef {
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxPageEntryFulfillmentElMessagesElOutputAudioTextEl {
+pub struct DialogflowCxPage_EntryFulfillment_Messages_OutputAudioText {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ssml: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     text: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DialogflowCxPageEntryFulfillmentElMessagesElOutputAudioTextEl {
+impl DialogflowCxPage_EntryFulfillment_Messages_OutputAudioText {
     #[doc = "Set the field `ssml`.\nThe SSML text to be synthesized. For more information, see SSML."]
     pub fn set_ssml(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.ssml = std::option::Option::Some(v.into());
@@ -869,8 +942,8 @@ impl DialogflowCxPageEntryFulfillmentElMessagesElOutputAudioTextEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxPageEntryFulfillmentElMessagesElOutputAudioTextEl {
-    type O = terrars::BlockAssignable<DialogflowCxPageEntryFulfillmentElMessagesElOutputAudioTextEl>;
+impl terrars::ToListMappable for DialogflowCxPage_EntryFulfillment_Messages_OutputAudioText {
+    type O = terrars::BlockAssignable<DialogflowCxPage_EntryFulfillment_Messages_OutputAudioText>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -881,35 +954,37 @@ impl terrars::ToListMappable for DialogflowCxPageEntryFulfillmentElMessagesElOut
     }
 }
 
-pub struct BuildDialogflowCxPageEntryFulfillmentElMessagesElOutputAudioTextEl {}
+pub struct BuildDialogflowCxPage_EntryFulfillment_Messages_OutputAudioText {}
 
-impl BuildDialogflowCxPageEntryFulfillmentElMessagesElOutputAudioTextEl {
-    pub fn build(self) -> DialogflowCxPageEntryFulfillmentElMessagesElOutputAudioTextEl {
-        DialogflowCxPageEntryFulfillmentElMessagesElOutputAudioTextEl {
+impl BuildDialogflowCxPage_EntryFulfillment_Messages_OutputAudioText {
+    pub fn build(self) -> DialogflowCxPage_EntryFulfillment_Messages_OutputAudioText {
+        DialogflowCxPage_EntryFulfillment_Messages_OutputAudioText {
             ssml: core::default::Default::default(),
             text: core::default::Default::default(),
         }
     }
 }
 
-pub struct DialogflowCxPageEntryFulfillmentElMessagesElOutputAudioTextElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxPage_EntryFulfillment_Messages_OutputAudioTextRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxPageEntryFulfillmentElMessagesElOutputAudioTextElRef {
+impl terrars::Ref for DialogflowCxPage_EntryFulfillment_Messages_OutputAudioTextRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxPageEntryFulfillmentElMessagesElOutputAudioTextElRef {
-        DialogflowCxPageEntryFulfillmentElMessagesElOutputAudioTextElRef {
+    ) -> DialogflowCxPage_EntryFulfillment_Messages_OutputAudioTextRef {
+        DialogflowCxPage_EntryFulfillment_Messages_OutputAudioTextRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxPageEntryFulfillmentElMessagesElOutputAudioTextElRef {
+impl DialogflowCxPage_EntryFulfillment_Messages_OutputAudioTextRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -933,14 +1008,14 @@ impl DialogflowCxPageEntryFulfillmentElMessagesElOutputAudioTextElRef {
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxPageEntryFulfillmentElMessagesElPlayAudioEl {
+pub struct DialogflowCxPage_EntryFulfillment_Messages_PlayAudio {
     audio_uri: terrars::PrimField<std::string::String>,
 }
 
-impl DialogflowCxPageEntryFulfillmentElMessagesElPlayAudioEl { }
+impl DialogflowCxPage_EntryFulfillment_Messages_PlayAudio { }
 
-impl terrars::ToListMappable for DialogflowCxPageEntryFulfillmentElMessagesElPlayAudioEl {
-    type O = terrars::BlockAssignable<DialogflowCxPageEntryFulfillmentElMessagesElPlayAudioEl>;
+impl terrars::ToListMappable for DialogflowCxPage_EntryFulfillment_Messages_PlayAudio {
+    type O = terrars::BlockAssignable<DialogflowCxPage_EntryFulfillment_Messages_PlayAudio>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -951,36 +1026,38 @@ impl terrars::ToListMappable for DialogflowCxPageEntryFulfillmentElMessagesElPla
     }
 }
 
-pub struct BuildDialogflowCxPageEntryFulfillmentElMessagesElPlayAudioEl {
+pub struct BuildDialogflowCxPage_EntryFulfillment_Messages_PlayAudio {
     #[doc =
         "URI of the audio clip. Dialogflow does not impose any validation on this value. It is specific to the client that reads it."]
     pub audio_uri: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDialogflowCxPageEntryFulfillmentElMessagesElPlayAudioEl {
-    pub fn build(self) -> DialogflowCxPageEntryFulfillmentElMessagesElPlayAudioEl {
-        DialogflowCxPageEntryFulfillmentElMessagesElPlayAudioEl { audio_uri: self.audio_uri }
+impl BuildDialogflowCxPage_EntryFulfillment_Messages_PlayAudio {
+    pub fn build(self) -> DialogflowCxPage_EntryFulfillment_Messages_PlayAudio {
+        DialogflowCxPage_EntryFulfillment_Messages_PlayAudio { audio_uri: self.audio_uri }
     }
 }
 
-pub struct DialogflowCxPageEntryFulfillmentElMessagesElPlayAudioElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxPage_EntryFulfillment_Messages_PlayAudioRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxPageEntryFulfillmentElMessagesElPlayAudioElRef {
+impl terrars::Ref for DialogflowCxPage_EntryFulfillment_Messages_PlayAudioRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxPageEntryFulfillmentElMessagesElPlayAudioElRef {
-        DialogflowCxPageEntryFulfillmentElMessagesElPlayAudioElRef {
+    ) -> DialogflowCxPage_EntryFulfillment_Messages_PlayAudioRef {
+        DialogflowCxPage_EntryFulfillment_Messages_PlayAudioRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxPageEntryFulfillmentElMessagesElPlayAudioElRef {
+impl DialogflowCxPage_EntryFulfillment_Messages_PlayAudioRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -999,14 +1076,14 @@ impl DialogflowCxPageEntryFulfillmentElMessagesElPlayAudioElRef {
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxPageEntryFulfillmentElMessagesElTelephonyTransferCallEl {
+pub struct DialogflowCxPage_EntryFulfillment_Messages_TelephonyTransferCall {
     phone_number: terrars::PrimField<std::string::String>,
 }
 
-impl DialogflowCxPageEntryFulfillmentElMessagesElTelephonyTransferCallEl { }
+impl DialogflowCxPage_EntryFulfillment_Messages_TelephonyTransferCall { }
 
-impl terrars::ToListMappable for DialogflowCxPageEntryFulfillmentElMessagesElTelephonyTransferCallEl {
-    type O = terrars::BlockAssignable<DialogflowCxPageEntryFulfillmentElMessagesElTelephonyTransferCallEl>;
+impl terrars::ToListMappable for DialogflowCxPage_EntryFulfillment_Messages_TelephonyTransferCall {
+    type O = terrars::BlockAssignable<DialogflowCxPage_EntryFulfillment_Messages_TelephonyTransferCall>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1017,35 +1094,37 @@ impl terrars::ToListMappable for DialogflowCxPageEntryFulfillmentElMessagesElTel
     }
 }
 
-pub struct BuildDialogflowCxPageEntryFulfillmentElMessagesElTelephonyTransferCallEl {
+pub struct BuildDialogflowCxPage_EntryFulfillment_Messages_TelephonyTransferCall {
     #[doc = "Transfer the call to a phone number in E.164 format."]
     pub phone_number: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDialogflowCxPageEntryFulfillmentElMessagesElTelephonyTransferCallEl {
-    pub fn build(self) -> DialogflowCxPageEntryFulfillmentElMessagesElTelephonyTransferCallEl {
-        DialogflowCxPageEntryFulfillmentElMessagesElTelephonyTransferCallEl { phone_number: self.phone_number }
+impl BuildDialogflowCxPage_EntryFulfillment_Messages_TelephonyTransferCall {
+    pub fn build(self) -> DialogflowCxPage_EntryFulfillment_Messages_TelephonyTransferCall {
+        DialogflowCxPage_EntryFulfillment_Messages_TelephonyTransferCall { phone_number: self.phone_number }
     }
 }
 
-pub struct DialogflowCxPageEntryFulfillmentElMessagesElTelephonyTransferCallElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxPage_EntryFulfillment_Messages_TelephonyTransferCallRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxPageEntryFulfillmentElMessagesElTelephonyTransferCallElRef {
+impl terrars::Ref for DialogflowCxPage_EntryFulfillment_Messages_TelephonyTransferCallRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxPageEntryFulfillmentElMessagesElTelephonyTransferCallElRef {
-        DialogflowCxPageEntryFulfillmentElMessagesElTelephonyTransferCallElRef {
+    ) -> DialogflowCxPage_EntryFulfillment_Messages_TelephonyTransferCallRef {
+        DialogflowCxPage_EntryFulfillment_Messages_TelephonyTransferCallRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxPageEntryFulfillmentElMessagesElTelephonyTransferCallElRef {
+impl DialogflowCxPage_EntryFulfillment_Messages_TelephonyTransferCallRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1058,12 +1137,12 @@ impl DialogflowCxPageEntryFulfillmentElMessagesElTelephonyTransferCallElRef {
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxPageEntryFulfillmentElMessagesElTextEl {
+pub struct DialogflowCxPage_EntryFulfillment_Messages_Text {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     text: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DialogflowCxPageEntryFulfillmentElMessagesElTextEl {
+impl DialogflowCxPage_EntryFulfillment_Messages_Text {
     #[doc = "Set the field `text`.\nA collection of text responses."]
     pub fn set_text(
         mut self,
@@ -1074,8 +1153,8 @@ impl DialogflowCxPageEntryFulfillmentElMessagesElTextEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxPageEntryFulfillmentElMessagesElTextEl {
-    type O = terrars::BlockAssignable<DialogflowCxPageEntryFulfillmentElMessagesElTextEl>;
+impl terrars::ToListMappable for DialogflowCxPage_EntryFulfillment_Messages_Text {
+    type O = terrars::BlockAssignable<DialogflowCxPage_EntryFulfillment_Messages_Text>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1086,32 +1165,34 @@ impl terrars::ToListMappable for DialogflowCxPageEntryFulfillmentElMessagesElTex
     }
 }
 
-pub struct BuildDialogflowCxPageEntryFulfillmentElMessagesElTextEl {}
+pub struct BuildDialogflowCxPage_EntryFulfillment_Messages_Text {}
 
-impl BuildDialogflowCxPageEntryFulfillmentElMessagesElTextEl {
-    pub fn build(self) -> DialogflowCxPageEntryFulfillmentElMessagesElTextEl {
-        DialogflowCxPageEntryFulfillmentElMessagesElTextEl { text: core::default::Default::default() }
+impl BuildDialogflowCxPage_EntryFulfillment_Messages_Text {
+    pub fn build(self) -> DialogflowCxPage_EntryFulfillment_Messages_Text {
+        DialogflowCxPage_EntryFulfillment_Messages_Text { text: core::default::Default::default() }
     }
 }
 
-pub struct DialogflowCxPageEntryFulfillmentElMessagesElTextElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxPage_EntryFulfillment_Messages_TextRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxPageEntryFulfillmentElMessagesElTextElRef {
+impl terrars::Ref for DialogflowCxPage_EntryFulfillment_Messages_TextRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxPageEntryFulfillmentElMessagesElTextElRef {
-        DialogflowCxPageEntryFulfillmentElMessagesElTextElRef {
+    ) -> DialogflowCxPage_EntryFulfillment_Messages_TextRef {
+        DialogflowCxPage_EntryFulfillment_Messages_TextRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxPageEntryFulfillmentElMessagesElTextElRef {
+impl DialogflowCxPage_EntryFulfillment_Messages_TextRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1129,25 +1210,25 @@ impl DialogflowCxPageEntryFulfillmentElMessagesElTextElRef {
 }
 
 #[derive(Serialize, Default)]
-struct DialogflowCxPageEntryFulfillmentElMessagesElDynamic {
+struct DialogflowCxPage_EntryFulfillment_MessagesDynamic {
     conversation_success: std
     ::option
-    ::Option<terrars::DynamicBlock<DialogflowCxPageEntryFulfillmentElMessagesElConversationSuccessEl>>,
+    ::Option<terrars::DynamicBlock<DialogflowCxPage_EntryFulfillment_Messages_ConversationSuccess>>,
     live_agent_handoff: std
     ::option
-    ::Option<terrars::DynamicBlock<DialogflowCxPageEntryFulfillmentElMessagesElLiveAgentHandoffEl>>,
+    ::Option<terrars::DynamicBlock<DialogflowCxPage_EntryFulfillment_Messages_LiveAgentHandoff>>,
     output_audio_text: std
     ::option
-    ::Option<terrars::DynamicBlock<DialogflowCxPageEntryFulfillmentElMessagesElOutputAudioTextEl>>,
-    play_audio: std::option::Option<terrars::DynamicBlock<DialogflowCxPageEntryFulfillmentElMessagesElPlayAudioEl>>,
+    ::Option<terrars::DynamicBlock<DialogflowCxPage_EntryFulfillment_Messages_OutputAudioText>>,
+    play_audio: std::option::Option<terrars::DynamicBlock<DialogflowCxPage_EntryFulfillment_Messages_PlayAudio>>,
     telephony_transfer_call: std
     ::option
-    ::Option<terrars::DynamicBlock<DialogflowCxPageEntryFulfillmentElMessagesElTelephonyTransferCallEl>>,
-    text: std::option::Option<terrars::DynamicBlock<DialogflowCxPageEntryFulfillmentElMessagesElTextEl>>,
+    ::Option<terrars::DynamicBlock<DialogflowCxPage_EntryFulfillment_Messages_TelephonyTransferCall>>,
+    text: std::option::Option<terrars::DynamicBlock<DialogflowCxPage_EntryFulfillment_Messages_Text>>,
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxPageEntryFulfillmentElMessagesEl {
+pub struct DialogflowCxPage_EntryFulfillment_Messages {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     channel: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1155,25 +1236,23 @@ pub struct DialogflowCxPageEntryFulfillmentElMessagesEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     conversation_success: std
     ::option
-    ::Option<std::vec::Vec<DialogflowCxPageEntryFulfillmentElMessagesElConversationSuccessEl>>,
+    ::Option<std::vec::Vec<DialogflowCxPage_EntryFulfillment_Messages_ConversationSuccess>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    live_agent_handoff: std
-    ::option
-    ::Option<std::vec::Vec<DialogflowCxPageEntryFulfillmentElMessagesElLiveAgentHandoffEl>>,
+    live_agent_handoff: std::option::Option<std::vec::Vec<DialogflowCxPage_EntryFulfillment_Messages_LiveAgentHandoff>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    output_audio_text: std::option::Option<std::vec::Vec<DialogflowCxPageEntryFulfillmentElMessagesElOutputAudioTextEl>>,
+    output_audio_text: std::option::Option<std::vec::Vec<DialogflowCxPage_EntryFulfillment_Messages_OutputAudioText>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    play_audio: std::option::Option<std::vec::Vec<DialogflowCxPageEntryFulfillmentElMessagesElPlayAudioEl>>,
+    play_audio: std::option::Option<std::vec::Vec<DialogflowCxPage_EntryFulfillment_Messages_PlayAudio>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     telephony_transfer_call: std
     ::option
-    ::Option<std::vec::Vec<DialogflowCxPageEntryFulfillmentElMessagesElTelephonyTransferCallEl>>,
+    ::Option<std::vec::Vec<DialogflowCxPage_EntryFulfillment_Messages_TelephonyTransferCall>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    text: std::option::Option<std::vec::Vec<DialogflowCxPageEntryFulfillmentElMessagesElTextEl>>,
-    dynamic: DialogflowCxPageEntryFulfillmentElMessagesElDynamic,
+    text: std::option::Option<std::vec::Vec<DialogflowCxPage_EntryFulfillment_Messages_Text>>,
+    dynamic: DialogflowCxPage_EntryFulfillment_MessagesDynamic,
 }
 
-impl DialogflowCxPageEntryFulfillmentElMessagesEl {
+impl DialogflowCxPage_EntryFulfillment_Messages {
     #[doc =
         "Set the field `channel`.\nThe channel which the response is associated with. Clients can specify the channel via QueryParameters.channel, and only associated channel response will be returned."]
     pub fn set_channel(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1195,9 +1274,7 @@ impl DialogflowCxPageEntryFulfillmentElMessagesEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<DialogflowCxPageEntryFulfillmentElMessagesElConversationSuccessEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<DialogflowCxPage_EntryFulfillment_Messages_ConversationSuccess>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1218,7 +1295,7 @@ impl DialogflowCxPageEntryFulfillmentElMessagesEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<DialogflowCxPageEntryFulfillmentElMessagesElLiveAgentHandoffEl>>,
+                    ::Into<terrars::BlockAssignable<DialogflowCxPage_EntryFulfillment_Messages_LiveAgentHandoff>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1239,7 +1316,7 @@ impl DialogflowCxPageEntryFulfillmentElMessagesEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<DialogflowCxPageEntryFulfillmentElMessagesElOutputAudioTextEl>>,
+                    ::Into<terrars::BlockAssignable<DialogflowCxPage_EntryFulfillment_Messages_OutputAudioText>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1255,12 +1332,7 @@ impl DialogflowCxPageEntryFulfillmentElMessagesEl {
     #[doc = "Set the field `play_audio`.\n"]
     pub fn set_play_audio(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<DialogflowCxPageEntryFulfillmentElMessagesElPlayAudioEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPage_EntryFulfillment_Messages_PlayAudio>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1282,7 +1354,7 @@ impl DialogflowCxPageEntryFulfillmentElMessagesEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<DialogflowCxPageEntryFulfillmentElMessagesElTelephonyTransferCallEl>,
+                        terrars::BlockAssignable<DialogflowCxPage_EntryFulfillment_Messages_TelephonyTransferCall>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1299,7 +1371,7 @@ impl DialogflowCxPageEntryFulfillmentElMessagesEl {
     #[doc = "Set the field `text`.\n"]
     pub fn set_text(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPageEntryFulfillmentElMessagesElTextEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPage_EntryFulfillment_Messages_Text>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1313,8 +1385,8 @@ impl DialogflowCxPageEntryFulfillmentElMessagesEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxPageEntryFulfillmentElMessagesEl {
-    type O = terrars::BlockAssignable<DialogflowCxPageEntryFulfillmentElMessagesEl>;
+impl terrars::ToListMappable for DialogflowCxPage_EntryFulfillment_Messages {
+    type O = terrars::BlockAssignable<DialogflowCxPage_EntryFulfillment_Messages>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1325,11 +1397,11 @@ impl terrars::ToListMappable for DialogflowCxPageEntryFulfillmentElMessagesEl {
     }
 }
 
-pub struct BuildDialogflowCxPageEntryFulfillmentElMessagesEl {}
+pub struct BuildDialogflowCxPage_EntryFulfillment_Messages {}
 
-impl BuildDialogflowCxPageEntryFulfillmentElMessagesEl {
-    pub fn build(self) -> DialogflowCxPageEntryFulfillmentElMessagesEl {
-        DialogflowCxPageEntryFulfillmentElMessagesEl {
+impl BuildDialogflowCxPage_EntryFulfillment_Messages {
+    pub fn build(self) -> DialogflowCxPage_EntryFulfillment_Messages {
+        DialogflowCxPage_EntryFulfillment_Messages {
             channel: core::default::Default::default(),
             payload: core::default::Default::default(),
             conversation_success: core::default::Default::default(),
@@ -1343,24 +1415,23 @@ impl BuildDialogflowCxPageEntryFulfillmentElMessagesEl {
     }
 }
 
-pub struct DialogflowCxPageEntryFulfillmentElMessagesElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxPage_EntryFulfillment_MessagesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxPageEntryFulfillmentElMessagesElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DialogflowCxPageEntryFulfillmentElMessagesElRef {
-        DialogflowCxPageEntryFulfillmentElMessagesElRef {
+impl terrars::Ref for DialogflowCxPage_EntryFulfillment_MessagesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxPage_EntryFulfillment_MessagesRef {
+        DialogflowCxPage_EntryFulfillment_MessagesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxPageEntryFulfillmentElMessagesElRef {
+impl DialogflowCxPage_EntryFulfillment_MessagesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1379,51 +1450,47 @@ impl DialogflowCxPageEntryFulfillmentElMessagesElRef {
     #[doc = "Get a reference to the value of field `conversation_success` after provisioning.\n"]
     pub fn conversation_success(
         &self,
-    ) -> terrars::ListRef<DialogflowCxPageEntryFulfillmentElMessagesElConversationSuccessElRef> {
+    ) -> terrars::ListRef<DialogflowCxPage_EntryFulfillment_Messages_ConversationSuccessRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.conversation_success", self.base))
     }
 
     #[doc = "Get a reference to the value of field `live_agent_handoff` after provisioning.\n"]
-    pub fn live_agent_handoff(
-        &self,
-    ) -> terrars::ListRef<DialogflowCxPageEntryFulfillmentElMessagesElLiveAgentHandoffElRef> {
+    pub fn live_agent_handoff(&self) -> terrars::ListRef<DialogflowCxPage_EntryFulfillment_Messages_LiveAgentHandoffRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.live_agent_handoff", self.base))
     }
 
     #[doc = "Get a reference to the value of field `output_audio_text` after provisioning.\n"]
-    pub fn output_audio_text(
-        &self,
-    ) -> terrars::ListRef<DialogflowCxPageEntryFulfillmentElMessagesElOutputAudioTextElRef> {
+    pub fn output_audio_text(&self) -> terrars::ListRef<DialogflowCxPage_EntryFulfillment_Messages_OutputAudioTextRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.output_audio_text", self.base))
     }
 
     #[doc = "Get a reference to the value of field `play_audio` after provisioning.\n"]
-    pub fn play_audio(&self) -> terrars::ListRef<DialogflowCxPageEntryFulfillmentElMessagesElPlayAudioElRef> {
+    pub fn play_audio(&self) -> terrars::ListRef<DialogflowCxPage_EntryFulfillment_Messages_PlayAudioRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.play_audio", self.base))
     }
 
     #[doc = "Get a reference to the value of field `telephony_transfer_call` after provisioning.\n"]
     pub fn telephony_transfer_call(
         &self,
-    ) -> terrars::ListRef<DialogflowCxPageEntryFulfillmentElMessagesElTelephonyTransferCallElRef> {
+    ) -> terrars::ListRef<DialogflowCxPage_EntryFulfillment_Messages_TelephonyTransferCallRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.telephony_transfer_call", self.base))
     }
 
     #[doc = "Get a reference to the value of field `text` after provisioning.\n"]
-    pub fn text(&self) -> terrars::ListRef<DialogflowCxPageEntryFulfillmentElMessagesElTextElRef> {
+    pub fn text(&self) -> terrars::ListRef<DialogflowCxPage_EntryFulfillment_Messages_TextRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.text", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxPageEntryFulfillmentElSetParameterActionsEl {
+pub struct DialogflowCxPage_EntryFulfillment_SetParameterActions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     parameter: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DialogflowCxPageEntryFulfillmentElSetParameterActionsEl {
+impl DialogflowCxPage_EntryFulfillment_SetParameterActions {
     #[doc = "Set the field `parameter`.\nDisplay name of the parameter."]
     pub fn set_parameter(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.parameter = std::option::Option::Some(v.into());
@@ -1437,8 +1504,8 @@ impl DialogflowCxPageEntryFulfillmentElSetParameterActionsEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxPageEntryFulfillmentElSetParameterActionsEl {
-    type O = terrars::BlockAssignable<DialogflowCxPageEntryFulfillmentElSetParameterActionsEl>;
+impl terrars::ToListMappable for DialogflowCxPage_EntryFulfillment_SetParameterActions {
+    type O = terrars::BlockAssignable<DialogflowCxPage_EntryFulfillment_SetParameterActions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1449,35 +1516,37 @@ impl terrars::ToListMappable for DialogflowCxPageEntryFulfillmentElSetParameterA
     }
 }
 
-pub struct BuildDialogflowCxPageEntryFulfillmentElSetParameterActionsEl {}
+pub struct BuildDialogflowCxPage_EntryFulfillment_SetParameterActions {}
 
-impl BuildDialogflowCxPageEntryFulfillmentElSetParameterActionsEl {
-    pub fn build(self) -> DialogflowCxPageEntryFulfillmentElSetParameterActionsEl {
-        DialogflowCxPageEntryFulfillmentElSetParameterActionsEl {
+impl BuildDialogflowCxPage_EntryFulfillment_SetParameterActions {
+    pub fn build(self) -> DialogflowCxPage_EntryFulfillment_SetParameterActions {
+        DialogflowCxPage_EntryFulfillment_SetParameterActions {
             parameter: core::default::Default::default(),
             value: core::default::Default::default(),
         }
     }
 }
 
-pub struct DialogflowCxPageEntryFulfillmentElSetParameterActionsElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxPage_EntryFulfillment_SetParameterActionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxPageEntryFulfillmentElSetParameterActionsElRef {
+impl terrars::Ref for DialogflowCxPage_EntryFulfillment_SetParameterActionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxPageEntryFulfillmentElSetParameterActionsElRef {
-        DialogflowCxPageEntryFulfillmentElSetParameterActionsElRef {
+    ) -> DialogflowCxPage_EntryFulfillment_SetParameterActionsRef {
+        DialogflowCxPage_EntryFulfillment_SetParameterActionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxPageEntryFulfillmentElSetParameterActionsElRef {
+impl DialogflowCxPage_EntryFulfillment_SetParameterActionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1495,18 +1564,16 @@ impl DialogflowCxPageEntryFulfillmentElSetParameterActionsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct DialogflowCxPageEntryFulfillmentElDynamic {
-    conditional_cases: std
-    ::option
-    ::Option<terrars::DynamicBlock<DialogflowCxPageEntryFulfillmentElConditionalCasesEl>>,
-    messages: std::option::Option<terrars::DynamicBlock<DialogflowCxPageEntryFulfillmentElMessagesEl>>,
+struct DialogflowCxPage_EntryFulfillmentDynamic {
+    conditional_cases: std::option::Option<terrars::DynamicBlock<DialogflowCxPage_EntryFulfillment_ConditionalCases>>,
+    messages: std::option::Option<terrars::DynamicBlock<DialogflowCxPage_EntryFulfillment_Messages>>,
     set_parameter_actions: std
     ::option
-    ::Option<terrars::DynamicBlock<DialogflowCxPageEntryFulfillmentElSetParameterActionsEl>>,
+    ::Option<terrars::DynamicBlock<DialogflowCxPage_EntryFulfillment_SetParameterActions>>,
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxPageEntryFulfillmentEl {
+pub struct DialogflowCxPage_EntryFulfillment {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     return_partial_responses: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1514,15 +1581,15 @@ pub struct DialogflowCxPageEntryFulfillmentEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     webhook: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    conditional_cases: std::option::Option<std::vec::Vec<DialogflowCxPageEntryFulfillmentElConditionalCasesEl>>,
+    conditional_cases: std::option::Option<std::vec::Vec<DialogflowCxPage_EntryFulfillment_ConditionalCases>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    messages: std::option::Option<std::vec::Vec<DialogflowCxPageEntryFulfillmentElMessagesEl>>,
+    messages: std::option::Option<std::vec::Vec<DialogflowCxPage_EntryFulfillment_Messages>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    set_parameter_actions: std::option::Option<std::vec::Vec<DialogflowCxPageEntryFulfillmentElSetParameterActionsEl>>,
-    dynamic: DialogflowCxPageEntryFulfillmentElDynamic,
+    set_parameter_actions: std::option::Option<std::vec::Vec<DialogflowCxPage_EntryFulfillment_SetParameterActions>>,
+    dynamic: DialogflowCxPage_EntryFulfillmentDynamic,
 }
 
-impl DialogflowCxPageEntryFulfillmentEl {
+impl DialogflowCxPage_EntryFulfillment {
     #[doc =
         "Set the field `return_partial_responses`.\nWhether Dialogflow should return currently queued fulfillment response messages in streaming APIs. If a webhook is specified, it happens before Dialogflow invokes webhook. Warning: 1) This flag only affects streaming API. Responses are still queued and returned once in non-streaming API. 2) The flag can be enabled in any fulfillment but only the first 3 partial responses will be returned. You may only want to apply it to fulfillments that have slow webhooks."]
     pub fn set_return_partial_responses(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -1547,7 +1614,7 @@ impl DialogflowCxPageEntryFulfillmentEl {
     #[doc = "Set the field `conditional_cases`.\n"]
     pub fn set_conditional_cases(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPageEntryFulfillmentElConditionalCasesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPage_EntryFulfillment_ConditionalCases>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1563,7 +1630,7 @@ impl DialogflowCxPageEntryFulfillmentEl {
     #[doc = "Set the field `messages`.\n"]
     pub fn set_messages(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPageEntryFulfillmentElMessagesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPage_EntryFulfillment_Messages>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1579,12 +1646,7 @@ impl DialogflowCxPageEntryFulfillmentEl {
     #[doc = "Set the field `set_parameter_actions`.\n"]
     pub fn set_set_parameter_actions(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<DialogflowCxPageEntryFulfillmentElSetParameterActionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPage_EntryFulfillment_SetParameterActions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1598,8 +1660,8 @@ impl DialogflowCxPageEntryFulfillmentEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxPageEntryFulfillmentEl {
-    type O = terrars::BlockAssignable<DialogflowCxPageEntryFulfillmentEl>;
+impl terrars::ToListMappable for DialogflowCxPage_EntryFulfillment {
+    type O = terrars::BlockAssignable<DialogflowCxPage_EntryFulfillment>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1610,11 +1672,11 @@ impl terrars::ToListMappable for DialogflowCxPageEntryFulfillmentEl {
     }
 }
 
-pub struct BuildDialogflowCxPageEntryFulfillmentEl {}
+pub struct BuildDialogflowCxPage_EntryFulfillment {}
 
-impl BuildDialogflowCxPageEntryFulfillmentEl {
-    pub fn build(self) -> DialogflowCxPageEntryFulfillmentEl {
-        DialogflowCxPageEntryFulfillmentEl {
+impl BuildDialogflowCxPage_EntryFulfillment {
+    pub fn build(self) -> DialogflowCxPage_EntryFulfillment {
+        DialogflowCxPage_EntryFulfillment {
             return_partial_responses: core::default::Default::default(),
             tag: core::default::Default::default(),
             webhook: core::default::Default::default(),
@@ -1626,21 +1688,23 @@ impl BuildDialogflowCxPageEntryFulfillmentEl {
     }
 }
 
-pub struct DialogflowCxPageEntryFulfillmentElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxPage_EntryFulfillmentRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxPageEntryFulfillmentElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxPageEntryFulfillmentElRef {
-        DialogflowCxPageEntryFulfillmentElRef {
+impl terrars::Ref for DialogflowCxPage_EntryFulfillmentRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxPage_EntryFulfillmentRef {
+        DialogflowCxPage_EntryFulfillmentRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxPageEntryFulfillmentElRef {
+impl DialogflowCxPage_EntryFulfillmentRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1664,928 +1728,32 @@ impl DialogflowCxPageEntryFulfillmentElRef {
     }
 
     #[doc = "Get a reference to the value of field `conditional_cases` after provisioning.\n"]
-    pub fn conditional_cases(&self) -> terrars::ListRef<DialogflowCxPageEntryFulfillmentElConditionalCasesElRef> {
+    pub fn conditional_cases(&self) -> terrars::ListRef<DialogflowCxPage_EntryFulfillment_ConditionalCasesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.conditional_cases", self.base))
     }
 
     #[doc = "Get a reference to the value of field `messages` after provisioning.\n"]
-    pub fn messages(&self) -> terrars::ListRef<DialogflowCxPageEntryFulfillmentElMessagesElRef> {
+    pub fn messages(&self) -> terrars::ListRef<DialogflowCxPage_EntryFulfillment_MessagesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.messages", self.base))
     }
 
     #[doc = "Get a reference to the value of field `set_parameter_actions` after provisioning.\n"]
-    pub fn set_parameter_actions(&self) -> terrars::ListRef<DialogflowCxPageEntryFulfillmentElSetParameterActionsElRef> {
+    pub fn set_parameter_actions(&self) -> terrars::ListRef<DialogflowCxPage_EntryFulfillment_SetParameterActionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.set_parameter_actions", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct DialogflowCxPageEventHandlersElTriggerFulfillmentElConditionalCasesEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cases: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DialogflowCxPageEventHandlersElTriggerFulfillmentElConditionalCasesEl {
-    #[doc =
-        "Set the field `cases`.\nA JSON encoded list of cascading if-else conditions. Cases are mutually exclusive. The first one with a matching condition is selected, all the rest ignored.\nSee [Case](https://cloud.google.com/dialogflow/cx/docs/reference/rest/v3/Fulfillment#case) for the schema."]
-    pub fn set_cases(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.cases = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DialogflowCxPageEventHandlersElTriggerFulfillmentElConditionalCasesEl {
-    type O = terrars::BlockAssignable<DialogflowCxPageEventHandlersElTriggerFulfillmentElConditionalCasesEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDialogflowCxPageEventHandlersElTriggerFulfillmentElConditionalCasesEl {}
-
-impl BuildDialogflowCxPageEventHandlersElTriggerFulfillmentElConditionalCasesEl {
-    pub fn build(self) -> DialogflowCxPageEventHandlersElTriggerFulfillmentElConditionalCasesEl {
-        DialogflowCxPageEventHandlersElTriggerFulfillmentElConditionalCasesEl {
-            cases: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DialogflowCxPageEventHandlersElTriggerFulfillmentElConditionalCasesElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DialogflowCxPageEventHandlersElTriggerFulfillmentElConditionalCasesElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DialogflowCxPageEventHandlersElTriggerFulfillmentElConditionalCasesElRef {
-        DialogflowCxPageEventHandlersElTriggerFulfillmentElConditionalCasesElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DialogflowCxPageEventHandlersElTriggerFulfillmentElConditionalCasesElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `cases` after provisioning.\nA JSON encoded list of cascading if-else conditions. Cases are mutually exclusive. The first one with a matching condition is selected, all the rest ignored.\nSee [Case](https://cloud.google.com/dialogflow/cx/docs/reference/rest/v3/Fulfillment#case) for the schema."]
-    pub fn cases(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cases", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElConversationSuccessEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    metadata: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElConversationSuccessEl {
-    #[doc = "Set the field `metadata`.\nCustom metadata. Dialogflow doesn't impose any structure on this."]
-    pub fn set_metadata(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.metadata = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElConversationSuccessEl {
-    type O =
-        terrars::BlockAssignable<DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElConversationSuccessEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElConversationSuccessEl {}
-
-impl BuildDialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElConversationSuccessEl {
-    pub fn build(self) -> DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElConversationSuccessEl {
-        DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElConversationSuccessEl {
-            metadata: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElConversationSuccessElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElConversationSuccessElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElConversationSuccessElRef {
-        DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElConversationSuccessElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElConversationSuccessElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `metadata` after provisioning.\nCustom metadata. Dialogflow doesn't impose any structure on this."]
-    pub fn metadata(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.metadata", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElLiveAgentHandoffEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    metadata: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElLiveAgentHandoffEl {
-    #[doc = "Set the field `metadata`.\nCustom metadata. Dialogflow doesn't impose any structure on this."]
-    pub fn set_metadata(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.metadata = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElLiveAgentHandoffEl {
-    type O =
-        terrars::BlockAssignable<DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElLiveAgentHandoffEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElLiveAgentHandoffEl {}
-
-impl BuildDialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElLiveAgentHandoffEl {
-    pub fn build(self) -> DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElLiveAgentHandoffEl {
-        DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElLiveAgentHandoffEl {
-            metadata: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElLiveAgentHandoffElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElLiveAgentHandoffElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElLiveAgentHandoffElRef {
-        DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElLiveAgentHandoffElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElLiveAgentHandoffElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `metadata` after provisioning.\nCustom metadata. Dialogflow doesn't impose any structure on this."]
-    pub fn metadata(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.metadata", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElOutputAudioTextEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ssml: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    text: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElOutputAudioTextEl {
-    #[doc = "Set the field `ssml`.\nThe SSML text to be synthesized. For more information, see SSML."]
-    pub fn set_ssml(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.ssml = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `text`.\nThe raw text to be synthesized."]
-    pub fn set_text(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.text = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElOutputAudioTextEl {
-    type O =
-        terrars::BlockAssignable<DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElOutputAudioTextEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElOutputAudioTextEl {}
-
-impl BuildDialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElOutputAudioTextEl {
-    pub fn build(self) -> DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElOutputAudioTextEl {
-        DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElOutputAudioTextEl {
-            ssml: core::default::Default::default(),
-            text: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElOutputAudioTextElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElOutputAudioTextElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElOutputAudioTextElRef {
-        DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElOutputAudioTextElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElOutputAudioTextElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `allow_playback_interruption` after provisioning.\nWhether the playback of this message can be interrupted by the end user's speech and the client can then starts the next Dialogflow request."]
-    pub fn allow_playback_interruption(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.allow_playback_interruption", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `ssml` after provisioning.\nThe SSML text to be synthesized. For more information, see SSML."]
-    pub fn ssml(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ssml", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `text` after provisioning.\nThe raw text to be synthesized."]
-    pub fn text(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.text", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElPlayAudioEl {
-    audio_uri: terrars::PrimField<std::string::String>,
-}
-
-impl DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElPlayAudioEl { }
-
-impl terrars::ToListMappable for DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElPlayAudioEl {
-    type O = terrars::BlockAssignable<DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElPlayAudioEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElPlayAudioEl {
-    #[doc =
-        "URI of the audio clip. Dialogflow does not impose any validation on this value. It is specific to the client that reads it."]
-    pub audio_uri: terrars::PrimField<std::string::String>,
-}
-
-impl BuildDialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElPlayAudioEl {
-    pub fn build(self) -> DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElPlayAudioEl {
-        DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElPlayAudioEl { audio_uri: self.audio_uri }
-    }
-}
-
-pub struct DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElPlayAudioElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElPlayAudioElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElPlayAudioElRef {
-        DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElPlayAudioElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElPlayAudioElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `allow_playback_interruption` after provisioning.\nWhether the playback of this message can be interrupted by the end user's speech and the client can then starts the next Dialogflow request."]
-    pub fn allow_playback_interruption(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.allow_playback_interruption", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `audio_uri` after provisioning.\nURI of the audio clip. Dialogflow does not impose any validation on this value. It is specific to the client that reads it."]
-    pub fn audio_uri(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.audio_uri", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElTelephonyTransferCallEl {
-    phone_number: terrars::PrimField<std::string::String>,
-}
-
-impl DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElTelephonyTransferCallEl { }
-
-impl terrars::ToListMappable for DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElTelephonyTransferCallEl {
-    type O =
-        terrars
-        ::BlockAssignable<DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElTelephonyTransferCallEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElTelephonyTransferCallEl {
-    #[doc = "Transfer the call to a phone number in E.164 format."]
-    pub phone_number: terrars::PrimField<std::string::String>,
-}
-
-impl BuildDialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElTelephonyTransferCallEl {
-    pub fn build(self) -> DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElTelephonyTransferCallEl {
-        DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElTelephonyTransferCallEl {
-            phone_number: self.phone_number,
-        }
-    }
-}
-
-pub struct DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElTelephonyTransferCallElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElTelephonyTransferCallElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElTelephonyTransferCallElRef {
-        DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElTelephonyTransferCallElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElTelephonyTransferCallElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `phone_number` after provisioning.\nTransfer the call to a phone number in E.164 format."]
-    pub fn phone_number(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.phone_number", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElTextEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    text: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
-}
-
-impl DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElTextEl {
-    #[doc = "Set the field `text`.\nA collection of text responses."]
-    pub fn set_text(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.text = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElTextEl {
-    type O = terrars::BlockAssignable<DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElTextEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElTextEl {}
-
-impl BuildDialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElTextEl {
-    pub fn build(self) -> DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElTextEl {
-        DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElTextEl {
-            text: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElTextElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElTextElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElTextElRef {
-        DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElTextElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElTextElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `allow_playback_interruption` after provisioning.\nWhether the playback of this message can be interrupted by the end user's speech and the client can then starts the next Dialogflow request."]
-    pub fn allow_playback_interruption(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.allow_playback_interruption", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `text` after provisioning.\nA collection of text responses."]
-    pub fn text(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.text", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElDynamic {
-    conversation_success: std
-    ::option
-    ::Option<
-        terrars::DynamicBlock<DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElConversationSuccessEl>,
-    >,
-    live_agent_handoff: std
-    ::option
-    ::Option<terrars::DynamicBlock<DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElLiveAgentHandoffEl>>,
-    output_audio_text: std
-    ::option
-    ::Option<terrars::DynamicBlock<DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElOutputAudioTextEl>>,
-    play_audio: std
-    ::option
-    ::Option<terrars::DynamicBlock<DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElPlayAudioEl>>,
-    telephony_transfer_call: std
-    ::option
-    ::Option<
-        terrars::DynamicBlock<DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElTelephonyTransferCallEl>,
-    >,
-    text: std
-    ::option
-    ::Option<terrars::DynamicBlock<DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElTextEl>>,
-}
-
-#[derive(Serialize)]
-pub struct DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    channel: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    payload: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    conversation_success: std
-    ::option
-    ::Option<std::vec::Vec<DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElConversationSuccessEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    live_agent_handoff: std
-    ::option
-    ::Option<std::vec::Vec<DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElLiveAgentHandoffEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    output_audio_text: std
-    ::option
-    ::Option<std::vec::Vec<DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElOutputAudioTextEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    play_audio: std
-    ::option
-    ::Option<std::vec::Vec<DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElPlayAudioEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    telephony_transfer_call: std
-    ::option
-    ::Option<std::vec::Vec<DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElTelephonyTransferCallEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    text: std::option::Option<std::vec::Vec<DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElTextEl>>,
-    dynamic: DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElDynamic,
-}
-
-impl DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesEl {
-    #[doc =
-        "Set the field `channel`.\nThe channel which the response is associated with. Clients can specify the channel via QueryParameters.channel, and only associated channel response will be returned."]
-    pub fn set_channel(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.channel = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `payload`.\nA custom, platform-specific payload."]
-    pub fn set_payload(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.payload = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `conversation_success`.\n"]
-    pub fn set_conversation_success(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElConversationSuccessEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.conversation_success = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.conversation_success = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `live_agent_handoff`.\n"]
-    pub fn set_live_agent_handoff(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElLiveAgentHandoffEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.live_agent_handoff = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.live_agent_handoff = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `output_audio_text`.\n"]
-    pub fn set_output_audio_text(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElOutputAudioTextEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.output_audio_text = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.output_audio_text = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `play_audio`.\n"]
-    pub fn set_play_audio(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElPlayAudioEl>,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.play_audio = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.play_audio = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `telephony_transfer_call`.\n"]
-    pub fn set_telephony_transfer_call(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElTelephonyTransferCallEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.telephony_transfer_call = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.telephony_transfer_call = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `text`.\n"]
-    pub fn set_text(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars::BlockAssignable<DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElTextEl>,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.text = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.text = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesEl {
-    type O = terrars::BlockAssignable<DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesEl {}
-
-impl BuildDialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesEl {
-    pub fn build(self) -> DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesEl {
-        DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesEl {
-            channel: core::default::Default::default(),
-            payload: core::default::Default::default(),
-            conversation_success: core::default::Default::default(),
-            live_agent_handoff: core::default::Default::default(),
-            output_audio_text: core::default::Default::default(),
-            play_audio: core::default::Default::default(),
-            telephony_transfer_call: core::default::Default::default(),
-            text: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElRef {
-        DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `channel` after provisioning.\nThe channel which the response is associated with. Clients can specify the channel via QueryParameters.channel, and only associated channel response will be returned."]
-    pub fn channel(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.channel", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `payload` after provisioning.\nA custom, platform-specific payload."]
-    pub fn payload(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.payload", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `conversation_success` after provisioning.\n"]
-    pub fn conversation_success(
-        &self,
-    ) -> terrars::ListRef<DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElConversationSuccessElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.conversation_success", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `live_agent_handoff` after provisioning.\n"]
-    pub fn live_agent_handoff(
-        &self,
-    ) -> terrars::ListRef<DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElLiveAgentHandoffElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.live_agent_handoff", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `output_audio_text` after provisioning.\n"]
-    pub fn output_audio_text(
-        &self,
-    ) -> terrars::ListRef<DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElOutputAudioTextElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.output_audio_text", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `play_audio` after provisioning.\n"]
-    pub fn play_audio(
-        &self,
-    ) -> terrars::ListRef<DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElPlayAudioElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.play_audio", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `telephony_transfer_call` after provisioning.\n"]
-    pub fn telephony_transfer_call(
-        &self,
-    ) -> terrars::ListRef<DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElTelephonyTransferCallElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.telephony_transfer_call", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `text` after provisioning.\n"]
-    pub fn text(&self) -> terrars::ListRef<DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElTextElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.text", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DialogflowCxPageEventHandlersElTriggerFulfillmentElSetParameterActionsEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    parameter: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    value: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DialogflowCxPageEventHandlersElTriggerFulfillmentElSetParameterActionsEl {
-    #[doc = "Set the field `parameter`.\nDisplay name of the parameter."]
-    pub fn set_parameter(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.parameter = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `value`.\nThe new JSON-encoded value of the parameter. A null value clears the parameter."]
-    pub fn set_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.value = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DialogflowCxPageEventHandlersElTriggerFulfillmentElSetParameterActionsEl {
-    type O = terrars::BlockAssignable<DialogflowCxPageEventHandlersElTriggerFulfillmentElSetParameterActionsEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDialogflowCxPageEventHandlersElTriggerFulfillmentElSetParameterActionsEl {}
-
-impl BuildDialogflowCxPageEventHandlersElTriggerFulfillmentElSetParameterActionsEl {
-    pub fn build(self) -> DialogflowCxPageEventHandlersElTriggerFulfillmentElSetParameterActionsEl {
-        DialogflowCxPageEventHandlersElTriggerFulfillmentElSetParameterActionsEl {
-            parameter: core::default::Default::default(),
-            value: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DialogflowCxPageEventHandlersElTriggerFulfillmentElSetParameterActionsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DialogflowCxPageEventHandlersElTriggerFulfillmentElSetParameterActionsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DialogflowCxPageEventHandlersElTriggerFulfillmentElSetParameterActionsElRef {
-        DialogflowCxPageEventHandlersElTriggerFulfillmentElSetParameterActionsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DialogflowCxPageEventHandlersElTriggerFulfillmentElSetParameterActionsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `parameter` after provisioning.\nDisplay name of the parameter."]
-    pub fn parameter(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.parameter", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `value` after provisioning.\nThe new JSON-encoded value of the parameter. A null value clears the parameter."]
-    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct DialogflowCxPageEventHandlersElTriggerFulfillmentElDynamic {
-    conditional_cases: std
-    ::option
-    ::Option<terrars::DynamicBlock<DialogflowCxPageEventHandlersElTriggerFulfillmentElConditionalCasesEl>>,
-    messages: std
-    ::option
-    ::Option<terrars::DynamicBlock<DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesEl>>,
+struct DialogflowCxPage_EventHandlers_TriggerFulfillmentDynamic {
+    conditional_cases: std::option::Option<terrars::DynamicBlock<DialogflowCxPage_EntryFulfillment_ConditionalCases>>,
+    messages: std::option::Option<terrars::DynamicBlock<DialogflowCxPage_EntryFulfillment_Messages>>,
     set_parameter_actions: std
     ::option
-    ::Option<terrars::DynamicBlock<DialogflowCxPageEventHandlersElTriggerFulfillmentElSetParameterActionsEl>>,
+    ::Option<terrars::DynamicBlock<DialogflowCxPage_EntryFulfillment_SetParameterActions>>,
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxPageEventHandlersElTriggerFulfillmentEl {
+pub struct DialogflowCxPage_EventHandlers_TriggerFulfillment {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     return_partial_responses: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2593,19 +1761,15 @@ pub struct DialogflowCxPageEventHandlersElTriggerFulfillmentEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     webhook: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    conditional_cases: std
-    ::option
-    ::Option<std::vec::Vec<DialogflowCxPageEventHandlersElTriggerFulfillmentElConditionalCasesEl>>,
+    conditional_cases: std::option::Option<std::vec::Vec<DialogflowCxPage_EntryFulfillment_ConditionalCases>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    messages: std::option::Option<std::vec::Vec<DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesEl>>,
+    messages: std::option::Option<std::vec::Vec<DialogflowCxPage_EntryFulfillment_Messages>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    set_parameter_actions: std
-    ::option
-    ::Option<std::vec::Vec<DialogflowCxPageEventHandlersElTriggerFulfillmentElSetParameterActionsEl>>,
-    dynamic: DialogflowCxPageEventHandlersElTriggerFulfillmentElDynamic,
+    set_parameter_actions: std::option::Option<std::vec::Vec<DialogflowCxPage_EntryFulfillment_SetParameterActions>>,
+    dynamic: DialogflowCxPage_EventHandlers_TriggerFulfillmentDynamic,
 }
 
-impl DialogflowCxPageEventHandlersElTriggerFulfillmentEl {
+impl DialogflowCxPage_EventHandlers_TriggerFulfillment {
     #[doc =
         "Set the field `return_partial_responses`.\nWhether Dialogflow should return currently queued fulfillment response messages in streaming APIs. If a webhook is specified, it happens before Dialogflow invokes webhook. Warning: 1) This flag only affects streaming API. Responses are still queued and returned once in non-streaming API. 2) The flag can be enabled in any fulfillment but only the first 3 partial responses will be returned. You may only want to apply it to fulfillments that have slow webhooks."]
     pub fn set_return_partial_responses(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -2630,15 +1794,7 @@ impl DialogflowCxPageEventHandlersElTriggerFulfillmentEl {
     #[doc = "Set the field `conditional_cases`.\n"]
     pub fn set_conditional_cases(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<DialogflowCxPageEventHandlersElTriggerFulfillmentElConditionalCasesEl>,
-                    >,
+        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPage_EntryFulfillment_ConditionalCases>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2654,12 +1810,7 @@ impl DialogflowCxPageEventHandlersElTriggerFulfillmentEl {
     #[doc = "Set the field `messages`.\n"]
     pub fn set_messages(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPage_EntryFulfillment_Messages>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2675,15 +1826,7 @@ impl DialogflowCxPageEventHandlersElTriggerFulfillmentEl {
     #[doc = "Set the field `set_parameter_actions`.\n"]
     pub fn set_set_parameter_actions(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<DialogflowCxPageEventHandlersElTriggerFulfillmentElSetParameterActionsEl>,
-                    >,
+        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPage_EntryFulfillment_SetParameterActions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2697,8 +1840,8 @@ impl DialogflowCxPageEventHandlersElTriggerFulfillmentEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxPageEventHandlersElTriggerFulfillmentEl {
-    type O = terrars::BlockAssignable<DialogflowCxPageEventHandlersElTriggerFulfillmentEl>;
+impl terrars::ToListMappable for DialogflowCxPage_EventHandlers_TriggerFulfillment {
+    type O = terrars::BlockAssignable<DialogflowCxPage_EventHandlers_TriggerFulfillment>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2709,11 +1852,11 @@ impl terrars::ToListMappable for DialogflowCxPageEventHandlersElTriggerFulfillme
     }
 }
 
-pub struct BuildDialogflowCxPageEventHandlersElTriggerFulfillmentEl {}
+pub struct BuildDialogflowCxPage_EventHandlers_TriggerFulfillment {}
 
-impl BuildDialogflowCxPageEventHandlersElTriggerFulfillmentEl {
-    pub fn build(self) -> DialogflowCxPageEventHandlersElTriggerFulfillmentEl {
-        DialogflowCxPageEventHandlersElTriggerFulfillmentEl {
+impl BuildDialogflowCxPage_EventHandlers_TriggerFulfillment {
+    pub fn build(self) -> DialogflowCxPage_EventHandlers_TriggerFulfillment {
+        DialogflowCxPage_EventHandlers_TriggerFulfillment {
             return_partial_responses: core::default::Default::default(),
             tag: core::default::Default::default(),
             webhook: core::default::Default::default(),
@@ -2725,24 +1868,26 @@ impl BuildDialogflowCxPageEventHandlersElTriggerFulfillmentEl {
     }
 }
 
-pub struct DialogflowCxPageEventHandlersElTriggerFulfillmentElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxPage_EventHandlers_TriggerFulfillmentRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxPageEventHandlersElTriggerFulfillmentElRef {
+impl terrars::Ref for DialogflowCxPage_EventHandlers_TriggerFulfillmentRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxPageEventHandlersElTriggerFulfillmentElRef {
-        DialogflowCxPageEventHandlersElTriggerFulfillmentElRef {
+    ) -> DialogflowCxPage_EventHandlers_TriggerFulfillmentRef {
+        DialogflowCxPage_EventHandlers_TriggerFulfillmentRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxPageEventHandlersElTriggerFulfillmentElRef {
+impl DialogflowCxPage_EventHandlers_TriggerFulfillmentRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2766,34 +1911,30 @@ impl DialogflowCxPageEventHandlersElTriggerFulfillmentElRef {
     }
 
     #[doc = "Get a reference to the value of field `conditional_cases` after provisioning.\n"]
-    pub fn conditional_cases(
-        &self,
-    ) -> terrars::ListRef<DialogflowCxPageEventHandlersElTriggerFulfillmentElConditionalCasesElRef> {
+    pub fn conditional_cases(&self) -> terrars::ListRef<DialogflowCxPage_EntryFulfillment_ConditionalCasesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.conditional_cases", self.base))
     }
 
     #[doc = "Get a reference to the value of field `messages` after provisioning.\n"]
-    pub fn messages(&self) -> terrars::ListRef<DialogflowCxPageEventHandlersElTriggerFulfillmentElMessagesElRef> {
+    pub fn messages(&self) -> terrars::ListRef<DialogflowCxPage_EntryFulfillment_MessagesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.messages", self.base))
     }
 
     #[doc = "Get a reference to the value of field `set_parameter_actions` after provisioning.\n"]
-    pub fn set_parameter_actions(
-        &self,
-    ) -> terrars::ListRef<DialogflowCxPageEventHandlersElTriggerFulfillmentElSetParameterActionsElRef> {
+    pub fn set_parameter_actions(&self) -> terrars::ListRef<DialogflowCxPage_EntryFulfillment_SetParameterActionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.set_parameter_actions", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct DialogflowCxPageEventHandlersElDynamic {
+struct DialogflowCxPage_EventHandlersDynamic {
     trigger_fulfillment: std
     ::option
-    ::Option<terrars::DynamicBlock<DialogflowCxPageEventHandlersElTriggerFulfillmentEl>>,
+    ::Option<terrars::DynamicBlock<DialogflowCxPage_EventHandlers_TriggerFulfillment>>,
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxPageEventHandlersEl {
+pub struct DialogflowCxPage_EventHandlers {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     event: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2801,11 +1942,11 @@ pub struct DialogflowCxPageEventHandlersEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     target_page: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    trigger_fulfillment: std::option::Option<std::vec::Vec<DialogflowCxPageEventHandlersElTriggerFulfillmentEl>>,
-    dynamic: DialogflowCxPageEventHandlersElDynamic,
+    trigger_fulfillment: std::option::Option<std::vec::Vec<DialogflowCxPage_EventHandlers_TriggerFulfillment>>,
+    dynamic: DialogflowCxPage_EventHandlersDynamic,
 }
 
-impl DialogflowCxPageEventHandlersEl {
+impl DialogflowCxPage_EventHandlers {
     #[doc = "Set the field `event`.\nThe name of the event to handle."]
     pub fn set_event(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.event = std::option::Option::Some(v.into());
@@ -2829,7 +1970,7 @@ impl DialogflowCxPageEventHandlersEl {
     #[doc = "Set the field `trigger_fulfillment`.\n"]
     pub fn set_trigger_fulfillment(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPageEventHandlersElTriggerFulfillmentEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPage_EventHandlers_TriggerFulfillment>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2843,8 +1984,8 @@ impl DialogflowCxPageEventHandlersEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxPageEventHandlersEl {
-    type O = terrars::BlockAssignable<DialogflowCxPageEventHandlersEl>;
+impl terrars::ToListMappable for DialogflowCxPage_EventHandlers {
+    type O = terrars::BlockAssignable<DialogflowCxPage_EventHandlers>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2855,11 +1996,11 @@ impl terrars::ToListMappable for DialogflowCxPageEventHandlersEl {
     }
 }
 
-pub struct BuildDialogflowCxPageEventHandlersEl {}
+pub struct BuildDialogflowCxPage_EventHandlers {}
 
-impl BuildDialogflowCxPageEventHandlersEl {
-    pub fn build(self) -> DialogflowCxPageEventHandlersEl {
-        DialogflowCxPageEventHandlersEl {
+impl BuildDialogflowCxPage_EventHandlers {
+    pub fn build(self) -> DialogflowCxPage_EventHandlers {
+        DialogflowCxPage_EventHandlers {
             event: core::default::Default::default(),
             target_flow: core::default::Default::default(),
             target_page: core::default::Default::default(),
@@ -2869,21 +2010,23 @@ impl BuildDialogflowCxPageEventHandlersEl {
     }
 }
 
-pub struct DialogflowCxPageEventHandlersElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxPage_EventHandlersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxPageEventHandlersElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxPageEventHandlersElRef {
-        DialogflowCxPageEventHandlersElRef {
+impl terrars::Ref for DialogflowCxPage_EventHandlersRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxPage_EventHandlersRef {
+        DialogflowCxPage_EventHandlersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxPageEventHandlersElRef {
+impl DialogflowCxPage_EventHandlersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2912,1243 +2055,22 @@ impl DialogflowCxPageEventHandlersElRef {
     }
 
     #[doc = "Get a reference to the value of field `trigger_fulfillment` after provisioning.\n"]
-    pub fn trigger_fulfillment(&self) -> terrars::ListRef<DialogflowCxPageEventHandlersElTriggerFulfillmentElRef> {
+    pub fn trigger_fulfillment(&self) -> terrars::ListRef<DialogflowCxPage_EventHandlers_TriggerFulfillmentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.trigger_fulfillment", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct DialogflowCxPageFormElParametersElAdvancedSettingsElDtmfSettingsEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    enabled: std::option::Option<terrars::PrimField<bool>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    finish_digit: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    max_digits: std::option::Option<terrars::PrimField<f64>>,
-}
-
-impl DialogflowCxPageFormElParametersElAdvancedSettingsElDtmfSettingsEl {
-    #[doc =
-        "Set the field `enabled`.\nIf true, incoming audio is processed for DTMF (dual tone multi frequency) events. For example, if the caller presses a button on their telephone keypad and DTMF processing is enabled, Dialogflow will detect the event (e.g. a \"3\" was pressed) in the incoming audio and pass the event to the bot to drive business logic (e.g. when 3 is pressed, return the account balance)."]
-    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.enabled = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `finish_digit`.\nThe digit that terminates a DTMF digit sequence."]
-    pub fn set_finish_digit(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.finish_digit = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `max_digits`.\nMax length of DTMF digits."]
-    pub fn set_max_digits(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.max_digits = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DialogflowCxPageFormElParametersElAdvancedSettingsElDtmfSettingsEl {
-    type O = terrars::BlockAssignable<DialogflowCxPageFormElParametersElAdvancedSettingsElDtmfSettingsEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDialogflowCxPageFormElParametersElAdvancedSettingsElDtmfSettingsEl {}
-
-impl BuildDialogflowCxPageFormElParametersElAdvancedSettingsElDtmfSettingsEl {
-    pub fn build(self) -> DialogflowCxPageFormElParametersElAdvancedSettingsElDtmfSettingsEl {
-        DialogflowCxPageFormElParametersElAdvancedSettingsElDtmfSettingsEl {
-            enabled: core::default::Default::default(),
-            finish_digit: core::default::Default::default(),
-            max_digits: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DialogflowCxPageFormElParametersElAdvancedSettingsElDtmfSettingsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DialogflowCxPageFormElParametersElAdvancedSettingsElDtmfSettingsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DialogflowCxPageFormElParametersElAdvancedSettingsElDtmfSettingsElRef {
-        DialogflowCxPageFormElParametersElAdvancedSettingsElDtmfSettingsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DialogflowCxPageFormElParametersElAdvancedSettingsElDtmfSettingsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `enabled` after provisioning.\nIf true, incoming audio is processed for DTMF (dual tone multi frequency) events. For example, if the caller presses a button on their telephone keypad and DTMF processing is enabled, Dialogflow will detect the event (e.g. a \"3\" was pressed) in the incoming audio and pass the event to the bot to drive business logic (e.g. when 3 is pressed, return the account balance)."]
-    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `finish_digit` after provisioning.\nThe digit that terminates a DTMF digit sequence."]
-    pub fn finish_digit(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.finish_digit", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `max_digits` after provisioning.\nMax length of DTMF digits."]
-    pub fn max_digits(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_digits", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct DialogflowCxPageFormElParametersElAdvancedSettingsElDynamic {
-    dtmf_settings: std
-    ::option
-    ::Option<terrars::DynamicBlock<DialogflowCxPageFormElParametersElAdvancedSettingsElDtmfSettingsEl>>,
-}
-
-#[derive(Serialize)]
-pub struct DialogflowCxPageFormElParametersElAdvancedSettingsEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    dtmf_settings: std::option::Option<std::vec::Vec<DialogflowCxPageFormElParametersElAdvancedSettingsElDtmfSettingsEl>>,
-    dynamic: DialogflowCxPageFormElParametersElAdvancedSettingsElDynamic,
-}
-
-impl DialogflowCxPageFormElParametersElAdvancedSettingsEl {
-    #[doc = "Set the field `dtmf_settings`.\n"]
-    pub fn set_dtmf_settings(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars::BlockAssignable<DialogflowCxPageFormElParametersElAdvancedSettingsElDtmfSettingsEl>,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.dtmf_settings = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.dtmf_settings = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for DialogflowCxPageFormElParametersElAdvancedSettingsEl {
-    type O = terrars::BlockAssignable<DialogflowCxPageFormElParametersElAdvancedSettingsEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDialogflowCxPageFormElParametersElAdvancedSettingsEl {}
-
-impl BuildDialogflowCxPageFormElParametersElAdvancedSettingsEl {
-    pub fn build(self) -> DialogflowCxPageFormElParametersElAdvancedSettingsEl {
-        DialogflowCxPageFormElParametersElAdvancedSettingsEl {
-            dtmf_settings: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DialogflowCxPageFormElParametersElAdvancedSettingsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DialogflowCxPageFormElParametersElAdvancedSettingsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DialogflowCxPageFormElParametersElAdvancedSettingsElRef {
-        DialogflowCxPageFormElParametersElAdvancedSettingsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DialogflowCxPageFormElParametersElAdvancedSettingsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `dtmf_settings` after provisioning.\n"]
-    pub fn dtmf_settings(
-        &self,
-    ) -> terrars::ListRef<DialogflowCxPageFormElParametersElAdvancedSettingsElDtmfSettingsElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.dtmf_settings", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElConditionalCasesEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cases: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElConditionalCasesEl {
-    #[doc =
-        "Set the field `cases`.\nA JSON encoded list of cascading if-else conditions. Cases are mutually exclusive. The first one with a matching condition is selected, all the rest ignored.\nSee [Case](https://cloud.google.com/dialogflow/cx/docs/reference/rest/v3/Fulfillment#case) for the schema."]
-    pub fn set_cases(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.cases = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElConditionalCasesEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElConditionalCasesEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElConditionalCasesEl {}
-
-impl BuildDialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElConditionalCasesEl {
-    pub fn build(
-        self,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElConditionalCasesEl {
-        DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElConditionalCasesEl {
-            cases: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElConditionalCasesElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElConditionalCasesElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElConditionalCasesElRef {
-        DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElConditionalCasesElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElConditionalCasesElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `cases` after provisioning.\nA JSON encoded list of cascading if-else conditions. Cases are mutually exclusive. The first one with a matching condition is selected, all the rest ignored.\nSee [Case](https://cloud.google.com/dialogflow/cx/docs/reference/rest/v3/Fulfillment#case) for the schema."]
-    pub fn cases(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cases", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElConversationSuccessEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    metadata: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElConversationSuccessEl {
-    #[doc = "Set the field `metadata`.\nCustom metadata. Dialogflow doesn't impose any structure on this."]
-    pub fn set_metadata(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.metadata = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElConversationSuccessEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElConversationSuccessEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElConversationSuccessEl {}
-
-impl BuildDialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElConversationSuccessEl {
-    pub fn build(
-        self,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElConversationSuccessEl {
-        DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElConversationSuccessEl {
-            metadata: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElConversationSuccessElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElConversationSuccessElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElConversationSuccessElRef {
-        DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElConversationSuccessElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElConversationSuccessElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `metadata` after provisioning.\nCustom metadata. Dialogflow doesn't impose any structure on this."]
-    pub fn metadata(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.metadata", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElLiveAgentHandoffEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    metadata: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElLiveAgentHandoffEl {
-    #[doc = "Set the field `metadata`.\nCustom metadata. Dialogflow doesn't impose any structure on this."]
-    pub fn set_metadata(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.metadata = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElLiveAgentHandoffEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElLiveAgentHandoffEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElLiveAgentHandoffEl {}
-
-impl BuildDialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElLiveAgentHandoffEl {
-    pub fn build(
-        self,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElLiveAgentHandoffEl {
-        DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElLiveAgentHandoffEl {
-            metadata: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElLiveAgentHandoffElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElLiveAgentHandoffElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElLiveAgentHandoffElRef {
-        DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElLiveAgentHandoffElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElLiveAgentHandoffElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `metadata` after provisioning.\nCustom metadata. Dialogflow doesn't impose any structure on this."]
-    pub fn metadata(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.metadata", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElOutputAudioTextEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ssml: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    text: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElOutputAudioTextEl {
-    #[doc = "Set the field `ssml`.\nThe SSML text to be synthesized. For more information, see SSML."]
-    pub fn set_ssml(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.ssml = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `text`.\nThe raw text to be synthesized."]
-    pub fn set_text(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.text = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElOutputAudioTextEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElOutputAudioTextEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElOutputAudioTextEl {}
-
-impl BuildDialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElOutputAudioTextEl {
-    pub fn build(
-        self,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElOutputAudioTextEl {
-        DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElOutputAudioTextEl {
-            ssml: core::default::Default::default(),
-            text: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElOutputAudioTextElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElOutputAudioTextElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElOutputAudioTextElRef {
-        DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElOutputAudioTextElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElOutputAudioTextElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `allow_playback_interruption` after provisioning.\nWhether the playback of this message can be interrupted by the end user's speech and the client can then starts the next Dialogflow request."]
-    pub fn allow_playback_interruption(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.allow_playback_interruption", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `ssml` after provisioning.\nThe SSML text to be synthesized. For more information, see SSML."]
-    pub fn ssml(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ssml", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `text` after provisioning.\nThe raw text to be synthesized."]
-    pub fn text(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.text", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElPlayAudioEl {
-    audio_uri: terrars::PrimField<std::string::String>,
-}
-
-impl DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElPlayAudioEl { }
-
-impl terrars
-::ToListMappable for DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElPlayAudioEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElPlayAudioEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElPlayAudioEl {
-    #[doc =
-        "URI of the audio clip. Dialogflow does not impose any validation on this value. It is specific to the client that reads it."]
-    pub audio_uri: terrars::PrimField<std::string::String>,
-}
-
-impl BuildDialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElPlayAudioEl {
-    pub fn build(
-        self,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElPlayAudioEl {
-        DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElPlayAudioEl {
-            audio_uri: self.audio_uri,
-        }
-    }
-}
-
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElPlayAudioElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElPlayAudioElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElPlayAudioElRef {
-        DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElPlayAudioElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElPlayAudioElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `allow_playback_interruption` after provisioning.\nWhether the playback of this message can be interrupted by the end user's speech and the client can then starts the next Dialogflow request."]
-    pub fn allow_playback_interruption(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.allow_playback_interruption", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `audio_uri` after provisioning.\nURI of the audio clip. Dialogflow does not impose any validation on this value. It is specific to the client that reads it."]
-    pub fn audio_uri(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.audio_uri", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElTelephonyTransferCallEl {
-    phone_number: terrars::PrimField<std::string::String>,
-}
-
-impl DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElTelephonyTransferCallEl { }
-
-impl terrars
-::ToListMappable for DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElTelephonyTransferCallEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElTelephonyTransferCallEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElTelephonyTransferCallEl {
-    #[doc = "Transfer the call to a phone number in E.164 format."]
-    pub phone_number: terrars::PrimField<std::string::String>,
-}
-
-impl BuildDialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElTelephonyTransferCallEl {
-    pub fn build(
-        self,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElTelephonyTransferCallEl {
-        DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElTelephonyTransferCallEl {
-            phone_number: self.phone_number,
-        }
-    }
-}
-
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElTelephonyTransferCallElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElTelephonyTransferCallElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElTelephonyTransferCallElRef {
-        DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElTelephonyTransferCallElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElTelephonyTransferCallElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `phone_number` after provisioning.\nTransfer the call to a phone number in E.164 format."]
-    pub fn phone_number(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.phone_number", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElTextEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    text: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
-}
-
-impl DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElTextEl {
-    #[doc = "Set the field `text`.\nA collection of text responses."]
-    pub fn set_text(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.text = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElTextEl {
-    type O =
-        terrars
-        ::BlockAssignable<DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElTextEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElTextEl {}
-
-impl BuildDialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElTextEl {
-    pub fn build(self) -> DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElTextEl {
-        DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElTextEl {
-            text: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElTextElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElTextElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElTextElRef {
-        DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElTextElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElTextElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `allow_playback_interruption` after provisioning.\nWhether the playback of this message can be interrupted by the end user's speech and the client can then starts the next Dialogflow request."]
-    pub fn allow_playback_interruption(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.allow_playback_interruption", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `text` after provisioning.\nA collection of text responses."]
-    pub fn text(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.text", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElDynamic {
-    conversation_success: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElConversationSuccessEl,
-        >,
-    >,
-    live_agent_handoff: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElLiveAgentHandoffEl,
-        >,
-    >,
-    output_audio_text: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElOutputAudioTextEl,
-        >,
-    >,
-    play_audio: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElPlayAudioEl,
-        >,
-    >,
-    telephony_transfer_call: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElTelephonyTransferCallEl,
-        >,
-    >,
-    text: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElTextEl>,
-    >,
-}
-
-#[derive(Serialize)]
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    channel: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    payload: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    conversation_success: std
-    ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<
-            DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElConversationSuccessEl,
-        >,
-    >,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    live_agent_handoff: std
-    ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElLiveAgentHandoffEl>,
-    >,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    output_audio_text: std
-    ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElOutputAudioTextEl>,
-    >,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    play_audio: std
-    ::option
-    ::Option<
-        std::vec::Vec<DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElPlayAudioEl>,
-    >,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    telephony_transfer_call: std
-    ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<
-            DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElTelephonyTransferCallEl,
-        >,
-    >,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    text: std
-    ::option
-    ::Option<
-        std::vec::Vec<DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElTextEl>,
-    >,
-    dynamic: DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElDynamic,
-}
-
-impl DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesEl {
-    #[doc =
-        "Set the field `channel`.\nThe channel which the response is associated with. Clients can specify the channel via QueryParameters.channel, and only associated channel response will be returned."]
-    pub fn set_channel(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.channel = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `payload`.\nA custom, platform-specific payload."]
-    pub fn set_payload(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.payload = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `conversation_success`.\n"]
-    pub fn set_conversation_success(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElConversationSuccessEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.conversation_success = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.conversation_success = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `live_agent_handoff`.\n"]
-    pub fn set_live_agent_handoff(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElLiveAgentHandoffEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.live_agent_handoff = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.live_agent_handoff = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `output_audio_text`.\n"]
-    pub fn set_output_audio_text(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElOutputAudioTextEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.output_audio_text = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.output_audio_text = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `play_audio`.\n"]
-    pub fn set_play_audio(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElPlayAudioEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.play_audio = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.play_audio = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `telephony_transfer_call`.\n"]
-    pub fn set_telephony_transfer_call(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElTelephonyTransferCallEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.telephony_transfer_call = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.telephony_transfer_call = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `text`.\n"]
-    pub fn set_text(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElTextEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.text = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.text = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesEl {
-    type O =
-        terrars
-        ::BlockAssignable<DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesEl {}
-
-impl BuildDialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesEl {
-    pub fn build(self) -> DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesEl {
-        DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesEl {
-            channel: core::default::Default::default(),
-            payload: core::default::Default::default(),
-            conversation_success: core::default::Default::default(),
-            live_agent_handoff: core::default::Default::default(),
-            output_audio_text: core::default::Default::default(),
-            play_audio: core::default::Default::default(),
-            telephony_transfer_call: core::default::Default::default(),
-            text: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElRef {
-        DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `channel` after provisioning.\nThe channel which the response is associated with. Clients can specify the channel via QueryParameters.channel, and only associated channel response will be returned."]
-    pub fn channel(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.channel", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `payload` after provisioning.\nA custom, platform-specific payload."]
-    pub fn payload(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.payload", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `conversation_success` after provisioning.\n"]
-    pub fn conversation_success(
-        &self,
-    ) -> terrars
-    ::ListRef<
-        DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElConversationSuccessElRef,
-    > {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.conversation_success", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `live_agent_handoff` after provisioning.\n"]
-    pub fn live_agent_handoff(
-        &self,
-    ) -> terrars
-    ::ListRef<
-        DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElLiveAgentHandoffElRef,
-    > {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.live_agent_handoff", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `output_audio_text` after provisioning.\n"]
-    pub fn output_audio_text(
-        &self,
-    ) -> terrars
-    ::ListRef<
-        DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElOutputAudioTextElRef,
-    > {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.output_audio_text", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `play_audio` after provisioning.\n"]
-    pub fn play_audio(
-        &self,
-    ) -> terrars
-    ::ListRef<DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElPlayAudioElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.play_audio", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `telephony_transfer_call` after provisioning.\n"]
-    pub fn telephony_transfer_call(
-        &self,
-    ) -> terrars
-    ::ListRef<
-        DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElTelephonyTransferCallElRef,
-    > {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.telephony_transfer_call", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `text` after provisioning.\n"]
-    pub fn text(
-        &self,
-    ) -> terrars
-    ::ListRef<DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElTextElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.text", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElSetParameterActionsEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    parameter: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    value: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElSetParameterActionsEl {
-    #[doc = "Set the field `parameter`.\nDisplay name of the parameter."]
-    pub fn set_parameter(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.parameter = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `value`.\nThe new JSON-encoded value of the parameter. A null value clears the parameter."]
-    pub fn set_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.value = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElSetParameterActionsEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElSetParameterActionsEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElSetParameterActionsEl {}
-
-impl BuildDialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElSetParameterActionsEl {
-    pub fn build(
-        self,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElSetParameterActionsEl {
-        DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElSetParameterActionsEl {
-            parameter: core::default::Default::default(),
-            value: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElSetParameterActionsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElSetParameterActionsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElSetParameterActionsElRef {
-        DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElSetParameterActionsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElSetParameterActionsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `parameter` after provisioning.\nDisplay name of the parameter."]
-    pub fn parameter(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.parameter", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `value` after provisioning.\nThe new JSON-encoded value of the parameter. A null value clears the parameter."]
-    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElDynamic {
-    conditional_cases: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElConditionalCasesEl>,
-    >,
-    messages: std
-    ::option
-    ::Option<
-        terrars::DynamicBlock<DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesEl>,
-    >,
+struct DialogflowCxPage_Form_Parameters_FillBehavior_InitialPromptFulfillmentDynamic {
+    conditional_cases: std::option::Option<terrars::DynamicBlock<DialogflowCxPage_EntryFulfillment_ConditionalCases>>,
+    messages: std::option::Option<terrars::DynamicBlock<DialogflowCxPage_EntryFulfillment_Messages>>,
     set_parameter_actions: std
     ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElSetParameterActionsEl,
-        >,
-    >,
+    ::Option<terrars::DynamicBlock<DialogflowCxPage_EntryFulfillment_SetParameterActions>>,
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentEl {
+pub struct DialogflowCxPage_Form_Parameters_FillBehavior_InitialPromptFulfillment {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     return_partial_responses: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -4156,25 +2078,15 @@ pub struct DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillm
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     webhook: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    conditional_cases: std
-    ::option
-    ::Option<
-        std::vec::Vec<DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElConditionalCasesEl>,
-    >,
+    conditional_cases: std::option::Option<std::vec::Vec<DialogflowCxPage_EntryFulfillment_ConditionalCases>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    messages: std
-    ::option
-    ::Option<std::vec::Vec<DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesEl>>,
+    messages: std::option::Option<std::vec::Vec<DialogflowCxPage_EntryFulfillment_Messages>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    set_parameter_actions: std
-    ::option
-    ::Option<
-        std::vec::Vec<DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElSetParameterActionsEl>,
-    >,
-    dynamic: DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElDynamic,
+    set_parameter_actions: std::option::Option<std::vec::Vec<DialogflowCxPage_EntryFulfillment_SetParameterActions>>,
+    dynamic: DialogflowCxPage_Form_Parameters_FillBehavior_InitialPromptFulfillmentDynamic,
 }
 
-impl DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentEl {
+impl DialogflowCxPage_Form_Parameters_FillBehavior_InitialPromptFulfillment {
     #[doc =
         "Set the field `return_partial_responses`.\nWhether Dialogflow should return currently queued fulfillment response messages in streaming APIs. If a webhook is specified, it happens before Dialogflow invokes webhook. Warning: 1) This flag only affects streaming API. Responses are still queued and returned once in non-streaming API. 2) The flag can be enabled in any fulfillment but only the first 3 partial responses will be returned. You may only want to apply it to fulfillments that have slow webhooks."]
     pub fn set_return_partial_responses(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -4199,17 +2111,7 @@ impl DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentEl 
     #[doc = "Set the field `conditional_cases`.\n"]
     pub fn set_conditional_cases(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElConditionalCasesEl,
-                        >,
-                    >,
+        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPage_EntryFulfillment_ConditionalCases>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -4225,17 +2127,7 @@ impl DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentEl 
     #[doc = "Set the field `messages`.\n"]
     pub fn set_messages(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesEl,
-                        >,
-                    >,
+        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPage_EntryFulfillment_Messages>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -4251,17 +2143,7 @@ impl DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentEl 
     #[doc = "Set the field `set_parameter_actions`.\n"]
     pub fn set_set_parameter_actions(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElSetParameterActionsEl,
-                        >,
-                    >,
+        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPage_EntryFulfillment_SetParameterActions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -4275,8 +2157,8 @@ impl DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentEl 
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentEl {
-    type O = terrars::BlockAssignable<DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentEl>;
+impl terrars::ToListMappable for DialogflowCxPage_Form_Parameters_FillBehavior_InitialPromptFulfillment {
+    type O = terrars::BlockAssignable<DialogflowCxPage_Form_Parameters_FillBehavior_InitialPromptFulfillment>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4287,11 +2169,11 @@ impl terrars::ToListMappable for DialogflowCxPageFormElParametersElFillBehaviorE
     }
 }
 
-pub struct BuildDialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentEl {}
+pub struct BuildDialogflowCxPage_Form_Parameters_FillBehavior_InitialPromptFulfillment {}
 
-impl BuildDialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentEl {
-    pub fn build(self) -> DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentEl {
-        DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentEl {
+impl BuildDialogflowCxPage_Form_Parameters_FillBehavior_InitialPromptFulfillment {
+    pub fn build(self) -> DialogflowCxPage_Form_Parameters_FillBehavior_InitialPromptFulfillment {
+        DialogflowCxPage_Form_Parameters_FillBehavior_InitialPromptFulfillment {
             return_partial_responses: core::default::Default::default(),
             tag: core::default::Default::default(),
             webhook: core::default::Default::default(),
@@ -4303,24 +2185,26 @@ impl BuildDialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillme
     }
 }
 
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxPage_Form_Parameters_FillBehavior_InitialPromptFulfillmentRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElRef {
+impl terrars::Ref for DialogflowCxPage_Form_Parameters_FillBehavior_InitialPromptFulfillmentRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElRef {
-        DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElRef {
+    ) -> DialogflowCxPage_Form_Parameters_FillBehavior_InitialPromptFulfillmentRef {
+        DialogflowCxPage_Form_Parameters_FillBehavior_InitialPromptFulfillmentRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElRef {
+impl DialogflowCxPage_Form_Parameters_FillBehavior_InitialPromptFulfillmentRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4344,1369 +2228,30 @@ impl DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElR
     }
 
     #[doc = "Get a reference to the value of field `conditional_cases` after provisioning.\n"]
-    pub fn conditional_cases(
-        &self,
-    ) -> terrars
-    ::ListRef<DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElConditionalCasesElRef> {
+    pub fn conditional_cases(&self) -> terrars::ListRef<DialogflowCxPage_EntryFulfillment_ConditionalCasesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.conditional_cases", self.base))
     }
 
     #[doc = "Get a reference to the value of field `messages` after provisioning.\n"]
-    pub fn messages(
-        &self,
-    ) -> terrars::ListRef<DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElMessagesElRef> {
+    pub fn messages(&self) -> terrars::ListRef<DialogflowCxPage_EntryFulfillment_MessagesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.messages", self.base))
     }
 
     #[doc = "Get a reference to the value of field `set_parameter_actions` after provisioning.\n"]
-    pub fn set_parameter_actions(
-        &self,
-    ) -> terrars
-    ::ListRef<DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElSetParameterActionsElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.set_parameter_actions", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElConditionalCasesEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cases: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElConditionalCasesEl {
-    #[doc =
-        "Set the field `cases`.\nA JSON encoded list of cascading if-else conditions. Cases are mutually exclusive. The first one with a matching condition is selected, all the rest ignored.\nSee [Case](https://cloud.google.com/dialogflow/cx/docs/reference/rest/v3/Fulfillment#case) for the schema."]
-    pub fn set_cases(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.cases = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElConditionalCasesEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElConditionalCasesEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElConditionalCasesEl {}
-
-impl BuildDialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElConditionalCasesEl {
-    pub fn build(
-        self,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElConditionalCasesEl {
-        DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElConditionalCasesEl {
-            cases: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElConditionalCasesElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElConditionalCasesElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElConditionalCasesElRef {
-        DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElConditionalCasesElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElConditionalCasesElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `cases` after provisioning.\nA JSON encoded list of cascading if-else conditions. Cases are mutually exclusive. The first one with a matching condition is selected, all the rest ignored.\nSee [Case](https://cloud.google.com/dialogflow/cx/docs/reference/rest/v3/Fulfillment#case) for the schema."]
-    pub fn cases(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cases", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElConversationSuccessEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    metadata: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElConversationSuccessEl {
-    #[doc = "Set the field `metadata`.\nCustom metadata. Dialogflow doesn't impose any structure on this."]
-    pub fn set_metadata(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.metadata = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElConversationSuccessEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElConversationSuccessEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElConversationSuccessEl {}
-
-impl BuildDialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElConversationSuccessEl {
-    pub fn build(
-        self,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElConversationSuccessEl {
-        DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElConversationSuccessEl {
-            metadata: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElConversationSuccessElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElConversationSuccessElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElConversationSuccessElRef {
-        DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElConversationSuccessElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElConversationSuccessElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `metadata` after provisioning.\nCustom metadata. Dialogflow doesn't impose any structure on this."]
-    pub fn metadata(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.metadata", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElLiveAgentHandoffEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    metadata: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElLiveAgentHandoffEl {
-    #[doc = "Set the field `metadata`.\nCustom metadata. Dialogflow doesn't impose any structure on this."]
-    pub fn set_metadata(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.metadata = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElLiveAgentHandoffEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElLiveAgentHandoffEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElLiveAgentHandoffEl {}
-
-impl BuildDialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElLiveAgentHandoffEl {
-    pub fn build(
-        self,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElLiveAgentHandoffEl {
-        DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElLiveAgentHandoffEl {
-            metadata: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElLiveAgentHandoffElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElLiveAgentHandoffElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElLiveAgentHandoffElRef {
-        DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElLiveAgentHandoffElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElLiveAgentHandoffElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `metadata` after provisioning.\nCustom metadata. Dialogflow doesn't impose any structure on this."]
-    pub fn metadata(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.metadata", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElOutputAudioTextEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ssml: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    text: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElOutputAudioTextEl {
-    #[doc = "Set the field `ssml`.\nThe SSML text to be synthesized. For more information, see SSML."]
-    pub fn set_ssml(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.ssml = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `text`.\nThe raw text to be synthesized."]
-    pub fn set_text(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.text = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElOutputAudioTextEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElOutputAudioTextEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElOutputAudioTextEl {}
-
-impl BuildDialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElOutputAudioTextEl {
-    pub fn build(
-        self,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElOutputAudioTextEl {
-        DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElOutputAudioTextEl {
-            ssml: core::default::Default::default(),
-            text: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElOutputAudioTextElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElOutputAudioTextElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElOutputAudioTextElRef {
-        DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElOutputAudioTextElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElOutputAudioTextElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `allow_playback_interruption` after provisioning.\nWhether the playback of this message can be interrupted by the end user's speech and the client can then starts the next Dialogflow request."]
-    pub fn allow_playback_interruption(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.allow_playback_interruption", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `ssml` after provisioning.\nThe SSML text to be synthesized. For more information, see SSML."]
-    pub fn ssml(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ssml", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `text` after provisioning.\nThe raw text to be synthesized."]
-    pub fn text(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.text", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElPlayAudioEl {
-    audio_uri: terrars::PrimField<std::string::String>,
-}
-
-impl DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElPlayAudioEl {
-
-}
-
-impl terrars
-::ToListMappable for DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElPlayAudioEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElPlayAudioEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElPlayAudioEl {
-    #[doc =
-        "URI of the audio clip. Dialogflow does not impose any validation on this value. It is specific to the client that reads it."]
-    pub audio_uri: terrars::PrimField<std::string::String>,
-}
-
-impl BuildDialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElPlayAudioEl {
-    pub fn build(
-        self,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElPlayAudioEl {
-        DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElPlayAudioEl {
-            audio_uri: self.audio_uri,
-        }
-    }
-}
-
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElPlayAudioElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElPlayAudioElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElPlayAudioElRef {
-        DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElPlayAudioElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElPlayAudioElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `allow_playback_interruption` after provisioning.\nWhether the playback of this message can be interrupted by the end user's speech and the client can then starts the next Dialogflow request."]
-    pub fn allow_playback_interruption(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.allow_playback_interruption", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `audio_uri` after provisioning.\nURI of the audio clip. Dialogflow does not impose any validation on this value. It is specific to the client that reads it."]
-    pub fn audio_uri(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.audio_uri", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElTelephonyTransferCallEl {
-    phone_number: terrars::PrimField<std::string::String>,
-}
-
-impl DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElTelephonyTransferCallEl {
-
-}
-
-impl terrars
-::ToListMappable for DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElTelephonyTransferCallEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElTelephonyTransferCallEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElTelephonyTransferCallEl {
-    #[doc = "Transfer the call to a phone number in E.164 format."]
-    pub phone_number: terrars::PrimField<std::string::String>,
-}
-
-impl BuildDialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElTelephonyTransferCallEl {
-    pub fn build(
-        self,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElTelephonyTransferCallEl {
-        DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElTelephonyTransferCallEl {
-            phone_number: self.phone_number,
-        }
-    }
-}
-
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElTelephonyTransferCallElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElTelephonyTransferCallElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElTelephonyTransferCallElRef {
-        DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElTelephonyTransferCallElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElTelephonyTransferCallElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `phone_number` after provisioning.\nTransfer the call to a phone number in E.164 format."]
-    pub fn phone_number(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.phone_number", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElTextEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    text: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
-}
-
-impl DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElTextEl {
-    #[doc = "Set the field `text`.\nA collection of text responses."]
-    pub fn set_text(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.text = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElTextEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElTextEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElTextEl {}
-
-impl BuildDialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElTextEl {
-    pub fn build(
-        self,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElTextEl {
-        DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElTextEl {
-            text: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElTextElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElTextElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElTextElRef {
-        DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElTextElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElTextElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `allow_playback_interruption` after provisioning.\nWhether the playback of this message can be interrupted by the end user's speech and the client can then starts the next Dialogflow request."]
-    pub fn allow_playback_interruption(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.allow_playback_interruption", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `text` after provisioning.\nA collection of text responses."]
-    pub fn text(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.text", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElDynamic {
-    conversation_success: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElConversationSuccessEl,
-        >,
-    >,
-    live_agent_handoff: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElLiveAgentHandoffEl,
-        >,
-    >,
-    output_audio_text: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElOutputAudioTextEl,
-        >,
-    >,
-    play_audio: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElPlayAudioEl,
-        >,
-    >,
-    telephony_transfer_call: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElTelephonyTransferCallEl,
-        >,
-    >,
-    text: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElTextEl,
-        >,
-    >,
-}
-
-#[derive(Serialize)]
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    channel: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    payload: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    conversation_success: std
-    ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<
-            DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElConversationSuccessEl,
-        >,
-    >,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    live_agent_handoff: std
-    ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<
-            DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElLiveAgentHandoffEl,
-        >,
-    >,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    output_audio_text: std
-    ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<
-            DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElOutputAudioTextEl,
-        >,
-    >,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    play_audio: std
-    ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<
-            DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElPlayAudioEl,
-        >,
-    >,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    telephony_transfer_call: std
-    ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<
-            DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElTelephonyTransferCallEl,
-        >,
-    >,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    text: std
-    ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<
-            DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElTextEl,
-        >,
-    >,
-    dynamic: DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElDynamic,
-}
-
-impl DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesEl {
-    #[doc =
-        "Set the field `channel`.\nThe channel which the response is associated with. Clients can specify the channel via QueryParameters.channel, and only associated channel response will be returned."]
-    pub fn set_channel(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.channel = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `payload`.\nA custom, platform-specific payload."]
-    pub fn set_payload(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.payload = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `conversation_success`.\n"]
-    pub fn set_conversation_success(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElConversationSuccessEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.conversation_success = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.conversation_success = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `live_agent_handoff`.\n"]
-    pub fn set_live_agent_handoff(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElLiveAgentHandoffEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.live_agent_handoff = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.live_agent_handoff = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `output_audio_text`.\n"]
-    pub fn set_output_audio_text(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElOutputAudioTextEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.output_audio_text = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.output_audio_text = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `play_audio`.\n"]
-    pub fn set_play_audio(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElPlayAudioEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.play_audio = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.play_audio = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `telephony_transfer_call`.\n"]
-    pub fn set_telephony_transfer_call(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElTelephonyTransferCallEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.telephony_transfer_call = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.telephony_transfer_call = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `text`.\n"]
-    pub fn set_text(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElTextEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.text = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.text = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesEl {}
-
-impl BuildDialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesEl {
-    pub fn build(
-        self,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesEl {
-        DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesEl {
-            channel: core::default::Default::default(),
-            payload: core::default::Default::default(),
-            conversation_success: core::default::Default::default(),
-            live_agent_handoff: core::default::Default::default(),
-            output_audio_text: core::default::Default::default(),
-            play_audio: core::default::Default::default(),
-            telephony_transfer_call: core::default::Default::default(),
-            text: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElRef {
-        DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `channel` after provisioning.\nThe channel which the response is associated with. Clients can specify the channel via QueryParameters.channel, and only associated channel response will be returned."]
-    pub fn channel(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.channel", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `payload` after provisioning.\nA custom, platform-specific payload."]
-    pub fn payload(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.payload", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `conversation_success` after provisioning.\n"]
-    pub fn conversation_success(
-        &self,
-    ) -> terrars
-    ::ListRef<
-        DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElConversationSuccessElRef,
-    > {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.conversation_success", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `live_agent_handoff` after provisioning.\n"]
-    pub fn live_agent_handoff(
-        &self,
-    ) -> terrars
-    ::ListRef<
-        DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElLiveAgentHandoffElRef,
-    > {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.live_agent_handoff", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `output_audio_text` after provisioning.\n"]
-    pub fn output_audio_text(
-        &self,
-    ) -> terrars
-    ::ListRef<
-        DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElOutputAudioTextElRef,
-    > {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.output_audio_text", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `play_audio` after provisioning.\n"]
-    pub fn play_audio(
-        &self,
-    ) -> terrars
-    ::ListRef<
-        DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElPlayAudioElRef,
-    > {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.play_audio", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `telephony_transfer_call` after provisioning.\n"]
-    pub fn telephony_transfer_call(
-        &self,
-    ) -> terrars
-    ::ListRef<
-        DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElTelephonyTransferCallElRef,
-    > {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.telephony_transfer_call", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `text` after provisioning.\n"]
-    pub fn text(
-        &self,
-    ) -> terrars
-    ::ListRef<
-        DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElTextElRef,
-    > {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.text", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElSetParameterActionsEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    parameter: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    value: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElSetParameterActionsEl {
-    #[doc = "Set the field `parameter`.\nDisplay name of the parameter."]
-    pub fn set_parameter(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.parameter = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `value`.\nThe new JSON-encoded value of the parameter. A null value clears the parameter."]
-    pub fn set_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.value = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElSetParameterActionsEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElSetParameterActionsEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElSetParameterActionsEl {}
-
-impl BuildDialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElSetParameterActionsEl {
-    pub fn build(
-        self,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElSetParameterActionsEl {
-        DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElSetParameterActionsEl {
-            parameter: core::default::Default::default(),
-            value: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElSetParameterActionsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElSetParameterActionsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElSetParameterActionsElRef {
-        DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElSetParameterActionsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElSetParameterActionsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `parameter` after provisioning.\nDisplay name of the parameter."]
-    pub fn parameter(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.parameter", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `value` after provisioning.\nThe new JSON-encoded value of the parameter. A null value clears the parameter."]
-    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElDynamic {
-    conditional_cases: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElConditionalCasesEl,
-        >,
-    >,
-    messages: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesEl,
-        >,
-    >,
-    set_parameter_actions: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElSetParameterActionsEl,
-        >,
-    >,
-}
-
-#[derive(Serialize)]
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    return_partial_responses: std::option::Option<terrars::PrimField<bool>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tag: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    webhook: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    conditional_cases: std
-    ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<
-            DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElConditionalCasesEl,
-        >,
-    >,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    messages: std
-    ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesEl>,
-    >,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    set_parameter_actions: std
-    ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<
-            DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElSetParameterActionsEl,
-        >,
-    >,
-    dynamic: DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElDynamic,
-}
-
-impl DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentEl {
-    #[doc =
-        "Set the field `return_partial_responses`.\nWhether Dialogflow should return currently queued fulfillment response messages in streaming APIs. If a webhook is specified, it happens before Dialogflow invokes webhook. Warning: 1) This flag only affects streaming API. Responses are still queued and returned once in non-streaming API. 2) The flag can be enabled in any fulfillment but only the first 3 partial responses will be returned. You may only want to apply it to fulfillments that have slow webhooks."]
-    pub fn set_return_partial_responses(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.return_partial_responses = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `tag`.\nThe tag used by the webhook to identify which fulfillment is being called. This field is required if webhook is specified."]
-    pub fn set_tag(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.tag = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `webhook`.\nThe webhook to call. Format: projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/webhooks/<Webhook ID>."]
-    pub fn set_webhook(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.webhook = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `conditional_cases`.\n"]
-    pub fn set_conditional_cases(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElConditionalCasesEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.conditional_cases = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.conditional_cases = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `messages`.\n"]
-    pub fn set_messages(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.messages = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.messages = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `set_parameter_actions`.\n"]
-    pub fn set_set_parameter_actions(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElSetParameterActionsEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.set_parameter_actions = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.set_parameter_actions = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentEl {}
-
-impl BuildDialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentEl {
-    pub fn build(
-        self,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentEl {
-        DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentEl {
-            return_partial_responses: core::default::Default::default(),
-            tag: core::default::Default::default(),
-            webhook: core::default::Default::default(),
-            conditional_cases: core::default::Default::default(),
-            messages: core::default::Default::default(),
-            set_parameter_actions: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElRef {
-        DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `return_partial_responses` after provisioning.\nWhether Dialogflow should return currently queued fulfillment response messages in streaming APIs. If a webhook is specified, it happens before Dialogflow invokes webhook. Warning: 1) This flag only affects streaming API. Responses are still queued and returned once in non-streaming API. 2) The flag can be enabled in any fulfillment but only the first 3 partial responses will be returned. You may only want to apply it to fulfillments that have slow webhooks."]
-    pub fn return_partial_responses(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.return_partial_responses", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `tag` after provisioning.\nThe tag used by the webhook to identify which fulfillment is being called. This field is required if webhook is specified."]
-    pub fn tag(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tag", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `webhook` after provisioning.\nThe webhook to call. Format: projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/webhooks/<Webhook ID>."]
-    pub fn webhook(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.webhook", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `conditional_cases` after provisioning.\n"]
-    pub fn conditional_cases(
-        &self,
-    ) -> terrars
-    ::ListRef<
-        DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElConditionalCasesElRef,
-    > {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.conditional_cases", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `messages` after provisioning.\n"]
-    pub fn messages(
-        &self,
-    ) -> terrars
-    ::ListRef<
-        DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElMessagesElRef,
-    > {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.messages", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `set_parameter_actions` after provisioning.\n"]
-    pub fn set_parameter_actions(
-        &self,
-    ) -> terrars
-    ::ListRef<
-        DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElSetParameterActionsElRef,
-    > {
+    pub fn set_parameter_actions(&self) -> terrars::ListRef<DialogflowCxPage_EntryFulfillment_SetParameterActionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.set_parameter_actions", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElDynamic {
+struct DialogflowCxPage_Form_Parameters_FillBehavior_RepromptEventHandlersDynamic {
     trigger_fulfillment: std
     ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentEl>,
-    >,
+    ::Option<terrars::DynamicBlock<DialogflowCxPage_EventHandlers_TriggerFulfillment>>,
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersEl {
+pub struct DialogflowCxPage_Form_Parameters_FillBehavior_RepromptEventHandlers {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     event: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -5714,15 +2259,11 @@ pub struct DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlers
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     target_page: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    trigger_fulfillment: std
-    ::option
-    ::Option<
-        std::vec::Vec<DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentEl>,
-    >,
-    dynamic: DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElDynamic,
+    trigger_fulfillment: std::option::Option<std::vec::Vec<DialogflowCxPage_EventHandlers_TriggerFulfillment>>,
+    dynamic: DialogflowCxPage_Form_Parameters_FillBehavior_RepromptEventHandlersDynamic,
 }
 
-impl DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersEl {
+impl DialogflowCxPage_Form_Parameters_FillBehavior_RepromptEventHandlers {
     #[doc = "Set the field `event`.\nThe name of the event to handle."]
     pub fn set_event(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.event = std::option::Option::Some(v.into());
@@ -5746,17 +2287,7 @@ impl DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersEl {
     #[doc = "Set the field `trigger_fulfillment`.\n"]
     pub fn set_trigger_fulfillment(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentEl,
-                        >,
-                    >,
+        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPage_EventHandlers_TriggerFulfillment>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -5770,8 +2301,8 @@ impl DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersEl {
-    type O = terrars::BlockAssignable<DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersEl>;
+impl terrars::ToListMappable for DialogflowCxPage_Form_Parameters_FillBehavior_RepromptEventHandlers {
+    type O = terrars::BlockAssignable<DialogflowCxPage_Form_Parameters_FillBehavior_RepromptEventHandlers>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5782,11 +2313,11 @@ impl terrars::ToListMappable for DialogflowCxPageFormElParametersElFillBehaviorE
     }
 }
 
-pub struct BuildDialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersEl {}
+pub struct BuildDialogflowCxPage_Form_Parameters_FillBehavior_RepromptEventHandlers {}
 
-impl BuildDialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersEl {
-    pub fn build(self) -> DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersEl {
-        DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersEl {
+impl BuildDialogflowCxPage_Form_Parameters_FillBehavior_RepromptEventHandlers {
+    pub fn build(self) -> DialogflowCxPage_Form_Parameters_FillBehavior_RepromptEventHandlers {
+        DialogflowCxPage_Form_Parameters_FillBehavior_RepromptEventHandlers {
             event: core::default::Default::default(),
             target_flow: core::default::Default::default(),
             target_page: core::default::Default::default(),
@@ -5796,24 +2327,26 @@ impl BuildDialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersE
     }
 }
 
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxPage_Form_Parameters_FillBehavior_RepromptEventHandlersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElRef {
+impl terrars::Ref for DialogflowCxPage_Form_Parameters_FillBehavior_RepromptEventHandlersRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElRef {
-        DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElRef {
+    ) -> DialogflowCxPage_Form_Parameters_FillBehavior_RepromptEventHandlersRef {
+        DialogflowCxPage_Form_Parameters_FillBehavior_RepromptEventHandlersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElRef {
+impl DialogflowCxPage_Form_Parameters_FillBehavior_RepromptEventHandlersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5842,38 +2375,35 @@ impl DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElRef 
     }
 
     #[doc = "Get a reference to the value of field `trigger_fulfillment` after provisioning.\n"]
-    pub fn trigger_fulfillment(
-        &self,
-    ) -> terrars
-    ::ListRef<DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElTriggerFulfillmentElRef> {
+    pub fn trigger_fulfillment(&self) -> terrars::ListRef<DialogflowCxPage_EventHandlers_TriggerFulfillmentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.trigger_fulfillment", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct DialogflowCxPageFormElParametersElFillBehaviorElDynamic {
+struct DialogflowCxPage_Form_Parameters_FillBehaviorDynamic {
     initial_prompt_fulfillment: std
     ::option
-    ::Option<terrars::DynamicBlock<DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentEl>>,
+    ::Option<terrars::DynamicBlock<DialogflowCxPage_Form_Parameters_FillBehavior_InitialPromptFulfillment>>,
     reprompt_event_handlers: std
     ::option
-    ::Option<terrars::DynamicBlock<DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersEl>>,
+    ::Option<terrars::DynamicBlock<DialogflowCxPage_Form_Parameters_FillBehavior_RepromptEventHandlers>>,
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxPageFormElParametersElFillBehaviorEl {
+pub struct DialogflowCxPage_Form_Parameters_FillBehavior {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     initial_prompt_fulfillment: std
     ::option
-    ::Option<std::vec::Vec<DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentEl>>,
+    ::Option<std::vec::Vec<DialogflowCxPage_Form_Parameters_FillBehavior_InitialPromptFulfillment>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     reprompt_event_handlers: std
     ::option
-    ::Option<std::vec::Vec<DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersEl>>,
-    dynamic: DialogflowCxPageFormElParametersElFillBehaviorElDynamic,
+    ::Option<std::vec::Vec<DialogflowCxPage_Form_Parameters_FillBehavior_RepromptEventHandlers>>,
+    dynamic: DialogflowCxPage_Form_Parameters_FillBehaviorDynamic,
 }
 
-impl DialogflowCxPageFormElParametersElFillBehaviorEl {
+impl DialogflowCxPage_Form_Parameters_FillBehavior {
     #[doc = "Set the field `initial_prompt_fulfillment`.\n"]
     pub fn set_initial_prompt_fulfillment(
         mut self,
@@ -5884,7 +2414,7 @@ impl DialogflowCxPageFormElParametersElFillBehaviorEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentEl>,
+                        ::BlockAssignable<DialogflowCxPage_Form_Parameters_FillBehavior_InitialPromptFulfillment>,
                     >,
     ) -> Self {
         match v.into() {
@@ -5907,8 +2437,7 @@ impl DialogflowCxPageFormElParametersElFillBehaviorEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersEl>,
+                        terrars::BlockAssignable<DialogflowCxPage_Form_Parameters_FillBehavior_RepromptEventHandlers>,
                     >,
     ) -> Self {
         match v.into() {
@@ -5923,8 +2452,8 @@ impl DialogflowCxPageFormElParametersElFillBehaviorEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxPageFormElParametersElFillBehaviorEl {
-    type O = terrars::BlockAssignable<DialogflowCxPageFormElParametersElFillBehaviorEl>;
+impl terrars::ToListMappable for DialogflowCxPage_Form_Parameters_FillBehavior {
+    type O = terrars::BlockAssignable<DialogflowCxPage_Form_Parameters_FillBehavior>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5935,11 +2464,11 @@ impl terrars::ToListMappable for DialogflowCxPageFormElParametersElFillBehaviorE
     }
 }
 
-pub struct BuildDialogflowCxPageFormElParametersElFillBehaviorEl {}
+pub struct BuildDialogflowCxPage_Form_Parameters_FillBehavior {}
 
-impl BuildDialogflowCxPageFormElParametersElFillBehaviorEl {
-    pub fn build(self) -> DialogflowCxPageFormElParametersElFillBehaviorEl {
-        DialogflowCxPageFormElParametersElFillBehaviorEl {
+impl BuildDialogflowCxPage_Form_Parameters_FillBehavior {
+    pub fn build(self) -> DialogflowCxPage_Form_Parameters_FillBehavior {
+        DialogflowCxPage_Form_Parameters_FillBehavior {
             initial_prompt_fulfillment: core::default::Default::default(),
             reprompt_event_handlers: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -5947,24 +2476,26 @@ impl BuildDialogflowCxPageFormElParametersElFillBehaviorEl {
     }
 }
 
-pub struct DialogflowCxPageFormElParametersElFillBehaviorElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxPage_Form_Parameters_FillBehaviorRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxPageFormElParametersElFillBehaviorElRef {
+impl terrars::Ref for DialogflowCxPage_Form_Parameters_FillBehaviorRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxPageFormElParametersElFillBehaviorElRef {
-        DialogflowCxPageFormElParametersElFillBehaviorElRef {
+    ) -> DialogflowCxPage_Form_Parameters_FillBehaviorRef {
+        DialogflowCxPage_Form_Parameters_FillBehaviorRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxPageFormElParametersElFillBehaviorElRef {
+impl DialogflowCxPage_Form_Parameters_FillBehaviorRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5972,28 +2503,26 @@ impl DialogflowCxPageFormElParametersElFillBehaviorElRef {
     #[doc = "Get a reference to the value of field `initial_prompt_fulfillment` after provisioning.\n"]
     pub fn initial_prompt_fulfillment(
         &self,
-    ) -> terrars::ListRef<DialogflowCxPageFormElParametersElFillBehaviorElInitialPromptFulfillmentElRef> {
+    ) -> terrars::ListRef<DialogflowCxPage_Form_Parameters_FillBehavior_InitialPromptFulfillmentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.initial_prompt_fulfillment", self.base))
     }
 
     #[doc = "Get a reference to the value of field `reprompt_event_handlers` after provisioning.\n"]
     pub fn reprompt_event_handlers(
         &self,
-    ) -> terrars::ListRef<DialogflowCxPageFormElParametersElFillBehaviorElRepromptEventHandlersElRef> {
+    ) -> terrars::ListRef<DialogflowCxPage_Form_Parameters_FillBehavior_RepromptEventHandlersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.reprompt_event_handlers", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct DialogflowCxPageFormElParametersElDynamic {
-    advanced_settings: std
-    ::option
-    ::Option<terrars::DynamicBlock<DialogflowCxPageFormElParametersElAdvancedSettingsEl>>,
-    fill_behavior: std::option::Option<terrars::DynamicBlock<DialogflowCxPageFormElParametersElFillBehaviorEl>>,
+struct DialogflowCxPage_Form_ParametersDynamic {
+    advanced_settings: std::option::Option<terrars::DynamicBlock<DialogflowCxPage_AdvancedSettings>>,
+    fill_behavior: std::option::Option<terrars::DynamicBlock<DialogflowCxPage_Form_Parameters_FillBehavior>>,
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxPageFormElParametersEl {
+pub struct DialogflowCxPage_Form_Parameters {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     default_value: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -6007,13 +2536,13 @@ pub struct DialogflowCxPageFormElParametersEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     required: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    advanced_settings: std::option::Option<std::vec::Vec<DialogflowCxPageFormElParametersElAdvancedSettingsEl>>,
+    advanced_settings: std::option::Option<std::vec::Vec<DialogflowCxPage_AdvancedSettings>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    fill_behavior: std::option::Option<std::vec::Vec<DialogflowCxPageFormElParametersElFillBehaviorEl>>,
-    dynamic: DialogflowCxPageFormElParametersElDynamic,
+    fill_behavior: std::option::Option<std::vec::Vec<DialogflowCxPage_Form_Parameters_FillBehavior>>,
+    dynamic: DialogflowCxPage_Form_ParametersDynamic,
 }
 
-impl DialogflowCxPageFormElParametersEl {
+impl DialogflowCxPage_Form_Parameters {
     #[doc =
         "Set the field `default_value`.\nThe default value of an optional parameter. If the parameter is required, the default value will be ignored."]
     pub fn set_default_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -6057,7 +2586,7 @@ impl DialogflowCxPageFormElParametersEl {
     #[doc = "Set the field `advanced_settings`.\n"]
     pub fn set_advanced_settings(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPageFormElParametersElAdvancedSettingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPage_AdvancedSettings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -6073,7 +2602,7 @@ impl DialogflowCxPageFormElParametersEl {
     #[doc = "Set the field `fill_behavior`.\n"]
     pub fn set_fill_behavior(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPageFormElParametersElFillBehaviorEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPage_Form_Parameters_FillBehavior>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -6087,8 +2616,8 @@ impl DialogflowCxPageFormElParametersEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxPageFormElParametersEl {
-    type O = terrars::BlockAssignable<DialogflowCxPageFormElParametersEl>;
+impl terrars::ToListMappable for DialogflowCxPage_Form_Parameters {
+    type O = terrars::BlockAssignable<DialogflowCxPage_Form_Parameters>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6099,11 +2628,11 @@ impl terrars::ToListMappable for DialogflowCxPageFormElParametersEl {
     }
 }
 
-pub struct BuildDialogflowCxPageFormElParametersEl {}
+pub struct BuildDialogflowCxPage_Form_Parameters {}
 
-impl BuildDialogflowCxPageFormElParametersEl {
-    pub fn build(self) -> DialogflowCxPageFormElParametersEl {
-        DialogflowCxPageFormElParametersEl {
+impl BuildDialogflowCxPage_Form_Parameters {
+    pub fn build(self) -> DialogflowCxPage_Form_Parameters {
+        DialogflowCxPage_Form_Parameters {
             default_value: core::default::Default::default(),
             display_name: core::default::Default::default(),
             entity_type: core::default::Default::default(),
@@ -6117,21 +2646,23 @@ impl BuildDialogflowCxPageFormElParametersEl {
     }
 }
 
-pub struct DialogflowCxPageFormElParametersElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxPage_Form_ParametersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxPageFormElParametersElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxPageFormElParametersElRef {
-        DialogflowCxPageFormElParametersElRef {
+impl terrars::Ref for DialogflowCxPage_Form_ParametersRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxPage_Form_ParametersRef {
+        DialogflowCxPage_Form_ParametersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxPageFormElParametersElRef {
+impl DialogflowCxPage_Form_ParametersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -6173,33 +2704,33 @@ impl DialogflowCxPageFormElParametersElRef {
     }
 
     #[doc = "Get a reference to the value of field `advanced_settings` after provisioning.\n"]
-    pub fn advanced_settings(&self) -> terrars::ListRef<DialogflowCxPageFormElParametersElAdvancedSettingsElRef> {
+    pub fn advanced_settings(&self) -> terrars::ListRef<DialogflowCxPage_AdvancedSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.advanced_settings", self.base))
     }
 
     #[doc = "Get a reference to the value of field `fill_behavior` after provisioning.\n"]
-    pub fn fill_behavior(&self) -> terrars::ListRef<DialogflowCxPageFormElParametersElFillBehaviorElRef> {
+    pub fn fill_behavior(&self) -> terrars::ListRef<DialogflowCxPage_Form_Parameters_FillBehaviorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.fill_behavior", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct DialogflowCxPageFormElDynamic {
-    parameters: std::option::Option<terrars::DynamicBlock<DialogflowCxPageFormElParametersEl>>,
+struct DialogflowCxPage_FormDynamic {
+    parameters: std::option::Option<terrars::DynamicBlock<DialogflowCxPage_Form_Parameters>>,
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxPageFormEl {
+pub struct DialogflowCxPage_Form {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    parameters: std::option::Option<std::vec::Vec<DialogflowCxPageFormElParametersEl>>,
-    dynamic: DialogflowCxPageFormElDynamic,
+    parameters: std::option::Option<std::vec::Vec<DialogflowCxPage_Form_Parameters>>,
+    dynamic: DialogflowCxPage_FormDynamic,
 }
 
-impl DialogflowCxPageFormEl {
+impl DialogflowCxPage_Form {
     #[doc = "Set the field `parameters`.\n"]
     pub fn set_parameters(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPageFormElParametersEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPage_Form_Parameters>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -6213,8 +2744,8 @@ impl DialogflowCxPageFormEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxPageFormEl {
-    type O = terrars::BlockAssignable<DialogflowCxPageFormEl>;
+impl terrars::ToListMappable for DialogflowCxPage_Form {
+    type O = terrars::BlockAssignable<DialogflowCxPage_Form>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6225,148 +2756,82 @@ impl terrars::ToListMappable for DialogflowCxPageFormEl {
     }
 }
 
-pub struct BuildDialogflowCxPageFormEl {}
+pub struct BuildDialogflowCxPage_Form {}
 
-impl BuildDialogflowCxPageFormEl {
-    pub fn build(self) -> DialogflowCxPageFormEl {
-        DialogflowCxPageFormEl {
+impl BuildDialogflowCxPage_Form {
+    pub fn build(self) -> DialogflowCxPage_Form {
+        DialogflowCxPage_Form {
             parameters: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct DialogflowCxPageFormElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxPage_FormRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxPageFormElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxPageFormElRef {
-        DialogflowCxPageFormElRef {
+impl terrars::Ref for DialogflowCxPage_FormRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxPage_FormRef {
+        DialogflowCxPage_FormRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxPageFormElRef {
+impl DialogflowCxPage_FormRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `parameters` after provisioning.\n"]
-    pub fn parameters(&self) -> terrars::ListRef<DialogflowCxPageFormElParametersElRef> {
+    pub fn parameters(&self) -> terrars::ListRef<DialogflowCxPage_Form_ParametersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.parameters", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxPageTimeoutsEl {
+pub struct DialogflowCxPage_KnowledgeConnectorSettings_DataStoreConnections {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    data_store: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    data_store_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    update: std::option::Option<terrars::PrimField<std::string::String>>,
+    document_processing_mode: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DialogflowCxPageTimeoutsEl {
-    #[doc = "Set the field `create`.\n"]
-    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.create = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.delete = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `update`.\n"]
-    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.update = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DialogflowCxPageTimeoutsEl {
-    type O = terrars::BlockAssignable<DialogflowCxPageTimeoutsEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDialogflowCxPageTimeoutsEl {}
-
-impl BuildDialogflowCxPageTimeoutsEl {
-    pub fn build(self) -> DialogflowCxPageTimeoutsEl {
-        DialogflowCxPageTimeoutsEl {
-            create: core::default::Default::default(),
-            delete: core::default::Default::default(),
-            update: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DialogflowCxPageTimeoutsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DialogflowCxPageTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxPageTimeoutsElRef {
-        DialogflowCxPageTimeoutsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DialogflowCxPageTimeoutsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
-    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
-    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
-    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DialogflowCxPageTransitionRoutesElTriggerFulfillmentElConditionalCasesEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cases: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentElConditionalCasesEl {
+impl DialogflowCxPage_KnowledgeConnectorSettings_DataStoreConnections {
     #[doc =
-        "Set the field `cases`.\nA JSON encoded list of cascading if-else conditions. Cases are mutually exclusive. The first one with a matching condition is selected, all the rest ignored.\nSee [Case](https://cloud.google.com/dialogflow/cx/docs/reference/rest/v3/Fulfillment#case) for the schema."]
-    pub fn set_cases(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.cases = std::option::Option::Some(v.into());
+        "Set the field `data_store`.\nThe full name of the referenced data store. Formats: projects/{project}/locations/{location}/collections/{collection}/dataStores/{dataStore} projects/{project}/locations/{location}/dataStores/{dataStore}"]
+    pub fn set_data_store(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.data_store = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `data_store_type`.\nThe type of the connected data store.\n* PUBLIC_WEB: A data store that contains public web content.\n* UNSTRUCTURED: A data store that contains unstructured private data.\n* STRUCTURED: A data store that contains structured data (for example FAQ). Possible values: [\"PUBLIC_WEB\", \"UNSTRUCTURED\", \"STRUCTURED\"]"]
+    pub fn set_data_store_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.data_store_type = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `document_processing_mode`.\nThe document processing mode for the data store connection. Should only be set for PUBLIC_WEB and UNSTRUCTURED data stores. If not set it is considered as DOCUMENTS, as this is the legacy mode.\n* DOCUMENTS: Documents are processed as documents.\n* CHUNKS: Documents are converted to chunks. Possible values: [\"DOCUMENTS\", \"CHUNKS\"]"]
+    pub fn set_document_processing_mode(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.document_processing_mode = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxPageTransitionRoutesElTriggerFulfillmentElConditionalCasesEl {
-    type O = terrars::BlockAssignable<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElConditionalCasesEl>;
+impl terrars::ToListMappable for DialogflowCxPage_KnowledgeConnectorSettings_DataStoreConnections {
+    type O = terrars::BlockAssignable<DialogflowCxPage_KnowledgeConnectorSettings_DataStoreConnections>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6377,63 +2842,123 @@ impl terrars::ToListMappable for DialogflowCxPageTransitionRoutesElTriggerFulfil
     }
 }
 
-pub struct BuildDialogflowCxPageTransitionRoutesElTriggerFulfillmentElConditionalCasesEl {}
+pub struct BuildDialogflowCxPage_KnowledgeConnectorSettings_DataStoreConnections {}
 
-impl BuildDialogflowCxPageTransitionRoutesElTriggerFulfillmentElConditionalCasesEl {
-    pub fn build(self) -> DialogflowCxPageTransitionRoutesElTriggerFulfillmentElConditionalCasesEl {
-        DialogflowCxPageTransitionRoutesElTriggerFulfillmentElConditionalCasesEl {
-            cases: core::default::Default::default(),
+impl BuildDialogflowCxPage_KnowledgeConnectorSettings_DataStoreConnections {
+    pub fn build(self) -> DialogflowCxPage_KnowledgeConnectorSettings_DataStoreConnections {
+        DialogflowCxPage_KnowledgeConnectorSettings_DataStoreConnections {
+            data_store: core::default::Default::default(),
+            data_store_type: core::default::Default::default(),
+            document_processing_mode: core::default::Default::default(),
         }
     }
 }
 
-pub struct DialogflowCxPageTransitionRoutesElTriggerFulfillmentElConditionalCasesElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxPage_KnowledgeConnectorSettings_DataStoreConnectionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxPageTransitionRoutesElTriggerFulfillmentElConditionalCasesElRef {
+impl terrars::Ref for DialogflowCxPage_KnowledgeConnectorSettings_DataStoreConnectionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxPageTransitionRoutesElTriggerFulfillmentElConditionalCasesElRef {
-        DialogflowCxPageTransitionRoutesElTriggerFulfillmentElConditionalCasesElRef {
+    ) -> DialogflowCxPage_KnowledgeConnectorSettings_DataStoreConnectionsRef {
+        DialogflowCxPage_KnowledgeConnectorSettings_DataStoreConnectionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentElConditionalCasesElRef {
+impl DialogflowCxPage_KnowledgeConnectorSettings_DataStoreConnectionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `cases` after provisioning.\nA JSON encoded list of cascading if-else conditions. Cases are mutually exclusive. The first one with a matching condition is selected, all the rest ignored.\nSee [Case](https://cloud.google.com/dialogflow/cx/docs/reference/rest/v3/Fulfillment#case) for the schema."]
-    pub fn cases(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cases", self.base))
+        "Get a reference to the value of field `data_store` after provisioning.\nThe full name of the referenced data store. Formats: projects/{project}/locations/{location}/collections/{collection}/dataStores/{dataStore} projects/{project}/locations/{location}/dataStores/{dataStore}"]
+    pub fn data_store(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.data_store", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `data_store_type` after provisioning.\nThe type of the connected data store.\n* PUBLIC_WEB: A data store that contains public web content.\n* UNSTRUCTURED: A data store that contains unstructured private data.\n* STRUCTURED: A data store that contains structured data (for example FAQ). Possible values: [\"PUBLIC_WEB\", \"UNSTRUCTURED\", \"STRUCTURED\"]"]
+    pub fn data_store_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.data_store_type", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `document_processing_mode` after provisioning.\nThe document processing mode for the data store connection. Should only be set for PUBLIC_WEB and UNSTRUCTURED data stores. If not set it is considered as DOCUMENTS, as this is the legacy mode.\n* DOCUMENTS: Documents are processed as documents.\n* CHUNKS: Documents are converted to chunks. Possible values: [\"DOCUMENTS\", \"CHUNKS\"]"]
+    pub fn document_processing_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.document_processing_mode", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElConversationSuccessEl {
+pub struct DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_DtmfSettings {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    metadata: std::option::Option<terrars::PrimField<std::string::String>>,
+    enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    endpointing_timeout_duration: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    finish_digit: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    interdigit_timeout_duration: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_digits: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElConversationSuccessEl {
-    #[doc = "Set the field `metadata`.\nCustom metadata. Dialogflow doesn't impose any structure on this."]
-    pub fn set_metadata(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.metadata = std::option::Option::Some(v.into());
+impl DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_DtmfSettings {
+    #[doc =
+        "Set the field `enabled`.\nIf true, incoming audio is processed for DTMF (dual tone multi frequtectency) events. For example, if the caller presses a button on their telephone keypad and DTMF processing is enabled, Dialogflow will de the event (e.g. a \"3\" was pressed) in the incoming audio and pass the event to the bot to drive business logic (e.g. when 3 is pressed, return the account balance)."]
+    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enabled = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `endpointing_timeout_duration`.\nEndpoint timeout setting for matching dtmf input to regex.\nA duration in seconds with up to nine fractional digits, ending with 's'. Example: \"3.500s\"."]
+    pub fn set_endpointing_timeout_duration(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.endpointing_timeout_duration = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `finish_digit`.\nThe digit that terminates a DTMF digit sequence."]
+    pub fn set_finish_digit(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.finish_digit = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `interdigit_timeout_duration`.\nInterdigit timeout setting for matching dtmf input to regex.\nA duration in seconds with up to nine fractional digits, ending with 's'. Example: \"3.500s\"."]
+    pub fn set_interdigit_timeout_duration(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.interdigit_timeout_duration = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `max_digits`.\nMax length of DTMF digits."]
+    pub fn set_max_digits(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_digits = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElConversationSuccessEl {
+impl terrars
+::ToListMappable for DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_DtmfSettings {
     type O =
         terrars
-        ::BlockAssignable<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElConversationSuccessEl>;
+        ::BlockAssignable<
+            DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_DtmfSettings,
+        >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6444,62 +2969,114 @@ impl terrars::ToListMappable for DialogflowCxPageTransitionRoutesElTriggerFulfil
     }
 }
 
-pub struct BuildDialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElConversationSuccessEl {}
+pub struct BuildDialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_DtmfSettings {}
 
-impl BuildDialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElConversationSuccessEl {
-    pub fn build(self) -> DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElConversationSuccessEl {
-        DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElConversationSuccessEl {
-            metadata: core::default::Default::default(),
+impl BuildDialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_DtmfSettings {
+    pub fn build(
+        self,
+    ) -> DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_DtmfSettings {
+        DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_DtmfSettings {
+            enabled: core::default::Default::default(),
+            endpointing_timeout_duration: core::default::Default::default(),
+            finish_digit: core::default::Default::default(),
+            interdigit_timeout_duration: core::default::Default::default(),
+            max_digits: core::default::Default::default(),
         }
     }
 }
 
-pub struct DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElConversationSuccessElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_DtmfSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElConversationSuccessElRef {
+impl terrars::Ref for DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_DtmfSettingsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElConversationSuccessElRef {
-        DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElConversationSuccessElRef {
+    ) -> DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_DtmfSettingsRef {
+        DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_DtmfSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElConversationSuccessElRef {
+impl DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_DtmfSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `metadata` after provisioning.\nCustom metadata. Dialogflow doesn't impose any structure on this."]
-    pub fn metadata(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.metadata", self.base))
+        "Get a reference to the value of field `enabled` after provisioning.\nIf true, incoming audio is processed for DTMF (dual tone multi frequtectency) events. For example, if the caller presses a button on their telephone keypad and DTMF processing is enabled, Dialogflow will de the event (e.g. a \"3\" was pressed) in the incoming audio and pass the event to the bot to drive business logic (e.g. when 3 is pressed, return the account balance)."]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `endpointing_timeout_duration` after provisioning.\nEndpoint timeout setting for matching dtmf input to regex.\nA duration in seconds with up to nine fractional digits, ending with 's'. Example: \"3.500s\"."]
+    pub fn endpointing_timeout_duration(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpointing_timeout_duration", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `finish_digit` after provisioning.\nThe digit that terminates a DTMF digit sequence."]
+    pub fn finish_digit(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.finish_digit", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `interdigit_timeout_duration` after provisioning.\nInterdigit timeout setting for matching dtmf input to regex.\nA duration in seconds with up to nine fractional digits, ending with 's'. Example: \"3.500s\"."]
+    pub fn interdigit_timeout_duration(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.interdigit_timeout_duration", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `max_digits` after provisioning.\nMax length of DTMF digits."]
+    pub fn max_digits(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_digits", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElLiveAgentHandoffEl {
+pub struct DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_LoggingSettings {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    metadata: std::option::Option<terrars::PrimField<std::string::String>>,
+    enable_consent_based_redaction: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_interaction_logging: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_stackdriver_logging: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElLiveAgentHandoffEl {
-    #[doc = "Set the field `metadata`.\nCustom metadata. Dialogflow doesn't impose any structure on this."]
-    pub fn set_metadata(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.metadata = std::option::Option::Some(v.into());
+impl DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_LoggingSettings {
+    #[doc =
+        "Set the field `enable_consent_based_redaction`.\nEnables consent-based end-user input redaction, if true, a pre-defined session parameter **$session.params.conversation-redaction** will be used to determine if the utterance should be redacted."]
+    pub fn set_enable_consent_based_redaction(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enable_consent_based_redaction = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `enable_interaction_logging`.\nEnables DF Interaction logging."]
+    pub fn set_enable_interaction_logging(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enable_interaction_logging = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `enable_stackdriver_logging`.\nEnables Google Cloud Logging."]
+    pub fn set_enable_stackdriver_logging(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enable_stackdriver_logging = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElLiveAgentHandoffEl {
+impl terrars
+::ToListMappable for DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_LoggingSettings {
     type O =
-        terrars::BlockAssignable<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElLiveAgentHandoffEl>;
+        terrars
+        ::BlockAssignable<
+            DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_LoggingSettings,
+        >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6510,70 +3087,717 @@ impl terrars::ToListMappable for DialogflowCxPageTransitionRoutesElTriggerFulfil
     }
 }
 
-pub struct BuildDialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElLiveAgentHandoffEl {}
+pub struct BuildDialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_LoggingSettings {}
 
-impl BuildDialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElLiveAgentHandoffEl {
-    pub fn build(self) -> DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElLiveAgentHandoffEl {
-        DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElLiveAgentHandoffEl {
-            metadata: core::default::Default::default(),
+impl BuildDialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_LoggingSettings {
+    pub fn build(
+        self,
+    ) -> DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_LoggingSettings {
+        DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_LoggingSettings {
+            enable_consent_based_redaction: core::default::Default::default(),
+            enable_interaction_logging: core::default::Default::default(),
+            enable_stackdriver_logging: core::default::Default::default(),
         }
     }
 }
 
-pub struct DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElLiveAgentHandoffElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_LoggingSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElLiveAgentHandoffElRef {
+impl terrars
+::Ref for DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_LoggingSettingsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElLiveAgentHandoffElRef {
-        DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElLiveAgentHandoffElRef {
+    ) -> DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_LoggingSettingsRef {
+        DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_LoggingSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElLiveAgentHandoffElRef {
+impl DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_LoggingSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `metadata` after provisioning.\nCustom metadata. Dialogflow doesn't impose any structure on this."]
-    pub fn metadata(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.metadata", self.base))
+        "Get a reference to the value of field `enable_consent_based_redaction` after provisioning.\nEnables consent-based end-user input redaction, if true, a pre-defined session parameter **$session.params.conversation-redaction** will be used to determine if the utterance should be redacted."]
+    pub fn enable_consent_based_redaction(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_consent_based_redaction", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `enable_interaction_logging` after provisioning.\nEnables DF Interaction logging."]
+    pub fn enable_interaction_logging(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_interaction_logging", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `enable_stackdriver_logging` after provisioning.\nEnables Google Cloud Logging."]
+    pub fn enable_stackdriver_logging(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_stackdriver_logging", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElOutputAudioTextEl {
+pub struct DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_SpeechSettings {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    endpointer_sensitivity: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    models: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    no_speech_timeout: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    use_timeout_based_endpointing: std::option::Option<terrars::PrimField<bool>>,
+}
+
+impl DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_SpeechSettings {
+    #[doc =
+        "Set the field `endpointer_sensitivity`.\nSensitivity of the speech model that detects the end of speech. Scale from 0 to 100."]
+    pub fn set_endpointer_sensitivity(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.endpointer_sensitivity = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `models`.\nMapping from language to Speech-to-Text model. The mapped Speech-to-Text model will be selected for requests from its corresponding language. For more information, see [Speech models](https://cloud.google.com/dialogflow/cx/docs/concept/speech-models).\nAn object containing a list of **\"key\": value** pairs. Example: **{ \"name\": \"wrench\", \"mass\": \"1.3kg\", \"count\": \"3\" }**."]
+    pub fn set_models(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.models = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `no_speech_timeout`.\nTimeout before detecting no speech.\nA duration in seconds with up to nine fractional digits, ending with 's'. Example: \"3.500s\"."]
+    pub fn set_no_speech_timeout(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.no_speech_timeout = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `use_timeout_based_endpointing`.\nUse timeout based endpointing, interpreting endpointer sensitivity as seconds of timeout value."]
+    pub fn set_use_timeout_based_endpointing(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.use_timeout_based_endpointing = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_SpeechSettings {
+    type O =
+        terrars
+        ::BlockAssignable<
+            DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_SpeechSettings,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_SpeechSettings {}
+
+impl BuildDialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_SpeechSettings {
+    pub fn build(
+        self,
+    ) -> DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_SpeechSettings {
+        DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_SpeechSettings {
+            endpointer_sensitivity: core::default::Default::default(),
+            models: core::default::Default::default(),
+            no_speech_timeout: core::default::Default::default(),
+            use_timeout_based_endpointing: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_SpeechSettingsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_SpeechSettingsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_SpeechSettingsRef {
+        DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_SpeechSettingsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_SpeechSettingsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `endpointer_sensitivity` after provisioning.\nSensitivity of the speech model that detects the end of speech. Scale from 0 to 100."]
+    pub fn endpointer_sensitivity(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpointer_sensitivity", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `models` after provisioning.\nMapping from language to Speech-to-Text model. The mapped Speech-to-Text model will be selected for requests from its corresponding language. For more information, see [Speech models](https://cloud.google.com/dialogflow/cx/docs/concept/speech-models).\nAn object containing a list of **\"key\": value** pairs. Example: **{ \"name\": \"wrench\", \"mass\": \"1.3kg\", \"count\": \"3\" }**."]
+    pub fn models(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.models", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `no_speech_timeout` after provisioning.\nTimeout before detecting no speech.\nA duration in seconds with up to nine fractional digits, ending with 's'. Example: \"3.500s\"."]
+    pub fn no_speech_timeout(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.no_speech_timeout", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `use_timeout_based_endpointing` after provisioning.\nUse timeout based endpointing, interpreting endpointer sensitivity as seconds of timeout value."]
+    pub fn use_timeout_based_endpointing(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.use_timeout_based_endpointing", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettingsDynamic {
+    dtmf_settings: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_DtmfSettings>,
+    >,
+    logging_settings: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_LoggingSettings,
+        >,
+    >,
+    speech_settings: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_SpeechSettings>,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dtmf_settings: std
+    ::option
+    ::Option<
+        std::vec::Vec<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_DtmfSettings>,
+    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    logging_settings: std
+    ::option
+    ::Option<
+        std::vec::Vec<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_LoggingSettings>,
+    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    speech_settings: std
+    ::option
+    ::Option<
+        std::vec::Vec<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_SpeechSettings>,
+    >,
+    dynamic: DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettingsDynamic,
+}
+
+impl DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings {
+    #[doc = "Set the field `dtmf_settings`.\n"]
+    pub fn set_dtmf_settings(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_DtmfSettings,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.dtmf_settings = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.dtmf_settings = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `logging_settings`.\n"]
+    pub fn set_logging_settings(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_LoggingSettings,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.logging_settings = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.logging_settings = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `speech_settings`.\n"]
+    pub fn set_speech_settings(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_SpeechSettings,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.speech_settings = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.speech_settings = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings {
+    type O =
+        terrars::BlockAssignable<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings {}
+
+impl BuildDialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings {
+    pub fn build(self) -> DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings {
+        DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings {
+            dtmf_settings: core::default::Default::default(),
+            logging_settings: core::default::Default::default(),
+            speech_settings: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettingsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettingsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettingsRef {
+        DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettingsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettingsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `dtmf_settings` after provisioning.\n"]
+    pub fn dtmf_settings(
+        &self,
+    ) -> terrars
+    ::ListRef<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_DtmfSettingsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.dtmf_settings", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `logging_settings` after provisioning.\n"]
+    pub fn logging_settings(
+        &self,
+    ) -> terrars
+    ::ListRef<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_LoggingSettingsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.logging_settings", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `speech_settings` after provisioning.\n"]
+    pub fn speech_settings(
+        &self,
+    ) -> terrars
+    ::ListRef<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings_SpeechSettingsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.speech_settings", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_EndInteraction {}
+
+impl DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_EndInteraction { }
+
+impl terrars
+::ToListMappable for DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_EndInteraction {
+    type O =
+        terrars
+        ::BlockAssignable<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_EndInteraction>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_EndInteraction {}
+
+impl BuildDialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_EndInteraction {
+    pub fn build(self) -> DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_EndInteraction {
+        DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_EndInteraction {}
+    }
+}
+
+#[allow(dead_code)]
+pub struct DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_EndInteractionRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_EndInteractionRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_EndInteractionRef {
+        DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_EndInteractionRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_EndInteractionRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+}
+
+#[derive(Serialize)]
+pub struct DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_MixedAudio_Segments {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    allow_playback_interruption: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    audio: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    uri: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_MixedAudio_Segments {
+    #[doc = "Set the field `allow_playback_interruption`.\n"]
+    pub fn set_allow_playback_interruption(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.allow_playback_interruption = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `audio`.\n"]
+    pub fn set_audio(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.audio = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `uri`.\n"]
+    pub fn set_uri(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.uri = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_MixedAudio_Segments {
+    type O =
+        terrars
+        ::BlockAssignable<
+            DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_MixedAudio_Segments,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_MixedAudio_Segments {}
+
+impl BuildDialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_MixedAudio_Segments {
+    pub fn build(
+        self,
+    ) -> DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_MixedAudio_Segments {
+        DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_MixedAudio_Segments {
+            allow_playback_interruption: core::default::Default::default(),
+            audio: core::default::Default::default(),
+            uri: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_MixedAudio_SegmentsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_MixedAudio_SegmentsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_MixedAudio_SegmentsRef {
+        DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_MixedAudio_SegmentsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_MixedAudio_SegmentsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `allow_playback_interruption` after provisioning.\n"]
+    pub fn allow_playback_interruption(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.allow_playback_interruption", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `audio` after provisioning.\n"]
+    pub fn audio(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.audio", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `uri` after provisioning.\n"]
+    pub fn uri(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.uri", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_MixedAudio {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    segments: std
+    ::option
+    ::Option<
+        terrars
+        ::ListField<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_MixedAudio_Segments>,
+    >,
+}
+
+impl DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_MixedAudio {
+    #[doc = "Set the field `segments`.\n"]
+    pub fn set_segments(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::ListField<
+                            DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_MixedAudio_Segments,
+                        >,
+                    >,
+    ) -> Self {
+        self.segments = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_MixedAudio {
+    type O =
+        terrars::BlockAssignable<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_MixedAudio>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_MixedAudio {}
+
+impl BuildDialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_MixedAudio {
+    pub fn build(self) -> DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_MixedAudio {
+        DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_MixedAudio {
+            segments: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_MixedAudioRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_MixedAudioRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_MixedAudioRef {
+        DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_MixedAudioRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_MixedAudioRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `segments` after provisioning.\n"]
+    pub fn segments(
+        &self,
+    ) -> terrars
+    ::ListRef<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_MixedAudio_SegmentsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.segments", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_KnowledgeInfoCard {}
+
+impl DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_KnowledgeInfoCard { }
+
+impl terrars
+::ToListMappable for DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_KnowledgeInfoCard {
+    type O =
+        terrars
+        ::BlockAssignable<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_KnowledgeInfoCard>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_KnowledgeInfoCard {}
+
+impl BuildDialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_KnowledgeInfoCard {
+    pub fn build(self) -> DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_KnowledgeInfoCard {
+        DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_KnowledgeInfoCard {}
+    }
+}
+
+#[allow(dead_code)]
+pub struct DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_KnowledgeInfoCardRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_KnowledgeInfoCardRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_KnowledgeInfoCardRef {
+        DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_KnowledgeInfoCardRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_KnowledgeInfoCardRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+}
+
+#[derive(Serialize)]
+pub struct DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_OutputAudioText {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ssml: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     text: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElOutputAudioTextEl {
-    #[doc = "Set the field `ssml`.\nThe SSML text to be synthesized. For more information, see SSML."]
+impl DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_OutputAudioText {
+    #[doc =
+        "Set the field `ssml`.\nThe SSML text to be synthesized. For more information, see SSML.\nThis field is part of a union field 'source': Only one of 'text' or 'ssml' may be set."]
     pub fn set_ssml(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.ssml = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc = "Set the field `text`.\nThe raw text to be synthesized."]
+    #[doc =
+        "Set the field `text`.\nThe raw text to be synthesized.\nThis field is part of a union field 'source': Only one of 'text' or 'ssml' may be set."]
     pub fn set_text(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.text = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElOutputAudioTextEl {
+impl terrars
+::ToListMappable for DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_OutputAudioText {
     type O =
-        terrars::BlockAssignable<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElOutputAudioTextEl>;
+        terrars
+        ::BlockAssignable<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_OutputAudioText>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6584,35 +3808,37 @@ impl terrars::ToListMappable for DialogflowCxPageTransitionRoutesElTriggerFulfil
     }
 }
 
-pub struct BuildDialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElOutputAudioTextEl {}
+pub struct BuildDialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_OutputAudioText {}
 
-impl BuildDialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElOutputAudioTextEl {
-    pub fn build(self) -> DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElOutputAudioTextEl {
-        DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElOutputAudioTextEl {
+impl BuildDialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_OutputAudioText {
+    pub fn build(self) -> DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_OutputAudioText {
+        DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_OutputAudioText {
             ssml: core::default::Default::default(),
             text: core::default::Default::default(),
         }
     }
 }
 
-pub struct DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElOutputAudioTextElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_OutputAudioTextRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElOutputAudioTextElRef {
+impl terrars::Ref for DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_OutputAudioTextRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElOutputAudioTextElRef {
-        DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElOutputAudioTextElRef {
+    ) -> DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_OutputAudioTextRef {
+        DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_OutputAudioTextRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElOutputAudioTextElRef {
+impl DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_OutputAudioTextRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -6624,155 +3850,27 @@ impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElOutputAudio
     }
 
     #[doc =
-        "Get a reference to the value of field `ssml` after provisioning.\nThe SSML text to be synthesized. For more information, see SSML."]
+        "Get a reference to the value of field `ssml` after provisioning.\nThe SSML text to be synthesized. For more information, see SSML.\nThis field is part of a union field 'source': Only one of 'text' or 'ssml' may be set."]
     pub fn ssml(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ssml", self.base))
     }
 
-    #[doc = "Get a reference to the value of field `text` after provisioning.\nThe raw text to be synthesized."]
+    #[doc =
+        "Get a reference to the value of field `text` after provisioning.\nThe raw text to be synthesized.\nThis field is part of a union field 'source': Only one of 'text' or 'ssml' may be set."]
     pub fn text(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.text", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElPlayAudioEl {
-    audio_uri: terrars::PrimField<std::string::String>,
-}
-
-impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElPlayAudioEl { }
-
-impl terrars::ToListMappable for DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElPlayAudioEl {
-    type O = terrars::BlockAssignable<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElPlayAudioEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElPlayAudioEl {
-    #[doc =
-        "URI of the audio clip. Dialogflow does not impose any validation on this value. It is specific to the client that reads it."]
-    pub audio_uri: terrars::PrimField<std::string::String>,
-}
-
-impl BuildDialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElPlayAudioEl {
-    pub fn build(self) -> DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElPlayAudioEl {
-        DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElPlayAudioEl { audio_uri: self.audio_uri }
-    }
-}
-
-pub struct DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElPlayAudioElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElPlayAudioElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElPlayAudioElRef {
-        DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElPlayAudioElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElPlayAudioElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `allow_playback_interruption` after provisioning.\nWhether the playback of this message can be interrupted by the end user's speech and the client can then starts the next Dialogflow request."]
-    pub fn allow_playback_interruption(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.allow_playback_interruption", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `audio_uri` after provisioning.\nURI of the audio clip. Dialogflow does not impose any validation on this value. It is specific to the client that reads it."]
-    pub fn audio_uri(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.audio_uri", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElTelephonyTransferCallEl {
-    phone_number: terrars::PrimField<std::string::String>,
-}
-
-impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElTelephonyTransferCallEl { }
-
-impl terrars
-::ToListMappable for DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElTelephonyTransferCallEl {
-    type O =
-        terrars
-        ::BlockAssignable<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElTelephonyTransferCallEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElTelephonyTransferCallEl {
-    #[doc = "Transfer the call to a phone number in E.164 format."]
-    pub phone_number: terrars::PrimField<std::string::String>,
-}
-
-impl BuildDialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElTelephonyTransferCallEl {
-    pub fn build(self) -> DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElTelephonyTransferCallEl {
-        DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElTelephonyTransferCallEl {
-            phone_number: self.phone_number,
-        }
-    }
-}
-
-pub struct DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElTelephonyTransferCallElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElTelephonyTransferCallElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElTelephonyTransferCallElRef {
-        DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElTelephonyTransferCallElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElTelephonyTransferCallElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `phone_number` after provisioning.\nTransfer the call to a phone number in E.164 format."]
-    pub fn phone_number(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.phone_number", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElTextEl {
+pub struct DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_Text {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     text: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElTextEl {
-    #[doc = "Set the field `text`.\nA collection of text responses."]
+impl DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_Text {
+    #[doc =
+        "Set the field `text`.\nA collection of text response variants. If multiple variants are defined, only one text response variant is returned at runtime.\nrequired: true"]
     pub fn set_text(
         mut self,
         v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
@@ -6782,8 +3880,8 @@ impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElTextEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElTextEl {
-    type O = terrars::BlockAssignable<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElTextEl>;
+impl terrars::ToListMappable for DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_Text {
+    type O = terrars::BlockAssignable<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_Text>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6794,34 +3892,36 @@ impl terrars::ToListMappable for DialogflowCxPageTransitionRoutesElTriggerFulfil
     }
 }
 
-pub struct BuildDialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElTextEl {}
+pub struct BuildDialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_Text {}
 
-impl BuildDialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElTextEl {
-    pub fn build(self) -> DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElTextEl {
-        DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElTextEl {
+impl BuildDialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_Text {
+    pub fn build(self) -> DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_Text {
+        DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_Text {
             text: core::default::Default::default(),
         }
     }
 }
 
-pub struct DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElTextElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_TextRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElTextElRef {
+impl terrars::Ref for DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_TextRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElTextElRef {
-        DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElTextElRef {
+    ) -> DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_TextRef {
+        DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_TextRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElTextElRef {
+impl DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_TextRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -6832,44 +3932,43 @@ impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElTextElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.allow_playback_interruption", self.base))
     }
 
-    #[doc = "Get a reference to the value of field `text` after provisioning.\nA collection of text responses."]
+    #[doc =
+        "Get a reference to the value of field `text` after provisioning.\nA collection of text response variants. If multiple variants are defined, only one text response variant is returned at runtime.\nrequired: true"]
     pub fn text(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.text", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElDynamic {
+struct DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_MessagesDynamic {
     conversation_success: std
     ::option
+    ::Option<terrars::DynamicBlock<DialogflowCxPage_EntryFulfillment_Messages_ConversationSuccess>>,
+    knowledge_info_card: std
+    ::option
     ::Option<
-        terrars::DynamicBlock<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElConversationSuccessEl>,
+        terrars
+        ::DynamicBlock<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_KnowledgeInfoCard>,
     >,
     live_agent_handoff: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElLiveAgentHandoffEl>,
-    >,
+    ::Option<terrars::DynamicBlock<DialogflowCxPage_EntryFulfillment_Messages_LiveAgentHandoff>>,
     output_audio_text: std
     ::option
     ::Option<
-        terrars::DynamicBlock<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElOutputAudioTextEl>,
+        terrars::DynamicBlock<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_OutputAudioText>,
     >,
-    play_audio: std
-    ::option
-    ::Option<terrars::DynamicBlock<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElPlayAudioEl>>,
+    play_audio: std::option::Option<terrars::DynamicBlock<DialogflowCxPage_EntryFulfillment_Messages_PlayAudio>>,
     telephony_transfer_call: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElTelephonyTransferCallEl>,
-    >,
+    ::Option<terrars::DynamicBlock<DialogflowCxPage_EntryFulfillment_Messages_TelephonyTransferCall>>,
     text: std
     ::option
-    ::Option<terrars::DynamicBlock<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElTextEl>>,
+    ::Option<terrars::DynamicBlock<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_Text>>,
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesEl {
+pub struct DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     channel: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -6877,29 +3976,33 @@ pub struct DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     conversation_success: std
     ::option
-    ::Option<std::vec::Vec<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElConversationSuccessEl>>,
+    ::Option<std::vec::Vec<DialogflowCxPage_EntryFulfillment_Messages_ConversationSuccess>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    live_agent_handoff: std
+    knowledge_info_card: std
     ::option
-    ::Option<std::vec::Vec<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElLiveAgentHandoffEl>>,
+    ::Option<
+        std::vec::Vec<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_KnowledgeInfoCard>,
+    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    live_agent_handoff: std::option::Option<std::vec::Vec<DialogflowCxPage_EntryFulfillment_Messages_LiveAgentHandoff>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     output_audio_text: std
     ::option
-    ::Option<std::vec::Vec<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElOutputAudioTextEl>>,
+    ::Option<std::vec::Vec<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_OutputAudioText>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    play_audio: std
-    ::option
-    ::Option<std::vec::Vec<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElPlayAudioEl>>,
+    play_audio: std::option::Option<std::vec::Vec<DialogflowCxPage_EntryFulfillment_Messages_PlayAudio>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     telephony_transfer_call: std
     ::option
-    ::Option<std::vec::Vec<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElTelephonyTransferCallEl>>,
+    ::Option<std::vec::Vec<DialogflowCxPage_EntryFulfillment_Messages_TelephonyTransferCall>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    text: std::option::Option<std::vec::Vec<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElTextEl>>,
-    dynamic: DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElDynamic,
+    text: std
+    ::option
+    ::Option<std::vec::Vec<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_Text>>,
+    dynamic: DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_MessagesDynamic,
 }
 
-impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesEl {
+impl DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages {
     #[doc =
         "Set the field `channel`.\nThe channel which the response is associated with. Clients can specify the channel via QueryParameters.channel, and only associated channel response will be returned."]
     pub fn set_channel(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -6907,7 +4010,8 @@ impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesEl {
         self
     }
 
-    #[doc = "Set the field `payload`.\nA custom, platform-specific payload."]
+    #[doc =
+        "Set the field `payload`.\nReturns a response containing a custom, platform-specific payload.\nThis field is part of a union field 'message': Only one of 'text', 'payload', 'conversationSuccess', 'outputAudioText', 'liveAgentHandoff', 'endInteraction', 'playAudio', 'mixedAudio', 'telephonyTransferCall', or 'knowledgeInfoCard' may be set."]
     pub fn set_payload(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.payload = std::option::Option::Some(v.into());
         self
@@ -6921,12 +4025,7 @@ impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElConversationSuccessEl,
-                        >,
-                    >,
+                    ::Into<terrars::BlockAssignable<DialogflowCxPage_EntryFulfillment_Messages_ConversationSuccess>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -6934,6 +4033,32 @@ impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesEl {
             },
             terrars::BlockAssignable::Dynamic(d) => {
                 self.dynamic.conversation_success = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `knowledge_info_card`.\n"]
+    pub fn set_knowledge_info_card(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_KnowledgeInfoCard,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.knowledge_info_card = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.knowledge_info_card = std::option::Option::Some(d);
             },
         }
         self
@@ -6947,12 +4072,7 @@ impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElLiveAgentHandoffEl,
-                        >,
-                    >,
+                    ::Into<terrars::BlockAssignable<DialogflowCxPage_EntryFulfillment_Messages_LiveAgentHandoff>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -6976,7 +4096,7 @@ impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElOutputAudioTextEl,
+                            DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_OutputAudioText,
                         >,
                     >,
     ) -> Self {
@@ -6994,15 +4114,7 @@ impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesEl {
     #[doc = "Set the field `play_audio`.\n"]
     pub fn set_play_audio(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElPlayAudioEl>,
-                    >,
+        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPage_EntryFulfillment_Messages_PlayAudio>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -7024,10 +4136,7 @@ impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElTelephonyTransferCallEl,
-                        >,
+                        terrars::BlockAssignable<DialogflowCxPage_EntryFulfillment_Messages_TelephonyTransferCall>,
                     >,
     ) -> Self {
         match v.into() {
@@ -7051,7 +4160,9 @@ impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElTextEl>,
+                        ::BlockAssignable<
+                            DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_Text,
+                        >,
                     >,
     ) -> Self {
         match v.into() {
@@ -7066,8 +4177,8 @@ impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesEl {
-    type O = terrars::BlockAssignable<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesEl>;
+impl terrars::ToListMappable for DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages {
+    type O = terrars::BlockAssignable<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -7078,14 +4189,15 @@ impl terrars::ToListMappable for DialogflowCxPageTransitionRoutesElTriggerFulfil
     }
 }
 
-pub struct BuildDialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesEl {}
+pub struct BuildDialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages {}
 
-impl BuildDialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesEl {
-    pub fn build(self) -> DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesEl {
-        DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesEl {
+impl BuildDialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages {
+    pub fn build(self) -> DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages {
+        DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages {
             channel: core::default::Default::default(),
             payload: core::default::Default::default(),
             conversation_success: core::default::Default::default(),
+            knowledge_info_card: core::default::Default::default(),
             live_agent_handoff: core::default::Default::default(),
             output_audio_text: core::default::Default::default(),
             play_audio: core::default::Default::default(),
@@ -7096,24 +4208,26 @@ impl BuildDialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesEl {
     }
 }
 
-pub struct DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_MessagesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElRef {
+impl terrars::Ref for DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_MessagesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElRef {
-        DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElRef {
+    ) -> DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_MessagesRef {
+        DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_MessagesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElRef {
+impl DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_MessagesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -7124,7 +4238,24 @@ impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.channel", self.base))
     }
 
-    #[doc = "Get a reference to the value of field `payload` after provisioning.\nA custom, platform-specific payload."]
+    #[doc =
+        "Get a reference to the value of field `end_interaction` after provisioning.\nThis type has no fields.\nIndicates that interaction with the Dialogflow agent has ended. This message is generated by Dialogflow only and not supposed to be defined by the user.\nThis field is part of a union field 'message': Only one of 'text', 'payload', 'conversationSuccess', 'outputAudioText', 'liveAgentHandoff', 'endInteraction', 'playAudio', 'mixedAudio', 'telephonyTransferCall', or 'knowledgeInfoCard' may be set."]
+    pub fn end_interaction(
+        &self,
+    ) -> terrars::ListRef<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_EndInteractionRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.end_interaction", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `mixed_audio` after provisioning.\nRepresents an audio message that is composed of both segments synthesized from the Dialogflow agent prompts and ones hosted externally at the specified URIs. The external URIs are specified via playAudio. This message is generated by Dialogflow only and not supposed to be defined by the user.\nThis field is part of a union field 'message': Only one of 'text', 'payload', 'conversationSuccess', 'outputAudioText', 'liveAgentHandoff', 'endInteraction', 'playAudio', 'mixedAudio', 'telephonyTransferCall', or 'knowledgeInfoCard' may be set."]
+    pub fn mixed_audio(
+        &self,
+    ) -> terrars::ListRef<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_MixedAudioRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.mixed_audio", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `payload` after provisioning.\nReturns a response containing a custom, platform-specific payload.\nThis field is part of a union field 'message': Only one of 'text', 'payload', 'conversationSuccess', 'outputAudioText', 'liveAgentHandoff', 'endInteraction', 'playAudio', 'mixedAudio', 'telephonyTransferCall', or 'knowledgeInfoCard' may be set."]
     pub fn payload(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.payload", self.base))
     }
@@ -7132,138 +4263,70 @@ impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElRef {
     #[doc = "Get a reference to the value of field `conversation_success` after provisioning.\n"]
     pub fn conversation_success(
         &self,
-    ) -> terrars::ListRef<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElConversationSuccessElRef> {
+    ) -> terrars::ListRef<DialogflowCxPage_EntryFulfillment_Messages_ConversationSuccessRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.conversation_success", self.base))
     }
 
-    #[doc = "Get a reference to the value of field `live_agent_handoff` after provisioning.\n"]
-    pub fn live_agent_handoff(
+    #[doc = "Get a reference to the value of field `knowledge_info_card` after provisioning.\n"]
+    pub fn knowledge_info_card(
         &self,
-    ) -> terrars::ListRef<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElLiveAgentHandoffElRef> {
+    ) -> terrars
+    ::ListRef<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_KnowledgeInfoCardRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.knowledge_info_card", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `live_agent_handoff` after provisioning.\n"]
+    pub fn live_agent_handoff(&self) -> terrars::ListRef<DialogflowCxPage_EntryFulfillment_Messages_LiveAgentHandoffRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.live_agent_handoff", self.base))
     }
 
     #[doc = "Get a reference to the value of field `output_audio_text` after provisioning.\n"]
     pub fn output_audio_text(
         &self,
-    ) -> terrars::ListRef<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElOutputAudioTextElRef> {
+    ) -> terrars::ListRef<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_OutputAudioTextRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.output_audio_text", self.base))
     }
 
     #[doc = "Get a reference to the value of field `play_audio` after provisioning.\n"]
-    pub fn play_audio(
-        &self,
-    ) -> terrars::ListRef<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElPlayAudioElRef> {
+    pub fn play_audio(&self) -> terrars::ListRef<DialogflowCxPage_EntryFulfillment_Messages_PlayAudioRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.play_audio", self.base))
     }
 
     #[doc = "Get a reference to the value of field `telephony_transfer_call` after provisioning.\n"]
     pub fn telephony_transfer_call(
         &self,
-    ) -> terrars::ListRef<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElTelephonyTransferCallElRef> {
+    ) -> terrars::ListRef<DialogflowCxPage_EntryFulfillment_Messages_TelephonyTransferCallRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.telephony_transfer_call", self.base))
     }
 
     #[doc = "Get a reference to the value of field `text` after provisioning.\n"]
-    pub fn text(&self) -> terrars::ListRef<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElTextElRef> {
+    pub fn text(
+        &self,
+    ) -> terrars::ListRef<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages_TextRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.text", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct DialogflowCxPageTransitionRoutesElTriggerFulfillmentElSetParameterActionsEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    parameter: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    value: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentElSetParameterActionsEl {
-    #[doc = "Set the field `parameter`.\nDisplay name of the parameter."]
-    pub fn set_parameter(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.parameter = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `value`.\nThe new JSON-encoded value of the parameter. A null value clears the parameter."]
-    pub fn set_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.value = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DialogflowCxPageTransitionRoutesElTriggerFulfillmentElSetParameterActionsEl {
-    type O = terrars::BlockAssignable<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElSetParameterActionsEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDialogflowCxPageTransitionRoutesElTriggerFulfillmentElSetParameterActionsEl {}
-
-impl BuildDialogflowCxPageTransitionRoutesElTriggerFulfillmentElSetParameterActionsEl {
-    pub fn build(self) -> DialogflowCxPageTransitionRoutesElTriggerFulfillmentElSetParameterActionsEl {
-        DialogflowCxPageTransitionRoutesElTriggerFulfillmentElSetParameterActionsEl {
-            parameter: core::default::Default::default(),
-            value: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DialogflowCxPageTransitionRoutesElTriggerFulfillmentElSetParameterActionsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DialogflowCxPageTransitionRoutesElTriggerFulfillmentElSetParameterActionsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DialogflowCxPageTransitionRoutesElTriggerFulfillmentElSetParameterActionsElRef {
-        DialogflowCxPageTransitionRoutesElTriggerFulfillmentElSetParameterActionsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentElSetParameterActionsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `parameter` after provisioning.\nDisplay name of the parameter."]
-    pub fn parameter(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.parameter", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `value` after provisioning.\nThe new JSON-encoded value of the parameter. A null value clears the parameter."]
-    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct DialogflowCxPageTransitionRoutesElTriggerFulfillmentElDynamic {
+struct DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillmentDynamic {
+    advanced_settings: std
+    ::option
+    ::Option<terrars::DynamicBlock<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings>>,
     conditional_cases: std
     ::option
-    ::Option<terrars::DynamicBlock<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElConditionalCasesEl>>,
+    ::Option<terrars::DynamicBlock<DialogflowCxPage_EntryFulfillment_ConditionalCases>>,
     messages: std
     ::option
-    ::Option<terrars::DynamicBlock<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesEl>>,
+    ::Option<terrars::DynamicBlock<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages>>,
     set_parameter_actions: std
     ::option
-    ::Option<terrars::DynamicBlock<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElSetParameterActionsEl>>,
+    ::Option<terrars::DynamicBlock<DialogflowCxPage_EntryFulfillment_SetParameterActions>>,
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxPageTransitionRoutesElTriggerFulfillmentEl {
+pub struct DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_generative_fallback: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     return_partial_responses: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -7271,19 +4334,26 @@ pub struct DialogflowCxPageTransitionRoutesElTriggerFulfillmentEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     webhook: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    conditional_cases: std
+    advanced_settings: std
     ::option
-    ::Option<std::vec::Vec<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElConditionalCasesEl>>,
+    ::Option<std::vec::Vec<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    messages: std::option::Option<std::vec::Vec<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesEl>>,
+    conditional_cases: std::option::Option<std::vec::Vec<DialogflowCxPage_EntryFulfillment_ConditionalCases>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    set_parameter_actions: std
-    ::option
-    ::Option<std::vec::Vec<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElSetParameterActionsEl>>,
-    dynamic: DialogflowCxPageTransitionRoutesElTriggerFulfillmentElDynamic,
+    messages: std::option::Option<std::vec::Vec<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    set_parameter_actions: std::option::Option<std::vec::Vec<DialogflowCxPage_EntryFulfillment_SetParameterActions>>,
+    dynamic: DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillmentDynamic,
 }
 
-impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentEl {
+impl DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment {
+    #[doc =
+        "Set the field `enable_generative_fallback`.\nIf the flag is true, the agent will utilize LLM to generate a text response. If LLM generation fails, the defined responses in the fulfillment will be respected. This flag is only useful for fulfillments associated with no-match event handlers."]
+    pub fn set_enable_generative_fallback(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enable_generative_fallback = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc =
         "Set the field `return_partial_responses`.\nWhether Dialogflow should return currently queued fulfillment response messages in streaming APIs. If a webhook is specified, it happens before Dialogflow invokes webhook. Warning: 1) This flag only affects streaming API. Responses are still queued and returned once in non-streaming API. 2) The flag can be enabled in any fulfillment but only the first 3 partial responses will be returned. You may only want to apply it to fulfillments that have slow webhooks."]
     pub fn set_return_partial_responses(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -7305,8 +4375,8 @@ impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentEl {
         self
     }
 
-    #[doc = "Set the field `conditional_cases`.\n"]
-    pub fn set_conditional_cases(
+    #[doc = "Set the field `advanced_settings`.\n"]
+    pub fn set_advanced_settings(
         mut self,
         v:
             impl
@@ -7315,8 +4385,26 @@ impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElConditionalCasesEl>,
+                        ::BlockAssignable<
+                            DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettings,
+                        >,
                     >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.advanced_settings = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.advanced_settings = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `conditional_cases`.\n"]
+    pub fn set_conditional_cases(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPage_EntryFulfillment_ConditionalCases>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -7338,7 +4426,8 @@ impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesEl>,
+                        terrars
+                        ::BlockAssignable<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_Messages>,
                     >,
     ) -> Self {
         match v.into() {
@@ -7355,15 +4444,7 @@ impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentEl {
     #[doc = "Set the field `set_parameter_actions`.\n"]
     pub fn set_set_parameter_actions(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElSetParameterActionsEl>,
-                    >,
+        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPage_EntryFulfillment_SetParameterActions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -7377,8 +4458,8 @@ impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxPageTransitionRoutesElTriggerFulfillmentEl {
-    type O = terrars::BlockAssignable<DialogflowCxPageTransitionRoutesElTriggerFulfillmentEl>;
+impl terrars::ToListMappable for DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment {
+    type O = terrars::BlockAssignable<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -7389,14 +4470,16 @@ impl terrars::ToListMappable for DialogflowCxPageTransitionRoutesElTriggerFulfil
     }
 }
 
-pub struct BuildDialogflowCxPageTransitionRoutesElTriggerFulfillmentEl {}
+pub struct BuildDialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment {}
 
-impl BuildDialogflowCxPageTransitionRoutesElTriggerFulfillmentEl {
-    pub fn build(self) -> DialogflowCxPageTransitionRoutesElTriggerFulfillmentEl {
-        DialogflowCxPageTransitionRoutesElTriggerFulfillmentEl {
+impl BuildDialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment {
+    pub fn build(self) -> DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment {
+        DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment {
+            enable_generative_fallback: core::default::Default::default(),
             return_partial_responses: core::default::Default::default(),
             tag: core::default::Default::default(),
             webhook: core::default::Default::default(),
+            advanced_settings: core::default::Default::default(),
             conditional_cases: core::default::Default::default(),
             messages: core::default::Default::default(),
             set_parameter_actions: core::default::Default::default(),
@@ -7405,26 +4488,34 @@ impl BuildDialogflowCxPageTransitionRoutesElTriggerFulfillmentEl {
     }
 }
 
-pub struct DialogflowCxPageTransitionRoutesElTriggerFulfillmentElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillmentRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxPageTransitionRoutesElTriggerFulfillmentElRef {
+impl terrars::Ref for DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillmentRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxPageTransitionRoutesElTriggerFulfillmentElRef {
-        DialogflowCxPageTransitionRoutesElTriggerFulfillmentElRef {
+    ) -> DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillmentRef {
+        DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillmentRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentElRef {
+impl DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillmentRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `enable_generative_fallback` after provisioning.\nIf the flag is true, the agent will utilize LLM to generate a text response. If LLM generation fails, the defined responses in the fulfillment will be respected. This flag is only useful for fulfillments associated with no-match event handlers."]
+    pub fn enable_generative_fallback(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_generative_fallback", self.base))
     }
 
     #[doc =
@@ -7445,35 +4536,310 @@ impl DialogflowCxPageTransitionRoutesElTriggerFulfillmentElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.webhook", self.base))
     }
 
-    #[doc = "Get a reference to the value of field `conditional_cases` after provisioning.\n"]
-    pub fn conditional_cases(
+    #[doc = "Get a reference to the value of field `advanced_settings` after provisioning.\n"]
+    pub fn advanced_settings(
         &self,
-    ) -> terrars::ListRef<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElConditionalCasesElRef> {
+    ) -> terrars::ListRef<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_AdvancedSettingsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.advanced_settings", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `conditional_cases` after provisioning.\n"]
+    pub fn conditional_cases(&self) -> terrars::ListRef<DialogflowCxPage_EntryFulfillment_ConditionalCasesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.conditional_cases", self.base))
     }
 
     #[doc = "Get a reference to the value of field `messages` after provisioning.\n"]
-    pub fn messages(&self) -> terrars::ListRef<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElMessagesElRef> {
+    pub fn messages(
+        &self,
+    ) -> terrars::ListRef<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment_MessagesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.messages", self.base))
     }
 
     #[doc = "Get a reference to the value of field `set_parameter_actions` after provisioning.\n"]
-    pub fn set_parameter_actions(
-        &self,
-    ) -> terrars::ListRef<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElSetParameterActionsElRef> {
+    pub fn set_parameter_actions(&self) -> terrars::ListRef<DialogflowCxPage_EntryFulfillment_SetParameterActionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.set_parameter_actions", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct DialogflowCxPageTransitionRoutesElDynamic {
+struct DialogflowCxPage_KnowledgeConnectorSettingsDynamic {
+    data_store_connections: std
+    ::option
+    ::Option<terrars::DynamicBlock<DialogflowCxPage_KnowledgeConnectorSettings_DataStoreConnections>>,
     trigger_fulfillment: std
     ::option
-    ::Option<terrars::DynamicBlock<DialogflowCxPageTransitionRoutesElTriggerFulfillmentEl>>,
+    ::Option<terrars::DynamicBlock<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment>>,
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxPageTransitionRoutesEl {
+pub struct DialogflowCxPage_KnowledgeConnectorSettings {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    target_flow: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    target_page: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    data_store_connections: std
+    ::option
+    ::Option<std::vec::Vec<DialogflowCxPage_KnowledgeConnectorSettings_DataStoreConnections>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    trigger_fulfillment: std
+    ::option
+    ::Option<std::vec::Vec<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment>>,
+    dynamic: DialogflowCxPage_KnowledgeConnectorSettingsDynamic,
+}
+
+impl DialogflowCxPage_KnowledgeConnectorSettings {
+    #[doc = "Set the field `enabled`.\nWhether Knowledge Connector is enabled or not."]
+    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enabled = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `target_flow`.\nThe target flow to transition to. Format: projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/flows/<FlowID>.\nThis field is part of a union field 'target': Only one of 'targetPage' or 'targetFlow' may be set."]
+    pub fn set_target_flow(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.target_flow = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `target_page`.\nThe target page to transition to. Format: projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/flows/<FlowID>/pages/<PageID>.\nThe page must be in the same host flow (the flow that owns this 'KnowledgeConnectorSettings').\nThis field is part of a union field 'target': Only one of 'targetPage' or 'targetFlow' may be set."]
+    pub fn set_target_page(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.target_page = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `data_store_connections`.\n"]
+    pub fn set_data_store_connections(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<DialogflowCxPage_KnowledgeConnectorSettings_DataStoreConnections>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.data_store_connections = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.data_store_connections = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `trigger_fulfillment`.\n"]
+    pub fn set_trigger_fulfillment(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillment>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.trigger_fulfillment = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.trigger_fulfillment = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for DialogflowCxPage_KnowledgeConnectorSettings {
+    type O = terrars::BlockAssignable<DialogflowCxPage_KnowledgeConnectorSettings>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDialogflowCxPage_KnowledgeConnectorSettings {}
+
+impl BuildDialogflowCxPage_KnowledgeConnectorSettings {
+    pub fn build(self) -> DialogflowCxPage_KnowledgeConnectorSettings {
+        DialogflowCxPage_KnowledgeConnectorSettings {
+            enabled: core::default::Default::default(),
+            target_flow: core::default::Default::default(),
+            target_page: core::default::Default::default(),
+            data_store_connections: core::default::Default::default(),
+            trigger_fulfillment: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DialogflowCxPage_KnowledgeConnectorSettingsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DialogflowCxPage_KnowledgeConnectorSettingsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DialogflowCxPage_KnowledgeConnectorSettingsRef {
+        DialogflowCxPage_KnowledgeConnectorSettingsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DialogflowCxPage_KnowledgeConnectorSettingsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `enabled` after provisioning.\nWhether Knowledge Connector is enabled or not."]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `target_flow` after provisioning.\nThe target flow to transition to. Format: projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/flows/<FlowID>.\nThis field is part of a union field 'target': Only one of 'targetPage' or 'targetFlow' may be set."]
+    pub fn target_flow(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_flow", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `target_page` after provisioning.\nThe target page to transition to. Format: projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/flows/<FlowID>/pages/<PageID>.\nThe page must be in the same host flow (the flow that owns this 'KnowledgeConnectorSettings').\nThis field is part of a union field 'target': Only one of 'targetPage' or 'targetFlow' may be set."]
+    pub fn target_page(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_page", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `data_store_connections` after provisioning.\n"]
+    pub fn data_store_connections(
+        &self,
+    ) -> terrars::ListRef<DialogflowCxPage_KnowledgeConnectorSettings_DataStoreConnectionsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.data_store_connections", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `trigger_fulfillment` after provisioning.\n"]
+    pub fn trigger_fulfillment(
+        &self,
+    ) -> terrars::ListRef<DialogflowCxPage_KnowledgeConnectorSettings_TriggerFulfillmentRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.trigger_fulfillment", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DialogflowCxPage_Timeouts {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DialogflowCxPage_Timeouts {
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DialogflowCxPage_Timeouts {
+    type O = terrars::BlockAssignable<DialogflowCxPage_Timeouts>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDialogflowCxPage_Timeouts {}
+
+impl BuildDialogflowCxPage_Timeouts {
+    pub fn build(self) -> DialogflowCxPage_Timeouts {
+        DialogflowCxPage_Timeouts {
+            create: core::default::Default::default(),
+            delete: core::default::Default::default(),
+            update: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DialogflowCxPage_TimeoutsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DialogflowCxPage_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxPage_TimeoutsRef {
+        DialogflowCxPage_TimeoutsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DialogflowCxPage_TimeoutsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct DialogflowCxPage_TransitionRoutesDynamic {
+    trigger_fulfillment: std
+    ::option
+    ::Option<terrars::DynamicBlock<DialogflowCxPage_EventHandlers_TriggerFulfillment>>,
+}
+
+#[derive(Serialize)]
+pub struct DialogflowCxPage_TransitionRoutes {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     condition: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -7483,11 +4849,11 @@ pub struct DialogflowCxPageTransitionRoutesEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     target_page: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    trigger_fulfillment: std::option::Option<std::vec::Vec<DialogflowCxPageTransitionRoutesElTriggerFulfillmentEl>>,
-    dynamic: DialogflowCxPageTransitionRoutesElDynamic,
+    trigger_fulfillment: std::option::Option<std::vec::Vec<DialogflowCxPage_EventHandlers_TriggerFulfillment>>,
+    dynamic: DialogflowCxPage_TransitionRoutesDynamic,
 }
 
-impl DialogflowCxPageTransitionRoutesEl {
+impl DialogflowCxPage_TransitionRoutes {
     #[doc =
         "Set the field `condition`.\nThe condition to evaluate against form parameters or session parameters.\nAt least one of intent or condition must be specified. When both intent and condition are specified, the transition can only happen when both are fulfilled."]
     pub fn set_condition(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -7519,7 +4885,7 @@ impl DialogflowCxPageTransitionRoutesEl {
     #[doc = "Set the field `trigger_fulfillment`.\n"]
     pub fn set_trigger_fulfillment(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPageTransitionRoutesElTriggerFulfillmentEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxPage_EventHandlers_TriggerFulfillment>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -7533,8 +4899,8 @@ impl DialogflowCxPageTransitionRoutesEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxPageTransitionRoutesEl {
-    type O = terrars::BlockAssignable<DialogflowCxPageTransitionRoutesEl>;
+impl terrars::ToListMappable for DialogflowCxPage_TransitionRoutes {
+    type O = terrars::BlockAssignable<DialogflowCxPage_TransitionRoutes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -7545,11 +4911,11 @@ impl terrars::ToListMappable for DialogflowCxPageTransitionRoutesEl {
     }
 }
 
-pub struct BuildDialogflowCxPageTransitionRoutesEl {}
+pub struct BuildDialogflowCxPage_TransitionRoutes {}
 
-impl BuildDialogflowCxPageTransitionRoutesEl {
-    pub fn build(self) -> DialogflowCxPageTransitionRoutesEl {
-        DialogflowCxPageTransitionRoutesEl {
+impl BuildDialogflowCxPage_TransitionRoutes {
+    pub fn build(self) -> DialogflowCxPage_TransitionRoutes {
+        DialogflowCxPage_TransitionRoutes {
             condition: core::default::Default::default(),
             intent: core::default::Default::default(),
             target_flow: core::default::Default::default(),
@@ -7560,21 +4926,23 @@ impl BuildDialogflowCxPageTransitionRoutesEl {
     }
 }
 
-pub struct DialogflowCxPageTransitionRoutesElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxPage_TransitionRoutesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxPageTransitionRoutesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxPageTransitionRoutesElRef {
-        DialogflowCxPageTransitionRoutesElRef {
+impl terrars::Ref for DialogflowCxPage_TransitionRoutesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxPage_TransitionRoutesRef {
+        DialogflowCxPage_TransitionRoutesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxPageTransitionRoutesElRef {
+impl DialogflowCxPage_TransitionRoutesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -7610,16 +4978,7 @@ impl DialogflowCxPageTransitionRoutesElRef {
     }
 
     #[doc = "Get a reference to the value of field `trigger_fulfillment` after provisioning.\n"]
-    pub fn trigger_fulfillment(&self) -> terrars::ListRef<DialogflowCxPageTransitionRoutesElTriggerFulfillmentElRef> {
+    pub fn trigger_fulfillment(&self) -> terrars::ListRef<DialogflowCxPage_EventHandlers_TriggerFulfillmentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.trigger_fulfillment", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DialogflowCxPageDynamic {
-    advanced_settings: std::option::Option<terrars::DynamicBlock<DialogflowCxPageAdvancedSettingsEl>>,
-    entry_fulfillment: std::option::Option<terrars::DynamicBlock<DialogflowCxPageEntryFulfillmentEl>>,
-    event_handlers: std::option::Option<terrars::DynamicBlock<DialogflowCxPageEventHandlersEl>>,
-    form: std::option::Option<terrars::DynamicBlock<DialogflowCxPageFormEl>>,
-    transition_routes: std::option::Option<terrars::DynamicBlock<DialogflowCxPageTransitionRoutesEl>>,
 }

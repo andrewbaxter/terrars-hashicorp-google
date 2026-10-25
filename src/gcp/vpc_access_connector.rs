@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct VpcAccessConnectorData {
+struct VpcAccessConnectorData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct VpcAccessConnectorData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -40,16 +44,16 @@ struct VpcAccessConnectorData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    subnet: std::option::Option<std::vec::Vec<VpcAccessConnectorSubnetEl>>,
+    subnet: std::option::Option<std::vec::Vec<VpcAccessConnector_Subnet>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<VpcAccessConnectorTimeoutsEl>,
+    timeouts: std::option::Option<VpcAccessConnector_Timeouts>,
     dynamic: VpcAccessConnectorDynamic,
 }
 
 struct VpcAccessConnector_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<VpcAccessConnectorData>,
+    data: std::cell::RefCell<VpcAccessConnectorData_>,
 }
 
 #[derive(Clone)]
@@ -149,6 +153,13 @@ impl VpcAccessConnector {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -168,26 +179,29 @@ impl VpcAccessConnector {
         self
     }
 
-    #[doc = "Set the field `max_instances`.\nMaximum value of instances in autoscaling group underlying the connector."]
+    #[doc =
+        "Set the field `max_instances`.\nMaximum value of instances in autoscaling group underlying the connector. Value must be between 3 and 10, inclusive. Must be\nhigher than the value specified by min_instances. Required alongside 'min_instances' if not using 'min_throughput'/'max_throughput'."]
     pub fn set_max_instances(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.0.data.borrow_mut().max_instances = std::option::Option::Some(v.into());
         self
     }
 
     #[doc =
-        "Set the field `max_throughput`.\nMaximum throughput of the connector in Mbps, must be greater than 'min_throughput'. Default is 300."]
+        "Set the field `max_throughput`.\nMaximum throughput of the connector in Mbps, must be greater than 'min_throughput'. Default is 300. Refers to the expected throughput\nwhen using an e2-micro machine type. Value must be a multiple of 100 from 300 through 1000. Must be higher than the value specified by\nmin_throughput. Only one of 'max_throughput' and 'max_instances' can be specified. The use of max_throughput is discouraged in favor of max_instances."]
     pub fn set_max_throughput(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.0.data.borrow_mut().max_throughput = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc = "Set the field `min_instances`.\nMinimum value of instances in autoscaling group underlying the connector."]
+    #[doc =
+        "Set the field `min_instances`.\nMinimum value of instances in autoscaling group underlying the connector. Value must be between 2 and 9, inclusive. Must be\nlower than the value specified by max_instances. Required alongside 'max_instances' if not using 'min_throughput'/'max_throughput'."]
     pub fn set_min_instances(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.0.data.borrow_mut().min_instances = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc = "Set the field `min_throughput`.\nMinimum throughput of the connector in Mbps. Default and min is 200."]
+    #[doc =
+        "Set the field `min_throughput`.\nMinimum throughput of the connector in Mbps. Default and min is 200. Refers to the expected throughput when using an e2-micro machine type.\nValue must be a multiple of 100 from 200 through 900. Must be lower than the value specified by max_throughput.\nOnly one of 'min_throughput' and 'min_instances' can be specified. The use of min_throughput is discouraged in favor of min_instances."]
     pub fn set_min_throughput(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.0.data.borrow_mut().min_throughput = std::option::Option::Some(v.into());
         self
@@ -213,7 +227,7 @@ impl VpcAccessConnector {
     }
 
     #[doc = "Set the field `subnet`.\n"]
-    pub fn set_subnet(self, v: impl std::convert::Into<terrars::BlockAssignable<VpcAccessConnectorSubnetEl>>) -> Self {
+    pub fn set_subnet(self, v: impl std::convert::Into<terrars::BlockAssignable<VpcAccessConnector_Subnet>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().subnet = std::option::Option::Some(v);
@@ -226,7 +240,7 @@ impl VpcAccessConnector {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<VpcAccessConnectorTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<VpcAccessConnector_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -235,6 +249,12 @@ impl VpcAccessConnector {
         "Get a reference to the value of field `connected_projects` after provisioning.\nList of projects using the connector."]
     pub fn connected_projects(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.connected_projects", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -255,25 +275,25 @@ impl VpcAccessConnector {
     }
 
     #[doc =
-        "Get a reference to the value of field `max_instances` after provisioning.\nMaximum value of instances in autoscaling group underlying the connector."]
+        "Get a reference to the value of field `max_instances` after provisioning.\nMaximum value of instances in autoscaling group underlying the connector. Value must be between 3 and 10, inclusive. Must be\nhigher than the value specified by min_instances. Required alongside 'min_instances' if not using 'min_throughput'/'max_throughput'."]
     pub fn max_instances(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_instances", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `max_throughput` after provisioning.\nMaximum throughput of the connector in Mbps, must be greater than 'min_throughput'. Default is 300."]
+        "Get a reference to the value of field `max_throughput` after provisioning.\nMaximum throughput of the connector in Mbps, must be greater than 'min_throughput'. Default is 300. Refers to the expected throughput\nwhen using an e2-micro machine type. Value must be a multiple of 100 from 300 through 1000. Must be higher than the value specified by\nmin_throughput. Only one of 'max_throughput' and 'max_instances' can be specified. The use of max_throughput is discouraged in favor of max_instances."]
     pub fn max_throughput(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_throughput", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `min_instances` after provisioning.\nMinimum value of instances in autoscaling group underlying the connector."]
+        "Get a reference to the value of field `min_instances` after provisioning.\nMinimum value of instances in autoscaling group underlying the connector. Value must be between 2 and 9, inclusive. Must be\nlower than the value specified by max_instances. Required alongside 'max_instances' if not using 'min_throughput'/'max_throughput'."]
     pub fn min_instances(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_instances", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `min_throughput` after provisioning.\nMinimum throughput of the connector in Mbps. Default and min is 200."]
+        "Get a reference to the value of field `min_throughput` after provisioning.\nMinimum throughput of the connector in Mbps. Default and min is 200. Refers to the expected throughput when using an e2-micro machine type.\nValue must be a multiple of 100 from 200 through 900. Must be lower than the value specified by max_throughput.\nOnly one of 'min_throughput' and 'min_instances' can be specified. The use of min_throughput is discouraged in favor of min_instances."]
     pub fn min_throughput(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_throughput", self.extract_ref()))
     }
@@ -313,13 +333,13 @@ impl VpcAccessConnector {
     }
 
     #[doc = "Get a reference to the value of field `subnet` after provisioning.\n"]
-    pub fn subnet(&self) -> terrars::ListRef<VpcAccessConnectorSubnetElRef> {
+    pub fn subnet(&self) -> terrars::ListRef<VpcAccessConnector_SubnetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.subnet", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> VpcAccessConnectorTimeoutsElRef {
-        VpcAccessConnectorTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> VpcAccessConnector_TimeoutsRef {
+        VpcAccessConnector_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -365,12 +385,13 @@ impl BuildVpcAccessConnector {
         let out = VpcAccessConnector(std::rc::Rc::new(VpcAccessConnector_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(VpcAccessConnectorData {
+            data: std::cell::RefCell::new(VpcAccessConnectorData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 ip_cidr_range: core::default::Default::default(),
                 machine_type: core::default::Default::default(),
@@ -421,6 +442,12 @@ impl VpcAccessConnectorRef {
         terrars::ListRef::new(self.shared().clone(), format!("{}.connected_projects", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -439,25 +466,25 @@ impl VpcAccessConnectorRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `max_instances` after provisioning.\nMaximum value of instances in autoscaling group underlying the connector."]
+        "Get a reference to the value of field `max_instances` after provisioning.\nMaximum value of instances in autoscaling group underlying the connector. Value must be between 3 and 10, inclusive. Must be\nhigher than the value specified by min_instances. Required alongside 'min_instances' if not using 'min_throughput'/'max_throughput'."]
     pub fn max_instances(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_instances", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `max_throughput` after provisioning.\nMaximum throughput of the connector in Mbps, must be greater than 'min_throughput'. Default is 300."]
+        "Get a reference to the value of field `max_throughput` after provisioning.\nMaximum throughput of the connector in Mbps, must be greater than 'min_throughput'. Default is 300. Refers to the expected throughput\nwhen using an e2-micro machine type. Value must be a multiple of 100 from 300 through 1000. Must be higher than the value specified by\nmin_throughput. Only one of 'max_throughput' and 'max_instances' can be specified. The use of max_throughput is discouraged in favor of max_instances."]
     pub fn max_throughput(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_throughput", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `min_instances` after provisioning.\nMinimum value of instances in autoscaling group underlying the connector."]
+        "Get a reference to the value of field `min_instances` after provisioning.\nMinimum value of instances in autoscaling group underlying the connector. Value must be between 2 and 9, inclusive. Must be\nlower than the value specified by max_instances. Required alongside 'max_instances' if not using 'min_throughput'/'max_throughput'."]
     pub fn min_instances(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_instances", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `min_throughput` after provisioning.\nMinimum throughput of the connector in Mbps. Default and min is 200."]
+        "Get a reference to the value of field `min_throughput` after provisioning.\nMinimum throughput of the connector in Mbps. Default and min is 200. Refers to the expected throughput when using an e2-micro machine type.\nValue must be a multiple of 100 from 200 through 900. Must be lower than the value specified by max_throughput.\nOnly one of 'min_throughput' and 'min_instances' can be specified. The use of min_throughput is discouraged in favor of min_instances."]
     pub fn min_throughput(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_throughput", self.extract_ref()))
     }
@@ -497,25 +524,30 @@ impl VpcAccessConnectorRef {
     }
 
     #[doc = "Get a reference to the value of field `subnet` after provisioning.\n"]
-    pub fn subnet(&self) -> terrars::ListRef<VpcAccessConnectorSubnetElRef> {
+    pub fn subnet(&self) -> terrars::ListRef<VpcAccessConnector_SubnetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.subnet", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> VpcAccessConnectorTimeoutsElRef {
-        VpcAccessConnectorTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> VpcAccessConnector_TimeoutsRef {
+        VpcAccessConnector_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct VpcAccessConnectorDynamic {
+    subnet: std::option::Option<terrars::DynamicBlock<VpcAccessConnector_Subnet>>,
+}
+
 #[derive(Serialize)]
-pub struct VpcAccessConnectorSubnetEl {
+pub struct VpcAccessConnector_Subnet {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl VpcAccessConnectorSubnetEl {
+impl VpcAccessConnector_Subnet {
     #[doc =
         "Set the field `name`.\nSubnet name (relative, not fully qualified). E.g. if the full subnet selfLink is\nhttps://compute.googleapis.com/compute/v1/projects/{project}/regions/{region}/subnetworks/{subnetName} the correct input for this field would be {subnetName}\""]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -531,8 +563,8 @@ impl VpcAccessConnectorSubnetEl {
     }
 }
 
-impl terrars::ToListMappable for VpcAccessConnectorSubnetEl {
-    type O = terrars::BlockAssignable<VpcAccessConnectorSubnetEl>;
+impl terrars::ToListMappable for VpcAccessConnector_Subnet {
+    type O = terrars::BlockAssignable<VpcAccessConnector_Subnet>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -543,32 +575,34 @@ impl terrars::ToListMappable for VpcAccessConnectorSubnetEl {
     }
 }
 
-pub struct BuildVpcAccessConnectorSubnetEl {}
+pub struct BuildVpcAccessConnector_Subnet {}
 
-impl BuildVpcAccessConnectorSubnetEl {
-    pub fn build(self) -> VpcAccessConnectorSubnetEl {
-        VpcAccessConnectorSubnetEl {
+impl BuildVpcAccessConnector_Subnet {
+    pub fn build(self) -> VpcAccessConnector_Subnet {
+        VpcAccessConnector_Subnet {
             name: core::default::Default::default(),
             project_id: core::default::Default::default(),
         }
     }
 }
 
-pub struct VpcAccessConnectorSubnetElRef {
+#[allow(dead_code)]
+pub struct VpcAccessConnector_SubnetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for VpcAccessConnectorSubnetElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> VpcAccessConnectorSubnetElRef {
-        VpcAccessConnectorSubnetElRef {
+impl terrars::Ref for VpcAccessConnector_SubnetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> VpcAccessConnector_SubnetRef {
+        VpcAccessConnector_SubnetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl VpcAccessConnectorSubnetElRef {
+impl VpcAccessConnector_SubnetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -587,14 +621,16 @@ impl VpcAccessConnectorSubnetElRef {
 }
 
 #[derive(Serialize)]
-pub struct VpcAccessConnectorTimeoutsEl {
+pub struct VpcAccessConnector_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl VpcAccessConnectorTimeoutsEl {
+impl VpcAccessConnector_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -606,10 +642,16 @@ impl VpcAccessConnectorTimeoutsEl {
         self.delete = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for VpcAccessConnectorTimeoutsEl {
-    type O = terrars::BlockAssignable<VpcAccessConnectorTimeoutsEl>;
+impl terrars::ToListMappable for VpcAccessConnector_Timeouts {
+    type O = terrars::BlockAssignable<VpcAccessConnector_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -620,32 +662,35 @@ impl terrars::ToListMappable for VpcAccessConnectorTimeoutsEl {
     }
 }
 
-pub struct BuildVpcAccessConnectorTimeoutsEl {}
+pub struct BuildVpcAccessConnector_Timeouts {}
 
-impl BuildVpcAccessConnectorTimeoutsEl {
-    pub fn build(self) -> VpcAccessConnectorTimeoutsEl {
-        VpcAccessConnectorTimeoutsEl {
+impl BuildVpcAccessConnector_Timeouts {
+    pub fn build(self) -> VpcAccessConnector_Timeouts {
+        VpcAccessConnector_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
+            update: core::default::Default::default(),
         }
     }
 }
 
-pub struct VpcAccessConnectorTimeoutsElRef {
+#[allow(dead_code)]
+pub struct VpcAccessConnector_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for VpcAccessConnectorTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> VpcAccessConnectorTimeoutsElRef {
-        VpcAccessConnectorTimeoutsElRef {
+impl terrars::Ref for VpcAccessConnector_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> VpcAccessConnector_TimeoutsRef {
+        VpcAccessConnector_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl VpcAccessConnectorTimeoutsElRef {
+impl VpcAccessConnector_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -659,9 +704,9 @@ impl VpcAccessConnectorTimeoutsElRef {
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
-}
 
-#[derive(Serialize, Default)]
-struct VpcAccessConnectorDynamic {
-    subnet: std::option::Option<terrars::DynamicBlock<VpcAccessConnectorSubnetEl>>,
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    }
 }

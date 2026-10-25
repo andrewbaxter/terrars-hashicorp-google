@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct AppEngineStandardAppVersionData {
+struct AppEngineStandardAppVersionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,7 +23,11 @@ struct AppEngineStandardAppVersionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     app_engine_apis: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    app_engine_bundled_services: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete_service_on_destroy: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     env_variables: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -45,30 +51,30 @@ struct AppEngineStandardAppVersionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     version_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    automatic_scaling: std::option::Option<std::vec::Vec<AppEngineStandardAppVersionAutomaticScalingEl>>,
+    automatic_scaling: std::option::Option<std::vec::Vec<AppEngineStandardAppVersion_AutomaticScaling>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    basic_scaling: std::option::Option<std::vec::Vec<AppEngineStandardAppVersionBasicScalingEl>>,
+    basic_scaling: std::option::Option<std::vec::Vec<AppEngineStandardAppVersion_BasicScaling>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    deployment: std::option::Option<std::vec::Vec<AppEngineStandardAppVersionDeploymentEl>>,
+    deployment: std::option::Option<std::vec::Vec<AppEngineStandardAppVersion_Deployment>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    entrypoint: std::option::Option<std::vec::Vec<AppEngineStandardAppVersionEntrypointEl>>,
+    entrypoint: std::option::Option<std::vec::Vec<AppEngineStandardAppVersion_Entrypoint>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    handlers: std::option::Option<std::vec::Vec<AppEngineStandardAppVersionHandlersEl>>,
+    handlers: std::option::Option<std::vec::Vec<AppEngineStandardAppVersion_Handlers>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    libraries: std::option::Option<std::vec::Vec<AppEngineStandardAppVersionLibrariesEl>>,
+    libraries: std::option::Option<std::vec::Vec<AppEngineStandardAppVersion_Libraries>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    manual_scaling: std::option::Option<std::vec::Vec<AppEngineStandardAppVersionManualScalingEl>>,
+    manual_scaling: std::option::Option<std::vec::Vec<AppEngineStandardAppVersion_ManualScaling>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<AppEngineStandardAppVersionTimeoutsEl>,
+    timeouts: std::option::Option<AppEngineStandardAppVersion_Timeouts>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpc_access_connector: std::option::Option<std::vec::Vec<AppEngineStandardAppVersionVpcAccessConnectorEl>>,
+    vpc_access_connector: std::option::Option<std::vec::Vec<AppEngineStandardAppVersion_VpcAccessConnector>>,
     dynamic: AppEngineStandardAppVersionDynamic,
 }
 
 struct AppEngineStandardAppVersion_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AppEngineStandardAppVersionData>,
+    data: std::cell::RefCell<AppEngineStandardAppVersionData_>,
 }
 
 #[derive(Clone)]
@@ -169,9 +175,19 @@ impl AppEngineStandardAppVersion {
     }
 
     #[doc =
-        "Set the field `app_engine_apis`.\nAllows App Engine second generation runtimes to access the legacy bundled services."]
+        "Set the field `app_engine_apis`.\nAllows App Engine second generation runtimes to access the legacy bundled services.\nCannot specify both 'app_engine_apis' and 'app_engine_bundled_services' together."]
     pub fn set_app_engine_apis(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().app_engine_apis = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `app_engine_bundled_services`.\nA list of legacy bundled services to enable for this version on an App Engine second-generation runtime.\nCannot specify both 'app_engine_apis' and 'app_engine_bundled_services' together. Possible values: [\"BUNDLED_SERVICE_TYPE_APP_IDENTITY_SERVICE\", \"BUNDLED_SERVICE_TYPE_BLOBSTORE\", \"BUNDLED_SERVICE_TYPE_CAPABILITY_SERVICE\", \"BUNDLED_SERVICE_TYPE_DATASTORE_V3\", \"BUNDLED_SERVICE_TYPE_IMAGES\", \"BUNDLED_SERVICE_TYPE_MAIL\", \"BUNDLED_SERVICE_TYPE_MEMCACHE\", \"BUNDLED_SERVICE_TYPE_MODULES\", \"BUNDLED_SERVICE_TYPE_SEARCH\", \"BUNDLED_SERVICE_TYPE_TASKQUEUES\", \"BUNDLED_SERVICE_TYPE_URLFETCH\", \"BUNDLED_SERVICE_TYPE_USERS\"]"]
+    pub fn set_app_engine_bundled_services(
+        self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().app_engine_bundled_services = std::option::Option::Some(v.into());
         self
     }
 
@@ -179,6 +195,13 @@ impl AppEngineStandardAppVersion {
         "Set the field `delete_service_on_destroy`.\nIf set to 'true', the service will be deleted if it is the last version."]
     pub fn set_delete_service_on_destroy(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().delete_service_on_destroy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
         self
     }
 
@@ -256,7 +279,7 @@ impl AppEngineStandardAppVersion {
     #[doc = "Set the field `automatic_scaling`.\n"]
     pub fn set_automatic_scaling(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineStandardAppVersionAutomaticScalingEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineStandardAppVersion_AutomaticScaling>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -272,7 +295,7 @@ impl AppEngineStandardAppVersion {
     #[doc = "Set the field `basic_scaling`.\n"]
     pub fn set_basic_scaling(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineStandardAppVersionBasicScalingEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineStandardAppVersion_BasicScaling>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -288,7 +311,7 @@ impl AppEngineStandardAppVersion {
     #[doc = "Set the field `deployment`.\n"]
     pub fn set_deployment(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineStandardAppVersionDeploymentEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineStandardAppVersion_Deployment>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -304,7 +327,7 @@ impl AppEngineStandardAppVersion {
     #[doc = "Set the field `entrypoint`.\n"]
     pub fn set_entrypoint(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineStandardAppVersionEntrypointEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineStandardAppVersion_Entrypoint>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -320,7 +343,7 @@ impl AppEngineStandardAppVersion {
     #[doc = "Set the field `handlers`.\n"]
     pub fn set_handlers(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineStandardAppVersionHandlersEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineStandardAppVersion_Handlers>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -336,7 +359,7 @@ impl AppEngineStandardAppVersion {
     #[doc = "Set the field `libraries`.\n"]
     pub fn set_libraries(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineStandardAppVersionLibrariesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineStandardAppVersion_Libraries>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -352,7 +375,7 @@ impl AppEngineStandardAppVersion {
     #[doc = "Set the field `manual_scaling`.\n"]
     pub fn set_manual_scaling(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineStandardAppVersionManualScalingEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineStandardAppVersion_ManualScaling>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -366,7 +389,7 @@ impl AppEngineStandardAppVersion {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<AppEngineStandardAppVersionTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<AppEngineStandardAppVersion_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -374,7 +397,7 @@ impl AppEngineStandardAppVersion {
     #[doc = "Set the field `vpc_access_connector`.\n"]
     pub fn set_vpc_access_connector(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineStandardAppVersionVpcAccessConnectorEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineStandardAppVersion_VpcAccessConnector>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -388,15 +411,27 @@ impl AppEngineStandardAppVersion {
     }
 
     #[doc =
-        "Get a reference to the value of field `app_engine_apis` after provisioning.\nAllows App Engine second generation runtimes to access the legacy bundled services."]
+        "Get a reference to the value of field `app_engine_apis` after provisioning.\nAllows App Engine second generation runtimes to access the legacy bundled services.\nCannot specify both 'app_engine_apis' and 'app_engine_bundled_services' together."]
     pub fn app_engine_apis(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.app_engine_apis", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `app_engine_bundled_services` after provisioning.\nA list of legacy bundled services to enable for this version on an App Engine second-generation runtime.\nCannot specify both 'app_engine_apis' and 'app_engine_bundled_services' together. Possible values: [\"BUNDLED_SERVICE_TYPE_APP_IDENTITY_SERVICE\", \"BUNDLED_SERVICE_TYPE_BLOBSTORE\", \"BUNDLED_SERVICE_TYPE_CAPABILITY_SERVICE\", \"BUNDLED_SERVICE_TYPE_DATASTORE_V3\", \"BUNDLED_SERVICE_TYPE_IMAGES\", \"BUNDLED_SERVICE_TYPE_MAIL\", \"BUNDLED_SERVICE_TYPE_MEMCACHE\", \"BUNDLED_SERVICE_TYPE_MODULES\", \"BUNDLED_SERVICE_TYPE_SEARCH\", \"BUNDLED_SERVICE_TYPE_TASKQUEUES\", \"BUNDLED_SERVICE_TYPE_URLFETCH\", \"BUNDLED_SERVICE_TYPE_USERS\"]"]
+    pub fn app_engine_bundled_services(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.app_engine_bundled_services", self.extract_ref()))
     }
 
     #[doc =
         "Get a reference to the value of field `delete_service_on_destroy` after provisioning.\nIf set to 'true', the service will be deleted if it is the last version."]
     pub fn delete_service_on_destroy(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete_service_on_destroy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -474,50 +509,50 @@ impl AppEngineStandardAppVersion {
     }
 
     #[doc = "Get a reference to the value of field `automatic_scaling` after provisioning.\n"]
-    pub fn automatic_scaling(&self) -> terrars::ListRef<AppEngineStandardAppVersionAutomaticScalingElRef> {
+    pub fn automatic_scaling(&self) -> terrars::ListRef<AppEngineStandardAppVersion_AutomaticScalingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.automatic_scaling", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `basic_scaling` after provisioning.\n"]
-    pub fn basic_scaling(&self) -> terrars::ListRef<AppEngineStandardAppVersionBasicScalingElRef> {
+    pub fn basic_scaling(&self) -> terrars::ListRef<AppEngineStandardAppVersion_BasicScalingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.basic_scaling", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `deployment` after provisioning.\n"]
-    pub fn deployment(&self) -> terrars::ListRef<AppEngineStandardAppVersionDeploymentElRef> {
+    pub fn deployment(&self) -> terrars::ListRef<AppEngineStandardAppVersion_DeploymentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.deployment", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `entrypoint` after provisioning.\n"]
-    pub fn entrypoint(&self) -> terrars::ListRef<AppEngineStandardAppVersionEntrypointElRef> {
+    pub fn entrypoint(&self) -> terrars::ListRef<AppEngineStandardAppVersion_EntrypointRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.entrypoint", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `handlers` after provisioning.\n"]
-    pub fn handlers(&self) -> terrars::ListRef<AppEngineStandardAppVersionHandlersElRef> {
+    pub fn handlers(&self) -> terrars::ListRef<AppEngineStandardAppVersion_HandlersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.handlers", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `libraries` after provisioning.\n"]
-    pub fn libraries(&self) -> terrars::ListRef<AppEngineStandardAppVersionLibrariesElRef> {
+    pub fn libraries(&self) -> terrars::ListRef<AppEngineStandardAppVersion_LibrariesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.libraries", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `manual_scaling` after provisioning.\n"]
-    pub fn manual_scaling(&self) -> terrars::ListRef<AppEngineStandardAppVersionManualScalingElRef> {
+    pub fn manual_scaling(&self) -> terrars::ListRef<AppEngineStandardAppVersion_ManualScalingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.manual_scaling", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> AppEngineStandardAppVersionTimeoutsElRef {
-        AppEngineStandardAppVersionTimeoutsElRef::new(
+    pub fn timeouts(&self) -> AppEngineStandardAppVersion_TimeoutsRef {
+        AppEngineStandardAppVersion_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 
     #[doc = "Get a reference to the value of field `vpc_access_connector` after provisioning.\n"]
-    pub fn vpc_access_connector(&self) -> terrars::ListRef<AppEngineStandardAppVersionVpcAccessConnectorElRef> {
+    pub fn vpc_access_connector(&self) -> terrars::ListRef<AppEngineStandardAppVersion_VpcAccessConnectorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_access_connector", self.extract_ref()))
     }
 }
@@ -566,14 +601,16 @@ impl BuildAppEngineStandardAppVersion {
         let out = AppEngineStandardAppVersion(std::rc::Rc::new(AppEngineStandardAppVersion_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AppEngineStandardAppVersionData {
+            data: std::cell::RefCell::new(AppEngineStandardAppVersionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 app_engine_apis: core::default::Default::default(),
+                app_engine_bundled_services: core::default::Default::default(),
                 delete_service_on_destroy: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 env_variables: core::default::Default::default(),
                 id: core::default::Default::default(),
                 inbound_services: core::default::Default::default(),
@@ -627,15 +664,27 @@ impl AppEngineStandardAppVersionRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `app_engine_apis` after provisioning.\nAllows App Engine second generation runtimes to access the legacy bundled services."]
+        "Get a reference to the value of field `app_engine_apis` after provisioning.\nAllows App Engine second generation runtimes to access the legacy bundled services.\nCannot specify both 'app_engine_apis' and 'app_engine_bundled_services' together."]
     pub fn app_engine_apis(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.app_engine_apis", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `app_engine_bundled_services` after provisioning.\nA list of legacy bundled services to enable for this version on an App Engine second-generation runtime.\nCannot specify both 'app_engine_apis' and 'app_engine_bundled_services' together. Possible values: [\"BUNDLED_SERVICE_TYPE_APP_IDENTITY_SERVICE\", \"BUNDLED_SERVICE_TYPE_BLOBSTORE\", \"BUNDLED_SERVICE_TYPE_CAPABILITY_SERVICE\", \"BUNDLED_SERVICE_TYPE_DATASTORE_V3\", \"BUNDLED_SERVICE_TYPE_IMAGES\", \"BUNDLED_SERVICE_TYPE_MAIL\", \"BUNDLED_SERVICE_TYPE_MEMCACHE\", \"BUNDLED_SERVICE_TYPE_MODULES\", \"BUNDLED_SERVICE_TYPE_SEARCH\", \"BUNDLED_SERVICE_TYPE_TASKQUEUES\", \"BUNDLED_SERVICE_TYPE_URLFETCH\", \"BUNDLED_SERVICE_TYPE_USERS\"]"]
+    pub fn app_engine_bundled_services(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.app_engine_bundled_services", self.extract_ref()))
     }
 
     #[doc =
         "Get a reference to the value of field `delete_service_on_destroy` after provisioning.\nIf set to 'true', the service will be deleted if it is the last version."]
     pub fn delete_service_on_destroy(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete_service_on_destroy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -713,56 +762,70 @@ impl AppEngineStandardAppVersionRef {
     }
 
     #[doc = "Get a reference to the value of field `automatic_scaling` after provisioning.\n"]
-    pub fn automatic_scaling(&self) -> terrars::ListRef<AppEngineStandardAppVersionAutomaticScalingElRef> {
+    pub fn automatic_scaling(&self) -> terrars::ListRef<AppEngineStandardAppVersion_AutomaticScalingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.automatic_scaling", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `basic_scaling` after provisioning.\n"]
-    pub fn basic_scaling(&self) -> terrars::ListRef<AppEngineStandardAppVersionBasicScalingElRef> {
+    pub fn basic_scaling(&self) -> terrars::ListRef<AppEngineStandardAppVersion_BasicScalingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.basic_scaling", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `deployment` after provisioning.\n"]
-    pub fn deployment(&self) -> terrars::ListRef<AppEngineStandardAppVersionDeploymentElRef> {
+    pub fn deployment(&self) -> terrars::ListRef<AppEngineStandardAppVersion_DeploymentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.deployment", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `entrypoint` after provisioning.\n"]
-    pub fn entrypoint(&self) -> terrars::ListRef<AppEngineStandardAppVersionEntrypointElRef> {
+    pub fn entrypoint(&self) -> terrars::ListRef<AppEngineStandardAppVersion_EntrypointRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.entrypoint", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `handlers` after provisioning.\n"]
-    pub fn handlers(&self) -> terrars::ListRef<AppEngineStandardAppVersionHandlersElRef> {
+    pub fn handlers(&self) -> terrars::ListRef<AppEngineStandardAppVersion_HandlersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.handlers", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `libraries` after provisioning.\n"]
-    pub fn libraries(&self) -> terrars::ListRef<AppEngineStandardAppVersionLibrariesElRef> {
+    pub fn libraries(&self) -> terrars::ListRef<AppEngineStandardAppVersion_LibrariesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.libraries", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `manual_scaling` after provisioning.\n"]
-    pub fn manual_scaling(&self) -> terrars::ListRef<AppEngineStandardAppVersionManualScalingElRef> {
+    pub fn manual_scaling(&self) -> terrars::ListRef<AppEngineStandardAppVersion_ManualScalingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.manual_scaling", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> AppEngineStandardAppVersionTimeoutsElRef {
-        AppEngineStandardAppVersionTimeoutsElRef::new(
+    pub fn timeouts(&self) -> AppEngineStandardAppVersion_TimeoutsRef {
+        AppEngineStandardAppVersion_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 
     #[doc = "Get a reference to the value of field `vpc_access_connector` after provisioning.\n"]
-    pub fn vpc_access_connector(&self) -> terrars::ListRef<AppEngineStandardAppVersionVpcAccessConnectorElRef> {
+    pub fn vpc_access_connector(&self) -> terrars::ListRef<AppEngineStandardAppVersion_VpcAccessConnectorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_access_connector", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct AppEngineStandardAppVersionDynamic {
+    automatic_scaling: std::option::Option<terrars::DynamicBlock<AppEngineStandardAppVersion_AutomaticScaling>>,
+    basic_scaling: std::option::Option<terrars::DynamicBlock<AppEngineStandardAppVersion_BasicScaling>>,
+    deployment: std::option::Option<terrars::DynamicBlock<AppEngineStandardAppVersion_Deployment>>,
+    entrypoint: std::option::Option<terrars::DynamicBlock<AppEngineStandardAppVersion_Entrypoint>>,
+    handlers: std::option::Option<terrars::DynamicBlock<AppEngineStandardAppVersion_Handlers>>,
+    libraries: std::option::Option<terrars::DynamicBlock<AppEngineStandardAppVersion_Libraries>>,
+    manual_scaling: std::option::Option<terrars::DynamicBlock<AppEngineStandardAppVersion_ManualScaling>>,
+    vpc_access_connector: std
+    ::option
+    ::Option<terrars::DynamicBlock<AppEngineStandardAppVersion_VpcAccessConnector>>,
+}
+
 #[derive(Serialize)]
-pub struct AppEngineStandardAppVersionAutomaticScalingElStandardSchedulerSettingsEl {
+pub struct AppEngineStandardAppVersion_AutomaticScaling_StandardSchedulerSettings {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max_instances: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -773,9 +836,9 @@ pub struct AppEngineStandardAppVersionAutomaticScalingElStandardSchedulerSetting
     target_throughput_utilization: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl AppEngineStandardAppVersionAutomaticScalingElStandardSchedulerSettingsEl {
+impl AppEngineStandardAppVersion_AutomaticScaling_StandardSchedulerSettings {
     #[doc =
-        "Set the field `max_instances`.\nMaximum number of instances to run for this version. Set to zero to disable maxInstances configuration."]
+        "Set the field `max_instances`.\nMaximum number of instances to run for this version. Set to zero to disable maxInstances configuration.\n\n**Note:** Starting from March 2025, App Engine sets the maxInstances default for standard environment deployments to 20. This change doesn't impact existing apps. To override the default, specify a new value between 0 and 2147483647, and deploy a new version or redeploy over an existing version. To disable the maxInstances default configuration setting, specify the maximum permitted value 2147483647."]
     pub fn set_max_instances(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max_instances = std::option::Option::Some(v.into());
         self
@@ -803,8 +866,8 @@ impl AppEngineStandardAppVersionAutomaticScalingElStandardSchedulerSettingsEl {
     }
 }
 
-impl terrars::ToListMappable for AppEngineStandardAppVersionAutomaticScalingElStandardSchedulerSettingsEl {
-    type O = terrars::BlockAssignable<AppEngineStandardAppVersionAutomaticScalingElStandardSchedulerSettingsEl>;
+impl terrars::ToListMappable for AppEngineStandardAppVersion_AutomaticScaling_StandardSchedulerSettings {
+    type O = terrars::BlockAssignable<AppEngineStandardAppVersion_AutomaticScaling_StandardSchedulerSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -815,11 +878,11 @@ impl terrars::ToListMappable for AppEngineStandardAppVersionAutomaticScalingElSt
     }
 }
 
-pub struct BuildAppEngineStandardAppVersionAutomaticScalingElStandardSchedulerSettingsEl {}
+pub struct BuildAppEngineStandardAppVersion_AutomaticScaling_StandardSchedulerSettings {}
 
-impl BuildAppEngineStandardAppVersionAutomaticScalingElStandardSchedulerSettingsEl {
-    pub fn build(self) -> AppEngineStandardAppVersionAutomaticScalingElStandardSchedulerSettingsEl {
-        AppEngineStandardAppVersionAutomaticScalingElStandardSchedulerSettingsEl {
+impl BuildAppEngineStandardAppVersion_AutomaticScaling_StandardSchedulerSettings {
+    pub fn build(self) -> AppEngineStandardAppVersion_AutomaticScaling_StandardSchedulerSettings {
+        AppEngineStandardAppVersion_AutomaticScaling_StandardSchedulerSettings {
             max_instances: core::default::Default::default(),
             min_instances: core::default::Default::default(),
             target_cpu_utilization: core::default::Default::default(),
@@ -828,30 +891,32 @@ impl BuildAppEngineStandardAppVersionAutomaticScalingElStandardSchedulerSettings
     }
 }
 
-pub struct AppEngineStandardAppVersionAutomaticScalingElStandardSchedulerSettingsElRef {
+#[allow(dead_code)]
+pub struct AppEngineStandardAppVersion_AutomaticScaling_StandardSchedulerSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineStandardAppVersionAutomaticScalingElStandardSchedulerSettingsElRef {
+impl terrars::Ref for AppEngineStandardAppVersion_AutomaticScaling_StandardSchedulerSettingsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppEngineStandardAppVersionAutomaticScalingElStandardSchedulerSettingsElRef {
-        AppEngineStandardAppVersionAutomaticScalingElStandardSchedulerSettingsElRef {
+    ) -> AppEngineStandardAppVersion_AutomaticScaling_StandardSchedulerSettingsRef {
+        AppEngineStandardAppVersion_AutomaticScaling_StandardSchedulerSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineStandardAppVersionAutomaticScalingElStandardSchedulerSettingsElRef {
+impl AppEngineStandardAppVersion_AutomaticScaling_StandardSchedulerSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `max_instances` after provisioning.\nMaximum number of instances to run for this version. Set to zero to disable maxInstances configuration."]
+        "Get a reference to the value of field `max_instances` after provisioning.\nMaximum number of instances to run for this version. Set to zero to disable maxInstances configuration.\n\n**Note:** Starting from March 2025, App Engine sets the maxInstances default for standard environment deployments to 20. This change doesn't impact existing apps. To override the default, specify a new value between 0 and 2147483647, and deploy a new version or redeploy over an existing version. To disable the maxInstances default configuration setting, specify the maximum permitted value 2147483647."]
     pub fn max_instances(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_instances", self.base))
     }
@@ -876,14 +941,14 @@ impl AppEngineStandardAppVersionAutomaticScalingElStandardSchedulerSettingsElRef
 }
 
 #[derive(Serialize, Default)]
-struct AppEngineStandardAppVersionAutomaticScalingElDynamic {
+struct AppEngineStandardAppVersion_AutomaticScalingDynamic {
     standard_scheduler_settings: std
     ::option
-    ::Option<terrars::DynamicBlock<AppEngineStandardAppVersionAutomaticScalingElStandardSchedulerSettingsEl>>,
+    ::Option<terrars::DynamicBlock<AppEngineStandardAppVersion_AutomaticScaling_StandardSchedulerSettings>>,
 }
 
 #[derive(Serialize)]
-pub struct AppEngineStandardAppVersionAutomaticScalingEl {
+pub struct AppEngineStandardAppVersion_AutomaticScaling {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max_concurrent_requests: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -897,11 +962,11 @@ pub struct AppEngineStandardAppVersionAutomaticScalingEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     standard_scheduler_settings: std
     ::option
-    ::Option<std::vec::Vec<AppEngineStandardAppVersionAutomaticScalingElStandardSchedulerSettingsEl>>,
-    dynamic: AppEngineStandardAppVersionAutomaticScalingElDynamic,
+    ::Option<std::vec::Vec<AppEngineStandardAppVersion_AutomaticScaling_StandardSchedulerSettings>>,
+    dynamic: AppEngineStandardAppVersion_AutomaticScalingDynamic,
 }
 
-impl AppEngineStandardAppVersionAutomaticScalingEl {
+impl AppEngineStandardAppVersion_AutomaticScaling {
     #[doc =
         "Set the field `max_concurrent_requests`.\nNumber of concurrent requests an automatic scaling instance can accept before the scheduler spawns a new instance.\n\nDefaults to a runtime-specific value."]
     pub fn set_max_concurrent_requests(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -953,7 +1018,7 @@ impl AppEngineStandardAppVersionAutomaticScalingEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<AppEngineStandardAppVersionAutomaticScalingElStandardSchedulerSettingsEl>,
+                        ::BlockAssignable<AppEngineStandardAppVersion_AutomaticScaling_StandardSchedulerSettings>,
                     >,
     ) -> Self {
         match v.into() {
@@ -968,8 +1033,8 @@ impl AppEngineStandardAppVersionAutomaticScalingEl {
     }
 }
 
-impl terrars::ToListMappable for AppEngineStandardAppVersionAutomaticScalingEl {
-    type O = terrars::BlockAssignable<AppEngineStandardAppVersionAutomaticScalingEl>;
+impl terrars::ToListMappable for AppEngineStandardAppVersion_AutomaticScaling {
+    type O = terrars::BlockAssignable<AppEngineStandardAppVersion_AutomaticScaling>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -980,11 +1045,11 @@ impl terrars::ToListMappable for AppEngineStandardAppVersionAutomaticScalingEl {
     }
 }
 
-pub struct BuildAppEngineStandardAppVersionAutomaticScalingEl {}
+pub struct BuildAppEngineStandardAppVersion_AutomaticScaling {}
 
-impl BuildAppEngineStandardAppVersionAutomaticScalingEl {
-    pub fn build(self) -> AppEngineStandardAppVersionAutomaticScalingEl {
-        AppEngineStandardAppVersionAutomaticScalingEl {
+impl BuildAppEngineStandardAppVersion_AutomaticScaling {
+    pub fn build(self) -> AppEngineStandardAppVersion_AutomaticScaling {
+        AppEngineStandardAppVersion_AutomaticScaling {
             max_concurrent_requests: core::default::Default::default(),
             max_idle_instances: core::default::Default::default(),
             max_pending_latency: core::default::Default::default(),
@@ -996,24 +1061,26 @@ impl BuildAppEngineStandardAppVersionAutomaticScalingEl {
     }
 }
 
-pub struct AppEngineStandardAppVersionAutomaticScalingElRef {
+#[allow(dead_code)]
+pub struct AppEngineStandardAppVersion_AutomaticScalingRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineStandardAppVersionAutomaticScalingElRef {
+impl terrars::Ref for AppEngineStandardAppVersion_AutomaticScalingRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppEngineStandardAppVersionAutomaticScalingElRef {
-        AppEngineStandardAppVersionAutomaticScalingElRef {
+    ) -> AppEngineStandardAppVersion_AutomaticScalingRef {
+        AppEngineStandardAppVersion_AutomaticScalingRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineStandardAppVersionAutomaticScalingElRef {
+impl AppEngineStandardAppVersion_AutomaticScalingRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1051,19 +1118,19 @@ impl AppEngineStandardAppVersionAutomaticScalingElRef {
     #[doc = "Get a reference to the value of field `standard_scheduler_settings` after provisioning.\n"]
     pub fn standard_scheduler_settings(
         &self,
-    ) -> terrars::ListRef<AppEngineStandardAppVersionAutomaticScalingElStandardSchedulerSettingsElRef> {
+    ) -> terrars::ListRef<AppEngineStandardAppVersion_AutomaticScaling_StandardSchedulerSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.standard_scheduler_settings", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AppEngineStandardAppVersionBasicScalingEl {
+pub struct AppEngineStandardAppVersion_BasicScaling {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     idle_timeout: std::option::Option<terrars::PrimField<std::string::String>>,
     max_instances: terrars::PrimField<f64>,
 }
 
-impl AppEngineStandardAppVersionBasicScalingEl {
+impl AppEngineStandardAppVersion_BasicScaling {
     #[doc =
         "Set the field `idle_timeout`.\nDuration of time after the last request that an instance must wait before the instance is shut down.\nA duration in seconds with up to nine fractional digits, terminated by 's'. Example: \"3.5s\". Defaults to 900s."]
     pub fn set_idle_timeout(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1072,8 +1139,8 @@ impl AppEngineStandardAppVersionBasicScalingEl {
     }
 }
 
-impl terrars::ToListMappable for AppEngineStandardAppVersionBasicScalingEl {
-    type O = terrars::BlockAssignable<AppEngineStandardAppVersionBasicScalingEl>;
+impl terrars::ToListMappable for AppEngineStandardAppVersion_BasicScaling {
+    type O = terrars::BlockAssignable<AppEngineStandardAppVersion_BasicScaling>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1084,35 +1151,37 @@ impl terrars::ToListMappable for AppEngineStandardAppVersionBasicScalingEl {
     }
 }
 
-pub struct BuildAppEngineStandardAppVersionBasicScalingEl {
+pub struct BuildAppEngineStandardAppVersion_BasicScaling {
     #[doc = "Maximum number of instances to create for this version. Must be in the range [1.0, 200.0]."]
     pub max_instances: terrars::PrimField<f64>,
 }
 
-impl BuildAppEngineStandardAppVersionBasicScalingEl {
-    pub fn build(self) -> AppEngineStandardAppVersionBasicScalingEl {
-        AppEngineStandardAppVersionBasicScalingEl {
+impl BuildAppEngineStandardAppVersion_BasicScaling {
+    pub fn build(self) -> AppEngineStandardAppVersion_BasicScaling {
+        AppEngineStandardAppVersion_BasicScaling {
             idle_timeout: core::default::Default::default(),
             max_instances: self.max_instances,
         }
     }
 }
 
-pub struct AppEngineStandardAppVersionBasicScalingElRef {
+#[allow(dead_code)]
+pub struct AppEngineStandardAppVersion_BasicScalingRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineStandardAppVersionBasicScalingElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineStandardAppVersionBasicScalingElRef {
-        AppEngineStandardAppVersionBasicScalingElRef {
+impl terrars::Ref for AppEngineStandardAppVersion_BasicScalingRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineStandardAppVersion_BasicScalingRef {
+        AppEngineStandardAppVersion_BasicScalingRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineStandardAppVersionBasicScalingElRef {
+impl AppEngineStandardAppVersion_BasicScalingRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1131,14 +1200,14 @@ impl AppEngineStandardAppVersionBasicScalingElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppEngineStandardAppVersionDeploymentElFilesEl {
+pub struct AppEngineStandardAppVersion_Deployment_Files {
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sha1_sum: std::option::Option<terrars::PrimField<std::string::String>>,
     source_url: terrars::PrimField<std::string::String>,
 }
 
-impl AppEngineStandardAppVersionDeploymentElFilesEl {
+impl AppEngineStandardAppVersion_Deployment_Files {
     #[doc = "Set the field `sha1_sum`.\nSHA1 checksum of the file"]
     pub fn set_sha1_sum(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.sha1_sum = std::option::Option::Some(v.into());
@@ -1146,8 +1215,8 @@ impl AppEngineStandardAppVersionDeploymentElFilesEl {
     }
 }
 
-impl terrars::ToListMappable for AppEngineStandardAppVersionDeploymentElFilesEl {
-    type O = terrars::BlockAssignable<AppEngineStandardAppVersionDeploymentElFilesEl>;
+impl terrars::ToListMappable for AppEngineStandardAppVersion_Deployment_Files {
+    type O = terrars::BlockAssignable<AppEngineStandardAppVersion_Deployment_Files>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1158,16 +1227,16 @@ impl terrars::ToListMappable for AppEngineStandardAppVersionDeploymentElFilesEl 
     }
 }
 
-pub struct BuildAppEngineStandardAppVersionDeploymentElFilesEl {
+pub struct BuildAppEngineStandardAppVersion_Deployment_Files {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = "Source URL"]
     pub source_url: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppEngineStandardAppVersionDeploymentElFilesEl {
-    pub fn build(self) -> AppEngineStandardAppVersionDeploymentElFilesEl {
-        AppEngineStandardAppVersionDeploymentElFilesEl {
+impl BuildAppEngineStandardAppVersion_Deployment_Files {
+    pub fn build(self) -> AppEngineStandardAppVersion_Deployment_Files {
+        AppEngineStandardAppVersion_Deployment_Files {
             name: self.name,
             sha1_sum: core::default::Default::default(),
             source_url: self.source_url,
@@ -1175,24 +1244,26 @@ impl BuildAppEngineStandardAppVersionDeploymentElFilesEl {
     }
 }
 
-pub struct AppEngineStandardAppVersionDeploymentElFilesElRef {
+#[allow(dead_code)]
+pub struct AppEngineStandardAppVersion_Deployment_FilesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineStandardAppVersionDeploymentElFilesElRef {
+impl terrars::Ref for AppEngineStandardAppVersion_Deployment_FilesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppEngineStandardAppVersionDeploymentElFilesElRef {
-        AppEngineStandardAppVersionDeploymentElFilesElRef {
+    ) -> AppEngineStandardAppVersion_Deployment_FilesRef {
+        AppEngineStandardAppVersion_Deployment_FilesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineStandardAppVersionDeploymentElFilesElRef {
+impl AppEngineStandardAppVersion_Deployment_FilesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1214,13 +1285,13 @@ impl AppEngineStandardAppVersionDeploymentElFilesElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppEngineStandardAppVersionDeploymentElZipEl {
+pub struct AppEngineStandardAppVersion_Deployment_Zip {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     files_count: std::option::Option<terrars::PrimField<f64>>,
     source_url: terrars::PrimField<std::string::String>,
 }
 
-impl AppEngineStandardAppVersionDeploymentElZipEl {
+impl AppEngineStandardAppVersion_Deployment_Zip {
     #[doc = "Set the field `files_count`.\nfiles count"]
     pub fn set_files_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.files_count = std::option::Option::Some(v.into());
@@ -1228,8 +1299,8 @@ impl AppEngineStandardAppVersionDeploymentElZipEl {
     }
 }
 
-impl terrars::ToListMappable for AppEngineStandardAppVersionDeploymentElZipEl {
-    type O = terrars::BlockAssignable<AppEngineStandardAppVersionDeploymentElZipEl>;
+impl terrars::ToListMappable for AppEngineStandardAppVersion_Deployment_Zip {
+    type O = terrars::BlockAssignable<AppEngineStandardAppVersion_Deployment_Zip>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1240,38 +1311,37 @@ impl terrars::ToListMappable for AppEngineStandardAppVersionDeploymentElZipEl {
     }
 }
 
-pub struct BuildAppEngineStandardAppVersionDeploymentElZipEl {
+pub struct BuildAppEngineStandardAppVersion_Deployment_Zip {
     #[doc = "Source URL"]
     pub source_url: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppEngineStandardAppVersionDeploymentElZipEl {
-    pub fn build(self) -> AppEngineStandardAppVersionDeploymentElZipEl {
-        AppEngineStandardAppVersionDeploymentElZipEl {
+impl BuildAppEngineStandardAppVersion_Deployment_Zip {
+    pub fn build(self) -> AppEngineStandardAppVersion_Deployment_Zip {
+        AppEngineStandardAppVersion_Deployment_Zip {
             files_count: core::default::Default::default(),
             source_url: self.source_url,
         }
     }
 }
 
-pub struct AppEngineStandardAppVersionDeploymentElZipElRef {
+#[allow(dead_code)]
+pub struct AppEngineStandardAppVersion_Deployment_ZipRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineStandardAppVersionDeploymentElZipElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppEngineStandardAppVersionDeploymentElZipElRef {
-        AppEngineStandardAppVersionDeploymentElZipElRef {
+impl terrars::Ref for AppEngineStandardAppVersion_Deployment_ZipRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineStandardAppVersion_Deployment_ZipRef {
+        AppEngineStandardAppVersion_Deployment_ZipRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineStandardAppVersionDeploymentElZipElRef {
+impl AppEngineStandardAppVersion_Deployment_ZipRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1288,25 +1358,25 @@ impl AppEngineStandardAppVersionDeploymentElZipElRef {
 }
 
 #[derive(Serialize, Default)]
-struct AppEngineStandardAppVersionDeploymentElDynamic {
-    files: std::option::Option<terrars::DynamicBlock<AppEngineStandardAppVersionDeploymentElFilesEl>>,
-    zip: std::option::Option<terrars::DynamicBlock<AppEngineStandardAppVersionDeploymentElZipEl>>,
+struct AppEngineStandardAppVersion_DeploymentDynamic {
+    files: std::option::Option<terrars::DynamicBlock<AppEngineStandardAppVersion_Deployment_Files>>,
+    zip: std::option::Option<terrars::DynamicBlock<AppEngineStandardAppVersion_Deployment_Zip>>,
 }
 
 #[derive(Serialize)]
-pub struct AppEngineStandardAppVersionDeploymentEl {
+pub struct AppEngineStandardAppVersion_Deployment {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    files: std::option::Option<std::vec::Vec<AppEngineStandardAppVersionDeploymentElFilesEl>>,
+    files: std::option::Option<std::vec::Vec<AppEngineStandardAppVersion_Deployment_Files>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    zip: std::option::Option<std::vec::Vec<AppEngineStandardAppVersionDeploymentElZipEl>>,
-    dynamic: AppEngineStandardAppVersionDeploymentElDynamic,
+    zip: std::option::Option<std::vec::Vec<AppEngineStandardAppVersion_Deployment_Zip>>,
+    dynamic: AppEngineStandardAppVersion_DeploymentDynamic,
 }
 
-impl AppEngineStandardAppVersionDeploymentEl {
+impl AppEngineStandardAppVersion_Deployment {
     #[doc = "Set the field `files`.\n"]
     pub fn set_files(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineStandardAppVersionDeploymentElFilesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineStandardAppVersion_Deployment_Files>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1322,7 +1392,7 @@ impl AppEngineStandardAppVersionDeploymentEl {
     #[doc = "Set the field `zip`.\n"]
     pub fn set_zip(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineStandardAppVersionDeploymentElZipEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineStandardAppVersion_Deployment_Zip>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1336,8 +1406,8 @@ impl AppEngineStandardAppVersionDeploymentEl {
     }
 }
 
-impl terrars::ToListMappable for AppEngineStandardAppVersionDeploymentEl {
-    type O = terrars::BlockAssignable<AppEngineStandardAppVersionDeploymentEl>;
+impl terrars::ToListMappable for AppEngineStandardAppVersion_Deployment {
+    type O = terrars::BlockAssignable<AppEngineStandardAppVersion_Deployment>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1348,11 +1418,11 @@ impl terrars::ToListMappable for AppEngineStandardAppVersionDeploymentEl {
     }
 }
 
-pub struct BuildAppEngineStandardAppVersionDeploymentEl {}
+pub struct BuildAppEngineStandardAppVersion_Deployment {}
 
-impl BuildAppEngineStandardAppVersionDeploymentEl {
-    pub fn build(self) -> AppEngineStandardAppVersionDeploymentEl {
-        AppEngineStandardAppVersionDeploymentEl {
+impl BuildAppEngineStandardAppVersion_Deployment {
+    pub fn build(self) -> AppEngineStandardAppVersion_Deployment {
+        AppEngineStandardAppVersion_Deployment {
             files: core::default::Default::default(),
             zip: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1360,40 +1430,42 @@ impl BuildAppEngineStandardAppVersionDeploymentEl {
     }
 }
 
-pub struct AppEngineStandardAppVersionDeploymentElRef {
+#[allow(dead_code)]
+pub struct AppEngineStandardAppVersion_DeploymentRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineStandardAppVersionDeploymentElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineStandardAppVersionDeploymentElRef {
-        AppEngineStandardAppVersionDeploymentElRef {
+impl terrars::Ref for AppEngineStandardAppVersion_DeploymentRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineStandardAppVersion_DeploymentRef {
+        AppEngineStandardAppVersion_DeploymentRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineStandardAppVersionDeploymentElRef {
+impl AppEngineStandardAppVersion_DeploymentRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `zip` after provisioning.\n"]
-    pub fn zip(&self) -> terrars::ListRef<AppEngineStandardAppVersionDeploymentElZipElRef> {
+    pub fn zip(&self) -> terrars::ListRef<AppEngineStandardAppVersion_Deployment_ZipRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.zip", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AppEngineStandardAppVersionEntrypointEl {
+pub struct AppEngineStandardAppVersion_Entrypoint {
     shell: terrars::PrimField<std::string::String>,
 }
 
-impl AppEngineStandardAppVersionEntrypointEl { }
+impl AppEngineStandardAppVersion_Entrypoint { }
 
-impl terrars::ToListMappable for AppEngineStandardAppVersionEntrypointEl {
-    type O = terrars::BlockAssignable<AppEngineStandardAppVersionEntrypointEl>;
+impl terrars::ToListMappable for AppEngineStandardAppVersion_Entrypoint {
+    type O = terrars::BlockAssignable<AppEngineStandardAppVersion_Entrypoint>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1404,32 +1476,34 @@ impl terrars::ToListMappable for AppEngineStandardAppVersionEntrypointEl {
     }
 }
 
-pub struct BuildAppEngineStandardAppVersionEntrypointEl {
+pub struct BuildAppEngineStandardAppVersion_Entrypoint {
     #[doc = "The format should be a shell command that can be fed to bash -c."]
     pub shell: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppEngineStandardAppVersionEntrypointEl {
-    pub fn build(self) -> AppEngineStandardAppVersionEntrypointEl {
-        AppEngineStandardAppVersionEntrypointEl { shell: self.shell }
+impl BuildAppEngineStandardAppVersion_Entrypoint {
+    pub fn build(self) -> AppEngineStandardAppVersion_Entrypoint {
+        AppEngineStandardAppVersion_Entrypoint { shell: self.shell }
     }
 }
 
-pub struct AppEngineStandardAppVersionEntrypointElRef {
+#[allow(dead_code)]
+pub struct AppEngineStandardAppVersion_EntrypointRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineStandardAppVersionEntrypointElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineStandardAppVersionEntrypointElRef {
-        AppEngineStandardAppVersionEntrypointElRef {
+impl terrars::Ref for AppEngineStandardAppVersion_EntrypointRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineStandardAppVersion_EntrypointRef {
+        AppEngineStandardAppVersion_EntrypointRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineStandardAppVersionEntrypointElRef {
+impl AppEngineStandardAppVersion_EntrypointRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1442,14 +1516,14 @@ impl AppEngineStandardAppVersionEntrypointElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppEngineStandardAppVersionHandlersElScriptEl {
+pub struct AppEngineStandardAppVersion_Handlers_Script {
     script_path: terrars::PrimField<std::string::String>,
 }
 
-impl AppEngineStandardAppVersionHandlersElScriptEl { }
+impl AppEngineStandardAppVersion_Handlers_Script { }
 
-impl terrars::ToListMappable for AppEngineStandardAppVersionHandlersElScriptEl {
-    type O = terrars::BlockAssignable<AppEngineStandardAppVersionHandlersElScriptEl>;
+impl terrars::ToListMappable for AppEngineStandardAppVersion_Handlers_Script {
+    type O = terrars::BlockAssignable<AppEngineStandardAppVersion_Handlers_Script>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1460,35 +1534,37 @@ impl terrars::ToListMappable for AppEngineStandardAppVersionHandlersElScriptEl {
     }
 }
 
-pub struct BuildAppEngineStandardAppVersionHandlersElScriptEl {
+pub struct BuildAppEngineStandardAppVersion_Handlers_Script {
     #[doc = "Path to the script from the application root directory."]
     pub script_path: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppEngineStandardAppVersionHandlersElScriptEl {
-    pub fn build(self) -> AppEngineStandardAppVersionHandlersElScriptEl {
-        AppEngineStandardAppVersionHandlersElScriptEl { script_path: self.script_path }
+impl BuildAppEngineStandardAppVersion_Handlers_Script {
+    pub fn build(self) -> AppEngineStandardAppVersion_Handlers_Script {
+        AppEngineStandardAppVersion_Handlers_Script { script_path: self.script_path }
     }
 }
 
-pub struct AppEngineStandardAppVersionHandlersElScriptElRef {
+#[allow(dead_code)]
+pub struct AppEngineStandardAppVersion_Handlers_ScriptRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineStandardAppVersionHandlersElScriptElRef {
+impl terrars::Ref for AppEngineStandardAppVersion_Handlers_ScriptRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppEngineStandardAppVersionHandlersElScriptElRef {
-        AppEngineStandardAppVersionHandlersElScriptElRef {
+    ) -> AppEngineStandardAppVersion_Handlers_ScriptRef {
+        AppEngineStandardAppVersion_Handlers_ScriptRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineStandardAppVersionHandlersElScriptElRef {
+impl AppEngineStandardAppVersion_Handlers_ScriptRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1501,7 +1577,7 @@ impl AppEngineStandardAppVersionHandlersElScriptElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppEngineStandardAppVersionHandlersElStaticFilesEl {
+pub struct AppEngineStandardAppVersion_Handlers_StaticFiles {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     application_readable: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1518,7 +1594,7 @@ pub struct AppEngineStandardAppVersionHandlersElStaticFilesEl {
     upload_path_regex: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppEngineStandardAppVersionHandlersElStaticFilesEl {
+impl AppEngineStandardAppVersion_Handlers_StaticFiles {
     #[doc =
         "Set the field `application_readable`.\nWhether files should also be uploaded as code data. By default, files declared in static file handlers are uploaded as\nstatic data and are only served to end users; they cannot be read by the application. If enabled, uploads are charged\nagainst both your code and static data storage resource quotas."]
     pub fn set_application_readable(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -1572,8 +1648,8 @@ impl AppEngineStandardAppVersionHandlersElStaticFilesEl {
     }
 }
 
-impl terrars::ToListMappable for AppEngineStandardAppVersionHandlersElStaticFilesEl {
-    type O = terrars::BlockAssignable<AppEngineStandardAppVersionHandlersElStaticFilesEl>;
+impl terrars::ToListMappable for AppEngineStandardAppVersion_Handlers_StaticFiles {
+    type O = terrars::BlockAssignable<AppEngineStandardAppVersion_Handlers_StaticFiles>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1584,11 +1660,11 @@ impl terrars::ToListMappable for AppEngineStandardAppVersionHandlersElStaticFile
     }
 }
 
-pub struct BuildAppEngineStandardAppVersionHandlersElStaticFilesEl {}
+pub struct BuildAppEngineStandardAppVersion_Handlers_StaticFiles {}
 
-impl BuildAppEngineStandardAppVersionHandlersElStaticFilesEl {
-    pub fn build(self) -> AppEngineStandardAppVersionHandlersElStaticFilesEl {
-        AppEngineStandardAppVersionHandlersElStaticFilesEl {
+impl BuildAppEngineStandardAppVersion_Handlers_StaticFiles {
+    pub fn build(self) -> AppEngineStandardAppVersion_Handlers_StaticFiles {
+        AppEngineStandardAppVersion_Handlers_StaticFiles {
             application_readable: core::default::Default::default(),
             expiration: core::default::Default::default(),
             http_headers: core::default::Default::default(),
@@ -1600,24 +1676,26 @@ impl BuildAppEngineStandardAppVersionHandlersElStaticFilesEl {
     }
 }
 
-pub struct AppEngineStandardAppVersionHandlersElStaticFilesElRef {
+#[allow(dead_code)]
+pub struct AppEngineStandardAppVersion_Handlers_StaticFilesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineStandardAppVersionHandlersElStaticFilesElRef {
+impl terrars::Ref for AppEngineStandardAppVersion_Handlers_StaticFilesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppEngineStandardAppVersionHandlersElStaticFilesElRef {
-        AppEngineStandardAppVersionHandlersElStaticFilesElRef {
+    ) -> AppEngineStandardAppVersion_Handlers_StaticFilesRef {
+        AppEngineStandardAppVersion_Handlers_StaticFilesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineStandardAppVersionHandlersElStaticFilesElRef {
+impl AppEngineStandardAppVersion_Handlers_StaticFilesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1666,13 +1744,13 @@ impl AppEngineStandardAppVersionHandlersElStaticFilesElRef {
 }
 
 #[derive(Serialize, Default)]
-struct AppEngineStandardAppVersionHandlersElDynamic {
-    script: std::option::Option<terrars::DynamicBlock<AppEngineStandardAppVersionHandlersElScriptEl>>,
-    static_files: std::option::Option<terrars::DynamicBlock<AppEngineStandardAppVersionHandlersElStaticFilesEl>>,
+struct AppEngineStandardAppVersion_HandlersDynamic {
+    script: std::option::Option<terrars::DynamicBlock<AppEngineStandardAppVersion_Handlers_Script>>,
+    static_files: std::option::Option<terrars::DynamicBlock<AppEngineStandardAppVersion_Handlers_StaticFiles>>,
 }
 
 #[derive(Serialize)]
-pub struct AppEngineStandardAppVersionHandlersEl {
+pub struct AppEngineStandardAppVersion_Handlers {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     auth_fail_action: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1684,13 +1762,13 @@ pub struct AppEngineStandardAppVersionHandlersEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     url_regex: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    script: std::option::Option<std::vec::Vec<AppEngineStandardAppVersionHandlersElScriptEl>>,
+    script: std::option::Option<std::vec::Vec<AppEngineStandardAppVersion_Handlers_Script>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    static_files: std::option::Option<std::vec::Vec<AppEngineStandardAppVersionHandlersElStaticFilesEl>>,
-    dynamic: AppEngineStandardAppVersionHandlersElDynamic,
+    static_files: std::option::Option<std::vec::Vec<AppEngineStandardAppVersion_Handlers_StaticFiles>>,
+    dynamic: AppEngineStandardAppVersion_HandlersDynamic,
 }
 
-impl AppEngineStandardAppVersionHandlersEl {
+impl AppEngineStandardAppVersion_Handlers {
     #[doc =
         "Set the field `auth_fail_action`.\nActions to take when the user is not logged in. Possible values: [\"AUTH_FAIL_ACTION_REDIRECT\", \"AUTH_FAIL_ACTION_UNAUTHORIZED\"]"]
     pub fn set_auth_fail_action(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1732,7 +1810,7 @@ impl AppEngineStandardAppVersionHandlersEl {
     #[doc = "Set the field `script`.\n"]
     pub fn set_script(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineStandardAppVersionHandlersElScriptEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineStandardAppVersion_Handlers_Script>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1748,7 +1826,7 @@ impl AppEngineStandardAppVersionHandlersEl {
     #[doc = "Set the field `static_files`.\n"]
     pub fn set_static_files(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineStandardAppVersionHandlersElStaticFilesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineStandardAppVersion_Handlers_StaticFiles>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1762,8 +1840,8 @@ impl AppEngineStandardAppVersionHandlersEl {
     }
 }
 
-impl terrars::ToListMappable for AppEngineStandardAppVersionHandlersEl {
-    type O = terrars::BlockAssignable<AppEngineStandardAppVersionHandlersEl>;
+impl terrars::ToListMappable for AppEngineStandardAppVersion_Handlers {
+    type O = terrars::BlockAssignable<AppEngineStandardAppVersion_Handlers>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1774,11 +1852,11 @@ impl terrars::ToListMappable for AppEngineStandardAppVersionHandlersEl {
     }
 }
 
-pub struct BuildAppEngineStandardAppVersionHandlersEl {}
+pub struct BuildAppEngineStandardAppVersion_Handlers {}
 
-impl BuildAppEngineStandardAppVersionHandlersEl {
-    pub fn build(self) -> AppEngineStandardAppVersionHandlersEl {
-        AppEngineStandardAppVersionHandlersEl {
+impl BuildAppEngineStandardAppVersion_Handlers {
+    pub fn build(self) -> AppEngineStandardAppVersion_Handlers {
+        AppEngineStandardAppVersion_Handlers {
             auth_fail_action: core::default::Default::default(),
             login: core::default::Default::default(),
             redirect_http_response_code: core::default::Default::default(),
@@ -1791,21 +1869,23 @@ impl BuildAppEngineStandardAppVersionHandlersEl {
     }
 }
 
-pub struct AppEngineStandardAppVersionHandlersElRef {
+#[allow(dead_code)]
+pub struct AppEngineStandardAppVersion_HandlersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineStandardAppVersionHandlersElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineStandardAppVersionHandlersElRef {
-        AppEngineStandardAppVersionHandlersElRef {
+impl terrars::Ref for AppEngineStandardAppVersion_HandlersRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineStandardAppVersion_HandlersRef {
+        AppEngineStandardAppVersion_HandlersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineStandardAppVersionHandlersElRef {
+impl AppEngineStandardAppVersion_HandlersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1841,25 +1921,25 @@ impl AppEngineStandardAppVersionHandlersElRef {
     }
 
     #[doc = "Get a reference to the value of field `script` after provisioning.\n"]
-    pub fn script(&self) -> terrars::ListRef<AppEngineStandardAppVersionHandlersElScriptElRef> {
+    pub fn script(&self) -> terrars::ListRef<AppEngineStandardAppVersion_Handlers_ScriptRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.script", self.base))
     }
 
     #[doc = "Get a reference to the value of field `static_files` after provisioning.\n"]
-    pub fn static_files(&self) -> terrars::ListRef<AppEngineStandardAppVersionHandlersElStaticFilesElRef> {
+    pub fn static_files(&self) -> terrars::ListRef<AppEngineStandardAppVersion_Handlers_StaticFilesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.static_files", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AppEngineStandardAppVersionLibrariesEl {
+pub struct AppEngineStandardAppVersion_Libraries {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     version: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppEngineStandardAppVersionLibrariesEl {
+impl AppEngineStandardAppVersion_Libraries {
     #[doc = "Set the field `name`.\nName of the library. Example \"django\"."]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
@@ -1873,8 +1953,8 @@ impl AppEngineStandardAppVersionLibrariesEl {
     }
 }
 
-impl terrars::ToListMappable for AppEngineStandardAppVersionLibrariesEl {
-    type O = terrars::BlockAssignable<AppEngineStandardAppVersionLibrariesEl>;
+impl terrars::ToListMappable for AppEngineStandardAppVersion_Libraries {
+    type O = terrars::BlockAssignable<AppEngineStandardAppVersion_Libraries>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1885,32 +1965,34 @@ impl terrars::ToListMappable for AppEngineStandardAppVersionLibrariesEl {
     }
 }
 
-pub struct BuildAppEngineStandardAppVersionLibrariesEl {}
+pub struct BuildAppEngineStandardAppVersion_Libraries {}
 
-impl BuildAppEngineStandardAppVersionLibrariesEl {
-    pub fn build(self) -> AppEngineStandardAppVersionLibrariesEl {
-        AppEngineStandardAppVersionLibrariesEl {
+impl BuildAppEngineStandardAppVersion_Libraries {
+    pub fn build(self) -> AppEngineStandardAppVersion_Libraries {
+        AppEngineStandardAppVersion_Libraries {
             name: core::default::Default::default(),
             version: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppEngineStandardAppVersionLibrariesElRef {
+#[allow(dead_code)]
+pub struct AppEngineStandardAppVersion_LibrariesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineStandardAppVersionLibrariesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineStandardAppVersionLibrariesElRef {
-        AppEngineStandardAppVersionLibrariesElRef {
+impl terrars::Ref for AppEngineStandardAppVersion_LibrariesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineStandardAppVersion_LibrariesRef {
+        AppEngineStandardAppVersion_LibrariesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineStandardAppVersionLibrariesElRef {
+impl AppEngineStandardAppVersion_LibrariesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1929,14 +2011,14 @@ impl AppEngineStandardAppVersionLibrariesElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppEngineStandardAppVersionManualScalingEl {
+pub struct AppEngineStandardAppVersion_ManualScaling {
     instances: terrars::PrimField<f64>,
 }
 
-impl AppEngineStandardAppVersionManualScalingEl { }
+impl AppEngineStandardAppVersion_ManualScaling { }
 
-impl terrars::ToListMappable for AppEngineStandardAppVersionManualScalingEl {
-    type O = terrars::BlockAssignable<AppEngineStandardAppVersionManualScalingEl>;
+impl terrars::ToListMappable for AppEngineStandardAppVersion_ManualScaling {
+    type O = terrars::BlockAssignable<AppEngineStandardAppVersion_ManualScaling>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1947,33 +2029,35 @@ impl terrars::ToListMappable for AppEngineStandardAppVersionManualScalingEl {
     }
 }
 
-pub struct BuildAppEngineStandardAppVersionManualScalingEl {
+pub struct BuildAppEngineStandardAppVersion_ManualScaling {
     #[doc =
         "Number of instances to assign to the service at the start.\n\n**Note:** When managing the number of instances at runtime through the App Engine Admin API or the (now deprecated) Python 2\nModules API set_num_instances() you must use 'lifecycle.ignore_changes = [\"manual_scaling\"[0].instances]' to prevent drift detection."]
     pub instances: terrars::PrimField<f64>,
 }
 
-impl BuildAppEngineStandardAppVersionManualScalingEl {
-    pub fn build(self) -> AppEngineStandardAppVersionManualScalingEl {
-        AppEngineStandardAppVersionManualScalingEl { instances: self.instances }
+impl BuildAppEngineStandardAppVersion_ManualScaling {
+    pub fn build(self) -> AppEngineStandardAppVersion_ManualScaling {
+        AppEngineStandardAppVersion_ManualScaling { instances: self.instances }
     }
 }
 
-pub struct AppEngineStandardAppVersionManualScalingElRef {
+#[allow(dead_code)]
+pub struct AppEngineStandardAppVersion_ManualScalingRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineStandardAppVersionManualScalingElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineStandardAppVersionManualScalingElRef {
-        AppEngineStandardAppVersionManualScalingElRef {
+impl terrars::Ref for AppEngineStandardAppVersion_ManualScalingRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineStandardAppVersion_ManualScalingRef {
+        AppEngineStandardAppVersion_ManualScalingRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineStandardAppVersionManualScalingElRef {
+impl AppEngineStandardAppVersion_ManualScalingRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1986,7 +2070,7 @@ impl AppEngineStandardAppVersionManualScalingElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppEngineStandardAppVersionTimeoutsEl {
+pub struct AppEngineStandardAppVersion_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1995,7 +2079,7 @@ pub struct AppEngineStandardAppVersionTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppEngineStandardAppVersionTimeoutsEl {
+impl AppEngineStandardAppVersion_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -2015,8 +2099,8 @@ impl AppEngineStandardAppVersionTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for AppEngineStandardAppVersionTimeoutsEl {
-    type O = terrars::BlockAssignable<AppEngineStandardAppVersionTimeoutsEl>;
+impl terrars::ToListMappable for AppEngineStandardAppVersion_Timeouts {
+    type O = terrars::BlockAssignable<AppEngineStandardAppVersion_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2027,11 +2111,11 @@ impl terrars::ToListMappable for AppEngineStandardAppVersionTimeoutsEl {
     }
 }
 
-pub struct BuildAppEngineStandardAppVersionTimeoutsEl {}
+pub struct BuildAppEngineStandardAppVersion_Timeouts {}
 
-impl BuildAppEngineStandardAppVersionTimeoutsEl {
-    pub fn build(self) -> AppEngineStandardAppVersionTimeoutsEl {
-        AppEngineStandardAppVersionTimeoutsEl {
+impl BuildAppEngineStandardAppVersion_Timeouts {
+    pub fn build(self) -> AppEngineStandardAppVersion_Timeouts {
+        AppEngineStandardAppVersion_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -2039,21 +2123,23 @@ impl BuildAppEngineStandardAppVersionTimeoutsEl {
     }
 }
 
-pub struct AppEngineStandardAppVersionTimeoutsElRef {
+#[allow(dead_code)]
+pub struct AppEngineStandardAppVersion_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineStandardAppVersionTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineStandardAppVersionTimeoutsElRef {
-        AppEngineStandardAppVersionTimeoutsElRef {
+impl terrars::Ref for AppEngineStandardAppVersion_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineStandardAppVersion_TimeoutsRef {
+        AppEngineStandardAppVersion_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineStandardAppVersionTimeoutsElRef {
+impl AppEngineStandardAppVersion_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2075,13 +2161,13 @@ impl AppEngineStandardAppVersionTimeoutsElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppEngineStandardAppVersionVpcAccessConnectorEl {
+pub struct AppEngineStandardAppVersion_VpcAccessConnector {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     egress_setting: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
 }
 
-impl AppEngineStandardAppVersionVpcAccessConnectorEl {
+impl AppEngineStandardAppVersion_VpcAccessConnector {
     #[doc =
         "Set the field `egress_setting`.\nThe egress setting for the connector, controlling what traffic is diverted through it."]
     pub fn set_egress_setting(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -2090,8 +2176,8 @@ impl AppEngineStandardAppVersionVpcAccessConnectorEl {
     }
 }
 
-impl terrars::ToListMappable for AppEngineStandardAppVersionVpcAccessConnectorEl {
-    type O = terrars::BlockAssignable<AppEngineStandardAppVersionVpcAccessConnectorEl>;
+impl terrars::ToListMappable for AppEngineStandardAppVersion_VpcAccessConnector {
+    type O = terrars::BlockAssignable<AppEngineStandardAppVersion_VpcAccessConnector>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2102,38 +2188,40 @@ impl terrars::ToListMappable for AppEngineStandardAppVersionVpcAccessConnectorEl
     }
 }
 
-pub struct BuildAppEngineStandardAppVersionVpcAccessConnectorEl {
+pub struct BuildAppEngineStandardAppVersion_VpcAccessConnector {
     #[doc = "Full Serverless VPC Access Connector name e.g. /projects/my-project/locations/us-central1/connectors/c1."]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppEngineStandardAppVersionVpcAccessConnectorEl {
-    pub fn build(self) -> AppEngineStandardAppVersionVpcAccessConnectorEl {
-        AppEngineStandardAppVersionVpcAccessConnectorEl {
+impl BuildAppEngineStandardAppVersion_VpcAccessConnector {
+    pub fn build(self) -> AppEngineStandardAppVersion_VpcAccessConnector {
+        AppEngineStandardAppVersion_VpcAccessConnector {
             egress_setting: core::default::Default::default(),
             name: self.name,
         }
     }
 }
 
-pub struct AppEngineStandardAppVersionVpcAccessConnectorElRef {
+#[allow(dead_code)]
+pub struct AppEngineStandardAppVersion_VpcAccessConnectorRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineStandardAppVersionVpcAccessConnectorElRef {
+impl terrars::Ref for AppEngineStandardAppVersion_VpcAccessConnectorRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppEngineStandardAppVersionVpcAccessConnectorElRef {
-        AppEngineStandardAppVersionVpcAccessConnectorElRef {
+    ) -> AppEngineStandardAppVersion_VpcAccessConnectorRef {
+        AppEngineStandardAppVersion_VpcAccessConnectorRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineStandardAppVersionVpcAccessConnectorElRef {
+impl AppEngineStandardAppVersion_VpcAccessConnectorRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2149,18 +2237,4 @@ impl AppEngineStandardAppVersionVpcAccessConnectorElRef {
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AppEngineStandardAppVersionDynamic {
-    automatic_scaling: std::option::Option<terrars::DynamicBlock<AppEngineStandardAppVersionAutomaticScalingEl>>,
-    basic_scaling: std::option::Option<terrars::DynamicBlock<AppEngineStandardAppVersionBasicScalingEl>>,
-    deployment: std::option::Option<terrars::DynamicBlock<AppEngineStandardAppVersionDeploymentEl>>,
-    entrypoint: std::option::Option<terrars::DynamicBlock<AppEngineStandardAppVersionEntrypointEl>>,
-    handlers: std::option::Option<terrars::DynamicBlock<AppEngineStandardAppVersionHandlersEl>>,
-    libraries: std::option::Option<terrars::DynamicBlock<AppEngineStandardAppVersionLibrariesEl>>,
-    manual_scaling: std::option::Option<terrars::DynamicBlock<AppEngineStandardAppVersionManualScalingEl>>,
-    vpc_access_connector: std
-    ::option
-    ::Option<terrars::DynamicBlock<AppEngineStandardAppVersionVpcAccessConnectorEl>>,
 }

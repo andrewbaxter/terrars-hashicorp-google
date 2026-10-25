@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ProjectDefaultServiceAccountsData {
+struct ProjectDefaultServiceAccountsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,13 +27,13 @@ struct ProjectDefaultServiceAccountsData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     restore_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ProjectDefaultServiceAccountsTimeoutsEl>,
+    timeouts: std::option::Option<ProjectDefaultServiceAccounts_Timeouts>,
 }
 
 struct ProjectDefaultServiceAccounts_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ProjectDefaultServiceAccountsData>,
+    data: std::cell::RefCell<ProjectDefaultServiceAccountsData_>,
 }
 
 #[derive(Clone)]
@@ -145,7 +147,7 @@ impl ProjectDefaultServiceAccounts {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ProjectDefaultServiceAccountsTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ProjectDefaultServiceAccounts_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -180,8 +182,8 @@ impl ProjectDefaultServiceAccounts {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ProjectDefaultServiceAccountsTimeoutsElRef {
-        ProjectDefaultServiceAccountsTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ProjectDefaultServiceAccounts_TimeoutsRef {
+        ProjectDefaultServiceAccounts_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -233,7 +235,7 @@ impl BuildProjectDefaultServiceAccounts {
         let out = ProjectDefaultServiceAccounts(std::rc::Rc::new(ProjectDefaultServiceAccounts_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ProjectDefaultServiceAccountsData {
+            data: std::cell::RefCell::new(ProjectDefaultServiceAccountsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -304,8 +306,8 @@ impl ProjectDefaultServiceAccountsRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ProjectDefaultServiceAccountsTimeoutsElRef {
-        ProjectDefaultServiceAccountsTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ProjectDefaultServiceAccounts_TimeoutsRef {
+        ProjectDefaultServiceAccounts_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -313,7 +315,7 @@ impl ProjectDefaultServiceAccountsRef {
 }
 
 #[derive(Serialize)]
-pub struct ProjectDefaultServiceAccountsTimeoutsEl {
+pub struct ProjectDefaultServiceAccounts_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -322,7 +324,7 @@ pub struct ProjectDefaultServiceAccountsTimeoutsEl {
     read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ProjectDefaultServiceAccountsTimeoutsEl {
+impl ProjectDefaultServiceAccounts_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -342,8 +344,8 @@ impl ProjectDefaultServiceAccountsTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ProjectDefaultServiceAccountsTimeoutsEl {
-    type O = terrars::BlockAssignable<ProjectDefaultServiceAccountsTimeoutsEl>;
+impl terrars::ToListMappable for ProjectDefaultServiceAccounts_Timeouts {
+    type O = terrars::BlockAssignable<ProjectDefaultServiceAccounts_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -354,11 +356,11 @@ impl terrars::ToListMappable for ProjectDefaultServiceAccountsTimeoutsEl {
     }
 }
 
-pub struct BuildProjectDefaultServiceAccountsTimeoutsEl {}
+pub struct BuildProjectDefaultServiceAccounts_Timeouts {}
 
-impl BuildProjectDefaultServiceAccountsTimeoutsEl {
-    pub fn build(self) -> ProjectDefaultServiceAccountsTimeoutsEl {
-        ProjectDefaultServiceAccountsTimeoutsEl {
+impl BuildProjectDefaultServiceAccounts_Timeouts {
+    pub fn build(self) -> ProjectDefaultServiceAccounts_Timeouts {
+        ProjectDefaultServiceAccounts_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             read: core::default::Default::default(),
@@ -366,21 +368,23 @@ impl BuildProjectDefaultServiceAccountsTimeoutsEl {
     }
 }
 
-pub struct ProjectDefaultServiceAccountsTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ProjectDefaultServiceAccounts_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ProjectDefaultServiceAccountsTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ProjectDefaultServiceAccountsTimeoutsElRef {
-        ProjectDefaultServiceAccountsTimeoutsElRef {
+impl terrars::Ref for ProjectDefaultServiceAccounts_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ProjectDefaultServiceAccounts_TimeoutsRef {
+        ProjectDefaultServiceAccounts_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ProjectDefaultServiceAccountsTimeoutsElRef {
+impl ProjectDefaultServiceAccounts_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

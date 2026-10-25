@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataComposerEnvironmentData {
+struct DataComposerEnvironmentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -28,7 +30,7 @@ struct DataComposerEnvironmentData {
 struct DataComposerEnvironment_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataComposerEnvironmentData>,
+    data: std::cell::RefCell<DataComposerEnvironmentData_>,
 }
 
 #[derive(Clone)]
@@ -94,8 +96,14 @@ impl DataComposerEnvironment {
 
     #[doc =
         "Get a reference to the value of field `config` after provisioning.\nConfiguration parameters for this environment."]
-    pub fn config(&self) -> terrars::ListRef<DataComposerEnvironmentConfigElRef> {
+    pub fn config(&self) -> terrars::ListRef<DataComposerEnvironment_ConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.config", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -134,7 +142,7 @@ impl DataComposerEnvironment {
 
     #[doc =
         "Get a reference to the value of field `storage_config` after provisioning.\nConfiguration options for storage used by Composer environment."]
-    pub fn storage_config(&self) -> terrars::ListRef<DataComposerEnvironmentStorageConfigElRef> {
+    pub fn storage_config(&self) -> terrars::ListRef<DataComposerEnvironment_StorageConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.storage_config", self.extract_ref()))
     }
 
@@ -187,7 +195,7 @@ impl BuildDataComposerEnvironment {
         let out = DataComposerEnvironment(std::rc::Rc::new(DataComposerEnvironment_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataComposerEnvironmentData {
+            data: std::cell::RefCell::new(DataComposerEnvironmentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -228,8 +236,14 @@ impl DataComposerEnvironmentRef {
 
     #[doc =
         "Get a reference to the value of field `config` after provisioning.\nConfiguration parameters for this environment."]
-    pub fn config(&self) -> terrars::ListRef<DataComposerEnvironmentConfigElRef> {
+    pub fn config(&self) -> terrars::ListRef<DataComposerEnvironment_ConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.config", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -268,7 +282,7 @@ impl DataComposerEnvironmentRef {
 
     #[doc =
         "Get a reference to the value of field `storage_config` after provisioning.\nConfiguration options for storage used by Composer environment."]
-    pub fn storage_config(&self) -> terrars::ListRef<DataComposerEnvironmentStorageConfigElRef> {
+    pub fn storage_config(&self) -> terrars::ListRef<DataComposerEnvironment_StorageConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.storage_config", self.extract_ref()))
     }
 
@@ -280,14 +294,270 @@ impl DataComposerEnvironmentRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComposerEnvironmentConfigElDatabaseConfigEl {
+pub struct DataComposerEnvironment_Config_DataRetentionConfig_AirflowMetadataRetentionConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    retention_days: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    retention_mode: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataComposerEnvironment_Config_DataRetentionConfig_AirflowMetadataRetentionConfig {
+    #[doc = "Set the field `retention_days`.\n"]
+    pub fn set_retention_days(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.retention_days = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `retention_mode`.\n"]
+    pub fn set_retention_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.retention_mode = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataComposerEnvironment_Config_DataRetentionConfig_AirflowMetadataRetentionConfig {
+    type O =
+        terrars::BlockAssignable<DataComposerEnvironment_Config_DataRetentionConfig_AirflowMetadataRetentionConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataComposerEnvironment_Config_DataRetentionConfig_AirflowMetadataRetentionConfig {}
+
+impl BuildDataComposerEnvironment_Config_DataRetentionConfig_AirflowMetadataRetentionConfig {
+    pub fn build(self) -> DataComposerEnvironment_Config_DataRetentionConfig_AirflowMetadataRetentionConfig {
+        DataComposerEnvironment_Config_DataRetentionConfig_AirflowMetadataRetentionConfig {
+            retention_days: core::default::Default::default(),
+            retention_mode: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataComposerEnvironment_Config_DataRetentionConfig_AirflowMetadataRetentionConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataComposerEnvironment_Config_DataRetentionConfig_AirflowMetadataRetentionConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataComposerEnvironment_Config_DataRetentionConfig_AirflowMetadataRetentionConfigRef {
+        DataComposerEnvironment_Config_DataRetentionConfig_AirflowMetadataRetentionConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataComposerEnvironment_Config_DataRetentionConfig_AirflowMetadataRetentionConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `retention_days` after provisioning.\n"]
+    pub fn retention_days(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.retention_days", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `retention_mode` after provisioning.\n"]
+    pub fn retention_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.retention_mode", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataComposerEnvironment_Config_DataRetentionConfig_TaskLogsRetentionConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    storage_mode: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataComposerEnvironment_Config_DataRetentionConfig_TaskLogsRetentionConfig {
+    #[doc = "Set the field `storage_mode`.\n"]
+    pub fn set_storage_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.storage_mode = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataComposerEnvironment_Config_DataRetentionConfig_TaskLogsRetentionConfig {
+    type O = terrars::BlockAssignable<DataComposerEnvironment_Config_DataRetentionConfig_TaskLogsRetentionConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataComposerEnvironment_Config_DataRetentionConfig_TaskLogsRetentionConfig {}
+
+impl BuildDataComposerEnvironment_Config_DataRetentionConfig_TaskLogsRetentionConfig {
+    pub fn build(self) -> DataComposerEnvironment_Config_DataRetentionConfig_TaskLogsRetentionConfig {
+        DataComposerEnvironment_Config_DataRetentionConfig_TaskLogsRetentionConfig {
+            storage_mode: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataComposerEnvironment_Config_DataRetentionConfig_TaskLogsRetentionConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataComposerEnvironment_Config_DataRetentionConfig_TaskLogsRetentionConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataComposerEnvironment_Config_DataRetentionConfig_TaskLogsRetentionConfigRef {
+        DataComposerEnvironment_Config_DataRetentionConfig_TaskLogsRetentionConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataComposerEnvironment_Config_DataRetentionConfig_TaskLogsRetentionConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `storage_mode` after provisioning.\n"]
+    pub fn storage_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.storage_mode", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataComposerEnvironment_Config_DataRetentionConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    airflow_metadata_retention_config: std
+    ::option
+    ::Option<terrars::ListField<DataComposerEnvironment_Config_DataRetentionConfig_AirflowMetadataRetentionConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    task_logs_retention_config: std
+    ::option
+    ::Option<terrars::ListField<DataComposerEnvironment_Config_DataRetentionConfig_TaskLogsRetentionConfig>>,
+}
+
+impl DataComposerEnvironment_Config_DataRetentionConfig {
+    #[doc = "Set the field `airflow_metadata_retention_config`.\n"]
+    pub fn set_airflow_metadata_retention_config(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::ListField<DataComposerEnvironment_Config_DataRetentionConfig_AirflowMetadataRetentionConfig>,
+                    >,
+    ) -> Self {
+        self.airflow_metadata_retention_config = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `task_logs_retention_config`.\n"]
+    pub fn set_task_logs_retention_config(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::ListField<DataComposerEnvironment_Config_DataRetentionConfig_TaskLogsRetentionConfig>,
+                    >,
+    ) -> Self {
+        self.task_logs_retention_config = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataComposerEnvironment_Config_DataRetentionConfig {
+    type O = terrars::BlockAssignable<DataComposerEnvironment_Config_DataRetentionConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataComposerEnvironment_Config_DataRetentionConfig {}
+
+impl BuildDataComposerEnvironment_Config_DataRetentionConfig {
+    pub fn build(self) -> DataComposerEnvironment_Config_DataRetentionConfig {
+        DataComposerEnvironment_Config_DataRetentionConfig {
+            airflow_metadata_retention_config: core::default::Default::default(),
+            task_logs_retention_config: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataComposerEnvironment_Config_DataRetentionConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataComposerEnvironment_Config_DataRetentionConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataComposerEnvironment_Config_DataRetentionConfigRef {
+        DataComposerEnvironment_Config_DataRetentionConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataComposerEnvironment_Config_DataRetentionConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `airflow_metadata_retention_config` after provisioning.\n"]
+    pub fn airflow_metadata_retention_config(
+        &self,
+    ) -> terrars::ListRef<DataComposerEnvironment_Config_DataRetentionConfig_AirflowMetadataRetentionConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.airflow_metadata_retention_config", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `task_logs_retention_config` after provisioning.\n"]
+    pub fn task_logs_retention_config(
+        &self,
+    ) -> terrars::ListRef<DataComposerEnvironment_Config_DataRetentionConfig_TaskLogsRetentionConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.task_logs_retention_config", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataComposerEnvironment_Config_DatabaseConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     machine_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     zone: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataComposerEnvironmentConfigElDatabaseConfigEl {
+impl DataComposerEnvironment_Config_DatabaseConfig {
     #[doc = "Set the field `machine_type`.\n"]
     pub fn set_machine_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.machine_type = std::option::Option::Some(v.into());
@@ -301,8 +571,8 @@ impl DataComposerEnvironmentConfigElDatabaseConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataComposerEnvironmentConfigElDatabaseConfigEl {
-    type O = terrars::BlockAssignable<DataComposerEnvironmentConfigElDatabaseConfigEl>;
+impl terrars::ToListMappable for DataComposerEnvironment_Config_DatabaseConfig {
+    type O = terrars::BlockAssignable<DataComposerEnvironment_Config_DatabaseConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -313,35 +583,37 @@ impl terrars::ToListMappable for DataComposerEnvironmentConfigElDatabaseConfigEl
     }
 }
 
-pub struct BuildDataComposerEnvironmentConfigElDatabaseConfigEl {}
+pub struct BuildDataComposerEnvironment_Config_DatabaseConfig {}
 
-impl BuildDataComposerEnvironmentConfigElDatabaseConfigEl {
-    pub fn build(self) -> DataComposerEnvironmentConfigElDatabaseConfigEl {
-        DataComposerEnvironmentConfigElDatabaseConfigEl {
+impl BuildDataComposerEnvironment_Config_DatabaseConfig {
+    pub fn build(self) -> DataComposerEnvironment_Config_DatabaseConfig {
+        DataComposerEnvironment_Config_DatabaseConfig {
             machine_type: core::default::Default::default(),
             zone: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataComposerEnvironmentConfigElDatabaseConfigElRef {
+#[allow(dead_code)]
+pub struct DataComposerEnvironment_Config_DatabaseConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComposerEnvironmentConfigElDatabaseConfigElRef {
+impl terrars::Ref for DataComposerEnvironment_Config_DatabaseConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComposerEnvironmentConfigElDatabaseConfigElRef {
-        DataComposerEnvironmentConfigElDatabaseConfigElRef {
+    ) -> DataComposerEnvironment_Config_DatabaseConfigRef {
+        DataComposerEnvironment_Config_DatabaseConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComposerEnvironmentConfigElDatabaseConfigElRef {
+impl DataComposerEnvironment_Config_DatabaseConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -358,12 +630,12 @@ impl DataComposerEnvironmentConfigElDatabaseConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComposerEnvironmentConfigElEncryptionConfigEl {
+pub struct DataComposerEnvironment_Config_EncryptionConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataComposerEnvironmentConfigElEncryptionConfigEl {
+impl DataComposerEnvironment_Config_EncryptionConfig {
     #[doc = "Set the field `kms_key_name`.\n"]
     pub fn set_kms_key_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.kms_key_name = std::option::Option::Some(v.into());
@@ -371,8 +643,8 @@ impl DataComposerEnvironmentConfigElEncryptionConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataComposerEnvironmentConfigElEncryptionConfigEl {
-    type O = terrars::BlockAssignable<DataComposerEnvironmentConfigElEncryptionConfigEl>;
+impl terrars::ToListMappable for DataComposerEnvironment_Config_EncryptionConfig {
+    type O = terrars::BlockAssignable<DataComposerEnvironment_Config_EncryptionConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -383,32 +655,34 @@ impl terrars::ToListMappable for DataComposerEnvironmentConfigElEncryptionConfig
     }
 }
 
-pub struct BuildDataComposerEnvironmentConfigElEncryptionConfigEl {}
+pub struct BuildDataComposerEnvironment_Config_EncryptionConfig {}
 
-impl BuildDataComposerEnvironmentConfigElEncryptionConfigEl {
-    pub fn build(self) -> DataComposerEnvironmentConfigElEncryptionConfigEl {
-        DataComposerEnvironmentConfigElEncryptionConfigEl { kms_key_name: core::default::Default::default() }
+impl BuildDataComposerEnvironment_Config_EncryptionConfig {
+    pub fn build(self) -> DataComposerEnvironment_Config_EncryptionConfig {
+        DataComposerEnvironment_Config_EncryptionConfig { kms_key_name: core::default::Default::default() }
     }
 }
 
-pub struct DataComposerEnvironmentConfigElEncryptionConfigElRef {
+#[allow(dead_code)]
+pub struct DataComposerEnvironment_Config_EncryptionConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComposerEnvironmentConfigElEncryptionConfigElRef {
+impl terrars::Ref for DataComposerEnvironment_Config_EncryptionConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComposerEnvironmentConfigElEncryptionConfigElRef {
-        DataComposerEnvironmentConfigElEncryptionConfigElRef {
+    ) -> DataComposerEnvironment_Config_EncryptionConfigRef {
+        DataComposerEnvironment_Config_EncryptionConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComposerEnvironmentConfigElEncryptionConfigElRef {
+impl DataComposerEnvironment_Config_EncryptionConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -420,7 +694,7 @@ impl DataComposerEnvironmentConfigElEncryptionConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComposerEnvironmentConfigElMaintenanceWindowEl {
+pub struct DataComposerEnvironment_Config_MaintenanceWindow {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     end_time: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -429,7 +703,7 @@ pub struct DataComposerEnvironmentConfigElMaintenanceWindowEl {
     start_time: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataComposerEnvironmentConfigElMaintenanceWindowEl {
+impl DataComposerEnvironment_Config_MaintenanceWindow {
     #[doc = "Set the field `end_time`.\n"]
     pub fn set_end_time(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.end_time = std::option::Option::Some(v.into());
@@ -449,8 +723,8 @@ impl DataComposerEnvironmentConfigElMaintenanceWindowEl {
     }
 }
 
-impl terrars::ToListMappable for DataComposerEnvironmentConfigElMaintenanceWindowEl {
-    type O = terrars::BlockAssignable<DataComposerEnvironmentConfigElMaintenanceWindowEl>;
+impl terrars::ToListMappable for DataComposerEnvironment_Config_MaintenanceWindow {
+    type O = terrars::BlockAssignable<DataComposerEnvironment_Config_MaintenanceWindow>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -461,11 +735,11 @@ impl terrars::ToListMappable for DataComposerEnvironmentConfigElMaintenanceWindo
     }
 }
 
-pub struct BuildDataComposerEnvironmentConfigElMaintenanceWindowEl {}
+pub struct BuildDataComposerEnvironment_Config_MaintenanceWindow {}
 
-impl BuildDataComposerEnvironmentConfigElMaintenanceWindowEl {
-    pub fn build(self) -> DataComposerEnvironmentConfigElMaintenanceWindowEl {
-        DataComposerEnvironmentConfigElMaintenanceWindowEl {
+impl BuildDataComposerEnvironment_Config_MaintenanceWindow {
+    pub fn build(self) -> DataComposerEnvironment_Config_MaintenanceWindow {
+        DataComposerEnvironment_Config_MaintenanceWindow {
             end_time: core::default::Default::default(),
             recurrence: core::default::Default::default(),
             start_time: core::default::Default::default(),
@@ -473,24 +747,26 @@ impl BuildDataComposerEnvironmentConfigElMaintenanceWindowEl {
     }
 }
 
-pub struct DataComposerEnvironmentConfigElMaintenanceWindowElRef {
+#[allow(dead_code)]
+pub struct DataComposerEnvironment_Config_MaintenanceWindowRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComposerEnvironmentConfigElMaintenanceWindowElRef {
+impl terrars::Ref for DataComposerEnvironment_Config_MaintenanceWindowRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComposerEnvironmentConfigElMaintenanceWindowElRef {
-        DataComposerEnvironmentConfigElMaintenanceWindowElRef {
+    ) -> DataComposerEnvironment_Config_MaintenanceWindowRef {
+        DataComposerEnvironment_Config_MaintenanceWindowRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComposerEnvironmentConfigElMaintenanceWindowElRef {
+impl DataComposerEnvironment_Config_MaintenanceWindowRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -512,14 +788,14 @@ impl DataComposerEnvironmentConfigElMaintenanceWindowElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComposerEnvironmentConfigElMasterAuthorizedNetworksConfigElCidrBlocksEl {
+pub struct DataComposerEnvironment_Config_MasterAuthorizedNetworksConfig_CidrBlocks {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cidr_block: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     display_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataComposerEnvironmentConfigElMasterAuthorizedNetworksConfigElCidrBlocksEl {
+impl DataComposerEnvironment_Config_MasterAuthorizedNetworksConfig_CidrBlocks {
     #[doc = "Set the field `cidr_block`.\n"]
     pub fn set_cidr_block(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.cidr_block = std::option::Option::Some(v.into());
@@ -533,8 +809,8 @@ impl DataComposerEnvironmentConfigElMasterAuthorizedNetworksConfigElCidrBlocksEl
     }
 }
 
-impl terrars::ToListMappable for DataComposerEnvironmentConfigElMasterAuthorizedNetworksConfigElCidrBlocksEl {
-    type O = terrars::BlockAssignable<DataComposerEnvironmentConfigElMasterAuthorizedNetworksConfigElCidrBlocksEl>;
+impl terrars::ToListMappable for DataComposerEnvironment_Config_MasterAuthorizedNetworksConfig_CidrBlocks {
+    type O = terrars::BlockAssignable<DataComposerEnvironment_Config_MasterAuthorizedNetworksConfig_CidrBlocks>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -545,35 +821,37 @@ impl terrars::ToListMappable for DataComposerEnvironmentConfigElMasterAuthorized
     }
 }
 
-pub struct BuildDataComposerEnvironmentConfigElMasterAuthorizedNetworksConfigElCidrBlocksEl {}
+pub struct BuildDataComposerEnvironment_Config_MasterAuthorizedNetworksConfig_CidrBlocks {}
 
-impl BuildDataComposerEnvironmentConfigElMasterAuthorizedNetworksConfigElCidrBlocksEl {
-    pub fn build(self) -> DataComposerEnvironmentConfigElMasterAuthorizedNetworksConfigElCidrBlocksEl {
-        DataComposerEnvironmentConfigElMasterAuthorizedNetworksConfigElCidrBlocksEl {
+impl BuildDataComposerEnvironment_Config_MasterAuthorizedNetworksConfig_CidrBlocks {
+    pub fn build(self) -> DataComposerEnvironment_Config_MasterAuthorizedNetworksConfig_CidrBlocks {
+        DataComposerEnvironment_Config_MasterAuthorizedNetworksConfig_CidrBlocks {
             cidr_block: core::default::Default::default(),
             display_name: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataComposerEnvironmentConfigElMasterAuthorizedNetworksConfigElCidrBlocksElRef {
+#[allow(dead_code)]
+pub struct DataComposerEnvironment_Config_MasterAuthorizedNetworksConfig_CidrBlocksRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComposerEnvironmentConfigElMasterAuthorizedNetworksConfigElCidrBlocksElRef {
+impl terrars::Ref for DataComposerEnvironment_Config_MasterAuthorizedNetworksConfig_CidrBlocksRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComposerEnvironmentConfigElMasterAuthorizedNetworksConfigElCidrBlocksElRef {
-        DataComposerEnvironmentConfigElMasterAuthorizedNetworksConfigElCidrBlocksElRef {
+    ) -> DataComposerEnvironment_Config_MasterAuthorizedNetworksConfig_CidrBlocksRef {
+        DataComposerEnvironment_Config_MasterAuthorizedNetworksConfig_CidrBlocksRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComposerEnvironmentConfigElMasterAuthorizedNetworksConfigElCidrBlocksElRef {
+impl DataComposerEnvironment_Config_MasterAuthorizedNetworksConfig_CidrBlocksRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -590,16 +868,16 @@ impl DataComposerEnvironmentConfigElMasterAuthorizedNetworksConfigElCidrBlocksEl
 }
 
 #[derive(Serialize)]
-pub struct DataComposerEnvironmentConfigElMasterAuthorizedNetworksConfigEl {
+pub struct DataComposerEnvironment_Config_MasterAuthorizedNetworksConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cidr_blocks: std
     ::option
-    ::Option<terrars::SetField<DataComposerEnvironmentConfigElMasterAuthorizedNetworksConfigElCidrBlocksEl>>,
+    ::Option<terrars::SetField<DataComposerEnvironment_Config_MasterAuthorizedNetworksConfig_CidrBlocks>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataComposerEnvironmentConfigElMasterAuthorizedNetworksConfigEl {
+impl DataComposerEnvironment_Config_MasterAuthorizedNetworksConfig {
     #[doc = "Set the field `cidr_blocks`.\n"]
     pub fn set_cidr_blocks(
         mut self,
@@ -609,7 +887,7 @@ impl DataComposerEnvironmentConfigElMasterAuthorizedNetworksConfigEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::SetField<DataComposerEnvironmentConfigElMasterAuthorizedNetworksConfigElCidrBlocksEl>,
+                        terrars::SetField<DataComposerEnvironment_Config_MasterAuthorizedNetworksConfig_CidrBlocks>,
                     >,
     ) -> Self {
         self.cidr_blocks = std::option::Option::Some(v.into());
@@ -623,8 +901,8 @@ impl DataComposerEnvironmentConfigElMasterAuthorizedNetworksConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataComposerEnvironmentConfigElMasterAuthorizedNetworksConfigEl {
-    type O = terrars::BlockAssignable<DataComposerEnvironmentConfigElMasterAuthorizedNetworksConfigEl>;
+impl terrars::ToListMappable for DataComposerEnvironment_Config_MasterAuthorizedNetworksConfig {
+    type O = terrars::BlockAssignable<DataComposerEnvironment_Config_MasterAuthorizedNetworksConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -635,35 +913,37 @@ impl terrars::ToListMappable for DataComposerEnvironmentConfigElMasterAuthorized
     }
 }
 
-pub struct BuildDataComposerEnvironmentConfigElMasterAuthorizedNetworksConfigEl {}
+pub struct BuildDataComposerEnvironment_Config_MasterAuthorizedNetworksConfig {}
 
-impl BuildDataComposerEnvironmentConfigElMasterAuthorizedNetworksConfigEl {
-    pub fn build(self) -> DataComposerEnvironmentConfigElMasterAuthorizedNetworksConfigEl {
-        DataComposerEnvironmentConfigElMasterAuthorizedNetworksConfigEl {
+impl BuildDataComposerEnvironment_Config_MasterAuthorizedNetworksConfig {
+    pub fn build(self) -> DataComposerEnvironment_Config_MasterAuthorizedNetworksConfig {
+        DataComposerEnvironment_Config_MasterAuthorizedNetworksConfig {
             cidr_blocks: core::default::Default::default(),
             enabled: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataComposerEnvironmentConfigElMasterAuthorizedNetworksConfigElRef {
+#[allow(dead_code)]
+pub struct DataComposerEnvironment_Config_MasterAuthorizedNetworksConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComposerEnvironmentConfigElMasterAuthorizedNetworksConfigElRef {
+impl terrars::Ref for DataComposerEnvironment_Config_MasterAuthorizedNetworksConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComposerEnvironmentConfigElMasterAuthorizedNetworksConfigElRef {
-        DataComposerEnvironmentConfigElMasterAuthorizedNetworksConfigElRef {
+    ) -> DataComposerEnvironment_Config_MasterAuthorizedNetworksConfigRef {
+        DataComposerEnvironment_Config_MasterAuthorizedNetworksConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComposerEnvironmentConfigElMasterAuthorizedNetworksConfigElRef {
+impl DataComposerEnvironment_Config_MasterAuthorizedNetworksConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -671,7 +951,7 @@ impl DataComposerEnvironmentConfigElMasterAuthorizedNetworksConfigElRef {
     #[doc = "Get a reference to the value of field `cidr_blocks` after provisioning.\n"]
     pub fn cidr_blocks(
         &self,
-    ) -> terrars::SetRef<DataComposerEnvironmentConfigElMasterAuthorizedNetworksConfigElCidrBlocksElRef> {
+    ) -> terrars::SetRef<DataComposerEnvironment_Config_MasterAuthorizedNetworksConfig_CidrBlocksRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.cidr_blocks", self.base))
     }
 
@@ -682,7 +962,7 @@ impl DataComposerEnvironmentConfigElMasterAuthorizedNetworksConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComposerEnvironmentConfigElNodeConfigElIpAllocationPolicyEl {
+pub struct DataComposerEnvironment_Config_NodeConfig_IpAllocationPolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cluster_ipv4_cidr_block: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -695,7 +975,7 @@ pub struct DataComposerEnvironmentConfigElNodeConfigElIpAllocationPolicyEl {
     use_ip_aliases: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataComposerEnvironmentConfigElNodeConfigElIpAllocationPolicyEl {
+impl DataComposerEnvironment_Config_NodeConfig_IpAllocationPolicy {
     #[doc = "Set the field `cluster_ipv4_cidr_block`.\n"]
     pub fn set_cluster_ipv4_cidr_block(
         mut self,
@@ -739,8 +1019,8 @@ impl DataComposerEnvironmentConfigElNodeConfigElIpAllocationPolicyEl {
     }
 }
 
-impl terrars::ToListMappable for DataComposerEnvironmentConfigElNodeConfigElIpAllocationPolicyEl {
-    type O = terrars::BlockAssignable<DataComposerEnvironmentConfigElNodeConfigElIpAllocationPolicyEl>;
+impl terrars::ToListMappable for DataComposerEnvironment_Config_NodeConfig_IpAllocationPolicy {
+    type O = terrars::BlockAssignable<DataComposerEnvironment_Config_NodeConfig_IpAllocationPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -751,11 +1031,11 @@ impl terrars::ToListMappable for DataComposerEnvironmentConfigElNodeConfigElIpAl
     }
 }
 
-pub struct BuildDataComposerEnvironmentConfigElNodeConfigElIpAllocationPolicyEl {}
+pub struct BuildDataComposerEnvironment_Config_NodeConfig_IpAllocationPolicy {}
 
-impl BuildDataComposerEnvironmentConfigElNodeConfigElIpAllocationPolicyEl {
-    pub fn build(self) -> DataComposerEnvironmentConfigElNodeConfigElIpAllocationPolicyEl {
-        DataComposerEnvironmentConfigElNodeConfigElIpAllocationPolicyEl {
+impl BuildDataComposerEnvironment_Config_NodeConfig_IpAllocationPolicy {
+    pub fn build(self) -> DataComposerEnvironment_Config_NodeConfig_IpAllocationPolicy {
+        DataComposerEnvironment_Config_NodeConfig_IpAllocationPolicy {
             cluster_ipv4_cidr_block: core::default::Default::default(),
             cluster_secondary_range_name: core::default::Default::default(),
             services_ipv4_cidr_block: core::default::Default::default(),
@@ -765,24 +1045,26 @@ impl BuildDataComposerEnvironmentConfigElNodeConfigElIpAllocationPolicyEl {
     }
 }
 
-pub struct DataComposerEnvironmentConfigElNodeConfigElIpAllocationPolicyElRef {
+#[allow(dead_code)]
+pub struct DataComposerEnvironment_Config_NodeConfig_IpAllocationPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComposerEnvironmentConfigElNodeConfigElIpAllocationPolicyElRef {
+impl terrars::Ref for DataComposerEnvironment_Config_NodeConfig_IpAllocationPolicyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComposerEnvironmentConfigElNodeConfigElIpAllocationPolicyElRef {
-        DataComposerEnvironmentConfigElNodeConfigElIpAllocationPolicyElRef {
+    ) -> DataComposerEnvironment_Config_NodeConfig_IpAllocationPolicyRef {
+        DataComposerEnvironment_Config_NodeConfig_IpAllocationPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComposerEnvironmentConfigElNodeConfigElIpAllocationPolicyElRef {
+impl DataComposerEnvironment_Config_NodeConfig_IpAllocationPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -814,7 +1096,11 @@ impl DataComposerEnvironmentConfigElNodeConfigElIpAllocationPolicyElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComposerEnvironmentConfigElNodeConfigEl {
+pub struct DataComposerEnvironment_Config_NodeConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    composer_internal_ipv4_cidr_block: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    composer_network_attachment: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     disk_size_gb: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -822,7 +1108,7 @@ pub struct DataComposerEnvironmentConfigElNodeConfigEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ip_allocation_policy: std
     ::option
-    ::Option<terrars::ListField<DataComposerEnvironmentConfigElNodeConfigElIpAllocationPolicyEl>>,
+    ::Option<terrars::ListField<DataComposerEnvironment_Config_NodeConfig_IpAllocationPolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     machine_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -839,7 +1125,25 @@ pub struct DataComposerEnvironmentConfigElNodeConfigEl {
     zone: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataComposerEnvironmentConfigElNodeConfigEl {
+impl DataComposerEnvironment_Config_NodeConfig {
+    #[doc = "Set the field `composer_internal_ipv4_cidr_block`.\n"]
+    pub fn set_composer_internal_ipv4_cidr_block(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.composer_internal_ipv4_cidr_block = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `composer_network_attachment`.\n"]
+    pub fn set_composer_network_attachment(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.composer_network_attachment = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `disk_size_gb`.\n"]
     pub fn set_disk_size_gb(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.disk_size_gb = std::option::Option::Some(v.into());
@@ -855,12 +1159,7 @@ impl DataComposerEnvironmentConfigElNodeConfigEl {
     #[doc = "Set the field `ip_allocation_policy`.\n"]
     pub fn set_ip_allocation_policy(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::ListField<DataComposerEnvironmentConfigElNodeConfigElIpAllocationPolicyEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataComposerEnvironment_Config_NodeConfig_IpAllocationPolicy>>,
     ) -> Self {
         self.ip_allocation_policy = std::option::Option::Some(v.into());
         self
@@ -915,8 +1214,8 @@ impl DataComposerEnvironmentConfigElNodeConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataComposerEnvironmentConfigElNodeConfigEl {
-    type O = terrars::BlockAssignable<DataComposerEnvironmentConfigElNodeConfigEl>;
+impl terrars::ToListMappable for DataComposerEnvironment_Config_NodeConfig {
+    type O = terrars::BlockAssignable<DataComposerEnvironment_Config_NodeConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -927,11 +1226,13 @@ impl terrars::ToListMappable for DataComposerEnvironmentConfigElNodeConfigEl {
     }
 }
 
-pub struct BuildDataComposerEnvironmentConfigElNodeConfigEl {}
+pub struct BuildDataComposerEnvironment_Config_NodeConfig {}
 
-impl BuildDataComposerEnvironmentConfigElNodeConfigEl {
-    pub fn build(self) -> DataComposerEnvironmentConfigElNodeConfigEl {
-        DataComposerEnvironmentConfigElNodeConfigEl {
+impl BuildDataComposerEnvironment_Config_NodeConfig {
+    pub fn build(self) -> DataComposerEnvironment_Config_NodeConfig {
+        DataComposerEnvironment_Config_NodeConfig {
+            composer_internal_ipv4_cidr_block: core::default::Default::default(),
+            composer_network_attachment: core::default::Default::default(),
             disk_size_gb: core::default::Default::default(),
             enable_ip_masq_agent: core::default::Default::default(),
             ip_allocation_policy: core::default::Default::default(),
@@ -946,26 +1247,35 @@ impl BuildDataComposerEnvironmentConfigElNodeConfigEl {
     }
 }
 
-pub struct DataComposerEnvironmentConfigElNodeConfigElRef {
+#[allow(dead_code)]
+pub struct DataComposerEnvironment_Config_NodeConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComposerEnvironmentConfigElNodeConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataComposerEnvironmentConfigElNodeConfigElRef {
-        DataComposerEnvironmentConfigElNodeConfigElRef {
+impl terrars::Ref for DataComposerEnvironment_Config_NodeConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComposerEnvironment_Config_NodeConfigRef {
+        DataComposerEnvironment_Config_NodeConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComposerEnvironmentConfigElNodeConfigElRef {
+impl DataComposerEnvironment_Config_NodeConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `composer_internal_ipv4_cidr_block` after provisioning.\n"]
+    pub fn composer_internal_ipv4_cidr_block(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.composer_internal_ipv4_cidr_block", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `composer_network_attachment` after provisioning.\n"]
+    pub fn composer_network_attachment(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.composer_network_attachment", self.base))
     }
 
     #[doc = "Get a reference to the value of field `disk_size_gb` after provisioning.\n"]
@@ -981,7 +1291,7 @@ impl DataComposerEnvironmentConfigElNodeConfigElRef {
     #[doc = "Get a reference to the value of field `ip_allocation_policy` after provisioning.\n"]
     pub fn ip_allocation_policy(
         &self,
-    ) -> terrars::ListRef<DataComposerEnvironmentConfigElNodeConfigElIpAllocationPolicyElRef> {
+    ) -> terrars::ListRef<DataComposerEnvironment_Config_NodeConfig_IpAllocationPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ip_allocation_policy", self.base))
     }
 
@@ -1022,7 +1332,7 @@ impl DataComposerEnvironmentConfigElNodeConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComposerEnvironmentConfigElPrivateEnvironmentConfigEl {
+pub struct DataComposerEnvironment_Config_PrivateEnvironmentConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cloud_composer_connection_subnetwork: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1041,7 +1351,7 @@ pub struct DataComposerEnvironmentConfigElPrivateEnvironmentConfigEl {
     web_server_ipv4_cidr_block: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataComposerEnvironmentConfigElPrivateEnvironmentConfigEl {
+impl DataComposerEnvironment_Config_PrivateEnvironmentConfig {
     #[doc = "Set the field `cloud_composer_connection_subnetwork`.\n"]
     pub fn set_cloud_composer_connection_subnetwork(
         mut self,
@@ -1106,8 +1416,8 @@ impl DataComposerEnvironmentConfigElPrivateEnvironmentConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataComposerEnvironmentConfigElPrivateEnvironmentConfigEl {
-    type O = terrars::BlockAssignable<DataComposerEnvironmentConfigElPrivateEnvironmentConfigEl>;
+impl terrars::ToListMappable for DataComposerEnvironment_Config_PrivateEnvironmentConfig {
+    type O = terrars::BlockAssignable<DataComposerEnvironment_Config_PrivateEnvironmentConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1118,11 +1428,11 @@ impl terrars::ToListMappable for DataComposerEnvironmentConfigElPrivateEnvironme
     }
 }
 
-pub struct BuildDataComposerEnvironmentConfigElPrivateEnvironmentConfigEl {}
+pub struct BuildDataComposerEnvironment_Config_PrivateEnvironmentConfig {}
 
-impl BuildDataComposerEnvironmentConfigElPrivateEnvironmentConfigEl {
-    pub fn build(self) -> DataComposerEnvironmentConfigElPrivateEnvironmentConfigEl {
-        DataComposerEnvironmentConfigElPrivateEnvironmentConfigEl {
+impl BuildDataComposerEnvironment_Config_PrivateEnvironmentConfig {
+    pub fn build(self) -> DataComposerEnvironment_Config_PrivateEnvironmentConfig {
+        DataComposerEnvironment_Config_PrivateEnvironmentConfig {
             cloud_composer_connection_subnetwork: core::default::Default::default(),
             cloud_composer_network_ipv4_cidr_block: core::default::Default::default(),
             cloud_sql_ipv4_cidr_block: core::default::Default::default(),
@@ -1135,24 +1445,26 @@ impl BuildDataComposerEnvironmentConfigElPrivateEnvironmentConfigEl {
     }
 }
 
-pub struct DataComposerEnvironmentConfigElPrivateEnvironmentConfigElRef {
+#[allow(dead_code)]
+pub struct DataComposerEnvironment_Config_PrivateEnvironmentConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComposerEnvironmentConfigElPrivateEnvironmentConfigElRef {
+impl terrars::Ref for DataComposerEnvironment_Config_PrivateEnvironmentConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComposerEnvironmentConfigElPrivateEnvironmentConfigElRef {
-        DataComposerEnvironmentConfigElPrivateEnvironmentConfigElRef {
+    ) -> DataComposerEnvironment_Config_PrivateEnvironmentConfigRef {
+        DataComposerEnvironment_Config_PrivateEnvironmentConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComposerEnvironmentConfigElPrivateEnvironmentConfigElRef {
+impl DataComposerEnvironment_Config_PrivateEnvironmentConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1202,7 +1514,7 @@ impl DataComposerEnvironmentConfigElPrivateEnvironmentConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComposerEnvironmentConfigElRecoveryConfigElScheduledSnapshotsConfigEl {
+pub struct DataComposerEnvironment_Config_RecoveryConfig_ScheduledSnapshotsConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1213,7 +1525,7 @@ pub struct DataComposerEnvironmentConfigElRecoveryConfigElScheduledSnapshotsConf
     time_zone: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataComposerEnvironmentConfigElRecoveryConfigElScheduledSnapshotsConfigEl {
+impl DataComposerEnvironment_Config_RecoveryConfig_ScheduledSnapshotsConfig {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -1242,8 +1554,8 @@ impl DataComposerEnvironmentConfigElRecoveryConfigElScheduledSnapshotsConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataComposerEnvironmentConfigElRecoveryConfigElScheduledSnapshotsConfigEl {
-    type O = terrars::BlockAssignable<DataComposerEnvironmentConfigElRecoveryConfigElScheduledSnapshotsConfigEl>;
+impl terrars::ToListMappable for DataComposerEnvironment_Config_RecoveryConfig_ScheduledSnapshotsConfig {
+    type O = terrars::BlockAssignable<DataComposerEnvironment_Config_RecoveryConfig_ScheduledSnapshotsConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1254,11 +1566,11 @@ impl terrars::ToListMappable for DataComposerEnvironmentConfigElRecoveryConfigEl
     }
 }
 
-pub struct BuildDataComposerEnvironmentConfigElRecoveryConfigElScheduledSnapshotsConfigEl {}
+pub struct BuildDataComposerEnvironment_Config_RecoveryConfig_ScheduledSnapshotsConfig {}
 
-impl BuildDataComposerEnvironmentConfigElRecoveryConfigElScheduledSnapshotsConfigEl {
-    pub fn build(self) -> DataComposerEnvironmentConfigElRecoveryConfigElScheduledSnapshotsConfigEl {
-        DataComposerEnvironmentConfigElRecoveryConfigElScheduledSnapshotsConfigEl {
+impl BuildDataComposerEnvironment_Config_RecoveryConfig_ScheduledSnapshotsConfig {
+    pub fn build(self) -> DataComposerEnvironment_Config_RecoveryConfig_ScheduledSnapshotsConfig {
+        DataComposerEnvironment_Config_RecoveryConfig_ScheduledSnapshotsConfig {
             enabled: core::default::Default::default(),
             snapshot_creation_schedule: core::default::Default::default(),
             snapshot_location: core::default::Default::default(),
@@ -1267,24 +1579,26 @@ impl BuildDataComposerEnvironmentConfigElRecoveryConfigElScheduledSnapshotsConfi
     }
 }
 
-pub struct DataComposerEnvironmentConfigElRecoveryConfigElScheduledSnapshotsConfigElRef {
+#[allow(dead_code)]
+pub struct DataComposerEnvironment_Config_RecoveryConfig_ScheduledSnapshotsConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComposerEnvironmentConfigElRecoveryConfigElScheduledSnapshotsConfigElRef {
+impl terrars::Ref for DataComposerEnvironment_Config_RecoveryConfig_ScheduledSnapshotsConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComposerEnvironmentConfigElRecoveryConfigElScheduledSnapshotsConfigElRef {
-        DataComposerEnvironmentConfigElRecoveryConfigElScheduledSnapshotsConfigElRef {
+    ) -> DataComposerEnvironment_Config_RecoveryConfig_ScheduledSnapshotsConfigRef {
+        DataComposerEnvironment_Config_RecoveryConfig_ScheduledSnapshotsConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComposerEnvironmentConfigElRecoveryConfigElScheduledSnapshotsConfigElRef {
+impl DataComposerEnvironment_Config_RecoveryConfig_ScheduledSnapshotsConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1311,14 +1625,14 @@ impl DataComposerEnvironmentConfigElRecoveryConfigElScheduledSnapshotsConfigElRe
 }
 
 #[derive(Serialize)]
-pub struct DataComposerEnvironmentConfigElRecoveryConfigEl {
+pub struct DataComposerEnvironment_Config_RecoveryConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     scheduled_snapshots_config: std
     ::option
-    ::Option<terrars::ListField<DataComposerEnvironmentConfigElRecoveryConfigElScheduledSnapshotsConfigEl>>,
+    ::Option<terrars::ListField<DataComposerEnvironment_Config_RecoveryConfig_ScheduledSnapshotsConfig>>,
 }
 
-impl DataComposerEnvironmentConfigElRecoveryConfigEl {
+impl DataComposerEnvironment_Config_RecoveryConfig {
     #[doc = "Set the field `scheduled_snapshots_config`.\n"]
     pub fn set_scheduled_snapshots_config(
         mut self,
@@ -1328,7 +1642,7 @@ impl DataComposerEnvironmentConfigElRecoveryConfigEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::ListField<DataComposerEnvironmentConfigElRecoveryConfigElScheduledSnapshotsConfigEl>,
+                        terrars::ListField<DataComposerEnvironment_Config_RecoveryConfig_ScheduledSnapshotsConfig>,
                     >,
     ) -> Self {
         self.scheduled_snapshots_config = std::option::Option::Some(v.into());
@@ -1336,8 +1650,8 @@ impl DataComposerEnvironmentConfigElRecoveryConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataComposerEnvironmentConfigElRecoveryConfigEl {
-    type O = terrars::BlockAssignable<DataComposerEnvironmentConfigElRecoveryConfigEl>;
+impl terrars::ToListMappable for DataComposerEnvironment_Config_RecoveryConfig {
+    type O = terrars::BlockAssignable<DataComposerEnvironment_Config_RecoveryConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1348,34 +1662,36 @@ impl terrars::ToListMappable for DataComposerEnvironmentConfigElRecoveryConfigEl
     }
 }
 
-pub struct BuildDataComposerEnvironmentConfigElRecoveryConfigEl {}
+pub struct BuildDataComposerEnvironment_Config_RecoveryConfig {}
 
-impl BuildDataComposerEnvironmentConfigElRecoveryConfigEl {
-    pub fn build(self) -> DataComposerEnvironmentConfigElRecoveryConfigEl {
-        DataComposerEnvironmentConfigElRecoveryConfigEl {
+impl BuildDataComposerEnvironment_Config_RecoveryConfig {
+    pub fn build(self) -> DataComposerEnvironment_Config_RecoveryConfig {
+        DataComposerEnvironment_Config_RecoveryConfig {
             scheduled_snapshots_config: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataComposerEnvironmentConfigElRecoveryConfigElRef {
+#[allow(dead_code)]
+pub struct DataComposerEnvironment_Config_RecoveryConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComposerEnvironmentConfigElRecoveryConfigElRef {
+impl terrars::Ref for DataComposerEnvironment_Config_RecoveryConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComposerEnvironmentConfigElRecoveryConfigElRef {
-        DataComposerEnvironmentConfigElRecoveryConfigElRef {
+    ) -> DataComposerEnvironment_Config_RecoveryConfigRef {
+        DataComposerEnvironment_Config_RecoveryConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComposerEnvironmentConfigElRecoveryConfigElRef {
+impl DataComposerEnvironment_Config_RecoveryConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1383,15 +1699,85 @@ impl DataComposerEnvironmentConfigElRecoveryConfigElRef {
     #[doc = "Get a reference to the value of field `scheduled_snapshots_config` after provisioning.\n"]
     pub fn scheduled_snapshots_config(
         &self,
-    ) -> terrars::ListRef<DataComposerEnvironmentConfigElRecoveryConfigElScheduledSnapshotsConfigElRef> {
+    ) -> terrars::ListRef<DataComposerEnvironment_Config_RecoveryConfig_ScheduledSnapshotsConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.scheduled_snapshots_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataComposerEnvironmentConfigElSoftwareConfigEl {
+pub struct DataComposerEnvironment_Config_SoftwareConfig_CloudDataLineageIntegration {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enabled: std::option::Option<terrars::PrimField<bool>>,
+}
+
+impl DataComposerEnvironment_Config_SoftwareConfig_CloudDataLineageIntegration {
+    #[doc = "Set the field `enabled`.\n"]
+    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enabled = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataComposerEnvironment_Config_SoftwareConfig_CloudDataLineageIntegration {
+    type O = terrars::BlockAssignable<DataComposerEnvironment_Config_SoftwareConfig_CloudDataLineageIntegration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataComposerEnvironment_Config_SoftwareConfig_CloudDataLineageIntegration {}
+
+impl BuildDataComposerEnvironment_Config_SoftwareConfig_CloudDataLineageIntegration {
+    pub fn build(self) -> DataComposerEnvironment_Config_SoftwareConfig_CloudDataLineageIntegration {
+        DataComposerEnvironment_Config_SoftwareConfig_CloudDataLineageIntegration {
+            enabled: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataComposerEnvironment_Config_SoftwareConfig_CloudDataLineageIntegrationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataComposerEnvironment_Config_SoftwareConfig_CloudDataLineageIntegrationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataComposerEnvironment_Config_SoftwareConfig_CloudDataLineageIntegrationRef {
+        DataComposerEnvironment_Config_SoftwareConfig_CloudDataLineageIntegrationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataComposerEnvironment_Config_SoftwareConfig_CloudDataLineageIntegrationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataComposerEnvironment_Config_SoftwareConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     airflow_config_overrides: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cloud_data_lineage_integration: std
+    ::option
+    ::Option<terrars::ListField<DataComposerEnvironment_Config_SoftwareConfig_CloudDataLineageIntegration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     env_variables: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1402,15 +1788,33 @@ pub struct DataComposerEnvironmentConfigElSoftwareConfigEl {
     python_version: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     scheduler_count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    web_server_plugins_mode: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataComposerEnvironmentConfigElSoftwareConfigEl {
+impl DataComposerEnvironment_Config_SoftwareConfig {
     #[doc = "Set the field `airflow_config_overrides`.\n"]
     pub fn set_airflow_config_overrides(
         mut self,
         v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
     ) -> Self {
         self.airflow_config_overrides = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `cloud_data_lineage_integration`.\n"]
+    pub fn set_cloud_data_lineage_integration(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::ListField<DataComposerEnvironment_Config_SoftwareConfig_CloudDataLineageIntegration>,
+                    >,
+    ) -> Self {
+        self.cloud_data_lineage_integration = std::option::Option::Some(v.into());
         self
     }
 
@@ -1449,10 +1853,19 @@ impl DataComposerEnvironmentConfigElSoftwareConfigEl {
         self.scheduler_count = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `web_server_plugins_mode`.\n"]
+    pub fn set_web_server_plugins_mode(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.web_server_plugins_mode = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for DataComposerEnvironmentConfigElSoftwareConfigEl {
-    type O = terrars::BlockAssignable<DataComposerEnvironmentConfigElSoftwareConfigEl>;
+impl terrars::ToListMappable for DataComposerEnvironment_Config_SoftwareConfig {
+    type O = terrars::BlockAssignable<DataComposerEnvironment_Config_SoftwareConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1463,39 +1876,43 @@ impl terrars::ToListMappable for DataComposerEnvironmentConfigElSoftwareConfigEl
     }
 }
 
-pub struct BuildDataComposerEnvironmentConfigElSoftwareConfigEl {}
+pub struct BuildDataComposerEnvironment_Config_SoftwareConfig {}
 
-impl BuildDataComposerEnvironmentConfigElSoftwareConfigEl {
-    pub fn build(self) -> DataComposerEnvironmentConfigElSoftwareConfigEl {
-        DataComposerEnvironmentConfigElSoftwareConfigEl {
+impl BuildDataComposerEnvironment_Config_SoftwareConfig {
+    pub fn build(self) -> DataComposerEnvironment_Config_SoftwareConfig {
+        DataComposerEnvironment_Config_SoftwareConfig {
             airflow_config_overrides: core::default::Default::default(),
+            cloud_data_lineage_integration: core::default::Default::default(),
             env_variables: core::default::Default::default(),
             image_version: core::default::Default::default(),
             pypi_packages: core::default::Default::default(),
             python_version: core::default::Default::default(),
             scheduler_count: core::default::Default::default(),
+            web_server_plugins_mode: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataComposerEnvironmentConfigElSoftwareConfigElRef {
+#[allow(dead_code)]
+pub struct DataComposerEnvironment_Config_SoftwareConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComposerEnvironmentConfigElSoftwareConfigElRef {
+impl terrars::Ref for DataComposerEnvironment_Config_SoftwareConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComposerEnvironmentConfigElSoftwareConfigElRef {
-        DataComposerEnvironmentConfigElSoftwareConfigElRef {
+    ) -> DataComposerEnvironment_Config_SoftwareConfigRef {
+        DataComposerEnvironment_Config_SoftwareConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComposerEnvironmentConfigElSoftwareConfigElRef {
+impl DataComposerEnvironment_Config_SoftwareConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1503,6 +1920,13 @@ impl DataComposerEnvironmentConfigElSoftwareConfigElRef {
     #[doc = "Get a reference to the value of field `airflow_config_overrides` after provisioning.\n"]
     pub fn airflow_config_overrides(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.airflow_config_overrides", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `cloud_data_lineage_integration` after provisioning.\n"]
+    pub fn cloud_data_lineage_integration(
+        &self,
+    ) -> terrars::ListRef<DataComposerEnvironment_Config_SoftwareConfig_CloudDataLineageIntegrationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cloud_data_lineage_integration", self.base))
     }
 
     #[doc = "Get a reference to the value of field `env_variables` after provisioning.\n"]
@@ -1529,15 +1953,20 @@ impl DataComposerEnvironmentConfigElSoftwareConfigElRef {
     pub fn scheduler_count(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.scheduler_count", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `web_server_plugins_mode` after provisioning.\n"]
+    pub fn web_server_plugins_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.web_server_plugins_mode", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct DataComposerEnvironmentConfigElWebServerConfigEl {
+pub struct DataComposerEnvironment_Config_WebServerConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     machine_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataComposerEnvironmentConfigElWebServerConfigEl {
+impl DataComposerEnvironment_Config_WebServerConfig {
     #[doc = "Set the field `machine_type`.\n"]
     pub fn set_machine_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.machine_type = std::option::Option::Some(v.into());
@@ -1545,8 +1974,8 @@ impl DataComposerEnvironmentConfigElWebServerConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataComposerEnvironmentConfigElWebServerConfigEl {
-    type O = terrars::BlockAssignable<DataComposerEnvironmentConfigElWebServerConfigEl>;
+impl terrars::ToListMappable for DataComposerEnvironment_Config_WebServerConfig {
+    type O = terrars::BlockAssignable<DataComposerEnvironment_Config_WebServerConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1557,32 +1986,34 @@ impl terrars::ToListMappable for DataComposerEnvironmentConfigElWebServerConfigE
     }
 }
 
-pub struct BuildDataComposerEnvironmentConfigElWebServerConfigEl {}
+pub struct BuildDataComposerEnvironment_Config_WebServerConfig {}
 
-impl BuildDataComposerEnvironmentConfigElWebServerConfigEl {
-    pub fn build(self) -> DataComposerEnvironmentConfigElWebServerConfigEl {
-        DataComposerEnvironmentConfigElWebServerConfigEl { machine_type: core::default::Default::default() }
+impl BuildDataComposerEnvironment_Config_WebServerConfig {
+    pub fn build(self) -> DataComposerEnvironment_Config_WebServerConfig {
+        DataComposerEnvironment_Config_WebServerConfig { machine_type: core::default::Default::default() }
     }
 }
 
-pub struct DataComposerEnvironmentConfigElWebServerConfigElRef {
+#[allow(dead_code)]
+pub struct DataComposerEnvironment_Config_WebServerConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComposerEnvironmentConfigElWebServerConfigElRef {
+impl terrars::Ref for DataComposerEnvironment_Config_WebServerConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComposerEnvironmentConfigElWebServerConfigElRef {
-        DataComposerEnvironmentConfigElWebServerConfigElRef {
+    ) -> DataComposerEnvironment_Config_WebServerConfigRef {
+        DataComposerEnvironment_Config_WebServerConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComposerEnvironmentConfigElWebServerConfigElRef {
+impl DataComposerEnvironment_Config_WebServerConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1594,14 +2025,14 @@ impl DataComposerEnvironmentConfigElWebServerConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComposerEnvironmentConfigElWebServerNetworkAccessControlElAllowedIpRangeEl {
+pub struct DataComposerEnvironment_Config_WebServerNetworkAccessControl_AllowedIpRange {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataComposerEnvironmentConfigElWebServerNetworkAccessControlElAllowedIpRangeEl {
+impl DataComposerEnvironment_Config_WebServerNetworkAccessControl_AllowedIpRange {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -1615,9 +2046,8 @@ impl DataComposerEnvironmentConfigElWebServerNetworkAccessControlElAllowedIpRang
     }
 }
 
-impl terrars::ToListMappable for DataComposerEnvironmentConfigElWebServerNetworkAccessControlElAllowedIpRangeEl {
-    type O =
-        terrars::BlockAssignable<DataComposerEnvironmentConfigElWebServerNetworkAccessControlElAllowedIpRangeEl>;
+impl terrars::ToListMappable for DataComposerEnvironment_Config_WebServerNetworkAccessControl_AllowedIpRange {
+    type O = terrars::BlockAssignable<DataComposerEnvironment_Config_WebServerNetworkAccessControl_AllowedIpRange>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1628,35 +2058,37 @@ impl terrars::ToListMappable for DataComposerEnvironmentConfigElWebServerNetwork
     }
 }
 
-pub struct BuildDataComposerEnvironmentConfigElWebServerNetworkAccessControlElAllowedIpRangeEl {}
+pub struct BuildDataComposerEnvironment_Config_WebServerNetworkAccessControl_AllowedIpRange {}
 
-impl BuildDataComposerEnvironmentConfigElWebServerNetworkAccessControlElAllowedIpRangeEl {
-    pub fn build(self) -> DataComposerEnvironmentConfigElWebServerNetworkAccessControlElAllowedIpRangeEl {
-        DataComposerEnvironmentConfigElWebServerNetworkAccessControlElAllowedIpRangeEl {
+impl BuildDataComposerEnvironment_Config_WebServerNetworkAccessControl_AllowedIpRange {
+    pub fn build(self) -> DataComposerEnvironment_Config_WebServerNetworkAccessControl_AllowedIpRange {
+        DataComposerEnvironment_Config_WebServerNetworkAccessControl_AllowedIpRange {
             description: core::default::Default::default(),
             value: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataComposerEnvironmentConfigElWebServerNetworkAccessControlElAllowedIpRangeElRef {
+#[allow(dead_code)]
+pub struct DataComposerEnvironment_Config_WebServerNetworkAccessControl_AllowedIpRangeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComposerEnvironmentConfigElWebServerNetworkAccessControlElAllowedIpRangeElRef {
+impl terrars::Ref for DataComposerEnvironment_Config_WebServerNetworkAccessControl_AllowedIpRangeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComposerEnvironmentConfigElWebServerNetworkAccessControlElAllowedIpRangeElRef {
-        DataComposerEnvironmentConfigElWebServerNetworkAccessControlElAllowedIpRangeElRef {
+    ) -> DataComposerEnvironment_Config_WebServerNetworkAccessControl_AllowedIpRangeRef {
+        DataComposerEnvironment_Config_WebServerNetworkAccessControl_AllowedIpRangeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComposerEnvironmentConfigElWebServerNetworkAccessControlElAllowedIpRangeElRef {
+impl DataComposerEnvironment_Config_WebServerNetworkAccessControl_AllowedIpRangeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1673,14 +2105,14 @@ impl DataComposerEnvironmentConfigElWebServerNetworkAccessControlElAllowedIpRang
 }
 
 #[derive(Serialize)]
-pub struct DataComposerEnvironmentConfigElWebServerNetworkAccessControlEl {
+pub struct DataComposerEnvironment_Config_WebServerNetworkAccessControl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allowed_ip_range: std
     ::option
-    ::Option<terrars::SetField<DataComposerEnvironmentConfigElWebServerNetworkAccessControlElAllowedIpRangeEl>>,
+    ::Option<terrars::SetField<DataComposerEnvironment_Config_WebServerNetworkAccessControl_AllowedIpRange>>,
 }
 
-impl DataComposerEnvironmentConfigElWebServerNetworkAccessControlEl {
+impl DataComposerEnvironment_Config_WebServerNetworkAccessControl {
     #[doc = "Set the field `allowed_ip_range`.\n"]
     pub fn set_allowed_ip_range(
         mut self,
@@ -1690,8 +2122,7 @@ impl DataComposerEnvironmentConfigElWebServerNetworkAccessControlEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::SetField<DataComposerEnvironmentConfigElWebServerNetworkAccessControlElAllowedIpRangeEl>,
+                        terrars::SetField<DataComposerEnvironment_Config_WebServerNetworkAccessControl_AllowedIpRange>,
                     >,
     ) -> Self {
         self.allowed_ip_range = std::option::Option::Some(v.into());
@@ -1699,8 +2130,8 @@ impl DataComposerEnvironmentConfigElWebServerNetworkAccessControlEl {
     }
 }
 
-impl terrars::ToListMappable for DataComposerEnvironmentConfigElWebServerNetworkAccessControlEl {
-    type O = terrars::BlockAssignable<DataComposerEnvironmentConfigElWebServerNetworkAccessControlEl>;
+impl terrars::ToListMappable for DataComposerEnvironment_Config_WebServerNetworkAccessControl {
+    type O = terrars::BlockAssignable<DataComposerEnvironment_Config_WebServerNetworkAccessControl>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1711,34 +2142,36 @@ impl terrars::ToListMappable for DataComposerEnvironmentConfigElWebServerNetwork
     }
 }
 
-pub struct BuildDataComposerEnvironmentConfigElWebServerNetworkAccessControlEl {}
+pub struct BuildDataComposerEnvironment_Config_WebServerNetworkAccessControl {}
 
-impl BuildDataComposerEnvironmentConfigElWebServerNetworkAccessControlEl {
-    pub fn build(self) -> DataComposerEnvironmentConfigElWebServerNetworkAccessControlEl {
-        DataComposerEnvironmentConfigElWebServerNetworkAccessControlEl {
+impl BuildDataComposerEnvironment_Config_WebServerNetworkAccessControl {
+    pub fn build(self) -> DataComposerEnvironment_Config_WebServerNetworkAccessControl {
+        DataComposerEnvironment_Config_WebServerNetworkAccessControl {
             allowed_ip_range: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataComposerEnvironmentConfigElWebServerNetworkAccessControlElRef {
+#[allow(dead_code)]
+pub struct DataComposerEnvironment_Config_WebServerNetworkAccessControlRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComposerEnvironmentConfigElWebServerNetworkAccessControlElRef {
+impl terrars::Ref for DataComposerEnvironment_Config_WebServerNetworkAccessControlRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComposerEnvironmentConfigElWebServerNetworkAccessControlElRef {
-        DataComposerEnvironmentConfigElWebServerNetworkAccessControlElRef {
+    ) -> DataComposerEnvironment_Config_WebServerNetworkAccessControlRef {
+        DataComposerEnvironment_Config_WebServerNetworkAccessControlRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComposerEnvironmentConfigElWebServerNetworkAccessControlElRef {
+impl DataComposerEnvironment_Config_WebServerNetworkAccessControlRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1746,13 +2179,13 @@ impl DataComposerEnvironmentConfigElWebServerNetworkAccessControlElRef {
     #[doc = "Get a reference to the value of field `allowed_ip_range` after provisioning.\n"]
     pub fn allowed_ip_range(
         &self,
-    ) -> terrars::SetRef<DataComposerEnvironmentConfigElWebServerNetworkAccessControlElAllowedIpRangeElRef> {
+    ) -> terrars::SetRef<DataComposerEnvironment_Config_WebServerNetworkAccessControl_AllowedIpRangeRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.allowed_ip_range", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataComposerEnvironmentConfigElWorkloadsConfigElSchedulerEl {
+pub struct DataComposerEnvironment_Config_WorkloadsConfig_DagProcessor {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     count: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1763,7 +2196,7 @@ pub struct DataComposerEnvironmentConfigElWorkloadsConfigElSchedulerEl {
     storage_gb: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataComposerEnvironmentConfigElWorkloadsConfigElSchedulerEl {
+impl DataComposerEnvironment_Config_WorkloadsConfig_DagProcessor {
     #[doc = "Set the field `count`.\n"]
     pub fn set_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.count = std::option::Option::Some(v.into());
@@ -1789,8 +2222,8 @@ impl DataComposerEnvironmentConfigElWorkloadsConfigElSchedulerEl {
     }
 }
 
-impl terrars::ToListMappable for DataComposerEnvironmentConfigElWorkloadsConfigElSchedulerEl {
-    type O = terrars::BlockAssignable<DataComposerEnvironmentConfigElWorkloadsConfigElSchedulerEl>;
+impl terrars::ToListMappable for DataComposerEnvironment_Config_WorkloadsConfig_DagProcessor {
+    type O = terrars::BlockAssignable<DataComposerEnvironment_Config_WorkloadsConfig_DagProcessor>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1801,11 +2234,11 @@ impl terrars::ToListMappable for DataComposerEnvironmentConfigElWorkloadsConfigE
     }
 }
 
-pub struct BuildDataComposerEnvironmentConfigElWorkloadsConfigElSchedulerEl {}
+pub struct BuildDataComposerEnvironment_Config_WorkloadsConfig_DagProcessor {}
 
-impl BuildDataComposerEnvironmentConfigElWorkloadsConfigElSchedulerEl {
-    pub fn build(self) -> DataComposerEnvironmentConfigElWorkloadsConfigElSchedulerEl {
-        DataComposerEnvironmentConfigElWorkloadsConfigElSchedulerEl {
+impl BuildDataComposerEnvironment_Config_WorkloadsConfig_DagProcessor {
+    pub fn build(self) -> DataComposerEnvironment_Config_WorkloadsConfig_DagProcessor {
+        DataComposerEnvironment_Config_WorkloadsConfig_DagProcessor {
             count: core::default::Default::default(),
             cpu: core::default::Default::default(),
             memory_gb: core::default::Default::default(),
@@ -1814,24 +2247,26 @@ impl BuildDataComposerEnvironmentConfigElWorkloadsConfigElSchedulerEl {
     }
 }
 
-pub struct DataComposerEnvironmentConfigElWorkloadsConfigElSchedulerElRef {
+#[allow(dead_code)]
+pub struct DataComposerEnvironment_Config_WorkloadsConfig_DagProcessorRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComposerEnvironmentConfigElWorkloadsConfigElSchedulerElRef {
+impl terrars::Ref for DataComposerEnvironment_Config_WorkloadsConfig_DagProcessorRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComposerEnvironmentConfigElWorkloadsConfigElSchedulerElRef {
-        DataComposerEnvironmentConfigElWorkloadsConfigElSchedulerElRef {
+    ) -> DataComposerEnvironment_Config_WorkloadsConfig_DagProcessorRef {
+        DataComposerEnvironment_Config_WorkloadsConfig_DagProcessorRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComposerEnvironmentConfigElWorkloadsConfigElSchedulerElRef {
+impl DataComposerEnvironment_Config_WorkloadsConfig_DagProcessorRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1858,7 +2293,115 @@ impl DataComposerEnvironmentConfigElWorkloadsConfigElSchedulerElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComposerEnvironmentConfigElWorkloadsConfigElTriggererEl {
+pub struct DataComposerEnvironment_Config_WorkloadsConfig_Scheduler {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cpu: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    memory_gb: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    storage_gb: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl DataComposerEnvironment_Config_WorkloadsConfig_Scheduler {
+    #[doc = "Set the field `count`.\n"]
+    pub fn set_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.count = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `cpu`.\n"]
+    pub fn set_cpu(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.cpu = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `memory_gb`.\n"]
+    pub fn set_memory_gb(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.memory_gb = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `storage_gb`.\n"]
+    pub fn set_storage_gb(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.storage_gb = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataComposerEnvironment_Config_WorkloadsConfig_Scheduler {
+    type O = terrars::BlockAssignable<DataComposerEnvironment_Config_WorkloadsConfig_Scheduler>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataComposerEnvironment_Config_WorkloadsConfig_Scheduler {}
+
+impl BuildDataComposerEnvironment_Config_WorkloadsConfig_Scheduler {
+    pub fn build(self) -> DataComposerEnvironment_Config_WorkloadsConfig_Scheduler {
+        DataComposerEnvironment_Config_WorkloadsConfig_Scheduler {
+            count: core::default::Default::default(),
+            cpu: core::default::Default::default(),
+            memory_gb: core::default::Default::default(),
+            storage_gb: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataComposerEnvironment_Config_WorkloadsConfig_SchedulerRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataComposerEnvironment_Config_WorkloadsConfig_SchedulerRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataComposerEnvironment_Config_WorkloadsConfig_SchedulerRef {
+        DataComposerEnvironment_Config_WorkloadsConfig_SchedulerRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataComposerEnvironment_Config_WorkloadsConfig_SchedulerRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `count` after provisioning.\n"]
+    pub fn count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.count", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `cpu` after provisioning.\n"]
+    pub fn cpu(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cpu", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `memory_gb` after provisioning.\n"]
+    pub fn memory_gb(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.memory_gb", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `storage_gb` after provisioning.\n"]
+    pub fn storage_gb(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.storage_gb", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataComposerEnvironment_Config_WorkloadsConfig_Triggerer {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     count: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1867,7 +2410,7 @@ pub struct DataComposerEnvironmentConfigElWorkloadsConfigElTriggererEl {
     memory_gb: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataComposerEnvironmentConfigElWorkloadsConfigElTriggererEl {
+impl DataComposerEnvironment_Config_WorkloadsConfig_Triggerer {
     #[doc = "Set the field `count`.\n"]
     pub fn set_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.count = std::option::Option::Some(v.into());
@@ -1887,8 +2430,8 @@ impl DataComposerEnvironmentConfigElWorkloadsConfigElTriggererEl {
     }
 }
 
-impl terrars::ToListMappable for DataComposerEnvironmentConfigElWorkloadsConfigElTriggererEl {
-    type O = terrars::BlockAssignable<DataComposerEnvironmentConfigElWorkloadsConfigElTriggererEl>;
+impl terrars::ToListMappable for DataComposerEnvironment_Config_WorkloadsConfig_Triggerer {
+    type O = terrars::BlockAssignable<DataComposerEnvironment_Config_WorkloadsConfig_Triggerer>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1899,11 +2442,11 @@ impl terrars::ToListMappable for DataComposerEnvironmentConfigElWorkloadsConfigE
     }
 }
 
-pub struct BuildDataComposerEnvironmentConfigElWorkloadsConfigElTriggererEl {}
+pub struct BuildDataComposerEnvironment_Config_WorkloadsConfig_Triggerer {}
 
-impl BuildDataComposerEnvironmentConfigElWorkloadsConfigElTriggererEl {
-    pub fn build(self) -> DataComposerEnvironmentConfigElWorkloadsConfigElTriggererEl {
-        DataComposerEnvironmentConfigElWorkloadsConfigElTriggererEl {
+impl BuildDataComposerEnvironment_Config_WorkloadsConfig_Triggerer {
+    pub fn build(self) -> DataComposerEnvironment_Config_WorkloadsConfig_Triggerer {
+        DataComposerEnvironment_Config_WorkloadsConfig_Triggerer {
             count: core::default::Default::default(),
             cpu: core::default::Default::default(),
             memory_gb: core::default::Default::default(),
@@ -1911,24 +2454,26 @@ impl BuildDataComposerEnvironmentConfigElWorkloadsConfigElTriggererEl {
     }
 }
 
-pub struct DataComposerEnvironmentConfigElWorkloadsConfigElTriggererElRef {
+#[allow(dead_code)]
+pub struct DataComposerEnvironment_Config_WorkloadsConfig_TriggererRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComposerEnvironmentConfigElWorkloadsConfigElTriggererElRef {
+impl terrars::Ref for DataComposerEnvironment_Config_WorkloadsConfig_TriggererRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComposerEnvironmentConfigElWorkloadsConfigElTriggererElRef {
-        DataComposerEnvironmentConfigElWorkloadsConfigElTriggererElRef {
+    ) -> DataComposerEnvironment_Config_WorkloadsConfig_TriggererRef {
+        DataComposerEnvironment_Config_WorkloadsConfig_TriggererRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComposerEnvironmentConfigElWorkloadsConfigElTriggererElRef {
+impl DataComposerEnvironment_Config_WorkloadsConfig_TriggererRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1950,7 +2495,7 @@ impl DataComposerEnvironmentConfigElWorkloadsConfigElTriggererElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComposerEnvironmentConfigElWorkloadsConfigElWebServerEl {
+pub struct DataComposerEnvironment_Config_WorkloadsConfig_WebServer {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cpu: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1959,7 +2504,7 @@ pub struct DataComposerEnvironmentConfigElWorkloadsConfigElWebServerEl {
     storage_gb: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataComposerEnvironmentConfigElWorkloadsConfigElWebServerEl {
+impl DataComposerEnvironment_Config_WorkloadsConfig_WebServer {
     #[doc = "Set the field `cpu`.\n"]
     pub fn set_cpu(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.cpu = std::option::Option::Some(v.into());
@@ -1979,8 +2524,8 @@ impl DataComposerEnvironmentConfigElWorkloadsConfigElWebServerEl {
     }
 }
 
-impl terrars::ToListMappable for DataComposerEnvironmentConfigElWorkloadsConfigElWebServerEl {
-    type O = terrars::BlockAssignable<DataComposerEnvironmentConfigElWorkloadsConfigElWebServerEl>;
+impl terrars::ToListMappable for DataComposerEnvironment_Config_WorkloadsConfig_WebServer {
+    type O = terrars::BlockAssignable<DataComposerEnvironment_Config_WorkloadsConfig_WebServer>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1991,11 +2536,11 @@ impl terrars::ToListMappable for DataComposerEnvironmentConfigElWorkloadsConfigE
     }
 }
 
-pub struct BuildDataComposerEnvironmentConfigElWorkloadsConfigElWebServerEl {}
+pub struct BuildDataComposerEnvironment_Config_WorkloadsConfig_WebServer {}
 
-impl BuildDataComposerEnvironmentConfigElWorkloadsConfigElWebServerEl {
-    pub fn build(self) -> DataComposerEnvironmentConfigElWorkloadsConfigElWebServerEl {
-        DataComposerEnvironmentConfigElWorkloadsConfigElWebServerEl {
+impl BuildDataComposerEnvironment_Config_WorkloadsConfig_WebServer {
+    pub fn build(self) -> DataComposerEnvironment_Config_WorkloadsConfig_WebServer {
+        DataComposerEnvironment_Config_WorkloadsConfig_WebServer {
             cpu: core::default::Default::default(),
             memory_gb: core::default::Default::default(),
             storage_gb: core::default::Default::default(),
@@ -2003,24 +2548,26 @@ impl BuildDataComposerEnvironmentConfigElWorkloadsConfigElWebServerEl {
     }
 }
 
-pub struct DataComposerEnvironmentConfigElWorkloadsConfigElWebServerElRef {
+#[allow(dead_code)]
+pub struct DataComposerEnvironment_Config_WorkloadsConfig_WebServerRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComposerEnvironmentConfigElWorkloadsConfigElWebServerElRef {
+impl terrars::Ref for DataComposerEnvironment_Config_WorkloadsConfig_WebServerRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComposerEnvironmentConfigElWorkloadsConfigElWebServerElRef {
-        DataComposerEnvironmentConfigElWorkloadsConfigElWebServerElRef {
+    ) -> DataComposerEnvironment_Config_WorkloadsConfig_WebServerRef {
+        DataComposerEnvironment_Config_WorkloadsConfig_WebServerRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComposerEnvironmentConfigElWorkloadsConfigElWebServerElRef {
+impl DataComposerEnvironment_Config_WorkloadsConfig_WebServerRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2042,7 +2589,7 @@ impl DataComposerEnvironmentConfigElWorkloadsConfigElWebServerElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComposerEnvironmentConfigElWorkloadsConfigElWorkerEl {
+pub struct DataComposerEnvironment_Config_WorkloadsConfig_Worker {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cpu: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2055,7 +2602,7 @@ pub struct DataComposerEnvironmentConfigElWorkloadsConfigElWorkerEl {
     storage_gb: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataComposerEnvironmentConfigElWorkloadsConfigElWorkerEl {
+impl DataComposerEnvironment_Config_WorkloadsConfig_Worker {
     #[doc = "Set the field `cpu`.\n"]
     pub fn set_cpu(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.cpu = std::option::Option::Some(v.into());
@@ -2087,8 +2634,8 @@ impl DataComposerEnvironmentConfigElWorkloadsConfigElWorkerEl {
     }
 }
 
-impl terrars::ToListMappable for DataComposerEnvironmentConfigElWorkloadsConfigElWorkerEl {
-    type O = terrars::BlockAssignable<DataComposerEnvironmentConfigElWorkloadsConfigElWorkerEl>;
+impl terrars::ToListMappable for DataComposerEnvironment_Config_WorkloadsConfig_Worker {
+    type O = terrars::BlockAssignable<DataComposerEnvironment_Config_WorkloadsConfig_Worker>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2099,11 +2646,11 @@ impl terrars::ToListMappable for DataComposerEnvironmentConfigElWorkloadsConfigE
     }
 }
 
-pub struct BuildDataComposerEnvironmentConfigElWorkloadsConfigElWorkerEl {}
+pub struct BuildDataComposerEnvironment_Config_WorkloadsConfig_Worker {}
 
-impl BuildDataComposerEnvironmentConfigElWorkloadsConfigElWorkerEl {
-    pub fn build(self) -> DataComposerEnvironmentConfigElWorkloadsConfigElWorkerEl {
-        DataComposerEnvironmentConfigElWorkloadsConfigElWorkerEl {
+impl BuildDataComposerEnvironment_Config_WorkloadsConfig_Worker {
+    pub fn build(self) -> DataComposerEnvironment_Config_WorkloadsConfig_Worker {
+        DataComposerEnvironment_Config_WorkloadsConfig_Worker {
             cpu: core::default::Default::default(),
             max_count: core::default::Default::default(),
             memory_gb: core::default::Default::default(),
@@ -2113,24 +2660,26 @@ impl BuildDataComposerEnvironmentConfigElWorkloadsConfigElWorkerEl {
     }
 }
 
-pub struct DataComposerEnvironmentConfigElWorkloadsConfigElWorkerElRef {
+#[allow(dead_code)]
+pub struct DataComposerEnvironment_Config_WorkloadsConfig_WorkerRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComposerEnvironmentConfigElWorkloadsConfigElWorkerElRef {
+impl terrars::Ref for DataComposerEnvironment_Config_WorkloadsConfig_WorkerRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComposerEnvironmentConfigElWorkloadsConfigElWorkerElRef {
-        DataComposerEnvironmentConfigElWorkloadsConfigElWorkerElRef {
+    ) -> DataComposerEnvironment_Config_WorkloadsConfig_WorkerRef {
+        DataComposerEnvironment_Config_WorkloadsConfig_WorkerRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComposerEnvironmentConfigElWorkloadsConfigElWorkerElRef {
+impl DataComposerEnvironment_Config_WorkloadsConfig_WorkerRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2162,22 +2711,33 @@ impl DataComposerEnvironmentConfigElWorkloadsConfigElWorkerElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComposerEnvironmentConfigElWorkloadsConfigEl {
+pub struct DataComposerEnvironment_Config_WorkloadsConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    scheduler: std::option::Option<terrars::ListField<DataComposerEnvironmentConfigElWorkloadsConfigElSchedulerEl>>,
+    dag_processor: std::option::Option<terrars::ListField<DataComposerEnvironment_Config_WorkloadsConfig_DagProcessor>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    triggerer: std::option::Option<terrars::ListField<DataComposerEnvironmentConfigElWorkloadsConfigElTriggererEl>>,
+    scheduler: std::option::Option<terrars::ListField<DataComposerEnvironment_Config_WorkloadsConfig_Scheduler>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    web_server: std::option::Option<terrars::ListField<DataComposerEnvironmentConfigElWorkloadsConfigElWebServerEl>>,
+    triggerer: std::option::Option<terrars::ListField<DataComposerEnvironment_Config_WorkloadsConfig_Triggerer>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    worker: std::option::Option<terrars::ListField<DataComposerEnvironmentConfigElWorkloadsConfigElWorkerEl>>,
+    web_server: std::option::Option<terrars::ListField<DataComposerEnvironment_Config_WorkloadsConfig_WebServer>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    worker: std::option::Option<terrars::ListField<DataComposerEnvironment_Config_WorkloadsConfig_Worker>>,
 }
 
-impl DataComposerEnvironmentConfigElWorkloadsConfigEl {
+impl DataComposerEnvironment_Config_WorkloadsConfig {
+    #[doc = "Set the field `dag_processor`.\n"]
+    pub fn set_dag_processor(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataComposerEnvironment_Config_WorkloadsConfig_DagProcessor>>,
+    ) -> Self {
+        self.dag_processor = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `scheduler`.\n"]
     pub fn set_scheduler(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataComposerEnvironmentConfigElWorkloadsConfigElSchedulerEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataComposerEnvironment_Config_WorkloadsConfig_Scheduler>>,
     ) -> Self {
         self.scheduler = std::option::Option::Some(v.into());
         self
@@ -2186,7 +2746,7 @@ impl DataComposerEnvironmentConfigElWorkloadsConfigEl {
     #[doc = "Set the field `triggerer`.\n"]
     pub fn set_triggerer(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataComposerEnvironmentConfigElWorkloadsConfigElTriggererEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataComposerEnvironment_Config_WorkloadsConfig_Triggerer>>,
     ) -> Self {
         self.triggerer = std::option::Option::Some(v.into());
         self
@@ -2195,7 +2755,7 @@ impl DataComposerEnvironmentConfigElWorkloadsConfigEl {
     #[doc = "Set the field `web_server`.\n"]
     pub fn set_web_server(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataComposerEnvironmentConfigElWorkloadsConfigElWebServerEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataComposerEnvironment_Config_WorkloadsConfig_WebServer>>,
     ) -> Self {
         self.web_server = std::option::Option::Some(v.into());
         self
@@ -2204,15 +2764,15 @@ impl DataComposerEnvironmentConfigElWorkloadsConfigEl {
     #[doc = "Set the field `worker`.\n"]
     pub fn set_worker(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataComposerEnvironmentConfigElWorkloadsConfigElWorkerEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataComposerEnvironment_Config_WorkloadsConfig_Worker>>,
     ) -> Self {
         self.worker = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataComposerEnvironmentConfigElWorkloadsConfigEl {
-    type O = terrars::BlockAssignable<DataComposerEnvironmentConfigElWorkloadsConfigEl>;
+impl terrars::ToListMappable for DataComposerEnvironment_Config_WorkloadsConfig {
+    type O = terrars::BlockAssignable<DataComposerEnvironment_Config_WorkloadsConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2223,11 +2783,12 @@ impl terrars::ToListMappable for DataComposerEnvironmentConfigElWorkloadsConfigE
     }
 }
 
-pub struct BuildDataComposerEnvironmentConfigElWorkloadsConfigEl {}
+pub struct BuildDataComposerEnvironment_Config_WorkloadsConfig {}
 
-impl BuildDataComposerEnvironmentConfigElWorkloadsConfigEl {
-    pub fn build(self) -> DataComposerEnvironmentConfigElWorkloadsConfigEl {
-        DataComposerEnvironmentConfigElWorkloadsConfigEl {
+impl BuildDataComposerEnvironment_Config_WorkloadsConfig {
+    pub fn build(self) -> DataComposerEnvironment_Config_WorkloadsConfig {
+        DataComposerEnvironment_Config_WorkloadsConfig {
+            dag_processor: core::default::Default::default(),
             scheduler: core::default::Default::default(),
             triggerer: core::default::Default::default(),
             web_server: core::default::Default::default(),
@@ -2236,94 +2797,107 @@ impl BuildDataComposerEnvironmentConfigElWorkloadsConfigEl {
     }
 }
 
-pub struct DataComposerEnvironmentConfigElWorkloadsConfigElRef {
+#[allow(dead_code)]
+pub struct DataComposerEnvironment_Config_WorkloadsConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComposerEnvironmentConfigElWorkloadsConfigElRef {
+impl terrars::Ref for DataComposerEnvironment_Config_WorkloadsConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComposerEnvironmentConfigElWorkloadsConfigElRef {
-        DataComposerEnvironmentConfigElWorkloadsConfigElRef {
+    ) -> DataComposerEnvironment_Config_WorkloadsConfigRef {
+        DataComposerEnvironment_Config_WorkloadsConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComposerEnvironmentConfigElWorkloadsConfigElRef {
+impl DataComposerEnvironment_Config_WorkloadsConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
+    #[doc = "Get a reference to the value of field `dag_processor` after provisioning.\n"]
+    pub fn dag_processor(&self) -> terrars::ListRef<DataComposerEnvironment_Config_WorkloadsConfig_DagProcessorRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.dag_processor", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `scheduler` after provisioning.\n"]
-    pub fn scheduler(&self) -> terrars::ListRef<DataComposerEnvironmentConfigElWorkloadsConfigElSchedulerElRef> {
+    pub fn scheduler(&self) -> terrars::ListRef<DataComposerEnvironment_Config_WorkloadsConfig_SchedulerRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.scheduler", self.base))
     }
 
     #[doc = "Get a reference to the value of field `triggerer` after provisioning.\n"]
-    pub fn triggerer(&self) -> terrars::ListRef<DataComposerEnvironmentConfigElWorkloadsConfigElTriggererElRef> {
+    pub fn triggerer(&self) -> terrars::ListRef<DataComposerEnvironment_Config_WorkloadsConfig_TriggererRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.triggerer", self.base))
     }
 
     #[doc = "Get a reference to the value of field `web_server` after provisioning.\n"]
-    pub fn web_server(&self) -> terrars::ListRef<DataComposerEnvironmentConfigElWorkloadsConfigElWebServerElRef> {
+    pub fn web_server(&self) -> terrars::ListRef<DataComposerEnvironment_Config_WorkloadsConfig_WebServerRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.web_server", self.base))
     }
 
     #[doc = "Get a reference to the value of field `worker` after provisioning.\n"]
-    pub fn worker(&self) -> terrars::ListRef<DataComposerEnvironmentConfigElWorkloadsConfigElWorkerElRef> {
+    pub fn worker(&self) -> terrars::ListRef<DataComposerEnvironment_Config_WorkloadsConfig_WorkerRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.worker", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataComposerEnvironmentConfigEl {
+pub struct DataComposerEnvironment_Config {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     airflow_uri: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dag_gcs_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    database_config: std::option::Option<terrars::ListField<DataComposerEnvironmentConfigElDatabaseConfigEl>>,
+    data_retention_config: std::option::Option<terrars::ListField<DataComposerEnvironment_Config_DataRetentionConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    encryption_config: std::option::Option<terrars::ListField<DataComposerEnvironmentConfigElEncryptionConfigEl>>,
+    database_config: std::option::Option<terrars::ListField<DataComposerEnvironment_Config_DatabaseConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_private_builds_only: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_private_environment: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    encryption_config: std::option::Option<terrars::ListField<DataComposerEnvironment_Config_EncryptionConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     environment_size: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     gke_cluster: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    maintenance_window: std::option::Option<terrars::ListField<DataComposerEnvironmentConfigElMaintenanceWindowEl>>,
+    maintenance_window: std::option::Option<terrars::ListField<DataComposerEnvironment_Config_MaintenanceWindow>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     master_authorized_networks_config: std
     ::option
-    ::Option<terrars::ListField<DataComposerEnvironmentConfigElMasterAuthorizedNetworksConfigEl>>,
+    ::Option<terrars::ListField<DataComposerEnvironment_Config_MasterAuthorizedNetworksConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    node_config: std::option::Option<terrars::ListField<DataComposerEnvironmentConfigElNodeConfigEl>>,
+    node_config: std::option::Option<terrars::ListField<DataComposerEnvironment_Config_NodeConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     node_count: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     private_environment_config: std
     ::option
-    ::Option<terrars::ListField<DataComposerEnvironmentConfigElPrivateEnvironmentConfigEl>>,
+    ::Option<terrars::ListField<DataComposerEnvironment_Config_PrivateEnvironmentConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    recovery_config: std::option::Option<terrars::ListField<DataComposerEnvironmentConfigElRecoveryConfigEl>>,
+    recovery_config: std::option::Option<terrars::ListField<DataComposerEnvironment_Config_RecoveryConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resilience_mode: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    software_config: std::option::Option<terrars::ListField<DataComposerEnvironmentConfigElSoftwareConfigEl>>,
+    software_config: std::option::Option<terrars::ListField<DataComposerEnvironment_Config_SoftwareConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    web_server_config: std::option::Option<terrars::ListField<DataComposerEnvironmentConfigElWebServerConfigEl>>,
+    web_server_config: std::option::Option<terrars::ListField<DataComposerEnvironment_Config_WebServerConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     web_server_network_access_control: std
     ::option
-    ::Option<terrars::ListField<DataComposerEnvironmentConfigElWebServerNetworkAccessControlEl>>,
+    ::Option<terrars::ListField<DataComposerEnvironment_Config_WebServerNetworkAccessControl>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    workloads_config: std::option::Option<terrars::ListField<DataComposerEnvironmentConfigElWorkloadsConfigEl>>,
+    workloads_config: std::option::Option<terrars::ListField<DataComposerEnvironment_Config_WorkloadsConfig>>,
 }
 
-impl DataComposerEnvironmentConfigEl {
+impl DataComposerEnvironment_Config {
     #[doc = "Set the field `airflow_uri`.\n"]
     pub fn set_airflow_uri(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.airflow_uri = std::option::Option::Some(v.into());
@@ -2336,19 +2910,40 @@ impl DataComposerEnvironmentConfigEl {
         self
     }
 
+    #[doc = "Set the field `data_retention_config`.\n"]
+    pub fn set_data_retention_config(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataComposerEnvironment_Config_DataRetentionConfig>>,
+    ) -> Self {
+        self.data_retention_config = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `database_config`.\n"]
     pub fn set_database_config(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataComposerEnvironmentConfigElDatabaseConfigEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataComposerEnvironment_Config_DatabaseConfig>>,
     ) -> Self {
         self.database_config = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `enable_private_builds_only`.\n"]
+    pub fn set_enable_private_builds_only(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enable_private_builds_only = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `enable_private_environment`.\n"]
+    pub fn set_enable_private_environment(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enable_private_environment = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `encryption_config`.\n"]
     pub fn set_encryption_config(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataComposerEnvironmentConfigElEncryptionConfigEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataComposerEnvironment_Config_EncryptionConfig>>,
     ) -> Self {
         self.encryption_config = std::option::Option::Some(v.into());
         self
@@ -2369,7 +2964,7 @@ impl DataComposerEnvironmentConfigEl {
     #[doc = "Set the field `maintenance_window`.\n"]
     pub fn set_maintenance_window(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataComposerEnvironmentConfigElMaintenanceWindowEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataComposerEnvironment_Config_MaintenanceWindow>>,
     ) -> Self {
         self.maintenance_window = std::option::Option::Some(v.into());
         self
@@ -2383,7 +2978,7 @@ impl DataComposerEnvironmentConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::ListField<DataComposerEnvironmentConfigElMasterAuthorizedNetworksConfigEl>>,
+                    ::Into<terrars::ListField<DataComposerEnvironment_Config_MasterAuthorizedNetworksConfig>>,
     ) -> Self {
         self.master_authorized_networks_config = std::option::Option::Some(v.into());
         self
@@ -2392,7 +2987,7 @@ impl DataComposerEnvironmentConfigEl {
     #[doc = "Set the field `node_config`.\n"]
     pub fn set_node_config(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataComposerEnvironmentConfigElNodeConfigEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataComposerEnvironment_Config_NodeConfig>>,
     ) -> Self {
         self.node_config = std::option::Option::Some(v.into());
         self
@@ -2407,7 +3002,7 @@ impl DataComposerEnvironmentConfigEl {
     #[doc = "Set the field `private_environment_config`.\n"]
     pub fn set_private_environment_config(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataComposerEnvironmentConfigElPrivateEnvironmentConfigEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataComposerEnvironment_Config_PrivateEnvironmentConfig>>,
     ) -> Self {
         self.private_environment_config = std::option::Option::Some(v.into());
         self
@@ -2416,7 +3011,7 @@ impl DataComposerEnvironmentConfigEl {
     #[doc = "Set the field `recovery_config`.\n"]
     pub fn set_recovery_config(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataComposerEnvironmentConfigElRecoveryConfigEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataComposerEnvironment_Config_RecoveryConfig>>,
     ) -> Self {
         self.recovery_config = std::option::Option::Some(v.into());
         self
@@ -2431,7 +3026,7 @@ impl DataComposerEnvironmentConfigEl {
     #[doc = "Set the field `software_config`.\n"]
     pub fn set_software_config(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataComposerEnvironmentConfigElSoftwareConfigEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataComposerEnvironment_Config_SoftwareConfig>>,
     ) -> Self {
         self.software_config = std::option::Option::Some(v.into());
         self
@@ -2440,7 +3035,7 @@ impl DataComposerEnvironmentConfigEl {
     #[doc = "Set the field `web_server_config`.\n"]
     pub fn set_web_server_config(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataComposerEnvironmentConfigElWebServerConfigEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataComposerEnvironment_Config_WebServerConfig>>,
     ) -> Self {
         self.web_server_config = std::option::Option::Some(v.into());
         self
@@ -2449,12 +3044,7 @@ impl DataComposerEnvironmentConfigEl {
     #[doc = "Set the field `web_server_network_access_control`.\n"]
     pub fn set_web_server_network_access_control(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::ListField<DataComposerEnvironmentConfigElWebServerNetworkAccessControlEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataComposerEnvironment_Config_WebServerNetworkAccessControl>>,
     ) -> Self {
         self.web_server_network_access_control = std::option::Option::Some(v.into());
         self
@@ -2463,15 +3053,15 @@ impl DataComposerEnvironmentConfigEl {
     #[doc = "Set the field `workloads_config`.\n"]
     pub fn set_workloads_config(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataComposerEnvironmentConfigElWorkloadsConfigEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataComposerEnvironment_Config_WorkloadsConfig>>,
     ) -> Self {
         self.workloads_config = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataComposerEnvironmentConfigEl {
-    type O = terrars::BlockAssignable<DataComposerEnvironmentConfigEl>;
+impl terrars::ToListMappable for DataComposerEnvironment_Config {
+    type O = terrars::BlockAssignable<DataComposerEnvironment_Config>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2482,14 +3072,17 @@ impl terrars::ToListMappable for DataComposerEnvironmentConfigEl {
     }
 }
 
-pub struct BuildDataComposerEnvironmentConfigEl {}
+pub struct BuildDataComposerEnvironment_Config {}
 
-impl BuildDataComposerEnvironmentConfigEl {
-    pub fn build(self) -> DataComposerEnvironmentConfigEl {
-        DataComposerEnvironmentConfigEl {
+impl BuildDataComposerEnvironment_Config {
+    pub fn build(self) -> DataComposerEnvironment_Config {
+        DataComposerEnvironment_Config {
             airflow_uri: core::default::Default::default(),
             dag_gcs_prefix: core::default::Default::default(),
+            data_retention_config: core::default::Default::default(),
             database_config: core::default::Default::default(),
+            enable_private_builds_only: core::default::Default::default(),
+            enable_private_environment: core::default::Default::default(),
             encryption_config: core::default::Default::default(),
             environment_size: core::default::Default::default(),
             gke_cluster: core::default::Default::default(),
@@ -2508,21 +3101,23 @@ impl BuildDataComposerEnvironmentConfigEl {
     }
 }
 
-pub struct DataComposerEnvironmentConfigElRef {
+#[allow(dead_code)]
+pub struct DataComposerEnvironment_ConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComposerEnvironmentConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComposerEnvironmentConfigElRef {
-        DataComposerEnvironmentConfigElRef {
+impl terrars::Ref for DataComposerEnvironment_ConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComposerEnvironment_ConfigRef {
+        DataComposerEnvironment_ConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComposerEnvironmentConfigElRef {
+impl DataComposerEnvironment_ConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2537,13 +3132,28 @@ impl DataComposerEnvironmentConfigElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.dag_gcs_prefix", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `data_retention_config` after provisioning.\n"]
+    pub fn data_retention_config(&self) -> terrars::ListRef<DataComposerEnvironment_Config_DataRetentionConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.data_retention_config", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `database_config` after provisioning.\n"]
-    pub fn database_config(&self) -> terrars::ListRef<DataComposerEnvironmentConfigElDatabaseConfigElRef> {
+    pub fn database_config(&self) -> terrars::ListRef<DataComposerEnvironment_Config_DatabaseConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.database_config", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `enable_private_builds_only` after provisioning.\n"]
+    pub fn enable_private_builds_only(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_private_builds_only", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `enable_private_environment` after provisioning.\n"]
+    pub fn enable_private_environment(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_private_environment", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `encryption_config` after provisioning.\n"]
-    pub fn encryption_config(&self) -> terrars::ListRef<DataComposerEnvironmentConfigElEncryptionConfigElRef> {
+    pub fn encryption_config(&self) -> terrars::ListRef<DataComposerEnvironment_Config_EncryptionConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_config", self.base))
     }
 
@@ -2558,19 +3168,19 @@ impl DataComposerEnvironmentConfigElRef {
     }
 
     #[doc = "Get a reference to the value of field `maintenance_window` after provisioning.\n"]
-    pub fn maintenance_window(&self) -> terrars::ListRef<DataComposerEnvironmentConfigElMaintenanceWindowElRef> {
+    pub fn maintenance_window(&self) -> terrars::ListRef<DataComposerEnvironment_Config_MaintenanceWindowRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.maintenance_window", self.base))
     }
 
     #[doc = "Get a reference to the value of field `master_authorized_networks_config` after provisioning.\n"]
     pub fn master_authorized_networks_config(
         &self,
-    ) -> terrars::ListRef<DataComposerEnvironmentConfigElMasterAuthorizedNetworksConfigElRef> {
+    ) -> terrars::ListRef<DataComposerEnvironment_Config_MasterAuthorizedNetworksConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.master_authorized_networks_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `node_config` after provisioning.\n"]
-    pub fn node_config(&self) -> terrars::ListRef<DataComposerEnvironmentConfigElNodeConfigElRef> {
+    pub fn node_config(&self) -> terrars::ListRef<DataComposerEnvironment_Config_NodeConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.node_config", self.base))
     }
 
@@ -2582,12 +3192,12 @@ impl DataComposerEnvironmentConfigElRef {
     #[doc = "Get a reference to the value of field `private_environment_config` after provisioning.\n"]
     pub fn private_environment_config(
         &self,
-    ) -> terrars::ListRef<DataComposerEnvironmentConfigElPrivateEnvironmentConfigElRef> {
+    ) -> terrars::ListRef<DataComposerEnvironment_Config_PrivateEnvironmentConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.private_environment_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `recovery_config` after provisioning.\n"]
-    pub fn recovery_config(&self) -> terrars::ListRef<DataComposerEnvironmentConfigElRecoveryConfigElRef> {
+    pub fn recovery_config(&self) -> terrars::ListRef<DataComposerEnvironment_Config_RecoveryConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.recovery_config", self.base))
     }
 
@@ -2597,35 +3207,35 @@ impl DataComposerEnvironmentConfigElRef {
     }
 
     #[doc = "Get a reference to the value of field `software_config` after provisioning.\n"]
-    pub fn software_config(&self) -> terrars::ListRef<DataComposerEnvironmentConfigElSoftwareConfigElRef> {
+    pub fn software_config(&self) -> terrars::ListRef<DataComposerEnvironment_Config_SoftwareConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.software_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `web_server_config` after provisioning.\n"]
-    pub fn web_server_config(&self) -> terrars::ListRef<DataComposerEnvironmentConfigElWebServerConfigElRef> {
+    pub fn web_server_config(&self) -> terrars::ListRef<DataComposerEnvironment_Config_WebServerConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.web_server_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `web_server_network_access_control` after provisioning.\n"]
     pub fn web_server_network_access_control(
         &self,
-    ) -> terrars::ListRef<DataComposerEnvironmentConfigElWebServerNetworkAccessControlElRef> {
+    ) -> terrars::ListRef<DataComposerEnvironment_Config_WebServerNetworkAccessControlRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.web_server_network_access_control", self.base))
     }
 
     #[doc = "Get a reference to the value of field `workloads_config` after provisioning.\n"]
-    pub fn workloads_config(&self) -> terrars::ListRef<DataComposerEnvironmentConfigElWorkloadsConfigElRef> {
+    pub fn workloads_config(&self) -> terrars::ListRef<DataComposerEnvironment_Config_WorkloadsConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.workloads_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataComposerEnvironmentStorageConfigEl {
+pub struct DataComposerEnvironment_StorageConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bucket: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataComposerEnvironmentStorageConfigEl {
+impl DataComposerEnvironment_StorageConfig {
     #[doc = "Set the field `bucket`.\n"]
     pub fn set_bucket(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.bucket = std::option::Option::Some(v.into());
@@ -2633,8 +3243,8 @@ impl DataComposerEnvironmentStorageConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataComposerEnvironmentStorageConfigEl {
-    type O = terrars::BlockAssignable<DataComposerEnvironmentStorageConfigEl>;
+impl terrars::ToListMappable for DataComposerEnvironment_StorageConfig {
+    type O = terrars::BlockAssignable<DataComposerEnvironment_StorageConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2645,29 +3255,31 @@ impl terrars::ToListMappable for DataComposerEnvironmentStorageConfigEl {
     }
 }
 
-pub struct BuildDataComposerEnvironmentStorageConfigEl {}
+pub struct BuildDataComposerEnvironment_StorageConfig {}
 
-impl BuildDataComposerEnvironmentStorageConfigEl {
-    pub fn build(self) -> DataComposerEnvironmentStorageConfigEl {
-        DataComposerEnvironmentStorageConfigEl { bucket: core::default::Default::default() }
+impl BuildDataComposerEnvironment_StorageConfig {
+    pub fn build(self) -> DataComposerEnvironment_StorageConfig {
+        DataComposerEnvironment_StorageConfig { bucket: core::default::Default::default() }
     }
 }
 
-pub struct DataComposerEnvironmentStorageConfigElRef {
+#[allow(dead_code)]
+pub struct DataComposerEnvironment_StorageConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComposerEnvironmentStorageConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComposerEnvironmentStorageConfigElRef {
-        DataComposerEnvironmentStorageConfigElRef {
+impl terrars::Ref for DataComposerEnvironment_StorageConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComposerEnvironment_StorageConfigRef {
+        DataComposerEnvironment_StorageConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComposerEnvironmentStorageConfigElRef {
+impl DataComposerEnvironment_StorageConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

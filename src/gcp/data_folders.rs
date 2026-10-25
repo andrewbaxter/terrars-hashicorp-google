@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataFoldersData {
+struct DataFoldersData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -24,7 +26,7 @@ struct DataFoldersData {
 struct DataFolders_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataFoldersData>,
+    data: std::cell::RefCell<DataFoldersData_>,
 }
 
 #[derive(Clone)]
@@ -76,7 +78,7 @@ impl DataFolders {
     }
 
     #[doc = "Get a reference to the value of field `folders` after provisioning.\n"]
-    pub fn folders(&self) -> terrars::ListRef<DataFoldersFoldersElRef> {
+    pub fn folders(&self) -> terrars::ListRef<DataFolders_FoldersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.folders", self.extract_ref()))
     }
 
@@ -133,7 +135,7 @@ impl BuildDataFolders {
         let out = DataFolders(std::rc::Rc::new(DataFolders_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataFoldersData {
+            data: std::cell::RefCell::new(DataFoldersData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -171,7 +173,7 @@ impl DataFoldersRef {
     }
 
     #[doc = "Get a reference to the value of field `folders` after provisioning.\n"]
-    pub fn folders(&self) -> terrars::ListRef<DataFoldersFoldersElRef> {
+    pub fn folders(&self) -> terrars::ListRef<DataFolders_FoldersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.folders", self.extract_ref()))
     }
 
@@ -187,7 +189,7 @@ impl DataFoldersRef {
 }
 
 #[derive(Serialize)]
-pub struct DataFoldersFoldersEl {
+pub struct DataFolders_Folders {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create_time: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -206,7 +208,7 @@ pub struct DataFoldersFoldersEl {
     update_time: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataFoldersFoldersEl {
+impl DataFolders_Folders {
     #[doc = "Set the field `create_time`.\n"]
     pub fn set_create_time(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create_time = std::option::Option::Some(v.into());
@@ -256,8 +258,8 @@ impl DataFoldersFoldersEl {
     }
 }
 
-impl terrars::ToListMappable for DataFoldersFoldersEl {
-    type O = terrars::BlockAssignable<DataFoldersFoldersEl>;
+impl terrars::ToListMappable for DataFolders_Folders {
+    type O = terrars::BlockAssignable<DataFolders_Folders>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -268,11 +270,11 @@ impl terrars::ToListMappable for DataFoldersFoldersEl {
     }
 }
 
-pub struct BuildDataFoldersFoldersEl {}
+pub struct BuildDataFolders_Folders {}
 
-impl BuildDataFoldersFoldersEl {
-    pub fn build(self) -> DataFoldersFoldersEl {
-        DataFoldersFoldersEl {
+impl BuildDataFolders_Folders {
+    pub fn build(self) -> DataFolders_Folders {
+        DataFolders_Folders {
             create_time: core::default::Default::default(),
             delete_time: core::default::Default::default(),
             display_name: core::default::Default::default(),
@@ -285,21 +287,23 @@ impl BuildDataFoldersFoldersEl {
     }
 }
 
-pub struct DataFoldersFoldersElRef {
+#[allow(dead_code)]
+pub struct DataFolders_FoldersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataFoldersFoldersElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataFoldersFoldersElRef {
-        DataFoldersFoldersElRef {
+impl terrars::Ref for DataFolders_FoldersRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataFolders_FoldersRef {
+        DataFolders_FoldersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataFoldersFoldersElRef {
+impl DataFolders_FoldersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ApigeeSyncAuthorizationData {
+struct ApigeeSyncAuthorizationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,13 +25,13 @@ struct ApigeeSyncAuthorizationData {
     identities: terrars::ListField<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ApigeeSyncAuthorizationTimeoutsEl>,
+    timeouts: std::option::Option<ApigeeSyncAuthorization_Timeouts>,
 }
 
 struct ApigeeSyncAuthorization_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ApigeeSyncAuthorizationData>,
+    data: std::cell::RefCell<ApigeeSyncAuthorizationData_>,
 }
 
 #[derive(Clone)]
@@ -136,7 +138,7 @@ impl ApigeeSyncAuthorization {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ApigeeSyncAuthorizationTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ApigeeSyncAuthorization_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -164,8 +166,8 @@ impl ApigeeSyncAuthorization {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ApigeeSyncAuthorizationTimeoutsElRef {
-        ApigeeSyncAuthorizationTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ApigeeSyncAuthorization_TimeoutsRef {
+        ApigeeSyncAuthorization_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -214,7 +216,7 @@ impl BuildApigeeSyncAuthorization {
         let out = ApigeeSyncAuthorization(std::rc::Rc::new(ApigeeSyncAuthorization_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ApigeeSyncAuthorizationData {
+            data: std::cell::RefCell::new(ApigeeSyncAuthorizationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -277,13 +279,13 @@ impl ApigeeSyncAuthorizationRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ApigeeSyncAuthorizationTimeoutsElRef {
-        ApigeeSyncAuthorizationTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ApigeeSyncAuthorization_TimeoutsRef {
+        ApigeeSyncAuthorization_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct ApigeeSyncAuthorizationTimeoutsEl {
+pub struct ApigeeSyncAuthorization_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -292,7 +294,7 @@ pub struct ApigeeSyncAuthorizationTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ApigeeSyncAuthorizationTimeoutsEl {
+impl ApigeeSyncAuthorization_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -312,8 +314,8 @@ impl ApigeeSyncAuthorizationTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ApigeeSyncAuthorizationTimeoutsEl {
-    type O = terrars::BlockAssignable<ApigeeSyncAuthorizationTimeoutsEl>;
+impl terrars::ToListMappable for ApigeeSyncAuthorization_Timeouts {
+    type O = terrars::BlockAssignable<ApigeeSyncAuthorization_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -324,11 +326,11 @@ impl terrars::ToListMappable for ApigeeSyncAuthorizationTimeoutsEl {
     }
 }
 
-pub struct BuildApigeeSyncAuthorizationTimeoutsEl {}
+pub struct BuildApigeeSyncAuthorization_Timeouts {}
 
-impl BuildApigeeSyncAuthorizationTimeoutsEl {
-    pub fn build(self) -> ApigeeSyncAuthorizationTimeoutsEl {
-        ApigeeSyncAuthorizationTimeoutsEl {
+impl BuildApigeeSyncAuthorization_Timeouts {
+    pub fn build(self) -> ApigeeSyncAuthorization_Timeouts {
+        ApigeeSyncAuthorization_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -336,21 +338,23 @@ impl BuildApigeeSyncAuthorizationTimeoutsEl {
     }
 }
 
-pub struct ApigeeSyncAuthorizationTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ApigeeSyncAuthorization_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApigeeSyncAuthorizationTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ApigeeSyncAuthorizationTimeoutsElRef {
-        ApigeeSyncAuthorizationTimeoutsElRef {
+impl terrars::Ref for ApigeeSyncAuthorization_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApigeeSyncAuthorization_TimeoutsRef {
+        ApigeeSyncAuthorization_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApigeeSyncAuthorizationTimeoutsElRef {
+impl ApigeeSyncAuthorization_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

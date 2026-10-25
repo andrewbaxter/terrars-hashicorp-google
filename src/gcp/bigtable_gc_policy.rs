@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct BigtableGcPolicyData {
+struct BigtableGcPolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,6 +27,8 @@ struct BigtableGcPolicyData {
     gc_rules: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ignore_warnings: std::option::Option<terrars::PrimField<bool>>,
     instance_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     mode: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -32,18 +36,18 @@ struct BigtableGcPolicyData {
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     table: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    max_age: std::option::Option<std::vec::Vec<BigtableGcPolicyMaxAgeEl>>,
+    max_age: std::option::Option<std::vec::Vec<BigtableGcPolicy_MaxAge>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    max_version: std::option::Option<std::vec::Vec<BigtableGcPolicyMaxVersionEl>>,
+    max_version: std::option::Option<std::vec::Vec<BigtableGcPolicy_MaxVersion>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<BigtableGcPolicyTimeoutsEl>,
+    timeouts: std::option::Option<BigtableGcPolicy_Timeouts>,
     dynamic: BigtableGcPolicyDynamic,
 }
 
 struct BigtableGcPolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<BigtableGcPolicyData>,
+    data: std::cell::RefCell<BigtableGcPolicyData_>,
 }
 
 #[derive(Clone)]
@@ -144,7 +148,7 @@ impl BigtableGcPolicy {
     }
 
     #[doc =
-        "Set the field `deletion_policy`.\nThe deletion policy for the GC policy. Setting ABANDON allows the resource\n\t\t\t\tto be abandoned rather than deleted. This is useful for GC policy as it cannot be deleted\n\t\t\t\tin a replicated instance. Possible values are: \"ABANDON\"."]
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
     pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
         self
@@ -164,6 +168,13 @@ impl BigtableGcPolicy {
     }
 
     #[doc =
+        "Set the field `ignore_warnings`.\nAllows ignoring warnings when updating the GC policy. This can be used\n\t\t\t\tto increase the gc policy on replicated clusters. Doing this may make clusters be\n\t\t\t\tinconsistent for a longer period of time, before using this make sure you understand\n\t\t\t\tthe risks listed at https://cloud.google.com/bigtable/docs/garbage-collection#increasing"]
+    pub fn set_ignore_warnings(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().ignore_warnings = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `mode`.\nNOTE: 'gc_rules' is more flexible, and should be preferred over this field for new resources. This field may be deprecated in the future. If multiple policies are set, you should choose between UNION OR INTERSECTION."]
     pub fn set_mode(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().mode = std::option::Option::Some(v.into());
@@ -178,7 +189,7 @@ impl BigtableGcPolicy {
     }
 
     #[doc = "Set the field `max_age`.\n"]
-    pub fn set_max_age(self, v: impl std::convert::Into<terrars::BlockAssignable<BigtableGcPolicyMaxAgeEl>>) -> Self {
+    pub fn set_max_age(self, v: impl std::convert::Into<terrars::BlockAssignable<BigtableGcPolicy_MaxAge>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().max_age = std::option::Option::Some(v);
@@ -193,7 +204,7 @@ impl BigtableGcPolicy {
     #[doc = "Set the field `max_version`.\n"]
     pub fn set_max_version(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BigtableGcPolicyMaxVersionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigtableGcPolicy_MaxVersion>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -207,7 +218,7 @@ impl BigtableGcPolicy {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<BigtableGcPolicyTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<BigtableGcPolicy_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -218,7 +229,7 @@ impl BigtableGcPolicy {
     }
 
     #[doc =
-        "Get a reference to the value of field `deletion_policy` after provisioning.\nThe deletion policy for the GC policy. Setting ABANDON allows the resource\n\t\t\t\tto be abandoned rather than deleted. This is useful for GC policy as it cannot be deleted\n\t\t\t\tin a replicated instance. Possible values are: \"ABANDON\"."]
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
     pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
@@ -232,6 +243,12 @@ impl BigtableGcPolicy {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `ignore_warnings` after provisioning.\nAllows ignoring warnings when updating the GC policy. This can be used\n\t\t\t\tto increase the gc policy on replicated clusters. Doing this may make clusters be\n\t\t\t\tinconsistent for a longer period of time, before using this make sure you understand\n\t\t\t\tthe risks listed at https://cloud.google.com/bigtable/docs/garbage-collection#increasing"]
+    pub fn ignore_warnings(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ignore_warnings", self.extract_ref()))
     }
 
     #[doc =
@@ -258,18 +275,18 @@ impl BigtableGcPolicy {
     }
 
     #[doc = "Get a reference to the value of field `max_age` after provisioning.\n"]
-    pub fn max_age(&self) -> terrars::ListRef<BigtableGcPolicyMaxAgeElRef> {
+    pub fn max_age(&self) -> terrars::ListRef<BigtableGcPolicy_MaxAgeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.max_age", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `max_version` after provisioning.\n"]
-    pub fn max_version(&self) -> terrars::ListRef<BigtableGcPolicyMaxVersionElRef> {
+    pub fn max_version(&self) -> terrars::ListRef<BigtableGcPolicy_MaxVersionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.max_version", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> BigtableGcPolicyTimeoutsElRef {
-        BigtableGcPolicyTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> BigtableGcPolicy_TimeoutsRef {
+        BigtableGcPolicy_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -319,7 +336,7 @@ impl BuildBigtableGcPolicy {
         let out = BigtableGcPolicy(std::rc::Rc::new(BigtableGcPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(BigtableGcPolicyData {
+            data: std::cell::RefCell::new(BigtableGcPolicyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -329,6 +346,7 @@ impl BuildBigtableGcPolicy {
                 deletion_policy: core::default::Default::default(),
                 gc_rules: core::default::Default::default(),
                 id: core::default::Default::default(),
+                ignore_warnings: core::default::Default::default(),
                 instance_name: self.instance_name,
                 mode: core::default::Default::default(),
                 project: core::default::Default::default(),
@@ -373,7 +391,7 @@ impl BigtableGcPolicyRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `deletion_policy` after provisioning.\nThe deletion policy for the GC policy. Setting ABANDON allows the resource\n\t\t\t\tto be abandoned rather than deleted. This is useful for GC policy as it cannot be deleted\n\t\t\t\tin a replicated instance. Possible values are: \"ABANDON\"."]
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
     pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
@@ -387,6 +405,12 @@ impl BigtableGcPolicyRef {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `ignore_warnings` after provisioning.\nAllows ignoring warnings when updating the GC policy. This can be used\n\t\t\t\tto increase the gc policy on replicated clusters. Doing this may make clusters be\n\t\t\t\tinconsistent for a longer period of time, before using this make sure you understand\n\t\t\t\tthe risks listed at https://cloud.google.com/bigtable/docs/garbage-collection#increasing"]
+    pub fn ignore_warnings(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ignore_warnings", self.extract_ref()))
     }
 
     #[doc =
@@ -413,30 +437,36 @@ impl BigtableGcPolicyRef {
     }
 
     #[doc = "Get a reference to the value of field `max_age` after provisioning.\n"]
-    pub fn max_age(&self) -> terrars::ListRef<BigtableGcPolicyMaxAgeElRef> {
+    pub fn max_age(&self) -> terrars::ListRef<BigtableGcPolicy_MaxAgeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.max_age", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `max_version` after provisioning.\n"]
-    pub fn max_version(&self) -> terrars::ListRef<BigtableGcPolicyMaxVersionElRef> {
+    pub fn max_version(&self) -> terrars::ListRef<BigtableGcPolicy_MaxVersionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.max_version", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> BigtableGcPolicyTimeoutsElRef {
-        BigtableGcPolicyTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> BigtableGcPolicy_TimeoutsRef {
+        BigtableGcPolicy_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct BigtableGcPolicyDynamic {
+    max_age: std::option::Option<terrars::DynamicBlock<BigtableGcPolicy_MaxAge>>,
+    max_version: std::option::Option<terrars::DynamicBlock<BigtableGcPolicy_MaxVersion>>,
+}
+
 #[derive(Serialize)]
-pub struct BigtableGcPolicyMaxAgeEl {
+pub struct BigtableGcPolicy_MaxAge {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     days: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     duration: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl BigtableGcPolicyMaxAgeEl {
+impl BigtableGcPolicy_MaxAge {
     #[doc = "Set the field `days`.\nNumber of days before applying GC policy."]
     pub fn set_days(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.days = std::option::Option::Some(v.into());
@@ -450,8 +480,8 @@ impl BigtableGcPolicyMaxAgeEl {
     }
 }
 
-impl terrars::ToListMappable for BigtableGcPolicyMaxAgeEl {
-    type O = terrars::BlockAssignable<BigtableGcPolicyMaxAgeEl>;
+impl terrars::ToListMappable for BigtableGcPolicy_MaxAge {
+    type O = terrars::BlockAssignable<BigtableGcPolicy_MaxAge>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -462,32 +492,34 @@ impl terrars::ToListMappable for BigtableGcPolicyMaxAgeEl {
     }
 }
 
-pub struct BuildBigtableGcPolicyMaxAgeEl {}
+pub struct BuildBigtableGcPolicy_MaxAge {}
 
-impl BuildBigtableGcPolicyMaxAgeEl {
-    pub fn build(self) -> BigtableGcPolicyMaxAgeEl {
-        BigtableGcPolicyMaxAgeEl {
+impl BuildBigtableGcPolicy_MaxAge {
+    pub fn build(self) -> BigtableGcPolicy_MaxAge {
+        BigtableGcPolicy_MaxAge {
             days: core::default::Default::default(),
             duration: core::default::Default::default(),
         }
     }
 }
 
-pub struct BigtableGcPolicyMaxAgeElRef {
+#[allow(dead_code)]
+pub struct BigtableGcPolicy_MaxAgeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigtableGcPolicyMaxAgeElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigtableGcPolicyMaxAgeElRef {
-        BigtableGcPolicyMaxAgeElRef {
+impl terrars::Ref for BigtableGcPolicy_MaxAgeRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigtableGcPolicy_MaxAgeRef {
+        BigtableGcPolicy_MaxAgeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigtableGcPolicyMaxAgeElRef {
+impl BigtableGcPolicy_MaxAgeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -505,14 +537,14 @@ impl BigtableGcPolicyMaxAgeElRef {
 }
 
 #[derive(Serialize)]
-pub struct BigtableGcPolicyMaxVersionEl {
+pub struct BigtableGcPolicy_MaxVersion {
     number: terrars::PrimField<f64>,
 }
 
-impl BigtableGcPolicyMaxVersionEl { }
+impl BigtableGcPolicy_MaxVersion { }
 
-impl terrars::ToListMappable for BigtableGcPolicyMaxVersionEl {
-    type O = terrars::BlockAssignable<BigtableGcPolicyMaxVersionEl>;
+impl terrars::ToListMappable for BigtableGcPolicy_MaxVersion {
+    type O = terrars::BlockAssignable<BigtableGcPolicy_MaxVersion>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -523,32 +555,34 @@ impl terrars::ToListMappable for BigtableGcPolicyMaxVersionEl {
     }
 }
 
-pub struct BuildBigtableGcPolicyMaxVersionEl {
+pub struct BuildBigtableGcPolicy_MaxVersion {
     #[doc = "Number of version before applying the GC policy."]
     pub number: terrars::PrimField<f64>,
 }
 
-impl BuildBigtableGcPolicyMaxVersionEl {
-    pub fn build(self) -> BigtableGcPolicyMaxVersionEl {
-        BigtableGcPolicyMaxVersionEl { number: self.number }
+impl BuildBigtableGcPolicy_MaxVersion {
+    pub fn build(self) -> BigtableGcPolicy_MaxVersion {
+        BigtableGcPolicy_MaxVersion { number: self.number }
     }
 }
 
-pub struct BigtableGcPolicyMaxVersionElRef {
+#[allow(dead_code)]
+pub struct BigtableGcPolicy_MaxVersionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigtableGcPolicyMaxVersionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigtableGcPolicyMaxVersionElRef {
-        BigtableGcPolicyMaxVersionElRef {
+impl terrars::Ref for BigtableGcPolicy_MaxVersionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigtableGcPolicy_MaxVersionRef {
+        BigtableGcPolicy_MaxVersionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigtableGcPolicyMaxVersionElRef {
+impl BigtableGcPolicy_MaxVersionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -561,14 +595,14 @@ impl BigtableGcPolicyMaxVersionElRef {
 }
 
 #[derive(Serialize)]
-pub struct BigtableGcPolicyTimeoutsEl {
+pub struct BigtableGcPolicy_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl BigtableGcPolicyTimeoutsEl {
+impl BigtableGcPolicy_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -582,8 +616,8 @@ impl BigtableGcPolicyTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for BigtableGcPolicyTimeoutsEl {
-    type O = terrars::BlockAssignable<BigtableGcPolicyTimeoutsEl>;
+impl terrars::ToListMappable for BigtableGcPolicy_Timeouts {
+    type O = terrars::BlockAssignable<BigtableGcPolicy_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -594,32 +628,34 @@ impl terrars::ToListMappable for BigtableGcPolicyTimeoutsEl {
     }
 }
 
-pub struct BuildBigtableGcPolicyTimeoutsEl {}
+pub struct BuildBigtableGcPolicy_Timeouts {}
 
-impl BuildBigtableGcPolicyTimeoutsEl {
-    pub fn build(self) -> BigtableGcPolicyTimeoutsEl {
-        BigtableGcPolicyTimeoutsEl {
+impl BuildBigtableGcPolicy_Timeouts {
+    pub fn build(self) -> BigtableGcPolicy_Timeouts {
+        BigtableGcPolicy_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct BigtableGcPolicyTimeoutsElRef {
+#[allow(dead_code)]
+pub struct BigtableGcPolicy_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigtableGcPolicyTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigtableGcPolicyTimeoutsElRef {
-        BigtableGcPolicyTimeoutsElRef {
+impl terrars::Ref for BigtableGcPolicy_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigtableGcPolicy_TimeoutsRef {
+        BigtableGcPolicy_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigtableGcPolicyTimeoutsElRef {
+impl BigtableGcPolicy_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -633,10 +669,4 @@ impl BigtableGcPolicyTimeoutsElRef {
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct BigtableGcPolicyDynamic {
-    max_age: std::option::Option<terrars::DynamicBlock<BigtableGcPolicyMaxAgeEl>>,
-    max_version: std::option::Option<terrars::DynamicBlock<BigtableGcPolicyMaxVersionEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DnsResponsePolicyRuleData {
+struct DnsResponsePolicyRuleData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct DnsResponsePolicyRuleData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     dns_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -26,16 +30,16 @@ struct DnsResponsePolicyRuleData {
     response_policy: terrars::PrimField<std::string::String>,
     rule_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    local_data: std::option::Option<std::vec::Vec<DnsResponsePolicyRuleLocalDataEl>>,
+    local_data: std::option::Option<std::vec::Vec<DnsResponsePolicyRule_LocalData>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DnsResponsePolicyRuleTimeoutsEl>,
+    timeouts: std::option::Option<DnsResponsePolicyRule_Timeouts>,
     dynamic: DnsResponsePolicyRuleDynamic,
 }
 
 struct DnsResponsePolicyRule_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DnsResponsePolicyRuleData>,
+    data: std::cell::RefCell<DnsResponsePolicyRuleData_>,
 }
 
 #[derive(Clone)]
@@ -135,6 +139,13 @@ impl DnsResponsePolicyRule {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -150,7 +161,7 @@ impl DnsResponsePolicyRule {
     #[doc = "Set the field `local_data`.\n"]
     pub fn set_local_data(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DnsResponsePolicyRuleLocalDataEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DnsResponsePolicyRule_LocalData>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -164,9 +175,15 @@ impl DnsResponsePolicyRule {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DnsResponsePolicyRuleTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DnsResponsePolicyRule_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -198,13 +215,13 @@ impl DnsResponsePolicyRule {
     }
 
     #[doc = "Get a reference to the value of field `local_data` after provisioning.\n"]
-    pub fn local_data(&self) -> terrars::ListRef<DnsResponsePolicyRuleLocalDataElRef> {
+    pub fn local_data(&self) -> terrars::ListRef<DnsResponsePolicyRule_LocalDataRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.local_data", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DnsResponsePolicyRuleTimeoutsElRef {
-        DnsResponsePolicyRuleTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DnsResponsePolicyRule_TimeoutsRef {
+        DnsResponsePolicyRule_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -254,12 +271,13 @@ impl BuildDnsResponsePolicyRule {
         let out = DnsResponsePolicyRule(std::rc::Rc::new(DnsResponsePolicyRule_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DnsResponsePolicyRuleData {
+            data: std::cell::RefCell::new(DnsResponsePolicyRuleData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 dns_name: self.dns_name,
                 id: core::default::Default::default(),
                 project: core::default::Default::default(),
@@ -299,6 +317,12 @@ impl DnsResponsePolicyRuleRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `dns_name` after provisioning.\nThe DNS name (wildcard or exact) to apply this rule to. Must be unique within the Response Policy Rule."]
     pub fn dns_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.dns_name", self.extract_ref()))
@@ -327,18 +351,23 @@ impl DnsResponsePolicyRuleRef {
     }
 
     #[doc = "Get a reference to the value of field `local_data` after provisioning.\n"]
-    pub fn local_data(&self) -> terrars::ListRef<DnsResponsePolicyRuleLocalDataElRef> {
+    pub fn local_data(&self) -> terrars::ListRef<DnsResponsePolicyRule_LocalDataRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.local_data", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DnsResponsePolicyRuleTimeoutsElRef {
-        DnsResponsePolicyRuleTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DnsResponsePolicyRule_TimeoutsRef {
+        DnsResponsePolicyRule_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DnsResponsePolicyRuleDynamic {
+    local_data: std::option::Option<terrars::DynamicBlock<DnsResponsePolicyRule_LocalData>>,
+}
+
 #[derive(Serialize)]
-pub struct DnsResponsePolicyRuleLocalDataElLocalDatasEl {
+pub struct DnsResponsePolicyRule_LocalData_LocalDatas {
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     rrdatas: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
@@ -348,7 +377,7 @@ pub struct DnsResponsePolicyRuleLocalDataElLocalDatasEl {
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl DnsResponsePolicyRuleLocalDataElLocalDatasEl {
+impl DnsResponsePolicyRule_LocalData_LocalDatas {
     #[doc = "Set the field `rrdatas`.\nAs defined in RFC 1035 (section 5) and RFC 1034 (section 3.6.1)"]
     pub fn set_rrdatas(
         mut self,
@@ -365,8 +394,8 @@ impl DnsResponsePolicyRuleLocalDataElLocalDatasEl {
     }
 }
 
-impl terrars::ToListMappable for DnsResponsePolicyRuleLocalDataElLocalDatasEl {
-    type O = terrars::BlockAssignable<DnsResponsePolicyRuleLocalDataElLocalDatasEl>;
+impl terrars::ToListMappable for DnsResponsePolicyRule_LocalData_LocalDatas {
+    type O = terrars::BlockAssignable<DnsResponsePolicyRule_LocalData_LocalDatas>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -377,7 +406,7 @@ impl terrars::ToListMappable for DnsResponsePolicyRuleLocalDataElLocalDatasEl {
     }
 }
 
-pub struct BuildDnsResponsePolicyRuleLocalDataElLocalDatasEl {
+pub struct BuildDnsResponsePolicyRule_LocalData_LocalDatas {
     #[doc = "For example, www.example.com."]
     pub name: terrars::PrimField<std::string::String>,
     #[doc =
@@ -385,9 +414,9 @@ pub struct BuildDnsResponsePolicyRuleLocalDataElLocalDatasEl {
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDnsResponsePolicyRuleLocalDataElLocalDatasEl {
-    pub fn build(self) -> DnsResponsePolicyRuleLocalDataElLocalDatasEl {
-        DnsResponsePolicyRuleLocalDataElLocalDatasEl {
+impl BuildDnsResponsePolicyRule_LocalData_LocalDatas {
+    pub fn build(self) -> DnsResponsePolicyRule_LocalData_LocalDatas {
+        DnsResponsePolicyRule_LocalData_LocalDatas {
             name: self.name,
             rrdatas: core::default::Default::default(),
             ttl: core::default::Default::default(),
@@ -396,24 +425,23 @@ impl BuildDnsResponsePolicyRuleLocalDataElLocalDatasEl {
     }
 }
 
-pub struct DnsResponsePolicyRuleLocalDataElLocalDatasElRef {
+#[allow(dead_code)]
+pub struct DnsResponsePolicyRule_LocalData_LocalDatasRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DnsResponsePolicyRuleLocalDataElLocalDatasElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DnsResponsePolicyRuleLocalDataElLocalDatasElRef {
-        DnsResponsePolicyRuleLocalDataElLocalDatasElRef {
+impl terrars::Ref for DnsResponsePolicyRule_LocalData_LocalDatasRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DnsResponsePolicyRule_LocalData_LocalDatasRef {
+        DnsResponsePolicyRule_LocalData_LocalDatasRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DnsResponsePolicyRuleLocalDataElLocalDatasElRef {
+impl DnsResponsePolicyRule_LocalData_LocalDatasRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -443,22 +471,22 @@ impl DnsResponsePolicyRuleLocalDataElLocalDatasElRef {
 }
 
 #[derive(Serialize, Default)]
-struct DnsResponsePolicyRuleLocalDataElDynamic {
-    local_datas: std::option::Option<terrars::DynamicBlock<DnsResponsePolicyRuleLocalDataElLocalDatasEl>>,
+struct DnsResponsePolicyRule_LocalDataDynamic {
+    local_datas: std::option::Option<terrars::DynamicBlock<DnsResponsePolicyRule_LocalData_LocalDatas>>,
 }
 
 #[derive(Serialize)]
-pub struct DnsResponsePolicyRuleLocalDataEl {
+pub struct DnsResponsePolicyRule_LocalData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    local_datas: std::option::Option<std::vec::Vec<DnsResponsePolicyRuleLocalDataElLocalDatasEl>>,
-    dynamic: DnsResponsePolicyRuleLocalDataElDynamic,
+    local_datas: std::option::Option<std::vec::Vec<DnsResponsePolicyRule_LocalData_LocalDatas>>,
+    dynamic: DnsResponsePolicyRule_LocalDataDynamic,
 }
 
-impl DnsResponsePolicyRuleLocalDataEl {
+impl DnsResponsePolicyRule_LocalData {
     #[doc = "Set the field `local_datas`.\n"]
     pub fn set_local_datas(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DnsResponsePolicyRuleLocalDataElLocalDatasEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DnsResponsePolicyRule_LocalData_LocalDatas>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -472,8 +500,8 @@ impl DnsResponsePolicyRuleLocalDataEl {
     }
 }
 
-impl terrars::ToListMappable for DnsResponsePolicyRuleLocalDataEl {
-    type O = terrars::BlockAssignable<DnsResponsePolicyRuleLocalDataEl>;
+impl terrars::ToListMappable for DnsResponsePolicyRule_LocalData {
+    type O = terrars::BlockAssignable<DnsResponsePolicyRule_LocalData>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -484,44 +512,46 @@ impl terrars::ToListMappable for DnsResponsePolicyRuleLocalDataEl {
     }
 }
 
-pub struct BuildDnsResponsePolicyRuleLocalDataEl {}
+pub struct BuildDnsResponsePolicyRule_LocalData {}
 
-impl BuildDnsResponsePolicyRuleLocalDataEl {
-    pub fn build(self) -> DnsResponsePolicyRuleLocalDataEl {
-        DnsResponsePolicyRuleLocalDataEl {
+impl BuildDnsResponsePolicyRule_LocalData {
+    pub fn build(self) -> DnsResponsePolicyRule_LocalData {
+        DnsResponsePolicyRule_LocalData {
             local_datas: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct DnsResponsePolicyRuleLocalDataElRef {
+#[allow(dead_code)]
+pub struct DnsResponsePolicyRule_LocalDataRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DnsResponsePolicyRuleLocalDataElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DnsResponsePolicyRuleLocalDataElRef {
-        DnsResponsePolicyRuleLocalDataElRef {
+impl terrars::Ref for DnsResponsePolicyRule_LocalDataRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DnsResponsePolicyRule_LocalDataRef {
+        DnsResponsePolicyRule_LocalDataRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DnsResponsePolicyRuleLocalDataElRef {
+impl DnsResponsePolicyRule_LocalDataRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `local_datas` after provisioning.\n"]
-    pub fn local_datas(&self) -> terrars::ListRef<DnsResponsePolicyRuleLocalDataElLocalDatasElRef> {
+    pub fn local_datas(&self) -> terrars::ListRef<DnsResponsePolicyRule_LocalData_LocalDatasRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.local_datas", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DnsResponsePolicyRuleTimeoutsEl {
+pub struct DnsResponsePolicyRule_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -530,7 +560,7 @@ pub struct DnsResponsePolicyRuleTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DnsResponsePolicyRuleTimeoutsEl {
+impl DnsResponsePolicyRule_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -550,8 +580,8 @@ impl DnsResponsePolicyRuleTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DnsResponsePolicyRuleTimeoutsEl {
-    type O = terrars::BlockAssignable<DnsResponsePolicyRuleTimeoutsEl>;
+impl terrars::ToListMappable for DnsResponsePolicyRule_Timeouts {
+    type O = terrars::BlockAssignable<DnsResponsePolicyRule_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -562,11 +592,11 @@ impl terrars::ToListMappable for DnsResponsePolicyRuleTimeoutsEl {
     }
 }
 
-pub struct BuildDnsResponsePolicyRuleTimeoutsEl {}
+pub struct BuildDnsResponsePolicyRule_Timeouts {}
 
-impl BuildDnsResponsePolicyRuleTimeoutsEl {
-    pub fn build(self) -> DnsResponsePolicyRuleTimeoutsEl {
-        DnsResponsePolicyRuleTimeoutsEl {
+impl BuildDnsResponsePolicyRule_Timeouts {
+    pub fn build(self) -> DnsResponsePolicyRule_Timeouts {
+        DnsResponsePolicyRule_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -574,21 +604,23 @@ impl BuildDnsResponsePolicyRuleTimeoutsEl {
     }
 }
 
-pub struct DnsResponsePolicyRuleTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DnsResponsePolicyRule_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DnsResponsePolicyRuleTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DnsResponsePolicyRuleTimeoutsElRef {
-        DnsResponsePolicyRuleTimeoutsElRef {
+impl terrars::Ref for DnsResponsePolicyRule_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DnsResponsePolicyRule_TimeoutsRef {
+        DnsResponsePolicyRule_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DnsResponsePolicyRuleTimeoutsElRef {
+impl DnsResponsePolicyRule_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -607,9 +639,4 @@ impl DnsResponsePolicyRuleTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DnsResponsePolicyRuleDynamic {
-    local_data: std::option::Option<terrars::DynamicBlock<DnsResponsePolicyRuleLocalDataEl>>,
 }

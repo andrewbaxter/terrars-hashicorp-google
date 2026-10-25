@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct MonitoringCustomServiceData {
+struct MonitoringCustomServiceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct MonitoringCustomServiceData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     display_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -29,16 +33,16 @@ struct MonitoringCustomServiceData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     user_labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    telemetry: std::option::Option<std::vec::Vec<MonitoringCustomServiceTelemetryEl>>,
+    telemetry: std::option::Option<std::vec::Vec<MonitoringCustomService_Telemetry>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<MonitoringCustomServiceTimeoutsEl>,
+    timeouts: std::option::Option<MonitoringCustomService_Timeouts>,
     dynamic: MonitoringCustomServiceDynamic,
 }
 
 struct MonitoringCustomService_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<MonitoringCustomServiceData>,
+    data: std::cell::RefCell<MonitoringCustomServiceData_>,
 }
 
 #[derive(Clone)]
@@ -138,6 +142,13 @@ impl MonitoringCustomService {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `display_name`.\nName used for UI elements listing this Service."]
     pub fn set_display_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().display_name = std::option::Option::Some(v.into());
@@ -176,7 +187,7 @@ impl MonitoringCustomService {
     #[doc = "Set the field `telemetry`.\n"]
     pub fn set_telemetry(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringCustomServiceTelemetryEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringCustomService_Telemetry>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -190,9 +201,15 @@ impl MonitoringCustomService {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<MonitoringCustomServiceTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<MonitoringCustomService_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -230,13 +247,13 @@ impl MonitoringCustomService {
     }
 
     #[doc = "Get a reference to the value of field `telemetry` after provisioning.\n"]
-    pub fn telemetry(&self) -> terrars::ListRef<MonitoringCustomServiceTelemetryElRef> {
+    pub fn telemetry(&self) -> terrars::ListRef<MonitoringCustomService_TelemetryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.telemetry", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> MonitoringCustomServiceTimeoutsElRef {
-        MonitoringCustomServiceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> MonitoringCustomService_TimeoutsRef {
+        MonitoringCustomService_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -280,12 +297,13 @@ impl BuildMonitoringCustomService {
         let out = MonitoringCustomService(std::rc::Rc::new(MonitoringCustomService_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(MonitoringCustomServiceData {
+            data: std::cell::RefCell::new(MonitoringCustomServiceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 display_name: core::default::Default::default(),
                 id: core::default::Default::default(),
                 project: core::default::Default::default(),
@@ -325,6 +343,12 @@ impl MonitoringCustomServiceRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `display_name` after provisioning.\nName used for UI elements listing this Service."]
     pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
@@ -359,23 +383,28 @@ impl MonitoringCustomServiceRef {
     }
 
     #[doc = "Get a reference to the value of field `telemetry` after provisioning.\n"]
-    pub fn telemetry(&self) -> terrars::ListRef<MonitoringCustomServiceTelemetryElRef> {
+    pub fn telemetry(&self) -> terrars::ListRef<MonitoringCustomService_TelemetryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.telemetry", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> MonitoringCustomServiceTimeoutsElRef {
-        MonitoringCustomServiceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> MonitoringCustomService_TimeoutsRef {
+        MonitoringCustomService_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct MonitoringCustomServiceDynamic {
+    telemetry: std::option::Option<terrars::DynamicBlock<MonitoringCustomService_Telemetry>>,
+}
+
 #[derive(Serialize)]
-pub struct MonitoringCustomServiceTelemetryEl {
+pub struct MonitoringCustomService_Telemetry {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resource_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl MonitoringCustomServiceTelemetryEl {
+impl MonitoringCustomService_Telemetry {
     #[doc =
         "Set the field `resource_name`.\nThe full name of the resource that defines this service.\nFormatted as described in\nhttps://cloud.google.com/apis/design/resource_names."]
     pub fn set_resource_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -384,8 +413,8 @@ impl MonitoringCustomServiceTelemetryEl {
     }
 }
 
-impl terrars::ToListMappable for MonitoringCustomServiceTelemetryEl {
-    type O = terrars::BlockAssignable<MonitoringCustomServiceTelemetryEl>;
+impl terrars::ToListMappable for MonitoringCustomService_Telemetry {
+    type O = terrars::BlockAssignable<MonitoringCustomService_Telemetry>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -396,29 +425,31 @@ impl terrars::ToListMappable for MonitoringCustomServiceTelemetryEl {
     }
 }
 
-pub struct BuildMonitoringCustomServiceTelemetryEl {}
+pub struct BuildMonitoringCustomService_Telemetry {}
 
-impl BuildMonitoringCustomServiceTelemetryEl {
-    pub fn build(self) -> MonitoringCustomServiceTelemetryEl {
-        MonitoringCustomServiceTelemetryEl { resource_name: core::default::Default::default() }
+impl BuildMonitoringCustomService_Telemetry {
+    pub fn build(self) -> MonitoringCustomService_Telemetry {
+        MonitoringCustomService_Telemetry { resource_name: core::default::Default::default() }
     }
 }
 
-pub struct MonitoringCustomServiceTelemetryElRef {
+#[allow(dead_code)]
+pub struct MonitoringCustomService_TelemetryRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MonitoringCustomServiceTelemetryElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitoringCustomServiceTelemetryElRef {
-        MonitoringCustomServiceTelemetryElRef {
+impl terrars::Ref for MonitoringCustomService_TelemetryRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitoringCustomService_TelemetryRef {
+        MonitoringCustomService_TelemetryRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MonitoringCustomServiceTelemetryElRef {
+impl MonitoringCustomService_TelemetryRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -431,7 +462,7 @@ impl MonitoringCustomServiceTelemetryElRef {
 }
 
 #[derive(Serialize)]
-pub struct MonitoringCustomServiceTimeoutsEl {
+pub struct MonitoringCustomService_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -440,7 +471,7 @@ pub struct MonitoringCustomServiceTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl MonitoringCustomServiceTimeoutsEl {
+impl MonitoringCustomService_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -460,8 +491,8 @@ impl MonitoringCustomServiceTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for MonitoringCustomServiceTimeoutsEl {
-    type O = terrars::BlockAssignable<MonitoringCustomServiceTimeoutsEl>;
+impl terrars::ToListMappable for MonitoringCustomService_Timeouts {
+    type O = terrars::BlockAssignable<MonitoringCustomService_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -472,11 +503,11 @@ impl terrars::ToListMappable for MonitoringCustomServiceTimeoutsEl {
     }
 }
 
-pub struct BuildMonitoringCustomServiceTimeoutsEl {}
+pub struct BuildMonitoringCustomService_Timeouts {}
 
-impl BuildMonitoringCustomServiceTimeoutsEl {
-    pub fn build(self) -> MonitoringCustomServiceTimeoutsEl {
-        MonitoringCustomServiceTimeoutsEl {
+impl BuildMonitoringCustomService_Timeouts {
+    pub fn build(self) -> MonitoringCustomService_Timeouts {
+        MonitoringCustomService_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -484,21 +515,23 @@ impl BuildMonitoringCustomServiceTimeoutsEl {
     }
 }
 
-pub struct MonitoringCustomServiceTimeoutsElRef {
+#[allow(dead_code)]
+pub struct MonitoringCustomService_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MonitoringCustomServiceTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitoringCustomServiceTimeoutsElRef {
-        MonitoringCustomServiceTimeoutsElRef {
+impl terrars::Ref for MonitoringCustomService_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitoringCustomService_TimeoutsRef {
+        MonitoringCustomService_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MonitoringCustomServiceTimeoutsElRef {
+impl MonitoringCustomService_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -517,9 +550,4 @@ impl MonitoringCustomServiceTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct MonitoringCustomServiceDynamic {
-    telemetry: std::option::Option<terrars::DynamicBlock<MonitoringCustomServiceTelemetryEl>>,
 }

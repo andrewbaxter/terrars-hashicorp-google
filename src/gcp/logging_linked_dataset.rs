@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct LoggingLinkedDatasetData {
+struct LoggingLinkedDatasetData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,6 +22,8 @@ struct LoggingLinkedDatasetData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     bucket: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -29,16 +33,16 @@ struct LoggingLinkedDatasetData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     parent: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    bigquery_dataset: std::option::Option<std::vec::Vec<LoggingLinkedDatasetBigqueryDatasetEl>>,
+    bigquery_dataset: std::option::Option<std::vec::Vec<LoggingLinkedDataset_BigqueryDataset>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<LoggingLinkedDatasetTimeoutsEl>,
+    timeouts: std::option::Option<LoggingLinkedDataset_Timeouts>,
     dynamic: LoggingLinkedDatasetDynamic,
 }
 
 struct LoggingLinkedDataset_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<LoggingLinkedDatasetData>,
+    data: std::cell::RefCell<LoggingLinkedDatasetData_>,
 }
 
 #[derive(Clone)]
@@ -139,6 +143,13 @@ impl LoggingLinkedDataset {
     }
 
     #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `description`.\nDescribes this link. The maximum length of the description is 8000 characters."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -166,7 +177,7 @@ impl LoggingLinkedDataset {
     #[doc = "Set the field `bigquery_dataset`.\n"]
     pub fn set_bigquery_dataset(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LoggingLinkedDatasetBigqueryDatasetEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LoggingLinkedDataset_BigqueryDataset>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -180,7 +191,7 @@ impl LoggingLinkedDataset {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<LoggingLinkedDatasetTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<LoggingLinkedDataset_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -195,6 +206,12 @@ impl LoggingLinkedDataset {
         "Get a reference to the value of field `create_time` after provisioning.\nOutput only. The creation timestamp of the link. A timestamp in RFC3339 UTC \"Zulu\" format,\nwith nanosecond resolution and up to nine fractional digits. Examples: \"2014-10-02T15:01:23Z\"\nand \"2014-10-02T15:01:23.045123456Z\"."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -236,13 +253,13 @@ impl LoggingLinkedDataset {
     }
 
     #[doc = "Get a reference to the value of field `bigquery_dataset` after provisioning.\n"]
-    pub fn bigquery_dataset(&self) -> terrars::ListRef<LoggingLinkedDatasetBigqueryDatasetElRef> {
+    pub fn bigquery_dataset(&self) -> terrars::ListRef<LoggingLinkedDataset_BigqueryDatasetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.bigquery_dataset", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> LoggingLinkedDatasetTimeoutsElRef {
-        LoggingLinkedDatasetTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> LoggingLinkedDataset_TimeoutsRef {
+        LoggingLinkedDataset_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -290,13 +307,14 @@ impl BuildLoggingLinkedDataset {
         let out = LoggingLinkedDataset(std::rc::Rc::new(LoggingLinkedDataset_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(LoggingLinkedDatasetData {
+            data: std::cell::RefCell::new(LoggingLinkedDatasetData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 bucket: self.bucket,
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 link_id: self.link_id,
@@ -348,6 +366,12 @@ impl LoggingLinkedDatasetRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nDescribes this link. The maximum length of the description is 8000 characters."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -386,23 +410,28 @@ impl LoggingLinkedDatasetRef {
     }
 
     #[doc = "Get a reference to the value of field `bigquery_dataset` after provisioning.\n"]
-    pub fn bigquery_dataset(&self) -> terrars::ListRef<LoggingLinkedDatasetBigqueryDatasetElRef> {
+    pub fn bigquery_dataset(&self) -> terrars::ListRef<LoggingLinkedDataset_BigqueryDatasetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.bigquery_dataset", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> LoggingLinkedDatasetTimeoutsElRef {
-        LoggingLinkedDatasetTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> LoggingLinkedDataset_TimeoutsRef {
+        LoggingLinkedDataset_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct LoggingLinkedDatasetDynamic {
+    bigquery_dataset: std::option::Option<terrars::DynamicBlock<LoggingLinkedDataset_BigqueryDataset>>,
+}
+
 #[derive(Serialize)]
-pub struct LoggingLinkedDatasetBigqueryDatasetEl {}
+pub struct LoggingLinkedDataset_BigqueryDataset {}
 
-impl LoggingLinkedDatasetBigqueryDatasetEl { }
+impl LoggingLinkedDataset_BigqueryDataset { }
 
-impl terrars::ToListMappable for LoggingLinkedDatasetBigqueryDatasetEl {
-    type O = terrars::BlockAssignable<LoggingLinkedDatasetBigqueryDatasetEl>;
+impl terrars::ToListMappable for LoggingLinkedDataset_BigqueryDataset {
+    type O = terrars::BlockAssignable<LoggingLinkedDataset_BigqueryDataset>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -413,29 +442,31 @@ impl terrars::ToListMappable for LoggingLinkedDatasetBigqueryDatasetEl {
     }
 }
 
-pub struct BuildLoggingLinkedDatasetBigqueryDatasetEl {}
+pub struct BuildLoggingLinkedDataset_BigqueryDataset {}
 
-impl BuildLoggingLinkedDatasetBigqueryDatasetEl {
-    pub fn build(self) -> LoggingLinkedDatasetBigqueryDatasetEl {
-        LoggingLinkedDatasetBigqueryDatasetEl {}
+impl BuildLoggingLinkedDataset_BigqueryDataset {
+    pub fn build(self) -> LoggingLinkedDataset_BigqueryDataset {
+        LoggingLinkedDataset_BigqueryDataset {}
     }
 }
 
-pub struct LoggingLinkedDatasetBigqueryDatasetElRef {
+#[allow(dead_code)]
+pub struct LoggingLinkedDataset_BigqueryDatasetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LoggingLinkedDatasetBigqueryDatasetElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LoggingLinkedDatasetBigqueryDatasetElRef {
-        LoggingLinkedDatasetBigqueryDatasetElRef {
+impl terrars::Ref for LoggingLinkedDataset_BigqueryDatasetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LoggingLinkedDataset_BigqueryDatasetRef {
+        LoggingLinkedDataset_BigqueryDatasetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LoggingLinkedDatasetBigqueryDatasetElRef {
+impl LoggingLinkedDataset_BigqueryDatasetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -448,14 +479,14 @@ impl LoggingLinkedDatasetBigqueryDatasetElRef {
 }
 
 #[derive(Serialize)]
-pub struct LoggingLinkedDatasetTimeoutsEl {
+pub struct LoggingLinkedDataset_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl LoggingLinkedDatasetTimeoutsEl {
+impl LoggingLinkedDataset_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -469,8 +500,8 @@ impl LoggingLinkedDatasetTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for LoggingLinkedDatasetTimeoutsEl {
-    type O = terrars::BlockAssignable<LoggingLinkedDatasetTimeoutsEl>;
+impl terrars::ToListMappable for LoggingLinkedDataset_Timeouts {
+    type O = terrars::BlockAssignable<LoggingLinkedDataset_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -481,32 +512,34 @@ impl terrars::ToListMappable for LoggingLinkedDatasetTimeoutsEl {
     }
 }
 
-pub struct BuildLoggingLinkedDatasetTimeoutsEl {}
+pub struct BuildLoggingLinkedDataset_Timeouts {}
 
-impl BuildLoggingLinkedDatasetTimeoutsEl {
-    pub fn build(self) -> LoggingLinkedDatasetTimeoutsEl {
-        LoggingLinkedDatasetTimeoutsEl {
+impl BuildLoggingLinkedDataset_Timeouts {
+    pub fn build(self) -> LoggingLinkedDataset_Timeouts {
+        LoggingLinkedDataset_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct LoggingLinkedDatasetTimeoutsElRef {
+#[allow(dead_code)]
+pub struct LoggingLinkedDataset_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LoggingLinkedDatasetTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LoggingLinkedDatasetTimeoutsElRef {
-        LoggingLinkedDatasetTimeoutsElRef {
+impl terrars::Ref for LoggingLinkedDataset_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LoggingLinkedDataset_TimeoutsRef {
+        LoggingLinkedDataset_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LoggingLinkedDatasetTimeoutsElRef {
+impl LoggingLinkedDataset_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -520,9 +553,4 @@ impl LoggingLinkedDatasetTimeoutsElRef {
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct LoggingLinkedDatasetDynamic {
-    bigquery_dataset: std::option::Option<terrars::DynamicBlock<LoggingLinkedDatasetBigqueryDatasetEl>>,
 }

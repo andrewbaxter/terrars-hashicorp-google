@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeRegionCommitmentData {
+struct ComputeRegionCommitmentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,6 +27,8 @@ struct ComputeRegionCommitmentData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    existing_reservations: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     plan: terrars::PrimField<std::string::String>,
@@ -35,18 +39,20 @@ struct ComputeRegionCommitmentData {
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    license_resource: std::option::Option<std::vec::Vec<ComputeRegionCommitmentLicenseResourceEl>>,
+    license_resource: std::option::Option<std::vec::Vec<ComputeRegionCommitment_LicenseResource>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    resources: std::option::Option<std::vec::Vec<ComputeRegionCommitmentResourcesEl>>,
+    params: std::option::Option<std::vec::Vec<ComputeRegionCommitment_Params>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComputeRegionCommitmentTimeoutsEl>,
+    resources: std::option::Option<std::vec::Vec<ComputeRegionCommitment_Resources>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<ComputeRegionCommitment_Timeouts>,
     dynamic: ComputeRegionCommitmentDynamic,
 }
 
 struct ComputeRegionCommitment_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeRegionCommitmentData>,
+    data: std::cell::RefCell<ComputeRegionCommitmentData_>,
 }
 
 #[derive(Clone)]
@@ -166,6 +172,13 @@ impl ComputeRegionCommitment {
         self
     }
 
+    #[doc =
+        "Set the field `existing_reservations`.\nSpecifies the already existing reservations to attach to the Commitment. This field will suppress\ndiffs that change the value from empty to non-empty. To force changing this field from empty to non-empty,\nchange another field at the same time."]
+    pub fn set_existing_reservations(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().existing_reservations = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -185,7 +198,7 @@ impl ComputeRegionCommitment {
     }
 
     #[doc =
-        "Set the field `type_`.\nThe type of commitment, which affects the discount rate and the eligible resources.\nThe type could be one of the following value: 'MEMORY_OPTIMIZED', 'ACCELERATOR_OPTIMIZED',\n'GENERAL_PURPOSE_N1', 'GENERAL_PURPOSE_N2', 'GENERAL_PURPOSE_N2D', 'GENERAL_PURPOSE_E2',\n'GENERAL_PURPOSE_T2D', 'GENERAL_PURPOSE_C3', 'COMPUTE_OPTIMIZED_C2', 'COMPUTE_OPTIMIZED_C2D' and\n'GRAPHICS_OPTIMIZED_G2'"]
+        "Set the field `type_`.\nThe type of commitment, which affects the discount rate and the eligible resources.\nThe type could be one of the following value: 'MEMORY_OPTIMIZED', 'ACCELERATOR_OPTIMIZED',\n'GENERAL_PURPOSE', 'GENERAL_PURPOSE_N2', 'GENERAL_PURPOSE_N2D', 'GENERAL_PURPOSE_E2',\n'GENERAL_PURPOSE_T2D', 'GENERAL_PURPOSE_C3', 'COMPUTE_OPTIMIZED_C2', 'COMPUTE_OPTIMIZED_C2D' and\n'GRAPHICS_OPTIMIZED_G2'"]
     pub fn set_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().type_ = std::option::Option::Some(v.into());
         self
@@ -194,7 +207,7 @@ impl ComputeRegionCommitment {
     #[doc = "Set the field `license_resource`.\n"]
     pub fn set_license_resource(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeRegionCommitmentLicenseResourceEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeRegionCommitment_LicenseResource>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -207,10 +220,26 @@ impl ComputeRegionCommitment {
         self
     }
 
+    #[doc = "Set the field `params`.\n"]
+    pub fn set_params(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeRegionCommitment_Params>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().params = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.params = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `resources`.\n"]
     pub fn set_resources(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeRegionCommitmentResourcesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeRegionCommitment_Resources>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -224,7 +253,7 @@ impl ComputeRegionCommitment {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeRegionCommitmentTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeRegionCommitment_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -263,6 +292,12 @@ impl ComputeRegionCommitment {
         "Get a reference to the value of field `end_timestamp` after provisioning.\nCommitment end time in RFC3339 text format."]
     pub fn end_timestamp(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.end_timestamp", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `existing_reservations` after provisioning.\nSpecifies the already existing reservations to attach to the Commitment. This field will suppress\ndiffs that change the value from empty to non-empty. To force changing this field from empty to non-empty,\nchange another field at the same time."]
+    pub fn existing_reservations(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.existing_reservations", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -317,24 +352,29 @@ impl ComputeRegionCommitment {
     }
 
     #[doc =
-        "Get a reference to the value of field `type_` after provisioning.\nThe type of commitment, which affects the discount rate and the eligible resources.\nThe type could be one of the following value: 'MEMORY_OPTIMIZED', 'ACCELERATOR_OPTIMIZED',\n'GENERAL_PURPOSE_N1', 'GENERAL_PURPOSE_N2', 'GENERAL_PURPOSE_N2D', 'GENERAL_PURPOSE_E2',\n'GENERAL_PURPOSE_T2D', 'GENERAL_PURPOSE_C3', 'COMPUTE_OPTIMIZED_C2', 'COMPUTE_OPTIMIZED_C2D' and\n'GRAPHICS_OPTIMIZED_G2'"]
+        "Get a reference to the value of field `type_` after provisioning.\nThe type of commitment, which affects the discount rate and the eligible resources.\nThe type could be one of the following value: 'MEMORY_OPTIMIZED', 'ACCELERATOR_OPTIMIZED',\n'GENERAL_PURPOSE', 'GENERAL_PURPOSE_N2', 'GENERAL_PURPOSE_N2D', 'GENERAL_PURPOSE_E2',\n'GENERAL_PURPOSE_T2D', 'GENERAL_PURPOSE_C3', 'COMPUTE_OPTIMIZED_C2', 'COMPUTE_OPTIMIZED_C2D' and\n'GRAPHICS_OPTIMIZED_G2'"]
     pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `license_resource` after provisioning.\n"]
-    pub fn license_resource(&self) -> terrars::ListRef<ComputeRegionCommitmentLicenseResourceElRef> {
+    pub fn license_resource(&self) -> terrars::ListRef<ComputeRegionCommitment_LicenseResourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.license_resource", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `params` after provisioning.\n"]
+    pub fn params(&self) -> terrars::ListRef<ComputeRegionCommitment_ParamsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.params", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resources` after provisioning.\n"]
-    pub fn resources(&self) -> terrars::ListRef<ComputeRegionCommitmentResourcesElRef> {
+    pub fn resources(&self) -> terrars::ListRef<ComputeRegionCommitment_ResourcesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.resources", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeRegionCommitmentTimeoutsElRef {
-        ComputeRegionCommitmentTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeRegionCommitment_TimeoutsRef {
+        ComputeRegionCommitment_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -384,7 +424,7 @@ impl BuildComputeRegionCommitment {
         let out = ComputeRegionCommitment(std::rc::Rc::new(ComputeRegionCommitment_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeRegionCommitmentData {
+            data: std::cell::RefCell::new(ComputeRegionCommitmentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -393,6 +433,7 @@ impl BuildComputeRegionCommitment {
                 auto_renew: core::default::Default::default(),
                 category: core::default::Default::default(),
                 description: core::default::Default::default(),
+                existing_reservations: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
                 plan: self.plan,
@@ -400,6 +441,7 @@ impl BuildComputeRegionCommitment {
                 region: core::default::Default::default(),
                 type_: core::default::Default::default(),
                 license_resource: core::default::Default::default(),
+                params: core::default::Default::default(),
                 resources: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -469,6 +511,12 @@ impl ComputeRegionCommitmentRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.end_timestamp", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `existing_reservations` after provisioning.\nSpecifies the already existing reservations to attach to the Commitment. This field will suppress\ndiffs that change the value from empty to non-empty. To force changing this field from empty to non-empty,\nchange another field at the same time."]
+    pub fn existing_reservations(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.existing_reservations", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -521,29 +569,41 @@ impl ComputeRegionCommitmentRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `type_` after provisioning.\nThe type of commitment, which affects the discount rate and the eligible resources.\nThe type could be one of the following value: 'MEMORY_OPTIMIZED', 'ACCELERATOR_OPTIMIZED',\n'GENERAL_PURPOSE_N1', 'GENERAL_PURPOSE_N2', 'GENERAL_PURPOSE_N2D', 'GENERAL_PURPOSE_E2',\n'GENERAL_PURPOSE_T2D', 'GENERAL_PURPOSE_C3', 'COMPUTE_OPTIMIZED_C2', 'COMPUTE_OPTIMIZED_C2D' and\n'GRAPHICS_OPTIMIZED_G2'"]
+        "Get a reference to the value of field `type_` after provisioning.\nThe type of commitment, which affects the discount rate and the eligible resources.\nThe type could be one of the following value: 'MEMORY_OPTIMIZED', 'ACCELERATOR_OPTIMIZED',\n'GENERAL_PURPOSE', 'GENERAL_PURPOSE_N2', 'GENERAL_PURPOSE_N2D', 'GENERAL_PURPOSE_E2',\n'GENERAL_PURPOSE_T2D', 'GENERAL_PURPOSE_C3', 'COMPUTE_OPTIMIZED_C2', 'COMPUTE_OPTIMIZED_C2D' and\n'GRAPHICS_OPTIMIZED_G2'"]
     pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `license_resource` after provisioning.\n"]
-    pub fn license_resource(&self) -> terrars::ListRef<ComputeRegionCommitmentLicenseResourceElRef> {
+    pub fn license_resource(&self) -> terrars::ListRef<ComputeRegionCommitment_LicenseResourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.license_resource", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `params` after provisioning.\n"]
+    pub fn params(&self) -> terrars::ListRef<ComputeRegionCommitment_ParamsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.params", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resources` after provisioning.\n"]
-    pub fn resources(&self) -> terrars::ListRef<ComputeRegionCommitmentResourcesElRef> {
+    pub fn resources(&self) -> terrars::ListRef<ComputeRegionCommitment_ResourcesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.resources", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeRegionCommitmentTimeoutsElRef {
-        ComputeRegionCommitmentTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeRegionCommitment_TimeoutsRef {
+        ComputeRegionCommitment_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ComputeRegionCommitmentDynamic {
+    license_resource: std::option::Option<terrars::DynamicBlock<ComputeRegionCommitment_LicenseResource>>,
+    params: std::option::Option<terrars::DynamicBlock<ComputeRegionCommitment_Params>>,
+    resources: std::option::Option<terrars::DynamicBlock<ComputeRegionCommitment_Resources>>,
+}
+
 #[derive(Serialize)]
-pub struct ComputeRegionCommitmentLicenseResourceEl {
+pub struct ComputeRegionCommitment_LicenseResource {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     amount: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -551,7 +611,7 @@ pub struct ComputeRegionCommitmentLicenseResourceEl {
     license: terrars::PrimField<std::string::String>,
 }
 
-impl ComputeRegionCommitmentLicenseResourceEl {
+impl ComputeRegionCommitment_LicenseResource {
     #[doc = "Set the field `amount`.\nThe number of licenses purchased."]
     pub fn set_amount(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.amount = std::option::Option::Some(v.into());
@@ -566,8 +626,8 @@ impl ComputeRegionCommitmentLicenseResourceEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeRegionCommitmentLicenseResourceEl {
-    type O = terrars::BlockAssignable<ComputeRegionCommitmentLicenseResourceEl>;
+impl terrars::ToListMappable for ComputeRegionCommitment_LicenseResource {
+    type O = terrars::BlockAssignable<ComputeRegionCommitment_LicenseResource>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -578,14 +638,14 @@ impl terrars::ToListMappable for ComputeRegionCommitmentLicenseResourceEl {
     }
 }
 
-pub struct BuildComputeRegionCommitmentLicenseResourceEl {
+pub struct BuildComputeRegionCommitment_LicenseResource {
     #[doc = "Any applicable license URI."]
     pub license: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputeRegionCommitmentLicenseResourceEl {
-    pub fn build(self) -> ComputeRegionCommitmentLicenseResourceEl {
-        ComputeRegionCommitmentLicenseResourceEl {
+impl BuildComputeRegionCommitment_LicenseResource {
+    pub fn build(self) -> ComputeRegionCommitment_LicenseResource {
+        ComputeRegionCommitment_LicenseResource {
             amount: core::default::Default::default(),
             cores_per_license: core::default::Default::default(),
             license: self.license,
@@ -593,21 +653,23 @@ impl BuildComputeRegionCommitmentLicenseResourceEl {
     }
 }
 
-pub struct ComputeRegionCommitmentLicenseResourceElRef {
+#[allow(dead_code)]
+pub struct ComputeRegionCommitment_LicenseResourceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeRegionCommitmentLicenseResourceElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRegionCommitmentLicenseResourceElRef {
-        ComputeRegionCommitmentLicenseResourceElRef {
+impl terrars::Ref for ComputeRegionCommitment_LicenseResourceRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRegionCommitment_LicenseResourceRef {
+        ComputeRegionCommitment_LicenseResourceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeRegionCommitmentLicenseResourceElRef {
+impl ComputeRegionCommitment_LicenseResourceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -630,7 +692,73 @@ impl ComputeRegionCommitmentLicenseResourceElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeRegionCommitmentResourcesEl {
+pub struct ComputeRegionCommitment_Params {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_manager_tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+}
+
+impl ComputeRegionCommitment_Params {
+    #[doc =
+        "Set the field `resource_manager_tags`.\nResource manager tags to be bound to the commitment. Tag keys and values have the\nsame definition as resource manager tags. Keys must be in the format tagKeys/{tag_key_id},\nand values are in the format tagValues/456."]
+    pub fn set_resource_manager_tags(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.resource_manager_tags = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeRegionCommitment_Params {
+    type O = terrars::BlockAssignable<ComputeRegionCommitment_Params>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeRegionCommitment_Params {}
+
+impl BuildComputeRegionCommitment_Params {
+    pub fn build(self) -> ComputeRegionCommitment_Params {
+        ComputeRegionCommitment_Params { resource_manager_tags: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeRegionCommitment_ParamsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeRegionCommitment_ParamsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRegionCommitment_ParamsRef {
+        ComputeRegionCommitment_ParamsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeRegionCommitment_ParamsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `resource_manager_tags` after provisioning.\nResource manager tags to be bound to the commitment. Tag keys and values have the\nsame definition as resource manager tags. Keys must be in the format tagKeys/{tag_key_id},\nand values are in the format tagValues/456."]
+    pub fn resource_manager_tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.resource_manager_tags", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ComputeRegionCommitment_Resources {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     accelerator_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -639,7 +767,7 @@ pub struct ComputeRegionCommitmentResourcesEl {
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeRegionCommitmentResourcesEl {
+impl ComputeRegionCommitment_Resources {
     #[doc =
         "Set the field `accelerator_type`.\nName of the accelerator type resource. Applicable only when the type is ACCELERATOR."]
     pub fn set_accelerator_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -662,8 +790,8 @@ impl ComputeRegionCommitmentResourcesEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeRegionCommitmentResourcesEl {
-    type O = terrars::BlockAssignable<ComputeRegionCommitmentResourcesEl>;
+impl terrars::ToListMappable for ComputeRegionCommitment_Resources {
+    type O = terrars::BlockAssignable<ComputeRegionCommitment_Resources>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -674,11 +802,11 @@ impl terrars::ToListMappable for ComputeRegionCommitmentResourcesEl {
     }
 }
 
-pub struct BuildComputeRegionCommitmentResourcesEl {}
+pub struct BuildComputeRegionCommitment_Resources {}
 
-impl BuildComputeRegionCommitmentResourcesEl {
-    pub fn build(self) -> ComputeRegionCommitmentResourcesEl {
-        ComputeRegionCommitmentResourcesEl {
+impl BuildComputeRegionCommitment_Resources {
+    pub fn build(self) -> ComputeRegionCommitment_Resources {
+        ComputeRegionCommitment_Resources {
             accelerator_type: core::default::Default::default(),
             amount: core::default::Default::default(),
             type_: core::default::Default::default(),
@@ -686,21 +814,23 @@ impl BuildComputeRegionCommitmentResourcesEl {
     }
 }
 
-pub struct ComputeRegionCommitmentResourcesElRef {
+#[allow(dead_code)]
+pub struct ComputeRegionCommitment_ResourcesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeRegionCommitmentResourcesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRegionCommitmentResourcesElRef {
-        ComputeRegionCommitmentResourcesElRef {
+impl terrars::Ref for ComputeRegionCommitment_ResourcesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRegionCommitment_ResourcesRef {
+        ComputeRegionCommitment_ResourcesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeRegionCommitmentResourcesElRef {
+impl ComputeRegionCommitment_ResourcesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -725,14 +855,14 @@ impl ComputeRegionCommitmentResourcesElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeRegionCommitmentTimeoutsEl {
+pub struct ComputeRegionCommitment_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeRegionCommitmentTimeoutsEl {
+impl ComputeRegionCommitment_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -746,8 +876,8 @@ impl ComputeRegionCommitmentTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeRegionCommitmentTimeoutsEl {
-    type O = terrars::BlockAssignable<ComputeRegionCommitmentTimeoutsEl>;
+impl terrars::ToListMappable for ComputeRegionCommitment_Timeouts {
+    type O = terrars::BlockAssignable<ComputeRegionCommitment_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -758,32 +888,34 @@ impl terrars::ToListMappable for ComputeRegionCommitmentTimeoutsEl {
     }
 }
 
-pub struct BuildComputeRegionCommitmentTimeoutsEl {}
+pub struct BuildComputeRegionCommitment_Timeouts {}
 
-impl BuildComputeRegionCommitmentTimeoutsEl {
-    pub fn build(self) -> ComputeRegionCommitmentTimeoutsEl {
-        ComputeRegionCommitmentTimeoutsEl {
+impl BuildComputeRegionCommitment_Timeouts {
+    pub fn build(self) -> ComputeRegionCommitment_Timeouts {
+        ComputeRegionCommitment_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeRegionCommitmentTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComputeRegionCommitment_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeRegionCommitmentTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRegionCommitmentTimeoutsElRef {
-        ComputeRegionCommitmentTimeoutsElRef {
+impl terrars::Ref for ComputeRegionCommitment_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRegionCommitment_TimeoutsRef {
+        ComputeRegionCommitment_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeRegionCommitmentTimeoutsElRef {
+impl ComputeRegionCommitment_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -797,10 +929,4 @@ impl ComputeRegionCommitmentTimeoutsElRef {
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ComputeRegionCommitmentDynamic {
-    license_resource: std::option::Option<terrars::DynamicBlock<ComputeRegionCommitmentLicenseResourceEl>>,
-    resources: std::option::Option<terrars::DynamicBlock<ComputeRegionCommitmentResourcesEl>>,
 }

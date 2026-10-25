@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeAddressData {
+struct ComputeAddressData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,9 +25,13 @@ struct ComputeAddressData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     address_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ip_collection: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ip_version: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -48,13 +54,13 @@ struct ComputeAddressData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     subnetwork: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComputeAddressTimeoutsEl>,
+    timeouts: std::option::Option<ComputeAddress_Timeouts>,
 }
 
 struct ComputeAddress_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeAddressData>,
+    data: std::cell::RefCell<ComputeAddressData_>,
 }
 
 #[derive(Clone)]
@@ -168,6 +174,13 @@ impl ComputeAddress {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nAn optional description of this resource."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -177,6 +190,13 @@ impl ComputeAddress {
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `ip_collection`.\nReference to the source of external IPv4/IPv6 addresses, like a PublicDelegatedPrefix(PDP) for BYOIP.\nIf an IPv4 PDP is used, the PDP must support enhanced IPv4 allocations.\nIf an IPv6 PDP is used, the PDP must be in EXTERNAL_IPV6_FORWARDING_RULE_CREATION mode.\nUse one of the following formats to specify a PDP when reserving an external IPv4 address using BYOIP.\nFull resource URL, as in:\n  * 'https://www.googleapis.com/compute/v1/projects/{{projectId}}/regions/{{region}}/publicDelegatedPrefixes/{{pdp-name}}'\nPartial URL, as in:\n  * 'projects/{{projectId}}/regions/region/publicDelegatedPrefixes/{{pdp-name}}'\n  * 'regions/{{region}}/publicDelegatedPrefixes/{{pdp-name}}'"]
+    pub fn set_ip_collection(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().ip_collection = std::option::Option::Some(v.into());
         self
     }
 
@@ -231,7 +251,7 @@ impl ComputeAddress {
     }
 
     #[doc =
-        "Set the field `purpose`.\nThe purpose of this resource, which can be one of the following values.\n\n* GCE_ENDPOINT for addresses that are used by VM instances, alias IP\nranges, load balancers, and similar resources.\n\n* SHARED_LOADBALANCER_VIP for an address that can be used by multiple\ninternal load balancers.\n\n* VPC_PEERING for addresses that are reserved for VPC peer networks.\n\n* IPSEC_INTERCONNECT for addresses created from a private IP range that\nare reserved for a VLAN attachment in an HA VPN over Cloud Interconnect\nconfiguration. These addresses are regional resources.\n\n* PRIVATE_SERVICE_CONNECT for a private network address that is used to\nconfigure Private Service Connect. Only global internal addresses can use\nthis purpose.\n\n\nThis should only be set when using an Internal address."]
+        "Set the field `purpose`.\nThe purpose of this resource, which can be one of the following values.\n\n* GCE_ENDPOINT for addresses that are used by VM instances, alias IP\nranges, load balancers, and similar resources.\n\n* SHARED_LOADBALANCER_VIP for an address that can be used by multiple\ninternal load balancers.\n\n* VPC_PEERING for addresses that are reserved for VPC peer networks.\n\n* IPSEC_INTERCONNECT for addresses created from a private IP range that\nare reserved for a VLAN attachment in an HA VPN over Cloud Interconnect\nconfiguration. These addresses are regional resources.\n\n* PRIVATE_SERVICE_CONNECT for a private network address that is used to\nconfigure Private Service Connect. Only global internal addresses can use\nthis purpose.\n\n* SYSTEM_MANAGED for regional internal IP address that is reserved and\nmanaged internally. It can not be assigned to compute resources such as\nVM and internal load balancer.\n\nThis should only be set when using an Internal address."]
     pub fn set_purpose(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().purpose = std::option::Option::Some(v.into());
         self
@@ -245,14 +265,14 @@ impl ComputeAddress {
     }
 
     #[doc =
-        "Set the field `subnetwork`.\nThe URL of the subnetwork in which to reserve the address. If an IP\naddress is specified, it must be within the subnetwork's IP range.\nThis field can only be used with INTERNAL type with\nGCE_ENDPOINT/DNS_RESOLVER purposes."]
+        "Set the field `subnetwork`.\nThe URL of the subnetwork in which to reserve the address. If an IP\naddress is specified, it must be within the subnetwork's IP range.\nThis field can only be used with INTERNAL type with\nGCE_ENDPOINT/DNS_RESOLVER purposes, or with EXTERNAL type IPv6 addresses\nwhen 'ipv6_endpoint_type' is 'VM' or 'NETLB'."]
     pub fn set_subnetwork(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().subnetwork = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeAddressTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeAddress_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -261,6 +281,12 @@ impl ComputeAddress {
         "Get a reference to the value of field `address` after provisioning.\nThe static external IP address represented by this resource.\nThe IP address must be inside the specified subnetwork,\nif any. Set by the API if undefined."]
     pub fn address(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.address", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `address_id` after provisioning.\nThe unique numeric identifier for the resource. This identifier is defined by the server."]
+    pub fn address_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.address_id", self.extract_ref()))
     }
 
     #[doc =
@@ -273,6 +299,12 @@ impl ComputeAddress {
         "Get a reference to the value of field `creation_timestamp` after provisioning.\nCreation timestamp in RFC3339 text format."]
     pub fn creation_timestamp(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_timestamp", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -290,6 +322,12 @@ impl ComputeAddress {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `ip_collection` after provisioning.\nReference to the source of external IPv4/IPv6 addresses, like a PublicDelegatedPrefix(PDP) for BYOIP.\nIf an IPv4 PDP is used, the PDP must support enhanced IPv4 allocations.\nIf an IPv6 PDP is used, the PDP must be in EXTERNAL_IPV6_FORWARDING_RULE_CREATION mode.\nUse one of the following formats to specify a PDP when reserving an external IPv4 address using BYOIP.\nFull resource URL, as in:\n  * 'https://www.googleapis.com/compute/v1/projects/{{projectId}}/regions/{{region}}/publicDelegatedPrefixes/{{pdp-name}}'\nPartial URL, as in:\n  * 'projects/{{projectId}}/regions/region/publicDelegatedPrefixes/{{pdp-name}}'\n  * 'regions/{{region}}/publicDelegatedPrefixes/{{pdp-name}}'"]
+    pub fn ip_collection(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_collection", self.extract_ref()))
     }
 
     #[doc =
@@ -346,7 +384,7 @@ impl ComputeAddress {
     }
 
     #[doc =
-        "Get a reference to the value of field `purpose` after provisioning.\nThe purpose of this resource, which can be one of the following values.\n\n* GCE_ENDPOINT for addresses that are used by VM instances, alias IP\nranges, load balancers, and similar resources.\n\n* SHARED_LOADBALANCER_VIP for an address that can be used by multiple\ninternal load balancers.\n\n* VPC_PEERING for addresses that are reserved for VPC peer networks.\n\n* IPSEC_INTERCONNECT for addresses created from a private IP range that\nare reserved for a VLAN attachment in an HA VPN over Cloud Interconnect\nconfiguration. These addresses are regional resources.\n\n* PRIVATE_SERVICE_CONNECT for a private network address that is used to\nconfigure Private Service Connect. Only global internal addresses can use\nthis purpose.\n\n\nThis should only be set when using an Internal address."]
+        "Get a reference to the value of field `purpose` after provisioning.\nThe purpose of this resource, which can be one of the following values.\n\n* GCE_ENDPOINT for addresses that are used by VM instances, alias IP\nranges, load balancers, and similar resources.\n\n* SHARED_LOADBALANCER_VIP for an address that can be used by multiple\ninternal load balancers.\n\n* VPC_PEERING for addresses that are reserved for VPC peer networks.\n\n* IPSEC_INTERCONNECT for addresses created from a private IP range that\nare reserved for a VLAN attachment in an HA VPN over Cloud Interconnect\nconfiguration. These addresses are regional resources.\n\n* PRIVATE_SERVICE_CONNECT for a private network address that is used to\nconfigure Private Service Connect. Only global internal addresses can use\nthis purpose.\n\n* SYSTEM_MANAGED for regional internal IP address that is reserved and\nmanaged internally. It can not be assigned to compute resources such as\nVM and internal load balancer.\n\nThis should only be set when using an Internal address."]
     pub fn purpose(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.purpose", self.extract_ref()))
     }
@@ -363,7 +401,7 @@ impl ComputeAddress {
     }
 
     #[doc =
-        "Get a reference to the value of field `subnetwork` after provisioning.\nThe URL of the subnetwork in which to reserve the address. If an IP\naddress is specified, it must be within the subnetwork's IP range.\nThis field can only be used with INTERNAL type with\nGCE_ENDPOINT/DNS_RESOLVER purposes."]
+        "Get a reference to the value of field `subnetwork` after provisioning.\nThe URL of the subnetwork in which to reserve the address. If an IP\naddress is specified, it must be within the subnetwork's IP range.\nThis field can only be used with INTERNAL type with\nGCE_ENDPOINT/DNS_RESOLVER purposes, or with EXTERNAL type IPv6 addresses\nwhen 'ipv6_endpoint_type' is 'VM' or 'NETLB'."]
     pub fn subnetwork(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.subnetwork", self.extract_ref()))
     }
@@ -381,8 +419,8 @@ impl ComputeAddress {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeAddressTimeoutsElRef {
-        ComputeAddressTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeAddress_TimeoutsRef {
+        ComputeAddress_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -429,7 +467,7 @@ impl BuildComputeAddress {
         let out = ComputeAddress(std::rc::Rc::new(ComputeAddress_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeAddressData {
+            data: std::cell::RefCell::new(ComputeAddressData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -437,8 +475,10 @@ impl BuildComputeAddress {
                 provisioner: core::default::Default::default(),
                 address: core::default::Default::default(),
                 address_type: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
+                ip_collection: core::default::Default::default(),
                 ip_version: core::default::Default::default(),
                 ipv6_endpoint_type: core::default::Default::default(),
                 labels: core::default::Default::default(),
@@ -488,6 +528,12 @@ impl ComputeAddressRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `address_id` after provisioning.\nThe unique numeric identifier for the resource. This identifier is defined by the server."]
+    pub fn address_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.address_id", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `address_type` after provisioning.\nThe type of address to reserve.\nNote: if you set this argument's value as 'INTERNAL' you need to leave the 'network_tier' argument unset in that resource block. Default value: \"EXTERNAL\" Possible values: [\"INTERNAL\", \"EXTERNAL\"]"]
     pub fn address_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.address_type", self.extract_ref()))
@@ -497,6 +543,12 @@ impl ComputeAddressRef {
         "Get a reference to the value of field `creation_timestamp` after provisioning.\nCreation timestamp in RFC3339 text format."]
     pub fn creation_timestamp(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_timestamp", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -514,6 +566,12 @@ impl ComputeAddressRef {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `ip_collection` after provisioning.\nReference to the source of external IPv4/IPv6 addresses, like a PublicDelegatedPrefix(PDP) for BYOIP.\nIf an IPv4 PDP is used, the PDP must support enhanced IPv4 allocations.\nIf an IPv6 PDP is used, the PDP must be in EXTERNAL_IPV6_FORWARDING_RULE_CREATION mode.\nUse one of the following formats to specify a PDP when reserving an external IPv4 address using BYOIP.\nFull resource URL, as in:\n  * 'https://www.googleapis.com/compute/v1/projects/{{projectId}}/regions/{{region}}/publicDelegatedPrefixes/{{pdp-name}}'\nPartial URL, as in:\n  * 'projects/{{projectId}}/regions/region/publicDelegatedPrefixes/{{pdp-name}}'\n  * 'regions/{{region}}/publicDelegatedPrefixes/{{pdp-name}}'"]
+    pub fn ip_collection(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_collection", self.extract_ref()))
     }
 
     #[doc =
@@ -570,7 +628,7 @@ impl ComputeAddressRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `purpose` after provisioning.\nThe purpose of this resource, which can be one of the following values.\n\n* GCE_ENDPOINT for addresses that are used by VM instances, alias IP\nranges, load balancers, and similar resources.\n\n* SHARED_LOADBALANCER_VIP for an address that can be used by multiple\ninternal load balancers.\n\n* VPC_PEERING for addresses that are reserved for VPC peer networks.\n\n* IPSEC_INTERCONNECT for addresses created from a private IP range that\nare reserved for a VLAN attachment in an HA VPN over Cloud Interconnect\nconfiguration. These addresses are regional resources.\n\n* PRIVATE_SERVICE_CONNECT for a private network address that is used to\nconfigure Private Service Connect. Only global internal addresses can use\nthis purpose.\n\n\nThis should only be set when using an Internal address."]
+        "Get a reference to the value of field `purpose` after provisioning.\nThe purpose of this resource, which can be one of the following values.\n\n* GCE_ENDPOINT for addresses that are used by VM instances, alias IP\nranges, load balancers, and similar resources.\n\n* SHARED_LOADBALANCER_VIP for an address that can be used by multiple\ninternal load balancers.\n\n* VPC_PEERING for addresses that are reserved for VPC peer networks.\n\n* IPSEC_INTERCONNECT for addresses created from a private IP range that\nare reserved for a VLAN attachment in an HA VPN over Cloud Interconnect\nconfiguration. These addresses are regional resources.\n\n* PRIVATE_SERVICE_CONNECT for a private network address that is used to\nconfigure Private Service Connect. Only global internal addresses can use\nthis purpose.\n\n* SYSTEM_MANAGED for regional internal IP address that is reserved and\nmanaged internally. It can not be assigned to compute resources such as\nVM and internal load balancer.\n\nThis should only be set when using an Internal address."]
     pub fn purpose(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.purpose", self.extract_ref()))
     }
@@ -587,7 +645,7 @@ impl ComputeAddressRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `subnetwork` after provisioning.\nThe URL of the subnetwork in which to reserve the address. If an IP\naddress is specified, it must be within the subnetwork's IP range.\nThis field can only be used with INTERNAL type with\nGCE_ENDPOINT/DNS_RESOLVER purposes."]
+        "Get a reference to the value of field `subnetwork` after provisioning.\nThe URL of the subnetwork in which to reserve the address. If an IP\naddress is specified, it must be within the subnetwork's IP range.\nThis field can only be used with INTERNAL type with\nGCE_ENDPOINT/DNS_RESOLVER purposes, or with EXTERNAL type IPv6 addresses\nwhen 'ipv6_endpoint_type' is 'VM' or 'NETLB'."]
     pub fn subnetwork(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.subnetwork", self.extract_ref()))
     }
@@ -605,13 +663,13 @@ impl ComputeAddressRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeAddressTimeoutsElRef {
-        ComputeAddressTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeAddress_TimeoutsRef {
+        ComputeAddress_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeAddressTimeoutsEl {
+pub struct ComputeAddress_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -620,7 +678,7 @@ pub struct ComputeAddressTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeAddressTimeoutsEl {
+impl ComputeAddress_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -640,8 +698,8 @@ impl ComputeAddressTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeAddressTimeoutsEl {
-    type O = terrars::BlockAssignable<ComputeAddressTimeoutsEl>;
+impl terrars::ToListMappable for ComputeAddress_Timeouts {
+    type O = terrars::BlockAssignable<ComputeAddress_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -652,11 +710,11 @@ impl terrars::ToListMappable for ComputeAddressTimeoutsEl {
     }
 }
 
-pub struct BuildComputeAddressTimeoutsEl {}
+pub struct BuildComputeAddress_Timeouts {}
 
-impl BuildComputeAddressTimeoutsEl {
-    pub fn build(self) -> ComputeAddressTimeoutsEl {
-        ComputeAddressTimeoutsEl {
+impl BuildComputeAddress_Timeouts {
+    pub fn build(self) -> ComputeAddress_Timeouts {
+        ComputeAddress_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -664,21 +722,23 @@ impl BuildComputeAddressTimeoutsEl {
     }
 }
 
-pub struct ComputeAddressTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComputeAddress_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeAddressTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeAddressTimeoutsElRef {
-        ComputeAddressTimeoutsElRef {
+impl terrars::Ref for ComputeAddress_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeAddress_TimeoutsRef {
+        ComputeAddress_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeAddressTimeoutsElRef {
+impl ComputeAddress_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

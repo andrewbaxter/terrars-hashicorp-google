@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeRouterPeerData {
+struct ComputeRouterPeerData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,20 +27,34 @@ struct ComputeRouterPeerData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     advertised_route_priority: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_learned_route_priority: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_ipv4: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_ipv6: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    export_policies: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    import_policies: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     interface: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ip_address: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ipv4_nexthop_address: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ipv6_nexthop_address: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     peer_asn: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     peer_ip_address: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    peer_ipv4_nexthop_address: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     peer_ipv6_nexthop_address: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -49,18 +65,26 @@ struct ComputeRouterPeerData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     router_appliance_instance: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    advertised_ip_ranges: std::option::Option<std::vec::Vec<ComputeRouterPeerAdvertisedIpRangesEl>>,
+    zero_advertised_route_priority: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    bfd: std::option::Option<std::vec::Vec<ComputeRouterPeerBfdEl>>,
+    zero_custom_learned_route_priority: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComputeRouterPeerTimeoutsEl>,
+    advertised_ip_ranges: std::option::Option<std::vec::Vec<ComputeRouterPeer_AdvertisedIpRanges>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bfd: std::option::Option<std::vec::Vec<ComputeRouterPeer_Bfd>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_learned_ip_ranges: std::option::Option<std::vec::Vec<ComputeRouterPeer_CustomLearnedIpRanges>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    md5_authentication_key: std::option::Option<std::vec::Vec<ComputeRouterPeer_Md5AuthenticationKey>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<ComputeRouterPeer_Timeouts>,
     dynamic: ComputeRouterPeerDynamic,
 }
 
 struct ComputeRouterPeer_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeRouterPeerData>,
+    data: std::cell::RefCell<ComputeRouterPeerData_>,
 }
 
 #[derive(Clone)]
@@ -185,9 +209,30 @@ impl ComputeRouterPeer {
     }
 
     #[doc =
+        "Set the field `custom_learned_route_priority`.\nThe user-defined custom learned route priority for a BGP session.\nThis value is applied to all custom learned route ranges for the session. You can choose a value\nfrom 0 to 65335. If you don't provide a value, Google Cloud assigns a priority of 100 to the ranges."]
+    pub fn set_custom_learned_route_priority(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().custom_learned_route_priority = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `enable`.\nThe status of the BGP peer connection. If set to false, any active session\nwith the peer is terminated and all associated routing information is removed.\nIf set to true, the peer connection can be established with routing information.\nThe default is true."]
     pub fn set_enable(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().enable = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `enable_ipv4`.\nEnable IPv4 traffic over BGP Peer. It is enabled by default if the peerIpAddress is version 4."]
+    pub fn set_enable_ipv4(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().enable_ipv4 = std::option::Option::Some(v.into());
         self
     }
 
@@ -198,6 +243,16 @@ impl ComputeRouterPeer {
         self
     }
 
+    #[doc =
+        "Set the field `export_policies`.\nrouters.list of export policies applied to this peer, in the order they must be evaluated. \nThe name must correspond to an existing policy that has ROUTE_POLICY_TYPE_EXPORT type."]
+    pub fn set_export_policies(
+        self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().export_policies = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -205,9 +260,25 @@ impl ComputeRouterPeer {
     }
 
     #[doc =
+        "Set the field `import_policies`.\nrouters.list of import policies applied to this peer, in the order they must be evaluated. \nThe name must correspond to an existing policy that has ROUTE_POLICY_TYPE_IMPORT type."]
+    pub fn set_import_policies(
+        self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().import_policies = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `ip_address`.\nIP address of the interface inside Google Cloud Platform.\nOnly IPv4 is supported."]
     pub fn set_ip_address(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().ip_address = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `ipv4_nexthop_address`.\nIPv4 address of the interface inside Google Cloud Platform."]
+    pub fn set_ipv4_nexthop_address(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().ipv4_nexthop_address = std::option::Option::Some(v.into());
         self
     }
 
@@ -222,6 +293,16 @@ impl ComputeRouterPeer {
         "Set the field `peer_ip_address`.\nIP address of the BGP interface outside Google Cloud Platform.\nOnly IPv4 is supported. Required if 'ip_address' is set."]
     pub fn set_peer_ip_address(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().peer_ip_address = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `peer_ipv4_nexthop_address`.\nIPv4 address of the BGP interface outside Google Cloud Platform."]
+    pub fn set_peer_ipv4_nexthop_address(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().peer_ipv4_nexthop_address = std::option::Option::Some(v.into());
         self
     }
 
@@ -258,10 +339,22 @@ impl ComputeRouterPeer {
         self
     }
 
+    #[doc = "Set the field `zero_advertised_route_priority`.\nForce the advertised_route_priority to be 0."]
+    pub fn set_zero_advertised_route_priority(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().zero_advertised_route_priority = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `zero_custom_learned_route_priority`.\nForce the custom_learned_route_priority to be 0."]
+    pub fn set_zero_custom_learned_route_priority(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().zero_custom_learned_route_priority = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `advertised_ip_ranges`.\n"]
     pub fn set_advertised_ip_ranges(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeRouterPeerAdvertisedIpRangesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeRouterPeer_AdvertisedIpRanges>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -275,7 +368,7 @@ impl ComputeRouterPeer {
     }
 
     #[doc = "Set the field `bfd`.\n"]
-    pub fn set_bfd(self, v: impl std::convert::Into<terrars::BlockAssignable<ComputeRouterPeerBfdEl>>) -> Self {
+    pub fn set_bfd(self, v: impl std::convert::Into<terrars::BlockAssignable<ComputeRouterPeer_Bfd>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().bfd = std::option::Option::Some(v);
@@ -287,8 +380,40 @@ impl ComputeRouterPeer {
         self
     }
 
+    #[doc = "Set the field `custom_learned_ip_ranges`.\n"]
+    pub fn set_custom_learned_ip_ranges(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeRouterPeer_CustomLearnedIpRanges>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().custom_learned_ip_ranges = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.custom_learned_ip_ranges = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `md5_authentication_key`.\n"]
+    pub fn set_md5_authentication_key(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeRouterPeer_Md5AuthenticationKey>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().md5_authentication_key = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.md5_authentication_key = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeRouterPeerTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeRouterPeer_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -312,9 +437,30 @@ impl ComputeRouterPeer {
     }
 
     #[doc =
+        "Get a reference to the value of field `custom_learned_route_priority` after provisioning.\nThe user-defined custom learned route priority for a BGP session.\nThis value is applied to all custom learned route ranges for the session. You can choose a value\nfrom 0 to 65335. If you don't provide a value, Google Cloud assigns a priority of 100 to the ranges."]
+    pub fn custom_learned_route_priority(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.custom_learned_route_priority", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `enable` after provisioning.\nThe status of the BGP peer connection. If set to false, any active session\nwith the peer is terminated and all associated routing information is removed.\nIf set to true, the peer connection can be established with routing information.\nThe default is true."]
     pub fn enable(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `enable_ipv4` after provisioning.\nEnable IPv4 traffic over BGP Peer. It is enabled by default if the peerIpAddress is version 4."]
+    pub fn enable_ipv4(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_ipv4", self.extract_ref()))
     }
 
     #[doc =
@@ -323,9 +469,21 @@ impl ComputeRouterPeer {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_ipv6", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `export_policies` after provisioning.\nrouters.list of export policies applied to this peer, in the order they must be evaluated. \nThe name must correspond to an existing policy that has ROUTE_POLICY_TYPE_EXPORT type."]
+    pub fn export_policies(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.export_policies", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `import_policies` after provisioning.\nrouters.list of import policies applied to this peer, in the order they must be evaluated. \nThe name must correspond to an existing policy that has ROUTE_POLICY_TYPE_IMPORT type."]
+    pub fn import_policies(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.import_policies", self.extract_ref()))
     }
 
     #[doc =
@@ -341,9 +499,33 @@ impl ComputeRouterPeer {
     }
 
     #[doc =
+        "Get a reference to the value of field `ipv4_nexthop_address` after provisioning.\nIPv4 address of the interface inside Google Cloud Platform."]
+    pub fn ipv4_nexthop_address(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv4_nexthop_address", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `ipv6_nexthop_address` after provisioning.\nIPv6 address of the interface inside Google Cloud Platform.\nThe address must be in the range 2600:2d00:0:2::/64 or 2600:2d00:0:3::/64.\nIf you do not specify the next hop addresses, Google Cloud automatically\nassigns unused addresses from the 2600:2d00:0:2::/64 or 2600:2d00:0:3::/64 range for you."]
     pub fn ipv6_nexthop_address(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv6_nexthop_address", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `is_advertised_route_priority_set` after provisioning.\nAn internal boolean field for provider use for zero_advertised_route_priority."]
+    pub fn is_advertised_route_priority_set(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.is_advertised_route_priority_set", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `is_custom_learned_priority_set` after provisioning.\nAn internal boolean field for provider use."]
+    pub fn is_custom_learned_priority_set(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.is_custom_learned_priority_set", self.extract_ref()),
+        )
     }
 
     #[doc =
@@ -368,6 +550,12 @@ impl ComputeRouterPeer {
         "Get a reference to the value of field `peer_ip_address` after provisioning.\nIP address of the BGP interface outside Google Cloud Platform.\nOnly IPv4 is supported. Required if 'ip_address' is set."]
     pub fn peer_ip_address(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.peer_ip_address", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `peer_ipv4_nexthop_address` after provisioning.\nIPv4 address of the BGP interface outside Google Cloud Platform."]
+    pub fn peer_ipv4_nexthop_address(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.peer_ipv4_nexthop_address", self.extract_ref()))
     }
 
     #[doc =
@@ -399,19 +587,42 @@ impl ComputeRouterPeer {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.router_appliance_instance", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `advertised_ip_ranges` after provisioning.\n"]
-    pub fn advertised_ip_ranges(&self) -> terrars::ListRef<ComputeRouterPeerAdvertisedIpRangesElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.advertised_ip_ranges", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `zero_advertised_route_priority` after provisioning.\nForce the advertised_route_priority to be 0."]
+    pub fn zero_advertised_route_priority(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.zero_advertised_route_priority", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `zero_custom_learned_route_priority` after provisioning.\nForce the custom_learned_route_priority to be 0."]
+    pub fn zero_custom_learned_route_priority(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.zero_custom_learned_route_priority", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `bfd` after provisioning.\n"]
-    pub fn bfd(&self) -> terrars::ListRef<ComputeRouterPeerBfdElRef> {
+    pub fn bfd(&self) -> terrars::ListRef<ComputeRouterPeer_BfdRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.bfd", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `custom_learned_ip_ranges` after provisioning.\n"]
+    pub fn custom_learned_ip_ranges(&self) -> terrars::ListRef<ComputeRouterPeer_CustomLearnedIpRangesRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.custom_learned_ip_ranges", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `md5_authentication_key` after provisioning.\n"]
+    pub fn md5_authentication_key(&self) -> terrars::ListRef<ComputeRouterPeer_Md5AuthenticationKeyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.md5_authentication_key", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeRouterPeerTimeoutsElRef {
-        ComputeRouterPeerTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeRouterPeer_TimeoutsRef {
+        ComputeRouterPeer_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -464,7 +675,7 @@ impl BuildComputeRouterPeer {
         let out = ComputeRouterPeer(std::rc::Rc::new(ComputeRouterPeer_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeRouterPeerData {
+            data: std::cell::RefCell::new(ComputeRouterPeerData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -473,22 +684,33 @@ impl BuildComputeRouterPeer {
                 advertise_mode: core::default::Default::default(),
                 advertised_groups: core::default::Default::default(),
                 advertised_route_priority: core::default::Default::default(),
+                custom_learned_route_priority: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 enable: core::default::Default::default(),
+                enable_ipv4: core::default::Default::default(),
                 enable_ipv6: core::default::Default::default(),
+                export_policies: core::default::Default::default(),
                 id: core::default::Default::default(),
+                import_policies: core::default::Default::default(),
                 interface: self.interface,
                 ip_address: core::default::Default::default(),
+                ipv4_nexthop_address: core::default::Default::default(),
                 ipv6_nexthop_address: core::default::Default::default(),
                 name: self.name,
                 peer_asn: self.peer_asn,
                 peer_ip_address: core::default::Default::default(),
+                peer_ipv4_nexthop_address: core::default::Default::default(),
                 peer_ipv6_nexthop_address: core::default::Default::default(),
                 project: core::default::Default::default(),
                 region: core::default::Default::default(),
                 router: self.router,
                 router_appliance_instance: core::default::Default::default(),
+                zero_advertised_route_priority: core::default::Default::default(),
+                zero_custom_learned_route_priority: core::default::Default::default(),
                 advertised_ip_ranges: core::default::Default::default(),
                 bfd: core::default::Default::default(),
+                custom_learned_ip_ranges: core::default::Default::default(),
+                md5_authentication_key: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -540,9 +762,30 @@ impl ComputeRouterPeerRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `custom_learned_route_priority` after provisioning.\nThe user-defined custom learned route priority for a BGP session.\nThis value is applied to all custom learned route ranges for the session. You can choose a value\nfrom 0 to 65335. If you don't provide a value, Google Cloud assigns a priority of 100 to the ranges."]
+    pub fn custom_learned_route_priority(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.custom_learned_route_priority", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `enable` after provisioning.\nThe status of the BGP peer connection. If set to false, any active session\nwith the peer is terminated and all associated routing information is removed.\nIf set to true, the peer connection can be established with routing information.\nThe default is true."]
     pub fn enable(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `enable_ipv4` after provisioning.\nEnable IPv4 traffic over BGP Peer. It is enabled by default if the peerIpAddress is version 4."]
+    pub fn enable_ipv4(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_ipv4", self.extract_ref()))
     }
 
     #[doc =
@@ -551,9 +794,21 @@ impl ComputeRouterPeerRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_ipv6", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `export_policies` after provisioning.\nrouters.list of export policies applied to this peer, in the order they must be evaluated. \nThe name must correspond to an existing policy that has ROUTE_POLICY_TYPE_EXPORT type."]
+    pub fn export_policies(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.export_policies", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `import_policies` after provisioning.\nrouters.list of import policies applied to this peer, in the order they must be evaluated. \nThe name must correspond to an existing policy that has ROUTE_POLICY_TYPE_IMPORT type."]
+    pub fn import_policies(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.import_policies", self.extract_ref()))
     }
 
     #[doc =
@@ -569,9 +824,33 @@ impl ComputeRouterPeerRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `ipv4_nexthop_address` after provisioning.\nIPv4 address of the interface inside Google Cloud Platform."]
+    pub fn ipv4_nexthop_address(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv4_nexthop_address", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `ipv6_nexthop_address` after provisioning.\nIPv6 address of the interface inside Google Cloud Platform.\nThe address must be in the range 2600:2d00:0:2::/64 or 2600:2d00:0:3::/64.\nIf you do not specify the next hop addresses, Google Cloud automatically\nassigns unused addresses from the 2600:2d00:0:2::/64 or 2600:2d00:0:3::/64 range for you."]
     pub fn ipv6_nexthop_address(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv6_nexthop_address", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `is_advertised_route_priority_set` after provisioning.\nAn internal boolean field for provider use for zero_advertised_route_priority."]
+    pub fn is_advertised_route_priority_set(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.is_advertised_route_priority_set", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `is_custom_learned_priority_set` after provisioning.\nAn internal boolean field for provider use."]
+    pub fn is_custom_learned_priority_set(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.is_custom_learned_priority_set", self.extract_ref()),
+        )
     }
 
     #[doc =
@@ -596,6 +875,12 @@ impl ComputeRouterPeerRef {
         "Get a reference to the value of field `peer_ip_address` after provisioning.\nIP address of the BGP interface outside Google Cloud Platform.\nOnly IPv4 is supported. Required if 'ip_address' is set."]
     pub fn peer_ip_address(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.peer_ip_address", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `peer_ipv4_nexthop_address` after provisioning.\nIPv4 address of the BGP interface outside Google Cloud Platform."]
+    pub fn peer_ipv4_nexthop_address(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.peer_ipv4_nexthop_address", self.extract_ref()))
     }
 
     #[doc =
@@ -627,30 +912,61 @@ impl ComputeRouterPeerRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.router_appliance_instance", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `advertised_ip_ranges` after provisioning.\n"]
-    pub fn advertised_ip_ranges(&self) -> terrars::ListRef<ComputeRouterPeerAdvertisedIpRangesElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.advertised_ip_ranges", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `zero_advertised_route_priority` after provisioning.\nForce the advertised_route_priority to be 0."]
+    pub fn zero_advertised_route_priority(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.zero_advertised_route_priority", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `zero_custom_learned_route_priority` after provisioning.\nForce the custom_learned_route_priority to be 0."]
+    pub fn zero_custom_learned_route_priority(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.zero_custom_learned_route_priority", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `bfd` after provisioning.\n"]
-    pub fn bfd(&self) -> terrars::ListRef<ComputeRouterPeerBfdElRef> {
+    pub fn bfd(&self) -> terrars::ListRef<ComputeRouterPeer_BfdRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.bfd", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `custom_learned_ip_ranges` after provisioning.\n"]
+    pub fn custom_learned_ip_ranges(&self) -> terrars::ListRef<ComputeRouterPeer_CustomLearnedIpRangesRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.custom_learned_ip_ranges", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `md5_authentication_key` after provisioning.\n"]
+    pub fn md5_authentication_key(&self) -> terrars::ListRef<ComputeRouterPeer_Md5AuthenticationKeyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.md5_authentication_key", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeRouterPeerTimeoutsElRef {
-        ComputeRouterPeerTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeRouterPeer_TimeoutsRef {
+        ComputeRouterPeer_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ComputeRouterPeerDynamic {
+    advertised_ip_ranges: std::option::Option<terrars::DynamicBlock<ComputeRouterPeer_AdvertisedIpRanges>>,
+    bfd: std::option::Option<terrars::DynamicBlock<ComputeRouterPeer_Bfd>>,
+    custom_learned_ip_ranges: std::option::Option<terrars::DynamicBlock<ComputeRouterPeer_CustomLearnedIpRanges>>,
+    md5_authentication_key: std::option::Option<terrars::DynamicBlock<ComputeRouterPeer_Md5AuthenticationKey>>,
+}
+
 #[derive(Serialize)]
-pub struct ComputeRouterPeerAdvertisedIpRangesEl {
+pub struct ComputeRouterPeer_AdvertisedIpRanges {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     range: terrars::PrimField<std::string::String>,
 }
 
-impl ComputeRouterPeerAdvertisedIpRangesEl {
+impl ComputeRouterPeer_AdvertisedIpRanges {
     #[doc = "Set the field `description`.\nUser-specified description for the IP range."]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -658,8 +974,8 @@ impl ComputeRouterPeerAdvertisedIpRangesEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeRouterPeerAdvertisedIpRangesEl {
-    type O = terrars::BlockAssignable<ComputeRouterPeerAdvertisedIpRangesEl>;
+impl terrars::ToListMappable for ComputeRouterPeer_AdvertisedIpRanges {
+    type O = terrars::BlockAssignable<ComputeRouterPeer_AdvertisedIpRanges>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -670,35 +986,37 @@ impl terrars::ToListMappable for ComputeRouterPeerAdvertisedIpRangesEl {
     }
 }
 
-pub struct BuildComputeRouterPeerAdvertisedIpRangesEl {
+pub struct BuildComputeRouterPeer_AdvertisedIpRanges {
     #[doc = "The IP range to advertise. The value must be a\nCIDR-formatted string."]
     pub range: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputeRouterPeerAdvertisedIpRangesEl {
-    pub fn build(self) -> ComputeRouterPeerAdvertisedIpRangesEl {
-        ComputeRouterPeerAdvertisedIpRangesEl {
+impl BuildComputeRouterPeer_AdvertisedIpRanges {
+    pub fn build(self) -> ComputeRouterPeer_AdvertisedIpRanges {
+        ComputeRouterPeer_AdvertisedIpRanges {
             description: core::default::Default::default(),
             range: self.range,
         }
     }
 }
 
-pub struct ComputeRouterPeerAdvertisedIpRangesElRef {
+#[allow(dead_code)]
+pub struct ComputeRouterPeer_AdvertisedIpRangesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeRouterPeerAdvertisedIpRangesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRouterPeerAdvertisedIpRangesElRef {
-        ComputeRouterPeerAdvertisedIpRangesElRef {
+impl terrars::Ref for ComputeRouterPeer_AdvertisedIpRangesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRouterPeer_AdvertisedIpRangesRef {
+        ComputeRouterPeer_AdvertisedIpRangesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeRouterPeerAdvertisedIpRangesElRef {
+impl ComputeRouterPeer_AdvertisedIpRangesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -717,7 +1035,7 @@ impl ComputeRouterPeerAdvertisedIpRangesElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeRouterPeerBfdEl {
+pub struct ComputeRouterPeer_Bfd {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min_receive_interval: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -727,7 +1045,7 @@ pub struct ComputeRouterPeerBfdEl {
     session_initialization_mode: terrars::PrimField<std::string::String>,
 }
 
-impl ComputeRouterPeerBfdEl {
+impl ComputeRouterPeer_Bfd {
     #[doc =
         "Set the field `min_receive_interval`.\nThe minimum interval, in milliseconds, between BFD control packets\nreceived from the peer router. The actual value is negotiated\nbetween the two routers and is equal to the greater of this value\nand the transmit interval of the other router. If set, this value\nmust be between 1000 and 30000."]
     pub fn set_min_receive_interval(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -750,8 +1068,8 @@ impl ComputeRouterPeerBfdEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeRouterPeerBfdEl {
-    type O = terrars::BlockAssignable<ComputeRouterPeerBfdEl>;
+impl terrars::ToListMappable for ComputeRouterPeer_Bfd {
+    type O = terrars::BlockAssignable<ComputeRouterPeer_Bfd>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -762,15 +1080,15 @@ impl terrars::ToListMappable for ComputeRouterPeerBfdEl {
     }
 }
 
-pub struct BuildComputeRouterPeerBfdEl {
+pub struct BuildComputeRouterPeer_Bfd {
     #[doc =
         "The BFD session initialization mode for this BGP peer.\nIf set to 'ACTIVE', the Cloud Router will initiate the BFD session\nfor this BGP peer. If set to 'PASSIVE', the Cloud Router will wait\nfor the peer router to initiate the BFD session for this BGP peer.\nIf set to 'DISABLED', BFD is disabled for this BGP peer. Possible values: [\"ACTIVE\", \"DISABLED\", \"PASSIVE\"]"]
     pub session_initialization_mode: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputeRouterPeerBfdEl {
-    pub fn build(self) -> ComputeRouterPeerBfdEl {
-        ComputeRouterPeerBfdEl {
+impl BuildComputeRouterPeer_Bfd {
+    pub fn build(self) -> ComputeRouterPeer_Bfd {
+        ComputeRouterPeer_Bfd {
             min_receive_interval: core::default::Default::default(),
             min_transmit_interval: core::default::Default::default(),
             multiplier: core::default::Default::default(),
@@ -779,21 +1097,23 @@ impl BuildComputeRouterPeerBfdEl {
     }
 }
 
-pub struct ComputeRouterPeerBfdElRef {
+#[allow(dead_code)]
+pub struct ComputeRouterPeer_BfdRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeRouterPeerBfdElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRouterPeerBfdElRef {
-        ComputeRouterPeerBfdElRef {
+impl terrars::Ref for ComputeRouterPeer_BfdRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRouterPeer_BfdRef {
+        ComputeRouterPeer_BfdRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeRouterPeerBfdElRef {
+impl ComputeRouterPeer_BfdRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -824,7 +1144,135 @@ impl ComputeRouterPeerBfdElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeRouterPeerTimeoutsEl {
+pub struct ComputeRouterPeer_CustomLearnedIpRanges {
+    range: terrars::PrimField<std::string::String>,
+}
+
+impl ComputeRouterPeer_CustomLearnedIpRanges { }
+
+impl terrars::ToListMappable for ComputeRouterPeer_CustomLearnedIpRanges {
+    type O = terrars::BlockAssignable<ComputeRouterPeer_CustomLearnedIpRanges>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeRouterPeer_CustomLearnedIpRanges {
+    #[doc = "The IP range to learn. The value must be a\nCIDR-formatted string."]
+    pub range: terrars::PrimField<std::string::String>,
+}
+
+impl BuildComputeRouterPeer_CustomLearnedIpRanges {
+    pub fn build(self) -> ComputeRouterPeer_CustomLearnedIpRanges {
+        ComputeRouterPeer_CustomLearnedIpRanges { range: self.range }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeRouterPeer_CustomLearnedIpRangesRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeRouterPeer_CustomLearnedIpRangesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRouterPeer_CustomLearnedIpRangesRef {
+        ComputeRouterPeer_CustomLearnedIpRangesRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeRouterPeer_CustomLearnedIpRangesRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `range` after provisioning.\nThe IP range to learn. The value must be a\nCIDR-formatted string."]
+    pub fn range(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.range", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ComputeRouterPeer_Md5AuthenticationKey {
+    key: terrars::PrimField<std::string::String>,
+    name: terrars::PrimField<std::string::String>,
+}
+
+impl ComputeRouterPeer_Md5AuthenticationKey { }
+
+impl terrars::ToListMappable for ComputeRouterPeer_Md5AuthenticationKey {
+    type O = terrars::BlockAssignable<ComputeRouterPeer_Md5AuthenticationKey>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeRouterPeer_Md5AuthenticationKey {
+    #[doc = "Value of the key."]
+    pub key: terrars::PrimField<std::string::String>,
+    #[doc =
+        "[REQUIRED] Name used to identify the key.\nMust be unique within a router. Must be referenced by exactly one bgpPeer. Must comply with RFC1035."]
+    pub name: terrars::PrimField<std::string::String>,
+}
+
+impl BuildComputeRouterPeer_Md5AuthenticationKey {
+    pub fn build(self) -> ComputeRouterPeer_Md5AuthenticationKey {
+        ComputeRouterPeer_Md5AuthenticationKey {
+            key: self.key,
+            name: self.name,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeRouterPeer_Md5AuthenticationKeyRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeRouterPeer_Md5AuthenticationKeyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRouterPeer_Md5AuthenticationKeyRef {
+        ComputeRouterPeer_Md5AuthenticationKeyRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeRouterPeer_Md5AuthenticationKeyRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `key` after provisioning.\nValue of the key."]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\n[REQUIRED] Name used to identify the key.\nMust be unique within a router. Must be referenced by exactly one bgpPeer. Must comply with RFC1035."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ComputeRouterPeer_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -833,7 +1281,7 @@ pub struct ComputeRouterPeerTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeRouterPeerTimeoutsEl {
+impl ComputeRouterPeer_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -853,8 +1301,8 @@ impl ComputeRouterPeerTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeRouterPeerTimeoutsEl {
-    type O = terrars::BlockAssignable<ComputeRouterPeerTimeoutsEl>;
+impl terrars::ToListMappable for ComputeRouterPeer_Timeouts {
+    type O = terrars::BlockAssignable<ComputeRouterPeer_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -865,11 +1313,11 @@ impl terrars::ToListMappable for ComputeRouterPeerTimeoutsEl {
     }
 }
 
-pub struct BuildComputeRouterPeerTimeoutsEl {}
+pub struct BuildComputeRouterPeer_Timeouts {}
 
-impl BuildComputeRouterPeerTimeoutsEl {
-    pub fn build(self) -> ComputeRouterPeerTimeoutsEl {
-        ComputeRouterPeerTimeoutsEl {
+impl BuildComputeRouterPeer_Timeouts {
+    pub fn build(self) -> ComputeRouterPeer_Timeouts {
+        ComputeRouterPeer_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -877,21 +1325,23 @@ impl BuildComputeRouterPeerTimeoutsEl {
     }
 }
 
-pub struct ComputeRouterPeerTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComputeRouterPeer_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeRouterPeerTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRouterPeerTimeoutsElRef {
-        ComputeRouterPeerTimeoutsElRef {
+impl terrars::Ref for ComputeRouterPeer_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRouterPeer_TimeoutsRef {
+        ComputeRouterPeer_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeRouterPeerTimeoutsElRef {
+impl ComputeRouterPeer_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -910,10 +1360,4 @@ impl ComputeRouterPeerTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ComputeRouterPeerDynamic {
-    advertised_ip_ranges: std::option::Option<terrars::DynamicBlock<ComputeRouterPeerAdvertisedIpRangesEl>>,
-    bfd: std::option::Option<terrars::DynamicBlock<ComputeRouterPeerBfdEl>>,
 }

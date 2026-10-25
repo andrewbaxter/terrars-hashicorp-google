@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct NetworkSecurityAddressGroupData {
+struct NetworkSecurityAddressGroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct NetworkSecurityAddressGroupData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     capacity: terrars::PrimField<f64>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -34,13 +38,13 @@ struct NetworkSecurityAddressGroupData {
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<NetworkSecurityAddressGroupTimeoutsEl>,
+    timeouts: std::option::Option<NetworkSecurityAddressGroup_Timeouts>,
 }
 
 struct NetworkSecurityAddressGroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<NetworkSecurityAddressGroupData>,
+    data: std::cell::RefCell<NetworkSecurityAddressGroupData_>,
 }
 
 #[derive(Clone)]
@@ -140,6 +144,13 @@ impl NetworkSecurityAddressGroup {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nFree-text description of the resource."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -179,7 +190,7 @@ impl NetworkSecurityAddressGroup {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<NetworkSecurityAddressGroupTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<NetworkSecurityAddressGroup_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -193,6 +204,12 @@ impl NetworkSecurityAddressGroup {
         "Get a reference to the value of field `create_time` after provisioning.\nThe timestamp when the resource was created.\nA timestamp in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\""]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -259,8 +276,8 @@ impl NetworkSecurityAddressGroup {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NetworkSecurityAddressGroupTimeoutsElRef {
-        NetworkSecurityAddressGroupTimeoutsElRef::new(
+    pub fn timeouts(&self) -> NetworkSecurityAddressGroup_TimeoutsRef {
+        NetworkSecurityAddressGroup_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -316,13 +333,14 @@ impl BuildNetworkSecurityAddressGroup {
         let out = NetworkSecurityAddressGroup(std::rc::Rc::new(NetworkSecurityAddressGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(NetworkSecurityAddressGroupData {
+            data: std::cell::RefCell::new(NetworkSecurityAddressGroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 capacity: self.capacity,
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 items: core::default::Default::default(),
@@ -371,6 +389,12 @@ impl NetworkSecurityAddressGroupRef {
         "Get a reference to the value of field `create_time` after provisioning.\nThe timestamp when the resource was created.\nA timestamp in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\""]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -437,8 +461,8 @@ impl NetworkSecurityAddressGroupRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NetworkSecurityAddressGroupTimeoutsElRef {
-        NetworkSecurityAddressGroupTimeoutsElRef::new(
+    pub fn timeouts(&self) -> NetworkSecurityAddressGroup_TimeoutsRef {
+        NetworkSecurityAddressGroup_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -446,7 +470,7 @@ impl NetworkSecurityAddressGroupRef {
 }
 
 #[derive(Serialize)]
-pub struct NetworkSecurityAddressGroupTimeoutsEl {
+pub struct NetworkSecurityAddressGroup_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -455,7 +479,7 @@ pub struct NetworkSecurityAddressGroupTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl NetworkSecurityAddressGroupTimeoutsEl {
+impl NetworkSecurityAddressGroup_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -475,8 +499,8 @@ impl NetworkSecurityAddressGroupTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkSecurityAddressGroupTimeoutsEl {
-    type O = terrars::BlockAssignable<NetworkSecurityAddressGroupTimeoutsEl>;
+impl terrars::ToListMappable for NetworkSecurityAddressGroup_Timeouts {
+    type O = terrars::BlockAssignable<NetworkSecurityAddressGroup_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -487,11 +511,11 @@ impl terrars::ToListMappable for NetworkSecurityAddressGroupTimeoutsEl {
     }
 }
 
-pub struct BuildNetworkSecurityAddressGroupTimeoutsEl {}
+pub struct BuildNetworkSecurityAddressGroup_Timeouts {}
 
-impl BuildNetworkSecurityAddressGroupTimeoutsEl {
-    pub fn build(self) -> NetworkSecurityAddressGroupTimeoutsEl {
-        NetworkSecurityAddressGroupTimeoutsEl {
+impl BuildNetworkSecurityAddressGroup_Timeouts {
+    pub fn build(self) -> NetworkSecurityAddressGroup_Timeouts {
+        NetworkSecurityAddressGroup_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -499,21 +523,23 @@ impl BuildNetworkSecurityAddressGroupTimeoutsEl {
     }
 }
 
-pub struct NetworkSecurityAddressGroupTimeoutsElRef {
+#[allow(dead_code)]
+pub struct NetworkSecurityAddressGroup_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkSecurityAddressGroupTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkSecurityAddressGroupTimeoutsElRef {
-        NetworkSecurityAddressGroupTimeoutsElRef {
+impl terrars::Ref for NetworkSecurityAddressGroup_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkSecurityAddressGroup_TimeoutsRef {
+        NetworkSecurityAddressGroup_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkSecurityAddressGroupTimeoutsElRef {
+impl NetworkSecurityAddressGroup_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

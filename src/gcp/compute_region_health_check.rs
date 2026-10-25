@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeRegionHealthCheckData {
+struct ComputeRegionHealthCheckData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,6 +22,8 @@ struct ComputeRegionHealthCheckData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     check_interval_sec: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -36,28 +40,30 @@ struct ComputeRegionHealthCheckData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     unhealthy_threshold: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    grpc_health_check: std::option::Option<std::vec::Vec<ComputeRegionHealthCheckGrpcHealthCheckEl>>,
+    grpc_health_check: std::option::Option<std::vec::Vec<ComputeRegionHealthCheck_GrpcHealthCheck>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    http2_health_check: std::option::Option<std::vec::Vec<ComputeRegionHealthCheckHttp2HealthCheckEl>>,
+    grpc_tls_health_check: std::option::Option<std::vec::Vec<ComputeRegionHealthCheck_GrpcTlsHealthCheck>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    http_health_check: std::option::Option<std::vec::Vec<ComputeRegionHealthCheckHttpHealthCheckEl>>,
+    http2_health_check: std::option::Option<std::vec::Vec<ComputeRegionHealthCheck_Http2HealthCheck>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    https_health_check: std::option::Option<std::vec::Vec<ComputeRegionHealthCheckHttpsHealthCheckEl>>,
+    http_health_check: std::option::Option<std::vec::Vec<ComputeRegionHealthCheck_HttpHealthCheck>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    log_config: std::option::Option<std::vec::Vec<ComputeRegionHealthCheckLogConfigEl>>,
+    https_health_check: std::option::Option<std::vec::Vec<ComputeRegionHealthCheck_HttpsHealthCheck>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ssl_health_check: std::option::Option<std::vec::Vec<ComputeRegionHealthCheckSslHealthCheckEl>>,
+    log_config: std::option::Option<std::vec::Vec<ComputeRegionHealthCheck_LogConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tcp_health_check: std::option::Option<std::vec::Vec<ComputeRegionHealthCheckTcpHealthCheckEl>>,
+    ssl_health_check: std::option::Option<std::vec::Vec<ComputeRegionHealthCheck_SslHealthCheck>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComputeRegionHealthCheckTimeoutsEl>,
+    tcp_health_check: std::option::Option<std::vec::Vec<ComputeRegionHealthCheck_TcpHealthCheck>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<ComputeRegionHealthCheck_Timeouts>,
     dynamic: ComputeRegionHealthCheckDynamic,
 }
 
 struct ComputeRegionHealthCheck_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeRegionHealthCheckData>,
+    data: std::cell::RefCell<ComputeRegionHealthCheckData_>,
 }
 
 #[derive(Clone)]
@@ -165,6 +171,13 @@ impl ComputeRegionHealthCheck {
     }
 
     #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `description`.\nAn optional description of this resource. Provide this property when\nyou create the resource."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -214,7 +227,7 @@ impl ComputeRegionHealthCheck {
     #[doc = "Set the field `grpc_health_check`.\n"]
     pub fn set_grpc_health_check(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeRegionHealthCheckGrpcHealthCheckEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeRegionHealthCheck_GrpcHealthCheck>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -227,10 +240,26 @@ impl ComputeRegionHealthCheck {
         self
     }
 
+    #[doc = "Set the field `grpc_tls_health_check`.\n"]
+    pub fn set_grpc_tls_health_check(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeRegionHealthCheck_GrpcTlsHealthCheck>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().grpc_tls_health_check = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.grpc_tls_health_check = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `http2_health_check`.\n"]
     pub fn set_http2_health_check(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeRegionHealthCheckHttp2HealthCheckEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeRegionHealthCheck_Http2HealthCheck>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -246,7 +275,7 @@ impl ComputeRegionHealthCheck {
     #[doc = "Set the field `http_health_check`.\n"]
     pub fn set_http_health_check(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeRegionHealthCheckHttpHealthCheckEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeRegionHealthCheck_HttpHealthCheck>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -262,7 +291,7 @@ impl ComputeRegionHealthCheck {
     #[doc = "Set the field `https_health_check`.\n"]
     pub fn set_https_health_check(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeRegionHealthCheckHttpsHealthCheckEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeRegionHealthCheck_HttpsHealthCheck>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -278,7 +307,7 @@ impl ComputeRegionHealthCheck {
     #[doc = "Set the field `log_config`.\n"]
     pub fn set_log_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeRegionHealthCheckLogConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeRegionHealthCheck_LogConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -294,7 +323,7 @@ impl ComputeRegionHealthCheck {
     #[doc = "Set the field `ssl_health_check`.\n"]
     pub fn set_ssl_health_check(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeRegionHealthCheckSslHealthCheckEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeRegionHealthCheck_SslHealthCheck>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -310,7 +339,7 @@ impl ComputeRegionHealthCheck {
     #[doc = "Set the field `tcp_health_check`.\n"]
     pub fn set_tcp_health_check(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeRegionHealthCheckTcpHealthCheckEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeRegionHealthCheck_TcpHealthCheck>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -324,7 +353,7 @@ impl ComputeRegionHealthCheck {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeRegionHealthCheckTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeRegionHealthCheck_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -342,9 +371,21 @@ impl ComputeRegionHealthCheck {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nAn optional description of this resource. Provide this property when\nyou create the resource."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `health_check_id` after provisioning.\nThe unique identifier number for the resource. This identifier is defined by the server."]
+    pub fn health_check_id(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.health_check_id", self.extract_ref()))
     }
 
     #[doc =
@@ -399,43 +440,48 @@ impl ComputeRegionHealthCheck {
     }
 
     #[doc = "Get a reference to the value of field `grpc_health_check` after provisioning.\n"]
-    pub fn grpc_health_check(&self) -> terrars::ListRef<ComputeRegionHealthCheckGrpcHealthCheckElRef> {
+    pub fn grpc_health_check(&self) -> terrars::ListRef<ComputeRegionHealthCheck_GrpcHealthCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.grpc_health_check", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `grpc_tls_health_check` after provisioning.\n"]
+    pub fn grpc_tls_health_check(&self) -> terrars::ListRef<ComputeRegionHealthCheck_GrpcTlsHealthCheckRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.grpc_tls_health_check", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `http2_health_check` after provisioning.\n"]
-    pub fn http2_health_check(&self) -> terrars::ListRef<ComputeRegionHealthCheckHttp2HealthCheckElRef> {
+    pub fn http2_health_check(&self) -> terrars::ListRef<ComputeRegionHealthCheck_Http2HealthCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.http2_health_check", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `http_health_check` after provisioning.\n"]
-    pub fn http_health_check(&self) -> terrars::ListRef<ComputeRegionHealthCheckHttpHealthCheckElRef> {
+    pub fn http_health_check(&self) -> terrars::ListRef<ComputeRegionHealthCheck_HttpHealthCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.http_health_check", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `https_health_check` after provisioning.\n"]
-    pub fn https_health_check(&self) -> terrars::ListRef<ComputeRegionHealthCheckHttpsHealthCheckElRef> {
+    pub fn https_health_check(&self) -> terrars::ListRef<ComputeRegionHealthCheck_HttpsHealthCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.https_health_check", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `log_config` after provisioning.\n"]
-    pub fn log_config(&self) -> terrars::ListRef<ComputeRegionHealthCheckLogConfigElRef> {
+    pub fn log_config(&self) -> terrars::ListRef<ComputeRegionHealthCheck_LogConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.log_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `ssl_health_check` after provisioning.\n"]
-    pub fn ssl_health_check(&self) -> terrars::ListRef<ComputeRegionHealthCheckSslHealthCheckElRef> {
+    pub fn ssl_health_check(&self) -> terrars::ListRef<ComputeRegionHealthCheck_SslHealthCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ssl_health_check", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tcp_health_check` after provisioning.\n"]
-    pub fn tcp_health_check(&self) -> terrars::ListRef<ComputeRegionHealthCheckTcpHealthCheckElRef> {
+    pub fn tcp_health_check(&self) -> terrars::ListRef<ComputeRegionHealthCheck_TcpHealthCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tcp_health_check", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeRegionHealthCheckTimeoutsElRef {
-        ComputeRegionHealthCheckTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeRegionHealthCheck_TimeoutsRef {
+        ComputeRegionHealthCheck_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -482,13 +528,14 @@ impl BuildComputeRegionHealthCheck {
         let out = ComputeRegionHealthCheck(std::rc::Rc::new(ComputeRegionHealthCheck_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeRegionHealthCheckData {
+            data: std::cell::RefCell::new(ComputeRegionHealthCheckData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 check_interval_sec: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 healthy_threshold: core::default::Default::default(),
                 id: core::default::Default::default(),
@@ -498,6 +545,7 @@ impl BuildComputeRegionHealthCheck {
                 timeout_sec: core::default::Default::default(),
                 unhealthy_threshold: core::default::Default::default(),
                 grpc_health_check: core::default::Default::default(),
+                grpc_tls_health_check: core::default::Default::default(),
                 http2_health_check: core::default::Default::default(),
                 http_health_check: core::default::Default::default(),
                 https_health_check: core::default::Default::default(),
@@ -549,9 +597,21 @@ impl ComputeRegionHealthCheckRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nAn optional description of this resource. Provide this property when\nyou create the resource."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `health_check_id` after provisioning.\nThe unique identifier number for the resource. This identifier is defined by the server."]
+    pub fn health_check_id(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.health_check_id", self.extract_ref()))
     }
 
     #[doc =
@@ -606,48 +666,65 @@ impl ComputeRegionHealthCheckRef {
     }
 
     #[doc = "Get a reference to the value of field `grpc_health_check` after provisioning.\n"]
-    pub fn grpc_health_check(&self) -> terrars::ListRef<ComputeRegionHealthCheckGrpcHealthCheckElRef> {
+    pub fn grpc_health_check(&self) -> terrars::ListRef<ComputeRegionHealthCheck_GrpcHealthCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.grpc_health_check", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `grpc_tls_health_check` after provisioning.\n"]
+    pub fn grpc_tls_health_check(&self) -> terrars::ListRef<ComputeRegionHealthCheck_GrpcTlsHealthCheckRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.grpc_tls_health_check", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `http2_health_check` after provisioning.\n"]
-    pub fn http2_health_check(&self) -> terrars::ListRef<ComputeRegionHealthCheckHttp2HealthCheckElRef> {
+    pub fn http2_health_check(&self) -> terrars::ListRef<ComputeRegionHealthCheck_Http2HealthCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.http2_health_check", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `http_health_check` after provisioning.\n"]
-    pub fn http_health_check(&self) -> terrars::ListRef<ComputeRegionHealthCheckHttpHealthCheckElRef> {
+    pub fn http_health_check(&self) -> terrars::ListRef<ComputeRegionHealthCheck_HttpHealthCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.http_health_check", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `https_health_check` after provisioning.\n"]
-    pub fn https_health_check(&self) -> terrars::ListRef<ComputeRegionHealthCheckHttpsHealthCheckElRef> {
+    pub fn https_health_check(&self) -> terrars::ListRef<ComputeRegionHealthCheck_HttpsHealthCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.https_health_check", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `log_config` after provisioning.\n"]
-    pub fn log_config(&self) -> terrars::ListRef<ComputeRegionHealthCheckLogConfigElRef> {
+    pub fn log_config(&self) -> terrars::ListRef<ComputeRegionHealthCheck_LogConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.log_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `ssl_health_check` after provisioning.\n"]
-    pub fn ssl_health_check(&self) -> terrars::ListRef<ComputeRegionHealthCheckSslHealthCheckElRef> {
+    pub fn ssl_health_check(&self) -> terrars::ListRef<ComputeRegionHealthCheck_SslHealthCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ssl_health_check", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tcp_health_check` after provisioning.\n"]
-    pub fn tcp_health_check(&self) -> terrars::ListRef<ComputeRegionHealthCheckTcpHealthCheckElRef> {
+    pub fn tcp_health_check(&self) -> terrars::ListRef<ComputeRegionHealthCheck_TcpHealthCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tcp_health_check", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeRegionHealthCheckTimeoutsElRef {
-        ComputeRegionHealthCheckTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeRegionHealthCheck_TimeoutsRef {
+        ComputeRegionHealthCheck_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ComputeRegionHealthCheckDynamic {
+    grpc_health_check: std::option::Option<terrars::DynamicBlock<ComputeRegionHealthCheck_GrpcHealthCheck>>,
+    grpc_tls_health_check: std::option::Option<terrars::DynamicBlock<ComputeRegionHealthCheck_GrpcTlsHealthCheck>>,
+    http2_health_check: std::option::Option<terrars::DynamicBlock<ComputeRegionHealthCheck_Http2HealthCheck>>,
+    http_health_check: std::option::Option<terrars::DynamicBlock<ComputeRegionHealthCheck_HttpHealthCheck>>,
+    https_health_check: std::option::Option<terrars::DynamicBlock<ComputeRegionHealthCheck_HttpsHealthCheck>>,
+    log_config: std::option::Option<terrars::DynamicBlock<ComputeRegionHealthCheck_LogConfig>>,
+    ssl_health_check: std::option::Option<terrars::DynamicBlock<ComputeRegionHealthCheck_SslHealthCheck>>,
+    tcp_health_check: std::option::Option<terrars::DynamicBlock<ComputeRegionHealthCheck_TcpHealthCheck>>,
+}
+
 #[derive(Serialize)]
-pub struct ComputeRegionHealthCheckGrpcHealthCheckEl {
+pub struct ComputeRegionHealthCheck_GrpcHealthCheck {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     grpc_service_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -658,7 +735,7 @@ pub struct ComputeRegionHealthCheckGrpcHealthCheckEl {
     port_specification: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeRegionHealthCheckGrpcHealthCheckEl {
+impl ComputeRegionHealthCheck_GrpcHealthCheck {
     #[doc =
         "Set the field `grpc_service_name`.\nThe gRPC service name for the health check.\nThe value of grpcServiceName has the following meanings by convention:\n\n* Empty serviceName means the overall status of all services at the backend.\n* Non-empty serviceName means the health of that gRPC service, as defined by the owner of the service.\n\nThe grpcServiceName can only be ASCII."]
     pub fn set_grpc_service_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -691,8 +768,8 @@ impl ComputeRegionHealthCheckGrpcHealthCheckEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeRegionHealthCheckGrpcHealthCheckEl {
-    type O = terrars::BlockAssignable<ComputeRegionHealthCheckGrpcHealthCheckEl>;
+impl terrars::ToListMappable for ComputeRegionHealthCheck_GrpcHealthCheck {
+    type O = terrars::BlockAssignable<ComputeRegionHealthCheck_GrpcHealthCheck>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -703,11 +780,11 @@ impl terrars::ToListMappable for ComputeRegionHealthCheckGrpcHealthCheckEl {
     }
 }
 
-pub struct BuildComputeRegionHealthCheckGrpcHealthCheckEl {}
+pub struct BuildComputeRegionHealthCheck_GrpcHealthCheck {}
 
-impl BuildComputeRegionHealthCheckGrpcHealthCheckEl {
-    pub fn build(self) -> ComputeRegionHealthCheckGrpcHealthCheckEl {
-        ComputeRegionHealthCheckGrpcHealthCheckEl {
+impl BuildComputeRegionHealthCheck_GrpcHealthCheck {
+    pub fn build(self) -> ComputeRegionHealthCheck_GrpcHealthCheck {
+        ComputeRegionHealthCheck_GrpcHealthCheck {
             grpc_service_name: core::default::Default::default(),
             port: core::default::Default::default(),
             port_name: core::default::Default::default(),
@@ -716,21 +793,23 @@ impl BuildComputeRegionHealthCheckGrpcHealthCheckEl {
     }
 }
 
-pub struct ComputeRegionHealthCheckGrpcHealthCheckElRef {
+#[allow(dead_code)]
+pub struct ComputeRegionHealthCheck_GrpcHealthCheckRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeRegionHealthCheckGrpcHealthCheckElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRegionHealthCheckGrpcHealthCheckElRef {
-        ComputeRegionHealthCheckGrpcHealthCheckElRef {
+impl terrars::Ref for ComputeRegionHealthCheck_GrpcHealthCheckRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRegionHealthCheck_GrpcHealthCheckRef {
+        ComputeRegionHealthCheck_GrpcHealthCheckRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeRegionHealthCheckGrpcHealthCheckElRef {
+impl ComputeRegionHealthCheck_GrpcHealthCheckRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -761,7 +840,110 @@ impl ComputeRegionHealthCheckGrpcHealthCheckElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeRegionHealthCheckHttp2HealthCheckEl {
+pub struct ComputeRegionHealthCheck_GrpcTlsHealthCheck {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    grpc_service_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    port: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    port_specification: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl ComputeRegionHealthCheck_GrpcTlsHealthCheck {
+    #[doc =
+        "Set the field `grpc_service_name`.\nThe gRPC service name for the health check.\nThe value of grpcServiceName has the following meanings by convention:\n\n* Empty serviceName means the overall status of all services at the backend.\n* Non-empty serviceName means the health of that gRPC service, as defined by the owner of the service.\n\nThe grpcServiceName can only be ASCII."]
+    pub fn set_grpc_service_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.grpc_service_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `port`.\nThe port number for the health check request.\nMust be specified if port_specification is USE_FIXED_PORT. Valid values are 1 through 65535."]
+    pub fn set_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.port = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `port_specification`.\nSpecifies how port is selected for health checking, can be one of the\nfollowing values:\n\n  * 'USE_FIXED_PORT': The port number in 'port' is used for health checking.\n\n  * 'USE_NAMED_PORT': Not supported for GRPC with TLS health checking.\n\n  * 'USE_SERVING_PORT': For NetworkEndpointGroup, the port specified for each\n  network endpoint is used for health checking. For other backends, the\n  port or named port specified in the Backend Service is used for health\n  checking.\n\nIf not specified, gRPC health check follows behavior specified in the 'port' field. Possible values: [\"USE_FIXED_PORT\", \"USE_NAMED_PORT\", \"USE_SERVING_PORT\"]"]
+    pub fn set_port_specification(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.port_specification = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeRegionHealthCheck_GrpcTlsHealthCheck {
+    type O = terrars::BlockAssignable<ComputeRegionHealthCheck_GrpcTlsHealthCheck>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeRegionHealthCheck_GrpcTlsHealthCheck {}
+
+impl BuildComputeRegionHealthCheck_GrpcTlsHealthCheck {
+    pub fn build(self) -> ComputeRegionHealthCheck_GrpcTlsHealthCheck {
+        ComputeRegionHealthCheck_GrpcTlsHealthCheck {
+            grpc_service_name: core::default::Default::default(),
+            port: core::default::Default::default(),
+            port_specification: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeRegionHealthCheck_GrpcTlsHealthCheckRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeRegionHealthCheck_GrpcTlsHealthCheckRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputeRegionHealthCheck_GrpcTlsHealthCheckRef {
+        ComputeRegionHealthCheck_GrpcTlsHealthCheckRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeRegionHealthCheck_GrpcTlsHealthCheckRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `grpc_service_name` after provisioning.\nThe gRPC service name for the health check.\nThe value of grpcServiceName has the following meanings by convention:\n\n* Empty serviceName means the overall status of all services at the backend.\n* Non-empty serviceName means the health of that gRPC service, as defined by the owner of the service.\n\nThe grpcServiceName can only be ASCII."]
+    pub fn grpc_service_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.grpc_service_name", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `port` after provisioning.\nThe port number for the health check request.\nMust be specified if port_specification is USE_FIXED_PORT. Valid values are 1 through 65535."]
+    pub fn port(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `port_specification` after provisioning.\nSpecifies how port is selected for health checking, can be one of the\nfollowing values:\n\n  * 'USE_FIXED_PORT': The port number in 'port' is used for health checking.\n\n  * 'USE_NAMED_PORT': Not supported for GRPC with TLS health checking.\n\n  * 'USE_SERVING_PORT': For NetworkEndpointGroup, the port specified for each\n  network endpoint is used for health checking. For other backends, the\n  port or named port specified in the Backend Service is used for health\n  checking.\n\nIf not specified, gRPC health check follows behavior specified in the 'port' field. Possible values: [\"USE_FIXED_PORT\", \"USE_NAMED_PORT\", \"USE_SERVING_PORT\"]"]
+    pub fn port_specification(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.port_specification", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ComputeRegionHealthCheck_Http2HealthCheck {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     host: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -778,7 +960,7 @@ pub struct ComputeRegionHealthCheckHttp2HealthCheckEl {
     response: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeRegionHealthCheckHttp2HealthCheckEl {
+impl ComputeRegionHealthCheck_Http2HealthCheck {
     #[doc =
         "Set the field `host`.\nThe value of the host header in the HTTP2 health check request.\nIf left empty (default value), the public IP on behalf of which this health\ncheck is performed will be used."]
     pub fn set_host(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -831,8 +1013,8 @@ impl ComputeRegionHealthCheckHttp2HealthCheckEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeRegionHealthCheckHttp2HealthCheckEl {
-    type O = terrars::BlockAssignable<ComputeRegionHealthCheckHttp2HealthCheckEl>;
+impl terrars::ToListMappable for ComputeRegionHealthCheck_Http2HealthCheck {
+    type O = terrars::BlockAssignable<ComputeRegionHealthCheck_Http2HealthCheck>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -843,11 +1025,11 @@ impl terrars::ToListMappable for ComputeRegionHealthCheckHttp2HealthCheckEl {
     }
 }
 
-pub struct BuildComputeRegionHealthCheckHttp2HealthCheckEl {}
+pub struct BuildComputeRegionHealthCheck_Http2HealthCheck {}
 
-impl BuildComputeRegionHealthCheckHttp2HealthCheckEl {
-    pub fn build(self) -> ComputeRegionHealthCheckHttp2HealthCheckEl {
-        ComputeRegionHealthCheckHttp2HealthCheckEl {
+impl BuildComputeRegionHealthCheck_Http2HealthCheck {
+    pub fn build(self) -> ComputeRegionHealthCheck_Http2HealthCheck {
+        ComputeRegionHealthCheck_Http2HealthCheck {
             host: core::default::Default::default(),
             port: core::default::Default::default(),
             port_name: core::default::Default::default(),
@@ -859,21 +1041,23 @@ impl BuildComputeRegionHealthCheckHttp2HealthCheckEl {
     }
 }
 
-pub struct ComputeRegionHealthCheckHttp2HealthCheckElRef {
+#[allow(dead_code)]
+pub struct ComputeRegionHealthCheck_Http2HealthCheckRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeRegionHealthCheckHttp2HealthCheckElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRegionHealthCheckHttp2HealthCheckElRef {
-        ComputeRegionHealthCheckHttp2HealthCheckElRef {
+impl terrars::Ref for ComputeRegionHealthCheck_Http2HealthCheckRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRegionHealthCheck_Http2HealthCheckRef {
+        ComputeRegionHealthCheck_Http2HealthCheckRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeRegionHealthCheckHttp2HealthCheckElRef {
+impl ComputeRegionHealthCheck_Http2HealthCheckRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -922,7 +1106,7 @@ impl ComputeRegionHealthCheckHttp2HealthCheckElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeRegionHealthCheckHttpHealthCheckEl {
+pub struct ComputeRegionHealthCheck_HttpHealthCheck {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     host: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -939,7 +1123,7 @@ pub struct ComputeRegionHealthCheckHttpHealthCheckEl {
     response: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeRegionHealthCheckHttpHealthCheckEl {
+impl ComputeRegionHealthCheck_HttpHealthCheck {
     #[doc =
         "Set the field `host`.\nThe value of the host header in the HTTP health check request.\nIf left empty (default value), the public IP on behalf of which this health\ncheck is performed will be used."]
     pub fn set_host(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -992,8 +1176,8 @@ impl ComputeRegionHealthCheckHttpHealthCheckEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeRegionHealthCheckHttpHealthCheckEl {
-    type O = terrars::BlockAssignable<ComputeRegionHealthCheckHttpHealthCheckEl>;
+impl terrars::ToListMappable for ComputeRegionHealthCheck_HttpHealthCheck {
+    type O = terrars::BlockAssignable<ComputeRegionHealthCheck_HttpHealthCheck>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1004,11 +1188,11 @@ impl terrars::ToListMappable for ComputeRegionHealthCheckHttpHealthCheckEl {
     }
 }
 
-pub struct BuildComputeRegionHealthCheckHttpHealthCheckEl {}
+pub struct BuildComputeRegionHealthCheck_HttpHealthCheck {}
 
-impl BuildComputeRegionHealthCheckHttpHealthCheckEl {
-    pub fn build(self) -> ComputeRegionHealthCheckHttpHealthCheckEl {
-        ComputeRegionHealthCheckHttpHealthCheckEl {
+impl BuildComputeRegionHealthCheck_HttpHealthCheck {
+    pub fn build(self) -> ComputeRegionHealthCheck_HttpHealthCheck {
+        ComputeRegionHealthCheck_HttpHealthCheck {
             host: core::default::Default::default(),
             port: core::default::Default::default(),
             port_name: core::default::Default::default(),
@@ -1020,21 +1204,23 @@ impl BuildComputeRegionHealthCheckHttpHealthCheckEl {
     }
 }
 
-pub struct ComputeRegionHealthCheckHttpHealthCheckElRef {
+#[allow(dead_code)]
+pub struct ComputeRegionHealthCheck_HttpHealthCheckRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeRegionHealthCheckHttpHealthCheckElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRegionHealthCheckHttpHealthCheckElRef {
-        ComputeRegionHealthCheckHttpHealthCheckElRef {
+impl terrars::Ref for ComputeRegionHealthCheck_HttpHealthCheckRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRegionHealthCheck_HttpHealthCheckRef {
+        ComputeRegionHealthCheck_HttpHealthCheckRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeRegionHealthCheckHttpHealthCheckElRef {
+impl ComputeRegionHealthCheck_HttpHealthCheckRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1083,7 +1269,7 @@ impl ComputeRegionHealthCheckHttpHealthCheckElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeRegionHealthCheckHttpsHealthCheckEl {
+pub struct ComputeRegionHealthCheck_HttpsHealthCheck {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     host: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1100,7 +1286,7 @@ pub struct ComputeRegionHealthCheckHttpsHealthCheckEl {
     response: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeRegionHealthCheckHttpsHealthCheckEl {
+impl ComputeRegionHealthCheck_HttpsHealthCheck {
     #[doc =
         "Set the field `host`.\nThe value of the host header in the HTTPS health check request.\nIf left empty (default value), the public IP on behalf of which this health\ncheck is performed will be used."]
     pub fn set_host(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1153,8 +1339,8 @@ impl ComputeRegionHealthCheckHttpsHealthCheckEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeRegionHealthCheckHttpsHealthCheckEl {
-    type O = terrars::BlockAssignable<ComputeRegionHealthCheckHttpsHealthCheckEl>;
+impl terrars::ToListMappable for ComputeRegionHealthCheck_HttpsHealthCheck {
+    type O = terrars::BlockAssignable<ComputeRegionHealthCheck_HttpsHealthCheck>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1165,11 +1351,11 @@ impl terrars::ToListMappable for ComputeRegionHealthCheckHttpsHealthCheckEl {
     }
 }
 
-pub struct BuildComputeRegionHealthCheckHttpsHealthCheckEl {}
+pub struct BuildComputeRegionHealthCheck_HttpsHealthCheck {}
 
-impl BuildComputeRegionHealthCheckHttpsHealthCheckEl {
-    pub fn build(self) -> ComputeRegionHealthCheckHttpsHealthCheckEl {
-        ComputeRegionHealthCheckHttpsHealthCheckEl {
+impl BuildComputeRegionHealthCheck_HttpsHealthCheck {
+    pub fn build(self) -> ComputeRegionHealthCheck_HttpsHealthCheck {
+        ComputeRegionHealthCheck_HttpsHealthCheck {
             host: core::default::Default::default(),
             port: core::default::Default::default(),
             port_name: core::default::Default::default(),
@@ -1181,21 +1367,23 @@ impl BuildComputeRegionHealthCheckHttpsHealthCheckEl {
     }
 }
 
-pub struct ComputeRegionHealthCheckHttpsHealthCheckElRef {
+#[allow(dead_code)]
+pub struct ComputeRegionHealthCheck_HttpsHealthCheckRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeRegionHealthCheckHttpsHealthCheckElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRegionHealthCheckHttpsHealthCheckElRef {
-        ComputeRegionHealthCheckHttpsHealthCheckElRef {
+impl terrars::Ref for ComputeRegionHealthCheck_HttpsHealthCheckRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRegionHealthCheck_HttpsHealthCheckRef {
+        ComputeRegionHealthCheck_HttpsHealthCheckRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeRegionHealthCheckHttpsHealthCheckElRef {
+impl ComputeRegionHealthCheck_HttpsHealthCheckRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1244,12 +1432,12 @@ impl ComputeRegionHealthCheckHttpsHealthCheckElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeRegionHealthCheckLogConfigEl {
+pub struct ComputeRegionHealthCheck_LogConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl ComputeRegionHealthCheckLogConfigEl {
+impl ComputeRegionHealthCheck_LogConfig {
     #[doc =
         "Set the field `enable`.\nIndicates whether or not to export logs. This is false by default,\nwhich means no health check logging will be done."]
     pub fn set_enable(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -1258,8 +1446,8 @@ impl ComputeRegionHealthCheckLogConfigEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeRegionHealthCheckLogConfigEl {
-    type O = terrars::BlockAssignable<ComputeRegionHealthCheckLogConfigEl>;
+impl terrars::ToListMappable for ComputeRegionHealthCheck_LogConfig {
+    type O = terrars::BlockAssignable<ComputeRegionHealthCheck_LogConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1270,29 +1458,31 @@ impl terrars::ToListMappable for ComputeRegionHealthCheckLogConfigEl {
     }
 }
 
-pub struct BuildComputeRegionHealthCheckLogConfigEl {}
+pub struct BuildComputeRegionHealthCheck_LogConfig {}
 
-impl BuildComputeRegionHealthCheckLogConfigEl {
-    pub fn build(self) -> ComputeRegionHealthCheckLogConfigEl {
-        ComputeRegionHealthCheckLogConfigEl { enable: core::default::Default::default() }
+impl BuildComputeRegionHealthCheck_LogConfig {
+    pub fn build(self) -> ComputeRegionHealthCheck_LogConfig {
+        ComputeRegionHealthCheck_LogConfig { enable: core::default::Default::default() }
     }
 }
 
-pub struct ComputeRegionHealthCheckLogConfigElRef {
+#[allow(dead_code)]
+pub struct ComputeRegionHealthCheck_LogConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeRegionHealthCheckLogConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRegionHealthCheckLogConfigElRef {
-        ComputeRegionHealthCheckLogConfigElRef {
+impl terrars::Ref for ComputeRegionHealthCheck_LogConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRegionHealthCheck_LogConfigRef {
+        ComputeRegionHealthCheck_LogConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeRegionHealthCheckLogConfigElRef {
+impl ComputeRegionHealthCheck_LogConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1305,7 +1495,7 @@ impl ComputeRegionHealthCheckLogConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeRegionHealthCheckSslHealthCheckEl {
+pub struct ComputeRegionHealthCheck_SslHealthCheck {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     port: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1320,7 +1510,7 @@ pub struct ComputeRegionHealthCheckSslHealthCheckEl {
     response: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeRegionHealthCheckSslHealthCheckEl {
+impl ComputeRegionHealthCheck_SslHealthCheck {
     #[doc = "Set the field `port`.\nThe TCP port number for the SSL health check request.\nThe default value is 443."]
     pub fn set_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.port = std::option::Option::Some(v.into());
@@ -1366,8 +1556,8 @@ impl ComputeRegionHealthCheckSslHealthCheckEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeRegionHealthCheckSslHealthCheckEl {
-    type O = terrars::BlockAssignable<ComputeRegionHealthCheckSslHealthCheckEl>;
+impl terrars::ToListMappable for ComputeRegionHealthCheck_SslHealthCheck {
+    type O = terrars::BlockAssignable<ComputeRegionHealthCheck_SslHealthCheck>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1378,11 +1568,11 @@ impl terrars::ToListMappable for ComputeRegionHealthCheckSslHealthCheckEl {
     }
 }
 
-pub struct BuildComputeRegionHealthCheckSslHealthCheckEl {}
+pub struct BuildComputeRegionHealthCheck_SslHealthCheck {}
 
-impl BuildComputeRegionHealthCheckSslHealthCheckEl {
-    pub fn build(self) -> ComputeRegionHealthCheckSslHealthCheckEl {
-        ComputeRegionHealthCheckSslHealthCheckEl {
+impl BuildComputeRegionHealthCheck_SslHealthCheck {
+    pub fn build(self) -> ComputeRegionHealthCheck_SslHealthCheck {
+        ComputeRegionHealthCheck_SslHealthCheck {
             port: core::default::Default::default(),
             port_name: core::default::Default::default(),
             port_specification: core::default::Default::default(),
@@ -1393,21 +1583,23 @@ impl BuildComputeRegionHealthCheckSslHealthCheckEl {
     }
 }
 
-pub struct ComputeRegionHealthCheckSslHealthCheckElRef {
+#[allow(dead_code)]
+pub struct ComputeRegionHealthCheck_SslHealthCheckRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeRegionHealthCheckSslHealthCheckElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRegionHealthCheckSslHealthCheckElRef {
-        ComputeRegionHealthCheckSslHealthCheckElRef {
+impl terrars::Ref for ComputeRegionHealthCheck_SslHealthCheckRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRegionHealthCheck_SslHealthCheckRef {
+        ComputeRegionHealthCheck_SslHealthCheckRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeRegionHealthCheckSslHealthCheckElRef {
+impl ComputeRegionHealthCheck_SslHealthCheckRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1450,7 +1642,7 @@ impl ComputeRegionHealthCheckSslHealthCheckElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeRegionHealthCheckTcpHealthCheckEl {
+pub struct ComputeRegionHealthCheck_TcpHealthCheck {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     port: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1465,7 +1657,7 @@ pub struct ComputeRegionHealthCheckTcpHealthCheckEl {
     response: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeRegionHealthCheckTcpHealthCheckEl {
+impl ComputeRegionHealthCheck_TcpHealthCheck {
     #[doc = "Set the field `port`.\nThe TCP port number for the TCP health check request.\nThe default value is 80."]
     pub fn set_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.port = std::option::Option::Some(v.into());
@@ -1511,8 +1703,8 @@ impl ComputeRegionHealthCheckTcpHealthCheckEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeRegionHealthCheckTcpHealthCheckEl {
-    type O = terrars::BlockAssignable<ComputeRegionHealthCheckTcpHealthCheckEl>;
+impl terrars::ToListMappable for ComputeRegionHealthCheck_TcpHealthCheck {
+    type O = terrars::BlockAssignable<ComputeRegionHealthCheck_TcpHealthCheck>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1523,11 +1715,11 @@ impl terrars::ToListMappable for ComputeRegionHealthCheckTcpHealthCheckEl {
     }
 }
 
-pub struct BuildComputeRegionHealthCheckTcpHealthCheckEl {}
+pub struct BuildComputeRegionHealthCheck_TcpHealthCheck {}
 
-impl BuildComputeRegionHealthCheckTcpHealthCheckEl {
-    pub fn build(self) -> ComputeRegionHealthCheckTcpHealthCheckEl {
-        ComputeRegionHealthCheckTcpHealthCheckEl {
+impl BuildComputeRegionHealthCheck_TcpHealthCheck {
+    pub fn build(self) -> ComputeRegionHealthCheck_TcpHealthCheck {
+        ComputeRegionHealthCheck_TcpHealthCheck {
             port: core::default::Default::default(),
             port_name: core::default::Default::default(),
             port_specification: core::default::Default::default(),
@@ -1538,21 +1730,23 @@ impl BuildComputeRegionHealthCheckTcpHealthCheckEl {
     }
 }
 
-pub struct ComputeRegionHealthCheckTcpHealthCheckElRef {
+#[allow(dead_code)]
+pub struct ComputeRegionHealthCheck_TcpHealthCheckRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeRegionHealthCheckTcpHealthCheckElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRegionHealthCheckTcpHealthCheckElRef {
-        ComputeRegionHealthCheckTcpHealthCheckElRef {
+impl terrars::Ref for ComputeRegionHealthCheck_TcpHealthCheckRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRegionHealthCheck_TcpHealthCheckRef {
+        ComputeRegionHealthCheck_TcpHealthCheckRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeRegionHealthCheckTcpHealthCheckElRef {
+impl ComputeRegionHealthCheck_TcpHealthCheckRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1595,7 +1789,7 @@ impl ComputeRegionHealthCheckTcpHealthCheckElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeRegionHealthCheckTimeoutsEl {
+pub struct ComputeRegionHealthCheck_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1604,7 +1798,7 @@ pub struct ComputeRegionHealthCheckTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeRegionHealthCheckTimeoutsEl {
+impl ComputeRegionHealthCheck_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1624,8 +1818,8 @@ impl ComputeRegionHealthCheckTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeRegionHealthCheckTimeoutsEl {
-    type O = terrars::BlockAssignable<ComputeRegionHealthCheckTimeoutsEl>;
+impl terrars::ToListMappable for ComputeRegionHealthCheck_Timeouts {
+    type O = terrars::BlockAssignable<ComputeRegionHealthCheck_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1636,11 +1830,11 @@ impl terrars::ToListMappable for ComputeRegionHealthCheckTimeoutsEl {
     }
 }
 
-pub struct BuildComputeRegionHealthCheckTimeoutsEl {}
+pub struct BuildComputeRegionHealthCheck_Timeouts {}
 
-impl BuildComputeRegionHealthCheckTimeoutsEl {
-    pub fn build(self) -> ComputeRegionHealthCheckTimeoutsEl {
-        ComputeRegionHealthCheckTimeoutsEl {
+impl BuildComputeRegionHealthCheck_Timeouts {
+    pub fn build(self) -> ComputeRegionHealthCheck_Timeouts {
+        ComputeRegionHealthCheck_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1648,21 +1842,23 @@ impl BuildComputeRegionHealthCheckTimeoutsEl {
     }
 }
 
-pub struct ComputeRegionHealthCheckTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComputeRegionHealthCheck_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeRegionHealthCheckTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRegionHealthCheckTimeoutsElRef {
-        ComputeRegionHealthCheckTimeoutsElRef {
+impl terrars::Ref for ComputeRegionHealthCheck_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRegionHealthCheck_TimeoutsRef {
+        ComputeRegionHealthCheck_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeRegionHealthCheckTimeoutsElRef {
+impl ComputeRegionHealthCheck_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1681,15 +1877,4 @@ impl ComputeRegionHealthCheckTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ComputeRegionHealthCheckDynamic {
-    grpc_health_check: std::option::Option<terrars::DynamicBlock<ComputeRegionHealthCheckGrpcHealthCheckEl>>,
-    http2_health_check: std::option::Option<terrars::DynamicBlock<ComputeRegionHealthCheckHttp2HealthCheckEl>>,
-    http_health_check: std::option::Option<terrars::DynamicBlock<ComputeRegionHealthCheckHttpHealthCheckEl>>,
-    https_health_check: std::option::Option<terrars::DynamicBlock<ComputeRegionHealthCheckHttpsHealthCheckEl>>,
-    log_config: std::option::Option<terrars::DynamicBlock<ComputeRegionHealthCheckLogConfigEl>>,
-    ssl_health_check: std::option::Option<terrars::DynamicBlock<ComputeRegionHealthCheckSslHealthCheckEl>>,
-    tcp_health_check: std::option::Option<terrars::DynamicBlock<ComputeRegionHealthCheckTcpHealthCheckEl>>,
 }

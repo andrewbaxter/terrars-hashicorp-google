@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct GkeonpremVmwareNodePoolData {
+struct GkeonpremVmwareNodePoolData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,27 +23,31 @@ struct GkeonpremVmwareNodePoolData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     annotations: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     display_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     location: terrars::PrimField<std::string::String>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    on_prem_version: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     vmware_cluster: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    config: std::option::Option<std::vec::Vec<GkeonpremVmwareNodePoolConfigEl>>,
+    config: std::option::Option<std::vec::Vec<GkeonpremVmwareNodePool_Config>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    node_pool_autoscaling: std::option::Option<std::vec::Vec<GkeonpremVmwareNodePoolNodePoolAutoscalingEl>>,
+    node_pool_autoscaling: std::option::Option<std::vec::Vec<GkeonpremVmwareNodePool_NodePoolAutoscaling>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<GkeonpremVmwareNodePoolTimeoutsEl>,
+    timeouts: std::option::Option<GkeonpremVmwareNodePool_Timeouts>,
     dynamic: GkeonpremVmwareNodePoolDynamic,
 }
 
 struct GkeonpremVmwareNodePool_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<GkeonpremVmwareNodePoolData>,
+    data: std::cell::RefCell<GkeonpremVmwareNodePoolData_>,
 }
 
 #[derive(Clone)]
@@ -151,6 +157,13 @@ impl GkeonpremVmwareNodePool {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `display_name`.\nThe display name for the node pool."]
     pub fn set_display_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().display_name = std::option::Option::Some(v.into());
@@ -163,6 +176,12 @@ impl GkeonpremVmwareNodePool {
         self
     }
 
+    #[doc = "Set the field `on_prem_version`.\nAnthos version for the node pool. Defaults to the user cluster version."]
+    pub fn set_on_prem_version(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().on_prem_version = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `project`.\n"]
     pub fn set_project(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().project = std::option::Option::Some(v.into());
@@ -172,7 +191,7 @@ impl GkeonpremVmwareNodePool {
     #[doc = "Set the field `config`.\n"]
     pub fn set_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareNodePoolConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareNodePool_Config>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -188,7 +207,7 @@ impl GkeonpremVmwareNodePool {
     #[doc = "Set the field `node_pool_autoscaling`.\n"]
     pub fn set_node_pool_autoscaling(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareNodePoolNodePoolAutoscalingEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareNodePool_NodePoolAutoscaling>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -202,7 +221,7 @@ impl GkeonpremVmwareNodePool {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<GkeonpremVmwareNodePoolTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<GkeonpremVmwareNodePool_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -223,6 +242,12 @@ impl GkeonpremVmwareNodePool {
         "Get a reference to the value of field `delete_time` after provisioning.\nThe time the cluster was deleted, in RFC3339 text format."]
     pub fn delete_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -282,7 +307,7 @@ impl GkeonpremVmwareNodePool {
 
     #[doc =
         "Get a reference to the value of field `status` after provisioning.\nResourceStatus representing detailed cluster state."]
-    pub fn status(&self) -> terrars::ListRef<GkeonpremVmwareNodePoolStatusElRef> {
+    pub fn status(&self) -> terrars::ListRef<GkeonpremVmwareNodePool_StatusRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
@@ -304,18 +329,18 @@ impl GkeonpremVmwareNodePool {
     }
 
     #[doc = "Get a reference to the value of field `config` after provisioning.\n"]
-    pub fn config(&self) -> terrars::ListRef<GkeonpremVmwareNodePoolConfigElRef> {
+    pub fn config(&self) -> terrars::ListRef<GkeonpremVmwareNodePool_ConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `node_pool_autoscaling` after provisioning.\n"]
-    pub fn node_pool_autoscaling(&self) -> terrars::ListRef<GkeonpremVmwareNodePoolNodePoolAutoscalingElRef> {
+    pub fn node_pool_autoscaling(&self) -> terrars::ListRef<GkeonpremVmwareNodePool_NodePoolAutoscalingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.node_pool_autoscaling", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> GkeonpremVmwareNodePoolTimeoutsElRef {
-        GkeonpremVmwareNodePoolTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> GkeonpremVmwareNodePool_TimeoutsRef {
+        GkeonpremVmwareNodePool_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -365,17 +390,19 @@ impl BuildGkeonpremVmwareNodePool {
         let out = GkeonpremVmwareNodePool(std::rc::Rc::new(GkeonpremVmwareNodePool_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(GkeonpremVmwareNodePoolData {
+            data: std::cell::RefCell::new(GkeonpremVmwareNodePoolData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 annotations: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 display_name: core::default::Default::default(),
                 id: core::default::Default::default(),
                 location: self.location,
                 name: self.name,
+                on_prem_version: core::default::Default::default(),
                 project: core::default::Default::default(),
                 vmware_cluster: self.vmware_cluster,
                 config: core::default::Default::default(),
@@ -431,6 +458,12 @@ impl GkeonpremVmwareNodePoolRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `display_name` after provisioning.\nThe display name for the node pool."]
     pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
@@ -487,7 +520,7 @@ impl GkeonpremVmwareNodePoolRef {
 
     #[doc =
         "Get a reference to the value of field `status` after provisioning.\nResourceStatus representing detailed cluster state."]
-    pub fn status(&self) -> terrars::ListRef<GkeonpremVmwareNodePoolStatusElRef> {
+    pub fn status(&self) -> terrars::ListRef<GkeonpremVmwareNodePool_StatusRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
@@ -509,23 +542,29 @@ impl GkeonpremVmwareNodePoolRef {
     }
 
     #[doc = "Get a reference to the value of field `config` after provisioning.\n"]
-    pub fn config(&self) -> terrars::ListRef<GkeonpremVmwareNodePoolConfigElRef> {
+    pub fn config(&self) -> terrars::ListRef<GkeonpremVmwareNodePool_ConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `node_pool_autoscaling` after provisioning.\n"]
-    pub fn node_pool_autoscaling(&self) -> terrars::ListRef<GkeonpremVmwareNodePoolNodePoolAutoscalingElRef> {
+    pub fn node_pool_autoscaling(&self) -> terrars::ListRef<GkeonpremVmwareNodePool_NodePoolAutoscalingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.node_pool_autoscaling", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> GkeonpremVmwareNodePoolTimeoutsElRef {
-        GkeonpremVmwareNodePoolTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> GkeonpremVmwareNodePool_TimeoutsRef {
+        GkeonpremVmwareNodePool_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct GkeonpremVmwareNodePoolDynamic {
+    config: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareNodePool_Config>>,
+    node_pool_autoscaling: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareNodePool_NodePoolAutoscaling>>,
+}
+
 #[derive(Serialize)]
-pub struct GkeonpremVmwareNodePoolStatusElConditionsEl {
+pub struct GkeonpremVmwareNodePool_Status_Conditions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     last_transition_time: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -538,7 +577,7 @@ pub struct GkeonpremVmwareNodePoolStatusElConditionsEl {
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeonpremVmwareNodePoolStatusElConditionsEl {
+impl GkeonpremVmwareNodePool_Status_Conditions {
     #[doc = "Set the field `last_transition_time`.\n"]
     pub fn set_last_transition_time(
         mut self,
@@ -573,8 +612,8 @@ impl GkeonpremVmwareNodePoolStatusElConditionsEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremVmwareNodePoolStatusElConditionsEl {
-    type O = terrars::BlockAssignable<GkeonpremVmwareNodePoolStatusElConditionsEl>;
+impl terrars::ToListMappable for GkeonpremVmwareNodePool_Status_Conditions {
+    type O = terrars::BlockAssignable<GkeonpremVmwareNodePool_Status_Conditions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -585,11 +624,11 @@ impl terrars::ToListMappable for GkeonpremVmwareNodePoolStatusElConditionsEl {
     }
 }
 
-pub struct BuildGkeonpremVmwareNodePoolStatusElConditionsEl {}
+pub struct BuildGkeonpremVmwareNodePool_Status_Conditions {}
 
-impl BuildGkeonpremVmwareNodePoolStatusElConditionsEl {
-    pub fn build(self) -> GkeonpremVmwareNodePoolStatusElConditionsEl {
-        GkeonpremVmwareNodePoolStatusElConditionsEl {
+impl BuildGkeonpremVmwareNodePool_Status_Conditions {
+    pub fn build(self) -> GkeonpremVmwareNodePool_Status_Conditions {
+        GkeonpremVmwareNodePool_Status_Conditions {
             last_transition_time: core::default::Default::default(),
             message: core::default::Default::default(),
             reason: core::default::Default::default(),
@@ -599,24 +638,23 @@ impl BuildGkeonpremVmwareNodePoolStatusElConditionsEl {
     }
 }
 
-pub struct GkeonpremVmwareNodePoolStatusElConditionsElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareNodePool_Status_ConditionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareNodePoolStatusElConditionsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> GkeonpremVmwareNodePoolStatusElConditionsElRef {
-        GkeonpremVmwareNodePoolStatusElConditionsElRef {
+impl terrars::Ref for GkeonpremVmwareNodePool_Status_ConditionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareNodePool_Status_ConditionsRef {
+        GkeonpremVmwareNodePool_Status_ConditionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareNodePoolStatusElConditionsElRef {
+impl GkeonpremVmwareNodePool_Status_ConditionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -648,18 +686,18 @@ impl GkeonpremVmwareNodePoolStatusElConditionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremVmwareNodePoolStatusEl {
+pub struct GkeonpremVmwareNodePool_Status {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    conditions: std::option::Option<terrars::ListField<GkeonpremVmwareNodePoolStatusElConditionsEl>>,
+    conditions: std::option::Option<terrars::ListField<GkeonpremVmwareNodePool_Status_Conditions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     error_message: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeonpremVmwareNodePoolStatusEl {
+impl GkeonpremVmwareNodePool_Status {
     #[doc = "Set the field `conditions`.\n"]
     pub fn set_conditions(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<GkeonpremVmwareNodePoolStatusElConditionsEl>>,
+        v: impl std::convert::Into<terrars::ListField<GkeonpremVmwareNodePool_Status_Conditions>>,
     ) -> Self {
         self.conditions = std::option::Option::Some(v.into());
         self
@@ -672,8 +710,8 @@ impl GkeonpremVmwareNodePoolStatusEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremVmwareNodePoolStatusEl {
-    type O = terrars::BlockAssignable<GkeonpremVmwareNodePoolStatusEl>;
+impl terrars::ToListMappable for GkeonpremVmwareNodePool_Status {
+    type O = terrars::BlockAssignable<GkeonpremVmwareNodePool_Status>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -684,38 +722,40 @@ impl terrars::ToListMappable for GkeonpremVmwareNodePoolStatusEl {
     }
 }
 
-pub struct BuildGkeonpremVmwareNodePoolStatusEl {}
+pub struct BuildGkeonpremVmwareNodePool_Status {}
 
-impl BuildGkeonpremVmwareNodePoolStatusEl {
-    pub fn build(self) -> GkeonpremVmwareNodePoolStatusEl {
-        GkeonpremVmwareNodePoolStatusEl {
+impl BuildGkeonpremVmwareNodePool_Status {
+    pub fn build(self) -> GkeonpremVmwareNodePool_Status {
+        GkeonpremVmwareNodePool_Status {
             conditions: core::default::Default::default(),
             error_message: core::default::Default::default(),
         }
     }
 }
 
-pub struct GkeonpremVmwareNodePoolStatusElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareNodePool_StatusRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareNodePoolStatusElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareNodePoolStatusElRef {
-        GkeonpremVmwareNodePoolStatusElRef {
+impl terrars::Ref for GkeonpremVmwareNodePool_StatusRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareNodePool_StatusRef {
+        GkeonpremVmwareNodePool_StatusRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareNodePoolStatusElRef {
+impl GkeonpremVmwareNodePool_StatusRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `conditions` after provisioning.\n"]
-    pub fn conditions(&self) -> terrars::ListRef<GkeonpremVmwareNodePoolStatusElConditionsElRef> {
+    pub fn conditions(&self) -> terrars::ListRef<GkeonpremVmwareNodePool_Status_ConditionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.conditions", self.base))
     }
 
@@ -726,173 +766,14 @@ impl GkeonpremVmwareNodePoolStatusElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremVmwareNodePoolConfigElVsphereConfigElTagsEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    category: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tag: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl GkeonpremVmwareNodePoolConfigElVsphereConfigElTagsEl {
-    #[doc = "Set the field `category`.\n"]
-    pub fn set_category(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.category = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `tag`.\n"]
-    pub fn set_tag(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.tag = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for GkeonpremVmwareNodePoolConfigElVsphereConfigElTagsEl {
-    type O = terrars::BlockAssignable<GkeonpremVmwareNodePoolConfigElVsphereConfigElTagsEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildGkeonpremVmwareNodePoolConfigElVsphereConfigElTagsEl {}
-
-impl BuildGkeonpremVmwareNodePoolConfigElVsphereConfigElTagsEl {
-    pub fn build(self) -> GkeonpremVmwareNodePoolConfigElVsphereConfigElTagsEl {
-        GkeonpremVmwareNodePoolConfigElVsphereConfigElTagsEl {
-            category: core::default::Default::default(),
-            tag: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct GkeonpremVmwareNodePoolConfigElVsphereConfigElTagsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for GkeonpremVmwareNodePoolConfigElVsphereConfigElTagsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> GkeonpremVmwareNodePoolConfigElVsphereConfigElTagsElRef {
-        GkeonpremVmwareNodePoolConfigElVsphereConfigElTagsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl GkeonpremVmwareNodePoolConfigElVsphereConfigElTagsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `category` after provisioning.\n"]
-    pub fn category(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.category", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `tag` after provisioning.\n"]
-    pub fn tag(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tag", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct GkeonpremVmwareNodePoolConfigElVsphereConfigEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    datastore: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tags: std::option::Option<terrars::ListField<GkeonpremVmwareNodePoolConfigElVsphereConfigElTagsEl>>,
-}
-
-impl GkeonpremVmwareNodePoolConfigElVsphereConfigEl {
-    #[doc = "Set the field `datastore`.\n"]
-    pub fn set_datastore(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.datastore = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `tags`.\n"]
-    pub fn set_tags(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<GkeonpremVmwareNodePoolConfigElVsphereConfigElTagsEl>>,
-    ) -> Self {
-        self.tags = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for GkeonpremVmwareNodePoolConfigElVsphereConfigEl {
-    type O = terrars::BlockAssignable<GkeonpremVmwareNodePoolConfigElVsphereConfigEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildGkeonpremVmwareNodePoolConfigElVsphereConfigEl {}
-
-impl BuildGkeonpremVmwareNodePoolConfigElVsphereConfigEl {
-    pub fn build(self) -> GkeonpremVmwareNodePoolConfigElVsphereConfigEl {
-        GkeonpremVmwareNodePoolConfigElVsphereConfigEl {
-            datastore: core::default::Default::default(),
-            tags: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct GkeonpremVmwareNodePoolConfigElVsphereConfigElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for GkeonpremVmwareNodePoolConfigElVsphereConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> GkeonpremVmwareNodePoolConfigElVsphereConfigElRef {
-        GkeonpremVmwareNodePoolConfigElVsphereConfigElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl GkeonpremVmwareNodePoolConfigElVsphereConfigElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `datastore` after provisioning.\n"]
-    pub fn datastore(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.datastore", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> terrars::ListRef<GkeonpremVmwareNodePoolConfigElVsphereConfigElTagsElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.tags", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct GkeonpremVmwareNodePoolConfigElTaintsEl {
+pub struct GkeonpremVmwareNodePool_Config_Taints {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     effect: std::option::Option<terrars::PrimField<std::string::String>>,
     key: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl GkeonpremVmwareNodePoolConfigElTaintsEl {
+impl GkeonpremVmwareNodePool_Config_Taints {
     #[doc =
         "Set the field `effect`.\nAvailable taint effects. Possible values: [\"EFFECT_UNSPECIFIED\", \"NO_SCHEDULE\", \"PREFER_NO_SCHEDULE\", \"NO_EXECUTE\"]"]
     pub fn set_effect(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -901,8 +782,8 @@ impl GkeonpremVmwareNodePoolConfigElTaintsEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremVmwareNodePoolConfigElTaintsEl {
-    type O = terrars::BlockAssignable<GkeonpremVmwareNodePoolConfigElTaintsEl>;
+impl terrars::ToListMappable for GkeonpremVmwareNodePool_Config_Taints {
+    type O = terrars::BlockAssignable<GkeonpremVmwareNodePool_Config_Taints>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -913,16 +794,16 @@ impl terrars::ToListMappable for GkeonpremVmwareNodePoolConfigElTaintsEl {
     }
 }
 
-pub struct BuildGkeonpremVmwareNodePoolConfigElTaintsEl {
+pub struct BuildGkeonpremVmwareNodePool_Config_Taints {
     #[doc = "Key associated with the effect."]
     pub key: terrars::PrimField<std::string::String>,
     #[doc = "Value associated with the effect."]
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildGkeonpremVmwareNodePoolConfigElTaintsEl {
-    pub fn build(self) -> GkeonpremVmwareNodePoolConfigElTaintsEl {
-        GkeonpremVmwareNodePoolConfigElTaintsEl {
+impl BuildGkeonpremVmwareNodePool_Config_Taints {
+    pub fn build(self) -> GkeonpremVmwareNodePool_Config_Taints {
+        GkeonpremVmwareNodePool_Config_Taints {
             effect: core::default::Default::default(),
             key: self.key,
             value: self.value,
@@ -930,21 +811,23 @@ impl BuildGkeonpremVmwareNodePoolConfigElTaintsEl {
     }
 }
 
-pub struct GkeonpremVmwareNodePoolConfigElTaintsElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareNodePool_Config_TaintsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareNodePoolConfigElTaintsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareNodePoolConfigElTaintsElRef {
-        GkeonpremVmwareNodePoolConfigElTaintsElRef {
+impl terrars::Ref for GkeonpremVmwareNodePool_Config_TaintsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareNodePool_Config_TaintsRef {
+        GkeonpremVmwareNodePool_Config_TaintsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareNodePoolConfigElTaintsElRef {
+impl GkeonpremVmwareNodePool_Config_TaintsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -966,13 +849,210 @@ impl GkeonpremVmwareNodePoolConfigElTaintsElRef {
     }
 }
 
+#[derive(Serialize)]
+pub struct GkeonpremVmwareNodePool_Config_VsphereConfig_Tags {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    category: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tag: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl GkeonpremVmwareNodePool_Config_VsphereConfig_Tags {
+    #[doc = "Set the field `category`.\nThe Vsphere tag category."]
+    pub fn set_category(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.category = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tag`.\nThe Vsphere tag name."]
+    pub fn set_tag(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.tag = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for GkeonpremVmwareNodePool_Config_VsphereConfig_Tags {
+    type O = terrars::BlockAssignable<GkeonpremVmwareNodePool_Config_VsphereConfig_Tags>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildGkeonpremVmwareNodePool_Config_VsphereConfig_Tags {}
+
+impl BuildGkeonpremVmwareNodePool_Config_VsphereConfig_Tags {
+    pub fn build(self) -> GkeonpremVmwareNodePool_Config_VsphereConfig_Tags {
+        GkeonpremVmwareNodePool_Config_VsphereConfig_Tags {
+            category: core::default::Default::default(),
+            tag: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct GkeonpremVmwareNodePool_Config_VsphereConfig_TagsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for GkeonpremVmwareNodePool_Config_VsphereConfig_TagsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GkeonpremVmwareNodePool_Config_VsphereConfig_TagsRef {
+        GkeonpremVmwareNodePool_Config_VsphereConfig_TagsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl GkeonpremVmwareNodePool_Config_VsphereConfig_TagsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `category` after provisioning.\nThe Vsphere tag category."]
+    pub fn category(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.category", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `tag` after provisioning.\nThe Vsphere tag name."]
+    pub fn tag(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tag", self.base))
+    }
+}
+
 #[derive(Serialize, Default)]
-struct GkeonpremVmwareNodePoolConfigElDynamic {
-    taints: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareNodePoolConfigElTaintsEl>>,
+struct GkeonpremVmwareNodePool_Config_VsphereConfigDynamic {
+    tags: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareNodePool_Config_VsphereConfig_Tags>>,
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremVmwareNodePoolConfigEl {
+pub struct GkeonpremVmwareNodePool_Config_VsphereConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    datastore: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    host_groups: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<std::vec::Vec<GkeonpremVmwareNodePool_Config_VsphereConfig_Tags>>,
+    dynamic: GkeonpremVmwareNodePool_Config_VsphereConfigDynamic,
+}
+
+impl GkeonpremVmwareNodePool_Config_VsphereConfig {
+    #[doc = "Set the field `datastore`.\nThe name of the vCenter datastore. Inherited from the user cluster."]
+    pub fn set_datastore(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.datastore = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `host_groups`.\nVsphere host groups to apply to all VMs in the node pool"]
+    pub fn set_host_groups(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.host_groups = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareNodePool_Config_VsphereConfig_Tags>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.tags = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.tags = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for GkeonpremVmwareNodePool_Config_VsphereConfig {
+    type O = terrars::BlockAssignable<GkeonpremVmwareNodePool_Config_VsphereConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildGkeonpremVmwareNodePool_Config_VsphereConfig {}
+
+impl BuildGkeonpremVmwareNodePool_Config_VsphereConfig {
+    pub fn build(self) -> GkeonpremVmwareNodePool_Config_VsphereConfig {
+        GkeonpremVmwareNodePool_Config_VsphereConfig {
+            datastore: core::default::Default::default(),
+            host_groups: core::default::Default::default(),
+            tags: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct GkeonpremVmwareNodePool_Config_VsphereConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for GkeonpremVmwareNodePool_Config_VsphereConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GkeonpremVmwareNodePool_Config_VsphereConfigRef {
+        GkeonpremVmwareNodePool_Config_VsphereConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl GkeonpremVmwareNodePool_Config_VsphereConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `datastore` after provisioning.\nThe name of the vCenter datastore. Inherited from the user cluster."]
+    pub fn datastore(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.datastore", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `host_groups` after provisioning.\nVsphere host groups to apply to all VMs in the node pool"]
+    pub fn host_groups(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.host_groups", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::ListRef<GkeonpremVmwareNodePool_Config_VsphereConfig_TagsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.tags", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct GkeonpremVmwareNodePool_ConfigDynamic {
+    taints: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareNodePool_Config_Taints>>,
+    vsphere_config: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareNodePool_Config_VsphereConfig>>,
+}
+
+#[derive(Serialize)]
+pub struct GkeonpremVmwareNodePool_Config {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     boot_disk_size_gb: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -989,11 +1069,13 @@ pub struct GkeonpremVmwareNodePoolConfigEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     replicas: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    taints: std::option::Option<std::vec::Vec<GkeonpremVmwareNodePoolConfigElTaintsEl>>,
-    dynamic: GkeonpremVmwareNodePoolConfigElDynamic,
+    taints: std::option::Option<std::vec::Vec<GkeonpremVmwareNodePool_Config_Taints>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vsphere_config: std::option::Option<std::vec::Vec<GkeonpremVmwareNodePool_Config_VsphereConfig>>,
+    dynamic: GkeonpremVmwareNodePool_ConfigDynamic,
 }
 
-impl GkeonpremVmwareNodePoolConfigEl {
+impl GkeonpremVmwareNodePool_Config {
     #[doc = "Set the field `boot_disk_size_gb`.\nVMware disk size to be used during creation."]
     pub fn set_boot_disk_size_gb(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.boot_disk_size_gb = std::option::Option::Some(v.into());
@@ -1044,7 +1126,7 @@ impl GkeonpremVmwareNodePoolConfigEl {
     #[doc = "Set the field `taints`.\n"]
     pub fn set_taints(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareNodePoolConfigElTaintsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareNodePool_Config_Taints>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1056,10 +1138,26 @@ impl GkeonpremVmwareNodePoolConfigEl {
         }
         self
     }
+
+    #[doc = "Set the field `vsphere_config`.\n"]
+    pub fn set_vsphere_config(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremVmwareNodePool_Config_VsphereConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.vsphere_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.vsphere_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
 }
 
-impl terrars::ToListMappable for GkeonpremVmwareNodePoolConfigEl {
-    type O = terrars::BlockAssignable<GkeonpremVmwareNodePoolConfigEl>;
+impl terrars::ToListMappable for GkeonpremVmwareNodePool_Config {
+    type O = terrars::BlockAssignable<GkeonpremVmwareNodePool_Config>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1070,15 +1168,15 @@ impl terrars::ToListMappable for GkeonpremVmwareNodePoolConfigEl {
     }
 }
 
-pub struct BuildGkeonpremVmwareNodePoolConfigEl {
+pub struct BuildGkeonpremVmwareNodePool_Config {
     #[doc =
-        "The OS image to be used for each node in a node pool.\nCurrently 'cos', 'ubuntu', 'ubuntu_containerd' and 'windows' are supported."]
+        "The OS image to be used for each node in a node pool.\nCurrently 'cos', 'cos_cgv2', 'ubuntu', 'ubuntu_cgv2', 'ubuntu_containerd' and 'windows' are supported."]
     pub image_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildGkeonpremVmwareNodePoolConfigEl {
-    pub fn build(self) -> GkeonpremVmwareNodePoolConfigEl {
-        GkeonpremVmwareNodePoolConfigEl {
+impl BuildGkeonpremVmwareNodePool_Config {
+    pub fn build(self) -> GkeonpremVmwareNodePool_Config {
+        GkeonpremVmwareNodePool_Config {
             boot_disk_size_gb: core::default::Default::default(),
             cpus: core::default::Default::default(),
             enable_load_balancer: core::default::Default::default(),
@@ -1088,26 +1186,29 @@ impl BuildGkeonpremVmwareNodePoolConfigEl {
             memory_mb: core::default::Default::default(),
             replicas: core::default::Default::default(),
             taints: core::default::Default::default(),
+            vsphere_config: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct GkeonpremVmwareNodePoolConfigElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareNodePool_ConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareNodePoolConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareNodePoolConfigElRef {
-        GkeonpremVmwareNodePoolConfigElRef {
+impl terrars::Ref for GkeonpremVmwareNodePool_ConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareNodePool_ConfigRef {
+        GkeonpremVmwareNodePool_ConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareNodePoolConfigElRef {
+impl GkeonpremVmwareNodePool_ConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1137,7 +1238,7 @@ impl GkeonpremVmwareNodePoolConfigElRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `image_type` after provisioning.\nThe OS image to be used for each node in a node pool.\nCurrently 'cos', 'ubuntu', 'ubuntu_containerd' and 'windows' are supported."]
+        "Get a reference to the value of field `image_type` after provisioning.\nThe OS image to be used for each node in a node pool.\nCurrently 'cos', 'cos_cgv2', 'ubuntu', 'ubuntu_cgv2', 'ubuntu_containerd' and 'windows' are supported."]
     pub fn image_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.image_type", self.base))
     }
@@ -1160,28 +1261,27 @@ impl GkeonpremVmwareNodePoolConfigElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.replicas", self.base))
     }
 
-    #[doc =
-        "Get a reference to the value of field `vsphere_config` after provisioning.\nSpecifies the vSphere config for node pool."]
-    pub fn vsphere_config(&self) -> terrars::ListRef<GkeonpremVmwareNodePoolConfigElVsphereConfigElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.vsphere_config", self.base))
+    #[doc = "Get a reference to the value of field `taints` after provisioning.\n"]
+    pub fn taints(&self) -> terrars::ListRef<GkeonpremVmwareNodePool_Config_TaintsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.taints", self.base))
     }
 
-    #[doc = "Get a reference to the value of field `taints` after provisioning.\n"]
-    pub fn taints(&self) -> terrars::ListRef<GkeonpremVmwareNodePoolConfigElTaintsElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.taints", self.base))
+    #[doc = "Get a reference to the value of field `vsphere_config` after provisioning.\n"]
+    pub fn vsphere_config(&self) -> terrars::ListRef<GkeonpremVmwareNodePool_Config_VsphereConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.vsphere_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremVmwareNodePoolNodePoolAutoscalingEl {
+pub struct GkeonpremVmwareNodePool_NodePoolAutoscaling {
     max_replicas: terrars::PrimField<f64>,
     min_replicas: terrars::PrimField<f64>,
 }
 
-impl GkeonpremVmwareNodePoolNodePoolAutoscalingEl { }
+impl GkeonpremVmwareNodePool_NodePoolAutoscaling { }
 
-impl terrars::ToListMappable for GkeonpremVmwareNodePoolNodePoolAutoscalingEl {
-    type O = terrars::BlockAssignable<GkeonpremVmwareNodePoolNodePoolAutoscalingEl>;
+impl terrars::ToListMappable for GkeonpremVmwareNodePool_NodePoolAutoscaling {
+    type O = terrars::BlockAssignable<GkeonpremVmwareNodePool_NodePoolAutoscaling>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1192,40 +1292,42 @@ impl terrars::ToListMappable for GkeonpremVmwareNodePoolNodePoolAutoscalingEl {
     }
 }
 
-pub struct BuildGkeonpremVmwareNodePoolNodePoolAutoscalingEl {
+pub struct BuildGkeonpremVmwareNodePool_NodePoolAutoscaling {
     #[doc = "Maximum number of replicas in the NodePool."]
     pub max_replicas: terrars::PrimField<f64>,
     #[doc = "Minimum number of replicas in the NodePool."]
     pub min_replicas: terrars::PrimField<f64>,
 }
 
-impl BuildGkeonpremVmwareNodePoolNodePoolAutoscalingEl {
-    pub fn build(self) -> GkeonpremVmwareNodePoolNodePoolAutoscalingEl {
-        GkeonpremVmwareNodePoolNodePoolAutoscalingEl {
+impl BuildGkeonpremVmwareNodePool_NodePoolAutoscaling {
+    pub fn build(self) -> GkeonpremVmwareNodePool_NodePoolAutoscaling {
+        GkeonpremVmwareNodePool_NodePoolAutoscaling {
             max_replicas: self.max_replicas,
             min_replicas: self.min_replicas,
         }
     }
 }
 
-pub struct GkeonpremVmwareNodePoolNodePoolAutoscalingElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareNodePool_NodePoolAutoscalingRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareNodePoolNodePoolAutoscalingElRef {
+impl terrars::Ref for GkeonpremVmwareNodePool_NodePoolAutoscalingRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremVmwareNodePoolNodePoolAutoscalingElRef {
-        GkeonpremVmwareNodePoolNodePoolAutoscalingElRef {
+    ) -> GkeonpremVmwareNodePool_NodePoolAutoscalingRef {
+        GkeonpremVmwareNodePool_NodePoolAutoscalingRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareNodePoolNodePoolAutoscalingElRef {
+impl GkeonpremVmwareNodePool_NodePoolAutoscalingRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1244,7 +1346,7 @@ impl GkeonpremVmwareNodePoolNodePoolAutoscalingElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremVmwareNodePoolTimeoutsEl {
+pub struct GkeonpremVmwareNodePool_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1253,7 +1355,7 @@ pub struct GkeonpremVmwareNodePoolTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeonpremVmwareNodePoolTimeoutsEl {
+impl GkeonpremVmwareNodePool_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1273,8 +1375,8 @@ impl GkeonpremVmwareNodePoolTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremVmwareNodePoolTimeoutsEl {
-    type O = terrars::BlockAssignable<GkeonpremVmwareNodePoolTimeoutsEl>;
+impl terrars::ToListMappable for GkeonpremVmwareNodePool_Timeouts {
+    type O = terrars::BlockAssignable<GkeonpremVmwareNodePool_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1285,11 +1387,11 @@ impl terrars::ToListMappable for GkeonpremVmwareNodePoolTimeoutsEl {
     }
 }
 
-pub struct BuildGkeonpremVmwareNodePoolTimeoutsEl {}
+pub struct BuildGkeonpremVmwareNodePool_Timeouts {}
 
-impl BuildGkeonpremVmwareNodePoolTimeoutsEl {
-    pub fn build(self) -> GkeonpremVmwareNodePoolTimeoutsEl {
-        GkeonpremVmwareNodePoolTimeoutsEl {
+impl BuildGkeonpremVmwareNodePool_Timeouts {
+    pub fn build(self) -> GkeonpremVmwareNodePool_Timeouts {
+        GkeonpremVmwareNodePool_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1297,21 +1399,23 @@ impl BuildGkeonpremVmwareNodePoolTimeoutsEl {
     }
 }
 
-pub struct GkeonpremVmwareNodePoolTimeoutsElRef {
+#[allow(dead_code)]
+pub struct GkeonpremVmwareNodePool_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremVmwareNodePoolTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareNodePoolTimeoutsElRef {
-        GkeonpremVmwareNodePoolTimeoutsElRef {
+impl terrars::Ref for GkeonpremVmwareNodePool_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremVmwareNodePool_TimeoutsRef {
+        GkeonpremVmwareNodePool_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremVmwareNodePoolTimeoutsElRef {
+impl GkeonpremVmwareNodePool_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1330,10 +1434,4 @@ impl GkeonpremVmwareNodePoolTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct GkeonpremVmwareNodePoolDynamic {
-    config: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareNodePoolConfigEl>>,
-    node_pool_autoscaling: std::option::Option<terrars::DynamicBlock<GkeonpremVmwareNodePoolNodePoolAutoscalingEl>>,
 }

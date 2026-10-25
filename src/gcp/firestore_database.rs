@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct FirestoreDatabaseData {
+struct FirestoreDatabaseData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,27 +25,40 @@ struct FirestoreDatabaseData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     concurrency_mode: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    database_edition: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete_protection_state: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    firestore_data_access_mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     location_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mongodb_compatible_data_access_mode: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     point_in_time_recovery_enablement: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    realtime_updates_mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<FirestoreDatabaseTimeoutsEl>,
+    cmek_config: std::option::Option<std::vec::Vec<FirestoreDatabase_CmekConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<FirestoreDatabase_Timeouts>,
+    dynamic: FirestoreDatabaseDynamic,
 }
 
 struct FirestoreDatabase_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<FirestoreDatabaseData>,
+    data: std::cell::RefCell<FirestoreDatabaseData_>,
 }
 
 #[derive(Clone)]
@@ -161,6 +176,13 @@ impl FirestoreDatabase {
     }
 
     #[doc =
+        "Set the field `database_edition`.\nThe database edition. When set to 'ENTERPRISE', then type must be set to\n'FIRESTORE_NATIVE'. Possible values: [\"STANDARD\", \"ENTERPRISE\"]"]
+    pub fn set_database_edition(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().database_edition = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `delete_protection_state`.\nState of delete protection for the database.\nWhen delete protection is enabled, this database cannot be deleted.\nThe default value is 'DELETE_PROTECTION_STATE_UNSPECIFIED', which is currently equivalent to 'DELETE_PROTECTION_DISABLED'.\n**Note:** Additionally, to delete this database using 'terraform destroy', 'deletion_policy' must be set to 'DELETE'. Possible values: [\"DELETE_PROTECTION_STATE_UNSPECIFIED\", \"DELETE_PROTECTION_ENABLED\", \"DELETE_PROTECTION_DISABLED\"]"]
     pub fn set_delete_protection_state(
         self,
@@ -171,15 +193,35 @@ impl FirestoreDatabase {
     }
 
     #[doc =
-        "Set the field `deletion_policy`.\nDeletion behavior for this database.\nIf the deletion policy is 'ABANDON', the database will be removed from Terraform state but not deleted from Google Cloud upon destruction.\nIf the deletion policy is 'DELETE', the database will both be removed from Terraform state and deleted from Google Cloud upon destruction.\nThe default value is 'ABANDON'.\nSee also 'delete_protection'."]
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"ABANDON\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
     pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `firestore_data_access_mode`.\nThe Firestore API data access mode to use for this database. Can only be\nspecified for 'ENTERPRISE' edition databases. Possible values: [\"DATA_ACCESS_MODE_ENABLED\", \"DATA_ACCESS_MODE_DISABLED\"]"]
+    pub fn set_firestore_data_access_mode(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().firestore_data_access_mode = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `mongodb_compatible_data_access_mode`.\nThe MongoDB compatible API data access mode to use for this database. Can\nonly be specified for 'ENTERPRISE' edition databases. Possible values: [\"DATA_ACCESS_MODE_ENABLED\", \"DATA_ACCESS_MODE_DISABLED\"]"]
+    pub fn set_mongodb_compatible_data_access_mode(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().mongodb_compatible_data_access_mode = std::option::Option::Some(v.into());
         self
     }
 
@@ -199,8 +241,41 @@ impl FirestoreDatabase {
         self
     }
 
+    #[doc =
+        "Set the field `realtime_updates_mode`.\nThe Realtime Updates mode to use for this database. Can only be specified\nfor 'ENTERPRISE' edition databases. Possible values: [\"REALTIME_UPDATES_MODE_ENABLED\", \"REALTIME_UPDATES_MODE_DISABLED\"]"]
+    pub fn set_realtime_updates_mode(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().realtime_updates_mode = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `tags`.\nInput only. A map of resource manager tags. Resource manager tag keys\nand values have the same definition as resource manager tags.\nKeys must be in the format tagKeys/{tag_key_id}, and values are in the format tagValues/456.\nThe field is ignored when empty. The field is immutable and causes\nresource replacement when mutated. To apply tags to an existing resource, see\nthe 'google_tags_tag_value' resource."]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `cmek_config`.\n"]
+    pub fn set_cmek_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<FirestoreDatabase_CmekConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().cmek_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.cmek_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<FirestoreDatabaseTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<FirestoreDatabase_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -224,13 +299,19 @@ impl FirestoreDatabase {
     }
 
     #[doc =
+        "Get a reference to the value of field `database_edition` after provisioning.\nThe database edition. When set to 'ENTERPRISE', then type must be set to\n'FIRESTORE_NATIVE'. Possible values: [\"STANDARD\", \"ENTERPRISE\"]"]
+    pub fn database_edition(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.database_edition", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `delete_protection_state` after provisioning.\nState of delete protection for the database.\nWhen delete protection is enabled, this database cannot be deleted.\nThe default value is 'DELETE_PROTECTION_STATE_UNSPECIFIED', which is currently equivalent to 'DELETE_PROTECTION_DISABLED'.\n**Note:** Additionally, to delete this database using 'terraform destroy', 'deletion_policy' must be set to 'DELETE'. Possible values: [\"DELETE_PROTECTION_STATE_UNSPECIFIED\", \"DELETE_PROTECTION_ENABLED\", \"DELETE_PROTECTION_DISABLED\"]"]
     pub fn delete_protection_state(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete_protection_state", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `deletion_policy` after provisioning.\nDeletion behavior for this database.\nIf the deletion policy is 'ABANDON', the database will be removed from Terraform state but not deleted from Google Cloud upon destruction.\nIf the deletion policy is 'DELETE', the database will both be removed from Terraform state and deleted from Google Cloud upon destruction.\nThe default value is 'ABANDON'.\nSee also 'delete_protection'."]
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"ABANDON\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
     pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
@@ -245,6 +326,12 @@ impl FirestoreDatabase {
         "Get a reference to the value of field `etag` after provisioning.\nOutput only. This checksum is computed by the server based on the value of other fields,\nand may be sent on update and delete requests to ensure the client has an\nup-to-date value before proceeding."]
     pub fn etag(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.etag", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `firestore_data_access_mode` after provisioning.\nThe Firestore API data access mode to use for this database. Can only be\nspecified for 'ENTERPRISE' edition databases. Possible values: [\"DATA_ACCESS_MODE_ENABLED\", \"DATA_ACCESS_MODE_DISABLED\"]"]
+    pub fn firestore_data_access_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.firestore_data_access_mode", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -265,6 +352,15 @@ impl FirestoreDatabase {
     }
 
     #[doc =
+        "Get a reference to the value of field `mongodb_compatible_data_access_mode` after provisioning.\nThe MongoDB compatible API data access mode to use for this database. Can\nonly be specified for 'ENTERPRISE' edition databases. Possible values: [\"DATA_ACCESS_MODE_ENABLED\", \"DATA_ACCESS_MODE_DISABLED\"]"]
+    pub fn mongodb_compatible_data_access_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.mongodb_compatible_data_access_mode", self.extract_ref()),
+        )
+    }
+
+    #[doc =
         "Get a reference to the value of field `name` after provisioning.\nThe ID to use for the database, which will become the final\ncomponent of the database's resource name. This value should be 4-63\ncharacters. Valid characters are /[a-z][0-9]-/ with first character\na letter and the last a letter or a number. Must not be\nUUID-like /[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}/.\n\"(default)\" database id is also valid."]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
@@ -282,6 +378,18 @@ impl FirestoreDatabase {
     #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
     pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `realtime_updates_mode` after provisioning.\nThe Realtime Updates mode to use for this database. Can only be specified\nfor 'ENTERPRISE' edition databases. Possible values: [\"REALTIME_UPDATES_MODE_ENABLED\", \"REALTIME_UPDATES_MODE_DISABLED\"]"]
+    pub fn realtime_updates_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.realtime_updates_mode", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `tags` after provisioning.\nInput only. A map of resource manager tags. Resource manager tag keys\nand values have the same definition as resource manager tags.\nKeys must be in the format tagKeys/{tag_key_id}, and values are in the format tagValues/456.\nThe field is ignored when empty. The field is immutable and causes\nresource replacement when mutated. To apply tags to an existing resource, see\nthe 'google_tags_tag_value' resource."]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
     #[doc =
@@ -308,9 +416,14 @@ impl FirestoreDatabase {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.version_retention_period", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `cmek_config` after provisioning.\n"]
+    pub fn cmek_config(&self) -> terrars::ListRef<FirestoreDatabase_CmekConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cmek_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> FirestoreDatabaseTimeoutsElRef {
-        FirestoreDatabaseTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> FirestoreDatabase_TimeoutsRef {
+        FirestoreDatabase_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -363,7 +476,7 @@ impl BuildFirestoreDatabase {
         let out = FirestoreDatabase(std::rc::Rc::new(FirestoreDatabase_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(FirestoreDatabaseData {
+            data: std::cell::RefCell::new(FirestoreDatabaseData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -371,15 +484,22 @@ impl BuildFirestoreDatabase {
                 provisioner: core::default::Default::default(),
                 app_engine_integration_mode: core::default::Default::default(),
                 concurrency_mode: core::default::Default::default(),
+                database_edition: core::default::Default::default(),
                 delete_protection_state: core::default::Default::default(),
                 deletion_policy: core::default::Default::default(),
+                firestore_data_access_mode: core::default::Default::default(),
                 id: core::default::Default::default(),
                 location_id: self.location_id,
+                mongodb_compatible_data_access_mode: core::default::Default::default(),
                 name: self.name,
                 point_in_time_recovery_enablement: core::default::Default::default(),
                 project: core::default::Default::default(),
+                realtime_updates_mode: core::default::Default::default(),
+                tags: core::default::Default::default(),
                 type_: self.type_,
+                cmek_config: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -429,13 +549,19 @@ impl FirestoreDatabaseRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `database_edition` after provisioning.\nThe database edition. When set to 'ENTERPRISE', then type must be set to\n'FIRESTORE_NATIVE'. Possible values: [\"STANDARD\", \"ENTERPRISE\"]"]
+    pub fn database_edition(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.database_edition", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `delete_protection_state` after provisioning.\nState of delete protection for the database.\nWhen delete protection is enabled, this database cannot be deleted.\nThe default value is 'DELETE_PROTECTION_STATE_UNSPECIFIED', which is currently equivalent to 'DELETE_PROTECTION_DISABLED'.\n**Note:** Additionally, to delete this database using 'terraform destroy', 'deletion_policy' must be set to 'DELETE'. Possible values: [\"DELETE_PROTECTION_STATE_UNSPECIFIED\", \"DELETE_PROTECTION_ENABLED\", \"DELETE_PROTECTION_DISABLED\"]"]
     pub fn delete_protection_state(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete_protection_state", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `deletion_policy` after provisioning.\nDeletion behavior for this database.\nIf the deletion policy is 'ABANDON', the database will be removed from Terraform state but not deleted from Google Cloud upon destruction.\nIf the deletion policy is 'DELETE', the database will both be removed from Terraform state and deleted from Google Cloud upon destruction.\nThe default value is 'ABANDON'.\nSee also 'delete_protection'."]
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"ABANDON\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
     pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
@@ -450,6 +576,12 @@ impl FirestoreDatabaseRef {
         "Get a reference to the value of field `etag` after provisioning.\nOutput only. This checksum is computed by the server based on the value of other fields,\nand may be sent on update and delete requests to ensure the client has an\nup-to-date value before proceeding."]
     pub fn etag(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.etag", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `firestore_data_access_mode` after provisioning.\nThe Firestore API data access mode to use for this database. Can only be\nspecified for 'ENTERPRISE' edition databases. Possible values: [\"DATA_ACCESS_MODE_ENABLED\", \"DATA_ACCESS_MODE_DISABLED\"]"]
+    pub fn firestore_data_access_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.firestore_data_access_mode", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -470,6 +602,15 @@ impl FirestoreDatabaseRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `mongodb_compatible_data_access_mode` after provisioning.\nThe MongoDB compatible API data access mode to use for this database. Can\nonly be specified for 'ENTERPRISE' edition databases. Possible values: [\"DATA_ACCESS_MODE_ENABLED\", \"DATA_ACCESS_MODE_DISABLED\"]"]
+    pub fn mongodb_compatible_data_access_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.mongodb_compatible_data_access_mode", self.extract_ref()),
+        )
+    }
+
+    #[doc =
         "Get a reference to the value of field `name` after provisioning.\nThe ID to use for the database, which will become the final\ncomponent of the database's resource name. This value should be 4-63\ncharacters. Valid characters are /[a-z][0-9]-/ with first character\na letter and the last a letter or a number. Must not be\nUUID-like /[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}/.\n\"(default)\" database id is also valid."]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
@@ -487,6 +628,18 @@ impl FirestoreDatabaseRef {
     #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
     pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `realtime_updates_mode` after provisioning.\nThe Realtime Updates mode to use for this database. Can only be specified\nfor 'ENTERPRISE' edition databases. Possible values: [\"REALTIME_UPDATES_MODE_ENABLED\", \"REALTIME_UPDATES_MODE_DISABLED\"]"]
+    pub fn realtime_updates_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.realtime_updates_mode", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `tags` after provisioning.\nInput only. A map of resource manager tags. Resource manager tag keys\nand values have the same definition as resource manager tags.\nKeys must be in the format tagKeys/{tag_key_id}, and values are in the format tagValues/456.\nThe field is ignored when empty. The field is immutable and causes\nresource replacement when mutated. To apply tags to an existing resource, see\nthe 'google_tags_tag_value' resource."]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
     #[doc =
@@ -513,14 +666,89 @@ impl FirestoreDatabaseRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.version_retention_period", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `cmek_config` after provisioning.\n"]
+    pub fn cmek_config(&self) -> terrars::ListRef<FirestoreDatabase_CmekConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cmek_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> FirestoreDatabaseTimeoutsElRef {
-        FirestoreDatabaseTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> FirestoreDatabase_TimeoutsRef {
+        FirestoreDatabase_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct FirestoreDatabaseDynamic {
+    cmek_config: std::option::Option<terrars::DynamicBlock<FirestoreDatabase_CmekConfig>>,
+}
+
+#[derive(Serialize)]
+pub struct FirestoreDatabase_CmekConfig {
+    kms_key_name: terrars::PrimField<std::string::String>,
+}
+
+impl FirestoreDatabase_CmekConfig { }
+
+impl terrars::ToListMappable for FirestoreDatabase_CmekConfig {
+    type O = terrars::BlockAssignable<FirestoreDatabase_CmekConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildFirestoreDatabase_CmekConfig {
+    #[doc =
+        "The resource ID of a Cloud KMS key. If set, the database created will\nbe a Customer-managed Encryption Key (CMEK) database encrypted with\nthis key. This feature is allowlist only in initial launch.\n\nOnly keys in the same location as this database are allowed to be used\nfor encryption. For Firestore's nam5 multi-region, this corresponds to Cloud KMS\nmulti-region us. For Firestore's eur3 multi-region, this corresponds to\nCloud KMS multi-region europe. See https://cloud.google.com/kms/docs/locations.\n\nThis value should be the KMS key resource ID in the format of\n'projects/{project_id}/locations/{kms_location}/keyRings/{key_ring}/cryptoKeys/{crypto_key}'.\nHow to retrieve this resource ID is listed at\nhttps://cloud.google.com/kms/docs/getting-resource-ids#getting_the_id_for_a_key_and_version."]
+    pub kms_key_name: terrars::PrimField<std::string::String>,
+}
+
+impl BuildFirestoreDatabase_CmekConfig {
+    pub fn build(self) -> FirestoreDatabase_CmekConfig {
+        FirestoreDatabase_CmekConfig { kms_key_name: self.kms_key_name }
+    }
+}
+
+#[allow(dead_code)]
+pub struct FirestoreDatabase_CmekConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for FirestoreDatabase_CmekConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FirestoreDatabase_CmekConfigRef {
+        FirestoreDatabase_CmekConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl FirestoreDatabase_CmekConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `active_key_version` after provisioning.\nCurrently in-use KMS key versions (https://cloud.google.com/kms/docs/resource-hierarchy#key_versions).\nDuring key rotation (https://cloud.google.com/kms/docs/key-rotation), there can be\nmultiple in-use key versions.\n\nThe expected format is\n'projects/{project_id}/locations/{kms_location}/keyRings/{key_ring}/cryptoKeys/{crypto_key}/cryptoKeyVersions/{key_version}'."]
+    pub fn active_key_version(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.active_key_version", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `kms_key_name` after provisioning.\nThe resource ID of a Cloud KMS key. If set, the database created will\nbe a Customer-managed Encryption Key (CMEK) database encrypted with\nthis key. This feature is allowlist only in initial launch.\n\nOnly keys in the same location as this database are allowed to be used\nfor encryption. For Firestore's nam5 multi-region, this corresponds to Cloud KMS\nmulti-region us. For Firestore's eur3 multi-region, this corresponds to\nCloud KMS multi-region europe. See https://cloud.google.com/kms/docs/locations.\n\nThis value should be the KMS key resource ID in the format of\n'projects/{project_id}/locations/{kms_location}/keyRings/{key_ring}/cryptoKeys/{crypto_key}'.\nHow to retrieve this resource ID is listed at\nhttps://cloud.google.com/kms/docs/getting-resource-ids#getting_the_id_for_a_key_and_version."]
+    pub fn kms_key_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_name", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct FirestoreDatabaseTimeoutsEl {
+pub struct FirestoreDatabase_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -529,7 +757,7 @@ pub struct FirestoreDatabaseTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl FirestoreDatabaseTimeoutsEl {
+impl FirestoreDatabase_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -549,8 +777,8 @@ impl FirestoreDatabaseTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for FirestoreDatabaseTimeoutsEl {
-    type O = terrars::BlockAssignable<FirestoreDatabaseTimeoutsEl>;
+impl terrars::ToListMappable for FirestoreDatabase_Timeouts {
+    type O = terrars::BlockAssignable<FirestoreDatabase_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -561,11 +789,11 @@ impl terrars::ToListMappable for FirestoreDatabaseTimeoutsEl {
     }
 }
 
-pub struct BuildFirestoreDatabaseTimeoutsEl {}
+pub struct BuildFirestoreDatabase_Timeouts {}
 
-impl BuildFirestoreDatabaseTimeoutsEl {
-    pub fn build(self) -> FirestoreDatabaseTimeoutsEl {
-        FirestoreDatabaseTimeoutsEl {
+impl BuildFirestoreDatabase_Timeouts {
+    pub fn build(self) -> FirestoreDatabase_Timeouts {
+        FirestoreDatabase_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -573,21 +801,23 @@ impl BuildFirestoreDatabaseTimeoutsEl {
     }
 }
 
-pub struct FirestoreDatabaseTimeoutsElRef {
+#[allow(dead_code)]
+pub struct FirestoreDatabase_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FirestoreDatabaseTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FirestoreDatabaseTimeoutsElRef {
-        FirestoreDatabaseTimeoutsElRef {
+impl terrars::Ref for FirestoreDatabase_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FirestoreDatabase_TimeoutsRef {
+        FirestoreDatabase_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FirestoreDatabaseTimeoutsElRef {
+impl FirestoreDatabase_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataIamTestablePermissionsData {
+struct DataIamTestablePermissionsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -28,7 +30,7 @@ struct DataIamTestablePermissionsData {
 struct DataIamTestablePermissions_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataIamTestablePermissionsData>,
+    data: std::cell::RefCell<DataIamTestablePermissionsData_>,
 }
 
 #[derive(Clone)]
@@ -110,7 +112,7 @@ impl DataIamTestablePermissions {
     }
 
     #[doc = "Get a reference to the value of field `permissions` after provisioning.\n"]
-    pub fn permissions(&self) -> terrars::ListRef<DataIamTestablePermissionsPermissionsElRef> {
+    pub fn permissions(&self) -> terrars::ListRef<DataIamTestablePermissions_PermissionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.permissions", self.extract_ref()))
     }
 
@@ -162,7 +164,7 @@ impl BuildDataIamTestablePermissions {
         let out = DataIamTestablePermissions(std::rc::Rc::new(DataIamTestablePermissions_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataIamTestablePermissionsData {
+            data: std::cell::RefCell::new(DataIamTestablePermissionsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -217,7 +219,7 @@ impl DataIamTestablePermissionsRef {
     }
 
     #[doc = "Get a reference to the value of field `permissions` after provisioning.\n"]
-    pub fn permissions(&self) -> terrars::ListRef<DataIamTestablePermissionsPermissionsElRef> {
+    pub fn permissions(&self) -> terrars::ListRef<DataIamTestablePermissions_PermissionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.permissions", self.extract_ref()))
     }
 
@@ -228,7 +230,7 @@ impl DataIamTestablePermissionsRef {
 }
 
 #[derive(Serialize)]
-pub struct DataIamTestablePermissionsPermissionsEl {
+pub struct DataIamTestablePermissions_Permissions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     api_disabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -241,7 +243,7 @@ pub struct DataIamTestablePermissionsPermissionsEl {
     title: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataIamTestablePermissionsPermissionsEl {
+impl DataIamTestablePermissions_Permissions {
     #[doc = "Set the field `api_disabled`.\n"]
     pub fn set_api_disabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.api_disabled = std::option::Option::Some(v.into());
@@ -276,8 +278,8 @@ impl DataIamTestablePermissionsPermissionsEl {
     }
 }
 
-impl terrars::ToListMappable for DataIamTestablePermissionsPermissionsEl {
-    type O = terrars::BlockAssignable<DataIamTestablePermissionsPermissionsEl>;
+impl terrars::ToListMappable for DataIamTestablePermissions_Permissions {
+    type O = terrars::BlockAssignable<DataIamTestablePermissions_Permissions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -288,11 +290,11 @@ impl terrars::ToListMappable for DataIamTestablePermissionsPermissionsEl {
     }
 }
 
-pub struct BuildDataIamTestablePermissionsPermissionsEl {}
+pub struct BuildDataIamTestablePermissions_Permissions {}
 
-impl BuildDataIamTestablePermissionsPermissionsEl {
-    pub fn build(self) -> DataIamTestablePermissionsPermissionsEl {
-        DataIamTestablePermissionsPermissionsEl {
+impl BuildDataIamTestablePermissions_Permissions {
+    pub fn build(self) -> DataIamTestablePermissions_Permissions {
+        DataIamTestablePermissions_Permissions {
             api_disabled: core::default::Default::default(),
             custom_support_level: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -302,21 +304,23 @@ impl BuildDataIamTestablePermissionsPermissionsEl {
     }
 }
 
-pub struct DataIamTestablePermissionsPermissionsElRef {
+#[allow(dead_code)]
+pub struct DataIamTestablePermissions_PermissionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataIamTestablePermissionsPermissionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataIamTestablePermissionsPermissionsElRef {
-        DataIamTestablePermissionsPermissionsElRef {
+impl terrars::Ref for DataIamTestablePermissions_PermissionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataIamTestablePermissions_PermissionsRef {
+        DataIamTestablePermissions_PermissionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataIamTestablePermissionsPermissionsElRef {
+impl DataIamTestablePermissions_PermissionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct VertexAiIndexEndpointData {
+struct VertexAiIndexEndpointData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct VertexAiIndexEndpointData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     display_name: terrars::PrimField<std::string::String>,
@@ -34,18 +38,18 @@ struct VertexAiIndexEndpointData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    private_service_connect_config: std
-    ::option
-    ::Option<std::vec::Vec<VertexAiIndexEndpointPrivateServiceConnectConfigEl>>,
+    encryption_spec: std::option::Option<std::vec::Vec<VertexAiIndexEndpoint_EncryptionSpec>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<VertexAiIndexEndpointTimeoutsEl>,
+    private_service_connect_config: std::option::Option<std::vec::Vec<VertexAiIndexEndpoint_PrivateServiceConnectConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<VertexAiIndexEndpoint_Timeouts>,
     dynamic: VertexAiIndexEndpointDynamic,
 }
 
 struct VertexAiIndexEndpoint_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<VertexAiIndexEndpointData>,
+    data: std::cell::RefCell<VertexAiIndexEndpointData_>,
 }
 
 #[derive(Clone)]
@@ -145,6 +149,13 @@ impl VertexAiIndexEndpoint {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nThe description of the Index."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -193,10 +204,26 @@ impl VertexAiIndexEndpoint {
         self
     }
 
+    #[doc = "Set the field `encryption_spec`.\n"]
+    pub fn set_encryption_spec(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<VertexAiIndexEndpoint_EncryptionSpec>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().encryption_spec = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.encryption_spec = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `private_service_connect_config`.\n"]
     pub fn set_private_service_connect_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<VertexAiIndexEndpointPrivateServiceConnectConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<VertexAiIndexEndpoint_PrivateServiceConnectConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -210,7 +237,7 @@ impl VertexAiIndexEndpoint {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<VertexAiIndexEndpointTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<VertexAiIndexEndpoint_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -219,6 +246,12 @@ impl VertexAiIndexEndpoint {
         "Get a reference to the value of field `create_time` after provisioning.\nThe timestamp of when the Index was created in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `description` after provisioning.\nThe description of the Index."]
@@ -301,10 +334,15 @@ impl VertexAiIndexEndpoint {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update_time", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `encryption_spec` after provisioning.\n"]
+    pub fn encryption_spec(&self) -> terrars::ListRef<VertexAiIndexEndpoint_EncryptionSpecRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_spec", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `private_service_connect_config` after provisioning.\n"]
     pub fn private_service_connect_config(
         &self,
-    ) -> terrars::ListRef<VertexAiIndexEndpointPrivateServiceConnectConfigElRef> {
+    ) -> terrars::ListRef<VertexAiIndexEndpoint_PrivateServiceConnectConfigRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.private_service_connect_config", self.extract_ref()),
@@ -312,8 +350,8 @@ impl VertexAiIndexEndpoint {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> VertexAiIndexEndpointTimeoutsElRef {
-        VertexAiIndexEndpointTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> VertexAiIndexEndpoint_TimeoutsRef {
+        VertexAiIndexEndpoint_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -360,12 +398,13 @@ impl BuildVertexAiIndexEndpoint {
         let out = VertexAiIndexEndpoint(std::rc::Rc::new(VertexAiIndexEndpoint_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(VertexAiIndexEndpointData {
+            data: std::cell::RefCell::new(VertexAiIndexEndpointData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 display_name: self.display_name,
                 id: core::default::Default::default(),
@@ -374,6 +413,7 @@ impl BuildVertexAiIndexEndpoint {
                 project: core::default::Default::default(),
                 public_endpoint_enabled: core::default::Default::default(),
                 region: core::default::Default::default(),
+                encryption_spec: core::default::Default::default(),
                 private_service_connect_config: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -411,6 +451,12 @@ impl VertexAiIndexEndpointRef {
         "Get a reference to the value of field `create_time` after provisioning.\nThe timestamp of when the Index was created in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `description` after provisioning.\nThe description of the Index."]
@@ -493,10 +539,15 @@ impl VertexAiIndexEndpointRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update_time", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `encryption_spec` after provisioning.\n"]
+    pub fn encryption_spec(&self) -> terrars::ListRef<VertexAiIndexEndpoint_EncryptionSpecRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_spec", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `private_service_connect_config` after provisioning.\n"]
     pub fn private_service_connect_config(
         &self,
-    ) -> terrars::ListRef<VertexAiIndexEndpointPrivateServiceConnectConfigElRef> {
+    ) -> terrars::ListRef<VertexAiIndexEndpoint_PrivateServiceConnectConfigRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.private_service_connect_config", self.extract_ref()),
@@ -504,32 +555,28 @@ impl VertexAiIndexEndpointRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> VertexAiIndexEndpointTimeoutsElRef {
-        VertexAiIndexEndpointTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> VertexAiIndexEndpoint_TimeoutsRef {
+        VertexAiIndexEndpoint_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
+}
+
+#[derive(Serialize, Default)]
+struct VertexAiIndexEndpointDynamic {
+    encryption_spec: std::option::Option<terrars::DynamicBlock<VertexAiIndexEndpoint_EncryptionSpec>>,
+    private_service_connect_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<VertexAiIndexEndpoint_PrivateServiceConnectConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct VertexAiIndexEndpointPrivateServiceConnectConfigEl {
-    enable_private_service_connect: terrars::PrimField<bool>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    project_allowlist: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+pub struct VertexAiIndexEndpoint_EncryptionSpec {
+    kms_key_name: terrars::PrimField<std::string::String>,
 }
 
-impl VertexAiIndexEndpointPrivateServiceConnectConfigEl {
-    #[doc =
-        "Set the field `project_allowlist`.\nA list of Projects from which the forwarding rule will target the service attachment."]
-    pub fn set_project_allowlist(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.project_allowlist = std::option::Option::Some(v.into());
-        self
-    }
-}
+impl VertexAiIndexEndpoint_EncryptionSpec { }
 
-impl terrars::ToListMappable for VertexAiIndexEndpointPrivateServiceConnectConfigEl {
-    type O = terrars::BlockAssignable<VertexAiIndexEndpointPrivateServiceConnectConfigEl>;
+impl terrars::ToListMappable for VertexAiIndexEndpoint_EncryptionSpec {
+    type O = terrars::BlockAssignable<VertexAiIndexEndpoint_EncryptionSpec>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -540,38 +587,223 @@ impl terrars::ToListMappable for VertexAiIndexEndpointPrivateServiceConnectConfi
     }
 }
 
-pub struct BuildVertexAiIndexEndpointPrivateServiceConnectConfigEl {
-    #[doc = "If set to true, the IndexEndpoint is created without private service access."]
-    pub enable_private_service_connect: terrars::PrimField<bool>,
+pub struct BuildVertexAiIndexEndpoint_EncryptionSpec {
+    #[doc =
+        "Required. The Cloud KMS resource identifier of the customer managed encryption key used to protect a resource. Has the form: 'projects/my-project/locations/my-region/keyRings/my-kr/cryptoKeys/my-key'. The key needs to be in the same region as where the compute resource is created."]
+    pub kms_key_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildVertexAiIndexEndpointPrivateServiceConnectConfigEl {
-    pub fn build(self) -> VertexAiIndexEndpointPrivateServiceConnectConfigEl {
-        VertexAiIndexEndpointPrivateServiceConnectConfigEl {
-            enable_private_service_connect: self.enable_private_service_connect,
-            project_allowlist: core::default::Default::default(),
-        }
+impl BuildVertexAiIndexEndpoint_EncryptionSpec {
+    pub fn build(self) -> VertexAiIndexEndpoint_EncryptionSpec {
+        VertexAiIndexEndpoint_EncryptionSpec { kms_key_name: self.kms_key_name }
     }
 }
 
-pub struct VertexAiIndexEndpointPrivateServiceConnectConfigElRef {
+#[allow(dead_code)]
+pub struct VertexAiIndexEndpoint_EncryptionSpecRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for VertexAiIndexEndpointPrivateServiceConnectConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> VertexAiIndexEndpointPrivateServiceConnectConfigElRef {
-        VertexAiIndexEndpointPrivateServiceConnectConfigElRef {
+impl terrars::Ref for VertexAiIndexEndpoint_EncryptionSpecRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> VertexAiIndexEndpoint_EncryptionSpecRef {
+        VertexAiIndexEndpoint_EncryptionSpecRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl VertexAiIndexEndpointPrivateServiceConnectConfigElRef {
+impl VertexAiIndexEndpoint_EncryptionSpecRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `kms_key_name` after provisioning.\nRequired. The Cloud KMS resource identifier of the customer managed encryption key used to protect a resource. Has the form: 'projects/my-project/locations/my-region/keyRings/my-kr/cryptoKeys/my-key'. The key needs to be in the same region as where the compute resource is created."]
+    pub fn kms_key_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_name", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct VertexAiIndexEndpoint_PrivateServiceConnectConfig_PscAutomationConfigs {
+    network: terrars::PrimField<std::string::String>,
+    project_id: terrars::PrimField<std::string::String>,
+}
+
+impl VertexAiIndexEndpoint_PrivateServiceConnectConfig_PscAutomationConfigs { }
+
+impl terrars::ToListMappable for VertexAiIndexEndpoint_PrivateServiceConnectConfig_PscAutomationConfigs {
+    type O = terrars::BlockAssignable<VertexAiIndexEndpoint_PrivateServiceConnectConfig_PscAutomationConfigs>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildVertexAiIndexEndpoint_PrivateServiceConnectConfig_PscAutomationConfigs {
+    #[doc =
+        "The full name of the Google Compute Engine [network](https://cloud.google.com/compute/docs/networks-and-firewalls#networks). [Format](https://cloud.google.com/compute/docs/reference/rest/v1/networks/get): projects/{project}/global/networks/{network}."]
+    pub network: terrars::PrimField<std::string::String>,
+    #[doc = "Project id used to create forwarding rule."]
+    pub project_id: terrars::PrimField<std::string::String>,
+}
+
+impl BuildVertexAiIndexEndpoint_PrivateServiceConnectConfig_PscAutomationConfigs {
+    pub fn build(self) -> VertexAiIndexEndpoint_PrivateServiceConnectConfig_PscAutomationConfigs {
+        VertexAiIndexEndpoint_PrivateServiceConnectConfig_PscAutomationConfigs {
+            network: self.network,
+            project_id: self.project_id,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct VertexAiIndexEndpoint_PrivateServiceConnectConfig_PscAutomationConfigsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for VertexAiIndexEndpoint_PrivateServiceConnectConfig_PscAutomationConfigsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> VertexAiIndexEndpoint_PrivateServiceConnectConfig_PscAutomationConfigsRef {
+        VertexAiIndexEndpoint_PrivateServiceConnectConfig_PscAutomationConfigsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl VertexAiIndexEndpoint_PrivateServiceConnectConfig_PscAutomationConfigsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `network` after provisioning.\nThe full name of the Google Compute Engine [network](https://cloud.google.com/compute/docs/networks-and-firewalls#networks). [Format](https://cloud.google.com/compute/docs/reference/rest/v1/networks/get): projects/{project}/global/networks/{network}."]
+    pub fn network(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `project_id` after provisioning.\nProject id used to create forwarding rule."]
+    pub fn project_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project_id", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct VertexAiIndexEndpoint_PrivateServiceConnectConfigDynamic {
+    psc_automation_configs: std
+    ::option
+    ::Option<terrars::DynamicBlock<VertexAiIndexEndpoint_PrivateServiceConnectConfig_PscAutomationConfigs>>,
+}
+
+#[derive(Serialize)]
+pub struct VertexAiIndexEndpoint_PrivateServiceConnectConfig {
+    enable_private_service_connect: terrars::PrimField<bool>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    project_allowlist: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    psc_automation_configs: std
+    ::option
+    ::Option<std::vec::Vec<VertexAiIndexEndpoint_PrivateServiceConnectConfig_PscAutomationConfigs>>,
+    dynamic: VertexAiIndexEndpoint_PrivateServiceConnectConfigDynamic,
+}
+
+impl VertexAiIndexEndpoint_PrivateServiceConnectConfig {
+    #[doc =
+        "Set the field `project_allowlist`.\nA list of Projects from which the forwarding rule will target the service attachment."]
+    pub fn set_project_allowlist(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.project_allowlist = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `psc_automation_configs`.\n"]
+    pub fn set_psc_automation_configs(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<VertexAiIndexEndpoint_PrivateServiceConnectConfig_PscAutomationConfigs>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.psc_automation_configs = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.psc_automation_configs = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for VertexAiIndexEndpoint_PrivateServiceConnectConfig {
+    type O = terrars::BlockAssignable<VertexAiIndexEndpoint_PrivateServiceConnectConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildVertexAiIndexEndpoint_PrivateServiceConnectConfig {
+    #[doc = "If set to true, the IndexEndpoint is created without private service access."]
+    pub enable_private_service_connect: terrars::PrimField<bool>,
+}
+
+impl BuildVertexAiIndexEndpoint_PrivateServiceConnectConfig {
+    pub fn build(self) -> VertexAiIndexEndpoint_PrivateServiceConnectConfig {
+        VertexAiIndexEndpoint_PrivateServiceConnectConfig {
+            enable_private_service_connect: self.enable_private_service_connect,
+            project_allowlist: core::default::Default::default(),
+            psc_automation_configs: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct VertexAiIndexEndpoint_PrivateServiceConnectConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for VertexAiIndexEndpoint_PrivateServiceConnectConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> VertexAiIndexEndpoint_PrivateServiceConnectConfigRef {
+        VertexAiIndexEndpoint_PrivateServiceConnectConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl VertexAiIndexEndpoint_PrivateServiceConnectConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -587,10 +819,17 @@ impl VertexAiIndexEndpointPrivateServiceConnectConfigElRef {
     pub fn project_allowlist(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.project_allowlist", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `psc_automation_configs` after provisioning.\n"]
+    pub fn psc_automation_configs(
+        &self,
+    ) -> terrars::ListRef<VertexAiIndexEndpoint_PrivateServiceConnectConfig_PscAutomationConfigsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.psc_automation_configs", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct VertexAiIndexEndpointTimeoutsEl {
+pub struct VertexAiIndexEndpoint_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -599,7 +838,7 @@ pub struct VertexAiIndexEndpointTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl VertexAiIndexEndpointTimeoutsEl {
+impl VertexAiIndexEndpoint_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -619,8 +858,8 @@ impl VertexAiIndexEndpointTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for VertexAiIndexEndpointTimeoutsEl {
-    type O = terrars::BlockAssignable<VertexAiIndexEndpointTimeoutsEl>;
+impl terrars::ToListMappable for VertexAiIndexEndpoint_Timeouts {
+    type O = terrars::BlockAssignable<VertexAiIndexEndpoint_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -631,11 +870,11 @@ impl terrars::ToListMappable for VertexAiIndexEndpointTimeoutsEl {
     }
 }
 
-pub struct BuildVertexAiIndexEndpointTimeoutsEl {}
+pub struct BuildVertexAiIndexEndpoint_Timeouts {}
 
-impl BuildVertexAiIndexEndpointTimeoutsEl {
-    pub fn build(self) -> VertexAiIndexEndpointTimeoutsEl {
-        VertexAiIndexEndpointTimeoutsEl {
+impl BuildVertexAiIndexEndpoint_Timeouts {
+    pub fn build(self) -> VertexAiIndexEndpoint_Timeouts {
+        VertexAiIndexEndpoint_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -643,21 +882,23 @@ impl BuildVertexAiIndexEndpointTimeoutsEl {
     }
 }
 
-pub struct VertexAiIndexEndpointTimeoutsElRef {
+#[allow(dead_code)]
+pub struct VertexAiIndexEndpoint_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for VertexAiIndexEndpointTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> VertexAiIndexEndpointTimeoutsElRef {
-        VertexAiIndexEndpointTimeoutsElRef {
+impl terrars::Ref for VertexAiIndexEndpoint_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> VertexAiIndexEndpoint_TimeoutsRef {
+        VertexAiIndexEndpoint_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl VertexAiIndexEndpointTimeoutsElRef {
+impl VertexAiIndexEndpoint_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -676,11 +917,4 @@ impl VertexAiIndexEndpointTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct VertexAiIndexEndpointDynamic {
-    private_service_connect_config: std
-    ::option
-    ::Option<terrars::DynamicBlock<VertexAiIndexEndpointPrivateServiceConnectConfigEl>>,
 }

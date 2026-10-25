@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct GkeonpremBareMetalAdminClusterData {
+struct GkeonpremBareMetalAdminClusterData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -31,34 +33,34 @@ struct GkeonpremBareMetalAdminClusterData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cluster_operations: std::option::Option<std::vec::Vec<GkeonpremBareMetalAdminClusterClusterOperationsEl>>,
+    cluster_operations: std::option::Option<std::vec::Vec<GkeonpremBareMetalAdminCluster_ClusterOperations>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    control_plane: std::option::Option<std::vec::Vec<GkeonpremBareMetalAdminClusterControlPlaneEl>>,
+    control_plane: std::option::Option<std::vec::Vec<GkeonpremBareMetalAdminCluster_ControlPlane>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    load_balancer: std::option::Option<std::vec::Vec<GkeonpremBareMetalAdminClusterLoadBalancerEl>>,
+    load_balancer: std::option::Option<std::vec::Vec<GkeonpremBareMetalAdminCluster_LoadBalancer>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    maintenance_config: std::option::Option<std::vec::Vec<GkeonpremBareMetalAdminClusterMaintenanceConfigEl>>,
+    maintenance_config: std::option::Option<std::vec::Vec<GkeonpremBareMetalAdminCluster_MaintenanceConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    network_config: std::option::Option<std::vec::Vec<GkeonpremBareMetalAdminClusterNetworkConfigEl>>,
+    network_config: std::option::Option<std::vec::Vec<GkeonpremBareMetalAdminCluster_NetworkConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    node_access_config: std::option::Option<std::vec::Vec<GkeonpremBareMetalAdminClusterNodeAccessConfigEl>>,
+    node_access_config: std::option::Option<std::vec::Vec<GkeonpremBareMetalAdminCluster_NodeAccessConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    node_config: std::option::Option<std::vec::Vec<GkeonpremBareMetalAdminClusterNodeConfigEl>>,
+    node_config: std::option::Option<std::vec::Vec<GkeonpremBareMetalAdminCluster_NodeConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    proxy: std::option::Option<std::vec::Vec<GkeonpremBareMetalAdminClusterProxyEl>>,
+    proxy: std::option::Option<std::vec::Vec<GkeonpremBareMetalAdminCluster_Proxy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    security_config: std::option::Option<std::vec::Vec<GkeonpremBareMetalAdminClusterSecurityConfigEl>>,
+    security_config: std::option::Option<std::vec::Vec<GkeonpremBareMetalAdminCluster_SecurityConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    storage: std::option::Option<std::vec::Vec<GkeonpremBareMetalAdminClusterStorageEl>>,
+    storage: std::option::Option<std::vec::Vec<GkeonpremBareMetalAdminCluster_Storage>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<GkeonpremBareMetalAdminClusterTimeoutsEl>,
+    timeouts: std::option::Option<GkeonpremBareMetalAdminCluster_Timeouts>,
     dynamic: GkeonpremBareMetalAdminClusterDynamic,
 }
 
 struct GkeonpremBareMetalAdminCluster_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<GkeonpremBareMetalAdminClusterData>,
+    data: std::cell::RefCell<GkeonpremBareMetalAdminClusterData_>,
 }
 
 #[derive(Clone)]
@@ -195,7 +197,7 @@ impl GkeonpremBareMetalAdminCluster {
     #[doc = "Set the field `cluster_operations`.\n"]
     pub fn set_cluster_operations(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremBareMetalAdminClusterClusterOperationsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_ClusterOperations>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -211,7 +213,7 @@ impl GkeonpremBareMetalAdminCluster {
     #[doc = "Set the field `control_plane`.\n"]
     pub fn set_control_plane(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremBareMetalAdminClusterControlPlaneEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_ControlPlane>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -227,7 +229,7 @@ impl GkeonpremBareMetalAdminCluster {
     #[doc = "Set the field `load_balancer`.\n"]
     pub fn set_load_balancer(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremBareMetalAdminClusterLoadBalancerEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_LoadBalancer>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -243,7 +245,7 @@ impl GkeonpremBareMetalAdminCluster {
     #[doc = "Set the field `maintenance_config`.\n"]
     pub fn set_maintenance_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremBareMetalAdminClusterMaintenanceConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_MaintenanceConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -259,7 +261,7 @@ impl GkeonpremBareMetalAdminCluster {
     #[doc = "Set the field `network_config`.\n"]
     pub fn set_network_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremBareMetalAdminClusterNetworkConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_NetworkConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -275,7 +277,7 @@ impl GkeonpremBareMetalAdminCluster {
     #[doc = "Set the field `node_access_config`.\n"]
     pub fn set_node_access_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremBareMetalAdminClusterNodeAccessConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_NodeAccessConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -291,7 +293,7 @@ impl GkeonpremBareMetalAdminCluster {
     #[doc = "Set the field `node_config`.\n"]
     pub fn set_node_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremBareMetalAdminClusterNodeConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_NodeConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -307,7 +309,7 @@ impl GkeonpremBareMetalAdminCluster {
     #[doc = "Set the field `proxy`.\n"]
     pub fn set_proxy(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremBareMetalAdminClusterProxyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_Proxy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -323,7 +325,7 @@ impl GkeonpremBareMetalAdminCluster {
     #[doc = "Set the field `security_config`.\n"]
     pub fn set_security_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremBareMetalAdminClusterSecurityConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_SecurityConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -339,7 +341,7 @@ impl GkeonpremBareMetalAdminCluster {
     #[doc = "Set the field `storage`.\n"]
     pub fn set_storage(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremBareMetalAdminClusterStorageEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_Storage>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -353,7 +355,7 @@ impl GkeonpremBareMetalAdminCluster {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<GkeonpremBareMetalAdminClusterTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<GkeonpremBareMetalAdminCluster_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -408,7 +410,7 @@ impl GkeonpremBareMetalAdminCluster {
 
     #[doc =
         "Get a reference to the value of field `fleet` after provisioning.\nFleet related configuration.\nFleets are a Google Cloud concept for logically organizing clusters,\nletting you use and manage multi-cluster capabilities and apply\nconsistent policies across your systems.\nSee [Anthos Fleets](https://cloud.google.com/anthos/multicluster-management/fleets) for\nmore details on Anthos multi-cluster capabilities using Fleets."]
-    pub fn fleet(&self) -> terrars::ListRef<GkeonpremBareMetalAdminClusterFleetElRef> {
+    pub fn fleet(&self) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_FleetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.fleet", self.extract_ref()))
     }
 
@@ -450,7 +452,7 @@ impl GkeonpremBareMetalAdminCluster {
     }
 
     #[doc = "Get a reference to the value of field `status` after provisioning.\nSpecifies detailed cluster status."]
-    pub fn status(&self) -> terrars::ListRef<GkeonpremBareMetalAdminClusterStatusElRef> {
+    pub fn status(&self) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_StatusRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
@@ -468,63 +470,63 @@ impl GkeonpremBareMetalAdminCluster {
 
     #[doc =
         "Get a reference to the value of field `validation_check` after provisioning.\nSpecifies the security related settings for the Bare Metal Admin Cluster."]
-    pub fn validation_check(&self) -> terrars::ListRef<GkeonpremBareMetalAdminClusterValidationCheckElRef> {
+    pub fn validation_check(&self) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_ValidationCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.validation_check", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `cluster_operations` after provisioning.\n"]
-    pub fn cluster_operations(&self) -> terrars::ListRef<GkeonpremBareMetalAdminClusterClusterOperationsElRef> {
+    pub fn cluster_operations(&self) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_ClusterOperationsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cluster_operations", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `control_plane` after provisioning.\n"]
-    pub fn control_plane(&self) -> terrars::ListRef<GkeonpremBareMetalAdminClusterControlPlaneElRef> {
+    pub fn control_plane(&self) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_ControlPlaneRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.control_plane", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `load_balancer` after provisioning.\n"]
-    pub fn load_balancer(&self) -> terrars::ListRef<GkeonpremBareMetalAdminClusterLoadBalancerElRef> {
+    pub fn load_balancer(&self) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_LoadBalancerRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.load_balancer", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `maintenance_config` after provisioning.\n"]
-    pub fn maintenance_config(&self) -> terrars::ListRef<GkeonpremBareMetalAdminClusterMaintenanceConfigElRef> {
+    pub fn maintenance_config(&self) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_MaintenanceConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.maintenance_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `network_config` after provisioning.\n"]
-    pub fn network_config(&self) -> terrars::ListRef<GkeonpremBareMetalAdminClusterNetworkConfigElRef> {
+    pub fn network_config(&self) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_NetworkConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `node_access_config` after provisioning.\n"]
-    pub fn node_access_config(&self) -> terrars::ListRef<GkeonpremBareMetalAdminClusterNodeAccessConfigElRef> {
+    pub fn node_access_config(&self) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_NodeAccessConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.node_access_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `node_config` after provisioning.\n"]
-    pub fn node_config(&self) -> terrars::ListRef<GkeonpremBareMetalAdminClusterNodeConfigElRef> {
+    pub fn node_config(&self) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_NodeConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.node_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `proxy` after provisioning.\n"]
-    pub fn proxy(&self) -> terrars::ListRef<GkeonpremBareMetalAdminClusterProxyElRef> {
+    pub fn proxy(&self) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_ProxyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.proxy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `security_config` after provisioning.\n"]
-    pub fn security_config(&self) -> terrars::ListRef<GkeonpremBareMetalAdminClusterSecurityConfigElRef> {
+    pub fn security_config(&self) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_SecurityConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.security_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `storage` after provisioning.\n"]
-    pub fn storage(&self) -> terrars::ListRef<GkeonpremBareMetalAdminClusterStorageElRef> {
+    pub fn storage(&self) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_StorageRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.storage", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> GkeonpremBareMetalAdminClusterTimeoutsElRef {
-        GkeonpremBareMetalAdminClusterTimeoutsElRef::new(
+    pub fn timeouts(&self) -> GkeonpremBareMetalAdminCluster_TimeoutsRef {
+        GkeonpremBareMetalAdminCluster_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -575,7 +577,7 @@ impl BuildGkeonpremBareMetalAdminCluster {
         let out = GkeonpremBareMetalAdminCluster(std::rc::Rc::new(GkeonpremBareMetalAdminCluster_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(GkeonpremBareMetalAdminClusterData {
+            data: std::cell::RefCell::new(GkeonpremBareMetalAdminClusterData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -680,7 +682,7 @@ impl GkeonpremBareMetalAdminClusterRef {
 
     #[doc =
         "Get a reference to the value of field `fleet` after provisioning.\nFleet related configuration.\nFleets are a Google Cloud concept for logically organizing clusters,\nletting you use and manage multi-cluster capabilities and apply\nconsistent policies across your systems.\nSee [Anthos Fleets](https://cloud.google.com/anthos/multicluster-management/fleets) for\nmore details on Anthos multi-cluster capabilities using Fleets."]
-    pub fn fleet(&self) -> terrars::ListRef<GkeonpremBareMetalAdminClusterFleetElRef> {
+    pub fn fleet(&self) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_FleetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.fleet", self.extract_ref()))
     }
 
@@ -722,7 +724,7 @@ impl GkeonpremBareMetalAdminClusterRef {
     }
 
     #[doc = "Get a reference to the value of field `status` after provisioning.\nSpecifies detailed cluster status."]
-    pub fn status(&self) -> terrars::ListRef<GkeonpremBareMetalAdminClusterStatusElRef> {
+    pub fn status(&self) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_StatusRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
@@ -740,76 +742,90 @@ impl GkeonpremBareMetalAdminClusterRef {
 
     #[doc =
         "Get a reference to the value of field `validation_check` after provisioning.\nSpecifies the security related settings for the Bare Metal Admin Cluster."]
-    pub fn validation_check(&self) -> terrars::ListRef<GkeonpremBareMetalAdminClusterValidationCheckElRef> {
+    pub fn validation_check(&self) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_ValidationCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.validation_check", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `cluster_operations` after provisioning.\n"]
-    pub fn cluster_operations(&self) -> terrars::ListRef<GkeonpremBareMetalAdminClusterClusterOperationsElRef> {
+    pub fn cluster_operations(&self) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_ClusterOperationsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cluster_operations", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `control_plane` after provisioning.\n"]
-    pub fn control_plane(&self) -> terrars::ListRef<GkeonpremBareMetalAdminClusterControlPlaneElRef> {
+    pub fn control_plane(&self) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_ControlPlaneRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.control_plane", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `load_balancer` after provisioning.\n"]
-    pub fn load_balancer(&self) -> terrars::ListRef<GkeonpremBareMetalAdminClusterLoadBalancerElRef> {
+    pub fn load_balancer(&self) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_LoadBalancerRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.load_balancer", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `maintenance_config` after provisioning.\n"]
-    pub fn maintenance_config(&self) -> terrars::ListRef<GkeonpremBareMetalAdminClusterMaintenanceConfigElRef> {
+    pub fn maintenance_config(&self) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_MaintenanceConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.maintenance_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `network_config` after provisioning.\n"]
-    pub fn network_config(&self) -> terrars::ListRef<GkeonpremBareMetalAdminClusterNetworkConfigElRef> {
+    pub fn network_config(&self) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_NetworkConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `node_access_config` after provisioning.\n"]
-    pub fn node_access_config(&self) -> terrars::ListRef<GkeonpremBareMetalAdminClusterNodeAccessConfigElRef> {
+    pub fn node_access_config(&self) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_NodeAccessConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.node_access_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `node_config` after provisioning.\n"]
-    pub fn node_config(&self) -> terrars::ListRef<GkeonpremBareMetalAdminClusterNodeConfigElRef> {
+    pub fn node_config(&self) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_NodeConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.node_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `proxy` after provisioning.\n"]
-    pub fn proxy(&self) -> terrars::ListRef<GkeonpremBareMetalAdminClusterProxyElRef> {
+    pub fn proxy(&self) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_ProxyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.proxy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `security_config` after provisioning.\n"]
-    pub fn security_config(&self) -> terrars::ListRef<GkeonpremBareMetalAdminClusterSecurityConfigElRef> {
+    pub fn security_config(&self) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_SecurityConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.security_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `storage` after provisioning.\n"]
-    pub fn storage(&self) -> terrars::ListRef<GkeonpremBareMetalAdminClusterStorageElRef> {
+    pub fn storage(&self) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_StorageRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.storage", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> GkeonpremBareMetalAdminClusterTimeoutsElRef {
-        GkeonpremBareMetalAdminClusterTimeoutsElRef::new(
+    pub fn timeouts(&self) -> GkeonpremBareMetalAdminCluster_TimeoutsRef {
+        GkeonpremBareMetalAdminCluster_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct GkeonpremBareMetalAdminClusterDynamic {
+    cluster_operations: std::option::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminCluster_ClusterOperations>>,
+    control_plane: std::option::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminCluster_ControlPlane>>,
+    load_balancer: std::option::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminCluster_LoadBalancer>>,
+    maintenance_config: std::option::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminCluster_MaintenanceConfig>>,
+    network_config: std::option::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminCluster_NetworkConfig>>,
+    node_access_config: std::option::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminCluster_NodeAccessConfig>>,
+    node_config: std::option::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminCluster_NodeConfig>>,
+    proxy: std::option::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminCluster_Proxy>>,
+    security_config: std::option::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminCluster_SecurityConfig>>,
+    storage: std::option::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminCluster_Storage>>,
+}
+
 #[derive(Serialize)]
-pub struct GkeonpremBareMetalAdminClusterFleetEl {
+pub struct GkeonpremBareMetalAdminCluster_Fleet {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     membership: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeonpremBareMetalAdminClusterFleetEl {
+impl GkeonpremBareMetalAdminCluster_Fleet {
     #[doc = "Set the field `membership`.\n"]
     pub fn set_membership(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.membership = std::option::Option::Some(v.into());
@@ -817,8 +833,8 @@ impl GkeonpremBareMetalAdminClusterFleetEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterFleetEl {
-    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminClusterFleetEl>;
+impl terrars::ToListMappable for GkeonpremBareMetalAdminCluster_Fleet {
+    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_Fleet>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -829,29 +845,31 @@ impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterFleetEl {
     }
 }
 
-pub struct BuildGkeonpremBareMetalAdminClusterFleetEl {}
+pub struct BuildGkeonpremBareMetalAdminCluster_Fleet {}
 
-impl BuildGkeonpremBareMetalAdminClusterFleetEl {
-    pub fn build(self) -> GkeonpremBareMetalAdminClusterFleetEl {
-        GkeonpremBareMetalAdminClusterFleetEl { membership: core::default::Default::default() }
+impl BuildGkeonpremBareMetalAdminCluster_Fleet {
+    pub fn build(self) -> GkeonpremBareMetalAdminCluster_Fleet {
+        GkeonpremBareMetalAdminCluster_Fleet { membership: core::default::Default::default() }
     }
 }
 
-pub struct GkeonpremBareMetalAdminClusterFleetElRef {
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_FleetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremBareMetalAdminClusterFleetElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremBareMetalAdminClusterFleetElRef {
-        GkeonpremBareMetalAdminClusterFleetElRef {
+impl terrars::Ref for GkeonpremBareMetalAdminCluster_FleetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremBareMetalAdminCluster_FleetRef {
+        GkeonpremBareMetalAdminCluster_FleetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremBareMetalAdminClusterFleetElRef {
+impl GkeonpremBareMetalAdminCluster_FleetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -863,7 +881,7 @@ impl GkeonpremBareMetalAdminClusterFleetElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremBareMetalAdminClusterStatusElConditionsEl {
+pub struct GkeonpremBareMetalAdminCluster_Status_Conditions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     last_transition_time: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -876,7 +894,7 @@ pub struct GkeonpremBareMetalAdminClusterStatusElConditionsEl {
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeonpremBareMetalAdminClusterStatusElConditionsEl {
+impl GkeonpremBareMetalAdminCluster_Status_Conditions {
     #[doc = "Set the field `last_transition_time`.\n"]
     pub fn set_last_transition_time(
         mut self,
@@ -911,8 +929,8 @@ impl GkeonpremBareMetalAdminClusterStatusElConditionsEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterStatusElConditionsEl {
-    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminClusterStatusElConditionsEl>;
+impl terrars::ToListMappable for GkeonpremBareMetalAdminCluster_Status_Conditions {
+    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_Status_Conditions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -923,11 +941,11 @@ impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterStatusElCondition
     }
 }
 
-pub struct BuildGkeonpremBareMetalAdminClusterStatusElConditionsEl {}
+pub struct BuildGkeonpremBareMetalAdminCluster_Status_Conditions {}
 
-impl BuildGkeonpremBareMetalAdminClusterStatusElConditionsEl {
-    pub fn build(self) -> GkeonpremBareMetalAdminClusterStatusElConditionsEl {
-        GkeonpremBareMetalAdminClusterStatusElConditionsEl {
+impl BuildGkeonpremBareMetalAdminCluster_Status_Conditions {
+    pub fn build(self) -> GkeonpremBareMetalAdminCluster_Status_Conditions {
+        GkeonpremBareMetalAdminCluster_Status_Conditions {
             last_transition_time: core::default::Default::default(),
             message: core::default::Default::default(),
             reason: core::default::Default::default(),
@@ -937,24 +955,26 @@ impl BuildGkeonpremBareMetalAdminClusterStatusElConditionsEl {
     }
 }
 
-pub struct GkeonpremBareMetalAdminClusterStatusElConditionsElRef {
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_Status_ConditionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremBareMetalAdminClusterStatusElConditionsElRef {
+impl terrars::Ref for GkeonpremBareMetalAdminCluster_Status_ConditionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremBareMetalAdminClusterStatusElConditionsElRef {
-        GkeonpremBareMetalAdminClusterStatusElConditionsElRef {
+    ) -> GkeonpremBareMetalAdminCluster_Status_ConditionsRef {
+        GkeonpremBareMetalAdminCluster_Status_ConditionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremBareMetalAdminClusterStatusElConditionsElRef {
+impl GkeonpremBareMetalAdminCluster_Status_ConditionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -986,18 +1006,18 @@ impl GkeonpremBareMetalAdminClusterStatusElConditionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremBareMetalAdminClusterStatusEl {
+pub struct GkeonpremBareMetalAdminCluster_Status {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    conditions: std::option::Option<terrars::ListField<GkeonpremBareMetalAdminClusterStatusElConditionsEl>>,
+    conditions: std::option::Option<terrars::ListField<GkeonpremBareMetalAdminCluster_Status_Conditions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     error_message: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeonpremBareMetalAdminClusterStatusEl {
+impl GkeonpremBareMetalAdminCluster_Status {
     #[doc = "Set the field `conditions`.\n"]
     pub fn set_conditions(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<GkeonpremBareMetalAdminClusterStatusElConditionsEl>>,
+        v: impl std::convert::Into<terrars::ListField<GkeonpremBareMetalAdminCluster_Status_Conditions>>,
     ) -> Self {
         self.conditions = std::option::Option::Some(v.into());
         self
@@ -1010,8 +1030,8 @@ impl GkeonpremBareMetalAdminClusterStatusEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterStatusEl {
-    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminClusterStatusEl>;
+impl terrars::ToListMappable for GkeonpremBareMetalAdminCluster_Status {
+    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_Status>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1022,38 +1042,40 @@ impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterStatusEl {
     }
 }
 
-pub struct BuildGkeonpremBareMetalAdminClusterStatusEl {}
+pub struct BuildGkeonpremBareMetalAdminCluster_Status {}
 
-impl BuildGkeonpremBareMetalAdminClusterStatusEl {
-    pub fn build(self) -> GkeonpremBareMetalAdminClusterStatusEl {
-        GkeonpremBareMetalAdminClusterStatusEl {
+impl BuildGkeonpremBareMetalAdminCluster_Status {
+    pub fn build(self) -> GkeonpremBareMetalAdminCluster_Status {
+        GkeonpremBareMetalAdminCluster_Status {
             conditions: core::default::Default::default(),
             error_message: core::default::Default::default(),
         }
     }
 }
 
-pub struct GkeonpremBareMetalAdminClusterStatusElRef {
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_StatusRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremBareMetalAdminClusterStatusElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremBareMetalAdminClusterStatusElRef {
-        GkeonpremBareMetalAdminClusterStatusElRef {
+impl terrars::Ref for GkeonpremBareMetalAdminCluster_StatusRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremBareMetalAdminCluster_StatusRef {
+        GkeonpremBareMetalAdminCluster_StatusRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremBareMetalAdminClusterStatusElRef {
+impl GkeonpremBareMetalAdminCluster_StatusRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `conditions` after provisioning.\n"]
-    pub fn conditions(&self) -> terrars::ListRef<GkeonpremBareMetalAdminClusterStatusElConditionsElRef> {
+    pub fn conditions(&self) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_Status_ConditionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.conditions", self.base))
     }
 
@@ -1064,7 +1086,7 @@ impl GkeonpremBareMetalAdminClusterStatusElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremBareMetalAdminClusterValidationCheckElStatusElResultEl {
+pub struct GkeonpremBareMetalAdminCluster_ValidationCheck_Status_Result {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     category: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1077,7 +1099,7 @@ pub struct GkeonpremBareMetalAdminClusterValidationCheckElStatusElResultEl {
     reason: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeonpremBareMetalAdminClusterValidationCheckElStatusElResultEl {
+impl GkeonpremBareMetalAdminCluster_ValidationCheck_Status_Result {
     #[doc = "Set the field `category`.\n"]
     pub fn set_category(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.category = std::option::Option::Some(v.into());
@@ -1109,8 +1131,8 @@ impl GkeonpremBareMetalAdminClusterValidationCheckElStatusElResultEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterValidationCheckElStatusElResultEl {
-    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminClusterValidationCheckElStatusElResultEl>;
+impl terrars::ToListMappable for GkeonpremBareMetalAdminCluster_ValidationCheck_Status_Result {
+    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_ValidationCheck_Status_Result>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1121,11 +1143,11 @@ impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterValidationCheckEl
     }
 }
 
-pub struct BuildGkeonpremBareMetalAdminClusterValidationCheckElStatusElResultEl {}
+pub struct BuildGkeonpremBareMetalAdminCluster_ValidationCheck_Status_Result {}
 
-impl BuildGkeonpremBareMetalAdminClusterValidationCheckElStatusElResultEl {
-    pub fn build(self) -> GkeonpremBareMetalAdminClusterValidationCheckElStatusElResultEl {
-        GkeonpremBareMetalAdminClusterValidationCheckElStatusElResultEl {
+impl BuildGkeonpremBareMetalAdminCluster_ValidationCheck_Status_Result {
+    pub fn build(self) -> GkeonpremBareMetalAdminCluster_ValidationCheck_Status_Result {
+        GkeonpremBareMetalAdminCluster_ValidationCheck_Status_Result {
             category: core::default::Default::default(),
             description: core::default::Default::default(),
             details: core::default::Default::default(),
@@ -1135,24 +1157,26 @@ impl BuildGkeonpremBareMetalAdminClusterValidationCheckElStatusElResultEl {
     }
 }
 
-pub struct GkeonpremBareMetalAdminClusterValidationCheckElStatusElResultElRef {
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_ValidationCheck_Status_ResultRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremBareMetalAdminClusterValidationCheckElStatusElResultElRef {
+impl terrars::Ref for GkeonpremBareMetalAdminCluster_ValidationCheck_Status_ResultRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremBareMetalAdminClusterValidationCheckElStatusElResultElRef {
-        GkeonpremBareMetalAdminClusterValidationCheckElStatusElResultElRef {
+    ) -> GkeonpremBareMetalAdminCluster_ValidationCheck_Status_ResultRef {
+        GkeonpremBareMetalAdminCluster_ValidationCheck_Status_ResultRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremBareMetalAdminClusterValidationCheckElStatusElResultElRef {
+impl GkeonpremBareMetalAdminCluster_ValidationCheck_Status_ResultRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1184,29 +1208,24 @@ impl GkeonpremBareMetalAdminClusterValidationCheckElStatusElResultElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremBareMetalAdminClusterValidationCheckElStatusEl {
+pub struct GkeonpremBareMetalAdminCluster_ValidationCheck_Status {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    result: std::option::Option<terrars::ListField<GkeonpremBareMetalAdminClusterValidationCheckElStatusElResultEl>>,
+    result: std::option::Option<terrars::ListField<GkeonpremBareMetalAdminCluster_ValidationCheck_Status_Result>>,
 }
 
-impl GkeonpremBareMetalAdminClusterValidationCheckElStatusEl {
+impl GkeonpremBareMetalAdminCluster_ValidationCheck_Status {
     #[doc = "Set the field `result`.\n"]
     pub fn set_result(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::ListField<GkeonpremBareMetalAdminClusterValidationCheckElStatusElResultEl>>,
+        v: impl std::convert::Into<terrars::ListField<GkeonpremBareMetalAdminCluster_ValidationCheck_Status_Result>>,
     ) -> Self {
         self.result = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterValidationCheckElStatusEl {
-    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminClusterValidationCheckElStatusEl>;
+impl terrars::ToListMappable for GkeonpremBareMetalAdminCluster_ValidationCheck_Status {
+    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_ValidationCheck_Status>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1217,53 +1236,55 @@ impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterValidationCheckEl
     }
 }
 
-pub struct BuildGkeonpremBareMetalAdminClusterValidationCheckElStatusEl {}
+pub struct BuildGkeonpremBareMetalAdminCluster_ValidationCheck_Status {}
 
-impl BuildGkeonpremBareMetalAdminClusterValidationCheckElStatusEl {
-    pub fn build(self) -> GkeonpremBareMetalAdminClusterValidationCheckElStatusEl {
-        GkeonpremBareMetalAdminClusterValidationCheckElStatusEl { result: core::default::Default::default() }
+impl BuildGkeonpremBareMetalAdminCluster_ValidationCheck_Status {
+    pub fn build(self) -> GkeonpremBareMetalAdminCluster_ValidationCheck_Status {
+        GkeonpremBareMetalAdminCluster_ValidationCheck_Status { result: core::default::Default::default() }
     }
 }
 
-pub struct GkeonpremBareMetalAdminClusterValidationCheckElStatusElRef {
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_ValidationCheck_StatusRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremBareMetalAdminClusterValidationCheckElStatusElRef {
+impl terrars::Ref for GkeonpremBareMetalAdminCluster_ValidationCheck_StatusRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremBareMetalAdminClusterValidationCheckElStatusElRef {
-        GkeonpremBareMetalAdminClusterValidationCheckElStatusElRef {
+    ) -> GkeonpremBareMetalAdminCluster_ValidationCheck_StatusRef {
+        GkeonpremBareMetalAdminCluster_ValidationCheck_StatusRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremBareMetalAdminClusterValidationCheckElStatusElRef {
+impl GkeonpremBareMetalAdminCluster_ValidationCheck_StatusRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `result` after provisioning.\n"]
-    pub fn result(&self) -> terrars::ListRef<GkeonpremBareMetalAdminClusterValidationCheckElStatusElResultElRef> {
+    pub fn result(&self) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_ValidationCheck_Status_ResultRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.result", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremBareMetalAdminClusterValidationCheckEl {
+pub struct GkeonpremBareMetalAdminCluster_ValidationCheck {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     options: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     scenario: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    status: std::option::Option<terrars::ListField<GkeonpremBareMetalAdminClusterValidationCheckElStatusEl>>,
+    status: std::option::Option<terrars::ListField<GkeonpremBareMetalAdminCluster_ValidationCheck_Status>>,
 }
 
-impl GkeonpremBareMetalAdminClusterValidationCheckEl {
+impl GkeonpremBareMetalAdminCluster_ValidationCheck {
     #[doc = "Set the field `options`.\n"]
     pub fn set_options(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.options = std::option::Option::Some(v.into());
@@ -1279,15 +1300,15 @@ impl GkeonpremBareMetalAdminClusterValidationCheckEl {
     #[doc = "Set the field `status`.\n"]
     pub fn set_status(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<GkeonpremBareMetalAdminClusterValidationCheckElStatusEl>>,
+        v: impl std::convert::Into<terrars::ListField<GkeonpremBareMetalAdminCluster_ValidationCheck_Status>>,
     ) -> Self {
         self.status = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterValidationCheckEl {
-    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminClusterValidationCheckEl>;
+impl terrars::ToListMappable for GkeonpremBareMetalAdminCluster_ValidationCheck {
+    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_ValidationCheck>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1298,11 +1319,11 @@ impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterValidationCheckEl
     }
 }
 
-pub struct BuildGkeonpremBareMetalAdminClusterValidationCheckEl {}
+pub struct BuildGkeonpremBareMetalAdminCluster_ValidationCheck {}
 
-impl BuildGkeonpremBareMetalAdminClusterValidationCheckEl {
-    pub fn build(self) -> GkeonpremBareMetalAdminClusterValidationCheckEl {
-        GkeonpremBareMetalAdminClusterValidationCheckEl {
+impl BuildGkeonpremBareMetalAdminCluster_ValidationCheck {
+    pub fn build(self) -> GkeonpremBareMetalAdminCluster_ValidationCheck {
+        GkeonpremBareMetalAdminCluster_ValidationCheck {
             options: core::default::Default::default(),
             scenario: core::default::Default::default(),
             status: core::default::Default::default(),
@@ -1310,24 +1331,26 @@ impl BuildGkeonpremBareMetalAdminClusterValidationCheckEl {
     }
 }
 
-pub struct GkeonpremBareMetalAdminClusterValidationCheckElRef {
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_ValidationCheckRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremBareMetalAdminClusterValidationCheckElRef {
+impl terrars::Ref for GkeonpremBareMetalAdminCluster_ValidationCheckRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremBareMetalAdminClusterValidationCheckElRef {
-        GkeonpremBareMetalAdminClusterValidationCheckElRef {
+    ) -> GkeonpremBareMetalAdminCluster_ValidationCheckRef {
+        GkeonpremBareMetalAdminCluster_ValidationCheckRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremBareMetalAdminClusterValidationCheckElRef {
+impl GkeonpremBareMetalAdminCluster_ValidationCheckRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1343,18 +1366,18 @@ impl GkeonpremBareMetalAdminClusterValidationCheckElRef {
     }
 
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
-    pub fn status(&self) -> terrars::ListRef<GkeonpremBareMetalAdminClusterValidationCheckElStatusElRef> {
+    pub fn status(&self) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_ValidationCheck_StatusRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.status", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremBareMetalAdminClusterClusterOperationsEl {
+pub struct GkeonpremBareMetalAdminCluster_ClusterOperations {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_application_logs: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl GkeonpremBareMetalAdminClusterClusterOperationsEl {
+impl GkeonpremBareMetalAdminCluster_ClusterOperations {
     #[doc =
         "Set the field `enable_application_logs`.\nWhether collection of application logs/metrics should be enabled (in addition to system logs/metrics)."]
     pub fn set_enable_application_logs(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -1363,8 +1386,8 @@ impl GkeonpremBareMetalAdminClusterClusterOperationsEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterClusterOperationsEl {
-    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminClusterClusterOperationsEl>;
+impl terrars::ToListMappable for GkeonpremBareMetalAdminCluster_ClusterOperations {
+    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_ClusterOperations>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1375,34 +1398,36 @@ impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterClusterOperations
     }
 }
 
-pub struct BuildGkeonpremBareMetalAdminClusterClusterOperationsEl {}
+pub struct BuildGkeonpremBareMetalAdminCluster_ClusterOperations {}
 
-impl BuildGkeonpremBareMetalAdminClusterClusterOperationsEl {
-    pub fn build(self) -> GkeonpremBareMetalAdminClusterClusterOperationsEl {
-        GkeonpremBareMetalAdminClusterClusterOperationsEl {
+impl BuildGkeonpremBareMetalAdminCluster_ClusterOperations {
+    pub fn build(self) -> GkeonpremBareMetalAdminCluster_ClusterOperations {
+        GkeonpremBareMetalAdminCluster_ClusterOperations {
             enable_application_logs: core::default::Default::default(),
         }
     }
 }
 
-pub struct GkeonpremBareMetalAdminClusterClusterOperationsElRef {
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_ClusterOperationsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremBareMetalAdminClusterClusterOperationsElRef {
+impl terrars::Ref for GkeonpremBareMetalAdminCluster_ClusterOperationsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremBareMetalAdminClusterClusterOperationsElRef {
-        GkeonpremBareMetalAdminClusterClusterOperationsElRef {
+    ) -> GkeonpremBareMetalAdminCluster_ClusterOperationsRef {
+        GkeonpremBareMetalAdminCluster_ClusterOperationsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremBareMetalAdminClusterClusterOperationsElRef {
+impl GkeonpremBareMetalAdminCluster_ClusterOperationsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1415,15 +1440,15 @@ impl GkeonpremBareMetalAdminClusterClusterOperationsElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremBareMetalAdminClusterControlPlaneElApiServerArgsEl {
+pub struct GkeonpremBareMetalAdminCluster_ControlPlane_ApiServerArgs {
     argument: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl GkeonpremBareMetalAdminClusterControlPlaneElApiServerArgsEl { }
+impl GkeonpremBareMetalAdminCluster_ControlPlane_ApiServerArgs { }
 
-impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterControlPlaneElApiServerArgsEl {
-    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminClusterControlPlaneElApiServerArgsEl>;
+impl terrars::ToListMappable for GkeonpremBareMetalAdminCluster_ControlPlane_ApiServerArgs {
+    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_ControlPlane_ApiServerArgs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1434,7 +1459,7 @@ impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterControlPlaneElApi
     }
 }
 
-pub struct BuildGkeonpremBareMetalAdminClusterControlPlaneElApiServerArgsEl {
+pub struct BuildGkeonpremBareMetalAdminCluster_ControlPlane_ApiServerArgs {
     #[doc =
         "The argument name as it appears on the API Server command line please make sure to remove the leading dashes."]
     pub argument: terrars::PrimField<std::string::String>,
@@ -1442,33 +1467,35 @@ pub struct BuildGkeonpremBareMetalAdminClusterControlPlaneElApiServerArgsEl {
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildGkeonpremBareMetalAdminClusterControlPlaneElApiServerArgsEl {
-    pub fn build(self) -> GkeonpremBareMetalAdminClusterControlPlaneElApiServerArgsEl {
-        GkeonpremBareMetalAdminClusterControlPlaneElApiServerArgsEl {
+impl BuildGkeonpremBareMetalAdminCluster_ControlPlane_ApiServerArgs {
+    pub fn build(self) -> GkeonpremBareMetalAdminCluster_ControlPlane_ApiServerArgs {
+        GkeonpremBareMetalAdminCluster_ControlPlane_ApiServerArgs {
             argument: self.argument,
             value: self.value,
         }
     }
 }
 
-pub struct GkeonpremBareMetalAdminClusterControlPlaneElApiServerArgsElRef {
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_ControlPlane_ApiServerArgsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremBareMetalAdminClusterControlPlaneElApiServerArgsElRef {
+impl terrars::Ref for GkeonpremBareMetalAdminCluster_ControlPlane_ApiServerArgsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremBareMetalAdminClusterControlPlaneElApiServerArgsElRef {
-        GkeonpremBareMetalAdminClusterControlPlaneElApiServerArgsElRef {
+    ) -> GkeonpremBareMetalAdminCluster_ControlPlane_ApiServerArgsRef {
+        GkeonpremBareMetalAdminCluster_ControlPlane_ApiServerArgsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremBareMetalAdminClusterControlPlaneElApiServerArgsElRef {
+impl GkeonpremBareMetalAdminCluster_ControlPlane_ApiServerArgsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1487,16 +1514,16 @@ impl GkeonpremBareMetalAdminClusterControlPlaneElApiServerArgsElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElNodeConfigsEl {
+pub struct GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig_NodeConfigs {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     node_ip: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElNodeConfigsEl {
+impl GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig_NodeConfigs {
     #[doc =
-        "Set the field `labels`.\nThe map of Kubernetes labels (key/value pairs) to be applied to\neach node. These will added in addition to any default label(s)\nthat Kubernetes may apply to the node. In case of conflict in\nlabel keys, the applied set may differ depending on the Kubernetes\nversion -- it's best to assume the behavior is undefined and\nconflicts should be avoided. For more information, including usage\nand the valid values, see:\n  http://kubernetes.io/v1.1/docs/user-guide/labels.html\nAn object containing a list of \"key\": value pairs.\nExample: { \"name\": \"wrench\", \"mass\": \"1.3kg\", \"count\": \"3\" }."]
+        "Set the field `labels`.\nThe map of Kubernetes labels (key/value pairs) to be applied to\neach node. These will added in addition to any default label(s)\nthat Kubernetes may apply to the node. In case of conflict in\nlabel keys, the applied set may differ depending on the Kubernetes\nversion -- it's best to assume the behavior is undefined and\nconflicts should be avoided. For more information, including usage\nand the valid values, see:\n  - http://kubernetes.io/v1.1/docs/user-guide/labels.html\nAn object containing a list of \"key\": value pairs.\nFor example: { \"name\": \"wrench\", \"mass\": \"1.3kg\", \"count\": \"3\" }."]
     pub fn set_labels(
         mut self,
         v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -1514,11 +1541,11 @@ impl GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNod
 }
 
 impl terrars
-::ToListMappable for GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElNodeConfigsEl {
+::ToListMappable for GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig_NodeConfigs {
     type O =
         terrars
         ::BlockAssignable<
-            GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElNodeConfigsEl,
+            GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig_NodeConfigs,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -1530,44 +1557,46 @@ impl terrars
     }
 }
 
-pub struct BuildGkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElNodeConfigsEl {}
+pub struct BuildGkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig_NodeConfigs {}
 
-impl BuildGkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElNodeConfigsEl {
+impl BuildGkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig_NodeConfigs {
     pub fn build(
         self,
-    ) -> GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElNodeConfigsEl {
-        GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElNodeConfigsEl {
+    ) -> GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig_NodeConfigs {
+        GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig_NodeConfigs {
             labels: core::default::Default::default(),
             node_ip: core::default::Default::default(),
         }
     }
 }
 
-pub struct GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElNodeConfigsElRef {
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig_NodeConfigsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElNodeConfigsElRef {
+::Ref for GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig_NodeConfigsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElNodeConfigsElRef {
-        GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElNodeConfigsElRef {
+    ) -> GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig_NodeConfigsRef {
+        GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig_NodeConfigsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElNodeConfigsElRef {
+impl GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig_NodeConfigsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `labels` after provisioning.\nThe map of Kubernetes labels (key/value pairs) to be applied to\neach node. These will added in addition to any default label(s)\nthat Kubernetes may apply to the node. In case of conflict in\nlabel keys, the applied set may differ depending on the Kubernetes\nversion -- it's best to assume the behavior is undefined and\nconflicts should be avoided. For more information, including usage\nand the valid values, see:\n  http://kubernetes.io/v1.1/docs/user-guide/labels.html\nAn object containing a list of \"key\": value pairs.\nExample: { \"name\": \"wrench\", \"mass\": \"1.3kg\", \"count\": \"3\" }."]
+        "Get a reference to the value of field `labels` after provisioning.\nThe map of Kubernetes labels (key/value pairs) to be applied to\neach node. These will added in addition to any default label(s)\nthat Kubernetes may apply to the node. In case of conflict in\nlabel keys, the applied set may differ depending on the Kubernetes\nversion -- it's best to assume the behavior is undefined and\nconflicts should be avoided. For more information, including usage\nand the valid values, see:\n  - http://kubernetes.io/v1.1/docs/user-guide/labels.html\nAn object containing a list of \"key\": value pairs.\nFor example: { \"name\": \"wrench\", \"mass\": \"1.3kg\", \"count\": \"3\" }."]
     pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.base))
     }
@@ -1580,7 +1609,7 @@ impl GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNod
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElTaintsEl {
+pub struct GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig_Taints {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     effect: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1589,7 +1618,7 @@ pub struct GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfi
     value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElTaintsEl {
+impl GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig_Taints {
     #[doc =
         "Set the field `effect`.\nSpecifies the nodes operating system (default: LINUX). Possible values: [\"EFFECT_UNSPECIFIED\", \"PREFER_NO_SCHEDULE\", \"NO_EXECUTE\"]"]
     pub fn set_effect(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1611,11 +1640,11 @@ impl GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNod
 }
 
 impl terrars
-::ToListMappable for GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElTaintsEl {
+::ToListMappable for GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig_Taints {
     type O =
         terrars
         ::BlockAssignable<
-            GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElTaintsEl,
+            GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig_Taints,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -1627,13 +1656,13 @@ impl terrars
     }
 }
 
-pub struct BuildGkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElTaintsEl {}
+pub struct BuildGkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig_Taints {}
 
-impl BuildGkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElTaintsEl {
+impl BuildGkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig_Taints {
     pub fn build(
         self,
-    ) -> GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElTaintsEl {
-        GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElTaintsEl {
+    ) -> GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig_Taints {
+        GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig_Taints {
             effect: core::default::Default::default(),
             key: core::default::Default::default(),
             value: core::default::Default::default(),
@@ -1641,25 +1670,26 @@ impl BuildGkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfig
     }
 }
 
-pub struct GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElTaintsElRef {
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig_TaintsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars
-::Ref for GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElTaintsElRef {
+impl terrars::Ref for GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig_TaintsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElTaintsElRef {
-        GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElTaintsElRef {
+    ) -> GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig_TaintsRef {
+        GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig_TaintsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElTaintsElRef {
+impl GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig_TaintsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1682,27 +1712,25 @@ impl GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNod
 }
 
 #[derive(Serialize, Default)]
-struct GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElDynamic {
+struct GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfigDynamic {
     node_configs: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElNodeConfigsEl,
+            GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig_NodeConfigs,
         >,
     >,
     taints: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElTaintsEl,
-        >,
+        ::DynamicBlock<GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig_Taints>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigEl {
+pub struct GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1713,22 +1741,20 @@ pub struct GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfi
     ::Option<
         std
         ::vec
-        ::Vec<GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElNodeConfigsEl>,
+        ::Vec<GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig_NodeConfigs>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     taints: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElTaintsEl>,
+        std::vec::Vec<GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig_Taints>,
     >,
-    dynamic: GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElDynamic,
+    dynamic: GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfigDynamic,
 }
 
-impl GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigEl {
+impl GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig {
     #[doc =
-        "Set the field `labels`.\nThe map of Kubernetes labels (key/value pairs) to be applied to\neach node. These will added in addition to any default label(s)\nthat Kubernetes may apply to the node. In case of conflict in\nlabel keys, the applied set may differ depending on the Kubernetes\nversion -- it's best to assume the behavior is undefined and\nconflicts should be avoided. For more information, including usage\nand the valid values, see:\n  http://kubernetes.io/v1.1/docs/user-guide/labels.html\nAn object containing a list of \"key\": value pairs.\nExample: { \"name\": \"wrench\", \"mass\": \"1.3kg\", \"count\": \"3\" }."]
+        "Set the field `labels`.\nThe map of Kubernetes labels (key/value pairs) to be applied to\neach node. These will added in addition to any default label(s)\nthat Kubernetes may apply to the node. In case of conflict in\nlabel keys, the applied set may differ depending on the Kubernetes\nversion -- it's best to assume the behavior is undefined and\nconflicts should be avoided. For more information, including usage\nand the valid values, see:\n  - http://kubernetes.io/v1.1/docs/user-guide/labels.html\nAn object containing a list of \"key\": value pairs.\nFor example: { \"name\": \"wrench\", \"mass\": \"1.3kg\", \"count\": \"3\" }."]
     pub fn set_labels(
         mut self,
         v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -1754,7 +1780,7 @@ impl GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNod
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElNodeConfigsEl,
+                            GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig_NodeConfigs,
                         >,
                     >,
     ) -> Self {
@@ -1780,7 +1806,7 @@ impl GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNod
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElTaintsEl,
+                            GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig_Taints,
                         >,
                     >,
     ) -> Self {
@@ -1797,10 +1823,10 @@ impl GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNod
 }
 
 impl terrars
-::ToListMappable for GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigEl {
+::ToListMappable for GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig {
     type O =
         terrars
-        ::BlockAssignable<GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigEl>;
+        ::BlockAssignable<GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1811,11 +1837,11 @@ impl terrars
     }
 }
 
-pub struct BuildGkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigEl {}
+pub struct BuildGkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig {}
 
-impl BuildGkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigEl {
-    pub fn build(self) -> GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigEl {
-        GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigEl {
+impl BuildGkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig {
+    pub fn build(self) -> GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig {
+        GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig {
             labels: core::default::Default::default(),
             operating_system: core::default::Default::default(),
             node_configs: core::default::Default::default(),
@@ -1825,30 +1851,32 @@ impl BuildGkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfig
     }
 }
 
-pub struct GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElRef {
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElRef {
+impl terrars::Ref for GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElRef {
-        GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElRef {
+    ) -> GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfigRef {
+        GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElRef {
+impl GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `labels` after provisioning.\nThe map of Kubernetes labels (key/value pairs) to be applied to\neach node. These will added in addition to any default label(s)\nthat Kubernetes may apply to the node. In case of conflict in\nlabel keys, the applied set may differ depending on the Kubernetes\nversion -- it's best to assume the behavior is undefined and\nconflicts should be avoided. For more information, including usage\nand the valid values, see:\n  http://kubernetes.io/v1.1/docs/user-guide/labels.html\nAn object containing a list of \"key\": value pairs.\nExample: { \"name\": \"wrench\", \"mass\": \"1.3kg\", \"count\": \"3\" }."]
+        "Get a reference to the value of field `labels` after provisioning.\nThe map of Kubernetes labels (key/value pairs) to be applied to\neach node. These will added in addition to any default label(s)\nthat Kubernetes may apply to the node. In case of conflict in\nlabel keys, the applied set may differ depending on the Kubernetes\nversion -- it's best to assume the behavior is undefined and\nconflicts should be avoided. For more information, including usage\nand the valid values, see:\n  - http://kubernetes.io/v1.1/docs/user-guide/labels.html\nAn object containing a list of \"key\": value pairs.\nFor example: { \"name\": \"wrench\", \"mass\": \"1.3kg\", \"count\": \"3\" }."]
     pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.base))
     }
@@ -1863,9 +1891,7 @@ impl GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNod
     pub fn node_configs(
         &self,
     ) -> terrars
-    ::ListRef<
-        GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElNodeConfigsElRef,
-    > {
+    ::ListRef<GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig_NodeConfigsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.node_configs", self.base))
     }
 
@@ -1873,31 +1899,30 @@ impl GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNod
     pub fn taints(
         &self,
     ) -> terrars
-    ::ListRef<GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElTaintsElRef> {
+    ::ListRef<GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig_TaintsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.taints", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElDynamic {
+struct GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfigDynamic {
     node_pool_config: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigEl>,
+        terrars::DynamicBlock<GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigEl {
+pub struct GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     node_pool_config: std
     ::option
-    ::Option<std::vec::Vec<GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigEl>>,
-    dynamic: GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElDynamic,
+    ::Option<std::vec::Vec<GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig>>,
+    dynamic: GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfigDynamic,
 }
 
-impl GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigEl {
+impl GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig {
     #[doc = "Set the field `node_pool_config`.\n"]
     pub fn set_node_pool_config(
         mut self,
@@ -1909,7 +1934,7 @@ impl GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigEl,
+                            GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfig,
                         >,
                     >,
     ) -> Self {
@@ -1925,8 +1950,8 @@ impl GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigEl {
-    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigEl>;
+impl terrars::ToListMappable for GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig {
+    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1937,35 +1962,37 @@ impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterControlPlaneElCon
     }
 }
 
-pub struct BuildGkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigEl {}
+pub struct BuildGkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig {}
 
-impl BuildGkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigEl {
-    pub fn build(self) -> GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigEl {
-        GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigEl {
+impl BuildGkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig {
+    pub fn build(self) -> GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig {
+        GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig {
             node_pool_config: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElRef {
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElRef {
+impl terrars::Ref for GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElRef {
-        GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElRef {
+    ) -> GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfigRef {
+        GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElRef {
+impl GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1973,34 +2000,33 @@ impl GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElRef
     #[doc = "Get a reference to the value of field `node_pool_config` after provisioning.\n"]
     pub fn node_pool_config(
         &self,
-    ) -> terrars
-    ::ListRef<GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElNodePoolConfigElRef> {
+    ) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig_NodePoolConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.node_pool_config", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct GkeonpremBareMetalAdminClusterControlPlaneElDynamic {
+struct GkeonpremBareMetalAdminCluster_ControlPlaneDynamic {
     api_server_args: std
     ::option
-    ::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminClusterControlPlaneElApiServerArgsEl>>,
+    ::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminCluster_ControlPlane_ApiServerArgs>>,
     control_plane_node_pool_config: std
     ::option
-    ::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigEl>>,
+    ::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremBareMetalAdminClusterControlPlaneEl {
+pub struct GkeonpremBareMetalAdminCluster_ControlPlane {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    api_server_args: std::option::Option<std::vec::Vec<GkeonpremBareMetalAdminClusterControlPlaneElApiServerArgsEl>>,
+    api_server_args: std::option::Option<std::vec::Vec<GkeonpremBareMetalAdminCluster_ControlPlane_ApiServerArgs>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     control_plane_node_pool_config: std
     ::option
-    ::Option<std::vec::Vec<GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigEl>>,
-    dynamic: GkeonpremBareMetalAdminClusterControlPlaneElDynamic,
+    ::Option<std::vec::Vec<GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig>>,
+    dynamic: GkeonpremBareMetalAdminCluster_ControlPlaneDynamic,
 }
 
-impl GkeonpremBareMetalAdminClusterControlPlaneEl {
+impl GkeonpremBareMetalAdminCluster_ControlPlane {
     #[doc = "Set the field `api_server_args`.\n"]
     pub fn set_api_server_args(
         mut self,
@@ -2009,7 +2035,7 @@ impl GkeonpremBareMetalAdminClusterControlPlaneEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<GkeonpremBareMetalAdminClusterControlPlaneElApiServerArgsEl>>,
+                    ::Into<terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_ControlPlane_ApiServerArgs>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2032,7 +2058,7 @@ impl GkeonpremBareMetalAdminClusterControlPlaneEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigEl>,
+                        ::BlockAssignable<GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfig>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2047,8 +2073,8 @@ impl GkeonpremBareMetalAdminClusterControlPlaneEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterControlPlaneEl {
-    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminClusterControlPlaneEl>;
+impl terrars::ToListMappable for GkeonpremBareMetalAdminCluster_ControlPlane {
+    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_ControlPlane>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2059,11 +2085,11 @@ impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterControlPlaneEl {
     }
 }
 
-pub struct BuildGkeonpremBareMetalAdminClusterControlPlaneEl {}
+pub struct BuildGkeonpremBareMetalAdminCluster_ControlPlane {}
 
-impl BuildGkeonpremBareMetalAdminClusterControlPlaneEl {
-    pub fn build(self) -> GkeonpremBareMetalAdminClusterControlPlaneEl {
-        GkeonpremBareMetalAdminClusterControlPlaneEl {
+impl BuildGkeonpremBareMetalAdminCluster_ControlPlane {
+    pub fn build(self) -> GkeonpremBareMetalAdminCluster_ControlPlane {
+        GkeonpremBareMetalAdminCluster_ControlPlane {
             api_server_args: core::default::Default::default(),
             control_plane_node_pool_config: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -2071,50 +2097,87 @@ impl BuildGkeonpremBareMetalAdminClusterControlPlaneEl {
     }
 }
 
-pub struct GkeonpremBareMetalAdminClusterControlPlaneElRef {
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_ControlPlaneRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremBareMetalAdminClusterControlPlaneElRef {
+impl terrars::Ref for GkeonpremBareMetalAdminCluster_ControlPlaneRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremBareMetalAdminClusterControlPlaneElRef {
-        GkeonpremBareMetalAdminClusterControlPlaneElRef {
+    ) -> GkeonpremBareMetalAdminCluster_ControlPlaneRef {
+        GkeonpremBareMetalAdminCluster_ControlPlaneRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremBareMetalAdminClusterControlPlaneElRef {
+impl GkeonpremBareMetalAdminCluster_ControlPlaneRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `api_server_args` after provisioning.\n"]
-    pub fn api_server_args(&self) -> terrars::ListRef<GkeonpremBareMetalAdminClusterControlPlaneElApiServerArgsElRef> {
+    pub fn api_server_args(&self) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_ControlPlane_ApiServerArgsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.api_server_args", self.base))
     }
 
     #[doc = "Get a reference to the value of field `control_plane_node_pool_config` after provisioning.\n"]
     pub fn control_plane_node_pool_config(
         &self,
-    ) -> terrars::ListRef<GkeonpremBareMetalAdminClusterControlPlaneElControlPlaneNodePoolConfigElRef> {
+    ) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_ControlPlane_ControlPlaneNodePoolConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.control_plane_node_pool_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremBareMetalAdminClusterLoadBalancerElManualLbConfigEl {
-    enabled: terrars::PrimField<bool>,
+pub struct GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_AddressPools {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    addresses: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    avoid_buggy_ips: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    manual_assign: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    pool: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeonpremBareMetalAdminClusterLoadBalancerElManualLbConfigEl { }
+impl GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_AddressPools {
+    #[doc = "Set the field `addresses`.\nThe addresses that are part of this pool."]
+    pub fn set_addresses(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.addresses = std::option::Option::Some(v.into());
+        self
+    }
 
-impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterLoadBalancerElManualLbConfigEl {
-    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminClusterLoadBalancerElManualLbConfigEl>;
+    #[doc =
+        "Set the field `avoid_buggy_ips`.\nThis avoids buggy consumer devices mistakenly\ndropping IPv4 traffic for those special IP addresses."]
+    pub fn set_avoid_buggy_ips(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.avoid_buggy_ips = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `manual_assign`.\nIf true, prevent IP addresses from being automatically assigned."]
+    pub fn set_manual_assign(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.manual_assign = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `pool`.\n"]
+    pub fn set_pool(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.pool = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_AddressPools {
+    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_AddressPools>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2125,35 +2188,1081 @@ impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterLoadBalancerElMan
     }
 }
 
-pub struct BuildGkeonpremBareMetalAdminClusterLoadBalancerElManualLbConfigEl {
-    #[doc = "Whether manual load balancing is enabled."]
-    pub enabled: terrars::PrimField<bool>,
-}
+pub struct BuildGkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_AddressPools {}
 
-impl BuildGkeonpremBareMetalAdminClusterLoadBalancerElManualLbConfigEl {
-    pub fn build(self) -> GkeonpremBareMetalAdminClusterLoadBalancerElManualLbConfigEl {
-        GkeonpremBareMetalAdminClusterLoadBalancerElManualLbConfigEl { enabled: self.enabled }
+impl BuildGkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_AddressPools {
+    pub fn build(self) -> GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_AddressPools {
+        GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_AddressPools {
+            addresses: core::default::Default::default(),
+            avoid_buggy_ips: core::default::Default::default(),
+            manual_assign: core::default::Default::default(),
+            pool: core::default::Default::default(),
+        }
     }
 }
 
-pub struct GkeonpremBareMetalAdminClusterLoadBalancerElManualLbConfigElRef {
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_AddressPoolsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremBareMetalAdminClusterLoadBalancerElManualLbConfigElRef {
+impl terrars::Ref for GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_AddressPoolsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremBareMetalAdminClusterLoadBalancerElManualLbConfigElRef {
-        GkeonpremBareMetalAdminClusterLoadBalancerElManualLbConfigElRef {
+    ) -> GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_AddressPoolsRef {
+        GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_AddressPoolsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremBareMetalAdminClusterLoadBalancerElManualLbConfigElRef {
+impl GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_AddressPoolsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `addresses` after provisioning.\nThe addresses that are part of this pool."]
+    pub fn addresses(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.addresses", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `avoid_buggy_ips` after provisioning.\nThis avoids buggy consumer devices mistakenly\ndropping IPv4 traffic for those special IP addresses."]
+    pub fn avoid_buggy_ips(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.avoid_buggy_ips", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `manual_assign` after provisioning.\nIf true, prevent IP addresses from being automatically assigned."]
+    pub fn manual_assign(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.manual_assign", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `pool` after provisioning.\n"]
+    pub fn pool(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.pool", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_BgpPeerConfigs {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    asn: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    control_plane_nodes: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ip_address: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_BgpPeerConfigs {
+    #[doc = "Set the field `asn`.\n"]
+    pub fn set_asn(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.asn = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `control_plane_nodes`.\nThe IP address of the control plane node that\nconnects to the external peer."]
+    pub fn set_control_plane_nodes(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.control_plane_nodes = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `ip_address`.\n"]
+    pub fn set_ip_address(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.ip_address = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_BgpPeerConfigs {
+    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_BgpPeerConfigs>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildGkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_BgpPeerConfigs {}
+
+impl BuildGkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_BgpPeerConfigs {
+    pub fn build(self) -> GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_BgpPeerConfigs {
+        GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_BgpPeerConfigs {
+            asn: core::default::Default::default(),
+            control_plane_nodes: core::default::Default::default(),
+            ip_address: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_BgpPeerConfigsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_BgpPeerConfigsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_BgpPeerConfigsRef {
+        GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_BgpPeerConfigsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_BgpPeerConfigsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `asn` after provisioning.\n"]
+    pub fn asn(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.asn", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `control_plane_nodes` after provisioning.\nThe IP address of the control plane node that\nconnects to the external peer."]
+    pub fn control_plane_nodes(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.control_plane_nodes", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `ip_address` after provisioning.\n"]
+    pub fn ip_address(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_address", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_KubeletConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    registry_burst: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    registry_pull_qps: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    serialize_image_pulls_disabled: std::option::Option<terrars::PrimField<bool>>,
+}
+
+impl GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_KubeletConfig {
+    #[doc = "Set the field `registry_burst`.\n"]
+    pub fn set_registry_burst(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.registry_burst = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `registry_pull_qps`.\n"]
+    pub fn set_registry_pull_qps(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.registry_pull_qps = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `serialize_image_pulls_disabled`.\n"]
+    pub fn set_serialize_image_pulls_disabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.serialize_image_pulls_disabled = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_KubeletConfig {
+    type O =
+        terrars
+        ::BlockAssignable<
+            GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_KubeletConfig,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildGkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_KubeletConfig {}
+
+impl BuildGkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_KubeletConfig {
+    pub fn build(
+        self,
+    ) -> GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_KubeletConfig {
+        GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_KubeletConfig {
+            registry_burst: core::default::Default::default(),
+            registry_pull_qps: core::default::Default::default(),
+            serialize_image_pulls_disabled: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_KubeletConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_KubeletConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_KubeletConfigRef {
+        GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_KubeletConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_KubeletConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `registry_burst` after provisioning.\n"]
+    pub fn registry_burst(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.registry_burst", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `registry_pull_qps` after provisioning.\n"]
+    pub fn registry_pull_qps(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.registry_pull_qps", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `serialize_image_pulls_disabled` after provisioning.\n"]
+    pub fn serialize_image_pulls_disabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.serialize_image_pulls_disabled", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_NodeConfigs {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    node_ip: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_NodeConfigs {
+    #[doc =
+        "Set the field `labels`.\nThe labels assigned to nodes of this node pool.\nAn object containing a list of key/value pairs.\nExample:\n{ \"name\": \"wrench\", \"mass\": \"1.3kg\", \"count\": \"3\" }."]
+    pub fn set_labels(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.labels = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `node_ip`.\n"]
+    pub fn set_node_ip(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.node_ip = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_NodeConfigs {
+    type O =
+        terrars
+        ::BlockAssignable<
+            GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_NodeConfigs,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildGkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_NodeConfigs {}
+
+impl BuildGkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_NodeConfigs {
+    pub fn build(
+        self,
+    ) -> GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_NodeConfigs {
+        GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_NodeConfigs {
+            labels: core::default::Default::default(),
+            node_ip: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_NodeConfigsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_NodeConfigsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_NodeConfigsRef {
+        GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_NodeConfigsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_NodeConfigsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `labels` after provisioning.\nThe labels assigned to nodes of this node pool.\nAn object containing a list of key/value pairs.\nExample:\n{ \"name\": \"wrench\", \"mass\": \"1.3kg\", \"count\": \"3\" }."]
+    pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `node_ip` after provisioning.\n"]
+    pub fn node_ip(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.node_ip", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_Taints {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    effect: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    value: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_Taints {
+    #[doc = "Set the field `effect`.\nAvailable taint effects."]
+    pub fn set_effect(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.effect = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `key`.\n"]
+    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.key = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `value`.\n"]
+    pub fn set_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.value = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_Taints {
+    type O =
+        terrars
+        ::BlockAssignable<
+            GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_Taints,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildGkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_Taints {}
+
+impl BuildGkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_Taints {
+    pub fn build(
+        self,
+    ) -> GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_Taints {
+        GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_Taints {
+            effect: core::default::Default::default(),
+            key: core::default::Default::default(),
+            value: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_TaintsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_TaintsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_TaintsRef {
+        GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_TaintsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_TaintsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `effect` after provisioning.\nAvailable taint effects."]
+    pub fn effect(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.effect", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfigDynamic {
+    kubelet_config: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_KubeletConfig,
+        >,
+    >,
+    node_configs: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_NodeConfigs,
+        >,
+    >,
+    taints: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_Taints,
+        >,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    operating_system: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kubelet_config: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
+            GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_KubeletConfig,
+        >,
+    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    node_configs: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
+            GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_NodeConfigs,
+        >,
+    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    taints: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
+            GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_Taints,
+        >,
+    >,
+    dynamic: GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfigDynamic,
+}
+
+impl GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig {
+    #[doc =
+        "Set the field `labels`.\nThe labels assigned to nodes of this node pool.\nAn object containing a list of key/value pairs.\nExample:\n{ \"name\": \"wrench\", \"mass\": \"1.3kg\", \"count\": \"3\" }."]
+    pub fn set_labels(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.labels = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `operating_system`.\nThe available Operating Systems to be run in a Node."]
+    pub fn set_operating_system(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.operating_system = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `kubelet_config`.\n"]
+    pub fn set_kubelet_config(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_KubeletConfig,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.kubelet_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.kubelet_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `node_configs`.\n"]
+    pub fn set_node_configs(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_NodeConfigs,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.node_configs = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.node_configs = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `taints`.\n"]
+    pub fn set_taints(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_Taints,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.taints = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.taints = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig {
+    type O =
+        terrars
+        ::BlockAssignable<
+            GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildGkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig {}
+
+impl BuildGkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig {
+    pub fn build(
+        self,
+    ) -> GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig {
+        GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig {
+            labels: core::default::Default::default(),
+            operating_system: core::default::Default::default(),
+            kubelet_config: core::default::Default::default(),
+            node_configs: core::default::Default::default(),
+            taints: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfigRef {
+        GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `labels` after provisioning.\nThe labels assigned to nodes of this node pool.\nAn object containing a list of key/value pairs.\nExample:\n{ \"name\": \"wrench\", \"mass\": \"1.3kg\", \"count\": \"3\" }."]
+    pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `operating_system` after provisioning.\nThe available Operating Systems to be run in a Node."]
+    pub fn operating_system(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.operating_system", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `kubelet_config` after provisioning.\n"]
+    pub fn kubelet_config(
+        &self,
+    ) -> terrars
+    ::ListRef<
+        GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_KubeletConfigRef,
+    > {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.kubelet_config", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `node_configs` after provisioning.\n"]
+    pub fn node_configs(
+        &self,
+    ) -> terrars
+    ::ListRef<
+        GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_NodeConfigsRef,
+    > {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.node_configs", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `taints` after provisioning.\n"]
+    pub fn taints(
+        &self,
+    ) -> terrars
+    ::ListRef<
+        GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig_TaintsRef,
+    > {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.taints", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfigDynamic {
+    node_pool_config: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig,
+        >,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    node_pool_config: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig>,
+    >,
+    dynamic: GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfigDynamic,
+}
+
+impl GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig {
+    #[doc = "Set the field `node_pool_config`.\n"]
+    pub fn set_node_pool_config(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfig,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.node_pool_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.node_pool_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig {
+    type O =
+        terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildGkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig {}
+
+impl BuildGkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig {
+    pub fn build(self) -> GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig {
+        GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig {
+            node_pool_config: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfigRef {
+        GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `node_pool_config` after provisioning.\n"]
+    pub fn node_pool_config(
+        &self,
+    ) -> terrars
+    ::ListRef<GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig_NodePoolConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.node_pool_config", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfigDynamic {
+    address_pools: std
+    ::option
+    ::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_AddressPools>>,
+    bgp_peer_configs: std
+    ::option
+    ::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_BgpPeerConfigs>>,
+    load_balancer_node_pool_config: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig>,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    asn: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    address_pools: std
+    ::option
+    ::Option<std::vec::Vec<GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_AddressPools>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bgp_peer_configs: std
+    ::option
+    ::Option<std::vec::Vec<GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_BgpPeerConfigs>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    load_balancer_node_pool_config: std
+    ::option
+    ::Option<std::vec::Vec<GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig>>,
+    dynamic: GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfigDynamic,
+}
+
+impl GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig {
+    #[doc = "Set the field `asn`.\nBGP autonomous system number (ASN) of the cluster."]
+    pub fn set_asn(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.asn = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `address_pools`.\n"]
+    pub fn set_address_pools(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_AddressPools>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.address_pools = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.address_pools = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `bgp_peer_configs`.\n"]
+    pub fn set_bgp_peer_configs(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_BgpPeerConfigs>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.bgp_peer_configs = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.bgp_peer_configs = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `load_balancer_node_pool_config`.\n"]
+    pub fn set_load_balancer_node_pool_config(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfig,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.load_balancer_node_pool_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.load_balancer_node_pool_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig {
+    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildGkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig {}
+
+impl BuildGkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig {
+    pub fn build(self) -> GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig {
+        GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig {
+            asn: core::default::Default::default(),
+            address_pools: core::default::Default::default(),
+            bgp_peer_configs: core::default::Default::default(),
+            load_balancer_node_pool_config: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfigRef {
+        GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `asn` after provisioning.\nBGP autonomous system number (ASN) of the cluster."]
+    pub fn asn(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.asn", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `address_pools` after provisioning.\n"]
+    pub fn address_pools(
+        &self,
+    ) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_AddressPoolsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.address_pools", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `bgp_peer_configs` after provisioning.\n"]
+    pub fn bgp_peer_configs(
+        &self,
+    ) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_BgpPeerConfigsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.bgp_peer_configs", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `load_balancer_node_pool_config` after provisioning.\n"]
+    pub fn load_balancer_node_pool_config(
+        &self,
+    ) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig_LoadBalancerNodePoolConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.load_balancer_node_pool_config", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct GkeonpremBareMetalAdminCluster_LoadBalancer_ManualLbConfig {
+    enabled: terrars::PrimField<bool>,
+}
+
+impl GkeonpremBareMetalAdminCluster_LoadBalancer_ManualLbConfig { }
+
+impl terrars::ToListMappable for GkeonpremBareMetalAdminCluster_LoadBalancer_ManualLbConfig {
+    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_LoadBalancer_ManualLbConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildGkeonpremBareMetalAdminCluster_LoadBalancer_ManualLbConfig {
+    #[doc = "Whether manual load balancing is enabled."]
+    pub enabled: terrars::PrimField<bool>,
+}
+
+impl BuildGkeonpremBareMetalAdminCluster_LoadBalancer_ManualLbConfig {
+    pub fn build(self) -> GkeonpremBareMetalAdminCluster_LoadBalancer_ManualLbConfig {
+        GkeonpremBareMetalAdminCluster_LoadBalancer_ManualLbConfig { enabled: self.enabled }
+    }
+}
+
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_LoadBalancer_ManualLbConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for GkeonpremBareMetalAdminCluster_LoadBalancer_ManualLbConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GkeonpremBareMetalAdminCluster_LoadBalancer_ManualLbConfigRef {
+        GkeonpremBareMetalAdminCluster_LoadBalancer_ManualLbConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl GkeonpremBareMetalAdminCluster_LoadBalancer_ManualLbConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2166,14 +3275,14 @@ impl GkeonpremBareMetalAdminClusterLoadBalancerElManualLbConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremBareMetalAdminClusterLoadBalancerElPortConfigEl {
+pub struct GkeonpremBareMetalAdminCluster_LoadBalancer_PortConfig {
     control_plane_load_balancer_port: terrars::PrimField<f64>,
 }
 
-impl GkeonpremBareMetalAdminClusterLoadBalancerElPortConfigEl { }
+impl GkeonpremBareMetalAdminCluster_LoadBalancer_PortConfig { }
 
-impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterLoadBalancerElPortConfigEl {
-    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminClusterLoadBalancerElPortConfigEl>;
+impl terrars::ToListMappable for GkeonpremBareMetalAdminCluster_LoadBalancer_PortConfig {
+    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_LoadBalancer_PortConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2184,37 +3293,39 @@ impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterLoadBalancerElPor
     }
 }
 
-pub struct BuildGkeonpremBareMetalAdminClusterLoadBalancerElPortConfigEl {
+pub struct BuildGkeonpremBareMetalAdminCluster_LoadBalancer_PortConfig {
     #[doc = "The port that control plane hosted load balancers will listen on."]
     pub control_plane_load_balancer_port: terrars::PrimField<f64>,
 }
 
-impl BuildGkeonpremBareMetalAdminClusterLoadBalancerElPortConfigEl {
-    pub fn build(self) -> GkeonpremBareMetalAdminClusterLoadBalancerElPortConfigEl {
-        GkeonpremBareMetalAdminClusterLoadBalancerElPortConfigEl {
+impl BuildGkeonpremBareMetalAdminCluster_LoadBalancer_PortConfig {
+    pub fn build(self) -> GkeonpremBareMetalAdminCluster_LoadBalancer_PortConfig {
+        GkeonpremBareMetalAdminCluster_LoadBalancer_PortConfig {
             control_plane_load_balancer_port: self.control_plane_load_balancer_port,
         }
     }
 }
 
-pub struct GkeonpremBareMetalAdminClusterLoadBalancerElPortConfigElRef {
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_LoadBalancer_PortConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremBareMetalAdminClusterLoadBalancerElPortConfigElRef {
+impl terrars::Ref for GkeonpremBareMetalAdminCluster_LoadBalancer_PortConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremBareMetalAdminClusterLoadBalancerElPortConfigElRef {
-        GkeonpremBareMetalAdminClusterLoadBalancerElPortConfigElRef {
+    ) -> GkeonpremBareMetalAdminCluster_LoadBalancer_PortConfigRef {
+        GkeonpremBareMetalAdminCluster_LoadBalancer_PortConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremBareMetalAdminClusterLoadBalancerElPortConfigElRef {
+impl GkeonpremBareMetalAdminCluster_LoadBalancer_PortConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2227,14 +3338,14 @@ impl GkeonpremBareMetalAdminClusterLoadBalancerElPortConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremBareMetalAdminClusterLoadBalancerElVipConfigEl {
+pub struct GkeonpremBareMetalAdminCluster_LoadBalancer_VipConfig {
     control_plane_vip: terrars::PrimField<std::string::String>,
 }
 
-impl GkeonpremBareMetalAdminClusterLoadBalancerElVipConfigEl { }
+impl GkeonpremBareMetalAdminCluster_LoadBalancer_VipConfig { }
 
-impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterLoadBalancerElVipConfigEl {
-    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminClusterLoadBalancerElVipConfigEl>;
+impl terrars::ToListMappable for GkeonpremBareMetalAdminCluster_LoadBalancer_VipConfig {
+    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_LoadBalancer_VipConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2245,35 +3356,37 @@ impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterLoadBalancerElVip
     }
 }
 
-pub struct BuildGkeonpremBareMetalAdminClusterLoadBalancerElVipConfigEl {
+pub struct BuildGkeonpremBareMetalAdminCluster_LoadBalancer_VipConfig {
     #[doc = "The VIP which you previously set aside for the Kubernetes API of this Bare Metal Admin Cluster."]
     pub control_plane_vip: terrars::PrimField<std::string::String>,
 }
 
-impl BuildGkeonpremBareMetalAdminClusterLoadBalancerElVipConfigEl {
-    pub fn build(self) -> GkeonpremBareMetalAdminClusterLoadBalancerElVipConfigEl {
-        GkeonpremBareMetalAdminClusterLoadBalancerElVipConfigEl { control_plane_vip: self.control_plane_vip }
+impl BuildGkeonpremBareMetalAdminCluster_LoadBalancer_VipConfig {
+    pub fn build(self) -> GkeonpremBareMetalAdminCluster_LoadBalancer_VipConfig {
+        GkeonpremBareMetalAdminCluster_LoadBalancer_VipConfig { control_plane_vip: self.control_plane_vip }
     }
 }
 
-pub struct GkeonpremBareMetalAdminClusterLoadBalancerElVipConfigElRef {
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_LoadBalancer_VipConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremBareMetalAdminClusterLoadBalancerElVipConfigElRef {
+impl terrars::Ref for GkeonpremBareMetalAdminCluster_LoadBalancer_VipConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremBareMetalAdminClusterLoadBalancerElVipConfigElRef {
-        GkeonpremBareMetalAdminClusterLoadBalancerElVipConfigElRef {
+    ) -> GkeonpremBareMetalAdminCluster_LoadBalancer_VipConfigRef {
+        GkeonpremBareMetalAdminCluster_LoadBalancer_VipConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremBareMetalAdminClusterLoadBalancerElVipConfigElRef {
+impl GkeonpremBareMetalAdminCluster_LoadBalancer_VipConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2286,28 +3399,52 @@ impl GkeonpremBareMetalAdminClusterLoadBalancerElVipConfigElRef {
 }
 
 #[derive(Serialize, Default)]
-struct GkeonpremBareMetalAdminClusterLoadBalancerElDynamic {
+struct GkeonpremBareMetalAdminCluster_LoadBalancerDynamic {
+    bgp_lb_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig>>,
     manual_lb_config: std
     ::option
-    ::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminClusterLoadBalancerElManualLbConfigEl>>,
-    port_config: std
-    ::option
-    ::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminClusterLoadBalancerElPortConfigEl>>,
-    vip_config: std::option::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminClusterLoadBalancerElVipConfigEl>>,
+    ::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminCluster_LoadBalancer_ManualLbConfig>>,
+    port_config: std::option::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminCluster_LoadBalancer_PortConfig>>,
+    vip_config: std::option::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminCluster_LoadBalancer_VipConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremBareMetalAdminClusterLoadBalancerEl {
+pub struct GkeonpremBareMetalAdminCluster_LoadBalancer {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    manual_lb_config: std::option::Option<std::vec::Vec<GkeonpremBareMetalAdminClusterLoadBalancerElManualLbConfigEl>>,
+    bgp_lb_config: std::option::Option<std::vec::Vec<GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    port_config: std::option::Option<std::vec::Vec<GkeonpremBareMetalAdminClusterLoadBalancerElPortConfigEl>>,
+    manual_lb_config: std::option::Option<std::vec::Vec<GkeonpremBareMetalAdminCluster_LoadBalancer_ManualLbConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vip_config: std::option::Option<std::vec::Vec<GkeonpremBareMetalAdminClusterLoadBalancerElVipConfigEl>>,
-    dynamic: GkeonpremBareMetalAdminClusterLoadBalancerElDynamic,
+    port_config: std::option::Option<std::vec::Vec<GkeonpremBareMetalAdminCluster_LoadBalancer_PortConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vip_config: std::option::Option<std::vec::Vec<GkeonpremBareMetalAdminCluster_LoadBalancer_VipConfig>>,
+    dynamic: GkeonpremBareMetalAdminCluster_LoadBalancerDynamic,
 }
 
-impl GkeonpremBareMetalAdminClusterLoadBalancerEl {
+impl GkeonpremBareMetalAdminCluster_LoadBalancer {
+    #[doc = "Set the field `bgp_lb_config`.\n"]
+    pub fn set_bgp_lb_config(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.bgp_lb_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.bgp_lb_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `manual_lb_config`.\n"]
     pub fn set_manual_lb_config(
         mut self,
@@ -2316,7 +3453,7 @@ impl GkeonpremBareMetalAdminClusterLoadBalancerEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<GkeonpremBareMetalAdminClusterLoadBalancerElManualLbConfigEl>>,
+                    ::Into<terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_LoadBalancer_ManualLbConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2332,12 +3469,7 @@ impl GkeonpremBareMetalAdminClusterLoadBalancerEl {
     #[doc = "Set the field `port_config`.\n"]
     pub fn set_port_config(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<GkeonpremBareMetalAdminClusterLoadBalancerElPortConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_LoadBalancer_PortConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2353,12 +3485,7 @@ impl GkeonpremBareMetalAdminClusterLoadBalancerEl {
     #[doc = "Set the field `vip_config`.\n"]
     pub fn set_vip_config(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<GkeonpremBareMetalAdminClusterLoadBalancerElVipConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_LoadBalancer_VipConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2372,8 +3499,8 @@ impl GkeonpremBareMetalAdminClusterLoadBalancerEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterLoadBalancerEl {
-    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminClusterLoadBalancerEl>;
+impl terrars::ToListMappable for GkeonpremBareMetalAdminCluster_LoadBalancer {
+    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_LoadBalancer>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2384,11 +3511,12 @@ impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterLoadBalancerEl {
     }
 }
 
-pub struct BuildGkeonpremBareMetalAdminClusterLoadBalancerEl {}
+pub struct BuildGkeonpremBareMetalAdminCluster_LoadBalancer {}
 
-impl BuildGkeonpremBareMetalAdminClusterLoadBalancerEl {
-    pub fn build(self) -> GkeonpremBareMetalAdminClusterLoadBalancerEl {
-        GkeonpremBareMetalAdminClusterLoadBalancerEl {
+impl BuildGkeonpremBareMetalAdminCluster_LoadBalancer {
+    pub fn build(self) -> GkeonpremBareMetalAdminCluster_LoadBalancer {
+        GkeonpremBareMetalAdminCluster_LoadBalancer {
+            bgp_lb_config: core::default::Default::default(),
             manual_lb_config: core::default::Default::default(),
             port_config: core::default::Default::default(),
             vip_config: core::default::Default::default(),
@@ -2397,53 +3525,60 @@ impl BuildGkeonpremBareMetalAdminClusterLoadBalancerEl {
     }
 }
 
-pub struct GkeonpremBareMetalAdminClusterLoadBalancerElRef {
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_LoadBalancerRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremBareMetalAdminClusterLoadBalancerElRef {
+impl terrars::Ref for GkeonpremBareMetalAdminCluster_LoadBalancerRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremBareMetalAdminClusterLoadBalancerElRef {
-        GkeonpremBareMetalAdminClusterLoadBalancerElRef {
+    ) -> GkeonpremBareMetalAdminCluster_LoadBalancerRef {
+        GkeonpremBareMetalAdminCluster_LoadBalancerRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremBareMetalAdminClusterLoadBalancerElRef {
+impl GkeonpremBareMetalAdminCluster_LoadBalancerRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
+    #[doc = "Get a reference to the value of field `bgp_lb_config` after provisioning.\n"]
+    pub fn bgp_lb_config(&self) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_LoadBalancer_BgpLbConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.bgp_lb_config", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `manual_lb_config` after provisioning.\n"]
-    pub fn manual_lb_config(&self) -> terrars::ListRef<GkeonpremBareMetalAdminClusterLoadBalancerElManualLbConfigElRef> {
+    pub fn manual_lb_config(&self) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_LoadBalancer_ManualLbConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.manual_lb_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `port_config` after provisioning.\n"]
-    pub fn port_config(&self) -> terrars::ListRef<GkeonpremBareMetalAdminClusterLoadBalancerElPortConfigElRef> {
+    pub fn port_config(&self) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_LoadBalancer_PortConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.port_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `vip_config` after provisioning.\n"]
-    pub fn vip_config(&self) -> terrars::ListRef<GkeonpremBareMetalAdminClusterLoadBalancerElVipConfigElRef> {
+    pub fn vip_config(&self) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_LoadBalancer_VipConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vip_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremBareMetalAdminClusterMaintenanceConfigEl {
+pub struct GkeonpremBareMetalAdminCluster_MaintenanceConfig {
     maintenance_address_cidr_blocks: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeonpremBareMetalAdminClusterMaintenanceConfigEl { }
+impl GkeonpremBareMetalAdminCluster_MaintenanceConfig { }
 
-impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterMaintenanceConfigEl {
-    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminClusterMaintenanceConfigEl>;
+impl terrars::ToListMappable for GkeonpremBareMetalAdminCluster_MaintenanceConfig {
+    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_MaintenanceConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2454,38 +3589,40 @@ impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterMaintenanceConfig
     }
 }
 
-pub struct BuildGkeonpremBareMetalAdminClusterMaintenanceConfigEl {
+pub struct BuildGkeonpremBareMetalAdminCluster_MaintenanceConfig {
     #[doc =
         "All IPv4 address from these ranges will be placed into maintenance mode.\nNodes in maintenance mode will be cordoned and drained. When both of these\nare true, the \"baremetal.cluster.gke.io/maintenance\" annotation will be set\non the node resource."]
     pub maintenance_address_cidr_blocks: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildGkeonpremBareMetalAdminClusterMaintenanceConfigEl {
-    pub fn build(self) -> GkeonpremBareMetalAdminClusterMaintenanceConfigEl {
-        GkeonpremBareMetalAdminClusterMaintenanceConfigEl {
+impl BuildGkeonpremBareMetalAdminCluster_MaintenanceConfig {
+    pub fn build(self) -> GkeonpremBareMetalAdminCluster_MaintenanceConfig {
+        GkeonpremBareMetalAdminCluster_MaintenanceConfig {
             maintenance_address_cidr_blocks: self.maintenance_address_cidr_blocks,
         }
     }
 }
 
-pub struct GkeonpremBareMetalAdminClusterMaintenanceConfigElRef {
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_MaintenanceConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremBareMetalAdminClusterMaintenanceConfigElRef {
+impl terrars::Ref for GkeonpremBareMetalAdminCluster_MaintenanceConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremBareMetalAdminClusterMaintenanceConfigElRef {
-        GkeonpremBareMetalAdminClusterMaintenanceConfigElRef {
+    ) -> GkeonpremBareMetalAdminCluster_MaintenanceConfigRef {
+        GkeonpremBareMetalAdminCluster_MaintenanceConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremBareMetalAdminClusterMaintenanceConfigElRef {
+impl GkeonpremBareMetalAdminCluster_MaintenanceConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2498,15 +3635,15 @@ impl GkeonpremBareMetalAdminClusterMaintenanceConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremBareMetalAdminClusterNetworkConfigElIslandModeCidrEl {
+pub struct GkeonpremBareMetalAdminCluster_NetworkConfig_IslandModeCidr {
     pod_address_cidr_blocks: terrars::ListField<terrars::PrimField<std::string::String>>,
     service_address_cidr_blocks: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeonpremBareMetalAdminClusterNetworkConfigElIslandModeCidrEl { }
+impl GkeonpremBareMetalAdminCluster_NetworkConfig_IslandModeCidr { }
 
-impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterNetworkConfigElIslandModeCidrEl {
-    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminClusterNetworkConfigElIslandModeCidrEl>;
+impl terrars::ToListMappable for GkeonpremBareMetalAdminCluster_NetworkConfig_IslandModeCidr {
+    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_NetworkConfig_IslandModeCidr>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2517,7 +3654,7 @@ impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterNetworkConfigElIs
     }
 }
 
-pub struct BuildGkeonpremBareMetalAdminClusterNetworkConfigElIslandModeCidrEl {
+pub struct BuildGkeonpremBareMetalAdminCluster_NetworkConfig_IslandModeCidr {
     #[doc =
         "All pods in the cluster are assigned an RFC1918 IPv4 address from these ranges. This field cannot be changed after creation."]
     pub pod_address_cidr_blocks: terrars::ListField<terrars::PrimField<std::string::String>>,
@@ -2526,33 +3663,35 @@ pub struct BuildGkeonpremBareMetalAdminClusterNetworkConfigElIslandModeCidrEl {
     pub service_address_cidr_blocks: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildGkeonpremBareMetalAdminClusterNetworkConfigElIslandModeCidrEl {
-    pub fn build(self) -> GkeonpremBareMetalAdminClusterNetworkConfigElIslandModeCidrEl {
-        GkeonpremBareMetalAdminClusterNetworkConfigElIslandModeCidrEl {
+impl BuildGkeonpremBareMetalAdminCluster_NetworkConfig_IslandModeCidr {
+    pub fn build(self) -> GkeonpremBareMetalAdminCluster_NetworkConfig_IslandModeCidr {
+        GkeonpremBareMetalAdminCluster_NetworkConfig_IslandModeCidr {
             pod_address_cidr_blocks: self.pod_address_cidr_blocks,
             service_address_cidr_blocks: self.service_address_cidr_blocks,
         }
     }
 }
 
-pub struct GkeonpremBareMetalAdminClusterNetworkConfigElIslandModeCidrElRef {
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_NetworkConfig_IslandModeCidrRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremBareMetalAdminClusterNetworkConfigElIslandModeCidrElRef {
+impl terrars::Ref for GkeonpremBareMetalAdminCluster_NetworkConfig_IslandModeCidrRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremBareMetalAdminClusterNetworkConfigElIslandModeCidrElRef {
-        GkeonpremBareMetalAdminClusterNetworkConfigElIslandModeCidrElRef {
+    ) -> GkeonpremBareMetalAdminCluster_NetworkConfig_IslandModeCidrRef {
+        GkeonpremBareMetalAdminCluster_NetworkConfig_IslandModeCidrRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremBareMetalAdminClusterNetworkConfigElIslandModeCidrElRef {
+impl GkeonpremBareMetalAdminCluster_NetworkConfig_IslandModeCidrRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2570,21 +3709,103 @@ impl GkeonpremBareMetalAdminClusterNetworkConfigElIslandModeCidrElRef {
     }
 }
 
+#[derive(Serialize)]
+pub struct GkeonpremBareMetalAdminCluster_NetworkConfig_MultipleNetworkInterfacesConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enabled: std::option::Option<terrars::PrimField<bool>>,
+}
+
+impl GkeonpremBareMetalAdminCluster_NetworkConfig_MultipleNetworkInterfacesConfig {
+    #[doc = "Set the field `enabled`.\nWhen set network_config.advanced_networking is automatically\nset to true."]
+    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enabled = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for GkeonpremBareMetalAdminCluster_NetworkConfig_MultipleNetworkInterfacesConfig {
+    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_NetworkConfig_MultipleNetworkInterfacesConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildGkeonpremBareMetalAdminCluster_NetworkConfig_MultipleNetworkInterfacesConfig {}
+
+impl BuildGkeonpremBareMetalAdminCluster_NetworkConfig_MultipleNetworkInterfacesConfig {
+    pub fn build(self) -> GkeonpremBareMetalAdminCluster_NetworkConfig_MultipleNetworkInterfacesConfig {
+        GkeonpremBareMetalAdminCluster_NetworkConfig_MultipleNetworkInterfacesConfig {
+            enabled: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_NetworkConfig_MultipleNetworkInterfacesConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for GkeonpremBareMetalAdminCluster_NetworkConfig_MultipleNetworkInterfacesConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GkeonpremBareMetalAdminCluster_NetworkConfig_MultipleNetworkInterfacesConfigRef {
+        GkeonpremBareMetalAdminCluster_NetworkConfig_MultipleNetworkInterfacesConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl GkeonpremBareMetalAdminCluster_NetworkConfig_MultipleNetworkInterfacesConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `enabled` after provisioning.\nWhen set network_config.advanced_networking is automatically\nset to true."]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    }
+}
+
 #[derive(Serialize, Default)]
-struct GkeonpremBareMetalAdminClusterNetworkConfigElDynamic {
+struct GkeonpremBareMetalAdminCluster_NetworkConfigDynamic {
     island_mode_cidr: std
     ::option
-    ::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminClusterNetworkConfigElIslandModeCidrEl>>,
+    ::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminCluster_NetworkConfig_IslandModeCidr>>,
+    multiple_network_interfaces_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminCluster_NetworkConfig_MultipleNetworkInterfacesConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremBareMetalAdminClusterNetworkConfigEl {
+pub struct GkeonpremBareMetalAdminCluster_NetworkConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    island_mode_cidr: std::option::Option<std::vec::Vec<GkeonpremBareMetalAdminClusterNetworkConfigElIslandModeCidrEl>>,
-    dynamic: GkeonpremBareMetalAdminClusterNetworkConfigElDynamic,
+    advanced_networking: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    island_mode_cidr: std::option::Option<std::vec::Vec<GkeonpremBareMetalAdminCluster_NetworkConfig_IslandModeCidr>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    multiple_network_interfaces_config: std
+    ::option
+    ::Option<std::vec::Vec<GkeonpremBareMetalAdminCluster_NetworkConfig_MultipleNetworkInterfacesConfig>>,
+    dynamic: GkeonpremBareMetalAdminCluster_NetworkConfigDynamic,
 }
 
-impl GkeonpremBareMetalAdminClusterNetworkConfigEl {
+impl GkeonpremBareMetalAdminCluster_NetworkConfig {
+    #[doc = "Set the field `advanced_networking`.\nEnables the use of advanced Anthos networking features."]
+    pub fn set_advanced_networking(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.advanced_networking = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `island_mode_cidr`.\n"]
     pub fn set_island_mode_cidr(
         mut self,
@@ -2593,7 +3814,7 @@ impl GkeonpremBareMetalAdminClusterNetworkConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<GkeonpremBareMetalAdminClusterNetworkConfigElIslandModeCidrEl>>,
+                    ::Into<terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_NetworkConfig_IslandModeCidr>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2605,10 +3826,36 @@ impl GkeonpremBareMetalAdminClusterNetworkConfigEl {
         }
         self
     }
+
+    #[doc = "Set the field `multiple_network_interfaces_config`.\n"]
+    pub fn set_multiple_network_interfaces_config(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            GkeonpremBareMetalAdminCluster_NetworkConfig_MultipleNetworkInterfacesConfig,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.multiple_network_interfaces_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.multiple_network_interfaces_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
 }
 
-impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterNetworkConfigEl {
-    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminClusterNetworkConfigEl>;
+impl terrars::ToListMappable for GkeonpremBareMetalAdminCluster_NetworkConfig {
+    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_NetworkConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2619,52 +3866,69 @@ impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterNetworkConfigEl {
     }
 }
 
-pub struct BuildGkeonpremBareMetalAdminClusterNetworkConfigEl {}
+pub struct BuildGkeonpremBareMetalAdminCluster_NetworkConfig {}
 
-impl BuildGkeonpremBareMetalAdminClusterNetworkConfigEl {
-    pub fn build(self) -> GkeonpremBareMetalAdminClusterNetworkConfigEl {
-        GkeonpremBareMetalAdminClusterNetworkConfigEl {
+impl BuildGkeonpremBareMetalAdminCluster_NetworkConfig {
+    pub fn build(self) -> GkeonpremBareMetalAdminCluster_NetworkConfig {
+        GkeonpremBareMetalAdminCluster_NetworkConfig {
+            advanced_networking: core::default::Default::default(),
             island_mode_cidr: core::default::Default::default(),
+            multiple_network_interfaces_config: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct GkeonpremBareMetalAdminClusterNetworkConfigElRef {
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_NetworkConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremBareMetalAdminClusterNetworkConfigElRef {
+impl terrars::Ref for GkeonpremBareMetalAdminCluster_NetworkConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremBareMetalAdminClusterNetworkConfigElRef {
-        GkeonpremBareMetalAdminClusterNetworkConfigElRef {
+    ) -> GkeonpremBareMetalAdminCluster_NetworkConfigRef {
+        GkeonpremBareMetalAdminCluster_NetworkConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremBareMetalAdminClusterNetworkConfigElRef {
+impl GkeonpremBareMetalAdminCluster_NetworkConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
+    #[doc =
+        "Get a reference to the value of field `advanced_networking` after provisioning.\nEnables the use of advanced Anthos networking features."]
+    pub fn advanced_networking(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.advanced_networking", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `island_mode_cidr` after provisioning.\n"]
-    pub fn island_mode_cidr(&self) -> terrars::ListRef<GkeonpremBareMetalAdminClusterNetworkConfigElIslandModeCidrElRef> {
+    pub fn island_mode_cidr(&self) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_NetworkConfig_IslandModeCidrRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.island_mode_cidr", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `multiple_network_interfaces_config` after provisioning.\n"]
+    pub fn multiple_network_interfaces_config(
+        &self,
+    ) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_NetworkConfig_MultipleNetworkInterfacesConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.multiple_network_interfaces_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremBareMetalAdminClusterNodeAccessConfigEl {
+pub struct GkeonpremBareMetalAdminCluster_NodeAccessConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     login_user: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeonpremBareMetalAdminClusterNodeAccessConfigEl {
+impl GkeonpremBareMetalAdminCluster_NodeAccessConfig {
     #[doc =
         "Set the field `login_user`.\nLoginUser is the user name used to access node machines.\nIt defaults to \"root\" if not set."]
     pub fn set_login_user(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -2673,8 +3937,8 @@ impl GkeonpremBareMetalAdminClusterNodeAccessConfigEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterNodeAccessConfigEl {
-    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminClusterNodeAccessConfigEl>;
+impl terrars::ToListMappable for GkeonpremBareMetalAdminCluster_NodeAccessConfig {
+    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_NodeAccessConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2685,32 +3949,34 @@ impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterNodeAccessConfigE
     }
 }
 
-pub struct BuildGkeonpremBareMetalAdminClusterNodeAccessConfigEl {}
+pub struct BuildGkeonpremBareMetalAdminCluster_NodeAccessConfig {}
 
-impl BuildGkeonpremBareMetalAdminClusterNodeAccessConfigEl {
-    pub fn build(self) -> GkeonpremBareMetalAdminClusterNodeAccessConfigEl {
-        GkeonpremBareMetalAdminClusterNodeAccessConfigEl { login_user: core::default::Default::default() }
+impl BuildGkeonpremBareMetalAdminCluster_NodeAccessConfig {
+    pub fn build(self) -> GkeonpremBareMetalAdminCluster_NodeAccessConfig {
+        GkeonpremBareMetalAdminCluster_NodeAccessConfig { login_user: core::default::Default::default() }
     }
 }
 
-pub struct GkeonpremBareMetalAdminClusterNodeAccessConfigElRef {
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_NodeAccessConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremBareMetalAdminClusterNodeAccessConfigElRef {
+impl terrars::Ref for GkeonpremBareMetalAdminCluster_NodeAccessConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremBareMetalAdminClusterNodeAccessConfigElRef {
-        GkeonpremBareMetalAdminClusterNodeAccessConfigElRef {
+    ) -> GkeonpremBareMetalAdminCluster_NodeAccessConfigRef {
+        GkeonpremBareMetalAdminCluster_NodeAccessConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremBareMetalAdminClusterNodeAccessConfigElRef {
+impl GkeonpremBareMetalAdminCluster_NodeAccessConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2723,12 +3989,12 @@ impl GkeonpremBareMetalAdminClusterNodeAccessConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremBareMetalAdminClusterNodeConfigEl {
+pub struct GkeonpremBareMetalAdminCluster_NodeConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max_pods_per_node: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl GkeonpremBareMetalAdminClusterNodeConfigEl {
+impl GkeonpremBareMetalAdminCluster_NodeConfig {
     #[doc =
         "Set the field `max_pods_per_node`.\nThe maximum number of pods a node can run. The size of the CIDR range\nassigned to the node will be derived from this parameter."]
     pub fn set_max_pods_per_node(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -2737,8 +4003,8 @@ impl GkeonpremBareMetalAdminClusterNodeConfigEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterNodeConfigEl {
-    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminClusterNodeConfigEl>;
+impl terrars::ToListMappable for GkeonpremBareMetalAdminCluster_NodeConfig {
+    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_NodeConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2749,29 +4015,31 @@ impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterNodeConfigEl {
     }
 }
 
-pub struct BuildGkeonpremBareMetalAdminClusterNodeConfigEl {}
+pub struct BuildGkeonpremBareMetalAdminCluster_NodeConfig {}
 
-impl BuildGkeonpremBareMetalAdminClusterNodeConfigEl {
-    pub fn build(self) -> GkeonpremBareMetalAdminClusterNodeConfigEl {
-        GkeonpremBareMetalAdminClusterNodeConfigEl { max_pods_per_node: core::default::Default::default() }
+impl BuildGkeonpremBareMetalAdminCluster_NodeConfig {
+    pub fn build(self) -> GkeonpremBareMetalAdminCluster_NodeConfig {
+        GkeonpremBareMetalAdminCluster_NodeConfig { max_pods_per_node: core::default::Default::default() }
     }
 }
 
-pub struct GkeonpremBareMetalAdminClusterNodeConfigElRef {
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_NodeConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremBareMetalAdminClusterNodeConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremBareMetalAdminClusterNodeConfigElRef {
-        GkeonpremBareMetalAdminClusterNodeConfigElRef {
+impl terrars::Ref for GkeonpremBareMetalAdminCluster_NodeConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremBareMetalAdminCluster_NodeConfigRef {
+        GkeonpremBareMetalAdminCluster_NodeConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremBareMetalAdminClusterNodeConfigElRef {
+impl GkeonpremBareMetalAdminCluster_NodeConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2784,15 +4052,15 @@ impl GkeonpremBareMetalAdminClusterNodeConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremBareMetalAdminClusterProxyEl {
+pub struct GkeonpremBareMetalAdminCluster_Proxy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     no_proxy: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     uri: terrars::PrimField<std::string::String>,
 }
 
-impl GkeonpremBareMetalAdminClusterProxyEl {
+impl GkeonpremBareMetalAdminCluster_Proxy {
     #[doc =
-        "Set the field `no_proxy`.\nA list of IPs, hostnames, and domains that should skip the proxy.\nExamples: [\"127.0.0.1\", \"example.com\", \".corp\", \"localhost\"]."]
+        "Set the field `no_proxy`.\nA list of IPs, hostnames, and domains that should skip the proxy.\nFor example: [\"127.0.0.1\", \"example.com\", \".corp\", \"localhost\"]."]
     pub fn set_no_proxy(
         mut self,
         v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
@@ -2802,8 +4070,8 @@ impl GkeonpremBareMetalAdminClusterProxyEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterProxyEl {
-    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminClusterProxyEl>;
+impl terrars::ToListMappable for GkeonpremBareMetalAdminCluster_Proxy {
+    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_Proxy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2814,62 +4082,64 @@ impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterProxyEl {
     }
 }
 
-pub struct BuildGkeonpremBareMetalAdminClusterProxyEl {
+pub struct BuildGkeonpremBareMetalAdminCluster_Proxy {
     #[doc =
-        "Specifies the address of your proxy server.\nExamples: http://domain\nWARNING: Do not provide credentials in the format\nhttp://(username:password@)domain these will be rejected by the server."]
+        "Specifies the address of your proxy server.\nFor Example: http://domain\nWARNING: Do not provide credentials in the format\nof http://(username:password@)domain these will be rejected by the server."]
     pub uri: terrars::PrimField<std::string::String>,
 }
 
-impl BuildGkeonpremBareMetalAdminClusterProxyEl {
-    pub fn build(self) -> GkeonpremBareMetalAdminClusterProxyEl {
-        GkeonpremBareMetalAdminClusterProxyEl {
+impl BuildGkeonpremBareMetalAdminCluster_Proxy {
+    pub fn build(self) -> GkeonpremBareMetalAdminCluster_Proxy {
+        GkeonpremBareMetalAdminCluster_Proxy {
             no_proxy: core::default::Default::default(),
             uri: self.uri,
         }
     }
 }
 
-pub struct GkeonpremBareMetalAdminClusterProxyElRef {
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_ProxyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremBareMetalAdminClusterProxyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremBareMetalAdminClusterProxyElRef {
-        GkeonpremBareMetalAdminClusterProxyElRef {
+impl terrars::Ref for GkeonpremBareMetalAdminCluster_ProxyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremBareMetalAdminCluster_ProxyRef {
+        GkeonpremBareMetalAdminCluster_ProxyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremBareMetalAdminClusterProxyElRef {
+impl GkeonpremBareMetalAdminCluster_ProxyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `no_proxy` after provisioning.\nA list of IPs, hostnames, and domains that should skip the proxy.\nExamples: [\"127.0.0.1\", \"example.com\", \".corp\", \"localhost\"]."]
+        "Get a reference to the value of field `no_proxy` after provisioning.\nA list of IPs, hostnames, and domains that should skip the proxy.\nFor example: [\"127.0.0.1\", \"example.com\", \".corp\", \"localhost\"]."]
     pub fn no_proxy(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.no_proxy", self.base))
     }
 
     #[doc =
-        "Get a reference to the value of field `uri` after provisioning.\nSpecifies the address of your proxy server.\nExamples: http://domain\nWARNING: Do not provide credentials in the format\nhttp://(username:password@)domain these will be rejected by the server."]
+        "Get a reference to the value of field `uri` after provisioning.\nSpecifies the address of your proxy server.\nFor Example: http://domain\nWARNING: Do not provide credentials in the format\nof http://(username:password@)domain these will be rejected by the server."]
     pub fn uri(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.uri", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationElAdminUsersEl {
+pub struct GkeonpremBareMetalAdminCluster_SecurityConfig_Authorization_AdminUsers {
     username: terrars::PrimField<std::string::String>,
 }
 
-impl GkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationElAdminUsersEl { }
+impl GkeonpremBareMetalAdminCluster_SecurityConfig_Authorization_AdminUsers { }
 
-impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationElAdminUsersEl {
-    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationElAdminUsersEl>;
+impl terrars::ToListMappable for GkeonpremBareMetalAdminCluster_SecurityConfig_Authorization_AdminUsers {
+    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_SecurityConfig_Authorization_AdminUsers>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2880,35 +4150,37 @@ impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterSecurityConfigElA
     }
 }
 
-pub struct BuildGkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationElAdminUsersEl {
+pub struct BuildGkeonpremBareMetalAdminCluster_SecurityConfig_Authorization_AdminUsers {
     #[doc = "The name of the user, e.g. 'my-gcp-id@gmail.com'."]
     pub username: terrars::PrimField<std::string::String>,
 }
 
-impl BuildGkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationElAdminUsersEl {
-    pub fn build(self) -> GkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationElAdminUsersEl {
-        GkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationElAdminUsersEl { username: self.username }
+impl BuildGkeonpremBareMetalAdminCluster_SecurityConfig_Authorization_AdminUsers {
+    pub fn build(self) -> GkeonpremBareMetalAdminCluster_SecurityConfig_Authorization_AdminUsers {
+        GkeonpremBareMetalAdminCluster_SecurityConfig_Authorization_AdminUsers { username: self.username }
     }
 }
 
-pub struct GkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationElAdminUsersElRef {
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_SecurityConfig_Authorization_AdminUsersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationElAdminUsersElRef {
+impl terrars::Ref for GkeonpremBareMetalAdminCluster_SecurityConfig_Authorization_AdminUsersRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationElAdminUsersElRef {
-        GkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationElAdminUsersElRef {
+    ) -> GkeonpremBareMetalAdminCluster_SecurityConfig_Authorization_AdminUsersRef {
+        GkeonpremBareMetalAdminCluster_SecurityConfig_Authorization_AdminUsersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationElAdminUsersElRef {
+impl GkeonpremBareMetalAdminCluster_SecurityConfig_Authorization_AdminUsersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2921,22 +4193,22 @@ impl GkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationElAdminUsersElRe
 }
 
 #[derive(Serialize, Default)]
-struct GkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationElDynamic {
+struct GkeonpremBareMetalAdminCluster_SecurityConfig_AuthorizationDynamic {
     admin_users: std
     ::option
-    ::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationElAdminUsersEl>>,
+    ::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminCluster_SecurityConfig_Authorization_AdminUsers>>,
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationEl {
+pub struct GkeonpremBareMetalAdminCluster_SecurityConfig_Authorization {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     admin_users: std
     ::option
-    ::Option<std::vec::Vec<GkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationElAdminUsersEl>>,
-    dynamic: GkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationElDynamic,
+    ::Option<std::vec::Vec<GkeonpremBareMetalAdminCluster_SecurityConfig_Authorization_AdminUsers>>,
+    dynamic: GkeonpremBareMetalAdminCluster_SecurityConfig_AuthorizationDynamic,
 }
 
-impl GkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationEl {
+impl GkeonpremBareMetalAdminCluster_SecurityConfig_Authorization {
     #[doc = "Set the field `admin_users`.\n"]
     pub fn set_admin_users(
         mut self,
@@ -2947,7 +4219,7 @@ impl GkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<GkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationElAdminUsersEl>,
+                        ::BlockAssignable<GkeonpremBareMetalAdminCluster_SecurityConfig_Authorization_AdminUsers>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2962,8 +4234,8 @@ impl GkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationEl {
-    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationEl>;
+impl terrars::ToListMappable for GkeonpremBareMetalAdminCluster_SecurityConfig_Authorization {
+    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_SecurityConfig_Authorization>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2974,35 +4246,37 @@ impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterSecurityConfigElA
     }
 }
 
-pub struct BuildGkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationEl {}
+pub struct BuildGkeonpremBareMetalAdminCluster_SecurityConfig_Authorization {}
 
-impl BuildGkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationEl {
-    pub fn build(self) -> GkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationEl {
-        GkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationEl {
+impl BuildGkeonpremBareMetalAdminCluster_SecurityConfig_Authorization {
+    pub fn build(self) -> GkeonpremBareMetalAdminCluster_SecurityConfig_Authorization {
+        GkeonpremBareMetalAdminCluster_SecurityConfig_Authorization {
             admin_users: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct GkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationElRef {
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_SecurityConfig_AuthorizationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationElRef {
+impl terrars::Ref for GkeonpremBareMetalAdminCluster_SecurityConfig_AuthorizationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationElRef {
-        GkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationElRef {
+    ) -> GkeonpremBareMetalAdminCluster_SecurityConfig_AuthorizationRef {
+        GkeonpremBareMetalAdminCluster_SecurityConfig_AuthorizationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationElRef {
+impl GkeonpremBareMetalAdminCluster_SecurityConfig_AuthorizationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3010,26 +4284,26 @@ impl GkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationElRef {
     #[doc = "Get a reference to the value of field `admin_users` after provisioning.\n"]
     pub fn admin_users(
         &self,
-    ) -> terrars::ListRef<GkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationElAdminUsersElRef> {
+    ) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_SecurityConfig_Authorization_AdminUsersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.admin_users", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct GkeonpremBareMetalAdminClusterSecurityConfigElDynamic {
+struct GkeonpremBareMetalAdminCluster_SecurityConfigDynamic {
     authorization: std
     ::option
-    ::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationEl>>,
+    ::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminCluster_SecurityConfig_Authorization>>,
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremBareMetalAdminClusterSecurityConfigEl {
+pub struct GkeonpremBareMetalAdminCluster_SecurityConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    authorization: std::option::Option<std::vec::Vec<GkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationEl>>,
-    dynamic: GkeonpremBareMetalAdminClusterSecurityConfigElDynamic,
+    authorization: std::option::Option<std::vec::Vec<GkeonpremBareMetalAdminCluster_SecurityConfig_Authorization>>,
+    dynamic: GkeonpremBareMetalAdminCluster_SecurityConfigDynamic,
 }
 
-impl GkeonpremBareMetalAdminClusterSecurityConfigEl {
+impl GkeonpremBareMetalAdminCluster_SecurityConfig {
     #[doc = "Set the field `authorization`.\n"]
     pub fn set_authorization(
         mut self,
@@ -3038,7 +4312,7 @@ impl GkeonpremBareMetalAdminClusterSecurityConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<GkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationEl>>,
+                    ::Into<terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_SecurityConfig_Authorization>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3052,8 +4326,8 @@ impl GkeonpremBareMetalAdminClusterSecurityConfigEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterSecurityConfigEl {
-    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminClusterSecurityConfigEl>;
+impl terrars::ToListMappable for GkeonpremBareMetalAdminCluster_SecurityConfig {
+    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_SecurityConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3064,55 +4338,57 @@ impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterSecurityConfigEl 
     }
 }
 
-pub struct BuildGkeonpremBareMetalAdminClusterSecurityConfigEl {}
+pub struct BuildGkeonpremBareMetalAdminCluster_SecurityConfig {}
 
-impl BuildGkeonpremBareMetalAdminClusterSecurityConfigEl {
-    pub fn build(self) -> GkeonpremBareMetalAdminClusterSecurityConfigEl {
-        GkeonpremBareMetalAdminClusterSecurityConfigEl {
+impl BuildGkeonpremBareMetalAdminCluster_SecurityConfig {
+    pub fn build(self) -> GkeonpremBareMetalAdminCluster_SecurityConfig {
+        GkeonpremBareMetalAdminCluster_SecurityConfig {
             authorization: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct GkeonpremBareMetalAdminClusterSecurityConfigElRef {
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_SecurityConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremBareMetalAdminClusterSecurityConfigElRef {
+impl terrars::Ref for GkeonpremBareMetalAdminCluster_SecurityConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremBareMetalAdminClusterSecurityConfigElRef {
-        GkeonpremBareMetalAdminClusterSecurityConfigElRef {
+    ) -> GkeonpremBareMetalAdminCluster_SecurityConfigRef {
+        GkeonpremBareMetalAdminCluster_SecurityConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremBareMetalAdminClusterSecurityConfigElRef {
+impl GkeonpremBareMetalAdminCluster_SecurityConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `authorization` after provisioning.\n"]
-    pub fn authorization(&self) -> terrars::ListRef<GkeonpremBareMetalAdminClusterSecurityConfigElAuthorizationElRef> {
+    pub fn authorization(&self) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_SecurityConfig_AuthorizationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.authorization", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremBareMetalAdminClusterStorageElLvpNodeMountsConfigEl {
+pub struct GkeonpremBareMetalAdminCluster_Storage_LvpNodeMountsConfig {
     path: terrars::PrimField<std::string::String>,
     storage_class: terrars::PrimField<std::string::String>,
 }
 
-impl GkeonpremBareMetalAdminClusterStorageElLvpNodeMountsConfigEl { }
+impl GkeonpremBareMetalAdminCluster_Storage_LvpNodeMountsConfig { }
 
-impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterStorageElLvpNodeMountsConfigEl {
-    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminClusterStorageElLvpNodeMountsConfigEl>;
+impl terrars::ToListMappable for GkeonpremBareMetalAdminCluster_Storage_LvpNodeMountsConfig {
+    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_Storage_LvpNodeMountsConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3123,40 +4399,42 @@ impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterStorageElLvpNodeM
     }
 }
 
-pub struct BuildGkeonpremBareMetalAdminClusterStorageElLvpNodeMountsConfigEl {
+pub struct BuildGkeonpremBareMetalAdminCluster_Storage_LvpNodeMountsConfig {
     #[doc = "The host machine path."]
     pub path: terrars::PrimField<std::string::String>,
     #[doc = "The StorageClass name that PVs will be created with."]
     pub storage_class: terrars::PrimField<std::string::String>,
 }
 
-impl BuildGkeonpremBareMetalAdminClusterStorageElLvpNodeMountsConfigEl {
-    pub fn build(self) -> GkeonpremBareMetalAdminClusterStorageElLvpNodeMountsConfigEl {
-        GkeonpremBareMetalAdminClusterStorageElLvpNodeMountsConfigEl {
+impl BuildGkeonpremBareMetalAdminCluster_Storage_LvpNodeMountsConfig {
+    pub fn build(self) -> GkeonpremBareMetalAdminCluster_Storage_LvpNodeMountsConfig {
+        GkeonpremBareMetalAdminCluster_Storage_LvpNodeMountsConfig {
             path: self.path,
             storage_class: self.storage_class,
         }
     }
 }
 
-pub struct GkeonpremBareMetalAdminClusterStorageElLvpNodeMountsConfigElRef {
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_Storage_LvpNodeMountsConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremBareMetalAdminClusterStorageElLvpNodeMountsConfigElRef {
+impl terrars::Ref for GkeonpremBareMetalAdminCluster_Storage_LvpNodeMountsConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremBareMetalAdminClusterStorageElLvpNodeMountsConfigElRef {
-        GkeonpremBareMetalAdminClusterStorageElLvpNodeMountsConfigElRef {
+    ) -> GkeonpremBareMetalAdminCluster_Storage_LvpNodeMountsConfigRef {
+        GkeonpremBareMetalAdminCluster_Storage_LvpNodeMountsConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremBareMetalAdminClusterStorageElLvpNodeMountsConfigElRef {
+impl GkeonpremBareMetalAdminCluster_Storage_LvpNodeMountsConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3174,15 +4452,15 @@ impl GkeonpremBareMetalAdminClusterStorageElLvpNodeMountsConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremBareMetalAdminClusterStorageElLvpShareConfigElLvpConfigEl {
+pub struct GkeonpremBareMetalAdminCluster_Storage_LvpShareConfig_LvpConfig {
     path: terrars::PrimField<std::string::String>,
     storage_class: terrars::PrimField<std::string::String>,
 }
 
-impl GkeonpremBareMetalAdminClusterStorageElLvpShareConfigElLvpConfigEl { }
+impl GkeonpremBareMetalAdminCluster_Storage_LvpShareConfig_LvpConfig { }
 
-impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterStorageElLvpShareConfigElLvpConfigEl {
-    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminClusterStorageElLvpShareConfigElLvpConfigEl>;
+impl terrars::ToListMappable for GkeonpremBareMetalAdminCluster_Storage_LvpShareConfig_LvpConfig {
+    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_Storage_LvpShareConfig_LvpConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3193,40 +4471,42 @@ impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterStorageElLvpShare
     }
 }
 
-pub struct BuildGkeonpremBareMetalAdminClusterStorageElLvpShareConfigElLvpConfigEl {
+pub struct BuildGkeonpremBareMetalAdminCluster_Storage_LvpShareConfig_LvpConfig {
     #[doc = "The host machine path."]
     pub path: terrars::PrimField<std::string::String>,
     #[doc = "The StorageClass name that PVs will be created with."]
     pub storage_class: terrars::PrimField<std::string::String>,
 }
 
-impl BuildGkeonpremBareMetalAdminClusterStorageElLvpShareConfigElLvpConfigEl {
-    pub fn build(self) -> GkeonpremBareMetalAdminClusterStorageElLvpShareConfigElLvpConfigEl {
-        GkeonpremBareMetalAdminClusterStorageElLvpShareConfigElLvpConfigEl {
+impl BuildGkeonpremBareMetalAdminCluster_Storage_LvpShareConfig_LvpConfig {
+    pub fn build(self) -> GkeonpremBareMetalAdminCluster_Storage_LvpShareConfig_LvpConfig {
+        GkeonpremBareMetalAdminCluster_Storage_LvpShareConfig_LvpConfig {
             path: self.path,
             storage_class: self.storage_class,
         }
     }
 }
 
-pub struct GkeonpremBareMetalAdminClusterStorageElLvpShareConfigElLvpConfigElRef {
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_Storage_LvpShareConfig_LvpConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremBareMetalAdminClusterStorageElLvpShareConfigElLvpConfigElRef {
+impl terrars::Ref for GkeonpremBareMetalAdminCluster_Storage_LvpShareConfig_LvpConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremBareMetalAdminClusterStorageElLvpShareConfigElLvpConfigElRef {
-        GkeonpremBareMetalAdminClusterStorageElLvpShareConfigElLvpConfigElRef {
+    ) -> GkeonpremBareMetalAdminCluster_Storage_LvpShareConfig_LvpConfigRef {
+        GkeonpremBareMetalAdminCluster_Storage_LvpShareConfig_LvpConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremBareMetalAdminClusterStorageElLvpShareConfigElLvpConfigElRef {
+impl GkeonpremBareMetalAdminCluster_Storage_LvpShareConfig_LvpConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3244,22 +4524,22 @@ impl GkeonpremBareMetalAdminClusterStorageElLvpShareConfigElLvpConfigElRef {
 }
 
 #[derive(Serialize, Default)]
-struct GkeonpremBareMetalAdminClusterStorageElLvpShareConfigElDynamic {
+struct GkeonpremBareMetalAdminCluster_Storage_LvpShareConfigDynamic {
     lvp_config: std
     ::option
-    ::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminClusterStorageElLvpShareConfigElLvpConfigEl>>,
+    ::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminCluster_Storage_LvpShareConfig_LvpConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremBareMetalAdminClusterStorageElLvpShareConfigEl {
+pub struct GkeonpremBareMetalAdminCluster_Storage_LvpShareConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     shared_path_pv_count: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    lvp_config: std::option::Option<std::vec::Vec<GkeonpremBareMetalAdminClusterStorageElLvpShareConfigElLvpConfigEl>>,
-    dynamic: GkeonpremBareMetalAdminClusterStorageElLvpShareConfigElDynamic,
+    lvp_config: std::option::Option<std::vec::Vec<GkeonpremBareMetalAdminCluster_Storage_LvpShareConfig_LvpConfig>>,
+    dynamic: GkeonpremBareMetalAdminCluster_Storage_LvpShareConfigDynamic,
 }
 
-impl GkeonpremBareMetalAdminClusterStorageElLvpShareConfigEl {
+impl GkeonpremBareMetalAdminCluster_Storage_LvpShareConfig {
     #[doc = "Set the field `shared_path_pv_count`.\nThe number of subdirectories to create under path."]
     pub fn set_shared_path_pv_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.shared_path_pv_count = std::option::Option::Some(v.into());
@@ -3274,9 +4554,7 @@ impl GkeonpremBareMetalAdminClusterStorageElLvpShareConfigEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<GkeonpremBareMetalAdminClusterStorageElLvpShareConfigElLvpConfigEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_Storage_LvpShareConfig_LvpConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3290,8 +4568,8 @@ impl GkeonpremBareMetalAdminClusterStorageElLvpShareConfigEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterStorageElLvpShareConfigEl {
-    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminClusterStorageElLvpShareConfigEl>;
+impl terrars::ToListMappable for GkeonpremBareMetalAdminCluster_Storage_LvpShareConfig {
+    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_Storage_LvpShareConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3302,11 +4580,11 @@ impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterStorageElLvpShare
     }
 }
 
-pub struct BuildGkeonpremBareMetalAdminClusterStorageElLvpShareConfigEl {}
+pub struct BuildGkeonpremBareMetalAdminCluster_Storage_LvpShareConfig {}
 
-impl BuildGkeonpremBareMetalAdminClusterStorageElLvpShareConfigEl {
-    pub fn build(self) -> GkeonpremBareMetalAdminClusterStorageElLvpShareConfigEl {
-        GkeonpremBareMetalAdminClusterStorageElLvpShareConfigEl {
+impl BuildGkeonpremBareMetalAdminCluster_Storage_LvpShareConfig {
+    pub fn build(self) -> GkeonpremBareMetalAdminCluster_Storage_LvpShareConfig {
+        GkeonpremBareMetalAdminCluster_Storage_LvpShareConfig {
             shared_path_pv_count: core::default::Default::default(),
             lvp_config: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -3314,24 +4592,26 @@ impl BuildGkeonpremBareMetalAdminClusterStorageElLvpShareConfigEl {
     }
 }
 
-pub struct GkeonpremBareMetalAdminClusterStorageElLvpShareConfigElRef {
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_Storage_LvpShareConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremBareMetalAdminClusterStorageElLvpShareConfigElRef {
+impl terrars::Ref for GkeonpremBareMetalAdminCluster_Storage_LvpShareConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeonpremBareMetalAdminClusterStorageElLvpShareConfigElRef {
-        GkeonpremBareMetalAdminClusterStorageElLvpShareConfigElRef {
+    ) -> GkeonpremBareMetalAdminCluster_Storage_LvpShareConfigRef {
+        GkeonpremBareMetalAdminCluster_Storage_LvpShareConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremBareMetalAdminClusterStorageElLvpShareConfigElRef {
+impl GkeonpremBareMetalAdminCluster_Storage_LvpShareConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3343,33 +4623,33 @@ impl GkeonpremBareMetalAdminClusterStorageElLvpShareConfigElRef {
     }
 
     #[doc = "Get a reference to the value of field `lvp_config` after provisioning.\n"]
-    pub fn lvp_config(&self) -> terrars::ListRef<GkeonpremBareMetalAdminClusterStorageElLvpShareConfigElLvpConfigElRef> {
+    pub fn lvp_config(&self) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_Storage_LvpShareConfig_LvpConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.lvp_config", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct GkeonpremBareMetalAdminClusterStorageElDynamic {
+struct GkeonpremBareMetalAdminCluster_StorageDynamic {
     lvp_node_mounts_config: std
     ::option
-    ::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminClusterStorageElLvpNodeMountsConfigEl>>,
+    ::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminCluster_Storage_LvpNodeMountsConfig>>,
     lvp_share_config: std
     ::option
-    ::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminClusterStorageElLvpShareConfigEl>>,
+    ::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminCluster_Storage_LvpShareConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremBareMetalAdminClusterStorageEl {
+pub struct GkeonpremBareMetalAdminCluster_Storage {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     lvp_node_mounts_config: std
     ::option
-    ::Option<std::vec::Vec<GkeonpremBareMetalAdminClusterStorageElLvpNodeMountsConfigEl>>,
+    ::Option<std::vec::Vec<GkeonpremBareMetalAdminCluster_Storage_LvpNodeMountsConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    lvp_share_config: std::option::Option<std::vec::Vec<GkeonpremBareMetalAdminClusterStorageElLvpShareConfigEl>>,
-    dynamic: GkeonpremBareMetalAdminClusterStorageElDynamic,
+    lvp_share_config: std::option::Option<std::vec::Vec<GkeonpremBareMetalAdminCluster_Storage_LvpShareConfig>>,
+    dynamic: GkeonpremBareMetalAdminCluster_StorageDynamic,
 }
 
-impl GkeonpremBareMetalAdminClusterStorageEl {
+impl GkeonpremBareMetalAdminCluster_Storage {
     #[doc = "Set the field `lvp_node_mounts_config`.\n"]
     pub fn set_lvp_node_mounts_config(
         mut self,
@@ -3378,7 +4658,7 @@ impl GkeonpremBareMetalAdminClusterStorageEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<GkeonpremBareMetalAdminClusterStorageElLvpNodeMountsConfigEl>>,
+                    ::Into<terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_Storage_LvpNodeMountsConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3394,12 +4674,7 @@ impl GkeonpremBareMetalAdminClusterStorageEl {
     #[doc = "Set the field `lvp_share_config`.\n"]
     pub fn set_lvp_share_config(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<GkeonpremBareMetalAdminClusterStorageElLvpShareConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_Storage_LvpShareConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3413,8 +4688,8 @@ impl GkeonpremBareMetalAdminClusterStorageEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterStorageEl {
-    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminClusterStorageEl>;
+impl terrars::ToListMappable for GkeonpremBareMetalAdminCluster_Storage {
+    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_Storage>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3425,11 +4700,11 @@ impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterStorageEl {
     }
 }
 
-pub struct BuildGkeonpremBareMetalAdminClusterStorageEl {}
+pub struct BuildGkeonpremBareMetalAdminCluster_Storage {}
 
-impl BuildGkeonpremBareMetalAdminClusterStorageEl {
-    pub fn build(self) -> GkeonpremBareMetalAdminClusterStorageEl {
-        GkeonpremBareMetalAdminClusterStorageEl {
+impl BuildGkeonpremBareMetalAdminCluster_Storage {
+    pub fn build(self) -> GkeonpremBareMetalAdminCluster_Storage {
+        GkeonpremBareMetalAdminCluster_Storage {
             lvp_node_mounts_config: core::default::Default::default(),
             lvp_share_config: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -3437,21 +4712,23 @@ impl BuildGkeonpremBareMetalAdminClusterStorageEl {
     }
 }
 
-pub struct GkeonpremBareMetalAdminClusterStorageElRef {
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_StorageRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremBareMetalAdminClusterStorageElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremBareMetalAdminClusterStorageElRef {
-        GkeonpremBareMetalAdminClusterStorageElRef {
+impl terrars::Ref for GkeonpremBareMetalAdminCluster_StorageRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremBareMetalAdminCluster_StorageRef {
+        GkeonpremBareMetalAdminCluster_StorageRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremBareMetalAdminClusterStorageElRef {
+impl GkeonpremBareMetalAdminCluster_StorageRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3459,18 +4736,18 @@ impl GkeonpremBareMetalAdminClusterStorageElRef {
     #[doc = "Get a reference to the value of field `lvp_node_mounts_config` after provisioning.\n"]
     pub fn lvp_node_mounts_config(
         &self,
-    ) -> terrars::ListRef<GkeonpremBareMetalAdminClusterStorageElLvpNodeMountsConfigElRef> {
+    ) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_Storage_LvpNodeMountsConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.lvp_node_mounts_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `lvp_share_config` after provisioning.\n"]
-    pub fn lvp_share_config(&self) -> terrars::ListRef<GkeonpremBareMetalAdminClusterStorageElLvpShareConfigElRef> {
+    pub fn lvp_share_config(&self) -> terrars::ListRef<GkeonpremBareMetalAdminCluster_Storage_LvpShareConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.lvp_share_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct GkeonpremBareMetalAdminClusterTimeoutsEl {
+pub struct GkeonpremBareMetalAdminCluster_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3479,7 +4756,7 @@ pub struct GkeonpremBareMetalAdminClusterTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeonpremBareMetalAdminClusterTimeoutsEl {
+impl GkeonpremBareMetalAdminCluster_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -3499,8 +4776,8 @@ impl GkeonpremBareMetalAdminClusterTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterTimeoutsEl {
-    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminClusterTimeoutsEl>;
+impl terrars::ToListMappable for GkeonpremBareMetalAdminCluster_Timeouts {
+    type O = terrars::BlockAssignable<GkeonpremBareMetalAdminCluster_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3511,11 +4788,11 @@ impl terrars::ToListMappable for GkeonpremBareMetalAdminClusterTimeoutsEl {
     }
 }
 
-pub struct BuildGkeonpremBareMetalAdminClusterTimeoutsEl {}
+pub struct BuildGkeonpremBareMetalAdminCluster_Timeouts {}
 
-impl BuildGkeonpremBareMetalAdminClusterTimeoutsEl {
-    pub fn build(self) -> GkeonpremBareMetalAdminClusterTimeoutsEl {
-        GkeonpremBareMetalAdminClusterTimeoutsEl {
+impl BuildGkeonpremBareMetalAdminCluster_Timeouts {
+    pub fn build(self) -> GkeonpremBareMetalAdminCluster_Timeouts {
+        GkeonpremBareMetalAdminCluster_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -3523,21 +4800,23 @@ impl BuildGkeonpremBareMetalAdminClusterTimeoutsEl {
     }
 }
 
-pub struct GkeonpremBareMetalAdminClusterTimeoutsElRef {
+#[allow(dead_code)]
+pub struct GkeonpremBareMetalAdminCluster_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeonpremBareMetalAdminClusterTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremBareMetalAdminClusterTimeoutsElRef {
-        GkeonpremBareMetalAdminClusterTimeoutsElRef {
+impl terrars::Ref for GkeonpremBareMetalAdminCluster_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeonpremBareMetalAdminCluster_TimeoutsRef {
+        GkeonpremBareMetalAdminCluster_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeonpremBareMetalAdminClusterTimeoutsElRef {
+impl GkeonpremBareMetalAdminCluster_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3556,20 +4835,4 @@ impl GkeonpremBareMetalAdminClusterTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct GkeonpremBareMetalAdminClusterDynamic {
-    cluster_operations: std::option::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminClusterClusterOperationsEl>>,
-    control_plane: std::option::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminClusterControlPlaneEl>>,
-    load_balancer: std::option::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminClusterLoadBalancerEl>>,
-    maintenance_config: std
-    ::option
-    ::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminClusterMaintenanceConfigEl>>,
-    network_config: std::option::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminClusterNetworkConfigEl>>,
-    node_access_config: std::option::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminClusterNodeAccessConfigEl>>,
-    node_config: std::option::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminClusterNodeConfigEl>>,
-    proxy: std::option::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminClusterProxyEl>>,
-    security_config: std::option::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminClusterSecurityConfigEl>>,
-    storage: std::option::Option<terrars::DynamicBlock<GkeonpremBareMetalAdminClusterStorageEl>>,
 }

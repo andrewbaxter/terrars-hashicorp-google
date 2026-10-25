@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct AccessContextManagerAccessLevelData {
+struct AccessContextManagerAccessLevelData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct AccessContextManagerAccessLevelData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -26,18 +30,18 @@ struct AccessContextManagerAccessLevelData {
     parent: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    basic: std::option::Option<std::vec::Vec<AccessContextManagerAccessLevelBasicEl>>,
+    basic: std::option::Option<std::vec::Vec<AccessContextManagerAccessLevel_Basic>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    custom: std::option::Option<std::vec::Vec<AccessContextManagerAccessLevelCustomEl>>,
+    custom: std::option::Option<std::vec::Vec<AccessContextManagerAccessLevel_Custom>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<AccessContextManagerAccessLevelTimeoutsEl>,
+    timeouts: std::option::Option<AccessContextManagerAccessLevel_Timeouts>,
     dynamic: AccessContextManagerAccessLevelDynamic,
 }
 
 struct AccessContextManagerAccessLevel_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AccessContextManagerAccessLevelData>,
+    data: std::cell::RefCell<AccessContextManagerAccessLevelData_>,
 }
 
 #[derive(Clone)]
@@ -137,6 +141,13 @@ impl AccessContextManagerAccessLevel {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nDescription of the AccessLevel and its use. Does not affect behavior."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -152,7 +163,7 @@ impl AccessContextManagerAccessLevel {
     #[doc = "Set the field `basic`.\n"]
     pub fn set_basic(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AccessContextManagerAccessLevelBasicEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AccessContextManagerAccessLevel_Basic>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -168,7 +179,7 @@ impl AccessContextManagerAccessLevel {
     #[doc = "Set the field `custom`.\n"]
     pub fn set_custom(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AccessContextManagerAccessLevelCustomEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AccessContextManagerAccessLevel_Custom>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -182,9 +193,15 @@ impl AccessContextManagerAccessLevel {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<AccessContextManagerAccessLevelTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<AccessContextManagerAccessLevel_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -217,18 +234,18 @@ impl AccessContextManagerAccessLevel {
     }
 
     #[doc = "Get a reference to the value of field `basic` after provisioning.\n"]
-    pub fn basic(&self) -> terrars::ListRef<AccessContextManagerAccessLevelBasicElRef> {
+    pub fn basic(&self) -> terrars::ListRef<AccessContextManagerAccessLevel_BasicRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.basic", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `custom` after provisioning.\n"]
-    pub fn custom(&self) -> terrars::ListRef<AccessContextManagerAccessLevelCustomElRef> {
+    pub fn custom(&self) -> terrars::ListRef<AccessContextManagerAccessLevel_CustomRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.custom", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> AccessContextManagerAccessLevelTimeoutsElRef {
-        AccessContextManagerAccessLevelTimeoutsElRef::new(
+    pub fn timeouts(&self) -> AccessContextManagerAccessLevel_TimeoutsRef {
+        AccessContextManagerAccessLevel_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -282,12 +299,13 @@ impl BuildAccessContextManagerAccessLevel {
         let out = AccessContextManagerAccessLevel(std::rc::Rc::new(AccessContextManagerAccessLevel_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AccessContextManagerAccessLevelData {
+            data: std::cell::RefCell::new(AccessContextManagerAccessLevelData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
@@ -328,6 +346,12 @@ impl AccessContextManagerAccessLevelRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nDescription of the AccessLevel and its use. Does not affect behavior."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -357,26 +381,32 @@ impl AccessContextManagerAccessLevelRef {
     }
 
     #[doc = "Get a reference to the value of field `basic` after provisioning.\n"]
-    pub fn basic(&self) -> terrars::ListRef<AccessContextManagerAccessLevelBasicElRef> {
+    pub fn basic(&self) -> terrars::ListRef<AccessContextManagerAccessLevel_BasicRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.basic", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `custom` after provisioning.\n"]
-    pub fn custom(&self) -> terrars::ListRef<AccessContextManagerAccessLevelCustomElRef> {
+    pub fn custom(&self) -> terrars::ListRef<AccessContextManagerAccessLevel_CustomRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.custom", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> AccessContextManagerAccessLevelTimeoutsElRef {
-        AccessContextManagerAccessLevelTimeoutsElRef::new(
+    pub fn timeouts(&self) -> AccessContextManagerAccessLevel_TimeoutsRef {
+        AccessContextManagerAccessLevel_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct AccessContextManagerAccessLevelDynamic {
+    basic: std::option::Option<terrars::DynamicBlock<AccessContextManagerAccessLevel_Basic>>,
+    custom: std::option::Option<terrars::DynamicBlock<AccessContextManagerAccessLevel_Custom>>,
+}
+
 #[derive(Serialize)]
-pub struct AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyElOsConstraintsEl {
+pub struct AccessContextManagerAccessLevel_Basic_Conditions_DevicePolicy_OsConstraints {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     minimum_version: std::option::Option<terrars::PrimField<std::string::String>>,
     os_type: terrars::PrimField<std::string::String>,
@@ -384,7 +414,7 @@ pub struct AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyElOsCon
     require_verified_chrome_os: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyElOsConstraintsEl {
+impl AccessContextManagerAccessLevel_Basic_Conditions_DevicePolicy_OsConstraints {
     #[doc =
         "Set the field `minimum_version`.\nThe minimum allowed OS version. If not set, any version\nof this OS satisfies the constraint.\nFormat: \"major.minor.patch\" such as \"10.5.301\", \"9.2.1\"."]
     pub fn set_minimum_version(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -400,9 +430,8 @@ impl AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyElOsConstrain
     }
 }
 
-impl terrars::ToListMappable for AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyElOsConstraintsEl {
-    type O =
-        terrars::BlockAssignable<AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyElOsConstraintsEl>;
+impl terrars::ToListMappable for AccessContextManagerAccessLevel_Basic_Conditions_DevicePolicy_OsConstraints {
+    type O = terrars::BlockAssignable<AccessContextManagerAccessLevel_Basic_Conditions_DevicePolicy_OsConstraints>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -413,15 +442,15 @@ impl terrars::ToListMappable for AccessContextManagerAccessLevelBasicElCondition
     }
 }
 
-pub struct BuildAccessContextManagerAccessLevelBasicElConditionsElDevicePolicyElOsConstraintsEl {
+pub struct BuildAccessContextManagerAccessLevel_Basic_Conditions_DevicePolicy_OsConstraints {
     #[doc =
         "The operating system type of the device. Possible values: [\"OS_UNSPECIFIED\", \"DESKTOP_MAC\", \"DESKTOP_WINDOWS\", \"DESKTOP_LINUX\", \"DESKTOP_CHROME_OS\", \"ANDROID\", \"IOS\"]"]
     pub os_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAccessContextManagerAccessLevelBasicElConditionsElDevicePolicyElOsConstraintsEl {
-    pub fn build(self) -> AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyElOsConstraintsEl {
-        AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyElOsConstraintsEl {
+impl BuildAccessContextManagerAccessLevel_Basic_Conditions_DevicePolicy_OsConstraints {
+    pub fn build(self) -> AccessContextManagerAccessLevel_Basic_Conditions_DevicePolicy_OsConstraints {
+        AccessContextManagerAccessLevel_Basic_Conditions_DevicePolicy_OsConstraints {
             minimum_version: core::default::Default::default(),
             os_type: self.os_type,
             require_verified_chrome_os: core::default::Default::default(),
@@ -429,24 +458,26 @@ impl BuildAccessContextManagerAccessLevelBasicElConditionsElDevicePolicyElOsCons
     }
 }
 
-pub struct AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyElOsConstraintsElRef {
+#[allow(dead_code)]
+pub struct AccessContextManagerAccessLevel_Basic_Conditions_DevicePolicy_OsConstraintsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyElOsConstraintsElRef {
+impl terrars::Ref for AccessContextManagerAccessLevel_Basic_Conditions_DevicePolicy_OsConstraintsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyElOsConstraintsElRef {
-        AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyElOsConstraintsElRef {
+    ) -> AccessContextManagerAccessLevel_Basic_Conditions_DevicePolicy_OsConstraintsRef {
+        AccessContextManagerAccessLevel_Basic_Conditions_DevicePolicy_OsConstraintsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyElOsConstraintsElRef {
+impl AccessContextManagerAccessLevel_Basic_Conditions_DevicePolicy_OsConstraintsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -471,14 +502,14 @@ impl AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyElOsConstrain
 }
 
 #[derive(Serialize, Default)]
-struct AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyElDynamic {
+struct AccessContextManagerAccessLevel_Basic_Conditions_DevicePolicyDynamic {
     os_constraints: std
     ::option
-    ::Option<terrars::DynamicBlock<AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyElOsConstraintsEl>>,
+    ::Option<terrars::DynamicBlock<AccessContextManagerAccessLevel_Basic_Conditions_DevicePolicy_OsConstraints>>,
 }
 
 #[derive(Serialize)]
-pub struct AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyEl {
+pub struct AccessContextManagerAccessLevel_Basic_Conditions_DevicePolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allowed_device_management_levels: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -492,11 +523,11 @@ pub struct AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     os_constraints: std
     ::option
-    ::Option<std::vec::Vec<AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyElOsConstraintsEl>>,
-    dynamic: AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyElDynamic,
+    ::Option<std::vec::Vec<AccessContextManagerAccessLevel_Basic_Conditions_DevicePolicy_OsConstraints>>,
+    dynamic: AccessContextManagerAccessLevel_Basic_Conditions_DevicePolicyDynamic,
 }
 
-impl AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyEl {
+impl AccessContextManagerAccessLevel_Basic_Conditions_DevicePolicy {
     #[doc =
         "Set the field `allowed_device_management_levels`.\nA list of allowed device management levels.\nAn empty list allows all management levels. Possible values: [\"MANAGEMENT_UNSPECIFIED\", \"NONE\", \"BASIC\", \"COMPLETE\"]"]
     pub fn set_allowed_device_management_levels(
@@ -546,9 +577,7 @@ impl AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyElOsConstraintsEl,
-                        >,
+                        ::BlockAssignable<AccessContextManagerAccessLevel_Basic_Conditions_DevicePolicy_OsConstraints>,
                     >,
     ) -> Self {
         match v.into() {
@@ -563,8 +592,8 @@ impl AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyEl {
     }
 }
 
-impl terrars::ToListMappable for AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyEl {
-    type O = terrars::BlockAssignable<AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyEl>;
+impl terrars::ToListMappable for AccessContextManagerAccessLevel_Basic_Conditions_DevicePolicy {
+    type O = terrars::BlockAssignable<AccessContextManagerAccessLevel_Basic_Conditions_DevicePolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -575,11 +604,11 @@ impl terrars::ToListMappable for AccessContextManagerAccessLevelBasicElCondition
     }
 }
 
-pub struct BuildAccessContextManagerAccessLevelBasicElConditionsElDevicePolicyEl {}
+pub struct BuildAccessContextManagerAccessLevel_Basic_Conditions_DevicePolicy {}
 
-impl BuildAccessContextManagerAccessLevelBasicElConditionsElDevicePolicyEl {
-    pub fn build(self) -> AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyEl {
-        AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyEl {
+impl BuildAccessContextManagerAccessLevel_Basic_Conditions_DevicePolicy {
+    pub fn build(self) -> AccessContextManagerAccessLevel_Basic_Conditions_DevicePolicy {
+        AccessContextManagerAccessLevel_Basic_Conditions_DevicePolicy {
             allowed_device_management_levels: core::default::Default::default(),
             allowed_encryption_statuses: core::default::Default::default(),
             require_admin_approval: core::default::Default::default(),
@@ -591,24 +620,26 @@ impl BuildAccessContextManagerAccessLevelBasicElConditionsElDevicePolicyEl {
     }
 }
 
-pub struct AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyElRef {
+#[allow(dead_code)]
+pub struct AccessContextManagerAccessLevel_Basic_Conditions_DevicePolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyElRef {
+impl terrars::Ref for AccessContextManagerAccessLevel_Basic_Conditions_DevicePolicyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyElRef {
-        AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyElRef {
+    ) -> AccessContextManagerAccessLevel_Basic_Conditions_DevicePolicyRef {
+        AccessContextManagerAccessLevel_Basic_Conditions_DevicePolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyElRef {
+impl AccessContextManagerAccessLevel_Basic_Conditions_DevicePolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -646,20 +677,20 @@ impl AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyElRef {
     #[doc = "Get a reference to the value of field `os_constraints` after provisioning.\n"]
     pub fn os_constraints(
         &self,
-    ) -> terrars::ListRef<AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyElOsConstraintsElRef> {
+    ) -> terrars::ListRef<AccessContextManagerAccessLevel_Basic_Conditions_DevicePolicy_OsConstraintsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.os_constraints", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesElVpcSubnetworkEl {
+pub struct AccessContextManagerAccessLevel_Basic_Conditions_VpcNetworkSources_VpcSubnetwork {
     network: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_ip_subnetworks: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl AccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesElVpcSubnetworkEl {
-    #[doc = "Set the field `vpc_ip_subnetworks`.\nCIDR block IP subnetwork specification. Must be IPv4."]
+impl AccessContextManagerAccessLevel_Basic_Conditions_VpcNetworkSources_VpcSubnetwork {
+    #[doc = "Set the field `vpc_ip_subnetworks`.\nA list of CIDR block IP subnetwork specification. Must be IPv4."]
     pub fn set_vpc_ip_subnetworks(
         mut self,
         v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
@@ -669,10 +700,9 @@ impl AccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesElVpcSub
     }
 }
 
-impl terrars::ToListMappable for AccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesElVpcSubnetworkEl {
+impl terrars::ToListMappable for AccessContextManagerAccessLevel_Basic_Conditions_VpcNetworkSources_VpcSubnetwork {
     type O =
-        terrars
-        ::BlockAssignable<AccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesElVpcSubnetworkEl>;
+        terrars::BlockAssignable<AccessContextManagerAccessLevel_Basic_Conditions_VpcNetworkSources_VpcSubnetwork>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -683,39 +713,41 @@ impl terrars::ToListMappable for AccessContextManagerAccessLevelBasicElCondition
     }
 }
 
-pub struct BuildAccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesElVpcSubnetworkEl {
+pub struct BuildAccessContextManagerAccessLevel_Basic_Conditions_VpcNetworkSources_VpcSubnetwork {
     #[doc =
         "Required. Network name to be allowed by this Access Level. Networks of foreign organizations requires 'compute.network.get' permission to be granted to caller."]
     pub network: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesElVpcSubnetworkEl {
-    pub fn build(self) -> AccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesElVpcSubnetworkEl {
-        AccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesElVpcSubnetworkEl {
+impl BuildAccessContextManagerAccessLevel_Basic_Conditions_VpcNetworkSources_VpcSubnetwork {
+    pub fn build(self) -> AccessContextManagerAccessLevel_Basic_Conditions_VpcNetworkSources_VpcSubnetwork {
+        AccessContextManagerAccessLevel_Basic_Conditions_VpcNetworkSources_VpcSubnetwork {
             network: self.network,
             vpc_ip_subnetworks: core::default::Default::default(),
         }
     }
 }
 
-pub struct AccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesElVpcSubnetworkElRef {
+#[allow(dead_code)]
+pub struct AccessContextManagerAccessLevel_Basic_Conditions_VpcNetworkSources_VpcSubnetworkRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesElVpcSubnetworkElRef {
+impl terrars::Ref for AccessContextManagerAccessLevel_Basic_Conditions_VpcNetworkSources_VpcSubnetworkRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesElVpcSubnetworkElRef {
-        AccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesElVpcSubnetworkElRef {
+    ) -> AccessContextManagerAccessLevel_Basic_Conditions_VpcNetworkSources_VpcSubnetworkRef {
+        AccessContextManagerAccessLevel_Basic_Conditions_VpcNetworkSources_VpcSubnetworkRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesElVpcSubnetworkElRef {
+impl AccessContextManagerAccessLevel_Basic_Conditions_VpcNetworkSources_VpcSubnetworkRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -727,31 +759,31 @@ impl AccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesElVpcSub
     }
 
     #[doc =
-        "Get a reference to the value of field `vpc_ip_subnetworks` after provisioning.\nCIDR block IP subnetwork specification. Must be IPv4."]
+        "Get a reference to the value of field `vpc_ip_subnetworks` after provisioning.\nA list of CIDR block IP subnetwork specification. Must be IPv4."]
     pub fn vpc_ip_subnetworks(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_ip_subnetworks", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesElDynamic {
+struct AccessContextManagerAccessLevel_Basic_Conditions_VpcNetworkSourcesDynamic {
     vpc_subnetwork: std
     ::option
     ::Option<
-        terrars::DynamicBlock<AccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesElVpcSubnetworkEl>,
+        terrars::DynamicBlock<AccessContextManagerAccessLevel_Basic_Conditions_VpcNetworkSources_VpcSubnetwork>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesEl {
+pub struct AccessContextManagerAccessLevel_Basic_Conditions_VpcNetworkSources {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_subnetwork: std
     ::option
-    ::Option<std::vec::Vec<AccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesElVpcSubnetworkEl>>,
-    dynamic: AccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesElDynamic,
+    ::Option<std::vec::Vec<AccessContextManagerAccessLevel_Basic_Conditions_VpcNetworkSources_VpcSubnetwork>>,
+    dynamic: AccessContextManagerAccessLevel_Basic_Conditions_VpcNetworkSourcesDynamic,
 }
 
-impl AccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesEl {
+impl AccessContextManagerAccessLevel_Basic_Conditions_VpcNetworkSources {
     #[doc = "Set the field `vpc_subnetwork`.\n"]
     pub fn set_vpc_subnetwork(
         mut self,
@@ -763,7 +795,7 @@ impl AccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesElVpcSubnetworkEl,
+                            AccessContextManagerAccessLevel_Basic_Conditions_VpcNetworkSources_VpcSubnetwork,
                         >,
                     >,
     ) -> Self {
@@ -779,8 +811,8 @@ impl AccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesEl {
     }
 }
 
-impl terrars::ToListMappable for AccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesEl {
-    type O = terrars::BlockAssignable<AccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesEl>;
+impl terrars::ToListMappable for AccessContextManagerAccessLevel_Basic_Conditions_VpcNetworkSources {
+    type O = terrars::BlockAssignable<AccessContextManagerAccessLevel_Basic_Conditions_VpcNetworkSources>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -791,35 +823,37 @@ impl terrars::ToListMappable for AccessContextManagerAccessLevelBasicElCondition
     }
 }
 
-pub struct BuildAccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesEl {}
+pub struct BuildAccessContextManagerAccessLevel_Basic_Conditions_VpcNetworkSources {}
 
-impl BuildAccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesEl {
-    pub fn build(self) -> AccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesEl {
-        AccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesEl {
+impl BuildAccessContextManagerAccessLevel_Basic_Conditions_VpcNetworkSources {
+    pub fn build(self) -> AccessContextManagerAccessLevel_Basic_Conditions_VpcNetworkSources {
+        AccessContextManagerAccessLevel_Basic_Conditions_VpcNetworkSources {
             vpc_subnetwork: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct AccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesElRef {
+#[allow(dead_code)]
+pub struct AccessContextManagerAccessLevel_Basic_Conditions_VpcNetworkSourcesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesElRef {
+impl terrars::Ref for AccessContextManagerAccessLevel_Basic_Conditions_VpcNetworkSourcesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesElRef {
-        AccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesElRef {
+    ) -> AccessContextManagerAccessLevel_Basic_Conditions_VpcNetworkSourcesRef {
+        AccessContextManagerAccessLevel_Basic_Conditions_VpcNetworkSourcesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesElRef {
+impl AccessContextManagerAccessLevel_Basic_Conditions_VpcNetworkSourcesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -827,23 +861,23 @@ impl AccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesElRef {
     #[doc = "Get a reference to the value of field `vpc_subnetwork` after provisioning.\n"]
     pub fn vpc_subnetwork(
         &self,
-    ) -> terrars::ListRef<AccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesElVpcSubnetworkElRef> {
+    ) -> terrars::ListRef<AccessContextManagerAccessLevel_Basic_Conditions_VpcNetworkSources_VpcSubnetworkRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_subnetwork", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AccessContextManagerAccessLevelBasicElConditionsElDynamic {
+struct AccessContextManagerAccessLevel_Basic_ConditionsDynamic {
     device_policy: std
     ::option
-    ::Option<terrars::DynamicBlock<AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyEl>>,
+    ::Option<terrars::DynamicBlock<AccessContextManagerAccessLevel_Basic_Conditions_DevicePolicy>>,
     vpc_network_sources: std
     ::option
-    ::Option<terrars::DynamicBlock<AccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesEl>>,
+    ::Option<terrars::DynamicBlock<AccessContextManagerAccessLevel_Basic_Conditions_VpcNetworkSources>>,
 }
 
 #[derive(Serialize)]
-pub struct AccessContextManagerAccessLevelBasicElConditionsEl {
+pub struct AccessContextManagerAccessLevel_Basic_Conditions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ip_subnetworks: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -855,15 +889,15 @@ pub struct AccessContextManagerAccessLevelBasicElConditionsEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     required_access_levels: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    device_policy: std::option::Option<std::vec::Vec<AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyEl>>,
+    device_policy: std::option::Option<std::vec::Vec<AccessContextManagerAccessLevel_Basic_Conditions_DevicePolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_network_sources: std
     ::option
-    ::Option<std::vec::Vec<AccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesEl>>,
-    dynamic: AccessContextManagerAccessLevelBasicElConditionsElDynamic,
+    ::Option<std::vec::Vec<AccessContextManagerAccessLevel_Basic_Conditions_VpcNetworkSources>>,
+    dynamic: AccessContextManagerAccessLevel_Basic_ConditionsDynamic,
 }
 
-impl AccessContextManagerAccessLevelBasicElConditionsEl {
+impl AccessContextManagerAccessLevel_Basic_Conditions {
     #[doc =
         "Set the field `ip_subnetworks`.\nA list of CIDR block IP subnetwork specification. May be IPv4\nor IPv6.\nNote that for a CIDR IP address block, the specified IP address\nportion must be properly truncated (i.e. all the host bits must\nbe zero) or the input is considered malformed. For example,\n\"192.0.2.0/24\" is accepted but \"192.0.2.1/24\" is not. Similarly,\nfor IPv6, \"2001:db8::/32\" is accepted whereas \"2001:db8::1/32\"\nis not. The originating IP of a request must be in one of the\nlisted subnets in order for this Condition to be true.\nIf empty, all IP addresses are allowed."]
     pub fn set_ip_subnetworks(
@@ -919,9 +953,7 @@ impl AccessContextManagerAccessLevelBasicElConditionsEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<AccessContextManagerAccessLevel_Basic_Conditions_DevicePolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -943,8 +975,7 @@ impl AccessContextManagerAccessLevelBasicElConditionsEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<AccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesEl>,
+                        terrars::BlockAssignable<AccessContextManagerAccessLevel_Basic_Conditions_VpcNetworkSources>,
                     >,
     ) -> Self {
         match v.into() {
@@ -959,8 +990,8 @@ impl AccessContextManagerAccessLevelBasicElConditionsEl {
     }
 }
 
-impl terrars::ToListMappable for AccessContextManagerAccessLevelBasicElConditionsEl {
-    type O = terrars::BlockAssignable<AccessContextManagerAccessLevelBasicElConditionsEl>;
+impl terrars::ToListMappable for AccessContextManagerAccessLevel_Basic_Conditions {
+    type O = terrars::BlockAssignable<AccessContextManagerAccessLevel_Basic_Conditions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -971,11 +1002,11 @@ impl terrars::ToListMappable for AccessContextManagerAccessLevelBasicElCondition
     }
 }
 
-pub struct BuildAccessContextManagerAccessLevelBasicElConditionsEl {}
+pub struct BuildAccessContextManagerAccessLevel_Basic_Conditions {}
 
-impl BuildAccessContextManagerAccessLevelBasicElConditionsEl {
-    pub fn build(self) -> AccessContextManagerAccessLevelBasicElConditionsEl {
-        AccessContextManagerAccessLevelBasicElConditionsEl {
+impl BuildAccessContextManagerAccessLevel_Basic_Conditions {
+    pub fn build(self) -> AccessContextManagerAccessLevel_Basic_Conditions {
+        AccessContextManagerAccessLevel_Basic_Conditions {
             ip_subnetworks: core::default::Default::default(),
             members: core::default::Default::default(),
             negate: core::default::Default::default(),
@@ -988,24 +1019,26 @@ impl BuildAccessContextManagerAccessLevelBasicElConditionsEl {
     }
 }
 
-pub struct AccessContextManagerAccessLevelBasicElConditionsElRef {
+#[allow(dead_code)]
+pub struct AccessContextManagerAccessLevel_Basic_ConditionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AccessContextManagerAccessLevelBasicElConditionsElRef {
+impl terrars::Ref for AccessContextManagerAccessLevel_Basic_ConditionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AccessContextManagerAccessLevelBasicElConditionsElRef {
-        AccessContextManagerAccessLevelBasicElConditionsElRef {
+    ) -> AccessContextManagerAccessLevel_Basic_ConditionsRef {
+        AccessContextManagerAccessLevel_Basic_ConditionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AccessContextManagerAccessLevelBasicElConditionsElRef {
+impl AccessContextManagerAccessLevel_Basic_ConditionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1041,33 +1074,33 @@ impl AccessContextManagerAccessLevelBasicElConditionsElRef {
     }
 
     #[doc = "Get a reference to the value of field `device_policy` after provisioning.\n"]
-    pub fn device_policy(&self) -> terrars::ListRef<AccessContextManagerAccessLevelBasicElConditionsElDevicePolicyElRef> {
+    pub fn device_policy(&self) -> terrars::ListRef<AccessContextManagerAccessLevel_Basic_Conditions_DevicePolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.device_policy", self.base))
     }
 
     #[doc = "Get a reference to the value of field `vpc_network_sources` after provisioning.\n"]
     pub fn vpc_network_sources(
         &self,
-    ) -> terrars::ListRef<AccessContextManagerAccessLevelBasicElConditionsElVpcNetworkSourcesElRef> {
+    ) -> terrars::ListRef<AccessContextManagerAccessLevel_Basic_Conditions_VpcNetworkSourcesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_network_sources", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AccessContextManagerAccessLevelBasicElDynamic {
-    conditions: std::option::Option<terrars::DynamicBlock<AccessContextManagerAccessLevelBasicElConditionsEl>>,
+struct AccessContextManagerAccessLevel_BasicDynamic {
+    conditions: std::option::Option<terrars::DynamicBlock<AccessContextManagerAccessLevel_Basic_Conditions>>,
 }
 
 #[derive(Serialize)]
-pub struct AccessContextManagerAccessLevelBasicEl {
+pub struct AccessContextManagerAccessLevel_Basic {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     combining_function: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    conditions: std::option::Option<std::vec::Vec<AccessContextManagerAccessLevelBasicElConditionsEl>>,
-    dynamic: AccessContextManagerAccessLevelBasicElDynamic,
+    conditions: std::option::Option<std::vec::Vec<AccessContextManagerAccessLevel_Basic_Conditions>>,
+    dynamic: AccessContextManagerAccessLevel_BasicDynamic,
 }
 
-impl AccessContextManagerAccessLevelBasicEl {
+impl AccessContextManagerAccessLevel_Basic {
     #[doc =
         "Set the field `combining_function`.\nHow the conditions list should be combined to determine if a request\nis granted this AccessLevel. If AND is used, each Condition in\nconditions must be satisfied for the AccessLevel to be applied. If\nOR is used, at least one Condition in conditions must be satisfied\nfor the AccessLevel to be applied. Default value: \"AND\" Possible values: [\"AND\", \"OR\"]"]
     pub fn set_combining_function(
@@ -1081,7 +1114,7 @@ impl AccessContextManagerAccessLevelBasicEl {
     #[doc = "Set the field `conditions`.\n"]
     pub fn set_conditions(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AccessContextManagerAccessLevelBasicElConditionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AccessContextManagerAccessLevel_Basic_Conditions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1095,8 +1128,8 @@ impl AccessContextManagerAccessLevelBasicEl {
     }
 }
 
-impl terrars::ToListMappable for AccessContextManagerAccessLevelBasicEl {
-    type O = terrars::BlockAssignable<AccessContextManagerAccessLevelBasicEl>;
+impl terrars::ToListMappable for AccessContextManagerAccessLevel_Basic {
+    type O = terrars::BlockAssignable<AccessContextManagerAccessLevel_Basic>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1107,11 +1140,11 @@ impl terrars::ToListMappable for AccessContextManagerAccessLevelBasicEl {
     }
 }
 
-pub struct BuildAccessContextManagerAccessLevelBasicEl {}
+pub struct BuildAccessContextManagerAccessLevel_Basic {}
 
-impl BuildAccessContextManagerAccessLevelBasicEl {
-    pub fn build(self) -> AccessContextManagerAccessLevelBasicEl {
-        AccessContextManagerAccessLevelBasicEl {
+impl BuildAccessContextManagerAccessLevel_Basic {
+    pub fn build(self) -> AccessContextManagerAccessLevel_Basic {
+        AccessContextManagerAccessLevel_Basic {
             combining_function: core::default::Default::default(),
             conditions: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1119,21 +1152,23 @@ impl BuildAccessContextManagerAccessLevelBasicEl {
     }
 }
 
-pub struct AccessContextManagerAccessLevelBasicElRef {
+#[allow(dead_code)]
+pub struct AccessContextManagerAccessLevel_BasicRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AccessContextManagerAccessLevelBasicElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AccessContextManagerAccessLevelBasicElRef {
-        AccessContextManagerAccessLevelBasicElRef {
+impl terrars::Ref for AccessContextManagerAccessLevel_BasicRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AccessContextManagerAccessLevel_BasicRef {
+        AccessContextManagerAccessLevel_BasicRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AccessContextManagerAccessLevelBasicElRef {
+impl AccessContextManagerAccessLevel_BasicRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1145,13 +1180,13 @@ impl AccessContextManagerAccessLevelBasicElRef {
     }
 
     #[doc = "Get a reference to the value of field `conditions` after provisioning.\n"]
-    pub fn conditions(&self) -> terrars::ListRef<AccessContextManagerAccessLevelBasicElConditionsElRef> {
+    pub fn conditions(&self) -> terrars::ListRef<AccessContextManagerAccessLevel_Basic_ConditionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.conditions", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AccessContextManagerAccessLevelCustomElExprEl {
+pub struct AccessContextManagerAccessLevel_Custom_Expr {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
@@ -1161,7 +1196,7 @@ pub struct AccessContextManagerAccessLevelCustomElExprEl {
     title: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AccessContextManagerAccessLevelCustomElExprEl {
+impl AccessContextManagerAccessLevel_Custom_Expr {
     #[doc = "Set the field `description`.\nDescription of the expression"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -1182,8 +1217,8 @@ impl AccessContextManagerAccessLevelCustomElExprEl {
     }
 }
 
-impl terrars::ToListMappable for AccessContextManagerAccessLevelCustomElExprEl {
-    type O = terrars::BlockAssignable<AccessContextManagerAccessLevelCustomElExprEl>;
+impl terrars::ToListMappable for AccessContextManagerAccessLevel_Custom_Expr {
+    type O = terrars::BlockAssignable<AccessContextManagerAccessLevel_Custom_Expr>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1194,14 +1229,14 @@ impl terrars::ToListMappable for AccessContextManagerAccessLevelCustomElExprEl {
     }
 }
 
-pub struct BuildAccessContextManagerAccessLevelCustomElExprEl {
+pub struct BuildAccessContextManagerAccessLevel_Custom_Expr {
     #[doc = "Textual representation of an expression in Common Expression Language syntax."]
     pub expression: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAccessContextManagerAccessLevelCustomElExprEl {
-    pub fn build(self) -> AccessContextManagerAccessLevelCustomElExprEl {
-        AccessContextManagerAccessLevelCustomElExprEl {
+impl BuildAccessContextManagerAccessLevel_Custom_Expr {
+    pub fn build(self) -> AccessContextManagerAccessLevel_Custom_Expr {
+        AccessContextManagerAccessLevel_Custom_Expr {
             description: core::default::Default::default(),
             expression: self.expression,
             location: core::default::Default::default(),
@@ -1210,24 +1245,26 @@ impl BuildAccessContextManagerAccessLevelCustomElExprEl {
     }
 }
 
-pub struct AccessContextManagerAccessLevelCustomElExprElRef {
+#[allow(dead_code)]
+pub struct AccessContextManagerAccessLevel_Custom_ExprRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AccessContextManagerAccessLevelCustomElExprElRef {
+impl terrars::Ref for AccessContextManagerAccessLevel_Custom_ExprRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AccessContextManagerAccessLevelCustomElExprElRef {
-        AccessContextManagerAccessLevelCustomElExprElRef {
+    ) -> AccessContextManagerAccessLevel_Custom_ExprRef {
+        AccessContextManagerAccessLevel_Custom_ExprRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AccessContextManagerAccessLevelCustomElExprElRef {
+impl AccessContextManagerAccessLevel_Custom_ExprRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1257,22 +1294,22 @@ impl AccessContextManagerAccessLevelCustomElExprElRef {
 }
 
 #[derive(Serialize, Default)]
-struct AccessContextManagerAccessLevelCustomElDynamic {
-    expr: std::option::Option<terrars::DynamicBlock<AccessContextManagerAccessLevelCustomElExprEl>>,
+struct AccessContextManagerAccessLevel_CustomDynamic {
+    expr: std::option::Option<terrars::DynamicBlock<AccessContextManagerAccessLevel_Custom_Expr>>,
 }
 
 #[derive(Serialize)]
-pub struct AccessContextManagerAccessLevelCustomEl {
+pub struct AccessContextManagerAccessLevel_Custom {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    expr: std::option::Option<std::vec::Vec<AccessContextManagerAccessLevelCustomElExprEl>>,
-    dynamic: AccessContextManagerAccessLevelCustomElDynamic,
+    expr: std::option::Option<std::vec::Vec<AccessContextManagerAccessLevel_Custom_Expr>>,
+    dynamic: AccessContextManagerAccessLevel_CustomDynamic,
 }
 
-impl AccessContextManagerAccessLevelCustomEl {
+impl AccessContextManagerAccessLevel_Custom {
     #[doc = "Set the field `expr`.\n"]
     pub fn set_expr(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AccessContextManagerAccessLevelCustomElExprEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AccessContextManagerAccessLevel_Custom_Expr>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1286,8 +1323,8 @@ impl AccessContextManagerAccessLevelCustomEl {
     }
 }
 
-impl terrars::ToListMappable for AccessContextManagerAccessLevelCustomEl {
-    type O = terrars::BlockAssignable<AccessContextManagerAccessLevelCustomEl>;
+impl terrars::ToListMappable for AccessContextManagerAccessLevel_Custom {
+    type O = terrars::BlockAssignable<AccessContextManagerAccessLevel_Custom>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1298,44 +1335,46 @@ impl terrars::ToListMappable for AccessContextManagerAccessLevelCustomEl {
     }
 }
 
-pub struct BuildAccessContextManagerAccessLevelCustomEl {}
+pub struct BuildAccessContextManagerAccessLevel_Custom {}
 
-impl BuildAccessContextManagerAccessLevelCustomEl {
-    pub fn build(self) -> AccessContextManagerAccessLevelCustomEl {
-        AccessContextManagerAccessLevelCustomEl {
+impl BuildAccessContextManagerAccessLevel_Custom {
+    pub fn build(self) -> AccessContextManagerAccessLevel_Custom {
+        AccessContextManagerAccessLevel_Custom {
             expr: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct AccessContextManagerAccessLevelCustomElRef {
+#[allow(dead_code)]
+pub struct AccessContextManagerAccessLevel_CustomRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AccessContextManagerAccessLevelCustomElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AccessContextManagerAccessLevelCustomElRef {
-        AccessContextManagerAccessLevelCustomElRef {
+impl terrars::Ref for AccessContextManagerAccessLevel_CustomRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AccessContextManagerAccessLevel_CustomRef {
+        AccessContextManagerAccessLevel_CustomRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AccessContextManagerAccessLevelCustomElRef {
+impl AccessContextManagerAccessLevel_CustomRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `expr` after provisioning.\n"]
-    pub fn expr(&self) -> terrars::ListRef<AccessContextManagerAccessLevelCustomElExprElRef> {
+    pub fn expr(&self) -> terrars::ListRef<AccessContextManagerAccessLevel_Custom_ExprRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.expr", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AccessContextManagerAccessLevelTimeoutsEl {
+pub struct AccessContextManagerAccessLevel_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1344,7 +1383,7 @@ pub struct AccessContextManagerAccessLevelTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AccessContextManagerAccessLevelTimeoutsEl {
+impl AccessContextManagerAccessLevel_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1364,8 +1403,8 @@ impl AccessContextManagerAccessLevelTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for AccessContextManagerAccessLevelTimeoutsEl {
-    type O = terrars::BlockAssignable<AccessContextManagerAccessLevelTimeoutsEl>;
+impl terrars::ToListMappable for AccessContextManagerAccessLevel_Timeouts {
+    type O = terrars::BlockAssignable<AccessContextManagerAccessLevel_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1376,11 +1415,11 @@ impl terrars::ToListMappable for AccessContextManagerAccessLevelTimeoutsEl {
     }
 }
 
-pub struct BuildAccessContextManagerAccessLevelTimeoutsEl {}
+pub struct BuildAccessContextManagerAccessLevel_Timeouts {}
 
-impl BuildAccessContextManagerAccessLevelTimeoutsEl {
-    pub fn build(self) -> AccessContextManagerAccessLevelTimeoutsEl {
-        AccessContextManagerAccessLevelTimeoutsEl {
+impl BuildAccessContextManagerAccessLevel_Timeouts {
+    pub fn build(self) -> AccessContextManagerAccessLevel_Timeouts {
+        AccessContextManagerAccessLevel_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1388,21 +1427,23 @@ impl BuildAccessContextManagerAccessLevelTimeoutsEl {
     }
 }
 
-pub struct AccessContextManagerAccessLevelTimeoutsElRef {
+#[allow(dead_code)]
+pub struct AccessContextManagerAccessLevel_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AccessContextManagerAccessLevelTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AccessContextManagerAccessLevelTimeoutsElRef {
-        AccessContextManagerAccessLevelTimeoutsElRef {
+impl terrars::Ref for AccessContextManagerAccessLevel_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AccessContextManagerAccessLevel_TimeoutsRef {
+        AccessContextManagerAccessLevel_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AccessContextManagerAccessLevelTimeoutsElRef {
+impl AccessContextManagerAccessLevel_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1421,10 +1462,4 @@ impl AccessContextManagerAccessLevelTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AccessContextManagerAccessLevelDynamic {
-    basic: std::option::Option<terrars::DynamicBlock<AccessContextManagerAccessLevelBasicEl>>,
-    custom: std::option::Option<terrars::DynamicBlock<AccessContextManagerAccessLevelCustomEl>>,
 }

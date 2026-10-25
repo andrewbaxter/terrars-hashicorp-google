@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct BillingAccountIamMemberData {
+struct BillingAccountIamMemberData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,14 +26,14 @@ struct BillingAccountIamMemberData {
     member: terrars::PrimField<std::string::String>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<BillingAccountIamMemberConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<BillingAccountIamMember_Condition>>,
     dynamic: BillingAccountIamMemberDynamic,
 }
 
 struct BillingAccountIamMember_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<BillingAccountIamMemberData>,
+    data: std::cell::RefCell<BillingAccountIamMemberData_>,
 }
 
 #[derive(Clone)]
@@ -140,7 +142,7 @@ impl BillingAccountIamMember {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BillingAccountIamMemberConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BillingAccountIamMember_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -179,7 +181,7 @@ impl BillingAccountIamMember {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<BillingAccountIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<BillingAccountIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -230,7 +232,7 @@ impl BuildBillingAccountIamMember {
         let out = BillingAccountIamMember(std::rc::Rc::new(BillingAccountIamMember_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(BillingAccountIamMemberData {
+            data: std::cell::RefCell::new(BillingAccountIamMemberData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -298,20 +300,25 @@ impl BillingAccountIamMemberRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<BillingAccountIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<BillingAccountIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct BillingAccountIamMemberDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<BillingAccountIamMember_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct BillingAccountIamMemberConditionEl {
+pub struct BillingAccountIamMember_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl BillingAccountIamMemberConditionEl {
+impl BillingAccountIamMember_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -319,8 +326,8 @@ impl BillingAccountIamMemberConditionEl {
     }
 }
 
-impl terrars::ToListMappable for BillingAccountIamMemberConditionEl {
-    type O = terrars::BlockAssignable<BillingAccountIamMemberConditionEl>;
+impl terrars::ToListMappable for BillingAccountIamMember_Condition {
+    type O = terrars::BlockAssignable<BillingAccountIamMember_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -331,16 +338,16 @@ impl terrars::ToListMappable for BillingAccountIamMemberConditionEl {
     }
 }
 
-pub struct BuildBillingAccountIamMemberConditionEl {
+pub struct BuildBillingAccountIamMember_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBillingAccountIamMemberConditionEl {
-    pub fn build(self) -> BillingAccountIamMemberConditionEl {
-        BillingAccountIamMemberConditionEl {
+impl BuildBillingAccountIamMember_Condition {
+    pub fn build(self) -> BillingAccountIamMember_Condition {
+        BillingAccountIamMember_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -348,21 +355,23 @@ impl BuildBillingAccountIamMemberConditionEl {
     }
 }
 
-pub struct BillingAccountIamMemberConditionElRef {
+#[allow(dead_code)]
+pub struct BillingAccountIamMember_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BillingAccountIamMemberConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BillingAccountIamMemberConditionElRef {
-        BillingAccountIamMemberConditionElRef {
+impl terrars::Ref for BillingAccountIamMember_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BillingAccountIamMember_ConditionRef {
+        BillingAccountIamMember_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BillingAccountIamMemberConditionElRef {
+impl BillingAccountIamMember_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -381,9 +390,4 @@ impl BillingAccountIamMemberConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct BillingAccountIamMemberDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<BillingAccountIamMemberConditionEl>>,
 }

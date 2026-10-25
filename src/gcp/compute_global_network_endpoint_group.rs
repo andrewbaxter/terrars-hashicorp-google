@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeGlobalNetworkEndpointGroupData {
+struct ComputeGlobalNetworkEndpointGroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,6 +23,8 @@ struct ComputeGlobalNetworkEndpointGroupData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     default_port: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -29,13 +33,13 @@ struct ComputeGlobalNetworkEndpointGroupData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComputeGlobalNetworkEndpointGroupTimeoutsEl>,
+    timeouts: std::option::Option<ComputeGlobalNetworkEndpointGroup_Timeouts>,
 }
 
 struct ComputeGlobalNetworkEndpointGroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeGlobalNetworkEndpointGroupData>,
+    data: std::cell::RefCell<ComputeGlobalNetworkEndpointGroupData_>,
 }
 
 #[derive(Clone)]
@@ -143,6 +147,13 @@ impl ComputeGlobalNetworkEndpointGroup {
     }
 
     #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `description`.\nAn optional description of this resource. Provide this property when\nyou create the resource."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -162,7 +173,7 @@ impl ComputeGlobalNetworkEndpointGroup {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeGlobalNetworkEndpointGroupTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeGlobalNetworkEndpointGroup_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -171,6 +182,12 @@ impl ComputeGlobalNetworkEndpointGroup {
         "Get a reference to the value of field `default_port` after provisioning.\nThe default port used if the port number is not specified in the\nnetwork endpoint."]
     pub fn default_port(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.default_port", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -207,8 +224,8 @@ impl ComputeGlobalNetworkEndpointGroup {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeGlobalNetworkEndpointGroupTimeoutsElRef {
-        ComputeGlobalNetworkEndpointGroupTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ComputeGlobalNetworkEndpointGroup_TimeoutsRef {
+        ComputeGlobalNetworkEndpointGroup_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -261,13 +278,14 @@ impl BuildComputeGlobalNetworkEndpointGroup {
         let out = ComputeGlobalNetworkEndpointGroup(std::rc::Rc::new(ComputeGlobalNetworkEndpointGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeGlobalNetworkEndpointGroupData {
+            data: std::cell::RefCell::new(ComputeGlobalNetworkEndpointGroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 default_port: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
@@ -311,6 +329,12 @@ impl ComputeGlobalNetworkEndpointGroupRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nAn optional description of this resource. Provide this property when\nyou create the resource."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -344,8 +368,8 @@ impl ComputeGlobalNetworkEndpointGroupRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeGlobalNetworkEndpointGroupTimeoutsElRef {
-        ComputeGlobalNetworkEndpointGroupTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ComputeGlobalNetworkEndpointGroup_TimeoutsRef {
+        ComputeGlobalNetworkEndpointGroup_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -353,14 +377,14 @@ impl ComputeGlobalNetworkEndpointGroupRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeGlobalNetworkEndpointGroupTimeoutsEl {
+pub struct ComputeGlobalNetworkEndpointGroup_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeGlobalNetworkEndpointGroupTimeoutsEl {
+impl ComputeGlobalNetworkEndpointGroup_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -374,8 +398,8 @@ impl ComputeGlobalNetworkEndpointGroupTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeGlobalNetworkEndpointGroupTimeoutsEl {
-    type O = terrars::BlockAssignable<ComputeGlobalNetworkEndpointGroupTimeoutsEl>;
+impl terrars::ToListMappable for ComputeGlobalNetworkEndpointGroup_Timeouts {
+    type O = terrars::BlockAssignable<ComputeGlobalNetworkEndpointGroup_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -386,35 +410,34 @@ impl terrars::ToListMappable for ComputeGlobalNetworkEndpointGroupTimeoutsEl {
     }
 }
 
-pub struct BuildComputeGlobalNetworkEndpointGroupTimeoutsEl {}
+pub struct BuildComputeGlobalNetworkEndpointGroup_Timeouts {}
 
-impl BuildComputeGlobalNetworkEndpointGroupTimeoutsEl {
-    pub fn build(self) -> ComputeGlobalNetworkEndpointGroupTimeoutsEl {
-        ComputeGlobalNetworkEndpointGroupTimeoutsEl {
+impl BuildComputeGlobalNetworkEndpointGroup_Timeouts {
+    pub fn build(self) -> ComputeGlobalNetworkEndpointGroup_Timeouts {
+        ComputeGlobalNetworkEndpointGroup_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeGlobalNetworkEndpointGroupTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComputeGlobalNetworkEndpointGroup_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeGlobalNetworkEndpointGroupTimeoutsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ComputeGlobalNetworkEndpointGroupTimeoutsElRef {
-        ComputeGlobalNetworkEndpointGroupTimeoutsElRef {
+impl terrars::Ref for ComputeGlobalNetworkEndpointGroup_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeGlobalNetworkEndpointGroup_TimeoutsRef {
+        ComputeGlobalNetworkEndpointGroup_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeGlobalNetworkEndpointGroupTimeoutsElRef {
+impl ComputeGlobalNetworkEndpointGroup_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

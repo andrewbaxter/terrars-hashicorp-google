@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataComputeGlobalForwardingRuleData {
+struct DataComputeGlobalForwardingRuleData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -26,7 +28,7 @@ struct DataComputeGlobalForwardingRuleData {
 struct DataComputeGlobalForwardingRule_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataComputeGlobalForwardingRuleData>,
+    data: std::cell::RefCell<DataComputeGlobalForwardingRuleData_>,
 }
 
 #[derive(Clone)]
@@ -90,6 +92,12 @@ impl DataComputeGlobalForwardingRule {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nAn optional description of this resource. Provide this property when\nyou create the resource."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -101,13 +109,37 @@ impl DataComputeGlobalForwardingRule {
         terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `external_managed_backend_bucket_migration_state` after provisioning.\nSpecifies the canary migration state for the backend buckets attached to this forwarding rule.\nPossible values are PREPARE, TEST_BY_PERCENTAGE, and TEST_ALL_TRAFFIC.\n\nTo begin the migration from EXTERNAL to EXTERNAL_MANAGED, the state must be changed to\nPREPARE. The state must be changed to TEST_ALL_TRAFFIC before the loadBalancingScheme can be\nchanged to EXTERNAL_MANAGED. Optionally, the TEST_BY_PERCENTAGE state can be used to migrate\ntraffic to backend buckets attached to this forwarding rule by percentage using\nexternalManagedBackendBucketMigrationTestingPercentage.\n\nRolling back a migration requires the states to be set in reverse order. So changing the\nscheme from EXTERNAL_MANAGED to EXTERNAL requires the state to be set to TEST_ALL_TRAFFIC at\nthe same time. Optionally, the TEST_BY_PERCENTAGE state can be used to migrate some traffic\nback to EXTERNAL or PREPARE can be used to migrate all traffic back to EXTERNAL. Possible values: [\"PREPARE\", \"TEST_BY_PERCENTAGE\", \"TEST_ALL_TRAFFIC\"]"]
+    pub fn external_managed_backend_bucket_migration_state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.external_managed_backend_bucket_migration_state", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `external_managed_backend_bucket_migration_testing_percentage` after provisioning.\nDetermines the fraction of requests to backend buckets that should be processed by the Global\nexternal Application Load Balancer.\n\nThe value of this field must be in the range [0, 100].\n\nThis value can only be set if the loadBalancingScheme in the forwarding rule is set to\nEXTERNAL (when using the Classic ALB) and the migration state is TEST_BY_PERCENTAGE."]
+    pub fn external_managed_backend_bucket_migration_testing_percentage(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.external_managed_backend_bucket_migration_testing_percentage", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `forwarding_rule_id` after provisioning.\nThe unique identifier number for the resource. This identifier is defined by the server."]
+    pub fn forwarding_rule_id(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.forwarding_rule_id", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `ip_address` after provisioning.\nIP address for which this forwarding rule accepts traffic. When a client\nsends traffic to this IP address, the forwarding rule directs the traffic\nto the referenced 'target'.\n\nWhile creating a forwarding rule, specifying an 'IPAddress' is\nrequired under the following circumstances:\n\n* When the 'target' is set to 'targetGrpcProxy' and\n'validateForProxyless' is set to 'true', the\n'IPAddress' should be set to '0.0.0.0'.\n* When the 'target' is a Private Service Connect Google APIs\nbundle, you must specify an 'IPAddress'.\n\n\nOtherwise, you can optionally specify an IP address that references an\nexisting static (reserved) IP address resource. When omitted, Google Cloud\nassigns an ephemeral IP address.\n\nUse one of the following formats to specify an IP address while creating a\nforwarding rule:\n\n* IP address number, as in '100.1.2.3'\n* IPv6 address range, as in '2600:1234::/96'\n* Full resource URL, as in\n'https://www.googleapis.com/compute/v1/projects/project_id/regions/region/addresses/address-name'\n* Partial URL or by name, as in:\n  * 'projects/project_id/regions/region/addresses/address-name'\n  * 'regions/region/addresses/address-name'\n  * 'global/addresses/address-name'\n  * 'address-name'\n\n\nThe forwarding rule's 'target',\nand in most cases, also the 'loadBalancingScheme', determine the\ntype of IP address that you can use. For detailed information, see\n[IP address\nspecifications](https://cloud.google.com/load-balancing/docs/forwarding-rule-concepts#ip_address_specifications).\n\nWhen reading an 'IPAddress', the API always returns the IP\naddress number."]
+        "Get a reference to the value of field `ip_address` after provisioning.\nIP address for which this forwarding rule accepts traffic. When a client\nsends traffic to this IP address, the forwarding rule directs the traffic\nto the referenced 'target'.\n\nWhile creating a forwarding rule, specifying an 'IPAddress' is\nrequired under the following circumstances:\n\n* When the 'target' is set to 'targetGrpcProxy' and\n'validateForProxyless' is set to 'true', the\n'IPAddress' should be set to '0.0.0.0'.\n* When the 'target' is a Private Service Connect Google APIs\nbundle, you must specify an 'IPAddress'.\n\nOtherwise, you can optionally specify an IP address that references an\nexisting static (reserved) IP address resource. When omitted, Google Cloud\nassigns an ephemeral IP address.\n\nUse one of the following formats to specify an IP address while creating a\nforwarding rule:\n\n* IP address number, as in '100.1.2.3'\n* IPv6 address range, as in '2600:1234::/96'\n* Full resource URL, as in\n'https://www.googleapis.com/compute/v1/projects/project_id/regions/region/addresses/address-name'\n* Partial URL or by name, as in:\n  * 'projects/project_id/regions/region/addresses/address-name'\n  * 'regions/region/addresses/address-name'\n  * 'global/addresses/address-name'\n  * 'address-name'\n\nThe forwarding rule's 'target',\nand in most cases, also the 'loadBalancingScheme', determine the\ntype of IP address that you can use. For detailed information, see\n[IP address\nspecifications](https://cloud.google.com/load-balancing/docs/forwarding-rule-concepts#ip_address_specifications).\n\nWhen reading an 'IPAddress', the API always returns the IP\naddress number."]
     pub fn ip_address(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_address", self.extract_ref()))
     }
@@ -137,14 +169,14 @@ impl DataComputeGlobalForwardingRule {
     }
 
     #[doc =
-        "Get a reference to the value of field `load_balancing_scheme` after provisioning.\nSpecifies the forwarding rule type.\n\nFor more information about forwarding rules, refer to\n[Forwarding rule concepts](https://cloud.google.com/load-balancing/docs/forwarding-rule-concepts). Default value: \"EXTERNAL\" Possible values: [\"EXTERNAL\", \"EXTERNAL_MANAGED\", \"INTERNAL_MANAGED\", \"INTERNAL_SELF_MANAGED\"]"]
+        "Get a reference to the value of field `load_balancing_scheme` after provisioning.\nSpecifies the forwarding rule type.\n\nFor more information about forwarding rules, refer to\n[Forwarding rule concepts](https://cloud.google.com/load-balancing/docs/forwarding-rule-concepts). Default value: \"EXTERNAL_MANAGED\" Possible values: [\"EXTERNAL\", \"EXTERNAL_MANAGED\", \"INTERNAL_MANAGED\", \"INTERNAL_SELF_MANAGED\"]"]
     pub fn load_balancing_scheme(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.load_balancing_scheme", self.extract_ref()))
     }
 
     #[doc =
         "Get a reference to the value of field `metadata_filters` after provisioning.\nOpaque filter criteria used by Loadbalancer to restrict routing\nconfiguration to a limited set xDS compliant clients. In their xDS\nrequests to Loadbalancer, xDS clients present node metadata. If a\nmatch takes place, the relevant routing configuration is made available\nto those proxies.\n\nFor each metadataFilter in this list, if its filterMatchCriteria is set\nto MATCH_ANY, at least one of the filterLabels must match the\ncorresponding label provided in the metadata. If its filterMatchCriteria\nis set to MATCH_ALL, then all of its filterLabels must match with\ncorresponding labels in the provided metadata.\n\nmetadataFilters specified here can be overridden by those specified in\nthe UrlMap that this ForwardingRule references.\n\nmetadataFilters only applies to Loadbalancers that have their\nloadBalancingScheme set to INTERNAL_SELF_MANAGED."]
-    pub fn metadata_filters(&self) -> terrars::ListRef<DataComputeGlobalForwardingRuleMetadataFiltersElRef> {
+    pub fn metadata_filters(&self) -> terrars::ListRef<DataComputeGlobalForwardingRule_MetadataFiltersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.metadata_filters", self.extract_ref()))
     }
 
@@ -158,6 +190,12 @@ impl DataComputeGlobalForwardingRule {
         "Get a reference to the value of field `network` after provisioning.\nThis field is not used for external load balancing.\n\nFor Internal TCP/UDP Load Balancing, this field identifies the network that\nthe load balanced IP should belong to for this Forwarding Rule.\nIf the subnetwork is specified, the network of the subnetwork will be used.\nIf neither subnetwork nor this field is specified, the default network will\nbe used.\n\nFor Private Service Connect forwarding rules that forward traffic to Google\nAPIs, a network must be provided."]
     pub fn network(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.network", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `network_tier` after provisioning.\nThis signifies the networking tier used for configuring\nthis load balancer and can only take the following values:\n'PREMIUM', 'STANDARD'.\n\nFor regional ForwardingRule, the valid values are 'PREMIUM' and\n'STANDARD'. For GlobalForwardingRule, the valid value is\n'PREMIUM'.\n\nIf this field is not specified, it is assumed to be 'PREMIUM'.\nIf 'IPAddress' is specified, this value must be equal to the\nnetworkTier of the Address. Possible values: [\"PREMIUM\", \"STANDARD\"]"]
+    pub fn network_tier(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_tier", self.extract_ref()))
     }
 
     #[doc =
@@ -198,7 +236,7 @@ impl DataComputeGlobalForwardingRule {
         "Get a reference to the value of field `service_directory_registrations` after provisioning.\nService Directory resources to register this forwarding rule with.\n\nCurrently, only supports a single Service Directory resource."]
     pub fn service_directory_registrations(
         &self,
-    ) -> terrars::ListRef<DataComputeGlobalForwardingRuleServiceDirectoryRegistrationsElRef> {
+    ) -> terrars::ListRef<DataComputeGlobalForwardingRule_ServiceDirectoryRegistrationsRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.service_directory_registrations", self.extract_ref()),
@@ -218,7 +256,7 @@ impl DataComputeGlobalForwardingRule {
     }
 
     #[doc =
-        "Get a reference to the value of field `target` after provisioning.\nThe URL of the target resource to receive the matched traffic.  For\nregional forwarding rules, this target must be in the same region as the\nforwarding rule. For global forwarding rules, this target must be a global\nload balancing resource.\n\nThe forwarded traffic must be of a type appropriate to the target object.\n*  For load balancers, see the \"Target\" column in [Port specifications](https://cloud.google.com/load-balancing/docs/forwarding-rule-concepts#ip_address_specifications).\n*  For Private Service Connect forwarding rules that forward traffic to Google APIs, provide the name of a supported Google API bundle:\n  *  'vpc-sc' - [ APIs that support VPC Service Controls](https://cloud.google.com/vpc-service-controls/docs/supported-products).\n  *  'all-apis' - [All supported Google APIs](https://cloud.google.com/vpc/docs/private-service-connect#supported-apis).\n\n\nFor Private Service Connect forwarding rules that forward traffic to managed services, the target must be a service attachment."]
+        "Get a reference to the value of field `target` after provisioning.\nThe URL of the target resource to receive the matched traffic.  For\nregional forwarding rules, this target must be in the same region as the\nforwarding rule. For global forwarding rules, this target must be a global\nload balancing resource.\n\nThe forwarded traffic must be of a type appropriate to the target object.\n*  For load balancers, see the \"Target\" column in [Port specifications](https://cloud.google.com/load-balancing/docs/forwarding-rule-concepts#ip_address_specifications).\n*  For Private Service Connect forwarding rules that forward traffic to Google APIs, provide the name of a supported Google API bundle:\n  *  'vpc-sc' - [ APIs that support VPC Service Controls](https://cloud.google.com/vpc-service-controls/docs/supported-products).\n  *  'all-apis' - [All supported Google APIs](https://cloud.google.com/vpc/docs/private-service-connect#supported-apis).\n\nFor Private Service Connect forwarding rules that forward traffic to managed services, the target must be a service attachment."]
     pub fn target(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.target", self.extract_ref()))
     }
@@ -273,7 +311,7 @@ impl BuildDataComputeGlobalForwardingRule {
         let out = DataComputeGlobalForwardingRule(std::rc::Rc::new(DataComputeGlobalForwardingRule_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataComputeGlobalForwardingRuleData {
+            data: std::cell::RefCell::new(DataComputeGlobalForwardingRuleData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -318,6 +356,12 @@ impl DataComputeGlobalForwardingRuleRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nAn optional description of this resource. Provide this property when\nyou create the resource."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -329,13 +373,37 @@ impl DataComputeGlobalForwardingRuleRef {
         terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `external_managed_backend_bucket_migration_state` after provisioning.\nSpecifies the canary migration state for the backend buckets attached to this forwarding rule.\nPossible values are PREPARE, TEST_BY_PERCENTAGE, and TEST_ALL_TRAFFIC.\n\nTo begin the migration from EXTERNAL to EXTERNAL_MANAGED, the state must be changed to\nPREPARE. The state must be changed to TEST_ALL_TRAFFIC before the loadBalancingScheme can be\nchanged to EXTERNAL_MANAGED. Optionally, the TEST_BY_PERCENTAGE state can be used to migrate\ntraffic to backend buckets attached to this forwarding rule by percentage using\nexternalManagedBackendBucketMigrationTestingPercentage.\n\nRolling back a migration requires the states to be set in reverse order. So changing the\nscheme from EXTERNAL_MANAGED to EXTERNAL requires the state to be set to TEST_ALL_TRAFFIC at\nthe same time. Optionally, the TEST_BY_PERCENTAGE state can be used to migrate some traffic\nback to EXTERNAL or PREPARE can be used to migrate all traffic back to EXTERNAL. Possible values: [\"PREPARE\", \"TEST_BY_PERCENTAGE\", \"TEST_ALL_TRAFFIC\"]"]
+    pub fn external_managed_backend_bucket_migration_state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.external_managed_backend_bucket_migration_state", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `external_managed_backend_bucket_migration_testing_percentage` after provisioning.\nDetermines the fraction of requests to backend buckets that should be processed by the Global\nexternal Application Load Balancer.\n\nThe value of this field must be in the range [0, 100].\n\nThis value can only be set if the loadBalancingScheme in the forwarding rule is set to\nEXTERNAL (when using the Classic ALB) and the migration state is TEST_BY_PERCENTAGE."]
+    pub fn external_managed_backend_bucket_migration_testing_percentage(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.external_managed_backend_bucket_migration_testing_percentage", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `forwarding_rule_id` after provisioning.\nThe unique identifier number for the resource. This identifier is defined by the server."]
+    pub fn forwarding_rule_id(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.forwarding_rule_id", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `ip_address` after provisioning.\nIP address for which this forwarding rule accepts traffic. When a client\nsends traffic to this IP address, the forwarding rule directs the traffic\nto the referenced 'target'.\n\nWhile creating a forwarding rule, specifying an 'IPAddress' is\nrequired under the following circumstances:\n\n* When the 'target' is set to 'targetGrpcProxy' and\n'validateForProxyless' is set to 'true', the\n'IPAddress' should be set to '0.0.0.0'.\n* When the 'target' is a Private Service Connect Google APIs\nbundle, you must specify an 'IPAddress'.\n\n\nOtherwise, you can optionally specify an IP address that references an\nexisting static (reserved) IP address resource. When omitted, Google Cloud\nassigns an ephemeral IP address.\n\nUse one of the following formats to specify an IP address while creating a\nforwarding rule:\n\n* IP address number, as in '100.1.2.3'\n* IPv6 address range, as in '2600:1234::/96'\n* Full resource URL, as in\n'https://www.googleapis.com/compute/v1/projects/project_id/regions/region/addresses/address-name'\n* Partial URL or by name, as in:\n  * 'projects/project_id/regions/region/addresses/address-name'\n  * 'regions/region/addresses/address-name'\n  * 'global/addresses/address-name'\n  * 'address-name'\n\n\nThe forwarding rule's 'target',\nand in most cases, also the 'loadBalancingScheme', determine the\ntype of IP address that you can use. For detailed information, see\n[IP address\nspecifications](https://cloud.google.com/load-balancing/docs/forwarding-rule-concepts#ip_address_specifications).\n\nWhen reading an 'IPAddress', the API always returns the IP\naddress number."]
+        "Get a reference to the value of field `ip_address` after provisioning.\nIP address for which this forwarding rule accepts traffic. When a client\nsends traffic to this IP address, the forwarding rule directs the traffic\nto the referenced 'target'.\n\nWhile creating a forwarding rule, specifying an 'IPAddress' is\nrequired under the following circumstances:\n\n* When the 'target' is set to 'targetGrpcProxy' and\n'validateForProxyless' is set to 'true', the\n'IPAddress' should be set to '0.0.0.0'.\n* When the 'target' is a Private Service Connect Google APIs\nbundle, you must specify an 'IPAddress'.\n\nOtherwise, you can optionally specify an IP address that references an\nexisting static (reserved) IP address resource. When omitted, Google Cloud\nassigns an ephemeral IP address.\n\nUse one of the following formats to specify an IP address while creating a\nforwarding rule:\n\n* IP address number, as in '100.1.2.3'\n* IPv6 address range, as in '2600:1234::/96'\n* Full resource URL, as in\n'https://www.googleapis.com/compute/v1/projects/project_id/regions/region/addresses/address-name'\n* Partial URL or by name, as in:\n  * 'projects/project_id/regions/region/addresses/address-name'\n  * 'regions/region/addresses/address-name'\n  * 'global/addresses/address-name'\n  * 'address-name'\n\nThe forwarding rule's 'target',\nand in most cases, also the 'loadBalancingScheme', determine the\ntype of IP address that you can use. For detailed information, see\n[IP address\nspecifications](https://cloud.google.com/load-balancing/docs/forwarding-rule-concepts#ip_address_specifications).\n\nWhen reading an 'IPAddress', the API always returns the IP\naddress number."]
     pub fn ip_address(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_address", self.extract_ref()))
     }
@@ -365,14 +433,14 @@ impl DataComputeGlobalForwardingRuleRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `load_balancing_scheme` after provisioning.\nSpecifies the forwarding rule type.\n\nFor more information about forwarding rules, refer to\n[Forwarding rule concepts](https://cloud.google.com/load-balancing/docs/forwarding-rule-concepts). Default value: \"EXTERNAL\" Possible values: [\"EXTERNAL\", \"EXTERNAL_MANAGED\", \"INTERNAL_MANAGED\", \"INTERNAL_SELF_MANAGED\"]"]
+        "Get a reference to the value of field `load_balancing_scheme` after provisioning.\nSpecifies the forwarding rule type.\n\nFor more information about forwarding rules, refer to\n[Forwarding rule concepts](https://cloud.google.com/load-balancing/docs/forwarding-rule-concepts). Default value: \"EXTERNAL_MANAGED\" Possible values: [\"EXTERNAL\", \"EXTERNAL_MANAGED\", \"INTERNAL_MANAGED\", \"INTERNAL_SELF_MANAGED\"]"]
     pub fn load_balancing_scheme(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.load_balancing_scheme", self.extract_ref()))
     }
 
     #[doc =
         "Get a reference to the value of field `metadata_filters` after provisioning.\nOpaque filter criteria used by Loadbalancer to restrict routing\nconfiguration to a limited set xDS compliant clients. In their xDS\nrequests to Loadbalancer, xDS clients present node metadata. If a\nmatch takes place, the relevant routing configuration is made available\nto those proxies.\n\nFor each metadataFilter in this list, if its filterMatchCriteria is set\nto MATCH_ANY, at least one of the filterLabels must match the\ncorresponding label provided in the metadata. If its filterMatchCriteria\nis set to MATCH_ALL, then all of its filterLabels must match with\ncorresponding labels in the provided metadata.\n\nmetadataFilters specified here can be overridden by those specified in\nthe UrlMap that this ForwardingRule references.\n\nmetadataFilters only applies to Loadbalancers that have their\nloadBalancingScheme set to INTERNAL_SELF_MANAGED."]
-    pub fn metadata_filters(&self) -> terrars::ListRef<DataComputeGlobalForwardingRuleMetadataFiltersElRef> {
+    pub fn metadata_filters(&self) -> terrars::ListRef<DataComputeGlobalForwardingRule_MetadataFiltersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.metadata_filters", self.extract_ref()))
     }
 
@@ -386,6 +454,12 @@ impl DataComputeGlobalForwardingRuleRef {
         "Get a reference to the value of field `network` after provisioning.\nThis field is not used for external load balancing.\n\nFor Internal TCP/UDP Load Balancing, this field identifies the network that\nthe load balanced IP should belong to for this Forwarding Rule.\nIf the subnetwork is specified, the network of the subnetwork will be used.\nIf neither subnetwork nor this field is specified, the default network will\nbe used.\n\nFor Private Service Connect forwarding rules that forward traffic to Google\nAPIs, a network must be provided."]
     pub fn network(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.network", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `network_tier` after provisioning.\nThis signifies the networking tier used for configuring\nthis load balancer and can only take the following values:\n'PREMIUM', 'STANDARD'.\n\nFor regional ForwardingRule, the valid values are 'PREMIUM' and\n'STANDARD'. For GlobalForwardingRule, the valid value is\n'PREMIUM'.\n\nIf this field is not specified, it is assumed to be 'PREMIUM'.\nIf 'IPAddress' is specified, this value must be equal to the\nnetworkTier of the Address. Possible values: [\"PREMIUM\", \"STANDARD\"]"]
+    pub fn network_tier(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_tier", self.extract_ref()))
     }
 
     #[doc =
@@ -426,7 +500,7 @@ impl DataComputeGlobalForwardingRuleRef {
         "Get a reference to the value of field `service_directory_registrations` after provisioning.\nService Directory resources to register this forwarding rule with.\n\nCurrently, only supports a single Service Directory resource."]
     pub fn service_directory_registrations(
         &self,
-    ) -> terrars::ListRef<DataComputeGlobalForwardingRuleServiceDirectoryRegistrationsElRef> {
+    ) -> terrars::ListRef<DataComputeGlobalForwardingRule_ServiceDirectoryRegistrationsRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.service_directory_registrations", self.extract_ref()),
@@ -446,7 +520,7 @@ impl DataComputeGlobalForwardingRuleRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `target` after provisioning.\nThe URL of the target resource to receive the matched traffic.  For\nregional forwarding rules, this target must be in the same region as the\nforwarding rule. For global forwarding rules, this target must be a global\nload balancing resource.\n\nThe forwarded traffic must be of a type appropriate to the target object.\n*  For load balancers, see the \"Target\" column in [Port specifications](https://cloud.google.com/load-balancing/docs/forwarding-rule-concepts#ip_address_specifications).\n*  For Private Service Connect forwarding rules that forward traffic to Google APIs, provide the name of a supported Google API bundle:\n  *  'vpc-sc' - [ APIs that support VPC Service Controls](https://cloud.google.com/vpc-service-controls/docs/supported-products).\n  *  'all-apis' - [All supported Google APIs](https://cloud.google.com/vpc/docs/private-service-connect#supported-apis).\n\n\nFor Private Service Connect forwarding rules that forward traffic to managed services, the target must be a service attachment."]
+        "Get a reference to the value of field `target` after provisioning.\nThe URL of the target resource to receive the matched traffic.  For\nregional forwarding rules, this target must be in the same region as the\nforwarding rule. For global forwarding rules, this target must be a global\nload balancing resource.\n\nThe forwarded traffic must be of a type appropriate to the target object.\n*  For load balancers, see the \"Target\" column in [Port specifications](https://cloud.google.com/load-balancing/docs/forwarding-rule-concepts#ip_address_specifications).\n*  For Private Service Connect forwarding rules that forward traffic to Google APIs, provide the name of a supported Google API bundle:\n  *  'vpc-sc' - [ APIs that support VPC Service Controls](https://cloud.google.com/vpc-service-controls/docs/supported-products).\n  *  'all-apis' - [All supported Google APIs](https://cloud.google.com/vpc/docs/private-service-connect#supported-apis).\n\nFor Private Service Connect forwarding rules that forward traffic to managed services, the target must be a service attachment."]
     pub fn target(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.target", self.extract_ref()))
     }
@@ -459,14 +533,14 @@ impl DataComputeGlobalForwardingRuleRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComputeGlobalForwardingRuleMetadataFiltersElFilterLabelsEl {
+pub struct DataComputeGlobalForwardingRule_MetadataFilters_FilterLabels {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataComputeGlobalForwardingRuleMetadataFiltersElFilterLabelsEl {
+impl DataComputeGlobalForwardingRule_MetadataFilters_FilterLabels {
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
@@ -480,8 +554,8 @@ impl DataComputeGlobalForwardingRuleMetadataFiltersElFilterLabelsEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeGlobalForwardingRuleMetadataFiltersElFilterLabelsEl {
-    type O = terrars::BlockAssignable<DataComputeGlobalForwardingRuleMetadataFiltersElFilterLabelsEl>;
+impl terrars::ToListMappable for DataComputeGlobalForwardingRule_MetadataFilters_FilterLabels {
+    type O = terrars::BlockAssignable<DataComputeGlobalForwardingRule_MetadataFilters_FilterLabels>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -492,35 +566,37 @@ impl terrars::ToListMappable for DataComputeGlobalForwardingRuleMetadataFiltersE
     }
 }
 
-pub struct BuildDataComputeGlobalForwardingRuleMetadataFiltersElFilterLabelsEl {}
+pub struct BuildDataComputeGlobalForwardingRule_MetadataFilters_FilterLabels {}
 
-impl BuildDataComputeGlobalForwardingRuleMetadataFiltersElFilterLabelsEl {
-    pub fn build(self) -> DataComputeGlobalForwardingRuleMetadataFiltersElFilterLabelsEl {
-        DataComputeGlobalForwardingRuleMetadataFiltersElFilterLabelsEl {
+impl BuildDataComputeGlobalForwardingRule_MetadataFilters_FilterLabels {
+    pub fn build(self) -> DataComputeGlobalForwardingRule_MetadataFilters_FilterLabels {
+        DataComputeGlobalForwardingRule_MetadataFilters_FilterLabels {
             name: core::default::Default::default(),
             value: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataComputeGlobalForwardingRuleMetadataFiltersElFilterLabelsElRef {
+#[allow(dead_code)]
+pub struct DataComputeGlobalForwardingRule_MetadataFilters_FilterLabelsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeGlobalForwardingRuleMetadataFiltersElFilterLabelsElRef {
+impl terrars::Ref for DataComputeGlobalForwardingRule_MetadataFilters_FilterLabelsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComputeGlobalForwardingRuleMetadataFiltersElFilterLabelsElRef {
-        DataComputeGlobalForwardingRuleMetadataFiltersElFilterLabelsElRef {
+    ) -> DataComputeGlobalForwardingRule_MetadataFilters_FilterLabelsRef {
+        DataComputeGlobalForwardingRule_MetadataFilters_FilterLabelsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeGlobalForwardingRuleMetadataFiltersElFilterLabelsElRef {
+impl DataComputeGlobalForwardingRule_MetadataFilters_FilterLabelsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -537,25 +613,18 @@ impl DataComputeGlobalForwardingRuleMetadataFiltersElFilterLabelsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComputeGlobalForwardingRuleMetadataFiltersEl {
+pub struct DataComputeGlobalForwardingRule_MetadataFilters {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter_labels: std
-    ::option
-    ::Option<terrars::ListField<DataComputeGlobalForwardingRuleMetadataFiltersElFilterLabelsEl>>,
+    filter_labels: std::option::Option<terrars::ListField<DataComputeGlobalForwardingRule_MetadataFilters_FilterLabels>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     filter_match_criteria: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataComputeGlobalForwardingRuleMetadataFiltersEl {
+impl DataComputeGlobalForwardingRule_MetadataFilters {
     #[doc = "Set the field `filter_labels`.\n"]
     pub fn set_filter_labels(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::ListField<DataComputeGlobalForwardingRuleMetadataFiltersElFilterLabelsEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataComputeGlobalForwardingRule_MetadataFilters_FilterLabels>>,
     ) -> Self {
         self.filter_labels = std::option::Option::Some(v.into());
         self
@@ -571,8 +640,8 @@ impl DataComputeGlobalForwardingRuleMetadataFiltersEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeGlobalForwardingRuleMetadataFiltersEl {
-    type O = terrars::BlockAssignable<DataComputeGlobalForwardingRuleMetadataFiltersEl>;
+impl terrars::ToListMappable for DataComputeGlobalForwardingRule_MetadataFilters {
+    type O = terrars::BlockAssignable<DataComputeGlobalForwardingRule_MetadataFilters>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -583,41 +652,43 @@ impl terrars::ToListMappable for DataComputeGlobalForwardingRuleMetadataFiltersE
     }
 }
 
-pub struct BuildDataComputeGlobalForwardingRuleMetadataFiltersEl {}
+pub struct BuildDataComputeGlobalForwardingRule_MetadataFilters {}
 
-impl BuildDataComputeGlobalForwardingRuleMetadataFiltersEl {
-    pub fn build(self) -> DataComputeGlobalForwardingRuleMetadataFiltersEl {
-        DataComputeGlobalForwardingRuleMetadataFiltersEl {
+impl BuildDataComputeGlobalForwardingRule_MetadataFilters {
+    pub fn build(self) -> DataComputeGlobalForwardingRule_MetadataFilters {
+        DataComputeGlobalForwardingRule_MetadataFilters {
             filter_labels: core::default::Default::default(),
             filter_match_criteria: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataComputeGlobalForwardingRuleMetadataFiltersElRef {
+#[allow(dead_code)]
+pub struct DataComputeGlobalForwardingRule_MetadataFiltersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeGlobalForwardingRuleMetadataFiltersElRef {
+impl terrars::Ref for DataComputeGlobalForwardingRule_MetadataFiltersRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComputeGlobalForwardingRuleMetadataFiltersElRef {
-        DataComputeGlobalForwardingRuleMetadataFiltersElRef {
+    ) -> DataComputeGlobalForwardingRule_MetadataFiltersRef {
+        DataComputeGlobalForwardingRule_MetadataFiltersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeGlobalForwardingRuleMetadataFiltersElRef {
+impl DataComputeGlobalForwardingRule_MetadataFiltersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `filter_labels` after provisioning.\n"]
-    pub fn filter_labels(&self) -> terrars::ListRef<DataComputeGlobalForwardingRuleMetadataFiltersElFilterLabelsElRef> {
+    pub fn filter_labels(&self) -> terrars::ListRef<DataComputeGlobalForwardingRule_MetadataFilters_FilterLabelsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.filter_labels", self.base))
     }
 
@@ -628,14 +699,14 @@ impl DataComputeGlobalForwardingRuleMetadataFiltersElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComputeGlobalForwardingRuleServiceDirectoryRegistrationsEl {
+pub struct DataComputeGlobalForwardingRule_ServiceDirectoryRegistrations {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     namespace: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     service_directory_region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataComputeGlobalForwardingRuleServiceDirectoryRegistrationsEl {
+impl DataComputeGlobalForwardingRule_ServiceDirectoryRegistrations {
     #[doc = "Set the field `namespace`.\n"]
     pub fn set_namespace(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.namespace = std::option::Option::Some(v.into());
@@ -652,8 +723,8 @@ impl DataComputeGlobalForwardingRuleServiceDirectoryRegistrationsEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeGlobalForwardingRuleServiceDirectoryRegistrationsEl {
-    type O = terrars::BlockAssignable<DataComputeGlobalForwardingRuleServiceDirectoryRegistrationsEl>;
+impl terrars::ToListMappable for DataComputeGlobalForwardingRule_ServiceDirectoryRegistrations {
+    type O = terrars::BlockAssignable<DataComputeGlobalForwardingRule_ServiceDirectoryRegistrations>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -664,35 +735,37 @@ impl terrars::ToListMappable for DataComputeGlobalForwardingRuleServiceDirectory
     }
 }
 
-pub struct BuildDataComputeGlobalForwardingRuleServiceDirectoryRegistrationsEl {}
+pub struct BuildDataComputeGlobalForwardingRule_ServiceDirectoryRegistrations {}
 
-impl BuildDataComputeGlobalForwardingRuleServiceDirectoryRegistrationsEl {
-    pub fn build(self) -> DataComputeGlobalForwardingRuleServiceDirectoryRegistrationsEl {
-        DataComputeGlobalForwardingRuleServiceDirectoryRegistrationsEl {
+impl BuildDataComputeGlobalForwardingRule_ServiceDirectoryRegistrations {
+    pub fn build(self) -> DataComputeGlobalForwardingRule_ServiceDirectoryRegistrations {
+        DataComputeGlobalForwardingRule_ServiceDirectoryRegistrations {
             namespace: core::default::Default::default(),
             service_directory_region: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataComputeGlobalForwardingRuleServiceDirectoryRegistrationsElRef {
+#[allow(dead_code)]
+pub struct DataComputeGlobalForwardingRule_ServiceDirectoryRegistrationsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeGlobalForwardingRuleServiceDirectoryRegistrationsElRef {
+impl terrars::Ref for DataComputeGlobalForwardingRule_ServiceDirectoryRegistrationsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataComputeGlobalForwardingRuleServiceDirectoryRegistrationsElRef {
-        DataComputeGlobalForwardingRuleServiceDirectoryRegistrationsElRef {
+    ) -> DataComputeGlobalForwardingRule_ServiceDirectoryRegistrationsRef {
+        DataComputeGlobalForwardingRule_ServiceDirectoryRegistrationsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeGlobalForwardingRuleServiceDirectoryRegistrationsElRef {
+impl DataComputeGlobalForwardingRule_ServiceDirectoryRegistrationsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct CertificateManagerTrustConfigData {
+struct CertificateManagerTrustConfigData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct CertificateManagerTrustConfigData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -29,16 +33,18 @@ struct CertificateManagerTrustConfigData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<CertificateManagerTrustConfigTimeoutsEl>,
+    allowlisted_certificates: std::option::Option<std::vec::Vec<CertificateManagerTrustConfig_AllowlistedCertificates>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    trust_stores: std::option::Option<std::vec::Vec<CertificateManagerTrustConfigTrustStoresEl>>,
+    timeouts: std::option::Option<CertificateManagerTrustConfig_Timeouts>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    trust_stores: std::option::Option<std::vec::Vec<CertificateManagerTrustConfig_TrustStores>>,
     dynamic: CertificateManagerTrustConfigDynamic,
 }
 
 struct CertificateManagerTrustConfig_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CertificateManagerTrustConfigData>,
+    data: std::cell::RefCell<CertificateManagerTrustConfigData_>,
 }
 
 #[derive(Clone)]
@@ -138,6 +144,13 @@ impl CertificateManagerTrustConfig {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nOne or more paragraphs of text description of a trust config."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -166,8 +179,24 @@ impl CertificateManagerTrustConfig {
         self
     }
 
+    #[doc = "Set the field `allowlisted_certificates`.\n"]
+    pub fn set_allowlisted_certificates(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CertificateManagerTrustConfig_AllowlistedCertificates>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().allowlisted_certificates = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.allowlisted_certificates = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<CertificateManagerTrustConfigTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<CertificateManagerTrustConfig_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -175,7 +204,7 @@ impl CertificateManagerTrustConfig {
     #[doc = "Set the field `trust_stores`.\n"]
     pub fn set_trust_stores(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CertificateManagerTrustConfigTrustStoresEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CertificateManagerTrustConfig_TrustStores>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -192,6 +221,12 @@ impl CertificateManagerTrustConfig {
         "Get a reference to the value of field `create_time` after provisioning.\nThe creation timestamp of a TrustConfig.\n\nA timestamp in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -245,16 +280,21 @@ impl CertificateManagerTrustConfig {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update_time", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `allowlisted_certificates` after provisioning.\n"]
+    pub fn allowlisted_certificates(&self) -> terrars::ListRef<CertificateManagerTrustConfig_AllowlistedCertificatesRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.allowlisted_certificates", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> CertificateManagerTrustConfigTimeoutsElRef {
-        CertificateManagerTrustConfigTimeoutsElRef::new(
+    pub fn timeouts(&self) -> CertificateManagerTrustConfig_TimeoutsRef {
+        CertificateManagerTrustConfig_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 
     #[doc = "Get a reference to the value of field `trust_stores` after provisioning.\n"]
-    pub fn trust_stores(&self) -> terrars::ListRef<CertificateManagerTrustConfigTrustStoresElRef> {
+    pub fn trust_stores(&self) -> terrars::ListRef<CertificateManagerTrustConfig_TrustStoresRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.trust_stores", self.extract_ref()))
     }
 }
@@ -303,18 +343,20 @@ impl BuildCertificateManagerTrustConfig {
         let out = CertificateManagerTrustConfig(std::rc::Rc::new(CertificateManagerTrustConfig_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CertificateManagerTrustConfigData {
+            data: std::cell::RefCell::new(CertificateManagerTrustConfigData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 labels: core::default::Default::default(),
                 location: self.location,
                 name: self.name,
                 project: core::default::Default::default(),
+                allowlisted_certificates: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 trust_stores: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -352,6 +394,12 @@ impl CertificateManagerTrustConfigRef {
         "Get a reference to the value of field `create_time` after provisioning.\nThe creation timestamp of a TrustConfig.\n\nA timestamp in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -405,22 +453,97 @@ impl CertificateManagerTrustConfigRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update_time", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `allowlisted_certificates` after provisioning.\n"]
+    pub fn allowlisted_certificates(&self) -> terrars::ListRef<CertificateManagerTrustConfig_AllowlistedCertificatesRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.allowlisted_certificates", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> CertificateManagerTrustConfigTimeoutsElRef {
-        CertificateManagerTrustConfigTimeoutsElRef::new(
+    pub fn timeouts(&self) -> CertificateManagerTrustConfig_TimeoutsRef {
+        CertificateManagerTrustConfig_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 
     #[doc = "Get a reference to the value of field `trust_stores` after provisioning.\n"]
-    pub fn trust_stores(&self) -> terrars::ListRef<CertificateManagerTrustConfigTrustStoresElRef> {
+    pub fn trust_stores(&self) -> terrars::ListRef<CertificateManagerTrustConfig_TrustStoresRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.trust_stores", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct CertificateManagerTrustConfigDynamic {
+    allowlisted_certificates: std
+    ::option
+    ::Option<terrars::DynamicBlock<CertificateManagerTrustConfig_AllowlistedCertificates>>,
+    trust_stores: std::option::Option<terrars::DynamicBlock<CertificateManagerTrustConfig_TrustStores>>,
+}
+
 #[derive(Serialize)]
-pub struct CertificateManagerTrustConfigTimeoutsEl {
+pub struct CertificateManagerTrustConfig_AllowlistedCertificates {
+    pem_certificate: terrars::PrimField<std::string::String>,
+}
+
+impl CertificateManagerTrustConfig_AllowlistedCertificates { }
+
+impl terrars::ToListMappable for CertificateManagerTrustConfig_AllowlistedCertificates {
+    type O = terrars::BlockAssignable<CertificateManagerTrustConfig_AllowlistedCertificates>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCertificateManagerTrustConfig_AllowlistedCertificates {
+    #[doc =
+        "PEM certificate that is allowlisted. The certificate can be up to 5k bytes, and must be a parseable X.509 certificate."]
+    pub pem_certificate: terrars::PrimField<std::string::String>,
+}
+
+impl BuildCertificateManagerTrustConfig_AllowlistedCertificates {
+    pub fn build(self) -> CertificateManagerTrustConfig_AllowlistedCertificates {
+        CertificateManagerTrustConfig_AllowlistedCertificates { pem_certificate: self.pem_certificate }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CertificateManagerTrustConfig_AllowlistedCertificatesRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CertificateManagerTrustConfig_AllowlistedCertificatesRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CertificateManagerTrustConfig_AllowlistedCertificatesRef {
+        CertificateManagerTrustConfig_AllowlistedCertificatesRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CertificateManagerTrustConfig_AllowlistedCertificatesRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `pem_certificate` after provisioning.\nPEM certificate that is allowlisted. The certificate can be up to 5k bytes, and must be a parseable X.509 certificate."]
+    pub fn pem_certificate(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.pem_certificate", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct CertificateManagerTrustConfig_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -429,7 +552,7 @@ pub struct CertificateManagerTrustConfigTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CertificateManagerTrustConfigTimeoutsEl {
+impl CertificateManagerTrustConfig_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -449,8 +572,8 @@ impl CertificateManagerTrustConfigTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for CertificateManagerTrustConfigTimeoutsEl {
-    type O = terrars::BlockAssignable<CertificateManagerTrustConfigTimeoutsEl>;
+impl terrars::ToListMappable for CertificateManagerTrustConfig_Timeouts {
+    type O = terrars::BlockAssignable<CertificateManagerTrustConfig_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -461,11 +584,11 @@ impl terrars::ToListMappable for CertificateManagerTrustConfigTimeoutsEl {
     }
 }
 
-pub struct BuildCertificateManagerTrustConfigTimeoutsEl {}
+pub struct BuildCertificateManagerTrustConfig_Timeouts {}
 
-impl BuildCertificateManagerTrustConfigTimeoutsEl {
-    pub fn build(self) -> CertificateManagerTrustConfigTimeoutsEl {
-        CertificateManagerTrustConfigTimeoutsEl {
+impl BuildCertificateManagerTrustConfig_Timeouts {
+    pub fn build(self) -> CertificateManagerTrustConfig_Timeouts {
+        CertificateManagerTrustConfig_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -473,21 +596,23 @@ impl BuildCertificateManagerTrustConfigTimeoutsEl {
     }
 }
 
-pub struct CertificateManagerTrustConfigTimeoutsElRef {
+#[allow(dead_code)]
+pub struct CertificateManagerTrustConfig_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CertificateManagerTrustConfigTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CertificateManagerTrustConfigTimeoutsElRef {
-        CertificateManagerTrustConfigTimeoutsElRef {
+impl terrars::Ref for CertificateManagerTrustConfig_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CertificateManagerTrustConfig_TimeoutsRef {
+        CertificateManagerTrustConfig_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CertificateManagerTrustConfigTimeoutsElRef {
+impl CertificateManagerTrustConfig_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -509,12 +634,12 @@ impl CertificateManagerTrustConfigTimeoutsElRef {
 }
 
 #[derive(Serialize)]
-pub struct CertificateManagerTrustConfigTrustStoresElIntermediateCasEl {
+pub struct CertificateManagerTrustConfig_TrustStores_IntermediateCas {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     pem_certificate: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CertificateManagerTrustConfigTrustStoresElIntermediateCasEl {
+impl CertificateManagerTrustConfig_TrustStores_IntermediateCas {
     #[doc =
         "Set the field `pem_certificate`.\nPEM intermediate certificate used for building up paths for validation.\nEach certificate provided in PEM format may occupy up to 5kB."]
     pub fn set_pem_certificate(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -523,8 +648,8 @@ impl CertificateManagerTrustConfigTrustStoresElIntermediateCasEl {
     }
 }
 
-impl terrars::ToListMappable for CertificateManagerTrustConfigTrustStoresElIntermediateCasEl {
-    type O = terrars::BlockAssignable<CertificateManagerTrustConfigTrustStoresElIntermediateCasEl>;
+impl terrars::ToListMappable for CertificateManagerTrustConfig_TrustStores_IntermediateCas {
+    type O = terrars::BlockAssignable<CertificateManagerTrustConfig_TrustStores_IntermediateCas>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -535,34 +660,36 @@ impl terrars::ToListMappable for CertificateManagerTrustConfigTrustStoresElInter
     }
 }
 
-pub struct BuildCertificateManagerTrustConfigTrustStoresElIntermediateCasEl {}
+pub struct BuildCertificateManagerTrustConfig_TrustStores_IntermediateCas {}
 
-impl BuildCertificateManagerTrustConfigTrustStoresElIntermediateCasEl {
-    pub fn build(self) -> CertificateManagerTrustConfigTrustStoresElIntermediateCasEl {
-        CertificateManagerTrustConfigTrustStoresElIntermediateCasEl {
+impl BuildCertificateManagerTrustConfig_TrustStores_IntermediateCas {
+    pub fn build(self) -> CertificateManagerTrustConfig_TrustStores_IntermediateCas {
+        CertificateManagerTrustConfig_TrustStores_IntermediateCas {
             pem_certificate: core::default::Default::default(),
         }
     }
 }
 
-pub struct CertificateManagerTrustConfigTrustStoresElIntermediateCasElRef {
+#[allow(dead_code)]
+pub struct CertificateManagerTrustConfig_TrustStores_IntermediateCasRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CertificateManagerTrustConfigTrustStoresElIntermediateCasElRef {
+impl terrars::Ref for CertificateManagerTrustConfig_TrustStores_IntermediateCasRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CertificateManagerTrustConfigTrustStoresElIntermediateCasElRef {
-        CertificateManagerTrustConfigTrustStoresElIntermediateCasElRef {
+    ) -> CertificateManagerTrustConfig_TrustStores_IntermediateCasRef {
+        CertificateManagerTrustConfig_TrustStores_IntermediateCasRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CertificateManagerTrustConfigTrustStoresElIntermediateCasElRef {
+impl CertificateManagerTrustConfig_TrustStores_IntermediateCasRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -575,12 +702,12 @@ impl CertificateManagerTrustConfigTrustStoresElIntermediateCasElRef {
 }
 
 #[derive(Serialize)]
-pub struct CertificateManagerTrustConfigTrustStoresElTrustAnchorsEl {
+pub struct CertificateManagerTrustConfig_TrustStores_TrustAnchors {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     pem_certificate: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CertificateManagerTrustConfigTrustStoresElTrustAnchorsEl {
+impl CertificateManagerTrustConfig_TrustStores_TrustAnchors {
     #[doc =
         "Set the field `pem_certificate`.\nPEM root certificate of the PKI used for validation.\nEach certificate provided in PEM format may occupy up to 5kB."]
     pub fn set_pem_certificate(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -589,8 +716,8 @@ impl CertificateManagerTrustConfigTrustStoresElTrustAnchorsEl {
     }
 }
 
-impl terrars::ToListMappable for CertificateManagerTrustConfigTrustStoresElTrustAnchorsEl {
-    type O = terrars::BlockAssignable<CertificateManagerTrustConfigTrustStoresElTrustAnchorsEl>;
+impl terrars::ToListMappable for CertificateManagerTrustConfig_TrustStores_TrustAnchors {
+    type O = terrars::BlockAssignable<CertificateManagerTrustConfig_TrustStores_TrustAnchors>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -601,34 +728,34 @@ impl terrars::ToListMappable for CertificateManagerTrustConfigTrustStoresElTrust
     }
 }
 
-pub struct BuildCertificateManagerTrustConfigTrustStoresElTrustAnchorsEl {}
+pub struct BuildCertificateManagerTrustConfig_TrustStores_TrustAnchors {}
 
-impl BuildCertificateManagerTrustConfigTrustStoresElTrustAnchorsEl {
-    pub fn build(self) -> CertificateManagerTrustConfigTrustStoresElTrustAnchorsEl {
-        CertificateManagerTrustConfigTrustStoresElTrustAnchorsEl {
-            pem_certificate: core::default::Default::default(),
-        }
+impl BuildCertificateManagerTrustConfig_TrustStores_TrustAnchors {
+    pub fn build(self) -> CertificateManagerTrustConfig_TrustStores_TrustAnchors {
+        CertificateManagerTrustConfig_TrustStores_TrustAnchors { pem_certificate: core::default::Default::default() }
     }
 }
 
-pub struct CertificateManagerTrustConfigTrustStoresElTrustAnchorsElRef {
+#[allow(dead_code)]
+pub struct CertificateManagerTrustConfig_TrustStores_TrustAnchorsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CertificateManagerTrustConfigTrustStoresElTrustAnchorsElRef {
+impl terrars::Ref for CertificateManagerTrustConfig_TrustStores_TrustAnchorsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CertificateManagerTrustConfigTrustStoresElTrustAnchorsElRef {
-        CertificateManagerTrustConfigTrustStoresElTrustAnchorsElRef {
+    ) -> CertificateManagerTrustConfig_TrustStores_TrustAnchorsRef {
+        CertificateManagerTrustConfig_TrustStores_TrustAnchorsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CertificateManagerTrustConfigTrustStoresElTrustAnchorsElRef {
+impl CertificateManagerTrustConfig_TrustStores_TrustAnchorsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -641,25 +768,25 @@ impl CertificateManagerTrustConfigTrustStoresElTrustAnchorsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct CertificateManagerTrustConfigTrustStoresElDynamic {
+struct CertificateManagerTrustConfig_TrustStoresDynamic {
     intermediate_cas: std
     ::option
-    ::Option<terrars::DynamicBlock<CertificateManagerTrustConfigTrustStoresElIntermediateCasEl>>,
+    ::Option<terrars::DynamicBlock<CertificateManagerTrustConfig_TrustStores_IntermediateCas>>,
     trust_anchors: std
     ::option
-    ::Option<terrars::DynamicBlock<CertificateManagerTrustConfigTrustStoresElTrustAnchorsEl>>,
+    ::Option<terrars::DynamicBlock<CertificateManagerTrustConfig_TrustStores_TrustAnchors>>,
 }
 
 #[derive(Serialize)]
-pub struct CertificateManagerTrustConfigTrustStoresEl {
+pub struct CertificateManagerTrustConfig_TrustStores {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    intermediate_cas: std::option::Option<std::vec::Vec<CertificateManagerTrustConfigTrustStoresElIntermediateCasEl>>,
+    intermediate_cas: std::option::Option<std::vec::Vec<CertificateManagerTrustConfig_TrustStores_IntermediateCas>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    trust_anchors: std::option::Option<std::vec::Vec<CertificateManagerTrustConfigTrustStoresElTrustAnchorsEl>>,
-    dynamic: CertificateManagerTrustConfigTrustStoresElDynamic,
+    trust_anchors: std::option::Option<std::vec::Vec<CertificateManagerTrustConfig_TrustStores_TrustAnchors>>,
+    dynamic: CertificateManagerTrustConfig_TrustStoresDynamic,
 }
 
-impl CertificateManagerTrustConfigTrustStoresEl {
+impl CertificateManagerTrustConfig_TrustStores {
     #[doc = "Set the field `intermediate_cas`.\n"]
     pub fn set_intermediate_cas(
         mut self,
@@ -668,7 +795,7 @@ impl CertificateManagerTrustConfigTrustStoresEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<CertificateManagerTrustConfigTrustStoresElIntermediateCasEl>>,
+                    ::Into<terrars::BlockAssignable<CertificateManagerTrustConfig_TrustStores_IntermediateCas>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -684,12 +811,7 @@ impl CertificateManagerTrustConfigTrustStoresEl {
     #[doc = "Set the field `trust_anchors`.\n"]
     pub fn set_trust_anchors(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<CertificateManagerTrustConfigTrustStoresElTrustAnchorsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CertificateManagerTrustConfig_TrustStores_TrustAnchors>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -703,8 +825,8 @@ impl CertificateManagerTrustConfigTrustStoresEl {
     }
 }
 
-impl terrars::ToListMappable for CertificateManagerTrustConfigTrustStoresEl {
-    type O = terrars::BlockAssignable<CertificateManagerTrustConfigTrustStoresEl>;
+impl terrars::ToListMappable for CertificateManagerTrustConfig_TrustStores {
+    type O = terrars::BlockAssignable<CertificateManagerTrustConfig_TrustStores>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -715,11 +837,11 @@ impl terrars::ToListMappable for CertificateManagerTrustConfigTrustStoresEl {
     }
 }
 
-pub struct BuildCertificateManagerTrustConfigTrustStoresEl {}
+pub struct BuildCertificateManagerTrustConfig_TrustStores {}
 
-impl BuildCertificateManagerTrustConfigTrustStoresEl {
-    pub fn build(self) -> CertificateManagerTrustConfigTrustStoresEl {
-        CertificateManagerTrustConfigTrustStoresEl {
+impl BuildCertificateManagerTrustConfig_TrustStores {
+    pub fn build(self) -> CertificateManagerTrustConfig_TrustStores {
+        CertificateManagerTrustConfig_TrustStores {
             intermediate_cas: core::default::Default::default(),
             trust_anchors: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -727,37 +849,34 @@ impl BuildCertificateManagerTrustConfigTrustStoresEl {
     }
 }
 
-pub struct CertificateManagerTrustConfigTrustStoresElRef {
+#[allow(dead_code)]
+pub struct CertificateManagerTrustConfig_TrustStoresRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CertificateManagerTrustConfigTrustStoresElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CertificateManagerTrustConfigTrustStoresElRef {
-        CertificateManagerTrustConfigTrustStoresElRef {
+impl terrars::Ref for CertificateManagerTrustConfig_TrustStoresRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CertificateManagerTrustConfig_TrustStoresRef {
+        CertificateManagerTrustConfig_TrustStoresRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CertificateManagerTrustConfigTrustStoresElRef {
+impl CertificateManagerTrustConfig_TrustStoresRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `intermediate_cas` after provisioning.\n"]
-    pub fn intermediate_cas(&self) -> terrars::ListRef<CertificateManagerTrustConfigTrustStoresElIntermediateCasElRef> {
+    pub fn intermediate_cas(&self) -> terrars::ListRef<CertificateManagerTrustConfig_TrustStores_IntermediateCasRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.intermediate_cas", self.base))
     }
 
     #[doc = "Get a reference to the value of field `trust_anchors` after provisioning.\n"]
-    pub fn trust_anchors(&self) -> terrars::ListRef<CertificateManagerTrustConfigTrustStoresElTrustAnchorsElRef> {
+    pub fn trust_anchors(&self) -> terrars::ListRef<CertificateManagerTrustConfig_TrustStores_TrustAnchorsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.trust_anchors", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct CertificateManagerTrustConfigDynamic {
-    trust_stores: std::option::Option<terrars::DynamicBlock<CertificateManagerTrustConfigTrustStoresEl>>,
 }

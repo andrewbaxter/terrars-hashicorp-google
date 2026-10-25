@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct PrivatecaCaPoolData {
+struct PrivatecaCaPoolData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct PrivatecaCaPoolData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -28,18 +32,20 @@ struct PrivatecaCaPoolData {
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     tier: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    issuance_policy: std::option::Option<std::vec::Vec<PrivatecaCaPoolIssuancePolicyEl>>,
+    encryption_spec: std::option::Option<std::vec::Vec<PrivatecaCaPool_EncryptionSpec>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    publishing_options: std::option::Option<std::vec::Vec<PrivatecaCaPoolPublishingOptionsEl>>,
+    issuance_policy: std::option::Option<std::vec::Vec<PrivatecaCaPool_IssuancePolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<PrivatecaCaPoolTimeoutsEl>,
+    publishing_options: std::option::Option<std::vec::Vec<PrivatecaCaPool_PublishingOptions>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<PrivatecaCaPool_Timeouts>,
     dynamic: PrivatecaCaPoolDynamic,
 }
 
 struct PrivatecaCaPool_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<PrivatecaCaPoolData>,
+    data: std::cell::RefCell<PrivatecaCaPoolData_>,
 }
 
 #[derive(Clone)]
@@ -139,6 +145,13 @@ impl PrivatecaCaPool {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -161,10 +174,26 @@ impl PrivatecaCaPool {
         self
     }
 
+    #[doc = "Set the field `encryption_spec`.\n"]
+    pub fn set_encryption_spec(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<PrivatecaCaPool_EncryptionSpec>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().encryption_spec = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.encryption_spec = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `issuance_policy`.\n"]
     pub fn set_issuance_policy(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<PrivatecaCaPoolIssuancePolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<PrivatecaCaPool_IssuancePolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -180,7 +209,7 @@ impl PrivatecaCaPool {
     #[doc = "Set the field `publishing_options`.\n"]
     pub fn set_publishing_options(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<PrivatecaCaPoolPublishingOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<PrivatecaCaPool_PublishingOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -194,9 +223,15 @@ impl PrivatecaCaPool {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<PrivatecaCaPoolTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<PrivatecaCaPool_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -244,19 +279,24 @@ impl PrivatecaCaPool {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.tier", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `encryption_spec` after provisioning.\n"]
+    pub fn encryption_spec(&self) -> terrars::ListRef<PrivatecaCaPool_EncryptionSpecRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_spec", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `issuance_policy` after provisioning.\n"]
-    pub fn issuance_policy(&self) -> terrars::ListRef<PrivatecaCaPoolIssuancePolicyElRef> {
+    pub fn issuance_policy(&self) -> terrars::ListRef<PrivatecaCaPool_IssuancePolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.issuance_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `publishing_options` after provisioning.\n"]
-    pub fn publishing_options(&self) -> terrars::ListRef<PrivatecaCaPoolPublishingOptionsElRef> {
+    pub fn publishing_options(&self) -> terrars::ListRef<PrivatecaCaPool_PublishingOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.publishing_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> PrivatecaCaPoolTimeoutsElRef {
-        PrivatecaCaPoolTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> PrivatecaCaPool_TimeoutsRef {
+        PrivatecaCaPool_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -307,18 +347,20 @@ impl BuildPrivatecaCaPool {
         let out = PrivatecaCaPool(std::rc::Rc::new(PrivatecaCaPool_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(PrivatecaCaPoolData {
+            data: std::cell::RefCell::new(PrivatecaCaPoolData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 labels: core::default::Default::default(),
                 location: self.location,
                 name: self.name,
                 project: core::default::Default::default(),
                 tier: self.tier,
+                encryption_spec: core::default::Default::default(),
                 issuance_policy: core::default::Default::default(),
                 publishing_options: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
@@ -351,6 +393,12 @@ impl PrivatecaCaPoolRef {
 
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -398,32 +446,51 @@ impl PrivatecaCaPoolRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.tier", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `encryption_spec` after provisioning.\n"]
+    pub fn encryption_spec(&self) -> terrars::ListRef<PrivatecaCaPool_EncryptionSpecRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_spec", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `issuance_policy` after provisioning.\n"]
-    pub fn issuance_policy(&self) -> terrars::ListRef<PrivatecaCaPoolIssuancePolicyElRef> {
+    pub fn issuance_policy(&self) -> terrars::ListRef<PrivatecaCaPool_IssuancePolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.issuance_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `publishing_options` after provisioning.\n"]
-    pub fn publishing_options(&self) -> terrars::ListRef<PrivatecaCaPoolPublishingOptionsElRef> {
+    pub fn publishing_options(&self) -> terrars::ListRef<PrivatecaCaPool_PublishingOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.publishing_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> PrivatecaCaPoolTimeoutsElRef {
-        PrivatecaCaPoolTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> PrivatecaCaPool_TimeoutsRef {
+        PrivatecaCaPool_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
-#[derive(Serialize)]
-pub struct PrivatecaCaPoolIssuancePolicyElAllowedIssuanceModesEl {
-    allow_config_based_issuance: terrars::PrimField<bool>,
-    allow_csr_based_issuance: terrars::PrimField<bool>,
+#[derive(Serialize, Default)]
+struct PrivatecaCaPoolDynamic {
+    encryption_spec: std::option::Option<terrars::DynamicBlock<PrivatecaCaPool_EncryptionSpec>>,
+    issuance_policy: std::option::Option<terrars::DynamicBlock<PrivatecaCaPool_IssuancePolicy>>,
+    publishing_options: std::option::Option<terrars::DynamicBlock<PrivatecaCaPool_PublishingOptions>>,
 }
 
-impl PrivatecaCaPoolIssuancePolicyElAllowedIssuanceModesEl { }
+#[derive(Serialize)]
+pub struct PrivatecaCaPool_EncryptionSpec {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cloud_kms_key: std::option::Option<terrars::PrimField<std::string::String>>,
+}
 
-impl terrars::ToListMappable for PrivatecaCaPoolIssuancePolicyElAllowedIssuanceModesEl {
-    type O = terrars::BlockAssignable<PrivatecaCaPoolIssuancePolicyElAllowedIssuanceModesEl>;
+impl PrivatecaCaPool_EncryptionSpec {
+    #[doc =
+        "Set the field `cloud_kms_key`.\nThe resource name for an existing Cloud KMS key in the format\n'projects/*/locations/*/keyRings/*/cryptoKeys/*'."]
+    pub fn set_cloud_kms_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.cloud_kms_key = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for PrivatecaCaPool_EncryptionSpec {
+    type O = terrars::BlockAssignable<PrivatecaCaPool_EncryptionSpec>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -434,40 +501,98 @@ impl terrars::ToListMappable for PrivatecaCaPoolIssuancePolicyElAllowedIssuanceM
     }
 }
 
-pub struct BuildPrivatecaCaPoolIssuancePolicyElAllowedIssuanceModesEl {
-    #[doc = "When true, allows callers to create Certificates by specifying a CertificateConfig."]
-    pub allow_config_based_issuance: terrars::PrimField<bool>,
-    #[doc = "When true, allows callers to create Certificates by specifying a CSR."]
-    pub allow_csr_based_issuance: terrars::PrimField<bool>,
-}
+pub struct BuildPrivatecaCaPool_EncryptionSpec {}
 
-impl BuildPrivatecaCaPoolIssuancePolicyElAllowedIssuanceModesEl {
-    pub fn build(self) -> PrivatecaCaPoolIssuancePolicyElAllowedIssuanceModesEl {
-        PrivatecaCaPoolIssuancePolicyElAllowedIssuanceModesEl {
-            allow_config_based_issuance: self.allow_config_based_issuance,
-            allow_csr_based_issuance: self.allow_csr_based_issuance,
-        }
+impl BuildPrivatecaCaPool_EncryptionSpec {
+    pub fn build(self) -> PrivatecaCaPool_EncryptionSpec {
+        PrivatecaCaPool_EncryptionSpec { cloud_kms_key: core::default::Default::default() }
     }
 }
 
-pub struct PrivatecaCaPoolIssuancePolicyElAllowedIssuanceModesElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCaPool_EncryptionSpecRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCaPoolIssuancePolicyElAllowedIssuanceModesElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> PrivatecaCaPoolIssuancePolicyElAllowedIssuanceModesElRef {
-        PrivatecaCaPoolIssuancePolicyElAllowedIssuanceModesElRef {
+impl terrars::Ref for PrivatecaCaPool_EncryptionSpecRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> PrivatecaCaPool_EncryptionSpecRef {
+        PrivatecaCaPool_EncryptionSpecRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCaPoolIssuancePolicyElAllowedIssuanceModesElRef {
+impl PrivatecaCaPool_EncryptionSpecRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `cloud_kms_key` after provisioning.\nThe resource name for an existing Cloud KMS key in the format\n'projects/*/locations/*/keyRings/*/cryptoKeys/*'."]
+    pub fn cloud_kms_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cloud_kms_key", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct PrivatecaCaPool_IssuancePolicy_AllowedIssuanceModes {
+    allow_config_based_issuance: terrars::PrimField<bool>,
+    allow_csr_based_issuance: terrars::PrimField<bool>,
+}
+
+impl PrivatecaCaPool_IssuancePolicy_AllowedIssuanceModes { }
+
+impl terrars::ToListMappable for PrivatecaCaPool_IssuancePolicy_AllowedIssuanceModes {
+    type O = terrars::BlockAssignable<PrivatecaCaPool_IssuancePolicy_AllowedIssuanceModes>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildPrivatecaCaPool_IssuancePolicy_AllowedIssuanceModes {
+    #[doc = "When true, allows callers to create Certificates by specifying a CertificateConfig."]
+    pub allow_config_based_issuance: terrars::PrimField<bool>,
+    #[doc = "When true, allows callers to create Certificates by specifying a CSR."]
+    pub allow_csr_based_issuance: terrars::PrimField<bool>,
+}
+
+impl BuildPrivatecaCaPool_IssuancePolicy_AllowedIssuanceModes {
+    pub fn build(self) -> PrivatecaCaPool_IssuancePolicy_AllowedIssuanceModes {
+        PrivatecaCaPool_IssuancePolicy_AllowedIssuanceModes {
+            allow_config_based_issuance: self.allow_config_based_issuance,
+            allow_csr_based_issuance: self.allow_csr_based_issuance,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct PrivatecaCaPool_IssuancePolicy_AllowedIssuanceModesRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for PrivatecaCaPool_IssuancePolicy_AllowedIssuanceModesRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> PrivatecaCaPool_IssuancePolicy_AllowedIssuanceModesRef {
+        PrivatecaCaPool_IssuancePolicy_AllowedIssuanceModesRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl PrivatecaCaPool_IssuancePolicy_AllowedIssuanceModesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -486,14 +611,14 @@ impl PrivatecaCaPoolIssuancePolicyElAllowedIssuanceModesElRef {
 }
 
 #[derive(Serialize)]
-pub struct PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElEllipticCurveEl {
+pub struct PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes_EllipticCurve {
     signature_algorithm: terrars::PrimField<std::string::String>,
 }
 
-impl PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElEllipticCurveEl { }
+impl PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes_EllipticCurve { }
 
-impl terrars::ToListMappable for PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElEllipticCurveEl {
-    type O = terrars::BlockAssignable<PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElEllipticCurveEl>;
+impl terrars::ToListMappable for PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes_EllipticCurve {
+    type O = terrars::BlockAssignable<PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes_EllipticCurve>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -504,37 +629,39 @@ impl terrars::ToListMappable for PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesE
     }
 }
 
-pub struct BuildPrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElEllipticCurveEl {
+pub struct BuildPrivatecaCaPool_IssuancePolicy_AllowedKeyTypes_EllipticCurve {
     #[doc = "The algorithm used. Possible values: [\"ECDSA_P256\", \"ECDSA_P384\", \"EDDSA_25519\"]"]
     pub signature_algorithm: terrars::PrimField<std::string::String>,
 }
 
-impl BuildPrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElEllipticCurveEl {
-    pub fn build(self) -> PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElEllipticCurveEl {
-        PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElEllipticCurveEl {
+impl BuildPrivatecaCaPool_IssuancePolicy_AllowedKeyTypes_EllipticCurve {
+    pub fn build(self) -> PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes_EllipticCurve {
+        PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes_EllipticCurve {
             signature_algorithm: self.signature_algorithm,
         }
     }
 }
 
-pub struct PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElEllipticCurveElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes_EllipticCurveRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElEllipticCurveElRef {
+impl terrars::Ref for PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes_EllipticCurveRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElEllipticCurveElRef {
-        PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElEllipticCurveElRef {
+    ) -> PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes_EllipticCurveRef {
+        PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes_EllipticCurveRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElEllipticCurveElRef {
+impl PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes_EllipticCurveRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -547,14 +674,14 @@ impl PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElEllipticCurveElRef {
 }
 
 #[derive(Serialize)]
-pub struct PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElRsaEl {
+pub struct PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes_Rsa {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max_modulus_size: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min_modulus_size: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElRsaEl {
+impl PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes_Rsa {
     #[doc =
         "Set the field `max_modulus_size`.\nThe maximum allowed RSA modulus size, in bits. If this is not set, or if set to zero, the\nservice will not enforce an explicit upper bound on RSA modulus sizes."]
     pub fn set_max_modulus_size(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -570,8 +697,8 @@ impl PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElRsaEl {
     }
 }
 
-impl terrars::ToListMappable for PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElRsaEl {
-    type O = terrars::BlockAssignable<PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElRsaEl>;
+impl terrars::ToListMappable for PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes_Rsa {
+    type O = terrars::BlockAssignable<PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes_Rsa>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -582,35 +709,37 @@ impl terrars::ToListMappable for PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesE
     }
 }
 
-pub struct BuildPrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElRsaEl {}
+pub struct BuildPrivatecaCaPool_IssuancePolicy_AllowedKeyTypes_Rsa {}
 
-impl BuildPrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElRsaEl {
-    pub fn build(self) -> PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElRsaEl {
-        PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElRsaEl {
+impl BuildPrivatecaCaPool_IssuancePolicy_AllowedKeyTypes_Rsa {
+    pub fn build(self) -> PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes_Rsa {
+        PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes_Rsa {
             max_modulus_size: core::default::Default::default(),
             min_modulus_size: core::default::Default::default(),
         }
     }
 }
 
-pub struct PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElRsaElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes_RsaRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElRsaElRef {
+impl terrars::Ref for PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes_RsaRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElRsaElRef {
-        PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElRsaElRef {
+    ) -> PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes_RsaRef {
+        PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes_RsaRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElRsaElRef {
+impl PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes_RsaRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -629,23 +758,23 @@ impl PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElRsaElRef {
 }
 
 #[derive(Serialize, Default)]
-struct PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElDynamic {
+struct PrivatecaCaPool_IssuancePolicy_AllowedKeyTypesDynamic {
     elliptic_curve: std
     ::option
-    ::Option<terrars::DynamicBlock<PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElEllipticCurveEl>>,
-    rsa: std::option::Option<terrars::DynamicBlock<PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElRsaEl>>,
+    ::Option<terrars::DynamicBlock<PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes_EllipticCurve>>,
+    rsa: std::option::Option<terrars::DynamicBlock<PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes_Rsa>>,
 }
 
 #[derive(Serialize)]
-pub struct PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesEl {
+pub struct PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    elliptic_curve: std::option::Option<std::vec::Vec<PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElEllipticCurveEl>>,
+    elliptic_curve: std::option::Option<std::vec::Vec<PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes_EllipticCurve>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    rsa: std::option::Option<std::vec::Vec<PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElRsaEl>>,
-    dynamic: PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElDynamic,
+    rsa: std::option::Option<std::vec::Vec<PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes_Rsa>>,
+    dynamic: PrivatecaCaPool_IssuancePolicy_AllowedKeyTypesDynamic,
 }
 
-impl PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesEl {
+impl PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes {
     #[doc = "Set the field `elliptic_curve`.\n"]
     pub fn set_elliptic_curve(
         mut self,
@@ -654,7 +783,7 @@ impl PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElEllipticCurveEl>>,
+                    ::Into<terrars::BlockAssignable<PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes_EllipticCurve>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -670,7 +799,7 @@ impl PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesEl {
     #[doc = "Set the field `rsa`.\n"]
     pub fn set_rsa(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElRsaEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes_Rsa>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -684,8 +813,8 @@ impl PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesEl {
     }
 }
 
-impl terrars::ToListMappable for PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesEl {
-    type O = terrars::BlockAssignable<PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesEl>;
+impl terrars::ToListMappable for PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes {
+    type O = terrars::BlockAssignable<PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -696,11 +825,11 @@ impl terrars::ToListMappable for PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesE
     }
 }
 
-pub struct BuildPrivatecaCaPoolIssuancePolicyElAllowedKeyTypesEl {}
+pub struct BuildPrivatecaCaPool_IssuancePolicy_AllowedKeyTypes {}
 
-impl BuildPrivatecaCaPoolIssuancePolicyElAllowedKeyTypesEl {
-    pub fn build(self) -> PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesEl {
-        PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesEl {
+impl BuildPrivatecaCaPool_IssuancePolicy_AllowedKeyTypes {
+    pub fn build(self) -> PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes {
+        PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes {
             elliptic_curve: core::default::Default::default(),
             rsa: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -708,49 +837,50 @@ impl BuildPrivatecaCaPoolIssuancePolicyElAllowedKeyTypesEl {
     }
 }
 
-pub struct PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCaPool_IssuancePolicy_AllowedKeyTypesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElRef {
+impl terrars::Ref for PrivatecaCaPool_IssuancePolicy_AllowedKeyTypesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElRef {
-        PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElRef {
+    ) -> PrivatecaCaPool_IssuancePolicy_AllowedKeyTypesRef {
+        PrivatecaCaPool_IssuancePolicy_AllowedKeyTypesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElRef {
+impl PrivatecaCaPool_IssuancePolicy_AllowedKeyTypesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `elliptic_curve` after provisioning.\n"]
-    pub fn elliptic_curve(&self) -> terrars::ListRef<PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElEllipticCurveElRef> {
+    pub fn elliptic_curve(&self) -> terrars::ListRef<PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes_EllipticCurveRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.elliptic_curve", self.base))
     }
 
     #[doc = "Get a reference to the value of field `rsa` after provisioning.\n"]
-    pub fn rsa(&self) -> terrars::ListRef<PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElRsaElRef> {
+    pub fn rsa(&self) -> terrars::ListRef<PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes_RsaRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.rsa", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct PrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsElObjectIdEl {
+pub struct PrivatecaCaPool_IssuancePolicy_BaselineValues_AdditionalExtensions_ObjectId {
     object_id_path: terrars::ListField<terrars::PrimField<f64>>,
 }
 
-impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsElObjectIdEl { }
+impl PrivatecaCaPool_IssuancePolicy_BaselineValues_AdditionalExtensions_ObjectId { }
 
-impl terrars::ToListMappable for PrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsElObjectIdEl {
-    type O =
-        terrars::BlockAssignable<PrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsElObjectIdEl>;
+impl terrars::ToListMappable for PrivatecaCaPool_IssuancePolicy_BaselineValues_AdditionalExtensions_ObjectId {
+    type O = terrars::BlockAssignable<PrivatecaCaPool_IssuancePolicy_BaselineValues_AdditionalExtensions_ObjectId>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -761,38 +891,40 @@ impl terrars::ToListMappable for PrivatecaCaPoolIssuancePolicyElBaselineValuesEl
     }
 }
 
-pub struct BuildPrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsElObjectIdEl {
+pub struct BuildPrivatecaCaPool_IssuancePolicy_BaselineValues_AdditionalExtensions_ObjectId {
     #[doc =
         "An ObjectId specifies an object identifier (OID). These provide context and describe types in ASN.1 messages."]
     pub object_id_path: terrars::ListField<terrars::PrimField<f64>>,
 }
 
-impl BuildPrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsElObjectIdEl {
-    pub fn build(self) -> PrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsElObjectIdEl {
-        PrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsElObjectIdEl {
+impl BuildPrivatecaCaPool_IssuancePolicy_BaselineValues_AdditionalExtensions_ObjectId {
+    pub fn build(self) -> PrivatecaCaPool_IssuancePolicy_BaselineValues_AdditionalExtensions_ObjectId {
+        PrivatecaCaPool_IssuancePolicy_BaselineValues_AdditionalExtensions_ObjectId {
             object_id_path: self.object_id_path,
         }
     }
 }
 
-pub struct PrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsElObjectIdElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCaPool_IssuancePolicy_BaselineValues_AdditionalExtensions_ObjectIdRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsElObjectIdElRef {
+impl terrars::Ref for PrivatecaCaPool_IssuancePolicy_BaselineValues_AdditionalExtensions_ObjectIdRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> PrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsElObjectIdElRef {
-        PrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsElObjectIdElRef {
+    ) -> PrivatecaCaPool_IssuancePolicy_BaselineValues_AdditionalExtensions_ObjectIdRef {
+        PrivatecaCaPool_IssuancePolicy_BaselineValues_AdditionalExtensions_ObjectIdRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsElObjectIdElRef {
+impl PrivatecaCaPool_IssuancePolicy_BaselineValues_AdditionalExtensions_ObjectIdRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -805,24 +937,24 @@ impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsElObject
 }
 
 #[derive(Serialize, Default)]
-struct PrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsElDynamic {
+struct PrivatecaCaPool_IssuancePolicy_BaselineValues_AdditionalExtensionsDynamic {
     object_id: std
     ::option
-    ::Option<terrars::DynamicBlock<PrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsElObjectIdEl>>,
+    ::Option<terrars::DynamicBlock<PrivatecaCaPool_IssuancePolicy_BaselineValues_AdditionalExtensions_ObjectId>>,
 }
 
 #[derive(Serialize)]
-pub struct PrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsEl {
+pub struct PrivatecaCaPool_IssuancePolicy_BaselineValues_AdditionalExtensions {
     critical: terrars::PrimField<bool>,
     value: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     object_id: std
     ::option
-    ::Option<std::vec::Vec<PrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsElObjectIdEl>>,
-    dynamic: PrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsElDynamic,
+    ::Option<std::vec::Vec<PrivatecaCaPool_IssuancePolicy_BaselineValues_AdditionalExtensions_ObjectId>>,
+    dynamic: PrivatecaCaPool_IssuancePolicy_BaselineValues_AdditionalExtensionsDynamic,
 }
 
-impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsEl {
+impl PrivatecaCaPool_IssuancePolicy_BaselineValues_AdditionalExtensions {
     #[doc = "Set the field `object_id`.\n"]
     pub fn set_object_id(
         mut self,
@@ -833,9 +965,7 @@ impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            PrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsElObjectIdEl,
-                        >,
+                        ::BlockAssignable<PrivatecaCaPool_IssuancePolicy_BaselineValues_AdditionalExtensions_ObjectId>,
                     >,
     ) -> Self {
         match v.into() {
@@ -850,8 +980,8 @@ impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsEl {
     }
 }
 
-impl terrars::ToListMappable for PrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsEl {
-    type O = terrars::BlockAssignable<PrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsEl>;
+impl terrars::ToListMappable for PrivatecaCaPool_IssuancePolicy_BaselineValues_AdditionalExtensions {
+    type O = terrars::BlockAssignable<PrivatecaCaPool_IssuancePolicy_BaselineValues_AdditionalExtensions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -862,7 +992,7 @@ impl terrars::ToListMappable for PrivatecaCaPoolIssuancePolicyElBaselineValuesEl
     }
 }
 
-pub struct BuildPrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsEl {
+pub struct BuildPrivatecaCaPool_IssuancePolicy_BaselineValues_AdditionalExtensions {
     #[doc =
         "Indicates whether or not this extension is critical (i.e., if the client does not know how to\nhandle this extension, the client should consider this to be an error)."]
     pub critical: terrars::PrimField<bool>,
@@ -870,9 +1000,9 @@ pub struct BuildPrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensi
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildPrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsEl {
-    pub fn build(self) -> PrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsEl {
-        PrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsEl {
+impl BuildPrivatecaCaPool_IssuancePolicy_BaselineValues_AdditionalExtensions {
+    pub fn build(self) -> PrivatecaCaPool_IssuancePolicy_BaselineValues_AdditionalExtensions {
+        PrivatecaCaPool_IssuancePolicy_BaselineValues_AdditionalExtensions {
             critical: self.critical,
             value: self.value,
             object_id: core::default::Default::default(),
@@ -881,24 +1011,26 @@ impl BuildPrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsEl 
     }
 }
 
-pub struct PrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCaPool_IssuancePolicy_BaselineValues_AdditionalExtensionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsElRef {
+impl terrars::Ref for PrivatecaCaPool_IssuancePolicy_BaselineValues_AdditionalExtensionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> PrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsElRef {
-        PrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsElRef {
+    ) -> PrivatecaCaPool_IssuancePolicy_BaselineValues_AdditionalExtensionsRef {
+        PrivatecaCaPool_IssuancePolicy_BaselineValues_AdditionalExtensionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsElRef {
+impl PrivatecaCaPool_IssuancePolicy_BaselineValues_AdditionalExtensionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -918,13 +1050,13 @@ impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsElRef {
     #[doc = "Get a reference to the value of field `object_id` after provisioning.\n"]
     pub fn object_id(
         &self,
-    ) -> terrars::ListRef<PrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsElObjectIdElRef> {
+    ) -> terrars::ListRef<PrivatecaCaPool_IssuancePolicy_BaselineValues_AdditionalExtensions_ObjectIdRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.object_id", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct PrivatecaCaPoolIssuancePolicyElBaselineValuesElCaOptionsEl {
+pub struct PrivatecaCaPool_IssuancePolicy_BaselineValues_CaOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     is_ca: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -935,7 +1067,7 @@ pub struct PrivatecaCaPoolIssuancePolicyElBaselineValuesElCaOptionsEl {
     zero_max_issuer_path_length: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElCaOptionsEl {
+impl PrivatecaCaPool_IssuancePolicy_BaselineValues_CaOptions {
     #[doc = "Set the field `is_ca`.\nWhen true, the \"CA\" in Basic Constraints extension will be set to true."]
     pub fn set_is_ca(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.is_ca = std::option::Option::Some(v.into());
@@ -964,8 +1096,8 @@ impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElCaOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for PrivatecaCaPoolIssuancePolicyElBaselineValuesElCaOptionsEl {
-    type O = terrars::BlockAssignable<PrivatecaCaPoolIssuancePolicyElBaselineValuesElCaOptionsEl>;
+impl terrars::ToListMappable for PrivatecaCaPool_IssuancePolicy_BaselineValues_CaOptions {
+    type O = terrars::BlockAssignable<PrivatecaCaPool_IssuancePolicy_BaselineValues_CaOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -976,11 +1108,11 @@ impl terrars::ToListMappable for PrivatecaCaPoolIssuancePolicyElBaselineValuesEl
     }
 }
 
-pub struct BuildPrivatecaCaPoolIssuancePolicyElBaselineValuesElCaOptionsEl {}
+pub struct BuildPrivatecaCaPool_IssuancePolicy_BaselineValues_CaOptions {}
 
-impl BuildPrivatecaCaPoolIssuancePolicyElBaselineValuesElCaOptionsEl {
-    pub fn build(self) -> PrivatecaCaPoolIssuancePolicyElBaselineValuesElCaOptionsEl {
-        PrivatecaCaPoolIssuancePolicyElBaselineValuesElCaOptionsEl {
+impl BuildPrivatecaCaPool_IssuancePolicy_BaselineValues_CaOptions {
+    pub fn build(self) -> PrivatecaCaPool_IssuancePolicy_BaselineValues_CaOptions {
+        PrivatecaCaPool_IssuancePolicy_BaselineValues_CaOptions {
             is_ca: core::default::Default::default(),
             max_issuer_path_length: core::default::Default::default(),
             non_ca: core::default::Default::default(),
@@ -989,24 +1121,26 @@ impl BuildPrivatecaCaPoolIssuancePolicyElBaselineValuesElCaOptionsEl {
     }
 }
 
-pub struct PrivatecaCaPoolIssuancePolicyElBaselineValuesElCaOptionsElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCaPool_IssuancePolicy_BaselineValues_CaOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCaPoolIssuancePolicyElBaselineValuesElCaOptionsElRef {
+impl terrars::Ref for PrivatecaCaPool_IssuancePolicy_BaselineValues_CaOptionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> PrivatecaCaPoolIssuancePolicyElBaselineValuesElCaOptionsElRef {
-        PrivatecaCaPoolIssuancePolicyElBaselineValuesElCaOptionsElRef {
+    ) -> PrivatecaCaPool_IssuancePolicy_BaselineValues_CaOptionsRef {
+        PrivatecaCaPool_IssuancePolicy_BaselineValues_CaOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElCaOptionsElRef {
+impl PrivatecaCaPool_IssuancePolicy_BaselineValues_CaOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1037,7 +1171,7 @@ impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElCaOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElBaseKeyUsageEl {
+pub struct PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_BaseKeyUsage {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cert_sign: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1058,7 +1192,7 @@ pub struct PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElBaseKeyUsage
     key_encipherment: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElBaseKeyUsageEl {
+impl PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_BaseKeyUsage {
     #[doc = "Set the field `cert_sign`.\nThe key may be used to sign certificates."]
     pub fn set_cert_sign(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.cert_sign = std::option::Option::Some(v.into());
@@ -1115,8 +1249,8 @@ impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElBaseKeyUsageEl {
     }
 }
 
-impl terrars::ToListMappable for PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElBaseKeyUsageEl {
-    type O = terrars::BlockAssignable<PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElBaseKeyUsageEl>;
+impl terrars::ToListMappable for PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_BaseKeyUsage {
+    type O = terrars::BlockAssignable<PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_BaseKeyUsage>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1127,11 +1261,11 @@ impl terrars::ToListMappable for PrivatecaCaPoolIssuancePolicyElBaselineValuesEl
     }
 }
 
-pub struct BuildPrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElBaseKeyUsageEl {}
+pub struct BuildPrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_BaseKeyUsage {}
 
-impl BuildPrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElBaseKeyUsageEl {
-    pub fn build(self) -> PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElBaseKeyUsageEl {
-        PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElBaseKeyUsageEl {
+impl BuildPrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_BaseKeyUsage {
+    pub fn build(self) -> PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_BaseKeyUsage {
+        PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_BaseKeyUsage {
             cert_sign: core::default::Default::default(),
             content_commitment: core::default::Default::default(),
             crl_sign: core::default::Default::default(),
@@ -1145,24 +1279,26 @@ impl BuildPrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElBaseKeyUsageE
     }
 }
 
-pub struct PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElBaseKeyUsageElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_BaseKeyUsageRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElBaseKeyUsageElRef {
+impl terrars::Ref for PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_BaseKeyUsageRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElBaseKeyUsageElRef {
-        PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElBaseKeyUsageElRef {
+    ) -> PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_BaseKeyUsageRef {
+        PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_BaseKeyUsageRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElBaseKeyUsageElRef {
+impl PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_BaseKeyUsageRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1223,7 +1359,7 @@ impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElBaseKeyUsageElRef 
 }
 
 #[derive(Serialize)]
-pub struct PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElExtendedKeyUsageEl {
+pub struct PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_ExtendedKeyUsage {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     client_auth: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1238,7 +1374,7 @@ pub struct PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElExtendedKeyU
     time_stamping: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElExtendedKeyUsageEl {
+impl PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_ExtendedKeyUsage {
     #[doc =
         "Set the field `client_auth`.\nCorresponds to OID 1.3.6.1.5.5.7.3.2. Officially described as \"TLS WWW client authentication\", though regularly used for non-WWW TLS."]
     pub fn set_client_auth(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -1282,8 +1418,8 @@ impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElExtendedKeyUsageEl
     }
 }
 
-impl terrars::ToListMappable for PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElExtendedKeyUsageEl {
-    type O = terrars::BlockAssignable<PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElExtendedKeyUsageEl>;
+impl terrars::ToListMappable for PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_ExtendedKeyUsage {
+    type O = terrars::BlockAssignable<PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_ExtendedKeyUsage>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1294,11 +1430,11 @@ impl terrars::ToListMappable for PrivatecaCaPoolIssuancePolicyElBaselineValuesEl
     }
 }
 
-pub struct BuildPrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElExtendedKeyUsageEl {}
+pub struct BuildPrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_ExtendedKeyUsage {}
 
-impl BuildPrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElExtendedKeyUsageEl {
-    pub fn build(self) -> PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElExtendedKeyUsageEl {
-        PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElExtendedKeyUsageEl {
+impl BuildPrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_ExtendedKeyUsage {
+    pub fn build(self) -> PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_ExtendedKeyUsage {
+        PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_ExtendedKeyUsage {
             client_auth: core::default::Default::default(),
             code_signing: core::default::Default::default(),
             email_protection: core::default::Default::default(),
@@ -1309,24 +1445,26 @@ impl BuildPrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElExtendedKeyUs
     }
 }
 
-pub struct PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElExtendedKeyUsageElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_ExtendedKeyUsageRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElExtendedKeyUsageElRef {
+impl terrars::Ref for PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_ExtendedKeyUsageRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElExtendedKeyUsageElRef {
-        PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElExtendedKeyUsageElRef {
+    ) -> PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_ExtendedKeyUsageRef {
+        PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_ExtendedKeyUsageRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElExtendedKeyUsageElRef {
+impl PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_ExtendedKeyUsageRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1369,16 +1507,15 @@ impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElExtendedKeyUsageEl
 }
 
 #[derive(Serialize)]
-pub struct PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElUnknownExtendedKeyUsagesEl {
+pub struct PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_UnknownExtendedKeyUsages {
     object_id_path: terrars::ListField<terrars::PrimField<f64>>,
 }
 
-impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElUnknownExtendedKeyUsagesEl { }
+impl PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_UnknownExtendedKeyUsages { }
 
-impl terrars::ToListMappable for PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElUnknownExtendedKeyUsagesEl {
+impl terrars::ToListMappable for PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_UnknownExtendedKeyUsages {
     type O =
-        terrars
-        ::BlockAssignable<PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElUnknownExtendedKeyUsagesEl>;
+        terrars::BlockAssignable<PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_UnknownExtendedKeyUsages>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1389,38 +1526,40 @@ impl terrars::ToListMappable for PrivatecaCaPoolIssuancePolicyElBaselineValuesEl
     }
 }
 
-pub struct BuildPrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElUnknownExtendedKeyUsagesEl {
+pub struct BuildPrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_UnknownExtendedKeyUsages {
     #[doc =
         "An ObjectId specifies an object identifier (OID). These provide context and describe types in ASN.1 messages."]
     pub object_id_path: terrars::ListField<terrars::PrimField<f64>>,
 }
 
-impl BuildPrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElUnknownExtendedKeyUsagesEl {
-    pub fn build(self) -> PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElUnknownExtendedKeyUsagesEl {
-        PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElUnknownExtendedKeyUsagesEl {
+impl BuildPrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_UnknownExtendedKeyUsages {
+    pub fn build(self) -> PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_UnknownExtendedKeyUsages {
+        PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_UnknownExtendedKeyUsages {
             object_id_path: self.object_id_path,
         }
     }
 }
 
-pub struct PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElUnknownExtendedKeyUsagesElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_UnknownExtendedKeyUsagesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElUnknownExtendedKeyUsagesElRef {
+impl terrars::Ref for PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_UnknownExtendedKeyUsagesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElUnknownExtendedKeyUsagesElRef {
-        PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElUnknownExtendedKeyUsagesElRef {
+    ) -> PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_UnknownExtendedKeyUsagesRef {
+        PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_UnknownExtendedKeyUsagesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElUnknownExtendedKeyUsagesElRef {
+impl PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_UnknownExtendedKeyUsagesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1433,38 +1572,36 @@ impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElUnknownExtendedKey
 }
 
 #[derive(Serialize, Default)]
-struct PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElDynamic {
+struct PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsageDynamic {
     base_key_usage: std
     ::option
-    ::Option<terrars::DynamicBlock<PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElBaseKeyUsageEl>>,
+    ::Option<terrars::DynamicBlock<PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_BaseKeyUsage>>,
     extended_key_usage: std
     ::option
-    ::Option<terrars::DynamicBlock<PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElExtendedKeyUsageEl>>,
+    ::Option<terrars::DynamicBlock<PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_ExtendedKeyUsage>>,
     unknown_extended_key_usages: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElUnknownExtendedKeyUsagesEl>,
-    >,
+    ::Option<terrars::DynamicBlock<PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_UnknownExtendedKeyUsages>>,
 }
 
 #[derive(Serialize)]
-pub struct PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageEl {
+pub struct PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     base_key_usage: std
     ::option
-    ::Option<std::vec::Vec<PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElBaseKeyUsageEl>>,
+    ::Option<std::vec::Vec<PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_BaseKeyUsage>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     extended_key_usage: std
     ::option
-    ::Option<std::vec::Vec<PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElExtendedKeyUsageEl>>,
+    ::Option<std::vec::Vec<PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_ExtendedKeyUsage>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     unknown_extended_key_usages: std
     ::option
-    ::Option<std::vec::Vec<PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElUnknownExtendedKeyUsagesEl>>,
-    dynamic: PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElDynamic,
+    ::Option<std::vec::Vec<PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_UnknownExtendedKeyUsages>>,
+    dynamic: PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsageDynamic,
 }
 
-impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageEl {
+impl PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage {
     #[doc = "Set the field `base_key_usage`.\n"]
     pub fn set_base_key_usage(
         mut self,
@@ -1474,8 +1611,7 @@ impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElBaseKeyUsageEl>,
+                        terrars::BlockAssignable<PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_BaseKeyUsage>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1499,7 +1635,7 @@ impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElExtendedKeyUsageEl>,
+                        ::BlockAssignable<PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_ExtendedKeyUsage>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1524,7 +1660,7 @@ impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElUnknownExtendedKeyUsagesEl,
+                            PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_UnknownExtendedKeyUsages,
                         >,
                     >,
     ) -> Self {
@@ -1540,8 +1676,8 @@ impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageEl {
     }
 }
 
-impl terrars::ToListMappable for PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageEl {
-    type O = terrars::BlockAssignable<PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageEl>;
+impl terrars::ToListMappable for PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage {
+    type O = terrars::BlockAssignable<PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1552,11 +1688,11 @@ impl terrars::ToListMappable for PrivatecaCaPoolIssuancePolicyElBaselineValuesEl
     }
 }
 
-pub struct BuildPrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageEl {}
+pub struct BuildPrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage {}
 
-impl BuildPrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageEl {
-    pub fn build(self) -> PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageEl {
-        PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageEl {
+impl BuildPrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage {
+    pub fn build(self) -> PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage {
+        PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage {
             base_key_usage: core::default::Default::default(),
             extended_key_usage: core::default::Default::default(),
             unknown_extended_key_usages: core::default::Default::default(),
@@ -1565,24 +1701,26 @@ impl BuildPrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageEl {
     }
 }
 
-pub struct PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsageRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElRef {
+impl terrars::Ref for PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsageRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElRef {
-        PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElRef {
+    ) -> PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsageRef {
+        PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsageRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElRef {
+impl PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsageRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1590,27 +1728,27 @@ impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElRef {
     #[doc = "Get a reference to the value of field `base_key_usage` after provisioning.\n"]
     pub fn base_key_usage(
         &self,
-    ) -> terrars::ListRef<PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElBaseKeyUsageElRef> {
+    ) -> terrars::ListRef<PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_BaseKeyUsageRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.base_key_usage", self.base))
     }
 
     #[doc = "Get a reference to the value of field `extended_key_usage` after provisioning.\n"]
     pub fn extended_key_usage(
         &self,
-    ) -> terrars::ListRef<PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElExtendedKeyUsageElRef> {
+    ) -> terrars::ListRef<PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_ExtendedKeyUsageRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.extended_key_usage", self.base))
     }
 
     #[doc = "Get a reference to the value of field `unknown_extended_key_usages` after provisioning.\n"]
     pub fn unknown_extended_key_usages(
         &self,
-    ) -> terrars::ListRef<PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElUnknownExtendedKeyUsagesElRef> {
+    ) -> terrars::ListRef<PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage_UnknownExtendedKeyUsagesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.unknown_extended_key_usages", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct PrivatecaCaPoolIssuancePolicyElBaselineValuesElNameConstraintsEl {
+pub struct PrivatecaCaPool_IssuancePolicy_BaselineValues_NameConstraints {
     critical: terrars::PrimField<bool>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     excluded_dns_names: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
@@ -1630,7 +1768,7 @@ pub struct PrivatecaCaPoolIssuancePolicyElBaselineValuesElNameConstraintsEl {
     permitted_uris: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElNameConstraintsEl {
+impl PrivatecaCaPool_IssuancePolicy_BaselineValues_NameConstraints {
     #[doc =
         "Set the field `excluded_dns_names`.\nContains excluded DNS names. Any DNS name that can be\nconstructed by simply adding zero or more labels to\nthe left-hand side of the name satisfies the name constraint.\nFor example, 'example.com', 'www.example.com', 'www.sub.example.com'\nwould satisfy 'example.com' while 'example1.com' does not."]
     pub fn set_excluded_dns_names(
@@ -1712,8 +1850,8 @@ impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElNameConstraintsEl {
     }
 }
 
-impl terrars::ToListMappable for PrivatecaCaPoolIssuancePolicyElBaselineValuesElNameConstraintsEl {
-    type O = terrars::BlockAssignable<PrivatecaCaPoolIssuancePolicyElBaselineValuesElNameConstraintsEl>;
+impl terrars::ToListMappable for PrivatecaCaPool_IssuancePolicy_BaselineValues_NameConstraints {
+    type O = terrars::BlockAssignable<PrivatecaCaPool_IssuancePolicy_BaselineValues_NameConstraints>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1724,14 +1862,14 @@ impl terrars::ToListMappable for PrivatecaCaPoolIssuancePolicyElBaselineValuesEl
     }
 }
 
-pub struct BuildPrivatecaCaPoolIssuancePolicyElBaselineValuesElNameConstraintsEl {
+pub struct BuildPrivatecaCaPool_IssuancePolicy_BaselineValues_NameConstraints {
     #[doc = "Indicates whether or not the name constraints are marked critical."]
     pub critical: terrars::PrimField<bool>,
 }
 
-impl BuildPrivatecaCaPoolIssuancePolicyElBaselineValuesElNameConstraintsEl {
-    pub fn build(self) -> PrivatecaCaPoolIssuancePolicyElBaselineValuesElNameConstraintsEl {
-        PrivatecaCaPoolIssuancePolicyElBaselineValuesElNameConstraintsEl {
+impl BuildPrivatecaCaPool_IssuancePolicy_BaselineValues_NameConstraints {
+    pub fn build(self) -> PrivatecaCaPool_IssuancePolicy_BaselineValues_NameConstraints {
+        PrivatecaCaPool_IssuancePolicy_BaselineValues_NameConstraints {
             critical: self.critical,
             excluded_dns_names: core::default::Default::default(),
             excluded_email_addresses: core::default::Default::default(),
@@ -1745,24 +1883,26 @@ impl BuildPrivatecaCaPoolIssuancePolicyElBaselineValuesElNameConstraintsEl {
     }
 }
 
-pub struct PrivatecaCaPoolIssuancePolicyElBaselineValuesElNameConstraintsElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCaPool_IssuancePolicy_BaselineValues_NameConstraintsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCaPoolIssuancePolicyElBaselineValuesElNameConstraintsElRef {
+impl terrars::Ref for PrivatecaCaPool_IssuancePolicy_BaselineValues_NameConstraintsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> PrivatecaCaPoolIssuancePolicyElBaselineValuesElNameConstraintsElRef {
-        PrivatecaCaPoolIssuancePolicyElBaselineValuesElNameConstraintsElRef {
+    ) -> PrivatecaCaPool_IssuancePolicy_BaselineValues_NameConstraintsRef {
+        PrivatecaCaPool_IssuancePolicy_BaselineValues_NameConstraintsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElNameConstraintsElRef {
+impl PrivatecaCaPool_IssuancePolicy_BaselineValues_NameConstraintsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1823,14 +1963,14 @@ impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElNameConstraintsElRef {
 }
 
 #[derive(Serialize)]
-pub struct PrivatecaCaPoolIssuancePolicyElBaselineValuesElPolicyIdsEl {
+pub struct PrivatecaCaPool_IssuancePolicy_BaselineValues_PolicyIds {
     object_id_path: terrars::ListField<terrars::PrimField<f64>>,
 }
 
-impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElPolicyIdsEl { }
+impl PrivatecaCaPool_IssuancePolicy_BaselineValues_PolicyIds { }
 
-impl terrars::ToListMappable for PrivatecaCaPoolIssuancePolicyElBaselineValuesElPolicyIdsEl {
-    type O = terrars::BlockAssignable<PrivatecaCaPoolIssuancePolicyElBaselineValuesElPolicyIdsEl>;
+impl terrars::ToListMappable for PrivatecaCaPool_IssuancePolicy_BaselineValues_PolicyIds {
+    type O = terrars::BlockAssignable<PrivatecaCaPool_IssuancePolicy_BaselineValues_PolicyIds>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1841,36 +1981,38 @@ impl terrars::ToListMappable for PrivatecaCaPoolIssuancePolicyElBaselineValuesEl
     }
 }
 
-pub struct BuildPrivatecaCaPoolIssuancePolicyElBaselineValuesElPolicyIdsEl {
+pub struct BuildPrivatecaCaPool_IssuancePolicy_BaselineValues_PolicyIds {
     #[doc =
         "An ObjectId specifies an object identifier (OID). These provide context and describe types in ASN.1 messages."]
     pub object_id_path: terrars::ListField<terrars::PrimField<f64>>,
 }
 
-impl BuildPrivatecaCaPoolIssuancePolicyElBaselineValuesElPolicyIdsEl {
-    pub fn build(self) -> PrivatecaCaPoolIssuancePolicyElBaselineValuesElPolicyIdsEl {
-        PrivatecaCaPoolIssuancePolicyElBaselineValuesElPolicyIdsEl { object_id_path: self.object_id_path }
+impl BuildPrivatecaCaPool_IssuancePolicy_BaselineValues_PolicyIds {
+    pub fn build(self) -> PrivatecaCaPool_IssuancePolicy_BaselineValues_PolicyIds {
+        PrivatecaCaPool_IssuancePolicy_BaselineValues_PolicyIds { object_id_path: self.object_id_path }
     }
 }
 
-pub struct PrivatecaCaPoolIssuancePolicyElBaselineValuesElPolicyIdsElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCaPool_IssuancePolicy_BaselineValues_PolicyIdsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCaPoolIssuancePolicyElBaselineValuesElPolicyIdsElRef {
+impl terrars::Ref for PrivatecaCaPool_IssuancePolicy_BaselineValues_PolicyIdsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> PrivatecaCaPoolIssuancePolicyElBaselineValuesElPolicyIdsElRef {
-        PrivatecaCaPoolIssuancePolicyElBaselineValuesElPolicyIdsElRef {
+    ) -> PrivatecaCaPool_IssuancePolicy_BaselineValues_PolicyIdsRef {
+        PrivatecaCaPool_IssuancePolicy_BaselineValues_PolicyIdsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElPolicyIdsElRef {
+impl PrivatecaCaPool_IssuancePolicy_BaselineValues_PolicyIdsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1883,44 +2025,38 @@ impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElPolicyIdsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct PrivatecaCaPoolIssuancePolicyElBaselineValuesElDynamic {
+struct PrivatecaCaPool_IssuancePolicy_BaselineValuesDynamic {
     additional_extensions: std
     ::option
-    ::Option<terrars::DynamicBlock<PrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsEl>>,
-    ca_options: std
-    ::option
-    ::Option<terrars::DynamicBlock<PrivatecaCaPoolIssuancePolicyElBaselineValuesElCaOptionsEl>>,
-    key_usage: std::option::Option<terrars::DynamicBlock<PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageEl>>,
+    ::Option<terrars::DynamicBlock<PrivatecaCaPool_IssuancePolicy_BaselineValues_AdditionalExtensions>>,
+    ca_options: std::option::Option<terrars::DynamicBlock<PrivatecaCaPool_IssuancePolicy_BaselineValues_CaOptions>>,
+    key_usage: std::option::Option<terrars::DynamicBlock<PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage>>,
     name_constraints: std
     ::option
-    ::Option<terrars::DynamicBlock<PrivatecaCaPoolIssuancePolicyElBaselineValuesElNameConstraintsEl>>,
-    policy_ids: std
-    ::option
-    ::Option<terrars::DynamicBlock<PrivatecaCaPoolIssuancePolicyElBaselineValuesElPolicyIdsEl>>,
+    ::Option<terrars::DynamicBlock<PrivatecaCaPool_IssuancePolicy_BaselineValues_NameConstraints>>,
+    policy_ids: std::option::Option<terrars::DynamicBlock<PrivatecaCaPool_IssuancePolicy_BaselineValues_PolicyIds>>,
 }
 
 #[derive(Serialize)]
-pub struct PrivatecaCaPoolIssuancePolicyElBaselineValuesEl {
+pub struct PrivatecaCaPool_IssuancePolicy_BaselineValues {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     aia_ocsp_servers: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     additional_extensions: std
     ::option
-    ::Option<std::vec::Vec<PrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsEl>>,
+    ::Option<std::vec::Vec<PrivatecaCaPool_IssuancePolicy_BaselineValues_AdditionalExtensions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ca_options: std::option::Option<std::vec::Vec<PrivatecaCaPoolIssuancePolicyElBaselineValuesElCaOptionsEl>>,
+    ca_options: std::option::Option<std::vec::Vec<PrivatecaCaPool_IssuancePolicy_BaselineValues_CaOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    key_usage: std::option::Option<std::vec::Vec<PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageEl>>,
+    key_usage: std::option::Option<std::vec::Vec<PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    name_constraints: std
-    ::option
-    ::Option<std::vec::Vec<PrivatecaCaPoolIssuancePolicyElBaselineValuesElNameConstraintsEl>>,
+    name_constraints: std::option::Option<std::vec::Vec<PrivatecaCaPool_IssuancePolicy_BaselineValues_NameConstraints>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    policy_ids: std::option::Option<std::vec::Vec<PrivatecaCaPoolIssuancePolicyElBaselineValuesElPolicyIdsEl>>,
-    dynamic: PrivatecaCaPoolIssuancePolicyElBaselineValuesElDynamic,
+    policy_ids: std::option::Option<std::vec::Vec<PrivatecaCaPool_IssuancePolicy_BaselineValues_PolicyIds>>,
+    dynamic: PrivatecaCaPool_IssuancePolicy_BaselineValuesDynamic,
 }
 
-impl PrivatecaCaPoolIssuancePolicyElBaselineValuesEl {
+impl PrivatecaCaPool_IssuancePolicy_BaselineValues {
     #[doc =
         "Set the field `aia_ocsp_servers`.\nDescribes Online Certificate Status Protocol (OCSP) endpoint addresses that appear in the\n\"Authority Information Access\" extension in the certificate."]
     pub fn set_aia_ocsp_servers(
@@ -1940,8 +2076,7 @@ impl PrivatecaCaPoolIssuancePolicyElBaselineValuesEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<PrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsEl>,
+                        terrars::BlockAssignable<PrivatecaCaPool_IssuancePolicy_BaselineValues_AdditionalExtensions>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1963,7 +2098,7 @@ impl PrivatecaCaPoolIssuancePolicyElBaselineValuesEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<PrivatecaCaPoolIssuancePolicyElBaselineValuesElCaOptionsEl>>,
+                    ::Into<terrars::BlockAssignable<PrivatecaCaPool_IssuancePolicy_BaselineValues_CaOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1979,12 +2114,7 @@ impl PrivatecaCaPoolIssuancePolicyElBaselineValuesEl {
     #[doc = "Set the field `key_usage`.\n"]
     pub fn set_key_usage(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsage>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2005,9 +2135,7 @@ impl PrivatecaCaPoolIssuancePolicyElBaselineValuesEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<PrivatecaCaPoolIssuancePolicyElBaselineValuesElNameConstraintsEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<PrivatecaCaPool_IssuancePolicy_BaselineValues_NameConstraints>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2028,7 +2156,7 @@ impl PrivatecaCaPoolIssuancePolicyElBaselineValuesEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<PrivatecaCaPoolIssuancePolicyElBaselineValuesElPolicyIdsEl>>,
+                    ::Into<terrars::BlockAssignable<PrivatecaCaPool_IssuancePolicy_BaselineValues_PolicyIds>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2042,8 +2170,8 @@ impl PrivatecaCaPoolIssuancePolicyElBaselineValuesEl {
     }
 }
 
-impl terrars::ToListMappable for PrivatecaCaPoolIssuancePolicyElBaselineValuesEl {
-    type O = terrars::BlockAssignable<PrivatecaCaPoolIssuancePolicyElBaselineValuesEl>;
+impl terrars::ToListMappable for PrivatecaCaPool_IssuancePolicy_BaselineValues {
+    type O = terrars::BlockAssignable<PrivatecaCaPool_IssuancePolicy_BaselineValues>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2054,11 +2182,11 @@ impl terrars::ToListMappable for PrivatecaCaPoolIssuancePolicyElBaselineValuesEl
     }
 }
 
-pub struct BuildPrivatecaCaPoolIssuancePolicyElBaselineValuesEl {}
+pub struct BuildPrivatecaCaPool_IssuancePolicy_BaselineValues {}
 
-impl BuildPrivatecaCaPoolIssuancePolicyElBaselineValuesEl {
-    pub fn build(self) -> PrivatecaCaPoolIssuancePolicyElBaselineValuesEl {
-        PrivatecaCaPoolIssuancePolicyElBaselineValuesEl {
+impl BuildPrivatecaCaPool_IssuancePolicy_BaselineValues {
+    pub fn build(self) -> PrivatecaCaPool_IssuancePolicy_BaselineValues {
+        PrivatecaCaPool_IssuancePolicy_BaselineValues {
             aia_ocsp_servers: core::default::Default::default(),
             additional_extensions: core::default::Default::default(),
             ca_options: core::default::Default::default(),
@@ -2070,24 +2198,26 @@ impl BuildPrivatecaCaPoolIssuancePolicyElBaselineValuesEl {
     }
 }
 
-pub struct PrivatecaCaPoolIssuancePolicyElBaselineValuesElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCaPool_IssuancePolicy_BaselineValuesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCaPoolIssuancePolicyElBaselineValuesElRef {
+impl terrars::Ref for PrivatecaCaPool_IssuancePolicy_BaselineValuesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> PrivatecaCaPoolIssuancePolicyElBaselineValuesElRef {
-        PrivatecaCaPoolIssuancePolicyElBaselineValuesElRef {
+    ) -> PrivatecaCaPool_IssuancePolicy_BaselineValuesRef {
+        PrivatecaCaPool_IssuancePolicy_BaselineValuesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElRef {
+impl PrivatecaCaPool_IssuancePolicy_BaselineValuesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2101,35 +2231,33 @@ impl PrivatecaCaPoolIssuancePolicyElBaselineValuesElRef {
     #[doc = "Get a reference to the value of field `additional_extensions` after provisioning.\n"]
     pub fn additional_extensions(
         &self,
-    ) -> terrars::ListRef<PrivatecaCaPoolIssuancePolicyElBaselineValuesElAdditionalExtensionsElRef> {
+    ) -> terrars::ListRef<PrivatecaCaPool_IssuancePolicy_BaselineValues_AdditionalExtensionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.additional_extensions", self.base))
     }
 
     #[doc = "Get a reference to the value of field `ca_options` after provisioning.\n"]
-    pub fn ca_options(&self) -> terrars::ListRef<PrivatecaCaPoolIssuancePolicyElBaselineValuesElCaOptionsElRef> {
+    pub fn ca_options(&self) -> terrars::ListRef<PrivatecaCaPool_IssuancePolicy_BaselineValues_CaOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ca_options", self.base))
     }
 
     #[doc = "Get a reference to the value of field `key_usage` after provisioning.\n"]
-    pub fn key_usage(&self) -> terrars::ListRef<PrivatecaCaPoolIssuancePolicyElBaselineValuesElKeyUsageElRef> {
+    pub fn key_usage(&self) -> terrars::ListRef<PrivatecaCaPool_IssuancePolicy_BaselineValues_KeyUsageRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.key_usage", self.base))
     }
 
     #[doc = "Get a reference to the value of field `name_constraints` after provisioning.\n"]
-    pub fn name_constraints(
-        &self,
-    ) -> terrars::ListRef<PrivatecaCaPoolIssuancePolicyElBaselineValuesElNameConstraintsElRef> {
+    pub fn name_constraints(&self) -> terrars::ListRef<PrivatecaCaPool_IssuancePolicy_BaselineValues_NameConstraintsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.name_constraints", self.base))
     }
 
     #[doc = "Get a reference to the value of field `policy_ids` after provisioning.\n"]
-    pub fn policy_ids(&self) -> terrars::ListRef<PrivatecaCaPoolIssuancePolicyElBaselineValuesElPolicyIdsElRef> {
+    pub fn policy_ids(&self) -> terrars::ListRef<PrivatecaCaPool_IssuancePolicy_BaselineValues_PolicyIdsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.policy_ids", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct PrivatecaCaPoolIssuancePolicyElIdentityConstraintsElCelExpressionEl {
+pub struct PrivatecaCaPool_IssuancePolicy_IdentityConstraints_CelExpression {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
@@ -2139,7 +2267,7 @@ pub struct PrivatecaCaPoolIssuancePolicyElIdentityConstraintsElCelExpressionEl {
     title: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl PrivatecaCaPoolIssuancePolicyElIdentityConstraintsElCelExpressionEl {
+impl PrivatecaCaPool_IssuancePolicy_IdentityConstraints_CelExpression {
     #[doc =
         "Set the field `description`.\nDescription of the expression. This is a longer text which describes the expression, e.g. when hovered over it in a UI."]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -2162,8 +2290,8 @@ impl PrivatecaCaPoolIssuancePolicyElIdentityConstraintsElCelExpressionEl {
     }
 }
 
-impl terrars::ToListMappable for PrivatecaCaPoolIssuancePolicyElIdentityConstraintsElCelExpressionEl {
-    type O = terrars::BlockAssignable<PrivatecaCaPoolIssuancePolicyElIdentityConstraintsElCelExpressionEl>;
+impl terrars::ToListMappable for PrivatecaCaPool_IssuancePolicy_IdentityConstraints_CelExpression {
+    type O = terrars::BlockAssignable<PrivatecaCaPool_IssuancePolicy_IdentityConstraints_CelExpression>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2174,14 +2302,14 @@ impl terrars::ToListMappable for PrivatecaCaPoolIssuancePolicyElIdentityConstrai
     }
 }
 
-pub struct BuildPrivatecaCaPoolIssuancePolicyElIdentityConstraintsElCelExpressionEl {
+pub struct BuildPrivatecaCaPool_IssuancePolicy_IdentityConstraints_CelExpression {
     #[doc = "Textual representation of an expression in Common Expression Language syntax."]
     pub expression: terrars::PrimField<std::string::String>,
 }
 
-impl BuildPrivatecaCaPoolIssuancePolicyElIdentityConstraintsElCelExpressionEl {
-    pub fn build(self) -> PrivatecaCaPoolIssuancePolicyElIdentityConstraintsElCelExpressionEl {
-        PrivatecaCaPoolIssuancePolicyElIdentityConstraintsElCelExpressionEl {
+impl BuildPrivatecaCaPool_IssuancePolicy_IdentityConstraints_CelExpression {
+    pub fn build(self) -> PrivatecaCaPool_IssuancePolicy_IdentityConstraints_CelExpression {
+        PrivatecaCaPool_IssuancePolicy_IdentityConstraints_CelExpression {
             description: core::default::Default::default(),
             expression: self.expression,
             location: core::default::Default::default(),
@@ -2190,24 +2318,26 @@ impl BuildPrivatecaCaPoolIssuancePolicyElIdentityConstraintsElCelExpressionEl {
     }
 }
 
-pub struct PrivatecaCaPoolIssuancePolicyElIdentityConstraintsElCelExpressionElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCaPool_IssuancePolicy_IdentityConstraints_CelExpressionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCaPoolIssuancePolicyElIdentityConstraintsElCelExpressionElRef {
+impl terrars::Ref for PrivatecaCaPool_IssuancePolicy_IdentityConstraints_CelExpressionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> PrivatecaCaPoolIssuancePolicyElIdentityConstraintsElCelExpressionElRef {
-        PrivatecaCaPoolIssuancePolicyElIdentityConstraintsElCelExpressionElRef {
+    ) -> PrivatecaCaPool_IssuancePolicy_IdentityConstraints_CelExpressionRef {
+        PrivatecaCaPool_IssuancePolicy_IdentityConstraints_CelExpressionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCaPoolIssuancePolicyElIdentityConstraintsElCelExpressionElRef {
+impl PrivatecaCaPool_IssuancePolicy_IdentityConstraints_CelExpressionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2238,24 +2368,22 @@ impl PrivatecaCaPoolIssuancePolicyElIdentityConstraintsElCelExpressionElRef {
 }
 
 #[derive(Serialize, Default)]
-struct PrivatecaCaPoolIssuancePolicyElIdentityConstraintsElDynamic {
+struct PrivatecaCaPool_IssuancePolicy_IdentityConstraintsDynamic {
     cel_expression: std
     ::option
-    ::Option<terrars::DynamicBlock<PrivatecaCaPoolIssuancePolicyElIdentityConstraintsElCelExpressionEl>>,
+    ::Option<terrars::DynamicBlock<PrivatecaCaPool_IssuancePolicy_IdentityConstraints_CelExpression>>,
 }
 
 #[derive(Serialize)]
-pub struct PrivatecaCaPoolIssuancePolicyElIdentityConstraintsEl {
+pub struct PrivatecaCaPool_IssuancePolicy_IdentityConstraints {
     allow_subject_alt_names_passthrough: terrars::PrimField<bool>,
     allow_subject_passthrough: terrars::PrimField<bool>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cel_expression: std
-    ::option
-    ::Option<std::vec::Vec<PrivatecaCaPoolIssuancePolicyElIdentityConstraintsElCelExpressionEl>>,
-    dynamic: PrivatecaCaPoolIssuancePolicyElIdentityConstraintsElDynamic,
+    cel_expression: std::option::Option<std::vec::Vec<PrivatecaCaPool_IssuancePolicy_IdentityConstraints_CelExpression>>,
+    dynamic: PrivatecaCaPool_IssuancePolicy_IdentityConstraintsDynamic,
 }
 
-impl PrivatecaCaPoolIssuancePolicyElIdentityConstraintsEl {
+impl PrivatecaCaPool_IssuancePolicy_IdentityConstraints {
     #[doc = "Set the field `cel_expression`.\n"]
     pub fn set_cel_expression(
         mut self,
@@ -2265,7 +2393,7 @@ impl PrivatecaCaPoolIssuancePolicyElIdentityConstraintsEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<PrivatecaCaPoolIssuancePolicyElIdentityConstraintsElCelExpressionEl>,
+                        terrars::BlockAssignable<PrivatecaCaPool_IssuancePolicy_IdentityConstraints_CelExpression>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2280,8 +2408,8 @@ impl PrivatecaCaPoolIssuancePolicyElIdentityConstraintsEl {
     }
 }
 
-impl terrars::ToListMappable for PrivatecaCaPoolIssuancePolicyElIdentityConstraintsEl {
-    type O = terrars::BlockAssignable<PrivatecaCaPoolIssuancePolicyElIdentityConstraintsEl>;
+impl terrars::ToListMappable for PrivatecaCaPool_IssuancePolicy_IdentityConstraints {
+    type O = terrars::BlockAssignable<PrivatecaCaPool_IssuancePolicy_IdentityConstraints>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2292,7 +2420,7 @@ impl terrars::ToListMappable for PrivatecaCaPoolIssuancePolicyElIdentityConstrai
     }
 }
 
-pub struct BuildPrivatecaCaPoolIssuancePolicyElIdentityConstraintsEl {
+pub struct BuildPrivatecaCaPool_IssuancePolicy_IdentityConstraints {
     #[doc =
         "If this is set, the SubjectAltNames extension may be copied from a certificate request into the signed certificate.\nOtherwise, the requested SubjectAltNames will be discarded."]
     pub allow_subject_alt_names_passthrough: terrars::PrimField<bool>,
@@ -2301,9 +2429,9 @@ pub struct BuildPrivatecaCaPoolIssuancePolicyElIdentityConstraintsEl {
     pub allow_subject_passthrough: terrars::PrimField<bool>,
 }
 
-impl BuildPrivatecaCaPoolIssuancePolicyElIdentityConstraintsEl {
-    pub fn build(self) -> PrivatecaCaPoolIssuancePolicyElIdentityConstraintsEl {
-        PrivatecaCaPoolIssuancePolicyElIdentityConstraintsEl {
+impl BuildPrivatecaCaPool_IssuancePolicy_IdentityConstraints {
+    pub fn build(self) -> PrivatecaCaPool_IssuancePolicy_IdentityConstraints {
+        PrivatecaCaPool_IssuancePolicy_IdentityConstraints {
             allow_subject_alt_names_passthrough: self.allow_subject_alt_names_passthrough,
             allow_subject_passthrough: self.allow_subject_passthrough,
             cel_expression: core::default::Default::default(),
@@ -2312,24 +2440,26 @@ impl BuildPrivatecaCaPoolIssuancePolicyElIdentityConstraintsEl {
     }
 }
 
-pub struct PrivatecaCaPoolIssuancePolicyElIdentityConstraintsElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCaPool_IssuancePolicy_IdentityConstraintsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCaPoolIssuancePolicyElIdentityConstraintsElRef {
+impl terrars::Ref for PrivatecaCaPool_IssuancePolicy_IdentityConstraintsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> PrivatecaCaPoolIssuancePolicyElIdentityConstraintsElRef {
-        PrivatecaCaPoolIssuancePolicyElIdentityConstraintsElRef {
+    ) -> PrivatecaCaPool_IssuancePolicy_IdentityConstraintsRef {
+        PrivatecaCaPool_IssuancePolicy_IdentityConstraintsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCaPoolIssuancePolicyElIdentityConstraintsElRef {
+impl PrivatecaCaPool_IssuancePolicy_IdentityConstraintsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2349,39 +2479,60 @@ impl PrivatecaCaPoolIssuancePolicyElIdentityConstraintsElRef {
     #[doc = "Get a reference to the value of field `cel_expression` after provisioning.\n"]
     pub fn cel_expression(
         &self,
-    ) -> terrars::ListRef<PrivatecaCaPoolIssuancePolicyElIdentityConstraintsElCelExpressionElRef> {
+    ) -> terrars::ListRef<PrivatecaCaPool_IssuancePolicy_IdentityConstraints_CelExpressionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cel_expression", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct PrivatecaCaPoolIssuancePolicyElDynamic {
+struct PrivatecaCaPool_IssuancePolicyDynamic {
     allowed_issuance_modes: std
     ::option
-    ::Option<terrars::DynamicBlock<PrivatecaCaPoolIssuancePolicyElAllowedIssuanceModesEl>>,
-    allowed_key_types: std::option::Option<terrars::DynamicBlock<PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesEl>>,
-    baseline_values: std::option::Option<terrars::DynamicBlock<PrivatecaCaPoolIssuancePolicyElBaselineValuesEl>>,
+    ::Option<terrars::DynamicBlock<PrivatecaCaPool_IssuancePolicy_AllowedIssuanceModes>>,
+    allowed_key_types: std::option::Option<terrars::DynamicBlock<PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes>>,
+    baseline_values: std::option::Option<terrars::DynamicBlock<PrivatecaCaPool_IssuancePolicy_BaselineValues>>,
     identity_constraints: std
     ::option
-    ::Option<terrars::DynamicBlock<PrivatecaCaPoolIssuancePolicyElIdentityConstraintsEl>>,
+    ::Option<terrars::DynamicBlock<PrivatecaCaPool_IssuancePolicy_IdentityConstraints>>,
 }
 
 #[derive(Serialize)]
-pub struct PrivatecaCaPoolIssuancePolicyEl {
+pub struct PrivatecaCaPool_IssuancePolicy {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    allow_requester_specified_not_before_time: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    backdate_duration: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     maximum_lifetime: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    allowed_issuance_modes: std::option::Option<std::vec::Vec<PrivatecaCaPoolIssuancePolicyElAllowedIssuanceModesEl>>,
+    allowed_issuance_modes: std::option::Option<std::vec::Vec<PrivatecaCaPool_IssuancePolicy_AllowedIssuanceModes>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    allowed_key_types: std::option::Option<std::vec::Vec<PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesEl>>,
+    allowed_key_types: std::option::Option<std::vec::Vec<PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    baseline_values: std::option::Option<std::vec::Vec<PrivatecaCaPoolIssuancePolicyElBaselineValuesEl>>,
+    baseline_values: std::option::Option<std::vec::Vec<PrivatecaCaPool_IssuancePolicy_BaselineValues>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    identity_constraints: std::option::Option<std::vec::Vec<PrivatecaCaPoolIssuancePolicyElIdentityConstraintsEl>>,
-    dynamic: PrivatecaCaPoolIssuancePolicyElDynamic,
+    identity_constraints: std::option::Option<std::vec::Vec<PrivatecaCaPool_IssuancePolicy_IdentityConstraints>>,
+    dynamic: PrivatecaCaPool_IssuancePolicyDynamic,
 }
 
-impl PrivatecaCaPoolIssuancePolicyEl {
+impl PrivatecaCaPool_IssuancePolicy {
+    #[doc =
+        "Set the field `allow_requester_specified_not_before_time`.\nIf set to true, allows requesters to specify the requested_not_before_time\nfield when creating a Certificate. Certificates requested with this\noption enabled will have a 'not_before_time' equal to the value\nspecified in the request."]
+    pub fn set_allow_requester_specified_not_before_time(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<bool>>,
+    ) -> Self {
+        self.allow_requester_specified_not_before_time = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `backdate_duration`.\nThe duration to backdate all certificates issued from this CaPool. If not set, the\ncertificates will be issued with a not_before_time of the issuance time (i.e. the current\ntime). If set, the certificates will be issued with a not_before_time of the issuance\ntime minus the backdate_duration. The not_after_time will be adjusted to preserve the\nrequested lifetime. The backdate_duration must be less than or equal to 48 hours."]
+    pub fn set_backdate_duration(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.backdate_duration = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc =
         "Set the field `maximum_lifetime`.\nThe maximum lifetime allowed for issued Certificates. Note that if the issuing CertificateAuthority\nexpires before a Certificate's requested maximumLifetime, the effective lifetime will be explicitly truncated to match it."]
     pub fn set_maximum_lifetime(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -2392,7 +2543,7 @@ impl PrivatecaCaPoolIssuancePolicyEl {
     #[doc = "Set the field `allowed_issuance_modes`.\n"]
     pub fn set_allowed_issuance_modes(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<PrivatecaCaPoolIssuancePolicyElAllowedIssuanceModesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<PrivatecaCaPool_IssuancePolicy_AllowedIssuanceModes>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2408,7 +2559,7 @@ impl PrivatecaCaPoolIssuancePolicyEl {
     #[doc = "Set the field `allowed_key_types`.\n"]
     pub fn set_allowed_key_types(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<PrivatecaCaPool_IssuancePolicy_AllowedKeyTypes>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2424,7 +2575,7 @@ impl PrivatecaCaPoolIssuancePolicyEl {
     #[doc = "Set the field `baseline_values`.\n"]
     pub fn set_baseline_values(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<PrivatecaCaPoolIssuancePolicyElBaselineValuesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<PrivatecaCaPool_IssuancePolicy_BaselineValues>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2440,7 +2591,7 @@ impl PrivatecaCaPoolIssuancePolicyEl {
     #[doc = "Set the field `identity_constraints`.\n"]
     pub fn set_identity_constraints(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<PrivatecaCaPoolIssuancePolicyElIdentityConstraintsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<PrivatecaCaPool_IssuancePolicy_IdentityConstraints>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2454,8 +2605,8 @@ impl PrivatecaCaPoolIssuancePolicyEl {
     }
 }
 
-impl terrars::ToListMappable for PrivatecaCaPoolIssuancePolicyEl {
-    type O = terrars::BlockAssignable<PrivatecaCaPoolIssuancePolicyEl>;
+impl terrars::ToListMappable for PrivatecaCaPool_IssuancePolicy {
+    type O = terrars::BlockAssignable<PrivatecaCaPool_IssuancePolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2466,11 +2617,13 @@ impl terrars::ToListMappable for PrivatecaCaPoolIssuancePolicyEl {
     }
 }
 
-pub struct BuildPrivatecaCaPoolIssuancePolicyEl {}
+pub struct BuildPrivatecaCaPool_IssuancePolicy {}
 
-impl BuildPrivatecaCaPoolIssuancePolicyEl {
-    pub fn build(self) -> PrivatecaCaPoolIssuancePolicyEl {
-        PrivatecaCaPoolIssuancePolicyEl {
+impl BuildPrivatecaCaPool_IssuancePolicy {
+    pub fn build(self) -> PrivatecaCaPool_IssuancePolicy {
+        PrivatecaCaPool_IssuancePolicy {
+            allow_requester_specified_not_before_time: core::default::Default::default(),
+            backdate_duration: core::default::Default::default(),
             maximum_lifetime: core::default::Default::default(),
             allowed_issuance_modes: core::default::Default::default(),
             allowed_key_types: core::default::Default::default(),
@@ -2481,23 +2634,40 @@ impl BuildPrivatecaCaPoolIssuancePolicyEl {
     }
 }
 
-pub struct PrivatecaCaPoolIssuancePolicyElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCaPool_IssuancePolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCaPoolIssuancePolicyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> PrivatecaCaPoolIssuancePolicyElRef {
-        PrivatecaCaPoolIssuancePolicyElRef {
+impl terrars::Ref for PrivatecaCaPool_IssuancePolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> PrivatecaCaPool_IssuancePolicyRef {
+        PrivatecaCaPool_IssuancePolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCaPoolIssuancePolicyElRef {
+impl PrivatecaCaPool_IssuancePolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `allow_requester_specified_not_before_time` after provisioning.\nIf set to true, allows requesters to specify the requested_not_before_time\nfield when creating a Certificate. Certificates requested with this\noption enabled will have a 'not_before_time' equal to the value\nspecified in the request."]
+    pub fn allow_requester_specified_not_before_time(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.allow_requester_specified_not_before_time", self.base),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `backdate_duration` after provisioning.\nThe duration to backdate all certificates issued from this CaPool. If not set, the\ncertificates will be issued with a not_before_time of the issuance time (i.e. the current\ntime). If set, the certificates will be issued with a not_before_time of the issuance\ntime minus the backdate_duration. The not_after_time will be adjusted to preserve the\nrequested lifetime. The backdate_duration must be less than or equal to 48 hours."]
+    pub fn backdate_duration(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.backdate_duration", self.base))
     }
 
     #[doc =
@@ -2507,35 +2677,35 @@ impl PrivatecaCaPoolIssuancePolicyElRef {
     }
 
     #[doc = "Get a reference to the value of field `allowed_issuance_modes` after provisioning.\n"]
-    pub fn allowed_issuance_modes(&self) -> terrars::ListRef<PrivatecaCaPoolIssuancePolicyElAllowedIssuanceModesElRef> {
+    pub fn allowed_issuance_modes(&self) -> terrars::ListRef<PrivatecaCaPool_IssuancePolicy_AllowedIssuanceModesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.allowed_issuance_modes", self.base))
     }
 
     #[doc = "Get a reference to the value of field `allowed_key_types` after provisioning.\n"]
-    pub fn allowed_key_types(&self) -> terrars::ListRef<PrivatecaCaPoolIssuancePolicyElAllowedKeyTypesElRef> {
+    pub fn allowed_key_types(&self) -> terrars::ListRef<PrivatecaCaPool_IssuancePolicy_AllowedKeyTypesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.allowed_key_types", self.base))
     }
 
     #[doc = "Get a reference to the value of field `baseline_values` after provisioning.\n"]
-    pub fn baseline_values(&self) -> terrars::ListRef<PrivatecaCaPoolIssuancePolicyElBaselineValuesElRef> {
+    pub fn baseline_values(&self) -> terrars::ListRef<PrivatecaCaPool_IssuancePolicy_BaselineValuesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.baseline_values", self.base))
     }
 
     #[doc = "Get a reference to the value of field `identity_constraints` after provisioning.\n"]
-    pub fn identity_constraints(&self) -> terrars::ListRef<PrivatecaCaPoolIssuancePolicyElIdentityConstraintsElRef> {
+    pub fn identity_constraints(&self) -> terrars::ListRef<PrivatecaCaPool_IssuancePolicy_IdentityConstraintsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.identity_constraints", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct PrivatecaCaPoolPublishingOptionsEl {
+pub struct PrivatecaCaPool_PublishingOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     encoding_format: std::option::Option<terrars::PrimField<std::string::String>>,
     publish_ca_cert: terrars::PrimField<bool>,
     publish_crl: terrars::PrimField<bool>,
 }
 
-impl PrivatecaCaPoolPublishingOptionsEl {
+impl PrivatecaCaPool_PublishingOptions {
     #[doc =
         "Set the field `encoding_format`.\nSpecifies the encoding format of each CertificateAuthority's CA\ncertificate and CRLs. If this is omitted, CA certificates and CRLs\nwill be published in PEM. Possible values: [\"PEM\", \"DER\"]"]
     pub fn set_encoding_format(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -2544,8 +2714,8 @@ impl PrivatecaCaPoolPublishingOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for PrivatecaCaPoolPublishingOptionsEl {
-    type O = terrars::BlockAssignable<PrivatecaCaPoolPublishingOptionsEl>;
+impl terrars::ToListMappable for PrivatecaCaPool_PublishingOptions {
+    type O = terrars::BlockAssignable<PrivatecaCaPool_PublishingOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2556,7 +2726,7 @@ impl terrars::ToListMappable for PrivatecaCaPoolPublishingOptionsEl {
     }
 }
 
-pub struct BuildPrivatecaCaPoolPublishingOptionsEl {
+pub struct BuildPrivatecaCaPool_PublishingOptions {
     #[doc =
         "When true, publishes each CertificateAuthority's CA certificate and includes its URL in the \"Authority Information Access\"\nX.509 extension in all issued Certificates. If this is false, the CA certificate will not be published and the corresponding\nX.509 extension will not be written in issued certificates."]
     pub publish_ca_cert: terrars::PrimField<bool>,
@@ -2565,9 +2735,9 @@ pub struct BuildPrivatecaCaPoolPublishingOptionsEl {
     pub publish_crl: terrars::PrimField<bool>,
 }
 
-impl BuildPrivatecaCaPoolPublishingOptionsEl {
-    pub fn build(self) -> PrivatecaCaPoolPublishingOptionsEl {
-        PrivatecaCaPoolPublishingOptionsEl {
+impl BuildPrivatecaCaPool_PublishingOptions {
+    pub fn build(self) -> PrivatecaCaPool_PublishingOptions {
+        PrivatecaCaPool_PublishingOptions {
             encoding_format: core::default::Default::default(),
             publish_ca_cert: self.publish_ca_cert,
             publish_crl: self.publish_crl,
@@ -2575,21 +2745,23 @@ impl BuildPrivatecaCaPoolPublishingOptionsEl {
     }
 }
 
-pub struct PrivatecaCaPoolPublishingOptionsElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCaPool_PublishingOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCaPoolPublishingOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> PrivatecaCaPoolPublishingOptionsElRef {
-        PrivatecaCaPoolPublishingOptionsElRef {
+impl terrars::Ref for PrivatecaCaPool_PublishingOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> PrivatecaCaPool_PublishingOptionsRef {
+        PrivatecaCaPool_PublishingOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCaPoolPublishingOptionsElRef {
+impl PrivatecaCaPool_PublishingOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2614,7 +2786,7 @@ impl PrivatecaCaPoolPublishingOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct PrivatecaCaPoolTimeoutsEl {
+pub struct PrivatecaCaPool_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2623,7 +2795,7 @@ pub struct PrivatecaCaPoolTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl PrivatecaCaPoolTimeoutsEl {
+impl PrivatecaCaPool_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -2643,8 +2815,8 @@ impl PrivatecaCaPoolTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for PrivatecaCaPoolTimeoutsEl {
-    type O = terrars::BlockAssignable<PrivatecaCaPoolTimeoutsEl>;
+impl terrars::ToListMappable for PrivatecaCaPool_Timeouts {
+    type O = terrars::BlockAssignable<PrivatecaCaPool_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2655,11 +2827,11 @@ impl terrars::ToListMappable for PrivatecaCaPoolTimeoutsEl {
     }
 }
 
-pub struct BuildPrivatecaCaPoolTimeoutsEl {}
+pub struct BuildPrivatecaCaPool_Timeouts {}
 
-impl BuildPrivatecaCaPoolTimeoutsEl {
-    pub fn build(self) -> PrivatecaCaPoolTimeoutsEl {
-        PrivatecaCaPoolTimeoutsEl {
+impl BuildPrivatecaCaPool_Timeouts {
+    pub fn build(self) -> PrivatecaCaPool_Timeouts {
+        PrivatecaCaPool_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -2667,21 +2839,23 @@ impl BuildPrivatecaCaPoolTimeoutsEl {
     }
 }
 
-pub struct PrivatecaCaPoolTimeoutsElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCaPool_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCaPoolTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> PrivatecaCaPoolTimeoutsElRef {
-        PrivatecaCaPoolTimeoutsElRef {
+impl terrars::Ref for PrivatecaCaPool_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> PrivatecaCaPool_TimeoutsRef {
+        PrivatecaCaPool_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCaPoolTimeoutsElRef {
+impl PrivatecaCaPool_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2700,10 +2874,4 @@ impl PrivatecaCaPoolTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct PrivatecaCaPoolDynamic {
-    issuance_policy: std::option::Option<terrars::DynamicBlock<PrivatecaCaPoolIssuancePolicyEl>>,
-    publishing_options: std::option::Option<terrars::DynamicBlock<PrivatecaCaPoolPublishingOptionsEl>>,
 }

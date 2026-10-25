@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct StorageNotificationData {
+struct StorageNotificationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,8 +26,6 @@ struct StorageNotificationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     event_types: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     object_name_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
     payload_format: terrars::PrimField<std::string::String>,
     topic: terrars::PrimField<std::string::String>,
@@ -34,7 +34,7 @@ struct StorageNotificationData {
 struct StorageNotification_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<StorageNotificationData>,
+    data: std::cell::RefCell<StorageNotificationData_>,
 }
 
 #[derive(Clone)]
@@ -135,7 +135,7 @@ impl StorageNotification {
     }
 
     #[doc =
-        "Set the field `custom_attributes`.\n A set of key/value attribute pairs to attach to each Cloud Pub/Sub message published for this notification subscription"]
+        "Set the field `custom_attributes`.\nA set of key/value attribute pairs to attach to each Cloud Pub/Sub message published for this notification subscription."]
     pub fn set_custom_attributes(
         self,
         v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -154,12 +154,6 @@ impl StorageNotification {
         self
     }
 
-    #[doc = "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
-        self
-    }
-
     #[doc =
         "Set the field `object_name_prefix`.\nSpecifies a prefix path filter for this notification config. Cloud Storage will only send notifications for objects in this bucket whose names begin with the specified prefix."]
     pub fn set_object_name_prefix(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -173,7 +167,7 @@ impl StorageNotification {
     }
 
     #[doc =
-        "Get a reference to the value of field `custom_attributes` after provisioning.\n A set of key/value attribute pairs to attach to each Cloud Pub/Sub message published for this notification subscription"]
+        "Get a reference to the value of field `custom_attributes` after provisioning.\nA set of key/value attribute pairs to attach to each Cloud Pub/Sub message published for this notification subscription."]
     pub fn custom_attributes(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.custom_attributes", self.extract_ref()))
     }
@@ -213,7 +207,7 @@ impl StorageNotification {
     }
 
     #[doc =
-        "Get a reference to the value of field `topic` after provisioning.\nThe Cloud Pub/Sub topic to which this subscription publishes. Expects either the  topic name, assumed to belong to the default GCP provider project, or the project-level name,  i.e. projects/my-gcp-project/topics/my-topic or my-topic. If the project is not set in the provider, you will need to use the project-level name."]
+        "Get a reference to the value of field `topic` after provisioning.\nThe Cloud Pub/Sub topic to which this subscription publishes."]
     pub fn topic(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.topic", self.extract_ref()))
     }
@@ -256,8 +250,7 @@ pub struct BuildStorageNotification {
     pub bucket: terrars::PrimField<std::string::String>,
     #[doc = "The desired content of the Payload. One of \"JSON_API_V1\" or \"NONE\"."]
     pub payload_format: terrars::PrimField<std::string::String>,
-    #[doc =
-        "The Cloud Pub/Sub topic to which this subscription publishes. Expects either the  topic name, assumed to belong to the default GCP provider project, or the project-level name,  i.e. projects/my-gcp-project/topics/my-topic or my-topic. If the project is not set in the provider, you will need to use the project-level name."]
+    #[doc = "The Cloud Pub/Sub topic to which this subscription publishes."]
     pub topic: terrars::PrimField<std::string::String>,
 }
 
@@ -266,7 +259,7 @@ impl BuildStorageNotification {
         let out = StorageNotification(std::rc::Rc::new(StorageNotification_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(StorageNotificationData {
+            data: std::cell::RefCell::new(StorageNotificationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -275,7 +268,6 @@ impl BuildStorageNotification {
                 bucket: self.bucket,
                 custom_attributes: core::default::Default::default(),
                 event_types: core::default::Default::default(),
-                id: core::default::Default::default(),
                 object_name_prefix: core::default::Default::default(),
                 payload_format: self.payload_format,
                 topic: self.topic,
@@ -315,7 +307,7 @@ impl StorageNotificationRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `custom_attributes` after provisioning.\n A set of key/value attribute pairs to attach to each Cloud Pub/Sub message published for this notification subscription"]
+        "Get a reference to the value of field `custom_attributes` after provisioning.\nA set of key/value attribute pairs to attach to each Cloud Pub/Sub message published for this notification subscription."]
     pub fn custom_attributes(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.custom_attributes", self.extract_ref()))
     }
@@ -355,7 +347,7 @@ impl StorageNotificationRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `topic` after provisioning.\nThe Cloud Pub/Sub topic to which this subscription publishes. Expects either the  topic name, assumed to belong to the default GCP provider project, or the project-level name,  i.e. projects/my-gcp-project/topics/my-topic or my-topic. If the project is not set in the provider, you will need to use the project-level name."]
+        "Get a reference to the value of field `topic` after provisioning.\nThe Cloud Pub/Sub topic to which this subscription publishes."]
     pub fn topic(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.topic", self.extract_ref()))
     }

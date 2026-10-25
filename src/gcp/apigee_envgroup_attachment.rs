@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ApigeeEnvgroupAttachmentData {
+struct ApigeeEnvgroupAttachmentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,18 +20,20 @@ struct ApigeeEnvgroupAttachmentData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     envgroup_id: terrars::PrimField<std::string::String>,
     environment: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ApigeeEnvgroupAttachmentTimeoutsEl>,
+    timeouts: std::option::Option<ApigeeEnvgroupAttachment_Timeouts>,
 }
 
 struct ApigeeEnvgroupAttachment_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ApigeeEnvgroupAttachmentData>,
+    data: std::cell::RefCell<ApigeeEnvgroupAttachmentData_>,
 }
 
 #[derive(Clone)]
@@ -129,6 +133,13 @@ impl ApigeeEnvgroupAttachment {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -136,9 +147,15 @@ impl ApigeeEnvgroupAttachment {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ApigeeEnvgroupAttachmentTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ApigeeEnvgroupAttachment_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -165,8 +182,8 @@ impl ApigeeEnvgroupAttachment {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ApigeeEnvgroupAttachmentTimeoutsElRef {
-        ApigeeEnvgroupAttachmentTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ApigeeEnvgroupAttachment_TimeoutsRef {
+        ApigeeEnvgroupAttachment_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -215,12 +232,13 @@ impl BuildApigeeEnvgroupAttachment {
         let out = ApigeeEnvgroupAttachment(std::rc::Rc::new(ApigeeEnvgroupAttachment_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ApigeeEnvgroupAttachmentData {
+            data: std::cell::RefCell::new(ApigeeEnvgroupAttachmentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 envgroup_id: self.envgroup_id,
                 environment: self.environment,
                 id: core::default::Default::default(),
@@ -256,6 +274,12 @@ impl ApigeeEnvgroupAttachmentRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `envgroup_id` after provisioning.\nThe Apigee environment group associated with the Apigee environment,\nin the format 'organizations/{{org_name}}/envgroups/{{envgroup_name}}'."]
     pub fn envgroup_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.envgroup_id", self.extract_ref()))
@@ -279,20 +303,20 @@ impl ApigeeEnvgroupAttachmentRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ApigeeEnvgroupAttachmentTimeoutsElRef {
-        ApigeeEnvgroupAttachmentTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ApigeeEnvgroupAttachment_TimeoutsRef {
+        ApigeeEnvgroupAttachment_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct ApigeeEnvgroupAttachmentTimeoutsEl {
+pub struct ApigeeEnvgroupAttachment_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ApigeeEnvgroupAttachmentTimeoutsEl {
+impl ApigeeEnvgroupAttachment_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -306,8 +330,8 @@ impl ApigeeEnvgroupAttachmentTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ApigeeEnvgroupAttachmentTimeoutsEl {
-    type O = terrars::BlockAssignable<ApigeeEnvgroupAttachmentTimeoutsEl>;
+impl terrars::ToListMappable for ApigeeEnvgroupAttachment_Timeouts {
+    type O = terrars::BlockAssignable<ApigeeEnvgroupAttachment_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -318,32 +342,34 @@ impl terrars::ToListMappable for ApigeeEnvgroupAttachmentTimeoutsEl {
     }
 }
 
-pub struct BuildApigeeEnvgroupAttachmentTimeoutsEl {}
+pub struct BuildApigeeEnvgroupAttachment_Timeouts {}
 
-impl BuildApigeeEnvgroupAttachmentTimeoutsEl {
-    pub fn build(self) -> ApigeeEnvgroupAttachmentTimeoutsEl {
-        ApigeeEnvgroupAttachmentTimeoutsEl {
+impl BuildApigeeEnvgroupAttachment_Timeouts {
+    pub fn build(self) -> ApigeeEnvgroupAttachment_Timeouts {
+        ApigeeEnvgroupAttachment_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct ApigeeEnvgroupAttachmentTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ApigeeEnvgroupAttachment_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApigeeEnvgroupAttachmentTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ApigeeEnvgroupAttachmentTimeoutsElRef {
-        ApigeeEnvgroupAttachmentTimeoutsElRef {
+impl terrars::Ref for ApigeeEnvgroupAttachment_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApigeeEnvgroupAttachment_TimeoutsRef {
+        ApigeeEnvgroupAttachment_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApigeeEnvgroupAttachmentTimeoutsElRef {
+impl ApigeeEnvgroupAttachment_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

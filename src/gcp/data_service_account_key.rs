@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataServiceAccountKeyData {
+struct DataServiceAccountKeyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -20,15 +22,13 @@ struct DataServiceAccountKeyData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    project: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     public_key_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct DataServiceAccountKey_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataServiceAccountKeyData>,
+    data: std::cell::RefCell<DataServiceAccountKeyData_>,
 }
 
 #[derive(Clone)]
@@ -79,12 +79,6 @@ impl DataServiceAccountKey {
         self
     }
 
-    #[doc = "Set the field `project`.\n"]
-    pub fn set_project(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.0.data.borrow_mut().project = std::option::Option::Some(v.into());
-        self
-    }
-
     #[doc = "Set the field `public_key_type`.\n"]
     pub fn set_public_key_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().public_key_type = std::option::Option::Some(v.into());
@@ -104,11 +98,6 @@ impl DataServiceAccountKey {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `public_key` after provisioning.\n"]
@@ -164,14 +153,13 @@ impl BuildDataServiceAccountKey {
         let out = DataServiceAccountKey(std::rc::Rc::new(DataServiceAccountKey_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataServiceAccountKeyData {
+            data: std::cell::RefCell::new(DataServiceAccountKeyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 name: self.name,
-                project: core::default::Default::default(),
                 public_key_type: core::default::Default::default(),
             }),
         }));
@@ -216,11 +204,6 @@ impl DataServiceAccountKeyRef {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
-    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `public_key` after provisioning.\n"]

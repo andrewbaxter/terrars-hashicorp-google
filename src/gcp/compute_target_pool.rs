@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeTargetPoolData {
+struct ComputeTargetPoolData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,6 +22,8 @@ struct ComputeTargetPoolData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     backup_pool: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -38,13 +42,13 @@ struct ComputeTargetPoolData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     session_affinity: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComputeTargetPoolTimeoutsEl>,
+    timeouts: std::option::Option<ComputeTargetPool_Timeouts>,
 }
 
 struct ComputeTargetPool_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeTargetPoolData>,
+    data: std::cell::RefCell<ComputeTargetPoolData_>,
 }
 
 #[derive(Clone)]
@@ -150,6 +154,13 @@ impl ComputeTargetPool {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nTextual description field."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -210,7 +221,7 @@ impl ComputeTargetPool {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeTargetPoolTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeTargetPool_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -219,6 +230,12 @@ impl ComputeTargetPool {
         "Get a reference to the value of field `backup_pool` after provisioning.\nURL to the backup target pool. Must also set failover_ratio."]
     pub fn backup_pool(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.backup_pool", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `description` after provisioning.\nTextual description field."]
@@ -279,8 +296,8 @@ impl ComputeTargetPool {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeTargetPoolTimeoutsElRef {
-        ComputeTargetPoolTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeTargetPool_TimeoutsRef {
+        ComputeTargetPool_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -326,13 +343,14 @@ impl BuildComputeTargetPool {
         let out = ComputeTargetPool(std::rc::Rc::new(ComputeTargetPool_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeTargetPoolData {
+            data: std::cell::RefCell::new(ComputeTargetPoolData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 backup_pool: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 failover_ratio: core::default::Default::default(),
                 health_checks: core::default::Default::default(),
@@ -379,6 +397,12 @@ impl ComputeTargetPoolRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.backup_pool", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `description` after provisioning.\nTextual description field."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -437,13 +461,13 @@ impl ComputeTargetPoolRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeTargetPoolTimeoutsElRef {
-        ComputeTargetPoolTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeTargetPool_TimeoutsRef {
+        ComputeTargetPool_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeTargetPoolTimeoutsEl {
+pub struct ComputeTargetPool_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -452,7 +476,7 @@ pub struct ComputeTargetPoolTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeTargetPoolTimeoutsEl {
+impl ComputeTargetPool_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -472,8 +496,8 @@ impl ComputeTargetPoolTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeTargetPoolTimeoutsEl {
-    type O = terrars::BlockAssignable<ComputeTargetPoolTimeoutsEl>;
+impl terrars::ToListMappable for ComputeTargetPool_Timeouts {
+    type O = terrars::BlockAssignable<ComputeTargetPool_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -484,11 +508,11 @@ impl terrars::ToListMappable for ComputeTargetPoolTimeoutsEl {
     }
 }
 
-pub struct BuildComputeTargetPoolTimeoutsEl {}
+pub struct BuildComputeTargetPool_Timeouts {}
 
-impl BuildComputeTargetPoolTimeoutsEl {
-    pub fn build(self) -> ComputeTargetPoolTimeoutsEl {
-        ComputeTargetPoolTimeoutsEl {
+impl BuildComputeTargetPool_Timeouts {
+    pub fn build(self) -> ComputeTargetPool_Timeouts {
+        ComputeTargetPool_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -496,21 +520,23 @@ impl BuildComputeTargetPoolTimeoutsEl {
     }
 }
 
-pub struct ComputeTargetPoolTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComputeTargetPool_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeTargetPoolTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeTargetPoolTimeoutsElRef {
-        ComputeTargetPoolTimeoutsElRef {
+impl terrars::Ref for ComputeTargetPool_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeTargetPool_TimeoutsRef {
+        ComputeTargetPool_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeTargetPoolTimeoutsElRef {
+impl ComputeTargetPool_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct SccNotificationConfigData {
+struct SccNotificationConfigData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,22 +22,26 @@ struct SccNotificationConfigData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     config_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_notifications_enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     organization: terrars::PrimField<std::string::String>,
     pubsub_topic: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    streaming_config: std::option::Option<std::vec::Vec<SccNotificationConfigStreamingConfigEl>>,
+    streaming_config: std::option::Option<std::vec::Vec<SccNotificationConfig_StreamingConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<SccNotificationConfigTimeoutsEl>,
+    timeouts: std::option::Option<SccNotificationConfig_Timeouts>,
     dynamic: SccNotificationConfigDynamic,
 }
 
 struct SccNotificationConfig_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SccNotificationConfigData>,
+    data: std::cell::RefCell<SccNotificationConfigData_>,
 }
 
 #[derive(Clone)]
@@ -135,6 +141,20 @@ impl SccNotificationConfig {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_notifications_enabled`.\nIndicates whether the notifications will be sent for deleted findings."]
+    pub fn set_deletion_notifications_enabled(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().deletion_notifications_enabled = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nThe description of the notification config (max of 1024 characters)."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -150,7 +170,7 @@ impl SccNotificationConfig {
     #[doc = "Set the field `streaming_config`.\n"]
     pub fn set_streaming_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SccNotificationConfigStreamingConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SccNotificationConfig_StreamingConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -164,7 +184,7 @@ impl SccNotificationConfig {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<SccNotificationConfigTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<SccNotificationConfig_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -173,6 +193,21 @@ impl SccNotificationConfig {
         "Get a reference to the value of field `config_id` after provisioning.\nThis must be unique within the organization."]
     pub fn config_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.config_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_notifications_enabled` after provisioning.\nIndicates whether the notifications will be sent for deleted findings."]
+    pub fn deletion_notifications_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.deletion_notifications_enabled", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -211,13 +246,13 @@ impl SccNotificationConfig {
     }
 
     #[doc = "Get a reference to the value of field `streaming_config` after provisioning.\n"]
-    pub fn streaming_config(&self) -> terrars::ListRef<SccNotificationConfigStreamingConfigElRef> {
+    pub fn streaming_config(&self) -> terrars::ListRef<SccNotificationConfig_StreamingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.streaming_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> SccNotificationConfigTimeoutsElRef {
-        SccNotificationConfigTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> SccNotificationConfig_TimeoutsRef {
+        SccNotificationConfig_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -267,13 +302,15 @@ impl BuildSccNotificationConfig {
         let out = SccNotificationConfig(std::rc::Rc::new(SccNotificationConfig_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SccNotificationConfigData {
+            data: std::cell::RefCell::new(SccNotificationConfigData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 config_id: self.config_id,
+                deletion_notifications_enabled: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 organization: self.organization,
@@ -318,6 +355,21 @@ impl SccNotificationConfigRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_notifications_enabled` after provisioning.\nIndicates whether the notifications will be sent for deleted findings."]
+    pub fn deletion_notifications_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.deletion_notifications_enabled", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nThe description of the notification config (max of 1024 characters)."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -353,25 +405,30 @@ impl SccNotificationConfigRef {
     }
 
     #[doc = "Get a reference to the value of field `streaming_config` after provisioning.\n"]
-    pub fn streaming_config(&self) -> terrars::ListRef<SccNotificationConfigStreamingConfigElRef> {
+    pub fn streaming_config(&self) -> terrars::ListRef<SccNotificationConfig_StreamingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.streaming_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> SccNotificationConfigTimeoutsElRef {
-        SccNotificationConfigTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> SccNotificationConfig_TimeoutsRef {
+        SccNotificationConfig_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct SccNotificationConfigDynamic {
+    streaming_config: std::option::Option<terrars::DynamicBlock<SccNotificationConfig_StreamingConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct SccNotificationConfigStreamingConfigEl {
+pub struct SccNotificationConfig_StreamingConfig {
     filter: terrars::PrimField<std::string::String>,
 }
 
-impl SccNotificationConfigStreamingConfigEl { }
+impl SccNotificationConfig_StreamingConfig { }
 
-impl terrars::ToListMappable for SccNotificationConfigStreamingConfigEl {
-    type O = terrars::BlockAssignable<SccNotificationConfigStreamingConfigEl>;
+impl terrars::ToListMappable for SccNotificationConfig_StreamingConfig {
+    type O = terrars::BlockAssignable<SccNotificationConfig_StreamingConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -382,33 +439,35 @@ impl terrars::ToListMappable for SccNotificationConfigStreamingConfigEl {
     }
 }
 
-pub struct BuildSccNotificationConfigStreamingConfigEl {
+pub struct BuildSccNotificationConfig_StreamingConfig {
     #[doc =
         "Expression that defines the filter to apply across create/update\nevents of assets or findings as specified by the event type. The\nexpression is a list of zero or more restrictions combined via\nlogical operators AND and OR. Parentheses are supported, and OR\nhas higher precedence than AND.\n\nRestrictions have the form <field> <operator> <value> and may have\na - character in front of them to indicate negation. The fields\nmap to those defined in the corresponding resource.\n\nThe supported operators are:\n\n* = for all value types.\n* >, <, >=, <= for integer values.\n* :, meaning substring matching, for strings.\n\nThe supported value types are:\n\n* string literals in quotes.\n* integer literals without quotes.\n* boolean literals true and false without quotes.\n\nSee\n[Filtering notifications](https://cloud.google.com/security-command-center/docs/how-to-api-filter-notifications)\nfor information on how to write a filter."]
     pub filter: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSccNotificationConfigStreamingConfigEl {
-    pub fn build(self) -> SccNotificationConfigStreamingConfigEl {
-        SccNotificationConfigStreamingConfigEl { filter: self.filter }
+impl BuildSccNotificationConfig_StreamingConfig {
+    pub fn build(self) -> SccNotificationConfig_StreamingConfig {
+        SccNotificationConfig_StreamingConfig { filter: self.filter }
     }
 }
 
-pub struct SccNotificationConfigStreamingConfigElRef {
+#[allow(dead_code)]
+pub struct SccNotificationConfig_StreamingConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SccNotificationConfigStreamingConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SccNotificationConfigStreamingConfigElRef {
-        SccNotificationConfigStreamingConfigElRef {
+impl terrars::Ref for SccNotificationConfig_StreamingConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SccNotificationConfig_StreamingConfigRef {
+        SccNotificationConfig_StreamingConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SccNotificationConfigStreamingConfigElRef {
+impl SccNotificationConfig_StreamingConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -421,7 +480,7 @@ impl SccNotificationConfigStreamingConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct SccNotificationConfigTimeoutsEl {
+pub struct SccNotificationConfig_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -430,7 +489,7 @@ pub struct SccNotificationConfigTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SccNotificationConfigTimeoutsEl {
+impl SccNotificationConfig_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -450,8 +509,8 @@ impl SccNotificationConfigTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for SccNotificationConfigTimeoutsEl {
-    type O = terrars::BlockAssignable<SccNotificationConfigTimeoutsEl>;
+impl terrars::ToListMappable for SccNotificationConfig_Timeouts {
+    type O = terrars::BlockAssignable<SccNotificationConfig_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -462,11 +521,11 @@ impl terrars::ToListMappable for SccNotificationConfigTimeoutsEl {
     }
 }
 
-pub struct BuildSccNotificationConfigTimeoutsEl {}
+pub struct BuildSccNotificationConfig_Timeouts {}
 
-impl BuildSccNotificationConfigTimeoutsEl {
-    pub fn build(self) -> SccNotificationConfigTimeoutsEl {
-        SccNotificationConfigTimeoutsEl {
+impl BuildSccNotificationConfig_Timeouts {
+    pub fn build(self) -> SccNotificationConfig_Timeouts {
+        SccNotificationConfig_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -474,21 +533,23 @@ impl BuildSccNotificationConfigTimeoutsEl {
     }
 }
 
-pub struct SccNotificationConfigTimeoutsElRef {
+#[allow(dead_code)]
+pub struct SccNotificationConfig_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SccNotificationConfigTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SccNotificationConfigTimeoutsElRef {
-        SccNotificationConfigTimeoutsElRef {
+impl terrars::Ref for SccNotificationConfig_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SccNotificationConfig_TimeoutsRef {
+        SccNotificationConfig_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SccNotificationConfigTimeoutsElRef {
+impl SccNotificationConfig_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -507,9 +568,4 @@ impl SccNotificationConfigTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct SccNotificationConfigDynamic {
-    streaming_config: std::option::Option<terrars::DynamicBlock<SccNotificationConfigStreamingConfigEl>>,
 }

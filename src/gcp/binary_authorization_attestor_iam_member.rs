@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct BinaryAuthorizationAttestorIamMemberData {
+struct BinaryAuthorizationAttestorIamMemberData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,14 +28,14 @@ struct BinaryAuthorizationAttestorIamMemberData {
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<BinaryAuthorizationAttestorIamMemberConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<BinaryAuthorizationAttestorIamMember_Condition>>,
     dynamic: BinaryAuthorizationAttestorIamMemberDynamic,
 }
 
 struct BinaryAuthorizationAttestorIamMember_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<BinaryAuthorizationAttestorIamMemberData>,
+    data: std::cell::RefCell<BinaryAuthorizationAttestorIamMemberData_>,
 }
 
 #[derive(Clone)]
@@ -148,7 +150,7 @@ impl BinaryAuthorizationAttestorIamMember {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BinaryAuthorizationAttestorIamMemberConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BinaryAuthorizationAttestorIamMember_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -192,7 +194,7 @@ impl BinaryAuthorizationAttestorIamMember {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<BinaryAuthorizationAttestorIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<BinaryAuthorizationAttestorIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -243,7 +245,7 @@ impl BuildBinaryAuthorizationAttestorIamMember {
         let out = BinaryAuthorizationAttestorIamMember(std::rc::Rc::new(BinaryAuthorizationAttestorIamMember_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(BinaryAuthorizationAttestorIamMemberData {
+            data: std::cell::RefCell::new(BinaryAuthorizationAttestorIamMemberData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -317,20 +319,25 @@ impl BinaryAuthorizationAttestorIamMemberRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<BinaryAuthorizationAttestorIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<BinaryAuthorizationAttestorIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct BinaryAuthorizationAttestorIamMemberDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<BinaryAuthorizationAttestorIamMember_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct BinaryAuthorizationAttestorIamMemberConditionEl {
+pub struct BinaryAuthorizationAttestorIamMember_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl BinaryAuthorizationAttestorIamMemberConditionEl {
+impl BinaryAuthorizationAttestorIamMember_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -338,8 +345,8 @@ impl BinaryAuthorizationAttestorIamMemberConditionEl {
     }
 }
 
-impl terrars::ToListMappable for BinaryAuthorizationAttestorIamMemberConditionEl {
-    type O = terrars::BlockAssignable<BinaryAuthorizationAttestorIamMemberConditionEl>;
+impl terrars::ToListMappable for BinaryAuthorizationAttestorIamMember_Condition {
+    type O = terrars::BlockAssignable<BinaryAuthorizationAttestorIamMember_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -350,16 +357,16 @@ impl terrars::ToListMappable for BinaryAuthorizationAttestorIamMemberConditionEl
     }
 }
 
-pub struct BuildBinaryAuthorizationAttestorIamMemberConditionEl {
+pub struct BuildBinaryAuthorizationAttestorIamMember_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBinaryAuthorizationAttestorIamMemberConditionEl {
-    pub fn build(self) -> BinaryAuthorizationAttestorIamMemberConditionEl {
-        BinaryAuthorizationAttestorIamMemberConditionEl {
+impl BuildBinaryAuthorizationAttestorIamMember_Condition {
+    pub fn build(self) -> BinaryAuthorizationAttestorIamMember_Condition {
+        BinaryAuthorizationAttestorIamMember_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -367,24 +374,26 @@ impl BuildBinaryAuthorizationAttestorIamMemberConditionEl {
     }
 }
 
-pub struct BinaryAuthorizationAttestorIamMemberConditionElRef {
+#[allow(dead_code)]
+pub struct BinaryAuthorizationAttestorIamMember_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BinaryAuthorizationAttestorIamMemberConditionElRef {
+impl terrars::Ref for BinaryAuthorizationAttestorIamMember_ConditionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> BinaryAuthorizationAttestorIamMemberConditionElRef {
-        BinaryAuthorizationAttestorIamMemberConditionElRef {
+    ) -> BinaryAuthorizationAttestorIamMember_ConditionRef {
+        BinaryAuthorizationAttestorIamMember_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BinaryAuthorizationAttestorIamMemberConditionElRef {
+impl BinaryAuthorizationAttestorIamMember_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -403,9 +412,4 @@ impl BinaryAuthorizationAttestorIamMemberConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct BinaryAuthorizationAttestorIamMemberDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<BinaryAuthorizationAttestorIamMemberConditionEl>>,
 }

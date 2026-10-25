@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct KmsCryptoKeyIamBindingData {
+struct KmsCryptoKeyIamBindingData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,14 +26,14 @@ struct KmsCryptoKeyIamBindingData {
     members: terrars::SetField<terrars::PrimField<std::string::String>>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<KmsCryptoKeyIamBindingConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<KmsCryptoKeyIamBinding_Condition>>,
     dynamic: KmsCryptoKeyIamBindingDynamic,
 }
 
 struct KmsCryptoKeyIamBinding_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<KmsCryptoKeyIamBindingData>,
+    data: std::cell::RefCell<KmsCryptoKeyIamBindingData_>,
 }
 
 #[derive(Clone)]
@@ -140,7 +142,7 @@ impl KmsCryptoKeyIamBinding {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<KmsCryptoKeyIamBindingConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<KmsCryptoKeyIamBinding_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -179,7 +181,7 @@ impl KmsCryptoKeyIamBinding {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<KmsCryptoKeyIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<KmsCryptoKeyIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -230,7 +232,7 @@ impl BuildKmsCryptoKeyIamBinding {
         let out = KmsCryptoKeyIamBinding(std::rc::Rc::new(KmsCryptoKeyIamBinding_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(KmsCryptoKeyIamBindingData {
+            data: std::cell::RefCell::new(KmsCryptoKeyIamBindingData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -298,20 +300,25 @@ impl KmsCryptoKeyIamBindingRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<KmsCryptoKeyIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<KmsCryptoKeyIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct KmsCryptoKeyIamBindingDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<KmsCryptoKeyIamBinding_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct KmsCryptoKeyIamBindingConditionEl {
+pub struct KmsCryptoKeyIamBinding_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl KmsCryptoKeyIamBindingConditionEl {
+impl KmsCryptoKeyIamBinding_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -319,8 +326,8 @@ impl KmsCryptoKeyIamBindingConditionEl {
     }
 }
 
-impl terrars::ToListMappable for KmsCryptoKeyIamBindingConditionEl {
-    type O = terrars::BlockAssignable<KmsCryptoKeyIamBindingConditionEl>;
+impl terrars::ToListMappable for KmsCryptoKeyIamBinding_Condition {
+    type O = terrars::BlockAssignable<KmsCryptoKeyIamBinding_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -331,16 +338,16 @@ impl terrars::ToListMappable for KmsCryptoKeyIamBindingConditionEl {
     }
 }
 
-pub struct BuildKmsCryptoKeyIamBindingConditionEl {
+pub struct BuildKmsCryptoKeyIamBinding_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildKmsCryptoKeyIamBindingConditionEl {
-    pub fn build(self) -> KmsCryptoKeyIamBindingConditionEl {
-        KmsCryptoKeyIamBindingConditionEl {
+impl BuildKmsCryptoKeyIamBinding_Condition {
+    pub fn build(self) -> KmsCryptoKeyIamBinding_Condition {
+        KmsCryptoKeyIamBinding_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -348,21 +355,23 @@ impl BuildKmsCryptoKeyIamBindingConditionEl {
     }
 }
 
-pub struct KmsCryptoKeyIamBindingConditionElRef {
+#[allow(dead_code)]
+pub struct KmsCryptoKeyIamBinding_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KmsCryptoKeyIamBindingConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> KmsCryptoKeyIamBindingConditionElRef {
-        KmsCryptoKeyIamBindingConditionElRef {
+impl terrars::Ref for KmsCryptoKeyIamBinding_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> KmsCryptoKeyIamBinding_ConditionRef {
+        KmsCryptoKeyIamBinding_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KmsCryptoKeyIamBindingConditionElRef {
+impl KmsCryptoKeyIamBinding_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -381,9 +390,4 @@ impl KmsCryptoKeyIamBindingConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct KmsCryptoKeyIamBindingDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<KmsCryptoKeyIamBindingConditionEl>>,
 }

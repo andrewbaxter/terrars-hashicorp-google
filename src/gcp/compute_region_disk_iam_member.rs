@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeRegionDiskIamMemberData {
+struct ComputeRegionDiskIamMemberData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,14 +30,14 @@ struct ComputeRegionDiskIamMemberData {
     region: std::option::Option<terrars::PrimField<std::string::String>>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<ComputeRegionDiskIamMemberConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<ComputeRegionDiskIamMember_Condition>>,
     dynamic: ComputeRegionDiskIamMemberDynamic,
 }
 
 struct ComputeRegionDiskIamMember_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeRegionDiskIamMemberData>,
+    data: std::cell::RefCell<ComputeRegionDiskIamMemberData_>,
 }
 
 #[derive(Clone)]
@@ -156,7 +158,7 @@ impl ComputeRegionDiskIamMember {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeRegionDiskIamMemberConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeRegionDiskIamMember_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -205,7 +207,7 @@ impl ComputeRegionDiskIamMember {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<ComputeRegionDiskIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<ComputeRegionDiskIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -256,7 +258,7 @@ impl BuildComputeRegionDiskIamMember {
         let out = ComputeRegionDiskIamMember(std::rc::Rc::new(ComputeRegionDiskIamMember_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeRegionDiskIamMemberData {
+            data: std::cell::RefCell::new(ComputeRegionDiskIamMemberData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -336,20 +338,25 @@ impl ComputeRegionDiskIamMemberRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<ComputeRegionDiskIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<ComputeRegionDiskIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ComputeRegionDiskIamMemberDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<ComputeRegionDiskIamMember_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct ComputeRegionDiskIamMemberConditionEl {
+pub struct ComputeRegionDiskIamMember_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl ComputeRegionDiskIamMemberConditionEl {
+impl ComputeRegionDiskIamMember_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -357,8 +364,8 @@ impl ComputeRegionDiskIamMemberConditionEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeRegionDiskIamMemberConditionEl {
-    type O = terrars::BlockAssignable<ComputeRegionDiskIamMemberConditionEl>;
+impl terrars::ToListMappable for ComputeRegionDiskIamMember_Condition {
+    type O = terrars::BlockAssignable<ComputeRegionDiskIamMember_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -369,16 +376,16 @@ impl terrars::ToListMappable for ComputeRegionDiskIamMemberConditionEl {
     }
 }
 
-pub struct BuildComputeRegionDiskIamMemberConditionEl {
+pub struct BuildComputeRegionDiskIamMember_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputeRegionDiskIamMemberConditionEl {
-    pub fn build(self) -> ComputeRegionDiskIamMemberConditionEl {
-        ComputeRegionDiskIamMemberConditionEl {
+impl BuildComputeRegionDiskIamMember_Condition {
+    pub fn build(self) -> ComputeRegionDiskIamMember_Condition {
+        ComputeRegionDiskIamMember_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -386,21 +393,23 @@ impl BuildComputeRegionDiskIamMemberConditionEl {
     }
 }
 
-pub struct ComputeRegionDiskIamMemberConditionElRef {
+#[allow(dead_code)]
+pub struct ComputeRegionDiskIamMember_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeRegionDiskIamMemberConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRegionDiskIamMemberConditionElRef {
-        ComputeRegionDiskIamMemberConditionElRef {
+impl terrars::Ref for ComputeRegionDiskIamMember_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeRegionDiskIamMember_ConditionRef {
+        ComputeRegionDiskIamMember_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeRegionDiskIamMemberConditionElRef {
+impl ComputeRegionDiskIamMember_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -419,9 +428,4 @@ impl ComputeRegionDiskIamMemberConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ComputeRegionDiskIamMemberDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<ComputeRegionDiskIamMemberConditionEl>>,
 }

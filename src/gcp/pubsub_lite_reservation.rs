@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct PubsubLiteReservationData {
+struct PubsubLiteReservationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct PubsubLiteReservationData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -27,13 +31,13 @@ struct PubsubLiteReservationData {
     region: std::option::Option<terrars::PrimField<std::string::String>>,
     throughput_capacity: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<PubsubLiteReservationTimeoutsEl>,
+    timeouts: std::option::Option<PubsubLiteReservation_Timeouts>,
 }
 
 struct PubsubLiteReservation_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<PubsubLiteReservationData>,
+    data: std::cell::RefCell<PubsubLiteReservationData_>,
 }
 
 #[derive(Clone)]
@@ -133,6 +137,13 @@ impl PubsubLiteReservation {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -152,9 +163,15 @@ impl PubsubLiteReservation {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<PubsubLiteReservationTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<PubsubLiteReservation_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -185,8 +202,8 @@ impl PubsubLiteReservation {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> PubsubLiteReservationTimeoutsElRef {
-        PubsubLiteReservationTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> PubsubLiteReservation_TimeoutsRef {
+        PubsubLiteReservation_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -235,12 +252,13 @@ impl BuildPubsubLiteReservation {
         let out = PubsubLiteReservation(std::rc::Rc::new(PubsubLiteReservation_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(PubsubLiteReservationData {
+            data: std::cell::RefCell::new(PubsubLiteReservationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
                 project: core::default::Default::default(),
@@ -277,6 +295,12 @@ impl PubsubLiteReservationRef {
         &self.shared
     }
 
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -305,13 +329,13 @@ impl PubsubLiteReservationRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> PubsubLiteReservationTimeoutsElRef {
-        PubsubLiteReservationTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> PubsubLiteReservation_TimeoutsRef {
+        PubsubLiteReservation_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct PubsubLiteReservationTimeoutsEl {
+pub struct PubsubLiteReservation_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -320,7 +344,7 @@ pub struct PubsubLiteReservationTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl PubsubLiteReservationTimeoutsEl {
+impl PubsubLiteReservation_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -340,8 +364,8 @@ impl PubsubLiteReservationTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for PubsubLiteReservationTimeoutsEl {
-    type O = terrars::BlockAssignable<PubsubLiteReservationTimeoutsEl>;
+impl terrars::ToListMappable for PubsubLiteReservation_Timeouts {
+    type O = terrars::BlockAssignable<PubsubLiteReservation_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -352,11 +376,11 @@ impl terrars::ToListMappable for PubsubLiteReservationTimeoutsEl {
     }
 }
 
-pub struct BuildPubsubLiteReservationTimeoutsEl {}
+pub struct BuildPubsubLiteReservation_Timeouts {}
 
-impl BuildPubsubLiteReservationTimeoutsEl {
-    pub fn build(self) -> PubsubLiteReservationTimeoutsEl {
-        PubsubLiteReservationTimeoutsEl {
+impl BuildPubsubLiteReservation_Timeouts {
+    pub fn build(self) -> PubsubLiteReservation_Timeouts {
+        PubsubLiteReservation_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -364,21 +388,23 @@ impl BuildPubsubLiteReservationTimeoutsEl {
     }
 }
 
-pub struct PubsubLiteReservationTimeoutsElRef {
+#[allow(dead_code)]
+pub struct PubsubLiteReservation_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PubsubLiteReservationTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> PubsubLiteReservationTimeoutsElRef {
-        PubsubLiteReservationTimeoutsElRef {
+impl terrars::Ref for PubsubLiteReservation_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> PubsubLiteReservation_TimeoutsRef {
+        PubsubLiteReservation_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PubsubLiteReservationTimeoutsElRef {
+impl PubsubLiteReservation_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

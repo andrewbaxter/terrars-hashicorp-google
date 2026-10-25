@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct PrivatecaCaPoolIamBindingData {
+struct PrivatecaCaPoolIamBindingData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,14 +30,14 @@ struct PrivatecaCaPoolIamBindingData {
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<PrivatecaCaPoolIamBindingConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<PrivatecaCaPoolIamBinding_Condition>>,
     dynamic: PrivatecaCaPoolIamBindingDynamic,
 }
 
 struct PrivatecaCaPoolIamBinding_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<PrivatecaCaPoolIamBindingData>,
+    data: std::cell::RefCell<PrivatecaCaPoolIamBindingData_>,
 }
 
 #[derive(Clone)]
@@ -156,7 +158,7 @@ impl PrivatecaCaPoolIamBinding {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<PrivatecaCaPoolIamBindingConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<PrivatecaCaPoolIamBinding_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -205,7 +207,7 @@ impl PrivatecaCaPoolIamBinding {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<PrivatecaCaPoolIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<PrivatecaCaPoolIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -256,7 +258,7 @@ impl BuildPrivatecaCaPoolIamBinding {
         let out = PrivatecaCaPoolIamBinding(std::rc::Rc::new(PrivatecaCaPoolIamBinding_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(PrivatecaCaPoolIamBindingData {
+            data: std::cell::RefCell::new(PrivatecaCaPoolIamBindingData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -336,20 +338,25 @@ impl PrivatecaCaPoolIamBindingRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<PrivatecaCaPoolIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<PrivatecaCaPoolIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct PrivatecaCaPoolIamBindingDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<PrivatecaCaPoolIamBinding_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct PrivatecaCaPoolIamBindingConditionEl {
+pub struct PrivatecaCaPoolIamBinding_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl PrivatecaCaPoolIamBindingConditionEl {
+impl PrivatecaCaPoolIamBinding_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -357,8 +364,8 @@ impl PrivatecaCaPoolIamBindingConditionEl {
     }
 }
 
-impl terrars::ToListMappable for PrivatecaCaPoolIamBindingConditionEl {
-    type O = terrars::BlockAssignable<PrivatecaCaPoolIamBindingConditionEl>;
+impl terrars::ToListMappable for PrivatecaCaPoolIamBinding_Condition {
+    type O = terrars::BlockAssignable<PrivatecaCaPoolIamBinding_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -369,16 +376,16 @@ impl terrars::ToListMappable for PrivatecaCaPoolIamBindingConditionEl {
     }
 }
 
-pub struct BuildPrivatecaCaPoolIamBindingConditionEl {
+pub struct BuildPrivatecaCaPoolIamBinding_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildPrivatecaCaPoolIamBindingConditionEl {
-    pub fn build(self) -> PrivatecaCaPoolIamBindingConditionEl {
-        PrivatecaCaPoolIamBindingConditionEl {
+impl BuildPrivatecaCaPoolIamBinding_Condition {
+    pub fn build(self) -> PrivatecaCaPoolIamBinding_Condition {
+        PrivatecaCaPoolIamBinding_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -386,21 +393,23 @@ impl BuildPrivatecaCaPoolIamBindingConditionEl {
     }
 }
 
-pub struct PrivatecaCaPoolIamBindingConditionElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCaPoolIamBinding_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCaPoolIamBindingConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> PrivatecaCaPoolIamBindingConditionElRef {
-        PrivatecaCaPoolIamBindingConditionElRef {
+impl terrars::Ref for PrivatecaCaPoolIamBinding_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> PrivatecaCaPoolIamBinding_ConditionRef {
+        PrivatecaCaPoolIamBinding_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCaPoolIamBindingConditionElRef {
+impl PrivatecaCaPoolIamBinding_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -419,9 +428,4 @@ impl PrivatecaCaPoolIamBindingConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct PrivatecaCaPoolIamBindingDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<PrivatecaCaPoolIamBindingConditionEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ResourceManagerLienData {
+struct ResourceManagerLienData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,19 +21,21 @@ struct ResourceManagerLienData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     origin: terrars::PrimField<std::string::String>,
     parent: terrars::PrimField<std::string::String>,
     reason: terrars::PrimField<std::string::String>,
     restrictions: terrars::ListField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ResourceManagerLienTimeoutsEl>,
+    timeouts: std::option::Option<ResourceManagerLien_Timeouts>,
 }
 
 struct ResourceManagerLien_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ResourceManagerLienData>,
+    data: std::cell::RefCell<ResourceManagerLienData_>,
 }
 
 #[derive(Clone)]
@@ -131,6 +135,13 @@ impl ResourceManagerLien {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -138,7 +149,7 @@ impl ResourceManagerLien {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ResourceManagerLienTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ResourceManagerLien_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -146,6 +157,12 @@ impl ResourceManagerLien {
     #[doc = "Get a reference to the value of field `create_time` after provisioning.\nTime of creation"]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -184,8 +201,8 @@ impl ResourceManagerLien {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ResourceManagerLienTimeoutsElRef {
-        ResourceManagerLienTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ResourceManagerLien_TimeoutsRef {
+        ResourceManagerLien_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -241,12 +258,13 @@ impl BuildResourceManagerLien {
         let out = ResourceManagerLien(std::rc::Rc::new(ResourceManagerLien_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ResourceManagerLienData {
+            data: std::cell::RefCell::new(ResourceManagerLienData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 origin: self.origin,
                 parent: self.parent,
@@ -288,6 +306,12 @@ impl ResourceManagerLienRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -324,20 +348,20 @@ impl ResourceManagerLienRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ResourceManagerLienTimeoutsElRef {
-        ResourceManagerLienTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ResourceManagerLien_TimeoutsRef {
+        ResourceManagerLien_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct ResourceManagerLienTimeoutsEl {
+pub struct ResourceManagerLien_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ResourceManagerLienTimeoutsEl {
+impl ResourceManagerLien_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -351,8 +375,8 @@ impl ResourceManagerLienTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ResourceManagerLienTimeoutsEl {
-    type O = terrars::BlockAssignable<ResourceManagerLienTimeoutsEl>;
+impl terrars::ToListMappable for ResourceManagerLien_Timeouts {
+    type O = terrars::BlockAssignable<ResourceManagerLien_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -363,32 +387,34 @@ impl terrars::ToListMappable for ResourceManagerLienTimeoutsEl {
     }
 }
 
-pub struct BuildResourceManagerLienTimeoutsEl {}
+pub struct BuildResourceManagerLien_Timeouts {}
 
-impl BuildResourceManagerLienTimeoutsEl {
-    pub fn build(self) -> ResourceManagerLienTimeoutsEl {
-        ResourceManagerLienTimeoutsEl {
+impl BuildResourceManagerLien_Timeouts {
+    pub fn build(self) -> ResourceManagerLien_Timeouts {
+        ResourceManagerLien_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct ResourceManagerLienTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ResourceManagerLien_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ResourceManagerLienTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ResourceManagerLienTimeoutsElRef {
-        ResourceManagerLienTimeoutsElRef {
+impl terrars::Ref for ResourceManagerLien_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ResourceManagerLien_TimeoutsRef {
+        ResourceManagerLien_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ResourceManagerLienTimeoutsElRef {
+impl ResourceManagerLien_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

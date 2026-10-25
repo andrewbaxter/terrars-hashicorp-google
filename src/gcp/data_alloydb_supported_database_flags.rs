@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataAlloydbSupportedDatabaseFlagsData {
+struct DataAlloydbSupportedDatabaseFlagsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -26,7 +28,7 @@ struct DataAlloydbSupportedDatabaseFlagsData {
 struct DataAlloydbSupportedDatabaseFlags_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataAlloydbSupportedDatabaseFlagsData>,
+    data: std::cell::RefCell<DataAlloydbSupportedDatabaseFlagsData_>,
 }
 
 #[derive(Clone)]
@@ -102,7 +104,7 @@ impl DataAlloydbSupportedDatabaseFlags {
     #[doc = "Get a reference to the value of field `supported_database_flags` after provisioning.\n"]
     pub fn supported_database_flags(
         &self,
-    ) -> terrars::ListRef<DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElRef> {
+    ) -> terrars::ListRef<DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlagsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.supported_database_flags", self.extract_ref()))
     }
 }
@@ -149,7 +151,7 @@ impl BuildDataAlloydbSupportedDatabaseFlags {
         let out = DataAlloydbSupportedDatabaseFlags(std::rc::Rc::new(DataAlloydbSupportedDatabaseFlags_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataAlloydbSupportedDatabaseFlagsData {
+            data: std::cell::RefCell::new(DataAlloydbSupportedDatabaseFlagsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -206,20 +208,20 @@ impl DataAlloydbSupportedDatabaseFlagsRef {
     #[doc = "Get a reference to the value of field `supported_database_flags` after provisioning.\n"]
     pub fn supported_database_flags(
         &self,
-    ) -> terrars::ListRef<DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElRef> {
+    ) -> terrars::ListRef<DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlagsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.supported_database_flags", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElIntegerRestrictionsEl {
+pub struct DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags_IntegerRestrictions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max_value: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min_value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElIntegerRestrictionsEl {
+impl DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags_IntegerRestrictions {
     #[doc = "Set the field `max_value`.\n"]
     pub fn set_max_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.max_value = std::option::Option::Some(v.into());
@@ -233,9 +235,8 @@ impl DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElIntegerRestriction
     }
 }
 
-impl terrars::ToListMappable for DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElIntegerRestrictionsEl {
-    type O =
-        terrars::BlockAssignable<DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElIntegerRestrictionsEl>;
+impl terrars::ToListMappable for DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags_IntegerRestrictions {
+    type O = terrars::BlockAssignable<DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags_IntegerRestrictions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -246,35 +247,37 @@ impl terrars::ToListMappable for DataAlloydbSupportedDatabaseFlagsSupportedDatab
     }
 }
 
-pub struct BuildDataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElIntegerRestrictionsEl {}
+pub struct BuildDataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags_IntegerRestrictions {}
 
-impl BuildDataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElIntegerRestrictionsEl {
-    pub fn build(self) -> DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElIntegerRestrictionsEl {
-        DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElIntegerRestrictionsEl {
+impl BuildDataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags_IntegerRestrictions {
+    pub fn build(self) -> DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags_IntegerRestrictions {
+        DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags_IntegerRestrictions {
             max_value: core::default::Default::default(),
             min_value: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElIntegerRestrictionsElRef {
+#[allow(dead_code)]
+pub struct DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags_IntegerRestrictionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElIntegerRestrictionsElRef {
+impl terrars::Ref for DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags_IntegerRestrictionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElIntegerRestrictionsElRef {
-        DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElIntegerRestrictionsElRef {
+    ) -> DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags_IntegerRestrictionsRef {
+        DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags_IntegerRestrictionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElIntegerRestrictionsElRef {
+impl DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags_IntegerRestrictionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -291,12 +294,12 @@ impl DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElIntegerRestriction
 }
 
 #[derive(Serialize)]
-pub struct DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElStringRestrictionsEl {
+pub struct DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags_StringRestrictions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allowed_values: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElStringRestrictionsEl {
+impl DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags_StringRestrictions {
     #[doc = "Set the field `allowed_values`.\n"]
     pub fn set_allowed_values(
         mut self,
@@ -307,8 +310,8 @@ impl DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElStringRestrictions
     }
 }
 
-impl terrars::ToListMappable for DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElStringRestrictionsEl {
-    type O = terrars::BlockAssignable<DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElStringRestrictionsEl>;
+impl terrars::ToListMappable for DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags_StringRestrictions {
+    type O = terrars::BlockAssignable<DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags_StringRestrictions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -319,34 +322,36 @@ impl terrars::ToListMappable for DataAlloydbSupportedDatabaseFlagsSupportedDatab
     }
 }
 
-pub struct BuildDataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElStringRestrictionsEl {}
+pub struct BuildDataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags_StringRestrictions {}
 
-impl BuildDataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElStringRestrictionsEl {
-    pub fn build(self) -> DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElStringRestrictionsEl {
-        DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElStringRestrictionsEl {
+impl BuildDataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags_StringRestrictions {
+    pub fn build(self) -> DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags_StringRestrictions {
+        DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags_StringRestrictions {
             allowed_values: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElStringRestrictionsElRef {
+#[allow(dead_code)]
+pub struct DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags_StringRestrictionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElStringRestrictionsElRef {
+impl terrars::Ref for DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags_StringRestrictionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElStringRestrictionsElRef {
-        DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElStringRestrictionsElRef {
+    ) -> DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags_StringRestrictionsRef {
+        DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags_StringRestrictionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElStringRestrictionsElRef {
+impl DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags_StringRestrictionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -358,7 +363,7 @@ impl DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElStringRestrictions
 }
 
 #[derive(Serialize)]
-pub struct DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsEl {
+pub struct DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     accepts_multiple_values: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -366,7 +371,7 @@ pub struct DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     integer_restrictions: std
     ::option
-    ::Option<terrars::ListField<DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElIntegerRestrictionsEl>>,
+    ::Option<terrars::ListField<DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags_IntegerRestrictions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -374,14 +379,14 @@ pub struct DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     string_restrictions: std
     ::option
-    ::Option<terrars::ListField<DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElStringRestrictionsEl>>,
+    ::Option<terrars::ListField<DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags_StringRestrictions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     supported_db_versions: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     value_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsEl {
+impl DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags {
     #[doc = "Set the field `accepts_multiple_values`.\n"]
     pub fn set_accepts_multiple_values(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.accepts_multiple_values = std::option::Option::Some(v.into());
@@ -404,7 +409,7 @@ impl DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::ListField<DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElIntegerRestrictionsEl>,
+                        ::ListField<DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags_IntegerRestrictions>,
                     >,
     ) -> Self {
         self.integer_restrictions = std::option::Option::Some(v.into());
@@ -433,7 +438,7 @@ impl DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::ListField<DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElStringRestrictionsEl>,
+                        ::ListField<DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags_StringRestrictions>,
                     >,
     ) -> Self {
         self.string_restrictions = std::option::Option::Some(v.into());
@@ -456,8 +461,8 @@ impl DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsEl {
     }
 }
 
-impl terrars::ToListMappable for DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsEl {
-    type O = terrars::BlockAssignable<DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsEl>;
+impl terrars::ToListMappable for DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags {
+    type O = terrars::BlockAssignable<DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -468,11 +473,11 @@ impl terrars::ToListMappable for DataAlloydbSupportedDatabaseFlagsSupportedDatab
     }
 }
 
-pub struct BuildDataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsEl {}
+pub struct BuildDataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags {}
 
-impl BuildDataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsEl {
-    pub fn build(self) -> DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsEl {
-        DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsEl {
+impl BuildDataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags {
+    pub fn build(self) -> DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags {
+        DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags {
             accepts_multiple_values: core::default::Default::default(),
             flag_name: core::default::Default::default(),
             integer_restrictions: core::default::Default::default(),
@@ -485,24 +490,26 @@ impl BuildDataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsEl {
     }
 }
 
-pub struct DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElRef {
+#[allow(dead_code)]
+pub struct DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlagsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElRef {
+impl terrars::Ref for DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlagsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElRef {
-        DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElRef {
+    ) -> DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlagsRef {
+        DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlagsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElRef {
+impl DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlagsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -520,7 +527,7 @@ impl DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElRef {
     #[doc = "Get a reference to the value of field `integer_restrictions` after provisioning.\n"]
     pub fn integer_restrictions(
         &self,
-    ) -> terrars::ListRef<DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElIntegerRestrictionsElRef> {
+    ) -> terrars::ListRef<DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags_IntegerRestrictionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.integer_restrictions", self.base))
     }
 
@@ -537,7 +544,7 @@ impl DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElRef {
     #[doc = "Get a reference to the value of field `string_restrictions` after provisioning.\n"]
     pub fn string_restrictions(
         &self,
-    ) -> terrars::ListRef<DataAlloydbSupportedDatabaseFlagsSupportedDatabaseFlagsElStringRestrictionsElRef> {
+    ) -> terrars::ListRef<DataAlloydbSupportedDatabaseFlags_SupportedDatabaseFlags_StringRestrictionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.string_restrictions", self.base))
     }
 

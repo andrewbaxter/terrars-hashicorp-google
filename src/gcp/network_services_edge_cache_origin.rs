@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct NetworkServicesEdgeCacheOriginData {
+struct NetworkServicesEdgeCacheOriginData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct NetworkServicesEdgeCacheOriginData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -39,22 +43,24 @@ struct NetworkServicesEdgeCacheOriginData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     retry_conditions: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    aws_v4_authentication: std::option::Option<std::vec::Vec<NetworkServicesEdgeCacheOriginAwsV4AuthenticationEl>>,
+    aws_v4_authentication: std::option::Option<std::vec::Vec<NetworkServicesEdgeCacheOrigin_AwsV4Authentication>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    origin_override_action: std::option::Option<std::vec::Vec<NetworkServicesEdgeCacheOriginOriginOverrideActionEl>>,
+    flex_shielding: std::option::Option<std::vec::Vec<NetworkServicesEdgeCacheOrigin_FlexShielding>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    origin_redirect: std::option::Option<std::vec::Vec<NetworkServicesEdgeCacheOriginOriginRedirectEl>>,
+    origin_override_action: std::option::Option<std::vec::Vec<NetworkServicesEdgeCacheOrigin_OriginOverrideAction>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeout: std::option::Option<std::vec::Vec<NetworkServicesEdgeCacheOriginTimeoutEl>>,
+    origin_redirect: std::option::Option<std::vec::Vec<NetworkServicesEdgeCacheOrigin_OriginRedirect>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<NetworkServicesEdgeCacheOriginTimeoutsEl>,
+    timeout: std::option::Option<std::vec::Vec<NetworkServicesEdgeCacheOrigin_Timeout>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<NetworkServicesEdgeCacheOrigin_Timeouts>,
     dynamic: NetworkServicesEdgeCacheOriginDynamic,
 }
 
 struct NetworkServicesEdgeCacheOrigin_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<NetworkServicesEdgeCacheOriginData>,
+    data: std::cell::RefCell<NetworkServicesEdgeCacheOriginData_>,
 }
 
 #[derive(Clone)]
@@ -154,6 +160,13 @@ impl NetworkServicesEdgeCacheOrigin {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nA human-readable description of the resource."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -223,7 +236,7 @@ impl NetworkServicesEdgeCacheOrigin {
     #[doc = "Set the field `aws_v4_authentication`.\n"]
     pub fn set_aws_v4_authentication(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<NetworkServicesEdgeCacheOriginAwsV4AuthenticationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<NetworkServicesEdgeCacheOrigin_AwsV4Authentication>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -236,10 +249,26 @@ impl NetworkServicesEdgeCacheOrigin {
         self
     }
 
+    #[doc = "Set the field `flex_shielding`.\n"]
+    pub fn set_flex_shielding(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<NetworkServicesEdgeCacheOrigin_FlexShielding>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().flex_shielding = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.flex_shielding = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `origin_override_action`.\n"]
     pub fn set_origin_override_action(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<NetworkServicesEdgeCacheOriginOriginOverrideActionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<NetworkServicesEdgeCacheOrigin_OriginOverrideAction>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -255,7 +284,7 @@ impl NetworkServicesEdgeCacheOrigin {
     #[doc = "Set the field `origin_redirect`.\n"]
     pub fn set_origin_redirect(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<NetworkServicesEdgeCacheOriginOriginRedirectEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<NetworkServicesEdgeCacheOrigin_OriginRedirect>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -271,7 +300,7 @@ impl NetworkServicesEdgeCacheOrigin {
     #[doc = "Set the field `timeout`.\n"]
     pub fn set_timeout(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<NetworkServicesEdgeCacheOriginTimeoutEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<NetworkServicesEdgeCacheOrigin_Timeout>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -285,9 +314,15 @@ impl NetworkServicesEdgeCacheOrigin {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<NetworkServicesEdgeCacheOriginTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<NetworkServicesEdgeCacheOrigin_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -367,28 +402,33 @@ impl NetworkServicesEdgeCacheOrigin {
     }
 
     #[doc = "Get a reference to the value of field `aws_v4_authentication` after provisioning.\n"]
-    pub fn aws_v4_authentication(&self) -> terrars::ListRef<NetworkServicesEdgeCacheOriginAwsV4AuthenticationElRef> {
+    pub fn aws_v4_authentication(&self) -> terrars::ListRef<NetworkServicesEdgeCacheOrigin_AwsV4AuthenticationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.aws_v4_authentication", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `flex_shielding` after provisioning.\n"]
+    pub fn flex_shielding(&self) -> terrars::ListRef<NetworkServicesEdgeCacheOrigin_FlexShieldingRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.flex_shielding", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `origin_override_action` after provisioning.\n"]
-    pub fn origin_override_action(&self) -> terrars::ListRef<NetworkServicesEdgeCacheOriginOriginOverrideActionElRef> {
+    pub fn origin_override_action(&self) -> terrars::ListRef<NetworkServicesEdgeCacheOrigin_OriginOverrideActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.origin_override_action", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `origin_redirect` after provisioning.\n"]
-    pub fn origin_redirect(&self) -> terrars::ListRef<NetworkServicesEdgeCacheOriginOriginRedirectElRef> {
+    pub fn origin_redirect(&self) -> terrars::ListRef<NetworkServicesEdgeCacheOrigin_OriginRedirectRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.origin_redirect", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeout` after provisioning.\n"]
-    pub fn timeout(&self) -> terrars::ListRef<NetworkServicesEdgeCacheOriginTimeoutElRef> {
+    pub fn timeout(&self) -> terrars::ListRef<NetworkServicesEdgeCacheOrigin_TimeoutRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.timeout", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NetworkServicesEdgeCacheOriginTimeoutsElRef {
-        NetworkServicesEdgeCacheOriginTimeoutsElRef::new(
+    pub fn timeouts(&self) -> NetworkServicesEdgeCacheOrigin_TimeoutsRef {
+        NetworkServicesEdgeCacheOrigin_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -441,12 +481,13 @@ impl BuildNetworkServicesEdgeCacheOrigin {
         let out = NetworkServicesEdgeCacheOrigin(std::rc::Rc::new(NetworkServicesEdgeCacheOrigin_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(NetworkServicesEdgeCacheOriginData {
+            data: std::cell::RefCell::new(NetworkServicesEdgeCacheOriginData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 failover_origin: core::default::Default::default(),
                 id: core::default::Default::default(),
@@ -459,6 +500,7 @@ impl BuildNetworkServicesEdgeCacheOrigin {
                 protocol: core::default::Default::default(),
                 retry_conditions: core::default::Default::default(),
                 aws_v4_authentication: core::default::Default::default(),
+                flex_shielding: core::default::Default::default(),
                 origin_override_action: core::default::Default::default(),
                 origin_redirect: core::default::Default::default(),
                 timeout: core::default::Default::default(),
@@ -492,6 +534,12 @@ impl NetworkServicesEdgeCacheOriginRef {
 
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -571,45 +619,63 @@ impl NetworkServicesEdgeCacheOriginRef {
     }
 
     #[doc = "Get a reference to the value of field `aws_v4_authentication` after provisioning.\n"]
-    pub fn aws_v4_authentication(&self) -> terrars::ListRef<NetworkServicesEdgeCacheOriginAwsV4AuthenticationElRef> {
+    pub fn aws_v4_authentication(&self) -> terrars::ListRef<NetworkServicesEdgeCacheOrigin_AwsV4AuthenticationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.aws_v4_authentication", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `flex_shielding` after provisioning.\n"]
+    pub fn flex_shielding(&self) -> terrars::ListRef<NetworkServicesEdgeCacheOrigin_FlexShieldingRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.flex_shielding", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `origin_override_action` after provisioning.\n"]
-    pub fn origin_override_action(&self) -> terrars::ListRef<NetworkServicesEdgeCacheOriginOriginOverrideActionElRef> {
+    pub fn origin_override_action(&self) -> terrars::ListRef<NetworkServicesEdgeCacheOrigin_OriginOverrideActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.origin_override_action", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `origin_redirect` after provisioning.\n"]
-    pub fn origin_redirect(&self) -> terrars::ListRef<NetworkServicesEdgeCacheOriginOriginRedirectElRef> {
+    pub fn origin_redirect(&self) -> terrars::ListRef<NetworkServicesEdgeCacheOrigin_OriginRedirectRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.origin_redirect", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeout` after provisioning.\n"]
-    pub fn timeout(&self) -> terrars::ListRef<NetworkServicesEdgeCacheOriginTimeoutElRef> {
+    pub fn timeout(&self) -> terrars::ListRef<NetworkServicesEdgeCacheOrigin_TimeoutRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.timeout", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NetworkServicesEdgeCacheOriginTimeoutsElRef {
-        NetworkServicesEdgeCacheOriginTimeoutsElRef::new(
+    pub fn timeouts(&self) -> NetworkServicesEdgeCacheOrigin_TimeoutsRef {
+        NetworkServicesEdgeCacheOrigin_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct NetworkServicesEdgeCacheOriginDynamic {
+    aws_v4_authentication: std
+    ::option
+    ::Option<terrars::DynamicBlock<NetworkServicesEdgeCacheOrigin_AwsV4Authentication>>,
+    flex_shielding: std::option::Option<terrars::DynamicBlock<NetworkServicesEdgeCacheOrigin_FlexShielding>>,
+    origin_override_action: std
+    ::option
+    ::Option<terrars::DynamicBlock<NetworkServicesEdgeCacheOrigin_OriginOverrideAction>>,
+    origin_redirect: std::option::Option<terrars::DynamicBlock<NetworkServicesEdgeCacheOrigin_OriginRedirect>>,
+    timeout: std::option::Option<terrars::DynamicBlock<NetworkServicesEdgeCacheOrigin_Timeout>>,
+}
+
 #[derive(Serialize)]
-pub struct NetworkServicesEdgeCacheOriginAwsV4AuthenticationEl {
+pub struct NetworkServicesEdgeCacheOrigin_AwsV4Authentication {
     access_key_id: terrars::PrimField<std::string::String>,
     origin_region: terrars::PrimField<std::string::String>,
     secret_access_key_version: terrars::PrimField<std::string::String>,
 }
 
-impl NetworkServicesEdgeCacheOriginAwsV4AuthenticationEl { }
+impl NetworkServicesEdgeCacheOrigin_AwsV4Authentication { }
 
-impl terrars::ToListMappable for NetworkServicesEdgeCacheOriginAwsV4AuthenticationEl {
-    type O = terrars::BlockAssignable<NetworkServicesEdgeCacheOriginAwsV4AuthenticationEl>;
+impl terrars::ToListMappable for NetworkServicesEdgeCacheOrigin_AwsV4Authentication {
+    type O = terrars::BlockAssignable<NetworkServicesEdgeCacheOrigin_AwsV4Authentication>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -620,7 +686,7 @@ impl terrars::ToListMappable for NetworkServicesEdgeCacheOriginAwsV4Authenticati
     }
 }
 
-pub struct BuildNetworkServicesEdgeCacheOriginAwsV4AuthenticationEl {
+pub struct BuildNetworkServicesEdgeCacheOrigin_AwsV4Authentication {
     #[doc = "The access key ID your origin uses to identify the key."]
     pub access_key_id: terrars::PrimField<std::string::String>,
     #[doc = "The name of the AWS region that your origin is in."]
@@ -630,9 +696,9 @@ pub struct BuildNetworkServicesEdgeCacheOriginAwsV4AuthenticationEl {
     pub secret_access_key_version: terrars::PrimField<std::string::String>,
 }
 
-impl BuildNetworkServicesEdgeCacheOriginAwsV4AuthenticationEl {
-    pub fn build(self) -> NetworkServicesEdgeCacheOriginAwsV4AuthenticationEl {
-        NetworkServicesEdgeCacheOriginAwsV4AuthenticationEl {
+impl BuildNetworkServicesEdgeCacheOrigin_AwsV4Authentication {
+    pub fn build(self) -> NetworkServicesEdgeCacheOrigin_AwsV4Authentication {
+        NetworkServicesEdgeCacheOrigin_AwsV4Authentication {
             access_key_id: self.access_key_id,
             origin_region: self.origin_region,
             secret_access_key_version: self.secret_access_key_version,
@@ -640,24 +706,26 @@ impl BuildNetworkServicesEdgeCacheOriginAwsV4AuthenticationEl {
     }
 }
 
-pub struct NetworkServicesEdgeCacheOriginAwsV4AuthenticationElRef {
+#[allow(dead_code)]
+pub struct NetworkServicesEdgeCacheOrigin_AwsV4AuthenticationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkServicesEdgeCacheOriginAwsV4AuthenticationElRef {
+impl terrars::Ref for NetworkServicesEdgeCacheOrigin_AwsV4AuthenticationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkServicesEdgeCacheOriginAwsV4AuthenticationElRef {
-        NetworkServicesEdgeCacheOriginAwsV4AuthenticationElRef {
+    ) -> NetworkServicesEdgeCacheOrigin_AwsV4AuthenticationRef {
+        NetworkServicesEdgeCacheOrigin_AwsV4AuthenticationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkServicesEdgeCacheOriginAwsV4AuthenticationElRef {
+impl NetworkServicesEdgeCacheOrigin_AwsV4AuthenticationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -682,27 +750,25 @@ impl NetworkServicesEdgeCacheOriginAwsV4AuthenticationElRef {
 }
 
 #[derive(Serialize)]
-pub struct NetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionElRequestHeadersToAddEl {
-    header_name: terrars::PrimField<std::string::String>,
-    header_value: terrars::PrimField<std::string::String>,
+pub struct NetworkServicesEdgeCacheOrigin_FlexShielding {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    replace: std::option::Option<terrars::PrimField<bool>>,
+    flex_shielding_regions: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl NetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionElRequestHeadersToAddEl {
+impl NetworkServicesEdgeCacheOrigin_FlexShielding {
     #[doc =
-        "Set the field `replace`.\nWhether to replace all existing headers with the same name.\n\nBy default, added header values are appended\nto the response or request headers with the\nsame field names. The added values are\nseparated by commas.\n\nTo overwrite existing values, set 'replace' to 'true'."]
-    pub fn set_replace(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.replace = std::option::Option::Some(v.into());
+        "Set the field `flex_shielding_regions`.\nWhenever possible, content will be fetched from origin and cached in or\nnear the specified origin. Best effort.\n\nYou must specify exactly one FlexShieldingRegion. Possible values include\n'AFRICA_SOUTH1', 'ME_CENTRAL1', 'EUROPE_WEST3', and 'US_EAST5'. See\n[FlexShieldingRegion](https://cloud.google.com/media-cdn/docs/reference/rest/v1/projects.locations.edgeCacheOrigins#FlexShieldingRegion)\nfor the full list of supported regions."]
+    pub fn set_flex_shielding_regions(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.flex_shielding_regions = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars
-::ToListMappable for NetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionElRequestHeadersToAddEl {
-    type O =
-        terrars
-        ::BlockAssignable<NetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionElRequestHeadersToAddEl>;
+impl terrars::ToListMappable for NetworkServicesEdgeCacheOrigin_FlexShielding {
+    type O = terrars::BlockAssignable<NetworkServicesEdgeCacheOrigin_FlexShielding>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -713,16 +779,86 @@ impl terrars
     }
 }
 
-pub struct BuildNetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionElRequestHeadersToAddEl {
+pub struct BuildNetworkServicesEdgeCacheOrigin_FlexShielding {}
+
+impl BuildNetworkServicesEdgeCacheOrigin_FlexShielding {
+    pub fn build(self) -> NetworkServicesEdgeCacheOrigin_FlexShielding {
+        NetworkServicesEdgeCacheOrigin_FlexShielding { flex_shielding_regions: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct NetworkServicesEdgeCacheOrigin_FlexShieldingRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for NetworkServicesEdgeCacheOrigin_FlexShieldingRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> NetworkServicesEdgeCacheOrigin_FlexShieldingRef {
+        NetworkServicesEdgeCacheOrigin_FlexShieldingRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl NetworkServicesEdgeCacheOrigin_FlexShieldingRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `flex_shielding_regions` after provisioning.\nWhenever possible, content will be fetched from origin and cached in or\nnear the specified origin. Best effort.\n\nYou must specify exactly one FlexShieldingRegion. Possible values include\n'AFRICA_SOUTH1', 'ME_CENTRAL1', 'EUROPE_WEST3', and 'US_EAST5'. See\n[FlexShieldingRegion](https://cloud.google.com/media-cdn/docs/reference/rest/v1/projects.locations.edgeCacheOrigins#FlexShieldingRegion)\nfor the full list of supported regions."]
+    pub fn flex_shielding_regions(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.flex_shielding_regions", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct NetworkServicesEdgeCacheOrigin_OriginOverrideAction_HeaderAction_RequestHeadersToAdd {
+    header_name: terrars::PrimField<std::string::String>,
+    header_value: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    replace: std::option::Option<terrars::PrimField<bool>>,
+}
+
+impl NetworkServicesEdgeCacheOrigin_OriginOverrideAction_HeaderAction_RequestHeadersToAdd {
+    #[doc =
+        "Set the field `replace`.\nWhether to replace all existing headers with the same name.\n\nBy default, added header values are appended\nto the response or request headers with the\nsame field names. The added values are\nseparated by commas.\n\nTo overwrite existing values, set 'replace' to 'true'."]
+    pub fn set_replace(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.replace = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for NetworkServicesEdgeCacheOrigin_OriginOverrideAction_HeaderAction_RequestHeadersToAdd {
+    type O =
+        terrars
+        ::BlockAssignable<NetworkServicesEdgeCacheOrigin_OriginOverrideAction_HeaderAction_RequestHeadersToAdd>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildNetworkServicesEdgeCacheOrigin_OriginOverrideAction_HeaderAction_RequestHeadersToAdd {
     #[doc = "The name of the header to add."]
     pub header_name: terrars::PrimField<std::string::String>,
     #[doc = "The value of the header to add."]
     pub header_value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildNetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionElRequestHeadersToAddEl {
-    pub fn build(self) -> NetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionElRequestHeadersToAddEl {
-        NetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionElRequestHeadersToAddEl {
+impl BuildNetworkServicesEdgeCacheOrigin_OriginOverrideAction_HeaderAction_RequestHeadersToAdd {
+    pub fn build(self) -> NetworkServicesEdgeCacheOrigin_OriginOverrideAction_HeaderAction_RequestHeadersToAdd {
+        NetworkServicesEdgeCacheOrigin_OriginOverrideAction_HeaderAction_RequestHeadersToAdd {
             header_name: self.header_name,
             header_value: self.header_value,
             replace: core::default::Default::default(),
@@ -730,24 +866,26 @@ impl BuildNetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionElRequ
     }
 }
 
-pub struct NetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionElRequestHeadersToAddElRef {
+#[allow(dead_code)]
+pub struct NetworkServicesEdgeCacheOrigin_OriginOverrideAction_HeaderAction_RequestHeadersToAddRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionElRequestHeadersToAddElRef {
+impl terrars::Ref for NetworkServicesEdgeCacheOrigin_OriginOverrideAction_HeaderAction_RequestHeadersToAddRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionElRequestHeadersToAddElRef {
-        NetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionElRequestHeadersToAddElRef {
+    ) -> NetworkServicesEdgeCacheOrigin_OriginOverrideAction_HeaderAction_RequestHeadersToAddRef {
+        NetworkServicesEdgeCacheOrigin_OriginOverrideAction_HeaderAction_RequestHeadersToAddRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionElRequestHeadersToAddElRef {
+impl NetworkServicesEdgeCacheOrigin_OriginOverrideAction_HeaderAction_RequestHeadersToAddRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -770,24 +908,24 @@ impl NetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionElRequestHe
 }
 
 #[derive(Serialize, Default)]
-struct NetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionElDynamic {
+struct NetworkServicesEdgeCacheOrigin_OriginOverrideAction_HeaderActionDynamic {
     request_headers_to_add: std
     ::option
     ::Option<
-        terrars::DynamicBlock<NetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionElRequestHeadersToAddEl>,
+        terrars::DynamicBlock<NetworkServicesEdgeCacheOrigin_OriginOverrideAction_HeaderAction_RequestHeadersToAdd>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct NetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionEl {
+pub struct NetworkServicesEdgeCacheOrigin_OriginOverrideAction_HeaderAction {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     request_headers_to_add: std
     ::option
-    ::Option<std::vec::Vec<NetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionElRequestHeadersToAddEl>>,
-    dynamic: NetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionElDynamic,
+    ::Option<std::vec::Vec<NetworkServicesEdgeCacheOrigin_OriginOverrideAction_HeaderAction_RequestHeadersToAdd>>,
+    dynamic: NetworkServicesEdgeCacheOrigin_OriginOverrideAction_HeaderActionDynamic,
 }
 
-impl NetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionEl {
+impl NetworkServicesEdgeCacheOrigin_OriginOverrideAction_HeaderAction {
     #[doc = "Set the field `request_headers_to_add`.\n"]
     pub fn set_request_headers_to_add(
         mut self,
@@ -799,7 +937,7 @@ impl NetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            NetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionElRequestHeadersToAddEl,
+                            NetworkServicesEdgeCacheOrigin_OriginOverrideAction_HeaderAction_RequestHeadersToAdd,
                         >,
                     >,
     ) -> Self {
@@ -815,8 +953,8 @@ impl NetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionEl {
-    type O = terrars::BlockAssignable<NetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionEl>;
+impl terrars::ToListMappable for NetworkServicesEdgeCacheOrigin_OriginOverrideAction_HeaderAction {
+    type O = terrars::BlockAssignable<NetworkServicesEdgeCacheOrigin_OriginOverrideAction_HeaderAction>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -827,35 +965,37 @@ impl terrars::ToListMappable for NetworkServicesEdgeCacheOriginOriginOverrideAct
     }
 }
 
-pub struct BuildNetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionEl {}
+pub struct BuildNetworkServicesEdgeCacheOrigin_OriginOverrideAction_HeaderAction {}
 
-impl BuildNetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionEl {
-    pub fn build(self) -> NetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionEl {
-        NetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionEl {
+impl BuildNetworkServicesEdgeCacheOrigin_OriginOverrideAction_HeaderAction {
+    pub fn build(self) -> NetworkServicesEdgeCacheOrigin_OriginOverrideAction_HeaderAction {
+        NetworkServicesEdgeCacheOrigin_OriginOverrideAction_HeaderAction {
             request_headers_to_add: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct NetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionElRef {
+#[allow(dead_code)]
+pub struct NetworkServicesEdgeCacheOrigin_OriginOverrideAction_HeaderActionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionElRef {
+impl terrars::Ref for NetworkServicesEdgeCacheOrigin_OriginOverrideAction_HeaderActionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionElRef {
-        NetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionElRef {
+    ) -> NetworkServicesEdgeCacheOrigin_OriginOverrideAction_HeaderActionRef {
+        NetworkServicesEdgeCacheOrigin_OriginOverrideAction_HeaderActionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionElRef {
+impl NetworkServicesEdgeCacheOrigin_OriginOverrideAction_HeaderActionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -863,18 +1003,18 @@ impl NetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionElRef {
     #[doc = "Get a reference to the value of field `request_headers_to_add` after provisioning.\n"]
     pub fn request_headers_to_add(
         &self,
-    ) -> terrars::ListRef<NetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionElRequestHeadersToAddElRef> {
+    ) -> terrars::ListRef<NetworkServicesEdgeCacheOrigin_OriginOverrideAction_HeaderAction_RequestHeadersToAddRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.request_headers_to_add", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct NetworkServicesEdgeCacheOriginOriginOverrideActionElUrlRewriteEl {
+pub struct NetworkServicesEdgeCacheOrigin_OriginOverrideAction_UrlRewrite {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     host_rewrite: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl NetworkServicesEdgeCacheOriginOriginOverrideActionElUrlRewriteEl {
+impl NetworkServicesEdgeCacheOrigin_OriginOverrideAction_UrlRewrite {
     #[doc =
         "Set the field `host_rewrite`.\nPrior to forwarding the request to the selected\norigin, the request's host header is replaced with\ncontents of the hostRewrite.\n\nThis value must be between 1 and 255 characters."]
     pub fn set_host_rewrite(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -883,8 +1023,8 @@ impl NetworkServicesEdgeCacheOriginOriginOverrideActionElUrlRewriteEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkServicesEdgeCacheOriginOriginOverrideActionElUrlRewriteEl {
-    type O = terrars::BlockAssignable<NetworkServicesEdgeCacheOriginOriginOverrideActionElUrlRewriteEl>;
+impl terrars::ToListMappable for NetworkServicesEdgeCacheOrigin_OriginOverrideAction_UrlRewrite {
+    type O = terrars::BlockAssignable<NetworkServicesEdgeCacheOrigin_OriginOverrideAction_UrlRewrite>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -895,34 +1035,36 @@ impl terrars::ToListMappable for NetworkServicesEdgeCacheOriginOriginOverrideAct
     }
 }
 
-pub struct BuildNetworkServicesEdgeCacheOriginOriginOverrideActionElUrlRewriteEl {}
+pub struct BuildNetworkServicesEdgeCacheOrigin_OriginOverrideAction_UrlRewrite {}
 
-impl BuildNetworkServicesEdgeCacheOriginOriginOverrideActionElUrlRewriteEl {
-    pub fn build(self) -> NetworkServicesEdgeCacheOriginOriginOverrideActionElUrlRewriteEl {
-        NetworkServicesEdgeCacheOriginOriginOverrideActionElUrlRewriteEl {
+impl BuildNetworkServicesEdgeCacheOrigin_OriginOverrideAction_UrlRewrite {
+    pub fn build(self) -> NetworkServicesEdgeCacheOrigin_OriginOverrideAction_UrlRewrite {
+        NetworkServicesEdgeCacheOrigin_OriginOverrideAction_UrlRewrite {
             host_rewrite: core::default::Default::default(),
         }
     }
 }
 
-pub struct NetworkServicesEdgeCacheOriginOriginOverrideActionElUrlRewriteElRef {
+#[allow(dead_code)]
+pub struct NetworkServicesEdgeCacheOrigin_OriginOverrideAction_UrlRewriteRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkServicesEdgeCacheOriginOriginOverrideActionElUrlRewriteElRef {
+impl terrars::Ref for NetworkServicesEdgeCacheOrigin_OriginOverrideAction_UrlRewriteRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkServicesEdgeCacheOriginOriginOverrideActionElUrlRewriteElRef {
-        NetworkServicesEdgeCacheOriginOriginOverrideActionElUrlRewriteElRef {
+    ) -> NetworkServicesEdgeCacheOrigin_OriginOverrideAction_UrlRewriteRef {
+        NetworkServicesEdgeCacheOrigin_OriginOverrideAction_UrlRewriteRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkServicesEdgeCacheOriginOriginOverrideActionElUrlRewriteElRef {
+impl NetworkServicesEdgeCacheOrigin_OriginOverrideAction_UrlRewriteRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -935,25 +1077,25 @@ impl NetworkServicesEdgeCacheOriginOriginOverrideActionElUrlRewriteElRef {
 }
 
 #[derive(Serialize, Default)]
-struct NetworkServicesEdgeCacheOriginOriginOverrideActionElDynamic {
+struct NetworkServicesEdgeCacheOrigin_OriginOverrideActionDynamic {
     header_action: std
     ::option
-    ::Option<terrars::DynamicBlock<NetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionEl>>,
+    ::Option<terrars::DynamicBlock<NetworkServicesEdgeCacheOrigin_OriginOverrideAction_HeaderAction>>,
     url_rewrite: std
     ::option
-    ::Option<terrars::DynamicBlock<NetworkServicesEdgeCacheOriginOriginOverrideActionElUrlRewriteEl>>,
+    ::Option<terrars::DynamicBlock<NetworkServicesEdgeCacheOrigin_OriginOverrideAction_UrlRewrite>>,
 }
 
 #[derive(Serialize)]
-pub struct NetworkServicesEdgeCacheOriginOriginOverrideActionEl {
+pub struct NetworkServicesEdgeCacheOrigin_OriginOverrideAction {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    header_action: std::option::Option<std::vec::Vec<NetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionEl>>,
+    header_action: std::option::Option<std::vec::Vec<NetworkServicesEdgeCacheOrigin_OriginOverrideAction_HeaderAction>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    url_rewrite: std::option::Option<std::vec::Vec<NetworkServicesEdgeCacheOriginOriginOverrideActionElUrlRewriteEl>>,
-    dynamic: NetworkServicesEdgeCacheOriginOriginOverrideActionElDynamic,
+    url_rewrite: std::option::Option<std::vec::Vec<NetworkServicesEdgeCacheOrigin_OriginOverrideAction_UrlRewrite>>,
+    dynamic: NetworkServicesEdgeCacheOrigin_OriginOverrideActionDynamic,
 }
 
-impl NetworkServicesEdgeCacheOriginOriginOverrideActionEl {
+impl NetworkServicesEdgeCacheOrigin_OriginOverrideAction {
     #[doc = "Set the field `header_action`.\n"]
     pub fn set_header_action(
         mut self,
@@ -963,7 +1105,7 @@ impl NetworkServicesEdgeCacheOriginOriginOverrideActionEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<NetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionEl>,
+                        terrars::BlockAssignable<NetworkServicesEdgeCacheOrigin_OriginOverrideAction_HeaderAction>,
                     >,
     ) -> Self {
         match v.into() {
@@ -985,9 +1127,7 @@ impl NetworkServicesEdgeCacheOriginOriginOverrideActionEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<NetworkServicesEdgeCacheOriginOriginOverrideActionElUrlRewriteEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<NetworkServicesEdgeCacheOrigin_OriginOverrideAction_UrlRewrite>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1001,8 +1141,8 @@ impl NetworkServicesEdgeCacheOriginOriginOverrideActionEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkServicesEdgeCacheOriginOriginOverrideActionEl {
-    type O = terrars::BlockAssignable<NetworkServicesEdgeCacheOriginOriginOverrideActionEl>;
+impl terrars::ToListMappable for NetworkServicesEdgeCacheOrigin_OriginOverrideAction {
+    type O = terrars::BlockAssignable<NetworkServicesEdgeCacheOrigin_OriginOverrideAction>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1013,11 +1153,11 @@ impl terrars::ToListMappable for NetworkServicesEdgeCacheOriginOriginOverrideAct
     }
 }
 
-pub struct BuildNetworkServicesEdgeCacheOriginOriginOverrideActionEl {}
+pub struct BuildNetworkServicesEdgeCacheOrigin_OriginOverrideAction {}
 
-impl BuildNetworkServicesEdgeCacheOriginOriginOverrideActionEl {
-    pub fn build(self) -> NetworkServicesEdgeCacheOriginOriginOverrideActionEl {
-        NetworkServicesEdgeCacheOriginOriginOverrideActionEl {
+impl BuildNetworkServicesEdgeCacheOrigin_OriginOverrideAction {
+    pub fn build(self) -> NetworkServicesEdgeCacheOrigin_OriginOverrideAction {
+        NetworkServicesEdgeCacheOrigin_OriginOverrideAction {
             header_action: core::default::Default::default(),
             url_rewrite: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1025,48 +1165,48 @@ impl BuildNetworkServicesEdgeCacheOriginOriginOverrideActionEl {
     }
 }
 
-pub struct NetworkServicesEdgeCacheOriginOriginOverrideActionElRef {
+#[allow(dead_code)]
+pub struct NetworkServicesEdgeCacheOrigin_OriginOverrideActionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkServicesEdgeCacheOriginOriginOverrideActionElRef {
+impl terrars::Ref for NetworkServicesEdgeCacheOrigin_OriginOverrideActionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkServicesEdgeCacheOriginOriginOverrideActionElRef {
-        NetworkServicesEdgeCacheOriginOriginOverrideActionElRef {
+    ) -> NetworkServicesEdgeCacheOrigin_OriginOverrideActionRef {
+        NetworkServicesEdgeCacheOrigin_OriginOverrideActionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkServicesEdgeCacheOriginOriginOverrideActionElRef {
+impl NetworkServicesEdgeCacheOrigin_OriginOverrideActionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `header_action` after provisioning.\n"]
-    pub fn header_action(
-        &self,
-    ) -> terrars::ListRef<NetworkServicesEdgeCacheOriginOriginOverrideActionElHeaderActionElRef> {
+    pub fn header_action(&self) -> terrars::ListRef<NetworkServicesEdgeCacheOrigin_OriginOverrideAction_HeaderActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.header_action", self.base))
     }
 
     #[doc = "Get a reference to the value of field `url_rewrite` after provisioning.\n"]
-    pub fn url_rewrite(&self) -> terrars::ListRef<NetworkServicesEdgeCacheOriginOriginOverrideActionElUrlRewriteElRef> {
+    pub fn url_rewrite(&self) -> terrars::ListRef<NetworkServicesEdgeCacheOrigin_OriginOverrideAction_UrlRewriteRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.url_rewrite", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct NetworkServicesEdgeCacheOriginOriginRedirectEl {
+pub struct NetworkServicesEdgeCacheOrigin_OriginRedirect {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     redirect_conditions: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl NetworkServicesEdgeCacheOriginOriginRedirectEl {
+impl NetworkServicesEdgeCacheOrigin_OriginRedirect {
     #[doc =
         "Set the field `redirect_conditions`.\nThe set of redirect response codes that the CDN\nfollows. Values of\n[RedirectConditions](https://cloud.google.com/media-cdn/docs/reference/rest/v1/projects.locations.edgeCacheOrigins#redirectconditions)\nare accepted."]
     pub fn set_redirect_conditions(
@@ -1078,8 +1218,8 @@ impl NetworkServicesEdgeCacheOriginOriginRedirectEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkServicesEdgeCacheOriginOriginRedirectEl {
-    type O = terrars::BlockAssignable<NetworkServicesEdgeCacheOriginOriginRedirectEl>;
+impl terrars::ToListMappable for NetworkServicesEdgeCacheOrigin_OriginRedirect {
+    type O = terrars::BlockAssignable<NetworkServicesEdgeCacheOrigin_OriginRedirect>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1090,32 +1230,34 @@ impl terrars::ToListMappable for NetworkServicesEdgeCacheOriginOriginRedirectEl 
     }
 }
 
-pub struct BuildNetworkServicesEdgeCacheOriginOriginRedirectEl {}
+pub struct BuildNetworkServicesEdgeCacheOrigin_OriginRedirect {}
 
-impl BuildNetworkServicesEdgeCacheOriginOriginRedirectEl {
-    pub fn build(self) -> NetworkServicesEdgeCacheOriginOriginRedirectEl {
-        NetworkServicesEdgeCacheOriginOriginRedirectEl { redirect_conditions: core::default::Default::default() }
+impl BuildNetworkServicesEdgeCacheOrigin_OriginRedirect {
+    pub fn build(self) -> NetworkServicesEdgeCacheOrigin_OriginRedirect {
+        NetworkServicesEdgeCacheOrigin_OriginRedirect { redirect_conditions: core::default::Default::default() }
     }
 }
 
-pub struct NetworkServicesEdgeCacheOriginOriginRedirectElRef {
+#[allow(dead_code)]
+pub struct NetworkServicesEdgeCacheOrigin_OriginRedirectRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkServicesEdgeCacheOriginOriginRedirectElRef {
+impl terrars::Ref for NetworkServicesEdgeCacheOrigin_OriginRedirectRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkServicesEdgeCacheOriginOriginRedirectElRef {
-        NetworkServicesEdgeCacheOriginOriginRedirectElRef {
+    ) -> NetworkServicesEdgeCacheOrigin_OriginRedirectRef {
+        NetworkServicesEdgeCacheOrigin_OriginRedirectRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkServicesEdgeCacheOriginOriginRedirectElRef {
+impl NetworkServicesEdgeCacheOrigin_OriginRedirectRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1128,7 +1270,7 @@ impl NetworkServicesEdgeCacheOriginOriginRedirectElRef {
 }
 
 #[derive(Serialize)]
-pub struct NetworkServicesEdgeCacheOriginTimeoutEl {
+pub struct NetworkServicesEdgeCacheOrigin_Timeout {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     connect_timeout: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1139,7 +1281,7 @@ pub struct NetworkServicesEdgeCacheOriginTimeoutEl {
     response_timeout: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl NetworkServicesEdgeCacheOriginTimeoutEl {
+impl NetworkServicesEdgeCacheOrigin_Timeout {
     #[doc =
         "Set the field `connect_timeout`.\nThe maximum duration to wait for a single origin connection to be established, including DNS lookup, TLS handshake and TCP/QUIC connection establishment.\n\nDefaults to 5 seconds. The timeout must be a value between 1s and 15s.\n\nThe connectTimeout capped by the deadline set by the request's maxAttemptsTimeout.  The last connection attempt may have a smaller connectTimeout in order to adhere to the overall maxAttemptsTimeout."]
     pub fn set_connect_timeout(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1172,8 +1314,8 @@ impl NetworkServicesEdgeCacheOriginTimeoutEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkServicesEdgeCacheOriginTimeoutEl {
-    type O = terrars::BlockAssignable<NetworkServicesEdgeCacheOriginTimeoutEl>;
+impl terrars::ToListMappable for NetworkServicesEdgeCacheOrigin_Timeout {
+    type O = terrars::BlockAssignable<NetworkServicesEdgeCacheOrigin_Timeout>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1184,11 +1326,11 @@ impl terrars::ToListMappable for NetworkServicesEdgeCacheOriginTimeoutEl {
     }
 }
 
-pub struct BuildNetworkServicesEdgeCacheOriginTimeoutEl {}
+pub struct BuildNetworkServicesEdgeCacheOrigin_Timeout {}
 
-impl BuildNetworkServicesEdgeCacheOriginTimeoutEl {
-    pub fn build(self) -> NetworkServicesEdgeCacheOriginTimeoutEl {
-        NetworkServicesEdgeCacheOriginTimeoutEl {
+impl BuildNetworkServicesEdgeCacheOrigin_Timeout {
+    pub fn build(self) -> NetworkServicesEdgeCacheOrigin_Timeout {
+        NetworkServicesEdgeCacheOrigin_Timeout {
             connect_timeout: core::default::Default::default(),
             max_attempts_timeout: core::default::Default::default(),
             read_timeout: core::default::Default::default(),
@@ -1197,21 +1339,23 @@ impl BuildNetworkServicesEdgeCacheOriginTimeoutEl {
     }
 }
 
-pub struct NetworkServicesEdgeCacheOriginTimeoutElRef {
+#[allow(dead_code)]
+pub struct NetworkServicesEdgeCacheOrigin_TimeoutRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkServicesEdgeCacheOriginTimeoutElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkServicesEdgeCacheOriginTimeoutElRef {
-        NetworkServicesEdgeCacheOriginTimeoutElRef {
+impl terrars::Ref for NetworkServicesEdgeCacheOrigin_TimeoutRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkServicesEdgeCacheOrigin_TimeoutRef {
+        NetworkServicesEdgeCacheOrigin_TimeoutRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkServicesEdgeCacheOriginTimeoutElRef {
+impl NetworkServicesEdgeCacheOrigin_TimeoutRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1242,7 +1386,7 @@ impl NetworkServicesEdgeCacheOriginTimeoutElRef {
 }
 
 #[derive(Serialize)]
-pub struct NetworkServicesEdgeCacheOriginTimeoutsEl {
+pub struct NetworkServicesEdgeCacheOrigin_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1251,7 +1395,7 @@ pub struct NetworkServicesEdgeCacheOriginTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl NetworkServicesEdgeCacheOriginTimeoutsEl {
+impl NetworkServicesEdgeCacheOrigin_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1271,8 +1415,8 @@ impl NetworkServicesEdgeCacheOriginTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkServicesEdgeCacheOriginTimeoutsEl {
-    type O = terrars::BlockAssignable<NetworkServicesEdgeCacheOriginTimeoutsEl>;
+impl terrars::ToListMappable for NetworkServicesEdgeCacheOrigin_Timeouts {
+    type O = terrars::BlockAssignable<NetworkServicesEdgeCacheOrigin_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1283,11 +1427,11 @@ impl terrars::ToListMappable for NetworkServicesEdgeCacheOriginTimeoutsEl {
     }
 }
 
-pub struct BuildNetworkServicesEdgeCacheOriginTimeoutsEl {}
+pub struct BuildNetworkServicesEdgeCacheOrigin_Timeouts {}
 
-impl BuildNetworkServicesEdgeCacheOriginTimeoutsEl {
-    pub fn build(self) -> NetworkServicesEdgeCacheOriginTimeoutsEl {
-        NetworkServicesEdgeCacheOriginTimeoutsEl {
+impl BuildNetworkServicesEdgeCacheOrigin_Timeouts {
+    pub fn build(self) -> NetworkServicesEdgeCacheOrigin_Timeouts {
+        NetworkServicesEdgeCacheOrigin_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1295,21 +1439,23 @@ impl BuildNetworkServicesEdgeCacheOriginTimeoutsEl {
     }
 }
 
-pub struct NetworkServicesEdgeCacheOriginTimeoutsElRef {
+#[allow(dead_code)]
+pub struct NetworkServicesEdgeCacheOrigin_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkServicesEdgeCacheOriginTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkServicesEdgeCacheOriginTimeoutsElRef {
-        NetworkServicesEdgeCacheOriginTimeoutsElRef {
+impl terrars::Ref for NetworkServicesEdgeCacheOrigin_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkServicesEdgeCacheOrigin_TimeoutsRef {
+        NetworkServicesEdgeCacheOrigin_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkServicesEdgeCacheOriginTimeoutsElRef {
+impl NetworkServicesEdgeCacheOrigin_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1328,16 +1474,4 @@ impl NetworkServicesEdgeCacheOriginTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct NetworkServicesEdgeCacheOriginDynamic {
-    aws_v4_authentication: std
-    ::option
-    ::Option<terrars::DynamicBlock<NetworkServicesEdgeCacheOriginAwsV4AuthenticationEl>>,
-    origin_override_action: std
-    ::option
-    ::Option<terrars::DynamicBlock<NetworkServicesEdgeCacheOriginOriginOverrideActionEl>>,
-    origin_redirect: std::option::Option<terrars::DynamicBlock<NetworkServicesEdgeCacheOriginOriginRedirectEl>>,
-    timeout: std::option::Option<terrars::DynamicBlock<NetworkServicesEdgeCacheOriginTimeoutEl>>,
 }

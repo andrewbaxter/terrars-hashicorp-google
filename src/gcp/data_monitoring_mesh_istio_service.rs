@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataMonitoringMeshIstioServiceData {
+struct DataMonitoringMeshIstioServiceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -28,7 +30,7 @@ struct DataMonitoringMeshIstioServiceData {
 struct DataMonitoringMeshIstioService_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataMonitoringMeshIstioServiceData>,
+    data: std::cell::RefCell<DataMonitoringMeshIstioServiceData_>,
 }
 
 #[derive(Clone)]
@@ -86,6 +88,12 @@ impl DataMonitoringMeshIstioService {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `display_name` after provisioning.\nName used for UI elements listing this Service."]
     pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
@@ -133,7 +141,7 @@ impl DataMonitoringMeshIstioService {
 
     #[doc =
         "Get a reference to the value of field `telemetry` after provisioning.\nConfiguration for how to query telemetry on a Service."]
-    pub fn telemetry(&self) -> terrars::ListRef<DataMonitoringMeshIstioServiceTelemetryElRef> {
+    pub fn telemetry(&self) -> terrars::ListRef<DataMonitoringMeshIstioService_TelemetryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.telemetry", self.extract_ref()))
     }
 
@@ -193,7 +201,7 @@ impl BuildDataMonitoringMeshIstioService {
         let out = DataMonitoringMeshIstioService(std::rc::Rc::new(DataMonitoringMeshIstioService_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataMonitoringMeshIstioServiceData {
+            data: std::cell::RefCell::new(DataMonitoringMeshIstioServiceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -231,6 +239,12 @@ impl DataMonitoringMeshIstioServiceRef {
 
     fn extract_ref(&self) -> std::string::String {
         self.base.clone()
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -281,7 +295,7 @@ impl DataMonitoringMeshIstioServiceRef {
 
     #[doc =
         "Get a reference to the value of field `telemetry` after provisioning.\nConfiguration for how to query telemetry on a Service."]
-    pub fn telemetry(&self) -> terrars::ListRef<DataMonitoringMeshIstioServiceTelemetryElRef> {
+    pub fn telemetry(&self) -> terrars::ListRef<DataMonitoringMeshIstioService_TelemetryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.telemetry", self.extract_ref()))
     }
 
@@ -293,12 +307,12 @@ impl DataMonitoringMeshIstioServiceRef {
 }
 
 #[derive(Serialize)]
-pub struct DataMonitoringMeshIstioServiceTelemetryEl {
+pub struct DataMonitoringMeshIstioService_Telemetry {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resource_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataMonitoringMeshIstioServiceTelemetryEl {
+impl DataMonitoringMeshIstioService_Telemetry {
     #[doc = "Set the field `resource_name`.\n"]
     pub fn set_resource_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.resource_name = std::option::Option::Some(v.into());
@@ -306,8 +320,8 @@ impl DataMonitoringMeshIstioServiceTelemetryEl {
     }
 }
 
-impl terrars::ToListMappable for DataMonitoringMeshIstioServiceTelemetryEl {
-    type O = terrars::BlockAssignable<DataMonitoringMeshIstioServiceTelemetryEl>;
+impl terrars::ToListMappable for DataMonitoringMeshIstioService_Telemetry {
+    type O = terrars::BlockAssignable<DataMonitoringMeshIstioService_Telemetry>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -318,29 +332,31 @@ impl terrars::ToListMappable for DataMonitoringMeshIstioServiceTelemetryEl {
     }
 }
 
-pub struct BuildDataMonitoringMeshIstioServiceTelemetryEl {}
+pub struct BuildDataMonitoringMeshIstioService_Telemetry {}
 
-impl BuildDataMonitoringMeshIstioServiceTelemetryEl {
-    pub fn build(self) -> DataMonitoringMeshIstioServiceTelemetryEl {
-        DataMonitoringMeshIstioServiceTelemetryEl { resource_name: core::default::Default::default() }
+impl BuildDataMonitoringMeshIstioService_Telemetry {
+    pub fn build(self) -> DataMonitoringMeshIstioService_Telemetry {
+        DataMonitoringMeshIstioService_Telemetry { resource_name: core::default::Default::default() }
     }
 }
 
-pub struct DataMonitoringMeshIstioServiceTelemetryElRef {
+#[allow(dead_code)]
+pub struct DataMonitoringMeshIstioService_TelemetryRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataMonitoringMeshIstioServiceTelemetryElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataMonitoringMeshIstioServiceTelemetryElRef {
-        DataMonitoringMeshIstioServiceTelemetryElRef {
+impl terrars::Ref for DataMonitoringMeshIstioService_TelemetryRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataMonitoringMeshIstioService_TelemetryRef {
+        DataMonitoringMeshIstioService_TelemetryRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataMonitoringMeshIstioServiceTelemetryElRef {
+impl DataMonitoringMeshIstioService_TelemetryRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

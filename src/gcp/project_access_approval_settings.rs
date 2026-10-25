@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ProjectAccessApprovalSettingsData {
+struct ProjectAccessApprovalSettingsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,6 +23,8 @@ struct ProjectAccessApprovalSettingsData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     active_key_version: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     notification_emails: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
@@ -28,16 +32,16 @@ struct ProjectAccessApprovalSettingsData {
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     project_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    enrolled_services: std::option::Option<std::vec::Vec<ProjectAccessApprovalSettingsEnrolledServicesEl>>,
+    enrolled_services: std::option::Option<std::vec::Vec<ProjectAccessApprovalSettings_EnrolledServices>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ProjectAccessApprovalSettingsTimeoutsEl>,
+    timeouts: std::option::Option<ProjectAccessApprovalSettings_Timeouts>,
     dynamic: ProjectAccessApprovalSettingsDynamic,
 }
 
 struct ProjectAccessApprovalSettings_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ProjectAccessApprovalSettingsData>,
+    data: std::cell::RefCell<ProjectAccessApprovalSettingsData_>,
 }
 
 #[derive(Clone)]
@@ -144,6 +148,13 @@ impl ProjectAccessApprovalSettings {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -169,7 +180,7 @@ impl ProjectAccessApprovalSettings {
     #[doc = "Set the field `enrolled_services`.\n"]
     pub fn set_enrolled_services(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ProjectAccessApprovalSettingsEnrolledServicesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ProjectAccessApprovalSettings_EnrolledServices>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -183,7 +194,7 @@ impl ProjectAccessApprovalSettings {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ProjectAccessApprovalSettingsTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ProjectAccessApprovalSettings_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -201,6 +212,12 @@ impl ProjectAccessApprovalSettings {
             self.shared().clone(),
             format!("{}.ancestor_has_active_key_version", self.extract_ref()),
         )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -244,8 +261,8 @@ impl ProjectAccessApprovalSettings {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ProjectAccessApprovalSettingsTimeoutsElRef {
-        ProjectAccessApprovalSettingsTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ProjectAccessApprovalSettings_TimeoutsRef {
+        ProjectAccessApprovalSettings_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -294,13 +311,14 @@ impl BuildProjectAccessApprovalSettings {
         let out = ProjectAccessApprovalSettings(std::rc::Rc::new(ProjectAccessApprovalSettings_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ProjectAccessApprovalSettingsData {
+            data: std::cell::RefCell::new(ProjectAccessApprovalSettingsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 active_key_version: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 notification_emails: core::default::Default::default(),
                 project: core::default::Default::default(),
@@ -354,6 +372,12 @@ impl ProjectAccessApprovalSettingsRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `enrolled_ancestor` after provisioning.\nIf the field is true, that indicates that at least one service is enrolled for Access Approval in one or more ancestors of the Project."]
     pub fn enrolled_ancestor(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enrolled_ancestor", self.extract_ref()))
@@ -394,22 +418,27 @@ impl ProjectAccessApprovalSettingsRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ProjectAccessApprovalSettingsTimeoutsElRef {
-        ProjectAccessApprovalSettingsTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ProjectAccessApprovalSettings_TimeoutsRef {
+        ProjectAccessApprovalSettings_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct ProjectAccessApprovalSettingsDynamic {
+    enrolled_services: std::option::Option<terrars::DynamicBlock<ProjectAccessApprovalSettings_EnrolledServices>>,
+}
+
 #[derive(Serialize)]
-pub struct ProjectAccessApprovalSettingsEnrolledServicesEl {
+pub struct ProjectAccessApprovalSettings_EnrolledServices {
     cloud_product: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enrollment_level: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ProjectAccessApprovalSettingsEnrolledServicesEl {
+impl ProjectAccessApprovalSettings_EnrolledServices {
     #[doc =
         "Set the field `enrollment_level`.\nThe enrollment level of the service. Default value: \"BLOCK_ALL\" Possible values: [\"BLOCK_ALL\"]"]
     pub fn set_enrollment_level(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -418,8 +447,8 @@ impl ProjectAccessApprovalSettingsEnrolledServicesEl {
     }
 }
 
-impl terrars::ToListMappable for ProjectAccessApprovalSettingsEnrolledServicesEl {
-    type O = terrars::BlockAssignable<ProjectAccessApprovalSettingsEnrolledServicesEl>;
+impl terrars::ToListMappable for ProjectAccessApprovalSettings_EnrolledServices {
+    type O = terrars::BlockAssignable<ProjectAccessApprovalSettings_EnrolledServices>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -430,39 +459,41 @@ impl terrars::ToListMappable for ProjectAccessApprovalSettingsEnrolledServicesEl
     }
 }
 
-pub struct BuildProjectAccessApprovalSettingsEnrolledServicesEl {
+pub struct BuildProjectAccessApprovalSettings_EnrolledServices {
     #[doc =
         "The product for which Access Approval will be enrolled. Allowed values are listed (case-sensitive):\n  all\n  appengine.googleapis.com\n  bigquery.googleapis.com\n  bigtable.googleapis.com\n  cloudkms.googleapis.com\n  compute.googleapis.com\n  dataflow.googleapis.com\n  iam.googleapis.com\n  pubsub.googleapis.com\n  storage.googleapis.com"]
     pub cloud_product: terrars::PrimField<std::string::String>,
 }
 
-impl BuildProjectAccessApprovalSettingsEnrolledServicesEl {
-    pub fn build(self) -> ProjectAccessApprovalSettingsEnrolledServicesEl {
-        ProjectAccessApprovalSettingsEnrolledServicesEl {
+impl BuildProjectAccessApprovalSettings_EnrolledServices {
+    pub fn build(self) -> ProjectAccessApprovalSettings_EnrolledServices {
+        ProjectAccessApprovalSettings_EnrolledServices {
             cloud_product: self.cloud_product,
             enrollment_level: core::default::Default::default(),
         }
     }
 }
 
-pub struct ProjectAccessApprovalSettingsEnrolledServicesElRef {
+#[allow(dead_code)]
+pub struct ProjectAccessApprovalSettings_EnrolledServicesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ProjectAccessApprovalSettingsEnrolledServicesElRef {
+impl terrars::Ref for ProjectAccessApprovalSettings_EnrolledServicesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ProjectAccessApprovalSettingsEnrolledServicesElRef {
-        ProjectAccessApprovalSettingsEnrolledServicesElRef {
+    ) -> ProjectAccessApprovalSettings_EnrolledServicesRef {
+        ProjectAccessApprovalSettings_EnrolledServicesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ProjectAccessApprovalSettingsEnrolledServicesElRef {
+impl ProjectAccessApprovalSettings_EnrolledServicesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -481,7 +512,7 @@ impl ProjectAccessApprovalSettingsEnrolledServicesElRef {
 }
 
 #[derive(Serialize)]
-pub struct ProjectAccessApprovalSettingsTimeoutsEl {
+pub struct ProjectAccessApprovalSettings_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -490,7 +521,7 @@ pub struct ProjectAccessApprovalSettingsTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ProjectAccessApprovalSettingsTimeoutsEl {
+impl ProjectAccessApprovalSettings_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -510,8 +541,8 @@ impl ProjectAccessApprovalSettingsTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ProjectAccessApprovalSettingsTimeoutsEl {
-    type O = terrars::BlockAssignable<ProjectAccessApprovalSettingsTimeoutsEl>;
+impl terrars::ToListMappable for ProjectAccessApprovalSettings_Timeouts {
+    type O = terrars::BlockAssignable<ProjectAccessApprovalSettings_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -522,11 +553,11 @@ impl terrars::ToListMappable for ProjectAccessApprovalSettingsTimeoutsEl {
     }
 }
 
-pub struct BuildProjectAccessApprovalSettingsTimeoutsEl {}
+pub struct BuildProjectAccessApprovalSettings_Timeouts {}
 
-impl BuildProjectAccessApprovalSettingsTimeoutsEl {
-    pub fn build(self) -> ProjectAccessApprovalSettingsTimeoutsEl {
-        ProjectAccessApprovalSettingsTimeoutsEl {
+impl BuildProjectAccessApprovalSettings_Timeouts {
+    pub fn build(self) -> ProjectAccessApprovalSettings_Timeouts {
+        ProjectAccessApprovalSettings_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -534,21 +565,23 @@ impl BuildProjectAccessApprovalSettingsTimeoutsEl {
     }
 }
 
-pub struct ProjectAccessApprovalSettingsTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ProjectAccessApprovalSettings_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ProjectAccessApprovalSettingsTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ProjectAccessApprovalSettingsTimeoutsElRef {
-        ProjectAccessApprovalSettingsTimeoutsElRef {
+impl terrars::Ref for ProjectAccessApprovalSettings_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ProjectAccessApprovalSettings_TimeoutsRef {
+        ProjectAccessApprovalSettings_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ProjectAccessApprovalSettingsTimeoutsElRef {
+impl ProjectAccessApprovalSettings_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -567,9 +600,4 @@ impl ProjectAccessApprovalSettingsTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ProjectAccessApprovalSettingsDynamic {
-    enrolled_services: std::option::Option<terrars::DynamicBlock<ProjectAccessApprovalSettingsEnrolledServicesEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct GkeHubMembershipIamBindingData {
+struct GkeHubMembershipIamBindingData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,14 +30,14 @@ struct GkeHubMembershipIamBindingData {
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<GkeHubMembershipIamBindingConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<GkeHubMembershipIamBinding_Condition>>,
     dynamic: GkeHubMembershipIamBindingDynamic,
 }
 
 struct GkeHubMembershipIamBinding_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<GkeHubMembershipIamBindingData>,
+    data: std::cell::RefCell<GkeHubMembershipIamBindingData_>,
 }
 
 #[derive(Clone)]
@@ -156,7 +158,7 @@ impl GkeHubMembershipIamBinding {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeHubMembershipIamBindingConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeHubMembershipIamBinding_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -205,7 +207,7 @@ impl GkeHubMembershipIamBinding {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<GkeHubMembershipIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<GkeHubMembershipIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -256,7 +258,7 @@ impl BuildGkeHubMembershipIamBinding {
         let out = GkeHubMembershipIamBinding(std::rc::Rc::new(GkeHubMembershipIamBinding_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(GkeHubMembershipIamBindingData {
+            data: std::cell::RefCell::new(GkeHubMembershipIamBindingData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -336,20 +338,25 @@ impl GkeHubMembershipIamBindingRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<GkeHubMembershipIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<GkeHubMembershipIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct GkeHubMembershipIamBindingDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<GkeHubMembershipIamBinding_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct GkeHubMembershipIamBindingConditionEl {
+pub struct GkeHubMembershipIamBinding_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl GkeHubMembershipIamBindingConditionEl {
+impl GkeHubMembershipIamBinding_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -357,8 +364,8 @@ impl GkeHubMembershipIamBindingConditionEl {
     }
 }
 
-impl terrars::ToListMappable for GkeHubMembershipIamBindingConditionEl {
-    type O = terrars::BlockAssignable<GkeHubMembershipIamBindingConditionEl>;
+impl terrars::ToListMappable for GkeHubMembershipIamBinding_Condition {
+    type O = terrars::BlockAssignable<GkeHubMembershipIamBinding_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -369,16 +376,16 @@ impl terrars::ToListMappable for GkeHubMembershipIamBindingConditionEl {
     }
 }
 
-pub struct BuildGkeHubMembershipIamBindingConditionEl {
+pub struct BuildGkeHubMembershipIamBinding_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildGkeHubMembershipIamBindingConditionEl {
-    pub fn build(self) -> GkeHubMembershipIamBindingConditionEl {
-        GkeHubMembershipIamBindingConditionEl {
+impl BuildGkeHubMembershipIamBinding_Condition {
+    pub fn build(self) -> GkeHubMembershipIamBinding_Condition {
+        GkeHubMembershipIamBinding_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -386,21 +393,23 @@ impl BuildGkeHubMembershipIamBindingConditionEl {
     }
 }
 
-pub struct GkeHubMembershipIamBindingConditionElRef {
+#[allow(dead_code)]
+pub struct GkeHubMembershipIamBinding_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeHubMembershipIamBindingConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeHubMembershipIamBindingConditionElRef {
-        GkeHubMembershipIamBindingConditionElRef {
+impl terrars::Ref for GkeHubMembershipIamBinding_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeHubMembershipIamBinding_ConditionRef {
+        GkeHubMembershipIamBinding_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeHubMembershipIamBindingConditionElRef {
+impl GkeHubMembershipIamBinding_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -419,9 +428,4 @@ impl GkeHubMembershipIamBindingConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct GkeHubMembershipIamBindingDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<GkeHubMembershipIamBindingConditionEl>>,
 }

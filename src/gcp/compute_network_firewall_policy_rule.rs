@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeNetworkFirewallPolicyRuleData {
+struct ComputeNetworkFirewallPolicyRuleData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct ComputeNetworkFirewallPolicyRuleData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     action: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     direction: terrars::PrimField<std::string::String>,
@@ -35,20 +39,28 @@ struct ComputeNetworkFirewallPolicyRuleData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     rule_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    security_profile_group: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    target_forwarding_rules: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     target_service_accounts: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    target_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tls_inspect: std::option::Option<terrars::PrimField<bool>>,
     #[serde(rename = "match", skip_serializing_if = "std::option::Option::is_none")]
-    match_: std::option::Option<std::vec::Vec<ComputeNetworkFirewallPolicyRuleMatchEl>>,
+    match_: std::option::Option<std::vec::Vec<ComputeNetworkFirewallPolicyRule_Match>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    target_secure_tags: std::option::Option<std::vec::Vec<ComputeNetworkFirewallPolicyRuleTargetSecureTagsEl>>,
+    target_secure_tags: std::option::Option<std::vec::Vec<ComputeNetworkFirewallPolicyRule_TargetSecureTags>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComputeNetworkFirewallPolicyRuleTimeoutsEl>,
+    timeouts: std::option::Option<ComputeNetworkFirewallPolicyRule_Timeouts>,
     dynamic: ComputeNetworkFirewallPolicyRuleDynamic,
 }
 
 struct ComputeNetworkFirewallPolicyRule_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeNetworkFirewallPolicyRuleData>,
+    data: std::cell::RefCell<ComputeNetworkFirewallPolicyRuleData_>,
 }
 
 #[derive(Clone)]
@@ -148,6 +160,13 @@ impl ComputeNetworkFirewallPolicyRule {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nAn optional description for this resource."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -155,14 +174,14 @@ impl ComputeNetworkFirewallPolicyRule {
     }
 
     #[doc =
-        "Set the field `disabled`.\nDenotes whether the firewall policy rule is disabled. When set to true, the firewall policy rule is not enforced and traffic behaves as if it did not exist. If this is unspecified, the firewall policy rule will be enabled."]
+        "Set the field `disabled`.\nDenotes whether the firewall policy rule is disabled.\nWhen set to true, the firewall policy rule is not enforced and traffic behaves as if it did not exist.\nIf this is unspecified, the firewall policy rule will be enabled."]
     pub fn set_disabled(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().disabled = std::option::Option::Some(v.into());
         self
     }
 
     #[doc =
-        "Set the field `enable_logging`.\nDenotes whether to enable logging for a particular rule. If logging is enabled, logs will be exported to the configured export destination in Stackdriver. Logs may be exported to BigQuery or Pub/Sub. Note: you cannot enable logging on \"goto_next\" rules."]
+        "Set the field `enable_logging`.\nDenotes whether to enable logging for a particular rule.\nIf logging is enabled, logs will be exported to the configured export destination in Stackdriver.\nLogs may be exported to BigQuery or Pub/Sub.\nNote: you cannot enable logging on \"goto_next\" rules."]
     pub fn set_enable_logging(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().enable_logging = std::option::Option::Some(v.into());
         self
@@ -174,7 +193,7 @@ impl ComputeNetworkFirewallPolicyRule {
         self
     }
 
-    #[doc = "Set the field `project`.\nThe project for the resource"]
+    #[doc = "Set the field `project`.\n"]
     pub fn set_project(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().project = std::option::Option::Some(v.into());
         self
@@ -188,6 +207,26 @@ impl ComputeNetworkFirewallPolicyRule {
     }
 
     #[doc =
+        "Set the field `security_profile_group`.\nA fully-qualified URL of a SecurityProfile resource instance.\nExample: https://networksecurity.googleapis.com/v1/projects/{project}/locations/{location}/securityProfileGroups/my-security-profile-group\nMust be specified if action = 'apply_security_profile_group' and cannot be specified for other actions."]
+    pub fn set_security_profile_group(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().security_profile_group = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `target_forwarding_rules`.\nA list of forwarding rules to which this rule applies.\nThis field allows you to control which load balancers get this rule.\nFor example, the following are valid values:\n- https://www.googleapis.com/compute/v1/projects/project/global/forwardingRules/forwardingRule\n- https://www.googleapis.com/compute/v1/projects/project/regions/region/forwardingRules/forwardingRule\n- projects/project/global/forwardingRules/forwardingRule\n- projects/project/regions/region/forwardingRules/forwardingRule"]
+    pub fn set_target_forwarding_rules(
+        self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().target_forwarding_rules = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `target_service_accounts`.\nA list of service accounts indicating the sets of instances that are applied with this rule."]
     pub fn set_target_service_accounts(
         self,
@@ -197,10 +236,24 @@ impl ComputeNetworkFirewallPolicyRule {
         self
     }
 
+    #[doc =
+        "Set the field `target_type`.\nTarget types of the firewall policy rule.\nDefault value is INSTANCES.\nWhen target_type is INTERNAL_MANAGED_LB, target_forwarding_rules must be set Possible values: [\"INSTANCES\", \"INTERNAL_MANAGED_LB\"]"]
+    pub fn set_target_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().target_type = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `tls_inspect`.\nBoolean flag indicating if the traffic should be TLS decrypted.\nCan be set only if action = 'apply_security_profile_group' and cannot be set for other actions."]
+    pub fn set_tls_inspect(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().tls_inspect = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `match_`.\n"]
     pub fn set_match(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeNetworkFirewallPolicyRuleMatchEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeNetworkFirewallPolicyRule_Match>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -216,7 +269,7 @@ impl ComputeNetworkFirewallPolicyRule {
     #[doc = "Set the field `target_secure_tags`.\n"]
     pub fn set_target_secure_tags(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeNetworkFirewallPolicyRuleTargetSecureTagsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeNetworkFirewallPolicyRule_TargetSecureTags>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -230,15 +283,27 @@ impl ComputeNetworkFirewallPolicyRule {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeNetworkFirewallPolicyRuleTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeNetworkFirewallPolicyRule_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
     #[doc =
-        "Get a reference to the value of field `action` after provisioning.\nThe Action to perform when the client connection triggers the rule. Valid actions are \"allow\", \"deny\" and \"goto_next\"."]
+        "Get a reference to the value of field `action` after provisioning.\nThe Action to perform when the client connection triggers the rule. Valid actions are \"allow\", \"deny\", \"goto_next\" and \"apply_security_profile_group\"."]
     pub fn action(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.action", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `creation_timestamp` after provisioning.\nCreation timestamp in RFC3339 text format."]
+    pub fn creation_timestamp(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_timestamp", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -248,19 +313,19 @@ impl ComputeNetworkFirewallPolicyRule {
     }
 
     #[doc =
-        "Get a reference to the value of field `direction` after provisioning.\nThe direction in which this rule applies. Possible values: INGRESS, EGRESS"]
+        "Get a reference to the value of field `direction` after provisioning.\nThe direction in which this rule applies. Possible values: [\"INGRESS\", \"EGRESS\"]"]
     pub fn direction(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.direction", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `disabled` after provisioning.\nDenotes whether the firewall policy rule is disabled. When set to true, the firewall policy rule is not enforced and traffic behaves as if it did not exist. If this is unspecified, the firewall policy rule will be enabled."]
+        "Get a reference to the value of field `disabled` after provisioning.\nDenotes whether the firewall policy rule is disabled.\nWhen set to true, the firewall policy rule is not enforced and traffic behaves as if it did not exist.\nIf this is unspecified, the firewall policy rule will be enabled."]
     pub fn disabled(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.disabled", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `enable_logging` after provisioning.\nDenotes whether to enable logging for a particular rule. If logging is enabled, logs will be exported to the configured export destination in Stackdriver. Logs may be exported to BigQuery or Pub/Sub. Note: you cannot enable logging on \"goto_next\" rules."]
+        "Get a reference to the value of field `enable_logging` after provisioning.\nDenotes whether to enable logging for a particular rule.\nIf logging is enabled, logs will be exported to the configured export destination in Stackdriver.\nLogs may be exported to BigQuery or Pub/Sub.\nNote: you cannot enable logging on \"goto_next\" rules."]
     pub fn enable_logging(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_logging", self.extract_ref()))
     }
@@ -277,18 +342,18 @@ impl ComputeNetworkFirewallPolicyRule {
     }
 
     #[doc =
-        "Get a reference to the value of field `kind` after provisioning.\nType of the resource. Always `compute#firewallPolicyRule` for firewall policy rules"]
+        "Get a reference to the value of field `kind` after provisioning.\nType of the resource. Always 'compute#firewallPolicyRule' for firewall policy rules"]
     pub fn kind(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.kind", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `priority` after provisioning.\nAn integer indicating the priority of a rule in the list. The priority must be a positive value between 0 and 2147483647. Rules are evaluated from highest to lowest priority where 0 is the highest priority and 2147483647 is the lowest prority."]
+        "Get a reference to the value of field `priority` after provisioning.\nAn integer indicating the priority of a rule in the list.\nThe priority must be a positive value between 0 and 2147483647.\nRules are evaluated from highest to lowest priority where 0 is the highest priority and 2147483647 is the lowest prority."]
     pub fn priority(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.priority", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `project` after provisioning.\nThe project for the resource"]
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
     pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
@@ -306,24 +371,48 @@ impl ComputeNetworkFirewallPolicyRule {
     }
 
     #[doc =
+        "Get a reference to the value of field `security_profile_group` after provisioning.\nA fully-qualified URL of a SecurityProfile resource instance.\nExample: https://networksecurity.googleapis.com/v1/projects/{project}/locations/{location}/securityProfileGroups/my-security-profile-group\nMust be specified if action = 'apply_security_profile_group' and cannot be specified for other actions."]
+    pub fn security_profile_group(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.security_profile_group", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `target_forwarding_rules` after provisioning.\nA list of forwarding rules to which this rule applies.\nThis field allows you to control which load balancers get this rule.\nFor example, the following are valid values:\n- https://www.googleapis.com/compute/v1/projects/project/global/forwardingRules/forwardingRule\n- https://www.googleapis.com/compute/v1/projects/project/regions/region/forwardingRules/forwardingRule\n- projects/project/global/forwardingRules/forwardingRule\n- projects/project/regions/region/forwardingRules/forwardingRule"]
+    pub fn target_forwarding_rules(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.target_forwarding_rules", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `target_service_accounts` after provisioning.\nA list of service accounts indicating the sets of instances that are applied with this rule."]
     pub fn target_service_accounts(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.target_service_accounts", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `target_type` after provisioning.\nTarget types of the firewall policy rule.\nDefault value is INSTANCES.\nWhen target_type is INTERNAL_MANAGED_LB, target_forwarding_rules must be set Possible values: [\"INSTANCES\", \"INTERNAL_MANAGED_LB\"]"]
+    pub fn target_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_type", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `tls_inspect` after provisioning.\nBoolean flag indicating if the traffic should be TLS decrypted.\nCan be set only if action = 'apply_security_profile_group' and cannot be set for other actions."]
+    pub fn tls_inspect(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tls_inspect", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `match_` after provisioning.\n"]
-    pub fn match_(&self) -> terrars::ListRef<ComputeNetworkFirewallPolicyRuleMatchElRef> {
+    pub fn match_(&self) -> terrars::ListRef<ComputeNetworkFirewallPolicyRule_MatchRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.match", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `target_secure_tags` after provisioning.\n"]
-    pub fn target_secure_tags(&self) -> terrars::ListRef<ComputeNetworkFirewallPolicyRuleTargetSecureTagsElRef> {
+    pub fn target_secure_tags(&self) -> terrars::ListRef<ComputeNetworkFirewallPolicyRule_TargetSecureTagsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.target_secure_tags", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeNetworkFirewallPolicyRuleTimeoutsElRef {
-        ComputeNetworkFirewallPolicyRuleTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ComputeNetworkFirewallPolicyRule_TimeoutsRef {
+        ComputeNetworkFirewallPolicyRule_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -364,14 +453,14 @@ impl terrars::Resource_ for ComputeNetworkFirewallPolicyRule_ {
 pub struct BuildComputeNetworkFirewallPolicyRule {
     pub tf_id: std::string::String,
     #[doc =
-        "The Action to perform when the client connection triggers the rule. Valid actions are \"allow\", \"deny\" and \"goto_next\"."]
+        "The Action to perform when the client connection triggers the rule. Valid actions are \"allow\", \"deny\", \"goto_next\" and \"apply_security_profile_group\"."]
     pub action: terrars::PrimField<std::string::String>,
-    #[doc = "The direction in which this rule applies. Possible values: INGRESS, EGRESS"]
+    #[doc = "The direction in which this rule applies. Possible values: [\"INGRESS\", \"EGRESS\"]"]
     pub direction: terrars::PrimField<std::string::String>,
     #[doc = "The firewall policy of the resource."]
     pub firewall_policy: terrars::PrimField<std::string::String>,
     #[doc =
-        "An integer indicating the priority of a rule in the list. The priority must be a positive value between 0 and 2147483647. Rules are evaluated from highest to lowest priority where 0 is the highest priority and 2147483647 is the lowest prority."]
+        "An integer indicating the priority of a rule in the list.\nThe priority must be a positive value between 0 and 2147483647.\nRules are evaluated from highest to lowest priority where 0 is the highest priority and 2147483647 is the lowest prority."]
     pub priority: terrars::PrimField<f64>,
 }
 
@@ -380,13 +469,14 @@ impl BuildComputeNetworkFirewallPolicyRule {
         let out = ComputeNetworkFirewallPolicyRule(std::rc::Rc::new(ComputeNetworkFirewallPolicyRule_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeNetworkFirewallPolicyRuleData {
+            data: std::cell::RefCell::new(ComputeNetworkFirewallPolicyRuleData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 action: self.action,
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 direction: self.direction,
                 disabled: core::default::Default::default(),
@@ -396,7 +486,11 @@ impl BuildComputeNetworkFirewallPolicyRule {
                 priority: self.priority,
                 project: core::default::Default::default(),
                 rule_name: core::default::Default::default(),
+                security_profile_group: core::default::Default::default(),
+                target_forwarding_rules: core::default::Default::default(),
                 target_service_accounts: core::default::Default::default(),
+                target_type: core::default::Default::default(),
+                tls_inspect: core::default::Default::default(),
                 match_: core::default::Default::default(),
                 target_secure_tags: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
@@ -432,9 +526,21 @@ impl ComputeNetworkFirewallPolicyRuleRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `action` after provisioning.\nThe Action to perform when the client connection triggers the rule. Valid actions are \"allow\", \"deny\" and \"goto_next\"."]
+        "Get a reference to the value of field `action` after provisioning.\nThe Action to perform when the client connection triggers the rule. Valid actions are \"allow\", \"deny\", \"goto_next\" and \"apply_security_profile_group\"."]
     pub fn action(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.action", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `creation_timestamp` after provisioning.\nCreation timestamp in RFC3339 text format."]
+    pub fn creation_timestamp(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_timestamp", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -444,19 +550,19 @@ impl ComputeNetworkFirewallPolicyRuleRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `direction` after provisioning.\nThe direction in which this rule applies. Possible values: INGRESS, EGRESS"]
+        "Get a reference to the value of field `direction` after provisioning.\nThe direction in which this rule applies. Possible values: [\"INGRESS\", \"EGRESS\"]"]
     pub fn direction(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.direction", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `disabled` after provisioning.\nDenotes whether the firewall policy rule is disabled. When set to true, the firewall policy rule is not enforced and traffic behaves as if it did not exist. If this is unspecified, the firewall policy rule will be enabled."]
+        "Get a reference to the value of field `disabled` after provisioning.\nDenotes whether the firewall policy rule is disabled.\nWhen set to true, the firewall policy rule is not enforced and traffic behaves as if it did not exist.\nIf this is unspecified, the firewall policy rule will be enabled."]
     pub fn disabled(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.disabled", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `enable_logging` after provisioning.\nDenotes whether to enable logging for a particular rule. If logging is enabled, logs will be exported to the configured export destination in Stackdriver. Logs may be exported to BigQuery or Pub/Sub. Note: you cannot enable logging on \"goto_next\" rules."]
+        "Get a reference to the value of field `enable_logging` after provisioning.\nDenotes whether to enable logging for a particular rule.\nIf logging is enabled, logs will be exported to the configured export destination in Stackdriver.\nLogs may be exported to BigQuery or Pub/Sub.\nNote: you cannot enable logging on \"goto_next\" rules."]
     pub fn enable_logging(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_logging", self.extract_ref()))
     }
@@ -473,18 +579,18 @@ impl ComputeNetworkFirewallPolicyRuleRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `kind` after provisioning.\nType of the resource. Always `compute#firewallPolicyRule` for firewall policy rules"]
+        "Get a reference to the value of field `kind` after provisioning.\nType of the resource. Always 'compute#firewallPolicyRule' for firewall policy rules"]
     pub fn kind(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.kind", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `priority` after provisioning.\nAn integer indicating the priority of a rule in the list. The priority must be a positive value between 0 and 2147483647. Rules are evaluated from highest to lowest priority where 0 is the highest priority and 2147483647 is the lowest prority."]
+        "Get a reference to the value of field `priority` after provisioning.\nAn integer indicating the priority of a rule in the list.\nThe priority must be a positive value between 0 and 2147483647.\nRules are evaluated from highest to lowest priority where 0 is the highest priority and 2147483647 is the lowest prority."]
     pub fn priority(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.priority", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `project` after provisioning.\nThe project for the resource"]
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
     pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
@@ -502,40 +608,72 @@ impl ComputeNetworkFirewallPolicyRuleRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `security_profile_group` after provisioning.\nA fully-qualified URL of a SecurityProfile resource instance.\nExample: https://networksecurity.googleapis.com/v1/projects/{project}/locations/{location}/securityProfileGroups/my-security-profile-group\nMust be specified if action = 'apply_security_profile_group' and cannot be specified for other actions."]
+    pub fn security_profile_group(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.security_profile_group", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `target_forwarding_rules` after provisioning.\nA list of forwarding rules to which this rule applies.\nThis field allows you to control which load balancers get this rule.\nFor example, the following are valid values:\n- https://www.googleapis.com/compute/v1/projects/project/global/forwardingRules/forwardingRule\n- https://www.googleapis.com/compute/v1/projects/project/regions/region/forwardingRules/forwardingRule\n- projects/project/global/forwardingRules/forwardingRule\n- projects/project/regions/region/forwardingRules/forwardingRule"]
+    pub fn target_forwarding_rules(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.target_forwarding_rules", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `target_service_accounts` after provisioning.\nA list of service accounts indicating the sets of instances that are applied with this rule."]
     pub fn target_service_accounts(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.target_service_accounts", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `target_type` after provisioning.\nTarget types of the firewall policy rule.\nDefault value is INSTANCES.\nWhen target_type is INTERNAL_MANAGED_LB, target_forwarding_rules must be set Possible values: [\"INSTANCES\", \"INTERNAL_MANAGED_LB\"]"]
+    pub fn target_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_type", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `tls_inspect` after provisioning.\nBoolean flag indicating if the traffic should be TLS decrypted.\nCan be set only if action = 'apply_security_profile_group' and cannot be set for other actions."]
+    pub fn tls_inspect(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tls_inspect", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `match_` after provisioning.\n"]
-    pub fn match_(&self) -> terrars::ListRef<ComputeNetworkFirewallPolicyRuleMatchElRef> {
+    pub fn match_(&self) -> terrars::ListRef<ComputeNetworkFirewallPolicyRule_MatchRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.match", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `target_secure_tags` after provisioning.\n"]
-    pub fn target_secure_tags(&self) -> terrars::ListRef<ComputeNetworkFirewallPolicyRuleTargetSecureTagsElRef> {
+    pub fn target_secure_tags(&self) -> terrars::ListRef<ComputeNetworkFirewallPolicyRule_TargetSecureTagsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.target_secure_tags", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeNetworkFirewallPolicyRuleTimeoutsElRef {
-        ComputeNetworkFirewallPolicyRuleTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ComputeNetworkFirewallPolicyRule_TimeoutsRef {
+        ComputeNetworkFirewallPolicyRule_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct ComputeNetworkFirewallPolicyRuleDynamic {
+    match_: std::option::Option<terrars::DynamicBlock<ComputeNetworkFirewallPolicyRule_Match>>,
+    target_secure_tags: std
+    ::option
+    ::Option<terrars::DynamicBlock<ComputeNetworkFirewallPolicyRule_TargetSecureTags>>,
+}
+
 #[derive(Serialize)]
-pub struct ComputeNetworkFirewallPolicyRuleMatchElLayer4ConfigsEl {
+pub struct ComputeNetworkFirewallPolicyRule_Match_Layer4Configs {
     ip_protocol: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ports: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl ComputeNetworkFirewallPolicyRuleMatchElLayer4ConfigsEl {
+impl ComputeNetworkFirewallPolicyRule_Match_Layer4Configs {
     #[doc =
-        "Set the field `ports`.\nAn optional list of ports to which this rule applies. This field is only applicable for UDP or TCP protocol. Each entry must be either an integer or a range. If not specified, this rule applies to connections through any port. Example inputs include: ``."]
+        "Set the field `ports`.\nAn optional list of ports to which this rule applies. This field is only applicable for UDP or TCP protocol. Each entry must be either an integer or a range. If not specified, this rule applies to connections through any port.\nExample inputs include: [\"22\"], [\"80\",\"443\"], and [\"12345-12349\"]."]
     pub fn set_ports(
         mut self,
         v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
@@ -545,8 +683,8 @@ impl ComputeNetworkFirewallPolicyRuleMatchElLayer4ConfigsEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeNetworkFirewallPolicyRuleMatchElLayer4ConfigsEl {
-    type O = terrars::BlockAssignable<ComputeNetworkFirewallPolicyRuleMatchElLayer4ConfigsEl>;
+impl terrars::ToListMappable for ComputeNetworkFirewallPolicyRule_Match_Layer4Configs {
+    type O = terrars::BlockAssignable<ComputeNetworkFirewallPolicyRule_Match_Layer4Configs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -557,65 +695,74 @@ impl terrars::ToListMappable for ComputeNetworkFirewallPolicyRuleMatchElLayer4Co
     }
 }
 
-pub struct BuildComputeNetworkFirewallPolicyRuleMatchElLayer4ConfigsEl {
+pub struct BuildComputeNetworkFirewallPolicyRule_Match_Layer4Configs {
     #[doc =
-        "The IP protocol to which this rule applies. The protocol type is required when creating a firewall rule. This value can either be one of the following well known protocol strings (`tcp`, `udp`, `icmp`, `esp`, `ah`, `ipip`, `sctp`), or the IP protocol number."]
+        "The IP protocol to which this rule applies. The protocol type is required when creating a firewall rule.\nThis value can either be one of the following well known protocol strings (tcp, udp, icmp, esp, ah, ipip, sctp), or the IP protocol number."]
     pub ip_protocol: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputeNetworkFirewallPolicyRuleMatchElLayer4ConfigsEl {
-    pub fn build(self) -> ComputeNetworkFirewallPolicyRuleMatchElLayer4ConfigsEl {
-        ComputeNetworkFirewallPolicyRuleMatchElLayer4ConfigsEl {
+impl BuildComputeNetworkFirewallPolicyRule_Match_Layer4Configs {
+    pub fn build(self) -> ComputeNetworkFirewallPolicyRule_Match_Layer4Configs {
+        ComputeNetworkFirewallPolicyRule_Match_Layer4Configs {
             ip_protocol: self.ip_protocol,
             ports: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeNetworkFirewallPolicyRuleMatchElLayer4ConfigsElRef {
+#[allow(dead_code)]
+pub struct ComputeNetworkFirewallPolicyRule_Match_Layer4ConfigsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeNetworkFirewallPolicyRuleMatchElLayer4ConfigsElRef {
+impl terrars::Ref for ComputeNetworkFirewallPolicyRule_Match_Layer4ConfigsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeNetworkFirewallPolicyRuleMatchElLayer4ConfigsElRef {
-        ComputeNetworkFirewallPolicyRuleMatchElLayer4ConfigsElRef {
+    ) -> ComputeNetworkFirewallPolicyRule_Match_Layer4ConfigsRef {
+        ComputeNetworkFirewallPolicyRule_Match_Layer4ConfigsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeNetworkFirewallPolicyRuleMatchElLayer4ConfigsElRef {
+impl ComputeNetworkFirewallPolicyRule_Match_Layer4ConfigsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `ip_protocol` after provisioning.\nThe IP protocol to which this rule applies. The protocol type is required when creating a firewall rule. This value can either be one of the following well known protocol strings (`tcp`, `udp`, `icmp`, `esp`, `ah`, `ipip`, `sctp`), or the IP protocol number."]
+        "Get a reference to the value of field `ip_protocol` after provisioning.\nThe IP protocol to which this rule applies. The protocol type is required when creating a firewall rule.\nThis value can either be one of the following well known protocol strings (tcp, udp, icmp, esp, ah, ipip, sctp), or the IP protocol number."]
     pub fn ip_protocol(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_protocol", self.base))
     }
 
     #[doc =
-        "Get a reference to the value of field `ports` after provisioning.\nAn optional list of ports to which this rule applies. This field is only applicable for UDP or TCP protocol. Each entry must be either an integer or a range. If not specified, this rule applies to connections through any port. Example inputs include: ``."]
+        "Get a reference to the value of field `ports` after provisioning.\nAn optional list of ports to which this rule applies. This field is only applicable for UDP or TCP protocol. Each entry must be either an integer or a range. If not specified, this rule applies to connections through any port.\nExample inputs include: [\"22\"], [\"80\",\"443\"], and [\"12345-12349\"]."]
     pub fn ports(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ports", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeNetworkFirewallPolicyRuleMatchElSrcSecureTagsEl {
-    name: terrars::PrimField<std::string::String>,
+pub struct ComputeNetworkFirewallPolicyRule_Match_SrcSecureTags {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeNetworkFirewallPolicyRuleMatchElSrcSecureTagsEl { }
+impl ComputeNetworkFirewallPolicyRule_Match_SrcSecureTags {
+    #[doc = "Set the field `name`.\nName of the secure tag, created with TagManager's TagValue API."]
+    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.name = std::option::Option::Some(v.into());
+        self
+    }
+}
 
-impl terrars::ToListMappable for ComputeNetworkFirewallPolicyRuleMatchElSrcSecureTagsEl {
-    type O = terrars::BlockAssignable<ComputeNetworkFirewallPolicyRuleMatchElSrcSecureTagsEl>;
+impl terrars::ToListMappable for ComputeNetworkFirewallPolicyRule_Match_SrcSecureTags {
+    type O = terrars::BlockAssignable<ComputeNetworkFirewallPolicyRule_Match_SrcSecureTags>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -626,70 +773,69 @@ impl terrars::ToListMappable for ComputeNetworkFirewallPolicyRuleMatchElSrcSecur
     }
 }
 
-pub struct BuildComputeNetworkFirewallPolicyRuleMatchElSrcSecureTagsEl {
-    #[doc = "Name of the secure tag, created with TagManager's TagValue API. @pattern tagValues/[0-9]+"]
-    pub name: terrars::PrimField<std::string::String>,
-}
+pub struct BuildComputeNetworkFirewallPolicyRule_Match_SrcSecureTags {}
 
-impl BuildComputeNetworkFirewallPolicyRuleMatchElSrcSecureTagsEl {
-    pub fn build(self) -> ComputeNetworkFirewallPolicyRuleMatchElSrcSecureTagsEl {
-        ComputeNetworkFirewallPolicyRuleMatchElSrcSecureTagsEl { name: self.name }
+impl BuildComputeNetworkFirewallPolicyRule_Match_SrcSecureTags {
+    pub fn build(self) -> ComputeNetworkFirewallPolicyRule_Match_SrcSecureTags {
+        ComputeNetworkFirewallPolicyRule_Match_SrcSecureTags { name: core::default::Default::default() }
     }
 }
 
-pub struct ComputeNetworkFirewallPolicyRuleMatchElSrcSecureTagsElRef {
+#[allow(dead_code)]
+pub struct ComputeNetworkFirewallPolicyRule_Match_SrcSecureTagsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeNetworkFirewallPolicyRuleMatchElSrcSecureTagsElRef {
+impl terrars::Ref for ComputeNetworkFirewallPolicyRule_Match_SrcSecureTagsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeNetworkFirewallPolicyRuleMatchElSrcSecureTagsElRef {
-        ComputeNetworkFirewallPolicyRuleMatchElSrcSecureTagsElRef {
+    ) -> ComputeNetworkFirewallPolicyRule_Match_SrcSecureTagsRef {
+        ComputeNetworkFirewallPolicyRule_Match_SrcSecureTagsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeNetworkFirewallPolicyRuleMatchElSrcSecureTagsElRef {
+impl ComputeNetworkFirewallPolicyRule_Match_SrcSecureTagsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `name` after provisioning.\nName of the secure tag, created with TagManager's TagValue API. @pattern tagValues/[0-9]+"]
+        "Get a reference to the value of field `name` after provisioning.\nName of the secure tag, created with TagManager's TagValue API."]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
     #[doc =
-        "Get a reference to the value of field `state` after provisioning.\n[Output Only] State of the secure tag, either `EFFECTIVE` or `INEFFECTIVE`. A secure tag is `INEFFECTIVE` when it is deleted or its network is deleted."]
+        "Get a reference to the value of field `state` after provisioning.\nState of the secure tag, either EFFECTIVE or INEFFECTIVE. A secure tag is INEFFECTIVE when it is deleted or its network is deleted."]
     pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct ComputeNetworkFirewallPolicyRuleMatchElDynamic {
-    layer4_configs: std
-    ::option
-    ::Option<terrars::DynamicBlock<ComputeNetworkFirewallPolicyRuleMatchElLayer4ConfigsEl>>,
+struct ComputeNetworkFirewallPolicyRule_MatchDynamic {
+    layer4_configs: std::option::Option<terrars::DynamicBlock<ComputeNetworkFirewallPolicyRule_Match_Layer4Configs>>,
     src_secure_tags: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeNetworkFirewallPolicyRuleMatchElSrcSecureTagsEl>>,
+    ::Option<terrars::DynamicBlock<ComputeNetworkFirewallPolicyRule_Match_SrcSecureTags>>,
 }
 
 #[derive(Serialize)]
-pub struct ComputeNetworkFirewallPolicyRuleMatchEl {
+pub struct ComputeNetworkFirewallPolicyRule_Match {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dest_address_groups: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dest_fqdns: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dest_ip_ranges: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dest_network_context: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dest_region_codes: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -701,19 +847,23 @@ pub struct ComputeNetworkFirewallPolicyRuleMatchEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     src_ip_ranges: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    src_network_context: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    src_networks: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     src_region_codes: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     src_threat_intelligences: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    layer4_configs: std::option::Option<std::vec::Vec<ComputeNetworkFirewallPolicyRuleMatchElLayer4ConfigsEl>>,
+    layer4_configs: std::option::Option<std::vec::Vec<ComputeNetworkFirewallPolicyRule_Match_Layer4Configs>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    src_secure_tags: std::option::Option<std::vec::Vec<ComputeNetworkFirewallPolicyRuleMatchElSrcSecureTagsEl>>,
-    dynamic: ComputeNetworkFirewallPolicyRuleMatchElDynamic,
+    src_secure_tags: std::option::Option<std::vec::Vec<ComputeNetworkFirewallPolicyRule_Match_SrcSecureTags>>,
+    dynamic: ComputeNetworkFirewallPolicyRule_MatchDynamic,
 }
 
-impl ComputeNetworkFirewallPolicyRuleMatchEl {
+impl ComputeNetworkFirewallPolicyRule_Match {
     #[doc =
-        "Set the field `dest_address_groups`.\nAddress groups which should be matched against the traffic destination. Maximum number of destination address groups is 10. Destination address groups is only supported in Egress rules."]
+        "Set the field `dest_address_groups`.\nAddress groups which should be matched against the traffic destination. Maximum number of destination address groups is 10."]
     pub fn set_dest_address_groups(
         mut self,
         v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
@@ -723,7 +873,7 @@ impl ComputeNetworkFirewallPolicyRuleMatchEl {
     }
 
     #[doc =
-        "Set the field `dest_fqdns`.\nDomain names that will be used to match against the resolved domain name of destination of traffic. Can only be specified if DIRECTION is egress."]
+        "Set the field `dest_fqdns`.\nFully Qualified Domain Name (FQDN) which should be matched against traffic destination. Maximum number of destination fqdn allowed is 100."]
     pub fn set_dest_fqdns(
         mut self,
         v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
@@ -743,7 +893,17 @@ impl ComputeNetworkFirewallPolicyRuleMatchEl {
     }
 
     #[doc =
-        "Set the field `dest_region_codes`.\nThe Unicode country codes whose IP addresses will be used to match against the source of traffic. Can only be specified if DIRECTION is egress."]
+        "Set the field `dest_network_context`.\nNetwork context of the traffic destination. Possible values: [\"UNSPECIFIED\", \"INTERNET\", \"INTRA_VPC\", \"NON_INTERNET\", \"VPC_NETWORKS\"]"]
+    pub fn set_dest_network_context(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.dest_network_context = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `dest_region_codes`.\nRegion codes whose IP addresses will be used to match for destination of traffic. Should be specified as 2 letter country code defined as per ISO 3166 alpha-2 country codes. ex.\"US\" Maximum number of dest region codes allowed is 5000."]
     pub fn set_dest_region_codes(
         mut self,
         v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
@@ -752,7 +912,8 @@ impl ComputeNetworkFirewallPolicyRuleMatchEl {
         self
     }
 
-    #[doc = "Set the field `dest_threat_intelligences`.\nName of the Google Cloud Threat Intelligence list."]
+    #[doc =
+        "Set the field `dest_threat_intelligences`.\nNames of Network Threat Intelligence lists. The IPs in these lists will be matched against traffic destination."]
     pub fn set_dest_threat_intelligences(
         mut self,
         v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
@@ -762,7 +923,7 @@ impl ComputeNetworkFirewallPolicyRuleMatchEl {
     }
 
     #[doc =
-        "Set the field `src_address_groups`.\nAddress groups which should be matched against the traffic source. Maximum number of source address groups is 10. Source address groups is only supported in Ingress rules."]
+        "Set the field `src_address_groups`.\nAddress groups which should be matched against the traffic source. Maximum number of source address groups is 10."]
     pub fn set_src_address_groups(
         mut self,
         v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
@@ -772,7 +933,7 @@ impl ComputeNetworkFirewallPolicyRuleMatchEl {
     }
 
     #[doc =
-        "Set the field `src_fqdns`.\nDomain names that will be used to match against the resolved domain name of source of traffic. Can only be specified if DIRECTION is ingress."]
+        "Set the field `src_fqdns`.\nFully Qualified Domain Name (FQDN) which should be matched against traffic source. Maximum number of source fqdn allowed is 100."]
     pub fn set_src_fqdns(
         mut self,
         v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
@@ -792,7 +953,26 @@ impl ComputeNetworkFirewallPolicyRuleMatchEl {
     }
 
     #[doc =
-        "Set the field `src_region_codes`.\nThe Unicode country codes whose IP addresses will be used to match against the source of traffic. Can only be specified if DIRECTION is ingress."]
+        "Set the field `src_network_context`.\nNetwork context of the traffic source. Possible values: [\"UNSPECIFIED\", \"INTERNET\", \"INTRA_VPC\", \"NON_INTERNET\", \"VPC_NETWORKS\"]"]
+    pub fn set_src_network_context(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.src_network_context = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `src_networks`.\nNetworks of the traffic source. It can be either a full or partial url."]
+    pub fn set_src_networks(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.src_networks = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `src_region_codes`.\nRegion codes whose IP addresses will be used to match for source of traffic. Should be specified as 2 letter country code defined as per ISO 3166 alpha-2 country codes. ex.\"US\" Maximum number of source region codes allowed is 5000."]
     pub fn set_src_region_codes(
         mut self,
         v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
@@ -801,7 +981,8 @@ impl ComputeNetworkFirewallPolicyRuleMatchEl {
         self
     }
 
-    #[doc = "Set the field `src_threat_intelligences`.\nName of the Google Cloud Threat Intelligence list."]
+    #[doc =
+        "Set the field `src_threat_intelligences`.\nNames of Network Threat Intelligence lists. The IPs in these lists will be matched against traffic source."]
     pub fn set_src_threat_intelligences(
         mut self,
         v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
@@ -813,7 +994,7 @@ impl ComputeNetworkFirewallPolicyRuleMatchEl {
     #[doc = "Set the field `layer4_configs`.\n"]
     pub fn set_layer4_configs(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeNetworkFirewallPolicyRuleMatchElLayer4ConfigsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeNetworkFirewallPolicyRule_Match_Layer4Configs>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -829,7 +1010,7 @@ impl ComputeNetworkFirewallPolicyRuleMatchEl {
     #[doc = "Set the field `src_secure_tags`.\n"]
     pub fn set_src_secure_tags(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeNetworkFirewallPolicyRuleMatchElSrcSecureTagsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeNetworkFirewallPolicyRule_Match_SrcSecureTags>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -843,8 +1024,8 @@ impl ComputeNetworkFirewallPolicyRuleMatchEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeNetworkFirewallPolicyRuleMatchEl {
-    type O = terrars::BlockAssignable<ComputeNetworkFirewallPolicyRuleMatchEl>;
+impl terrars::ToListMappable for ComputeNetworkFirewallPolicyRule_Match {
+    type O = terrars::BlockAssignable<ComputeNetworkFirewallPolicyRule_Match>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -855,19 +1036,22 @@ impl terrars::ToListMappable for ComputeNetworkFirewallPolicyRuleMatchEl {
     }
 }
 
-pub struct BuildComputeNetworkFirewallPolicyRuleMatchEl {}
+pub struct BuildComputeNetworkFirewallPolicyRule_Match {}
 
-impl BuildComputeNetworkFirewallPolicyRuleMatchEl {
-    pub fn build(self) -> ComputeNetworkFirewallPolicyRuleMatchEl {
-        ComputeNetworkFirewallPolicyRuleMatchEl {
+impl BuildComputeNetworkFirewallPolicyRule_Match {
+    pub fn build(self) -> ComputeNetworkFirewallPolicyRule_Match {
+        ComputeNetworkFirewallPolicyRule_Match {
             dest_address_groups: core::default::Default::default(),
             dest_fqdns: core::default::Default::default(),
             dest_ip_ranges: core::default::Default::default(),
+            dest_network_context: core::default::Default::default(),
             dest_region_codes: core::default::Default::default(),
             dest_threat_intelligences: core::default::Default::default(),
             src_address_groups: core::default::Default::default(),
             src_fqdns: core::default::Default::default(),
             src_ip_ranges: core::default::Default::default(),
+            src_network_context: core::default::Default::default(),
+            src_networks: core::default::Default::default(),
             src_region_codes: core::default::Default::default(),
             src_threat_intelligences: core::default::Default::default(),
             layer4_configs: core::default::Default::default(),
@@ -877,33 +1061,35 @@ impl BuildComputeNetworkFirewallPolicyRuleMatchEl {
     }
 }
 
-pub struct ComputeNetworkFirewallPolicyRuleMatchElRef {
+#[allow(dead_code)]
+pub struct ComputeNetworkFirewallPolicyRule_MatchRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeNetworkFirewallPolicyRuleMatchElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeNetworkFirewallPolicyRuleMatchElRef {
-        ComputeNetworkFirewallPolicyRuleMatchElRef {
+impl terrars::Ref for ComputeNetworkFirewallPolicyRule_MatchRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeNetworkFirewallPolicyRule_MatchRef {
+        ComputeNetworkFirewallPolicyRule_MatchRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeNetworkFirewallPolicyRuleMatchElRef {
+impl ComputeNetworkFirewallPolicyRule_MatchRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `dest_address_groups` after provisioning.\nAddress groups which should be matched against the traffic destination. Maximum number of destination address groups is 10. Destination address groups is only supported in Egress rules."]
+        "Get a reference to the value of field `dest_address_groups` after provisioning.\nAddress groups which should be matched against the traffic destination. Maximum number of destination address groups is 10."]
     pub fn dest_address_groups(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dest_address_groups", self.base))
     }
 
     #[doc =
-        "Get a reference to the value of field `dest_fqdns` after provisioning.\nDomain names that will be used to match against the resolved domain name of destination of traffic. Can only be specified if DIRECTION is egress."]
+        "Get a reference to the value of field `dest_fqdns` after provisioning.\nFully Qualified Domain Name (FQDN) which should be matched against traffic destination. Maximum number of destination fqdn allowed is 100."]
     pub fn dest_fqdns(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dest_fqdns", self.base))
     }
@@ -915,25 +1101,31 @@ impl ComputeNetworkFirewallPolicyRuleMatchElRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `dest_region_codes` after provisioning.\nThe Unicode country codes whose IP addresses will be used to match against the source of traffic. Can only be specified if DIRECTION is egress."]
+        "Get a reference to the value of field `dest_network_context` after provisioning.\nNetwork context of the traffic destination. Possible values: [\"UNSPECIFIED\", \"INTERNET\", \"INTRA_VPC\", \"NON_INTERNET\", \"VPC_NETWORKS\"]"]
+    pub fn dest_network_context(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.dest_network_context", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `dest_region_codes` after provisioning.\nRegion codes whose IP addresses will be used to match for destination of traffic. Should be specified as 2 letter country code defined as per ISO 3166 alpha-2 country codes. ex.\"US\" Maximum number of dest region codes allowed is 5000."]
     pub fn dest_region_codes(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dest_region_codes", self.base))
     }
 
     #[doc =
-        "Get a reference to the value of field `dest_threat_intelligences` after provisioning.\nName of the Google Cloud Threat Intelligence list."]
+        "Get a reference to the value of field `dest_threat_intelligences` after provisioning.\nNames of Network Threat Intelligence lists. The IPs in these lists will be matched against traffic destination."]
     pub fn dest_threat_intelligences(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dest_threat_intelligences", self.base))
     }
 
     #[doc =
-        "Get a reference to the value of field `src_address_groups` after provisioning.\nAddress groups which should be matched against the traffic source. Maximum number of source address groups is 10. Source address groups is only supported in Ingress rules."]
+        "Get a reference to the value of field `src_address_groups` after provisioning.\nAddress groups which should be matched against the traffic source. Maximum number of source address groups is 10."]
     pub fn src_address_groups(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.src_address_groups", self.base))
     }
 
     #[doc =
-        "Get a reference to the value of field `src_fqdns` after provisioning.\nDomain names that will be used to match against the resolved domain name of source of traffic. Can only be specified if DIRECTION is ingress."]
+        "Get a reference to the value of field `src_fqdns` after provisioning.\nFully Qualified Domain Name (FQDN) which should be matched against traffic source. Maximum number of source fqdn allowed is 100."]
     pub fn src_fqdns(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.src_fqdns", self.base))
     }
@@ -945,37 +1137,56 @@ impl ComputeNetworkFirewallPolicyRuleMatchElRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `src_region_codes` after provisioning.\nThe Unicode country codes whose IP addresses will be used to match against the source of traffic. Can only be specified if DIRECTION is ingress."]
+        "Get a reference to the value of field `src_network_context` after provisioning.\nNetwork context of the traffic source. Possible values: [\"UNSPECIFIED\", \"INTERNET\", \"INTRA_VPC\", \"NON_INTERNET\", \"VPC_NETWORKS\"]"]
+    pub fn src_network_context(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.src_network_context", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `src_networks` after provisioning.\nNetworks of the traffic source. It can be either a full or partial url."]
+    pub fn src_networks(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.src_networks", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `src_region_codes` after provisioning.\nRegion codes whose IP addresses will be used to match for source of traffic. Should be specified as 2 letter country code defined as per ISO 3166 alpha-2 country codes. ex.\"US\" Maximum number of source region codes allowed is 5000."]
     pub fn src_region_codes(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.src_region_codes", self.base))
     }
 
     #[doc =
-        "Get a reference to the value of field `src_threat_intelligences` after provisioning.\nName of the Google Cloud Threat Intelligence list."]
+        "Get a reference to the value of field `src_threat_intelligences` after provisioning.\nNames of Network Threat Intelligence lists. The IPs in these lists will be matched against traffic source."]
     pub fn src_threat_intelligences(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.src_threat_intelligences", self.base))
     }
 
     #[doc = "Get a reference to the value of field `layer4_configs` after provisioning.\n"]
-    pub fn layer4_configs(&self) -> terrars::ListRef<ComputeNetworkFirewallPolicyRuleMatchElLayer4ConfigsElRef> {
+    pub fn layer4_configs(&self) -> terrars::ListRef<ComputeNetworkFirewallPolicyRule_Match_Layer4ConfigsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.layer4_configs", self.base))
     }
 
     #[doc = "Get a reference to the value of field `src_secure_tags` after provisioning.\n"]
-    pub fn src_secure_tags(&self) -> terrars::ListRef<ComputeNetworkFirewallPolicyRuleMatchElSrcSecureTagsElRef> {
+    pub fn src_secure_tags(&self) -> terrars::ListRef<ComputeNetworkFirewallPolicyRule_Match_SrcSecureTagsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.src_secure_tags", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeNetworkFirewallPolicyRuleTargetSecureTagsEl {
-    name: terrars::PrimField<std::string::String>,
+pub struct ComputeNetworkFirewallPolicyRule_TargetSecureTags {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeNetworkFirewallPolicyRuleTargetSecureTagsEl { }
+impl ComputeNetworkFirewallPolicyRule_TargetSecureTags {
+    #[doc = "Set the field `name`.\nName of the secure tag, created with TagManager's TagValue API."]
+    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.name = std::option::Option::Some(v.into());
+        self
+    }
+}
 
-impl terrars::ToListMappable for ComputeNetworkFirewallPolicyRuleTargetSecureTagsEl {
-    type O = terrars::BlockAssignable<ComputeNetworkFirewallPolicyRuleTargetSecureTagsEl>;
+impl terrars::ToListMappable for ComputeNetworkFirewallPolicyRule_TargetSecureTags {
+    type O = terrars::BlockAssignable<ComputeNetworkFirewallPolicyRule_TargetSecureTags>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -986,54 +1197,53 @@ impl terrars::ToListMappable for ComputeNetworkFirewallPolicyRuleTargetSecureTag
     }
 }
 
-pub struct BuildComputeNetworkFirewallPolicyRuleTargetSecureTagsEl {
-    #[doc = "Name of the secure tag, created with TagManager's TagValue API. @pattern tagValues/[0-9]+"]
-    pub name: terrars::PrimField<std::string::String>,
-}
+pub struct BuildComputeNetworkFirewallPolicyRule_TargetSecureTags {}
 
-impl BuildComputeNetworkFirewallPolicyRuleTargetSecureTagsEl {
-    pub fn build(self) -> ComputeNetworkFirewallPolicyRuleTargetSecureTagsEl {
-        ComputeNetworkFirewallPolicyRuleTargetSecureTagsEl { name: self.name }
+impl BuildComputeNetworkFirewallPolicyRule_TargetSecureTags {
+    pub fn build(self) -> ComputeNetworkFirewallPolicyRule_TargetSecureTags {
+        ComputeNetworkFirewallPolicyRule_TargetSecureTags { name: core::default::Default::default() }
     }
 }
 
-pub struct ComputeNetworkFirewallPolicyRuleTargetSecureTagsElRef {
+#[allow(dead_code)]
+pub struct ComputeNetworkFirewallPolicyRule_TargetSecureTagsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeNetworkFirewallPolicyRuleTargetSecureTagsElRef {
+impl terrars::Ref for ComputeNetworkFirewallPolicyRule_TargetSecureTagsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeNetworkFirewallPolicyRuleTargetSecureTagsElRef {
-        ComputeNetworkFirewallPolicyRuleTargetSecureTagsElRef {
+    ) -> ComputeNetworkFirewallPolicyRule_TargetSecureTagsRef {
+        ComputeNetworkFirewallPolicyRule_TargetSecureTagsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeNetworkFirewallPolicyRuleTargetSecureTagsElRef {
+impl ComputeNetworkFirewallPolicyRule_TargetSecureTagsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `name` after provisioning.\nName of the secure tag, created with TagManager's TagValue API. @pattern tagValues/[0-9]+"]
+        "Get a reference to the value of field `name` after provisioning.\nName of the secure tag, created with TagManager's TagValue API."]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
     #[doc =
-        "Get a reference to the value of field `state` after provisioning.\n[Output Only] State of the secure tag, either `EFFECTIVE` or `INEFFECTIVE`. A secure tag is `INEFFECTIVE` when it is deleted or its network is deleted."]
+        "Get a reference to the value of field `state` after provisioning.\nState of the secure tag, either EFFECTIVE or INEFFECTIVE. A secure tag is INEFFECTIVE when it is deleted or its network is deleted."]
     pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeNetworkFirewallPolicyRuleTimeoutsEl {
+pub struct ComputeNetworkFirewallPolicyRule_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1042,7 +1252,7 @@ pub struct ComputeNetworkFirewallPolicyRuleTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeNetworkFirewallPolicyRuleTimeoutsEl {
+impl ComputeNetworkFirewallPolicyRule_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1062,8 +1272,8 @@ impl ComputeNetworkFirewallPolicyRuleTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeNetworkFirewallPolicyRuleTimeoutsEl {
-    type O = terrars::BlockAssignable<ComputeNetworkFirewallPolicyRuleTimeoutsEl>;
+impl terrars::ToListMappable for ComputeNetworkFirewallPolicyRule_Timeouts {
+    type O = terrars::BlockAssignable<ComputeNetworkFirewallPolicyRule_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1074,11 +1284,11 @@ impl terrars::ToListMappable for ComputeNetworkFirewallPolicyRuleTimeoutsEl {
     }
 }
 
-pub struct BuildComputeNetworkFirewallPolicyRuleTimeoutsEl {}
+pub struct BuildComputeNetworkFirewallPolicyRule_Timeouts {}
 
-impl BuildComputeNetworkFirewallPolicyRuleTimeoutsEl {
-    pub fn build(self) -> ComputeNetworkFirewallPolicyRuleTimeoutsEl {
-        ComputeNetworkFirewallPolicyRuleTimeoutsEl {
+impl BuildComputeNetworkFirewallPolicyRule_Timeouts {
+    pub fn build(self) -> ComputeNetworkFirewallPolicyRule_Timeouts {
+        ComputeNetworkFirewallPolicyRule_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1086,21 +1296,23 @@ impl BuildComputeNetworkFirewallPolicyRuleTimeoutsEl {
     }
 }
 
-pub struct ComputeNetworkFirewallPolicyRuleTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComputeNetworkFirewallPolicyRule_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeNetworkFirewallPolicyRuleTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeNetworkFirewallPolicyRuleTimeoutsElRef {
-        ComputeNetworkFirewallPolicyRuleTimeoutsElRef {
+impl terrars::Ref for ComputeNetworkFirewallPolicyRule_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeNetworkFirewallPolicyRule_TimeoutsRef {
+        ComputeNetworkFirewallPolicyRule_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeNetworkFirewallPolicyRuleTimeoutsElRef {
+impl ComputeNetworkFirewallPolicyRule_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1119,12 +1331,4 @@ impl ComputeNetworkFirewallPolicyRuleTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ComputeNetworkFirewallPolicyRuleDynamic {
-    match_: std::option::Option<terrars::DynamicBlock<ComputeNetworkFirewallPolicyRuleMatchEl>>,
-    target_secure_tags: std
-    ::option
-    ::Option<terrars::DynamicBlock<ComputeNetworkFirewallPolicyRuleTargetSecureTagsEl>>,
 }

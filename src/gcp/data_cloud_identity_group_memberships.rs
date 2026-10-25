@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataCloudIdentityGroupMembershipsData {
+struct DataCloudIdentityGroupMembershipsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -24,7 +26,7 @@ struct DataCloudIdentityGroupMembershipsData {
 struct DataCloudIdentityGroupMemberships_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataCloudIdentityGroupMembershipsData>,
+    data: std::cell::RefCell<DataCloudIdentityGroupMembershipsData_>,
 }
 
 #[derive(Clone)]
@@ -88,7 +90,7 @@ impl DataCloudIdentityGroupMemberships {
 
     #[doc =
         "Get a reference to the value of field `memberships` after provisioning.\nList of Cloud Identity group memberships."]
-    pub fn memberships(&self) -> terrars::ListRef<DataCloudIdentityGroupMembershipsMembershipsElRef> {
+    pub fn memberships(&self) -> terrars::ListRef<DataCloudIdentityGroupMemberships_MembershipsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.memberships", self.extract_ref()))
     }
 }
@@ -135,7 +137,7 @@ impl BuildDataCloudIdentityGroupMemberships {
         let out = DataCloudIdentityGroupMemberships(std::rc::Rc::new(DataCloudIdentityGroupMemberships_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataCloudIdentityGroupMembershipsData {
+            data: std::cell::RefCell::new(DataCloudIdentityGroupMembershipsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -185,20 +187,20 @@ impl DataCloudIdentityGroupMembershipsRef {
 
     #[doc =
         "Get a reference to the value of field `memberships` after provisioning.\nList of Cloud Identity group memberships."]
-    pub fn memberships(&self) -> terrars::ListRef<DataCloudIdentityGroupMembershipsMembershipsElRef> {
+    pub fn memberships(&self) -> terrars::ListRef<DataCloudIdentityGroupMemberships_MembershipsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.memberships", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataCloudIdentityGroupMembershipsMembershipsElPreferredMemberKeyEl {
+pub struct DataCloudIdentityGroupMemberships_Memberships_PreferredMemberKey {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     namespace: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCloudIdentityGroupMembershipsMembershipsElPreferredMemberKeyEl {
+impl DataCloudIdentityGroupMemberships_Memberships_PreferredMemberKey {
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.id = std::option::Option::Some(v.into());
@@ -212,8 +214,8 @@ impl DataCloudIdentityGroupMembershipsMembershipsElPreferredMemberKeyEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudIdentityGroupMembershipsMembershipsElPreferredMemberKeyEl {
-    type O = terrars::BlockAssignable<DataCloudIdentityGroupMembershipsMembershipsElPreferredMemberKeyEl>;
+impl terrars::ToListMappable for DataCloudIdentityGroupMemberships_Memberships_PreferredMemberKey {
+    type O = terrars::BlockAssignable<DataCloudIdentityGroupMemberships_Memberships_PreferredMemberKey>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -224,35 +226,37 @@ impl terrars::ToListMappable for DataCloudIdentityGroupMembershipsMembershipsElP
     }
 }
 
-pub struct BuildDataCloudIdentityGroupMembershipsMembershipsElPreferredMemberKeyEl {}
+pub struct BuildDataCloudIdentityGroupMemberships_Memberships_PreferredMemberKey {}
 
-impl BuildDataCloudIdentityGroupMembershipsMembershipsElPreferredMemberKeyEl {
-    pub fn build(self) -> DataCloudIdentityGroupMembershipsMembershipsElPreferredMemberKeyEl {
-        DataCloudIdentityGroupMembershipsMembershipsElPreferredMemberKeyEl {
+impl BuildDataCloudIdentityGroupMemberships_Memberships_PreferredMemberKey {
+    pub fn build(self) -> DataCloudIdentityGroupMemberships_Memberships_PreferredMemberKey {
+        DataCloudIdentityGroupMemberships_Memberships_PreferredMemberKey {
             id: core::default::Default::default(),
             namespace: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataCloudIdentityGroupMembershipsMembershipsElPreferredMemberKeyElRef {
+#[allow(dead_code)]
+pub struct DataCloudIdentityGroupMemberships_Memberships_PreferredMemberKeyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudIdentityGroupMembershipsMembershipsElPreferredMemberKeyElRef {
+impl terrars::Ref for DataCloudIdentityGroupMemberships_Memberships_PreferredMemberKeyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCloudIdentityGroupMembershipsMembershipsElPreferredMemberKeyElRef {
-        DataCloudIdentityGroupMembershipsMembershipsElPreferredMemberKeyElRef {
+    ) -> DataCloudIdentityGroupMemberships_Memberships_PreferredMemberKeyRef {
+        DataCloudIdentityGroupMemberships_Memberships_PreferredMemberKeyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudIdentityGroupMembershipsMembershipsElPreferredMemberKeyElRef {
+impl DataCloudIdentityGroupMemberships_Memberships_PreferredMemberKeyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -269,12 +273,12 @@ impl DataCloudIdentityGroupMembershipsMembershipsElPreferredMemberKeyElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCloudIdentityGroupMembershipsMembershipsElRolesElExpiryDetailEl {
+pub struct DataCloudIdentityGroupMemberships_Memberships_Roles_ExpiryDetail {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     expire_time: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCloudIdentityGroupMembershipsMembershipsElRolesElExpiryDetailEl {
+impl DataCloudIdentityGroupMemberships_Memberships_Roles_ExpiryDetail {
     #[doc = "Set the field `expire_time`.\n"]
     pub fn set_expire_time(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.expire_time = std::option::Option::Some(v.into());
@@ -282,8 +286,8 @@ impl DataCloudIdentityGroupMembershipsMembershipsElRolesElExpiryDetailEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudIdentityGroupMembershipsMembershipsElRolesElExpiryDetailEl {
-    type O = terrars::BlockAssignable<DataCloudIdentityGroupMembershipsMembershipsElRolesElExpiryDetailEl>;
+impl terrars::ToListMappable for DataCloudIdentityGroupMemberships_Memberships_Roles_ExpiryDetail {
+    type O = terrars::BlockAssignable<DataCloudIdentityGroupMemberships_Memberships_Roles_ExpiryDetail>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -294,34 +298,36 @@ impl terrars::ToListMappable for DataCloudIdentityGroupMembershipsMembershipsElR
     }
 }
 
-pub struct BuildDataCloudIdentityGroupMembershipsMembershipsElRolesElExpiryDetailEl {}
+pub struct BuildDataCloudIdentityGroupMemberships_Memberships_Roles_ExpiryDetail {}
 
-impl BuildDataCloudIdentityGroupMembershipsMembershipsElRolesElExpiryDetailEl {
-    pub fn build(self) -> DataCloudIdentityGroupMembershipsMembershipsElRolesElExpiryDetailEl {
-        DataCloudIdentityGroupMembershipsMembershipsElRolesElExpiryDetailEl {
+impl BuildDataCloudIdentityGroupMemberships_Memberships_Roles_ExpiryDetail {
+    pub fn build(self) -> DataCloudIdentityGroupMemberships_Memberships_Roles_ExpiryDetail {
+        DataCloudIdentityGroupMemberships_Memberships_Roles_ExpiryDetail {
             expire_time: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataCloudIdentityGroupMembershipsMembershipsElRolesElExpiryDetailElRef {
+#[allow(dead_code)]
+pub struct DataCloudIdentityGroupMemberships_Memberships_Roles_ExpiryDetailRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudIdentityGroupMembershipsMembershipsElRolesElExpiryDetailElRef {
+impl terrars::Ref for DataCloudIdentityGroupMemberships_Memberships_Roles_ExpiryDetailRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCloudIdentityGroupMembershipsMembershipsElRolesElExpiryDetailElRef {
-        DataCloudIdentityGroupMembershipsMembershipsElRolesElExpiryDetailElRef {
+    ) -> DataCloudIdentityGroupMemberships_Memberships_Roles_ExpiryDetailRef {
+        DataCloudIdentityGroupMemberships_Memberships_Roles_ExpiryDetailRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudIdentityGroupMembershipsMembershipsElRolesElExpiryDetailElRef {
+impl DataCloudIdentityGroupMemberships_Memberships_Roles_ExpiryDetailRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -333,16 +339,16 @@ impl DataCloudIdentityGroupMembershipsMembershipsElRolesElExpiryDetailElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCloudIdentityGroupMembershipsMembershipsElRolesEl {
+pub struct DataCloudIdentityGroupMemberships_Memberships_Roles {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     expiry_detail: std
     ::option
-    ::Option<terrars::ListField<DataCloudIdentityGroupMembershipsMembershipsElRolesElExpiryDetailEl>>,
+    ::Option<terrars::ListField<DataCloudIdentityGroupMemberships_Memberships_Roles_ExpiryDetail>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCloudIdentityGroupMembershipsMembershipsElRolesEl {
+impl DataCloudIdentityGroupMemberships_Memberships_Roles {
     #[doc = "Set the field `expiry_detail`.\n"]
     pub fn set_expiry_detail(
         mut self,
@@ -351,7 +357,7 @@ impl DataCloudIdentityGroupMembershipsMembershipsElRolesEl {
 
                     std
                     ::convert
-                    ::Into<terrars::ListField<DataCloudIdentityGroupMembershipsMembershipsElRolesElExpiryDetailEl>>,
+                    ::Into<terrars::ListField<DataCloudIdentityGroupMemberships_Memberships_Roles_ExpiryDetail>>,
     ) -> Self {
         self.expiry_detail = std::option::Option::Some(v.into());
         self
@@ -364,8 +370,8 @@ impl DataCloudIdentityGroupMembershipsMembershipsElRolesEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudIdentityGroupMembershipsMembershipsElRolesEl {
-    type O = terrars::BlockAssignable<DataCloudIdentityGroupMembershipsMembershipsElRolesEl>;
+impl terrars::ToListMappable for DataCloudIdentityGroupMemberships_Memberships_Roles {
+    type O = terrars::BlockAssignable<DataCloudIdentityGroupMemberships_Memberships_Roles>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -376,43 +382,43 @@ impl terrars::ToListMappable for DataCloudIdentityGroupMembershipsMembershipsElR
     }
 }
 
-pub struct BuildDataCloudIdentityGroupMembershipsMembershipsElRolesEl {}
+pub struct BuildDataCloudIdentityGroupMemberships_Memberships_Roles {}
 
-impl BuildDataCloudIdentityGroupMembershipsMembershipsElRolesEl {
-    pub fn build(self) -> DataCloudIdentityGroupMembershipsMembershipsElRolesEl {
-        DataCloudIdentityGroupMembershipsMembershipsElRolesEl {
+impl BuildDataCloudIdentityGroupMemberships_Memberships_Roles {
+    pub fn build(self) -> DataCloudIdentityGroupMemberships_Memberships_Roles {
+        DataCloudIdentityGroupMemberships_Memberships_Roles {
             expiry_detail: core::default::Default::default(),
             name: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataCloudIdentityGroupMembershipsMembershipsElRolesElRef {
+#[allow(dead_code)]
+pub struct DataCloudIdentityGroupMemberships_Memberships_RolesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudIdentityGroupMembershipsMembershipsElRolesElRef {
+impl terrars::Ref for DataCloudIdentityGroupMemberships_Memberships_RolesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCloudIdentityGroupMembershipsMembershipsElRolesElRef {
-        DataCloudIdentityGroupMembershipsMembershipsElRolesElRef {
+    ) -> DataCloudIdentityGroupMemberships_Memberships_RolesRef {
+        DataCloudIdentityGroupMemberships_Memberships_RolesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudIdentityGroupMembershipsMembershipsElRolesElRef {
+impl DataCloudIdentityGroupMemberships_Memberships_RolesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `expiry_detail` after provisioning.\n"]
-    pub fn expiry_detail(
-        &self,
-    ) -> terrars::ListRef<DataCloudIdentityGroupMembershipsMembershipsElRolesElExpiryDetailElRef> {
+    pub fn expiry_detail(&self) -> terrars::ListRef<DataCloudIdentityGroupMemberships_Memberships_Roles_ExpiryDetailRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.expiry_detail", self.base))
     }
 
@@ -423,9 +429,13 @@ impl DataCloudIdentityGroupMembershipsMembershipsElRolesElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCloudIdentityGroupMembershipsMembershipsEl {
+pub struct DataCloudIdentityGroupMemberships_Memberships {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create_ignore_already_exists: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create_time: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     group: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -433,19 +443,31 @@ pub struct DataCloudIdentityGroupMembershipsMembershipsEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     preferred_member_key: std
     ::option
-    ::Option<terrars::ListField<DataCloudIdentityGroupMembershipsMembershipsElPreferredMemberKeyEl>>,
+    ::Option<terrars::ListField<DataCloudIdentityGroupMemberships_Memberships_PreferredMemberKey>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    roles: std::option::Option<terrars::SetField<DataCloudIdentityGroupMembershipsMembershipsElRolesEl>>,
+    roles: std::option::Option<terrars::SetField<DataCloudIdentityGroupMemberships_Memberships_Roles>>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     update_time: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCloudIdentityGroupMembershipsMembershipsEl {
+impl DataCloudIdentityGroupMemberships_Memberships {
+    #[doc = "Set the field `create_ignore_already_exists`.\n"]
+    pub fn set_create_ignore_already_exists(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.create_ignore_already_exists = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `create_time`.\n"]
     pub fn set_create_time(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create_time = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `deletion_policy`.\n"]
+    pub fn set_deletion_policy(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.deletion_policy = std::option::Option::Some(v.into());
         self
     }
 
@@ -469,7 +491,7 @@ impl DataCloudIdentityGroupMembershipsMembershipsEl {
 
                     std
                     ::convert
-                    ::Into<terrars::ListField<DataCloudIdentityGroupMembershipsMembershipsElPreferredMemberKeyEl>>,
+                    ::Into<terrars::ListField<DataCloudIdentityGroupMemberships_Memberships_PreferredMemberKey>>,
     ) -> Self {
         self.preferred_member_key = std::option::Option::Some(v.into());
         self
@@ -478,7 +500,7 @@ impl DataCloudIdentityGroupMembershipsMembershipsEl {
     #[doc = "Set the field `roles`.\n"]
     pub fn set_roles(
         mut self,
-        v: impl std::convert::Into<terrars::SetField<DataCloudIdentityGroupMembershipsMembershipsElRolesEl>>,
+        v: impl std::convert::Into<terrars::SetField<DataCloudIdentityGroupMemberships_Memberships_Roles>>,
     ) -> Self {
         self.roles = std::option::Option::Some(v.into());
         self
@@ -497,8 +519,8 @@ impl DataCloudIdentityGroupMembershipsMembershipsEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudIdentityGroupMembershipsMembershipsEl {
-    type O = terrars::BlockAssignable<DataCloudIdentityGroupMembershipsMembershipsEl>;
+impl terrars::ToListMappable for DataCloudIdentityGroupMemberships_Memberships {
+    type O = terrars::BlockAssignable<DataCloudIdentityGroupMemberships_Memberships>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -509,12 +531,14 @@ impl terrars::ToListMappable for DataCloudIdentityGroupMembershipsMembershipsEl 
     }
 }
 
-pub struct BuildDataCloudIdentityGroupMembershipsMembershipsEl {}
+pub struct BuildDataCloudIdentityGroupMemberships_Memberships {}
 
-impl BuildDataCloudIdentityGroupMembershipsMembershipsEl {
-    pub fn build(self) -> DataCloudIdentityGroupMembershipsMembershipsEl {
-        DataCloudIdentityGroupMembershipsMembershipsEl {
+impl BuildDataCloudIdentityGroupMemberships_Memberships {
+    pub fn build(self) -> DataCloudIdentityGroupMemberships_Memberships {
+        DataCloudIdentityGroupMemberships_Memberships {
+            create_ignore_already_exists: core::default::Default::default(),
             create_time: core::default::Default::default(),
+            deletion_policy: core::default::Default::default(),
             group: core::default::Default::default(),
             name: core::default::Default::default(),
             preferred_member_key: core::default::Default::default(),
@@ -525,31 +549,43 @@ impl BuildDataCloudIdentityGroupMembershipsMembershipsEl {
     }
 }
 
-pub struct DataCloudIdentityGroupMembershipsMembershipsElRef {
+#[allow(dead_code)]
+pub struct DataCloudIdentityGroupMemberships_MembershipsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudIdentityGroupMembershipsMembershipsElRef {
+impl terrars::Ref for DataCloudIdentityGroupMemberships_MembershipsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCloudIdentityGroupMembershipsMembershipsElRef {
-        DataCloudIdentityGroupMembershipsMembershipsElRef {
+    ) -> DataCloudIdentityGroupMemberships_MembershipsRef {
+        DataCloudIdentityGroupMemberships_MembershipsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudIdentityGroupMembershipsMembershipsElRef {
+impl DataCloudIdentityGroupMemberships_MembershipsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `create_ignore_already_exists` after provisioning.\n"]
+    pub fn create_ignore_already_exists(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_ignore_already_exists", self.base))
     }
 
     #[doc = "Get a reference to the value of field `create_time` after provisioning.\n"]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `deletion_policy` after provisioning.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.base))
     }
 
     #[doc = "Get a reference to the value of field `group` after provisioning.\n"]
@@ -565,12 +601,12 @@ impl DataCloudIdentityGroupMembershipsMembershipsElRef {
     #[doc = "Get a reference to the value of field `preferred_member_key` after provisioning.\n"]
     pub fn preferred_member_key(
         &self,
-    ) -> terrars::ListRef<DataCloudIdentityGroupMembershipsMembershipsElPreferredMemberKeyElRef> {
+    ) -> terrars::ListRef<DataCloudIdentityGroupMemberships_Memberships_PreferredMemberKeyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.preferred_member_key", self.base))
     }
 
     #[doc = "Get a reference to the value of field `roles` after provisioning.\n"]
-    pub fn roles(&self) -> terrars::SetRef<DataCloudIdentityGroupMembershipsMembershipsElRolesElRef> {
+    pub fn roles(&self) -> terrars::SetRef<DataCloudIdentityGroupMemberships_Memberships_RolesRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.roles", self.base))
     }
 

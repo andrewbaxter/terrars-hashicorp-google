@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataCloudIdentityGroupLookupData {
+struct DataCloudIdentityGroupLookupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -19,14 +21,14 @@ struct DataCloudIdentityGroupLookupData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    group_key: std::option::Option<std::vec::Vec<DataCloudIdentityGroupLookupGroupKeyEl>>,
+    group_key: std::option::Option<std::vec::Vec<DataCloudIdentityGroupLookup_GroupKey>>,
     dynamic: DataCloudIdentityGroupLookupDynamic,
 }
 
 struct DataCloudIdentityGroupLookup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataCloudIdentityGroupLookupData>,
+    data: std::cell::RefCell<DataCloudIdentityGroupLookupData_>,
 }
 
 #[derive(Clone)]
@@ -80,7 +82,7 @@ impl DataCloudIdentityGroupLookup {
     #[doc = "Set the field `group_key`.\n"]
     pub fn set_group_key(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataCloudIdentityGroupLookupGroupKeyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataCloudIdentityGroupLookup_GroupKey>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -105,7 +107,7 @@ impl DataCloudIdentityGroupLookup {
     }
 
     #[doc = "Get a reference to the value of field `group_key` after provisioning.\n"]
-    pub fn group_key(&self) -> terrars::ListRef<DataCloudIdentityGroupLookupGroupKeyElRef> {
+    pub fn group_key(&self) -> terrars::ListRef<DataCloudIdentityGroupLookup_GroupKeyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.group_key", self.extract_ref()))
     }
 }
@@ -150,7 +152,7 @@ impl BuildDataCloudIdentityGroupLookup {
         let out = DataCloudIdentityGroupLookup(std::rc::Rc::new(DataCloudIdentityGroupLookup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataCloudIdentityGroupLookupData {
+            data: std::cell::RefCell::new(DataCloudIdentityGroupLookupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -200,19 +202,24 @@ impl DataCloudIdentityGroupLookupRef {
     }
 
     #[doc = "Get a reference to the value of field `group_key` after provisioning.\n"]
-    pub fn group_key(&self) -> terrars::ListRef<DataCloudIdentityGroupLookupGroupKeyElRef> {
+    pub fn group_key(&self) -> terrars::ListRef<DataCloudIdentityGroupLookup_GroupKeyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.group_key", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataCloudIdentityGroupLookupDynamic {
+    group_key: std::option::Option<terrars::DynamicBlock<DataCloudIdentityGroupLookup_GroupKey>>,
+}
+
 #[derive(Serialize)]
-pub struct DataCloudIdentityGroupLookupGroupKeyEl {
+pub struct DataCloudIdentityGroupLookup_GroupKey {
     id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     namespace: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCloudIdentityGroupLookupGroupKeyEl {
+impl DataCloudIdentityGroupLookup_GroupKey {
     #[doc =
         "Set the field `namespace`.\nThe namespace in which the entity exists. If not specified, the EntityKey represents a Google-managed entity such as a Google user or a Google Group.\nIf specified, the EntityKey represents an external-identity-mapped group. The namespace must correspond to an identity source created in Admin Console and must be in the form of identitysources/{identity_source}."]
     pub fn set_namespace(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -221,8 +228,8 @@ impl DataCloudIdentityGroupLookupGroupKeyEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudIdentityGroupLookupGroupKeyEl {
-    type O = terrars::BlockAssignable<DataCloudIdentityGroupLookupGroupKeyEl>;
+impl terrars::ToListMappable for DataCloudIdentityGroupLookup_GroupKey {
+    type O = terrars::BlockAssignable<DataCloudIdentityGroupLookup_GroupKey>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -233,36 +240,38 @@ impl terrars::ToListMappable for DataCloudIdentityGroupLookupGroupKeyEl {
     }
 }
 
-pub struct BuildDataCloudIdentityGroupLookupGroupKeyEl {
+pub struct BuildDataCloudIdentityGroupLookup_GroupKey {
     #[doc =
         "The ID of the entity. For Google-managed entities, the id should be the email address of an existing group or user.\nFor external-identity-mapped entities, the id must be a string conforming to the Identity Source's requirements.\nMust be unique within a namespace."]
     pub id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataCloudIdentityGroupLookupGroupKeyEl {
-    pub fn build(self) -> DataCloudIdentityGroupLookupGroupKeyEl {
-        DataCloudIdentityGroupLookupGroupKeyEl {
+impl BuildDataCloudIdentityGroupLookup_GroupKey {
+    pub fn build(self) -> DataCloudIdentityGroupLookup_GroupKey {
+        DataCloudIdentityGroupLookup_GroupKey {
             id: self.id,
             namespace: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataCloudIdentityGroupLookupGroupKeyElRef {
+#[allow(dead_code)]
+pub struct DataCloudIdentityGroupLookup_GroupKeyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudIdentityGroupLookupGroupKeyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudIdentityGroupLookupGroupKeyElRef {
-        DataCloudIdentityGroupLookupGroupKeyElRef {
+impl terrars::Ref for DataCloudIdentityGroupLookup_GroupKeyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudIdentityGroupLookup_GroupKeyRef {
+        DataCloudIdentityGroupLookup_GroupKeyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudIdentityGroupLookupGroupKeyElRef {
+impl DataCloudIdentityGroupLookup_GroupKeyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -278,9 +287,4 @@ impl DataCloudIdentityGroupLookupGroupKeyElRef {
     pub fn namespace(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.namespace", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataCloudIdentityGroupLookupDynamic {
-    group_key: std::option::Option<terrars::DynamicBlock<DataCloudIdentityGroupLookupGroupKeyEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataplexLakeData {
+struct DataplexLakeData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct DataplexLakeData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -31,16 +35,16 @@ struct DataplexLakeData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    metastore: std::option::Option<std::vec::Vec<DataplexLakeMetastoreEl>>,
+    metastore: std::option::Option<std::vec::Vec<DataplexLake_Metastore>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataplexLakeTimeoutsEl>,
+    timeouts: std::option::Option<DataplexLake_Timeouts>,
     dynamic: DataplexLakeDynamic,
 }
 
 struct DataplexLake_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataplexLakeData>,
+    data: std::cell::RefCell<DataplexLakeData_>,
 }
 
 #[derive(Clone)]
@@ -140,6 +144,13 @@ impl DataplexLake {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nOptional. Description of the lake."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -175,7 +186,7 @@ impl DataplexLake {
     }
 
     #[doc = "Set the field `metastore`.\n"]
-    pub fn set_metastore(self, v: impl std::convert::Into<terrars::BlockAssignable<DataplexLakeMetastoreEl>>) -> Self {
+    pub fn set_metastore(self, v: impl std::convert::Into<terrars::BlockAssignable<DataplexLake_Metastore>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().metastore = std::option::Option::Some(v);
@@ -188,14 +199,14 @@ impl DataplexLake {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataplexLakeTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataplexLake_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
     #[doc =
         "Get a reference to the value of field `asset_status` after provisioning.\nOutput only. Aggregated status of the underlying assets of the lake."]
-    pub fn asset_status(&self) -> terrars::ListRef<DataplexLakeAssetStatusElRef> {
+    pub fn asset_status(&self) -> terrars::ListRef<DataplexLake_AssetStatusRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.asset_status", self.extract_ref()))
     }
 
@@ -203,6 +214,12 @@ impl DataplexLake {
         "Get a reference to the value of field `create_time` after provisioning.\nOutput only. The time when the lake was created."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -241,7 +258,7 @@ impl DataplexLake {
 
     #[doc =
         "Get a reference to the value of field `metastore_status` after provisioning.\nOutput only. Metastore status of the lake."]
-    pub fn metastore_status(&self) -> terrars::ListRef<DataplexLakeMetastoreStatusElRef> {
+    pub fn metastore_status(&self) -> terrars::ListRef<DataplexLake_MetastoreStatusRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.metastore_status", self.extract_ref()))
     }
 
@@ -286,13 +303,13 @@ impl DataplexLake {
     }
 
     #[doc = "Get a reference to the value of field `metastore` after provisioning.\n"]
-    pub fn metastore(&self) -> terrars::ListRef<DataplexLakeMetastoreElRef> {
+    pub fn metastore(&self) -> terrars::ListRef<DataplexLake_MetastoreRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.metastore", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataplexLakeTimeoutsElRef {
-        DataplexLakeTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataplexLake_TimeoutsRef {
+        DataplexLake_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -340,12 +357,13 @@ impl BuildDataplexLake {
         let out = DataplexLake(std::rc::Rc::new(DataplexLake_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataplexLakeData {
+            data: std::cell::RefCell::new(DataplexLakeData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 display_name: core::default::Default::default(),
                 id: core::default::Default::default(),
@@ -388,7 +406,7 @@ impl DataplexLakeRef {
 
     #[doc =
         "Get a reference to the value of field `asset_status` after provisioning.\nOutput only. Aggregated status of the underlying assets of the lake."]
-    pub fn asset_status(&self) -> terrars::ListRef<DataplexLakeAssetStatusElRef> {
+    pub fn asset_status(&self) -> terrars::ListRef<DataplexLake_AssetStatusRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.asset_status", self.extract_ref()))
     }
 
@@ -396,6 +414,12 @@ impl DataplexLakeRef {
         "Get a reference to the value of field `create_time` after provisioning.\nOutput only. The time when the lake was created."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -434,7 +458,7 @@ impl DataplexLakeRef {
 
     #[doc =
         "Get a reference to the value of field `metastore_status` after provisioning.\nOutput only. Metastore status of the lake."]
-    pub fn metastore_status(&self) -> terrars::ListRef<DataplexLakeMetastoreStatusElRef> {
+    pub fn metastore_status(&self) -> terrars::ListRef<DataplexLake_MetastoreStatusRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.metastore_status", self.extract_ref()))
     }
 
@@ -479,18 +503,23 @@ impl DataplexLakeRef {
     }
 
     #[doc = "Get a reference to the value of field `metastore` after provisioning.\n"]
-    pub fn metastore(&self) -> terrars::ListRef<DataplexLakeMetastoreElRef> {
+    pub fn metastore(&self) -> terrars::ListRef<DataplexLake_MetastoreRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.metastore", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataplexLakeTimeoutsElRef {
-        DataplexLakeTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataplexLake_TimeoutsRef {
+        DataplexLake_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataplexLakeDynamic {
+    metastore: std::option::Option<terrars::DynamicBlock<DataplexLake_Metastore>>,
+}
+
 #[derive(Serialize)]
-pub struct DataplexLakeAssetStatusEl {
+pub struct DataplexLake_AssetStatus {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     active_assets: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -499,7 +528,7 @@ pub struct DataplexLakeAssetStatusEl {
     update_time: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataplexLakeAssetStatusEl {
+impl DataplexLake_AssetStatus {
     #[doc = "Set the field `active_assets`.\n"]
     pub fn set_active_assets(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.active_assets = std::option::Option::Some(v.into());
@@ -519,8 +548,8 @@ impl DataplexLakeAssetStatusEl {
     }
 }
 
-impl terrars::ToListMappable for DataplexLakeAssetStatusEl {
-    type O = terrars::BlockAssignable<DataplexLakeAssetStatusEl>;
+impl terrars::ToListMappable for DataplexLake_AssetStatus {
+    type O = terrars::BlockAssignable<DataplexLake_AssetStatus>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -531,11 +560,11 @@ impl terrars::ToListMappable for DataplexLakeAssetStatusEl {
     }
 }
 
-pub struct BuildDataplexLakeAssetStatusEl {}
+pub struct BuildDataplexLake_AssetStatus {}
 
-impl BuildDataplexLakeAssetStatusEl {
-    pub fn build(self) -> DataplexLakeAssetStatusEl {
-        DataplexLakeAssetStatusEl {
+impl BuildDataplexLake_AssetStatus {
+    pub fn build(self) -> DataplexLake_AssetStatus {
+        DataplexLake_AssetStatus {
             active_assets: core::default::Default::default(),
             security_policy_applying_assets: core::default::Default::default(),
             update_time: core::default::Default::default(),
@@ -543,21 +572,23 @@ impl BuildDataplexLakeAssetStatusEl {
     }
 }
 
-pub struct DataplexLakeAssetStatusElRef {
+#[allow(dead_code)]
+pub struct DataplexLake_AssetStatusRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataplexLakeAssetStatusElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexLakeAssetStatusElRef {
-        DataplexLakeAssetStatusElRef {
+impl terrars::Ref for DataplexLake_AssetStatusRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexLake_AssetStatusRef {
+        DataplexLake_AssetStatusRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataplexLakeAssetStatusElRef {
+impl DataplexLake_AssetStatusRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -579,7 +610,7 @@ impl DataplexLakeAssetStatusElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataplexLakeMetastoreStatusEl {
+pub struct DataplexLake_MetastoreStatus {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     endpoint: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -590,7 +621,7 @@ pub struct DataplexLakeMetastoreStatusEl {
     update_time: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataplexLakeMetastoreStatusEl {
+impl DataplexLake_MetastoreStatus {
     #[doc = "Set the field `endpoint`.\n"]
     pub fn set_endpoint(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.endpoint = std::option::Option::Some(v.into());
@@ -616,8 +647,8 @@ impl DataplexLakeMetastoreStatusEl {
     }
 }
 
-impl terrars::ToListMappable for DataplexLakeMetastoreStatusEl {
-    type O = terrars::BlockAssignable<DataplexLakeMetastoreStatusEl>;
+impl terrars::ToListMappable for DataplexLake_MetastoreStatus {
+    type O = terrars::BlockAssignable<DataplexLake_MetastoreStatus>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -628,11 +659,11 @@ impl terrars::ToListMappable for DataplexLakeMetastoreStatusEl {
     }
 }
 
-pub struct BuildDataplexLakeMetastoreStatusEl {}
+pub struct BuildDataplexLake_MetastoreStatus {}
 
-impl BuildDataplexLakeMetastoreStatusEl {
-    pub fn build(self) -> DataplexLakeMetastoreStatusEl {
-        DataplexLakeMetastoreStatusEl {
+impl BuildDataplexLake_MetastoreStatus {
+    pub fn build(self) -> DataplexLake_MetastoreStatus {
+        DataplexLake_MetastoreStatus {
             endpoint: core::default::Default::default(),
             message: core::default::Default::default(),
             state: core::default::Default::default(),
@@ -641,21 +672,23 @@ impl BuildDataplexLakeMetastoreStatusEl {
     }
 }
 
-pub struct DataplexLakeMetastoreStatusElRef {
+#[allow(dead_code)]
+pub struct DataplexLake_MetastoreStatusRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataplexLakeMetastoreStatusElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexLakeMetastoreStatusElRef {
-        DataplexLakeMetastoreStatusElRef {
+impl terrars::Ref for DataplexLake_MetastoreStatusRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexLake_MetastoreStatusRef {
+        DataplexLake_MetastoreStatusRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataplexLakeMetastoreStatusElRef {
+impl DataplexLake_MetastoreStatusRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -682,12 +715,12 @@ impl DataplexLakeMetastoreStatusElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataplexLakeMetastoreEl {
+pub struct DataplexLake_Metastore {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     service: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataplexLakeMetastoreEl {
+impl DataplexLake_Metastore {
     #[doc =
         "Set the field `service`.\nOptional. A relative reference to the Dataproc Metastore (https://cloud.google.com/dataproc-metastore/docs) service associated with the lake: `projects/{project_id}/locations/{location_id}/services/{service_id}`"]
     pub fn set_service(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -696,8 +729,8 @@ impl DataplexLakeMetastoreEl {
     }
 }
 
-impl terrars::ToListMappable for DataplexLakeMetastoreEl {
-    type O = terrars::BlockAssignable<DataplexLakeMetastoreEl>;
+impl terrars::ToListMappable for DataplexLake_Metastore {
+    type O = terrars::BlockAssignable<DataplexLake_Metastore>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -708,29 +741,31 @@ impl terrars::ToListMappable for DataplexLakeMetastoreEl {
     }
 }
 
-pub struct BuildDataplexLakeMetastoreEl {}
+pub struct BuildDataplexLake_Metastore {}
 
-impl BuildDataplexLakeMetastoreEl {
-    pub fn build(self) -> DataplexLakeMetastoreEl {
-        DataplexLakeMetastoreEl { service: core::default::Default::default() }
+impl BuildDataplexLake_Metastore {
+    pub fn build(self) -> DataplexLake_Metastore {
+        DataplexLake_Metastore { service: core::default::Default::default() }
     }
 }
 
-pub struct DataplexLakeMetastoreElRef {
+#[allow(dead_code)]
+pub struct DataplexLake_MetastoreRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataplexLakeMetastoreElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexLakeMetastoreElRef {
-        DataplexLakeMetastoreElRef {
+impl terrars::Ref for DataplexLake_MetastoreRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexLake_MetastoreRef {
+        DataplexLake_MetastoreRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataplexLakeMetastoreElRef {
+impl DataplexLake_MetastoreRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -743,7 +778,7 @@ impl DataplexLakeMetastoreElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataplexLakeTimeoutsEl {
+pub struct DataplexLake_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -752,7 +787,7 @@ pub struct DataplexLakeTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataplexLakeTimeoutsEl {
+impl DataplexLake_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -772,8 +807,8 @@ impl DataplexLakeTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataplexLakeTimeoutsEl {
-    type O = terrars::BlockAssignable<DataplexLakeTimeoutsEl>;
+impl terrars::ToListMappable for DataplexLake_Timeouts {
+    type O = terrars::BlockAssignable<DataplexLake_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -784,11 +819,11 @@ impl terrars::ToListMappable for DataplexLakeTimeoutsEl {
     }
 }
 
-pub struct BuildDataplexLakeTimeoutsEl {}
+pub struct BuildDataplexLake_Timeouts {}
 
-impl BuildDataplexLakeTimeoutsEl {
-    pub fn build(self) -> DataplexLakeTimeoutsEl {
-        DataplexLakeTimeoutsEl {
+impl BuildDataplexLake_Timeouts {
+    pub fn build(self) -> DataplexLake_Timeouts {
+        DataplexLake_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -796,21 +831,23 @@ impl BuildDataplexLakeTimeoutsEl {
     }
 }
 
-pub struct DataplexLakeTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataplexLake_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataplexLakeTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexLakeTimeoutsElRef {
-        DataplexLakeTimeoutsElRef {
+impl terrars::Ref for DataplexLake_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexLake_TimeoutsRef {
+        DataplexLake_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataplexLakeTimeoutsElRef {
+impl DataplexLake_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -829,9 +866,4 @@ impl DataplexLakeTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataplexLakeDynamic {
-    metastore: std::option::Option<terrars::DynamicBlock<DataplexLakeMetastoreEl>>,
 }

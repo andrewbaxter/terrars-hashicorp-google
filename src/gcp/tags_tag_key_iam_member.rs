@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct TagsTagKeyIamMemberData {
+struct TagsTagKeyIamMemberData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,14 +26,14 @@ struct TagsTagKeyIamMemberData {
     role: terrars::PrimField<std::string::String>,
     tag_key: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<TagsTagKeyIamMemberConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<TagsTagKeyIamMember_Condition>>,
     dynamic: TagsTagKeyIamMemberDynamic,
 }
 
 struct TagsTagKeyIamMember_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<TagsTagKeyIamMemberData>,
+    data: std::cell::RefCell<TagsTagKeyIamMemberData_>,
 }
 
 #[derive(Clone)]
@@ -140,7 +142,7 @@ impl TagsTagKeyIamMember {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<TagsTagKeyIamMemberConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<TagsTagKeyIamMember_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -179,7 +181,7 @@ impl TagsTagKeyIamMember {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<TagsTagKeyIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<TagsTagKeyIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -230,7 +232,7 @@ impl BuildTagsTagKeyIamMember {
         let out = TagsTagKeyIamMember(std::rc::Rc::new(TagsTagKeyIamMember_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(TagsTagKeyIamMemberData {
+            data: std::cell::RefCell::new(TagsTagKeyIamMemberData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -298,20 +300,25 @@ impl TagsTagKeyIamMemberRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<TagsTagKeyIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<TagsTagKeyIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct TagsTagKeyIamMemberDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<TagsTagKeyIamMember_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct TagsTagKeyIamMemberConditionEl {
+pub struct TagsTagKeyIamMember_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl TagsTagKeyIamMemberConditionEl {
+impl TagsTagKeyIamMember_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -319,8 +326,8 @@ impl TagsTagKeyIamMemberConditionEl {
     }
 }
 
-impl terrars::ToListMappable for TagsTagKeyIamMemberConditionEl {
-    type O = terrars::BlockAssignable<TagsTagKeyIamMemberConditionEl>;
+impl terrars::ToListMappable for TagsTagKeyIamMember_Condition {
+    type O = terrars::BlockAssignable<TagsTagKeyIamMember_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -331,16 +338,16 @@ impl terrars::ToListMappable for TagsTagKeyIamMemberConditionEl {
     }
 }
 
-pub struct BuildTagsTagKeyIamMemberConditionEl {
+pub struct BuildTagsTagKeyIamMember_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildTagsTagKeyIamMemberConditionEl {
-    pub fn build(self) -> TagsTagKeyIamMemberConditionEl {
-        TagsTagKeyIamMemberConditionEl {
+impl BuildTagsTagKeyIamMember_Condition {
+    pub fn build(self) -> TagsTagKeyIamMember_Condition {
+        TagsTagKeyIamMember_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -348,21 +355,23 @@ impl BuildTagsTagKeyIamMemberConditionEl {
     }
 }
 
-pub struct TagsTagKeyIamMemberConditionElRef {
+#[allow(dead_code)]
+pub struct TagsTagKeyIamMember_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for TagsTagKeyIamMemberConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> TagsTagKeyIamMemberConditionElRef {
-        TagsTagKeyIamMemberConditionElRef {
+impl terrars::Ref for TagsTagKeyIamMember_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> TagsTagKeyIamMember_ConditionRef {
+        TagsTagKeyIamMember_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl TagsTagKeyIamMemberConditionElRef {
+impl TagsTagKeyIamMember_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -381,9 +390,4 @@ impl TagsTagKeyIamMemberConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct TagsTagKeyIamMemberDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<TagsTagKeyIamMemberConditionEl>>,
 }

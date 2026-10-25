@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct AssuredWorkloadsWorkloadData {
+struct AssuredWorkloadsWorkloadData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,6 +23,8 @@ struct AssuredWorkloadsWorkloadData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     billing_account: std::option::Option<terrars::PrimField<std::string::String>>,
     compliance_regime: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     display_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_sovereign_controls: std::option::Option<terrars::PrimField<bool>>,
@@ -33,24 +37,28 @@ struct AssuredWorkloadsWorkloadData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     partner: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    partner_services_billing_account: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     provisioned_resources_parent: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     violation_notifications_enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    kms_settings: std::option::Option<std::vec::Vec<AssuredWorkloadsWorkloadKmsSettingsEl>>,
+    kms_settings: std::option::Option<std::vec::Vec<AssuredWorkloadsWorkload_KmsSettings>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    partner_permissions: std::option::Option<std::vec::Vec<AssuredWorkloadsWorkloadPartnerPermissionsEl>>,
+    partner_permissions: std::option::Option<std::vec::Vec<AssuredWorkloadsWorkload_PartnerPermissions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    resource_settings: std::option::Option<std::vec::Vec<AssuredWorkloadsWorkloadResourceSettingsEl>>,
+    resource_settings: std::option::Option<std::vec::Vec<AssuredWorkloadsWorkload_ResourceSettings>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<AssuredWorkloadsWorkloadTimeoutsEl>,
+    timeouts: std::option::Option<AssuredWorkloadsWorkload_Timeouts>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    workload_options: std::option::Option<std::vec::Vec<AssuredWorkloadsWorkload_WorkloadOptions>>,
     dynamic: AssuredWorkloadsWorkloadDynamic,
 }
 
 struct AssuredWorkloadsWorkload_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AssuredWorkloadsWorkloadData>,
+    data: std::cell::RefCell<AssuredWorkloadsWorkloadData_>,
 }
 
 #[derive(Clone)]
@@ -158,6 +166,13 @@ impl AssuredWorkloadsWorkload {
     }
 
     #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `enable_sovereign_controls`.\nOptional. Indicates the sovereignty status of the given workload. Currently meant to be used by Europe/Canada customers."]
     pub fn set_enable_sovereign_controls(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().enable_sovereign_controls = std::option::Option::Some(v.into());
@@ -181,9 +196,19 @@ impl AssuredWorkloadsWorkload {
     }
 
     #[doc =
-        "Set the field `partner`.\nOptional. Partner regime associated with this workload. Possible values: PARTNER_UNSPECIFIED, LOCAL_CONTROLS_BY_S3NS, SOVEREIGN_CONTROLS_BY_T_SYSTEMS, SOVEREIGN_CONTROLS_BY_SIA_MINSAIT, SOVEREIGN_CONTROLS_BY_PSN"]
+        "Set the field `partner`.\nOptional. Partner regime associated with this workload. Possible values: PARTNER_UNSPECIFIED, LOCAL_CONTROLS_BY_S3NS, SOVEREIGN_CONTROLS_BY_T_SYSTEMS, SOVEREIGN_CONTROLS_BY_SIA_MINSAIT, SOVEREIGN_CONTROLS_BY_PSN, SOVEREIGN_CONTROLS_BY_CNTXT, SOVEREIGN_CONTROLS_BY_CNTXT_NO_EKM, SPAIN_DATA_BOUNDARY_BY_TELEFONICA"]
     pub fn set_partner(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().partner = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `partner_services_billing_account`.\nOptional. Input only. Billing account necessary for purchasing services from Sovereign Partners. This field is required for creating SIA/PSN/CNTXT partner workloads. The caller should have 'billing.resourceAssociations.create' IAM permission on this billing-account. The format of this string is billingAccounts/AAAAAA-BBBBBB-CCCCCC."]
+    pub fn set_partner_services_billing_account(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().partner_services_billing_account = std::option::Option::Some(v.into());
         self
     }
 
@@ -207,7 +232,7 @@ impl AssuredWorkloadsWorkload {
     #[doc = "Set the field `kms_settings`.\n"]
     pub fn set_kms_settings(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AssuredWorkloadsWorkloadKmsSettingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AssuredWorkloadsWorkload_KmsSettings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -223,7 +248,7 @@ impl AssuredWorkloadsWorkload {
     #[doc = "Set the field `partner_permissions`.\n"]
     pub fn set_partner_permissions(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AssuredWorkloadsWorkloadPartnerPermissionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AssuredWorkloadsWorkload_PartnerPermissions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -239,7 +264,7 @@ impl AssuredWorkloadsWorkload {
     #[doc = "Set the field `resource_settings`.\n"]
     pub fn set_resource_settings(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AssuredWorkloadsWorkloadResourceSettingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AssuredWorkloadsWorkload_ResourceSettings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -253,8 +278,24 @@ impl AssuredWorkloadsWorkload {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<AssuredWorkloadsWorkloadTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<AssuredWorkloadsWorkload_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `workload_options`.\n"]
+    pub fn set_workload_options(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<AssuredWorkloadsWorkload_WorkloadOptions>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().workload_options = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.workload_options = std::option::Option::Some(d);
+            },
+        }
         self
     }
 
@@ -265,14 +306,14 @@ impl AssuredWorkloadsWorkload {
     }
 
     #[doc =
-        "Get a reference to the value of field `compliance_regime` after provisioning.\nRequired. Immutable. Compliance Regime associated with this workload. Possible values: COMPLIANCE_REGIME_UNSPECIFIED, IL4, CJIS, FEDRAMP_HIGH, FEDRAMP_MODERATE, US_REGIONAL_ACCESS, HIPAA, HITRUST, EU_REGIONS_AND_SUPPORT, CA_REGIONS_AND_SUPPORT, ITAR, AU_REGIONS_AND_US_SUPPORT, ASSURED_WORKLOADS_FOR_PARTNERS, ISR_REGIONS, ISR_REGIONS_AND_SUPPORT, CA_PROTECTED_B, IL5, IL2, JP_REGIONS_AND_SUPPORT"]
+        "Get a reference to the value of field `compliance_regime` after provisioning.\nRequired. Immutable. Compliance Regime associated with this workload. Possible values: COMPLIANCE_REGIME_UNSPECIFIED, IL4, CJIS, FEDRAMP_HIGH, FEDRAMP_MODERATE, US_REGIONAL_ACCESS, HIPAA, HITRUST, EU_REGIONS_AND_SUPPORT, CA_REGIONS_AND_SUPPORT, ITAR, AU_REGIONS_AND_US_SUPPORT, ASSURED_WORKLOADS_FOR_PARTNERS, ISR_REGIONS, ISR_REGIONS_AND_SUPPORT, CA_PROTECTED_B, IL5, IL2, JP_REGIONS_AND_SUPPORT, KSA_REGIONS_AND_SUPPORT_WITH_SOVEREIGNTY_CONTROLS, REGIONAL_CONTROLS, HEALTHCARE_AND_LIFE_SCIENCES_CONTROLS, HEALTHCARE_AND_LIFE_SCIENCES_CONTROLS_US_SUPPORT, IRS_1075"]
     pub fn compliance_regime(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.compliance_regime", self.extract_ref()))
     }
 
     #[doc =
         "Get a reference to the value of field `compliance_status` after provisioning.\nOutput only. Count of active Violations in the Workload."]
-    pub fn compliance_status(&self) -> terrars::ListRef<AssuredWorkloadsWorkloadComplianceStatusElRef> {
+    pub fn compliance_status(&self) -> terrars::ListRef<AssuredWorkloadsWorkload_ComplianceStatusRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.compliance_status", self.extract_ref()))
     }
 
@@ -292,6 +333,12 @@ impl AssuredWorkloadsWorkload {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `display_name` after provisioning.\nRequired. The user-assigned display name of the Workload. When present it must be between 4 to 30 characters. Allowed characters are: lowercase and uppercase letters, numbers, hyphen, and spaces. Example: My Workload"]
     pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
@@ -305,7 +352,7 @@ impl AssuredWorkloadsWorkload {
 
     #[doc =
         "Get a reference to the value of field `ekm_provisioning_response` after provisioning.\nOptional. Represents the Ekm Provisioning State of the given workload."]
-    pub fn ekm_provisioning_response(&self) -> terrars::ListRef<AssuredWorkloadsWorkloadEkmProvisioningResponseElRef> {
+    pub fn ekm_provisioning_response(&self) -> terrars::ListRef<AssuredWorkloadsWorkload_EkmProvisioningResponseRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ekm_provisioning_response", self.extract_ref()))
     }
 
@@ -350,9 +397,18 @@ impl AssuredWorkloadsWorkload {
     }
 
     #[doc =
-        "Get a reference to the value of field `partner` after provisioning.\nOptional. Partner regime associated with this workload. Possible values: PARTNER_UNSPECIFIED, LOCAL_CONTROLS_BY_S3NS, SOVEREIGN_CONTROLS_BY_T_SYSTEMS, SOVEREIGN_CONTROLS_BY_SIA_MINSAIT, SOVEREIGN_CONTROLS_BY_PSN"]
+        "Get a reference to the value of field `partner` after provisioning.\nOptional. Partner regime associated with this workload. Possible values: PARTNER_UNSPECIFIED, LOCAL_CONTROLS_BY_S3NS, SOVEREIGN_CONTROLS_BY_T_SYSTEMS, SOVEREIGN_CONTROLS_BY_SIA_MINSAIT, SOVEREIGN_CONTROLS_BY_PSN, SOVEREIGN_CONTROLS_BY_CNTXT, SOVEREIGN_CONTROLS_BY_CNTXT_NO_EKM, SPAIN_DATA_BOUNDARY_BY_TELEFONICA"]
     pub fn partner(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.partner", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `partner_services_billing_account` after provisioning.\nOptional. Input only. Billing account necessary for purchasing services from Sovereign Partners. This field is required for creating SIA/PSN/CNTXT partner workloads. The caller should have 'billing.resourceAssociations.create' IAM permission on this billing-account. The format of this string is billingAccounts/AAAAAA-BBBBBB-CCCCCC."]
+    pub fn partner_services_billing_account(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.partner_services_billing_account", self.extract_ref()),
+        )
     }
 
     #[doc =
@@ -363,13 +419,13 @@ impl AssuredWorkloadsWorkload {
 
     #[doc =
         "Get a reference to the value of field `resources` after provisioning.\nOutput only. The resources associated with this workload. These resources will be created when creating the workload. If any of the projects already exist, the workload creation will fail. Always read only."]
-    pub fn resources(&self) -> terrars::ListRef<AssuredWorkloadsWorkloadResourcesElRef> {
+    pub fn resources(&self) -> terrars::ListRef<AssuredWorkloadsWorkload_ResourcesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.resources", self.extract_ref()))
     }
 
     #[doc =
         "Get a reference to the value of field `saa_enrollment_response` after provisioning.\nOutput only. Represents the SAA enrollment response of the given workload. SAA enrollment response is queried during workloads.get call. In failure cases, user friendly error message is shown in SAA details page."]
-    pub fn saa_enrollment_response(&self) -> terrars::ListRef<AssuredWorkloadsWorkloadSaaEnrollmentResponseElRef> {
+    pub fn saa_enrollment_response(&self) -> terrars::ListRef<AssuredWorkloadsWorkload_SaaEnrollmentResponseRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.saa_enrollment_response", self.extract_ref()))
     }
 
@@ -389,23 +445,28 @@ impl AssuredWorkloadsWorkload {
     }
 
     #[doc = "Get a reference to the value of field `kms_settings` after provisioning.\n"]
-    pub fn kms_settings(&self) -> terrars::ListRef<AssuredWorkloadsWorkloadKmsSettingsElRef> {
+    pub fn kms_settings(&self) -> terrars::ListRef<AssuredWorkloadsWorkload_KmsSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.kms_settings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `partner_permissions` after provisioning.\n"]
-    pub fn partner_permissions(&self) -> terrars::ListRef<AssuredWorkloadsWorkloadPartnerPermissionsElRef> {
+    pub fn partner_permissions(&self) -> terrars::ListRef<AssuredWorkloadsWorkload_PartnerPermissionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.partner_permissions", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `resource_settings` after provisioning.\n"]
-    pub fn resource_settings(&self) -> terrars::ListRef<AssuredWorkloadsWorkloadResourceSettingsElRef> {
+    pub fn resource_settings(&self) -> terrars::ListRef<AssuredWorkloadsWorkload_ResourceSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.resource_settings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> AssuredWorkloadsWorkloadTimeoutsElRef {
-        AssuredWorkloadsWorkloadTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> AssuredWorkloadsWorkload_TimeoutsRef {
+        AssuredWorkloadsWorkload_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `workload_options` after provisioning.\n"]
+    pub fn workload_options(&self) -> terrars::ListRef<AssuredWorkloadsWorkload_WorkloadOptionsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.workload_options", self.extract_ref()))
     }
 }
 
@@ -443,7 +504,7 @@ impl terrars::Resource_ for AssuredWorkloadsWorkload_ {
 pub struct BuildAssuredWorkloadsWorkload {
     pub tf_id: std::string::String,
     #[doc =
-        "Required. Immutable. Compliance Regime associated with this workload. Possible values: COMPLIANCE_REGIME_UNSPECIFIED, IL4, CJIS, FEDRAMP_HIGH, FEDRAMP_MODERATE, US_REGIONAL_ACCESS, HIPAA, HITRUST, EU_REGIONS_AND_SUPPORT, CA_REGIONS_AND_SUPPORT, ITAR, AU_REGIONS_AND_US_SUPPORT, ASSURED_WORKLOADS_FOR_PARTNERS, ISR_REGIONS, ISR_REGIONS_AND_SUPPORT, CA_PROTECTED_B, IL5, IL2, JP_REGIONS_AND_SUPPORT"]
+        "Required. Immutable. Compliance Regime associated with this workload. Possible values: COMPLIANCE_REGIME_UNSPECIFIED, IL4, CJIS, FEDRAMP_HIGH, FEDRAMP_MODERATE, US_REGIONAL_ACCESS, HIPAA, HITRUST, EU_REGIONS_AND_SUPPORT, CA_REGIONS_AND_SUPPORT, ITAR, AU_REGIONS_AND_US_SUPPORT, ASSURED_WORKLOADS_FOR_PARTNERS, ISR_REGIONS, ISR_REGIONS_AND_SUPPORT, CA_PROTECTED_B, IL5, IL2, JP_REGIONS_AND_SUPPORT, KSA_REGIONS_AND_SUPPORT_WITH_SOVEREIGNTY_CONTROLS, REGIONAL_CONTROLS, HEALTHCARE_AND_LIFE_SCIENCES_CONTROLS, HEALTHCARE_AND_LIFE_SCIENCES_CONTROLS_US_SUPPORT, IRS_1075"]
     pub compliance_regime: terrars::PrimField<std::string::String>,
     #[doc =
         "Required. The user-assigned display name of the Workload. When present it must be between 4 to 30 characters. Allowed characters are: lowercase and uppercase letters, numbers, hyphen, and spaces. Example: My Workload"]
@@ -459,7 +520,7 @@ impl BuildAssuredWorkloadsWorkload {
         let out = AssuredWorkloadsWorkload(std::rc::Rc::new(AssuredWorkloadsWorkload_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AssuredWorkloadsWorkloadData {
+            data: std::cell::RefCell::new(AssuredWorkloadsWorkloadData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -467,6 +528,7 @@ impl BuildAssuredWorkloadsWorkload {
                 provisioner: core::default::Default::default(),
                 billing_account: core::default::Default::default(),
                 compliance_regime: self.compliance_regime,
+                deletion_policy: core::default::Default::default(),
                 display_name: self.display_name,
                 enable_sovereign_controls: core::default::Default::default(),
                 id: core::default::Default::default(),
@@ -474,12 +536,14 @@ impl BuildAssuredWorkloadsWorkload {
                 location: self.location,
                 organization: self.organization,
                 partner: core::default::Default::default(),
+                partner_services_billing_account: core::default::Default::default(),
                 provisioned_resources_parent: core::default::Default::default(),
                 violation_notifications_enabled: core::default::Default::default(),
                 kms_settings: core::default::Default::default(),
                 partner_permissions: core::default::Default::default(),
                 resource_settings: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
+                workload_options: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -518,14 +582,14 @@ impl AssuredWorkloadsWorkloadRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `compliance_regime` after provisioning.\nRequired. Immutable. Compliance Regime associated with this workload. Possible values: COMPLIANCE_REGIME_UNSPECIFIED, IL4, CJIS, FEDRAMP_HIGH, FEDRAMP_MODERATE, US_REGIONAL_ACCESS, HIPAA, HITRUST, EU_REGIONS_AND_SUPPORT, CA_REGIONS_AND_SUPPORT, ITAR, AU_REGIONS_AND_US_SUPPORT, ASSURED_WORKLOADS_FOR_PARTNERS, ISR_REGIONS, ISR_REGIONS_AND_SUPPORT, CA_PROTECTED_B, IL5, IL2, JP_REGIONS_AND_SUPPORT"]
+        "Get a reference to the value of field `compliance_regime` after provisioning.\nRequired. Immutable. Compliance Regime associated with this workload. Possible values: COMPLIANCE_REGIME_UNSPECIFIED, IL4, CJIS, FEDRAMP_HIGH, FEDRAMP_MODERATE, US_REGIONAL_ACCESS, HIPAA, HITRUST, EU_REGIONS_AND_SUPPORT, CA_REGIONS_AND_SUPPORT, ITAR, AU_REGIONS_AND_US_SUPPORT, ASSURED_WORKLOADS_FOR_PARTNERS, ISR_REGIONS, ISR_REGIONS_AND_SUPPORT, CA_PROTECTED_B, IL5, IL2, JP_REGIONS_AND_SUPPORT, KSA_REGIONS_AND_SUPPORT_WITH_SOVEREIGNTY_CONTROLS, REGIONAL_CONTROLS, HEALTHCARE_AND_LIFE_SCIENCES_CONTROLS, HEALTHCARE_AND_LIFE_SCIENCES_CONTROLS_US_SUPPORT, IRS_1075"]
     pub fn compliance_regime(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.compliance_regime", self.extract_ref()))
     }
 
     #[doc =
         "Get a reference to the value of field `compliance_status` after provisioning.\nOutput only. Count of active Violations in the Workload."]
-    pub fn compliance_status(&self) -> terrars::ListRef<AssuredWorkloadsWorkloadComplianceStatusElRef> {
+    pub fn compliance_status(&self) -> terrars::ListRef<AssuredWorkloadsWorkload_ComplianceStatusRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.compliance_status", self.extract_ref()))
     }
 
@@ -545,6 +609,12 @@ impl AssuredWorkloadsWorkloadRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `display_name` after provisioning.\nRequired. The user-assigned display name of the Workload. When present it must be between 4 to 30 characters. Allowed characters are: lowercase and uppercase letters, numbers, hyphen, and spaces. Example: My Workload"]
     pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
@@ -558,7 +628,7 @@ impl AssuredWorkloadsWorkloadRef {
 
     #[doc =
         "Get a reference to the value of field `ekm_provisioning_response` after provisioning.\nOptional. Represents the Ekm Provisioning State of the given workload."]
-    pub fn ekm_provisioning_response(&self) -> terrars::ListRef<AssuredWorkloadsWorkloadEkmProvisioningResponseElRef> {
+    pub fn ekm_provisioning_response(&self) -> terrars::ListRef<AssuredWorkloadsWorkload_EkmProvisioningResponseRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ekm_provisioning_response", self.extract_ref()))
     }
 
@@ -603,9 +673,18 @@ impl AssuredWorkloadsWorkloadRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `partner` after provisioning.\nOptional. Partner regime associated with this workload. Possible values: PARTNER_UNSPECIFIED, LOCAL_CONTROLS_BY_S3NS, SOVEREIGN_CONTROLS_BY_T_SYSTEMS, SOVEREIGN_CONTROLS_BY_SIA_MINSAIT, SOVEREIGN_CONTROLS_BY_PSN"]
+        "Get a reference to the value of field `partner` after provisioning.\nOptional. Partner regime associated with this workload. Possible values: PARTNER_UNSPECIFIED, LOCAL_CONTROLS_BY_S3NS, SOVEREIGN_CONTROLS_BY_T_SYSTEMS, SOVEREIGN_CONTROLS_BY_SIA_MINSAIT, SOVEREIGN_CONTROLS_BY_PSN, SOVEREIGN_CONTROLS_BY_CNTXT, SOVEREIGN_CONTROLS_BY_CNTXT_NO_EKM, SPAIN_DATA_BOUNDARY_BY_TELEFONICA"]
     pub fn partner(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.partner", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `partner_services_billing_account` after provisioning.\nOptional. Input only. Billing account necessary for purchasing services from Sovereign Partners. This field is required for creating SIA/PSN/CNTXT partner workloads. The caller should have 'billing.resourceAssociations.create' IAM permission on this billing-account. The format of this string is billingAccounts/AAAAAA-BBBBBB-CCCCCC."]
+    pub fn partner_services_billing_account(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.partner_services_billing_account", self.extract_ref()),
+        )
     }
 
     #[doc =
@@ -616,13 +695,13 @@ impl AssuredWorkloadsWorkloadRef {
 
     #[doc =
         "Get a reference to the value of field `resources` after provisioning.\nOutput only. The resources associated with this workload. These resources will be created when creating the workload. If any of the projects already exist, the workload creation will fail. Always read only."]
-    pub fn resources(&self) -> terrars::ListRef<AssuredWorkloadsWorkloadResourcesElRef> {
+    pub fn resources(&self) -> terrars::ListRef<AssuredWorkloadsWorkload_ResourcesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.resources", self.extract_ref()))
     }
 
     #[doc =
         "Get a reference to the value of field `saa_enrollment_response` after provisioning.\nOutput only. Represents the SAA enrollment response of the given workload. SAA enrollment response is queried during workloads.get call. In failure cases, user friendly error message is shown in SAA details page."]
-    pub fn saa_enrollment_response(&self) -> terrars::ListRef<AssuredWorkloadsWorkloadSaaEnrollmentResponseElRef> {
+    pub fn saa_enrollment_response(&self) -> terrars::ListRef<AssuredWorkloadsWorkload_SaaEnrollmentResponseRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.saa_enrollment_response", self.extract_ref()))
     }
 
@@ -642,35 +721,48 @@ impl AssuredWorkloadsWorkloadRef {
     }
 
     #[doc = "Get a reference to the value of field `kms_settings` after provisioning.\n"]
-    pub fn kms_settings(&self) -> terrars::ListRef<AssuredWorkloadsWorkloadKmsSettingsElRef> {
+    pub fn kms_settings(&self) -> terrars::ListRef<AssuredWorkloadsWorkload_KmsSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.kms_settings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `partner_permissions` after provisioning.\n"]
-    pub fn partner_permissions(&self) -> terrars::ListRef<AssuredWorkloadsWorkloadPartnerPermissionsElRef> {
+    pub fn partner_permissions(&self) -> terrars::ListRef<AssuredWorkloadsWorkload_PartnerPermissionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.partner_permissions", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `resource_settings` after provisioning.\n"]
-    pub fn resource_settings(&self) -> terrars::ListRef<AssuredWorkloadsWorkloadResourceSettingsElRef> {
+    pub fn resource_settings(&self) -> terrars::ListRef<AssuredWorkloadsWorkload_ResourceSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.resource_settings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> AssuredWorkloadsWorkloadTimeoutsElRef {
-        AssuredWorkloadsWorkloadTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> AssuredWorkloadsWorkload_TimeoutsRef {
+        AssuredWorkloadsWorkload_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `workload_options` after provisioning.\n"]
+    pub fn workload_options(&self) -> terrars::ListRef<AssuredWorkloadsWorkload_WorkloadOptionsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.workload_options", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct AssuredWorkloadsWorkloadDynamic {
+    kms_settings: std::option::Option<terrars::DynamicBlock<AssuredWorkloadsWorkload_KmsSettings>>,
+    partner_permissions: std::option::Option<terrars::DynamicBlock<AssuredWorkloadsWorkload_PartnerPermissions>>,
+    resource_settings: std::option::Option<terrars::DynamicBlock<AssuredWorkloadsWorkload_ResourceSettings>>,
+    workload_options: std::option::Option<terrars::DynamicBlock<AssuredWorkloadsWorkload_WorkloadOptions>>,
+}
+
 #[derive(Serialize)]
-pub struct AssuredWorkloadsWorkloadComplianceStatusEl {
+pub struct AssuredWorkloadsWorkload_ComplianceStatus {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     acknowledged_violation_count: std::option::Option<terrars::ListField<terrars::PrimField<f64>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     active_violation_count: std::option::Option<terrars::ListField<terrars::PrimField<f64>>>,
 }
 
-impl AssuredWorkloadsWorkloadComplianceStatusEl {
+impl AssuredWorkloadsWorkload_ComplianceStatus {
     #[doc = "Set the field `acknowledged_violation_count`.\n"]
     pub fn set_acknowledged_violation_count(
         mut self,
@@ -690,8 +782,8 @@ impl AssuredWorkloadsWorkloadComplianceStatusEl {
     }
 }
 
-impl terrars::ToListMappable for AssuredWorkloadsWorkloadComplianceStatusEl {
-    type O = terrars::BlockAssignable<AssuredWorkloadsWorkloadComplianceStatusEl>;
+impl terrars::ToListMappable for AssuredWorkloadsWorkload_ComplianceStatus {
+    type O = terrars::BlockAssignable<AssuredWorkloadsWorkload_ComplianceStatus>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -702,32 +794,34 @@ impl terrars::ToListMappable for AssuredWorkloadsWorkloadComplianceStatusEl {
     }
 }
 
-pub struct BuildAssuredWorkloadsWorkloadComplianceStatusEl {}
+pub struct BuildAssuredWorkloadsWorkload_ComplianceStatus {}
 
-impl BuildAssuredWorkloadsWorkloadComplianceStatusEl {
-    pub fn build(self) -> AssuredWorkloadsWorkloadComplianceStatusEl {
-        AssuredWorkloadsWorkloadComplianceStatusEl {
+impl BuildAssuredWorkloadsWorkload_ComplianceStatus {
+    pub fn build(self) -> AssuredWorkloadsWorkload_ComplianceStatus {
+        AssuredWorkloadsWorkload_ComplianceStatus {
             acknowledged_violation_count: core::default::Default::default(),
             active_violation_count: core::default::Default::default(),
         }
     }
 }
 
-pub struct AssuredWorkloadsWorkloadComplianceStatusElRef {
+#[allow(dead_code)]
+pub struct AssuredWorkloadsWorkload_ComplianceStatusRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AssuredWorkloadsWorkloadComplianceStatusElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AssuredWorkloadsWorkloadComplianceStatusElRef {
-        AssuredWorkloadsWorkloadComplianceStatusElRef {
+impl terrars::Ref for AssuredWorkloadsWorkload_ComplianceStatusRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AssuredWorkloadsWorkload_ComplianceStatusRef {
+        AssuredWorkloadsWorkload_ComplianceStatusRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AssuredWorkloadsWorkloadComplianceStatusElRef {
+impl AssuredWorkloadsWorkload_ComplianceStatusRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -744,7 +838,7 @@ impl AssuredWorkloadsWorkloadComplianceStatusElRef {
 }
 
 #[derive(Serialize)]
-pub struct AssuredWorkloadsWorkloadEkmProvisioningResponseEl {
+pub struct AssuredWorkloadsWorkload_EkmProvisioningResponse {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ekm_provisioning_error_domain: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -753,7 +847,7 @@ pub struct AssuredWorkloadsWorkloadEkmProvisioningResponseEl {
     ekm_provisioning_state: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AssuredWorkloadsWorkloadEkmProvisioningResponseEl {
+impl AssuredWorkloadsWorkload_EkmProvisioningResponse {
     #[doc = "Set the field `ekm_provisioning_error_domain`.\n"]
     pub fn set_ekm_provisioning_error_domain(
         mut self,
@@ -782,8 +876,8 @@ impl AssuredWorkloadsWorkloadEkmProvisioningResponseEl {
     }
 }
 
-impl terrars::ToListMappable for AssuredWorkloadsWorkloadEkmProvisioningResponseEl {
-    type O = terrars::BlockAssignable<AssuredWorkloadsWorkloadEkmProvisioningResponseEl>;
+impl terrars::ToListMappable for AssuredWorkloadsWorkload_EkmProvisioningResponse {
+    type O = terrars::BlockAssignable<AssuredWorkloadsWorkload_EkmProvisioningResponse>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -794,11 +888,11 @@ impl terrars::ToListMappable for AssuredWorkloadsWorkloadEkmProvisioningResponse
     }
 }
 
-pub struct BuildAssuredWorkloadsWorkloadEkmProvisioningResponseEl {}
+pub struct BuildAssuredWorkloadsWorkload_EkmProvisioningResponse {}
 
-impl BuildAssuredWorkloadsWorkloadEkmProvisioningResponseEl {
-    pub fn build(self) -> AssuredWorkloadsWorkloadEkmProvisioningResponseEl {
-        AssuredWorkloadsWorkloadEkmProvisioningResponseEl {
+impl BuildAssuredWorkloadsWorkload_EkmProvisioningResponse {
+    pub fn build(self) -> AssuredWorkloadsWorkload_EkmProvisioningResponse {
+        AssuredWorkloadsWorkload_EkmProvisioningResponse {
             ekm_provisioning_error_domain: core::default::Default::default(),
             ekm_provisioning_error_mapping: core::default::Default::default(),
             ekm_provisioning_state: core::default::Default::default(),
@@ -806,24 +900,26 @@ impl BuildAssuredWorkloadsWorkloadEkmProvisioningResponseEl {
     }
 }
 
-pub struct AssuredWorkloadsWorkloadEkmProvisioningResponseElRef {
+#[allow(dead_code)]
+pub struct AssuredWorkloadsWorkload_EkmProvisioningResponseRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AssuredWorkloadsWorkloadEkmProvisioningResponseElRef {
+impl terrars::Ref for AssuredWorkloadsWorkload_EkmProvisioningResponseRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AssuredWorkloadsWorkloadEkmProvisioningResponseElRef {
-        AssuredWorkloadsWorkloadEkmProvisioningResponseElRef {
+    ) -> AssuredWorkloadsWorkload_EkmProvisioningResponseRef {
+        AssuredWorkloadsWorkload_EkmProvisioningResponseRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AssuredWorkloadsWorkloadEkmProvisioningResponseElRef {
+impl AssuredWorkloadsWorkload_EkmProvisioningResponseRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -845,14 +941,14 @@ impl AssuredWorkloadsWorkloadEkmProvisioningResponseElRef {
 }
 
 #[derive(Serialize)]
-pub struct AssuredWorkloadsWorkloadResourcesEl {
+pub struct AssuredWorkloadsWorkload_Resources {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resource_id: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resource_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AssuredWorkloadsWorkloadResourcesEl {
+impl AssuredWorkloadsWorkload_Resources {
     #[doc = "Set the field `resource_id`.\n"]
     pub fn set_resource_id(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.resource_id = std::option::Option::Some(v.into());
@@ -866,8 +962,8 @@ impl AssuredWorkloadsWorkloadResourcesEl {
     }
 }
 
-impl terrars::ToListMappable for AssuredWorkloadsWorkloadResourcesEl {
-    type O = terrars::BlockAssignable<AssuredWorkloadsWorkloadResourcesEl>;
+impl terrars::ToListMappable for AssuredWorkloadsWorkload_Resources {
+    type O = terrars::BlockAssignable<AssuredWorkloadsWorkload_Resources>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -878,32 +974,34 @@ impl terrars::ToListMappable for AssuredWorkloadsWorkloadResourcesEl {
     }
 }
 
-pub struct BuildAssuredWorkloadsWorkloadResourcesEl {}
+pub struct BuildAssuredWorkloadsWorkload_Resources {}
 
-impl BuildAssuredWorkloadsWorkloadResourcesEl {
-    pub fn build(self) -> AssuredWorkloadsWorkloadResourcesEl {
-        AssuredWorkloadsWorkloadResourcesEl {
+impl BuildAssuredWorkloadsWorkload_Resources {
+    pub fn build(self) -> AssuredWorkloadsWorkload_Resources {
+        AssuredWorkloadsWorkload_Resources {
             resource_id: core::default::Default::default(),
             resource_type: core::default::Default::default(),
         }
     }
 }
 
-pub struct AssuredWorkloadsWorkloadResourcesElRef {
+#[allow(dead_code)]
+pub struct AssuredWorkloadsWorkload_ResourcesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AssuredWorkloadsWorkloadResourcesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AssuredWorkloadsWorkloadResourcesElRef {
-        AssuredWorkloadsWorkloadResourcesElRef {
+impl terrars::Ref for AssuredWorkloadsWorkload_ResourcesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AssuredWorkloadsWorkload_ResourcesRef {
+        AssuredWorkloadsWorkload_ResourcesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AssuredWorkloadsWorkloadResourcesElRef {
+impl AssuredWorkloadsWorkload_ResourcesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -920,14 +1018,14 @@ impl AssuredWorkloadsWorkloadResourcesElRef {
 }
 
 #[derive(Serialize)]
-pub struct AssuredWorkloadsWorkloadSaaEnrollmentResponseEl {
+pub struct AssuredWorkloadsWorkload_SaaEnrollmentResponse {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     setup_errors: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     setup_status: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AssuredWorkloadsWorkloadSaaEnrollmentResponseEl {
+impl AssuredWorkloadsWorkload_SaaEnrollmentResponse {
     #[doc = "Set the field `setup_errors`.\n"]
     pub fn set_setup_errors(
         mut self,
@@ -944,8 +1042,8 @@ impl AssuredWorkloadsWorkloadSaaEnrollmentResponseEl {
     }
 }
 
-impl terrars::ToListMappable for AssuredWorkloadsWorkloadSaaEnrollmentResponseEl {
-    type O = terrars::BlockAssignable<AssuredWorkloadsWorkloadSaaEnrollmentResponseEl>;
+impl terrars::ToListMappable for AssuredWorkloadsWorkload_SaaEnrollmentResponse {
+    type O = terrars::BlockAssignable<AssuredWorkloadsWorkload_SaaEnrollmentResponse>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -956,35 +1054,37 @@ impl terrars::ToListMappable for AssuredWorkloadsWorkloadSaaEnrollmentResponseEl
     }
 }
 
-pub struct BuildAssuredWorkloadsWorkloadSaaEnrollmentResponseEl {}
+pub struct BuildAssuredWorkloadsWorkload_SaaEnrollmentResponse {}
 
-impl BuildAssuredWorkloadsWorkloadSaaEnrollmentResponseEl {
-    pub fn build(self) -> AssuredWorkloadsWorkloadSaaEnrollmentResponseEl {
-        AssuredWorkloadsWorkloadSaaEnrollmentResponseEl {
+impl BuildAssuredWorkloadsWorkload_SaaEnrollmentResponse {
+    pub fn build(self) -> AssuredWorkloadsWorkload_SaaEnrollmentResponse {
+        AssuredWorkloadsWorkload_SaaEnrollmentResponse {
             setup_errors: core::default::Default::default(),
             setup_status: core::default::Default::default(),
         }
     }
 }
 
-pub struct AssuredWorkloadsWorkloadSaaEnrollmentResponseElRef {
+#[allow(dead_code)]
+pub struct AssuredWorkloadsWorkload_SaaEnrollmentResponseRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AssuredWorkloadsWorkloadSaaEnrollmentResponseElRef {
+impl terrars::Ref for AssuredWorkloadsWorkload_SaaEnrollmentResponseRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AssuredWorkloadsWorkloadSaaEnrollmentResponseElRef {
-        AssuredWorkloadsWorkloadSaaEnrollmentResponseElRef {
+    ) -> AssuredWorkloadsWorkload_SaaEnrollmentResponseRef {
+        AssuredWorkloadsWorkload_SaaEnrollmentResponseRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AssuredWorkloadsWorkloadSaaEnrollmentResponseElRef {
+impl AssuredWorkloadsWorkload_SaaEnrollmentResponseRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1001,15 +1101,15 @@ impl AssuredWorkloadsWorkloadSaaEnrollmentResponseElRef {
 }
 
 #[derive(Serialize)]
-pub struct AssuredWorkloadsWorkloadKmsSettingsEl {
+pub struct AssuredWorkloadsWorkload_KmsSettings {
     next_rotation_time: terrars::PrimField<std::string::String>,
     rotation_period: terrars::PrimField<std::string::String>,
 }
 
-impl AssuredWorkloadsWorkloadKmsSettingsEl { }
+impl AssuredWorkloadsWorkload_KmsSettings { }
 
-impl terrars::ToListMappable for AssuredWorkloadsWorkloadKmsSettingsEl {
-    type O = terrars::BlockAssignable<AssuredWorkloadsWorkloadKmsSettingsEl>;
+impl terrars::ToListMappable for AssuredWorkloadsWorkload_KmsSettings {
+    type O = terrars::BlockAssignable<AssuredWorkloadsWorkload_KmsSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1020,7 +1120,7 @@ impl terrars::ToListMappable for AssuredWorkloadsWorkloadKmsSettingsEl {
     }
 }
 
-pub struct BuildAssuredWorkloadsWorkloadKmsSettingsEl {
+pub struct BuildAssuredWorkloadsWorkload_KmsSettings {
     #[doc =
         "Required. Input only. Immutable. The time at which the Key Management Service will automatically create a new version of the crypto key and mark it as the primary."]
     pub next_rotation_time: terrars::PrimField<std::string::String>,
@@ -1029,30 +1129,32 @@ pub struct BuildAssuredWorkloadsWorkloadKmsSettingsEl {
     pub rotation_period: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAssuredWorkloadsWorkloadKmsSettingsEl {
-    pub fn build(self) -> AssuredWorkloadsWorkloadKmsSettingsEl {
-        AssuredWorkloadsWorkloadKmsSettingsEl {
+impl BuildAssuredWorkloadsWorkload_KmsSettings {
+    pub fn build(self) -> AssuredWorkloadsWorkload_KmsSettings {
+        AssuredWorkloadsWorkload_KmsSettings {
             next_rotation_time: self.next_rotation_time,
             rotation_period: self.rotation_period,
         }
     }
 }
 
-pub struct AssuredWorkloadsWorkloadKmsSettingsElRef {
+#[allow(dead_code)]
+pub struct AssuredWorkloadsWorkload_KmsSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AssuredWorkloadsWorkloadKmsSettingsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AssuredWorkloadsWorkloadKmsSettingsElRef {
-        AssuredWorkloadsWorkloadKmsSettingsElRef {
+impl terrars::Ref for AssuredWorkloadsWorkload_KmsSettingsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AssuredWorkloadsWorkload_KmsSettingsRef {
+        AssuredWorkloadsWorkload_KmsSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AssuredWorkloadsWorkloadKmsSettingsElRef {
+impl AssuredWorkloadsWorkload_KmsSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1071,7 +1173,7 @@ impl AssuredWorkloadsWorkloadKmsSettingsElRef {
 }
 
 #[derive(Serialize)]
-pub struct AssuredWorkloadsWorkloadPartnerPermissionsEl {
+pub struct AssuredWorkloadsWorkload_PartnerPermissions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     assured_workloads_monitoring: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1080,7 +1182,7 @@ pub struct AssuredWorkloadsWorkloadPartnerPermissionsEl {
     service_access_approver: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl AssuredWorkloadsWorkloadPartnerPermissionsEl {
+impl AssuredWorkloadsWorkload_PartnerPermissions {
     #[doc = "Set the field `assured_workloads_monitoring`.\nOptional. Allow partner to view violation alerts."]
     pub fn set_assured_workloads_monitoring(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.assured_workloads_monitoring = std::option::Option::Some(v.into());
@@ -1101,8 +1203,8 @@ impl AssuredWorkloadsWorkloadPartnerPermissionsEl {
     }
 }
 
-impl terrars::ToListMappable for AssuredWorkloadsWorkloadPartnerPermissionsEl {
-    type O = terrars::BlockAssignable<AssuredWorkloadsWorkloadPartnerPermissionsEl>;
+impl terrars::ToListMappable for AssuredWorkloadsWorkload_PartnerPermissions {
+    type O = terrars::BlockAssignable<AssuredWorkloadsWorkload_PartnerPermissions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1113,11 +1215,11 @@ impl terrars::ToListMappable for AssuredWorkloadsWorkloadPartnerPermissionsEl {
     }
 }
 
-pub struct BuildAssuredWorkloadsWorkloadPartnerPermissionsEl {}
+pub struct BuildAssuredWorkloadsWorkload_PartnerPermissions {}
 
-impl BuildAssuredWorkloadsWorkloadPartnerPermissionsEl {
-    pub fn build(self) -> AssuredWorkloadsWorkloadPartnerPermissionsEl {
-        AssuredWorkloadsWorkloadPartnerPermissionsEl {
+impl BuildAssuredWorkloadsWorkload_PartnerPermissions {
+    pub fn build(self) -> AssuredWorkloadsWorkload_PartnerPermissions {
+        AssuredWorkloadsWorkload_PartnerPermissions {
             assured_workloads_monitoring: core::default::Default::default(),
             data_logs_viewer: core::default::Default::default(),
             service_access_approver: core::default::Default::default(),
@@ -1125,24 +1227,26 @@ impl BuildAssuredWorkloadsWorkloadPartnerPermissionsEl {
     }
 }
 
-pub struct AssuredWorkloadsWorkloadPartnerPermissionsElRef {
+#[allow(dead_code)]
+pub struct AssuredWorkloadsWorkload_PartnerPermissionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AssuredWorkloadsWorkloadPartnerPermissionsElRef {
+impl terrars::Ref for AssuredWorkloadsWorkload_PartnerPermissionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AssuredWorkloadsWorkloadPartnerPermissionsElRef {
-        AssuredWorkloadsWorkloadPartnerPermissionsElRef {
+    ) -> AssuredWorkloadsWorkload_PartnerPermissionsRef {
+        AssuredWorkloadsWorkload_PartnerPermissionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AssuredWorkloadsWorkloadPartnerPermissionsElRef {
+impl AssuredWorkloadsWorkload_PartnerPermissionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1167,7 +1271,7 @@ impl AssuredWorkloadsWorkloadPartnerPermissionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct AssuredWorkloadsWorkloadResourceSettingsEl {
+pub struct AssuredWorkloadsWorkload_ResourceSettings {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     display_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1176,7 +1280,7 @@ pub struct AssuredWorkloadsWorkloadResourceSettingsEl {
     resource_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AssuredWorkloadsWorkloadResourceSettingsEl {
+impl AssuredWorkloadsWorkload_ResourceSettings {
     #[doc =
         "Set the field `display_name`.\nUser-assigned resource display name. If not empty it will be used to create a resource with the specified name."]
     pub fn set_display_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1199,8 +1303,8 @@ impl AssuredWorkloadsWorkloadResourceSettingsEl {
     }
 }
 
-impl terrars::ToListMappable for AssuredWorkloadsWorkloadResourceSettingsEl {
-    type O = terrars::BlockAssignable<AssuredWorkloadsWorkloadResourceSettingsEl>;
+impl terrars::ToListMappable for AssuredWorkloadsWorkload_ResourceSettings {
+    type O = terrars::BlockAssignable<AssuredWorkloadsWorkload_ResourceSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1211,11 +1315,11 @@ impl terrars::ToListMappable for AssuredWorkloadsWorkloadResourceSettingsEl {
     }
 }
 
-pub struct BuildAssuredWorkloadsWorkloadResourceSettingsEl {}
+pub struct BuildAssuredWorkloadsWorkload_ResourceSettings {}
 
-impl BuildAssuredWorkloadsWorkloadResourceSettingsEl {
-    pub fn build(self) -> AssuredWorkloadsWorkloadResourceSettingsEl {
-        AssuredWorkloadsWorkloadResourceSettingsEl {
+impl BuildAssuredWorkloadsWorkload_ResourceSettings {
+    pub fn build(self) -> AssuredWorkloadsWorkload_ResourceSettings {
+        AssuredWorkloadsWorkload_ResourceSettings {
             display_name: core::default::Default::default(),
             resource_id: core::default::Default::default(),
             resource_type: core::default::Default::default(),
@@ -1223,21 +1327,23 @@ impl BuildAssuredWorkloadsWorkloadResourceSettingsEl {
     }
 }
 
-pub struct AssuredWorkloadsWorkloadResourceSettingsElRef {
+#[allow(dead_code)]
+pub struct AssuredWorkloadsWorkload_ResourceSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AssuredWorkloadsWorkloadResourceSettingsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AssuredWorkloadsWorkloadResourceSettingsElRef {
-        AssuredWorkloadsWorkloadResourceSettingsElRef {
+impl terrars::Ref for AssuredWorkloadsWorkload_ResourceSettingsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AssuredWorkloadsWorkload_ResourceSettingsRef {
+        AssuredWorkloadsWorkload_ResourceSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AssuredWorkloadsWorkloadResourceSettingsElRef {
+impl AssuredWorkloadsWorkload_ResourceSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1262,7 +1368,7 @@ impl AssuredWorkloadsWorkloadResourceSettingsElRef {
 }
 
 #[derive(Serialize)]
-pub struct AssuredWorkloadsWorkloadTimeoutsEl {
+pub struct AssuredWorkloadsWorkload_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1271,7 +1377,7 @@ pub struct AssuredWorkloadsWorkloadTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AssuredWorkloadsWorkloadTimeoutsEl {
+impl AssuredWorkloadsWorkload_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1291,8 +1397,8 @@ impl AssuredWorkloadsWorkloadTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for AssuredWorkloadsWorkloadTimeoutsEl {
-    type O = terrars::BlockAssignable<AssuredWorkloadsWorkloadTimeoutsEl>;
+impl terrars::ToListMappable for AssuredWorkloadsWorkload_Timeouts {
+    type O = terrars::BlockAssignable<AssuredWorkloadsWorkload_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1303,11 +1409,11 @@ impl terrars::ToListMappable for AssuredWorkloadsWorkloadTimeoutsEl {
     }
 }
 
-pub struct BuildAssuredWorkloadsWorkloadTimeoutsEl {}
+pub struct BuildAssuredWorkloadsWorkload_Timeouts {}
 
-impl BuildAssuredWorkloadsWorkloadTimeoutsEl {
-    pub fn build(self) -> AssuredWorkloadsWorkloadTimeoutsEl {
-        AssuredWorkloadsWorkloadTimeoutsEl {
+impl BuildAssuredWorkloadsWorkload_Timeouts {
+    pub fn build(self) -> AssuredWorkloadsWorkload_Timeouts {
+        AssuredWorkloadsWorkload_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1315,21 +1421,23 @@ impl BuildAssuredWorkloadsWorkloadTimeoutsEl {
     }
 }
 
-pub struct AssuredWorkloadsWorkloadTimeoutsElRef {
+#[allow(dead_code)]
+pub struct AssuredWorkloadsWorkload_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AssuredWorkloadsWorkloadTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AssuredWorkloadsWorkloadTimeoutsElRef {
-        AssuredWorkloadsWorkloadTimeoutsElRef {
+impl terrars::Ref for AssuredWorkloadsWorkload_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AssuredWorkloadsWorkload_TimeoutsRef {
+        AssuredWorkloadsWorkload_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AssuredWorkloadsWorkloadTimeoutsElRef {
+impl AssuredWorkloadsWorkload_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1350,9 +1458,68 @@ impl AssuredWorkloadsWorkloadTimeoutsElRef {
     }
 }
 
-#[derive(Serialize, Default)]
-struct AssuredWorkloadsWorkloadDynamic {
-    kms_settings: std::option::Option<terrars::DynamicBlock<AssuredWorkloadsWorkloadKmsSettingsEl>>,
-    partner_permissions: std::option::Option<terrars::DynamicBlock<AssuredWorkloadsWorkloadPartnerPermissionsEl>>,
-    resource_settings: std::option::Option<terrars::DynamicBlock<AssuredWorkloadsWorkloadResourceSettingsEl>>,
+#[derive(Serialize)]
+pub struct AssuredWorkloadsWorkload_WorkloadOptions {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kaj_enrollment_type: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl AssuredWorkloadsWorkload_WorkloadOptions {
+    #[doc =
+        "Set the field `kaj_enrollment_type`.\nIndicates type of KAJ enrollment for the workload. Currently, only specifiying KEY_ACCESS_TRANSPARENCY_OFF is implemented to not enroll in KAT-level KAJ enrollment for Regional Controls workloads. Possible values: KAJ_ENROLLMENT_TYPE_UNSPECIFIED, FULL_KAJ, EKM_ONLY, KEY_ACCESS_TRANSPARENCY_OFF"]
+    pub fn set_kaj_enrollment_type(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.kaj_enrollment_type = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for AssuredWorkloadsWorkload_WorkloadOptions {
+    type O = terrars::BlockAssignable<AssuredWorkloadsWorkload_WorkloadOptions>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAssuredWorkloadsWorkload_WorkloadOptions {}
+
+impl BuildAssuredWorkloadsWorkload_WorkloadOptions {
+    pub fn build(self) -> AssuredWorkloadsWorkload_WorkloadOptions {
+        AssuredWorkloadsWorkload_WorkloadOptions { kaj_enrollment_type: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AssuredWorkloadsWorkload_WorkloadOptionsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AssuredWorkloadsWorkload_WorkloadOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AssuredWorkloadsWorkload_WorkloadOptionsRef {
+        AssuredWorkloadsWorkload_WorkloadOptionsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AssuredWorkloadsWorkload_WorkloadOptionsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `kaj_enrollment_type` after provisioning.\nIndicates type of KAJ enrollment for the workload. Currently, only specifiying KEY_ACCESS_TRANSPARENCY_OFF is implemented to not enroll in KAT-level KAJ enrollment for Regional Controls workloads. Possible values: KAJ_ENROLLMENT_TYPE_UNSPECIFIED, FULL_KAJ, EKM_ONLY, KEY_ACCESS_TRANSPARENCY_OFF"]
+    pub fn kaj_enrollment_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kaj_enrollment_type", self.base))
+    }
 }

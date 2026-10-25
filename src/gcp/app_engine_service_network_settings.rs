@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct AppEngineServiceNetworkSettingsData {
+struct AppEngineServiceNetworkSettingsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,16 +26,16 @@ struct AppEngineServiceNetworkSettingsData {
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     service: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    network_settings: std::option::Option<std::vec::Vec<AppEngineServiceNetworkSettingsNetworkSettingsEl>>,
+    network_settings: std::option::Option<std::vec::Vec<AppEngineServiceNetworkSettings_NetworkSettings>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<AppEngineServiceNetworkSettingsTimeoutsEl>,
+    timeouts: std::option::Option<AppEngineServiceNetworkSettings_Timeouts>,
     dynamic: AppEngineServiceNetworkSettingsDynamic,
 }
 
 struct AppEngineServiceNetworkSettings_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AppEngineServiceNetworkSettingsData>,
+    data: std::cell::RefCell<AppEngineServiceNetworkSettingsData_>,
 }
 
 #[derive(Clone)]
@@ -148,7 +150,7 @@ impl AppEngineServiceNetworkSettings {
     #[doc = "Set the field `network_settings`.\n"]
     pub fn set_network_settings(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineServiceNetworkSettingsNetworkSettingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineServiceNetworkSettings_NetworkSettings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -162,7 +164,7 @@ impl AppEngineServiceNetworkSettings {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<AppEngineServiceNetworkSettingsTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<AppEngineServiceNetworkSettings_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -184,13 +186,13 @@ impl AppEngineServiceNetworkSettings {
     }
 
     #[doc = "Get a reference to the value of field `network_settings` after provisioning.\n"]
-    pub fn network_settings(&self) -> terrars::ListRef<AppEngineServiceNetworkSettingsNetworkSettingsElRef> {
+    pub fn network_settings(&self) -> terrars::ListRef<AppEngineServiceNetworkSettings_NetworkSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_settings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> AppEngineServiceNetworkSettingsTimeoutsElRef {
-        AppEngineServiceNetworkSettingsTimeoutsElRef::new(
+    pub fn timeouts(&self) -> AppEngineServiceNetworkSettings_TimeoutsRef {
+        AppEngineServiceNetworkSettings_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -239,7 +241,7 @@ impl BuildAppEngineServiceNetworkSettings {
         let out = AppEngineServiceNetworkSettings(std::rc::Rc::new(AppEngineServiceNetworkSettings_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AppEngineServiceNetworkSettingsData {
+            data: std::cell::RefCell::new(AppEngineServiceNetworkSettingsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -298,26 +300,31 @@ impl AppEngineServiceNetworkSettingsRef {
     }
 
     #[doc = "Get a reference to the value of field `network_settings` after provisioning.\n"]
-    pub fn network_settings(&self) -> terrars::ListRef<AppEngineServiceNetworkSettingsNetworkSettingsElRef> {
+    pub fn network_settings(&self) -> terrars::ListRef<AppEngineServiceNetworkSettings_NetworkSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_settings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> AppEngineServiceNetworkSettingsTimeoutsElRef {
-        AppEngineServiceNetworkSettingsTimeoutsElRef::new(
+    pub fn timeouts(&self) -> AppEngineServiceNetworkSettings_TimeoutsRef {
+        AppEngineServiceNetworkSettings_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct AppEngineServiceNetworkSettingsDynamic {
+    network_settings: std::option::Option<terrars::DynamicBlock<AppEngineServiceNetworkSettings_NetworkSettings>>,
+}
+
 #[derive(Serialize)]
-pub struct AppEngineServiceNetworkSettingsNetworkSettingsEl {
+pub struct AppEngineServiceNetworkSettings_NetworkSettings {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ingress_traffic_allowed: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppEngineServiceNetworkSettingsNetworkSettingsEl {
+impl AppEngineServiceNetworkSettings_NetworkSettings {
     #[doc =
         "Set the field `ingress_traffic_allowed`.\nThe ingress settings for version or service. Default value: \"INGRESS_TRAFFIC_ALLOWED_UNSPECIFIED\" Possible values: [\"INGRESS_TRAFFIC_ALLOWED_UNSPECIFIED\", \"INGRESS_TRAFFIC_ALLOWED_ALL\", \"INGRESS_TRAFFIC_ALLOWED_INTERNAL_ONLY\", \"INGRESS_TRAFFIC_ALLOWED_INTERNAL_AND_LB\"]"]
     pub fn set_ingress_traffic_allowed(
@@ -329,8 +336,8 @@ impl AppEngineServiceNetworkSettingsNetworkSettingsEl {
     }
 }
 
-impl terrars::ToListMappable for AppEngineServiceNetworkSettingsNetworkSettingsEl {
-    type O = terrars::BlockAssignable<AppEngineServiceNetworkSettingsNetworkSettingsEl>;
+impl terrars::ToListMappable for AppEngineServiceNetworkSettings_NetworkSettings {
+    type O = terrars::BlockAssignable<AppEngineServiceNetworkSettings_NetworkSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -341,34 +348,36 @@ impl terrars::ToListMappable for AppEngineServiceNetworkSettingsNetworkSettingsE
     }
 }
 
-pub struct BuildAppEngineServiceNetworkSettingsNetworkSettingsEl {}
+pub struct BuildAppEngineServiceNetworkSettings_NetworkSettings {}
 
-impl BuildAppEngineServiceNetworkSettingsNetworkSettingsEl {
-    pub fn build(self) -> AppEngineServiceNetworkSettingsNetworkSettingsEl {
-        AppEngineServiceNetworkSettingsNetworkSettingsEl {
+impl BuildAppEngineServiceNetworkSettings_NetworkSettings {
+    pub fn build(self) -> AppEngineServiceNetworkSettings_NetworkSettings {
+        AppEngineServiceNetworkSettings_NetworkSettings {
             ingress_traffic_allowed: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppEngineServiceNetworkSettingsNetworkSettingsElRef {
+#[allow(dead_code)]
+pub struct AppEngineServiceNetworkSettings_NetworkSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineServiceNetworkSettingsNetworkSettingsElRef {
+impl terrars::Ref for AppEngineServiceNetworkSettings_NetworkSettingsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppEngineServiceNetworkSettingsNetworkSettingsElRef {
-        AppEngineServiceNetworkSettingsNetworkSettingsElRef {
+    ) -> AppEngineServiceNetworkSettings_NetworkSettingsRef {
+        AppEngineServiceNetworkSettings_NetworkSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineServiceNetworkSettingsNetworkSettingsElRef {
+impl AppEngineServiceNetworkSettings_NetworkSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -381,7 +390,7 @@ impl AppEngineServiceNetworkSettingsNetworkSettingsElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppEngineServiceNetworkSettingsTimeoutsEl {
+pub struct AppEngineServiceNetworkSettings_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -390,7 +399,7 @@ pub struct AppEngineServiceNetworkSettingsTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppEngineServiceNetworkSettingsTimeoutsEl {
+impl AppEngineServiceNetworkSettings_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -410,8 +419,8 @@ impl AppEngineServiceNetworkSettingsTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for AppEngineServiceNetworkSettingsTimeoutsEl {
-    type O = terrars::BlockAssignable<AppEngineServiceNetworkSettingsTimeoutsEl>;
+impl terrars::ToListMappable for AppEngineServiceNetworkSettings_Timeouts {
+    type O = terrars::BlockAssignable<AppEngineServiceNetworkSettings_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -422,11 +431,11 @@ impl terrars::ToListMappable for AppEngineServiceNetworkSettingsTimeoutsEl {
     }
 }
 
-pub struct BuildAppEngineServiceNetworkSettingsTimeoutsEl {}
+pub struct BuildAppEngineServiceNetworkSettings_Timeouts {}
 
-impl BuildAppEngineServiceNetworkSettingsTimeoutsEl {
-    pub fn build(self) -> AppEngineServiceNetworkSettingsTimeoutsEl {
-        AppEngineServiceNetworkSettingsTimeoutsEl {
+impl BuildAppEngineServiceNetworkSettings_Timeouts {
+    pub fn build(self) -> AppEngineServiceNetworkSettings_Timeouts {
+        AppEngineServiceNetworkSettings_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -434,21 +443,23 @@ impl BuildAppEngineServiceNetworkSettingsTimeoutsEl {
     }
 }
 
-pub struct AppEngineServiceNetworkSettingsTimeoutsElRef {
+#[allow(dead_code)]
+pub struct AppEngineServiceNetworkSettings_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineServiceNetworkSettingsTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineServiceNetworkSettingsTimeoutsElRef {
-        AppEngineServiceNetworkSettingsTimeoutsElRef {
+impl terrars::Ref for AppEngineServiceNetworkSettings_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineServiceNetworkSettings_TimeoutsRef {
+        AppEngineServiceNetworkSettings_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineServiceNetworkSettingsTimeoutsElRef {
+impl AppEngineServiceNetworkSettings_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -467,9 +478,4 @@ impl AppEngineServiceNetworkSettingsTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AppEngineServiceNetworkSettingsDynamic {
-    network_settings: std::option::Option<terrars::DynamicBlock<AppEngineServiceNetworkSettingsNetworkSettingsEl>>,
 }

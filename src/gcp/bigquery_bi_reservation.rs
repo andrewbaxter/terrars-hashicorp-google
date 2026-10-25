@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct BigqueryBiReservationData {
+struct BigqueryBiReservationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct BigqueryBiReservationData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     location: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,16 +30,16 @@ struct BigqueryBiReservationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     size: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    preferred_tables: std::option::Option<std::vec::Vec<BigqueryBiReservationPreferredTablesEl>>,
+    preferred_tables: std::option::Option<std::vec::Vec<BigqueryBiReservation_PreferredTables>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<BigqueryBiReservationTimeoutsEl>,
+    timeouts: std::option::Option<BigqueryBiReservation_Timeouts>,
     dynamic: BigqueryBiReservationDynamic,
 }
 
 struct BigqueryBiReservation_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<BigqueryBiReservationData>,
+    data: std::cell::RefCell<BigqueryBiReservationData_>,
 }
 
 #[derive(Clone)]
@@ -135,6 +139,13 @@ impl BigqueryBiReservation {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -156,7 +167,7 @@ impl BigqueryBiReservation {
     #[doc = "Set the field `preferred_tables`.\n"]
     pub fn set_preferred_tables(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryBiReservationPreferredTablesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryBiReservation_PreferredTables>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -170,9 +181,15 @@ impl BigqueryBiReservation {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<BigqueryBiReservationTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<BigqueryBiReservation_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -208,13 +225,13 @@ impl BigqueryBiReservation {
     }
 
     #[doc = "Get a reference to the value of field `preferred_tables` after provisioning.\n"]
-    pub fn preferred_tables(&self) -> terrars::ListRef<BigqueryBiReservationPreferredTablesElRef> {
+    pub fn preferred_tables(&self) -> terrars::ListRef<BigqueryBiReservation_PreferredTablesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.preferred_tables", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> BigqueryBiReservationTimeoutsElRef {
-        BigqueryBiReservationTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> BigqueryBiReservation_TimeoutsRef {
+        BigqueryBiReservation_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -260,12 +277,13 @@ impl BuildBigqueryBiReservation {
         let out = BigqueryBiReservation(std::rc::Rc::new(BigqueryBiReservation_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(BigqueryBiReservationData {
+            data: std::cell::RefCell::new(BigqueryBiReservationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 location: self.location,
                 project: core::default::Default::default(),
@@ -303,6 +321,12 @@ impl BigqueryBiReservationRef {
         &self.shared
     }
 
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -336,18 +360,23 @@ impl BigqueryBiReservationRef {
     }
 
     #[doc = "Get a reference to the value of field `preferred_tables` after provisioning.\n"]
-    pub fn preferred_tables(&self) -> terrars::ListRef<BigqueryBiReservationPreferredTablesElRef> {
+    pub fn preferred_tables(&self) -> terrars::ListRef<BigqueryBiReservation_PreferredTablesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.preferred_tables", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> BigqueryBiReservationTimeoutsElRef {
-        BigqueryBiReservationTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> BigqueryBiReservation_TimeoutsRef {
+        BigqueryBiReservation_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct BigqueryBiReservationDynamic {
+    preferred_tables: std::option::Option<terrars::DynamicBlock<BigqueryBiReservation_PreferredTables>>,
+}
+
 #[derive(Serialize)]
-pub struct BigqueryBiReservationPreferredTablesEl {
+pub struct BigqueryBiReservation_PreferredTables {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dataset_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -356,7 +385,7 @@ pub struct BigqueryBiReservationPreferredTablesEl {
     table_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl BigqueryBiReservationPreferredTablesEl {
+impl BigqueryBiReservation_PreferredTables {
     #[doc = "Set the field `dataset_id`.\nThe ID of the dataset in the above project."]
     pub fn set_dataset_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.dataset_id = std::option::Option::Some(v.into());
@@ -376,8 +405,8 @@ impl BigqueryBiReservationPreferredTablesEl {
     }
 }
 
-impl terrars::ToListMappable for BigqueryBiReservationPreferredTablesEl {
-    type O = terrars::BlockAssignable<BigqueryBiReservationPreferredTablesEl>;
+impl terrars::ToListMappable for BigqueryBiReservation_PreferredTables {
+    type O = terrars::BlockAssignable<BigqueryBiReservation_PreferredTables>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -388,11 +417,11 @@ impl terrars::ToListMappable for BigqueryBiReservationPreferredTablesEl {
     }
 }
 
-pub struct BuildBigqueryBiReservationPreferredTablesEl {}
+pub struct BuildBigqueryBiReservation_PreferredTables {}
 
-impl BuildBigqueryBiReservationPreferredTablesEl {
-    pub fn build(self) -> BigqueryBiReservationPreferredTablesEl {
-        BigqueryBiReservationPreferredTablesEl {
+impl BuildBigqueryBiReservation_PreferredTables {
+    pub fn build(self) -> BigqueryBiReservation_PreferredTables {
+        BigqueryBiReservation_PreferredTables {
             dataset_id: core::default::Default::default(),
             project_id: core::default::Default::default(),
             table_id: core::default::Default::default(),
@@ -400,21 +429,23 @@ impl BuildBigqueryBiReservationPreferredTablesEl {
     }
 }
 
-pub struct BigqueryBiReservationPreferredTablesElRef {
+#[allow(dead_code)]
+pub struct BigqueryBiReservation_PreferredTablesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryBiReservationPreferredTablesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryBiReservationPreferredTablesElRef {
-        BigqueryBiReservationPreferredTablesElRef {
+impl terrars::Ref for BigqueryBiReservation_PreferredTablesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryBiReservation_PreferredTablesRef {
+        BigqueryBiReservation_PreferredTablesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryBiReservationPreferredTablesElRef {
+impl BigqueryBiReservation_PreferredTablesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -439,7 +470,7 @@ impl BigqueryBiReservationPreferredTablesElRef {
 }
 
 #[derive(Serialize)]
-pub struct BigqueryBiReservationTimeoutsEl {
+pub struct BigqueryBiReservation_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -448,7 +479,7 @@ pub struct BigqueryBiReservationTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl BigqueryBiReservationTimeoutsEl {
+impl BigqueryBiReservation_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -468,8 +499,8 @@ impl BigqueryBiReservationTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for BigqueryBiReservationTimeoutsEl {
-    type O = terrars::BlockAssignable<BigqueryBiReservationTimeoutsEl>;
+impl terrars::ToListMappable for BigqueryBiReservation_Timeouts {
+    type O = terrars::BlockAssignable<BigqueryBiReservation_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -480,11 +511,11 @@ impl terrars::ToListMappable for BigqueryBiReservationTimeoutsEl {
     }
 }
 
-pub struct BuildBigqueryBiReservationTimeoutsEl {}
+pub struct BuildBigqueryBiReservation_Timeouts {}
 
-impl BuildBigqueryBiReservationTimeoutsEl {
-    pub fn build(self) -> BigqueryBiReservationTimeoutsEl {
-        BigqueryBiReservationTimeoutsEl {
+impl BuildBigqueryBiReservation_Timeouts {
+    pub fn build(self) -> BigqueryBiReservation_Timeouts {
+        BigqueryBiReservation_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -492,21 +523,23 @@ impl BuildBigqueryBiReservationTimeoutsEl {
     }
 }
 
-pub struct BigqueryBiReservationTimeoutsElRef {
+#[allow(dead_code)]
+pub struct BigqueryBiReservation_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryBiReservationTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryBiReservationTimeoutsElRef {
-        BigqueryBiReservationTimeoutsElRef {
+impl terrars::Ref for BigqueryBiReservation_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryBiReservation_TimeoutsRef {
+        BigqueryBiReservation_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryBiReservationTimeoutsElRef {
+impl BigqueryBiReservation_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -525,9 +558,4 @@ impl BigqueryBiReservationTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct BigqueryBiReservationDynamic {
-    preferred_tables: std::option::Option<terrars::DynamicBlock<BigqueryBiReservationPreferredTablesEl>>,
 }

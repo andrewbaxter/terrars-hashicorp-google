@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct LoggingFolderBucketConfigData {
+struct LoggingFolderBucketConfigData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,6 +22,8 @@ struct LoggingFolderBucketConfigData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     bucket_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     folder: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,16 +32,16 @@ struct LoggingFolderBucketConfigData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     retention_days: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cmek_settings: std::option::Option<std::vec::Vec<LoggingFolderBucketConfigCmekSettingsEl>>,
+    cmek_settings: std::option::Option<std::vec::Vec<LoggingFolderBucketConfig_CmekSettings>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    index_configs: std::option::Option<std::vec::Vec<LoggingFolderBucketConfigIndexConfigsEl>>,
+    index_configs: std::option::Option<std::vec::Vec<LoggingFolderBucketConfig_IndexConfigs>>,
     dynamic: LoggingFolderBucketConfigDynamic,
 }
 
 struct LoggingFolderBucketConfig_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<LoggingFolderBucketConfigData>,
+    data: std::cell::RefCell<LoggingFolderBucketConfigData_>,
 }
 
 #[derive(Clone)]
@@ -137,6 +141,13 @@ impl LoggingFolderBucketConfig {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nAn optional description for this bucket."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -159,7 +170,7 @@ impl LoggingFolderBucketConfig {
     #[doc = "Set the field `cmek_settings`.\n"]
     pub fn set_cmek_settings(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LoggingFolderBucketConfigCmekSettingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LoggingFolderBucketConfig_CmekSettings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -175,7 +186,7 @@ impl LoggingFolderBucketConfig {
     #[doc = "Set the field `index_configs`.\n"]
     pub fn set_index_configs(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LoggingFolderBucketConfigIndexConfigsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LoggingFolderBucketConfig_IndexConfigs>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -192,6 +203,12 @@ impl LoggingFolderBucketConfig {
         "Get a reference to the value of field `bucket_id` after provisioning.\nThe name of the logging bucket. Logging automatically creates two log buckets: _Required and _Default."]
     pub fn bucket_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -234,7 +251,7 @@ impl LoggingFolderBucketConfig {
     }
 
     #[doc = "Get a reference to the value of field `cmek_settings` after provisioning.\n"]
-    pub fn cmek_settings(&self) -> terrars::ListRef<LoggingFolderBucketConfigCmekSettingsElRef> {
+    pub fn cmek_settings(&self) -> terrars::ListRef<LoggingFolderBucketConfig_CmekSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cmek_settings", self.extract_ref()))
     }
 }
@@ -285,13 +302,14 @@ impl BuildLoggingFolderBucketConfig {
         let out = LoggingFolderBucketConfig(std::rc::Rc::new(LoggingFolderBucketConfig_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(LoggingFolderBucketConfigData {
+            data: std::cell::RefCell::new(LoggingFolderBucketConfigData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 bucket_id: self.bucket_id,
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 folder: self.folder,
                 id: core::default::Default::default(),
@@ -337,6 +355,12 @@ impl LoggingFolderBucketConfigRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nAn optional description for this bucket."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -376,20 +400,26 @@ impl LoggingFolderBucketConfigRef {
     }
 
     #[doc = "Get a reference to the value of field `cmek_settings` after provisioning.\n"]
-    pub fn cmek_settings(&self) -> terrars::ListRef<LoggingFolderBucketConfigCmekSettingsElRef> {
+    pub fn cmek_settings(&self) -> terrars::ListRef<LoggingFolderBucketConfig_CmekSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cmek_settings", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct LoggingFolderBucketConfigDynamic {
+    cmek_settings: std::option::Option<terrars::DynamicBlock<LoggingFolderBucketConfig_CmekSettings>>,
+    index_configs: std::option::Option<terrars::DynamicBlock<LoggingFolderBucketConfig_IndexConfigs>>,
+}
+
 #[derive(Serialize)]
-pub struct LoggingFolderBucketConfigCmekSettingsEl {
+pub struct LoggingFolderBucketConfig_CmekSettings {
     kms_key_name: terrars::PrimField<std::string::String>,
 }
 
-impl LoggingFolderBucketConfigCmekSettingsEl { }
+impl LoggingFolderBucketConfig_CmekSettings { }
 
-impl terrars::ToListMappable for LoggingFolderBucketConfigCmekSettingsEl {
-    type O = terrars::BlockAssignable<LoggingFolderBucketConfigCmekSettingsEl>;
+impl terrars::ToListMappable for LoggingFolderBucketConfig_CmekSettings {
+    type O = terrars::BlockAssignable<LoggingFolderBucketConfig_CmekSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -400,33 +430,35 @@ impl terrars::ToListMappable for LoggingFolderBucketConfigCmekSettingsEl {
     }
 }
 
-pub struct BuildLoggingFolderBucketConfigCmekSettingsEl {
+pub struct BuildLoggingFolderBucketConfig_CmekSettings {
     #[doc =
         "The resource name for the configured Cloud KMS key.\nKMS key name format:\n\"projects/[PROJECT_ID]/locations/[LOCATION]/keyRings/[KEYRING]/cryptoKeys/[KEY]\"\nTo enable CMEK for the bucket, set this field to a valid kmsKeyName for which the associated service account has the required cloudkms.cryptoKeyEncrypterDecrypter roles assigned for the key.\nThe Cloud KMS key used by the bucket can be updated by changing the kmsKeyName to a new valid key name. Encryption operations that are in progress will be completed with the key that was in use when they started. Decryption operations will be completed using the key that was used at the time of encryption unless access to that key has been revoked.\nSee [Enabling CMEK for Logging Buckets](https://cloud.google.com/logging/docs/routing/managed-encryption-storage) for more information."]
     pub kms_key_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLoggingFolderBucketConfigCmekSettingsEl {
-    pub fn build(self) -> LoggingFolderBucketConfigCmekSettingsEl {
-        LoggingFolderBucketConfigCmekSettingsEl { kms_key_name: self.kms_key_name }
+impl BuildLoggingFolderBucketConfig_CmekSettings {
+    pub fn build(self) -> LoggingFolderBucketConfig_CmekSettings {
+        LoggingFolderBucketConfig_CmekSettings { kms_key_name: self.kms_key_name }
     }
 }
 
-pub struct LoggingFolderBucketConfigCmekSettingsElRef {
+#[allow(dead_code)]
+pub struct LoggingFolderBucketConfig_CmekSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LoggingFolderBucketConfigCmekSettingsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LoggingFolderBucketConfigCmekSettingsElRef {
-        LoggingFolderBucketConfigCmekSettingsElRef {
+impl terrars::Ref for LoggingFolderBucketConfig_CmekSettingsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LoggingFolderBucketConfig_CmekSettingsRef {
+        LoggingFolderBucketConfig_CmekSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LoggingFolderBucketConfigCmekSettingsElRef {
+impl LoggingFolderBucketConfig_CmekSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -456,16 +488,16 @@ impl LoggingFolderBucketConfigCmekSettingsElRef {
 }
 
 #[derive(Serialize)]
-pub struct LoggingFolderBucketConfigIndexConfigsEl {
+pub struct LoggingFolderBucketConfig_IndexConfigs {
     field_path: terrars::PrimField<std::string::String>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl LoggingFolderBucketConfigIndexConfigsEl { }
+impl LoggingFolderBucketConfig_IndexConfigs { }
 
-impl terrars::ToListMappable for LoggingFolderBucketConfigIndexConfigsEl {
-    type O = terrars::BlockAssignable<LoggingFolderBucketConfigIndexConfigsEl>;
+impl terrars::ToListMappable for LoggingFolderBucketConfig_IndexConfigs {
+    type O = terrars::BlockAssignable<LoggingFolderBucketConfig_IndexConfigs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -476,7 +508,7 @@ impl terrars::ToListMappable for LoggingFolderBucketConfigIndexConfigsEl {
     }
 }
 
-pub struct BuildLoggingFolderBucketConfigIndexConfigsEl {
+pub struct BuildLoggingFolderBucketConfig_IndexConfigs {
     #[doc = "The LogEntry field path to index."]
     pub field_path: terrars::PrimField<std::string::String>,
     #[doc =
@@ -484,30 +516,32 @@ pub struct BuildLoggingFolderBucketConfigIndexConfigsEl {
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLoggingFolderBucketConfigIndexConfigsEl {
-    pub fn build(self) -> LoggingFolderBucketConfigIndexConfigsEl {
-        LoggingFolderBucketConfigIndexConfigsEl {
+impl BuildLoggingFolderBucketConfig_IndexConfigs {
+    pub fn build(self) -> LoggingFolderBucketConfig_IndexConfigs {
+        LoggingFolderBucketConfig_IndexConfigs {
             field_path: self.field_path,
             type_: self.type_,
         }
     }
 }
 
-pub struct LoggingFolderBucketConfigIndexConfigsElRef {
+#[allow(dead_code)]
+pub struct LoggingFolderBucketConfig_IndexConfigsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LoggingFolderBucketConfigIndexConfigsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LoggingFolderBucketConfigIndexConfigsElRef {
-        LoggingFolderBucketConfigIndexConfigsElRef {
+impl terrars::Ref for LoggingFolderBucketConfig_IndexConfigsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LoggingFolderBucketConfig_IndexConfigsRef {
+        LoggingFolderBucketConfig_IndexConfigsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LoggingFolderBucketConfigIndexConfigsElRef {
+impl LoggingFolderBucketConfig_IndexConfigsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -522,10 +556,4 @@ impl LoggingFolderBucketConfigIndexConfigsElRef {
     pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct LoggingFolderBucketConfigDynamic {
-    cmek_settings: std::option::Option<terrars::DynamicBlock<LoggingFolderBucketConfigCmekSettingsEl>>,
-    index_configs: std::option::Option<terrars::DynamicBlock<LoggingFolderBucketConfigIndexConfigsEl>>,
 }

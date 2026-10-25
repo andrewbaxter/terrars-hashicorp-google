@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataCatalogTaxonomyIamPolicyData {
+struct DataCatalogTaxonomyIamPolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -31,7 +33,7 @@ struct DataCatalogTaxonomyIamPolicyData {
 struct DataCatalogTaxonomyIamPolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataCatalogTaxonomyIamPolicyData>,
+    data: std::cell::RefCell<DataCatalogTaxonomyIamPolicyData_>,
 }
 
 #[derive(Clone)]
@@ -224,7 +226,7 @@ impl BuildDataCatalogTaxonomyIamPolicy {
         let out = DataCatalogTaxonomyIamPolicy(std::rc::Rc::new(DataCatalogTaxonomyIamPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataCatalogTaxonomyIamPolicyData {
+            data: std::cell::RefCell::new(DataCatalogTaxonomyIamPolicyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),

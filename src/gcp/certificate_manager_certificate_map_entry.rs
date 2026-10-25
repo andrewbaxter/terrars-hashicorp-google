@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct CertificateManagerCertificateMapEntryData {
+struct CertificateManagerCertificateMapEntryData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct CertificateManagerCertificateMapEntryData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     certificates: terrars::ListField<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -34,13 +38,13 @@ struct CertificateManagerCertificateMapEntryData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<CertificateManagerCertificateMapEntryTimeoutsEl>,
+    timeouts: std::option::Option<CertificateManagerCertificateMapEntry_Timeouts>,
 }
 
 struct CertificateManagerCertificateMapEntry_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CertificateManagerCertificateMapEntryData>,
+    data: std::cell::RefCell<CertificateManagerCertificateMapEntryData_>,
 }
 
 #[derive(Clone)]
@@ -140,6 +144,13 @@ impl CertificateManagerCertificateMapEntry {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nA human-readable description of the resource."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -182,7 +193,7 @@ impl CertificateManagerCertificateMapEntry {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<CertificateManagerCertificateMapEntryTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<CertificateManagerCertificateMapEntry_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -197,6 +208,12 @@ impl CertificateManagerCertificateMapEntry {
         "Get a reference to the value of field `create_time` after provisioning.\nCreation timestamp of a Certificate Map Entry. Timestamp in RFC3339 UTC \"Zulu\" format,\nwith nanosecond resolution and up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -229,7 +246,7 @@ impl CertificateManagerCertificateMapEntry {
     }
 
     #[doc =
-        "Get a reference to the value of field `map` after provisioning.\nA map entry that is inputted into the cetrificate map"]
+        "Get a reference to the value of field `map` after provisioning.\nA map entry that is inputted into the certificate map"]
     pub fn map(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.map", self.extract_ref()))
     }
@@ -270,8 +287,8 @@ impl CertificateManagerCertificateMapEntry {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> CertificateManagerCertificateMapEntryTimeoutsElRef {
-        CertificateManagerCertificateMapEntryTimeoutsElRef::new(
+    pub fn timeouts(&self) -> CertificateManagerCertificateMapEntry_TimeoutsRef {
+        CertificateManagerCertificateMapEntry_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -314,7 +331,7 @@ pub struct BuildCertificateManagerCertificateMapEntry {
     #[doc =
         "A set of Certificates defines for the given hostname.\nThere can be defined up to fifteen certificates in each Certificate Map Entry.\nEach certificate must match pattern projects/*/locations/*/certificates/*."]
     pub certificates: terrars::ListField<terrars::PrimField<std::string::String>>,
-    #[doc = "A map entry that is inputted into the cetrificate map"]
+    #[doc = "A map entry that is inputted into the certificate map"]
     pub map: terrars::PrimField<std::string::String>,
     #[doc =
         "A user-defined name of the Certificate Map Entry. Certificate Map Entry\nnames must be unique globally and match pattern\n'projects/*/locations/*/certificateMaps/*/certificateMapEntries/*'"]
@@ -326,13 +343,14 @@ impl BuildCertificateManagerCertificateMapEntry {
         let out = CertificateManagerCertificateMapEntry(std::rc::Rc::new(CertificateManagerCertificateMapEntry_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CertificateManagerCertificateMapEntryData {
+            data: std::cell::RefCell::new(CertificateManagerCertificateMapEntryData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 certificates: self.certificates,
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 hostname: core::default::Default::default(),
                 id: core::default::Default::default(),
@@ -385,6 +403,12 @@ impl CertificateManagerCertificateMapEntryRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nA human-readable description of the resource."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -414,7 +438,7 @@ impl CertificateManagerCertificateMapEntryRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `map` after provisioning.\nA map entry that is inputted into the cetrificate map"]
+        "Get a reference to the value of field `map` after provisioning.\nA map entry that is inputted into the certificate map"]
     pub fn map(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.map", self.extract_ref()))
     }
@@ -455,8 +479,8 @@ impl CertificateManagerCertificateMapEntryRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> CertificateManagerCertificateMapEntryTimeoutsElRef {
-        CertificateManagerCertificateMapEntryTimeoutsElRef::new(
+    pub fn timeouts(&self) -> CertificateManagerCertificateMapEntry_TimeoutsRef {
+        CertificateManagerCertificateMapEntry_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -464,7 +488,7 @@ impl CertificateManagerCertificateMapEntryRef {
 }
 
 #[derive(Serialize)]
-pub struct CertificateManagerCertificateMapEntryTimeoutsEl {
+pub struct CertificateManagerCertificateMapEntry_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -473,7 +497,7 @@ pub struct CertificateManagerCertificateMapEntryTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CertificateManagerCertificateMapEntryTimeoutsEl {
+impl CertificateManagerCertificateMapEntry_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -493,8 +517,8 @@ impl CertificateManagerCertificateMapEntryTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for CertificateManagerCertificateMapEntryTimeoutsEl {
-    type O = terrars::BlockAssignable<CertificateManagerCertificateMapEntryTimeoutsEl>;
+impl terrars::ToListMappable for CertificateManagerCertificateMapEntry_Timeouts {
+    type O = terrars::BlockAssignable<CertificateManagerCertificateMapEntry_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -505,11 +529,11 @@ impl terrars::ToListMappable for CertificateManagerCertificateMapEntryTimeoutsEl
     }
 }
 
-pub struct BuildCertificateManagerCertificateMapEntryTimeoutsEl {}
+pub struct BuildCertificateManagerCertificateMapEntry_Timeouts {}
 
-impl BuildCertificateManagerCertificateMapEntryTimeoutsEl {
-    pub fn build(self) -> CertificateManagerCertificateMapEntryTimeoutsEl {
-        CertificateManagerCertificateMapEntryTimeoutsEl {
+impl BuildCertificateManagerCertificateMapEntry_Timeouts {
+    pub fn build(self) -> CertificateManagerCertificateMapEntry_Timeouts {
+        CertificateManagerCertificateMapEntry_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -517,24 +541,26 @@ impl BuildCertificateManagerCertificateMapEntryTimeoutsEl {
     }
 }
 
-pub struct CertificateManagerCertificateMapEntryTimeoutsElRef {
+#[allow(dead_code)]
+pub struct CertificateManagerCertificateMapEntry_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CertificateManagerCertificateMapEntryTimeoutsElRef {
+impl terrars::Ref for CertificateManagerCertificateMapEntry_TimeoutsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CertificateManagerCertificateMapEntryTimeoutsElRef {
-        CertificateManagerCertificateMapEntryTimeoutsElRef {
+    ) -> CertificateManagerCertificateMapEntry_TimeoutsRef {
+        CertificateManagerCertificateMapEntry_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CertificateManagerCertificateMapEntryTimeoutsElRef {
+impl CertificateManagerCertificateMapEntry_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

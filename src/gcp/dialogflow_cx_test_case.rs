@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DialogflowCxTestCaseData {
+struct DialogflowCxTestCaseData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct DialogflowCxTestCaseData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     display_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -28,18 +32,18 @@ struct DialogflowCxTestCaseData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    test_case_conversation_turns: std::option::Option<std::vec::Vec<DialogflowCxTestCaseTestCaseConversationTurnsEl>>,
+    test_case_conversation_turns: std::option::Option<std::vec::Vec<DialogflowCxTestCase_TestCaseConversationTurns>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    test_config: std::option::Option<std::vec::Vec<DialogflowCxTestCaseTestConfigEl>>,
+    test_config: std::option::Option<std::vec::Vec<DialogflowCxTestCase_TestConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DialogflowCxTestCaseTimeoutsEl>,
+    timeouts: std::option::Option<DialogflowCxTestCase_Timeouts>,
     dynamic: DialogflowCxTestCaseDynamic,
 }
 
 struct DialogflowCxTestCase_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DialogflowCxTestCaseData>,
+    data: std::cell::RefCell<DialogflowCxTestCaseData_>,
 }
 
 #[derive(Clone)]
@@ -139,6 +143,13 @@ impl DialogflowCxTestCase {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -171,7 +182,7 @@ impl DialogflowCxTestCase {
     #[doc = "Set the field `test_case_conversation_turns`.\n"]
     pub fn set_test_case_conversation_turns(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxTestCaseTestCaseConversationTurnsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxTestCase_TestCaseConversationTurns>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -187,7 +198,7 @@ impl DialogflowCxTestCase {
     #[doc = "Set the field `test_config`.\n"]
     pub fn set_test_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxTestCaseTestConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxTestCase_TestConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -201,7 +212,7 @@ impl DialogflowCxTestCase {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DialogflowCxTestCaseTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DialogflowCxTestCase_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -210,6 +221,12 @@ impl DialogflowCxTestCase {
         "Get a reference to the value of field `creation_time` after provisioning.\nWhen the test was created. A timestamp in RFC3339 text format."]
     pub fn creation_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -224,7 +241,7 @@ impl DialogflowCxTestCase {
     }
 
     #[doc = "Get a reference to the value of field `last_test_result` after provisioning.\nThe latest test result."]
-    pub fn last_test_result(&self) -> terrars::ListRef<DialogflowCxTestCaseLastTestResultElRef> {
+    pub fn last_test_result(&self) -> terrars::ListRef<DialogflowCxTestCase_LastTestResultRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.last_test_result", self.extract_ref()))
     }
 
@@ -253,18 +270,18 @@ impl DialogflowCxTestCase {
     }
 
     #[doc = "Get a reference to the value of field `test_case_conversation_turns` after provisioning.\n"]
-    pub fn test_case_conversation_turns(&self) -> terrars::ListRef<DialogflowCxTestCaseTestCaseConversationTurnsElRef> {
+    pub fn test_case_conversation_turns(&self) -> terrars::ListRef<DialogflowCxTestCase_TestCaseConversationTurnsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.test_case_conversation_turns", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `test_config` after provisioning.\n"]
-    pub fn test_config(&self) -> terrars::ListRef<DialogflowCxTestCaseTestConfigElRef> {
+    pub fn test_config(&self) -> terrars::ListRef<DialogflowCxTestCase_TestConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.test_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DialogflowCxTestCaseTimeoutsElRef {
-        DialogflowCxTestCaseTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DialogflowCxTestCase_TimeoutsRef {
+        DialogflowCxTestCase_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -310,12 +327,13 @@ impl BuildDialogflowCxTestCase {
         let out = DialogflowCxTestCase(std::rc::Rc::new(DialogflowCxTestCase_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DialogflowCxTestCaseData {
+            data: std::cell::RefCell::new(DialogflowCxTestCaseData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 display_name: self.display_name,
                 id: core::default::Default::default(),
                 notes: core::default::Default::default(),
@@ -362,6 +380,12 @@ impl DialogflowCxTestCaseRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `display_name` after provisioning.\nThe human-readable name of the test case, unique within the agent. Limit of 200 characters."]
     pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
@@ -373,7 +397,7 @@ impl DialogflowCxTestCaseRef {
     }
 
     #[doc = "Get a reference to the value of field `last_test_result` after provisioning.\nThe latest test result."]
-    pub fn last_test_result(&self) -> terrars::ListRef<DialogflowCxTestCaseLastTestResultElRef> {
+    pub fn last_test_result(&self) -> terrars::ListRef<DialogflowCxTestCase_LastTestResultRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.last_test_result", self.extract_ref()))
     }
 
@@ -402,30 +426,38 @@ impl DialogflowCxTestCaseRef {
     }
 
     #[doc = "Get a reference to the value of field `test_case_conversation_turns` after provisioning.\n"]
-    pub fn test_case_conversation_turns(&self) -> terrars::ListRef<DialogflowCxTestCaseTestCaseConversationTurnsElRef> {
+    pub fn test_case_conversation_turns(&self) -> terrars::ListRef<DialogflowCxTestCase_TestCaseConversationTurnsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.test_case_conversation_turns", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `test_config` after provisioning.\n"]
-    pub fn test_config(&self) -> terrars::ListRef<DialogflowCxTestCaseTestConfigElRef> {
+    pub fn test_config(&self) -> terrars::ListRef<DialogflowCxTestCase_TestConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.test_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DialogflowCxTestCaseTimeoutsElRef {
-        DialogflowCxTestCaseTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DialogflowCxTestCase_TimeoutsRef {
+        DialogflowCxTestCase_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DialogflowCxTestCaseDynamic {
+    test_case_conversation_turns: std
+    ::option
+    ::Option<terrars::DynamicBlock<DialogflowCxTestCase_TestCaseConversationTurns>>,
+    test_config: std::option::Option<terrars::DynamicBlock<DialogflowCxTestCase_TestConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElDtmfEl {
+pub struct DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_Dtmf {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     digits: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     finish_digit: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElDtmfEl {
+impl DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_Dtmf {
     #[doc = "Set the field `digits`.\n"]
     pub fn set_digits(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.digits = std::option::Option::Some(v.into());
@@ -439,9 +471,8 @@ impl DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElDt
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElDtmfEl {
-    type O =
-        terrars::BlockAssignable<DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElDtmfEl>;
+impl terrars::ToListMappable for DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_Dtmf {
+    type O = terrars::BlockAssignable<DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_Dtmf>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -452,35 +483,37 @@ impl terrars::ToListMappable for DialogflowCxTestCaseLastTestResultElConversatio
     }
 }
 
-pub struct BuildDialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElDtmfEl {}
+pub struct BuildDialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_Dtmf {}
 
-impl BuildDialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElDtmfEl {
-    pub fn build(self) -> DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElDtmfEl {
-        DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElDtmfEl {
+impl BuildDialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_Dtmf {
+    pub fn build(self) -> DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_Dtmf {
+        DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_Dtmf {
             digits: core::default::Default::default(),
             finish_digit: core::default::Default::default(),
         }
     }
 }
 
-pub struct DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElDtmfElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_DtmfRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElDtmfElRef {
+impl terrars::Ref for DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_DtmfRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElDtmfElRef {
-        DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElDtmfElRef {
+    ) -> DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_DtmfRef {
+        DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_DtmfRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElDtmfElRef {
+impl DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_DtmfRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -497,12 +530,12 @@ impl DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElDt
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElEventEl {
+pub struct DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_Event {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     event: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElEventEl {
+impl DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_Event {
     #[doc = "Set the field `event`.\n"]
     pub fn set_event(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.event = std::option::Option::Some(v.into());
@@ -510,9 +543,8 @@ impl DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElEv
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElEventEl {
-    type O =
-        terrars::BlockAssignable<DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElEventEl>;
+impl terrars::ToListMappable for DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_Event {
+    type O = terrars::BlockAssignable<DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_Event>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -523,34 +555,36 @@ impl terrars::ToListMappable for DialogflowCxTestCaseLastTestResultElConversatio
     }
 }
 
-pub struct BuildDialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElEventEl {}
+pub struct BuildDialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_Event {}
 
-impl BuildDialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElEventEl {
-    pub fn build(self) -> DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElEventEl {
-        DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElEventEl {
+impl BuildDialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_Event {
+    pub fn build(self) -> DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_Event {
+        DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_Event {
             event: core::default::Default::default(),
         }
     }
 }
 
-pub struct DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElEventElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_EventRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElEventElRef {
+impl terrars::Ref for DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_EventRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElEventElRef {
-        DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElEventElRef {
+    ) -> DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_EventRef {
+        DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_EventRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElEventElRef {
+impl DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_EventRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -562,12 +596,12 @@ impl DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElEv
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElTextEl {
+pub struct DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_Text {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     text: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElTextEl {
+impl DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_Text {
     #[doc = "Set the field `text`.\n"]
     pub fn set_text(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.text = std::option::Option::Some(v.into());
@@ -575,9 +609,8 @@ impl DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElTe
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElTextEl {
-    type O =
-        terrars::BlockAssignable<DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElTextEl>;
+impl terrars::ToListMappable for DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_Text {
+    type O = terrars::BlockAssignable<DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_Text>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -588,34 +621,36 @@ impl terrars::ToListMappable for DialogflowCxTestCaseLastTestResultElConversatio
     }
 }
 
-pub struct BuildDialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElTextEl {}
+pub struct BuildDialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_Text {}
 
-impl BuildDialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElTextEl {
-    pub fn build(self) -> DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElTextEl {
-        DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElTextEl {
+impl BuildDialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_Text {
+    pub fn build(self) -> DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_Text {
+        DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_Text {
             text: core::default::Default::default(),
         }
     }
 }
 
-pub struct DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElTextElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_TextRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElTextElRef {
+impl terrars::Ref for DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_TextRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElTextElRef {
-        DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElTextElRef {
+    ) -> DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_TextRef {
+        DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_TextRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElTextElRef {
+impl DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_TextRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -627,24 +662,24 @@ impl DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElTe
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputEl {
+pub struct DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dtmf: std
     ::option
-    ::Option<terrars::ListField<DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElDtmfEl>>,
+    ::Option<terrars::ListField<DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_Dtmf>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     event: std
     ::option
-    ::Option<terrars::ListField<DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElEventEl>>,
+    ::Option<terrars::ListField<DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_Event>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     language_code: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     text: std
     ::option
-    ::Option<terrars::ListField<DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElTextEl>>,
+    ::Option<terrars::ListField<DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_Text>>,
 }
 
-impl DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputEl {
+impl DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input {
     #[doc = "Set the field `dtmf`.\n"]
     pub fn set_dtmf(
         mut self,
@@ -654,8 +689,7 @@ impl DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::ListField<DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElDtmfEl>,
+                        terrars::ListField<DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_Dtmf>,
                     >,
     ) -> Self {
         self.dtmf = std::option::Option::Some(v.into());
@@ -672,7 +706,7 @@ impl DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::ListField<DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElEventEl>,
+                        ::ListField<DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_Event>,
                     >,
     ) -> Self {
         self.event = std::option::Option::Some(v.into());
@@ -694,8 +728,7 @@ impl DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::ListField<DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElTextEl>,
+                        terrars::ListField<DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_Text>,
                     >,
     ) -> Self {
         self.text = std::option::Option::Some(v.into());
@@ -703,8 +736,8 @@ impl DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputEl {
-    type O = terrars::BlockAssignable<DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputEl>;
+impl terrars::ToListMappable for DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input {
+    type O = terrars::BlockAssignable<DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -715,11 +748,11 @@ impl terrars::ToListMappable for DialogflowCxTestCaseLastTestResultElConversatio
     }
 }
 
-pub struct BuildDialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputEl {}
+pub struct BuildDialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input {}
 
-impl BuildDialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputEl {
-    pub fn build(self) -> DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputEl {
-        DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputEl {
+impl BuildDialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input {
+    pub fn build(self) -> DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input {
+        DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input {
             dtmf: core::default::Default::default(),
             event: core::default::Default::default(),
             language_code: core::default::Default::default(),
@@ -728,24 +761,26 @@ impl BuildDialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInpu
     }
 }
 
-pub struct DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_InputRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElRef {
+impl terrars::Ref for DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_InputRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElRef {
-        DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElRef {
+    ) -> DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_InputRef {
+        DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_InputRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElRef {
+impl DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_InputRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -753,14 +788,14 @@ impl DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElRe
     #[doc = "Get a reference to the value of field `dtmf` after provisioning.\n"]
     pub fn dtmf(
         &self,
-    ) -> terrars::ListRef<DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElDtmfElRef> {
+    ) -> terrars::ListRef<DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_DtmfRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dtmf", self.base))
     }
 
     #[doc = "Get a reference to the value of field `event` after provisioning.\n"]
     pub fn event(
         &self,
-    ) -> terrars::ListRef<DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElEventElRef> {
+    ) -> terrars::ListRef<DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_EventRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.event", self.base))
     }
 
@@ -772,26 +807,24 @@ impl DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElRe
     #[doc = "Get a reference to the value of field `text` after provisioning.\n"]
     pub fn text(
         &self,
-    ) -> terrars::ListRef<DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElTextElRef> {
+    ) -> terrars::ListRef<DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input_TextRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.text", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputEl {
+pub struct DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_sentiment_analysis: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     injected_parameters: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    input: std
-    ::option
-    ::Option<terrars::ListField<DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputEl>>,
+    input: std::option::Option<terrars::ListField<DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     is_webhook_enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputEl {
+impl DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput {
     #[doc = "Set the field `enable_sentiment_analysis`.\n"]
     pub fn set_enable_sentiment_analysis(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enable_sentiment_analysis = std::option::Option::Some(v.into());
@@ -815,9 +848,7 @@ impl DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::ListField<DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputEl>,
-                    >,
+                    ::Into<terrars::ListField<DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_Input>>,
     ) -> Self {
         self.input = std::option::Option::Some(v.into());
         self
@@ -830,8 +861,8 @@ impl DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputEl {
-    type O = terrars::BlockAssignable<DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputEl>;
+impl terrars::ToListMappable for DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput {
+    type O = terrars::BlockAssignable<DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -842,11 +873,11 @@ impl terrars::ToListMappable for DialogflowCxTestCaseLastTestResultElConversatio
     }
 }
 
-pub struct BuildDialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputEl {}
+pub struct BuildDialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput {}
 
-impl BuildDialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputEl {
-    pub fn build(self) -> DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputEl {
-        DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputEl {
+impl BuildDialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput {
+    pub fn build(self) -> DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput {
+        DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput {
             enable_sentiment_analysis: core::default::Default::default(),
             injected_parameters: core::default::Default::default(),
             input: core::default::Default::default(),
@@ -855,24 +886,26 @@ impl BuildDialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputEl {
     }
 }
 
-pub struct DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInputRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElRef {
+impl terrars::Ref for DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInputRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElRef {
-        DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElRef {
+    ) -> DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInputRef {
+        DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInputRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElRef {
+impl DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInputRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -888,9 +921,7 @@ impl DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElRef {
     }
 
     #[doc = "Get a reference to the value of field `input` after provisioning.\n"]
-    pub fn input(
-        &self,
-    ) -> terrars::ListRef<DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElInputElRef> {
+    pub fn input(&self) -> terrars::ListRef<DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput_InputRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.input", self.base))
     }
 
@@ -901,14 +932,14 @@ impl DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElRef {
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElCurrentPageEl {
+pub struct DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_CurrentPage {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     display_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElCurrentPageEl {
+impl DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_CurrentPage {
     #[doc = "Set the field `display_name`.\n"]
     pub fn set_display_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.display_name = std::option::Option::Some(v.into());
@@ -922,11 +953,10 @@ impl DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputEl
     }
 }
 
-impl terrars
-::ToListMappable for DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElCurrentPageEl {
+impl terrars::ToListMappable for DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_CurrentPage {
     type O =
         terrars
-        ::BlockAssignable<DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElCurrentPageEl>;
+        ::BlockAssignable<DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_CurrentPage>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -937,35 +967,37 @@ impl terrars
     }
 }
 
-pub struct BuildDialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElCurrentPageEl {}
+pub struct BuildDialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_CurrentPage {}
 
-impl BuildDialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElCurrentPageEl {
-    pub fn build(self) -> DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElCurrentPageEl {
-        DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElCurrentPageEl {
+impl BuildDialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_CurrentPage {
+    pub fn build(self) -> DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_CurrentPage {
+        DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_CurrentPage {
             display_name: core::default::Default::default(),
             name: core::default::Default::default(),
         }
     }
 }
 
-pub struct DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElCurrentPageElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_CurrentPageRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElCurrentPageElRef {
+impl terrars::Ref for DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_CurrentPageRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElCurrentPageElRef {
-        DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElCurrentPageElRef {
+    ) -> DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_CurrentPageRef {
+        DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_CurrentPageRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElCurrentPageElRef {
+impl DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_CurrentPageRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -982,14 +1014,14 @@ impl DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputEl
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElDifferencesEl {
+pub struct DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_Differences {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElDifferencesEl {
+impl DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_Differences {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -1003,11 +1035,10 @@ impl DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputEl
     }
 }
 
-impl terrars
-::ToListMappable for DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElDifferencesEl {
+impl terrars::ToListMappable for DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_Differences {
     type O =
         terrars
-        ::BlockAssignable<DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElDifferencesEl>;
+        ::BlockAssignable<DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_Differences>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1018,35 +1049,37 @@ impl terrars
     }
 }
 
-pub struct BuildDialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElDifferencesEl {}
+pub struct BuildDialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_Differences {}
 
-impl BuildDialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElDifferencesEl {
-    pub fn build(self) -> DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElDifferencesEl {
-        DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElDifferencesEl {
+impl BuildDialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_Differences {
+    pub fn build(self) -> DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_Differences {
+        DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_Differences {
             description: core::default::Default::default(),
             type_: core::default::Default::default(),
         }
     }
 }
 
-pub struct DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElDifferencesElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_DifferencesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElDifferencesElRef {
+impl terrars::Ref for DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_DifferencesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElDifferencesElRef {
-        DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElDifferencesElRef {
+    ) -> DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_DifferencesRef {
+        DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_DifferencesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElDifferencesElRef {
+impl DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_DifferencesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1063,7 +1096,7 @@ impl DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputEl
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElStatusEl {
+pub struct DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_Status {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     code: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1072,7 +1105,7 @@ pub struct DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOu
     message: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElStatusEl {
+impl DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_Status {
     #[doc = "Set the field `code`.\n"]
     pub fn set_code(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.code = std::option::Option::Some(v.into());
@@ -1092,10 +1125,9 @@ impl DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputEl
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElStatusEl {
+impl terrars::ToListMappable for DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_Status {
     type O =
-        terrars
-        ::BlockAssignable<DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElStatusEl>;
+        terrars::BlockAssignable<DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_Status>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1106,11 +1138,11 @@ impl terrars::ToListMappable for DialogflowCxTestCaseLastTestResultElConversatio
     }
 }
 
-pub struct BuildDialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElStatusEl {}
+pub struct BuildDialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_Status {}
 
-impl BuildDialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElStatusEl {
-    pub fn build(self) -> DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElStatusEl {
-        DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElStatusEl {
+impl BuildDialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_Status {
+    pub fn build(self) -> DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_Status {
+        DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_Status {
             code: core::default::Default::default(),
             details: core::default::Default::default(),
             message: core::default::Default::default(),
@@ -1118,24 +1150,26 @@ impl BuildDialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOut
     }
 }
 
-pub struct DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElStatusElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_StatusRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElStatusElRef {
+impl terrars::Ref for DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_StatusRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElStatusElRef {
-        DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElStatusElRef {
+    ) -> DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_StatusRef {
+        DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_StatusRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElStatusElRef {
+impl DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_StatusRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1157,12 +1191,12 @@ impl DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputEl
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElTextResponsesEl {
+pub struct DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_TextResponses {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     text: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElTextResponsesEl {
+impl DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_TextResponses {
     #[doc = "Set the field `text`.\n"]
     pub fn set_text(
         mut self,
@@ -1174,10 +1208,10 @@ impl DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputEl
 }
 
 impl terrars
-::ToListMappable for DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElTextResponsesEl {
+::ToListMappable for DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_TextResponses {
     type O =
         terrars
-        ::BlockAssignable<DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElTextResponsesEl>;
+        ::BlockAssignable<DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_TextResponses>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1188,34 +1222,36 @@ impl terrars
     }
 }
 
-pub struct BuildDialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElTextResponsesEl {}
+pub struct BuildDialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_TextResponses {}
 
-impl BuildDialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElTextResponsesEl {
-    pub fn build(self) -> DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElTextResponsesEl {
-        DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElTextResponsesEl {
+impl BuildDialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_TextResponses {
+    pub fn build(self) -> DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_TextResponses {
+        DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_TextResponses {
             text: core::default::Default::default(),
         }
     }
 }
 
-pub struct DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElTextResponsesElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_TextResponsesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElTextResponsesElRef {
+impl terrars::Ref for DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_TextResponsesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElTextResponsesElRef {
-        DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElTextResponsesElRef {
+    ) -> DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_TextResponsesRef {
+        DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_TextResponsesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElTextResponsesElRef {
+impl DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_TextResponsesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1227,14 +1263,14 @@ impl DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputEl
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElTriggeredIntentEl {
+pub struct DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_TriggeredIntent {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     display_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElTriggeredIntentEl {
+impl DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_TriggeredIntent {
     #[doc = "Set the field `display_name`.\n"]
     pub fn set_display_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.display_name = std::option::Option::Some(v.into());
@@ -1249,12 +1285,10 @@ impl DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputEl
 }
 
 impl terrars
-::ToListMappable for DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElTriggeredIntentEl {
+::ToListMappable for DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_TriggeredIntent {
     type O =
         terrars
-        ::BlockAssignable<
-            DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElTriggeredIntentEl,
-        >;
+        ::BlockAssignable<DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_TriggeredIntent>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1265,37 +1299,37 @@ impl terrars
     }
 }
 
-pub struct BuildDialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElTriggeredIntentEl {}
+pub struct BuildDialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_TriggeredIntent {}
 
-impl BuildDialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElTriggeredIntentEl {
-    pub fn build(
-        self,
-    ) -> DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElTriggeredIntentEl {
-        DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElTriggeredIntentEl {
+impl BuildDialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_TriggeredIntent {
+    pub fn build(self) -> DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_TriggeredIntent {
+        DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_TriggeredIntent {
             display_name: core::default::Default::default(),
             name: core::default::Default::default(),
         }
     }
 }
 
-pub struct DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElTriggeredIntentElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_TriggeredIntentRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElTriggeredIntentElRef {
+impl terrars::Ref for DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_TriggeredIntentRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElTriggeredIntentElRef {
-        DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElTriggeredIntentElRef {
+    ) -> DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_TriggeredIntentRef {
+        DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_TriggeredIntentRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElTriggeredIntentElRef {
+impl DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_TriggeredIntentRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1312,41 +1346,40 @@ impl DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputEl
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputEl {
+pub struct DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     current_page: std
     ::option
     ::Option<
-        terrars::ListField<DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElCurrentPageEl>,
+        terrars::ListField<DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_CurrentPage>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     differences: std
     ::option
     ::Option<
-        terrars::ListField<DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElDifferencesEl>,
+        terrars::ListField<DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_Differences>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     session_parameters: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     status: std
     ::option
-    ::Option<terrars::ListField<DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElStatusEl>>,
+    ::Option<terrars::ListField<DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_Status>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     text_responses: std
     ::option
     ::Option<
-        terrars::ListField<DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElTextResponsesEl>,
+        terrars::ListField<DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_TextResponses>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     triggered_intent: std
     ::option
     ::Option<
-        terrars
-        ::ListField<DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElTriggeredIntentEl>,
+        terrars::ListField<DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_TriggeredIntent>,
     >,
 }
 
-impl DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputEl {
+impl DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput {
     #[doc = "Set the field `current_page`.\n"]
     pub fn set_current_page(
         mut self,
@@ -1358,7 +1391,7 @@ impl DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputEl
                     ::Into<
                         terrars
                         ::ListField<
-                            DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElCurrentPageEl,
+                            DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_CurrentPage,
                         >,
                     >,
     ) -> Self {
@@ -1377,7 +1410,7 @@ impl DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputEl
                     ::Into<
                         terrars
                         ::ListField<
-                            DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElDifferencesEl,
+                            DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_Differences,
                         >,
                     >,
     ) -> Self {
@@ -1404,9 +1437,7 @@ impl DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputEl
                     ::convert
                     ::Into<
                         terrars
-                        ::ListField<
-                            DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElStatusEl,
-                        >,
+                        ::ListField<DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_Status>,
                     >,
     ) -> Self {
         self.status = std::option::Option::Some(v.into());
@@ -1424,7 +1455,7 @@ impl DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputEl
                     ::Into<
                         terrars
                         ::ListField<
-                            DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElTextResponsesEl,
+                            DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_TextResponses,
                         >,
                     >,
     ) -> Self {
@@ -1443,7 +1474,7 @@ impl DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputEl
                     ::Into<
                         terrars
                         ::ListField<
-                            DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElTriggeredIntentEl,
+                            DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_TriggeredIntent,
                         >,
                     >,
     ) -> Self {
@@ -1452,8 +1483,8 @@ impl DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputEl
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputEl {
-    type O = terrars::BlockAssignable<DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputEl>;
+impl terrars::ToListMappable for DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput {
+    type O = terrars::BlockAssignable<DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1464,11 +1495,11 @@ impl terrars::ToListMappable for DialogflowCxTestCaseLastTestResultElConversatio
     }
 }
 
-pub struct BuildDialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputEl {}
+pub struct BuildDialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput {}
 
-impl BuildDialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputEl {
-    pub fn build(self) -> DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputEl {
-        DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputEl {
+impl BuildDialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput {
+    pub fn build(self) -> DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput {
+        DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput {
             current_page: core::default::Default::default(),
             differences: core::default::Default::default(),
             session_parameters: core::default::Default::default(),
@@ -1479,24 +1510,26 @@ impl BuildDialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOut
     }
 }
 
-pub struct DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutputRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElRef {
+impl terrars::Ref for DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutputRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElRef {
-        DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElRef {
+    ) -> DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutputRef {
+        DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutputRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElRef {
+impl DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutputRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1504,16 +1537,14 @@ impl DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputEl
     #[doc = "Get a reference to the value of field `current_page` after provisioning.\n"]
     pub fn current_page(
         &self,
-    ) -> terrars
-    ::ListRef<DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElCurrentPageElRef> {
+    ) -> terrars::ListRef<DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_CurrentPageRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.current_page", self.base))
     }
 
     #[doc = "Get a reference to the value of field `differences` after provisioning.\n"]
     pub fn differences(
         &self,
-    ) -> terrars
-    ::ListRef<DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElDifferencesElRef> {
+    ) -> terrars::ListRef<DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_DifferencesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.differences", self.base))
     }
 
@@ -1525,15 +1556,14 @@ impl DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputEl
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
     pub fn status(
         &self,
-    ) -> terrars::ListRef<DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElStatusElRef> {
+    ) -> terrars::ListRef<DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_StatusRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.status", self.base))
     }
 
     #[doc = "Get a reference to the value of field `text_responses` after provisioning.\n"]
     pub fn text_responses(
         &self,
-    ) -> terrars
-    ::ListRef<DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElTextResponsesElRef> {
+    ) -> terrars::ListRef<DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_TextResponsesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.text_responses", self.base))
     }
 
@@ -1541,24 +1571,22 @@ impl DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputEl
     pub fn triggered_intent(
         &self,
     ) -> terrars
-    ::ListRef<DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElTriggeredIntentElRef> {
+    ::ListRef<DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput_TriggeredIntentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.triggered_intent", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxTestCaseLastTestResultElConversationTurnsEl {
+pub struct DialogflowCxTestCase_LastTestResult_ConversationTurns {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    user_input: std
-    ::option
-    ::Option<terrars::ListField<DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputEl>>,
+    user_input: std::option::Option<terrars::ListField<DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     virtual_agent_output: std
     ::option
-    ::Option<terrars::ListField<DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputEl>>,
+    ::Option<terrars::ListField<DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput>>,
 }
 
-impl DialogflowCxTestCaseLastTestResultElConversationTurnsEl {
+impl DialogflowCxTestCase_LastTestResult_ConversationTurns {
     #[doc = "Set the field `user_input`.\n"]
     pub fn set_user_input(
         mut self,
@@ -1567,7 +1595,7 @@ impl DialogflowCxTestCaseLastTestResultElConversationTurnsEl {
 
                     std
                     ::convert
-                    ::Into<terrars::ListField<DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputEl>>,
+                    ::Into<terrars::ListField<DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInput>>,
     ) -> Self {
         self.user_input = std::option::Option::Some(v.into());
         self
@@ -1582,8 +1610,7 @@ impl DialogflowCxTestCaseLastTestResultElConversationTurnsEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::ListField<DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputEl>,
+                        terrars::ListField<DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutput>,
                     >,
     ) -> Self {
         self.virtual_agent_output = std::option::Option::Some(v.into());
@@ -1591,8 +1618,8 @@ impl DialogflowCxTestCaseLastTestResultElConversationTurnsEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxTestCaseLastTestResultElConversationTurnsEl {
-    type O = terrars::BlockAssignable<DialogflowCxTestCaseLastTestResultElConversationTurnsEl>;
+impl terrars::ToListMappable for DialogflowCxTestCase_LastTestResult_ConversationTurns {
+    type O = terrars::BlockAssignable<DialogflowCxTestCase_LastTestResult_ConversationTurns>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1603,56 +1630,58 @@ impl terrars::ToListMappable for DialogflowCxTestCaseLastTestResultElConversatio
     }
 }
 
-pub struct BuildDialogflowCxTestCaseLastTestResultElConversationTurnsEl {}
+pub struct BuildDialogflowCxTestCase_LastTestResult_ConversationTurns {}
 
-impl BuildDialogflowCxTestCaseLastTestResultElConversationTurnsEl {
-    pub fn build(self) -> DialogflowCxTestCaseLastTestResultElConversationTurnsEl {
-        DialogflowCxTestCaseLastTestResultElConversationTurnsEl {
+impl BuildDialogflowCxTestCase_LastTestResult_ConversationTurns {
+    pub fn build(self) -> DialogflowCxTestCase_LastTestResult_ConversationTurns {
+        DialogflowCxTestCase_LastTestResult_ConversationTurns {
             user_input: core::default::Default::default(),
             virtual_agent_output: core::default::Default::default(),
         }
     }
 }
 
-pub struct DialogflowCxTestCaseLastTestResultElConversationTurnsElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxTestCase_LastTestResult_ConversationTurnsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxTestCaseLastTestResultElConversationTurnsElRef {
+impl terrars::Ref for DialogflowCxTestCase_LastTestResult_ConversationTurnsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxTestCaseLastTestResultElConversationTurnsElRef {
-        DialogflowCxTestCaseLastTestResultElConversationTurnsElRef {
+    ) -> DialogflowCxTestCase_LastTestResult_ConversationTurnsRef {
+        DialogflowCxTestCase_LastTestResult_ConversationTurnsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxTestCaseLastTestResultElConversationTurnsElRef {
+impl DialogflowCxTestCase_LastTestResult_ConversationTurnsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `user_input` after provisioning.\n"]
-    pub fn user_input(&self) -> terrars::ListRef<DialogflowCxTestCaseLastTestResultElConversationTurnsElUserInputElRef> {
+    pub fn user_input(&self) -> terrars::ListRef<DialogflowCxTestCase_LastTestResult_ConversationTurns_UserInputRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.user_input", self.base))
     }
 
     #[doc = "Get a reference to the value of field `virtual_agent_output` after provisioning.\n"]
     pub fn virtual_agent_output(
         &self,
-    ) -> terrars::ListRef<DialogflowCxTestCaseLastTestResultElConversationTurnsElVirtualAgentOutputElRef> {
+    ) -> terrars::ListRef<DialogflowCxTestCase_LastTestResult_ConversationTurns_VirtualAgentOutputRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.virtual_agent_output", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxTestCaseLastTestResultEl {
+pub struct DialogflowCxTestCase_LastTestResult {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    conversation_turns: std::option::Option<terrars::ListField<DialogflowCxTestCaseLastTestResultElConversationTurnsEl>>,
+    conversation_turns: std::option::Option<terrars::ListField<DialogflowCxTestCase_LastTestResult_ConversationTurns>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     environment: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1663,11 +1692,11 @@ pub struct DialogflowCxTestCaseLastTestResultEl {
     test_time: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DialogflowCxTestCaseLastTestResultEl {
+impl DialogflowCxTestCase_LastTestResult {
     #[doc = "Set the field `conversation_turns`.\n"]
     pub fn set_conversation_turns(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DialogflowCxTestCaseLastTestResultElConversationTurnsEl>>,
+        v: impl std::convert::Into<terrars::ListField<DialogflowCxTestCase_LastTestResult_ConversationTurns>>,
     ) -> Self {
         self.conversation_turns = std::option::Option::Some(v.into());
         self
@@ -1698,8 +1727,8 @@ impl DialogflowCxTestCaseLastTestResultEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxTestCaseLastTestResultEl {
-    type O = terrars::BlockAssignable<DialogflowCxTestCaseLastTestResultEl>;
+impl terrars::ToListMappable for DialogflowCxTestCase_LastTestResult {
+    type O = terrars::BlockAssignable<DialogflowCxTestCase_LastTestResult>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1710,11 +1739,11 @@ impl terrars::ToListMappable for DialogflowCxTestCaseLastTestResultEl {
     }
 }
 
-pub struct BuildDialogflowCxTestCaseLastTestResultEl {}
+pub struct BuildDialogflowCxTestCase_LastTestResult {}
 
-impl BuildDialogflowCxTestCaseLastTestResultEl {
-    pub fn build(self) -> DialogflowCxTestCaseLastTestResultEl {
-        DialogflowCxTestCaseLastTestResultEl {
+impl BuildDialogflowCxTestCase_LastTestResult {
+    pub fn build(self) -> DialogflowCxTestCase_LastTestResult {
+        DialogflowCxTestCase_LastTestResult {
             conversation_turns: core::default::Default::default(),
             environment: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -1724,27 +1753,29 @@ impl BuildDialogflowCxTestCaseLastTestResultEl {
     }
 }
 
-pub struct DialogflowCxTestCaseLastTestResultElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxTestCase_LastTestResultRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxTestCaseLastTestResultElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxTestCaseLastTestResultElRef {
-        DialogflowCxTestCaseLastTestResultElRef {
+impl terrars::Ref for DialogflowCxTestCase_LastTestResultRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxTestCase_LastTestResultRef {
+        DialogflowCxTestCase_LastTestResultRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxTestCaseLastTestResultElRef {
+impl DialogflowCxTestCase_LastTestResultRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `conversation_turns` after provisioning.\n"]
-    pub fn conversation_turns(&self) -> terrars::ListRef<DialogflowCxTestCaseLastTestResultElConversationTurnsElRef> {
+    pub fn conversation_turns(&self) -> terrars::ListRef<DialogflowCxTestCase_LastTestResult_ConversationTurnsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.conversation_turns", self.base))
     }
 
@@ -1770,14 +1801,14 @@ impl DialogflowCxTestCaseLastTestResultElRef {
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElDtmfEl {
+pub struct DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_Dtmf {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     digits: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     finish_digit: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElDtmfEl {
+impl DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_Dtmf {
     #[doc = "Set the field `digits`.\nThe dtmf digits."]
     pub fn set_digits(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.digits = std::option::Option::Some(v.into());
@@ -1791,8 +1822,8 @@ impl DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElDtmfEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElDtmfEl {
-    type O = terrars::BlockAssignable<DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElDtmfEl>;
+impl terrars::ToListMappable for DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_Dtmf {
+    type O = terrars::BlockAssignable<DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_Dtmf>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1803,35 +1834,37 @@ impl terrars::ToListMappable for DialogflowCxTestCaseTestCaseConversationTurnsEl
     }
 }
 
-pub struct BuildDialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElDtmfEl {}
+pub struct BuildDialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_Dtmf {}
 
-impl BuildDialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElDtmfEl {
-    pub fn build(self) -> DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElDtmfEl {
-        DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElDtmfEl {
+impl BuildDialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_Dtmf {
+    pub fn build(self) -> DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_Dtmf {
+        DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_Dtmf {
             digits: core::default::Default::default(),
             finish_digit: core::default::Default::default(),
         }
     }
 }
 
-pub struct DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElDtmfElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_DtmfRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElDtmfElRef {
+impl terrars::Ref for DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_DtmfRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElDtmfElRef {
-        DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElDtmfElRef {
+    ) -> DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_DtmfRef {
+        DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_DtmfRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElDtmfElRef {
+impl DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_DtmfRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1848,14 +1881,14 @@ impl DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElDtmfElRef 
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElEventEl {
+pub struct DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_Event {
     event: terrars::PrimField<std::string::String>,
 }
 
-impl DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElEventEl { }
+impl DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_Event { }
 
-impl terrars::ToListMappable for DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElEventEl {
-    type O = terrars::BlockAssignable<DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElEventEl>;
+impl terrars::ToListMappable for DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_Event {
+    type O = terrars::BlockAssignable<DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_Event>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1866,35 +1899,37 @@ impl terrars::ToListMappable for DialogflowCxTestCaseTestCaseConversationTurnsEl
     }
 }
 
-pub struct BuildDialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElEventEl {
+pub struct BuildDialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_Event {
     #[doc = "Name of the event."]
     pub event: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElEventEl {
-    pub fn build(self) -> DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElEventEl {
-        DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElEventEl { event: self.event }
+impl BuildDialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_Event {
+    pub fn build(self) -> DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_Event {
+        DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_Event { event: self.event }
     }
 }
 
-pub struct DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElEventElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_EventRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElEventElRef {
+impl terrars::Ref for DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_EventRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElEventElRef {
-        DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElEventElRef {
+    ) -> DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_EventRef {
+        DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_EventRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElEventElRef {
+impl DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_EventRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1906,14 +1941,14 @@ impl DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElEventElRef
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElTextEl {
+pub struct DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_Text {
     text: terrars::PrimField<std::string::String>,
 }
 
-impl DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElTextEl { }
+impl DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_Text { }
 
-impl terrars::ToListMappable for DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElTextEl {
-    type O = terrars::BlockAssignable<DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElTextEl>;
+impl terrars::ToListMappable for DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_Text {
+    type O = terrars::BlockAssignable<DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_Text>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1924,35 +1959,37 @@ impl terrars::ToListMappable for DialogflowCxTestCaseTestCaseConversationTurnsEl
     }
 }
 
-pub struct BuildDialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElTextEl {
+pub struct BuildDialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_Text {
     #[doc = "The natural language text to be processed. Text length must not exceed 256 characters."]
     pub text: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElTextEl {
-    pub fn build(self) -> DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElTextEl {
-        DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElTextEl { text: self.text }
+impl BuildDialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_Text {
+    pub fn build(self) -> DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_Text {
+        DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_Text { text: self.text }
     }
 }
 
-pub struct DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElTextElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_TextRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElTextElRef {
+impl terrars::Ref for DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_TextRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElTextElRef {
-        DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElTextElRef {
+    ) -> DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_TextRef {
+        DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_TextRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElTextElRef {
+impl DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_TextRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1965,32 +2002,32 @@ impl DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElTextElRef 
 }
 
 #[derive(Serialize, Default)]
-struct DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElDynamic {
+struct DialogflowCxTestCase_TestCaseConversationTurns_UserInput_InputDynamic {
     dtmf: std
     ::option
-    ::Option<terrars::DynamicBlock<DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElDtmfEl>>,
+    ::Option<terrars::DynamicBlock<DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_Dtmf>>,
     event: std
     ::option
-    ::Option<terrars::DynamicBlock<DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElEventEl>>,
+    ::Option<terrars::DynamicBlock<DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_Event>>,
     text: std
     ::option
-    ::Option<terrars::DynamicBlock<DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElTextEl>>,
+    ::Option<terrars::DynamicBlock<DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_Text>>,
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputEl {
+pub struct DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     language_code: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    dtmf: std::option::Option<std::vec::Vec<DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElDtmfEl>>,
+    dtmf: std::option::Option<std::vec::Vec<DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_Dtmf>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    event: std::option::Option<std::vec::Vec<DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElEventEl>>,
+    event: std::option::Option<std::vec::Vec<DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_Event>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    text: std::option::Option<std::vec::Vec<DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElTextEl>>,
-    dynamic: DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElDynamic,
+    text: std::option::Option<std::vec::Vec<DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_Text>>,
+    dynamic: DialogflowCxTestCase_TestCaseConversationTurns_UserInput_InputDynamic,
 }
 
-impl DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputEl {
+impl DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input {
     #[doc =
         "Set the field `language_code`.\nThe language of the input. See [Language Support](https://cloud.google.com/dialogflow/cx/docs/reference/language) for a list of the currently supported language codes.\nNote that queries in the same session do not necessarily need to specify the same language."]
     pub fn set_language_code(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -2007,8 +2044,7 @@ impl DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElDtmfEl>,
+                        terrars::BlockAssignable<DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_Dtmf>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2031,8 +2067,7 @@ impl DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElEventEl>,
+                        terrars::BlockAssignable<DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_Event>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2055,8 +2090,7 @@ impl DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElTextEl>,
+                        terrars::BlockAssignable<DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_Text>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2071,8 +2105,8 @@ impl DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputEl {
-    type O = terrars::BlockAssignable<DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputEl>;
+impl terrars::ToListMappable for DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input {
+    type O = terrars::BlockAssignable<DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2083,11 +2117,11 @@ impl terrars::ToListMappable for DialogflowCxTestCaseTestCaseConversationTurnsEl
     }
 }
 
-pub struct BuildDialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputEl {}
+pub struct BuildDialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input {}
 
-impl BuildDialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputEl {
-    pub fn build(self) -> DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputEl {
-        DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputEl {
+impl BuildDialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input {
+    pub fn build(self) -> DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input {
+        DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input {
             language_code: core::default::Default::default(),
             dtmf: core::default::Default::default(),
             event: core::default::Default::default(),
@@ -2097,24 +2131,26 @@ impl BuildDialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputEl {
     }
 }
 
-pub struct DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxTestCase_TestCaseConversationTurns_UserInput_InputRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElRef {
+impl terrars::Ref for DialogflowCxTestCase_TestCaseConversationTurns_UserInput_InputRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElRef {
-        DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElRef {
+    ) -> DialogflowCxTestCase_TestCaseConversationTurns_UserInput_InputRef {
+        DialogflowCxTestCase_TestCaseConversationTurns_UserInput_InputRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElRef {
+impl DialogflowCxTestCase_TestCaseConversationTurns_UserInput_InputRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2126,30 +2162,30 @@ impl DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElRef {
     }
 
     #[doc = "Get a reference to the value of field `dtmf` after provisioning.\n"]
-    pub fn dtmf(&self) -> terrars::ListRef<DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElDtmfElRef> {
+    pub fn dtmf(&self) -> terrars::ListRef<DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_DtmfRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dtmf", self.base))
     }
 
     #[doc = "Get a reference to the value of field `event` after provisioning.\n"]
-    pub fn event(&self) -> terrars::ListRef<DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElEventElRef> {
+    pub fn event(&self) -> terrars::ListRef<DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_EventRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.event", self.base))
     }
 
     #[doc = "Get a reference to the value of field `text` after provisioning.\n"]
-    pub fn text(&self) -> terrars::ListRef<DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElTextElRef> {
+    pub fn text(&self) -> terrars::ListRef<DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input_TextRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.text", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElDynamic {
+struct DialogflowCxTestCase_TestCaseConversationTurns_UserInputDynamic {
     input: std
     ::option
-    ::Option<terrars::DynamicBlock<DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputEl>>,
+    ::Option<terrars::DynamicBlock<DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input>>,
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxTestCaseTestCaseConversationTurnsElUserInputEl {
+pub struct DialogflowCxTestCase_TestCaseConversationTurns_UserInput {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_sentiment_analysis: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2157,11 +2193,11 @@ pub struct DialogflowCxTestCaseTestCaseConversationTurnsElUserInputEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     is_webhook_enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    input: std::option::Option<std::vec::Vec<DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputEl>>,
-    dynamic: DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElDynamic,
+    input: std::option::Option<std::vec::Vec<DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input>>,
+    dynamic: DialogflowCxTestCase_TestCaseConversationTurns_UserInputDynamic,
 }
 
-impl DialogflowCxTestCaseTestCaseConversationTurnsElUserInputEl {
+impl DialogflowCxTestCase_TestCaseConversationTurns_UserInput {
     #[doc = "Set the field `enable_sentiment_analysis`.\nWhether sentiment analysis is enabled."]
     pub fn set_enable_sentiment_analysis(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enable_sentiment_analysis = std::option::Option::Some(v.into());
@@ -2193,9 +2229,7 @@ impl DialogflowCxTestCaseTestCaseConversationTurnsElUserInputEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<DialogflowCxTestCase_TestCaseConversationTurns_UserInput_Input>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2209,8 +2243,8 @@ impl DialogflowCxTestCaseTestCaseConversationTurnsElUserInputEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxTestCaseTestCaseConversationTurnsElUserInputEl {
-    type O = terrars::BlockAssignable<DialogflowCxTestCaseTestCaseConversationTurnsElUserInputEl>;
+impl terrars::ToListMappable for DialogflowCxTestCase_TestCaseConversationTurns_UserInput {
+    type O = terrars::BlockAssignable<DialogflowCxTestCase_TestCaseConversationTurns_UserInput>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2221,11 +2255,11 @@ impl terrars::ToListMappable for DialogflowCxTestCaseTestCaseConversationTurnsEl
     }
 }
 
-pub struct BuildDialogflowCxTestCaseTestCaseConversationTurnsElUserInputEl {}
+pub struct BuildDialogflowCxTestCase_TestCaseConversationTurns_UserInput {}
 
-impl BuildDialogflowCxTestCaseTestCaseConversationTurnsElUserInputEl {
-    pub fn build(self) -> DialogflowCxTestCaseTestCaseConversationTurnsElUserInputEl {
-        DialogflowCxTestCaseTestCaseConversationTurnsElUserInputEl {
+impl BuildDialogflowCxTestCase_TestCaseConversationTurns_UserInput {
+    pub fn build(self) -> DialogflowCxTestCase_TestCaseConversationTurns_UserInput {
+        DialogflowCxTestCase_TestCaseConversationTurns_UserInput {
             enable_sentiment_analysis: core::default::Default::default(),
             injected_parameters: core::default::Default::default(),
             is_webhook_enabled: core::default::Default::default(),
@@ -2235,24 +2269,26 @@ impl BuildDialogflowCxTestCaseTestCaseConversationTurnsElUserInputEl {
     }
 }
 
-pub struct DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxTestCase_TestCaseConversationTurns_UserInputRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElRef {
+impl terrars::Ref for DialogflowCxTestCase_TestCaseConversationTurns_UserInputRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElRef {
-        DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElRef {
+    ) -> DialogflowCxTestCase_TestCaseConversationTurns_UserInputRef {
+        DialogflowCxTestCase_TestCaseConversationTurns_UserInputRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElRef {
+impl DialogflowCxTestCase_TestCaseConversationTurns_UserInputRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2276,18 +2312,18 @@ impl DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElRef {
     }
 
     #[doc = "Get a reference to the value of field `input` after provisioning.\n"]
-    pub fn input(&self) -> terrars::ListRef<DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElInputElRef> {
+    pub fn input(&self) -> terrars::ListRef<DialogflowCxTestCase_TestCaseConversationTurns_UserInput_InputRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.input", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElCurrentPageEl {
+pub struct DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_CurrentPage {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElCurrentPageEl {
+impl DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_CurrentPage {
     #[doc =
         "Set the field `name`.\nThe unique identifier of the page.\nFormat: projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/flows/<Flow ID>/pages/<Page ID>."]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -2296,9 +2332,8 @@ impl DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElCurrentP
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElCurrentPageEl {
-    type O =
-        terrars::BlockAssignable<DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElCurrentPageEl>;
+impl terrars::ToListMappable for DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_CurrentPage {
+    type O = terrars::BlockAssignable<DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_CurrentPage>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2309,34 +2344,36 @@ impl terrars::ToListMappable for DialogflowCxTestCaseTestCaseConversationTurnsEl
     }
 }
 
-pub struct BuildDialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElCurrentPageEl {}
+pub struct BuildDialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_CurrentPage {}
 
-impl BuildDialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElCurrentPageEl {
-    pub fn build(self) -> DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElCurrentPageEl {
-        DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElCurrentPageEl {
+impl BuildDialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_CurrentPage {
+    pub fn build(self) -> DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_CurrentPage {
+        DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_CurrentPage {
             name: core::default::Default::default(),
         }
     }
 }
 
-pub struct DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElCurrentPageElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_CurrentPageRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElCurrentPageElRef {
+impl terrars::Ref for DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_CurrentPageRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElCurrentPageElRef {
-        DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElCurrentPageElRef {
+    ) -> DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_CurrentPageRef {
+        DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_CurrentPageRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElCurrentPageElRef {
+impl DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_CurrentPageRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2355,12 +2392,12 @@ impl DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElCurrentP
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElTextResponsesEl {
+pub struct DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_TextResponses {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     text: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElTextResponsesEl {
+impl DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_TextResponses {
     #[doc = "Set the field `text`.\nA collection of text responses."]
     pub fn set_text(
         mut self,
@@ -2371,9 +2408,9 @@ impl DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElTextResp
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElTextResponsesEl {
+impl terrars::ToListMappable for DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_TextResponses {
     type O =
-        terrars::BlockAssignable<DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElTextResponsesEl>;
+        terrars::BlockAssignable<DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_TextResponses>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2384,34 +2421,36 @@ impl terrars::ToListMappable for DialogflowCxTestCaseTestCaseConversationTurnsEl
     }
 }
 
-pub struct BuildDialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElTextResponsesEl {}
+pub struct BuildDialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_TextResponses {}
 
-impl BuildDialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElTextResponsesEl {
-    pub fn build(self) -> DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElTextResponsesEl {
-        DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElTextResponsesEl {
+impl BuildDialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_TextResponses {
+    pub fn build(self) -> DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_TextResponses {
+        DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_TextResponses {
             text: core::default::Default::default(),
         }
     }
 }
 
-pub struct DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElTextResponsesElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_TextResponsesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElTextResponsesElRef {
+impl terrars::Ref for DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_TextResponsesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElTextResponsesElRef {
-        DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElTextResponsesElRef {
+    ) -> DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_TextResponsesRef {
+        DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_TextResponsesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElTextResponsesElRef {
+impl DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_TextResponsesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2423,12 +2462,12 @@ impl DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElTextResp
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElTriggeredIntentEl {
+pub struct DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_TriggeredIntent {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElTriggeredIntentEl {
+impl DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_TriggeredIntent {
     #[doc =
         "Set the field `name`.\nThe unique identifier of the intent.\nFormat: projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/intents/<Intent ID>."]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -2437,10 +2476,9 @@ impl DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElTriggere
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElTriggeredIntentEl {
+impl terrars::ToListMappable for DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_TriggeredIntent {
     type O =
-        terrars
-        ::BlockAssignable<DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElTriggeredIntentEl>;
+        terrars::BlockAssignable<DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_TriggeredIntent>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2451,34 +2489,36 @@ impl terrars::ToListMappable for DialogflowCxTestCaseTestCaseConversationTurnsEl
     }
 }
 
-pub struct BuildDialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElTriggeredIntentEl {}
+pub struct BuildDialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_TriggeredIntent {}
 
-impl BuildDialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElTriggeredIntentEl {
-    pub fn build(self) -> DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElTriggeredIntentEl {
-        DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElTriggeredIntentEl {
+impl BuildDialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_TriggeredIntent {
+    pub fn build(self) -> DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_TriggeredIntent {
+        DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_TriggeredIntent {
             name: core::default::Default::default(),
         }
     }
 }
 
-pub struct DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElTriggeredIntentElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_TriggeredIntentRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElTriggeredIntentElRef {
+impl terrars::Ref for DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_TriggeredIntentRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElTriggeredIntentElRef {
-        DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElTriggeredIntentElRef {
+    ) -> DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_TriggeredIntentRef {
+        DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_TriggeredIntentRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElTriggeredIntentElRef {
+impl DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_TriggeredIntentRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2497,42 +2537,40 @@ impl DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElTriggere
 }
 
 #[derive(Serialize, Default)]
-struct DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElDynamic {
+struct DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutputDynamic {
     current_page: std
     ::option
-    ::Option<terrars::DynamicBlock<DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElCurrentPageEl>>,
+    ::Option<terrars::DynamicBlock<DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_CurrentPage>>,
     text_responses: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElTextResponsesEl>,
-    >,
+    ::Option<terrars::DynamicBlock<DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_TextResponses>>,
     triggered_intent: std
     ::option
     ::Option<
-        terrars::DynamicBlock<DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElTriggeredIntentEl>,
+        terrars::DynamicBlock<DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_TriggeredIntent>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputEl {
+pub struct DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     session_parameters: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     current_page: std
     ::option
-    ::Option<std::vec::Vec<DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElCurrentPageEl>>,
+    ::Option<std::vec::Vec<DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_CurrentPage>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     text_responses: std
     ::option
-    ::Option<std::vec::Vec<DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElTextResponsesEl>>,
+    ::Option<std::vec::Vec<DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_TextResponses>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     triggered_intent: std
     ::option
-    ::Option<std::vec::Vec<DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElTriggeredIntentEl>>,
-    dynamic: DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElDynamic,
+    ::Option<std::vec::Vec<DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_TriggeredIntent>>,
+    dynamic: DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutputDynamic,
 }
 
-impl DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputEl {
+impl DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput {
     #[doc = "Set the field `session_parameters`.\nThe session parameters available to the bot at this point."]
     pub fn set_session_parameters(
         mut self,
@@ -2553,7 +2591,7 @@ impl DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElCurrentPageEl,
+                            DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_CurrentPage,
                         >,
                     >,
     ) -> Self {
@@ -2579,7 +2617,7 @@ impl DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElTextResponsesEl,
+                            DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_TextResponses,
                         >,
                     >,
     ) -> Self {
@@ -2605,7 +2643,7 @@ impl DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElTriggeredIntentEl,
+                            DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_TriggeredIntent,
                         >,
                     >,
     ) -> Self {
@@ -2621,8 +2659,8 @@ impl DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputEl {
-    type O = terrars::BlockAssignable<DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputEl>;
+impl terrars::ToListMappable for DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput {
+    type O = terrars::BlockAssignable<DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2633,11 +2671,11 @@ impl terrars::ToListMappable for DialogflowCxTestCaseTestCaseConversationTurnsEl
     }
 }
 
-pub struct BuildDialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputEl {}
+pub struct BuildDialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput {}
 
-impl BuildDialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputEl {
-    pub fn build(self) -> DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputEl {
-        DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputEl {
+impl BuildDialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput {
+    pub fn build(self) -> DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput {
+        DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput {
             session_parameters: core::default::Default::default(),
             current_page: core::default::Default::default(),
             text_responses: core::default::Default::default(),
@@ -2647,24 +2685,26 @@ impl BuildDialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputEl {
     }
 }
 
-pub struct DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutputRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElRef {
+impl terrars::Ref for DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutputRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElRef {
-        DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElRef {
+    ) -> DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutputRef {
+        DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutputRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElRef {
+impl DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutputRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2678,47 +2718,45 @@ impl DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElRef {
     #[doc = "Get a reference to the value of field `current_page` after provisioning.\n"]
     pub fn current_page(
         &self,
-    ) -> terrars::ListRef<DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElCurrentPageElRef> {
+    ) -> terrars::ListRef<DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_CurrentPageRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.current_page", self.base))
     }
 
     #[doc = "Get a reference to the value of field `text_responses` after provisioning.\n"]
     pub fn text_responses(
         &self,
-    ) -> terrars::ListRef<DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElTextResponsesElRef> {
+    ) -> terrars::ListRef<DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_TextResponsesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.text_responses", self.base))
     }
 
     #[doc = "Get a reference to the value of field `triggered_intent` after provisioning.\n"]
     pub fn triggered_intent(
         &self,
-    ) -> terrars::ListRef<DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElTriggeredIntentElRef> {
+    ) -> terrars::ListRef<DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput_TriggeredIntentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.triggered_intent", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct DialogflowCxTestCaseTestCaseConversationTurnsElDynamic {
-    user_input: std
-    ::option
-    ::Option<terrars::DynamicBlock<DialogflowCxTestCaseTestCaseConversationTurnsElUserInputEl>>,
+struct DialogflowCxTestCase_TestCaseConversationTurnsDynamic {
+    user_input: std::option::Option<terrars::DynamicBlock<DialogflowCxTestCase_TestCaseConversationTurns_UserInput>>,
     virtual_agent_output: std
     ::option
-    ::Option<terrars::DynamicBlock<DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputEl>>,
+    ::Option<terrars::DynamicBlock<DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput>>,
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxTestCaseTestCaseConversationTurnsEl {
+pub struct DialogflowCxTestCase_TestCaseConversationTurns {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    user_input: std::option::Option<std::vec::Vec<DialogflowCxTestCaseTestCaseConversationTurnsElUserInputEl>>,
+    user_input: std::option::Option<std::vec::Vec<DialogflowCxTestCase_TestCaseConversationTurns_UserInput>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     virtual_agent_output: std
     ::option
-    ::Option<std::vec::Vec<DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputEl>>,
-    dynamic: DialogflowCxTestCaseTestCaseConversationTurnsElDynamic,
+    ::Option<std::vec::Vec<DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput>>,
+    dynamic: DialogflowCxTestCase_TestCaseConversationTurnsDynamic,
 }
 
-impl DialogflowCxTestCaseTestCaseConversationTurnsEl {
+impl DialogflowCxTestCase_TestCaseConversationTurns {
     #[doc = "Set the field `user_input`.\n"]
     pub fn set_user_input(
         mut self,
@@ -2727,7 +2765,7 @@ impl DialogflowCxTestCaseTestCaseConversationTurnsEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<DialogflowCxTestCaseTestCaseConversationTurnsElUserInputEl>>,
+                    ::Into<terrars::BlockAssignable<DialogflowCxTestCase_TestCaseConversationTurns_UserInput>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2749,7 +2787,7 @@ impl DialogflowCxTestCaseTestCaseConversationTurnsEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputEl>,
+                        terrars::BlockAssignable<DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutput>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2764,8 +2802,8 @@ impl DialogflowCxTestCaseTestCaseConversationTurnsEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxTestCaseTestCaseConversationTurnsEl {
-    type O = terrars::BlockAssignable<DialogflowCxTestCaseTestCaseConversationTurnsEl>;
+impl terrars::ToListMappable for DialogflowCxTestCase_TestCaseConversationTurns {
+    type O = terrars::BlockAssignable<DialogflowCxTestCase_TestCaseConversationTurns>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2776,11 +2814,11 @@ impl terrars::ToListMappable for DialogflowCxTestCaseTestCaseConversationTurnsEl
     }
 }
 
-pub struct BuildDialogflowCxTestCaseTestCaseConversationTurnsEl {}
+pub struct BuildDialogflowCxTestCase_TestCaseConversationTurns {}
 
-impl BuildDialogflowCxTestCaseTestCaseConversationTurnsEl {
-    pub fn build(self) -> DialogflowCxTestCaseTestCaseConversationTurnsEl {
-        DialogflowCxTestCaseTestCaseConversationTurnsEl {
+impl BuildDialogflowCxTestCase_TestCaseConversationTurns {
+    pub fn build(self) -> DialogflowCxTestCase_TestCaseConversationTurns {
+        DialogflowCxTestCase_TestCaseConversationTurns {
             user_input: core::default::Default::default(),
             virtual_agent_output: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -2788,43 +2826,45 @@ impl BuildDialogflowCxTestCaseTestCaseConversationTurnsEl {
     }
 }
 
-pub struct DialogflowCxTestCaseTestCaseConversationTurnsElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxTestCase_TestCaseConversationTurnsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxTestCaseTestCaseConversationTurnsElRef {
+impl terrars::Ref for DialogflowCxTestCase_TestCaseConversationTurnsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxTestCaseTestCaseConversationTurnsElRef {
-        DialogflowCxTestCaseTestCaseConversationTurnsElRef {
+    ) -> DialogflowCxTestCase_TestCaseConversationTurnsRef {
+        DialogflowCxTestCase_TestCaseConversationTurnsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxTestCaseTestCaseConversationTurnsElRef {
+impl DialogflowCxTestCase_TestCaseConversationTurnsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `user_input` after provisioning.\n"]
-    pub fn user_input(&self) -> terrars::ListRef<DialogflowCxTestCaseTestCaseConversationTurnsElUserInputElRef> {
+    pub fn user_input(&self) -> terrars::ListRef<DialogflowCxTestCase_TestCaseConversationTurns_UserInputRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.user_input", self.base))
     }
 
     #[doc = "Get a reference to the value of field `virtual_agent_output` after provisioning.\n"]
     pub fn virtual_agent_output(
         &self,
-    ) -> terrars::ListRef<DialogflowCxTestCaseTestCaseConversationTurnsElVirtualAgentOutputElRef> {
+    ) -> terrars::ListRef<DialogflowCxTestCase_TestCaseConversationTurns_VirtualAgentOutputRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.virtual_agent_output", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxTestCaseTestConfigEl {
+pub struct DialogflowCxTestCase_TestConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     flow: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2833,7 +2873,7 @@ pub struct DialogflowCxTestCaseTestConfigEl {
     tracking_parameters: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DialogflowCxTestCaseTestConfigEl {
+impl DialogflowCxTestCase_TestConfig {
     #[doc =
         "Set the field `flow`.\nFlow name to start the test case with.\nFormat: projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/flows/<Flow ID>.\nOnly one of flow and page should be set to indicate the starting point of the test case. If neither is set, the test case will start with start page on the default start flow."]
     pub fn set_flow(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -2858,8 +2898,8 @@ impl DialogflowCxTestCaseTestConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxTestCaseTestConfigEl {
-    type O = terrars::BlockAssignable<DialogflowCxTestCaseTestConfigEl>;
+impl terrars::ToListMappable for DialogflowCxTestCase_TestConfig {
+    type O = terrars::BlockAssignable<DialogflowCxTestCase_TestConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2870,11 +2910,11 @@ impl terrars::ToListMappable for DialogflowCxTestCaseTestConfigEl {
     }
 }
 
-pub struct BuildDialogflowCxTestCaseTestConfigEl {}
+pub struct BuildDialogflowCxTestCase_TestConfig {}
 
-impl BuildDialogflowCxTestCaseTestConfigEl {
-    pub fn build(self) -> DialogflowCxTestCaseTestConfigEl {
-        DialogflowCxTestCaseTestConfigEl {
+impl BuildDialogflowCxTestCase_TestConfig {
+    pub fn build(self) -> DialogflowCxTestCase_TestConfig {
+        DialogflowCxTestCase_TestConfig {
             flow: core::default::Default::default(),
             page: core::default::Default::default(),
             tracking_parameters: core::default::Default::default(),
@@ -2882,21 +2922,23 @@ impl BuildDialogflowCxTestCaseTestConfigEl {
     }
 }
 
-pub struct DialogflowCxTestCaseTestConfigElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxTestCase_TestConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxTestCaseTestConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxTestCaseTestConfigElRef {
-        DialogflowCxTestCaseTestConfigElRef {
+impl terrars::Ref for DialogflowCxTestCase_TestConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxTestCase_TestConfigRef {
+        DialogflowCxTestCase_TestConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxTestCaseTestConfigElRef {
+impl DialogflowCxTestCase_TestConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2921,7 +2963,7 @@ impl DialogflowCxTestCaseTestConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxTestCaseTimeoutsEl {
+pub struct DialogflowCxTestCase_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2930,7 +2972,7 @@ pub struct DialogflowCxTestCaseTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DialogflowCxTestCaseTimeoutsEl {
+impl DialogflowCxTestCase_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -2950,8 +2992,8 @@ impl DialogflowCxTestCaseTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxTestCaseTimeoutsEl {
-    type O = terrars::BlockAssignable<DialogflowCxTestCaseTimeoutsEl>;
+impl terrars::ToListMappable for DialogflowCxTestCase_Timeouts {
+    type O = terrars::BlockAssignable<DialogflowCxTestCase_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2962,11 +3004,11 @@ impl terrars::ToListMappable for DialogflowCxTestCaseTimeoutsEl {
     }
 }
 
-pub struct BuildDialogflowCxTestCaseTimeoutsEl {}
+pub struct BuildDialogflowCxTestCase_Timeouts {}
 
-impl BuildDialogflowCxTestCaseTimeoutsEl {
-    pub fn build(self) -> DialogflowCxTestCaseTimeoutsEl {
-        DialogflowCxTestCaseTimeoutsEl {
+impl BuildDialogflowCxTestCase_Timeouts {
+    pub fn build(self) -> DialogflowCxTestCase_Timeouts {
+        DialogflowCxTestCase_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -2974,21 +3016,23 @@ impl BuildDialogflowCxTestCaseTimeoutsEl {
     }
 }
 
-pub struct DialogflowCxTestCaseTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxTestCase_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxTestCaseTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxTestCaseTimeoutsElRef {
-        DialogflowCxTestCaseTimeoutsElRef {
+impl terrars::Ref for DialogflowCxTestCase_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxTestCase_TimeoutsRef {
+        DialogflowCxTestCase_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxTestCaseTimeoutsElRef {
+impl DialogflowCxTestCase_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3007,12 +3051,4 @@ impl DialogflowCxTestCaseTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DialogflowCxTestCaseDynamic {
-    test_case_conversation_turns: std
-    ::option
-    ::Option<terrars::DynamicBlock<DialogflowCxTestCaseTestCaseConversationTurnsEl>>,
-    test_config: std::option::Option<terrars::DynamicBlock<DialogflowCxTestCaseTestConfigEl>>,
 }

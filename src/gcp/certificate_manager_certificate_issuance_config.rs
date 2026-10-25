@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct CertificateManagerCertificateIssuanceConfigData {
+struct CertificateManagerCertificateIssuanceConfigData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct CertificateManagerCertificateIssuanceConfigData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -35,16 +39,16 @@ struct CertificateManagerCertificateIssuanceConfigData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     certificate_authority_config: std
     ::option
-    ::Option<std::vec::Vec<CertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigEl>>,
+    ::Option<std::vec::Vec<CertificateManagerCertificateIssuanceConfig_CertificateAuthorityConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<CertificateManagerCertificateIssuanceConfigTimeoutsEl>,
+    timeouts: std::option::Option<CertificateManagerCertificateIssuanceConfig_Timeouts>,
     dynamic: CertificateManagerCertificateIssuanceConfigDynamic,
 }
 
 struct CertificateManagerCertificateIssuanceConfig_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CertificateManagerCertificateIssuanceConfigData>,
+    data: std::cell::RefCell<CertificateManagerCertificateIssuanceConfigData_>,
 }
 
 #[derive(Clone)]
@@ -144,6 +148,13 @@ impl CertificateManagerCertificateIssuanceConfig {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nOne or more paragraphs of text description of a CertificateIssuanceConfig."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -188,7 +199,7 @@ impl CertificateManagerCertificateIssuanceConfig {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<CertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigEl>,
+                        ::BlockAssignable<CertificateManagerCertificateIssuanceConfig_CertificateAuthorityConfig>,
                     >,
     ) -> Self {
         match v.into() {
@@ -203,7 +214,7 @@ impl CertificateManagerCertificateIssuanceConfig {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<CertificateManagerCertificateIssuanceConfigTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<CertificateManagerCertificateIssuanceConfig_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -212,6 +223,12 @@ impl CertificateManagerCertificateIssuanceConfig {
         "Get a reference to the value of field `create_time` after provisioning.\nThe creation timestamp of a CertificateIssuanceConfig. Timestamp is in RFC3339 UTC \"Zulu\" format,\naccurate to nanoseconds with up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -287,13 +304,13 @@ impl CertificateManagerCertificateIssuanceConfig {
     #[doc = "Get a reference to the value of field `certificate_authority_config` after provisioning.\n"]
     pub fn certificate_authority_config(
         &self,
-    ) -> terrars::ListRef<CertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigElRef> {
+    ) -> terrars::ListRef<CertificateManagerCertificateIssuanceConfig_CertificateAuthorityConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.certificate_authority_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> CertificateManagerCertificateIssuanceConfigTimeoutsElRef {
-        CertificateManagerCertificateIssuanceConfigTimeoutsElRef::new(
+    pub fn timeouts(&self) -> CertificateManagerCertificateIssuanceConfig_TimeoutsRef {
+        CertificateManagerCertificateIssuanceConfig_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -353,12 +370,13 @@ impl BuildCertificateManagerCertificateIssuanceConfig {
                 std::rc::Rc::new(CertificateManagerCertificateIssuanceConfig_ {
                     shared: stack.shared.clone(),
                     tf_id: self.tf_id,
-                    data: std::cell::RefCell::new(CertificateManagerCertificateIssuanceConfigData {
+                    data: std::cell::RefCell::new(CertificateManagerCertificateIssuanceConfigData_ {
                         depends_on: core::default::Default::default(),
                         provider: std::option::Option::None,
                         lifecycle: core::default::Default::default(),
                         for_each: std::option::Option::None,
                         provisioner: core::default::Default::default(),
+                        deletion_policy: core::default::Default::default(),
                         description: core::default::Default::default(),
                         id: core::default::Default::default(),
                         key_algorithm: self.key_algorithm,
@@ -406,6 +424,12 @@ impl CertificateManagerCertificateIssuanceConfigRef {
         "Get a reference to the value of field `create_time` after provisioning.\nThe creation timestamp of a CertificateIssuanceConfig. Timestamp is in RFC3339 UTC \"Zulu\" format,\naccurate to nanoseconds with up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -481,32 +505,39 @@ impl CertificateManagerCertificateIssuanceConfigRef {
     #[doc = "Get a reference to the value of field `certificate_authority_config` after provisioning.\n"]
     pub fn certificate_authority_config(
         &self,
-    ) -> terrars::ListRef<CertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigElRef> {
+    ) -> terrars::ListRef<CertificateManagerCertificateIssuanceConfig_CertificateAuthorityConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.certificate_authority_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> CertificateManagerCertificateIssuanceConfigTimeoutsElRef {
-        CertificateManagerCertificateIssuanceConfigTimeoutsElRef::new(
+    pub fn timeouts(&self) -> CertificateManagerCertificateIssuanceConfig_TimeoutsRef {
+        CertificateManagerCertificateIssuanceConfig_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct CertificateManagerCertificateIssuanceConfigDynamic {
+    certificate_authority_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<CertificateManagerCertificateIssuanceConfig_CertificateAuthorityConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct CertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigElCertificateAuthorityServiceConfigEl {
+pub struct CertificateManagerCertificateIssuanceConfig_CertificateAuthorityConfig_CertificateAuthorityServiceConfig {
     ca_pool: terrars::PrimField<std::string::String>,
 }
 
-impl CertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigElCertificateAuthorityServiceConfigEl { }
+impl CertificateManagerCertificateIssuanceConfig_CertificateAuthorityConfig_CertificateAuthorityServiceConfig { }
 
 impl terrars
-::ToListMappable for CertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigElCertificateAuthorityServiceConfigEl {
+::ToListMappable for CertificateManagerCertificateIssuanceConfig_CertificateAuthorityConfig_CertificateAuthorityServiceConfig {
     type O =
         terrars
         ::BlockAssignable<
-            CertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigElCertificateAuthorityServiceConfigEl,
+            CertificateManagerCertificateIssuanceConfig_CertificateAuthorityConfig_CertificateAuthorityServiceConfig,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -518,41 +549,43 @@ impl terrars
     }
 }
 
-pub struct BuildCertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigElCertificateAuthorityServiceConfigEl {
+pub struct BuildCertificateManagerCertificateIssuanceConfig_CertificateAuthorityConfig_CertificateAuthorityServiceConfig {
     #[doc =
         "A CA pool resource used to issue a certificate.\nThe CA pool string has a relative resource path following the form\n\"projects/{project}/locations/{location}/caPools/{caPool}\"."]
     pub ca_pool: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigElCertificateAuthorityServiceConfigEl {
+impl BuildCertificateManagerCertificateIssuanceConfig_CertificateAuthorityConfig_CertificateAuthorityServiceConfig {
     pub fn build(
         self,
-    ) -> CertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigElCertificateAuthorityServiceConfigEl {
-        CertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigElCertificateAuthorityServiceConfigEl {
+    ) -> CertificateManagerCertificateIssuanceConfig_CertificateAuthorityConfig_CertificateAuthorityServiceConfig {
+        CertificateManagerCertificateIssuanceConfig_CertificateAuthorityConfig_CertificateAuthorityServiceConfig {
             ca_pool: self.ca_pool,
         }
     }
 }
 
-pub struct CertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigElCertificateAuthorityServiceConfigElRef {
+#[allow(dead_code)]
+pub struct CertificateManagerCertificateIssuanceConfig_CertificateAuthorityConfig_CertificateAuthorityServiceConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for CertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigElCertificateAuthorityServiceConfigElRef {
+::Ref for CertificateManagerCertificateIssuanceConfig_CertificateAuthorityConfig_CertificateAuthorityServiceConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigElCertificateAuthorityServiceConfigElRef {
-        CertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigElCertificateAuthorityServiceConfigElRef {
+    ) -> CertificateManagerCertificateIssuanceConfig_CertificateAuthorityConfig_CertificateAuthorityServiceConfigRef {
+        CertificateManagerCertificateIssuanceConfig_CertificateAuthorityConfig_CertificateAuthorityServiceConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigElCertificateAuthorityServiceConfigElRef {
+impl CertificateManagerCertificateIssuanceConfig_CertificateAuthorityConfig_CertificateAuthorityServiceConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -565,19 +598,19 @@ impl CertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigElCert
 }
 
 #[derive(Serialize, Default)]
-struct CertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigElDynamic {
+struct CertificateManagerCertificateIssuanceConfig_CertificateAuthorityConfigDynamic {
     certificate_authority_service_config: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            CertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigElCertificateAuthorityServiceConfigEl,
+            CertificateManagerCertificateIssuanceConfig_CertificateAuthorityConfig_CertificateAuthorityServiceConfig,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct CertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigEl {
+pub struct CertificateManagerCertificateIssuanceConfig_CertificateAuthorityConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     certificate_authority_service_config: std
     ::option
@@ -585,13 +618,13 @@ pub struct CertificateManagerCertificateIssuanceConfigCertificateAuthorityConfig
         std
         ::vec
         ::Vec<
-            CertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigElCertificateAuthorityServiceConfigEl,
+            CertificateManagerCertificateIssuanceConfig_CertificateAuthorityConfig_CertificateAuthorityServiceConfig,
         >,
     >,
-    dynamic: CertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigElDynamic,
+    dynamic: CertificateManagerCertificateIssuanceConfig_CertificateAuthorityConfigDynamic,
 }
 
-impl CertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigEl {
+impl CertificateManagerCertificateIssuanceConfig_CertificateAuthorityConfig {
     #[doc = "Set the field `certificate_authority_service_config`.\n"]
     pub fn set_certificate_authority_service_config(
         mut self,
@@ -603,7 +636,7 @@ impl CertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            CertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigElCertificateAuthorityServiceConfigEl,
+                            CertificateManagerCertificateIssuanceConfig_CertificateAuthorityConfig_CertificateAuthorityServiceConfig,
                         >,
                     >,
     ) -> Self {
@@ -619,8 +652,8 @@ impl CertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigEl {
     }
 }
 
-impl terrars::ToListMappable for CertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigEl {
-    type O = terrars::BlockAssignable<CertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigEl>;
+impl terrars::ToListMappable for CertificateManagerCertificateIssuanceConfig_CertificateAuthorityConfig {
+    type O = terrars::BlockAssignable<CertificateManagerCertificateIssuanceConfig_CertificateAuthorityConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -631,35 +664,37 @@ impl terrars::ToListMappable for CertificateManagerCertificateIssuanceConfigCert
     }
 }
 
-pub struct BuildCertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigEl {}
+pub struct BuildCertificateManagerCertificateIssuanceConfig_CertificateAuthorityConfig {}
 
-impl BuildCertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigEl {
-    pub fn build(self) -> CertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigEl {
-        CertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigEl {
+impl BuildCertificateManagerCertificateIssuanceConfig_CertificateAuthorityConfig {
+    pub fn build(self) -> CertificateManagerCertificateIssuanceConfig_CertificateAuthorityConfig {
+        CertificateManagerCertificateIssuanceConfig_CertificateAuthorityConfig {
             certificate_authority_service_config: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct CertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigElRef {
+#[allow(dead_code)]
+pub struct CertificateManagerCertificateIssuanceConfig_CertificateAuthorityConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigElRef {
+impl terrars::Ref for CertificateManagerCertificateIssuanceConfig_CertificateAuthorityConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigElRef {
-        CertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigElRef {
+    ) -> CertificateManagerCertificateIssuanceConfig_CertificateAuthorityConfigRef {
+        CertificateManagerCertificateIssuanceConfig_CertificateAuthorityConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigElRef {
+impl CertificateManagerCertificateIssuanceConfig_CertificateAuthorityConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -669,21 +704,23 @@ impl CertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigElRef 
         &self,
     ) -> terrars
     ::ListRef<
-        CertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigElCertificateAuthorityServiceConfigElRef,
+        CertificateManagerCertificateIssuanceConfig_CertificateAuthorityConfig_CertificateAuthorityServiceConfigRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.certificate_authority_service_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct CertificateManagerCertificateIssuanceConfigTimeoutsEl {
+pub struct CertificateManagerCertificateIssuanceConfig_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CertificateManagerCertificateIssuanceConfigTimeoutsEl {
+impl CertificateManagerCertificateIssuanceConfig_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -695,10 +732,16 @@ impl CertificateManagerCertificateIssuanceConfigTimeoutsEl {
         self.delete = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for CertificateManagerCertificateIssuanceConfigTimeoutsEl {
-    type O = terrars::BlockAssignable<CertificateManagerCertificateIssuanceConfigTimeoutsEl>;
+impl terrars::ToListMappable for CertificateManagerCertificateIssuanceConfig_Timeouts {
+    type O = terrars::BlockAssignable<CertificateManagerCertificateIssuanceConfig_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -709,35 +752,38 @@ impl terrars::ToListMappable for CertificateManagerCertificateIssuanceConfigTime
     }
 }
 
-pub struct BuildCertificateManagerCertificateIssuanceConfigTimeoutsEl {}
+pub struct BuildCertificateManagerCertificateIssuanceConfig_Timeouts {}
 
-impl BuildCertificateManagerCertificateIssuanceConfigTimeoutsEl {
-    pub fn build(self) -> CertificateManagerCertificateIssuanceConfigTimeoutsEl {
-        CertificateManagerCertificateIssuanceConfigTimeoutsEl {
+impl BuildCertificateManagerCertificateIssuanceConfig_Timeouts {
+    pub fn build(self) -> CertificateManagerCertificateIssuanceConfig_Timeouts {
+        CertificateManagerCertificateIssuanceConfig_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
+            update: core::default::Default::default(),
         }
     }
 }
 
-pub struct CertificateManagerCertificateIssuanceConfigTimeoutsElRef {
+#[allow(dead_code)]
+pub struct CertificateManagerCertificateIssuanceConfig_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CertificateManagerCertificateIssuanceConfigTimeoutsElRef {
+impl terrars::Ref for CertificateManagerCertificateIssuanceConfig_TimeoutsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CertificateManagerCertificateIssuanceConfigTimeoutsElRef {
-        CertificateManagerCertificateIssuanceConfigTimeoutsElRef {
+    ) -> CertificateManagerCertificateIssuanceConfig_TimeoutsRef {
+        CertificateManagerCertificateIssuanceConfig_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CertificateManagerCertificateIssuanceConfigTimeoutsElRef {
+impl CertificateManagerCertificateIssuanceConfig_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -751,11 +797,9 @@ impl CertificateManagerCertificateIssuanceConfigTimeoutsElRef {
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
-}
 
-#[derive(Serialize, Default)]
-struct CertificateManagerCertificateIssuanceConfigDynamic {
-    certificate_authority_config: std
-    ::option
-    ::Option<terrars::DynamicBlock<CertificateManagerCertificateIssuanceConfigCertificateAuthorityConfigEl>>,
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    }
 }

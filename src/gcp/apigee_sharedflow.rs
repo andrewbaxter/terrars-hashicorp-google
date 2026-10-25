@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ApigeeSharedflowData {
+struct ApigeeSharedflowData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,19 +22,21 @@ struct ApigeeSharedflowData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     config_bundle: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     detect_md5hash: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     org_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ApigeeSharedflowTimeoutsEl>,
+    timeouts: std::option::Option<ApigeeSharedflow_Timeouts>,
 }
 
 struct ApigeeSharedflow_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ApigeeSharedflowData>,
+    data: std::cell::RefCell<ApigeeSharedflowData_>,
 }
 
 #[derive(Clone)]
@@ -133,6 +137,13 @@ impl ApigeeSharedflow {
     }
 
     #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `detect_md5hash`.\nA hash of local config bundle in string, user needs to use a Terraform Hash function of their choice. A change in hash will trigger an update."]
     pub fn set_detect_md5hash(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().detect_md5hash = std::option::Option::Some(v.into());
@@ -146,7 +157,7 @@ impl ApigeeSharedflow {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ApigeeSharedflowTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ApigeeSharedflow_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -154,6 +165,12 @@ impl ApigeeSharedflow {
     #[doc = "Get a reference to the value of field `config_bundle` after provisioning.\nPath to the config zip bundle"]
     pub fn config_bundle(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.config_bundle", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -181,7 +198,7 @@ impl ApigeeSharedflow {
 
     #[doc =
         "Get a reference to the value of field `meta_data` after provisioning.\nMetadata describing the shared flow."]
-    pub fn meta_data(&self) -> terrars::ListRef<ApigeeSharedflowMetaDataElRef> {
+    pub fn meta_data(&self) -> terrars::ListRef<ApigeeSharedflow_MetaDataRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.meta_data", self.extract_ref()))
     }
 
@@ -203,8 +220,8 @@ impl ApigeeSharedflow {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ApigeeSharedflowTimeoutsElRef {
-        ApigeeSharedflowTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ApigeeSharedflow_TimeoutsRef {
+        ApigeeSharedflow_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -254,13 +271,14 @@ impl BuildApigeeSharedflow {
         let out = ApigeeSharedflow(std::rc::Rc::new(ApigeeSharedflow_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ApigeeSharedflowData {
+            data: std::cell::RefCell::new(ApigeeSharedflowData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 config_bundle: self.config_bundle,
+                deletion_policy: core::default::Default::default(),
                 detect_md5hash: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
@@ -302,6 +320,12 @@ impl ApigeeSharedflowRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `detect_md5hash` after provisioning.\nA hash of local config bundle in string, user needs to use a Terraform Hash function of their choice. A change in hash will trigger an update."]
     pub fn detect_md5hash(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.detect_md5hash", self.extract_ref()))
@@ -326,7 +350,7 @@ impl ApigeeSharedflowRef {
 
     #[doc =
         "Get a reference to the value of field `meta_data` after provisioning.\nMetadata describing the shared flow."]
-    pub fn meta_data(&self) -> terrars::ListRef<ApigeeSharedflowMetaDataElRef> {
+    pub fn meta_data(&self) -> terrars::ListRef<ApigeeSharedflow_MetaDataRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.meta_data", self.extract_ref()))
     }
 
@@ -348,13 +372,13 @@ impl ApigeeSharedflowRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ApigeeSharedflowTimeoutsElRef {
-        ApigeeSharedflowTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ApigeeSharedflow_TimeoutsRef {
+        ApigeeSharedflow_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct ApigeeSharedflowMetaDataEl {
+pub struct ApigeeSharedflow_MetaData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     created_at: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -363,7 +387,7 @@ pub struct ApigeeSharedflowMetaDataEl {
     sub_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ApigeeSharedflowMetaDataEl {
+impl ApigeeSharedflow_MetaData {
     #[doc = "Set the field `created_at`.\n"]
     pub fn set_created_at(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.created_at = std::option::Option::Some(v.into());
@@ -383,8 +407,8 @@ impl ApigeeSharedflowMetaDataEl {
     }
 }
 
-impl terrars::ToListMappable for ApigeeSharedflowMetaDataEl {
-    type O = terrars::BlockAssignable<ApigeeSharedflowMetaDataEl>;
+impl terrars::ToListMappable for ApigeeSharedflow_MetaData {
+    type O = terrars::BlockAssignable<ApigeeSharedflow_MetaData>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -395,11 +419,11 @@ impl terrars::ToListMappable for ApigeeSharedflowMetaDataEl {
     }
 }
 
-pub struct BuildApigeeSharedflowMetaDataEl {}
+pub struct BuildApigeeSharedflow_MetaData {}
 
-impl BuildApigeeSharedflowMetaDataEl {
-    pub fn build(self) -> ApigeeSharedflowMetaDataEl {
-        ApigeeSharedflowMetaDataEl {
+impl BuildApigeeSharedflow_MetaData {
+    pub fn build(self) -> ApigeeSharedflow_MetaData {
+        ApigeeSharedflow_MetaData {
             created_at: core::default::Default::default(),
             last_modified_at: core::default::Default::default(),
             sub_type: core::default::Default::default(),
@@ -407,21 +431,23 @@ impl BuildApigeeSharedflowMetaDataEl {
     }
 }
 
-pub struct ApigeeSharedflowMetaDataElRef {
+#[allow(dead_code)]
+pub struct ApigeeSharedflow_MetaDataRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApigeeSharedflowMetaDataElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ApigeeSharedflowMetaDataElRef {
-        ApigeeSharedflowMetaDataElRef {
+impl terrars::Ref for ApigeeSharedflow_MetaDataRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApigeeSharedflow_MetaDataRef {
+        ApigeeSharedflow_MetaDataRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApigeeSharedflowMetaDataElRef {
+impl ApigeeSharedflow_MetaDataRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -443,7 +469,7 @@ impl ApigeeSharedflowMetaDataElRef {
 }
 
 #[derive(Serialize)]
-pub struct ApigeeSharedflowTimeoutsEl {
+pub struct ApigeeSharedflow_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -452,7 +478,7 @@ pub struct ApigeeSharedflowTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ApigeeSharedflowTimeoutsEl {
+impl ApigeeSharedflow_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -472,8 +498,8 @@ impl ApigeeSharedflowTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ApigeeSharedflowTimeoutsEl {
-    type O = terrars::BlockAssignable<ApigeeSharedflowTimeoutsEl>;
+impl terrars::ToListMappable for ApigeeSharedflow_Timeouts {
+    type O = terrars::BlockAssignable<ApigeeSharedflow_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -484,11 +510,11 @@ impl terrars::ToListMappable for ApigeeSharedflowTimeoutsEl {
     }
 }
 
-pub struct BuildApigeeSharedflowTimeoutsEl {}
+pub struct BuildApigeeSharedflow_Timeouts {}
 
-impl BuildApigeeSharedflowTimeoutsEl {
-    pub fn build(self) -> ApigeeSharedflowTimeoutsEl {
-        ApigeeSharedflowTimeoutsEl {
+impl BuildApigeeSharedflow_Timeouts {
+    pub fn build(self) -> ApigeeSharedflow_Timeouts {
+        ApigeeSharedflow_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -496,21 +522,23 @@ impl BuildApigeeSharedflowTimeoutsEl {
     }
 }
 
-pub struct ApigeeSharedflowTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ApigeeSharedflow_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApigeeSharedflowTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ApigeeSharedflowTimeoutsElRef {
-        ApigeeSharedflowTimeoutsElRef {
+impl terrars::Ref for ApigeeSharedflow_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApigeeSharedflow_TimeoutsRef {
+        ApigeeSharedflow_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApigeeSharedflowTimeoutsElRef {
+impl ApigeeSharedflow_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

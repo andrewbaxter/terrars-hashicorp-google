@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct BigqueryDatasetIamMemberData {
+struct BigqueryDatasetIamMemberData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,14 +28,14 @@ struct BigqueryDatasetIamMemberData {
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<BigqueryDatasetIamMemberConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<BigqueryDatasetIamMember_Condition>>,
     dynamic: BigqueryDatasetIamMemberDynamic,
 }
 
 struct BigqueryDatasetIamMember_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<BigqueryDatasetIamMemberData>,
+    data: std::cell::RefCell<BigqueryDatasetIamMemberData_>,
 }
 
 #[derive(Clone)]
@@ -148,7 +150,7 @@ impl BigqueryDatasetIamMember {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryDatasetIamMemberConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryDatasetIamMember_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -192,7 +194,7 @@ impl BigqueryDatasetIamMember {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<BigqueryDatasetIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<BigqueryDatasetIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -243,7 +245,7 @@ impl BuildBigqueryDatasetIamMember {
         let out = BigqueryDatasetIamMember(std::rc::Rc::new(BigqueryDatasetIamMember_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(BigqueryDatasetIamMemberData {
+            data: std::cell::RefCell::new(BigqueryDatasetIamMemberData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -317,20 +319,25 @@ impl BigqueryDatasetIamMemberRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<BigqueryDatasetIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<BigqueryDatasetIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct BigqueryDatasetIamMemberDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<BigqueryDatasetIamMember_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct BigqueryDatasetIamMemberConditionEl {
+pub struct BigqueryDatasetIamMember_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl BigqueryDatasetIamMemberConditionEl {
+impl BigqueryDatasetIamMember_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -338,8 +345,8 @@ impl BigqueryDatasetIamMemberConditionEl {
     }
 }
 
-impl terrars::ToListMappable for BigqueryDatasetIamMemberConditionEl {
-    type O = terrars::BlockAssignable<BigqueryDatasetIamMemberConditionEl>;
+impl terrars::ToListMappable for BigqueryDatasetIamMember_Condition {
+    type O = terrars::BlockAssignable<BigqueryDatasetIamMember_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -350,16 +357,16 @@ impl terrars::ToListMappable for BigqueryDatasetIamMemberConditionEl {
     }
 }
 
-pub struct BuildBigqueryDatasetIamMemberConditionEl {
+pub struct BuildBigqueryDatasetIamMember_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBigqueryDatasetIamMemberConditionEl {
-    pub fn build(self) -> BigqueryDatasetIamMemberConditionEl {
-        BigqueryDatasetIamMemberConditionEl {
+impl BuildBigqueryDatasetIamMember_Condition {
+    pub fn build(self) -> BigqueryDatasetIamMember_Condition {
+        BigqueryDatasetIamMember_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -367,21 +374,23 @@ impl BuildBigqueryDatasetIamMemberConditionEl {
     }
 }
 
-pub struct BigqueryDatasetIamMemberConditionElRef {
+#[allow(dead_code)]
+pub struct BigqueryDatasetIamMember_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryDatasetIamMemberConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryDatasetIamMemberConditionElRef {
-        BigqueryDatasetIamMemberConditionElRef {
+impl terrars::Ref for BigqueryDatasetIamMember_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryDatasetIamMember_ConditionRef {
+        BigqueryDatasetIamMember_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryDatasetIamMemberConditionElRef {
+impl BigqueryDatasetIamMember_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -400,9 +409,4 @@ impl BigqueryDatasetIamMemberConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct BigqueryDatasetIamMemberDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<BigqueryDatasetIamMemberConditionEl>>,
 }

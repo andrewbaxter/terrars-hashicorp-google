@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct LoggingMetricData {
+struct LoggingMetricData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,6 +22,8 @@ struct LoggingMetricData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bucket_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -35,18 +39,18 @@ struct LoggingMetricData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     value_extractor: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    bucket_options: std::option::Option<std::vec::Vec<LoggingMetricBucketOptionsEl>>,
+    bucket_options: std::option::Option<std::vec::Vec<LoggingMetric_BucketOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    metric_descriptor: std::option::Option<std::vec::Vec<LoggingMetricMetricDescriptorEl>>,
+    metric_descriptor: std::option::Option<std::vec::Vec<LoggingMetric_MetricDescriptor>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<LoggingMetricTimeoutsEl>,
+    timeouts: std::option::Option<LoggingMetric_Timeouts>,
     dynamic: LoggingMetricDynamic,
 }
 
 struct LoggingMetric_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<LoggingMetricData>,
+    data: std::cell::RefCell<LoggingMetricData_>,
 }
 
 #[derive(Clone)]
@@ -154,6 +158,13 @@ impl LoggingMetric {
     }
 
     #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `description`.\nA description of this metric, which is used in documentation. The maximum length of the\ndescription is 8000 characters."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -199,7 +210,7 @@ impl LoggingMetric {
     #[doc = "Set the field `bucket_options`.\n"]
     pub fn set_bucket_options(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LoggingMetricBucketOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LoggingMetric_BucketOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -215,7 +226,7 @@ impl LoggingMetric {
     #[doc = "Set the field `metric_descriptor`.\n"]
     pub fn set_metric_descriptor(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LoggingMetricMetricDescriptorEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LoggingMetric_MetricDescriptor>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -229,7 +240,7 @@ impl LoggingMetric {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<LoggingMetricTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<LoggingMetric_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -238,6 +249,12 @@ impl LoggingMetric {
         "Get a reference to the value of field `bucket_name` after provisioning.\nThe resource name of the Log Bucket that owns the Log Metric. Only Log Buckets in projects\nare supported. The bucket has to be in the same project as the metric."]
     pub fn bucket_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -287,18 +304,18 @@ impl LoggingMetric {
     }
 
     #[doc = "Get a reference to the value of field `bucket_options` after provisioning.\n"]
-    pub fn bucket_options(&self) -> terrars::ListRef<LoggingMetricBucketOptionsElRef> {
+    pub fn bucket_options(&self) -> terrars::ListRef<LoggingMetric_BucketOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.bucket_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `metric_descriptor` after provisioning.\n"]
-    pub fn metric_descriptor(&self) -> terrars::ListRef<LoggingMetricMetricDescriptorElRef> {
+    pub fn metric_descriptor(&self) -> terrars::ListRef<LoggingMetric_MetricDescriptorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.metric_descriptor", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> LoggingMetricTimeoutsElRef {
-        LoggingMetricTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> LoggingMetric_TimeoutsRef {
+        LoggingMetric_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -348,13 +365,14 @@ impl BuildLoggingMetric {
         let out = LoggingMetric(std::rc::Rc::new(LoggingMetric_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(LoggingMetricData {
+            data: std::cell::RefCell::new(LoggingMetricData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 bucket_name: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 disabled: core::default::Default::default(),
                 filter: self.filter,
@@ -404,6 +422,12 @@ impl LoggingMetricRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nA description of this metric, which is used in documentation. The maximum length of the\ndescription is 8000 characters."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -450,30 +474,36 @@ impl LoggingMetricRef {
     }
 
     #[doc = "Get a reference to the value of field `bucket_options` after provisioning.\n"]
-    pub fn bucket_options(&self) -> terrars::ListRef<LoggingMetricBucketOptionsElRef> {
+    pub fn bucket_options(&self) -> terrars::ListRef<LoggingMetric_BucketOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.bucket_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `metric_descriptor` after provisioning.\n"]
-    pub fn metric_descriptor(&self) -> terrars::ListRef<LoggingMetricMetricDescriptorElRef> {
+    pub fn metric_descriptor(&self) -> terrars::ListRef<LoggingMetric_MetricDescriptorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.metric_descriptor", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> LoggingMetricTimeoutsElRef {
-        LoggingMetricTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> LoggingMetric_TimeoutsRef {
+        LoggingMetric_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct LoggingMetricDynamic {
+    bucket_options: std::option::Option<terrars::DynamicBlock<LoggingMetric_BucketOptions>>,
+    metric_descriptor: std::option::Option<terrars::DynamicBlock<LoggingMetric_MetricDescriptor>>,
+}
+
 #[derive(Serialize)]
-pub struct LoggingMetricBucketOptionsElExplicitBucketsEl {
+pub struct LoggingMetric_BucketOptions_ExplicitBuckets {
     bounds: terrars::ListField<terrars::PrimField<f64>>,
 }
 
-impl LoggingMetricBucketOptionsElExplicitBucketsEl { }
+impl LoggingMetric_BucketOptions_ExplicitBuckets { }
 
-impl terrars::ToListMappable for LoggingMetricBucketOptionsElExplicitBucketsEl {
-    type O = terrars::BlockAssignable<LoggingMetricBucketOptionsElExplicitBucketsEl>;
+impl terrars::ToListMappable for LoggingMetric_BucketOptions_ExplicitBuckets {
+    type O = terrars::BlockAssignable<LoggingMetric_BucketOptions_ExplicitBuckets>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -484,35 +514,37 @@ impl terrars::ToListMappable for LoggingMetricBucketOptionsElExplicitBucketsEl {
     }
 }
 
-pub struct BuildLoggingMetricBucketOptionsElExplicitBucketsEl {
+pub struct BuildLoggingMetric_BucketOptions_ExplicitBuckets {
     #[doc = "The values must be monotonically increasing."]
     pub bounds: terrars::ListField<terrars::PrimField<f64>>,
 }
 
-impl BuildLoggingMetricBucketOptionsElExplicitBucketsEl {
-    pub fn build(self) -> LoggingMetricBucketOptionsElExplicitBucketsEl {
-        LoggingMetricBucketOptionsElExplicitBucketsEl { bounds: self.bounds }
+impl BuildLoggingMetric_BucketOptions_ExplicitBuckets {
+    pub fn build(self) -> LoggingMetric_BucketOptions_ExplicitBuckets {
+        LoggingMetric_BucketOptions_ExplicitBuckets { bounds: self.bounds }
     }
 }
 
-pub struct LoggingMetricBucketOptionsElExplicitBucketsElRef {
+#[allow(dead_code)]
+pub struct LoggingMetric_BucketOptions_ExplicitBucketsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LoggingMetricBucketOptionsElExplicitBucketsElRef {
+impl terrars::Ref for LoggingMetric_BucketOptions_ExplicitBucketsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> LoggingMetricBucketOptionsElExplicitBucketsElRef {
-        LoggingMetricBucketOptionsElExplicitBucketsElRef {
+    ) -> LoggingMetric_BucketOptions_ExplicitBucketsRef {
+        LoggingMetric_BucketOptions_ExplicitBucketsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LoggingMetricBucketOptionsElExplicitBucketsElRef {
+impl LoggingMetric_BucketOptions_ExplicitBucketsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -525,16 +557,16 @@ impl LoggingMetricBucketOptionsElExplicitBucketsElRef {
 }
 
 #[derive(Serialize)]
-pub struct LoggingMetricBucketOptionsElExponentialBucketsEl {
+pub struct LoggingMetric_BucketOptions_ExponentialBuckets {
     growth_factor: terrars::PrimField<f64>,
     num_finite_buckets: terrars::PrimField<f64>,
     scale: terrars::PrimField<f64>,
 }
 
-impl LoggingMetricBucketOptionsElExponentialBucketsEl { }
+impl LoggingMetric_BucketOptions_ExponentialBuckets { }
 
-impl terrars::ToListMappable for LoggingMetricBucketOptionsElExponentialBucketsEl {
-    type O = terrars::BlockAssignable<LoggingMetricBucketOptionsElExponentialBucketsEl>;
+impl terrars::ToListMappable for LoggingMetric_BucketOptions_ExponentialBuckets {
+    type O = terrars::BlockAssignable<LoggingMetric_BucketOptions_ExponentialBuckets>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -545,7 +577,7 @@ impl terrars::ToListMappable for LoggingMetricBucketOptionsElExponentialBucketsE
     }
 }
 
-pub struct BuildLoggingMetricBucketOptionsElExponentialBucketsEl {
+pub struct BuildLoggingMetric_BucketOptions_ExponentialBuckets {
     #[doc = "Must be greater than 1."]
     pub growth_factor: terrars::PrimField<f64>,
     #[doc = "Must be greater than 0."]
@@ -554,9 +586,9 @@ pub struct BuildLoggingMetricBucketOptionsElExponentialBucketsEl {
     pub scale: terrars::PrimField<f64>,
 }
 
-impl BuildLoggingMetricBucketOptionsElExponentialBucketsEl {
-    pub fn build(self) -> LoggingMetricBucketOptionsElExponentialBucketsEl {
-        LoggingMetricBucketOptionsElExponentialBucketsEl {
+impl BuildLoggingMetric_BucketOptions_ExponentialBuckets {
+    pub fn build(self) -> LoggingMetric_BucketOptions_ExponentialBuckets {
+        LoggingMetric_BucketOptions_ExponentialBuckets {
             growth_factor: self.growth_factor,
             num_finite_buckets: self.num_finite_buckets,
             scale: self.scale,
@@ -564,24 +596,26 @@ impl BuildLoggingMetricBucketOptionsElExponentialBucketsEl {
     }
 }
 
-pub struct LoggingMetricBucketOptionsElExponentialBucketsElRef {
+#[allow(dead_code)]
+pub struct LoggingMetric_BucketOptions_ExponentialBucketsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LoggingMetricBucketOptionsElExponentialBucketsElRef {
+impl terrars::Ref for LoggingMetric_BucketOptions_ExponentialBucketsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> LoggingMetricBucketOptionsElExponentialBucketsElRef {
-        LoggingMetricBucketOptionsElExponentialBucketsElRef {
+    ) -> LoggingMetric_BucketOptions_ExponentialBucketsRef {
+        LoggingMetric_BucketOptions_ExponentialBucketsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LoggingMetricBucketOptionsElExponentialBucketsElRef {
+impl LoggingMetric_BucketOptions_ExponentialBucketsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -603,16 +637,16 @@ impl LoggingMetricBucketOptionsElExponentialBucketsElRef {
 }
 
 #[derive(Serialize)]
-pub struct LoggingMetricBucketOptionsElLinearBucketsEl {
+pub struct LoggingMetric_BucketOptions_LinearBuckets {
     num_finite_buckets: terrars::PrimField<f64>,
     offset: terrars::PrimField<f64>,
     width: terrars::PrimField<f64>,
 }
 
-impl LoggingMetricBucketOptionsElLinearBucketsEl { }
+impl LoggingMetric_BucketOptions_LinearBuckets { }
 
-impl terrars::ToListMappable for LoggingMetricBucketOptionsElLinearBucketsEl {
-    type O = terrars::BlockAssignable<LoggingMetricBucketOptionsElLinearBucketsEl>;
+impl terrars::ToListMappable for LoggingMetric_BucketOptions_LinearBuckets {
+    type O = terrars::BlockAssignable<LoggingMetric_BucketOptions_LinearBuckets>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -623,7 +657,7 @@ impl terrars::ToListMappable for LoggingMetricBucketOptionsElLinearBucketsEl {
     }
 }
 
-pub struct BuildLoggingMetricBucketOptionsElLinearBucketsEl {
+pub struct BuildLoggingMetric_BucketOptions_LinearBuckets {
     #[doc = "Must be greater than 0."]
     pub num_finite_buckets: terrars::PrimField<f64>,
     #[doc = "Lower bound of the first bucket."]
@@ -632,9 +666,9 @@ pub struct BuildLoggingMetricBucketOptionsElLinearBucketsEl {
     pub width: terrars::PrimField<f64>,
 }
 
-impl BuildLoggingMetricBucketOptionsElLinearBucketsEl {
-    pub fn build(self) -> LoggingMetricBucketOptionsElLinearBucketsEl {
-        LoggingMetricBucketOptionsElLinearBucketsEl {
+impl BuildLoggingMetric_BucketOptions_LinearBuckets {
+    pub fn build(self) -> LoggingMetric_BucketOptions_LinearBuckets {
+        LoggingMetric_BucketOptions_LinearBuckets {
             num_finite_buckets: self.num_finite_buckets,
             offset: self.offset,
             width: self.width,
@@ -642,24 +676,23 @@ impl BuildLoggingMetricBucketOptionsElLinearBucketsEl {
     }
 }
 
-pub struct LoggingMetricBucketOptionsElLinearBucketsElRef {
+#[allow(dead_code)]
+pub struct LoggingMetric_BucketOptions_LinearBucketsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LoggingMetricBucketOptionsElLinearBucketsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> LoggingMetricBucketOptionsElLinearBucketsElRef {
-        LoggingMetricBucketOptionsElLinearBucketsElRef {
+impl terrars::Ref for LoggingMetric_BucketOptions_LinearBucketsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LoggingMetric_BucketOptions_LinearBucketsRef {
+        LoggingMetric_BucketOptions_LinearBucketsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LoggingMetricBucketOptionsElLinearBucketsElRef {
+impl LoggingMetric_BucketOptions_LinearBucketsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -681,30 +714,28 @@ impl LoggingMetricBucketOptionsElLinearBucketsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct LoggingMetricBucketOptionsElDynamic {
-    explicit_buckets: std::option::Option<terrars::DynamicBlock<LoggingMetricBucketOptionsElExplicitBucketsEl>>,
-    exponential_buckets: std
-    ::option
-    ::Option<terrars::DynamicBlock<LoggingMetricBucketOptionsElExponentialBucketsEl>>,
-    linear_buckets: std::option::Option<terrars::DynamicBlock<LoggingMetricBucketOptionsElLinearBucketsEl>>,
+struct LoggingMetric_BucketOptionsDynamic {
+    explicit_buckets: std::option::Option<terrars::DynamicBlock<LoggingMetric_BucketOptions_ExplicitBuckets>>,
+    exponential_buckets: std::option::Option<terrars::DynamicBlock<LoggingMetric_BucketOptions_ExponentialBuckets>>,
+    linear_buckets: std::option::Option<terrars::DynamicBlock<LoggingMetric_BucketOptions_LinearBuckets>>,
 }
 
 #[derive(Serialize)]
-pub struct LoggingMetricBucketOptionsEl {
+pub struct LoggingMetric_BucketOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    explicit_buckets: std::option::Option<std::vec::Vec<LoggingMetricBucketOptionsElExplicitBucketsEl>>,
+    explicit_buckets: std::option::Option<std::vec::Vec<LoggingMetric_BucketOptions_ExplicitBuckets>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    exponential_buckets: std::option::Option<std::vec::Vec<LoggingMetricBucketOptionsElExponentialBucketsEl>>,
+    exponential_buckets: std::option::Option<std::vec::Vec<LoggingMetric_BucketOptions_ExponentialBuckets>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    linear_buckets: std::option::Option<std::vec::Vec<LoggingMetricBucketOptionsElLinearBucketsEl>>,
-    dynamic: LoggingMetricBucketOptionsElDynamic,
+    linear_buckets: std::option::Option<std::vec::Vec<LoggingMetric_BucketOptions_LinearBuckets>>,
+    dynamic: LoggingMetric_BucketOptionsDynamic,
 }
 
-impl LoggingMetricBucketOptionsEl {
+impl LoggingMetric_BucketOptions {
     #[doc = "Set the field `explicit_buckets`.\n"]
     pub fn set_explicit_buckets(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LoggingMetricBucketOptionsElExplicitBucketsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LoggingMetric_BucketOptions_ExplicitBuckets>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -720,7 +751,7 @@ impl LoggingMetricBucketOptionsEl {
     #[doc = "Set the field `exponential_buckets`.\n"]
     pub fn set_exponential_buckets(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LoggingMetricBucketOptionsElExponentialBucketsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LoggingMetric_BucketOptions_ExponentialBuckets>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -736,7 +767,7 @@ impl LoggingMetricBucketOptionsEl {
     #[doc = "Set the field `linear_buckets`.\n"]
     pub fn set_linear_buckets(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LoggingMetricBucketOptionsElLinearBucketsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LoggingMetric_BucketOptions_LinearBuckets>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -750,8 +781,8 @@ impl LoggingMetricBucketOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for LoggingMetricBucketOptionsEl {
-    type O = terrars::BlockAssignable<LoggingMetricBucketOptionsEl>;
+impl terrars::ToListMappable for LoggingMetric_BucketOptions {
+    type O = terrars::BlockAssignable<LoggingMetric_BucketOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -762,11 +793,11 @@ impl terrars::ToListMappable for LoggingMetricBucketOptionsEl {
     }
 }
 
-pub struct BuildLoggingMetricBucketOptionsEl {}
+pub struct BuildLoggingMetric_BucketOptions {}
 
-impl BuildLoggingMetricBucketOptionsEl {
-    pub fn build(self) -> LoggingMetricBucketOptionsEl {
-        LoggingMetricBucketOptionsEl {
+impl BuildLoggingMetric_BucketOptions {
+    pub fn build(self) -> LoggingMetric_BucketOptions {
+        LoggingMetric_BucketOptions {
             explicit_buckets: core::default::Default::default(),
             exponential_buckets: core::default::Default::default(),
             linear_buckets: core::default::Default::default(),
@@ -775,43 +806,45 @@ impl BuildLoggingMetricBucketOptionsEl {
     }
 }
 
-pub struct LoggingMetricBucketOptionsElRef {
+#[allow(dead_code)]
+pub struct LoggingMetric_BucketOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LoggingMetricBucketOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LoggingMetricBucketOptionsElRef {
-        LoggingMetricBucketOptionsElRef {
+impl terrars::Ref for LoggingMetric_BucketOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LoggingMetric_BucketOptionsRef {
+        LoggingMetric_BucketOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LoggingMetricBucketOptionsElRef {
+impl LoggingMetric_BucketOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `explicit_buckets` after provisioning.\n"]
-    pub fn explicit_buckets(&self) -> terrars::ListRef<LoggingMetricBucketOptionsElExplicitBucketsElRef> {
+    pub fn explicit_buckets(&self) -> terrars::ListRef<LoggingMetric_BucketOptions_ExplicitBucketsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.explicit_buckets", self.base))
     }
 
     #[doc = "Get a reference to the value of field `exponential_buckets` after provisioning.\n"]
-    pub fn exponential_buckets(&self) -> terrars::ListRef<LoggingMetricBucketOptionsElExponentialBucketsElRef> {
+    pub fn exponential_buckets(&self) -> terrars::ListRef<LoggingMetric_BucketOptions_ExponentialBucketsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.exponential_buckets", self.base))
     }
 
     #[doc = "Get a reference to the value of field `linear_buckets` after provisioning.\n"]
-    pub fn linear_buckets(&self) -> terrars::ListRef<LoggingMetricBucketOptionsElLinearBucketsElRef> {
+    pub fn linear_buckets(&self) -> terrars::ListRef<LoggingMetric_BucketOptions_LinearBucketsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.linear_buckets", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct LoggingMetricMetricDescriptorElLabelsEl {
+pub struct LoggingMetric_MetricDescriptor_Labels {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     key: terrars::PrimField<std::string::String>,
@@ -819,7 +852,7 @@ pub struct LoggingMetricMetricDescriptorElLabelsEl {
     value_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl LoggingMetricMetricDescriptorElLabelsEl {
+impl LoggingMetric_MetricDescriptor_Labels {
     #[doc = "Set the field `description`.\nA human-readable description for the label."]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -834,8 +867,8 @@ impl LoggingMetricMetricDescriptorElLabelsEl {
     }
 }
 
-impl terrars::ToListMappable for LoggingMetricMetricDescriptorElLabelsEl {
-    type O = terrars::BlockAssignable<LoggingMetricMetricDescriptorElLabelsEl>;
+impl terrars::ToListMappable for LoggingMetric_MetricDescriptor_Labels {
+    type O = terrars::BlockAssignable<LoggingMetric_MetricDescriptor_Labels>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -846,14 +879,14 @@ impl terrars::ToListMappable for LoggingMetricMetricDescriptorElLabelsEl {
     }
 }
 
-pub struct BuildLoggingMetricMetricDescriptorElLabelsEl {
+pub struct BuildLoggingMetric_MetricDescriptor_Labels {
     #[doc = "The label key."]
     pub key: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLoggingMetricMetricDescriptorElLabelsEl {
-    pub fn build(self) -> LoggingMetricMetricDescriptorElLabelsEl {
-        LoggingMetricMetricDescriptorElLabelsEl {
+impl BuildLoggingMetric_MetricDescriptor_Labels {
+    pub fn build(self) -> LoggingMetric_MetricDescriptor_Labels {
+        LoggingMetric_MetricDescriptor_Labels {
             description: core::default::Default::default(),
             key: self.key,
             value_type: core::default::Default::default(),
@@ -861,21 +894,23 @@ impl BuildLoggingMetricMetricDescriptorElLabelsEl {
     }
 }
 
-pub struct LoggingMetricMetricDescriptorElLabelsElRef {
+#[allow(dead_code)]
+pub struct LoggingMetric_MetricDescriptor_LabelsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LoggingMetricMetricDescriptorElLabelsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LoggingMetricMetricDescriptorElLabelsElRef {
-        LoggingMetricMetricDescriptorElLabelsElRef {
+impl terrars::Ref for LoggingMetric_MetricDescriptor_LabelsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LoggingMetric_MetricDescriptor_LabelsRef {
+        LoggingMetric_MetricDescriptor_LabelsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LoggingMetricMetricDescriptorElLabelsElRef {
+impl LoggingMetric_MetricDescriptor_LabelsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -899,12 +934,12 @@ impl LoggingMetricMetricDescriptorElLabelsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct LoggingMetricMetricDescriptorElDynamic {
-    labels: std::option::Option<terrars::DynamicBlock<LoggingMetricMetricDescriptorElLabelsEl>>,
+struct LoggingMetric_MetricDescriptorDynamic {
+    labels: std::option::Option<terrars::DynamicBlock<LoggingMetric_MetricDescriptor_Labels>>,
 }
 
 #[derive(Serialize)]
-pub struct LoggingMetricMetricDescriptorEl {
+pub struct LoggingMetric_MetricDescriptor {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     display_name: std::option::Option<terrars::PrimField<std::string::String>>,
     metric_kind: terrars::PrimField<std::string::String>,
@@ -912,11 +947,11 @@ pub struct LoggingMetricMetricDescriptorEl {
     unit: std::option::Option<terrars::PrimField<std::string::String>>,
     value_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    labels: std::option::Option<std::vec::Vec<LoggingMetricMetricDescriptorElLabelsEl>>,
-    dynamic: LoggingMetricMetricDescriptorElDynamic,
+    labels: std::option::Option<std::vec::Vec<LoggingMetric_MetricDescriptor_Labels>>,
+    dynamic: LoggingMetric_MetricDescriptorDynamic,
 }
 
-impl LoggingMetricMetricDescriptorEl {
+impl LoggingMetric_MetricDescriptor {
     #[doc =
         "Set the field `display_name`.\nA concise name for the metric, which can be displayed in user interfaces. Use sentence case\nwithout an ending period, for example \"Request count\". This field is optional but it is\nrecommended to be set for any metrics associated with user-visible concepts, such as Quota."]
     pub fn set_display_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -934,7 +969,7 @@ impl LoggingMetricMetricDescriptorEl {
     #[doc = "Set the field `labels`.\n"]
     pub fn set_labels(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LoggingMetricMetricDescriptorElLabelsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LoggingMetric_MetricDescriptor_Labels>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -948,8 +983,8 @@ impl LoggingMetricMetricDescriptorEl {
     }
 }
 
-impl terrars::ToListMappable for LoggingMetricMetricDescriptorEl {
-    type O = terrars::BlockAssignable<LoggingMetricMetricDescriptorEl>;
+impl terrars::ToListMappable for LoggingMetric_MetricDescriptor {
+    type O = terrars::BlockAssignable<LoggingMetric_MetricDescriptor>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -960,7 +995,7 @@ impl terrars::ToListMappable for LoggingMetricMetricDescriptorEl {
     }
 }
 
-pub struct BuildLoggingMetricMetricDescriptorEl {
+pub struct BuildLoggingMetric_MetricDescriptor {
     #[doc =
         "Whether the metric records instantaneous values, changes to a value, etc.\nSome combinations of metricKind and valueType might not be supported.\nFor counter metrics, set this to DELTA. Possible values: [\"DELTA\", \"GAUGE\", \"CUMULATIVE\"]"]
     pub metric_kind: terrars::PrimField<std::string::String>,
@@ -969,9 +1004,9 @@ pub struct BuildLoggingMetricMetricDescriptorEl {
     pub value_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLoggingMetricMetricDescriptorEl {
-    pub fn build(self) -> LoggingMetricMetricDescriptorEl {
-        LoggingMetricMetricDescriptorEl {
+impl BuildLoggingMetric_MetricDescriptor {
+    pub fn build(self) -> LoggingMetric_MetricDescriptor {
+        LoggingMetric_MetricDescriptor {
             display_name: core::default::Default::default(),
             metric_kind: self.metric_kind,
             unit: core::default::Default::default(),
@@ -982,21 +1017,23 @@ impl BuildLoggingMetricMetricDescriptorEl {
     }
 }
 
-pub struct LoggingMetricMetricDescriptorElRef {
+#[allow(dead_code)]
+pub struct LoggingMetric_MetricDescriptorRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LoggingMetricMetricDescriptorElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LoggingMetricMetricDescriptorElRef {
-        LoggingMetricMetricDescriptorElRef {
+impl terrars::Ref for LoggingMetric_MetricDescriptorRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LoggingMetric_MetricDescriptorRef {
+        LoggingMetric_MetricDescriptorRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LoggingMetricMetricDescriptorElRef {
+impl LoggingMetric_MetricDescriptorRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1027,7 +1064,7 @@ impl LoggingMetricMetricDescriptorElRef {
 }
 
 #[derive(Serialize)]
-pub struct LoggingMetricTimeoutsEl {
+pub struct LoggingMetric_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1036,7 +1073,7 @@ pub struct LoggingMetricTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl LoggingMetricTimeoutsEl {
+impl LoggingMetric_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1056,8 +1093,8 @@ impl LoggingMetricTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for LoggingMetricTimeoutsEl {
-    type O = terrars::BlockAssignable<LoggingMetricTimeoutsEl>;
+impl terrars::ToListMappable for LoggingMetric_Timeouts {
+    type O = terrars::BlockAssignable<LoggingMetric_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1068,11 +1105,11 @@ impl terrars::ToListMappable for LoggingMetricTimeoutsEl {
     }
 }
 
-pub struct BuildLoggingMetricTimeoutsEl {}
+pub struct BuildLoggingMetric_Timeouts {}
 
-impl BuildLoggingMetricTimeoutsEl {
-    pub fn build(self) -> LoggingMetricTimeoutsEl {
-        LoggingMetricTimeoutsEl {
+impl BuildLoggingMetric_Timeouts {
+    pub fn build(self) -> LoggingMetric_Timeouts {
+        LoggingMetric_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1080,21 +1117,23 @@ impl BuildLoggingMetricTimeoutsEl {
     }
 }
 
-pub struct LoggingMetricTimeoutsElRef {
+#[allow(dead_code)]
+pub struct LoggingMetric_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LoggingMetricTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LoggingMetricTimeoutsElRef {
-        LoggingMetricTimeoutsElRef {
+impl terrars::Ref for LoggingMetric_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LoggingMetric_TimeoutsRef {
+        LoggingMetric_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LoggingMetricTimeoutsElRef {
+impl LoggingMetric_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1113,10 +1152,4 @@ impl LoggingMetricTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct LoggingMetricDynamic {
-    bucket_options: std::option::Option<terrars::DynamicBlock<LoggingMetricBucketOptionsEl>>,
-    metric_descriptor: std::option::Option<terrars::DynamicBlock<LoggingMetricMetricDescriptorEl>>,
 }

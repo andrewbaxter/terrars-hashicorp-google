@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct OsConfigOsPolicyAssignmentData {
+struct OsConfigOsPolicyAssignmentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct OsConfigOsPolicyAssignmentData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -29,20 +33,20 @@ struct OsConfigOsPolicyAssignmentData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     skip_await_rollout: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    instance_filter: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignmentInstanceFilterEl>>,
+    instance_filter: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignment_InstanceFilter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    os_policies: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesEl>>,
+    os_policies: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignment_OsPolicies>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    rollout: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignmentRolloutEl>>,
+    rollout: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignment_Rollout>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<OsConfigOsPolicyAssignmentTimeoutsEl>,
+    timeouts: std::option::Option<OsConfigOsPolicyAssignment_Timeouts>,
     dynamic: OsConfigOsPolicyAssignmentDynamic,
 }
 
 struct OsConfigOsPolicyAssignment_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<OsConfigOsPolicyAssignmentData>,
+    data: std::cell::RefCell<OsConfigOsPolicyAssignmentData_>,
 }
 
 #[derive(Clone)]
@@ -143,6 +147,13 @@ impl OsConfigOsPolicyAssignment {
     }
 
     #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `description`.\nOS policy assignment description. Length of the description is limited to 1024 characters."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -171,7 +182,7 @@ impl OsConfigOsPolicyAssignment {
     #[doc = "Set the field `instance_filter`.\n"]
     pub fn set_instance_filter(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigOsPolicyAssignmentInstanceFilterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigOsPolicyAssignment_InstanceFilter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -187,7 +198,7 @@ impl OsConfigOsPolicyAssignment {
     #[doc = "Set the field `os_policies`.\n"]
     pub fn set_os_policies(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -203,7 +214,7 @@ impl OsConfigOsPolicyAssignment {
     #[doc = "Set the field `rollout`.\n"]
     pub fn set_rollout(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigOsPolicyAssignmentRolloutEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigOsPolicyAssignment_Rollout>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -217,7 +228,7 @@ impl OsConfigOsPolicyAssignment {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<OsConfigOsPolicyAssignmentTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<OsConfigOsPolicyAssignment_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -232,6 +243,12 @@ impl OsConfigOsPolicyAssignment {
         "Get a reference to the value of field `deleted` after provisioning.\nOutput only. Indicates that this revision deletes the OS policy assignment."]
     pub fn deleted(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.deleted", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -303,23 +320,23 @@ impl OsConfigOsPolicyAssignment {
     }
 
     #[doc = "Get a reference to the value of field `instance_filter` after provisioning.\n"]
-    pub fn instance_filter(&self) -> terrars::ListRef<OsConfigOsPolicyAssignmentInstanceFilterElRef> {
+    pub fn instance_filter(&self) -> terrars::ListRef<OsConfigOsPolicyAssignment_InstanceFilterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.instance_filter", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `os_policies` after provisioning.\n"]
-    pub fn os_policies(&self) -> terrars::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElRef> {
+    pub fn os_policies(&self) -> terrars::ListRef<OsConfigOsPolicyAssignment_OsPoliciesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.os_policies", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `rollout` after provisioning.\n"]
-    pub fn rollout(&self) -> terrars::ListRef<OsConfigOsPolicyAssignmentRolloutElRef> {
+    pub fn rollout(&self) -> terrars::ListRef<OsConfigOsPolicyAssignment_RolloutRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.rollout", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> OsConfigOsPolicyAssignmentTimeoutsElRef {
-        OsConfigOsPolicyAssignmentTimeoutsElRef::new(
+    pub fn timeouts(&self) -> OsConfigOsPolicyAssignment_TimeoutsRef {
+        OsConfigOsPolicyAssignment_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -370,12 +387,13 @@ impl BuildOsConfigOsPolicyAssignment {
         let out = OsConfigOsPolicyAssignment(std::rc::Rc::new(OsConfigOsPolicyAssignment_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(OsConfigOsPolicyAssignmentData {
+            data: std::cell::RefCell::new(OsConfigOsPolicyAssignmentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 location: self.location,
@@ -430,6 +448,12 @@ impl OsConfigOsPolicyAssignmentRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nOS policy assignment description. Length of the description is limited to 1024 characters."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -498,36 +522,43 @@ impl OsConfigOsPolicyAssignmentRef {
     }
 
     #[doc = "Get a reference to the value of field `instance_filter` after provisioning.\n"]
-    pub fn instance_filter(&self) -> terrars::ListRef<OsConfigOsPolicyAssignmentInstanceFilterElRef> {
+    pub fn instance_filter(&self) -> terrars::ListRef<OsConfigOsPolicyAssignment_InstanceFilterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.instance_filter", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `os_policies` after provisioning.\n"]
-    pub fn os_policies(&self) -> terrars::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElRef> {
+    pub fn os_policies(&self) -> terrars::ListRef<OsConfigOsPolicyAssignment_OsPoliciesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.os_policies", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `rollout` after provisioning.\n"]
-    pub fn rollout(&self) -> terrars::ListRef<OsConfigOsPolicyAssignmentRolloutElRef> {
+    pub fn rollout(&self) -> terrars::ListRef<OsConfigOsPolicyAssignment_RolloutRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.rollout", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> OsConfigOsPolicyAssignmentTimeoutsElRef {
-        OsConfigOsPolicyAssignmentTimeoutsElRef::new(
+    pub fn timeouts(&self) -> OsConfigOsPolicyAssignment_TimeoutsRef {
+        OsConfigOsPolicyAssignment_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct OsConfigOsPolicyAssignmentDynamic {
+    instance_filter: std::option::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignment_InstanceFilter>>,
+    os_policies: std::option::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignment_OsPolicies>>,
+    rollout: std::option::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignment_Rollout>>,
+}
+
 #[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentInstanceFilterElExclusionLabelsEl {
+pub struct OsConfigOsPolicyAssignment_InstanceFilter_ExclusionLabels {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
-impl OsConfigOsPolicyAssignmentInstanceFilterElExclusionLabelsEl {
+impl OsConfigOsPolicyAssignment_InstanceFilter_ExclusionLabels {
     #[doc =
         "Set the field `labels`.\nLabels are identified by key/value pairs in this map. A VM should contain all the key/value pairs specified in this map to be selected."]
     pub fn set_labels(
@@ -539,8 +570,8 @@ impl OsConfigOsPolicyAssignmentInstanceFilterElExclusionLabelsEl {
     }
 }
 
-impl terrars::ToListMappable for OsConfigOsPolicyAssignmentInstanceFilterElExclusionLabelsEl {
-    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignmentInstanceFilterElExclusionLabelsEl>;
+impl terrars::ToListMappable for OsConfigOsPolicyAssignment_InstanceFilter_ExclusionLabels {
+    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignment_InstanceFilter_ExclusionLabels>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -551,32 +582,34 @@ impl terrars::ToListMappable for OsConfigOsPolicyAssignmentInstanceFilterElExclu
     }
 }
 
-pub struct BuildOsConfigOsPolicyAssignmentInstanceFilterElExclusionLabelsEl {}
+pub struct BuildOsConfigOsPolicyAssignment_InstanceFilter_ExclusionLabels {}
 
-impl BuildOsConfigOsPolicyAssignmentInstanceFilterElExclusionLabelsEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentInstanceFilterElExclusionLabelsEl {
-        OsConfigOsPolicyAssignmentInstanceFilterElExclusionLabelsEl { labels: core::default::Default::default() }
+impl BuildOsConfigOsPolicyAssignment_InstanceFilter_ExclusionLabels {
+    pub fn build(self) -> OsConfigOsPolicyAssignment_InstanceFilter_ExclusionLabels {
+        OsConfigOsPolicyAssignment_InstanceFilter_ExclusionLabels { labels: core::default::Default::default() }
     }
 }
 
-pub struct OsConfigOsPolicyAssignmentInstanceFilterElExclusionLabelsElRef {
+#[allow(dead_code)]
+pub struct OsConfigOsPolicyAssignment_InstanceFilter_ExclusionLabelsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigOsPolicyAssignmentInstanceFilterElExclusionLabelsElRef {
+impl terrars::Ref for OsConfigOsPolicyAssignment_InstanceFilter_ExclusionLabelsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentInstanceFilterElExclusionLabelsElRef {
-        OsConfigOsPolicyAssignmentInstanceFilterElExclusionLabelsElRef {
+    ) -> OsConfigOsPolicyAssignment_InstanceFilter_ExclusionLabelsRef {
+        OsConfigOsPolicyAssignment_InstanceFilter_ExclusionLabelsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigOsPolicyAssignmentInstanceFilterElExclusionLabelsElRef {
+impl OsConfigOsPolicyAssignment_InstanceFilter_ExclusionLabelsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -589,12 +622,12 @@ impl OsConfigOsPolicyAssignmentInstanceFilterElExclusionLabelsElRef {
 }
 
 #[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentInstanceFilterElInclusionLabelsEl {
+pub struct OsConfigOsPolicyAssignment_InstanceFilter_InclusionLabels {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
-impl OsConfigOsPolicyAssignmentInstanceFilterElInclusionLabelsEl {
+impl OsConfigOsPolicyAssignment_InstanceFilter_InclusionLabels {
     #[doc =
         "Set the field `labels`.\nLabels are identified by key/value pairs in this map. A VM should contain all the key/value pairs specified in this map to be selected."]
     pub fn set_labels(
@@ -606,8 +639,8 @@ impl OsConfigOsPolicyAssignmentInstanceFilterElInclusionLabelsEl {
     }
 }
 
-impl terrars::ToListMappable for OsConfigOsPolicyAssignmentInstanceFilterElInclusionLabelsEl {
-    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignmentInstanceFilterElInclusionLabelsEl>;
+impl terrars::ToListMappable for OsConfigOsPolicyAssignment_InstanceFilter_InclusionLabels {
+    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignment_InstanceFilter_InclusionLabels>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -618,32 +651,34 @@ impl terrars::ToListMappable for OsConfigOsPolicyAssignmentInstanceFilterElInclu
     }
 }
 
-pub struct BuildOsConfigOsPolicyAssignmentInstanceFilterElInclusionLabelsEl {}
+pub struct BuildOsConfigOsPolicyAssignment_InstanceFilter_InclusionLabels {}
 
-impl BuildOsConfigOsPolicyAssignmentInstanceFilterElInclusionLabelsEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentInstanceFilterElInclusionLabelsEl {
-        OsConfigOsPolicyAssignmentInstanceFilterElInclusionLabelsEl { labels: core::default::Default::default() }
+impl BuildOsConfigOsPolicyAssignment_InstanceFilter_InclusionLabels {
+    pub fn build(self) -> OsConfigOsPolicyAssignment_InstanceFilter_InclusionLabels {
+        OsConfigOsPolicyAssignment_InstanceFilter_InclusionLabels { labels: core::default::Default::default() }
     }
 }
 
-pub struct OsConfigOsPolicyAssignmentInstanceFilterElInclusionLabelsElRef {
+#[allow(dead_code)]
+pub struct OsConfigOsPolicyAssignment_InstanceFilter_InclusionLabelsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigOsPolicyAssignmentInstanceFilterElInclusionLabelsElRef {
+impl terrars::Ref for OsConfigOsPolicyAssignment_InstanceFilter_InclusionLabelsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentInstanceFilterElInclusionLabelsElRef {
-        OsConfigOsPolicyAssignmentInstanceFilterElInclusionLabelsElRef {
+    ) -> OsConfigOsPolicyAssignment_InstanceFilter_InclusionLabelsRef {
+        OsConfigOsPolicyAssignment_InstanceFilter_InclusionLabelsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigOsPolicyAssignmentInstanceFilterElInclusionLabelsElRef {
+impl OsConfigOsPolicyAssignment_InstanceFilter_InclusionLabelsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -656,13 +691,13 @@ impl OsConfigOsPolicyAssignmentInstanceFilterElInclusionLabelsElRef {
 }
 
 #[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentInstanceFilterElInventoriesEl {
+pub struct OsConfigOsPolicyAssignment_InstanceFilter_Inventories {
     os_short_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     os_version: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl OsConfigOsPolicyAssignmentInstanceFilterElInventoriesEl {
+impl OsConfigOsPolicyAssignment_InstanceFilter_Inventories {
     #[doc =
         "Set the field `os_version`.\nThe OS version Prefix matches are supported if asterisk(*) is provided as the last character. For example, to match all versions with a major version of '7', specify the following value for this field '7.*' An empty string matches all OS versions."]
     pub fn set_os_version(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -671,8 +706,8 @@ impl OsConfigOsPolicyAssignmentInstanceFilterElInventoriesEl {
     }
 }
 
-impl terrars::ToListMappable for OsConfigOsPolicyAssignmentInstanceFilterElInventoriesEl {
-    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignmentInstanceFilterElInventoriesEl>;
+impl terrars::ToListMappable for OsConfigOsPolicyAssignment_InstanceFilter_Inventories {
+    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignment_InstanceFilter_Inventories>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -683,38 +718,40 @@ impl terrars::ToListMappable for OsConfigOsPolicyAssignmentInstanceFilterElInven
     }
 }
 
-pub struct BuildOsConfigOsPolicyAssignmentInstanceFilterElInventoriesEl {
+pub struct BuildOsConfigOsPolicyAssignment_InstanceFilter_Inventories {
     #[doc = "The OS short name"]
     pub os_short_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildOsConfigOsPolicyAssignmentInstanceFilterElInventoriesEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentInstanceFilterElInventoriesEl {
-        OsConfigOsPolicyAssignmentInstanceFilterElInventoriesEl {
+impl BuildOsConfigOsPolicyAssignment_InstanceFilter_Inventories {
+    pub fn build(self) -> OsConfigOsPolicyAssignment_InstanceFilter_Inventories {
+        OsConfigOsPolicyAssignment_InstanceFilter_Inventories {
             os_short_name: self.os_short_name,
             os_version: core::default::Default::default(),
         }
     }
 }
 
-pub struct OsConfigOsPolicyAssignmentInstanceFilterElInventoriesElRef {
+#[allow(dead_code)]
+pub struct OsConfigOsPolicyAssignment_InstanceFilter_InventoriesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigOsPolicyAssignmentInstanceFilterElInventoriesElRef {
+impl terrars::Ref for OsConfigOsPolicyAssignment_InstanceFilter_InventoriesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentInstanceFilterElInventoriesElRef {
-        OsConfigOsPolicyAssignmentInstanceFilterElInventoriesElRef {
+    ) -> OsConfigOsPolicyAssignment_InstanceFilter_InventoriesRef {
+        OsConfigOsPolicyAssignment_InstanceFilter_InventoriesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigOsPolicyAssignmentInstanceFilterElInventoriesElRef {
+impl OsConfigOsPolicyAssignment_InstanceFilter_InventoriesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -732,32 +769,30 @@ impl OsConfigOsPolicyAssignmentInstanceFilterElInventoriesElRef {
 }
 
 #[derive(Serialize, Default)]
-struct OsConfigOsPolicyAssignmentInstanceFilterElDynamic {
+struct OsConfigOsPolicyAssignment_InstanceFilterDynamic {
     exclusion_labels: std
     ::option
-    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignmentInstanceFilterElExclusionLabelsEl>>,
+    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignment_InstanceFilter_ExclusionLabels>>,
     inclusion_labels: std
     ::option
-    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignmentInstanceFilterElInclusionLabelsEl>>,
-    inventories: std
-    ::option
-    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignmentInstanceFilterElInventoriesEl>>,
+    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignment_InstanceFilter_InclusionLabels>>,
+    inventories: std::option::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignment_InstanceFilter_Inventories>>,
 }
 
 #[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentInstanceFilterEl {
+pub struct OsConfigOsPolicyAssignment_InstanceFilter {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     all: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    exclusion_labels: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignmentInstanceFilterElExclusionLabelsEl>>,
+    exclusion_labels: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignment_InstanceFilter_ExclusionLabels>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    inclusion_labels: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignmentInstanceFilterElInclusionLabelsEl>>,
+    inclusion_labels: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignment_InstanceFilter_InclusionLabels>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    inventories: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignmentInstanceFilterElInventoriesEl>>,
-    dynamic: OsConfigOsPolicyAssignmentInstanceFilterElDynamic,
+    inventories: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignment_InstanceFilter_Inventories>>,
+    dynamic: OsConfigOsPolicyAssignment_InstanceFilterDynamic,
 }
 
-impl OsConfigOsPolicyAssignmentInstanceFilterEl {
+impl OsConfigOsPolicyAssignment_InstanceFilter {
     #[doc = "Set the field `all`.\nTarget all VMs in the project. If true, no other criteria is permitted."]
     pub fn set_all(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.all = std::option::Option::Some(v.into());
@@ -772,7 +807,7 @@ impl OsConfigOsPolicyAssignmentInstanceFilterEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<OsConfigOsPolicyAssignmentInstanceFilterElExclusionLabelsEl>>,
+                    ::Into<terrars::BlockAssignable<OsConfigOsPolicyAssignment_InstanceFilter_ExclusionLabels>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -793,7 +828,7 @@ impl OsConfigOsPolicyAssignmentInstanceFilterEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<OsConfigOsPolicyAssignmentInstanceFilterElInclusionLabelsEl>>,
+                    ::Into<terrars::BlockAssignable<OsConfigOsPolicyAssignment_InstanceFilter_InclusionLabels>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -809,12 +844,7 @@ impl OsConfigOsPolicyAssignmentInstanceFilterEl {
     #[doc = "Set the field `inventories`.\n"]
     pub fn set_inventories(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<OsConfigOsPolicyAssignmentInstanceFilterElInventoriesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigOsPolicyAssignment_InstanceFilter_Inventories>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -828,8 +858,8 @@ impl OsConfigOsPolicyAssignmentInstanceFilterEl {
     }
 }
 
-impl terrars::ToListMappable for OsConfigOsPolicyAssignmentInstanceFilterEl {
-    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignmentInstanceFilterEl>;
+impl terrars::ToListMappable for OsConfigOsPolicyAssignment_InstanceFilter {
+    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignment_InstanceFilter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -840,11 +870,11 @@ impl terrars::ToListMappable for OsConfigOsPolicyAssignmentInstanceFilterEl {
     }
 }
 
-pub struct BuildOsConfigOsPolicyAssignmentInstanceFilterEl {}
+pub struct BuildOsConfigOsPolicyAssignment_InstanceFilter {}
 
-impl BuildOsConfigOsPolicyAssignmentInstanceFilterEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentInstanceFilterEl {
-        OsConfigOsPolicyAssignmentInstanceFilterEl {
+impl BuildOsConfigOsPolicyAssignment_InstanceFilter {
+    pub fn build(self) -> OsConfigOsPolicyAssignment_InstanceFilter {
+        OsConfigOsPolicyAssignment_InstanceFilter {
             all: core::default::Default::default(),
             exclusion_labels: core::default::Default::default(),
             inclusion_labels: core::default::Default::default(),
@@ -854,21 +884,23 @@ impl BuildOsConfigOsPolicyAssignmentInstanceFilterEl {
     }
 }
 
-pub struct OsConfigOsPolicyAssignmentInstanceFilterElRef {
+#[allow(dead_code)]
+pub struct OsConfigOsPolicyAssignment_InstanceFilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigOsPolicyAssignmentInstanceFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> OsConfigOsPolicyAssignmentInstanceFilterElRef {
-        OsConfigOsPolicyAssignmentInstanceFilterElRef {
+impl terrars::Ref for OsConfigOsPolicyAssignment_InstanceFilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> OsConfigOsPolicyAssignment_InstanceFilterRef {
+        OsConfigOsPolicyAssignment_InstanceFilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigOsPolicyAssignmentInstanceFilterElRef {
+impl OsConfigOsPolicyAssignment_InstanceFilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -880,29 +912,29 @@ impl OsConfigOsPolicyAssignmentInstanceFilterElRef {
     }
 
     #[doc = "Get a reference to the value of field `exclusion_labels` after provisioning.\n"]
-    pub fn exclusion_labels(&self) -> terrars::ListRef<OsConfigOsPolicyAssignmentInstanceFilterElExclusionLabelsElRef> {
+    pub fn exclusion_labels(&self) -> terrars::ListRef<OsConfigOsPolicyAssignment_InstanceFilter_ExclusionLabelsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.exclusion_labels", self.base))
     }
 
     #[doc = "Get a reference to the value of field `inclusion_labels` after provisioning.\n"]
-    pub fn inclusion_labels(&self) -> terrars::ListRef<OsConfigOsPolicyAssignmentInstanceFilterElInclusionLabelsElRef> {
+    pub fn inclusion_labels(&self) -> terrars::ListRef<OsConfigOsPolicyAssignment_InstanceFilter_InclusionLabelsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.inclusion_labels", self.base))
     }
 
     #[doc = "Get a reference to the value of field `inventories` after provisioning.\n"]
-    pub fn inventories(&self) -> terrars::ListRef<OsConfigOsPolicyAssignmentInstanceFilterElInventoriesElRef> {
+    pub fn inventories(&self) -> terrars::ListRef<OsConfigOsPolicyAssignment_InstanceFilter_InventoriesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.inventories", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElInventoryFiltersEl {
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_InventoryFilters {
     os_short_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     os_version: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElInventoryFiltersEl {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_InventoryFilters {
     #[doc =
         "Set the field `os_version`.\nThe OS version\nPrefix matches are supported if asterisk(*) is provided as the last character. For example, to match all versions with a major version of '7', specify the following value for this field '7.*'\nAn empty string matches all OS versions."]
     pub fn set_os_version(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -911,8 +943,8 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElInventoryFiltersEl {
     }
 }
 
-impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElInventoryFiltersEl {
-    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElInventoryFiltersEl>;
+impl terrars::ToListMappable for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_InventoryFilters {
+    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_InventoryFilters>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -923,38 +955,40 @@ impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceG
     }
 }
 
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElInventoryFiltersEl {
+pub struct BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_InventoryFilters {
     #[doc = "The OS short name"]
     pub os_short_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElInventoryFiltersEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElInventoryFiltersEl {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElInventoryFiltersEl {
+impl BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_InventoryFilters {
+    pub fn build(self) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_InventoryFilters {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_InventoryFilters {
             os_short_name: self.os_short_name,
             os_version: core::default::Default::default(),
         }
     }
 }
 
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElInventoryFiltersElRef {
+#[allow(dead_code)]
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_InventoryFiltersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElInventoryFiltersElRef {
+impl terrars::Ref for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_InventoryFiltersRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElInventoryFiltersElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElInventoryFiltersElRef {
+    ) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_InventoryFiltersRef {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_InventoryFiltersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElInventoryFiltersElRef {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_InventoryFiltersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -972,14 +1006,14 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElInventoryFiltersElRef
 }
 
 #[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElGcsEl {
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_Gcs {
     bucket: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     generation: std::option::Option<terrars::PrimField<f64>>,
     object: terrars::PrimField<std::string::String>,
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElGcsEl {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_Gcs {
     #[doc = "Set the field `generation`.\nGeneration number of the Cloud Storage object."]
     pub fn set_generation(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.generation = std::option::Option::Some(v.into());
@@ -987,13 +1021,8 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnfo
     }
 }
 
-impl terrars
-::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElGcsEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElGcsEl,
-        >;
+impl terrars::ToListMappable for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_Gcs {
+    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_Gcs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1004,18 +1033,16 @@ impl terrars
     }
 }
 
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElGcsEl {
+pub struct BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_Gcs {
     #[doc = "Bucket of the Cloud Storage object."]
     pub bucket: terrars::PrimField<std::string::String>,
     #[doc = "Name of the Cloud Storage object."]
     pub object: terrars::PrimField<std::string::String>,
 }
 
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElGcsEl {
-    pub fn build(
-        self,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElGcsEl {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElGcsEl {
+impl BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_Gcs {
+    pub fn build(self) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_Gcs {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_Gcs {
             bucket: self.bucket,
             generation: core::default::Default::default(),
             object: self.object,
@@ -1023,24 +1050,26 @@ impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecE
     }
 }
 
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElGcsElRef {
+#[allow(dead_code)]
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_GcsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElGcsElRef {
+impl terrars::Ref for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_GcsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElGcsElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElGcsElRef {
+    ) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_GcsRef {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_GcsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElGcsElRef {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_GcsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1063,13 +1092,13 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnfo
 }
 
 #[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElRemoteEl {
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_Remote {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sha256_checksum: std::option::Option<terrars::PrimField<std::string::String>>,
     uri: terrars::PrimField<std::string::String>,
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElRemoteEl {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_Remote {
     #[doc = "Set the field `sha256_checksum`.\nSHA256 checksum of the remote file."]
     pub fn set_sha256_checksum(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.sha256_checksum = std::option::Option::Some(v.into());
@@ -1077,13 +1106,9 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnfo
     }
 }
 
-impl terrars
-::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElRemoteEl {
+impl terrars::ToListMappable for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_Remote {
     type O =
-        terrars
-        ::BlockAssignable<
-            OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElRemoteEl,
-        >;
+        terrars::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_Remote>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1094,42 +1119,41 @@ impl terrars
     }
 }
 
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElRemoteEl {
+pub struct BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_Remote {
     #[doc =
         "URI from which to fetch the object. It should contain both the protocol and path following the format '{protocol}://{location}'."]
     pub uri: terrars::PrimField<std::string::String>,
 }
 
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElRemoteEl {
-    pub fn build(
-        self,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElRemoteEl {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElRemoteEl {
+impl BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_Remote {
+    pub fn build(self) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_Remote {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_Remote {
             sha256_checksum: core::default::Default::default(),
             uri: self.uri,
         }
     }
 }
 
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElRemoteElRef {
+#[allow(dead_code)]
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_RemoteRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars
-::Ref for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElRemoteElRef {
+impl terrars::Ref for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_RemoteRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElRemoteElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElRemoteElRef {
+    ) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_RemoteRef {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_RemoteRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElRemoteElRef {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_RemoteRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1148,43 +1172,31 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnfo
 }
 
 #[derive(Serialize, Default)]
-struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElDynamic {
+struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_FileDynamic {
     gcs: std
     ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElGcsEl>,
-    >,
+    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_Gcs>>,
     remote: std
     ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElRemoteEl>,
-    >,
+    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_Remote>>,
 }
 
 #[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileEl {
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allow_insecure: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     local_path: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    gcs: std
-    ::option
-    ::Option<
-        std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElGcsEl>,
-    >,
+    gcs: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_Gcs>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     remote: std
     ::option
-    ::Option<
-        std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElRemoteEl>,
-    >,
-    dynamic: OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElDynamic,
+    ::Option<std::vec::Vec<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_Remote>>,
+    dynamic: OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_FileDynamic,
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileEl {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File {
     #[doc =
         "Set the field `allow_insecure`.\nDefaults to false. When false, files are subject to validations based on the file type: Remote: A checksum must be specified. Cloud Storage: An object generation number must be specified."]
     pub fn set_allow_insecure(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -1209,7 +1221,7 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnfo
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElGcsEl,
+                            OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_Gcs,
                         >,
                     >,
     ) -> Self {
@@ -1235,7 +1247,7 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnfo
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElRemoteEl,
+                            OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_Remote,
                         >,
                     >,
     ) -> Self {
@@ -1251,11 +1263,8 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnfo
     }
 }
 
-impl terrars
-::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileEl {
-    type O =
-        terrars
-        ::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileEl>;
+impl terrars::ToListMappable for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File {
+    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1266,11 +1275,11 @@ impl terrars
     }
 }
 
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileEl {}
+pub struct BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File {}
 
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileEl {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileEl {
+impl BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File {
+    pub fn build(self) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File {
             allow_insecure: core::default::Default::default(),
             local_path: core::default::Default::default(),
             gcs: core::default::Default::default(),
@@ -1280,24 +1289,26 @@ impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecE
     }
 }
 
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElRef {
+#[allow(dead_code)]
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_FileRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElRef {
+impl terrars::Ref for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_FileRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElRef {
+    ) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_FileRef {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_FileRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElRef {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_FileRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1317,31 +1328,27 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnfo
     #[doc = "Get a reference to the value of field `gcs` after provisioning.\n"]
     pub fn gcs(
         &self,
-    ) -> terrars
-    ::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElGcsElRef> {
+    ) -> terrars::ListRef<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_GcsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.gcs", self.base))
     }
 
     #[doc = "Get a reference to the value of field `remote` after provisioning.\n"]
     pub fn remote(
         &self,
-    ) -> terrars
-    ::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElRemoteElRef> {
+    ) -> terrars::ListRef<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_RemoteRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.remote", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElDynamic {
+struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_EnforceDynamic {
     file: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileEl>,
-    >,
+    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File>>,
 }
 
 #[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceEl {
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Enforce {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     args: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     interpreter: terrars::PrimField<std::string::String>,
@@ -1350,13 +1357,11 @@ pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExec
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     script: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    file: std
-    ::option
-    ::Option<std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileEl>>,
-    dynamic: OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElDynamic,
+    file: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File>>,
+    dynamic: OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_EnforceDynamic,
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceEl {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Enforce {
     #[doc = "Set the field `args`.\nOptional arguments to pass to the source during execution."]
     pub fn set_args(
         mut self,
@@ -1389,9 +1394,7 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnfo
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileEl,
-                        >,
+                        ::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1406,9 +1409,8 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnfo
     }
 }
 
-impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceEl {
-    type O =
-        terrars::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceEl>;
+impl terrars::ToListMappable for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Enforce {
+    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Enforce>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1419,15 +1421,15 @@ impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceG
     }
 }
 
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceEl {
+pub struct BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Enforce {
     #[doc =
         "The script interpreter to use. Possible values: [\"INTERPRETER_UNSPECIFIED\", \"NONE\", \"SHELL\", \"POWERSHELL\"]"]
     pub interpreter: terrars::PrimField<std::string::String>,
 }
 
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceEl {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceEl {
+impl BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Enforce {
+    pub fn build(self) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Enforce {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Enforce {
             args: core::default::Default::default(),
             interpreter: self.interpreter,
             output_file_path: core::default::Default::default(),
@@ -1438,24 +1440,26 @@ impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecE
     }
 }
 
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElRef {
+#[allow(dead_code)]
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_EnforceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElRef {
+impl terrars::Ref for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_EnforceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElRef {
+    ) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_EnforceRef {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_EnforceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElRef {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_EnforceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1485,229 +1489,37 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnfo
     }
 
     #[doc = "Get a reference to the value of field `file` after provisioning.\n"]
-    pub fn file(
-        &self,
-    ) -> terrars::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElFileElRef> {
+    pub fn file(&self) -> terrars::ListRef<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_FileRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.file", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElGcsEl {
-    bucket: terrars::PrimField<std::string::String>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    generation: std::option::Option<terrars::PrimField<f64>>,
-    object: terrars::PrimField<std::string::String>,
-}
-
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElGcsEl {
-    #[doc = "Set the field `generation`.\nGeneration number of the Cloud Storage object."]
-    pub fn set_generation(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.generation = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElGcsEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElGcsEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElGcsEl {
-    #[doc = "Bucket of the Cloud Storage object."]
-    pub bucket: terrars::PrimField<std::string::String>,
-    #[doc = "Name of the Cloud Storage object."]
-    pub object: terrars::PrimField<std::string::String>,
-}
-
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElGcsEl {
-    pub fn build(
-        self,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElGcsEl {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElGcsEl {
-            bucket: self.bucket,
-            generation: core::default::Default::default(),
-            object: self.object,
-        }
-    }
-}
-
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElGcsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElGcsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElGcsElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElGcsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElGcsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `bucket` after provisioning.\nBucket of the Cloud Storage object."]
-    pub fn bucket(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `generation` after provisioning.\nGeneration number of the Cloud Storage object."]
-    pub fn generation(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.generation", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `object` after provisioning.\nName of the Cloud Storage object."]
-    pub fn object(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.object", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElRemoteEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sha256_checksum: std::option::Option<terrars::PrimField<std::string::String>>,
-    uri: terrars::PrimField<std::string::String>,
-}
-
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElRemoteEl {
-    #[doc = "Set the field `sha256_checksum`.\nSHA256 checksum of the remote file."]
-    pub fn set_sha256_checksum(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.sha256_checksum = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElRemoteEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElRemoteEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElRemoteEl {
-    #[doc =
-        "URI from which to fetch the object. It should contain both the protocol and path following the format '{protocol}://{location}'."]
-    pub uri: terrars::PrimField<std::string::String>,
-}
-
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElRemoteEl {
-    pub fn build(
-        self,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElRemoteEl {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElRemoteEl {
-            sha256_checksum: core::default::Default::default(),
-            uri: self.uri,
-        }
-    }
-}
-
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElRemoteElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElRemoteElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElRemoteElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElRemoteElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElRemoteElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `sha256_checksum` after provisioning.\nSHA256 checksum of the remote file."]
-    pub fn sha256_checksum(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sha256_checksum", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `uri` after provisioning.\nURI from which to fetch the object. It should contain both the protocol and path following the format '{protocol}://{location}'."]
-    pub fn uri(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.uri", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElDynamic {
+struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Validate_FileDynamic {
     gcs: std
     ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElGcsEl>,
-    >,
+    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_Gcs>>,
     remote: std
     ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElRemoteEl,
-        >,
-    >,
+    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_Remote>>,
 }
 
 #[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileEl {
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Validate_File {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allow_insecure: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     local_path: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    gcs: std
-    ::option
-    ::Option<
-        std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElGcsEl>,
-    >,
+    gcs: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_Gcs>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     remote: std
     ::option
-    ::Option<
-        std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElRemoteEl>,
-    >,
-    dynamic: OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElDynamic,
+    ::Option<std::vec::Vec<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_Remote>>,
+    dynamic: OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Validate_FileDynamic,
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileEl {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Validate_File {
     #[doc =
         "Set the field `allow_insecure`.\nDefaults to false. When false, files are subject to validations based on the file type:\nRemote: A checksum must be specified. Cloud Storage: An object generation number must be specified."]
     pub fn set_allow_insecure(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -1732,7 +1544,7 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElVali
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElGcsEl,
+                            OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_Gcs,
                         >,
                     >,
     ) -> Self {
@@ -1758,7 +1570,7 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElVali
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElRemoteEl,
+                            OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_Remote,
                         >,
                     >,
     ) -> Self {
@@ -1774,11 +1586,9 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElVali
     }
 }
 
-impl terrars
-::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileEl {
+impl terrars::ToListMappable for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Validate_File {
     type O =
-        terrars
-        ::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileEl>;
+        terrars::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Validate_File>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1789,11 +1599,11 @@ impl terrars
     }
 }
 
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileEl {}
+pub struct BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Validate_File {}
 
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileEl {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileEl {
+impl BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Validate_File {
+    pub fn build(self) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Validate_File {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Validate_File {
             allow_insecure: core::default::Default::default(),
             local_path: core::default::Default::default(),
             gcs: core::default::Default::default(),
@@ -1803,24 +1613,26 @@ impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecE
     }
 }
 
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElRef {
+#[allow(dead_code)]
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Validate_FileRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElRef {
+impl terrars::Ref for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Validate_FileRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElRef {
+    ) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Validate_FileRef {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Validate_FileRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElRef {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Validate_FileRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1840,31 +1652,29 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElVali
     #[doc = "Get a reference to the value of field `gcs` after provisioning.\n"]
     pub fn gcs(
         &self,
-    ) -> terrars
-    ::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElGcsElRef> {
+    ) -> terrars::ListRef<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_GcsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.gcs", self.base))
     }
 
     #[doc = "Get a reference to the value of field `remote` after provisioning.\n"]
     pub fn remote(
         &self,
-    ) -> terrars
-    ::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElRemoteElRef> {
+    ) -> terrars::ListRef<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_RemoteRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.remote", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElDynamic {
+struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_ValidateDynamic {
     file: std
     ::option
     ::Option<
-        terrars::DynamicBlock<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileEl>,
+        terrars::DynamicBlock<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Validate_File>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateEl {
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Validate {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     args: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     interpreter: terrars::PrimField<std::string::String>,
@@ -1875,11 +1685,11 @@ pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExec
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     file: std
     ::option
-    ::Option<std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileEl>>,
-    dynamic: OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElDynamic,
+    ::Option<std::vec::Vec<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Validate_File>>,
+    dynamic: OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_ValidateDynamic,
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateEl {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Validate {
     #[doc = "Set the field `args`.\nOptional arguments to pass to the source during execution."]
     pub fn set_args(
         mut self,
@@ -1913,7 +1723,7 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElVali
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileEl,
+                            OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Validate_File,
                         >,
                     >,
     ) -> Self {
@@ -1929,9 +1739,8 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElVali
     }
 }
 
-impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateEl {
-    type O =
-        terrars::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateEl>;
+impl terrars::ToListMappable for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Validate {
+    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Validate>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1942,15 +1751,15 @@ impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceG
     }
 }
 
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateEl {
+pub struct BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Validate {
     #[doc =
         "The script interpreter to use. Possible values: [\"INTERPRETER_UNSPECIFIED\", \"NONE\", \"SHELL\", \"POWERSHELL\"]"]
     pub interpreter: terrars::PrimField<std::string::String>,
 }
 
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateEl {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateEl {
+impl BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Validate {
+    pub fn build(self) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Validate {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Validate {
             args: core::default::Default::default(),
             interpreter: self.interpreter,
             output_file_path: core::default::Default::default(),
@@ -1961,24 +1770,26 @@ impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecE
     }
 }
 
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElRef {
+#[allow(dead_code)]
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_ValidateRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElRef {
+impl terrars::Ref for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_ValidateRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElRef {
+    ) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_ValidateRef {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_ValidateRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElRef {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_ValidateRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2010,37 +1821,35 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElVali
     #[doc = "Get a reference to the value of field `file` after provisioning.\n"]
     pub fn file(
         &self,
-    ) -> terrars::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElFileElRef> {
+    ) -> terrars::ListRef<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Validate_FileRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.file", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElDynamic {
+struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_ExecDynamic {
     enforce: std
     ::option
-    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceEl>>,
+    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Enforce>>,
     validate: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateEl>,
-    >,
+    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Validate>>,
 }
 
 #[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecEl {
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enforce: std
     ::option
-    ::Option<std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceEl>>,
+    ::Option<std::vec::Vec<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Enforce>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     validate: std
     ::option
-    ::Option<std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateEl>>,
-    dynamic: OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElDynamic,
+    ::Option<std::vec::Vec<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Validate>>,
+    dynamic: OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_ExecDynamic,
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecEl {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec {
     #[doc = "Set the field `enforce`.\n"]
     pub fn set_enforce(
         mut self,
@@ -2051,9 +1860,7 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceEl,
-                        >,
+                        ::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Enforce>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2078,7 +1885,7 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateEl,
+                            OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_Validate,
                         >,
                     >,
     ) -> Self {
@@ -2094,8 +1901,8 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecEl {
     }
 }
 
-impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecEl {
-    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecEl>;
+impl terrars::ToListMappable for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec {
+    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2106,11 +1913,11 @@ impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceG
     }
 }
 
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecEl {}
+pub struct BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec {}
 
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecEl {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecEl {
+impl BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec {
+    pub fn build(self) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec {
             enforce: core::default::Default::default(),
             validate: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -2118,24 +1925,26 @@ impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecE
     }
 }
 
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElRef {
+#[allow(dead_code)]
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_ExecRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElRef {
+impl terrars::Ref for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_ExecRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElRef {
+    ) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_ExecRef {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_ExecRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElRef {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_ExecRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2143,376 +1952,37 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElRef 
     #[doc = "Get a reference to the value of field `enforce` after provisioning.\n"]
     pub fn enforce(
         &self,
-    ) -> terrars::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElEnforceElRef> {
+    ) -> terrars::ListRef<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_EnforceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.enforce", self.base))
     }
 
     #[doc = "Get a reference to the value of field `validate` after provisioning.\n"]
     pub fn validate(
         &self,
-    ) -> terrars::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElValidateElRef> {
+    ) -> terrars::ListRef<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec_ValidateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.validate", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElGcsEl {
-    bucket: terrars::PrimField<std::string::String>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    generation: std::option::Option<terrars::PrimField<f64>>,
-    object: terrars::PrimField<std::string::String>,
-}
-
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElGcsEl {
-    #[doc = "Set the field `generation`.\nGeneration number of the Cloud Storage object."]
-    pub fn set_generation(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.generation = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElGcsEl {
-    type O =
-        terrars::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElGcsEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElGcsEl {
-    #[doc = "Bucket of the Cloud Storage object."]
-    pub bucket: terrars::PrimField<std::string::String>,
-    #[doc = "Name of the Cloud Storage object."]
-    pub object: terrars::PrimField<std::string::String>,
-}
-
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElGcsEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElGcsEl {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElGcsEl {
-            bucket: self.bucket,
-            generation: core::default::Default::default(),
-            object: self.object,
-        }
-    }
-}
-
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElGcsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElGcsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElGcsElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElGcsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElGcsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `bucket` after provisioning.\nBucket of the Cloud Storage object."]
-    pub fn bucket(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `generation` after provisioning.\nGeneration number of the Cloud Storage object."]
-    pub fn generation(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.generation", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `object` after provisioning.\nName of the Cloud Storage object."]
-    pub fn object(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.object", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElRemoteEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sha256_checksum: std::option::Option<terrars::PrimField<std::string::String>>,
-    uri: terrars::PrimField<std::string::String>,
-}
-
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElRemoteEl {
-    #[doc = "Set the field `sha256_checksum`.\nSHA256 checksum of the remote file."]
-    pub fn set_sha256_checksum(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.sha256_checksum = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElRemoteEl {
-    type O =
-        terrars
-        ::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElRemoteEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElRemoteEl {
-    #[doc =
-        "URI from which to fetch the object. It should contain both the protocol and path following the format '{protocol}://{location}'."]
-    pub uri: terrars::PrimField<std::string::String>,
-}
-
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElRemoteEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElRemoteEl {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElRemoteEl {
-            sha256_checksum: core::default::Default::default(),
-            uri: self.uri,
-        }
-    }
-}
-
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElRemoteElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElRemoteElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElRemoteElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElRemoteElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElRemoteElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `sha256_checksum` after provisioning.\nSHA256 checksum of the remote file."]
-    pub fn sha256_checksum(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sha256_checksum", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `uri` after provisioning.\nURI from which to fetch the object. It should contain both the protocol and path following the format '{protocol}://{location}'."]
-    pub fn uri(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.uri", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElDynamic {
-    gcs: std
-    ::option
-    ::Option<
-        terrars::DynamicBlock<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElGcsEl>,
-    >,
-    remote: std
-    ::option
-    ::Option<
-        terrars::DynamicBlock<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElRemoteEl>,
-    >,
-}
-
-#[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    allow_insecure: std::option::Option<terrars::PrimField<bool>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    local_path: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    gcs: std
-    ::option
-    ::Option<std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElGcsEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    remote: std
-    ::option
-    ::Option<std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElRemoteEl>>,
-    dynamic: OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElDynamic,
-}
-
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileEl {
-    #[doc =
-        "Set the field `allow_insecure`.\nDefaults to false. When false, files are subject to validations based on the file type: Remote: A checksum must be specified. Cloud Storage: An object generation number must be specified."]
-    pub fn set_allow_insecure(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.allow_insecure = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `local_path`.\nA local path within the VM to use."]
-    pub fn set_local_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.local_path = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `gcs`.\n"]
-    pub fn set_gcs(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElGcsEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.gcs = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.gcs = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `remote`.\n"]
-    pub fn set_remote(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElRemoteEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.remote = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.remote = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileEl {
-    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileEl {}
-
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileEl {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileEl {
-            allow_insecure: core::default::Default::default(),
-            local_path: core::default::Default::default(),
-            gcs: core::default::Default::default(),
-            remote: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `allow_insecure` after provisioning.\nDefaults to false. When false, files are subject to validations based on the file type: Remote: A checksum must be specified. Cloud Storage: An object generation number must be specified."]
-    pub fn allow_insecure(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.allow_insecure", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `local_path` after provisioning.\nA local path within the VM to use."]
-    pub fn local_path(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.local_path", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `gcs` after provisioning.\n"]
-    pub fn gcs(
-        &self,
-    ) -> terrars::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElGcsElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.gcs", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `remote` after provisioning.\n"]
-    pub fn remote(
-        &self,
-    ) -> terrars::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElRemoteElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.remote", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElDynamic {
+struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_FileDynamic {
     file: std
     ::option
-    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileEl>>,
+    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File>>,
 }
 
 #[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileEl {
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     content: std::option::Option<terrars::PrimField<std::string::String>>,
     path: terrars::PrimField<std::string::String>,
     state: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    file: std
-    ::option
-    ::Option<std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileEl>>,
-    dynamic: OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElDynamic,
+    file: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File>>,
+    dynamic: OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_FileDynamic,
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileEl {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File {
     #[doc =
         "Set the field `content`.\nA a file with this content. The size of the content is limited to 1024 characters."]
     pub fn set_content(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -2530,9 +2000,7 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileEl,
-                        >,
+                        ::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2547,8 +2015,8 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileEl {
     }
 }
 
-impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileEl {
-    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileEl>;
+impl terrars::ToListMappable for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File {
+    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2559,7 +2027,7 @@ impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceG
     }
 }
 
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileEl {
+pub struct BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File {
     #[doc = "The absolute path of the file within the VM."]
     pub path: terrars::PrimField<std::string::String>,
     #[doc =
@@ -2567,9 +2035,9 @@ pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesE
     pub state: terrars::PrimField<std::string::String>,
 }
 
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileEl {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileEl {
+impl BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File {
+    pub fn build(self) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File {
             content: core::default::Default::default(),
             path: self.path,
             state: self.state,
@@ -2579,24 +2047,26 @@ impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileE
     }
 }
 
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElRef {
+#[allow(dead_code)]
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_FileRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElRef {
+impl terrars::Ref for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_FileRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElRef {
+    ) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_FileRef {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_FileRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElRef {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_FileRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2626,22 +2096,20 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElRef 
     }
 
     #[doc = "Get a reference to the value of field `file` after provisioning.\n"]
-    pub fn file(
-        &self,
-    ) -> terrars::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElFileElRef> {
+    pub fn file(&self) -> terrars::ListRef<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_FileRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.file", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElAptEl {
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Apt {
     name: terrars::PrimField<std::string::String>,
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElAptEl { }
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Apt { }
 
-impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElAptEl {
-    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElAptEl>;
+impl terrars::ToListMappable for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Apt {
+    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Apt>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2652,35 +2120,37 @@ impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceG
     }
 }
 
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElAptEl {
+pub struct BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Apt {
     #[doc = "Package name."]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElAptEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElAptEl {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElAptEl { name: self.name }
+impl BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Apt {
+    pub fn build(self) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Apt {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Apt { name: self.name }
     }
 }
 
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElAptElRef {
+#[allow(dead_code)]
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_AptRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElAptElRef {
+impl terrars::Ref for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_AptRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElAptElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElAptElRef {
+    ) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_AptRef {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_AptRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElAptElRef {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_AptRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2691,213 +2161,32 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElAptEl
     }
 }
 
-#[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElGcsEl {
-    bucket: terrars::PrimField<std::string::String>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    generation: std::option::Option<terrars::PrimField<f64>>,
-    object: terrars::PrimField<std::string::String>,
-}
-
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElGcsEl {
-    #[doc = "Set the field `generation`.\nGeneration number of the Cloud Storage object."]
-    pub fn set_generation(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.generation = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElGcsEl {
-    type O =
-        terrars
-        ::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElGcsEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElGcsEl {
-    #[doc = "Bucket of the Cloud Storage object."]
-    pub bucket: terrars::PrimField<std::string::String>,
-    #[doc = "Name of the Cloud Storage object."]
-    pub object: terrars::PrimField<std::string::String>,
-}
-
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElGcsEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElGcsEl {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElGcsEl {
-            bucket: self.bucket,
-            generation: core::default::Default::default(),
-            object: self.object,
-        }
-    }
-}
-
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElGcsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElGcsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElGcsElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElGcsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElGcsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `bucket` after provisioning.\nBucket of the Cloud Storage object."]
-    pub fn bucket(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `generation` after provisioning.\nGeneration number of the Cloud Storage object."]
-    pub fn generation(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.generation", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `object` after provisioning.\nName of the Cloud Storage object."]
-    pub fn object(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.object", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElRemoteEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sha256_checksum: std::option::Option<terrars::PrimField<std::string::String>>,
-    uri: terrars::PrimField<std::string::String>,
-}
-
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElRemoteEl {
-    #[doc = "Set the field `sha256_checksum`.\nSHA256 checksum of the remote file."]
-    pub fn set_sha256_checksum(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.sha256_checksum = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElRemoteEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElRemoteEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElRemoteEl {
-    #[doc =
-        "URI from which to fetch the object. It should contain both the protocol and path following the format '{protocol}://{location}'."]
-    pub uri: terrars::PrimField<std::string::String>,
-}
-
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElRemoteEl {
-    pub fn build(
-        self,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElRemoteEl {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElRemoteEl {
-            sha256_checksum: core::default::Default::default(),
-            uri: self.uri,
-        }
-    }
-}
-
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElRemoteElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElRemoteElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElRemoteElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElRemoteElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElRemoteElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `sha256_checksum` after provisioning.\nSHA256 checksum of the remote file."]
-    pub fn sha256_checksum(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sha256_checksum", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `uri` after provisioning.\nURI from which to fetch the object. It should contain both the protocol and path following the format '{protocol}://{location}'."]
-    pub fn uri(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.uri", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElDynamic {
+struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Deb_SourceDynamic {
     gcs: std
     ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElGcsEl>,
-    >,
+    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_Gcs>>,
     remote: std
     ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElRemoteEl>,
-    >,
+    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_Remote>>,
 }
 
 #[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceEl {
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Deb_Source {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allow_insecure: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     local_path: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    gcs: std
-    ::option
-    ::Option<std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElGcsEl>>,
+    gcs: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_Gcs>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     remote: std
     ::option
-    ::Option<
-        std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElRemoteEl>,
-    >,
-    dynamic: OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElDynamic,
+    ::Option<std::vec::Vec<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_Remote>>,
+    dynamic: OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Deb_SourceDynamic,
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceEl {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Deb_Source {
     #[doc =
         "Set the field `allow_insecure`.\nDefaults to false. When false, files are subject to validations based on the file type:\nRemote: A checksum must be specified. Cloud Storage: An object generation number must be specified."]
     pub fn set_allow_insecure(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -2922,7 +2211,7 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebEl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElGcsEl,
+                            OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_Gcs,
                         >,
                     >,
     ) -> Self {
@@ -2948,7 +2237,7 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebEl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElRemoteEl,
+                            OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_Remote,
                         >,
                     >,
     ) -> Self {
@@ -2964,10 +2253,8 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebEl
     }
 }
 
-impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceEl {
-    type O =
-        terrars
-        ::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceEl>;
+impl terrars::ToListMappable for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Deb_Source {
+    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Deb_Source>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2978,11 +2265,11 @@ impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceG
     }
 }
 
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceEl {}
+pub struct BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Deb_Source {}
 
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceEl {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceEl {
+impl BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Deb_Source {
+    pub fn build(self) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Deb_Source {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Deb_Source {
             allow_insecure: core::default::Default::default(),
             local_path: core::default::Default::default(),
             gcs: core::default::Default::default(),
@@ -2992,24 +2279,26 @@ impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgEl
     }
 }
 
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElRef {
+#[allow(dead_code)]
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Deb_SourceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElRef {
+impl terrars::Ref for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Deb_SourceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElRef {
+    ) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Deb_SourceRef {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Deb_SourceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElRef {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Deb_SourceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3029,41 +2318,37 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebEl
     #[doc = "Get a reference to the value of field `gcs` after provisioning.\n"]
     pub fn gcs(
         &self,
-    ) -> terrars
-    ::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElGcsElRef> {
+    ) -> terrars::ListRef<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_GcsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.gcs", self.base))
     }
 
     #[doc = "Get a reference to the value of field `remote` after provisioning.\n"]
     pub fn remote(
         &self,
-    ) -> terrars
-    ::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElRemoteElRef> {
+    ) -> terrars::ListRef<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File_File_RemoteRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.remote", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElDynamic {
+struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_DebDynamic {
     source: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceEl>,
-    >,
+    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Deb_Source>>,
 }
 
 #[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebEl {
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Deb {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     pull_deps: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     source: std
     ::option
-    ::Option<std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceEl>>,
-    dynamic: OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElDynamic,
+    ::Option<std::vec::Vec<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Deb_Source>>,
+    dynamic: OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_DebDynamic,
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebEl {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Deb {
     #[doc =
         "Set the field `pull_deps`.\nWhether dependencies should also be installed. - install when false: 'dpkg -i package' - install when true: 'apt-get update && apt-get -y install package.deb'"]
     pub fn set_pull_deps(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -3082,7 +2367,7 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebEl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceEl,
+                            OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Deb_Source,
                         >,
                     >,
     ) -> Self {
@@ -3098,8 +2383,8 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebEl
     }
 }
 
-impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebEl {
-    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebEl>;
+impl terrars::ToListMappable for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Deb {
+    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Deb>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3110,11 +2395,11 @@ impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceG
     }
 }
 
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebEl {}
+pub struct BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Deb {}
 
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebEl {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebEl {
+impl BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Deb {
+    pub fn build(self) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Deb {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Deb {
             pull_deps: core::default::Default::default(),
             source: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -3122,24 +2407,26 @@ impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgEl
     }
 }
 
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElRef {
+#[allow(dead_code)]
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_DebRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElRef {
+impl terrars::Ref for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_DebRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElRef {
+    ) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_DebRef {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_DebRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElRef {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_DebRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3153,21 +2440,20 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebEl
     #[doc = "Get a reference to the value of field `source` after provisioning.\n"]
     pub fn source(
         &self,
-    ) -> terrars::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElSourceElRef> {
+    ) -> terrars::ListRef<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Deb_SourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElGoogetEl {
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Googet {
     name: terrars::PrimField<std::string::String>,
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElGoogetEl { }
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Googet { }
 
-impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElGoogetEl {
-    type O =
-        terrars::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElGoogetEl>;
+impl terrars::ToListMappable for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Googet {
+    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Googet>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3178,35 +2464,37 @@ impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceG
     }
 }
 
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElGoogetEl {
+pub struct BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Googet {
     #[doc = "Package name."]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElGoogetEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElGoogetEl {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElGoogetEl { name: self.name }
+impl BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Googet {
+    pub fn build(self) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Googet {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Googet { name: self.name }
     }
 }
 
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElGoogetElRef {
+#[allow(dead_code)]
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_GoogetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElGoogetElRef {
+impl terrars::Ref for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_GoogetRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElGoogetElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElGoogetElRef {
+    ) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_GoogetRef {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_GoogetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElGoogetElRef {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_GoogetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3217,379 +2505,25 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElGooge
     }
 }
 
-#[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElGcsEl {
-    bucket: terrars::PrimField<std::string::String>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    generation: std::option::Option<terrars::PrimField<f64>>,
-    object: terrars::PrimField<std::string::String>,
-}
-
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElGcsEl {
-    #[doc = "Set the field `generation`.\nGeneration number of the Cloud Storage object."]
-    pub fn set_generation(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.generation = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElGcsEl {
-    type O =
-        terrars
-        ::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElGcsEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElGcsEl {
-    #[doc = "Bucket of the Cloud Storage object."]
-    pub bucket: terrars::PrimField<std::string::String>,
-    #[doc = "Name of the Cloud Storage object."]
-    pub object: terrars::PrimField<std::string::String>,
-}
-
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElGcsEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElGcsEl {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElGcsEl {
-            bucket: self.bucket,
-            generation: core::default::Default::default(),
-            object: self.object,
-        }
-    }
-}
-
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElGcsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElGcsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElGcsElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElGcsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElGcsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `bucket` after provisioning.\nBucket of the Cloud Storage object."]
-    pub fn bucket(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `generation` after provisioning.\nGeneration number of the Cloud Storage object."]
-    pub fn generation(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.generation", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `object` after provisioning.\nName of the Cloud Storage object."]
-    pub fn object(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.object", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElRemoteEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sha256_checksum: std::option::Option<terrars::PrimField<std::string::String>>,
-    uri: terrars::PrimField<std::string::String>,
-}
-
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElRemoteEl {
-    #[doc = "Set the field `sha256_checksum`.\nSHA256 checksum of the remote file."]
-    pub fn set_sha256_checksum(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.sha256_checksum = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElRemoteEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElRemoteEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElRemoteEl {
-    #[doc =
-        "URI from which to fetch the object. It should contain both the protocol and path following the format '{protocol}://{location}'."]
-    pub uri: terrars::PrimField<std::string::String>,
-}
-
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElRemoteEl {
-    pub fn build(
-        self,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElRemoteEl {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElRemoteEl {
-            sha256_checksum: core::default::Default::default(),
-            uri: self.uri,
-        }
-    }
-}
-
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElRemoteElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElRemoteElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElRemoteElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElRemoteElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElRemoteElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `sha256_checksum` after provisioning.\nSHA256 checksum of the remote file."]
-    pub fn sha256_checksum(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sha256_checksum", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `uri` after provisioning.\nURI from which to fetch the object. It should contain both the protocol and path following the format '{protocol}://{location}'."]
-    pub fn uri(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.uri", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElDynamic {
-    gcs: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElGcsEl>,
-    >,
-    remote: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElRemoteEl>,
-    >,
-}
-
-#[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    allow_insecure: std::option::Option<terrars::PrimField<bool>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    local_path: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    gcs: std
-    ::option
-    ::Option<std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElGcsEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    remote: std
-    ::option
-    ::Option<
-        std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElRemoteEl>,
-    >,
-    dynamic: OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElDynamic,
-}
-
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceEl {
-    #[doc =
-        "Set the field `allow_insecure`.\nDefaults to false. When false, files are subject to validations based on the file type:\nRemote: A checksum must be specified. Cloud Storage: An object generation number must be specified."]
-    pub fn set_allow_insecure(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.allow_insecure = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `local_path`.\nA local path within the VM to use."]
-    pub fn set_local_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.local_path = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `gcs`.\n"]
-    pub fn set_gcs(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElGcsEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.gcs = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.gcs = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `remote`.\n"]
-    pub fn set_remote(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElRemoteEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.remote = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.remote = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceEl {
-    type O =
-        terrars
-        ::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceEl {}
-
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceEl {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceEl {
-            allow_insecure: core::default::Default::default(),
-            local_path: core::default::Default::default(),
-            gcs: core::default::Default::default(),
-            remote: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `allow_insecure` after provisioning.\nDefaults to false. When false, files are subject to validations based on the file type:\nRemote: A checksum must be specified. Cloud Storage: An object generation number must be specified."]
-    pub fn allow_insecure(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.allow_insecure", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `local_path` after provisioning.\nA local path within the VM to use."]
-    pub fn local_path(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.local_path", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `gcs` after provisioning.\n"]
-    pub fn gcs(
-        &self,
-    ) -> terrars
-    ::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElGcsElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.gcs", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `remote` after provisioning.\n"]
-    pub fn remote(
-        &self,
-    ) -> terrars
-    ::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElRemoteElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.remote", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElDynamic {
+struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_MsiDynamic {
     source: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceEl>,
-    >,
+    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Deb_Source>>,
 }
 
 #[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiEl {
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Msi {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     properties: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     source: std
     ::option
-    ::Option<std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceEl>>,
-    dynamic: OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElDynamic,
+    ::Option<std::vec::Vec<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Deb_Source>>,
+    dynamic: OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_MsiDynamic,
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiEl {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Msi {
     #[doc =
         "Set the field `properties`.\nAdditional properties to use during installation. This should be in the format of Property=Setting. Appended to the defaults of 'ACTION=INSTALL REBOOT=ReallySuppress'."]
     pub fn set_properties(
@@ -3611,7 +2545,7 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiEl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceEl,
+                            OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Deb_Source,
                         >,
                     >,
     ) -> Self {
@@ -3627,8 +2561,8 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiEl
     }
 }
 
-impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiEl {
-    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiEl>;
+impl terrars::ToListMappable for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Msi {
+    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Msi>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3639,11 +2573,11 @@ impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceG
     }
 }
 
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiEl {}
+pub struct BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Msi {}
 
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiEl {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiEl {
+impl BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Msi {
+    pub fn build(self) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Msi {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Msi {
             properties: core::default::Default::default(),
             source: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -3651,24 +2585,26 @@ impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgEl
     }
 }
 
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElRef {
+#[allow(dead_code)]
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_MsiRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElRef {
+impl terrars::Ref for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_MsiRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElRef {
+    ) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_MsiRef {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_MsiRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElRef {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_MsiRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3682,384 +2618,30 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiEl
     #[doc = "Get a reference to the value of field `source` after provisioning.\n"]
     pub fn source(
         &self,
-    ) -> terrars::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElSourceElRef> {
+    ) -> terrars::ListRef<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Deb_SourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElGcsEl {
-    bucket: terrars::PrimField<std::string::String>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    generation: std::option::Option<terrars::PrimField<f64>>,
-    object: terrars::PrimField<std::string::String>,
-}
-
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElGcsEl {
-    #[doc = "Set the field `generation`.\nGeneration number of the Cloud Storage object."]
-    pub fn set_generation(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.generation = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElGcsEl {
-    type O =
-        terrars
-        ::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElGcsEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElGcsEl {
-    #[doc = "Bucket of the Cloud Storage object."]
-    pub bucket: terrars::PrimField<std::string::String>,
-    #[doc = "Name of the Cloud Storage object."]
-    pub object: terrars::PrimField<std::string::String>,
-}
-
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElGcsEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElGcsEl {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElGcsEl {
-            bucket: self.bucket,
-            generation: core::default::Default::default(),
-            object: self.object,
-        }
-    }
-}
-
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElGcsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElGcsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElGcsElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElGcsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElGcsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `bucket` after provisioning.\nBucket of the Cloud Storage object."]
-    pub fn bucket(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `generation` after provisioning.\nGeneration number of the Cloud Storage object."]
-    pub fn generation(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.generation", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `object` after provisioning.\nName of the Cloud Storage object."]
-    pub fn object(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.object", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElRemoteEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sha256_checksum: std::option::Option<terrars::PrimField<std::string::String>>,
-    uri: terrars::PrimField<std::string::String>,
-}
-
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElRemoteEl {
-    #[doc = "Set the field `sha256_checksum`.\nSHA256 checksum of the remote file."]
-    pub fn set_sha256_checksum(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.sha256_checksum = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElRemoteEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElRemoteEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElRemoteEl {
-    #[doc =
-        "URI from which to fetch the object. It should contain both the protocol and path following the format '{protocol}://{location}'."]
-    pub uri: terrars::PrimField<std::string::String>,
-}
-
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElRemoteEl {
-    pub fn build(
-        self,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElRemoteEl {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElRemoteEl {
-            sha256_checksum: core::default::Default::default(),
-            uri: self.uri,
-        }
-    }
-}
-
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElRemoteElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElRemoteElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElRemoteElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElRemoteElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElRemoteElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `sha256_checksum` after provisioning.\nSHA256 checksum of the remote file."]
-    pub fn sha256_checksum(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sha256_checksum", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `uri` after provisioning.\nURI from which to fetch the object. It should contain both the protocol and path following the format '{protocol}://{location}'."]
-    pub fn uri(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.uri", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElDynamic {
-    gcs: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElGcsEl>,
-    >,
-    remote: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElRemoteEl>,
-    >,
-}
-
-#[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    allow_insecure: std::option::Option<terrars::PrimField<bool>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    local_path: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    gcs: std
-    ::option
-    ::Option<std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElGcsEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    remote: std
-    ::option
-    ::Option<
-        std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElRemoteEl>,
-    >,
-    dynamic: OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElDynamic,
-}
-
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceEl {
-    #[doc =
-        "Set the field `allow_insecure`.\nDefaults to false. When false, files are subject to validations based on the file type:\nRemote: A checksum must be specified. Cloud Storage: An object generation number must be specified."]
-    pub fn set_allow_insecure(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.allow_insecure = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `local_path`.\nA local path within the VM to use."]
-    pub fn set_local_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.local_path = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `gcs`.\n"]
-    pub fn set_gcs(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElGcsEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.gcs = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.gcs = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `remote`.\n"]
-    pub fn set_remote(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElRemoteEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.remote = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.remote = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceEl {
-    type O =
-        terrars
-        ::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceEl {}
-
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceEl {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceEl {
-            allow_insecure: core::default::Default::default(),
-            local_path: core::default::Default::default(),
-            gcs: core::default::Default::default(),
-            remote: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `allow_insecure` after provisioning.\nDefaults to false. When false, files are subject to validations based on the file type:\nRemote: A checksum must be specified. Cloud Storage: An object generation number must be specified."]
-    pub fn allow_insecure(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.allow_insecure", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `local_path` after provisioning.\nA local path within the VM to use."]
-    pub fn local_path(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.local_path", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `gcs` after provisioning.\n"]
-    pub fn gcs(
-        &self,
-    ) -> terrars
-    ::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElGcsElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.gcs", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `remote` after provisioning.\n"]
-    pub fn remote(
-        &self,
-    ) -> terrars
-    ::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElRemoteElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.remote", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElDynamic {
+struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_RpmDynamic {
     source: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceEl>,
-    >,
+    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Deb_Source>>,
 }
 
 #[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmEl {
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Rpm {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     pull_deps: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     source: std
     ::option
-    ::Option<std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceEl>>,
-    dynamic: OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElDynamic,
+    ::Option<std::vec::Vec<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Deb_Source>>,
+    dynamic: OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_RpmDynamic,
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmEl {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Rpm {
     #[doc =
         "Set the field `pull_deps`.\nWhether dependencies should also be installed. - install when false: 'rpm --upgrade --replacepkgs package.rpm' - install when true: 'yum -y install package.rpm' or 'zypper -y install package.rpm'"]
     pub fn set_pull_deps(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -4078,7 +2660,7 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmEl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceEl,
+                            OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Deb_Source,
                         >,
                     >,
     ) -> Self {
@@ -4094,8 +2676,8 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmEl
     }
 }
 
-impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmEl {
-    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmEl>;
+impl terrars::ToListMappable for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Rpm {
+    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Rpm>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4106,11 +2688,11 @@ impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceG
     }
 }
 
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmEl {}
+pub struct BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Rpm {}
 
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmEl {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmEl {
+impl BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Rpm {
+    pub fn build(self) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Rpm {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Rpm {
             pull_deps: core::default::Default::default(),
             source: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -4118,24 +2700,26 @@ impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgEl
     }
 }
 
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElRef {
+#[allow(dead_code)]
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_RpmRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElRef {
+impl terrars::Ref for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_RpmRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElRef {
+    ) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_RpmRef {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_RpmRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElRef {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_RpmRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4149,20 +2733,20 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmEl
     #[doc = "Get a reference to the value of field `source` after provisioning.\n"]
     pub fn source(
         &self,
-    ) -> terrars::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElSourceElRef> {
+    ) -> terrars::ListRef<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Deb_SourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElYumEl {
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Yum {
     name: terrars::PrimField<std::string::String>,
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElYumEl { }
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Yum { }
 
-impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElYumEl {
-    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElYumEl>;
+impl terrars::ToListMappable for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Yum {
+    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Yum>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4173,35 +2757,37 @@ impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceG
     }
 }
 
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElYumEl {
+pub struct BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Yum {
     #[doc = "Package name."]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElYumEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElYumEl {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElYumEl { name: self.name }
+impl BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Yum {
+    pub fn build(self) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Yum {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Yum { name: self.name }
     }
 }
 
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElYumElRef {
+#[allow(dead_code)]
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_YumRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElYumElRef {
+impl terrars::Ref for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_YumRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElYumElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElYumElRef {
+    ) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_YumRef {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_YumRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElYumElRef {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_YumRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4213,15 +2799,14 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElYumEl
 }
 
 #[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElZypperEl {
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Zypper {
     name: terrars::PrimField<std::string::String>,
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElZypperEl { }
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Zypper { }
 
-impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElZypperEl {
-    type O =
-        terrars::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElZypperEl>;
+impl terrars::ToListMappable for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Zypper {
+    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Zypper>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4232,35 +2817,37 @@ impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceG
     }
 }
 
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElZypperEl {
+pub struct BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Zypper {
     #[doc = "Package name."]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElZypperEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElZypperEl {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElZypperEl { name: self.name }
+impl BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Zypper {
+    pub fn build(self) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Zypper {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Zypper { name: self.name }
     }
 }
 
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElZypperElRef {
+#[allow(dead_code)]
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_ZypperRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElZypperElRef {
+impl terrars::Ref for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_ZypperRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElZypperElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElZypperElRef {
+    ) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_ZypperRef {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_ZypperRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElZypperElRef {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_ZypperRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4272,55 +2859,51 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElZyppe
 }
 
 #[derive(Serialize, Default)]
-struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDynamic {
+struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_PkgDynamic {
     apt: std
     ::option
-    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElAptEl>>,
+    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Apt>>,
     deb: std
     ::option
-    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebEl>>,
+    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Deb>>,
     googet: std
     ::option
-    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElGoogetEl>>,
+    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Googet>>,
     msi: std
     ::option
-    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiEl>>,
+    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Msi>>,
     rpm: std
     ::option
-    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmEl>>,
+    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Rpm>>,
     yum: std
     ::option
-    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElYumEl>>,
+    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Yum>>,
     zypper: std
     ::option
-    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElZypperEl>>,
+    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Zypper>>,
 }
 
 #[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgEl {
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg {
     desired_state: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    apt: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElAptEl>>,
+    apt: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Apt>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    deb: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebEl>>,
+    deb: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Deb>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    googet: std
-    ::option
-    ::Option<std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElGoogetEl>>,
+    googet: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Googet>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    msi: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiEl>>,
+    msi: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Msi>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    rpm: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmEl>>,
+    rpm: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Rpm>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    yum: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElYumEl>>,
+    yum: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Yum>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    zypper: std
-    ::option
-    ::Option<std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElZypperEl>>,
-    dynamic: OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDynamic,
+    zypper: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Zypper>>,
+    dynamic: OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_PkgDynamic,
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgEl {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg {
     #[doc = "Set the field `apt`.\n"]
     pub fn set_apt(
         mut self,
@@ -4331,7 +2914,7 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElAptEl>,
+                        ::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Apt>,
                     >,
     ) -> Self {
         match v.into() {
@@ -4355,7 +2938,7 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebEl>,
+                        ::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Deb>,
                     >,
     ) -> Self {
         match v.into() {
@@ -4379,9 +2962,7 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElGoogetEl,
-                        >,
+                        ::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Googet>,
                     >,
     ) -> Self {
         match v.into() {
@@ -4405,7 +2986,7 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiEl>,
+                        ::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Msi>,
                     >,
     ) -> Self {
         match v.into() {
@@ -4429,7 +3010,7 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmEl>,
+                        ::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Rpm>,
                     >,
     ) -> Self {
         match v.into() {
@@ -4453,7 +3034,7 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElYumEl>,
+                        ::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Yum>,
                     >,
     ) -> Self {
         match v.into() {
@@ -4477,9 +3058,7 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElZypperEl,
-                        >,
+                        ::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_Zypper>,
                     >,
     ) -> Self {
         match v.into() {
@@ -4494,8 +3073,8 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgEl {
     }
 }
 
-impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgEl {
-    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgEl>;
+impl terrars::ToListMappable for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg {
+    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4506,15 +3085,15 @@ impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceG
     }
 }
 
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgEl {
+pub struct BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg {
     #[doc =
         "The desired state the agent should maintain for this package. Possible values: [\"DESIRED_STATE_UNSPECIFIED\", \"INSTALLED\", \"REMOVED\"]"]
     pub desired_state: terrars::PrimField<std::string::String>,
 }
 
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgEl {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgEl {
+impl BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg {
+    pub fn build(self) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg {
             desired_state: self.desired_state,
             apt: core::default::Default::default(),
             deb: core::default::Default::default(),
@@ -4528,24 +3107,26 @@ impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgEl
     }
 }
 
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRef {
+#[allow(dead_code)]
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_PkgRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRef {
+impl terrars::Ref for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_PkgRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRef {
+    ) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_PkgRef {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_PkgRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRef {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_PkgRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4557,57 +3138,47 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRef {
     }
 
     #[doc = "Get a reference to the value of field `apt` after provisioning.\n"]
-    pub fn apt(
-        &self,
-    ) -> terrars::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElAptElRef> {
+    pub fn apt(&self) -> terrars::ListRef<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_AptRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.apt", self.base))
     }
 
     #[doc = "Get a reference to the value of field `deb` after provisioning.\n"]
-    pub fn deb(
-        &self,
-    ) -> terrars::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElDebElRef> {
+    pub fn deb(&self) -> terrars::ListRef<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_DebRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.deb", self.base))
     }
 
     #[doc = "Get a reference to the value of field `googet` after provisioning.\n"]
     pub fn googet(
         &self,
-    ) -> terrars::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElGoogetElRef> {
+    ) -> terrars::ListRef<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_GoogetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.googet", self.base))
     }
 
     #[doc = "Get a reference to the value of field `msi` after provisioning.\n"]
-    pub fn msi(
-        &self,
-    ) -> terrars::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElMsiElRef> {
+    pub fn msi(&self) -> terrars::ListRef<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_MsiRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.msi", self.base))
     }
 
     #[doc = "Get a reference to the value of field `rpm` after provisioning.\n"]
-    pub fn rpm(
-        &self,
-    ) -> terrars::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRpmElRef> {
+    pub fn rpm(&self) -> terrars::ListRef<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_RpmRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.rpm", self.base))
     }
 
     #[doc = "Get a reference to the value of field `yum` after provisioning.\n"]
-    pub fn yum(
-        &self,
-    ) -> terrars::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElYumElRef> {
+    pub fn yum(&self) -> terrars::ListRef<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_YumRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.yum", self.base))
     }
 
     #[doc = "Get a reference to the value of field `zypper` after provisioning.\n"]
     pub fn zypper(
         &self,
-    ) -> terrars::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElZypperElRef> {
+    ) -> terrars::ListRef<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg_ZypperRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.zypper", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElAptEl {
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Apt {
     archive_type: terrars::PrimField<std::string::String>,
     components: terrars::ListField<terrars::PrimField<std::string::String>>,
     distribution: terrars::PrimField<std::string::String>,
@@ -4616,7 +3187,7 @@ pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepo
     uri: terrars::PrimField<std::string::String>,
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElAptEl {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Apt {
     #[doc =
         "Set the field `gpg_key`.\nURI of the key file for this repository. The agent maintains a keyring at '/etc/apt/trusted.gpg.d/osconfig_agent_managed.gpg'."]
     pub fn set_gpg_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -4625,9 +3196,8 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepository
     }
 }
 
-impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElAptEl {
-    type O =
-        terrars::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElAptEl>;
+impl terrars::ToListMappable for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Apt {
+    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Apt>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4638,7 +3208,7 @@ impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceG
     }
 }
 
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElAptEl {
+pub struct BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Apt {
     #[doc =
         "Type of archive files in this repository. Possible values: [\"ARCHIVE_TYPE_UNSPECIFIED\", \"DEB\", \"DEB_SRC\"]"]
     pub archive_type: terrars::PrimField<std::string::String>,
@@ -4650,9 +3220,9 @@ pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesE
     pub uri: terrars::PrimField<std::string::String>,
 }
 
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElAptEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElAptEl {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElAptEl {
+impl BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Apt {
+    pub fn build(self) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Apt {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Apt {
             archive_type: self.archive_type,
             components: self.components,
             distribution: self.distribution,
@@ -4662,24 +3232,26 @@ impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepos
     }
 }
 
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElAptElRef {
+#[allow(dead_code)]
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_AptRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElAptElRef {
+impl terrars::Ref for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_AptRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElAptElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElAptElRef {
+    ) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_AptRef {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_AptRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElAptElRef {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_AptRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4715,16 +3287,15 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepository
 }
 
 #[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElGooEl {
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Goo {
     name: terrars::PrimField<std::string::String>,
     url: terrars::PrimField<std::string::String>,
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElGooEl { }
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Goo { }
 
-impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElGooEl {
-    type O =
-        terrars::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElGooEl>;
+impl terrars::ToListMappable for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Goo {
+    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Goo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4735,40 +3306,42 @@ impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceG
     }
 }
 
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElGooEl {
+pub struct BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Goo {
     #[doc = "The name of the repository."]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = "The url of the repository."]
     pub url: terrars::PrimField<std::string::String>,
 }
 
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElGooEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElGooEl {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElGooEl {
+impl BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Goo {
+    pub fn build(self) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Goo {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Goo {
             name: self.name,
             url: self.url,
         }
     }
 }
 
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElGooElRef {
+#[allow(dead_code)]
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_GooRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElGooElRef {
+impl terrars::Ref for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_GooRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElGooElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElGooElRef {
+    ) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_GooRef {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_GooRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElGooElRef {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_GooRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4785,7 +3358,7 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepository
 }
 
 #[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElYumEl {
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Yum {
     base_url: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     display_name: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -4794,7 +3367,7 @@ pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepo
     id: terrars::PrimField<std::string::String>,
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElYumEl {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Yum {
     #[doc = "Set the field `display_name`.\nThe display name of the repository."]
     pub fn set_display_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.display_name = std::option::Option::Some(v.into());
@@ -4811,9 +3384,8 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepository
     }
 }
 
-impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElYumEl {
-    type O =
-        terrars::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElYumEl>;
+impl terrars::ToListMappable for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Yum {
+    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Yum>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4824,7 +3396,7 @@ impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceG
     }
 }
 
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElYumEl {
+pub struct BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Yum {
     #[doc = "The location of the repository directory."]
     pub base_url: terrars::PrimField<std::string::String>,
     #[doc =
@@ -4832,9 +3404,9 @@ pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesE
     pub id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElYumEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElYumEl {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElYumEl {
+impl BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Yum {
+    pub fn build(self) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Yum {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Yum {
             base_url: self.base_url,
             display_name: core::default::Default::default(),
             gpg_keys: core::default::Default::default(),
@@ -4843,24 +3415,26 @@ impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepos
     }
 }
 
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElYumElRef {
+#[allow(dead_code)]
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_YumRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElYumElRef {
+impl terrars::Ref for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_YumRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElYumElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElYumElRef {
+    ) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_YumRef {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_YumRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElYumElRef {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_YumRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4890,7 +3464,7 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepository
 }
 
 #[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElZypperEl {
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Zypper {
     base_url: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     display_name: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -4899,7 +3473,7 @@ pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepo
     id: terrars::PrimField<std::string::String>,
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElZypperEl {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Zypper {
     #[doc = "Set the field `display_name`.\nThe display name of the repository."]
     pub fn set_display_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.display_name = std::option::Option::Some(v.into());
@@ -4916,10 +3490,9 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepository
     }
 }
 
-impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElZypperEl {
+impl terrars::ToListMappable for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Zypper {
     type O =
-        terrars
-        ::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElZypperEl>;
+        terrars::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Zypper>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4930,7 +3503,7 @@ impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceG
     }
 }
 
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElZypperEl {
+pub struct BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Zypper {
     #[doc = "The location of the repository directory."]
     pub base_url: terrars::PrimField<std::string::String>,
     #[doc =
@@ -4938,9 +3511,9 @@ pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesE
     pub id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElZypperEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElZypperEl {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElZypperEl {
+impl BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Zypper {
+    pub fn build(self) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Zypper {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Zypper {
             base_url: self.base_url,
             display_name: core::default::Default::default(),
             gpg_keys: core::default::Default::default(),
@@ -4949,24 +3522,26 @@ impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepos
     }
 }
 
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElZypperElRef {
+#[allow(dead_code)]
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_ZypperRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElZypperElRef {
+impl terrars::Ref for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_ZypperRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElZypperElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElZypperElRef {
+    ) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_ZypperRef {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_ZypperRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElZypperElRef {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_ZypperRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4996,51 +3571,45 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepository
 }
 
 #[derive(Serialize, Default)]
-struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElDynamic {
+struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_RepositoryDynamic {
     apt: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElAptEl>,
-    >,
+    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Apt>>,
     goo: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElGooEl>,
-    >,
+    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Goo>>,
     yum: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElYumEl>,
-    >,
+    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Yum>>,
     zypper: std
     ::option
     ::Option<
-        terrars::DynamicBlock<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElZypperEl>,
+        terrars::DynamicBlock<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Zypper>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryEl {
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     apt: std
     ::option
-    ::Option<std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElAptEl>>,
+    ::Option<std::vec::Vec<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Apt>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     goo: std
     ::option
-    ::Option<std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElGooEl>>,
+    ::Option<std::vec::Vec<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Goo>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     yum: std
     ::option
-    ::Option<std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElYumEl>>,
+    ::Option<std::vec::Vec<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Yum>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     zypper: std
     ::option
-    ::Option<std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElZypperEl>>,
-    dynamic: OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElDynamic,
+    ::Option<std::vec::Vec<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Zypper>>,
+    dynamic: OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_RepositoryDynamic,
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryEl {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository {
     #[doc = "Set the field `apt`.\n"]
     pub fn set_apt(
         mut self,
@@ -5052,7 +3621,7 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepository
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElAptEl,
+                            OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Apt,
                         >,
                     >,
     ) -> Self {
@@ -5078,7 +3647,7 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepository
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElGooEl,
+                            OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Goo,
                         >,
                     >,
     ) -> Self {
@@ -5104,7 +3673,7 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepository
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElYumEl,
+                            OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Yum,
                         >,
                     >,
     ) -> Self {
@@ -5130,7 +3699,7 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepository
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElZypperEl,
+                            OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_Zypper,
                         >,
                     >,
     ) -> Self {
@@ -5146,8 +3715,8 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepository
     }
 }
 
-impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryEl {
-    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryEl>;
+impl terrars::ToListMappable for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository {
+    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5158,11 +3727,11 @@ impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceG
     }
 }
 
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryEl {}
+pub struct BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository {}
 
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryEl {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryEl {
+impl BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository {
+    pub fn build(self) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository {
             apt: core::default::Default::default(),
             goo: core::default::Default::default(),
             yum: core::default::Default::default(),
@@ -5172,24 +3741,26 @@ impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepos
     }
 }
 
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElRef {
+#[allow(dead_code)]
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_RepositoryRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElRef {
+impl terrars::Ref for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_RepositoryRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElRef {
+    ) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_RepositoryRef {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_RepositoryRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElRef {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_RepositoryRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5197,65 +3768,65 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepository
     #[doc = "Get a reference to the value of field `apt` after provisioning.\n"]
     pub fn apt(
         &self,
-    ) -> terrars::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElAptElRef> {
+    ) -> terrars::ListRef<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_AptRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.apt", self.base))
     }
 
     #[doc = "Get a reference to the value of field `goo` after provisioning.\n"]
     pub fn goo(
         &self,
-    ) -> terrars::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElGooElRef> {
+    ) -> terrars::ListRef<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_GooRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.goo", self.base))
     }
 
     #[doc = "Get a reference to the value of field `yum` after provisioning.\n"]
     pub fn yum(
         &self,
-    ) -> terrars::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElYumElRef> {
+    ) -> terrars::ListRef<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_YumRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.yum", self.base))
     }
 
     #[doc = "Get a reference to the value of field `zypper` after provisioning.\n"]
     pub fn zypper(
         &self,
-    ) -> terrars::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElZypperElRef> {
+    ) -> terrars::ListRef<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository_ZypperRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.zypper", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElDynamic {
+struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_ResourcesDynamic {
     exec: std
     ::option
-    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecEl>>,
+    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec>>,
     file: std
     ::option
-    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileEl>>,
+    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File>>,
     pkg: std
     ::option
-    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgEl>>,
+    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg>>,
     repository: std
     ::option
-    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryEl>>,
+    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository>>,
 }
 
 #[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesEl {
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources {
     id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    exec: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecEl>>,
+    exec: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    file: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileEl>>,
+    file: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    pkg: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgEl>>,
+    pkg: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     repository: std
     ::option
-    ::Option<std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryEl>>,
-    dynamic: OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElDynamic,
+    ::Option<std::vec::Vec<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository>>,
+    dynamic: OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_ResourcesDynamic,
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesEl {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources {
     #[doc = "Set the field `exec`.\n"]
     pub fn set_exec(
         mut self,
@@ -5265,8 +3836,7 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecEl>,
+                        terrars::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Exec>,
                     >,
     ) -> Self {
         match v.into() {
@@ -5289,8 +3859,7 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileEl>,
+                        terrars::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_File>,
                     >,
     ) -> Self {
         match v.into() {
@@ -5313,8 +3882,7 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgEl>,
+                        terrars::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Pkg>,
                     >,
     ) -> Self {
         match v.into() {
@@ -5338,9 +3906,7 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryEl,
-                        >,
+                        ::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_Repository>,
                     >,
     ) -> Self {
         match v.into() {
@@ -5355,8 +3921,8 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesEl {
     }
 }
 
-impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesEl {
-    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesEl>;
+impl terrars::ToListMappable for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources {
+    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5367,15 +3933,15 @@ impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceG
     }
 }
 
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesEl {
+pub struct BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources {
     #[doc =
         "The id of the resource with the following restrictions:\n* Must contain only lowercase letters, numbers, and hyphens.\n* Must start with a letter.\n* Must be between 1-63 characters.\n* Must end with a number or a letter.\n* Must be unique within the OS policy."]
     pub id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesEl {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesEl {
+impl BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources {
+    pub fn build(self) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources {
             id: self.id,
             exec: core::default::Default::default(),
             file: core::default::Default::default(),
@@ -5386,24 +3952,26 @@ impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesEl {
     }
 }
 
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRef {
+#[allow(dead_code)]
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_ResourcesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRef {
+impl terrars::Ref for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_ResourcesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRef {
+    ) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_ResourcesRef {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_ResourcesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRef {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_ResourcesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5415,50 +3983,50 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRef {
     }
 
     #[doc = "Get a reference to the value of field `exec` after provisioning.\n"]
-    pub fn exec(&self) -> terrars::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElExecElRef> {
+    pub fn exec(&self) -> terrars::ListRef<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_ExecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.exec", self.base))
     }
 
     #[doc = "Get a reference to the value of field `file` after provisioning.\n"]
-    pub fn file(&self) -> terrars::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElFileElRef> {
+    pub fn file(&self) -> terrars::ListRef<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_FileRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.file", self.base))
     }
 
     #[doc = "Get a reference to the value of field `pkg` after provisioning.\n"]
-    pub fn pkg(&self) -> terrars::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElPkgElRef> {
+    pub fn pkg(&self) -> terrars::ListRef<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_PkgRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.pkg", self.base))
     }
 
     #[doc = "Get a reference to the value of field `repository` after provisioning.\n"]
     pub fn repository(
         &self,
-    ) -> terrars::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRepositoryElRef> {
+    ) -> terrars::ListRef<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources_RepositoryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.repository", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElDynamic {
+struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroupsDynamic {
     inventory_filters: std
     ::option
-    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElInventoryFiltersEl>>,
+    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_InventoryFilters>>,
     resources: std
     ::option
-    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesEl>>,
+    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources>>,
 }
 
 #[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsEl {
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     inventory_filters: std
     ::option
-    ::Option<std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElInventoryFiltersEl>>,
+    ::Option<std::vec::Vec<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_InventoryFilters>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    resources: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesEl>>,
-    dynamic: OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElDynamic,
+    resources: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources>>,
+    dynamic: OsConfigOsPolicyAssignment_OsPolicies_ResourceGroupsDynamic,
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsEl {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups {
     #[doc = "Set the field `inventory_filters`.\n"]
     pub fn set_inventory_filters(
         mut self,
@@ -5469,7 +4037,7 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElInventoryFiltersEl>,
+                        ::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_InventoryFilters>,
                     >,
     ) -> Self {
         match v.into() {
@@ -5491,9 +4059,7 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_Resources>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -5507,8 +4073,8 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsEl {
     }
 }
 
-impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsEl {
-    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsEl>;
+impl terrars::ToListMappable for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups {
+    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5519,11 +4085,11 @@ impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesElResourceG
     }
 }
 
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsEl {}
+pub struct BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups {}
 
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsEl {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsEl {
+impl BuildOsConfigOsPolicyAssignment_OsPolicies_ResourceGroups {
+    pub fn build(self) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups {
             inventory_filters: core::default::Default::default(),
             resources: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -5531,24 +4097,26 @@ impl BuildOsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsEl {
     }
 }
 
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElRef {
+#[allow(dead_code)]
+pub struct OsConfigOsPolicyAssignment_OsPolicies_ResourceGroupsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElRef {
+impl terrars::Ref for OsConfigOsPolicyAssignment_OsPolicies_ResourceGroupsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElRef {
+    ) -> OsConfigOsPolicyAssignment_OsPolicies_ResourceGroupsRef {
+        OsConfigOsPolicyAssignment_OsPolicies_ResourceGroupsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElRef {
+impl OsConfigOsPolicyAssignment_OsPolicies_ResourceGroupsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5556,25 +4124,25 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElRef {
     #[doc = "Get a reference to the value of field `inventory_filters` after provisioning.\n"]
     pub fn inventory_filters(
         &self,
-    ) -> terrars::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElInventoryFiltersElRef> {
+    ) -> terrars::ListRef<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_InventoryFiltersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.inventory_filters", self.base))
     }
 
     #[doc = "Get a reference to the value of field `resources` after provisioning.\n"]
-    pub fn resources(&self) -> terrars::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElResourcesElRef> {
+    pub fn resources(&self) -> terrars::ListRef<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups_ResourcesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.resources", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct OsConfigOsPolicyAssignmentOsPoliciesElDynamic {
+struct OsConfigOsPolicyAssignment_OsPoliciesDynamic {
     resource_groups: std
     ::option
-    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsEl>>,
+    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups>>,
 }
 
 #[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentOsPoliciesEl {
+pub struct OsConfigOsPolicyAssignment_OsPolicies {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allow_no_resource_group_match: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -5582,11 +4150,11 @@ pub struct OsConfigOsPolicyAssignmentOsPoliciesEl {
     id: terrars::PrimField<std::string::String>,
     mode: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    resource_groups: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsEl>>,
-    dynamic: OsConfigOsPolicyAssignmentOsPoliciesElDynamic,
+    resource_groups: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups>>,
+    dynamic: OsConfigOsPolicyAssignment_OsPoliciesDynamic,
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesEl {
+impl OsConfigOsPolicyAssignment_OsPolicies {
     #[doc =
         "Set the field `allow_no_resource_group_match`.\nThis flag determines the OS policy compliance status when none of the resource groups within the policy are applicable for a VM. Set this value to 'true' if the policy needs to be reported as compliant even if the policy has nothing to validate or enforce."]
     pub fn set_allow_no_resource_group_match(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -5604,7 +4172,7 @@ impl OsConfigOsPolicyAssignmentOsPoliciesEl {
     #[doc = "Set the field `resource_groups`.\n"]
     pub fn set_resource_groups(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroups>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -5618,8 +4186,8 @@ impl OsConfigOsPolicyAssignmentOsPoliciesEl {
     }
 }
 
-impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesEl {
-    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignmentOsPoliciesEl>;
+impl terrars::ToListMappable for OsConfigOsPolicyAssignment_OsPolicies {
+    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignment_OsPolicies>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5630,7 +4198,7 @@ impl terrars::ToListMappable for OsConfigOsPolicyAssignmentOsPoliciesEl {
     }
 }
 
-pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesEl {
+pub struct BuildOsConfigOsPolicyAssignment_OsPolicies {
     #[doc =
         "The id of the OS policy with the following restrictions:\n* Must contain only lowercase letters, numbers, and hyphens.\n* Must start with a letter.\n* Must be between 1-63 characters.\n* Must end with a number or a letter.\n* Must be unique within the assignment."]
     pub id: terrars::PrimField<std::string::String>,
@@ -5638,9 +4206,9 @@ pub struct BuildOsConfigOsPolicyAssignmentOsPoliciesEl {
     pub mode: terrars::PrimField<std::string::String>,
 }
 
-impl BuildOsConfigOsPolicyAssignmentOsPoliciesEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentOsPoliciesEl {
-        OsConfigOsPolicyAssignmentOsPoliciesEl {
+impl BuildOsConfigOsPolicyAssignment_OsPolicies {
+    pub fn build(self) -> OsConfigOsPolicyAssignment_OsPolicies {
+        OsConfigOsPolicyAssignment_OsPolicies {
             allow_no_resource_group_match: core::default::Default::default(),
             description: core::default::Default::default(),
             id: self.id,
@@ -5651,21 +4219,23 @@ impl BuildOsConfigOsPolicyAssignmentOsPoliciesEl {
     }
 }
 
-pub struct OsConfigOsPolicyAssignmentOsPoliciesElRef {
+#[allow(dead_code)]
+pub struct OsConfigOsPolicyAssignment_OsPoliciesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigOsPolicyAssignmentOsPoliciesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> OsConfigOsPolicyAssignmentOsPoliciesElRef {
-        OsConfigOsPolicyAssignmentOsPoliciesElRef {
+impl terrars::Ref for OsConfigOsPolicyAssignment_OsPoliciesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> OsConfigOsPolicyAssignment_OsPoliciesRef {
+        OsConfigOsPolicyAssignment_OsPoliciesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigOsPolicyAssignmentOsPoliciesElRef {
+impl OsConfigOsPolicyAssignment_OsPoliciesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5695,20 +4265,20 @@ impl OsConfigOsPolicyAssignmentOsPoliciesElRef {
     }
 
     #[doc = "Get a reference to the value of field `resource_groups` after provisioning.\n"]
-    pub fn resource_groups(&self) -> terrars::ListRef<OsConfigOsPolicyAssignmentOsPoliciesElResourceGroupsElRef> {
+    pub fn resource_groups(&self) -> terrars::ListRef<OsConfigOsPolicyAssignment_OsPolicies_ResourceGroupsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.resource_groups", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentRolloutElDisruptionBudgetEl {
+pub struct OsConfigOsPolicyAssignment_Rollout_DisruptionBudget {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     fixed: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     percent: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl OsConfigOsPolicyAssignmentRolloutElDisruptionBudgetEl {
+impl OsConfigOsPolicyAssignment_Rollout_DisruptionBudget {
     #[doc = "Set the field `fixed`.\nSpecifies a fixed value."]
     pub fn set_fixed(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.fixed = std::option::Option::Some(v.into());
@@ -5723,8 +4293,8 @@ impl OsConfigOsPolicyAssignmentRolloutElDisruptionBudgetEl {
     }
 }
 
-impl terrars::ToListMappable for OsConfigOsPolicyAssignmentRolloutElDisruptionBudgetEl {
-    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignmentRolloutElDisruptionBudgetEl>;
+impl terrars::ToListMappable for OsConfigOsPolicyAssignment_Rollout_DisruptionBudget {
+    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignment_Rollout_DisruptionBudget>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5735,35 +4305,37 @@ impl terrars::ToListMappable for OsConfigOsPolicyAssignmentRolloutElDisruptionBu
     }
 }
 
-pub struct BuildOsConfigOsPolicyAssignmentRolloutElDisruptionBudgetEl {}
+pub struct BuildOsConfigOsPolicyAssignment_Rollout_DisruptionBudget {}
 
-impl BuildOsConfigOsPolicyAssignmentRolloutElDisruptionBudgetEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentRolloutElDisruptionBudgetEl {
-        OsConfigOsPolicyAssignmentRolloutElDisruptionBudgetEl {
+impl BuildOsConfigOsPolicyAssignment_Rollout_DisruptionBudget {
+    pub fn build(self) -> OsConfigOsPolicyAssignment_Rollout_DisruptionBudget {
+        OsConfigOsPolicyAssignment_Rollout_DisruptionBudget {
             fixed: core::default::Default::default(),
             percent: core::default::Default::default(),
         }
     }
 }
 
-pub struct OsConfigOsPolicyAssignmentRolloutElDisruptionBudgetElRef {
+#[allow(dead_code)]
+pub struct OsConfigOsPolicyAssignment_Rollout_DisruptionBudgetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigOsPolicyAssignmentRolloutElDisruptionBudgetElRef {
+impl terrars::Ref for OsConfigOsPolicyAssignment_Rollout_DisruptionBudgetRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OsConfigOsPolicyAssignmentRolloutElDisruptionBudgetElRef {
-        OsConfigOsPolicyAssignmentRolloutElDisruptionBudgetElRef {
+    ) -> OsConfigOsPolicyAssignment_Rollout_DisruptionBudgetRef {
+        OsConfigOsPolicyAssignment_Rollout_DisruptionBudgetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigOsPolicyAssignmentRolloutElDisruptionBudgetElRef {
+impl OsConfigOsPolicyAssignment_Rollout_DisruptionBudgetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5781,25 +4353,25 @@ impl OsConfigOsPolicyAssignmentRolloutElDisruptionBudgetElRef {
 }
 
 #[derive(Serialize, Default)]
-struct OsConfigOsPolicyAssignmentRolloutElDynamic {
+struct OsConfigOsPolicyAssignment_RolloutDynamic {
     disruption_budget: std
     ::option
-    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignmentRolloutElDisruptionBudgetEl>>,
+    ::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignment_Rollout_DisruptionBudget>>,
 }
 
 #[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentRolloutEl {
+pub struct OsConfigOsPolicyAssignment_Rollout {
     min_wait_duration: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    disruption_budget: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignmentRolloutElDisruptionBudgetEl>>,
-    dynamic: OsConfigOsPolicyAssignmentRolloutElDynamic,
+    disruption_budget: std::option::Option<std::vec::Vec<OsConfigOsPolicyAssignment_Rollout_DisruptionBudget>>,
+    dynamic: OsConfigOsPolicyAssignment_RolloutDynamic,
 }
 
-impl OsConfigOsPolicyAssignmentRolloutEl {
+impl OsConfigOsPolicyAssignment_Rollout {
     #[doc = "Set the field `disruption_budget`.\n"]
     pub fn set_disruption_budget(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigOsPolicyAssignmentRolloutElDisruptionBudgetEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OsConfigOsPolicyAssignment_Rollout_DisruptionBudget>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -5813,8 +4385,8 @@ impl OsConfigOsPolicyAssignmentRolloutEl {
     }
 }
 
-impl terrars::ToListMappable for OsConfigOsPolicyAssignmentRolloutEl {
-    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignmentRolloutEl>;
+impl terrars::ToListMappable for OsConfigOsPolicyAssignment_Rollout {
+    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignment_Rollout>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5825,15 +4397,15 @@ impl terrars::ToListMappable for OsConfigOsPolicyAssignmentRolloutEl {
     }
 }
 
-pub struct BuildOsConfigOsPolicyAssignmentRolloutEl {
+pub struct BuildOsConfigOsPolicyAssignment_Rollout {
     #[doc =
         "This determines the minimum duration of time to wait after the configuration changes are applied through the current rollout. A VM continues to count towards the 'disruption_budget' at least until this duration of time has passed after configuration changes are applied."]
     pub min_wait_duration: terrars::PrimField<std::string::String>,
 }
 
-impl BuildOsConfigOsPolicyAssignmentRolloutEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentRolloutEl {
-        OsConfigOsPolicyAssignmentRolloutEl {
+impl BuildOsConfigOsPolicyAssignment_Rollout {
+    pub fn build(self) -> OsConfigOsPolicyAssignment_Rollout {
+        OsConfigOsPolicyAssignment_Rollout {
             min_wait_duration: self.min_wait_duration,
             disruption_budget: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -5841,21 +4413,23 @@ impl BuildOsConfigOsPolicyAssignmentRolloutEl {
     }
 }
 
-pub struct OsConfigOsPolicyAssignmentRolloutElRef {
+#[allow(dead_code)]
+pub struct OsConfigOsPolicyAssignment_RolloutRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigOsPolicyAssignmentRolloutElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> OsConfigOsPolicyAssignmentRolloutElRef {
-        OsConfigOsPolicyAssignmentRolloutElRef {
+impl terrars::Ref for OsConfigOsPolicyAssignment_RolloutRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> OsConfigOsPolicyAssignment_RolloutRef {
+        OsConfigOsPolicyAssignment_RolloutRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigOsPolicyAssignmentRolloutElRef {
+impl OsConfigOsPolicyAssignment_RolloutRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5867,13 +4441,13 @@ impl OsConfigOsPolicyAssignmentRolloutElRef {
     }
 
     #[doc = "Get a reference to the value of field `disruption_budget` after provisioning.\n"]
-    pub fn disruption_budget(&self) -> terrars::ListRef<OsConfigOsPolicyAssignmentRolloutElDisruptionBudgetElRef> {
+    pub fn disruption_budget(&self) -> terrars::ListRef<OsConfigOsPolicyAssignment_Rollout_DisruptionBudgetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.disruption_budget", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct OsConfigOsPolicyAssignmentTimeoutsEl {
+pub struct OsConfigOsPolicyAssignment_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -5882,7 +4456,7 @@ pub struct OsConfigOsPolicyAssignmentTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl OsConfigOsPolicyAssignmentTimeoutsEl {
+impl OsConfigOsPolicyAssignment_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -5902,8 +4476,8 @@ impl OsConfigOsPolicyAssignmentTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for OsConfigOsPolicyAssignmentTimeoutsEl {
-    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignmentTimeoutsEl>;
+impl terrars::ToListMappable for OsConfigOsPolicyAssignment_Timeouts {
+    type O = terrars::BlockAssignable<OsConfigOsPolicyAssignment_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5914,11 +4488,11 @@ impl terrars::ToListMappable for OsConfigOsPolicyAssignmentTimeoutsEl {
     }
 }
 
-pub struct BuildOsConfigOsPolicyAssignmentTimeoutsEl {}
+pub struct BuildOsConfigOsPolicyAssignment_Timeouts {}
 
-impl BuildOsConfigOsPolicyAssignmentTimeoutsEl {
-    pub fn build(self) -> OsConfigOsPolicyAssignmentTimeoutsEl {
-        OsConfigOsPolicyAssignmentTimeoutsEl {
+impl BuildOsConfigOsPolicyAssignment_Timeouts {
+    pub fn build(self) -> OsConfigOsPolicyAssignment_Timeouts {
+        OsConfigOsPolicyAssignment_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -5926,21 +4500,23 @@ impl BuildOsConfigOsPolicyAssignmentTimeoutsEl {
     }
 }
 
-pub struct OsConfigOsPolicyAssignmentTimeoutsElRef {
+#[allow(dead_code)]
+pub struct OsConfigOsPolicyAssignment_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OsConfigOsPolicyAssignmentTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> OsConfigOsPolicyAssignmentTimeoutsElRef {
-        OsConfigOsPolicyAssignmentTimeoutsElRef {
+impl terrars::Ref for OsConfigOsPolicyAssignment_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> OsConfigOsPolicyAssignment_TimeoutsRef {
+        OsConfigOsPolicyAssignment_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OsConfigOsPolicyAssignmentTimeoutsElRef {
+impl OsConfigOsPolicyAssignment_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5959,11 +4535,4 @@ impl OsConfigOsPolicyAssignmentTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct OsConfigOsPolicyAssignmentDynamic {
-    instance_filter: std::option::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignmentInstanceFilterEl>>,
-    os_policies: std::option::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignmentOsPoliciesEl>>,
-    rollout: std::option::Option<terrars::DynamicBlock<OsConfigOsPolicyAssignmentRolloutEl>>,
 }

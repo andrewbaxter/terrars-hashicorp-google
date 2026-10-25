@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct LoggingBillingAccountBucketConfigData {
+struct LoggingBillingAccountBucketConfigData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,6 +23,8 @@ struct LoggingBillingAccountBucketConfigData {
     billing_account: terrars::PrimField<std::string::String>,
     bucket_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -28,16 +32,16 @@ struct LoggingBillingAccountBucketConfigData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     retention_days: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cmek_settings: std::option::Option<std::vec::Vec<LoggingBillingAccountBucketConfigCmekSettingsEl>>,
+    cmek_settings: std::option::Option<std::vec::Vec<LoggingBillingAccountBucketConfig_CmekSettings>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    index_configs: std::option::Option<std::vec::Vec<LoggingBillingAccountBucketConfigIndexConfigsEl>>,
+    index_configs: std::option::Option<std::vec::Vec<LoggingBillingAccountBucketConfig_IndexConfigs>>,
     dynamic: LoggingBillingAccountBucketConfigDynamic,
 }
 
 struct LoggingBillingAccountBucketConfig_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<LoggingBillingAccountBucketConfigData>,
+    data: std::cell::RefCell<LoggingBillingAccountBucketConfigData_>,
 }
 
 #[derive(Clone)]
@@ -137,6 +141,13 @@ impl LoggingBillingAccountBucketConfig {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nAn optional description for this bucket."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -159,7 +170,7 @@ impl LoggingBillingAccountBucketConfig {
     #[doc = "Set the field `cmek_settings`.\n"]
     pub fn set_cmek_settings(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LoggingBillingAccountBucketConfigCmekSettingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LoggingBillingAccountBucketConfig_CmekSettings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -175,7 +186,7 @@ impl LoggingBillingAccountBucketConfig {
     #[doc = "Set the field `index_configs`.\n"]
     pub fn set_index_configs(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LoggingBillingAccountBucketConfigIndexConfigsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LoggingBillingAccountBucketConfig_IndexConfigs>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -198,6 +209,12 @@ impl LoggingBillingAccountBucketConfig {
         "Get a reference to the value of field `bucket_id` after provisioning.\nThe name of the logging bucket. Logging automatically creates two log buckets: _Required and _Default."]
     pub fn bucket_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -234,7 +251,7 @@ impl LoggingBillingAccountBucketConfig {
     }
 
     #[doc = "Get a reference to the value of field `cmek_settings` after provisioning.\n"]
-    pub fn cmek_settings(&self) -> terrars::ListRef<LoggingBillingAccountBucketConfigCmekSettingsElRef> {
+    pub fn cmek_settings(&self) -> terrars::ListRef<LoggingBillingAccountBucketConfig_CmekSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cmek_settings", self.extract_ref()))
     }
 }
@@ -285,7 +302,7 @@ impl BuildLoggingBillingAccountBucketConfig {
         let out = LoggingBillingAccountBucketConfig(std::rc::Rc::new(LoggingBillingAccountBucketConfig_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(LoggingBillingAccountBucketConfigData {
+            data: std::cell::RefCell::new(LoggingBillingAccountBucketConfigData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -293,6 +310,7 @@ impl BuildLoggingBillingAccountBucketConfig {
                 provisioner: core::default::Default::default(),
                 billing_account: self.billing_account,
                 bucket_id: self.bucket_id,
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 location: self.location,
@@ -343,6 +361,12 @@ impl LoggingBillingAccountBucketConfigRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nAn optional description for this bucket."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -376,20 +400,26 @@ impl LoggingBillingAccountBucketConfigRef {
     }
 
     #[doc = "Get a reference to the value of field `cmek_settings` after provisioning.\n"]
-    pub fn cmek_settings(&self) -> terrars::ListRef<LoggingBillingAccountBucketConfigCmekSettingsElRef> {
+    pub fn cmek_settings(&self) -> terrars::ListRef<LoggingBillingAccountBucketConfig_CmekSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cmek_settings", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct LoggingBillingAccountBucketConfigDynamic {
+    cmek_settings: std::option::Option<terrars::DynamicBlock<LoggingBillingAccountBucketConfig_CmekSettings>>,
+    index_configs: std::option::Option<terrars::DynamicBlock<LoggingBillingAccountBucketConfig_IndexConfigs>>,
+}
+
 #[derive(Serialize)]
-pub struct LoggingBillingAccountBucketConfigCmekSettingsEl {
+pub struct LoggingBillingAccountBucketConfig_CmekSettings {
     kms_key_name: terrars::PrimField<std::string::String>,
 }
 
-impl LoggingBillingAccountBucketConfigCmekSettingsEl { }
+impl LoggingBillingAccountBucketConfig_CmekSettings { }
 
-impl terrars::ToListMappable for LoggingBillingAccountBucketConfigCmekSettingsEl {
-    type O = terrars::BlockAssignable<LoggingBillingAccountBucketConfigCmekSettingsEl>;
+impl terrars::ToListMappable for LoggingBillingAccountBucketConfig_CmekSettings {
+    type O = terrars::BlockAssignable<LoggingBillingAccountBucketConfig_CmekSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -400,36 +430,38 @@ impl terrars::ToListMappable for LoggingBillingAccountBucketConfigCmekSettingsEl
     }
 }
 
-pub struct BuildLoggingBillingAccountBucketConfigCmekSettingsEl {
+pub struct BuildLoggingBillingAccountBucketConfig_CmekSettings {
     #[doc =
         "The resource name for the configured Cloud KMS key.\nKMS key name format:\n\"projects/[PROJECT_ID]/locations/[LOCATION]/keyRings/[KEYRING]/cryptoKeys/[KEY]\"\nTo enable CMEK for the bucket, set this field to a valid kmsKeyName for which the associated service account has the required cloudkms.cryptoKeyEncrypterDecrypter roles assigned for the key.\nThe Cloud KMS key used by the bucket can be updated by changing the kmsKeyName to a new valid key name. Encryption operations that are in progress will be completed with the key that was in use when they started. Decryption operations will be completed using the key that was used at the time of encryption unless access to that key has been revoked.\nSee [Enabling CMEK for Logging Buckets](https://cloud.google.com/logging/docs/routing/managed-encryption-storage) for more information."]
     pub kms_key_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLoggingBillingAccountBucketConfigCmekSettingsEl {
-    pub fn build(self) -> LoggingBillingAccountBucketConfigCmekSettingsEl {
-        LoggingBillingAccountBucketConfigCmekSettingsEl { kms_key_name: self.kms_key_name }
+impl BuildLoggingBillingAccountBucketConfig_CmekSettings {
+    pub fn build(self) -> LoggingBillingAccountBucketConfig_CmekSettings {
+        LoggingBillingAccountBucketConfig_CmekSettings { kms_key_name: self.kms_key_name }
     }
 }
 
-pub struct LoggingBillingAccountBucketConfigCmekSettingsElRef {
+#[allow(dead_code)]
+pub struct LoggingBillingAccountBucketConfig_CmekSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LoggingBillingAccountBucketConfigCmekSettingsElRef {
+impl terrars::Ref for LoggingBillingAccountBucketConfig_CmekSettingsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> LoggingBillingAccountBucketConfigCmekSettingsElRef {
-        LoggingBillingAccountBucketConfigCmekSettingsElRef {
+    ) -> LoggingBillingAccountBucketConfig_CmekSettingsRef {
+        LoggingBillingAccountBucketConfig_CmekSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LoggingBillingAccountBucketConfigCmekSettingsElRef {
+impl LoggingBillingAccountBucketConfig_CmekSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -459,16 +491,16 @@ impl LoggingBillingAccountBucketConfigCmekSettingsElRef {
 }
 
 #[derive(Serialize)]
-pub struct LoggingBillingAccountBucketConfigIndexConfigsEl {
+pub struct LoggingBillingAccountBucketConfig_IndexConfigs {
     field_path: terrars::PrimField<std::string::String>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl LoggingBillingAccountBucketConfigIndexConfigsEl { }
+impl LoggingBillingAccountBucketConfig_IndexConfigs { }
 
-impl terrars::ToListMappable for LoggingBillingAccountBucketConfigIndexConfigsEl {
-    type O = terrars::BlockAssignable<LoggingBillingAccountBucketConfigIndexConfigsEl>;
+impl terrars::ToListMappable for LoggingBillingAccountBucketConfig_IndexConfigs {
+    type O = terrars::BlockAssignable<LoggingBillingAccountBucketConfig_IndexConfigs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -479,7 +511,7 @@ impl terrars::ToListMappable for LoggingBillingAccountBucketConfigIndexConfigsEl
     }
 }
 
-pub struct BuildLoggingBillingAccountBucketConfigIndexConfigsEl {
+pub struct BuildLoggingBillingAccountBucketConfig_IndexConfigs {
     #[doc = "The LogEntry field path to index."]
     pub field_path: terrars::PrimField<std::string::String>,
     #[doc =
@@ -487,33 +519,35 @@ pub struct BuildLoggingBillingAccountBucketConfigIndexConfigsEl {
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLoggingBillingAccountBucketConfigIndexConfigsEl {
-    pub fn build(self) -> LoggingBillingAccountBucketConfigIndexConfigsEl {
-        LoggingBillingAccountBucketConfigIndexConfigsEl {
+impl BuildLoggingBillingAccountBucketConfig_IndexConfigs {
+    pub fn build(self) -> LoggingBillingAccountBucketConfig_IndexConfigs {
+        LoggingBillingAccountBucketConfig_IndexConfigs {
             field_path: self.field_path,
             type_: self.type_,
         }
     }
 }
 
-pub struct LoggingBillingAccountBucketConfigIndexConfigsElRef {
+#[allow(dead_code)]
+pub struct LoggingBillingAccountBucketConfig_IndexConfigsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LoggingBillingAccountBucketConfigIndexConfigsElRef {
+impl terrars::Ref for LoggingBillingAccountBucketConfig_IndexConfigsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> LoggingBillingAccountBucketConfigIndexConfigsElRef {
-        LoggingBillingAccountBucketConfigIndexConfigsElRef {
+    ) -> LoggingBillingAccountBucketConfig_IndexConfigsRef {
+        LoggingBillingAccountBucketConfig_IndexConfigsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LoggingBillingAccountBucketConfigIndexConfigsElRef {
+impl LoggingBillingAccountBucketConfig_IndexConfigsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -528,10 +562,4 @@ impl LoggingBillingAccountBucketConfigIndexConfigsElRef {
     pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct LoggingBillingAccountBucketConfigDynamic {
-    cmek_settings: std::option::Option<terrars::DynamicBlock<LoggingBillingAccountBucketConfigCmekSettingsEl>>,
-    index_configs: std::option::Option<terrars::DynamicBlock<LoggingBillingAccountBucketConfigIndexConfigsEl>>,
 }

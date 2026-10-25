@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct BillingAccountIamPolicyData {
+struct BillingAccountIamPolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -27,7 +29,7 @@ struct BillingAccountIamPolicyData {
 struct BillingAccountIamPolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<BillingAccountIamPolicyData>,
+    data: std::cell::RefCell<BillingAccountIamPolicyData_>,
 }
 
 #[derive(Clone)]
@@ -198,7 +200,7 @@ impl BuildBillingAccountIamPolicy {
         let out = BillingAccountIamPolicy(std::rc::Rc::new(BillingAccountIamPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(BillingAccountIamPolicyData {
+            data: std::cell::RefCell::new(BillingAccountIamPolicyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),

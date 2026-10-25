@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataMonitoringNotificationChannelData {
+struct DataMonitoringNotificationChannelData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -33,7 +35,7 @@ struct DataMonitoringNotificationChannelData {
 struct DataMonitoringNotificationChannel_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataMonitoringNotificationChannelData>,
+    data: std::cell::RefCell<DataMonitoringNotificationChannelData_>,
 }
 
 #[derive(Clone)]
@@ -125,6 +127,12 @@ impl DataMonitoringNotificationChannel {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nAn optional human-readable description of this notification channel. This description may provide additional details, beyond the display name, for the channel. This may not exceed 1024 Unicode characters."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -172,7 +180,7 @@ impl DataMonitoringNotificationChannel {
 
     #[doc =
         "Get a reference to the value of field `sensitive_labels` after provisioning.\nDifferent notification type behaviors are configured primarily using the the 'labels' field on this\nresource. This block contains the labels which contain secrets or passwords so that they can be marked\nsensitive and hidden from plan output. The name of the field, eg: password, will be the key\nin the 'labels' map in the api request.\n\nCredentials may not be specified in both locations and will cause an error. Changing from one location\nto a different credential configuration in the config will require an apply to update state."]
-    pub fn sensitive_labels(&self) -> terrars::ListRef<DataMonitoringNotificationChannelSensitiveLabelsElRef> {
+    pub fn sensitive_labels(&self) -> terrars::ListRef<DataMonitoringNotificationChannel_SensitiveLabelsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sensitive_labels", self.extract_ref()))
     }
 
@@ -235,7 +243,7 @@ impl BuildDataMonitoringNotificationChannel {
         let out = DataMonitoringNotificationChannel(std::rc::Rc::new(DataMonitoringNotificationChannel_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataMonitoringNotificationChannelData {
+            data: std::cell::RefCell::new(DataMonitoringNotificationChannelData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -274,6 +282,12 @@ impl DataMonitoringNotificationChannelRef {
 
     fn extract_ref(&self) -> std::string::String {
         self.base.clone()
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -324,7 +338,7 @@ impl DataMonitoringNotificationChannelRef {
 
     #[doc =
         "Get a reference to the value of field `sensitive_labels` after provisioning.\nDifferent notification type behaviors are configured primarily using the the 'labels' field on this\nresource. This block contains the labels which contain secrets or passwords so that they can be marked\nsensitive and hidden from plan output. The name of the field, eg: password, will be the key\nin the 'labels' map in the api request.\n\nCredentials may not be specified in both locations and will cause an error. Changing from one location\nto a different credential configuration in the config will require an apply to update state."]
-    pub fn sensitive_labels(&self) -> terrars::ListRef<DataMonitoringNotificationChannelSensitiveLabelsElRef> {
+    pub fn sensitive_labels(&self) -> terrars::ListRef<DataMonitoringNotificationChannel_SensitiveLabelsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sensitive_labels", self.extract_ref()))
     }
 
@@ -348,19 +362,46 @@ impl DataMonitoringNotificationChannelRef {
 }
 
 #[derive(Serialize)]
-pub struct DataMonitoringNotificationChannelSensitiveLabelsEl {
+pub struct DataMonitoringNotificationChannel_SensitiveLabels {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     auth_token: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    auth_token_wo: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    auth_token_wo_version: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     password: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    password_wo: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    password_wo_version: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     service_key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    service_key_wo: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    service_key_wo_version: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataMonitoringNotificationChannelSensitiveLabelsEl {
+impl DataMonitoringNotificationChannel_SensitiveLabels {
     #[doc = "Set the field `auth_token`.\n"]
     pub fn set_auth_token(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.auth_token = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `auth_token_wo`.\n"]
+    pub fn set_auth_token_wo(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.auth_token_wo = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `auth_token_wo_version`.\n"]
+    pub fn set_auth_token_wo_version(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.auth_token_wo_version = std::option::Option::Some(v.into());
         self
     }
 
@@ -370,15 +411,45 @@ impl DataMonitoringNotificationChannelSensitiveLabelsEl {
         self
     }
 
+    #[doc = "Set the field `password_wo`.\n"]
+    pub fn set_password_wo(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.password_wo = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `password_wo_version`.\n"]
+    pub fn set_password_wo_version(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.password_wo_version = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `service_key`.\n"]
     pub fn set_service_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.service_key = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `service_key_wo`.\n"]
+    pub fn set_service_key_wo(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.service_key_wo = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `service_key_wo_version`.\n"]
+    pub fn set_service_key_wo_version(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.service_key_wo_version = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for DataMonitoringNotificationChannelSensitiveLabelsEl {
-    type O = terrars::BlockAssignable<DataMonitoringNotificationChannelSensitiveLabelsEl>;
+impl terrars::ToListMappable for DataMonitoringNotificationChannel_SensitiveLabels {
+    type O = terrars::BlockAssignable<DataMonitoringNotificationChannel_SensitiveLabels>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -389,36 +460,44 @@ impl terrars::ToListMappable for DataMonitoringNotificationChannelSensitiveLabel
     }
 }
 
-pub struct BuildDataMonitoringNotificationChannelSensitiveLabelsEl {}
+pub struct BuildDataMonitoringNotificationChannel_SensitiveLabels {}
 
-impl BuildDataMonitoringNotificationChannelSensitiveLabelsEl {
-    pub fn build(self) -> DataMonitoringNotificationChannelSensitiveLabelsEl {
-        DataMonitoringNotificationChannelSensitiveLabelsEl {
+impl BuildDataMonitoringNotificationChannel_SensitiveLabels {
+    pub fn build(self) -> DataMonitoringNotificationChannel_SensitiveLabels {
+        DataMonitoringNotificationChannel_SensitiveLabels {
             auth_token: core::default::Default::default(),
+            auth_token_wo: core::default::Default::default(),
+            auth_token_wo_version: core::default::Default::default(),
             password: core::default::Default::default(),
+            password_wo: core::default::Default::default(),
+            password_wo_version: core::default::Default::default(),
             service_key: core::default::Default::default(),
+            service_key_wo: core::default::Default::default(),
+            service_key_wo_version: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataMonitoringNotificationChannelSensitiveLabelsElRef {
+#[allow(dead_code)]
+pub struct DataMonitoringNotificationChannel_SensitiveLabelsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataMonitoringNotificationChannelSensitiveLabelsElRef {
+impl terrars::Ref for DataMonitoringNotificationChannel_SensitiveLabelsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataMonitoringNotificationChannelSensitiveLabelsElRef {
-        DataMonitoringNotificationChannelSensitiveLabelsElRef {
+    ) -> DataMonitoringNotificationChannel_SensitiveLabelsRef {
+        DataMonitoringNotificationChannel_SensitiveLabelsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataMonitoringNotificationChannelSensitiveLabelsElRef {
+impl DataMonitoringNotificationChannel_SensitiveLabelsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -428,13 +507,43 @@ impl DataMonitoringNotificationChannelSensitiveLabelsElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.auth_token", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `auth_token_wo` after provisioning.\n"]
+    pub fn auth_token_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auth_token_wo", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `auth_token_wo_version` after provisioning.\n"]
+    pub fn auth_token_wo_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auth_token_wo_version", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `password` after provisioning.\n"]
     pub fn password(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.password", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `password_wo` after provisioning.\n"]
+    pub fn password_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.password_wo", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `password_wo_version` after provisioning.\n"]
+    pub fn password_wo_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.password_wo_version", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `service_key` after provisioning.\n"]
     pub fn service_key(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_key", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `service_key_wo` after provisioning.\n"]
+    pub fn service_key_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_key_wo", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `service_key_wo_version` after provisioning.\n"]
+    pub fn service_key_wo_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_key_wo_version", self.base))
     }
 }

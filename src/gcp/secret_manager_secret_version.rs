@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct SecretManagerSecretVersionData {
+struct SecretManagerSecretVersionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,16 +28,23 @@ struct SecretManagerSecretVersionData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     is_secret_data_base64: std::option::Option<terrars::PrimField<bool>>,
-    secret: terrars::PrimField<std::string::String>,
-    secret_data: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<SecretManagerSecretVersionTimeoutsEl>,
+    project: std::option::Option<terrars::PrimField<std::string::String>>,
+    secret: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secret_data: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secret_data_wo: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secret_data_wo_version: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<SecretManagerSecretVersion_Timeouts>,
 }
 
 struct SecretManagerSecretVersion_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SecretManagerSecretVersionData>,
+    data: std::cell::RefCell<SecretManagerSecretVersionData_>,
 }
 
 #[derive(Clone)]
@@ -136,7 +145,7 @@ impl SecretManagerSecretVersion {
     }
 
     #[doc =
-        "Set the field `deletion_policy`.\nThe deletion policy for the secret version. Setting 'ABANDON' allows the resource\nto be abandoned rather than deleted. Setting 'DISABLE' allows the resource to be\ndisabled rather than deleted. Default is 'DELETE'. Possible values are:\n  * DELETE\n  * DISABLE\n  * ABANDON"]
+        "Set the field `deletion_policy`.\nThis field uses a custom implementation please refer to documentation under /hashicorp/terraform-provider-google-beta/website/docs/r/secret_manager_secret_version.html.markdown for specifics"]
     pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
         self
@@ -161,8 +170,37 @@ impl SecretManagerSecretVersion {
         self
     }
 
+    #[doc =
+        "Set the field `project`.\nThe ID of the project in which the resource belongs. If it is not provided,\nthe provider project is used"]
+    pub fn set_project(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().project = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `secret_data`.\nThe secret data. Must be no larger than 64KiB."]
+    pub fn set_secret_data(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().secret_data = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `secret_data_wo`.\nThe secret data. Must be no larger than 64KiB."]
+    pub fn set_secret_data_wo(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().secret_data_wo = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `secret_data_wo_version`.\nTriggers update of 'secret_data_wo' write-only. Increment this value when an update to 'secret_data_wo' is needed. For more info see [updating write-only arguments](/docs/providers/google/guides/using_write_only_arguments.html#updating-write-only-arguments)"]
+    pub fn set_secret_data_wo_version(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().secret_data_wo_version = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<SecretManagerSecretVersionTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<SecretManagerSecretVersion_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -174,7 +212,7 @@ impl SecretManagerSecretVersion {
     }
 
     #[doc =
-        "Get a reference to the value of field `deletion_policy` after provisioning.\nThe deletion policy for the secret version. Setting 'ABANDON' allows the resource\nto be abandoned rather than deleted. Setting 'DISABLE' allows the resource to be\ndisabled rather than deleted. Default is 'DELETE'. Possible values are:\n  * DELETE\n  * DISABLE\n  * ABANDON"]
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nThis field uses a custom implementation please refer to documentation under /hashicorp/terraform-provider-google-beta/website/docs/r/secret_manager_secret_version.html.markdown for specifics"]
     pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
@@ -208,6 +246,12 @@ impl SecretManagerSecretVersion {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `project` after provisioning.\nThe ID of the project in which the resource belongs. If it is not provided,\nthe provider project is used"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `secret` after provisioning.\nSecret Manager secret resource"]
     pub fn secret(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret", self.extract_ref()))
@@ -219,14 +263,26 @@ impl SecretManagerSecretVersion {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_data", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `secret_data_wo` after provisioning.\nThe secret data. Must be no larger than 64KiB."]
+    pub fn secret_data_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_data_wo", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `secret_data_wo_version` after provisioning.\nTriggers update of 'secret_data_wo' write-only. Increment this value when an update to 'secret_data_wo' is needed. For more info see [updating write-only arguments](/docs/providers/google/guides/using_write_only_arguments.html#updating-write-only-arguments)"]
+    pub fn secret_data_wo_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_data_wo_version", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `version` after provisioning.\nThe version of the Secret."]
     pub fn version(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.version", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> SecretManagerSecretVersionTimeoutsElRef {
-        SecretManagerSecretVersionTimeoutsElRef::new(
+    pub fn timeouts(&self) -> SecretManagerSecretVersion_TimeoutsRef {
+        SecretManagerSecretVersion_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -268,8 +324,6 @@ pub struct BuildSecretManagerSecretVersion {
     pub tf_id: std::string::String,
     #[doc = "Secret Manager secret resource"]
     pub secret: terrars::PrimField<std::string::String>,
-    #[doc = "The secret data. Must be no larger than 64KiB."]
-    pub secret_data: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecretManagerSecretVersion {
@@ -277,7 +331,7 @@ impl BuildSecretManagerSecretVersion {
         let out = SecretManagerSecretVersion(std::rc::Rc::new(SecretManagerSecretVersion_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SecretManagerSecretVersionData {
+            data: std::cell::RefCell::new(SecretManagerSecretVersionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -287,8 +341,11 @@ impl BuildSecretManagerSecretVersion {
                 enabled: core::default::Default::default(),
                 id: core::default::Default::default(),
                 is_secret_data_base64: core::default::Default::default(),
+                project: core::default::Default::default(),
                 secret: self.secret,
-                secret_data: self.secret_data,
+                secret_data: core::default::Default::default(),
+                secret_data_wo: core::default::Default::default(),
+                secret_data_wo_version: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
             }),
         }));
@@ -327,7 +384,7 @@ impl SecretManagerSecretVersionRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `deletion_policy` after provisioning.\nThe deletion policy for the secret version. Setting 'ABANDON' allows the resource\nto be abandoned rather than deleted. Setting 'DISABLE' allows the resource to be\ndisabled rather than deleted. Default is 'DELETE'. Possible values are:\n  * DELETE\n  * DISABLE\n  * ABANDON"]
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nThis field uses a custom implementation please refer to documentation under /hashicorp/terraform-provider-google-beta/website/docs/r/secret_manager_secret_version.html.markdown for specifics"]
     pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
@@ -361,6 +418,12 @@ impl SecretManagerSecretVersionRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `project` after provisioning.\nThe ID of the project in which the resource belongs. If it is not provided,\nthe provider project is used"]
+    pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `secret` after provisioning.\nSecret Manager secret resource"]
     pub fn secret(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret", self.extract_ref()))
@@ -372,14 +435,26 @@ impl SecretManagerSecretVersionRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_data", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `secret_data_wo` after provisioning.\nThe secret data. Must be no larger than 64KiB."]
+    pub fn secret_data_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_data_wo", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `secret_data_wo_version` after provisioning.\nTriggers update of 'secret_data_wo' write-only. Increment this value when an update to 'secret_data_wo' is needed. For more info see [updating write-only arguments](/docs/providers/google/guides/using_write_only_arguments.html#updating-write-only-arguments)"]
+    pub fn secret_data_wo_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_data_wo_version", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `version` after provisioning.\nThe version of the Secret."]
     pub fn version(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.version", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> SecretManagerSecretVersionTimeoutsElRef {
-        SecretManagerSecretVersionTimeoutsElRef::new(
+    pub fn timeouts(&self) -> SecretManagerSecretVersion_TimeoutsRef {
+        SecretManagerSecretVersion_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -387,7 +462,7 @@ impl SecretManagerSecretVersionRef {
 }
 
 #[derive(Serialize)]
-pub struct SecretManagerSecretVersionTimeoutsEl {
+pub struct SecretManagerSecretVersion_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -396,7 +471,7 @@ pub struct SecretManagerSecretVersionTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SecretManagerSecretVersionTimeoutsEl {
+impl SecretManagerSecretVersion_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -416,8 +491,8 @@ impl SecretManagerSecretVersionTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for SecretManagerSecretVersionTimeoutsEl {
-    type O = terrars::BlockAssignable<SecretManagerSecretVersionTimeoutsEl>;
+impl terrars::ToListMappable for SecretManagerSecretVersion_Timeouts {
+    type O = terrars::BlockAssignable<SecretManagerSecretVersion_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -428,11 +503,11 @@ impl terrars::ToListMappable for SecretManagerSecretVersionTimeoutsEl {
     }
 }
 
-pub struct BuildSecretManagerSecretVersionTimeoutsEl {}
+pub struct BuildSecretManagerSecretVersion_Timeouts {}
 
-impl BuildSecretManagerSecretVersionTimeoutsEl {
-    pub fn build(self) -> SecretManagerSecretVersionTimeoutsEl {
-        SecretManagerSecretVersionTimeoutsEl {
+impl BuildSecretManagerSecretVersion_Timeouts {
+    pub fn build(self) -> SecretManagerSecretVersion_Timeouts {
+        SecretManagerSecretVersion_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -440,21 +515,23 @@ impl BuildSecretManagerSecretVersionTimeoutsEl {
     }
 }
 
-pub struct SecretManagerSecretVersionTimeoutsElRef {
+#[allow(dead_code)]
+pub struct SecretManagerSecretVersion_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SecretManagerSecretVersionTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SecretManagerSecretVersionTimeoutsElRef {
-        SecretManagerSecretVersionTimeoutsElRef {
+impl terrars::Ref for SecretManagerSecretVersion_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecretManagerSecretVersion_TimeoutsRef {
+        SecretManagerSecretVersion_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SecretManagerSecretVersionTimeoutsElRef {
+impl SecretManagerSecretVersion_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

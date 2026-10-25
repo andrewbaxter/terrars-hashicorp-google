@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ServiceAccountIamMemberData {
+struct ServiceAccountIamMemberData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,14 +26,14 @@ struct ServiceAccountIamMemberData {
     role: terrars::PrimField<std::string::String>,
     service_account_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<ServiceAccountIamMemberConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<ServiceAccountIamMember_Condition>>,
     dynamic: ServiceAccountIamMemberDynamic,
 }
 
 struct ServiceAccountIamMember_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ServiceAccountIamMemberData>,
+    data: std::cell::RefCell<ServiceAccountIamMemberData_>,
 }
 
 #[derive(Clone)]
@@ -140,7 +142,7 @@ impl ServiceAccountIamMember {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ServiceAccountIamMemberConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ServiceAccountIamMember_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -179,7 +181,7 @@ impl ServiceAccountIamMember {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<ServiceAccountIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<ServiceAccountIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -230,7 +232,7 @@ impl BuildServiceAccountIamMember {
         let out = ServiceAccountIamMember(std::rc::Rc::new(ServiceAccountIamMember_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ServiceAccountIamMemberData {
+            data: std::cell::RefCell::new(ServiceAccountIamMemberData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -298,20 +300,25 @@ impl ServiceAccountIamMemberRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<ServiceAccountIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<ServiceAccountIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ServiceAccountIamMemberDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<ServiceAccountIamMember_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct ServiceAccountIamMemberConditionEl {
+pub struct ServiceAccountIamMember_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl ServiceAccountIamMemberConditionEl {
+impl ServiceAccountIamMember_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -319,8 +326,8 @@ impl ServiceAccountIamMemberConditionEl {
     }
 }
 
-impl terrars::ToListMappable for ServiceAccountIamMemberConditionEl {
-    type O = terrars::BlockAssignable<ServiceAccountIamMemberConditionEl>;
+impl terrars::ToListMappable for ServiceAccountIamMember_Condition {
+    type O = terrars::BlockAssignable<ServiceAccountIamMember_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -331,16 +338,16 @@ impl terrars::ToListMappable for ServiceAccountIamMemberConditionEl {
     }
 }
 
-pub struct BuildServiceAccountIamMemberConditionEl {
+pub struct BuildServiceAccountIamMember_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildServiceAccountIamMemberConditionEl {
-    pub fn build(self) -> ServiceAccountIamMemberConditionEl {
-        ServiceAccountIamMemberConditionEl {
+impl BuildServiceAccountIamMember_Condition {
+    pub fn build(self) -> ServiceAccountIamMember_Condition {
+        ServiceAccountIamMember_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -348,21 +355,23 @@ impl BuildServiceAccountIamMemberConditionEl {
     }
 }
 
-pub struct ServiceAccountIamMemberConditionElRef {
+#[allow(dead_code)]
+pub struct ServiceAccountIamMember_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ServiceAccountIamMemberConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ServiceAccountIamMemberConditionElRef {
-        ServiceAccountIamMemberConditionElRef {
+impl terrars::Ref for ServiceAccountIamMember_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ServiceAccountIamMember_ConditionRef {
+        ServiceAccountIamMember_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ServiceAccountIamMemberConditionElRef {
+impl ServiceAccountIamMember_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -381,9 +390,4 @@ impl ServiceAccountIamMemberConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ServiceAccountIamMemberDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<ServiceAccountIamMemberConditionEl>>,
 }

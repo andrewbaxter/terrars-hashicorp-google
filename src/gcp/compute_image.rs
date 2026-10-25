@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeImageData {
+struct ComputeImageData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct ComputeImageData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -42,20 +46,30 @@ struct ComputeImageData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     storage_locations: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    guest_os_features: std::option::Option<std::vec::Vec<ComputeImageGuestOsFeaturesEl>>,
+    guest_os_features: std::option::Option<std::vec::Vec<ComputeImage_GuestOsFeatures>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    image_encryption_key: std::option::Option<std::vec::Vec<ComputeImageImageEncryptionKeyEl>>,
+    image_encryption_key: std::option::Option<std::vec::Vec<ComputeImage_ImageEncryptionKey>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    raw_disk: std::option::Option<std::vec::Vec<ComputeImageRawDiskEl>>,
+    params: std::option::Option<std::vec::Vec<ComputeImage_Params>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComputeImageTimeoutsEl>,
+    raw_disk: std::option::Option<std::vec::Vec<ComputeImage_RawDisk>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    shielded_instance_initial_state: std::option::Option<std::vec::Vec<ComputeImage_ShieldedInstanceInitialState>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source_disk_encryption_key: std::option::Option<std::vec::Vec<ComputeImage_SourceDiskEncryptionKey>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source_image_encryption_key: std::option::Option<std::vec::Vec<ComputeImage_SourceImageEncryptionKey>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source_snapshot_encryption_key: std::option::Option<std::vec::Vec<ComputeImage_SourceSnapshotEncryptionKey>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<ComputeImage_Timeouts>,
     dynamic: ComputeImageDynamic,
 }
 
 struct ComputeImage_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeImageData>,
+    data: std::cell::RefCell<ComputeImageData_>,
 }
 
 #[derive(Clone)]
@@ -156,6 +170,13 @@ impl ComputeImage {
     }
 
     #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `description`.\nAn optional description of this resource. Provide this property when\nyou create the resource."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -240,7 +261,7 @@ impl ComputeImage {
     #[doc = "Set the field `guest_os_features`.\n"]
     pub fn set_guest_os_features(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeImageGuestOsFeaturesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeImage_GuestOsFeatures>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -256,7 +277,7 @@ impl ComputeImage {
     #[doc = "Set the field `image_encryption_key`.\n"]
     pub fn set_image_encryption_key(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeImageImageEncryptionKeyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeImage_ImageEncryptionKey>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -269,8 +290,21 @@ impl ComputeImage {
         self
     }
 
+    #[doc = "Set the field `params`.\n"]
+    pub fn set_params(self, v: impl std::convert::Into<terrars::BlockAssignable<ComputeImage_Params>>) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().params = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.params = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `raw_disk`.\n"]
-    pub fn set_raw_disk(self, v: impl std::convert::Into<terrars::BlockAssignable<ComputeImageRawDiskEl>>) -> Self {
+    pub fn set_raw_disk(self, v: impl std::convert::Into<terrars::BlockAssignable<ComputeImage_RawDisk>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().raw_disk = std::option::Option::Some(v);
@@ -282,8 +316,72 @@ impl ComputeImage {
         self
     }
 
+    #[doc = "Set the field `shielded_instance_initial_state`.\n"]
+    pub fn set_shielded_instance_initial_state(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeImage_ShieldedInstanceInitialState>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().shielded_instance_initial_state = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.shielded_instance_initial_state = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `source_disk_encryption_key`.\n"]
+    pub fn set_source_disk_encryption_key(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeImage_SourceDiskEncryptionKey>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().source_disk_encryption_key = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.source_disk_encryption_key = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `source_image_encryption_key`.\n"]
+    pub fn set_source_image_encryption_key(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeImage_SourceImageEncryptionKey>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().source_image_encryption_key = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.source_image_encryption_key = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `source_snapshot_encryption_key`.\n"]
+    pub fn set_source_snapshot_encryption_key(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeImage_SourceSnapshotEncryptionKey>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().source_snapshot_encryption_key = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.source_snapshot_encryption_key = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeImageTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeImage_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -298,6 +396,12 @@ impl ComputeImage {
         "Get a reference to the value of field `creation_timestamp` after provisioning.\nCreation timestamp in RFC3339 text format."]
     pub fn creation_timestamp(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_timestamp", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -393,18 +497,49 @@ impl ComputeImage {
     }
 
     #[doc = "Get a reference to the value of field `image_encryption_key` after provisioning.\n"]
-    pub fn image_encryption_key(&self) -> terrars::ListRef<ComputeImageImageEncryptionKeyElRef> {
+    pub fn image_encryption_key(&self) -> terrars::ListRef<ComputeImage_ImageEncryptionKeyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.image_encryption_key", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `params` after provisioning.\n"]
+    pub fn params(&self) -> terrars::ListRef<ComputeImage_ParamsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.params", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `raw_disk` after provisioning.\n"]
-    pub fn raw_disk(&self) -> terrars::ListRef<ComputeImageRawDiskElRef> {
+    pub fn raw_disk(&self) -> terrars::ListRef<ComputeImage_RawDiskRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.raw_disk", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `shielded_instance_initial_state` after provisioning.\n"]
+    pub fn shielded_instance_initial_state(&self) -> terrars::ListRef<ComputeImage_ShieldedInstanceInitialStateRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.shielded_instance_initial_state", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `source_disk_encryption_key` after provisioning.\n"]
+    pub fn source_disk_encryption_key(&self) -> terrars::ListRef<ComputeImage_SourceDiskEncryptionKeyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.source_disk_encryption_key", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `source_image_encryption_key` after provisioning.\n"]
+    pub fn source_image_encryption_key(&self) -> terrars::ListRef<ComputeImage_SourceImageEncryptionKeyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.source_image_encryption_key", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `source_snapshot_encryption_key` after provisioning.\n"]
+    pub fn source_snapshot_encryption_key(&self) -> terrars::ListRef<ComputeImage_SourceSnapshotEncryptionKeyRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.source_snapshot_encryption_key", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeImageTimeoutsElRef {
-        ComputeImageTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeImage_TimeoutsRef {
+        ComputeImage_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -451,12 +586,13 @@ impl BuildComputeImage {
         let out = ComputeImage(std::rc::Rc::new(ComputeImage_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeImageData {
+            data: std::cell::RefCell::new(ComputeImageData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 disk_size_gb: core::default::Default::default(),
                 family: core::default::Default::default(),
@@ -471,7 +607,12 @@ impl BuildComputeImage {
                 storage_locations: core::default::Default::default(),
                 guest_os_features: core::default::Default::default(),
                 image_encryption_key: core::default::Default::default(),
+                params: core::default::Default::default(),
                 raw_disk: core::default::Default::default(),
+                shielded_instance_initial_state: core::default::Default::default(),
+                source_disk_encryption_key: core::default::Default::default(),
+                source_image_encryption_key: core::default::Default::default(),
+                source_snapshot_encryption_key: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -514,6 +655,12 @@ impl ComputeImageRef {
         "Get a reference to the value of field `creation_timestamp` after provisioning.\nCreation timestamp in RFC3339 text format."]
     pub fn creation_timestamp(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_timestamp", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -609,31 +756,78 @@ impl ComputeImageRef {
     }
 
     #[doc = "Get a reference to the value of field `image_encryption_key` after provisioning.\n"]
-    pub fn image_encryption_key(&self) -> terrars::ListRef<ComputeImageImageEncryptionKeyElRef> {
+    pub fn image_encryption_key(&self) -> terrars::ListRef<ComputeImage_ImageEncryptionKeyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.image_encryption_key", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `params` after provisioning.\n"]
+    pub fn params(&self) -> terrars::ListRef<ComputeImage_ParamsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.params", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `raw_disk` after provisioning.\n"]
-    pub fn raw_disk(&self) -> terrars::ListRef<ComputeImageRawDiskElRef> {
+    pub fn raw_disk(&self) -> terrars::ListRef<ComputeImage_RawDiskRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.raw_disk", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `shielded_instance_initial_state` after provisioning.\n"]
+    pub fn shielded_instance_initial_state(&self) -> terrars::ListRef<ComputeImage_ShieldedInstanceInitialStateRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.shielded_instance_initial_state", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `source_disk_encryption_key` after provisioning.\n"]
+    pub fn source_disk_encryption_key(&self) -> terrars::ListRef<ComputeImage_SourceDiskEncryptionKeyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.source_disk_encryption_key", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `source_image_encryption_key` after provisioning.\n"]
+    pub fn source_image_encryption_key(&self) -> terrars::ListRef<ComputeImage_SourceImageEncryptionKeyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.source_image_encryption_key", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `source_snapshot_encryption_key` after provisioning.\n"]
+    pub fn source_snapshot_encryption_key(&self) -> terrars::ListRef<ComputeImage_SourceSnapshotEncryptionKeyRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.source_snapshot_encryption_key", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeImageTimeoutsElRef {
-        ComputeImageTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeImage_TimeoutsRef {
+        ComputeImage_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ComputeImageDynamic {
+    guest_os_features: std::option::Option<terrars::DynamicBlock<ComputeImage_GuestOsFeatures>>,
+    image_encryption_key: std::option::Option<terrars::DynamicBlock<ComputeImage_ImageEncryptionKey>>,
+    params: std::option::Option<terrars::DynamicBlock<ComputeImage_Params>>,
+    raw_disk: std::option::Option<terrars::DynamicBlock<ComputeImage_RawDisk>>,
+    shielded_instance_initial_state: std
+    ::option
+    ::Option<terrars::DynamicBlock<ComputeImage_ShieldedInstanceInitialState>>,
+    source_disk_encryption_key: std::option::Option<terrars::DynamicBlock<ComputeImage_SourceDiskEncryptionKey>>,
+    source_image_encryption_key: std::option::Option<terrars::DynamicBlock<ComputeImage_SourceImageEncryptionKey>>,
+    source_snapshot_encryption_key: std
+    ::option
+    ::Option<terrars::DynamicBlock<ComputeImage_SourceSnapshotEncryptionKey>>,
+}
+
 #[derive(Serialize)]
-pub struct ComputeImageGuestOsFeaturesEl {
+pub struct ComputeImage_GuestOsFeatures {
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl ComputeImageGuestOsFeaturesEl { }
+impl ComputeImage_GuestOsFeatures { }
 
-impl terrars::ToListMappable for ComputeImageGuestOsFeaturesEl {
-    type O = terrars::BlockAssignable<ComputeImageGuestOsFeaturesEl>;
+impl terrars::ToListMappable for ComputeImage_GuestOsFeatures {
+    type O = terrars::BlockAssignable<ComputeImage_GuestOsFeatures>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -644,53 +838,59 @@ impl terrars::ToListMappable for ComputeImageGuestOsFeaturesEl {
     }
 }
 
-pub struct BuildComputeImageGuestOsFeaturesEl {
+pub struct BuildComputeImage_GuestOsFeatures {
     #[doc =
-        "The type of supported feature. Read [Enabling guest operating system features](https://cloud.google.com/compute/docs/images/create-delete-deprecate-private-images#guest-os-features) to see a list of available options. Possible values: [\"MULTI_IP_SUBNET\", \"SECURE_BOOT\", \"SEV_CAPABLE\", \"UEFI_COMPATIBLE\", \"VIRTIO_SCSI_MULTIQUEUE\", \"WINDOWS\", \"GVNIC\", \"SEV_LIVE_MIGRATABLE\", \"SEV_SNP_CAPABLE\", \"SUSPEND_RESUME_COMPATIBLE\", \"TDX_CAPABLE\", \"SEV_LIVE_MIGRATABLE_V2\"]"]
+        "The type of supported feature. Read [Enabling guest operating system features](https://cloud.google.com/compute/docs/images/create-delete-deprecate-private-images#guest-os-features) to see a list of available options. Possible values: [\"MULTI_IP_SUBNET\", \"SECURE_BOOT\", \"SEV_CAPABLE\", \"UEFI_COMPATIBLE\", \"VIRTIO_SCSI_MULTIQUEUE\", \"WINDOWS\", \"GVNIC\", \"IDPF\", \"SEV_LIVE_MIGRATABLE\", \"SEV_SNP_CAPABLE\", \"SUSPEND_RESUME_COMPATIBLE\", \"TDX_CAPABLE\", \"SEV_LIVE_MIGRATABLE_V2\", \"SNP_SVSM_CAPABLE\"]"]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputeImageGuestOsFeaturesEl {
-    pub fn build(self) -> ComputeImageGuestOsFeaturesEl {
-        ComputeImageGuestOsFeaturesEl { type_: self.type_ }
+impl BuildComputeImage_GuestOsFeatures {
+    pub fn build(self) -> ComputeImage_GuestOsFeatures {
+        ComputeImage_GuestOsFeatures { type_: self.type_ }
     }
 }
 
-pub struct ComputeImageGuestOsFeaturesElRef {
+#[allow(dead_code)]
+pub struct ComputeImage_GuestOsFeaturesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeImageGuestOsFeaturesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeImageGuestOsFeaturesElRef {
-        ComputeImageGuestOsFeaturesElRef {
+impl terrars::Ref for ComputeImage_GuestOsFeaturesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeImage_GuestOsFeaturesRef {
+        ComputeImage_GuestOsFeaturesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeImageGuestOsFeaturesElRef {
+impl ComputeImage_GuestOsFeaturesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `type_` after provisioning.\nThe type of supported feature. Read [Enabling guest operating system features](https://cloud.google.com/compute/docs/images/create-delete-deprecate-private-images#guest-os-features) to see a list of available options. Possible values: [\"MULTI_IP_SUBNET\", \"SECURE_BOOT\", \"SEV_CAPABLE\", \"UEFI_COMPATIBLE\", \"VIRTIO_SCSI_MULTIQUEUE\", \"WINDOWS\", \"GVNIC\", \"SEV_LIVE_MIGRATABLE\", \"SEV_SNP_CAPABLE\", \"SUSPEND_RESUME_COMPATIBLE\", \"TDX_CAPABLE\", \"SEV_LIVE_MIGRATABLE_V2\"]"]
+        "Get a reference to the value of field `type_` after provisioning.\nThe type of supported feature. Read [Enabling guest operating system features](https://cloud.google.com/compute/docs/images/create-delete-deprecate-private-images#guest-os-features) to see a list of available options. Possible values: [\"MULTI_IP_SUBNET\", \"SECURE_BOOT\", \"SEV_CAPABLE\", \"UEFI_COMPATIBLE\", \"VIRTIO_SCSI_MULTIQUEUE\", \"WINDOWS\", \"GVNIC\", \"IDPF\", \"SEV_LIVE_MIGRATABLE\", \"SEV_SNP_CAPABLE\", \"SUSPEND_RESUME_COMPATIBLE\", \"TDX_CAPABLE\", \"SEV_LIVE_MIGRATABLE_V2\", \"SNP_SVSM_CAPABLE\"]"]
     pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeImageImageEncryptionKeyEl {
+pub struct ComputeImage_ImageEncryptionKey {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_self_link: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_service_account: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    raw_key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    rsa_encrypted_key: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeImageImageEncryptionKeyEl {
+impl ComputeImage_ImageEncryptionKey {
     #[doc =
         "Set the field `kms_key_self_link`.\nThe self link of the encryption key that is stored in Google Cloud\nKMS."]
     pub fn set_kms_key_self_link(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -707,10 +907,24 @@ impl ComputeImageImageEncryptionKeyEl {
         self.kms_key_service_account = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc =
+        "Set the field `raw_key`.\nSpecifies a 256-bit customer-supplied encryption key, encoded in\nRFC 4648 base64 to either encrypt or decrypt this resource."]
+    pub fn set_raw_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.raw_key = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `rsa_encrypted_key`.\nSpecifies a 256-bit customer-supplied encryption key, encoded in\nRFC 4648 base64 to either encrypt or decrypt this resource."]
+    pub fn set_rsa_encrypted_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.rsa_encrypted_key = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for ComputeImageImageEncryptionKeyEl {
-    type O = terrars::BlockAssignable<ComputeImageImageEncryptionKeyEl>;
+impl terrars::ToListMappable for ComputeImage_ImageEncryptionKey {
+    type O = terrars::BlockAssignable<ComputeImage_ImageEncryptionKey>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -721,32 +935,36 @@ impl terrars::ToListMappable for ComputeImageImageEncryptionKeyEl {
     }
 }
 
-pub struct BuildComputeImageImageEncryptionKeyEl {}
+pub struct BuildComputeImage_ImageEncryptionKey {}
 
-impl BuildComputeImageImageEncryptionKeyEl {
-    pub fn build(self) -> ComputeImageImageEncryptionKeyEl {
-        ComputeImageImageEncryptionKeyEl {
+impl BuildComputeImage_ImageEncryptionKey {
+    pub fn build(self) -> ComputeImage_ImageEncryptionKey {
+        ComputeImage_ImageEncryptionKey {
             kms_key_self_link: core::default::Default::default(),
             kms_key_service_account: core::default::Default::default(),
+            raw_key: core::default::Default::default(),
+            rsa_encrypted_key: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeImageImageEncryptionKeyElRef {
+#[allow(dead_code)]
+pub struct ComputeImage_ImageEncryptionKeyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeImageImageEncryptionKeyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeImageImageEncryptionKeyElRef {
-        ComputeImageImageEncryptionKeyElRef {
+impl terrars::Ref for ComputeImage_ImageEncryptionKeyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeImage_ImageEncryptionKeyRef {
+        ComputeImage_ImageEncryptionKeyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeImageImageEncryptionKeyElRef {
+impl ComputeImage_ImageEncryptionKeyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -762,10 +980,88 @@ impl ComputeImageImageEncryptionKeyElRef {
     pub fn kms_key_service_account(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_service_account", self.base))
     }
+
+    #[doc =
+        "Get a reference to the value of field `raw_key` after provisioning.\nSpecifies a 256-bit customer-supplied encryption key, encoded in\nRFC 4648 base64 to either encrypt or decrypt this resource."]
+    pub fn raw_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.raw_key", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `rsa_encrypted_key` after provisioning.\nSpecifies a 256-bit customer-supplied encryption key, encoded in\nRFC 4648 base64 to either encrypt or decrypt this resource."]
+    pub fn rsa_encrypted_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rsa_encrypted_key", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct ComputeImageRawDiskEl {
+pub struct ComputeImage_Params {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_manager_tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+}
+
+impl ComputeImage_Params {
+    #[doc =
+        "Set the field `resource_manager_tags`.\nResource manager tags to be bound to the image. Tag keys and values have the\nsame definition as resource manager tags. Keys and values can be either in numeric format,\nsuch as tagKeys/{tag_key_id} and tagValues/{tag_value_id} or in namespaced format such as\n{org_id|projectId}/{tag_key_short_name} and {tag_value_short_name}. The field is ignored when empty.\nThe field is immutable and causes resource replacement when mutated. This field is only\nset at create time and modifying this field after creation will trigger recreation.\nTo apply tags to an existing resource, see the google_tags_tag_binding resource."]
+    pub fn set_resource_manager_tags(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.resource_manager_tags = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeImage_Params {
+    type O = terrars::BlockAssignable<ComputeImage_Params>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeImage_Params {}
+
+impl BuildComputeImage_Params {
+    pub fn build(self) -> ComputeImage_Params {
+        ComputeImage_Params { resource_manager_tags: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeImage_ParamsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeImage_ParamsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeImage_ParamsRef {
+        ComputeImage_ParamsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeImage_ParamsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `resource_manager_tags` after provisioning.\nResource manager tags to be bound to the image. Tag keys and values have the\nsame definition as resource manager tags. Keys and values can be either in numeric format,\nsuch as tagKeys/{tag_key_id} and tagValues/{tag_value_id} or in namespaced format such as\n{org_id|projectId}/{tag_key_short_name} and {tag_value_short_name}. The field is ignored when empty.\nThe field is immutable and causes resource replacement when mutated. This field is only\nset at create time and modifying this field after creation will trigger recreation.\nTo apply tags to an existing resource, see the google_tags_tag_binding resource."]
+    pub fn resource_manager_tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.resource_manager_tags", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ComputeImage_RawDisk {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     container_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -773,7 +1069,7 @@ pub struct ComputeImageRawDiskEl {
     source: terrars::PrimField<std::string::String>,
 }
 
-impl ComputeImageRawDiskEl {
+impl ComputeImage_RawDisk {
     #[doc =
         "Set the field `container_type`.\nThe format used to encode and transmit the block device, which\nshould be TAR. This is just a container and transmission format\nand not a runtime format. Provided by the client when the disk\nimage is created. Default value: \"TAR\" Possible values: [\"TAR\"]"]
     pub fn set_container_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -789,8 +1085,8 @@ impl ComputeImageRawDiskEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeImageRawDiskEl {
-    type O = terrars::BlockAssignable<ComputeImageRawDiskEl>;
+impl terrars::ToListMappable for ComputeImage_RawDisk {
+    type O = terrars::BlockAssignable<ComputeImage_RawDisk>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -801,15 +1097,15 @@ impl terrars::ToListMappable for ComputeImageRawDiskEl {
     }
 }
 
-pub struct BuildComputeImageRawDiskEl {
+pub struct BuildComputeImage_RawDisk {
     #[doc =
         "The full Google Cloud Storage URL where disk storage is stored\nYou must provide either this property or the sourceDisk property\nbut not both."]
     pub source: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputeImageRawDiskEl {
-    pub fn build(self) -> ComputeImageRawDiskEl {
-        ComputeImageRawDiskEl {
+impl BuildComputeImage_RawDisk {
+    pub fn build(self) -> ComputeImage_RawDisk {
+        ComputeImage_RawDisk {
             container_type: core::default::Default::default(),
             sha1: core::default::Default::default(),
             source: self.source,
@@ -817,21 +1113,23 @@ impl BuildComputeImageRawDiskEl {
     }
 }
 
-pub struct ComputeImageRawDiskElRef {
+#[allow(dead_code)]
+pub struct ComputeImage_RawDiskRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeImageRawDiskElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeImageRawDiskElRef {
-        ComputeImageRawDiskElRef {
+impl terrars::Ref for ComputeImage_RawDiskRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeImage_RawDiskRef {
+        ComputeImage_RawDiskRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeImageRawDiskElRef {
+impl ComputeImage_RawDiskRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -856,7 +1154,818 @@ impl ComputeImageRawDiskElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeImageTimeoutsEl {
+pub struct ComputeImage_ShieldedInstanceInitialState_Dbs {
+    content: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    file_type: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl ComputeImage_ShieldedInstanceInitialState_Dbs {
+    #[doc = "Set the field `file_type`.\nThe file type of source file."]
+    pub fn set_file_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.file_type = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeImage_ShieldedInstanceInitialState_Dbs {
+    type O = terrars::BlockAssignable<ComputeImage_ShieldedInstanceInitialState_Dbs>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeImage_ShieldedInstanceInitialState_Dbs {
+    #[doc = "The raw content in the secure keys file.\n\nA base64-encoded string."]
+    pub content: terrars::PrimField<std::string::String>,
+}
+
+impl BuildComputeImage_ShieldedInstanceInitialState_Dbs {
+    pub fn build(self) -> ComputeImage_ShieldedInstanceInitialState_Dbs {
+        ComputeImage_ShieldedInstanceInitialState_Dbs {
+            content: self.content,
+            file_type: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeImage_ShieldedInstanceInitialState_DbsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeImage_ShieldedInstanceInitialState_DbsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputeImage_ShieldedInstanceInitialState_DbsRef {
+        ComputeImage_ShieldedInstanceInitialState_DbsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeImage_ShieldedInstanceInitialState_DbsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `content` after provisioning.\nThe raw content in the secure keys file.\n\nA base64-encoded string."]
+    pub fn content(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.content", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `file_type` after provisioning.\nThe file type of source file."]
+    pub fn file_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.file_type", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ComputeImage_ShieldedInstanceInitialState_Dbxs {
+    content: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    file_type: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl ComputeImage_ShieldedInstanceInitialState_Dbxs {
+    #[doc = "Set the field `file_type`.\nThe file type of source file."]
+    pub fn set_file_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.file_type = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeImage_ShieldedInstanceInitialState_Dbxs {
+    type O = terrars::BlockAssignable<ComputeImage_ShieldedInstanceInitialState_Dbxs>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeImage_ShieldedInstanceInitialState_Dbxs {
+    #[doc = "The raw content in the secure keys file.\n\nA base64-encoded string."]
+    pub content: terrars::PrimField<std::string::String>,
+}
+
+impl BuildComputeImage_ShieldedInstanceInitialState_Dbxs {
+    pub fn build(self) -> ComputeImage_ShieldedInstanceInitialState_Dbxs {
+        ComputeImage_ShieldedInstanceInitialState_Dbxs {
+            content: self.content,
+            file_type: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeImage_ShieldedInstanceInitialState_DbxsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeImage_ShieldedInstanceInitialState_DbxsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputeImage_ShieldedInstanceInitialState_DbxsRef {
+        ComputeImage_ShieldedInstanceInitialState_DbxsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeImage_ShieldedInstanceInitialState_DbxsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `content` after provisioning.\nThe raw content in the secure keys file.\n\nA base64-encoded string."]
+    pub fn content(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.content", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `file_type` after provisioning.\nThe file type of source file."]
+    pub fn file_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.file_type", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ComputeImage_ShieldedInstanceInitialState_Keks {
+    content: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    file_type: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl ComputeImage_ShieldedInstanceInitialState_Keks {
+    #[doc = "Set the field `file_type`.\nThe file type of source file."]
+    pub fn set_file_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.file_type = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeImage_ShieldedInstanceInitialState_Keks {
+    type O = terrars::BlockAssignable<ComputeImage_ShieldedInstanceInitialState_Keks>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeImage_ShieldedInstanceInitialState_Keks {
+    #[doc = "The raw content in the secure keys file.\n\nA base64-encoded string."]
+    pub content: terrars::PrimField<std::string::String>,
+}
+
+impl BuildComputeImage_ShieldedInstanceInitialState_Keks {
+    pub fn build(self) -> ComputeImage_ShieldedInstanceInitialState_Keks {
+        ComputeImage_ShieldedInstanceInitialState_Keks {
+            content: self.content,
+            file_type: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeImage_ShieldedInstanceInitialState_KeksRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeImage_ShieldedInstanceInitialState_KeksRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputeImage_ShieldedInstanceInitialState_KeksRef {
+        ComputeImage_ShieldedInstanceInitialState_KeksRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeImage_ShieldedInstanceInitialState_KeksRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `content` after provisioning.\nThe raw content in the secure keys file.\n\nA base64-encoded string."]
+    pub fn content(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.content", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `file_type` after provisioning.\nThe file type of source file."]
+    pub fn file_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.file_type", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ComputeImage_ShieldedInstanceInitialState_Pk {
+    content: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    file_type: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl ComputeImage_ShieldedInstanceInitialState_Pk {
+    #[doc = "Set the field `file_type`.\nThe file type of source file."]
+    pub fn set_file_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.file_type = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeImage_ShieldedInstanceInitialState_Pk {
+    type O = terrars::BlockAssignable<ComputeImage_ShieldedInstanceInitialState_Pk>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeImage_ShieldedInstanceInitialState_Pk {
+    #[doc = "The raw content in the secure keys file.\n\nA base64-encoded string."]
+    pub content: terrars::PrimField<std::string::String>,
+}
+
+impl BuildComputeImage_ShieldedInstanceInitialState_Pk {
+    pub fn build(self) -> ComputeImage_ShieldedInstanceInitialState_Pk {
+        ComputeImage_ShieldedInstanceInitialState_Pk {
+            content: self.content,
+            file_type: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeImage_ShieldedInstanceInitialState_PkRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeImage_ShieldedInstanceInitialState_PkRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputeImage_ShieldedInstanceInitialState_PkRef {
+        ComputeImage_ShieldedInstanceInitialState_PkRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeImage_ShieldedInstanceInitialState_PkRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `content` after provisioning.\nThe raw content in the secure keys file.\n\nA base64-encoded string."]
+    pub fn content(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.content", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `file_type` after provisioning.\nThe file type of source file."]
+    pub fn file_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.file_type", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct ComputeImage_ShieldedInstanceInitialStateDynamic {
+    dbs: std::option::Option<terrars::DynamicBlock<ComputeImage_ShieldedInstanceInitialState_Dbs>>,
+    dbxs: std::option::Option<terrars::DynamicBlock<ComputeImage_ShieldedInstanceInitialState_Dbxs>>,
+    keks: std::option::Option<terrars::DynamicBlock<ComputeImage_ShieldedInstanceInitialState_Keks>>,
+    pk: std::option::Option<terrars::DynamicBlock<ComputeImage_ShieldedInstanceInitialState_Pk>>,
+}
+
+#[derive(Serialize)]
+pub struct ComputeImage_ShieldedInstanceInitialState {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dbs: std::option::Option<std::vec::Vec<ComputeImage_ShieldedInstanceInitialState_Dbs>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dbxs: std::option::Option<std::vec::Vec<ComputeImage_ShieldedInstanceInitialState_Dbxs>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    keks: std::option::Option<std::vec::Vec<ComputeImage_ShieldedInstanceInitialState_Keks>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    pk: std::option::Option<std::vec::Vec<ComputeImage_ShieldedInstanceInitialState_Pk>>,
+    dynamic: ComputeImage_ShieldedInstanceInitialStateDynamic,
+}
+
+impl ComputeImage_ShieldedInstanceInitialState {
+    #[doc = "Set the field `dbs`.\n"]
+    pub fn set_dbs(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeImage_ShieldedInstanceInitialState_Dbs>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.dbs = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.dbs = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `dbxs`.\n"]
+    pub fn set_dbxs(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeImage_ShieldedInstanceInitialState_Dbxs>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.dbxs = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.dbxs = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `keks`.\n"]
+    pub fn set_keks(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeImage_ShieldedInstanceInitialState_Keks>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.keks = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.keks = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `pk`.\n"]
+    pub fn set_pk(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeImage_ShieldedInstanceInitialState_Pk>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.pk = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.pk = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeImage_ShieldedInstanceInitialState {
+    type O = terrars::BlockAssignable<ComputeImage_ShieldedInstanceInitialState>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeImage_ShieldedInstanceInitialState {}
+
+impl BuildComputeImage_ShieldedInstanceInitialState {
+    pub fn build(self) -> ComputeImage_ShieldedInstanceInitialState {
+        ComputeImage_ShieldedInstanceInitialState {
+            dbs: core::default::Default::default(),
+            dbxs: core::default::Default::default(),
+            keks: core::default::Default::default(),
+            pk: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeImage_ShieldedInstanceInitialStateRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeImage_ShieldedInstanceInitialStateRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeImage_ShieldedInstanceInitialStateRef {
+        ComputeImage_ShieldedInstanceInitialStateRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeImage_ShieldedInstanceInitialStateRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `dbs` after provisioning.\n"]
+    pub fn dbs(&self) -> terrars::ListRef<ComputeImage_ShieldedInstanceInitialState_DbsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.dbs", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `dbxs` after provisioning.\n"]
+    pub fn dbxs(&self) -> terrars::ListRef<ComputeImage_ShieldedInstanceInitialState_DbxsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.dbxs", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `keks` after provisioning.\n"]
+    pub fn keks(&self) -> terrars::ListRef<ComputeImage_ShieldedInstanceInitialState_KeksRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.keks", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `pk` after provisioning.\n"]
+    pub fn pk(&self) -> terrars::ListRef<ComputeImage_ShieldedInstanceInitialState_PkRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.pk", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ComputeImage_SourceDiskEncryptionKey {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_self_link: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_service_account: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    raw_key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    rsa_encrypted_key: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl ComputeImage_SourceDiskEncryptionKey {
+    #[doc =
+        "Set the field `kms_key_self_link`.\nThe self link of the encryption key used to decrypt this resource. Also called KmsKeyName\nin the cloud console. Your project's Compute Engine System service account\n('service-{{PROJECT_NUMBER}}@compute-system.iam.gserviceaccount.com') must have\n'roles/cloudkms.cryptoKeyEncrypterDecrypter' to use this feature.\nSee https://cloud.google.com/compute/docs/disks/customer-managed-encryption#encrypt_a_new_persistent_disk_with_your_own_keys"]
+    pub fn set_kms_key_self_link(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.kms_key_self_link = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `kms_key_service_account`.\nThe service account being used for the encryption request for the\ngiven KMS key. If absent, the Compute Engine default service\naccount is used."]
+    pub fn set_kms_key_service_account(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.kms_key_service_account = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `raw_key`.\nSpecifies a 256-bit customer-supplied encryption key, encoded in\nRFC 4648 base64 to either encrypt or decrypt this resource."]
+    pub fn set_raw_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.raw_key = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `rsa_encrypted_key`.\nSpecifies an RFC 4648 base64 encoded, RSA-wrapped 2048-bit\ncustomer-supplied encryption key to either encrypt or decrypt\nthis resource. You can provide either the rawKey or the rsaEncryptedKey."]
+    pub fn set_rsa_encrypted_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.rsa_encrypted_key = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeImage_SourceDiskEncryptionKey {
+    type O = terrars::BlockAssignable<ComputeImage_SourceDiskEncryptionKey>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeImage_SourceDiskEncryptionKey {}
+
+impl BuildComputeImage_SourceDiskEncryptionKey {
+    pub fn build(self) -> ComputeImage_SourceDiskEncryptionKey {
+        ComputeImage_SourceDiskEncryptionKey {
+            kms_key_self_link: core::default::Default::default(),
+            kms_key_service_account: core::default::Default::default(),
+            raw_key: core::default::Default::default(),
+            rsa_encrypted_key: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeImage_SourceDiskEncryptionKeyRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeImage_SourceDiskEncryptionKeyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeImage_SourceDiskEncryptionKeyRef {
+        ComputeImage_SourceDiskEncryptionKeyRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeImage_SourceDiskEncryptionKeyRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `kms_key_self_link` after provisioning.\nThe self link of the encryption key used to decrypt this resource. Also called KmsKeyName\nin the cloud console. Your project's Compute Engine System service account\n('service-{{PROJECT_NUMBER}}@compute-system.iam.gserviceaccount.com') must have\n'roles/cloudkms.cryptoKeyEncrypterDecrypter' to use this feature.\nSee https://cloud.google.com/compute/docs/disks/customer-managed-encryption#encrypt_a_new_persistent_disk_with_your_own_keys"]
+    pub fn kms_key_self_link(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_self_link", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `kms_key_service_account` after provisioning.\nThe service account being used for the encryption request for the\ngiven KMS key. If absent, the Compute Engine default service\naccount is used."]
+    pub fn kms_key_service_account(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_service_account", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `raw_key` after provisioning.\nSpecifies a 256-bit customer-supplied encryption key, encoded in\nRFC 4648 base64 to either encrypt or decrypt this resource."]
+    pub fn raw_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.raw_key", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `rsa_encrypted_key` after provisioning.\nSpecifies an RFC 4648 base64 encoded, RSA-wrapped 2048-bit\ncustomer-supplied encryption key to either encrypt or decrypt\nthis resource. You can provide either the rawKey or the rsaEncryptedKey."]
+    pub fn rsa_encrypted_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rsa_encrypted_key", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ComputeImage_SourceImageEncryptionKey {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_self_link: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_service_account: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    raw_key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    rsa_encrypted_key: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl ComputeImage_SourceImageEncryptionKey {
+    #[doc =
+        "Set the field `kms_key_self_link`.\nThe self link of the encryption key used to decrypt this resource. Also called KmsKeyName\nin the cloud console. Your project's Compute Engine System service account\n('service-{{PROJECT_NUMBER}}@compute-system.iam.gserviceaccount.com') must have\n'roles/cloudkms.cryptoKeyEncrypterDecrypter' to use this feature.\nSee https://cloud.google.com/compute/docs/disks/customer-managed-encryption#encrypt_a_new_persistent_disk_with_your_own_keys"]
+    pub fn set_kms_key_self_link(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.kms_key_self_link = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `kms_key_service_account`.\nThe service account being used for the encryption request for the\ngiven KMS key. If absent, the Compute Engine default service\naccount is used."]
+    pub fn set_kms_key_service_account(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.kms_key_service_account = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `raw_key`.\nSpecifies a 256-bit customer-supplied encryption key, encoded in\nRFC 4648 base64 to either encrypt or decrypt this resource."]
+    pub fn set_raw_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.raw_key = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `rsa_encrypted_key`.\nSpecifies an RFC 4648 base64 encoded, RSA-wrapped 2048-bit\ncustomer-supplied encryption key to either encrypt or decrypt\nthis resource. You can provide either the rawKey or the rsaEncryptedKey."]
+    pub fn set_rsa_encrypted_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.rsa_encrypted_key = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeImage_SourceImageEncryptionKey {
+    type O = terrars::BlockAssignable<ComputeImage_SourceImageEncryptionKey>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeImage_SourceImageEncryptionKey {}
+
+impl BuildComputeImage_SourceImageEncryptionKey {
+    pub fn build(self) -> ComputeImage_SourceImageEncryptionKey {
+        ComputeImage_SourceImageEncryptionKey {
+            kms_key_self_link: core::default::Default::default(),
+            kms_key_service_account: core::default::Default::default(),
+            raw_key: core::default::Default::default(),
+            rsa_encrypted_key: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeImage_SourceImageEncryptionKeyRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeImage_SourceImageEncryptionKeyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeImage_SourceImageEncryptionKeyRef {
+        ComputeImage_SourceImageEncryptionKeyRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeImage_SourceImageEncryptionKeyRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `kms_key_self_link` after provisioning.\nThe self link of the encryption key used to decrypt this resource. Also called KmsKeyName\nin the cloud console. Your project's Compute Engine System service account\n('service-{{PROJECT_NUMBER}}@compute-system.iam.gserviceaccount.com') must have\n'roles/cloudkms.cryptoKeyEncrypterDecrypter' to use this feature.\nSee https://cloud.google.com/compute/docs/disks/customer-managed-encryption#encrypt_a_new_persistent_disk_with_your_own_keys"]
+    pub fn kms_key_self_link(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_self_link", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `kms_key_service_account` after provisioning.\nThe service account being used for the encryption request for the\ngiven KMS key. If absent, the Compute Engine default service\naccount is used."]
+    pub fn kms_key_service_account(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_service_account", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `raw_key` after provisioning.\nSpecifies a 256-bit customer-supplied encryption key, encoded in\nRFC 4648 base64 to either encrypt or decrypt this resource."]
+    pub fn raw_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.raw_key", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `rsa_encrypted_key` after provisioning.\nSpecifies an RFC 4648 base64 encoded, RSA-wrapped 2048-bit\ncustomer-supplied encryption key to either encrypt or decrypt\nthis resource. You can provide either the rawKey or the rsaEncryptedKey."]
+    pub fn rsa_encrypted_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rsa_encrypted_key", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ComputeImage_SourceSnapshotEncryptionKey {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_self_link: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_service_account: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    raw_key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    rsa_encrypted_key: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl ComputeImage_SourceSnapshotEncryptionKey {
+    #[doc =
+        "Set the field `kms_key_self_link`.\nThe self link of the encryption key used to decrypt this resource. Also called KmsKeyName\nin the cloud console. Your project's Compute Engine System service account\n('service-{{PROJECT_NUMBER}}@compute-system.iam.gserviceaccount.com') must have\n'roles/cloudkms.cryptoKeyEncrypterDecrypter' to use this feature.\nSee https://cloud.google.com/compute/docs/disks/customer-managed-encryption#encrypt_a_new_persistent_disk_with_your_own_keys"]
+    pub fn set_kms_key_self_link(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.kms_key_self_link = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `kms_key_service_account`.\nThe service account being used for the encryption request for the\ngiven KMS key. If absent, the Compute Engine default service\naccount is used."]
+    pub fn set_kms_key_service_account(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.kms_key_service_account = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `raw_key`.\nSpecifies a 256-bit customer-supplied encryption key, encoded in\nRFC 4648 base64 to either encrypt or decrypt this resource."]
+    pub fn set_raw_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.raw_key = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `rsa_encrypted_key`.\nSpecifies an RFC 4648 base64 encoded, RSA-wrapped 2048-bit\ncustomer-supplied encryption key to either encrypt or decrypt\nthis resource. You can provide either the rawKey or the rsaEncryptedKey."]
+    pub fn set_rsa_encrypted_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.rsa_encrypted_key = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeImage_SourceSnapshotEncryptionKey {
+    type O = terrars::BlockAssignable<ComputeImage_SourceSnapshotEncryptionKey>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeImage_SourceSnapshotEncryptionKey {}
+
+impl BuildComputeImage_SourceSnapshotEncryptionKey {
+    pub fn build(self) -> ComputeImage_SourceSnapshotEncryptionKey {
+        ComputeImage_SourceSnapshotEncryptionKey {
+            kms_key_self_link: core::default::Default::default(),
+            kms_key_service_account: core::default::Default::default(),
+            raw_key: core::default::Default::default(),
+            rsa_encrypted_key: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeImage_SourceSnapshotEncryptionKeyRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeImage_SourceSnapshotEncryptionKeyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeImage_SourceSnapshotEncryptionKeyRef {
+        ComputeImage_SourceSnapshotEncryptionKeyRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeImage_SourceSnapshotEncryptionKeyRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `kms_key_self_link` after provisioning.\nThe self link of the encryption key used to decrypt this resource. Also called KmsKeyName\nin the cloud console. Your project's Compute Engine System service account\n('service-{{PROJECT_NUMBER}}@compute-system.iam.gserviceaccount.com') must have\n'roles/cloudkms.cryptoKeyEncrypterDecrypter' to use this feature.\nSee https://cloud.google.com/compute/docs/disks/customer-managed-encryption#encrypt_a_new_persistent_disk_with_your_own_keys"]
+    pub fn kms_key_self_link(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_self_link", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `kms_key_service_account` after provisioning.\nThe service account being used for the encryption request for the\ngiven KMS key. If absent, the Compute Engine default service\naccount is used."]
+    pub fn kms_key_service_account(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_service_account", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `raw_key` after provisioning.\nSpecifies a 256-bit customer-supplied encryption key, encoded in\nRFC 4648 base64 to either encrypt or decrypt this resource."]
+    pub fn raw_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.raw_key", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `rsa_encrypted_key` after provisioning.\nSpecifies an RFC 4648 base64 encoded, RSA-wrapped 2048-bit\ncustomer-supplied encryption key to either encrypt or decrypt\nthis resource. You can provide either the rawKey or the rsaEncryptedKey."]
+    pub fn rsa_encrypted_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rsa_encrypted_key", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ComputeImage_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -865,7 +1974,7 @@ pub struct ComputeImageTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeImageTimeoutsEl {
+impl ComputeImage_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -885,8 +1994,8 @@ impl ComputeImageTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeImageTimeoutsEl {
-    type O = terrars::BlockAssignable<ComputeImageTimeoutsEl>;
+impl terrars::ToListMappable for ComputeImage_Timeouts {
+    type O = terrars::BlockAssignable<ComputeImage_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -897,11 +2006,11 @@ impl terrars::ToListMappable for ComputeImageTimeoutsEl {
     }
 }
 
-pub struct BuildComputeImageTimeoutsEl {}
+pub struct BuildComputeImage_Timeouts {}
 
-impl BuildComputeImageTimeoutsEl {
-    pub fn build(self) -> ComputeImageTimeoutsEl {
-        ComputeImageTimeoutsEl {
+impl BuildComputeImage_Timeouts {
+    pub fn build(self) -> ComputeImage_Timeouts {
+        ComputeImage_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -909,21 +2018,23 @@ impl BuildComputeImageTimeoutsEl {
     }
 }
 
-pub struct ComputeImageTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComputeImage_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeImageTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeImageTimeoutsElRef {
-        ComputeImageTimeoutsElRef {
+impl terrars::Ref for ComputeImage_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeImage_TimeoutsRef {
+        ComputeImage_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeImageTimeoutsElRef {
+impl ComputeImage_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -942,11 +2053,4 @@ impl ComputeImageTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ComputeImageDynamic {
-    guest_os_features: std::option::Option<terrars::DynamicBlock<ComputeImageGuestOsFeaturesEl>>,
-    image_encryption_key: std::option::Option<terrars::DynamicBlock<ComputeImageImageEncryptionKeyEl>>,
-    raw_disk: std::option::Option<terrars::DynamicBlock<ComputeImageRawDiskEl>>,
 }

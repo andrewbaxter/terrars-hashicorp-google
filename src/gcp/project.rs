@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ProjectData {
+struct ProjectData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,6 +25,8 @@ struct ProjectData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     billing_account: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     folder_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -33,15 +37,15 @@ struct ProjectData {
     org_id: std::option::Option<terrars::PrimField<std::string::String>>,
     project_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    skip_delete: std::option::Option<terrars::PrimField<bool>>,
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ProjectTimeoutsEl>,
+    timeouts: std::option::Option<Project_Timeouts>,
 }
 
 struct Project_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ProjectData>,
+    data: std::cell::RefCell<ProjectData_>,
 }
 
 #[derive(Clone)]
@@ -156,6 +160,13 @@ impl Project {
     }
 
     #[doc =
+        "Set the field `deletion_policy`.\nThe deletion policy for the Project. Setting PREVENT will protect the project against any destroy actions caused by a terraform apply or terraform destroy. Setting ABANDON allows the resource\n\t\t\t\tto be abandoned rather than deleted. Possible values are: \"PREVENT\", \"ABANDON\", \"DELETE\""]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `folder_id`.\nThe numeric ID of the folder this project should be created under. Only one of org_id or folder_id may be specified. If the folder_id is specified, then the project is created under the specified folder. Changing this forces the project to be migrated to the newly specified folder."]
     pub fn set_folder_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().folder_id = std::option::Option::Some(v.into());
@@ -186,14 +197,17 @@ impl Project {
     }
 
     #[doc =
-        "Set the field `skip_delete`.\nIf true, the Terraform resource can be deleted without deleting the Project via the Google API."]
-    pub fn set_skip_delete(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().skip_delete = std::option::Option::Some(v.into());
+        "Set the field `tags`.\nA map of resource manager tags. Resource manager tag keys and values have the same definition as resource manager tags. Keys must be in the format tagKeys/{tag_key_id}, and values are in the format tagValues/456. The field is ignored when empty. This field is only set at create time and modifying this field after creation will trigger recreation. To apply tags to an existing resource, see the google_tags_tag_value resource."]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ProjectTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<Project_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -208,6 +222,12 @@ impl Project {
         "Get a reference to the value of field `billing_account` after provisioning.\nThe alphanumeric ID of the billing account this project belongs to. The user or service account performing this operation with Terraform must have Billing Account Administrator privileges (roles/billing.admin) in the organization. See Google Cloud Billing API Access Control for more details."]
     pub fn billing_account(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.billing_account", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nThe deletion policy for the Project. Setting PREVENT will protect the project against any destroy actions caused by a terraform apply or terraform destroy. Setting ABANDON allows the resource\n\t\t\t\tto be abandoned rather than deleted. Possible values are: \"PREVENT\", \"ABANDON\", \"DELETE\""]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -257,20 +277,20 @@ impl Project {
     }
 
     #[doc =
-        "Get a reference to the value of field `skip_delete` after provisioning.\nIf true, the Terraform resource can be deleted without deleting the Project via the Google API."]
-    pub fn skip_delete(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.skip_delete", self.extract_ref()))
+        "Get a reference to the value of field `tags` after provisioning.\nA map of resource manager tags. Resource manager tag keys and values have the same definition as resource manager tags. Keys must be in the format tagKeys/{tag_key_id}, and values are in the format tagValues/456. The field is ignored when empty. This field is only set at create time and modifying this field after creation will trigger recreation. To apply tags to an existing resource, see the google_tags_tag_value resource."]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource and default labels configured on the provider."]
+        "Get a reference to the value of field `terraform_labels` after provisioning.\n(ReadOnly) The combination of labels configured directly on the resource and default labels configured on the provider."]
     pub fn terraform_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ProjectTimeoutsElRef {
-        ProjectTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> Project_TimeoutsRef {
+        Project_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -318,7 +338,7 @@ impl BuildProject {
         let out = Project(std::rc::Rc::new(Project_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ProjectData {
+            data: std::cell::RefCell::new(ProjectData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -326,13 +346,14 @@ impl BuildProject {
                 provisioner: core::default::Default::default(),
                 auto_create_network: core::default::Default::default(),
                 billing_account: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 folder_id: core::default::Default::default(),
                 id: core::default::Default::default(),
                 labels: core::default::Default::default(),
                 name: self.name,
                 org_id: core::default::Default::default(),
                 project_id: self.project_id,
-                skip_delete: core::default::Default::default(),
+                tags: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
             }),
         }));
@@ -374,6 +395,12 @@ impl ProjectRef {
         "Get a reference to the value of field `billing_account` after provisioning.\nThe alphanumeric ID of the billing account this project belongs to. The user or service account performing this operation with Terraform must have Billing Account Administrator privileges (roles/billing.admin) in the organization. See Google Cloud Billing API Access Control for more details."]
     pub fn billing_account(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.billing_account", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nThe deletion policy for the Project. Setting PREVENT will protect the project against any destroy actions caused by a terraform apply or terraform destroy. Setting ABANDON allows the resource\n\t\t\t\tto be abandoned rather than deleted. Possible values are: \"PREVENT\", \"ABANDON\", \"DELETE\""]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -423,25 +450,25 @@ impl ProjectRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `skip_delete` after provisioning.\nIf true, the Terraform resource can be deleted without deleting the Project via the Google API."]
-    pub fn skip_delete(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.skip_delete", self.extract_ref()))
+        "Get a reference to the value of field `tags` after provisioning.\nA map of resource manager tags. Resource manager tag keys and values have the same definition as resource manager tags. Keys must be in the format tagKeys/{tag_key_id}, and values are in the format tagValues/456. The field is ignored when empty. This field is only set at create time and modifying this field after creation will trigger recreation. To apply tags to an existing resource, see the google_tags_tag_value resource."]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource and default labels configured on the provider."]
+        "Get a reference to the value of field `terraform_labels` after provisioning.\n(ReadOnly) The combination of labels configured directly on the resource and default labels configured on the provider."]
     pub fn terraform_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ProjectTimeoutsElRef {
-        ProjectTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> Project_TimeoutsRef {
+        Project_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct ProjectTimeoutsEl {
+pub struct Project_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -452,7 +479,7 @@ pub struct ProjectTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ProjectTimeoutsEl {
+impl Project_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -478,8 +505,8 @@ impl ProjectTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ProjectTimeoutsEl {
-    type O = terrars::BlockAssignable<ProjectTimeoutsEl>;
+impl terrars::ToListMappable for Project_Timeouts {
+    type O = terrars::BlockAssignable<Project_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -490,11 +517,11 @@ impl terrars::ToListMappable for ProjectTimeoutsEl {
     }
 }
 
-pub struct BuildProjectTimeoutsEl {}
+pub struct BuildProject_Timeouts {}
 
-impl BuildProjectTimeoutsEl {
-    pub fn build(self) -> ProjectTimeoutsEl {
-        ProjectTimeoutsEl {
+impl BuildProject_Timeouts {
+    pub fn build(self) -> Project_Timeouts {
+        Project_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             read: core::default::Default::default(),
@@ -503,21 +530,23 @@ impl BuildProjectTimeoutsEl {
     }
 }
 
-pub struct ProjectTimeoutsElRef {
+#[allow(dead_code)]
+pub struct Project_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ProjectTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ProjectTimeoutsElRef {
-        ProjectTimeoutsElRef {
+impl terrars::Ref for Project_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Project_TimeoutsRef {
+        Project_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ProjectTimeoutsElRef {
+impl Project_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

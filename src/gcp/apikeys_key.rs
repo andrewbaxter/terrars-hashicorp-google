@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ApikeysKeyData {
+struct ApikeysKeyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,10 @@ struct ApikeysKeyData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    check_existing_usage: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     display_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -26,16 +32,18 @@ struct ApikeysKeyData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    restrictions: std::option::Option<std::vec::Vec<ApikeysKeyRestrictionsEl>>,
+    service_account_email: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ApikeysKeyTimeoutsEl>,
+    restrictions: std::option::Option<std::vec::Vec<ApikeysKey_Restrictions>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<ApikeysKey_Timeouts>,
     dynamic: ApikeysKeyDynamic,
 }
 
 struct ApikeysKey_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ApikeysKeyData>,
+    data: std::cell::RefCell<ApikeysKeyData_>,
 }
 
 #[derive(Clone)]
@@ -135,6 +143,20 @@ impl ApikeysKey {
         self
     }
 
+    #[doc =
+        "Set the field `check_existing_usage`.\nDefines the behavior for checking existing usage when updating a key. Possible values: 'SKIP', 'CHECK'."]
+    pub fn set_check_existing_usage(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().check_existing_usage = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the resource. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the resource,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed, and existing traffic usage will be checked. If active usage was detected in the last 7 days, the request fails.\nWhen set to \"FORCE\", deleting the resource will bypass the active traffic usage check."]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `display_name`.\nHuman-readable display name of this API key. Modifiable by user."]
     pub fn set_display_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().display_name = std::option::Option::Some(v.into());
@@ -153,10 +175,17 @@ impl ApikeysKey {
         self
     }
 
+    #[doc =
+        "Set the field `service_account_email`.\nThe email of the service account the key is bound to. If this field is specified, the key is a service account bound key and auth enabled. See [Documentation](https://cloud.google.com/docs/authentication/api-keys?#api-keys-bound-sa) for more details."]
+    pub fn set_service_account_email(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().service_account_email = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `restrictions`.\n"]
     pub fn set_restrictions(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ApikeysKeyRestrictionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApikeysKey_Restrictions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -170,9 +199,21 @@ impl ApikeysKey {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ApikeysKeyTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ApikeysKey_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `check_existing_usage` after provisioning.\nDefines the behavior for checking existing usage when updating a key. Possible values: 'SKIP', 'CHECK'."]
+    pub fn check_existing_usage(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.check_existing_usage", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the resource. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the resource,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed, and existing traffic usage will be checked. If active usage was detected in the last 7 days, the request fails.\nWhen set to \"FORCE\", deleting the resource will bypass the active traffic usage check."]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -203,19 +244,25 @@ impl ApikeysKey {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `service_account_email` after provisioning.\nThe email of the service account the key is bound to. If this field is specified, the key is a service account bound key and auth enabled. See [Documentation](https://cloud.google.com/docs/authentication/api-keys?#api-keys-bound-sa) for more details."]
+    pub fn service_account_email(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_account_email", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `uid` after provisioning.\nOutput only. Unique id in UUID4 format."]
     pub fn uid(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.uid", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `restrictions` after provisioning.\n"]
-    pub fn restrictions(&self) -> terrars::ListRef<ApikeysKeyRestrictionsElRef> {
+    pub fn restrictions(&self) -> terrars::ListRef<ApikeysKey_RestrictionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.restrictions", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ApikeysKeyTimeoutsElRef {
-        ApikeysKeyTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ApikeysKey_TimeoutsRef {
+        ApikeysKey_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -262,16 +309,19 @@ impl BuildApikeysKey {
         let out = ApikeysKey(std::rc::Rc::new(ApikeysKey_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ApikeysKeyData {
+            data: std::cell::RefCell::new(ApikeysKeyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                check_existing_usage: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 display_name: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
                 project: core::default::Default::default(),
+                service_account_email: core::default::Default::default(),
                 restrictions: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -306,6 +356,18 @@ impl ApikeysKeyRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `check_existing_usage` after provisioning.\nDefines the behavior for checking existing usage when updating a key. Possible values: 'SKIP', 'CHECK'."]
+    pub fn check_existing_usage(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.check_existing_usage", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the resource. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the resource,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed, and existing traffic usage will be checked. If active usage was detected in the last 7 days, the request fails.\nWhen set to \"FORCE\", deleting the resource will bypass the active traffic usage check."]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `display_name` after provisioning.\nHuman-readable display name of this API key. Modifiable by user."]
     pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
@@ -333,32 +395,43 @@ impl ApikeysKeyRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `service_account_email` after provisioning.\nThe email of the service account the key is bound to. If this field is specified, the key is a service account bound key and auth enabled. See [Documentation](https://cloud.google.com/docs/authentication/api-keys?#api-keys-bound-sa) for more details."]
+    pub fn service_account_email(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_account_email", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `uid` after provisioning.\nOutput only. Unique id in UUID4 format."]
     pub fn uid(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.uid", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `restrictions` after provisioning.\n"]
-    pub fn restrictions(&self) -> terrars::ListRef<ApikeysKeyRestrictionsElRef> {
+    pub fn restrictions(&self) -> terrars::ListRef<ApikeysKey_RestrictionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.restrictions", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ApikeysKeyTimeoutsElRef {
-        ApikeysKeyTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ApikeysKey_TimeoutsRef {
+        ApikeysKey_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ApikeysKeyDynamic {
+    restrictions: std::option::Option<terrars::DynamicBlock<ApikeysKey_Restrictions>>,
+}
+
 #[derive(Serialize)]
-pub struct ApikeysKeyRestrictionsElAndroidKeyRestrictionsElAllowedApplicationsEl {
+pub struct ApikeysKey_Restrictions_AndroidKeyRestrictions_AllowedApplications {
     package_name: terrars::PrimField<std::string::String>,
     sha1_fingerprint: terrars::PrimField<std::string::String>,
 }
 
-impl ApikeysKeyRestrictionsElAndroidKeyRestrictionsElAllowedApplicationsEl { }
+impl ApikeysKey_Restrictions_AndroidKeyRestrictions_AllowedApplications { }
 
-impl terrars::ToListMappable for ApikeysKeyRestrictionsElAndroidKeyRestrictionsElAllowedApplicationsEl {
-    type O = terrars::BlockAssignable<ApikeysKeyRestrictionsElAndroidKeyRestrictionsElAllowedApplicationsEl>;
+impl terrars::ToListMappable for ApikeysKey_Restrictions_AndroidKeyRestrictions_AllowedApplications {
+    type O = terrars::BlockAssignable<ApikeysKey_Restrictions_AndroidKeyRestrictions_AllowedApplications>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -369,7 +442,7 @@ impl terrars::ToListMappable for ApikeysKeyRestrictionsElAndroidKeyRestrictionsE
     }
 }
 
-pub struct BuildApikeysKeyRestrictionsElAndroidKeyRestrictionsElAllowedApplicationsEl {
+pub struct BuildApikeysKey_Restrictions_AndroidKeyRestrictions_AllowedApplications {
     #[doc = "The package name of the application."]
     pub package_name: terrars::PrimField<std::string::String>,
     #[doc =
@@ -377,33 +450,35 @@ pub struct BuildApikeysKeyRestrictionsElAndroidKeyRestrictionsElAllowedApplicati
     pub sha1_fingerprint: terrars::PrimField<std::string::String>,
 }
 
-impl BuildApikeysKeyRestrictionsElAndroidKeyRestrictionsElAllowedApplicationsEl {
-    pub fn build(self) -> ApikeysKeyRestrictionsElAndroidKeyRestrictionsElAllowedApplicationsEl {
-        ApikeysKeyRestrictionsElAndroidKeyRestrictionsElAllowedApplicationsEl {
+impl BuildApikeysKey_Restrictions_AndroidKeyRestrictions_AllowedApplications {
+    pub fn build(self) -> ApikeysKey_Restrictions_AndroidKeyRestrictions_AllowedApplications {
+        ApikeysKey_Restrictions_AndroidKeyRestrictions_AllowedApplications {
             package_name: self.package_name,
             sha1_fingerprint: self.sha1_fingerprint,
         }
     }
 }
 
-pub struct ApikeysKeyRestrictionsElAndroidKeyRestrictionsElAllowedApplicationsElRef {
+#[allow(dead_code)]
+pub struct ApikeysKey_Restrictions_AndroidKeyRestrictions_AllowedApplicationsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApikeysKeyRestrictionsElAndroidKeyRestrictionsElAllowedApplicationsElRef {
+impl terrars::Ref for ApikeysKey_Restrictions_AndroidKeyRestrictions_AllowedApplicationsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ApikeysKeyRestrictionsElAndroidKeyRestrictionsElAllowedApplicationsElRef {
-        ApikeysKeyRestrictionsElAndroidKeyRestrictionsElAllowedApplicationsElRef {
+    ) -> ApikeysKey_Restrictions_AndroidKeyRestrictions_AllowedApplicationsRef {
+        ApikeysKey_Restrictions_AndroidKeyRestrictions_AllowedApplicationsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApikeysKeyRestrictionsElAndroidKeyRestrictionsElAllowedApplicationsElRef {
+impl ApikeysKey_Restrictions_AndroidKeyRestrictions_AllowedApplicationsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -422,22 +497,22 @@ impl ApikeysKeyRestrictionsElAndroidKeyRestrictionsElAllowedApplicationsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct ApikeysKeyRestrictionsElAndroidKeyRestrictionsElDynamic {
+struct ApikeysKey_Restrictions_AndroidKeyRestrictionsDynamic {
     allowed_applications: std
     ::option
-    ::Option<terrars::DynamicBlock<ApikeysKeyRestrictionsElAndroidKeyRestrictionsElAllowedApplicationsEl>>,
+    ::Option<terrars::DynamicBlock<ApikeysKey_Restrictions_AndroidKeyRestrictions_AllowedApplications>>,
 }
 
 #[derive(Serialize)]
-pub struct ApikeysKeyRestrictionsElAndroidKeyRestrictionsEl {
+pub struct ApikeysKey_Restrictions_AndroidKeyRestrictions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allowed_applications: std
     ::option
-    ::Option<std::vec::Vec<ApikeysKeyRestrictionsElAndroidKeyRestrictionsElAllowedApplicationsEl>>,
-    dynamic: ApikeysKeyRestrictionsElAndroidKeyRestrictionsElDynamic,
+    ::Option<std::vec::Vec<ApikeysKey_Restrictions_AndroidKeyRestrictions_AllowedApplications>>,
+    dynamic: ApikeysKey_Restrictions_AndroidKeyRestrictionsDynamic,
 }
 
-impl ApikeysKeyRestrictionsElAndroidKeyRestrictionsEl {
+impl ApikeysKey_Restrictions_AndroidKeyRestrictions {
     #[doc = "Set the field `allowed_applications`.\n"]
     pub fn set_allowed_applications(
         mut self,
@@ -447,8 +522,7 @@ impl ApikeysKeyRestrictionsElAndroidKeyRestrictionsEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<ApikeysKeyRestrictionsElAndroidKeyRestrictionsElAllowedApplicationsEl>,
+                        terrars::BlockAssignable<ApikeysKey_Restrictions_AndroidKeyRestrictions_AllowedApplications>,
                     >,
     ) -> Self {
         match v.into() {
@@ -463,8 +537,8 @@ impl ApikeysKeyRestrictionsElAndroidKeyRestrictionsEl {
     }
 }
 
-impl terrars::ToListMappable for ApikeysKeyRestrictionsElAndroidKeyRestrictionsEl {
-    type O = terrars::BlockAssignable<ApikeysKeyRestrictionsElAndroidKeyRestrictionsEl>;
+impl terrars::ToListMappable for ApikeysKey_Restrictions_AndroidKeyRestrictions {
+    type O = terrars::BlockAssignable<ApikeysKey_Restrictions_AndroidKeyRestrictions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -475,35 +549,37 @@ impl terrars::ToListMappable for ApikeysKeyRestrictionsElAndroidKeyRestrictionsE
     }
 }
 
-pub struct BuildApikeysKeyRestrictionsElAndroidKeyRestrictionsEl {}
+pub struct BuildApikeysKey_Restrictions_AndroidKeyRestrictions {}
 
-impl BuildApikeysKeyRestrictionsElAndroidKeyRestrictionsEl {
-    pub fn build(self) -> ApikeysKeyRestrictionsElAndroidKeyRestrictionsEl {
-        ApikeysKeyRestrictionsElAndroidKeyRestrictionsEl {
+impl BuildApikeysKey_Restrictions_AndroidKeyRestrictions {
+    pub fn build(self) -> ApikeysKey_Restrictions_AndroidKeyRestrictions {
+        ApikeysKey_Restrictions_AndroidKeyRestrictions {
             allowed_applications: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct ApikeysKeyRestrictionsElAndroidKeyRestrictionsElRef {
+#[allow(dead_code)]
+pub struct ApikeysKey_Restrictions_AndroidKeyRestrictionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApikeysKeyRestrictionsElAndroidKeyRestrictionsElRef {
+impl terrars::Ref for ApikeysKey_Restrictions_AndroidKeyRestrictionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ApikeysKeyRestrictionsElAndroidKeyRestrictionsElRef {
-        ApikeysKeyRestrictionsElAndroidKeyRestrictionsElRef {
+    ) -> ApikeysKey_Restrictions_AndroidKeyRestrictionsRef {
+        ApikeysKey_Restrictions_AndroidKeyRestrictionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApikeysKeyRestrictionsElAndroidKeyRestrictionsElRef {
+impl ApikeysKey_Restrictions_AndroidKeyRestrictionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -511,19 +587,19 @@ impl ApikeysKeyRestrictionsElAndroidKeyRestrictionsElRef {
     #[doc = "Get a reference to the value of field `allowed_applications` after provisioning.\n"]
     pub fn allowed_applications(
         &self,
-    ) -> terrars::ListRef<ApikeysKeyRestrictionsElAndroidKeyRestrictionsElAllowedApplicationsElRef> {
+    ) -> terrars::ListRef<ApikeysKey_Restrictions_AndroidKeyRestrictions_AllowedApplicationsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.allowed_applications", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ApikeysKeyRestrictionsElApiTargetsEl {
+pub struct ApikeysKey_Restrictions_ApiTargets {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     methods: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     service: terrars::PrimField<std::string::String>,
 }
 
-impl ApikeysKeyRestrictionsElApiTargetsEl {
+impl ApikeysKey_Restrictions_ApiTargets {
     #[doc =
         "Set the field `methods`.\nOptional. List of one or more methods that can be called. If empty, all methods for the service are allowed. A wildcard (*) can be used as the last symbol. Valid examples: `google.cloud.translate.v2.TranslateService.GetSupportedLanguage` `TranslateText` `Get*` `translate.googleapis.com.Get*`"]
     pub fn set_methods(
@@ -535,8 +611,8 @@ impl ApikeysKeyRestrictionsElApiTargetsEl {
     }
 }
 
-impl terrars::ToListMappable for ApikeysKeyRestrictionsElApiTargetsEl {
-    type O = terrars::BlockAssignable<ApikeysKeyRestrictionsElApiTargetsEl>;
+impl terrars::ToListMappable for ApikeysKey_Restrictions_ApiTargets {
+    type O = terrars::BlockAssignable<ApikeysKey_Restrictions_ApiTargets>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -547,36 +623,38 @@ impl terrars::ToListMappable for ApikeysKeyRestrictionsElApiTargetsEl {
     }
 }
 
-pub struct BuildApikeysKeyRestrictionsElApiTargetsEl {
+pub struct BuildApikeysKey_Restrictions_ApiTargets {
     #[doc =
         "The service for this restriction. It should be the canonical service name, for example: `translate.googleapis.com`. You can use `gcloud services list` to get a list of services that are enabled in the project."]
     pub service: terrars::PrimField<std::string::String>,
 }
 
-impl BuildApikeysKeyRestrictionsElApiTargetsEl {
-    pub fn build(self) -> ApikeysKeyRestrictionsElApiTargetsEl {
-        ApikeysKeyRestrictionsElApiTargetsEl {
+impl BuildApikeysKey_Restrictions_ApiTargets {
+    pub fn build(self) -> ApikeysKey_Restrictions_ApiTargets {
+        ApikeysKey_Restrictions_ApiTargets {
             methods: core::default::Default::default(),
             service: self.service,
         }
     }
 }
 
-pub struct ApikeysKeyRestrictionsElApiTargetsElRef {
+#[allow(dead_code)]
+pub struct ApikeysKey_Restrictions_ApiTargetsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApikeysKeyRestrictionsElApiTargetsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ApikeysKeyRestrictionsElApiTargetsElRef {
-        ApikeysKeyRestrictionsElApiTargetsElRef {
+impl terrars::Ref for ApikeysKey_Restrictions_ApiTargetsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApikeysKey_Restrictions_ApiTargetsRef {
+        ApikeysKey_Restrictions_ApiTargetsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApikeysKeyRestrictionsElApiTargetsElRef {
+impl ApikeysKey_Restrictions_ApiTargetsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -595,14 +673,14 @@ impl ApikeysKeyRestrictionsElApiTargetsElRef {
 }
 
 #[derive(Serialize)]
-pub struct ApikeysKeyRestrictionsElBrowserKeyRestrictionsEl {
+pub struct ApikeysKey_Restrictions_BrowserKeyRestrictions {
     allowed_referrers: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl ApikeysKeyRestrictionsElBrowserKeyRestrictionsEl { }
+impl ApikeysKey_Restrictions_BrowserKeyRestrictions { }
 
-impl terrars::ToListMappable for ApikeysKeyRestrictionsElBrowserKeyRestrictionsEl {
-    type O = terrars::BlockAssignable<ApikeysKeyRestrictionsElBrowserKeyRestrictionsEl>;
+impl terrars::ToListMappable for ApikeysKey_Restrictions_BrowserKeyRestrictions {
+    type O = terrars::BlockAssignable<ApikeysKey_Restrictions_BrowserKeyRestrictions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -613,35 +691,37 @@ impl terrars::ToListMappable for ApikeysKeyRestrictionsElBrowserKeyRestrictionsE
     }
 }
 
-pub struct BuildApikeysKeyRestrictionsElBrowserKeyRestrictionsEl {
+pub struct BuildApikeysKey_Restrictions_BrowserKeyRestrictions {
     #[doc = "A list of regular expressions for the referrer URLs that are allowed to make API calls with this key."]
     pub allowed_referrers: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildApikeysKeyRestrictionsElBrowserKeyRestrictionsEl {
-    pub fn build(self) -> ApikeysKeyRestrictionsElBrowserKeyRestrictionsEl {
-        ApikeysKeyRestrictionsElBrowserKeyRestrictionsEl { allowed_referrers: self.allowed_referrers }
+impl BuildApikeysKey_Restrictions_BrowserKeyRestrictions {
+    pub fn build(self) -> ApikeysKey_Restrictions_BrowserKeyRestrictions {
+        ApikeysKey_Restrictions_BrowserKeyRestrictions { allowed_referrers: self.allowed_referrers }
     }
 }
 
-pub struct ApikeysKeyRestrictionsElBrowserKeyRestrictionsElRef {
+#[allow(dead_code)]
+pub struct ApikeysKey_Restrictions_BrowserKeyRestrictionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApikeysKeyRestrictionsElBrowserKeyRestrictionsElRef {
+impl terrars::Ref for ApikeysKey_Restrictions_BrowserKeyRestrictionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ApikeysKeyRestrictionsElBrowserKeyRestrictionsElRef {
-        ApikeysKeyRestrictionsElBrowserKeyRestrictionsElRef {
+    ) -> ApikeysKey_Restrictions_BrowserKeyRestrictionsRef {
+        ApikeysKey_Restrictions_BrowserKeyRestrictionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApikeysKeyRestrictionsElBrowserKeyRestrictionsElRef {
+impl ApikeysKey_Restrictions_BrowserKeyRestrictionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -654,14 +734,14 @@ impl ApikeysKeyRestrictionsElBrowserKeyRestrictionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct ApikeysKeyRestrictionsElIosKeyRestrictionsEl {
+pub struct ApikeysKey_Restrictions_IosKeyRestrictions {
     allowed_bundle_ids: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl ApikeysKeyRestrictionsElIosKeyRestrictionsEl { }
+impl ApikeysKey_Restrictions_IosKeyRestrictions { }
 
-impl terrars::ToListMappable for ApikeysKeyRestrictionsElIosKeyRestrictionsEl {
-    type O = terrars::BlockAssignable<ApikeysKeyRestrictionsElIosKeyRestrictionsEl>;
+impl terrars::ToListMappable for ApikeysKey_Restrictions_IosKeyRestrictions {
+    type O = terrars::BlockAssignable<ApikeysKey_Restrictions_IosKeyRestrictions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -672,35 +752,34 @@ impl terrars::ToListMappable for ApikeysKeyRestrictionsElIosKeyRestrictionsEl {
     }
 }
 
-pub struct BuildApikeysKeyRestrictionsElIosKeyRestrictionsEl {
+pub struct BuildApikeysKey_Restrictions_IosKeyRestrictions {
     #[doc = "A list of bundle IDs that are allowed when making API calls with this key."]
     pub allowed_bundle_ids: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildApikeysKeyRestrictionsElIosKeyRestrictionsEl {
-    pub fn build(self) -> ApikeysKeyRestrictionsElIosKeyRestrictionsEl {
-        ApikeysKeyRestrictionsElIosKeyRestrictionsEl { allowed_bundle_ids: self.allowed_bundle_ids }
+impl BuildApikeysKey_Restrictions_IosKeyRestrictions {
+    pub fn build(self) -> ApikeysKey_Restrictions_IosKeyRestrictions {
+        ApikeysKey_Restrictions_IosKeyRestrictions { allowed_bundle_ids: self.allowed_bundle_ids }
     }
 }
 
-pub struct ApikeysKeyRestrictionsElIosKeyRestrictionsElRef {
+#[allow(dead_code)]
+pub struct ApikeysKey_Restrictions_IosKeyRestrictionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApikeysKeyRestrictionsElIosKeyRestrictionsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ApikeysKeyRestrictionsElIosKeyRestrictionsElRef {
-        ApikeysKeyRestrictionsElIosKeyRestrictionsElRef {
+impl terrars::Ref for ApikeysKey_Restrictions_IosKeyRestrictionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApikeysKey_Restrictions_IosKeyRestrictionsRef {
+        ApikeysKey_Restrictions_IosKeyRestrictionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApikeysKeyRestrictionsElIosKeyRestrictionsElRef {
+impl ApikeysKey_Restrictions_IosKeyRestrictionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -713,14 +792,14 @@ impl ApikeysKeyRestrictionsElIosKeyRestrictionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct ApikeysKeyRestrictionsElServerKeyRestrictionsEl {
+pub struct ApikeysKey_Restrictions_ServerKeyRestrictions {
     allowed_ips: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl ApikeysKeyRestrictionsElServerKeyRestrictionsEl { }
+impl ApikeysKey_Restrictions_ServerKeyRestrictions { }
 
-impl terrars::ToListMappable for ApikeysKeyRestrictionsElServerKeyRestrictionsEl {
-    type O = terrars::BlockAssignable<ApikeysKeyRestrictionsElServerKeyRestrictionsEl>;
+impl terrars::ToListMappable for ApikeysKey_Restrictions_ServerKeyRestrictions {
+    type O = terrars::BlockAssignable<ApikeysKey_Restrictions_ServerKeyRestrictions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -731,35 +810,37 @@ impl terrars::ToListMappable for ApikeysKeyRestrictionsElServerKeyRestrictionsEl
     }
 }
 
-pub struct BuildApikeysKeyRestrictionsElServerKeyRestrictionsEl {
+pub struct BuildApikeysKey_Restrictions_ServerKeyRestrictions {
     #[doc = "A list of the caller IP addresses that are allowed to make API calls with this key."]
     pub allowed_ips: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildApikeysKeyRestrictionsElServerKeyRestrictionsEl {
-    pub fn build(self) -> ApikeysKeyRestrictionsElServerKeyRestrictionsEl {
-        ApikeysKeyRestrictionsElServerKeyRestrictionsEl { allowed_ips: self.allowed_ips }
+impl BuildApikeysKey_Restrictions_ServerKeyRestrictions {
+    pub fn build(self) -> ApikeysKey_Restrictions_ServerKeyRestrictions {
+        ApikeysKey_Restrictions_ServerKeyRestrictions { allowed_ips: self.allowed_ips }
     }
 }
 
-pub struct ApikeysKeyRestrictionsElServerKeyRestrictionsElRef {
+#[allow(dead_code)]
+pub struct ApikeysKey_Restrictions_ServerKeyRestrictionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApikeysKeyRestrictionsElServerKeyRestrictionsElRef {
+impl terrars::Ref for ApikeysKey_Restrictions_ServerKeyRestrictionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ApikeysKeyRestrictionsElServerKeyRestrictionsElRef {
-        ApikeysKeyRestrictionsElServerKeyRestrictionsElRef {
+    ) -> ApikeysKey_Restrictions_ServerKeyRestrictionsRef {
+        ApikeysKey_Restrictions_ServerKeyRestrictionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApikeysKeyRestrictionsElServerKeyRestrictionsElRef {
+impl ApikeysKey_Restrictions_ServerKeyRestrictionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -772,40 +853,40 @@ impl ApikeysKeyRestrictionsElServerKeyRestrictionsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct ApikeysKeyRestrictionsElDynamic {
+struct ApikeysKey_RestrictionsDynamic {
     android_key_restrictions: std
     ::option
-    ::Option<terrars::DynamicBlock<ApikeysKeyRestrictionsElAndroidKeyRestrictionsEl>>,
-    api_targets: std::option::Option<terrars::DynamicBlock<ApikeysKeyRestrictionsElApiTargetsEl>>,
+    ::Option<terrars::DynamicBlock<ApikeysKey_Restrictions_AndroidKeyRestrictions>>,
+    api_targets: std::option::Option<terrars::DynamicBlock<ApikeysKey_Restrictions_ApiTargets>>,
     browser_key_restrictions: std
     ::option
-    ::Option<terrars::DynamicBlock<ApikeysKeyRestrictionsElBrowserKeyRestrictionsEl>>,
-    ios_key_restrictions: std::option::Option<terrars::DynamicBlock<ApikeysKeyRestrictionsElIosKeyRestrictionsEl>>,
+    ::Option<terrars::DynamicBlock<ApikeysKey_Restrictions_BrowserKeyRestrictions>>,
+    ios_key_restrictions: std::option::Option<terrars::DynamicBlock<ApikeysKey_Restrictions_IosKeyRestrictions>>,
     server_key_restrictions: std
     ::option
-    ::Option<terrars::DynamicBlock<ApikeysKeyRestrictionsElServerKeyRestrictionsEl>>,
+    ::Option<terrars::DynamicBlock<ApikeysKey_Restrictions_ServerKeyRestrictions>>,
 }
 
 #[derive(Serialize)]
-pub struct ApikeysKeyRestrictionsEl {
+pub struct ApikeysKey_Restrictions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    android_key_restrictions: std::option::Option<std::vec::Vec<ApikeysKeyRestrictionsElAndroidKeyRestrictionsEl>>,
+    android_key_restrictions: std::option::Option<std::vec::Vec<ApikeysKey_Restrictions_AndroidKeyRestrictions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    api_targets: std::option::Option<std::vec::Vec<ApikeysKeyRestrictionsElApiTargetsEl>>,
+    api_targets: std::option::Option<std::vec::Vec<ApikeysKey_Restrictions_ApiTargets>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    browser_key_restrictions: std::option::Option<std::vec::Vec<ApikeysKeyRestrictionsElBrowserKeyRestrictionsEl>>,
+    browser_key_restrictions: std::option::Option<std::vec::Vec<ApikeysKey_Restrictions_BrowserKeyRestrictions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ios_key_restrictions: std::option::Option<std::vec::Vec<ApikeysKeyRestrictionsElIosKeyRestrictionsEl>>,
+    ios_key_restrictions: std::option::Option<std::vec::Vec<ApikeysKey_Restrictions_IosKeyRestrictions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    server_key_restrictions: std::option::Option<std::vec::Vec<ApikeysKeyRestrictionsElServerKeyRestrictionsEl>>,
-    dynamic: ApikeysKeyRestrictionsElDynamic,
+    server_key_restrictions: std::option::Option<std::vec::Vec<ApikeysKey_Restrictions_ServerKeyRestrictions>>,
+    dynamic: ApikeysKey_RestrictionsDynamic,
 }
 
-impl ApikeysKeyRestrictionsEl {
+impl ApikeysKey_Restrictions {
     #[doc = "Set the field `android_key_restrictions`.\n"]
     pub fn set_android_key_restrictions(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ApikeysKeyRestrictionsElAndroidKeyRestrictionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApikeysKey_Restrictions_AndroidKeyRestrictions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -821,7 +902,7 @@ impl ApikeysKeyRestrictionsEl {
     #[doc = "Set the field `api_targets`.\n"]
     pub fn set_api_targets(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ApikeysKeyRestrictionsElApiTargetsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApikeysKey_Restrictions_ApiTargets>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -837,7 +918,7 @@ impl ApikeysKeyRestrictionsEl {
     #[doc = "Set the field `browser_key_restrictions`.\n"]
     pub fn set_browser_key_restrictions(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ApikeysKeyRestrictionsElBrowserKeyRestrictionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApikeysKey_Restrictions_BrowserKeyRestrictions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -853,7 +934,7 @@ impl ApikeysKeyRestrictionsEl {
     #[doc = "Set the field `ios_key_restrictions`.\n"]
     pub fn set_ios_key_restrictions(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ApikeysKeyRestrictionsElIosKeyRestrictionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApikeysKey_Restrictions_IosKeyRestrictions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -869,7 +950,7 @@ impl ApikeysKeyRestrictionsEl {
     #[doc = "Set the field `server_key_restrictions`.\n"]
     pub fn set_server_key_restrictions(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ApikeysKeyRestrictionsElServerKeyRestrictionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApikeysKey_Restrictions_ServerKeyRestrictions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -883,8 +964,8 @@ impl ApikeysKeyRestrictionsEl {
     }
 }
 
-impl terrars::ToListMappable for ApikeysKeyRestrictionsEl {
-    type O = terrars::BlockAssignable<ApikeysKeyRestrictionsEl>;
+impl terrars::ToListMappable for ApikeysKey_Restrictions {
+    type O = terrars::BlockAssignable<ApikeysKey_Restrictions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -895,11 +976,11 @@ impl terrars::ToListMappable for ApikeysKeyRestrictionsEl {
     }
 }
 
-pub struct BuildApikeysKeyRestrictionsEl {}
+pub struct BuildApikeysKey_Restrictions {}
 
-impl BuildApikeysKeyRestrictionsEl {
-    pub fn build(self) -> ApikeysKeyRestrictionsEl {
-        ApikeysKeyRestrictionsEl {
+impl BuildApikeysKey_Restrictions {
+    pub fn build(self) -> ApikeysKey_Restrictions {
+        ApikeysKey_Restrictions {
             android_key_restrictions: core::default::Default::default(),
             api_targets: core::default::Default::default(),
             browser_key_restrictions: core::default::Default::default(),
@@ -910,53 +991,55 @@ impl BuildApikeysKeyRestrictionsEl {
     }
 }
 
-pub struct ApikeysKeyRestrictionsElRef {
+#[allow(dead_code)]
+pub struct ApikeysKey_RestrictionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApikeysKeyRestrictionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ApikeysKeyRestrictionsElRef {
-        ApikeysKeyRestrictionsElRef {
+impl terrars::Ref for ApikeysKey_RestrictionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApikeysKey_RestrictionsRef {
+        ApikeysKey_RestrictionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApikeysKeyRestrictionsElRef {
+impl ApikeysKey_RestrictionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `android_key_restrictions` after provisioning.\n"]
-    pub fn android_key_restrictions(&self) -> terrars::ListRef<ApikeysKeyRestrictionsElAndroidKeyRestrictionsElRef> {
+    pub fn android_key_restrictions(&self) -> terrars::ListRef<ApikeysKey_Restrictions_AndroidKeyRestrictionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.android_key_restrictions", self.base))
     }
 
     #[doc = "Get a reference to the value of field `api_targets` after provisioning.\n"]
-    pub fn api_targets(&self) -> terrars::ListRef<ApikeysKeyRestrictionsElApiTargetsElRef> {
+    pub fn api_targets(&self) -> terrars::ListRef<ApikeysKey_Restrictions_ApiTargetsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.api_targets", self.base))
     }
 
     #[doc = "Get a reference to the value of field `browser_key_restrictions` after provisioning.\n"]
-    pub fn browser_key_restrictions(&self) -> terrars::ListRef<ApikeysKeyRestrictionsElBrowserKeyRestrictionsElRef> {
+    pub fn browser_key_restrictions(&self) -> terrars::ListRef<ApikeysKey_Restrictions_BrowserKeyRestrictionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.browser_key_restrictions", self.base))
     }
 
     #[doc = "Get a reference to the value of field `ios_key_restrictions` after provisioning.\n"]
-    pub fn ios_key_restrictions(&self) -> terrars::ListRef<ApikeysKeyRestrictionsElIosKeyRestrictionsElRef> {
+    pub fn ios_key_restrictions(&self) -> terrars::ListRef<ApikeysKey_Restrictions_IosKeyRestrictionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ios_key_restrictions", self.base))
     }
 
     #[doc = "Get a reference to the value of field `server_key_restrictions` after provisioning.\n"]
-    pub fn server_key_restrictions(&self) -> terrars::ListRef<ApikeysKeyRestrictionsElServerKeyRestrictionsElRef> {
+    pub fn server_key_restrictions(&self) -> terrars::ListRef<ApikeysKey_Restrictions_ServerKeyRestrictionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.server_key_restrictions", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ApikeysKeyTimeoutsEl {
+pub struct ApikeysKey_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -965,7 +1048,7 @@ pub struct ApikeysKeyTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ApikeysKeyTimeoutsEl {
+impl ApikeysKey_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -985,8 +1068,8 @@ impl ApikeysKeyTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ApikeysKeyTimeoutsEl {
-    type O = terrars::BlockAssignable<ApikeysKeyTimeoutsEl>;
+impl terrars::ToListMappable for ApikeysKey_Timeouts {
+    type O = terrars::BlockAssignable<ApikeysKey_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -997,11 +1080,11 @@ impl terrars::ToListMappable for ApikeysKeyTimeoutsEl {
     }
 }
 
-pub struct BuildApikeysKeyTimeoutsEl {}
+pub struct BuildApikeysKey_Timeouts {}
 
-impl BuildApikeysKeyTimeoutsEl {
-    pub fn build(self) -> ApikeysKeyTimeoutsEl {
-        ApikeysKeyTimeoutsEl {
+impl BuildApikeysKey_Timeouts {
+    pub fn build(self) -> ApikeysKey_Timeouts {
+        ApikeysKey_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1009,21 +1092,23 @@ impl BuildApikeysKeyTimeoutsEl {
     }
 }
 
-pub struct ApikeysKeyTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ApikeysKey_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApikeysKeyTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ApikeysKeyTimeoutsElRef {
-        ApikeysKeyTimeoutsElRef {
+impl terrars::Ref for ApikeysKey_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApikeysKey_TimeoutsRef {
+        ApikeysKey_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApikeysKeyTimeoutsElRef {
+impl ApikeysKey_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1042,9 +1127,4 @@ impl ApikeysKeyTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ApikeysKeyDynamic {
-    restrictions: std::option::Option<terrars::DynamicBlock<ApikeysKeyRestrictionsEl>>,
 }

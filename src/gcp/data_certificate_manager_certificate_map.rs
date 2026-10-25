@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataCertificateManagerCertificateMapData {
+struct DataCertificateManagerCertificateMapData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -26,7 +28,7 @@ struct DataCertificateManagerCertificateMapData {
 struct DataCertificateManagerCertificateMap_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataCertificateManagerCertificateMapData>,
+    data: std::cell::RefCell<DataCertificateManagerCertificateMapData_>,
 }
 
 #[derive(Clone)]
@@ -90,6 +92,12 @@ impl DataCertificateManagerCertificateMap {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nA human-readable description of the resource."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -103,7 +111,7 @@ impl DataCertificateManagerCertificateMap {
 
     #[doc =
         "Get a reference to the value of field `gclb_targets` after provisioning.\nA list of target proxies that use this Certificate Map"]
-    pub fn gclb_targets(&self) -> terrars::ListRef<DataCertificateManagerCertificateMapGclbTargetsElRef> {
+    pub fn gclb_targets(&self) -> terrars::ListRef<DataCertificateManagerCertificateMap_GclbTargetsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.gclb_targets", self.extract_ref()))
     }
 
@@ -185,7 +193,7 @@ impl BuildDataCertificateManagerCertificateMap {
         let out = DataCertificateManagerCertificateMap(std::rc::Rc::new(DataCertificateManagerCertificateMap_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataCertificateManagerCertificateMapData {
+            data: std::cell::RefCell::new(DataCertificateManagerCertificateMapData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -230,6 +238,12 @@ impl DataCertificateManagerCertificateMapRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nA human-readable description of the resource."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -243,7 +257,7 @@ impl DataCertificateManagerCertificateMapRef {
 
     #[doc =
         "Get a reference to the value of field `gclb_targets` after provisioning.\nA list of target proxies that use this Certificate Map"]
-    pub fn gclb_targets(&self) -> terrars::ListRef<DataCertificateManagerCertificateMapGclbTargetsElRef> {
+    pub fn gclb_targets(&self) -> terrars::ListRef<DataCertificateManagerCertificateMap_GclbTargetsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.gclb_targets", self.extract_ref()))
     }
 
@@ -283,14 +297,14 @@ impl DataCertificateManagerCertificateMapRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCertificateManagerCertificateMapGclbTargetsElIpConfigsEl {
+pub struct DataCertificateManagerCertificateMap_GclbTargets_IpConfigs {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ip_address: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ports: std::option::Option<terrars::ListField<terrars::PrimField<f64>>>,
 }
 
-impl DataCertificateManagerCertificateMapGclbTargetsElIpConfigsEl {
+impl DataCertificateManagerCertificateMap_GclbTargets_IpConfigs {
     #[doc = "Set the field `ip_address`.\n"]
     pub fn set_ip_address(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.ip_address = std::option::Option::Some(v.into());
@@ -304,8 +318,8 @@ impl DataCertificateManagerCertificateMapGclbTargetsElIpConfigsEl {
     }
 }
 
-impl terrars::ToListMappable for DataCertificateManagerCertificateMapGclbTargetsElIpConfigsEl {
-    type O = terrars::BlockAssignable<DataCertificateManagerCertificateMapGclbTargetsElIpConfigsEl>;
+impl terrars::ToListMappable for DataCertificateManagerCertificateMap_GclbTargets_IpConfigs {
+    type O = terrars::BlockAssignable<DataCertificateManagerCertificateMap_GclbTargets_IpConfigs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -316,35 +330,37 @@ impl terrars::ToListMappable for DataCertificateManagerCertificateMapGclbTargets
     }
 }
 
-pub struct BuildDataCertificateManagerCertificateMapGclbTargetsElIpConfigsEl {}
+pub struct BuildDataCertificateManagerCertificateMap_GclbTargets_IpConfigs {}
 
-impl BuildDataCertificateManagerCertificateMapGclbTargetsElIpConfigsEl {
-    pub fn build(self) -> DataCertificateManagerCertificateMapGclbTargetsElIpConfigsEl {
-        DataCertificateManagerCertificateMapGclbTargetsElIpConfigsEl {
+impl BuildDataCertificateManagerCertificateMap_GclbTargets_IpConfigs {
+    pub fn build(self) -> DataCertificateManagerCertificateMap_GclbTargets_IpConfigs {
+        DataCertificateManagerCertificateMap_GclbTargets_IpConfigs {
             ip_address: core::default::Default::default(),
             ports: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataCertificateManagerCertificateMapGclbTargetsElIpConfigsElRef {
+#[allow(dead_code)]
+pub struct DataCertificateManagerCertificateMap_GclbTargets_IpConfigsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCertificateManagerCertificateMapGclbTargetsElIpConfigsElRef {
+impl terrars::Ref for DataCertificateManagerCertificateMap_GclbTargets_IpConfigsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCertificateManagerCertificateMapGclbTargetsElIpConfigsElRef {
-        DataCertificateManagerCertificateMapGclbTargetsElIpConfigsElRef {
+    ) -> DataCertificateManagerCertificateMap_GclbTargets_IpConfigsRef {
+        DataCertificateManagerCertificateMap_GclbTargets_IpConfigsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCertificateManagerCertificateMapGclbTargetsElIpConfigsElRef {
+impl DataCertificateManagerCertificateMap_GclbTargets_IpConfigsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -361,20 +377,20 @@ impl DataCertificateManagerCertificateMapGclbTargetsElIpConfigsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCertificateManagerCertificateMapGclbTargetsEl {
+pub struct DataCertificateManagerCertificateMap_GclbTargets {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ip_configs: std::option::Option<terrars::ListField<DataCertificateManagerCertificateMapGclbTargetsElIpConfigsEl>>,
+    ip_configs: std::option::Option<terrars::ListField<DataCertificateManagerCertificateMap_GclbTargets_IpConfigs>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     target_https_proxy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     target_ssl_proxy: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCertificateManagerCertificateMapGclbTargetsEl {
+impl DataCertificateManagerCertificateMap_GclbTargets {
     #[doc = "Set the field `ip_configs`.\n"]
     pub fn set_ip_configs(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataCertificateManagerCertificateMapGclbTargetsElIpConfigsEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataCertificateManagerCertificateMap_GclbTargets_IpConfigs>>,
     ) -> Self {
         self.ip_configs = std::option::Option::Some(v.into());
         self
@@ -396,8 +412,8 @@ impl DataCertificateManagerCertificateMapGclbTargetsEl {
     }
 }
 
-impl terrars::ToListMappable for DataCertificateManagerCertificateMapGclbTargetsEl {
-    type O = terrars::BlockAssignable<DataCertificateManagerCertificateMapGclbTargetsEl>;
+impl terrars::ToListMappable for DataCertificateManagerCertificateMap_GclbTargets {
+    type O = terrars::BlockAssignable<DataCertificateManagerCertificateMap_GclbTargets>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -408,11 +424,11 @@ impl terrars::ToListMappable for DataCertificateManagerCertificateMapGclbTargets
     }
 }
 
-pub struct BuildDataCertificateManagerCertificateMapGclbTargetsEl {}
+pub struct BuildDataCertificateManagerCertificateMap_GclbTargets {}
 
-impl BuildDataCertificateManagerCertificateMapGclbTargetsEl {
-    pub fn build(self) -> DataCertificateManagerCertificateMapGclbTargetsEl {
-        DataCertificateManagerCertificateMapGclbTargetsEl {
+impl BuildDataCertificateManagerCertificateMap_GclbTargets {
+    pub fn build(self) -> DataCertificateManagerCertificateMap_GclbTargets {
+        DataCertificateManagerCertificateMap_GclbTargets {
             ip_configs: core::default::Default::default(),
             target_https_proxy: core::default::Default::default(),
             target_ssl_proxy: core::default::Default::default(),
@@ -420,30 +436,32 @@ impl BuildDataCertificateManagerCertificateMapGclbTargetsEl {
     }
 }
 
-pub struct DataCertificateManagerCertificateMapGclbTargetsElRef {
+#[allow(dead_code)]
+pub struct DataCertificateManagerCertificateMap_GclbTargetsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCertificateManagerCertificateMapGclbTargetsElRef {
+impl terrars::Ref for DataCertificateManagerCertificateMap_GclbTargetsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCertificateManagerCertificateMapGclbTargetsElRef {
-        DataCertificateManagerCertificateMapGclbTargetsElRef {
+    ) -> DataCertificateManagerCertificateMap_GclbTargetsRef {
+        DataCertificateManagerCertificateMap_GclbTargetsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCertificateManagerCertificateMapGclbTargetsElRef {
+impl DataCertificateManagerCertificateMap_GclbTargetsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `ip_configs` after provisioning.\n"]
-    pub fn ip_configs(&self) -> terrars::ListRef<DataCertificateManagerCertificateMapGclbTargetsElIpConfigsElRef> {
+    pub fn ip_configs(&self) -> terrars::ListRef<DataCertificateManagerCertificateMap_GclbTargets_IpConfigsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ip_configs", self.base))
     }
 

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DnsPolicyData {
+struct DnsPolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct DnsPolicyData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -30,18 +34,20 @@ struct DnsPolicyData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    alternative_name_server_config: std::option::Option<std::vec::Vec<DnsPolicyAlternativeNameServerConfigEl>>,
+    alternative_name_server_config: std::option::Option<std::vec::Vec<DnsPolicy_AlternativeNameServerConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    networks: std::option::Option<std::vec::Vec<DnsPolicyNetworksEl>>,
+    dns64_config: std::option::Option<std::vec::Vec<DnsPolicy_Dns64Config>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DnsPolicyTimeoutsEl>,
+    networks: std::option::Option<std::vec::Vec<DnsPolicy_Networks>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<DnsPolicy_Timeouts>,
     dynamic: DnsPolicyDynamic,
 }
 
 struct DnsPolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DnsPolicyData>,
+    data: std::cell::RefCell<DnsPolicyData_>,
 }
 
 #[derive(Clone)]
@@ -141,6 +147,13 @@ impl DnsPolicy {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nA textual description field. Defaults to 'Managed by Terraform'."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -176,7 +189,7 @@ impl DnsPolicy {
     #[doc = "Set the field `alternative_name_server_config`.\n"]
     pub fn set_alternative_name_server_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DnsPolicyAlternativeNameServerConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DnsPolicy_AlternativeNameServerConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -189,8 +202,21 @@ impl DnsPolicy {
         self
     }
 
+    #[doc = "Set the field `dns64_config`.\n"]
+    pub fn set_dns64_config(self, v: impl std::convert::Into<terrars::BlockAssignable<DnsPolicy_Dns64Config>>) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().dns64_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.dns64_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `networks`.\n"]
-    pub fn set_networks(self, v: impl std::convert::Into<terrars::BlockAssignable<DnsPolicyNetworksEl>>) -> Self {
+    pub fn set_networks(self, v: impl std::convert::Into<terrars::BlockAssignable<DnsPolicy_Networks>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().networks = std::option::Option::Some(v);
@@ -203,9 +229,15 @@ impl DnsPolicy {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DnsPolicyTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DnsPolicy_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -242,16 +274,21 @@ impl DnsPolicy {
     }
 
     #[doc = "Get a reference to the value of field `alternative_name_server_config` after provisioning.\n"]
-    pub fn alternative_name_server_config(&self) -> terrars::ListRef<DnsPolicyAlternativeNameServerConfigElRef> {
+    pub fn alternative_name_server_config(&self) -> terrars::ListRef<DnsPolicy_AlternativeNameServerConfigRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.alternative_name_server_config", self.extract_ref()),
         )
     }
 
+    #[doc = "Get a reference to the value of field `dns64_config` after provisioning.\n"]
+    pub fn dns64_config(&self) -> terrars::ListRef<DnsPolicy_Dns64ConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.dns64_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DnsPolicyTimeoutsElRef {
-        DnsPolicyTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DnsPolicy_TimeoutsRef {
+        DnsPolicy_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -297,12 +334,13 @@ impl BuildDnsPolicy {
         let out = DnsPolicy(std::rc::Rc::new(DnsPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DnsPolicyData {
+            data: std::cell::RefCell::new(DnsPolicyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 enable_inbound_forwarding: core::default::Default::default(),
                 enable_logging: core::default::Default::default(),
@@ -310,6 +348,7 @@ impl BuildDnsPolicy {
                 name: self.name,
                 project: core::default::Default::default(),
                 alternative_name_server_config: core::default::Default::default(),
+                dns64_config: core::default::Default::default(),
                 networks: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -341,6 +380,12 @@ impl DnsPolicyRef {
 
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -377,37 +422,40 @@ impl DnsPolicyRef {
     }
 
     #[doc = "Get a reference to the value of field `alternative_name_server_config` after provisioning.\n"]
-    pub fn alternative_name_server_config(&self) -> terrars::ListRef<DnsPolicyAlternativeNameServerConfigElRef> {
+    pub fn alternative_name_server_config(&self) -> terrars::ListRef<DnsPolicy_AlternativeNameServerConfigRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.alternative_name_server_config", self.extract_ref()),
         )
     }
 
-    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DnsPolicyTimeoutsElRef {
-        DnsPolicyTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `dns64_config` after provisioning.\n"]
+    pub fn dns64_config(&self) -> terrars::ListRef<DnsPolicy_Dns64ConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.dns64_config", self.extract_ref()))
     }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> DnsPolicy_TimeoutsRef {
+        DnsPolicy_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct DnsPolicyDynamic {
+    alternative_name_server_config: std::option::Option<terrars::DynamicBlock<DnsPolicy_AlternativeNameServerConfig>>,
+    dns64_config: std::option::Option<terrars::DynamicBlock<DnsPolicy_Dns64Config>>,
+    networks: std::option::Option<terrars::DynamicBlock<DnsPolicy_Networks>>,
 }
 
 #[derive(Serialize)]
-pub struct DnsPolicyAlternativeNameServerConfigElTargetNameServersEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    forwarding_path: std::option::Option<terrars::PrimField<std::string::String>>,
-    ipv4_address: terrars::PrimField<std::string::String>,
+pub struct DnsPolicy_AlternativeNameServerConfig_OutboundEndpoints {
+    name: terrars::PrimField<std::string::String>,
 }
 
-impl DnsPolicyAlternativeNameServerConfigElTargetNameServersEl {
-    #[doc =
-        "Set the field `forwarding_path`.\nForwarding path for this TargetNameServer. If unset or 'default' Cloud DNS will make forwarding\ndecision based on address ranges, i.e. RFC1918 addresses go to the VPC, Non-RFC1918 addresses go\nto the Internet. When set to 'private', Cloud DNS will always send queries through VPC for this target Possible values: [\"default\", \"private\"]"]
-    pub fn set_forwarding_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.forwarding_path = std::option::Option::Some(v.into());
-        self
-    }
-}
+impl DnsPolicy_AlternativeNameServerConfig_OutboundEndpoints { }
 
-impl terrars::ToListMappable for DnsPolicyAlternativeNameServerConfigElTargetNameServersEl {
-    type O = terrars::BlockAssignable<DnsPolicyAlternativeNameServerConfigElTargetNameServersEl>;
+impl terrars::ToListMappable for DnsPolicy_AlternativeNameServerConfig_OutboundEndpoints {
+    type O = terrars::BlockAssignable<DnsPolicy_AlternativeNameServerConfig_OutboundEndpoints>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -418,38 +466,111 @@ impl terrars::ToListMappable for DnsPolicyAlternativeNameServerConfigElTargetNam
     }
 }
 
-pub struct BuildDnsPolicyAlternativeNameServerConfigElTargetNameServersEl {
-    #[doc = "IPv4 address to forward to."]
-    pub ipv4_address: terrars::PrimField<std::string::String>,
+pub struct BuildDnsPolicy_AlternativeNameServerConfig_OutboundEndpoints {
+    #[doc =
+        "Specified as a resource path including project and region.\nThis should be formatted like\n'projects/{project}/locations/{location}/outboundEndpoints/{endpoint}'"]
+    pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDnsPolicyAlternativeNameServerConfigElTargetNameServersEl {
-    pub fn build(self) -> DnsPolicyAlternativeNameServerConfigElTargetNameServersEl {
-        DnsPolicyAlternativeNameServerConfigElTargetNameServersEl {
-            forwarding_path: core::default::Default::default(),
-            ipv4_address: self.ipv4_address,
-        }
+impl BuildDnsPolicy_AlternativeNameServerConfig_OutboundEndpoints {
+    pub fn build(self) -> DnsPolicy_AlternativeNameServerConfig_OutboundEndpoints {
+        DnsPolicy_AlternativeNameServerConfig_OutboundEndpoints { name: self.name }
     }
 }
 
-pub struct DnsPolicyAlternativeNameServerConfigElTargetNameServersElRef {
+#[allow(dead_code)]
+pub struct DnsPolicy_AlternativeNameServerConfig_OutboundEndpointsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DnsPolicyAlternativeNameServerConfigElTargetNameServersElRef {
+impl terrars::Ref for DnsPolicy_AlternativeNameServerConfig_OutboundEndpointsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DnsPolicyAlternativeNameServerConfigElTargetNameServersElRef {
-        DnsPolicyAlternativeNameServerConfigElTargetNameServersElRef {
+    ) -> DnsPolicy_AlternativeNameServerConfig_OutboundEndpointsRef {
+        DnsPolicy_AlternativeNameServerConfig_OutboundEndpointsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DnsPolicyAlternativeNameServerConfigElTargetNameServersElRef {
+impl DnsPolicy_AlternativeNameServerConfig_OutboundEndpointsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `name` after provisioning.\nSpecified as a resource path including project and region.\nThis should be formatted like\n'projects/{project}/locations/{location}/outboundEndpoints/{endpoint}'"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DnsPolicy_AlternativeNameServerConfig_TargetNameServers {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    forwarding_path: std::option::Option<terrars::PrimField<std::string::String>>,
+    ipv4_address: terrars::PrimField<std::string::String>,
+}
+
+impl DnsPolicy_AlternativeNameServerConfig_TargetNameServers {
+    #[doc =
+        "Set the field `forwarding_path`.\nForwarding path for this TargetNameServer. If unset or 'default' Cloud DNS will make forwarding\ndecision based on address ranges, i.e. RFC1918 addresses go to the VPC, Non-RFC1918 addresses go\nto the Internet. When set to 'private', Cloud DNS will always send queries through VPC for this target Possible values: [\"default\", \"private\"]"]
+    pub fn set_forwarding_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.forwarding_path = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DnsPolicy_AlternativeNameServerConfig_TargetNameServers {
+    type O = terrars::BlockAssignable<DnsPolicy_AlternativeNameServerConfig_TargetNameServers>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDnsPolicy_AlternativeNameServerConfig_TargetNameServers {
+    #[doc = "IPv4 address to forward to."]
+    pub ipv4_address: terrars::PrimField<std::string::String>,
+}
+
+impl BuildDnsPolicy_AlternativeNameServerConfig_TargetNameServers {
+    pub fn build(self) -> DnsPolicy_AlternativeNameServerConfig_TargetNameServers {
+        DnsPolicy_AlternativeNameServerConfig_TargetNameServers {
+            forwarding_path: core::default::Default::default(),
+            ipv4_address: self.ipv4_address,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DnsPolicy_AlternativeNameServerConfig_TargetNameServersRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DnsPolicy_AlternativeNameServerConfig_TargetNameServersRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DnsPolicy_AlternativeNameServerConfig_TargetNameServersRef {
+        DnsPolicy_AlternativeNameServerConfig_TargetNameServersRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DnsPolicy_AlternativeNameServerConfig_TargetNameServersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -467,20 +588,46 @@ impl DnsPolicyAlternativeNameServerConfigElTargetNameServersElRef {
 }
 
 #[derive(Serialize, Default)]
-struct DnsPolicyAlternativeNameServerConfigElDynamic {
+struct DnsPolicy_AlternativeNameServerConfigDynamic {
+    outbound_endpoints: std
+    ::option
+    ::Option<terrars::DynamicBlock<DnsPolicy_AlternativeNameServerConfig_OutboundEndpoints>>,
     target_name_servers: std
     ::option
-    ::Option<terrars::DynamicBlock<DnsPolicyAlternativeNameServerConfigElTargetNameServersEl>>,
+    ::Option<terrars::DynamicBlock<DnsPolicy_AlternativeNameServerConfig_TargetNameServers>>,
 }
 
 #[derive(Serialize)]
-pub struct DnsPolicyAlternativeNameServerConfigEl {
+pub struct DnsPolicy_AlternativeNameServerConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    target_name_servers: std::option::Option<std::vec::Vec<DnsPolicyAlternativeNameServerConfigElTargetNameServersEl>>,
-    dynamic: DnsPolicyAlternativeNameServerConfigElDynamic,
+    outbound_endpoints: std::option::Option<std::vec::Vec<DnsPolicy_AlternativeNameServerConfig_OutboundEndpoints>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    target_name_servers: std::option::Option<std::vec::Vec<DnsPolicy_AlternativeNameServerConfig_TargetNameServers>>,
+    dynamic: DnsPolicy_AlternativeNameServerConfigDynamic,
 }
 
-impl DnsPolicyAlternativeNameServerConfigEl {
+impl DnsPolicy_AlternativeNameServerConfig {
+    #[doc = "Set the field `outbound_endpoints`.\n"]
+    pub fn set_outbound_endpoints(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<DnsPolicy_AlternativeNameServerConfig_OutboundEndpoints>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.outbound_endpoints = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.outbound_endpoints = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `target_name_servers`.\n"]
     pub fn set_target_name_servers(
         mut self,
@@ -489,7 +636,7 @@ impl DnsPolicyAlternativeNameServerConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<DnsPolicyAlternativeNameServerConfigElTargetNameServersEl>>,
+                    ::Into<terrars::BlockAssignable<DnsPolicy_AlternativeNameServerConfig_TargetNameServers>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -503,8 +650,8 @@ impl DnsPolicyAlternativeNameServerConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DnsPolicyAlternativeNameServerConfigEl {
-    type O = terrars::BlockAssignable<DnsPolicyAlternativeNameServerConfigEl>;
+impl terrars::ToListMappable for DnsPolicy_AlternativeNameServerConfig {
+    type O = terrars::BlockAssignable<DnsPolicy_AlternativeNameServerConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -515,46 +662,61 @@ impl terrars::ToListMappable for DnsPolicyAlternativeNameServerConfigEl {
     }
 }
 
-pub struct BuildDnsPolicyAlternativeNameServerConfigEl {}
+pub struct BuildDnsPolicy_AlternativeNameServerConfig {}
 
-impl BuildDnsPolicyAlternativeNameServerConfigEl {
-    pub fn build(self) -> DnsPolicyAlternativeNameServerConfigEl {
-        DnsPolicyAlternativeNameServerConfigEl {
+impl BuildDnsPolicy_AlternativeNameServerConfig {
+    pub fn build(self) -> DnsPolicy_AlternativeNameServerConfig {
+        DnsPolicy_AlternativeNameServerConfig {
+            outbound_endpoints: core::default::Default::default(),
             target_name_servers: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct DnsPolicyAlternativeNameServerConfigElRef {
+#[allow(dead_code)]
+pub struct DnsPolicy_AlternativeNameServerConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DnsPolicyAlternativeNameServerConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DnsPolicyAlternativeNameServerConfigElRef {
-        DnsPolicyAlternativeNameServerConfigElRef {
+impl terrars::Ref for DnsPolicy_AlternativeNameServerConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DnsPolicy_AlternativeNameServerConfigRef {
+        DnsPolicy_AlternativeNameServerConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DnsPolicyAlternativeNameServerConfigElRef {
+impl DnsPolicy_AlternativeNameServerConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `outbound_endpoints` after provisioning.\n"]
+    pub fn outbound_endpoints(&self) -> terrars::ListRef<DnsPolicy_AlternativeNameServerConfig_OutboundEndpointsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.outbound_endpoints", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DnsPolicyNetworksEl {
-    network_url: terrars::PrimField<std::string::String>,
+pub struct DnsPolicy_Dns64Config_Scope {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    all_queries: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DnsPolicyNetworksEl { }
+impl DnsPolicy_Dns64Config_Scope {
+    #[doc = "Set the field `all_queries`.\nControls whether DNS64 is enabled globally at the network level."]
+    pub fn set_all_queries(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.all_queries = std::option::Option::Some(v.into());
+        self
+    }
+}
 
-impl terrars::ToListMappable for DnsPolicyNetworksEl {
-    type O = terrars::BlockAssignable<DnsPolicyNetworksEl>;
+impl terrars::ToListMappable for DnsPolicy_Dns64Config_Scope {
+    type O = terrars::BlockAssignable<DnsPolicy_Dns64Config_Scope>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -565,33 +727,170 @@ impl terrars::ToListMappable for DnsPolicyNetworksEl {
     }
 }
 
-pub struct BuildDnsPolicyNetworksEl {
-    #[doc =
-        "The id or fully qualified URL of the VPC network to forward queries to.\nThis should be formatted like 'projects/{project}/global/networks/{network}' or\n'https://www.googleapis.com/compute/v1/projects/{project}/global/networks/{network}'"]
-    pub network_url: terrars::PrimField<std::string::String>,
-}
+pub struct BuildDnsPolicy_Dns64Config_Scope {}
 
-impl BuildDnsPolicyNetworksEl {
-    pub fn build(self) -> DnsPolicyNetworksEl {
-        DnsPolicyNetworksEl { network_url: self.network_url }
+impl BuildDnsPolicy_Dns64Config_Scope {
+    pub fn build(self) -> DnsPolicy_Dns64Config_Scope {
+        DnsPolicy_Dns64Config_Scope { all_queries: core::default::Default::default() }
     }
 }
 
-pub struct DnsPolicyNetworksElRef {
+#[allow(dead_code)]
+pub struct DnsPolicy_Dns64Config_ScopeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DnsPolicyNetworksElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DnsPolicyNetworksElRef {
-        DnsPolicyNetworksElRef {
+impl terrars::Ref for DnsPolicy_Dns64Config_ScopeRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DnsPolicy_Dns64Config_ScopeRef {
+        DnsPolicy_Dns64Config_ScopeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DnsPolicyNetworksElRef {
+impl DnsPolicy_Dns64Config_ScopeRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `all_queries` after provisioning.\nControls whether DNS64 is enabled globally at the network level."]
+    pub fn all_queries(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.all_queries", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct DnsPolicy_Dns64ConfigDynamic {
+    scope: std::option::Option<terrars::DynamicBlock<DnsPolicy_Dns64Config_Scope>>,
+}
+
+#[derive(Serialize)]
+pub struct DnsPolicy_Dns64Config {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    scope: std::option::Option<std::vec::Vec<DnsPolicy_Dns64Config_Scope>>,
+    dynamic: DnsPolicy_Dns64ConfigDynamic,
+}
+
+impl DnsPolicy_Dns64Config {
+    #[doc = "Set the field `scope`.\n"]
+    pub fn set_scope(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<DnsPolicy_Dns64Config_Scope>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.scope = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.scope = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for DnsPolicy_Dns64Config {
+    type O = terrars::BlockAssignable<DnsPolicy_Dns64Config>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDnsPolicy_Dns64Config {}
+
+impl BuildDnsPolicy_Dns64Config {
+    pub fn build(self) -> DnsPolicy_Dns64Config {
+        DnsPolicy_Dns64Config {
+            scope: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DnsPolicy_Dns64ConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DnsPolicy_Dns64ConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DnsPolicy_Dns64ConfigRef {
+        DnsPolicy_Dns64ConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DnsPolicy_Dns64ConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `scope` after provisioning.\n"]
+    pub fn scope(&self) -> terrars::ListRef<DnsPolicy_Dns64Config_ScopeRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.scope", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DnsPolicy_Networks {
+    network_url: terrars::PrimField<std::string::String>,
+}
+
+impl DnsPolicy_Networks { }
+
+impl terrars::ToListMappable for DnsPolicy_Networks {
+    type O = terrars::BlockAssignable<DnsPolicy_Networks>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDnsPolicy_Networks {
+    #[doc =
+        "The id or fully qualified URL of the VPC network to forward queries to.\nThis should be formatted like 'projects/{project}/global/networks/{network}' or\n'https://www.googleapis.com/compute/v1/projects/{project}/global/networks/{network}'"]
+    pub network_url: terrars::PrimField<std::string::String>,
+}
+
+impl BuildDnsPolicy_Networks {
+    pub fn build(self) -> DnsPolicy_Networks {
+        DnsPolicy_Networks { network_url: self.network_url }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DnsPolicy_NetworksRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DnsPolicy_NetworksRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DnsPolicy_NetworksRef {
+        DnsPolicy_NetworksRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DnsPolicy_NetworksRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -604,7 +903,7 @@ impl DnsPolicyNetworksElRef {
 }
 
 #[derive(Serialize)]
-pub struct DnsPolicyTimeoutsEl {
+pub struct DnsPolicy_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -613,7 +912,7 @@ pub struct DnsPolicyTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DnsPolicyTimeoutsEl {
+impl DnsPolicy_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -633,8 +932,8 @@ impl DnsPolicyTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DnsPolicyTimeoutsEl {
-    type O = terrars::BlockAssignable<DnsPolicyTimeoutsEl>;
+impl terrars::ToListMappable for DnsPolicy_Timeouts {
+    type O = terrars::BlockAssignable<DnsPolicy_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -645,11 +944,11 @@ impl terrars::ToListMappable for DnsPolicyTimeoutsEl {
     }
 }
 
-pub struct BuildDnsPolicyTimeoutsEl {}
+pub struct BuildDnsPolicy_Timeouts {}
 
-impl BuildDnsPolicyTimeoutsEl {
-    pub fn build(self) -> DnsPolicyTimeoutsEl {
-        DnsPolicyTimeoutsEl {
+impl BuildDnsPolicy_Timeouts {
+    pub fn build(self) -> DnsPolicy_Timeouts {
+        DnsPolicy_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -657,21 +956,23 @@ impl BuildDnsPolicyTimeoutsEl {
     }
 }
 
-pub struct DnsPolicyTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DnsPolicy_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DnsPolicyTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DnsPolicyTimeoutsElRef {
-        DnsPolicyTimeoutsElRef {
+impl terrars::Ref for DnsPolicy_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DnsPolicy_TimeoutsRef {
+        DnsPolicy_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DnsPolicyTimeoutsElRef {
+impl DnsPolicy_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -690,12 +991,4 @@ impl DnsPolicyTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DnsPolicyDynamic {
-    alternative_name_server_config: std
-    ::option
-    ::Option<terrars::DynamicBlock<DnsPolicyAlternativeNameServerConfigEl>>,
-    networks: std::option::Option<terrars::DynamicBlock<DnsPolicyNetworksEl>>,
 }

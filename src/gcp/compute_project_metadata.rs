@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeProjectMetadataData {
+struct ComputeProjectMetadataData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,18 +21,20 @@ struct ComputeProjectMetadataData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     metadata: terrars::RecField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComputeProjectMetadataTimeoutsEl>,
+    timeouts: std::option::Option<ComputeProjectMetadata_Timeouts>,
 }
 
 struct ComputeProjectMetadata_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeProjectMetadataData>,
+    data: std::cell::RefCell<ComputeProjectMetadataData_>,
 }
 
 #[derive(Clone)]
@@ -130,6 +134,13 @@ impl ComputeProjectMetadata {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -144,9 +155,15 @@ impl ComputeProjectMetadata {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeProjectMetadataTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeProjectMetadata_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -166,8 +183,8 @@ impl ComputeProjectMetadata {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeProjectMetadataTimeoutsElRef {
-        ComputeProjectMetadataTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeProjectMetadata_TimeoutsRef {
+        ComputeProjectMetadata_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -213,12 +230,13 @@ impl BuildComputeProjectMetadata {
         let out = ComputeProjectMetadata(std::rc::Rc::new(ComputeProjectMetadata_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeProjectMetadataData {
+            data: std::cell::RefCell::new(ComputeProjectMetadataData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 metadata: self.metadata,
                 project: core::default::Default::default(),
@@ -253,6 +271,12 @@ impl ComputeProjectMetadataRef {
         &self.shared
     }
 
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -270,20 +294,20 @@ impl ComputeProjectMetadataRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeProjectMetadataTimeoutsElRef {
-        ComputeProjectMetadataTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeProjectMetadata_TimeoutsRef {
+        ComputeProjectMetadata_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeProjectMetadataTimeoutsEl {
+pub struct ComputeProjectMetadata_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeProjectMetadataTimeoutsEl {
+impl ComputeProjectMetadata_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -297,8 +321,8 @@ impl ComputeProjectMetadataTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeProjectMetadataTimeoutsEl {
-    type O = terrars::BlockAssignable<ComputeProjectMetadataTimeoutsEl>;
+impl terrars::ToListMappable for ComputeProjectMetadata_Timeouts {
+    type O = terrars::BlockAssignable<ComputeProjectMetadata_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -309,32 +333,34 @@ impl terrars::ToListMappable for ComputeProjectMetadataTimeoutsEl {
     }
 }
 
-pub struct BuildComputeProjectMetadataTimeoutsEl {}
+pub struct BuildComputeProjectMetadata_Timeouts {}
 
-impl BuildComputeProjectMetadataTimeoutsEl {
-    pub fn build(self) -> ComputeProjectMetadataTimeoutsEl {
-        ComputeProjectMetadataTimeoutsEl {
+impl BuildComputeProjectMetadata_Timeouts {
+    pub fn build(self) -> ComputeProjectMetadata_Timeouts {
+        ComputeProjectMetadata_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeProjectMetadataTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComputeProjectMetadata_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeProjectMetadataTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeProjectMetadataTimeoutsElRef {
-        ComputeProjectMetadataTimeoutsElRef {
+impl terrars::Ref for ComputeProjectMetadata_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeProjectMetadata_TimeoutsRef {
+        ComputeProjectMetadata_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeProjectMetadataTimeoutsElRef {
+impl ComputeProjectMetadata_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

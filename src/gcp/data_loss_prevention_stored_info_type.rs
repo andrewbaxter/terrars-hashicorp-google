@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataLossPreventionStoredInfoTypeData {
+struct DataLossPreventionStoredInfoTypeData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct DataLossPreventionStoredInfoTypeData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     display_name: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -28,20 +32,20 @@ struct DataLossPreventionStoredInfoTypeData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     stored_info_type_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    dictionary: std::option::Option<std::vec::Vec<DataLossPreventionStoredInfoTypeDictionaryEl>>,
+    dictionary: std::option::Option<std::vec::Vec<DataLossPreventionStoredInfoType_Dictionary>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    large_custom_dictionary: std::option::Option<std::vec::Vec<DataLossPreventionStoredInfoTypeLargeCustomDictionaryEl>>,
+    large_custom_dictionary: std::option::Option<std::vec::Vec<DataLossPreventionStoredInfoType_LargeCustomDictionary>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    regex: std::option::Option<std::vec::Vec<DataLossPreventionStoredInfoTypeRegexEl>>,
+    regex: std::option::Option<std::vec::Vec<DataLossPreventionStoredInfoType_Regex>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataLossPreventionStoredInfoTypeTimeoutsEl>,
+    timeouts: std::option::Option<DataLossPreventionStoredInfoType_Timeouts>,
     dynamic: DataLossPreventionStoredInfoTypeDynamic,
 }
 
 struct DataLossPreventionStoredInfoType_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataLossPreventionStoredInfoTypeData>,
+    data: std::cell::RefCell<DataLossPreventionStoredInfoTypeData_>,
 }
 
 #[derive(Clone)]
@@ -141,6 +145,13 @@ impl DataLossPreventionStoredInfoType {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nA description of the info type."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -169,7 +180,7 @@ impl DataLossPreventionStoredInfoType {
     #[doc = "Set the field `dictionary`.\n"]
     pub fn set_dictionary(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataLossPreventionStoredInfoTypeDictionaryEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataLossPreventionStoredInfoType_Dictionary>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -185,12 +196,7 @@ impl DataLossPreventionStoredInfoType {
     #[doc = "Set the field `large_custom_dictionary`.\n"]
     pub fn set_large_custom_dictionary(
         self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<DataLossPreventionStoredInfoTypeLargeCustomDictionaryEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataLossPreventionStoredInfoType_LargeCustomDictionary>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -206,7 +212,7 @@ impl DataLossPreventionStoredInfoType {
     #[doc = "Set the field `regex`.\n"]
     pub fn set_regex(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataLossPreventionStoredInfoTypeRegexEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataLossPreventionStoredInfoType_Regex>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -220,9 +226,15 @@ impl DataLossPreventionStoredInfoType {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataLossPreventionStoredInfoTypeTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataLossPreventionStoredInfoType_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `description` after provisioning.\nA description of the info type."]
@@ -260,25 +272,23 @@ impl DataLossPreventionStoredInfoType {
     }
 
     #[doc = "Get a reference to the value of field `dictionary` after provisioning.\n"]
-    pub fn dictionary(&self) -> terrars::ListRef<DataLossPreventionStoredInfoTypeDictionaryElRef> {
+    pub fn dictionary(&self) -> terrars::ListRef<DataLossPreventionStoredInfoType_DictionaryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dictionary", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `large_custom_dictionary` after provisioning.\n"]
-    pub fn large_custom_dictionary(
-        &self,
-    ) -> terrars::ListRef<DataLossPreventionStoredInfoTypeLargeCustomDictionaryElRef> {
+    pub fn large_custom_dictionary(&self) -> terrars::ListRef<DataLossPreventionStoredInfoType_LargeCustomDictionaryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.large_custom_dictionary", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `regex` after provisioning.\n"]
-    pub fn regex(&self) -> terrars::ListRef<DataLossPreventionStoredInfoTypeRegexElRef> {
+    pub fn regex(&self) -> terrars::ListRef<DataLossPreventionStoredInfoType_RegexRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.regex", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataLossPreventionStoredInfoTypeTimeoutsElRef {
-        DataLossPreventionStoredInfoTypeTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DataLossPreventionStoredInfoType_TimeoutsRef {
+        DataLossPreventionStoredInfoType_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -328,12 +338,13 @@ impl BuildDataLossPreventionStoredInfoType {
         let out = DataLossPreventionStoredInfoType(std::rc::Rc::new(DataLossPreventionStoredInfoType_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataLossPreventionStoredInfoTypeData {
+            data: std::cell::RefCell::new(DataLossPreventionStoredInfoTypeData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 display_name: core::default::Default::default(),
                 id: core::default::Default::default(),
@@ -374,6 +385,12 @@ impl DataLossPreventionStoredInfoTypeRef {
         &self.shared
     }
 
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `description` after provisioning.\nA description of the info type."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -409,40 +426,47 @@ impl DataLossPreventionStoredInfoTypeRef {
     }
 
     #[doc = "Get a reference to the value of field `dictionary` after provisioning.\n"]
-    pub fn dictionary(&self) -> terrars::ListRef<DataLossPreventionStoredInfoTypeDictionaryElRef> {
+    pub fn dictionary(&self) -> terrars::ListRef<DataLossPreventionStoredInfoType_DictionaryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dictionary", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `large_custom_dictionary` after provisioning.\n"]
-    pub fn large_custom_dictionary(
-        &self,
-    ) -> terrars::ListRef<DataLossPreventionStoredInfoTypeLargeCustomDictionaryElRef> {
+    pub fn large_custom_dictionary(&self) -> terrars::ListRef<DataLossPreventionStoredInfoType_LargeCustomDictionaryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.large_custom_dictionary", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `regex` after provisioning.\n"]
-    pub fn regex(&self) -> terrars::ListRef<DataLossPreventionStoredInfoTypeRegexElRef> {
+    pub fn regex(&self) -> terrars::ListRef<DataLossPreventionStoredInfoType_RegexRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.regex", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataLossPreventionStoredInfoTypeTimeoutsElRef {
-        DataLossPreventionStoredInfoTypeTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DataLossPreventionStoredInfoType_TimeoutsRef {
+        DataLossPreventionStoredInfoType_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataLossPreventionStoredInfoTypeDynamic {
+    dictionary: std::option::Option<terrars::DynamicBlock<DataLossPreventionStoredInfoType_Dictionary>>,
+    large_custom_dictionary: std
+    ::option
+    ::Option<terrars::DynamicBlock<DataLossPreventionStoredInfoType_LargeCustomDictionary>>,
+    regex: std::option::Option<terrars::DynamicBlock<DataLossPreventionStoredInfoType_Regex>>,
+}
+
 #[derive(Serialize)]
-pub struct DataLossPreventionStoredInfoTypeDictionaryElCloudStoragePathEl {
+pub struct DataLossPreventionStoredInfoType_Dictionary_CloudStoragePath {
     path: terrars::PrimField<std::string::String>,
 }
 
-impl DataLossPreventionStoredInfoTypeDictionaryElCloudStoragePathEl { }
+impl DataLossPreventionStoredInfoType_Dictionary_CloudStoragePath { }
 
-impl terrars::ToListMappable for DataLossPreventionStoredInfoTypeDictionaryElCloudStoragePathEl {
-    type O = terrars::BlockAssignable<DataLossPreventionStoredInfoTypeDictionaryElCloudStoragePathEl>;
+impl terrars::ToListMappable for DataLossPreventionStoredInfoType_Dictionary_CloudStoragePath {
+    type O = terrars::BlockAssignable<DataLossPreventionStoredInfoType_Dictionary_CloudStoragePath>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -453,36 +477,38 @@ impl terrars::ToListMappable for DataLossPreventionStoredInfoTypeDictionaryElClo
     }
 }
 
-pub struct BuildDataLossPreventionStoredInfoTypeDictionaryElCloudStoragePathEl {
+pub struct BuildDataLossPreventionStoredInfoType_Dictionary_CloudStoragePath {
     #[doc =
         "A url representing a file or path (no wildcards) in Cloud Storage. Example: 'gs://[BUCKET_NAME]/dictionary.txt'"]
     pub path: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataLossPreventionStoredInfoTypeDictionaryElCloudStoragePathEl {
-    pub fn build(self) -> DataLossPreventionStoredInfoTypeDictionaryElCloudStoragePathEl {
-        DataLossPreventionStoredInfoTypeDictionaryElCloudStoragePathEl { path: self.path }
+impl BuildDataLossPreventionStoredInfoType_Dictionary_CloudStoragePath {
+    pub fn build(self) -> DataLossPreventionStoredInfoType_Dictionary_CloudStoragePath {
+        DataLossPreventionStoredInfoType_Dictionary_CloudStoragePath { path: self.path }
     }
 }
 
-pub struct DataLossPreventionStoredInfoTypeDictionaryElCloudStoragePathElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionStoredInfoType_Dictionary_CloudStoragePathRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionStoredInfoTypeDictionaryElCloudStoragePathElRef {
+impl terrars::Ref for DataLossPreventionStoredInfoType_Dictionary_CloudStoragePathRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionStoredInfoTypeDictionaryElCloudStoragePathElRef {
-        DataLossPreventionStoredInfoTypeDictionaryElCloudStoragePathElRef {
+    ) -> DataLossPreventionStoredInfoType_Dictionary_CloudStoragePathRef {
+        DataLossPreventionStoredInfoType_Dictionary_CloudStoragePathRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionStoredInfoTypeDictionaryElCloudStoragePathElRef {
+impl DataLossPreventionStoredInfoType_Dictionary_CloudStoragePathRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -495,14 +521,14 @@ impl DataLossPreventionStoredInfoTypeDictionaryElCloudStoragePathElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionStoredInfoTypeDictionaryElWordListEl {
+pub struct DataLossPreventionStoredInfoType_Dictionary_WordList {
     words: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl DataLossPreventionStoredInfoTypeDictionaryElWordListEl { }
+impl DataLossPreventionStoredInfoType_Dictionary_WordList { }
 
-impl terrars::ToListMappable for DataLossPreventionStoredInfoTypeDictionaryElWordListEl {
-    type O = terrars::BlockAssignable<DataLossPreventionStoredInfoTypeDictionaryElWordListEl>;
+impl terrars::ToListMappable for DataLossPreventionStoredInfoType_Dictionary_WordList {
+    type O = terrars::BlockAssignable<DataLossPreventionStoredInfoType_Dictionary_WordList>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -513,36 +539,38 @@ impl terrars::ToListMappable for DataLossPreventionStoredInfoTypeDictionaryElWor
     }
 }
 
-pub struct BuildDataLossPreventionStoredInfoTypeDictionaryElWordListEl {
+pub struct BuildDataLossPreventionStoredInfoType_Dictionary_WordList {
     #[doc =
         "Words or phrases defining the dictionary. The dictionary must contain at least one\nphrase and every phrase must contain at least 2 characters that are letters or digits."]
     pub words: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataLossPreventionStoredInfoTypeDictionaryElWordListEl {
-    pub fn build(self) -> DataLossPreventionStoredInfoTypeDictionaryElWordListEl {
-        DataLossPreventionStoredInfoTypeDictionaryElWordListEl { words: self.words }
+impl BuildDataLossPreventionStoredInfoType_Dictionary_WordList {
+    pub fn build(self) -> DataLossPreventionStoredInfoType_Dictionary_WordList {
+        DataLossPreventionStoredInfoType_Dictionary_WordList { words: self.words }
     }
 }
 
-pub struct DataLossPreventionStoredInfoTypeDictionaryElWordListElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionStoredInfoType_Dictionary_WordListRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionStoredInfoTypeDictionaryElWordListElRef {
+impl terrars::Ref for DataLossPreventionStoredInfoType_Dictionary_WordListRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionStoredInfoTypeDictionaryElWordListElRef {
-        DataLossPreventionStoredInfoTypeDictionaryElWordListElRef {
+    ) -> DataLossPreventionStoredInfoType_Dictionary_WordListRef {
+        DataLossPreventionStoredInfoType_Dictionary_WordListRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionStoredInfoTypeDictionaryElWordListElRef {
+impl DataLossPreventionStoredInfoType_Dictionary_WordListRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -555,25 +583,23 @@ impl DataLossPreventionStoredInfoTypeDictionaryElWordListElRef {
 }
 
 #[derive(Serialize, Default)]
-struct DataLossPreventionStoredInfoTypeDictionaryElDynamic {
+struct DataLossPreventionStoredInfoType_DictionaryDynamic {
     cloud_storage_path: std
     ::option
-    ::Option<terrars::DynamicBlock<DataLossPreventionStoredInfoTypeDictionaryElCloudStoragePathEl>>,
-    word_list: std::option::Option<terrars::DynamicBlock<DataLossPreventionStoredInfoTypeDictionaryElWordListEl>>,
+    ::Option<terrars::DynamicBlock<DataLossPreventionStoredInfoType_Dictionary_CloudStoragePath>>,
+    word_list: std::option::Option<terrars::DynamicBlock<DataLossPreventionStoredInfoType_Dictionary_WordList>>,
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionStoredInfoTypeDictionaryEl {
+pub struct DataLossPreventionStoredInfoType_Dictionary {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cloud_storage_path: std
-    ::option
-    ::Option<std::vec::Vec<DataLossPreventionStoredInfoTypeDictionaryElCloudStoragePathEl>>,
+    cloud_storage_path: std::option::Option<std::vec::Vec<DataLossPreventionStoredInfoType_Dictionary_CloudStoragePath>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    word_list: std::option::Option<std::vec::Vec<DataLossPreventionStoredInfoTypeDictionaryElWordListEl>>,
-    dynamic: DataLossPreventionStoredInfoTypeDictionaryElDynamic,
+    word_list: std::option::Option<std::vec::Vec<DataLossPreventionStoredInfoType_Dictionary_WordList>>,
+    dynamic: DataLossPreventionStoredInfoType_DictionaryDynamic,
 }
 
-impl DataLossPreventionStoredInfoTypeDictionaryEl {
+impl DataLossPreventionStoredInfoType_Dictionary {
     #[doc = "Set the field `cloud_storage_path`.\n"]
     pub fn set_cloud_storage_path(
         mut self,
@@ -582,7 +608,7 @@ impl DataLossPreventionStoredInfoTypeDictionaryEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<DataLossPreventionStoredInfoTypeDictionaryElCloudStoragePathEl>>,
+                    ::Into<terrars::BlockAssignable<DataLossPreventionStoredInfoType_Dictionary_CloudStoragePath>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -598,7 +624,7 @@ impl DataLossPreventionStoredInfoTypeDictionaryEl {
     #[doc = "Set the field `word_list`.\n"]
     pub fn set_word_list(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataLossPreventionStoredInfoTypeDictionaryElWordListEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataLossPreventionStoredInfoType_Dictionary_WordList>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -612,8 +638,8 @@ impl DataLossPreventionStoredInfoTypeDictionaryEl {
     }
 }
 
-impl terrars::ToListMappable for DataLossPreventionStoredInfoTypeDictionaryEl {
-    type O = terrars::BlockAssignable<DataLossPreventionStoredInfoTypeDictionaryEl>;
+impl terrars::ToListMappable for DataLossPreventionStoredInfoType_Dictionary {
+    type O = terrars::BlockAssignable<DataLossPreventionStoredInfoType_Dictionary>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -624,11 +650,11 @@ impl terrars::ToListMappable for DataLossPreventionStoredInfoTypeDictionaryEl {
     }
 }
 
-pub struct BuildDataLossPreventionStoredInfoTypeDictionaryEl {}
+pub struct BuildDataLossPreventionStoredInfoType_Dictionary {}
 
-impl BuildDataLossPreventionStoredInfoTypeDictionaryEl {
-    pub fn build(self) -> DataLossPreventionStoredInfoTypeDictionaryEl {
-        DataLossPreventionStoredInfoTypeDictionaryEl {
+impl BuildDataLossPreventionStoredInfoType_Dictionary {
+    pub fn build(self) -> DataLossPreventionStoredInfoType_Dictionary {
+        DataLossPreventionStoredInfoType_Dictionary {
             cloud_storage_path: core::default::Default::default(),
             word_list: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -636,24 +662,26 @@ impl BuildDataLossPreventionStoredInfoTypeDictionaryEl {
     }
 }
 
-pub struct DataLossPreventionStoredInfoTypeDictionaryElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionStoredInfoType_DictionaryRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionStoredInfoTypeDictionaryElRef {
+impl terrars::Ref for DataLossPreventionStoredInfoType_DictionaryRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionStoredInfoTypeDictionaryElRef {
-        DataLossPreventionStoredInfoTypeDictionaryElRef {
+    ) -> DataLossPreventionStoredInfoType_DictionaryRef {
+        DataLossPreventionStoredInfoType_DictionaryRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionStoredInfoTypeDictionaryElRef {
+impl DataLossPreventionStoredInfoType_DictionaryRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -661,25 +689,25 @@ impl DataLossPreventionStoredInfoTypeDictionaryElRef {
     #[doc = "Get a reference to the value of field `cloud_storage_path` after provisioning.\n"]
     pub fn cloud_storage_path(
         &self,
-    ) -> terrars::ListRef<DataLossPreventionStoredInfoTypeDictionaryElCloudStoragePathElRef> {
+    ) -> terrars::ListRef<DataLossPreventionStoredInfoType_Dictionary_CloudStoragePathRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cloud_storage_path", self.base))
     }
 
     #[doc = "Get a reference to the value of field `word_list` after provisioning.\n"]
-    pub fn word_list(&self) -> terrars::ListRef<DataLossPreventionStoredInfoTypeDictionaryElWordListElRef> {
+    pub fn word_list(&self) -> terrars::ListRef<DataLossPreventionStoredInfoType_Dictionary_WordListRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.word_list", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElFieldEl {
+pub struct DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField_Field {
     name: terrars::PrimField<std::string::String>,
 }
 
-impl DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElFieldEl { }
+impl DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField_Field { }
 
-impl terrars::ToListMappable for DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElFieldEl {
-    type O = terrars::BlockAssignable<DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElFieldEl>;
+impl terrars::ToListMappable for DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField_Field {
+    type O = terrars::BlockAssignable<DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField_Field>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -690,35 +718,37 @@ impl terrars::ToListMappable for DataLossPreventionStoredInfoTypeLargeCustomDict
     }
 }
 
-pub struct BuildDataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElFieldEl {
+pub struct BuildDataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField_Field {
     #[doc = "Name describing the field."]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElFieldEl {
-    pub fn build(self) -> DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElFieldEl {
-        DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElFieldEl { name: self.name }
+impl BuildDataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField_Field {
+    pub fn build(self) -> DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField_Field {
+        DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField_Field { name: self.name }
     }
 }
 
-pub struct DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElFieldElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField_FieldRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElFieldElRef {
+impl terrars::Ref for DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField_FieldRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElFieldElRef {
-        DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElFieldElRef {
+    ) -> DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField_FieldRef {
+        DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField_FieldRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElFieldElRef {
+impl DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField_FieldRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -730,16 +760,16 @@ impl DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElField
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElTableEl {
+pub struct DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField_Table {
     dataset_id: terrars::PrimField<std::string::String>,
     project_id: terrars::PrimField<std::string::String>,
     table_id: terrars::PrimField<std::string::String>,
 }
 
-impl DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElTableEl { }
+impl DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField_Table { }
 
-impl terrars::ToListMappable for DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElTableEl {
-    type O = terrars::BlockAssignable<DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElTableEl>;
+impl terrars::ToListMappable for DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField_Table {
+    type O = terrars::BlockAssignable<DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField_Table>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -750,7 +780,7 @@ impl terrars::ToListMappable for DataLossPreventionStoredInfoTypeLargeCustomDict
     }
 }
 
-pub struct BuildDataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElTableEl {
+pub struct BuildDataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField_Table {
     #[doc = "The dataset ID of the table."]
     pub dataset_id: terrars::PrimField<std::string::String>,
     #[doc = "The Google Cloud Platform project ID of the project containing the table."]
@@ -759,9 +789,9 @@ pub struct BuildDataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryF
     pub table_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElTableEl {
-    pub fn build(self) -> DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElTableEl {
-        DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElTableEl {
+impl BuildDataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField_Table {
+    pub fn build(self) -> DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField_Table {
+        DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField_Table {
             dataset_id: self.dataset_id,
             project_id: self.project_id,
             table_id: self.table_id,
@@ -769,24 +799,26 @@ impl BuildDataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldEl
     }
 }
 
-pub struct DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElTableElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField_TableRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElTableElRef {
+impl terrars::Ref for DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField_TableRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElTableElRef {
-        DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElTableElRef {
+    ) -> DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField_TableRef {
+        DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField_TableRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElTableElRef {
+impl DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField_TableRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -809,29 +841,25 @@ impl DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElTable
 }
 
 #[derive(Serialize, Default)]
-struct DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElDynamic {
+struct DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryFieldDynamic {
     field: std
     ::option
-    ::Option<terrars::DynamicBlock<DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElFieldEl>>,
+    ::Option<terrars::DynamicBlock<DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField_Field>>,
     table: std
     ::option
-    ::Option<terrars::DynamicBlock<DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElTableEl>>,
+    ::Option<terrars::DynamicBlock<DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField_Table>>,
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldEl {
+pub struct DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    field: std
-    ::option
-    ::Option<std::vec::Vec<DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElFieldEl>>,
+    field: std::option::Option<std::vec::Vec<DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField_Field>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    table: std
-    ::option
-    ::Option<std::vec::Vec<DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElTableEl>>,
-    dynamic: DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElDynamic,
+    table: std::option::Option<std::vec::Vec<DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField_Table>>,
+    dynamic: DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryFieldDynamic,
 }
 
-impl DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldEl {
+impl DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField {
     #[doc = "Set the field `field`.\n"]
     pub fn set_field(
         mut self,
@@ -842,9 +870,7 @@ impl DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElFieldEl,
-                        >,
+                        ::BlockAssignable<DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField_Field>,
                     >,
     ) -> Self {
         match v.into() {
@@ -868,9 +894,7 @@ impl DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElTableEl,
-                        >,
+                        ::BlockAssignable<DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField_Table>,
                     >,
     ) -> Self {
         match v.into() {
@@ -885,8 +909,8 @@ impl DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldEl {
     }
 }
 
-impl terrars::ToListMappable for DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldEl {
-    type O = terrars::BlockAssignable<DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldEl>;
+impl terrars::ToListMappable for DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField {
+    type O = terrars::BlockAssignable<DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -897,11 +921,11 @@ impl terrars::ToListMappable for DataLossPreventionStoredInfoTypeLargeCustomDict
     }
 }
 
-pub struct BuildDataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldEl {}
+pub struct BuildDataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField {}
 
-impl BuildDataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldEl {
-    pub fn build(self) -> DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldEl {
-        DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldEl {
+impl BuildDataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField {
+    pub fn build(self) -> DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField {
+        DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField {
             field: core::default::Default::default(),
             table: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -909,24 +933,26 @@ impl BuildDataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldEl
     }
 }
 
-pub struct DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryFieldRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElRef {
+impl terrars::Ref for DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryFieldRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElRef {
-        DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElRef {
+    ) -> DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryFieldRef {
+        DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryFieldRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElRef {
+impl DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryFieldRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -934,27 +960,27 @@ impl DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElRef {
     #[doc = "Get a reference to the value of field `field` after provisioning.\n"]
     pub fn field(
         &self,
-    ) -> terrars::ListRef<DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElFieldElRef> {
+    ) -> terrars::ListRef<DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField_FieldRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.field", self.base))
     }
 
     #[doc = "Get a reference to the value of field `table` after provisioning.\n"]
     pub fn table(
         &self,
-    ) -> terrars::ListRef<DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElTableElRef> {
+    ) -> terrars::ListRef<DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField_TableRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.table", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionStoredInfoTypeLargeCustomDictionaryElCloudStorageFileSetEl {
+pub struct DataLossPreventionStoredInfoType_LargeCustomDictionary_CloudStorageFileSet {
     url: terrars::PrimField<std::string::String>,
 }
 
-impl DataLossPreventionStoredInfoTypeLargeCustomDictionaryElCloudStorageFileSetEl { }
+impl DataLossPreventionStoredInfoType_LargeCustomDictionary_CloudStorageFileSet { }
 
-impl terrars::ToListMappable for DataLossPreventionStoredInfoTypeLargeCustomDictionaryElCloudStorageFileSetEl {
-    type O = terrars::BlockAssignable<DataLossPreventionStoredInfoTypeLargeCustomDictionaryElCloudStorageFileSetEl>;
+impl terrars::ToListMappable for DataLossPreventionStoredInfoType_LargeCustomDictionary_CloudStorageFileSet {
+    type O = terrars::BlockAssignable<DataLossPreventionStoredInfoType_LargeCustomDictionary_CloudStorageFileSet>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -965,35 +991,37 @@ impl terrars::ToListMappable for DataLossPreventionStoredInfoTypeLargeCustomDict
     }
 }
 
-pub struct BuildDataLossPreventionStoredInfoTypeLargeCustomDictionaryElCloudStorageFileSetEl {
+pub struct BuildDataLossPreventionStoredInfoType_LargeCustomDictionary_CloudStorageFileSet {
     #[doc = "The url, in the format 'gs://<bucket>/<path>'. Trailing wildcard in the path is allowed."]
     pub url: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataLossPreventionStoredInfoTypeLargeCustomDictionaryElCloudStorageFileSetEl {
-    pub fn build(self) -> DataLossPreventionStoredInfoTypeLargeCustomDictionaryElCloudStorageFileSetEl {
-        DataLossPreventionStoredInfoTypeLargeCustomDictionaryElCloudStorageFileSetEl { url: self.url }
+impl BuildDataLossPreventionStoredInfoType_LargeCustomDictionary_CloudStorageFileSet {
+    pub fn build(self) -> DataLossPreventionStoredInfoType_LargeCustomDictionary_CloudStorageFileSet {
+        DataLossPreventionStoredInfoType_LargeCustomDictionary_CloudStorageFileSet { url: self.url }
     }
 }
 
-pub struct DataLossPreventionStoredInfoTypeLargeCustomDictionaryElCloudStorageFileSetElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionStoredInfoType_LargeCustomDictionary_CloudStorageFileSetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionStoredInfoTypeLargeCustomDictionaryElCloudStorageFileSetElRef {
+impl terrars::Ref for DataLossPreventionStoredInfoType_LargeCustomDictionary_CloudStorageFileSetRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionStoredInfoTypeLargeCustomDictionaryElCloudStorageFileSetElRef {
-        DataLossPreventionStoredInfoTypeLargeCustomDictionaryElCloudStorageFileSetElRef {
+    ) -> DataLossPreventionStoredInfoType_LargeCustomDictionary_CloudStorageFileSetRef {
+        DataLossPreventionStoredInfoType_LargeCustomDictionary_CloudStorageFileSetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionStoredInfoTypeLargeCustomDictionaryElCloudStorageFileSetElRef {
+impl DataLossPreventionStoredInfoType_LargeCustomDictionary_CloudStorageFileSetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1006,14 +1034,14 @@ impl DataLossPreventionStoredInfoTypeLargeCustomDictionaryElCloudStorageFileSetE
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionStoredInfoTypeLargeCustomDictionaryElOutputPathEl {
+pub struct DataLossPreventionStoredInfoType_LargeCustomDictionary_OutputPath {
     path: terrars::PrimField<std::string::String>,
 }
 
-impl DataLossPreventionStoredInfoTypeLargeCustomDictionaryElOutputPathEl { }
+impl DataLossPreventionStoredInfoType_LargeCustomDictionary_OutputPath { }
 
-impl terrars::ToListMappable for DataLossPreventionStoredInfoTypeLargeCustomDictionaryElOutputPathEl {
-    type O = terrars::BlockAssignable<DataLossPreventionStoredInfoTypeLargeCustomDictionaryElOutputPathEl>;
+impl terrars::ToListMappable for DataLossPreventionStoredInfoType_LargeCustomDictionary_OutputPath {
+    type O = terrars::BlockAssignable<DataLossPreventionStoredInfoType_LargeCustomDictionary_OutputPath>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1024,36 +1052,38 @@ impl terrars::ToListMappable for DataLossPreventionStoredInfoTypeLargeCustomDict
     }
 }
 
-pub struct BuildDataLossPreventionStoredInfoTypeLargeCustomDictionaryElOutputPathEl {
+pub struct BuildDataLossPreventionStoredInfoType_LargeCustomDictionary_OutputPath {
     #[doc =
         "A url representing a file or path (no wildcards) in Cloud Storage. Example: 'gs://[BUCKET_NAME]/dictionary.txt'"]
     pub path: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataLossPreventionStoredInfoTypeLargeCustomDictionaryElOutputPathEl {
-    pub fn build(self) -> DataLossPreventionStoredInfoTypeLargeCustomDictionaryElOutputPathEl {
-        DataLossPreventionStoredInfoTypeLargeCustomDictionaryElOutputPathEl { path: self.path }
+impl BuildDataLossPreventionStoredInfoType_LargeCustomDictionary_OutputPath {
+    pub fn build(self) -> DataLossPreventionStoredInfoType_LargeCustomDictionary_OutputPath {
+        DataLossPreventionStoredInfoType_LargeCustomDictionary_OutputPath { path: self.path }
     }
 }
 
-pub struct DataLossPreventionStoredInfoTypeLargeCustomDictionaryElOutputPathElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionStoredInfoType_LargeCustomDictionary_OutputPathRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionStoredInfoTypeLargeCustomDictionaryElOutputPathElRef {
+impl terrars::Ref for DataLossPreventionStoredInfoType_LargeCustomDictionary_OutputPathRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionStoredInfoTypeLargeCustomDictionaryElOutputPathElRef {
-        DataLossPreventionStoredInfoTypeLargeCustomDictionaryElOutputPathElRef {
+    ) -> DataLossPreventionStoredInfoType_LargeCustomDictionary_OutputPathRef {
+        DataLossPreventionStoredInfoType_LargeCustomDictionary_OutputPathRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionStoredInfoTypeLargeCustomDictionaryElOutputPathElRef {
+impl DataLossPreventionStoredInfoType_LargeCustomDictionary_OutputPathRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1066,34 +1096,34 @@ impl DataLossPreventionStoredInfoTypeLargeCustomDictionaryElOutputPathElRef {
 }
 
 #[derive(Serialize, Default)]
-struct DataLossPreventionStoredInfoTypeLargeCustomDictionaryElDynamic {
+struct DataLossPreventionStoredInfoType_LargeCustomDictionaryDynamic {
     big_query_field: std
     ::option
-    ::Option<terrars::DynamicBlock<DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldEl>>,
+    ::Option<terrars::DynamicBlock<DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField>>,
     cloud_storage_file_set: std
     ::option
-    ::Option<terrars::DynamicBlock<DataLossPreventionStoredInfoTypeLargeCustomDictionaryElCloudStorageFileSetEl>>,
+    ::Option<terrars::DynamicBlock<DataLossPreventionStoredInfoType_LargeCustomDictionary_CloudStorageFileSet>>,
     output_path: std
     ::option
-    ::Option<terrars::DynamicBlock<DataLossPreventionStoredInfoTypeLargeCustomDictionaryElOutputPathEl>>,
+    ::Option<terrars::DynamicBlock<DataLossPreventionStoredInfoType_LargeCustomDictionary_OutputPath>>,
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionStoredInfoTypeLargeCustomDictionaryEl {
+pub struct DataLossPreventionStoredInfoType_LargeCustomDictionary {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     big_query_field: std
     ::option
-    ::Option<std::vec::Vec<DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldEl>>,
+    ::Option<std::vec::Vec<DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cloud_storage_file_set: std
     ::option
-    ::Option<std::vec::Vec<DataLossPreventionStoredInfoTypeLargeCustomDictionaryElCloudStorageFileSetEl>>,
+    ::Option<std::vec::Vec<DataLossPreventionStoredInfoType_LargeCustomDictionary_CloudStorageFileSet>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    output_path: std::option::Option<std::vec::Vec<DataLossPreventionStoredInfoTypeLargeCustomDictionaryElOutputPathEl>>,
-    dynamic: DataLossPreventionStoredInfoTypeLargeCustomDictionaryElDynamic,
+    output_path: std::option::Option<std::vec::Vec<DataLossPreventionStoredInfoType_LargeCustomDictionary_OutputPath>>,
+    dynamic: DataLossPreventionStoredInfoType_LargeCustomDictionaryDynamic,
 }
 
-impl DataLossPreventionStoredInfoTypeLargeCustomDictionaryEl {
+impl DataLossPreventionStoredInfoType_LargeCustomDictionary {
     #[doc = "Set the field `big_query_field`.\n"]
     pub fn set_big_query_field(
         mut self,
@@ -1103,8 +1133,7 @@ impl DataLossPreventionStoredInfoTypeLargeCustomDictionaryEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldEl>,
+                        terrars::BlockAssignable<DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryField>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1128,9 +1157,7 @@ impl DataLossPreventionStoredInfoTypeLargeCustomDictionaryEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            DataLossPreventionStoredInfoTypeLargeCustomDictionaryElCloudStorageFileSetEl,
-                        >,
+                        ::BlockAssignable<DataLossPreventionStoredInfoType_LargeCustomDictionary_CloudStorageFileSet>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1153,7 +1180,7 @@ impl DataLossPreventionStoredInfoTypeLargeCustomDictionaryEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<DataLossPreventionStoredInfoTypeLargeCustomDictionaryElOutputPathEl>,
+                        terrars::BlockAssignable<DataLossPreventionStoredInfoType_LargeCustomDictionary_OutputPath>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1168,8 +1195,8 @@ impl DataLossPreventionStoredInfoTypeLargeCustomDictionaryEl {
     }
 }
 
-impl terrars::ToListMappable for DataLossPreventionStoredInfoTypeLargeCustomDictionaryEl {
-    type O = terrars::BlockAssignable<DataLossPreventionStoredInfoTypeLargeCustomDictionaryEl>;
+impl terrars::ToListMappable for DataLossPreventionStoredInfoType_LargeCustomDictionary {
+    type O = terrars::BlockAssignable<DataLossPreventionStoredInfoType_LargeCustomDictionary>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1180,11 +1207,11 @@ impl terrars::ToListMappable for DataLossPreventionStoredInfoTypeLargeCustomDict
     }
 }
 
-pub struct BuildDataLossPreventionStoredInfoTypeLargeCustomDictionaryEl {}
+pub struct BuildDataLossPreventionStoredInfoType_LargeCustomDictionary {}
 
-impl BuildDataLossPreventionStoredInfoTypeLargeCustomDictionaryEl {
-    pub fn build(self) -> DataLossPreventionStoredInfoTypeLargeCustomDictionaryEl {
-        DataLossPreventionStoredInfoTypeLargeCustomDictionaryEl {
+impl BuildDataLossPreventionStoredInfoType_LargeCustomDictionary {
+    pub fn build(self) -> DataLossPreventionStoredInfoType_LargeCustomDictionary {
+        DataLossPreventionStoredInfoType_LargeCustomDictionary {
             big_query_field: core::default::Default::default(),
             cloud_storage_file_set: core::default::Default::default(),
             output_path: core::default::Default::default(),
@@ -1193,24 +1220,26 @@ impl BuildDataLossPreventionStoredInfoTypeLargeCustomDictionaryEl {
     }
 }
 
-pub struct DataLossPreventionStoredInfoTypeLargeCustomDictionaryElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionStoredInfoType_LargeCustomDictionaryRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionStoredInfoTypeLargeCustomDictionaryElRef {
+impl terrars::Ref for DataLossPreventionStoredInfoType_LargeCustomDictionaryRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionStoredInfoTypeLargeCustomDictionaryElRef {
-        DataLossPreventionStoredInfoTypeLargeCustomDictionaryElRef {
+    ) -> DataLossPreventionStoredInfoType_LargeCustomDictionaryRef {
+        DataLossPreventionStoredInfoType_LargeCustomDictionaryRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionStoredInfoTypeLargeCustomDictionaryElRef {
+impl DataLossPreventionStoredInfoType_LargeCustomDictionaryRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1218,33 +1247,31 @@ impl DataLossPreventionStoredInfoTypeLargeCustomDictionaryElRef {
     #[doc = "Get a reference to the value of field `big_query_field` after provisioning.\n"]
     pub fn big_query_field(
         &self,
-    ) -> terrars::ListRef<DataLossPreventionStoredInfoTypeLargeCustomDictionaryElBigQueryFieldElRef> {
+    ) -> terrars::ListRef<DataLossPreventionStoredInfoType_LargeCustomDictionary_BigQueryFieldRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.big_query_field", self.base))
     }
 
     #[doc = "Get a reference to the value of field `cloud_storage_file_set` after provisioning.\n"]
     pub fn cloud_storage_file_set(
         &self,
-    ) -> terrars::ListRef<DataLossPreventionStoredInfoTypeLargeCustomDictionaryElCloudStorageFileSetElRef> {
+    ) -> terrars::ListRef<DataLossPreventionStoredInfoType_LargeCustomDictionary_CloudStorageFileSetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cloud_storage_file_set", self.base))
     }
 
     #[doc = "Get a reference to the value of field `output_path` after provisioning.\n"]
-    pub fn output_path(
-        &self,
-    ) -> terrars::ListRef<DataLossPreventionStoredInfoTypeLargeCustomDictionaryElOutputPathElRef> {
+    pub fn output_path(&self) -> terrars::ListRef<DataLossPreventionStoredInfoType_LargeCustomDictionary_OutputPathRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.output_path", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionStoredInfoTypeRegexEl {
+pub struct DataLossPreventionStoredInfoType_Regex {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     group_indexes: std::option::Option<terrars::ListField<terrars::PrimField<f64>>>,
     pattern: terrars::PrimField<std::string::String>,
 }
 
-impl DataLossPreventionStoredInfoTypeRegexEl {
+impl DataLossPreventionStoredInfoType_Regex {
     #[doc =
         "Set the field `group_indexes`.\nThe index of the submatch to extract as findings. When not specified, the entire match is returned. No more than 3 may be included."]
     pub fn set_group_indexes(
@@ -1256,8 +1283,8 @@ impl DataLossPreventionStoredInfoTypeRegexEl {
     }
 }
 
-impl terrars::ToListMappable for DataLossPreventionStoredInfoTypeRegexEl {
-    type O = terrars::BlockAssignable<DataLossPreventionStoredInfoTypeRegexEl>;
+impl terrars::ToListMappable for DataLossPreventionStoredInfoType_Regex {
+    type O = terrars::BlockAssignable<DataLossPreventionStoredInfoType_Regex>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1268,36 +1295,38 @@ impl terrars::ToListMappable for DataLossPreventionStoredInfoTypeRegexEl {
     }
 }
 
-pub struct BuildDataLossPreventionStoredInfoTypeRegexEl {
+pub struct BuildDataLossPreventionStoredInfoType_Regex {
     #[doc =
         "Pattern defining the regular expression.\nIts syntax (https://github.com/google/re2/wiki/Syntax) can be found under the google/re2 repository on GitHub."]
     pub pattern: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataLossPreventionStoredInfoTypeRegexEl {
-    pub fn build(self) -> DataLossPreventionStoredInfoTypeRegexEl {
-        DataLossPreventionStoredInfoTypeRegexEl {
+impl BuildDataLossPreventionStoredInfoType_Regex {
+    pub fn build(self) -> DataLossPreventionStoredInfoType_Regex {
+        DataLossPreventionStoredInfoType_Regex {
             group_indexes: core::default::Default::default(),
             pattern: self.pattern,
         }
     }
 }
 
-pub struct DataLossPreventionStoredInfoTypeRegexElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionStoredInfoType_RegexRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionStoredInfoTypeRegexElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLossPreventionStoredInfoTypeRegexElRef {
-        DataLossPreventionStoredInfoTypeRegexElRef {
+impl terrars::Ref for DataLossPreventionStoredInfoType_RegexRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLossPreventionStoredInfoType_RegexRef {
+        DataLossPreventionStoredInfoType_RegexRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionStoredInfoTypeRegexElRef {
+impl DataLossPreventionStoredInfoType_RegexRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1316,7 +1345,7 @@ impl DataLossPreventionStoredInfoTypeRegexElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionStoredInfoTypeTimeoutsEl {
+pub struct DataLossPreventionStoredInfoType_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1325,7 +1354,7 @@ pub struct DataLossPreventionStoredInfoTypeTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataLossPreventionStoredInfoTypeTimeoutsEl {
+impl DataLossPreventionStoredInfoType_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1345,8 +1374,8 @@ impl DataLossPreventionStoredInfoTypeTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataLossPreventionStoredInfoTypeTimeoutsEl {
-    type O = terrars::BlockAssignable<DataLossPreventionStoredInfoTypeTimeoutsEl>;
+impl terrars::ToListMappable for DataLossPreventionStoredInfoType_Timeouts {
+    type O = terrars::BlockAssignable<DataLossPreventionStoredInfoType_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1357,11 +1386,11 @@ impl terrars::ToListMappable for DataLossPreventionStoredInfoTypeTimeoutsEl {
     }
 }
 
-pub struct BuildDataLossPreventionStoredInfoTypeTimeoutsEl {}
+pub struct BuildDataLossPreventionStoredInfoType_Timeouts {}
 
-impl BuildDataLossPreventionStoredInfoTypeTimeoutsEl {
-    pub fn build(self) -> DataLossPreventionStoredInfoTypeTimeoutsEl {
-        DataLossPreventionStoredInfoTypeTimeoutsEl {
+impl BuildDataLossPreventionStoredInfoType_Timeouts {
+    pub fn build(self) -> DataLossPreventionStoredInfoType_Timeouts {
+        DataLossPreventionStoredInfoType_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1369,21 +1398,23 @@ impl BuildDataLossPreventionStoredInfoTypeTimeoutsEl {
     }
 }
 
-pub struct DataLossPreventionStoredInfoTypeTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionStoredInfoType_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionStoredInfoTypeTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLossPreventionStoredInfoTypeTimeoutsElRef {
-        DataLossPreventionStoredInfoTypeTimeoutsElRef {
+impl terrars::Ref for DataLossPreventionStoredInfoType_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLossPreventionStoredInfoType_TimeoutsRef {
+        DataLossPreventionStoredInfoType_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionStoredInfoTypeTimeoutsElRef {
+impl DataLossPreventionStoredInfoType_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1402,13 +1433,4 @@ impl DataLossPreventionStoredInfoTypeTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataLossPreventionStoredInfoTypeDynamic {
-    dictionary: std::option::Option<terrars::DynamicBlock<DataLossPreventionStoredInfoTypeDictionaryEl>>,
-    large_custom_dictionary: std
-    ::option
-    ::Option<terrars::DynamicBlock<DataLossPreventionStoredInfoTypeLargeCustomDictionaryEl>>,
-    regex: std::option::Option<terrars::DynamicBlock<DataLossPreventionStoredInfoTypeRegexEl>>,
 }

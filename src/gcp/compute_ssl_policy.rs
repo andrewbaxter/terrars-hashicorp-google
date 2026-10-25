@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeSslPolicyData {
+struct ComputeSslPolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,6 +23,8 @@ struct ComputeSslPolicyData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     custom_features: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -28,17 +32,19 @@ struct ComputeSslPolicyData {
     min_tls_version: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    post_quantum_key_exchange: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     profile: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComputeSslPolicyTimeoutsEl>,
+    timeouts: std::option::Option<ComputeSslPolicy_Timeouts>,
 }
 
 struct ComputeSslPolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeSslPolicyData>,
+    data: std::cell::RefCell<ComputeSslPolicyData_>,
 }
 
 #[derive(Clone)]
@@ -148,6 +154,13 @@ impl ComputeSslPolicy {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nAn optional description of this resource."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -161,14 +174,24 @@ impl ComputeSslPolicy {
     }
 
     #[doc =
-        "Set the field `min_tls_version`.\nThe minimum version of SSL protocol that can be used by the clients\nto establish a connection with the load balancer. Default value: \"TLS_1_0\" Possible values: [\"TLS_1_0\", \"TLS_1_1\", \"TLS_1_2\"]"]
+        "Set the field `min_tls_version`.\nThe minimum version of SSL protocol that can be used by the clients\nto establish a connection with the load balancer. When set to'\nTLS_1_3', the profile field must be set to 'RESTRICTED'. Default value: \"TLS_1_0\" Possible values: [\"TLS_1_0\", \"TLS_1_1\", \"TLS_1_2\", \"TLS_1_3\"]"]
     pub fn set_min_tls_version(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().min_tls_version = std::option::Option::Some(v.into());
         self
     }
 
     #[doc =
-        "Set the field `profile`.\nProfile specifies the set of SSL features that can be used by the\nload balancer when negotiating SSL with clients. If using 'CUSTOM',\nthe set of SSL features to enable must be specified in the\n'customFeatures' field.\n\nSee the [official documentation](https://cloud.google.com/compute/docs/load-balancing/ssl-policies#profilefeaturesupport)\nfor information on what cipher suites each profile provides. If\n'CUSTOM' is used, the 'custom_features' attribute **must be set**. Default value: \"COMPATIBLE\" Possible values: [\"COMPATIBLE\", \"MODERN\", \"RESTRICTED\", \"CUSTOM\"]"]
+        "Set the field `post_quantum_key_exchange`.\nOne of 'DEFAULT', 'ENABLED', or 'DEFERRED'. Controls whether the load balancer\nnegotiates X25519MLKEM768 key exchange when clients advertise support for it.\nWhen set to 'DEFAULT', or if no SSL Policy is attached to\nthe target proxy, the load balancer disallows X25519MLKEM768 key\nexchange before October 2026, and allows it afterward. When set to\n'ENABLED', the load balancer allows X25519MLKEM768 key\nexchange. When set to 'DEFERRED', the load balancer\ndisallows X25519MLKEM768 key exchange until October 2027, and allows\nit afterward. Possible values: [\"DEFAULT\", \"ENABLED\", \"DEFERRED\"]"]
+    pub fn set_post_quantum_key_exchange(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().post_quantum_key_exchange = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `profile`.\nProfile specifies the set of SSL features that can be used by the\nload balancer when negotiating SSL with clients. If using 'CUSTOM',\nthe set of SSL features to enable must be specified in the\n'customFeatures' field.\n\nSee the [official documentation](https://cloud.google.com/compute/docs/load-balancing/ssl-policies#profilefeaturesupport)\nfor information on what cipher suites each profile provides. If\n'CUSTOM' is used, the 'custom_features' attribute **must be set**.\nIf set to 'FIPS_202205', 'minTlsVersion' must also be set to\n'TLS_1_2'. Default value: \"COMPATIBLE\" Possible values: [\"COMPATIBLE\", \"MODERN\", \"RESTRICTED\", \"CUSTOM\", \"FIPS_202205\"]"]
     pub fn set_profile(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().profile = std::option::Option::Some(v.into());
         self
@@ -181,7 +204,7 @@ impl ComputeSslPolicy {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeSslPolicyTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeSslPolicy_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -196,6 +219,12 @@ impl ComputeSslPolicy {
         "Get a reference to the value of field `custom_features` after provisioning.\nProfile specifies the set of SSL features that can be used by the\nload balancer when negotiating SSL with clients. This can be one of\n'COMPATIBLE', 'MODERN', 'RESTRICTED', or 'CUSTOM'. If using 'CUSTOM',\nthe set of SSL features to enable must be specified in the\n'customFeatures' field.\n\nSee the [official documentation](https://cloud.google.com/compute/docs/load-balancing/ssl-policies#profilefeaturesupport)\nfor which ciphers are available to use. **Note**: this argument\n*must* be present when using the 'CUSTOM' profile. This argument\n*must not* be present when using any other profile."]
     pub fn custom_features(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.custom_features", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -222,7 +251,7 @@ impl ComputeSslPolicy {
     }
 
     #[doc =
-        "Get a reference to the value of field `min_tls_version` after provisioning.\nThe minimum version of SSL protocol that can be used by the clients\nto establish a connection with the load balancer. Default value: \"TLS_1_0\" Possible values: [\"TLS_1_0\", \"TLS_1_1\", \"TLS_1_2\"]"]
+        "Get a reference to the value of field `min_tls_version` after provisioning.\nThe minimum version of SSL protocol that can be used by the clients\nto establish a connection with the load balancer. When set to'\nTLS_1_3', the profile field must be set to 'RESTRICTED'. Default value: \"TLS_1_0\" Possible values: [\"TLS_1_0\", \"TLS_1_1\", \"TLS_1_2\", \"TLS_1_3\"]"]
     pub fn min_tls_version(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_tls_version", self.extract_ref()))
     }
@@ -234,7 +263,13 @@ impl ComputeSslPolicy {
     }
 
     #[doc =
-        "Get a reference to the value of field `profile` after provisioning.\nProfile specifies the set of SSL features that can be used by the\nload balancer when negotiating SSL with clients. If using 'CUSTOM',\nthe set of SSL features to enable must be specified in the\n'customFeatures' field.\n\nSee the [official documentation](https://cloud.google.com/compute/docs/load-balancing/ssl-policies#profilefeaturesupport)\nfor information on what cipher suites each profile provides. If\n'CUSTOM' is used, the 'custom_features' attribute **must be set**. Default value: \"COMPATIBLE\" Possible values: [\"COMPATIBLE\", \"MODERN\", \"RESTRICTED\", \"CUSTOM\"]"]
+        "Get a reference to the value of field `post_quantum_key_exchange` after provisioning.\nOne of 'DEFAULT', 'ENABLED', or 'DEFERRED'. Controls whether the load balancer\nnegotiates X25519MLKEM768 key exchange when clients advertise support for it.\nWhen set to 'DEFAULT', or if no SSL Policy is attached to\nthe target proxy, the load balancer disallows X25519MLKEM768 key\nexchange before October 2026, and allows it afterward. When set to\n'ENABLED', the load balancer allows X25519MLKEM768 key\nexchange. When set to 'DEFERRED', the load balancer\ndisallows X25519MLKEM768 key exchange until October 2027, and allows\nit afterward. Possible values: [\"DEFAULT\", \"ENABLED\", \"DEFERRED\"]"]
+    pub fn post_quantum_key_exchange(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.post_quantum_key_exchange", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `profile` after provisioning.\nProfile specifies the set of SSL features that can be used by the\nload balancer when negotiating SSL with clients. If using 'CUSTOM',\nthe set of SSL features to enable must be specified in the\n'customFeatures' field.\n\nSee the [official documentation](https://cloud.google.com/compute/docs/load-balancing/ssl-policies#profilefeaturesupport)\nfor information on what cipher suites each profile provides. If\n'CUSTOM' is used, the 'custom_features' attribute **must be set**.\nIf set to 'FIPS_202205', 'minTlsVersion' must also be set to\n'TLS_1_2'. Default value: \"COMPATIBLE\" Possible values: [\"COMPATIBLE\", \"MODERN\", \"RESTRICTED\", \"CUSTOM\", \"FIPS_202205\"]"]
     pub fn profile(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.profile", self.extract_ref()))
     }
@@ -250,8 +285,8 @@ impl ComputeSslPolicy {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeSslPolicyTimeoutsElRef {
-        ComputeSslPolicyTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeSslPolicy_TimeoutsRef {
+        ComputeSslPolicy_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -298,17 +333,19 @@ impl BuildComputeSslPolicy {
         let out = ComputeSslPolicy(std::rc::Rc::new(ComputeSslPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeSslPolicyData {
+            data: std::cell::RefCell::new(ComputeSslPolicyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 custom_features: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 min_tls_version: core::default::Default::default(),
                 name: self.name,
+                post_quantum_key_exchange: core::default::Default::default(),
                 profile: core::default::Default::default(),
                 project: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
@@ -355,6 +392,12 @@ impl ComputeSslPolicyRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nAn optional description of this resource."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -378,7 +421,7 @@ impl ComputeSslPolicyRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `min_tls_version` after provisioning.\nThe minimum version of SSL protocol that can be used by the clients\nto establish a connection with the load balancer. Default value: \"TLS_1_0\" Possible values: [\"TLS_1_0\", \"TLS_1_1\", \"TLS_1_2\"]"]
+        "Get a reference to the value of field `min_tls_version` after provisioning.\nThe minimum version of SSL protocol that can be used by the clients\nto establish a connection with the load balancer. When set to'\nTLS_1_3', the profile field must be set to 'RESTRICTED'. Default value: \"TLS_1_0\" Possible values: [\"TLS_1_0\", \"TLS_1_1\", \"TLS_1_2\", \"TLS_1_3\"]"]
     pub fn min_tls_version(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_tls_version", self.extract_ref()))
     }
@@ -390,7 +433,13 @@ impl ComputeSslPolicyRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `profile` after provisioning.\nProfile specifies the set of SSL features that can be used by the\nload balancer when negotiating SSL with clients. If using 'CUSTOM',\nthe set of SSL features to enable must be specified in the\n'customFeatures' field.\n\nSee the [official documentation](https://cloud.google.com/compute/docs/load-balancing/ssl-policies#profilefeaturesupport)\nfor information on what cipher suites each profile provides. If\n'CUSTOM' is used, the 'custom_features' attribute **must be set**. Default value: \"COMPATIBLE\" Possible values: [\"COMPATIBLE\", \"MODERN\", \"RESTRICTED\", \"CUSTOM\"]"]
+        "Get a reference to the value of field `post_quantum_key_exchange` after provisioning.\nOne of 'DEFAULT', 'ENABLED', or 'DEFERRED'. Controls whether the load balancer\nnegotiates X25519MLKEM768 key exchange when clients advertise support for it.\nWhen set to 'DEFAULT', or if no SSL Policy is attached to\nthe target proxy, the load balancer disallows X25519MLKEM768 key\nexchange before October 2026, and allows it afterward. When set to\n'ENABLED', the load balancer allows X25519MLKEM768 key\nexchange. When set to 'DEFERRED', the load balancer\ndisallows X25519MLKEM768 key exchange until October 2027, and allows\nit afterward. Possible values: [\"DEFAULT\", \"ENABLED\", \"DEFERRED\"]"]
+    pub fn post_quantum_key_exchange(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.post_quantum_key_exchange", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `profile` after provisioning.\nProfile specifies the set of SSL features that can be used by the\nload balancer when negotiating SSL with clients. If using 'CUSTOM',\nthe set of SSL features to enable must be specified in the\n'customFeatures' field.\n\nSee the [official documentation](https://cloud.google.com/compute/docs/load-balancing/ssl-policies#profilefeaturesupport)\nfor information on what cipher suites each profile provides. If\n'CUSTOM' is used, the 'custom_features' attribute **must be set**.\nIf set to 'FIPS_202205', 'minTlsVersion' must also be set to\n'TLS_1_2'. Default value: \"COMPATIBLE\" Possible values: [\"COMPATIBLE\", \"MODERN\", \"RESTRICTED\", \"CUSTOM\", \"FIPS_202205\"]"]
     pub fn profile(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.profile", self.extract_ref()))
     }
@@ -406,13 +455,13 @@ impl ComputeSslPolicyRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeSslPolicyTimeoutsElRef {
-        ComputeSslPolicyTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeSslPolicy_TimeoutsRef {
+        ComputeSslPolicy_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeSslPolicyTimeoutsEl {
+pub struct ComputeSslPolicy_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -421,7 +470,7 @@ pub struct ComputeSslPolicyTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeSslPolicyTimeoutsEl {
+impl ComputeSslPolicy_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -441,8 +490,8 @@ impl ComputeSslPolicyTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeSslPolicyTimeoutsEl {
-    type O = terrars::BlockAssignable<ComputeSslPolicyTimeoutsEl>;
+impl terrars::ToListMappable for ComputeSslPolicy_Timeouts {
+    type O = terrars::BlockAssignable<ComputeSslPolicy_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -453,11 +502,11 @@ impl terrars::ToListMappable for ComputeSslPolicyTimeoutsEl {
     }
 }
 
-pub struct BuildComputeSslPolicyTimeoutsEl {}
+pub struct BuildComputeSslPolicy_Timeouts {}
 
-impl BuildComputeSslPolicyTimeoutsEl {
-    pub fn build(self) -> ComputeSslPolicyTimeoutsEl {
-        ComputeSslPolicyTimeoutsEl {
+impl BuildComputeSslPolicy_Timeouts {
+    pub fn build(self) -> ComputeSslPolicy_Timeouts {
+        ComputeSslPolicy_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -465,21 +514,23 @@ impl BuildComputeSslPolicyTimeoutsEl {
     }
 }
 
-pub struct ComputeSslPolicyTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComputeSslPolicy_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeSslPolicyTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeSslPolicyTimeoutsElRef {
-        ComputeSslPolicyTimeoutsElRef {
+impl terrars::Ref for ComputeSslPolicy_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeSslPolicy_TimeoutsRef {
+        ComputeSslPolicy_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeSslPolicyTimeoutsElRef {
+impl ComputeSslPolicy_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

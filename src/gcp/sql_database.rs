@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct SqlDatabaseData {
+struct SqlDatabaseData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -31,13 +33,13 @@ struct SqlDatabaseData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<SqlDatabaseTimeoutsEl>,
+    timeouts: std::option::Option<SqlDatabase_Timeouts>,
 }
 
 struct SqlDatabase_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SqlDatabaseData>,
+    data: std::cell::RefCell<SqlDatabaseData_>,
 }
 
 #[derive(Clone)]
@@ -152,7 +154,7 @@ impl SqlDatabase {
     }
 
     #[doc =
-        "Set the field `deletion_policy`.\nThe deletion policy for the database. Setting ABANDON allows the resource\nto be abandoned rather than deleted. This is useful for Postgres, where databases cannot be\ndeleted from the API if there are users other than cloudsqlsuperuser with access. Possible\nvalues are: \"ABANDON\", \"DELETE\". Defaults to \"DELETE\"."]
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
     pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
         self
@@ -171,7 +173,7 @@ impl SqlDatabase {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<SqlDatabaseTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<SqlDatabase_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -189,7 +191,7 @@ impl SqlDatabase {
     }
 
     #[doc =
-        "Get a reference to the value of field `deletion_policy` after provisioning.\nThe deletion policy for the database. Setting ABANDON allows the resource\nto be abandoned rather than deleted. This is useful for Postgres, where databases cannot be\ndeleted from the API if there are users other than cloudsqlsuperuser with access. Possible\nvalues are: \"ABANDON\", \"DELETE\". Defaults to \"DELETE\"."]
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
     pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
@@ -222,8 +224,8 @@ impl SqlDatabase {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> SqlDatabaseTimeoutsElRef {
-        SqlDatabaseTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> SqlDatabase_TimeoutsRef {
+        SqlDatabase_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -272,7 +274,7 @@ impl BuildSqlDatabase {
         let out = SqlDatabase(std::rc::Rc::new(SqlDatabase_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SqlDatabaseData {
+            data: std::cell::RefCell::new(SqlDatabaseData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -329,7 +331,7 @@ impl SqlDatabaseRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `deletion_policy` after provisioning.\nThe deletion policy for the database. Setting ABANDON allows the resource\nto be abandoned rather than deleted. This is useful for Postgres, where databases cannot be\ndeleted from the API if there are users other than cloudsqlsuperuser with access. Possible\nvalues are: \"ABANDON\", \"DELETE\". Defaults to \"DELETE\"."]
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
     pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
@@ -362,13 +364,13 @@ impl SqlDatabaseRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> SqlDatabaseTimeoutsElRef {
-        SqlDatabaseTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> SqlDatabase_TimeoutsRef {
+        SqlDatabase_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct SqlDatabaseTimeoutsEl {
+pub struct SqlDatabase_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -377,7 +379,7 @@ pub struct SqlDatabaseTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SqlDatabaseTimeoutsEl {
+impl SqlDatabase_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -397,8 +399,8 @@ impl SqlDatabaseTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for SqlDatabaseTimeoutsEl {
-    type O = terrars::BlockAssignable<SqlDatabaseTimeoutsEl>;
+impl terrars::ToListMappable for SqlDatabase_Timeouts {
+    type O = terrars::BlockAssignable<SqlDatabase_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -409,11 +411,11 @@ impl terrars::ToListMappable for SqlDatabaseTimeoutsEl {
     }
 }
 
-pub struct BuildSqlDatabaseTimeoutsEl {}
+pub struct BuildSqlDatabase_Timeouts {}
 
-impl BuildSqlDatabaseTimeoutsEl {
-    pub fn build(self) -> SqlDatabaseTimeoutsEl {
-        SqlDatabaseTimeoutsEl {
+impl BuildSqlDatabase_Timeouts {
+    pub fn build(self) -> SqlDatabase_Timeouts {
+        SqlDatabase_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -421,21 +423,23 @@ impl BuildSqlDatabaseTimeoutsEl {
     }
 }
 
-pub struct SqlDatabaseTimeoutsElRef {
+#[allow(dead_code)]
+pub struct SqlDatabase_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SqlDatabaseTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SqlDatabaseTimeoutsElRef {
-        SqlDatabaseTimeoutsElRef {
+impl terrars::Ref for SqlDatabase_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SqlDatabase_TimeoutsRef {
+        SqlDatabase_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SqlDatabaseTimeoutsElRef {
+impl SqlDatabase_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

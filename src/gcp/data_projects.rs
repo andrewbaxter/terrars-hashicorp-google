@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataProjectsData {
+struct DataProjectsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -24,7 +26,7 @@ struct DataProjectsData {
 struct DataProjects_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataProjectsData>,
+    data: std::cell::RefCell<DataProjectsData_>,
 }
 
 #[derive(Clone)]
@@ -86,7 +88,7 @@ impl DataProjects {
     }
 
     #[doc = "Get a reference to the value of field `projects` after provisioning.\n"]
-    pub fn projects(&self) -> terrars::ListRef<DataProjectsProjectsElRef> {
+    pub fn projects(&self) -> terrars::ListRef<DataProjects_ProjectsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.projects", self.extract_ref()))
     }
 }
@@ -133,7 +135,7 @@ impl BuildDataProjects {
         let out = DataProjects(std::rc::Rc::new(DataProjects_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataProjectsData {
+            data: std::cell::RefCell::new(DataProjectsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -181,13 +183,13 @@ impl DataProjectsRef {
     }
 
     #[doc = "Get a reference to the value of field `projects` after provisioning.\n"]
-    pub fn projects(&self) -> terrars::ListRef<DataProjectsProjectsElRef> {
+    pub fn projects(&self) -> terrars::ListRef<DataProjects_ProjectsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.projects", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataProjectsProjectsEl {
+pub struct DataProjects_Projects {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create_time: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -204,7 +206,7 @@ pub struct DataProjectsProjectsEl {
     project_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataProjectsProjectsEl {
+impl DataProjects_Projects {
     #[doc = "Set the field `create_time`.\n"]
     pub fn set_create_time(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create_time = std::option::Option::Some(v.into());
@@ -254,8 +256,8 @@ impl DataProjectsProjectsEl {
     }
 }
 
-impl terrars::ToListMappable for DataProjectsProjectsEl {
-    type O = terrars::BlockAssignable<DataProjectsProjectsEl>;
+impl terrars::ToListMappable for DataProjects_Projects {
+    type O = terrars::BlockAssignable<DataProjects_Projects>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -266,11 +268,11 @@ impl terrars::ToListMappable for DataProjectsProjectsEl {
     }
 }
 
-pub struct BuildDataProjectsProjectsEl {}
+pub struct BuildDataProjects_Projects {}
 
-impl BuildDataProjectsProjectsEl {
-    pub fn build(self) -> DataProjectsProjectsEl {
-        DataProjectsProjectsEl {
+impl BuildDataProjects_Projects {
+    pub fn build(self) -> DataProjects_Projects {
+        DataProjects_Projects {
             create_time: core::default::Default::default(),
             labels: core::default::Default::default(),
             lifecycle_state: core::default::Default::default(),
@@ -282,21 +284,23 @@ impl BuildDataProjectsProjectsEl {
     }
 }
 
-pub struct DataProjectsProjectsElRef {
+#[allow(dead_code)]
+pub struct DataProjects_ProjectsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataProjectsProjectsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataProjectsProjectsElRef {
-        DataProjectsProjectsElRef {
+impl terrars::Ref for DataProjects_ProjectsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataProjects_ProjectsRef {
+        DataProjects_ProjectsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataProjectsProjectsElRef {
+impl DataProjects_ProjectsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

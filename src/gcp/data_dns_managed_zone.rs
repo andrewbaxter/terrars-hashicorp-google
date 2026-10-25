@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataDnsManagedZoneData {
+struct DataDnsManagedZoneData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -24,7 +26,7 @@ struct DataDnsManagedZoneData {
 struct DataDnsManagedZone_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataDnsManagedZoneData>,
+    data: std::cell::RefCell<DataDnsManagedZoneData_>,
 }
 
 #[derive(Clone)]
@@ -69,53 +71,48 @@ impl DataDnsManagedZone {
         self
     }
 
-    #[doc = "Set the field `project`.\nThe ID of the project for the Google Cloud."]
+    #[doc = "Set the field `project`.\n"]
     pub fn set_project(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().project = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc = "Get a reference to the value of field `description` after provisioning.\nA textual description field."]
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc =
-        "Get a reference to the value of field `dns_name` after provisioning.\nThe fully qualified DNS name of this zone."]
+    #[doc = "Get a reference to the value of field `dns_name` after provisioning.\n"]
     pub fn dns_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.dns_name", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `id` after provisioning.\nDNS managed zone identifier"]
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc =
-        "Get a reference to the value of field `managed_zone_id` after provisioning.\nUnique identifier for the resource; defined by the server."]
+    #[doc = "Get a reference to the value of field `managed_zone_id` after provisioning.\n"]
     pub fn managed_zone_id(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.managed_zone_id", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `name` after provisioning.\nA unique name for the resource."]
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc =
-        "Get a reference to the value of field `name_servers` after provisioning.\nThe list of nameservers that will be authoritative for this domain. Use NS records to redirect from your DNS provider to these names, thus making Google Cloud DNS authoritative for this zone."]
+    #[doc = "Get a reference to the value of field `name_servers` after provisioning.\n"]
     pub fn name_servers(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.name_servers", self.extract_ref()))
     }
 
-    #[doc =
-        "Get a reference to the value of field `project` after provisioning.\nThe ID of the project for the Google Cloud."]
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
     pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc =
-        "Get a reference to the value of field `visibility` after provisioning.\nThe zone's visibility: public zones are exposed to the Internet, while private zones are visible only to Virtual Private Cloud resources."]
+    #[doc = "Get a reference to the value of field `visibility` after provisioning.\n"]
     pub fn visibility(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.visibility", self.extract_ref()))
     }
@@ -154,7 +151,7 @@ impl terrars::Datasource_ for DataDnsManagedZone_ {
 
 pub struct BuildDataDnsManagedZone {
     pub tf_id: std::string::String,
-    #[doc = "A unique name for the resource."]
+    #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
 }
 
@@ -163,7 +160,7 @@ impl BuildDataDnsManagedZone {
         let out = DataDnsManagedZone(std::rc::Rc::new(DataDnsManagedZone_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataDnsManagedZoneData {
+            data: std::cell::RefCell::new(DataDnsManagedZoneData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -200,47 +197,42 @@ impl DataDnsManagedZoneRef {
         self.base.clone()
     }
 
-    #[doc = "Get a reference to the value of field `description` after provisioning.\nA textual description field."]
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc =
-        "Get a reference to the value of field `dns_name` after provisioning.\nThe fully qualified DNS name of this zone."]
+    #[doc = "Get a reference to the value of field `dns_name` after provisioning.\n"]
     pub fn dns_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.dns_name", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `id` after provisioning.\nDNS managed zone identifier"]
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc =
-        "Get a reference to the value of field `managed_zone_id` after provisioning.\nUnique identifier for the resource; defined by the server."]
+    #[doc = "Get a reference to the value of field `managed_zone_id` after provisioning.\n"]
     pub fn managed_zone_id(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.managed_zone_id", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `name` after provisioning.\nA unique name for the resource."]
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc =
-        "Get a reference to the value of field `name_servers` after provisioning.\nThe list of nameservers that will be authoritative for this domain. Use NS records to redirect from your DNS provider to these names, thus making Google Cloud DNS authoritative for this zone."]
+    #[doc = "Get a reference to the value of field `name_servers` after provisioning.\n"]
     pub fn name_servers(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.name_servers", self.extract_ref()))
     }
 
-    #[doc =
-        "Get a reference to the value of field `project` after provisioning.\nThe ID of the project for the Google Cloud."]
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
     pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc =
-        "Get a reference to the value of field `visibility` after provisioning.\nThe zone's visibility: public zones are exposed to the Internet, while private zones are visible only to Virtual Private Cloud resources."]
+    #[doc = "Get a reference to the value of field `visibility` after provisioning.\n"]
     pub fn visibility(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.visibility", self.extract_ref()))
     }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct CertificateManagerDnsAuthorizationData {
+struct CertificateManagerDnsAuthorizationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,23 +21,29 @@ struct CertificateManagerDnsAuthorizationData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     domain: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    location: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
+    type_: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<CertificateManagerDnsAuthorizationTimeoutsEl>,
+    timeouts: std::option::Option<CertificateManagerDnsAuthorization_Timeouts>,
 }
 
 struct CertificateManagerDnsAuthorization_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CertificateManagerDnsAuthorizationData>,
+    data: std::cell::RefCell<CertificateManagerDnsAuthorizationData_>,
 }
 
 #[derive(Clone)]
@@ -135,6 +143,13 @@ impl CertificateManagerDnsAuthorization {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nA human-readable description of the resource."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -157,16 +172,35 @@ impl CertificateManagerDnsAuthorization {
         self
     }
 
+    #[doc = "Set the field `location`.\nThe Certificate Manager location. If not specified, \"global\" is used."]
+    pub fn set_location(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().location = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `project`.\n"]
     pub fn set_project(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().project = std::option::Option::Some(v.into());
         self
     }
 
+    #[doc =
+        "Set the field `type_`.\ntype of DNS authorization. If unset during the resource creation, FIXED_RECORD will\nbe used for global resources, and PER_PROJECT_RECORD will be used for other locations.\n\nFIXED_RECORD DNS authorization uses DNS-01 validation method\n\nPER_PROJECT_RECORD DNS authorization allows for independent management\nof Google-managed certificates with DNS authorization across multiple\nprojects. Possible values: [\"FIXED_RECORD\", \"PER_PROJECT_RECORD\"]"]
+    pub fn set_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().type_ = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<CertificateManagerDnsAuthorizationTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<CertificateManagerDnsAuthorization_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -177,7 +211,7 @@ impl CertificateManagerDnsAuthorization {
 
     #[doc =
         "Get a reference to the value of field `dns_resource_record` after provisioning.\nThe structure describing the DNS Resource Record that needs to be added\nto DNS configuration for the authorization to be usable by\ncertificate."]
-    pub fn dns_resource_record(&self) -> terrars::ListRef<CertificateManagerDnsAuthorizationDnsResourceRecordElRef> {
+    pub fn dns_resource_record(&self) -> terrars::ListRef<CertificateManagerDnsAuthorization_DnsResourceRecordRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dns_resource_record", self.extract_ref()))
     }
 
@@ -205,6 +239,12 @@ impl CertificateManagerDnsAuthorization {
     }
 
     #[doc =
+        "Get a reference to the value of field `location` after provisioning.\nThe Certificate Manager location. If not specified, \"global\" is used."]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `name` after provisioning.\nName of the resource; provided by the client when the resource is created.\nThe name must be 1-64 characters long, and match the regular expression [a-zA-Z][a-zA-Z0-9_-]* which means the first character must be a letter,\nand all following characters must be a dash, underscore, letter or digit."]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
@@ -221,9 +261,15 @@ impl CertificateManagerDnsAuthorization {
         terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `type_` after provisioning.\ntype of DNS authorization. If unset during the resource creation, FIXED_RECORD will\nbe used for global resources, and PER_PROJECT_RECORD will be used for other locations.\n\nFIXED_RECORD DNS authorization uses DNS-01 validation method\n\nPER_PROJECT_RECORD DNS authorization allows for independent management\nof Google-managed certificates with DNS authorization across multiple\nprojects. Possible values: [\"FIXED_RECORD\", \"PER_PROJECT_RECORD\"]"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> CertificateManagerDnsAuthorizationTimeoutsElRef {
-        CertificateManagerDnsAuthorizationTimeoutsElRef::new(
+    pub fn timeouts(&self) -> CertificateManagerDnsAuthorization_TimeoutsRef {
+        CertificateManagerDnsAuthorization_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -276,18 +322,21 @@ impl BuildCertificateManagerDnsAuthorization {
         let out = CertificateManagerDnsAuthorization(std::rc::Rc::new(CertificateManagerDnsAuthorization_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CertificateManagerDnsAuthorizationData {
+            data: std::cell::RefCell::new(CertificateManagerDnsAuthorizationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 domain: self.domain,
                 id: core::default::Default::default(),
                 labels: core::default::Default::default(),
+                location: core::default::Default::default(),
                 name: self.name,
                 project: core::default::Default::default(),
+                type_: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
             }),
         }));
@@ -320,6 +369,12 @@ impl CertificateManagerDnsAuthorizationRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nA human-readable description of the resource."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -327,7 +382,7 @@ impl CertificateManagerDnsAuthorizationRef {
 
     #[doc =
         "Get a reference to the value of field `dns_resource_record` after provisioning.\nThe structure describing the DNS Resource Record that needs to be added\nto DNS configuration for the authorization to be usable by\ncertificate."]
-    pub fn dns_resource_record(&self) -> terrars::ListRef<CertificateManagerDnsAuthorizationDnsResourceRecordElRef> {
+    pub fn dns_resource_record(&self) -> terrars::ListRef<CertificateManagerDnsAuthorization_DnsResourceRecordRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dns_resource_record", self.extract_ref()))
     }
 
@@ -355,6 +410,12 @@ impl CertificateManagerDnsAuthorizationRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `location` after provisioning.\nThe Certificate Manager location. If not specified, \"global\" is used."]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `name` after provisioning.\nName of the resource; provided by the client when the resource is created.\nThe name must be 1-64 characters long, and match the regular expression [a-zA-Z][a-zA-Z0-9_-]* which means the first character must be a letter,\nand all following characters must be a dash, underscore, letter or digit."]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
@@ -371,9 +432,15 @@ impl CertificateManagerDnsAuthorizationRef {
         terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `type_` after provisioning.\ntype of DNS authorization. If unset during the resource creation, FIXED_RECORD will\nbe used for global resources, and PER_PROJECT_RECORD will be used for other locations.\n\nFIXED_RECORD DNS authorization uses DNS-01 validation method\n\nPER_PROJECT_RECORD DNS authorization allows for independent management\nof Google-managed certificates with DNS authorization across multiple\nprojects. Possible values: [\"FIXED_RECORD\", \"PER_PROJECT_RECORD\"]"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> CertificateManagerDnsAuthorizationTimeoutsElRef {
-        CertificateManagerDnsAuthorizationTimeoutsElRef::new(
+    pub fn timeouts(&self) -> CertificateManagerDnsAuthorization_TimeoutsRef {
+        CertificateManagerDnsAuthorization_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -381,7 +448,7 @@ impl CertificateManagerDnsAuthorizationRef {
 }
 
 #[derive(Serialize)]
-pub struct CertificateManagerDnsAuthorizationDnsResourceRecordEl {
+pub struct CertificateManagerDnsAuthorization_DnsResourceRecord {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     data: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -390,7 +457,7 @@ pub struct CertificateManagerDnsAuthorizationDnsResourceRecordEl {
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CertificateManagerDnsAuthorizationDnsResourceRecordEl {
+impl CertificateManagerDnsAuthorization_DnsResourceRecord {
     #[doc = "Set the field `data`.\n"]
     pub fn set_data(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.data = std::option::Option::Some(v.into());
@@ -410,8 +477,8 @@ impl CertificateManagerDnsAuthorizationDnsResourceRecordEl {
     }
 }
 
-impl terrars::ToListMappable for CertificateManagerDnsAuthorizationDnsResourceRecordEl {
-    type O = terrars::BlockAssignable<CertificateManagerDnsAuthorizationDnsResourceRecordEl>;
+impl terrars::ToListMappable for CertificateManagerDnsAuthorization_DnsResourceRecord {
+    type O = terrars::BlockAssignable<CertificateManagerDnsAuthorization_DnsResourceRecord>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -422,11 +489,11 @@ impl terrars::ToListMappable for CertificateManagerDnsAuthorizationDnsResourceRe
     }
 }
 
-pub struct BuildCertificateManagerDnsAuthorizationDnsResourceRecordEl {}
+pub struct BuildCertificateManagerDnsAuthorization_DnsResourceRecord {}
 
-impl BuildCertificateManagerDnsAuthorizationDnsResourceRecordEl {
-    pub fn build(self) -> CertificateManagerDnsAuthorizationDnsResourceRecordEl {
-        CertificateManagerDnsAuthorizationDnsResourceRecordEl {
+impl BuildCertificateManagerDnsAuthorization_DnsResourceRecord {
+    pub fn build(self) -> CertificateManagerDnsAuthorization_DnsResourceRecord {
+        CertificateManagerDnsAuthorization_DnsResourceRecord {
             data: core::default::Default::default(),
             name: core::default::Default::default(),
             type_: core::default::Default::default(),
@@ -434,24 +501,26 @@ impl BuildCertificateManagerDnsAuthorizationDnsResourceRecordEl {
     }
 }
 
-pub struct CertificateManagerDnsAuthorizationDnsResourceRecordElRef {
+#[allow(dead_code)]
+pub struct CertificateManagerDnsAuthorization_DnsResourceRecordRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CertificateManagerDnsAuthorizationDnsResourceRecordElRef {
+impl terrars::Ref for CertificateManagerDnsAuthorization_DnsResourceRecordRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CertificateManagerDnsAuthorizationDnsResourceRecordElRef {
-        CertificateManagerDnsAuthorizationDnsResourceRecordElRef {
+    ) -> CertificateManagerDnsAuthorization_DnsResourceRecordRef {
+        CertificateManagerDnsAuthorization_DnsResourceRecordRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CertificateManagerDnsAuthorizationDnsResourceRecordElRef {
+impl CertificateManagerDnsAuthorization_DnsResourceRecordRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -473,7 +542,7 @@ impl CertificateManagerDnsAuthorizationDnsResourceRecordElRef {
 }
 
 #[derive(Serialize)]
-pub struct CertificateManagerDnsAuthorizationTimeoutsEl {
+pub struct CertificateManagerDnsAuthorization_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -482,7 +551,7 @@ pub struct CertificateManagerDnsAuthorizationTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CertificateManagerDnsAuthorizationTimeoutsEl {
+impl CertificateManagerDnsAuthorization_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -502,8 +571,8 @@ impl CertificateManagerDnsAuthorizationTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for CertificateManagerDnsAuthorizationTimeoutsEl {
-    type O = terrars::BlockAssignable<CertificateManagerDnsAuthorizationTimeoutsEl>;
+impl terrars::ToListMappable for CertificateManagerDnsAuthorization_Timeouts {
+    type O = terrars::BlockAssignable<CertificateManagerDnsAuthorization_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -514,11 +583,11 @@ impl terrars::ToListMappable for CertificateManagerDnsAuthorizationTimeoutsEl {
     }
 }
 
-pub struct BuildCertificateManagerDnsAuthorizationTimeoutsEl {}
+pub struct BuildCertificateManagerDnsAuthorization_Timeouts {}
 
-impl BuildCertificateManagerDnsAuthorizationTimeoutsEl {
-    pub fn build(self) -> CertificateManagerDnsAuthorizationTimeoutsEl {
-        CertificateManagerDnsAuthorizationTimeoutsEl {
+impl BuildCertificateManagerDnsAuthorization_Timeouts {
+    pub fn build(self) -> CertificateManagerDnsAuthorization_Timeouts {
+        CertificateManagerDnsAuthorization_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -526,24 +595,26 @@ impl BuildCertificateManagerDnsAuthorizationTimeoutsEl {
     }
 }
 
-pub struct CertificateManagerDnsAuthorizationTimeoutsElRef {
+#[allow(dead_code)]
+pub struct CertificateManagerDnsAuthorization_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CertificateManagerDnsAuthorizationTimeoutsElRef {
+impl terrars::Ref for CertificateManagerDnsAuthorization_TimeoutsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CertificateManagerDnsAuthorizationTimeoutsElRef {
-        CertificateManagerDnsAuthorizationTimeoutsElRef {
+    ) -> CertificateManagerDnsAuthorization_TimeoutsRef {
+        CertificateManagerDnsAuthorization_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CertificateManagerDnsAuthorizationTimeoutsElRef {
+impl CertificateManagerDnsAuthorization_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

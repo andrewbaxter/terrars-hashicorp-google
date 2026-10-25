@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct VertexAiFeaturestoreData {
+struct VertexAiFeaturestoreData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct VertexAiFeaturestoreData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     force_destroy: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -31,18 +35,18 @@ struct VertexAiFeaturestoreData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    encryption_spec: std::option::Option<std::vec::Vec<VertexAiFeaturestoreEncryptionSpecEl>>,
+    encryption_spec: std::option::Option<std::vec::Vec<VertexAiFeaturestore_EncryptionSpec>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    online_serving_config: std::option::Option<std::vec::Vec<VertexAiFeaturestoreOnlineServingConfigEl>>,
+    online_serving_config: std::option::Option<std::vec::Vec<VertexAiFeaturestore_OnlineServingConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<VertexAiFeaturestoreTimeoutsEl>,
+    timeouts: std::option::Option<VertexAiFeaturestore_Timeouts>,
     dynamic: VertexAiFeaturestoreDynamic,
 }
 
 struct VertexAiFeaturestore_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<VertexAiFeaturestoreData>,
+    data: std::cell::RefCell<VertexAiFeaturestoreData_>,
 }
 
 #[derive(Clone)]
@@ -143,6 +147,13 @@ impl VertexAiFeaturestore {
     }
 
     #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `force_destroy`.\nIf set to true, any EntityTypes and Features for this Featurestore will also be deleted"]
     pub fn set_force_destroy(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().force_destroy = std::option::Option::Some(v.into());
@@ -187,7 +198,7 @@ impl VertexAiFeaturestore {
     #[doc = "Set the field `encryption_spec`.\n"]
     pub fn set_encryption_spec(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<VertexAiFeaturestoreEncryptionSpecEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<VertexAiFeaturestore_EncryptionSpec>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -203,7 +214,7 @@ impl VertexAiFeaturestore {
     #[doc = "Set the field `online_serving_config`.\n"]
     pub fn set_online_serving_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<VertexAiFeaturestoreOnlineServingConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<VertexAiFeaturestore_OnlineServingConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -217,7 +228,7 @@ impl VertexAiFeaturestore {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<VertexAiFeaturestoreTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<VertexAiFeaturestore_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -226,6 +237,12 @@ impl VertexAiFeaturestore {
         "Get a reference to the value of field `create_time` after provisioning.\nThe timestamp of when the featurestore was created in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -287,18 +304,18 @@ impl VertexAiFeaturestore {
     }
 
     #[doc = "Get a reference to the value of field `encryption_spec` after provisioning.\n"]
-    pub fn encryption_spec(&self) -> terrars::ListRef<VertexAiFeaturestoreEncryptionSpecElRef> {
+    pub fn encryption_spec(&self) -> terrars::ListRef<VertexAiFeaturestore_EncryptionSpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_spec", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `online_serving_config` after provisioning.\n"]
-    pub fn online_serving_config(&self) -> terrars::ListRef<VertexAiFeaturestoreOnlineServingConfigElRef> {
+    pub fn online_serving_config(&self) -> terrars::ListRef<VertexAiFeaturestore_OnlineServingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.online_serving_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> VertexAiFeaturestoreTimeoutsElRef {
-        VertexAiFeaturestoreTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> VertexAiFeaturestore_TimeoutsRef {
+        VertexAiFeaturestore_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -342,12 +359,13 @@ impl BuildVertexAiFeaturestore {
         let out = VertexAiFeaturestore(std::rc::Rc::new(VertexAiFeaturestore_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(VertexAiFeaturestoreData {
+            data: std::cell::RefCell::new(VertexAiFeaturestoreData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 force_destroy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 labels: core::default::Default::default(),
@@ -395,6 +413,12 @@ impl VertexAiFeaturestoreRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
     pub fn effective_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
@@ -453,30 +477,36 @@ impl VertexAiFeaturestoreRef {
     }
 
     #[doc = "Get a reference to the value of field `encryption_spec` after provisioning.\n"]
-    pub fn encryption_spec(&self) -> terrars::ListRef<VertexAiFeaturestoreEncryptionSpecElRef> {
+    pub fn encryption_spec(&self) -> terrars::ListRef<VertexAiFeaturestore_EncryptionSpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_spec", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `online_serving_config` after provisioning.\n"]
-    pub fn online_serving_config(&self) -> terrars::ListRef<VertexAiFeaturestoreOnlineServingConfigElRef> {
+    pub fn online_serving_config(&self) -> terrars::ListRef<VertexAiFeaturestore_OnlineServingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.online_serving_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> VertexAiFeaturestoreTimeoutsElRef {
-        VertexAiFeaturestoreTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> VertexAiFeaturestore_TimeoutsRef {
+        VertexAiFeaturestore_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct VertexAiFeaturestoreDynamic {
+    encryption_spec: std::option::Option<terrars::DynamicBlock<VertexAiFeaturestore_EncryptionSpec>>,
+    online_serving_config: std::option::Option<terrars::DynamicBlock<VertexAiFeaturestore_OnlineServingConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct VertexAiFeaturestoreEncryptionSpecEl {
+pub struct VertexAiFeaturestore_EncryptionSpec {
     kms_key_name: terrars::PrimField<std::string::String>,
 }
 
-impl VertexAiFeaturestoreEncryptionSpecEl { }
+impl VertexAiFeaturestore_EncryptionSpec { }
 
-impl terrars::ToListMappable for VertexAiFeaturestoreEncryptionSpecEl {
-    type O = terrars::BlockAssignable<VertexAiFeaturestoreEncryptionSpecEl>;
+impl terrars::ToListMappable for VertexAiFeaturestore_EncryptionSpec {
+    type O = terrars::BlockAssignable<VertexAiFeaturestore_EncryptionSpec>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -487,33 +517,35 @@ impl terrars::ToListMappable for VertexAiFeaturestoreEncryptionSpecEl {
     }
 }
 
-pub struct BuildVertexAiFeaturestoreEncryptionSpecEl {
+pub struct BuildVertexAiFeaturestore_EncryptionSpec {
     #[doc =
         "The Cloud KMS resource identifier of the customer managed encryption key used to protect a resource. Has the form: projects/my-project/locations/my-region/keyRings/my-kr/cryptoKeys/my-key. The key needs to be in the same region as where the compute resource is created."]
     pub kms_key_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildVertexAiFeaturestoreEncryptionSpecEl {
-    pub fn build(self) -> VertexAiFeaturestoreEncryptionSpecEl {
-        VertexAiFeaturestoreEncryptionSpecEl { kms_key_name: self.kms_key_name }
+impl BuildVertexAiFeaturestore_EncryptionSpec {
+    pub fn build(self) -> VertexAiFeaturestore_EncryptionSpec {
+        VertexAiFeaturestore_EncryptionSpec { kms_key_name: self.kms_key_name }
     }
 }
 
-pub struct VertexAiFeaturestoreEncryptionSpecElRef {
+#[allow(dead_code)]
+pub struct VertexAiFeaturestore_EncryptionSpecRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for VertexAiFeaturestoreEncryptionSpecElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> VertexAiFeaturestoreEncryptionSpecElRef {
-        VertexAiFeaturestoreEncryptionSpecElRef {
+impl terrars::Ref for VertexAiFeaturestore_EncryptionSpecRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> VertexAiFeaturestore_EncryptionSpecRef {
+        VertexAiFeaturestore_EncryptionSpecRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl VertexAiFeaturestoreEncryptionSpecElRef {
+impl VertexAiFeaturestore_EncryptionSpecRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -526,15 +558,15 @@ impl VertexAiFeaturestoreEncryptionSpecElRef {
 }
 
 #[derive(Serialize)]
-pub struct VertexAiFeaturestoreOnlineServingConfigElScalingEl {
+pub struct VertexAiFeaturestore_OnlineServingConfig_Scaling {
     max_node_count: terrars::PrimField<f64>,
     min_node_count: terrars::PrimField<f64>,
 }
 
-impl VertexAiFeaturestoreOnlineServingConfigElScalingEl { }
+impl VertexAiFeaturestore_OnlineServingConfig_Scaling { }
 
-impl terrars::ToListMappable for VertexAiFeaturestoreOnlineServingConfigElScalingEl {
-    type O = terrars::BlockAssignable<VertexAiFeaturestoreOnlineServingConfigElScalingEl>;
+impl terrars::ToListMappable for VertexAiFeaturestore_OnlineServingConfig_Scaling {
+    type O = terrars::BlockAssignable<VertexAiFeaturestore_OnlineServingConfig_Scaling>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -545,7 +577,7 @@ impl terrars::ToListMappable for VertexAiFeaturestoreOnlineServingConfigElScalin
     }
 }
 
-pub struct BuildVertexAiFeaturestoreOnlineServingConfigElScalingEl {
+pub struct BuildVertexAiFeaturestore_OnlineServingConfig_Scaling {
     #[doc =
         "The maximum number of nodes to scale up to. Must be greater than minNodeCount, and less than or equal to 10 times of 'minNodeCount'."]
     pub max_node_count: terrars::PrimField<f64>,
@@ -553,33 +585,35 @@ pub struct BuildVertexAiFeaturestoreOnlineServingConfigElScalingEl {
     pub min_node_count: terrars::PrimField<f64>,
 }
 
-impl BuildVertexAiFeaturestoreOnlineServingConfigElScalingEl {
-    pub fn build(self) -> VertexAiFeaturestoreOnlineServingConfigElScalingEl {
-        VertexAiFeaturestoreOnlineServingConfigElScalingEl {
+impl BuildVertexAiFeaturestore_OnlineServingConfig_Scaling {
+    pub fn build(self) -> VertexAiFeaturestore_OnlineServingConfig_Scaling {
+        VertexAiFeaturestore_OnlineServingConfig_Scaling {
             max_node_count: self.max_node_count,
             min_node_count: self.min_node_count,
         }
     }
 }
 
-pub struct VertexAiFeaturestoreOnlineServingConfigElScalingElRef {
+#[allow(dead_code)]
+pub struct VertexAiFeaturestore_OnlineServingConfig_ScalingRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for VertexAiFeaturestoreOnlineServingConfigElScalingElRef {
+impl terrars::Ref for VertexAiFeaturestore_OnlineServingConfig_ScalingRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> VertexAiFeaturestoreOnlineServingConfigElScalingElRef {
-        VertexAiFeaturestoreOnlineServingConfigElScalingElRef {
+    ) -> VertexAiFeaturestore_OnlineServingConfig_ScalingRef {
+        VertexAiFeaturestore_OnlineServingConfig_ScalingRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl VertexAiFeaturestoreOnlineServingConfigElScalingElRef {
+impl VertexAiFeaturestore_OnlineServingConfig_ScalingRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -598,20 +632,20 @@ impl VertexAiFeaturestoreOnlineServingConfigElScalingElRef {
 }
 
 #[derive(Serialize, Default)]
-struct VertexAiFeaturestoreOnlineServingConfigElDynamic {
-    scaling: std::option::Option<terrars::DynamicBlock<VertexAiFeaturestoreOnlineServingConfigElScalingEl>>,
+struct VertexAiFeaturestore_OnlineServingConfigDynamic {
+    scaling: std::option::Option<terrars::DynamicBlock<VertexAiFeaturestore_OnlineServingConfig_Scaling>>,
 }
 
 #[derive(Serialize)]
-pub struct VertexAiFeaturestoreOnlineServingConfigEl {
+pub struct VertexAiFeaturestore_OnlineServingConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     fixed_node_count: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    scaling: std::option::Option<std::vec::Vec<VertexAiFeaturestoreOnlineServingConfigElScalingEl>>,
-    dynamic: VertexAiFeaturestoreOnlineServingConfigElDynamic,
+    scaling: std::option::Option<std::vec::Vec<VertexAiFeaturestore_OnlineServingConfig_Scaling>>,
+    dynamic: VertexAiFeaturestore_OnlineServingConfigDynamic,
 }
 
-impl VertexAiFeaturestoreOnlineServingConfigEl {
+impl VertexAiFeaturestore_OnlineServingConfig {
     #[doc =
         "Set the field `fixed_node_count`.\nThe number of nodes for each cluster. The number of nodes will not scale automatically but can be scaled manually by providing different values when updating."]
     pub fn set_fixed_node_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -622,7 +656,7 @@ impl VertexAiFeaturestoreOnlineServingConfigEl {
     #[doc = "Set the field `scaling`.\n"]
     pub fn set_scaling(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<VertexAiFeaturestoreOnlineServingConfigElScalingEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<VertexAiFeaturestore_OnlineServingConfig_Scaling>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -636,8 +670,8 @@ impl VertexAiFeaturestoreOnlineServingConfigEl {
     }
 }
 
-impl terrars::ToListMappable for VertexAiFeaturestoreOnlineServingConfigEl {
-    type O = terrars::BlockAssignable<VertexAiFeaturestoreOnlineServingConfigEl>;
+impl terrars::ToListMappable for VertexAiFeaturestore_OnlineServingConfig {
+    type O = terrars::BlockAssignable<VertexAiFeaturestore_OnlineServingConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -648,11 +682,11 @@ impl terrars::ToListMappable for VertexAiFeaturestoreOnlineServingConfigEl {
     }
 }
 
-pub struct BuildVertexAiFeaturestoreOnlineServingConfigEl {}
+pub struct BuildVertexAiFeaturestore_OnlineServingConfig {}
 
-impl BuildVertexAiFeaturestoreOnlineServingConfigEl {
-    pub fn build(self) -> VertexAiFeaturestoreOnlineServingConfigEl {
-        VertexAiFeaturestoreOnlineServingConfigEl {
+impl BuildVertexAiFeaturestore_OnlineServingConfig {
+    pub fn build(self) -> VertexAiFeaturestore_OnlineServingConfig {
+        VertexAiFeaturestore_OnlineServingConfig {
             fixed_node_count: core::default::Default::default(),
             scaling: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -660,21 +694,23 @@ impl BuildVertexAiFeaturestoreOnlineServingConfigEl {
     }
 }
 
-pub struct VertexAiFeaturestoreOnlineServingConfigElRef {
+#[allow(dead_code)]
+pub struct VertexAiFeaturestore_OnlineServingConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for VertexAiFeaturestoreOnlineServingConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> VertexAiFeaturestoreOnlineServingConfigElRef {
-        VertexAiFeaturestoreOnlineServingConfigElRef {
+impl terrars::Ref for VertexAiFeaturestore_OnlineServingConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> VertexAiFeaturestore_OnlineServingConfigRef {
+        VertexAiFeaturestore_OnlineServingConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl VertexAiFeaturestoreOnlineServingConfigElRef {
+impl VertexAiFeaturestore_OnlineServingConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -686,13 +722,13 @@ impl VertexAiFeaturestoreOnlineServingConfigElRef {
     }
 
     #[doc = "Get a reference to the value of field `scaling` after provisioning.\n"]
-    pub fn scaling(&self) -> terrars::ListRef<VertexAiFeaturestoreOnlineServingConfigElScalingElRef> {
+    pub fn scaling(&self) -> terrars::ListRef<VertexAiFeaturestore_OnlineServingConfig_ScalingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.scaling", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct VertexAiFeaturestoreTimeoutsEl {
+pub struct VertexAiFeaturestore_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -701,7 +737,7 @@ pub struct VertexAiFeaturestoreTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl VertexAiFeaturestoreTimeoutsEl {
+impl VertexAiFeaturestore_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -721,8 +757,8 @@ impl VertexAiFeaturestoreTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for VertexAiFeaturestoreTimeoutsEl {
-    type O = terrars::BlockAssignable<VertexAiFeaturestoreTimeoutsEl>;
+impl terrars::ToListMappable for VertexAiFeaturestore_Timeouts {
+    type O = terrars::BlockAssignable<VertexAiFeaturestore_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -733,11 +769,11 @@ impl terrars::ToListMappable for VertexAiFeaturestoreTimeoutsEl {
     }
 }
 
-pub struct BuildVertexAiFeaturestoreTimeoutsEl {}
+pub struct BuildVertexAiFeaturestore_Timeouts {}
 
-impl BuildVertexAiFeaturestoreTimeoutsEl {
-    pub fn build(self) -> VertexAiFeaturestoreTimeoutsEl {
-        VertexAiFeaturestoreTimeoutsEl {
+impl BuildVertexAiFeaturestore_Timeouts {
+    pub fn build(self) -> VertexAiFeaturestore_Timeouts {
+        VertexAiFeaturestore_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -745,21 +781,23 @@ impl BuildVertexAiFeaturestoreTimeoutsEl {
     }
 }
 
-pub struct VertexAiFeaturestoreTimeoutsElRef {
+#[allow(dead_code)]
+pub struct VertexAiFeaturestore_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for VertexAiFeaturestoreTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> VertexAiFeaturestoreTimeoutsElRef {
-        VertexAiFeaturestoreTimeoutsElRef {
+impl terrars::Ref for VertexAiFeaturestore_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> VertexAiFeaturestore_TimeoutsRef {
+        VertexAiFeaturestore_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl VertexAiFeaturestoreTimeoutsElRef {
+impl VertexAiFeaturestore_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -778,10 +816,4 @@ impl VertexAiFeaturestoreTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct VertexAiFeaturestoreDynamic {
-    encryption_spec: std::option::Option<terrars::DynamicBlock<VertexAiFeaturestoreEncryptionSpecEl>>,
-    online_serving_config: std::option::Option<terrars::DynamicBlock<VertexAiFeaturestoreOnlineServingConfigEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataArtifactRegistryRepositoryData {
+struct DataArtifactRegistryRepositoryData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -27,7 +29,7 @@ struct DataArtifactRegistryRepositoryData {
 struct DataArtifactRegistryRepository_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataArtifactRegistryRepositoryData>,
+    data: std::cell::RefCell<DataArtifactRegistryRepositoryData_>,
 }
 
 #[derive(Clone)]
@@ -85,9 +87,27 @@ impl DataArtifactRegistryRepository {
     }
 
     #[doc =
+        "Get a reference to the value of field `cleanup_policies` after provisioning.\nCleanup policies for this repository. Cleanup policies indicate when\ncertain package versions can be automatically deleted.\nMap keys are policy IDs supplied by users during policy creation. They must\nunique within a repository and be under 128 characters in length."]
+    pub fn cleanup_policies(&self) -> terrars::SetRef<DataArtifactRegistryRepository_CleanupPoliciesRef> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.cleanup_policies", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `cleanup_policy_dry_run` after provisioning.\nIf true, the cleanup pipeline is prevented from deleting versions in this\nrepository."]
+    pub fn cleanup_policy_dry_run(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cleanup_policy_dry_run", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `create_time` after provisioning.\nThe time when the repository was created."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -98,7 +118,7 @@ impl DataArtifactRegistryRepository {
 
     #[doc =
         "Get a reference to the value of field `docker_config` after provisioning.\nDocker repository config contains repository level configuration for the repositories of docker type."]
-    pub fn docker_config(&self) -> terrars::ListRef<DataArtifactRegistryRepositoryDockerConfigElRef> {
+    pub fn docker_config(&self) -> terrars::ListRef<DataArtifactRegistryRepository_DockerConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.docker_config", self.extract_ref()))
     }
 
@@ -132,14 +152,14 @@ impl DataArtifactRegistryRepository {
     }
 
     #[doc =
-        "Get a reference to the value of field `location` after provisioning.\nThe name of the location this repository is located in."]
+        "Get a reference to the value of field `location` after provisioning.\nThe name of the repository's location. In addition to specific regions,\nspecial values for multi-region locations are 'asia', 'europe', and 'us'.\nSee [here](https://cloud.google.com/artifact-registry/docs/repositories/repo-locations),\nor use the\n[google_artifact_registry_locations](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/artifact_registry_locations)\ndata source for possible values."]
     pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
 
     #[doc =
         "Get a reference to the value of field `maven_config` after provisioning.\nMavenRepositoryConfig is maven related repository details.\nProvides additional configuration details for repositories of the maven\nformat type."]
-    pub fn maven_config(&self) -> terrars::ListRef<DataArtifactRegistryRepositoryMavenConfigElRef> {
+    pub fn maven_config(&self) -> terrars::ListRef<DataArtifactRegistryRepository_MavenConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.maven_config", self.extract_ref()))
     }
 
@@ -161,10 +181,14 @@ impl DataArtifactRegistryRepository {
     }
 
     #[doc =
+        "Get a reference to the value of field `registry_uri` after provisioning.\nThe repository endpoint, for example: us-docker.pkg.dev/my-proj/my-repo."]
+    pub fn registry_uri(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.registry_uri", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `remote_repository_config` after provisioning.\nConfiguration specific for a Remote Repository."]
-    pub fn remote_repository_config(
-        &self,
-    ) -> terrars::ListRef<DataArtifactRegistryRepositoryRemoteRepositoryConfigElRef> {
+    pub fn remote_repository_config(&self) -> terrars::ListRef<DataArtifactRegistryRepository_RemoteRepositoryConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.remote_repository_config", self.extract_ref()))
     }
 
@@ -190,8 +214,16 @@ impl DataArtifactRegistryRepository {
         "Get a reference to the value of field `virtual_repository_config` after provisioning.\nConfiguration specific for a Virtual Repository."]
     pub fn virtual_repository_config(
         &self,
-    ) -> terrars::ListRef<DataArtifactRegistryRepositoryVirtualRepositoryConfigElRef> {
+    ) -> terrars::ListRef<DataArtifactRegistryRepository_VirtualRepositoryConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.virtual_repository_config", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `vulnerability_scanning_config` after provisioning.\nConfiguration for vulnerability scanning of artifacts stored in this repository."]
+    pub fn vulnerability_scanning_config(
+        &self,
+    ) -> terrars::ListRef<DataArtifactRegistryRepository_VulnerabilityScanningConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.vulnerability_scanning_config", self.extract_ref()))
     }
 }
 
@@ -228,7 +260,8 @@ impl terrars::Datasource_ for DataArtifactRegistryRepository_ {
 
 pub struct BuildDataArtifactRegistryRepository {
     pub tf_id: std::string::String,
-    #[doc = "The name of the location this repository is located in."]
+    #[doc =
+        "The name of the repository's location. In addition to specific regions,\nspecial values for multi-region locations are 'asia', 'europe', and 'us'.\nSee [here](https://cloud.google.com/artifact-registry/docs/repositories/repo-locations),\nor use the\n[google_artifact_registry_locations](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/artifact_registry_locations)\ndata source for possible values."]
     pub location: terrars::PrimField<std::string::String>,
     #[doc = "The last part of the repository name, for example:\n\"repo1\""]
     pub repository_id: terrars::PrimField<std::string::String>,
@@ -239,7 +272,7 @@ impl BuildDataArtifactRegistryRepository {
         let out = DataArtifactRegistryRepository(std::rc::Rc::new(DataArtifactRegistryRepository_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataArtifactRegistryRepositoryData {
+            data: std::cell::RefCell::new(DataArtifactRegistryRepositoryData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -279,9 +312,27 @@ impl DataArtifactRegistryRepositoryRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `cleanup_policies` after provisioning.\nCleanup policies for this repository. Cleanup policies indicate when\ncertain package versions can be automatically deleted.\nMap keys are policy IDs supplied by users during policy creation. They must\nunique within a repository and be under 128 characters in length."]
+    pub fn cleanup_policies(&self) -> terrars::SetRef<DataArtifactRegistryRepository_CleanupPoliciesRef> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.cleanup_policies", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `cleanup_policy_dry_run` after provisioning.\nIf true, the cleanup pipeline is prevented from deleting versions in this\nrepository."]
+    pub fn cleanup_policy_dry_run(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cleanup_policy_dry_run", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `create_time` after provisioning.\nThe time when the repository was created."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -292,7 +343,7 @@ impl DataArtifactRegistryRepositoryRef {
 
     #[doc =
         "Get a reference to the value of field `docker_config` after provisioning.\nDocker repository config contains repository level configuration for the repositories of docker type."]
-    pub fn docker_config(&self) -> terrars::ListRef<DataArtifactRegistryRepositoryDockerConfigElRef> {
+    pub fn docker_config(&self) -> terrars::ListRef<DataArtifactRegistryRepository_DockerConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.docker_config", self.extract_ref()))
     }
 
@@ -326,14 +377,14 @@ impl DataArtifactRegistryRepositoryRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `location` after provisioning.\nThe name of the location this repository is located in."]
+        "Get a reference to the value of field `location` after provisioning.\nThe name of the repository's location. In addition to specific regions,\nspecial values for multi-region locations are 'asia', 'europe', and 'us'.\nSee [here](https://cloud.google.com/artifact-registry/docs/repositories/repo-locations),\nor use the\n[google_artifact_registry_locations](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/artifact_registry_locations)\ndata source for possible values."]
     pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
 
     #[doc =
         "Get a reference to the value of field `maven_config` after provisioning.\nMavenRepositoryConfig is maven related repository details.\nProvides additional configuration details for repositories of the maven\nformat type."]
-    pub fn maven_config(&self) -> terrars::ListRef<DataArtifactRegistryRepositoryMavenConfigElRef> {
+    pub fn maven_config(&self) -> terrars::ListRef<DataArtifactRegistryRepository_MavenConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.maven_config", self.extract_ref()))
     }
 
@@ -355,10 +406,14 @@ impl DataArtifactRegistryRepositoryRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `registry_uri` after provisioning.\nThe repository endpoint, for example: us-docker.pkg.dev/my-proj/my-repo."]
+    pub fn registry_uri(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.registry_uri", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `remote_repository_config` after provisioning.\nConfiguration specific for a Remote Repository."]
-    pub fn remote_repository_config(
-        &self,
-    ) -> terrars::ListRef<DataArtifactRegistryRepositoryRemoteRepositoryConfigElRef> {
+    pub fn remote_repository_config(&self) -> terrars::ListRef<DataArtifactRegistryRepository_RemoteRepositoryConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.remote_repository_config", self.extract_ref()))
     }
 
@@ -384,27 +439,84 @@ impl DataArtifactRegistryRepositoryRef {
         "Get a reference to the value of field `virtual_repository_config` after provisioning.\nConfiguration specific for a Virtual Repository."]
     pub fn virtual_repository_config(
         &self,
-    ) -> terrars::ListRef<DataArtifactRegistryRepositoryVirtualRepositoryConfigElRef> {
+    ) -> terrars::ListRef<DataArtifactRegistryRepository_VirtualRepositoryConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.virtual_repository_config", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `vulnerability_scanning_config` after provisioning.\nConfiguration for vulnerability scanning of artifacts stored in this repository."]
+    pub fn vulnerability_scanning_config(
+        &self,
+    ) -> terrars::ListRef<DataArtifactRegistryRepository_VulnerabilityScanningConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.vulnerability_scanning_config", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataArtifactRegistryRepositoryDockerConfigEl {
+pub struct DataArtifactRegistryRepository_CleanupPolicies_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    immutable_tags: std::option::Option<terrars::PrimField<bool>>,
+    newer_than: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    older_than: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    package_name_prefixes: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tag_prefixes: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tag_state: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    version_name_prefixes: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DataArtifactRegistryRepositoryDockerConfigEl {
-    #[doc = "Set the field `immutable_tags`.\n"]
-    pub fn set_immutable_tags(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.immutable_tags = std::option::Option::Some(v.into());
+impl DataArtifactRegistryRepository_CleanupPolicies_Condition {
+    #[doc = "Set the field `newer_than`.\n"]
+    pub fn set_newer_than(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.newer_than = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `older_than`.\n"]
+    pub fn set_older_than(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.older_than = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `package_name_prefixes`.\n"]
+    pub fn set_package_name_prefixes(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.package_name_prefixes = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tag_prefixes`.\n"]
+    pub fn set_tag_prefixes(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.tag_prefixes = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tag_state`.\n"]
+    pub fn set_tag_state(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.tag_state = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `version_name_prefixes`.\n"]
+    pub fn set_version_name_prefixes(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.version_name_prefixes = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataArtifactRegistryRepositoryDockerConfigEl {
-    type O = terrars::BlockAssignable<DataArtifactRegistryRepositoryDockerConfigEl>;
+impl terrars::ToListMappable for DataArtifactRegistryRepository_CleanupPolicies_Condition {
+    type O = terrars::BlockAssignable<DataArtifactRegistryRepository_CleanupPolicies_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -415,32 +527,336 @@ impl terrars::ToListMappable for DataArtifactRegistryRepositoryDockerConfigEl {
     }
 }
 
-pub struct BuildDataArtifactRegistryRepositoryDockerConfigEl {}
+pub struct BuildDataArtifactRegistryRepository_CleanupPolicies_Condition {}
 
-impl BuildDataArtifactRegistryRepositoryDockerConfigEl {
-    pub fn build(self) -> DataArtifactRegistryRepositoryDockerConfigEl {
-        DataArtifactRegistryRepositoryDockerConfigEl { immutable_tags: core::default::Default::default() }
+impl BuildDataArtifactRegistryRepository_CleanupPolicies_Condition {
+    pub fn build(self) -> DataArtifactRegistryRepository_CleanupPolicies_Condition {
+        DataArtifactRegistryRepository_CleanupPolicies_Condition {
+            newer_than: core::default::Default::default(),
+            older_than: core::default::Default::default(),
+            package_name_prefixes: core::default::Default::default(),
+            tag_prefixes: core::default::Default::default(),
+            tag_state: core::default::Default::default(),
+            version_name_prefixes: core::default::Default::default(),
+        }
     }
 }
 
-pub struct DataArtifactRegistryRepositoryDockerConfigElRef {
+#[allow(dead_code)]
+pub struct DataArtifactRegistryRepository_CleanupPolicies_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataArtifactRegistryRepositoryDockerConfigElRef {
+impl terrars::Ref for DataArtifactRegistryRepository_CleanupPolicies_ConditionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataArtifactRegistryRepositoryDockerConfigElRef {
-        DataArtifactRegistryRepositoryDockerConfigElRef {
+    ) -> DataArtifactRegistryRepository_CleanupPolicies_ConditionRef {
+        DataArtifactRegistryRepository_CleanupPolicies_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataArtifactRegistryRepositoryDockerConfigElRef {
+impl DataArtifactRegistryRepository_CleanupPolicies_ConditionRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `newer_than` after provisioning.\n"]
+    pub fn newer_than(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.newer_than", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `older_than` after provisioning.\n"]
+    pub fn older_than(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.older_than", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `package_name_prefixes` after provisioning.\n"]
+    pub fn package_name_prefixes(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.package_name_prefixes", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `tag_prefixes` after provisioning.\n"]
+    pub fn tag_prefixes(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.tag_prefixes", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `tag_state` after provisioning.\n"]
+    pub fn tag_state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tag_state", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `version_name_prefixes` after provisioning.\n"]
+    pub fn version_name_prefixes(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.version_name_prefixes", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataArtifactRegistryRepository_CleanupPolicies_MostRecentVersions {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    keep_count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    package_name_prefixes: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+}
+
+impl DataArtifactRegistryRepository_CleanupPolicies_MostRecentVersions {
+    #[doc = "Set the field `keep_count`.\n"]
+    pub fn set_keep_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.keep_count = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `package_name_prefixes`.\n"]
+    pub fn set_package_name_prefixes(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.package_name_prefixes = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataArtifactRegistryRepository_CleanupPolicies_MostRecentVersions {
+    type O = terrars::BlockAssignable<DataArtifactRegistryRepository_CleanupPolicies_MostRecentVersions>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataArtifactRegistryRepository_CleanupPolicies_MostRecentVersions {}
+
+impl BuildDataArtifactRegistryRepository_CleanupPolicies_MostRecentVersions {
+    pub fn build(self) -> DataArtifactRegistryRepository_CleanupPolicies_MostRecentVersions {
+        DataArtifactRegistryRepository_CleanupPolicies_MostRecentVersions {
+            keep_count: core::default::Default::default(),
+            package_name_prefixes: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataArtifactRegistryRepository_CleanupPolicies_MostRecentVersionsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataArtifactRegistryRepository_CleanupPolicies_MostRecentVersionsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataArtifactRegistryRepository_CleanupPolicies_MostRecentVersionsRef {
+        DataArtifactRegistryRepository_CleanupPolicies_MostRecentVersionsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataArtifactRegistryRepository_CleanupPolicies_MostRecentVersionsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `keep_count` after provisioning.\n"]
+    pub fn keep_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.keep_count", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `package_name_prefixes` after provisioning.\n"]
+    pub fn package_name_prefixes(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.package_name_prefixes", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataArtifactRegistryRepository_CleanupPolicies {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    action: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    condition: std::option::Option<terrars::ListField<DataArtifactRegistryRepository_CleanupPolicies_Condition>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    most_recent_versions: std
+    ::option
+    ::Option<terrars::ListField<DataArtifactRegistryRepository_CleanupPolicies_MostRecentVersions>>,
+}
+
+impl DataArtifactRegistryRepository_CleanupPolicies {
+    #[doc = "Set the field `action`.\n"]
+    pub fn set_action(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.action = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `condition`.\n"]
+    pub fn set_condition(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataArtifactRegistryRepository_CleanupPolicies_Condition>>,
+    ) -> Self {
+        self.condition = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `most_recent_versions`.\n"]
+    pub fn set_most_recent_versions(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::ListField<DataArtifactRegistryRepository_CleanupPolicies_MostRecentVersions>>,
+    ) -> Self {
+        self.most_recent_versions = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataArtifactRegistryRepository_CleanupPolicies {
+    type O = terrars::BlockAssignable<DataArtifactRegistryRepository_CleanupPolicies>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataArtifactRegistryRepository_CleanupPolicies {}
+
+impl BuildDataArtifactRegistryRepository_CleanupPolicies {
+    pub fn build(self) -> DataArtifactRegistryRepository_CleanupPolicies {
+        DataArtifactRegistryRepository_CleanupPolicies {
+            action: core::default::Default::default(),
+            condition: core::default::Default::default(),
+            id: core::default::Default::default(),
+            most_recent_versions: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataArtifactRegistryRepository_CleanupPoliciesRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataArtifactRegistryRepository_CleanupPoliciesRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataArtifactRegistryRepository_CleanupPoliciesRef {
+        DataArtifactRegistryRepository_CleanupPoliciesRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataArtifactRegistryRepository_CleanupPoliciesRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `action` after provisioning.\n"]
+    pub fn action(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.action", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
+    pub fn condition(&self) -> terrars::ListRef<DataArtifactRegistryRepository_CleanupPolicies_ConditionRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `most_recent_versions` after provisioning.\n"]
+    pub fn most_recent_versions(
+        &self,
+    ) -> terrars::ListRef<DataArtifactRegistryRepository_CleanupPolicies_MostRecentVersionsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.most_recent_versions", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataArtifactRegistryRepository_DockerConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    immutable_tags: std::option::Option<terrars::PrimField<bool>>,
+}
+
+impl DataArtifactRegistryRepository_DockerConfig {
+    #[doc = "Set the field `immutable_tags`.\n"]
+    pub fn set_immutable_tags(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.immutable_tags = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataArtifactRegistryRepository_DockerConfig {
+    type O = terrars::BlockAssignable<DataArtifactRegistryRepository_DockerConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataArtifactRegistryRepository_DockerConfig {}
+
+impl BuildDataArtifactRegistryRepository_DockerConfig {
+    pub fn build(self) -> DataArtifactRegistryRepository_DockerConfig {
+        DataArtifactRegistryRepository_DockerConfig { immutable_tags: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataArtifactRegistryRepository_DockerConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataArtifactRegistryRepository_DockerConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataArtifactRegistryRepository_DockerConfigRef {
+        DataArtifactRegistryRepository_DockerConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataArtifactRegistryRepository_DockerConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -452,14 +868,14 @@ impl DataArtifactRegistryRepositoryDockerConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataArtifactRegistryRepositoryMavenConfigEl {
+pub struct DataArtifactRegistryRepository_MavenConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allow_snapshot_overwrites: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     version_policy: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataArtifactRegistryRepositoryMavenConfigEl {
+impl DataArtifactRegistryRepository_MavenConfig {
     #[doc = "Set the field `allow_snapshot_overwrites`.\n"]
     pub fn set_allow_snapshot_overwrites(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.allow_snapshot_overwrites = std::option::Option::Some(v.into());
@@ -473,8 +889,8 @@ impl DataArtifactRegistryRepositoryMavenConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataArtifactRegistryRepositoryMavenConfigEl {
-    type O = terrars::BlockAssignable<DataArtifactRegistryRepositoryMavenConfigEl>;
+impl terrars::ToListMappable for DataArtifactRegistryRepository_MavenConfig {
+    type O = terrars::BlockAssignable<DataArtifactRegistryRepository_MavenConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -485,35 +901,34 @@ impl terrars::ToListMappable for DataArtifactRegistryRepositoryMavenConfigEl {
     }
 }
 
-pub struct BuildDataArtifactRegistryRepositoryMavenConfigEl {}
+pub struct BuildDataArtifactRegistryRepository_MavenConfig {}
 
-impl BuildDataArtifactRegistryRepositoryMavenConfigEl {
-    pub fn build(self) -> DataArtifactRegistryRepositoryMavenConfigEl {
-        DataArtifactRegistryRepositoryMavenConfigEl {
+impl BuildDataArtifactRegistryRepository_MavenConfig {
+    pub fn build(self) -> DataArtifactRegistryRepository_MavenConfig {
+        DataArtifactRegistryRepository_MavenConfig {
             allow_snapshot_overwrites: core::default::Default::default(),
             version_policy: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataArtifactRegistryRepositoryMavenConfigElRef {
+#[allow(dead_code)]
+pub struct DataArtifactRegistryRepository_MavenConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataArtifactRegistryRepositoryMavenConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataArtifactRegistryRepositoryMavenConfigElRef {
-        DataArtifactRegistryRepositoryMavenConfigElRef {
+impl terrars::Ref for DataArtifactRegistryRepository_MavenConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataArtifactRegistryRepository_MavenConfigRef {
+        DataArtifactRegistryRepository_MavenConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataArtifactRegistryRepositoryMavenConfigElRef {
+impl DataArtifactRegistryRepository_MavenConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -530,14 +945,14 @@ impl DataArtifactRegistryRepositoryMavenConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataArtifactRegistryRepositoryRemoteRepositoryConfigElAptRepositoryElPublicRepositoryEl {
+pub struct DataArtifactRegistryRepository_RemoteRepositoryConfig_AptRepository_PublicRepository {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     repository_base: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     repository_path: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElAptRepositoryElPublicRepositoryEl {
+impl DataArtifactRegistryRepository_RemoteRepositoryConfig_AptRepository_PublicRepository {
     #[doc = "Set the field `repository_base`.\n"]
     pub fn set_repository_base(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.repository_base = std::option::Option::Some(v.into());
@@ -551,11 +966,10 @@ impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElAptRepositoryElPublic
     }
 }
 
-impl terrars
-::ToListMappable for DataArtifactRegistryRepositoryRemoteRepositoryConfigElAptRepositoryElPublicRepositoryEl {
+impl terrars::ToListMappable for DataArtifactRegistryRepository_RemoteRepositoryConfig_AptRepository_PublicRepository {
     type O =
         terrars
-        ::BlockAssignable<DataArtifactRegistryRepositoryRemoteRepositoryConfigElAptRepositoryElPublicRepositoryEl>;
+        ::BlockAssignable<DataArtifactRegistryRepository_RemoteRepositoryConfig_AptRepository_PublicRepository>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -566,35 +980,37 @@ impl terrars
     }
 }
 
-pub struct BuildDataArtifactRegistryRepositoryRemoteRepositoryConfigElAptRepositoryElPublicRepositoryEl {}
+pub struct BuildDataArtifactRegistryRepository_RemoteRepositoryConfig_AptRepository_PublicRepository {}
 
-impl BuildDataArtifactRegistryRepositoryRemoteRepositoryConfigElAptRepositoryElPublicRepositoryEl {
-    pub fn build(self) -> DataArtifactRegistryRepositoryRemoteRepositoryConfigElAptRepositoryElPublicRepositoryEl {
-        DataArtifactRegistryRepositoryRemoteRepositoryConfigElAptRepositoryElPublicRepositoryEl {
+impl BuildDataArtifactRegistryRepository_RemoteRepositoryConfig_AptRepository_PublicRepository {
+    pub fn build(self) -> DataArtifactRegistryRepository_RemoteRepositoryConfig_AptRepository_PublicRepository {
+        DataArtifactRegistryRepository_RemoteRepositoryConfig_AptRepository_PublicRepository {
             repository_base: core::default::Default::default(),
             repository_path: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataArtifactRegistryRepositoryRemoteRepositoryConfigElAptRepositoryElPublicRepositoryElRef {
+#[allow(dead_code)]
+pub struct DataArtifactRegistryRepository_RemoteRepositoryConfig_AptRepository_PublicRepositoryRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataArtifactRegistryRepositoryRemoteRepositoryConfigElAptRepositoryElPublicRepositoryElRef {
+impl terrars::Ref for DataArtifactRegistryRepository_RemoteRepositoryConfig_AptRepository_PublicRepositoryRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataArtifactRegistryRepositoryRemoteRepositoryConfigElAptRepositoryElPublicRepositoryElRef {
-        DataArtifactRegistryRepositoryRemoteRepositoryConfigElAptRepositoryElPublicRepositoryElRef {
+    ) -> DataArtifactRegistryRepository_RemoteRepositoryConfig_AptRepository_PublicRepositoryRef {
+        DataArtifactRegistryRepository_RemoteRepositoryConfig_AptRepository_PublicRepositoryRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElAptRepositoryElPublicRepositoryElRef {
+impl DataArtifactRegistryRepository_RemoteRepositoryConfig_AptRepository_PublicRepositoryRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -611,16 +1027,16 @@ impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElAptRepositoryElPublic
 }
 
 #[derive(Serialize)]
-pub struct DataArtifactRegistryRepositoryRemoteRepositoryConfigElAptRepositoryEl {
+pub struct DataArtifactRegistryRepository_RemoteRepositoryConfig_AptRepository {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     public_repository: std
     ::option
     ::Option<
-        terrars::ListField<DataArtifactRegistryRepositoryRemoteRepositoryConfigElAptRepositoryElPublicRepositoryEl>,
+        terrars::ListField<DataArtifactRegistryRepository_RemoteRepositoryConfig_AptRepository_PublicRepository>,
     >,
 }
 
-impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElAptRepositoryEl {
+impl DataArtifactRegistryRepository_RemoteRepositoryConfig_AptRepository {
     #[doc = "Set the field `public_repository`.\n"]
     pub fn set_public_repository(
         mut self,
@@ -632,7 +1048,7 @@ impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElAptRepositoryEl {
                     ::Into<
                         terrars
                         ::ListField<
-                            DataArtifactRegistryRepositoryRemoteRepositoryConfigElAptRepositoryElPublicRepositoryEl,
+                            DataArtifactRegistryRepository_RemoteRepositoryConfig_AptRepository_PublicRepository,
                         >,
                     >,
     ) -> Self {
@@ -641,8 +1057,8 @@ impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElAptRepositoryEl {
     }
 }
 
-impl terrars::ToListMappable for DataArtifactRegistryRepositoryRemoteRepositoryConfigElAptRepositoryEl {
-    type O = terrars::BlockAssignable<DataArtifactRegistryRepositoryRemoteRepositoryConfigElAptRepositoryEl>;
+impl terrars::ToListMappable for DataArtifactRegistryRepository_RemoteRepositoryConfig_AptRepository {
+    type O = terrars::BlockAssignable<DataArtifactRegistryRepository_RemoteRepositoryConfig_AptRepository>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -653,34 +1069,36 @@ impl terrars::ToListMappable for DataArtifactRegistryRepositoryRemoteRepositoryC
     }
 }
 
-pub struct BuildDataArtifactRegistryRepositoryRemoteRepositoryConfigElAptRepositoryEl {}
+pub struct BuildDataArtifactRegistryRepository_RemoteRepositoryConfig_AptRepository {}
 
-impl BuildDataArtifactRegistryRepositoryRemoteRepositoryConfigElAptRepositoryEl {
-    pub fn build(self) -> DataArtifactRegistryRepositoryRemoteRepositoryConfigElAptRepositoryEl {
-        DataArtifactRegistryRepositoryRemoteRepositoryConfigElAptRepositoryEl {
+impl BuildDataArtifactRegistryRepository_RemoteRepositoryConfig_AptRepository {
+    pub fn build(self) -> DataArtifactRegistryRepository_RemoteRepositoryConfig_AptRepository {
+        DataArtifactRegistryRepository_RemoteRepositoryConfig_AptRepository {
             public_repository: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataArtifactRegistryRepositoryRemoteRepositoryConfigElAptRepositoryElRef {
+#[allow(dead_code)]
+pub struct DataArtifactRegistryRepository_RemoteRepositoryConfig_AptRepositoryRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataArtifactRegistryRepositoryRemoteRepositoryConfigElAptRepositoryElRef {
+impl terrars::Ref for DataArtifactRegistryRepository_RemoteRepositoryConfig_AptRepositoryRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataArtifactRegistryRepositoryRemoteRepositoryConfigElAptRepositoryElRef {
-        DataArtifactRegistryRepositoryRemoteRepositoryConfigElAptRepositoryElRef {
+    ) -> DataArtifactRegistryRepository_RemoteRepositoryConfig_AptRepositoryRef {
+        DataArtifactRegistryRepository_RemoteRepositoryConfig_AptRepositoryRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElAptRepositoryElRef {
+impl DataArtifactRegistryRepository_RemoteRepositoryConfig_AptRepositoryRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -688,27 +1106,27 @@ impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElAptRepositoryElRef {
     #[doc = "Get a reference to the value of field `public_repository` after provisioning.\n"]
     pub fn public_repository(
         &self,
-    ) -> terrars::ListRef<DataArtifactRegistryRepositoryRemoteRepositoryConfigElAptRepositoryElPublicRepositoryElRef> {
+    ) -> terrars::ListRef<DataArtifactRegistryRepository_RemoteRepositoryConfig_AptRepository_PublicRepositoryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.public_repository", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataArtifactRegistryRepositoryRemoteRepositoryConfigElDockerRepositoryEl {
+pub struct DataArtifactRegistryRepository_RemoteRepositoryConfig_CommonRepository {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    public_repository: std::option::Option<terrars::PrimField<std::string::String>>,
+    uri: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElDockerRepositoryEl {
-    #[doc = "Set the field `public_repository`.\n"]
-    pub fn set_public_repository(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.public_repository = std::option::Option::Some(v.into());
+impl DataArtifactRegistryRepository_RemoteRepositoryConfig_CommonRepository {
+    #[doc = "Set the field `uri`.\n"]
+    pub fn set_uri(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.uri = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataArtifactRegistryRepositoryRemoteRepositoryConfigElDockerRepositoryEl {
-    type O = terrars::BlockAssignable<DataArtifactRegistryRepositoryRemoteRepositoryConfigElDockerRepositoryEl>;
+impl terrars::ToListMappable for DataArtifactRegistryRepository_RemoteRepositoryConfig_CommonRepository {
+    type O = terrars::BlockAssignable<DataArtifactRegistryRepository_RemoteRepositoryConfig_CommonRepository>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -719,60 +1137,64 @@ impl terrars::ToListMappable for DataArtifactRegistryRepositoryRemoteRepositoryC
     }
 }
 
-pub struct BuildDataArtifactRegistryRepositoryRemoteRepositoryConfigElDockerRepositoryEl {}
+pub struct BuildDataArtifactRegistryRepository_RemoteRepositoryConfig_CommonRepository {}
 
-impl BuildDataArtifactRegistryRepositoryRemoteRepositoryConfigElDockerRepositoryEl {
-    pub fn build(self) -> DataArtifactRegistryRepositoryRemoteRepositoryConfigElDockerRepositoryEl {
-        DataArtifactRegistryRepositoryRemoteRepositoryConfigElDockerRepositoryEl {
-            public_repository: core::default::Default::default(),
+impl BuildDataArtifactRegistryRepository_RemoteRepositoryConfig_CommonRepository {
+    pub fn build(self) -> DataArtifactRegistryRepository_RemoteRepositoryConfig_CommonRepository {
+        DataArtifactRegistryRepository_RemoteRepositoryConfig_CommonRepository {
+            uri: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataArtifactRegistryRepositoryRemoteRepositoryConfigElDockerRepositoryElRef {
+#[allow(dead_code)]
+pub struct DataArtifactRegistryRepository_RemoteRepositoryConfig_CommonRepositoryRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataArtifactRegistryRepositoryRemoteRepositoryConfigElDockerRepositoryElRef {
+impl terrars::Ref for DataArtifactRegistryRepository_RemoteRepositoryConfig_CommonRepositoryRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataArtifactRegistryRepositoryRemoteRepositoryConfigElDockerRepositoryElRef {
-        DataArtifactRegistryRepositoryRemoteRepositoryConfigElDockerRepositoryElRef {
+    ) -> DataArtifactRegistryRepository_RemoteRepositoryConfig_CommonRepositoryRef {
+        DataArtifactRegistryRepository_RemoteRepositoryConfig_CommonRepositoryRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElDockerRepositoryElRef {
+impl DataArtifactRegistryRepository_RemoteRepositoryConfig_CommonRepositoryRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc = "Get a reference to the value of field `public_repository` after provisioning.\n"]
-    pub fn public_repository(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.public_repository", self.base))
+    #[doc = "Get a reference to the value of field `uri` after provisioning.\n"]
+    pub fn uri(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.uri", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataArtifactRegistryRepositoryRemoteRepositoryConfigElMavenRepositoryEl {
+pub struct DataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepository_CustomRepository {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    public_repository: std::option::Option<terrars::PrimField<std::string::String>>,
+    uri: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElMavenRepositoryEl {
-    #[doc = "Set the field `public_repository`.\n"]
-    pub fn set_public_repository(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.public_repository = std::option::Option::Some(v.into());
+impl DataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepository_CustomRepository {
+    #[doc = "Set the field `uri`.\n"]
+    pub fn set_uri(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.uri = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataArtifactRegistryRepositoryRemoteRepositoryConfigElMavenRepositoryEl {
-    type O = terrars::BlockAssignable<DataArtifactRegistryRepositoryRemoteRepositoryConfigElMavenRepositoryEl>;
+impl terrars::ToListMappable for DataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepository_CustomRepository {
+    type O =
+        terrars
+        ::BlockAssignable<DataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepository_CustomRepository>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -783,51 +1205,78 @@ impl terrars::ToListMappable for DataArtifactRegistryRepositoryRemoteRepositoryC
     }
 }
 
-pub struct BuildDataArtifactRegistryRepositoryRemoteRepositoryConfigElMavenRepositoryEl {}
+pub struct BuildDataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepository_CustomRepository {}
 
-impl BuildDataArtifactRegistryRepositoryRemoteRepositoryConfigElMavenRepositoryEl {
-    pub fn build(self) -> DataArtifactRegistryRepositoryRemoteRepositoryConfigElMavenRepositoryEl {
-        DataArtifactRegistryRepositoryRemoteRepositoryConfigElMavenRepositoryEl {
-            public_repository: core::default::Default::default(),
+impl BuildDataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepository_CustomRepository {
+    pub fn build(self) -> DataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepository_CustomRepository {
+        DataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepository_CustomRepository {
+            uri: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataArtifactRegistryRepositoryRemoteRepositoryConfigElMavenRepositoryElRef {
+#[allow(dead_code)]
+pub struct DataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepository_CustomRepositoryRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataArtifactRegistryRepositoryRemoteRepositoryConfigElMavenRepositoryElRef {
+impl terrars::Ref for DataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepository_CustomRepositoryRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataArtifactRegistryRepositoryRemoteRepositoryConfigElMavenRepositoryElRef {
-        DataArtifactRegistryRepositoryRemoteRepositoryConfigElMavenRepositoryElRef {
+    ) -> DataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepository_CustomRepositoryRef {
+        DataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepository_CustomRepositoryRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElMavenRepositoryElRef {
+impl DataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepository_CustomRepositoryRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc = "Get a reference to the value of field `public_repository` after provisioning.\n"]
-    pub fn public_repository(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.public_repository", self.base))
+    #[doc = "Get a reference to the value of field `uri` after provisioning.\n"]
+    pub fn uri(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.uri", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataArtifactRegistryRepositoryRemoteRepositoryConfigElNpmRepositoryEl {
+pub struct DataArtifactRegistryRepository_RemoteRepositoryConfig_DockerRepository {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_repository: std
+    ::option
+    ::Option<
+        terrars::ListField<DataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepository_CustomRepository>,
+    >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     public_repository: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElNpmRepositoryEl {
+impl DataArtifactRegistryRepository_RemoteRepositoryConfig_DockerRepository {
+    #[doc = "Set the field `custom_repository`.\n"]
+    pub fn set_custom_repository(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::ListField<
+                            DataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepository_CustomRepository,
+                        >,
+                    >,
+    ) -> Self {
+        self.custom_repository = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `public_repository`.\n"]
     pub fn set_public_repository(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.public_repository = std::option::Option::Some(v.into());
@@ -835,8 +1284,8 @@ impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElNpmRepositoryEl {
     }
 }
 
-impl terrars::ToListMappable for DataArtifactRegistryRepositoryRemoteRepositoryConfigElNpmRepositoryEl {
-    type O = terrars::BlockAssignable<DataArtifactRegistryRepositoryRemoteRepositoryConfigElNpmRepositoryEl>;
+impl terrars::ToListMappable for DataArtifactRegistryRepository_RemoteRepositoryConfig_DockerRepository {
+    type O = terrars::BlockAssignable<DataArtifactRegistryRepository_RemoteRepositoryConfig_DockerRepository>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -847,36 +1296,46 @@ impl terrars::ToListMappable for DataArtifactRegistryRepositoryRemoteRepositoryC
     }
 }
 
-pub struct BuildDataArtifactRegistryRepositoryRemoteRepositoryConfigElNpmRepositoryEl {}
+pub struct BuildDataArtifactRegistryRepository_RemoteRepositoryConfig_DockerRepository {}
 
-impl BuildDataArtifactRegistryRepositoryRemoteRepositoryConfigElNpmRepositoryEl {
-    pub fn build(self) -> DataArtifactRegistryRepositoryRemoteRepositoryConfigElNpmRepositoryEl {
-        DataArtifactRegistryRepositoryRemoteRepositoryConfigElNpmRepositoryEl {
+impl BuildDataArtifactRegistryRepository_RemoteRepositoryConfig_DockerRepository {
+    pub fn build(self) -> DataArtifactRegistryRepository_RemoteRepositoryConfig_DockerRepository {
+        DataArtifactRegistryRepository_RemoteRepositoryConfig_DockerRepository {
+            custom_repository: core::default::Default::default(),
             public_repository: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataArtifactRegistryRepositoryRemoteRepositoryConfigElNpmRepositoryElRef {
+#[allow(dead_code)]
+pub struct DataArtifactRegistryRepository_RemoteRepositoryConfig_DockerRepositoryRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataArtifactRegistryRepositoryRemoteRepositoryConfigElNpmRepositoryElRef {
+impl terrars::Ref for DataArtifactRegistryRepository_RemoteRepositoryConfig_DockerRepositoryRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataArtifactRegistryRepositoryRemoteRepositoryConfigElNpmRepositoryElRef {
-        DataArtifactRegistryRepositoryRemoteRepositoryConfigElNpmRepositoryElRef {
+    ) -> DataArtifactRegistryRepository_RemoteRepositoryConfig_DockerRepositoryRef {
+        DataArtifactRegistryRepository_RemoteRepositoryConfig_DockerRepositoryRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElNpmRepositoryElRef {
+impl DataArtifactRegistryRepository_RemoteRepositoryConfig_DockerRepositoryRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `custom_repository` after provisioning.\n"]
+    pub fn custom_repository(
+        &self,
+    ) -> terrars::ListRef<DataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepository_CustomRepositoryRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.custom_repository", self.base))
     }
 
     #[doc = "Get a reference to the value of field `public_repository` after provisioning.\n"]
@@ -886,12 +1345,37 @@ impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElNpmRepositoryElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataArtifactRegistryRepositoryRemoteRepositoryConfigElPythonRepositoryEl {
+pub struct DataArtifactRegistryRepository_RemoteRepositoryConfig_MavenRepository {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_repository: std
+    ::option
+    ::Option<
+        terrars::ListField<DataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepository_CustomRepository>,
+    >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     public_repository: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElPythonRepositoryEl {
+impl DataArtifactRegistryRepository_RemoteRepositoryConfig_MavenRepository {
+    #[doc = "Set the field `custom_repository`.\n"]
+    pub fn set_custom_repository(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::ListField<
+                            DataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepository_CustomRepository,
+                        >,
+                    >,
+    ) -> Self {
+        self.custom_repository = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `public_repository`.\n"]
     pub fn set_public_repository(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.public_repository = std::option::Option::Some(v.into());
@@ -899,8 +1383,8 @@ impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElPythonRepositoryEl {
     }
 }
 
-impl terrars::ToListMappable for DataArtifactRegistryRepositoryRemoteRepositoryConfigElPythonRepositoryEl {
-    type O = terrars::BlockAssignable<DataArtifactRegistryRepositoryRemoteRepositoryConfigElPythonRepositoryEl>;
+impl terrars::ToListMappable for DataArtifactRegistryRepository_RemoteRepositoryConfig_MavenRepository {
+    type O = terrars::BlockAssignable<DataArtifactRegistryRepository_RemoteRepositoryConfig_MavenRepository>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -911,36 +1395,46 @@ impl terrars::ToListMappable for DataArtifactRegistryRepositoryRemoteRepositoryC
     }
 }
 
-pub struct BuildDataArtifactRegistryRepositoryRemoteRepositoryConfigElPythonRepositoryEl {}
+pub struct BuildDataArtifactRegistryRepository_RemoteRepositoryConfig_MavenRepository {}
 
-impl BuildDataArtifactRegistryRepositoryRemoteRepositoryConfigElPythonRepositoryEl {
-    pub fn build(self) -> DataArtifactRegistryRepositoryRemoteRepositoryConfigElPythonRepositoryEl {
-        DataArtifactRegistryRepositoryRemoteRepositoryConfigElPythonRepositoryEl {
+impl BuildDataArtifactRegistryRepository_RemoteRepositoryConfig_MavenRepository {
+    pub fn build(self) -> DataArtifactRegistryRepository_RemoteRepositoryConfig_MavenRepository {
+        DataArtifactRegistryRepository_RemoteRepositoryConfig_MavenRepository {
+            custom_repository: core::default::Default::default(),
             public_repository: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataArtifactRegistryRepositoryRemoteRepositoryConfigElPythonRepositoryElRef {
+#[allow(dead_code)]
+pub struct DataArtifactRegistryRepository_RemoteRepositoryConfig_MavenRepositoryRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataArtifactRegistryRepositoryRemoteRepositoryConfigElPythonRepositoryElRef {
+impl terrars::Ref for DataArtifactRegistryRepository_RemoteRepositoryConfig_MavenRepositoryRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataArtifactRegistryRepositoryRemoteRepositoryConfigElPythonRepositoryElRef {
-        DataArtifactRegistryRepositoryRemoteRepositoryConfigElPythonRepositoryElRef {
+    ) -> DataArtifactRegistryRepository_RemoteRepositoryConfig_MavenRepositoryRef {
+        DataArtifactRegistryRepository_RemoteRepositoryConfig_MavenRepositoryRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElPythonRepositoryElRef {
+impl DataArtifactRegistryRepository_RemoteRepositoryConfig_MavenRepositoryRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `custom_repository` after provisioning.\n"]
+    pub fn custom_repository(
+        &self,
+    ) -> terrars::ListRef<DataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepository_CustomRepositoryRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.custom_repository", self.base))
     }
 
     #[doc = "Get a reference to the value of field `public_repository` after provisioning.\n"]
@@ -950,14 +1444,262 @@ impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElPythonRepositoryElRef
 }
 
 #[derive(Serialize)]
-pub struct DataArtifactRegistryRepositoryRemoteRepositoryConfigElUpstreamCredentialsElUsernamePasswordCredentialsEl {
+pub struct DataArtifactRegistryRepository_RemoteRepositoryConfig_NoCache {}
+
+impl DataArtifactRegistryRepository_RemoteRepositoryConfig_NoCache { }
+
+impl terrars::ToListMappable for DataArtifactRegistryRepository_RemoteRepositoryConfig_NoCache {
+    type O = terrars::BlockAssignable<DataArtifactRegistryRepository_RemoteRepositoryConfig_NoCache>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataArtifactRegistryRepository_RemoteRepositoryConfig_NoCache {}
+
+impl BuildDataArtifactRegistryRepository_RemoteRepositoryConfig_NoCache {
+    pub fn build(self) -> DataArtifactRegistryRepository_RemoteRepositoryConfig_NoCache {
+        DataArtifactRegistryRepository_RemoteRepositoryConfig_NoCache {}
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataArtifactRegistryRepository_RemoteRepositoryConfig_NoCacheRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataArtifactRegistryRepository_RemoteRepositoryConfig_NoCacheRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataArtifactRegistryRepository_RemoteRepositoryConfig_NoCacheRef {
+        DataArtifactRegistryRepository_RemoteRepositoryConfig_NoCacheRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataArtifactRegistryRepository_RemoteRepositoryConfig_NoCacheRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepository {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_repository: std
+    ::option
+    ::Option<
+        terrars::ListField<DataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepository_CustomRepository>,
+    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    public_repository: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepository {
+    #[doc = "Set the field `custom_repository`.\n"]
+    pub fn set_custom_repository(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::ListField<
+                            DataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepository_CustomRepository,
+                        >,
+                    >,
+    ) -> Self {
+        self.custom_repository = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `public_repository`.\n"]
+    pub fn set_public_repository(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.public_repository = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepository {
+    type O = terrars::BlockAssignable<DataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepository>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepository {}
+
+impl BuildDataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepository {
+    pub fn build(self) -> DataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepository {
+        DataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepository {
+            custom_repository: core::default::Default::default(),
+            public_repository: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepositoryRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepositoryRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepositoryRef {
+        DataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepositoryRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepositoryRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `custom_repository` after provisioning.\n"]
+    pub fn custom_repository(
+        &self,
+    ) -> terrars::ListRef<DataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepository_CustomRepositoryRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.custom_repository", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `public_repository` after provisioning.\n"]
+    pub fn public_repository(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.public_repository", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataArtifactRegistryRepository_RemoteRepositoryConfig_PythonRepository {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_repository: std
+    ::option
+    ::Option<
+        terrars::ListField<DataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepository_CustomRepository>,
+    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    public_repository: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataArtifactRegistryRepository_RemoteRepositoryConfig_PythonRepository {
+    #[doc = "Set the field `custom_repository`.\n"]
+    pub fn set_custom_repository(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::ListField<
+                            DataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepository_CustomRepository,
+                        >,
+                    >,
+    ) -> Self {
+        self.custom_repository = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `public_repository`.\n"]
+    pub fn set_public_repository(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.public_repository = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataArtifactRegistryRepository_RemoteRepositoryConfig_PythonRepository {
+    type O = terrars::BlockAssignable<DataArtifactRegistryRepository_RemoteRepositoryConfig_PythonRepository>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataArtifactRegistryRepository_RemoteRepositoryConfig_PythonRepository {}
+
+impl BuildDataArtifactRegistryRepository_RemoteRepositoryConfig_PythonRepository {
+    pub fn build(self) -> DataArtifactRegistryRepository_RemoteRepositoryConfig_PythonRepository {
+        DataArtifactRegistryRepository_RemoteRepositoryConfig_PythonRepository {
+            custom_repository: core::default::Default::default(),
+            public_repository: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataArtifactRegistryRepository_RemoteRepositoryConfig_PythonRepositoryRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataArtifactRegistryRepository_RemoteRepositoryConfig_PythonRepositoryRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataArtifactRegistryRepository_RemoteRepositoryConfig_PythonRepositoryRef {
+        DataArtifactRegistryRepository_RemoteRepositoryConfig_PythonRepositoryRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataArtifactRegistryRepository_RemoteRepositoryConfig_PythonRepositoryRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `custom_repository` after provisioning.\n"]
+    pub fn custom_repository(
+        &self,
+    ) -> terrars::ListRef<DataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepository_CustomRepositoryRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.custom_repository", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `public_repository` after provisioning.\n"]
+    pub fn public_repository(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.public_repository", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataArtifactRegistryRepository_RemoteRepositoryConfig_UpstreamCredentials_UsernamePasswordCredentials {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     password_secret_version: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     username: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElUpstreamCredentialsElUsernamePasswordCredentialsEl {
+impl DataArtifactRegistryRepository_RemoteRepositoryConfig_UpstreamCredentials_UsernamePasswordCredentials {
     #[doc = "Set the field `password_secret_version`.\n"]
     pub fn set_password_secret_version(
         mut self,
@@ -975,11 +1717,11 @@ impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElUpstreamCredentialsEl
 }
 
 impl terrars
-::ToListMappable for DataArtifactRegistryRepositoryRemoteRepositoryConfigElUpstreamCredentialsElUsernamePasswordCredentialsEl {
+::ToListMappable for DataArtifactRegistryRepository_RemoteRepositoryConfig_UpstreamCredentials_UsernamePasswordCredentials {
     type O =
         terrars
         ::BlockAssignable<
-            DataArtifactRegistryRepositoryRemoteRepositoryConfigElUpstreamCredentialsElUsernamePasswordCredentialsEl,
+            DataArtifactRegistryRepository_RemoteRepositoryConfig_UpstreamCredentials_UsernamePasswordCredentials,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -991,38 +1733,40 @@ impl terrars
     }
 }
 
-pub struct BuildDataArtifactRegistryRepositoryRemoteRepositoryConfigElUpstreamCredentialsElUsernamePasswordCredentialsEl {}
+pub struct BuildDataArtifactRegistryRepository_RemoteRepositoryConfig_UpstreamCredentials_UsernamePasswordCredentials {}
 
-impl BuildDataArtifactRegistryRepositoryRemoteRepositoryConfigElUpstreamCredentialsElUsernamePasswordCredentialsEl {
+impl BuildDataArtifactRegistryRepository_RemoteRepositoryConfig_UpstreamCredentials_UsernamePasswordCredentials {
     pub fn build(
         self,
-    ) -> DataArtifactRegistryRepositoryRemoteRepositoryConfigElUpstreamCredentialsElUsernamePasswordCredentialsEl {
-        DataArtifactRegistryRepositoryRemoteRepositoryConfigElUpstreamCredentialsElUsernamePasswordCredentialsEl {
+    ) -> DataArtifactRegistryRepository_RemoteRepositoryConfig_UpstreamCredentials_UsernamePasswordCredentials {
+        DataArtifactRegistryRepository_RemoteRepositoryConfig_UpstreamCredentials_UsernamePasswordCredentials {
             password_secret_version: core::default::Default::default(),
             username: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataArtifactRegistryRepositoryRemoteRepositoryConfigElUpstreamCredentialsElUsernamePasswordCredentialsElRef {
+#[allow(dead_code)]
+pub struct DataArtifactRegistryRepository_RemoteRepositoryConfig_UpstreamCredentials_UsernamePasswordCredentialsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for DataArtifactRegistryRepositoryRemoteRepositoryConfigElUpstreamCredentialsElUsernamePasswordCredentialsElRef {
+::Ref for DataArtifactRegistryRepository_RemoteRepositoryConfig_UpstreamCredentials_UsernamePasswordCredentialsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataArtifactRegistryRepositoryRemoteRepositoryConfigElUpstreamCredentialsElUsernamePasswordCredentialsElRef {
-        DataArtifactRegistryRepositoryRemoteRepositoryConfigElUpstreamCredentialsElUsernamePasswordCredentialsElRef {
+    ) -> DataArtifactRegistryRepository_RemoteRepositoryConfig_UpstreamCredentials_UsernamePasswordCredentialsRef {
+        DataArtifactRegistryRepository_RemoteRepositoryConfig_UpstreamCredentials_UsernamePasswordCredentialsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElUpstreamCredentialsElUsernamePasswordCredentialsElRef {
+impl DataArtifactRegistryRepository_RemoteRepositoryConfig_UpstreamCredentials_UsernamePasswordCredentialsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1039,19 +1783,19 @@ impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElUpstreamCredentialsEl
 }
 
 #[derive(Serialize)]
-pub struct DataArtifactRegistryRepositoryRemoteRepositoryConfigElUpstreamCredentialsEl {
+pub struct DataArtifactRegistryRepository_RemoteRepositoryConfig_UpstreamCredentials {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     username_password_credentials: std
     ::option
     ::Option<
         terrars
         ::ListField<
-            DataArtifactRegistryRepositoryRemoteRepositoryConfigElUpstreamCredentialsElUsernamePasswordCredentialsEl,
+            DataArtifactRegistryRepository_RemoteRepositoryConfig_UpstreamCredentials_UsernamePasswordCredentials,
         >,
     >,
 }
 
-impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElUpstreamCredentialsEl {
+impl DataArtifactRegistryRepository_RemoteRepositoryConfig_UpstreamCredentials {
     #[doc = "Set the field `username_password_credentials`.\n"]
     pub fn set_username_password_credentials(
         mut self,
@@ -1063,7 +1807,7 @@ impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElUpstreamCredentialsEl
                     ::Into<
                         terrars
                         ::ListField<
-                            DataArtifactRegistryRepositoryRemoteRepositoryConfigElUpstreamCredentialsElUsernamePasswordCredentialsEl,
+                            DataArtifactRegistryRepository_RemoteRepositoryConfig_UpstreamCredentials_UsernamePasswordCredentials,
                         >,
                     >,
     ) -> Self {
@@ -1072,8 +1816,8 @@ impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElUpstreamCredentialsEl
     }
 }
 
-impl terrars::ToListMappable for DataArtifactRegistryRepositoryRemoteRepositoryConfigElUpstreamCredentialsEl {
-    type O = terrars::BlockAssignable<DataArtifactRegistryRepositoryRemoteRepositoryConfigElUpstreamCredentialsEl>;
+impl terrars::ToListMappable for DataArtifactRegistryRepository_RemoteRepositoryConfig_UpstreamCredentials {
+    type O = terrars::BlockAssignable<DataArtifactRegistryRepository_RemoteRepositoryConfig_UpstreamCredentials>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1084,34 +1828,36 @@ impl terrars::ToListMappable for DataArtifactRegistryRepositoryRemoteRepositoryC
     }
 }
 
-pub struct BuildDataArtifactRegistryRepositoryRemoteRepositoryConfigElUpstreamCredentialsEl {}
+pub struct BuildDataArtifactRegistryRepository_RemoteRepositoryConfig_UpstreamCredentials {}
 
-impl BuildDataArtifactRegistryRepositoryRemoteRepositoryConfigElUpstreamCredentialsEl {
-    pub fn build(self) -> DataArtifactRegistryRepositoryRemoteRepositoryConfigElUpstreamCredentialsEl {
-        DataArtifactRegistryRepositoryRemoteRepositoryConfigElUpstreamCredentialsEl {
+impl BuildDataArtifactRegistryRepository_RemoteRepositoryConfig_UpstreamCredentials {
+    pub fn build(self) -> DataArtifactRegistryRepository_RemoteRepositoryConfig_UpstreamCredentials {
+        DataArtifactRegistryRepository_RemoteRepositoryConfig_UpstreamCredentials {
             username_password_credentials: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataArtifactRegistryRepositoryRemoteRepositoryConfigElUpstreamCredentialsElRef {
+#[allow(dead_code)]
+pub struct DataArtifactRegistryRepository_RemoteRepositoryConfig_UpstreamCredentialsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataArtifactRegistryRepositoryRemoteRepositoryConfigElUpstreamCredentialsElRef {
+impl terrars::Ref for DataArtifactRegistryRepository_RemoteRepositoryConfig_UpstreamCredentialsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataArtifactRegistryRepositoryRemoteRepositoryConfigElUpstreamCredentialsElRef {
-        DataArtifactRegistryRepositoryRemoteRepositoryConfigElUpstreamCredentialsElRef {
+    ) -> DataArtifactRegistryRepository_RemoteRepositoryConfig_UpstreamCredentialsRef {
+        DataArtifactRegistryRepository_RemoteRepositoryConfig_UpstreamCredentialsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElUpstreamCredentialsElRef {
+impl DataArtifactRegistryRepository_RemoteRepositoryConfig_UpstreamCredentialsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1121,104 +1867,23 @@ impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElUpstreamCredentialsEl
         &self,
     ) -> terrars
     ::ListRef<
-        DataArtifactRegistryRepositoryRemoteRepositoryConfigElUpstreamCredentialsElUsernamePasswordCredentialsElRef,
+        DataArtifactRegistryRepository_RemoteRepositoryConfig_UpstreamCredentials_UsernamePasswordCredentialsRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.username_password_credentials", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataArtifactRegistryRepositoryRemoteRepositoryConfigElYumRepositoryElPublicRepositoryEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    repository_base: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    repository_path: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElYumRepositoryElPublicRepositoryEl {
-    #[doc = "Set the field `repository_base`.\n"]
-    pub fn set_repository_base(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.repository_base = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `repository_path`.\n"]
-    pub fn set_repository_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.repository_path = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for DataArtifactRegistryRepositoryRemoteRepositoryConfigElYumRepositoryElPublicRepositoryEl {
-    type O =
-        terrars
-        ::BlockAssignable<DataArtifactRegistryRepositoryRemoteRepositoryConfigElYumRepositoryElPublicRepositoryEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataArtifactRegistryRepositoryRemoteRepositoryConfigElYumRepositoryElPublicRepositoryEl {}
-
-impl BuildDataArtifactRegistryRepositoryRemoteRepositoryConfigElYumRepositoryElPublicRepositoryEl {
-    pub fn build(self) -> DataArtifactRegistryRepositoryRemoteRepositoryConfigElYumRepositoryElPublicRepositoryEl {
-        DataArtifactRegistryRepositoryRemoteRepositoryConfigElYumRepositoryElPublicRepositoryEl {
-            repository_base: core::default::Default::default(),
-            repository_path: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataArtifactRegistryRepositoryRemoteRepositoryConfigElYumRepositoryElPublicRepositoryElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataArtifactRegistryRepositoryRemoteRepositoryConfigElYumRepositoryElPublicRepositoryElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataArtifactRegistryRepositoryRemoteRepositoryConfigElYumRepositoryElPublicRepositoryElRef {
-        DataArtifactRegistryRepositoryRemoteRepositoryConfigElYumRepositoryElPublicRepositoryElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElYumRepositoryElPublicRepositoryElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `repository_base` after provisioning.\n"]
-    pub fn repository_base(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.repository_base", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `repository_path` after provisioning.\n"]
-    pub fn repository_path(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.repository_path", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataArtifactRegistryRepositoryRemoteRepositoryConfigElYumRepositoryEl {
+pub struct DataArtifactRegistryRepository_RemoteRepositoryConfig_YumRepository {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     public_repository: std
     ::option
     ::Option<
-        terrars::ListField<DataArtifactRegistryRepositoryRemoteRepositoryConfigElYumRepositoryElPublicRepositoryEl>,
+        terrars::ListField<DataArtifactRegistryRepository_RemoteRepositoryConfig_AptRepository_PublicRepository>,
     >,
 }
 
-impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElYumRepositoryEl {
+impl DataArtifactRegistryRepository_RemoteRepositoryConfig_YumRepository {
     #[doc = "Set the field `public_repository`.\n"]
     pub fn set_public_repository(
         mut self,
@@ -1230,7 +1895,7 @@ impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElYumRepositoryEl {
                     ::Into<
                         terrars
                         ::ListField<
-                            DataArtifactRegistryRepositoryRemoteRepositoryConfigElYumRepositoryElPublicRepositoryEl,
+                            DataArtifactRegistryRepository_RemoteRepositoryConfig_AptRepository_PublicRepository,
                         >,
                     >,
     ) -> Self {
@@ -1239,8 +1904,8 @@ impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElYumRepositoryEl {
     }
 }
 
-impl terrars::ToListMappable for DataArtifactRegistryRepositoryRemoteRepositoryConfigElYumRepositoryEl {
-    type O = terrars::BlockAssignable<DataArtifactRegistryRepositoryRemoteRepositoryConfigElYumRepositoryEl>;
+impl terrars::ToListMappable for DataArtifactRegistryRepository_RemoteRepositoryConfig_YumRepository {
+    type O = terrars::BlockAssignable<DataArtifactRegistryRepository_RemoteRepositoryConfig_YumRepository>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1251,34 +1916,36 @@ impl terrars::ToListMappable for DataArtifactRegistryRepositoryRemoteRepositoryC
     }
 }
 
-pub struct BuildDataArtifactRegistryRepositoryRemoteRepositoryConfigElYumRepositoryEl {}
+pub struct BuildDataArtifactRegistryRepository_RemoteRepositoryConfig_YumRepository {}
 
-impl BuildDataArtifactRegistryRepositoryRemoteRepositoryConfigElYumRepositoryEl {
-    pub fn build(self) -> DataArtifactRegistryRepositoryRemoteRepositoryConfigElYumRepositoryEl {
-        DataArtifactRegistryRepositoryRemoteRepositoryConfigElYumRepositoryEl {
+impl BuildDataArtifactRegistryRepository_RemoteRepositoryConfig_YumRepository {
+    pub fn build(self) -> DataArtifactRegistryRepository_RemoteRepositoryConfig_YumRepository {
+        DataArtifactRegistryRepository_RemoteRepositoryConfig_YumRepository {
             public_repository: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataArtifactRegistryRepositoryRemoteRepositoryConfigElYumRepositoryElRef {
+#[allow(dead_code)]
+pub struct DataArtifactRegistryRepository_RemoteRepositoryConfig_YumRepositoryRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataArtifactRegistryRepositoryRemoteRepositoryConfigElYumRepositoryElRef {
+impl terrars::Ref for DataArtifactRegistryRepository_RemoteRepositoryConfig_YumRepositoryRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataArtifactRegistryRepositoryRemoteRepositoryConfigElYumRepositoryElRef {
-        DataArtifactRegistryRepositoryRemoteRepositoryConfigElYumRepositoryElRef {
+    ) -> DataArtifactRegistryRepository_RemoteRepositoryConfig_YumRepositoryRef {
+        DataArtifactRegistryRepository_RemoteRepositoryConfig_YumRepositoryRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElYumRepositoryElRef {
+impl DataArtifactRegistryRepository_RemoteRepositoryConfig_YumRepositoryRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1286,46 +1953,54 @@ impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElYumRepositoryElRef {
     #[doc = "Get a reference to the value of field `public_repository` after provisioning.\n"]
     pub fn public_repository(
         &self,
-    ) -> terrars::ListRef<DataArtifactRegistryRepositoryRemoteRepositoryConfigElYumRepositoryElPublicRepositoryElRef> {
+    ) -> terrars::ListRef<DataArtifactRegistryRepository_RemoteRepositoryConfig_AptRepository_PublicRepositoryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.public_repository", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataArtifactRegistryRepositoryRemoteRepositoryConfigEl {
+pub struct DataArtifactRegistryRepository_RemoteRepositoryConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     apt_repository: std
     ::option
-    ::Option<terrars::ListField<DataArtifactRegistryRepositoryRemoteRepositoryConfigElAptRepositoryEl>>,
+    ::Option<terrars::ListField<DataArtifactRegistryRepository_RemoteRepositoryConfig_AptRepository>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    common_repository: std
+    ::option
+    ::Option<terrars::ListField<DataArtifactRegistryRepository_RemoteRepositoryConfig_CommonRepository>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    disable_upstream_validation: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     docker_repository: std
     ::option
-    ::Option<terrars::ListField<DataArtifactRegistryRepositoryRemoteRepositoryConfigElDockerRepositoryEl>>,
+    ::Option<terrars::ListField<DataArtifactRegistryRepository_RemoteRepositoryConfig_DockerRepository>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     maven_repository: std
     ::option
-    ::Option<terrars::ListField<DataArtifactRegistryRepositoryRemoteRepositoryConfigElMavenRepositoryEl>>,
+    ::Option<terrars::ListField<DataArtifactRegistryRepository_RemoteRepositoryConfig_MavenRepository>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    no_cache: std::option::Option<terrars::ListField<DataArtifactRegistryRepository_RemoteRepositoryConfig_NoCache>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     npm_repository: std
     ::option
-    ::Option<terrars::ListField<DataArtifactRegistryRepositoryRemoteRepositoryConfigElNpmRepositoryEl>>,
+    ::Option<terrars::ListField<DataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepository>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     python_repository: std
     ::option
-    ::Option<terrars::ListField<DataArtifactRegistryRepositoryRemoteRepositoryConfigElPythonRepositoryEl>>,
+    ::Option<terrars::ListField<DataArtifactRegistryRepository_RemoteRepositoryConfig_PythonRepository>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     upstream_credentials: std
     ::option
-    ::Option<terrars::ListField<DataArtifactRegistryRepositoryRemoteRepositoryConfigElUpstreamCredentialsEl>>,
+    ::Option<terrars::ListField<DataArtifactRegistryRepository_RemoteRepositoryConfig_UpstreamCredentials>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     yum_repository: std
     ::option
-    ::Option<terrars::ListField<DataArtifactRegistryRepositoryRemoteRepositoryConfigElYumRepositoryEl>>,
+    ::Option<terrars::ListField<DataArtifactRegistryRepository_RemoteRepositoryConfig_YumRepository>>,
 }
 
-impl DataArtifactRegistryRepositoryRemoteRepositoryConfigEl {
+impl DataArtifactRegistryRepository_RemoteRepositoryConfig {
     #[doc = "Set the field `apt_repository`.\n"]
     pub fn set_apt_repository(
         mut self,
@@ -1334,15 +2009,37 @@ impl DataArtifactRegistryRepositoryRemoteRepositoryConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::ListField<DataArtifactRegistryRepositoryRemoteRepositoryConfigElAptRepositoryEl>>,
+                    ::Into<terrars::ListField<DataArtifactRegistryRepository_RemoteRepositoryConfig_AptRepository>>,
     ) -> Self {
         self.apt_repository = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `common_repository`.\n"]
+    pub fn set_common_repository(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::ListField<DataArtifactRegistryRepository_RemoteRepositoryConfig_CommonRepository>,
+                    >,
+    ) -> Self {
+        self.common_repository = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `disable_upstream_validation`.\n"]
+    pub fn set_disable_upstream_validation(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.disable_upstream_validation = std::option::Option::Some(v.into());
         self
     }
 
@@ -1355,7 +2052,7 @@ impl DataArtifactRegistryRepositoryRemoteRepositoryConfigEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::ListField<DataArtifactRegistryRepositoryRemoteRepositoryConfigElDockerRepositoryEl>,
+                        terrars::ListField<DataArtifactRegistryRepository_RemoteRepositoryConfig_DockerRepository>,
                     >,
     ) -> Self {
         self.docker_repository = std::option::Option::Some(v.into());
@@ -1370,11 +2067,23 @@ impl DataArtifactRegistryRepositoryRemoteRepositoryConfigEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::ListField<DataArtifactRegistryRepositoryRemoteRepositoryConfigElMavenRepositoryEl>,
-                    >,
+                    ::Into<terrars::ListField<DataArtifactRegistryRepository_RemoteRepositoryConfig_MavenRepository>>,
     ) -> Self {
         self.maven_repository = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `no_cache`.\n"]
+    pub fn set_no_cache(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::ListField<DataArtifactRegistryRepository_RemoteRepositoryConfig_NoCache>>,
+    ) -> Self {
+        self.no_cache = std::option::Option::Some(v.into());
         self
     }
 
@@ -1386,7 +2095,7 @@ impl DataArtifactRegistryRepositoryRemoteRepositoryConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::ListField<DataArtifactRegistryRepositoryRemoteRepositoryConfigElNpmRepositoryEl>>,
+                    ::Into<terrars::ListField<DataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepository>>,
     ) -> Self {
         self.npm_repository = std::option::Option::Some(v.into());
         self
@@ -1401,7 +2110,7 @@ impl DataArtifactRegistryRepositoryRemoteRepositoryConfigEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::ListField<DataArtifactRegistryRepositoryRemoteRepositoryConfigElPythonRepositoryEl>,
+                        terrars::ListField<DataArtifactRegistryRepository_RemoteRepositoryConfig_PythonRepository>,
                     >,
     ) -> Self {
         self.python_repository = std::option::Option::Some(v.into());
@@ -1417,8 +2126,7 @@ impl DataArtifactRegistryRepositoryRemoteRepositoryConfigEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::ListField<DataArtifactRegistryRepositoryRemoteRepositoryConfigElUpstreamCredentialsEl>,
+                        terrars::ListField<DataArtifactRegistryRepository_RemoteRepositoryConfig_UpstreamCredentials>,
                     >,
     ) -> Self {
         self.upstream_credentials = std::option::Option::Some(v.into());
@@ -1433,15 +2141,15 @@ impl DataArtifactRegistryRepositoryRemoteRepositoryConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::ListField<DataArtifactRegistryRepositoryRemoteRepositoryConfigElYumRepositoryEl>>,
+                    ::Into<terrars::ListField<DataArtifactRegistryRepository_RemoteRepositoryConfig_YumRepository>>,
     ) -> Self {
         self.yum_repository = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataArtifactRegistryRepositoryRemoteRepositoryConfigEl {
-    type O = terrars::BlockAssignable<DataArtifactRegistryRepositoryRemoteRepositoryConfigEl>;
+impl terrars::ToListMappable for DataArtifactRegistryRepository_RemoteRepositoryConfig {
+    type O = terrars::BlockAssignable<DataArtifactRegistryRepository_RemoteRepositoryConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1452,15 +2160,18 @@ impl terrars::ToListMappable for DataArtifactRegistryRepositoryRemoteRepositoryC
     }
 }
 
-pub struct BuildDataArtifactRegistryRepositoryRemoteRepositoryConfigEl {}
+pub struct BuildDataArtifactRegistryRepository_RemoteRepositoryConfig {}
 
-impl BuildDataArtifactRegistryRepositoryRemoteRepositoryConfigEl {
-    pub fn build(self) -> DataArtifactRegistryRepositoryRemoteRepositoryConfigEl {
-        DataArtifactRegistryRepositoryRemoteRepositoryConfigEl {
+impl BuildDataArtifactRegistryRepository_RemoteRepositoryConfig {
+    pub fn build(self) -> DataArtifactRegistryRepository_RemoteRepositoryConfig {
+        DataArtifactRegistryRepository_RemoteRepositoryConfig {
             apt_repository: core::default::Default::default(),
+            common_repository: core::default::Default::default(),
             description: core::default::Default::default(),
+            disable_upstream_validation: core::default::Default::default(),
             docker_repository: core::default::Default::default(),
             maven_repository: core::default::Default::default(),
+            no_cache: core::default::Default::default(),
             npm_repository: core::default::Default::default(),
             python_repository: core::default::Default::default(),
             upstream_credentials: core::default::Default::default(),
@@ -1469,24 +2180,26 @@ impl BuildDataArtifactRegistryRepositoryRemoteRepositoryConfigEl {
     }
 }
 
-pub struct DataArtifactRegistryRepositoryRemoteRepositoryConfigElRef {
+#[allow(dead_code)]
+pub struct DataArtifactRegistryRepository_RemoteRepositoryConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataArtifactRegistryRepositoryRemoteRepositoryConfigElRef {
+impl terrars::Ref for DataArtifactRegistryRepository_RemoteRepositoryConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataArtifactRegistryRepositoryRemoteRepositoryConfigElRef {
-        DataArtifactRegistryRepositoryRemoteRepositoryConfigElRef {
+    ) -> DataArtifactRegistryRepository_RemoteRepositoryConfigRef {
+        DataArtifactRegistryRepository_RemoteRepositoryConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElRef {
+impl DataArtifactRegistryRepository_RemoteRepositoryConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1494,8 +2207,15 @@ impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElRef {
     #[doc = "Get a reference to the value of field `apt_repository` after provisioning.\n"]
     pub fn apt_repository(
         &self,
-    ) -> terrars::ListRef<DataArtifactRegistryRepositoryRemoteRepositoryConfigElAptRepositoryElRef> {
+    ) -> terrars::ListRef<DataArtifactRegistryRepository_RemoteRepositoryConfig_AptRepositoryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.apt_repository", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `common_repository` after provisioning.\n"]
+    pub fn common_repository(
+        &self,
+    ) -> terrars::ListRef<DataArtifactRegistryRepository_RemoteRepositoryConfig_CommonRepositoryRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.common_repository", self.base))
     }
 
     #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
@@ -1503,51 +2223,61 @@ impl DataArtifactRegistryRepositoryRemoteRepositoryConfigElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `disable_upstream_validation` after provisioning.\n"]
+    pub fn disable_upstream_validation(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.disable_upstream_validation", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `docker_repository` after provisioning.\n"]
     pub fn docker_repository(
         &self,
-    ) -> terrars::ListRef<DataArtifactRegistryRepositoryRemoteRepositoryConfigElDockerRepositoryElRef> {
+    ) -> terrars::ListRef<DataArtifactRegistryRepository_RemoteRepositoryConfig_DockerRepositoryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.docker_repository", self.base))
     }
 
     #[doc = "Get a reference to the value of field `maven_repository` after provisioning.\n"]
     pub fn maven_repository(
         &self,
-    ) -> terrars::ListRef<DataArtifactRegistryRepositoryRemoteRepositoryConfigElMavenRepositoryElRef> {
+    ) -> terrars::ListRef<DataArtifactRegistryRepository_RemoteRepositoryConfig_MavenRepositoryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.maven_repository", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `no_cache` after provisioning.\n"]
+    pub fn no_cache(&self) -> terrars::ListRef<DataArtifactRegistryRepository_RemoteRepositoryConfig_NoCacheRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.no_cache", self.base))
     }
 
     #[doc = "Get a reference to the value of field `npm_repository` after provisioning.\n"]
     pub fn npm_repository(
         &self,
-    ) -> terrars::ListRef<DataArtifactRegistryRepositoryRemoteRepositoryConfigElNpmRepositoryElRef> {
+    ) -> terrars::ListRef<DataArtifactRegistryRepository_RemoteRepositoryConfig_NpmRepositoryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.npm_repository", self.base))
     }
 
     #[doc = "Get a reference to the value of field `python_repository` after provisioning.\n"]
     pub fn python_repository(
         &self,
-    ) -> terrars::ListRef<DataArtifactRegistryRepositoryRemoteRepositoryConfigElPythonRepositoryElRef> {
+    ) -> terrars::ListRef<DataArtifactRegistryRepository_RemoteRepositoryConfig_PythonRepositoryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.python_repository", self.base))
     }
 
     #[doc = "Get a reference to the value of field `upstream_credentials` after provisioning.\n"]
     pub fn upstream_credentials(
         &self,
-    ) -> terrars::ListRef<DataArtifactRegistryRepositoryRemoteRepositoryConfigElUpstreamCredentialsElRef> {
+    ) -> terrars::ListRef<DataArtifactRegistryRepository_RemoteRepositoryConfig_UpstreamCredentialsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.upstream_credentials", self.base))
     }
 
     #[doc = "Get a reference to the value of field `yum_repository` after provisioning.\n"]
     pub fn yum_repository(
         &self,
-    ) -> terrars::ListRef<DataArtifactRegistryRepositoryRemoteRepositoryConfigElYumRepositoryElRef> {
+    ) -> terrars::ListRef<DataArtifactRegistryRepository_RemoteRepositoryConfig_YumRepositoryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.yum_repository", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataArtifactRegistryRepositoryVirtualRepositoryConfigElUpstreamPoliciesEl {
+pub struct DataArtifactRegistryRepository_VirtualRepositoryConfig_UpstreamPolicies {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1556,7 +2286,7 @@ pub struct DataArtifactRegistryRepositoryVirtualRepositoryConfigElUpstreamPolici
     repository: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataArtifactRegistryRepositoryVirtualRepositoryConfigElUpstreamPoliciesEl {
+impl DataArtifactRegistryRepository_VirtualRepositoryConfig_UpstreamPolicies {
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.id = std::option::Option::Some(v.into());
@@ -1576,8 +2306,8 @@ impl DataArtifactRegistryRepositoryVirtualRepositoryConfigElUpstreamPoliciesEl {
     }
 }
 
-impl terrars::ToListMappable for DataArtifactRegistryRepositoryVirtualRepositoryConfigElUpstreamPoliciesEl {
-    type O = terrars::BlockAssignable<DataArtifactRegistryRepositoryVirtualRepositoryConfigElUpstreamPoliciesEl>;
+impl terrars::ToListMappable for DataArtifactRegistryRepository_VirtualRepositoryConfig_UpstreamPolicies {
+    type O = terrars::BlockAssignable<DataArtifactRegistryRepository_VirtualRepositoryConfig_UpstreamPolicies>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1588,11 +2318,11 @@ impl terrars::ToListMappable for DataArtifactRegistryRepositoryVirtualRepository
     }
 }
 
-pub struct BuildDataArtifactRegistryRepositoryVirtualRepositoryConfigElUpstreamPoliciesEl {}
+pub struct BuildDataArtifactRegistryRepository_VirtualRepositoryConfig_UpstreamPolicies {}
 
-impl BuildDataArtifactRegistryRepositoryVirtualRepositoryConfigElUpstreamPoliciesEl {
-    pub fn build(self) -> DataArtifactRegistryRepositoryVirtualRepositoryConfigElUpstreamPoliciesEl {
-        DataArtifactRegistryRepositoryVirtualRepositoryConfigElUpstreamPoliciesEl {
+impl BuildDataArtifactRegistryRepository_VirtualRepositoryConfig_UpstreamPolicies {
+    pub fn build(self) -> DataArtifactRegistryRepository_VirtualRepositoryConfig_UpstreamPolicies {
+        DataArtifactRegistryRepository_VirtualRepositoryConfig_UpstreamPolicies {
             id: core::default::Default::default(),
             priority: core::default::Default::default(),
             repository: core::default::Default::default(),
@@ -1600,24 +2330,26 @@ impl BuildDataArtifactRegistryRepositoryVirtualRepositoryConfigElUpstreamPolicie
     }
 }
 
-pub struct DataArtifactRegistryRepositoryVirtualRepositoryConfigElUpstreamPoliciesElRef {
+#[allow(dead_code)]
+pub struct DataArtifactRegistryRepository_VirtualRepositoryConfig_UpstreamPoliciesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataArtifactRegistryRepositoryVirtualRepositoryConfigElUpstreamPoliciesElRef {
+impl terrars::Ref for DataArtifactRegistryRepository_VirtualRepositoryConfig_UpstreamPoliciesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataArtifactRegistryRepositoryVirtualRepositoryConfigElUpstreamPoliciesElRef {
-        DataArtifactRegistryRepositoryVirtualRepositoryConfigElUpstreamPoliciesElRef {
+    ) -> DataArtifactRegistryRepository_VirtualRepositoryConfig_UpstreamPoliciesRef {
+        DataArtifactRegistryRepository_VirtualRepositoryConfig_UpstreamPoliciesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataArtifactRegistryRepositoryVirtualRepositoryConfigElUpstreamPoliciesElRef {
+impl DataArtifactRegistryRepository_VirtualRepositoryConfig_UpstreamPoliciesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1639,14 +2371,14 @@ impl DataArtifactRegistryRepositoryVirtualRepositoryConfigElUpstreamPoliciesElRe
 }
 
 #[derive(Serialize)]
-pub struct DataArtifactRegistryRepositoryVirtualRepositoryConfigEl {
+pub struct DataArtifactRegistryRepository_VirtualRepositoryConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     upstream_policies: std
     ::option
-    ::Option<terrars::ListField<DataArtifactRegistryRepositoryVirtualRepositoryConfigElUpstreamPoliciesEl>>,
+    ::Option<terrars::ListField<DataArtifactRegistryRepository_VirtualRepositoryConfig_UpstreamPolicies>>,
 }
 
-impl DataArtifactRegistryRepositoryVirtualRepositoryConfigEl {
+impl DataArtifactRegistryRepository_VirtualRepositoryConfig {
     #[doc = "Set the field `upstream_policies`.\n"]
     pub fn set_upstream_policies(
         mut self,
@@ -1656,7 +2388,7 @@ impl DataArtifactRegistryRepositoryVirtualRepositoryConfigEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::ListField<DataArtifactRegistryRepositoryVirtualRepositoryConfigElUpstreamPoliciesEl>,
+                        terrars::ListField<DataArtifactRegistryRepository_VirtualRepositoryConfig_UpstreamPolicies>,
                     >,
     ) -> Self {
         self.upstream_policies = std::option::Option::Some(v.into());
@@ -1664,8 +2396,8 @@ impl DataArtifactRegistryRepositoryVirtualRepositoryConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataArtifactRegistryRepositoryVirtualRepositoryConfigEl {
-    type O = terrars::BlockAssignable<DataArtifactRegistryRepositoryVirtualRepositoryConfigEl>;
+impl terrars::ToListMappable for DataArtifactRegistryRepository_VirtualRepositoryConfig {
+    type O = terrars::BlockAssignable<DataArtifactRegistryRepository_VirtualRepositoryConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1676,34 +2408,36 @@ impl terrars::ToListMappable for DataArtifactRegistryRepositoryVirtualRepository
     }
 }
 
-pub struct BuildDataArtifactRegistryRepositoryVirtualRepositoryConfigEl {}
+pub struct BuildDataArtifactRegistryRepository_VirtualRepositoryConfig {}
 
-impl BuildDataArtifactRegistryRepositoryVirtualRepositoryConfigEl {
-    pub fn build(self) -> DataArtifactRegistryRepositoryVirtualRepositoryConfigEl {
-        DataArtifactRegistryRepositoryVirtualRepositoryConfigEl {
+impl BuildDataArtifactRegistryRepository_VirtualRepositoryConfig {
+    pub fn build(self) -> DataArtifactRegistryRepository_VirtualRepositoryConfig {
+        DataArtifactRegistryRepository_VirtualRepositoryConfig {
             upstream_policies: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataArtifactRegistryRepositoryVirtualRepositoryConfigElRef {
+#[allow(dead_code)]
+pub struct DataArtifactRegistryRepository_VirtualRepositoryConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataArtifactRegistryRepositoryVirtualRepositoryConfigElRef {
+impl terrars::Ref for DataArtifactRegistryRepository_VirtualRepositoryConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataArtifactRegistryRepositoryVirtualRepositoryConfigElRef {
-        DataArtifactRegistryRepositoryVirtualRepositoryConfigElRef {
+    ) -> DataArtifactRegistryRepository_VirtualRepositoryConfigRef {
+        DataArtifactRegistryRepository_VirtualRepositoryConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataArtifactRegistryRepositoryVirtualRepositoryConfigElRef {
+impl DataArtifactRegistryRepository_VirtualRepositoryConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1711,7 +2445,104 @@ impl DataArtifactRegistryRepositoryVirtualRepositoryConfigElRef {
     #[doc = "Get a reference to the value of field `upstream_policies` after provisioning.\n"]
     pub fn upstream_policies(
         &self,
-    ) -> terrars::ListRef<DataArtifactRegistryRepositoryVirtualRepositoryConfigElUpstreamPoliciesElRef> {
+    ) -> terrars::ListRef<DataArtifactRegistryRepository_VirtualRepositoryConfig_UpstreamPoliciesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.upstream_policies", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataArtifactRegistryRepository_VulnerabilityScanningConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enablement_config: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enablement_state: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enablement_state_reason: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataArtifactRegistryRepository_VulnerabilityScanningConfig {
+    #[doc = "Set the field `enablement_config`.\n"]
+    pub fn set_enablement_config(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.enablement_config = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `enablement_state`.\n"]
+    pub fn set_enablement_state(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.enablement_state = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `enablement_state_reason`.\n"]
+    pub fn set_enablement_state_reason(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.enablement_state_reason = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataArtifactRegistryRepository_VulnerabilityScanningConfig {
+    type O = terrars::BlockAssignable<DataArtifactRegistryRepository_VulnerabilityScanningConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataArtifactRegistryRepository_VulnerabilityScanningConfig {}
+
+impl BuildDataArtifactRegistryRepository_VulnerabilityScanningConfig {
+    pub fn build(self) -> DataArtifactRegistryRepository_VulnerabilityScanningConfig {
+        DataArtifactRegistryRepository_VulnerabilityScanningConfig {
+            enablement_config: core::default::Default::default(),
+            enablement_state: core::default::Default::default(),
+            enablement_state_reason: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataArtifactRegistryRepository_VulnerabilityScanningConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataArtifactRegistryRepository_VulnerabilityScanningConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataArtifactRegistryRepository_VulnerabilityScanningConfigRef {
+        DataArtifactRegistryRepository_VulnerabilityScanningConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataArtifactRegistryRepository_VulnerabilityScanningConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `enablement_config` after provisioning.\n"]
+    pub fn enablement_config(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enablement_config", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `enablement_state` after provisioning.\n"]
+    pub fn enablement_state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enablement_state", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `enablement_state_reason` after provisioning.\n"]
+    pub fn enablement_state_reason(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enablement_state_reason", self.base))
     }
 }

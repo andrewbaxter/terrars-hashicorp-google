@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct BigqueryCapacityCommitmentData {
+struct BigqueryCapacityCommitmentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,6 +22,8 @@ struct BigqueryCapacityCommitmentData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     capacity_commitment_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     edition: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -35,13 +39,13 @@ struct BigqueryCapacityCommitmentData {
     renewal_plan: std::option::Option<terrars::PrimField<std::string::String>>,
     slot_count: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<BigqueryCapacityCommitmentTimeoutsEl>,
+    timeouts: std::option::Option<BigqueryCapacityCommitment_Timeouts>,
 }
 
 struct BigqueryCapacityCommitment_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<BigqueryCapacityCommitmentData>,
+    data: std::cell::RefCell<BigqueryCapacityCommitmentData_>,
 }
 
 #[derive(Clone)]
@@ -151,6 +155,13 @@ impl BigqueryCapacityCommitment {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `edition`.\nThe edition type. Valid values are STANDARD, ENTERPRISE, ENTERPRISE_PLUS"]
     pub fn set_edition(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().edition = std::option::Option::Some(v.into());
@@ -194,7 +205,7 @@ impl BigqueryCapacityCommitment {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<BigqueryCapacityCommitmentTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<BigqueryCapacityCommitment_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -215,6 +226,12 @@ impl BigqueryCapacityCommitment {
         "Get a reference to the value of field `commitment_start_time` after provisioning.\nThe start of the current commitment period. It is applicable only for ACTIVE capacity commitments."]
     pub fn commitment_start_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.commitment_start_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -278,8 +295,8 @@ impl BigqueryCapacityCommitment {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> BigqueryCapacityCommitmentTimeoutsElRef {
-        BigqueryCapacityCommitmentTimeoutsElRef::new(
+    pub fn timeouts(&self) -> BigqueryCapacityCommitment_TimeoutsRef {
+        BigqueryCapacityCommitment_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -331,13 +348,14 @@ impl BuildBigqueryCapacityCommitment {
         let out = BigqueryCapacityCommitment(std::rc::Rc::new(BigqueryCapacityCommitment_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(BigqueryCapacityCommitmentData {
+            data: std::cell::RefCell::new(BigqueryCapacityCommitmentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 capacity_commitment_id: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 edition: core::default::Default::default(),
                 enforce_single_admin_project_per_org: core::default::Default::default(),
                 id: core::default::Default::default(),
@@ -396,6 +414,12 @@ impl BigqueryCapacityCommitmentRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `edition` after provisioning.\nThe edition type. Valid values are STANDARD, ENTERPRISE, ENTERPRISE_PLUS"]
     pub fn edition(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.edition", self.extract_ref()))
@@ -456,8 +480,8 @@ impl BigqueryCapacityCommitmentRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> BigqueryCapacityCommitmentTimeoutsElRef {
-        BigqueryCapacityCommitmentTimeoutsElRef::new(
+    pub fn timeouts(&self) -> BigqueryCapacityCommitment_TimeoutsRef {
+        BigqueryCapacityCommitment_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -465,7 +489,7 @@ impl BigqueryCapacityCommitmentRef {
 }
 
 #[derive(Serialize)]
-pub struct BigqueryCapacityCommitmentTimeoutsEl {
+pub struct BigqueryCapacityCommitment_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -474,7 +498,7 @@ pub struct BigqueryCapacityCommitmentTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl BigqueryCapacityCommitmentTimeoutsEl {
+impl BigqueryCapacityCommitment_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -494,8 +518,8 @@ impl BigqueryCapacityCommitmentTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for BigqueryCapacityCommitmentTimeoutsEl {
-    type O = terrars::BlockAssignable<BigqueryCapacityCommitmentTimeoutsEl>;
+impl terrars::ToListMappable for BigqueryCapacityCommitment_Timeouts {
+    type O = terrars::BlockAssignable<BigqueryCapacityCommitment_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -506,11 +530,11 @@ impl terrars::ToListMappable for BigqueryCapacityCommitmentTimeoutsEl {
     }
 }
 
-pub struct BuildBigqueryCapacityCommitmentTimeoutsEl {}
+pub struct BuildBigqueryCapacityCommitment_Timeouts {}
 
-impl BuildBigqueryCapacityCommitmentTimeoutsEl {
-    pub fn build(self) -> BigqueryCapacityCommitmentTimeoutsEl {
-        BigqueryCapacityCommitmentTimeoutsEl {
+impl BuildBigqueryCapacityCommitment_Timeouts {
+    pub fn build(self) -> BigqueryCapacityCommitment_Timeouts {
+        BigqueryCapacityCommitment_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -518,21 +542,23 @@ impl BuildBigqueryCapacityCommitmentTimeoutsEl {
     }
 }
 
-pub struct BigqueryCapacityCommitmentTimeoutsElRef {
+#[allow(dead_code)]
+pub struct BigqueryCapacityCommitment_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryCapacityCommitmentTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryCapacityCommitmentTimeoutsElRef {
-        BigqueryCapacityCommitmentTimeoutsElRef {
+impl terrars::Ref for BigqueryCapacityCommitment_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryCapacityCommitment_TimeoutsRef {
+        BigqueryCapacityCommitment_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryCapacityCommitmentTimeoutsElRef {
+impl BigqueryCapacityCommitment_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

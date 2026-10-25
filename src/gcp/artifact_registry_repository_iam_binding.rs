@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ArtifactRegistryRepositoryIamBindingData {
+struct ArtifactRegistryRepositoryIamBindingData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,14 +30,14 @@ struct ArtifactRegistryRepositoryIamBindingData {
     repository: terrars::PrimField<std::string::String>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<ArtifactRegistryRepositoryIamBindingConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<ArtifactRegistryRepositoryIamBinding_Condition>>,
     dynamic: ArtifactRegistryRepositoryIamBindingDynamic,
 }
 
 struct ArtifactRegistryRepositoryIamBinding_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ArtifactRegistryRepositoryIamBindingData>,
+    data: std::cell::RefCell<ArtifactRegistryRepositoryIamBindingData_>,
 }
 
 #[derive(Clone)]
@@ -156,7 +158,7 @@ impl ArtifactRegistryRepositoryIamBinding {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ArtifactRegistryRepositoryIamBindingConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ArtifactRegistryRepositoryIamBinding_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -205,7 +207,7 @@ impl ArtifactRegistryRepositoryIamBinding {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<ArtifactRegistryRepositoryIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<ArtifactRegistryRepositoryIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -256,7 +258,7 @@ impl BuildArtifactRegistryRepositoryIamBinding {
         let out = ArtifactRegistryRepositoryIamBinding(std::rc::Rc::new(ArtifactRegistryRepositoryIamBinding_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ArtifactRegistryRepositoryIamBindingData {
+            data: std::cell::RefCell::new(ArtifactRegistryRepositoryIamBindingData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -336,20 +338,25 @@ impl ArtifactRegistryRepositoryIamBindingRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<ArtifactRegistryRepositoryIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<ArtifactRegistryRepositoryIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ArtifactRegistryRepositoryIamBindingDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<ArtifactRegistryRepositoryIamBinding_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct ArtifactRegistryRepositoryIamBindingConditionEl {
+pub struct ArtifactRegistryRepositoryIamBinding_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl ArtifactRegistryRepositoryIamBindingConditionEl {
+impl ArtifactRegistryRepositoryIamBinding_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -357,8 +364,8 @@ impl ArtifactRegistryRepositoryIamBindingConditionEl {
     }
 }
 
-impl terrars::ToListMappable for ArtifactRegistryRepositoryIamBindingConditionEl {
-    type O = terrars::BlockAssignable<ArtifactRegistryRepositoryIamBindingConditionEl>;
+impl terrars::ToListMappable for ArtifactRegistryRepositoryIamBinding_Condition {
+    type O = terrars::BlockAssignable<ArtifactRegistryRepositoryIamBinding_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -369,16 +376,16 @@ impl terrars::ToListMappable for ArtifactRegistryRepositoryIamBindingConditionEl
     }
 }
 
-pub struct BuildArtifactRegistryRepositoryIamBindingConditionEl {
+pub struct BuildArtifactRegistryRepositoryIamBinding_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildArtifactRegistryRepositoryIamBindingConditionEl {
-    pub fn build(self) -> ArtifactRegistryRepositoryIamBindingConditionEl {
-        ArtifactRegistryRepositoryIamBindingConditionEl {
+impl BuildArtifactRegistryRepositoryIamBinding_Condition {
+    pub fn build(self) -> ArtifactRegistryRepositoryIamBinding_Condition {
+        ArtifactRegistryRepositoryIamBinding_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -386,24 +393,26 @@ impl BuildArtifactRegistryRepositoryIamBindingConditionEl {
     }
 }
 
-pub struct ArtifactRegistryRepositoryIamBindingConditionElRef {
+#[allow(dead_code)]
+pub struct ArtifactRegistryRepositoryIamBinding_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ArtifactRegistryRepositoryIamBindingConditionElRef {
+impl terrars::Ref for ArtifactRegistryRepositoryIamBinding_ConditionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ArtifactRegistryRepositoryIamBindingConditionElRef {
-        ArtifactRegistryRepositoryIamBindingConditionElRef {
+    ) -> ArtifactRegistryRepositoryIamBinding_ConditionRef {
+        ArtifactRegistryRepositoryIamBinding_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ArtifactRegistryRepositoryIamBindingConditionElRef {
+impl ArtifactRegistryRepositoryIamBinding_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -422,9 +431,4 @@ impl ArtifactRegistryRepositoryIamBindingConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ArtifactRegistryRepositoryIamBindingDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<ArtifactRegistryRepositoryIamBindingConditionEl>>,
 }

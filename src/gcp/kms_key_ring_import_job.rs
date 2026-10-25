@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct KmsKeyRingImportJobData {
+struct KmsKeyRingImportJobData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,19 +21,21 @@ struct KmsKeyRingImportJobData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     import_job_id: terrars::PrimField<std::string::String>,
     import_method: terrars::PrimField<std::string::String>,
     key_ring: terrars::PrimField<std::string::String>,
     protection_level: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<KmsKeyRingImportJobTimeoutsEl>,
+    timeouts: std::option::Option<KmsKeyRingImportJob_Timeouts>,
 }
 
 struct KmsKeyRingImportJob_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<KmsKeyRingImportJobData>,
+    data: std::cell::RefCell<KmsKeyRingImportJobData_>,
 }
 
 #[derive(Clone)]
@@ -131,6 +135,13 @@ impl KmsKeyRingImportJob {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -138,15 +149,21 @@ impl KmsKeyRingImportJob {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<KmsKeyRingImportJobTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<KmsKeyRingImportJob_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
     #[doc =
         "Get a reference to the value of field `attestation` after provisioning.\nStatement that was generated and signed by the key creator (for example, an HSM) at key creation time.\nUse this statement to verify attributes of the key as stored on the HSM, independently of Google.\nOnly present if the chosen ImportMethod is one with a protection level of HSM."]
-    pub fn attestation(&self) -> terrars::ListRef<KmsKeyRingImportJobAttestationElRef> {
+    pub fn attestation(&self) -> terrars::ListRef<KmsKeyRingImportJob_AttestationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.attestation", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -167,7 +184,7 @@ impl KmsKeyRingImportJob {
     }
 
     #[doc =
-        "Get a reference to the value of field `import_method` after provisioning.\nThe wrapping method to be used for incoming key material. Possible values: [\"RSA_OAEP_3072_SHA1_AES_256\", \"RSA_OAEP_4096_SHA1_AES_256\"]"]
+        "Get a reference to the value of field `import_method` after provisioning.\nThe wrapping method to be used for incoming key material. Possible values: [\"RSA_OAEP_3072_SHA1_AES_256\", \"RSA_OAEP_4096_SHA1_AES_256\", \"RSA_OAEP_3072_SHA256_AES_256\", \"RSA_OAEP_4096_SHA256_AES_256\", \"RSA_OAEP_3072_SHA256\", \"RSA_OAEP_4096_SHA256\"]"]
     pub fn import_method(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.import_method", self.extract_ref()))
     }
@@ -192,7 +209,7 @@ impl KmsKeyRingImportJob {
 
     #[doc =
         "Get a reference to the value of field `public_key` after provisioning.\nThe public key with which to wrap key material prior to import. Only returned if state is 'ACTIVE'."]
-    pub fn public_key(&self) -> terrars::ListRef<KmsKeyRingImportJobPublicKeyElRef> {
+    pub fn public_key(&self) -> terrars::ListRef<KmsKeyRingImportJob_PublicKeyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.public_key", self.extract_ref()))
     }
 
@@ -203,8 +220,8 @@ impl KmsKeyRingImportJob {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> KmsKeyRingImportJobTimeoutsElRef {
-        KmsKeyRingImportJobTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> KmsKeyRingImportJob_TimeoutsRef {
+        KmsKeyRingImportJob_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -244,7 +261,7 @@ pub struct BuildKmsKeyRingImportJob {
     #[doc = "It must be unique within a KeyRing and match the regular expression [a-zA-Z0-9_-]{1,63}"]
     pub import_job_id: terrars::PrimField<std::string::String>,
     #[doc =
-        "The wrapping method to be used for incoming key material. Possible values: [\"RSA_OAEP_3072_SHA1_AES_256\", \"RSA_OAEP_4096_SHA1_AES_256\"]"]
+        "The wrapping method to be used for incoming key material. Possible values: [\"RSA_OAEP_3072_SHA1_AES_256\", \"RSA_OAEP_4096_SHA1_AES_256\", \"RSA_OAEP_3072_SHA256_AES_256\", \"RSA_OAEP_4096_SHA256_AES_256\", \"RSA_OAEP_3072_SHA256\", \"RSA_OAEP_4096_SHA256\"]"]
     pub import_method: terrars::PrimField<std::string::String>,
     #[doc =
         "The KeyRing that this import job belongs to.\nFormat: ''projects/{{project}}/locations/{{location}}/keyRings/{{keyRing}}''."]
@@ -259,12 +276,13 @@ impl BuildKmsKeyRingImportJob {
         let out = KmsKeyRingImportJob(std::rc::Rc::new(KmsKeyRingImportJob_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(KmsKeyRingImportJobData {
+            data: std::cell::RefCell::new(KmsKeyRingImportJobData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 import_job_id: self.import_job_id,
                 import_method: self.import_method,
@@ -303,8 +321,14 @@ impl KmsKeyRingImportJobRef {
 
     #[doc =
         "Get a reference to the value of field `attestation` after provisioning.\nStatement that was generated and signed by the key creator (for example, an HSM) at key creation time.\nUse this statement to verify attributes of the key as stored on the HSM, independently of Google.\nOnly present if the chosen ImportMethod is one with a protection level of HSM."]
-    pub fn attestation(&self) -> terrars::ListRef<KmsKeyRingImportJobAttestationElRef> {
+    pub fn attestation(&self) -> terrars::ListRef<KmsKeyRingImportJob_AttestationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.attestation", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -325,7 +349,7 @@ impl KmsKeyRingImportJobRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `import_method` after provisioning.\nThe wrapping method to be used for incoming key material. Possible values: [\"RSA_OAEP_3072_SHA1_AES_256\", \"RSA_OAEP_4096_SHA1_AES_256\"]"]
+        "Get a reference to the value of field `import_method` after provisioning.\nThe wrapping method to be used for incoming key material. Possible values: [\"RSA_OAEP_3072_SHA1_AES_256\", \"RSA_OAEP_4096_SHA1_AES_256\", \"RSA_OAEP_3072_SHA256_AES_256\", \"RSA_OAEP_4096_SHA256_AES_256\", \"RSA_OAEP_3072_SHA256\", \"RSA_OAEP_4096_SHA256\"]"]
     pub fn import_method(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.import_method", self.extract_ref()))
     }
@@ -350,7 +374,7 @@ impl KmsKeyRingImportJobRef {
 
     #[doc =
         "Get a reference to the value of field `public_key` after provisioning.\nThe public key with which to wrap key material prior to import. Only returned if state is 'ACTIVE'."]
-    pub fn public_key(&self) -> terrars::ListRef<KmsKeyRingImportJobPublicKeyElRef> {
+    pub fn public_key(&self) -> terrars::ListRef<KmsKeyRingImportJob_PublicKeyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.public_key", self.extract_ref()))
     }
 
@@ -361,20 +385,20 @@ impl KmsKeyRingImportJobRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> KmsKeyRingImportJobTimeoutsElRef {
-        KmsKeyRingImportJobTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> KmsKeyRingImportJob_TimeoutsRef {
+        KmsKeyRingImportJob_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct KmsKeyRingImportJobAttestationEl {
+pub struct KmsKeyRingImportJob_Attestation {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     content: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     format: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl KmsKeyRingImportJobAttestationEl {
+impl KmsKeyRingImportJob_Attestation {
     #[doc = "Set the field `content`.\n"]
     pub fn set_content(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.content = std::option::Option::Some(v.into());
@@ -388,8 +412,8 @@ impl KmsKeyRingImportJobAttestationEl {
     }
 }
 
-impl terrars::ToListMappable for KmsKeyRingImportJobAttestationEl {
-    type O = terrars::BlockAssignable<KmsKeyRingImportJobAttestationEl>;
+impl terrars::ToListMappable for KmsKeyRingImportJob_Attestation {
+    type O = terrars::BlockAssignable<KmsKeyRingImportJob_Attestation>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -400,32 +424,34 @@ impl terrars::ToListMappable for KmsKeyRingImportJobAttestationEl {
     }
 }
 
-pub struct BuildKmsKeyRingImportJobAttestationEl {}
+pub struct BuildKmsKeyRingImportJob_Attestation {}
 
-impl BuildKmsKeyRingImportJobAttestationEl {
-    pub fn build(self) -> KmsKeyRingImportJobAttestationEl {
-        KmsKeyRingImportJobAttestationEl {
+impl BuildKmsKeyRingImportJob_Attestation {
+    pub fn build(self) -> KmsKeyRingImportJob_Attestation {
+        KmsKeyRingImportJob_Attestation {
             content: core::default::Default::default(),
             format: core::default::Default::default(),
         }
     }
 }
 
-pub struct KmsKeyRingImportJobAttestationElRef {
+#[allow(dead_code)]
+pub struct KmsKeyRingImportJob_AttestationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KmsKeyRingImportJobAttestationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> KmsKeyRingImportJobAttestationElRef {
-        KmsKeyRingImportJobAttestationElRef {
+impl terrars::Ref for KmsKeyRingImportJob_AttestationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> KmsKeyRingImportJob_AttestationRef {
+        KmsKeyRingImportJob_AttestationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KmsKeyRingImportJobAttestationElRef {
+impl KmsKeyRingImportJob_AttestationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -442,12 +468,12 @@ impl KmsKeyRingImportJobAttestationElRef {
 }
 
 #[derive(Serialize)]
-pub struct KmsKeyRingImportJobPublicKeyEl {
+pub struct KmsKeyRingImportJob_PublicKey {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     pem: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl KmsKeyRingImportJobPublicKeyEl {
+impl KmsKeyRingImportJob_PublicKey {
     #[doc = "Set the field `pem`.\n"]
     pub fn set_pem(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.pem = std::option::Option::Some(v.into());
@@ -455,8 +481,8 @@ impl KmsKeyRingImportJobPublicKeyEl {
     }
 }
 
-impl terrars::ToListMappable for KmsKeyRingImportJobPublicKeyEl {
-    type O = terrars::BlockAssignable<KmsKeyRingImportJobPublicKeyEl>;
+impl terrars::ToListMappable for KmsKeyRingImportJob_PublicKey {
+    type O = terrars::BlockAssignable<KmsKeyRingImportJob_PublicKey>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -467,29 +493,31 @@ impl terrars::ToListMappable for KmsKeyRingImportJobPublicKeyEl {
     }
 }
 
-pub struct BuildKmsKeyRingImportJobPublicKeyEl {}
+pub struct BuildKmsKeyRingImportJob_PublicKey {}
 
-impl BuildKmsKeyRingImportJobPublicKeyEl {
-    pub fn build(self) -> KmsKeyRingImportJobPublicKeyEl {
-        KmsKeyRingImportJobPublicKeyEl { pem: core::default::Default::default() }
+impl BuildKmsKeyRingImportJob_PublicKey {
+    pub fn build(self) -> KmsKeyRingImportJob_PublicKey {
+        KmsKeyRingImportJob_PublicKey { pem: core::default::Default::default() }
     }
 }
 
-pub struct KmsKeyRingImportJobPublicKeyElRef {
+#[allow(dead_code)]
+pub struct KmsKeyRingImportJob_PublicKeyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KmsKeyRingImportJobPublicKeyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> KmsKeyRingImportJobPublicKeyElRef {
-        KmsKeyRingImportJobPublicKeyElRef {
+impl terrars::Ref for KmsKeyRingImportJob_PublicKeyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> KmsKeyRingImportJob_PublicKeyRef {
+        KmsKeyRingImportJob_PublicKeyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KmsKeyRingImportJobPublicKeyElRef {
+impl KmsKeyRingImportJob_PublicKeyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -501,14 +529,14 @@ impl KmsKeyRingImportJobPublicKeyElRef {
 }
 
 #[derive(Serialize)]
-pub struct KmsKeyRingImportJobTimeoutsEl {
+pub struct KmsKeyRingImportJob_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl KmsKeyRingImportJobTimeoutsEl {
+impl KmsKeyRingImportJob_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -522,8 +550,8 @@ impl KmsKeyRingImportJobTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for KmsKeyRingImportJobTimeoutsEl {
-    type O = terrars::BlockAssignable<KmsKeyRingImportJobTimeoutsEl>;
+impl terrars::ToListMappable for KmsKeyRingImportJob_Timeouts {
+    type O = terrars::BlockAssignable<KmsKeyRingImportJob_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -534,32 +562,34 @@ impl terrars::ToListMappable for KmsKeyRingImportJobTimeoutsEl {
     }
 }
 
-pub struct BuildKmsKeyRingImportJobTimeoutsEl {}
+pub struct BuildKmsKeyRingImportJob_Timeouts {}
 
-impl BuildKmsKeyRingImportJobTimeoutsEl {
-    pub fn build(self) -> KmsKeyRingImportJobTimeoutsEl {
-        KmsKeyRingImportJobTimeoutsEl {
+impl BuildKmsKeyRingImportJob_Timeouts {
+    pub fn build(self) -> KmsKeyRingImportJob_Timeouts {
+        KmsKeyRingImportJob_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct KmsKeyRingImportJobTimeoutsElRef {
+#[allow(dead_code)]
+pub struct KmsKeyRingImportJob_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KmsKeyRingImportJobTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> KmsKeyRingImportJobTimeoutsElRef {
-        KmsKeyRingImportJobTimeoutsElRef {
+impl terrars::Ref for KmsKeyRingImportJob_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> KmsKeyRingImportJob_TimeoutsRef {
+        KmsKeyRingImportJob_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KmsKeyRingImportJobTimeoutsElRef {
+impl KmsKeyRingImportJob_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

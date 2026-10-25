@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct RecaptchaEnterpriseKeyData {
+struct RecaptchaEnterpriseKeyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct RecaptchaEnterpriseKeyData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     display_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -26,24 +30,24 @@ struct RecaptchaEnterpriseKeyData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    android_settings: std::option::Option<std::vec::Vec<RecaptchaEnterpriseKeyAndroidSettingsEl>>,
+    android_settings: std::option::Option<std::vec::Vec<RecaptchaEnterpriseKey_AndroidSettings>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ios_settings: std::option::Option<std::vec::Vec<RecaptchaEnterpriseKeyIosSettingsEl>>,
+    ios_settings: std::option::Option<std::vec::Vec<RecaptchaEnterpriseKey_IosSettings>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    testing_options: std::option::Option<std::vec::Vec<RecaptchaEnterpriseKeyTestingOptionsEl>>,
+    testing_options: std::option::Option<std::vec::Vec<RecaptchaEnterpriseKey_TestingOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<RecaptchaEnterpriseKeyTimeoutsEl>,
+    timeouts: std::option::Option<RecaptchaEnterpriseKey_Timeouts>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    waf_settings: std::option::Option<std::vec::Vec<RecaptchaEnterpriseKeyWafSettingsEl>>,
+    waf_settings: std::option::Option<std::vec::Vec<RecaptchaEnterpriseKey_WafSettings>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    web_settings: std::option::Option<std::vec::Vec<RecaptchaEnterpriseKeyWebSettingsEl>>,
+    web_settings: std::option::Option<std::vec::Vec<RecaptchaEnterpriseKey_WebSettings>>,
     dynamic: RecaptchaEnterpriseKeyDynamic,
 }
 
 struct RecaptchaEnterpriseKey_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<RecaptchaEnterpriseKeyData>,
+    data: std::cell::RefCell<RecaptchaEnterpriseKeyData_>,
 }
 
 #[derive(Clone)]
@@ -143,6 +147,13 @@ impl RecaptchaEnterpriseKey {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -168,7 +179,7 @@ impl RecaptchaEnterpriseKey {
     #[doc = "Set the field `android_settings`.\n"]
     pub fn set_android_settings(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<RecaptchaEnterpriseKeyAndroidSettingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<RecaptchaEnterpriseKey_AndroidSettings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -184,7 +195,7 @@ impl RecaptchaEnterpriseKey {
     #[doc = "Set the field `ios_settings`.\n"]
     pub fn set_ios_settings(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<RecaptchaEnterpriseKeyIosSettingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<RecaptchaEnterpriseKey_IosSettings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -200,7 +211,7 @@ impl RecaptchaEnterpriseKey {
     #[doc = "Set the field `testing_options`.\n"]
     pub fn set_testing_options(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<RecaptchaEnterpriseKeyTestingOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<RecaptchaEnterpriseKey_TestingOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -214,7 +225,7 @@ impl RecaptchaEnterpriseKey {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<RecaptchaEnterpriseKeyTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<RecaptchaEnterpriseKey_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -222,7 +233,7 @@ impl RecaptchaEnterpriseKey {
     #[doc = "Set the field `waf_settings`.\n"]
     pub fn set_waf_settings(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<RecaptchaEnterpriseKeyWafSettingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<RecaptchaEnterpriseKey_WafSettings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -238,7 +249,7 @@ impl RecaptchaEnterpriseKey {
     #[doc = "Set the field `web_settings`.\n"]
     pub fn set_web_settings(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<RecaptchaEnterpriseKeyWebSettingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<RecaptchaEnterpriseKey_WebSettings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -255,6 +266,12 @@ impl RecaptchaEnterpriseKey {
         "Get a reference to the value of field `create_time` after provisioning.\nThe timestamp corresponding to the creation of this Key."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -281,7 +298,7 @@ impl RecaptchaEnterpriseKey {
     }
 
     #[doc =
-        "Get a reference to the value of field `name` after provisioning.\nThe resource name for the Key in the format \"projects/{project}/keys/{key}\"."]
+        "Get a reference to the value of field `name` after provisioning.\nThe resource id for the Key, which is the same as the Site Key itself."]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
@@ -298,32 +315,32 @@ impl RecaptchaEnterpriseKey {
     }
 
     #[doc = "Get a reference to the value of field `android_settings` after provisioning.\n"]
-    pub fn android_settings(&self) -> terrars::ListRef<RecaptchaEnterpriseKeyAndroidSettingsElRef> {
+    pub fn android_settings(&self) -> terrars::ListRef<RecaptchaEnterpriseKey_AndroidSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.android_settings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `ios_settings` after provisioning.\n"]
-    pub fn ios_settings(&self) -> terrars::ListRef<RecaptchaEnterpriseKeyIosSettingsElRef> {
+    pub fn ios_settings(&self) -> terrars::ListRef<RecaptchaEnterpriseKey_IosSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ios_settings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `testing_options` after provisioning.\n"]
-    pub fn testing_options(&self) -> terrars::ListRef<RecaptchaEnterpriseKeyTestingOptionsElRef> {
+    pub fn testing_options(&self) -> terrars::ListRef<RecaptchaEnterpriseKey_TestingOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.testing_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> RecaptchaEnterpriseKeyTimeoutsElRef {
-        RecaptchaEnterpriseKeyTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> RecaptchaEnterpriseKey_TimeoutsRef {
+        RecaptchaEnterpriseKey_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `waf_settings` after provisioning.\n"]
-    pub fn waf_settings(&self) -> terrars::ListRef<RecaptchaEnterpriseKeyWafSettingsElRef> {
+    pub fn waf_settings(&self) -> terrars::ListRef<RecaptchaEnterpriseKey_WafSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.waf_settings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `web_settings` after provisioning.\n"]
-    pub fn web_settings(&self) -> terrars::ListRef<RecaptchaEnterpriseKeyWebSettingsElRef> {
+    pub fn web_settings(&self) -> terrars::ListRef<RecaptchaEnterpriseKey_WebSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.web_settings", self.extract_ref()))
     }
 }
@@ -370,12 +387,13 @@ impl BuildRecaptchaEnterpriseKey {
         let out = RecaptchaEnterpriseKey(std::rc::Rc::new(RecaptchaEnterpriseKey_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(RecaptchaEnterpriseKeyData {
+            data: std::cell::RefCell::new(RecaptchaEnterpriseKeyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 display_name: self.display_name,
                 id: core::default::Default::default(),
                 labels: core::default::Default::default(),
@@ -424,6 +442,12 @@ impl RecaptchaEnterpriseKeyRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `display_name` after provisioning.\nHuman-readable display name of this key. Modifiable by user."]
     pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
@@ -447,7 +471,7 @@ impl RecaptchaEnterpriseKeyRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `name` after provisioning.\nThe resource name for the Key in the format \"projects/{project}/keys/{key}\"."]
+        "Get a reference to the value of field `name` after provisioning.\nThe resource id for the Key, which is the same as the Site Key itself."]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
@@ -464,45 +488,54 @@ impl RecaptchaEnterpriseKeyRef {
     }
 
     #[doc = "Get a reference to the value of field `android_settings` after provisioning.\n"]
-    pub fn android_settings(&self) -> terrars::ListRef<RecaptchaEnterpriseKeyAndroidSettingsElRef> {
+    pub fn android_settings(&self) -> terrars::ListRef<RecaptchaEnterpriseKey_AndroidSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.android_settings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `ios_settings` after provisioning.\n"]
-    pub fn ios_settings(&self) -> terrars::ListRef<RecaptchaEnterpriseKeyIosSettingsElRef> {
+    pub fn ios_settings(&self) -> terrars::ListRef<RecaptchaEnterpriseKey_IosSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ios_settings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `testing_options` after provisioning.\n"]
-    pub fn testing_options(&self) -> terrars::ListRef<RecaptchaEnterpriseKeyTestingOptionsElRef> {
+    pub fn testing_options(&self) -> terrars::ListRef<RecaptchaEnterpriseKey_TestingOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.testing_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> RecaptchaEnterpriseKeyTimeoutsElRef {
-        RecaptchaEnterpriseKeyTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> RecaptchaEnterpriseKey_TimeoutsRef {
+        RecaptchaEnterpriseKey_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `waf_settings` after provisioning.\n"]
-    pub fn waf_settings(&self) -> terrars::ListRef<RecaptchaEnterpriseKeyWafSettingsElRef> {
+    pub fn waf_settings(&self) -> terrars::ListRef<RecaptchaEnterpriseKey_WafSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.waf_settings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `web_settings` after provisioning.\n"]
-    pub fn web_settings(&self) -> terrars::ListRef<RecaptchaEnterpriseKeyWebSettingsElRef> {
+    pub fn web_settings(&self) -> terrars::ListRef<RecaptchaEnterpriseKey_WebSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.web_settings", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct RecaptchaEnterpriseKeyDynamic {
+    android_settings: std::option::Option<terrars::DynamicBlock<RecaptchaEnterpriseKey_AndroidSettings>>,
+    ios_settings: std::option::Option<terrars::DynamicBlock<RecaptchaEnterpriseKey_IosSettings>>,
+    testing_options: std::option::Option<terrars::DynamicBlock<RecaptchaEnterpriseKey_TestingOptions>>,
+    waf_settings: std::option::Option<terrars::DynamicBlock<RecaptchaEnterpriseKey_WafSettings>>,
+    web_settings: std::option::Option<terrars::DynamicBlock<RecaptchaEnterpriseKey_WebSettings>>,
+}
+
 #[derive(Serialize)]
-pub struct RecaptchaEnterpriseKeyAndroidSettingsEl {
+pub struct RecaptchaEnterpriseKey_AndroidSettings {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allow_all_package_names: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allowed_package_names: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl RecaptchaEnterpriseKeyAndroidSettingsEl {
+impl RecaptchaEnterpriseKey_AndroidSettings {
     #[doc =
         "Set the field `allow_all_package_names`.\nIf set to true, it means allowed_package_names will not be enforced."]
     pub fn set_allow_all_package_names(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -521,8 +554,8 @@ impl RecaptchaEnterpriseKeyAndroidSettingsEl {
     }
 }
 
-impl terrars::ToListMappable for RecaptchaEnterpriseKeyAndroidSettingsEl {
-    type O = terrars::BlockAssignable<RecaptchaEnterpriseKeyAndroidSettingsEl>;
+impl terrars::ToListMappable for RecaptchaEnterpriseKey_AndroidSettings {
+    type O = terrars::BlockAssignable<RecaptchaEnterpriseKey_AndroidSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -533,32 +566,34 @@ impl terrars::ToListMappable for RecaptchaEnterpriseKeyAndroidSettingsEl {
     }
 }
 
-pub struct BuildRecaptchaEnterpriseKeyAndroidSettingsEl {}
+pub struct BuildRecaptchaEnterpriseKey_AndroidSettings {}
 
-impl BuildRecaptchaEnterpriseKeyAndroidSettingsEl {
-    pub fn build(self) -> RecaptchaEnterpriseKeyAndroidSettingsEl {
-        RecaptchaEnterpriseKeyAndroidSettingsEl {
+impl BuildRecaptchaEnterpriseKey_AndroidSettings {
+    pub fn build(self) -> RecaptchaEnterpriseKey_AndroidSettings {
+        RecaptchaEnterpriseKey_AndroidSettings {
             allow_all_package_names: core::default::Default::default(),
             allowed_package_names: core::default::Default::default(),
         }
     }
 }
 
-pub struct RecaptchaEnterpriseKeyAndroidSettingsElRef {
+#[allow(dead_code)]
+pub struct RecaptchaEnterpriseKey_AndroidSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RecaptchaEnterpriseKeyAndroidSettingsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> RecaptchaEnterpriseKeyAndroidSettingsElRef {
-        RecaptchaEnterpriseKeyAndroidSettingsElRef {
+impl terrars::Ref for RecaptchaEnterpriseKey_AndroidSettingsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> RecaptchaEnterpriseKey_AndroidSettingsRef {
+        RecaptchaEnterpriseKey_AndroidSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RecaptchaEnterpriseKeyAndroidSettingsElRef {
+impl RecaptchaEnterpriseKey_AndroidSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -577,14 +612,14 @@ impl RecaptchaEnterpriseKeyAndroidSettingsElRef {
 }
 
 #[derive(Serialize)]
-pub struct RecaptchaEnterpriseKeyIosSettingsEl {
+pub struct RecaptchaEnterpriseKey_IosSettings {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allow_all_bundle_ids: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allowed_bundle_ids: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl RecaptchaEnterpriseKeyIosSettingsEl {
+impl RecaptchaEnterpriseKey_IosSettings {
     #[doc = "Set the field `allow_all_bundle_ids`.\nIf set to true, it means allowed_bundle_ids will not be enforced."]
     pub fn set_allow_all_bundle_ids(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.allow_all_bundle_ids = std::option::Option::Some(v.into());
@@ -602,8 +637,8 @@ impl RecaptchaEnterpriseKeyIosSettingsEl {
     }
 }
 
-impl terrars::ToListMappable for RecaptchaEnterpriseKeyIosSettingsEl {
-    type O = terrars::BlockAssignable<RecaptchaEnterpriseKeyIosSettingsEl>;
+impl terrars::ToListMappable for RecaptchaEnterpriseKey_IosSettings {
+    type O = terrars::BlockAssignable<RecaptchaEnterpriseKey_IosSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -614,32 +649,34 @@ impl terrars::ToListMappable for RecaptchaEnterpriseKeyIosSettingsEl {
     }
 }
 
-pub struct BuildRecaptchaEnterpriseKeyIosSettingsEl {}
+pub struct BuildRecaptchaEnterpriseKey_IosSettings {}
 
-impl BuildRecaptchaEnterpriseKeyIosSettingsEl {
-    pub fn build(self) -> RecaptchaEnterpriseKeyIosSettingsEl {
-        RecaptchaEnterpriseKeyIosSettingsEl {
+impl BuildRecaptchaEnterpriseKey_IosSettings {
+    pub fn build(self) -> RecaptchaEnterpriseKey_IosSettings {
+        RecaptchaEnterpriseKey_IosSettings {
             allow_all_bundle_ids: core::default::Default::default(),
             allowed_bundle_ids: core::default::Default::default(),
         }
     }
 }
 
-pub struct RecaptchaEnterpriseKeyIosSettingsElRef {
+#[allow(dead_code)]
+pub struct RecaptchaEnterpriseKey_IosSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RecaptchaEnterpriseKeyIosSettingsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> RecaptchaEnterpriseKeyIosSettingsElRef {
-        RecaptchaEnterpriseKeyIosSettingsElRef {
+impl terrars::Ref for RecaptchaEnterpriseKey_IosSettingsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> RecaptchaEnterpriseKey_IosSettingsRef {
+        RecaptchaEnterpriseKey_IosSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RecaptchaEnterpriseKeyIosSettingsElRef {
+impl RecaptchaEnterpriseKey_IosSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -658,14 +695,14 @@ impl RecaptchaEnterpriseKeyIosSettingsElRef {
 }
 
 #[derive(Serialize)]
-pub struct RecaptchaEnterpriseKeyTestingOptionsEl {
+pub struct RecaptchaEnterpriseKey_TestingOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     testing_challenge: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     testing_score: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl RecaptchaEnterpriseKeyTestingOptionsEl {
+impl RecaptchaEnterpriseKey_TestingOptions {
     #[doc =
         "Set the field `testing_challenge`.\nFor challenge-based keys only (CHECKBOX, INVISIBLE), all challenge requests for this site will return nocaptcha if NOCAPTCHA, or an unsolvable challenge if UNSOLVABLE_CHALLENGE. Possible values: TESTING_CHALLENGE_UNSPECIFIED, NOCAPTCHA, UNSOLVABLE_CHALLENGE"]
     pub fn set_testing_challenge(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -681,8 +718,8 @@ impl RecaptchaEnterpriseKeyTestingOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for RecaptchaEnterpriseKeyTestingOptionsEl {
-    type O = terrars::BlockAssignable<RecaptchaEnterpriseKeyTestingOptionsEl>;
+impl terrars::ToListMappable for RecaptchaEnterpriseKey_TestingOptions {
+    type O = terrars::BlockAssignable<RecaptchaEnterpriseKey_TestingOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -693,32 +730,34 @@ impl terrars::ToListMappable for RecaptchaEnterpriseKeyTestingOptionsEl {
     }
 }
 
-pub struct BuildRecaptchaEnterpriseKeyTestingOptionsEl {}
+pub struct BuildRecaptchaEnterpriseKey_TestingOptions {}
 
-impl BuildRecaptchaEnterpriseKeyTestingOptionsEl {
-    pub fn build(self) -> RecaptchaEnterpriseKeyTestingOptionsEl {
-        RecaptchaEnterpriseKeyTestingOptionsEl {
+impl BuildRecaptchaEnterpriseKey_TestingOptions {
+    pub fn build(self) -> RecaptchaEnterpriseKey_TestingOptions {
+        RecaptchaEnterpriseKey_TestingOptions {
             testing_challenge: core::default::Default::default(),
             testing_score: core::default::Default::default(),
         }
     }
 }
 
-pub struct RecaptchaEnterpriseKeyTestingOptionsElRef {
+#[allow(dead_code)]
+pub struct RecaptchaEnterpriseKey_TestingOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RecaptchaEnterpriseKeyTestingOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> RecaptchaEnterpriseKeyTestingOptionsElRef {
-        RecaptchaEnterpriseKeyTestingOptionsElRef {
+impl terrars::Ref for RecaptchaEnterpriseKey_TestingOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> RecaptchaEnterpriseKey_TestingOptionsRef {
+        RecaptchaEnterpriseKey_TestingOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RecaptchaEnterpriseKeyTestingOptionsElRef {
+impl RecaptchaEnterpriseKey_TestingOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -737,7 +776,7 @@ impl RecaptchaEnterpriseKeyTestingOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct RecaptchaEnterpriseKeyTimeoutsEl {
+pub struct RecaptchaEnterpriseKey_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -746,7 +785,7 @@ pub struct RecaptchaEnterpriseKeyTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl RecaptchaEnterpriseKeyTimeoutsEl {
+impl RecaptchaEnterpriseKey_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -766,8 +805,8 @@ impl RecaptchaEnterpriseKeyTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for RecaptchaEnterpriseKeyTimeoutsEl {
-    type O = terrars::BlockAssignable<RecaptchaEnterpriseKeyTimeoutsEl>;
+impl terrars::ToListMappable for RecaptchaEnterpriseKey_Timeouts {
+    type O = terrars::BlockAssignable<RecaptchaEnterpriseKey_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -778,11 +817,11 @@ impl terrars::ToListMappable for RecaptchaEnterpriseKeyTimeoutsEl {
     }
 }
 
-pub struct BuildRecaptchaEnterpriseKeyTimeoutsEl {}
+pub struct BuildRecaptchaEnterpriseKey_Timeouts {}
 
-impl BuildRecaptchaEnterpriseKeyTimeoutsEl {
-    pub fn build(self) -> RecaptchaEnterpriseKeyTimeoutsEl {
-        RecaptchaEnterpriseKeyTimeoutsEl {
+impl BuildRecaptchaEnterpriseKey_Timeouts {
+    pub fn build(self) -> RecaptchaEnterpriseKey_Timeouts {
+        RecaptchaEnterpriseKey_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -790,21 +829,23 @@ impl BuildRecaptchaEnterpriseKeyTimeoutsEl {
     }
 }
 
-pub struct RecaptchaEnterpriseKeyTimeoutsElRef {
+#[allow(dead_code)]
+pub struct RecaptchaEnterpriseKey_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RecaptchaEnterpriseKeyTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> RecaptchaEnterpriseKeyTimeoutsElRef {
-        RecaptchaEnterpriseKeyTimeoutsElRef {
+impl terrars::Ref for RecaptchaEnterpriseKey_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> RecaptchaEnterpriseKey_TimeoutsRef {
+        RecaptchaEnterpriseKey_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RecaptchaEnterpriseKeyTimeoutsElRef {
+impl RecaptchaEnterpriseKey_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -826,15 +867,15 @@ impl RecaptchaEnterpriseKeyTimeoutsElRef {
 }
 
 #[derive(Serialize)]
-pub struct RecaptchaEnterpriseKeyWafSettingsEl {
+pub struct RecaptchaEnterpriseKey_WafSettings {
     waf_feature: terrars::PrimField<std::string::String>,
     waf_service: terrars::PrimField<std::string::String>,
 }
 
-impl RecaptchaEnterpriseKeyWafSettingsEl { }
+impl RecaptchaEnterpriseKey_WafSettings { }
 
-impl terrars::ToListMappable for RecaptchaEnterpriseKeyWafSettingsEl {
-    type O = terrars::BlockAssignable<RecaptchaEnterpriseKeyWafSettingsEl>;
+impl terrars::ToListMappable for RecaptchaEnterpriseKey_WafSettings {
+    type O = terrars::BlockAssignable<RecaptchaEnterpriseKey_WafSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -845,7 +886,7 @@ impl terrars::ToListMappable for RecaptchaEnterpriseKeyWafSettingsEl {
     }
 }
 
-pub struct BuildRecaptchaEnterpriseKeyWafSettingsEl {
+pub struct BuildRecaptchaEnterpriseKey_WafSettings {
     #[doc =
         "Supported WAF features. For more information, see https://cloud.google.com/recaptcha-enterprise/docs/usecase#comparison_of_features. Possible values: CHALLENGE_PAGE, SESSION_TOKEN, ACTION_TOKEN, EXPRESS"]
     pub waf_feature: terrars::PrimField<std::string::String>,
@@ -853,30 +894,32 @@ pub struct BuildRecaptchaEnterpriseKeyWafSettingsEl {
     pub waf_service: terrars::PrimField<std::string::String>,
 }
 
-impl BuildRecaptchaEnterpriseKeyWafSettingsEl {
-    pub fn build(self) -> RecaptchaEnterpriseKeyWafSettingsEl {
-        RecaptchaEnterpriseKeyWafSettingsEl {
+impl BuildRecaptchaEnterpriseKey_WafSettings {
+    pub fn build(self) -> RecaptchaEnterpriseKey_WafSettings {
+        RecaptchaEnterpriseKey_WafSettings {
             waf_feature: self.waf_feature,
             waf_service: self.waf_service,
         }
     }
 }
 
-pub struct RecaptchaEnterpriseKeyWafSettingsElRef {
+#[allow(dead_code)]
+pub struct RecaptchaEnterpriseKey_WafSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RecaptchaEnterpriseKeyWafSettingsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> RecaptchaEnterpriseKeyWafSettingsElRef {
-        RecaptchaEnterpriseKeyWafSettingsElRef {
+impl terrars::Ref for RecaptchaEnterpriseKey_WafSettingsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> RecaptchaEnterpriseKey_WafSettingsRef {
+        RecaptchaEnterpriseKey_WafSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RecaptchaEnterpriseKeyWafSettingsElRef {
+impl RecaptchaEnterpriseKey_WafSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -895,7 +938,278 @@ impl RecaptchaEnterpriseKeyWafSettingsElRef {
 }
 
 #[derive(Serialize)]
-pub struct RecaptchaEnterpriseKeyWebSettingsEl {
+pub struct RecaptchaEnterpriseKey_WebSettings_ChallengeSettings_ActionSettings {
+    action: terrars::PrimField<std::string::String>,
+    score_threshold: terrars::PrimField<f64>,
+}
+
+impl RecaptchaEnterpriseKey_WebSettings_ChallengeSettings_ActionSettings { }
+
+impl terrars::ToListMappable for RecaptchaEnterpriseKey_WebSettings_ChallengeSettings_ActionSettings {
+    type O = terrars::BlockAssignable<RecaptchaEnterpriseKey_WebSettings_ChallengeSettings_ActionSettings>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildRecaptchaEnterpriseKey_WebSettings_ChallengeSettings_ActionSettings {
+    #[doc = "The action name."]
+    pub action: terrars::PrimField<std::string::String>,
+    #[doc =
+        "A challenge is triggered if the end-user score is below that threshold. Value must be between 0 and 1 (inclusive)."]
+    pub score_threshold: terrars::PrimField<f64>,
+}
+
+impl BuildRecaptchaEnterpriseKey_WebSettings_ChallengeSettings_ActionSettings {
+    pub fn build(self) -> RecaptchaEnterpriseKey_WebSettings_ChallengeSettings_ActionSettings {
+        RecaptchaEnterpriseKey_WebSettings_ChallengeSettings_ActionSettings {
+            action: self.action,
+            score_threshold: self.score_threshold,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct RecaptchaEnterpriseKey_WebSettings_ChallengeSettings_ActionSettingsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for RecaptchaEnterpriseKey_WebSettings_ChallengeSettings_ActionSettingsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> RecaptchaEnterpriseKey_WebSettings_ChallengeSettings_ActionSettingsRef {
+        RecaptchaEnterpriseKey_WebSettings_ChallengeSettings_ActionSettingsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl RecaptchaEnterpriseKey_WebSettings_ChallengeSettings_ActionSettingsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `action` after provisioning.\nThe action name."]
+    pub fn action(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.action", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `score_threshold` after provisioning.\nA challenge is triggered if the end-user score is below that threshold. Value must be between 0 and 1 (inclusive)."]
+    pub fn score_threshold(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.score_threshold", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct RecaptchaEnterpriseKey_WebSettings_ChallengeSettings_DefaultSettings {
+    score_threshold: terrars::PrimField<f64>,
+}
+
+impl RecaptchaEnterpriseKey_WebSettings_ChallengeSettings_DefaultSettings { }
+
+impl terrars::ToListMappable for RecaptchaEnterpriseKey_WebSettings_ChallengeSettings_DefaultSettings {
+    type O = terrars::BlockAssignable<RecaptchaEnterpriseKey_WebSettings_ChallengeSettings_DefaultSettings>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildRecaptchaEnterpriseKey_WebSettings_ChallengeSettings_DefaultSettings {
+    #[doc =
+        "A challenge is triggered if the end-user score is below that threshold. Value must be between 0 and 1 (inclusive)."]
+    pub score_threshold: terrars::PrimField<f64>,
+}
+
+impl BuildRecaptchaEnterpriseKey_WebSettings_ChallengeSettings_DefaultSettings {
+    pub fn build(self) -> RecaptchaEnterpriseKey_WebSettings_ChallengeSettings_DefaultSettings {
+        RecaptchaEnterpriseKey_WebSettings_ChallengeSettings_DefaultSettings {
+            score_threshold: self.score_threshold,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct RecaptchaEnterpriseKey_WebSettings_ChallengeSettings_DefaultSettingsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for RecaptchaEnterpriseKey_WebSettings_ChallengeSettings_DefaultSettingsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> RecaptchaEnterpriseKey_WebSettings_ChallengeSettings_DefaultSettingsRef {
+        RecaptchaEnterpriseKey_WebSettings_ChallengeSettings_DefaultSettingsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl RecaptchaEnterpriseKey_WebSettings_ChallengeSettings_DefaultSettingsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `score_threshold` after provisioning.\nA challenge is triggered if the end-user score is below that threshold. Value must be between 0 and 1 (inclusive)."]
+    pub fn score_threshold(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.score_threshold", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct RecaptchaEnterpriseKey_WebSettings_ChallengeSettingsDynamic {
+    action_settings: std
+    ::option
+    ::Option<terrars::DynamicBlock<RecaptchaEnterpriseKey_WebSettings_ChallengeSettings_ActionSettings>>,
+    default_settings: std
+    ::option
+    ::Option<terrars::DynamicBlock<RecaptchaEnterpriseKey_WebSettings_ChallengeSettings_DefaultSettings>>,
+}
+
+#[derive(Serialize)]
+pub struct RecaptchaEnterpriseKey_WebSettings_ChallengeSettings {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    action_settings: std
+    ::option
+    ::Option<std::vec::Vec<RecaptchaEnterpriseKey_WebSettings_ChallengeSettings_ActionSettings>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    default_settings: std
+    ::option
+    ::Option<std::vec::Vec<RecaptchaEnterpriseKey_WebSettings_ChallengeSettings_DefaultSettings>>,
+    dynamic: RecaptchaEnterpriseKey_WebSettings_ChallengeSettingsDynamic,
+}
+
+impl RecaptchaEnterpriseKey_WebSettings_ChallengeSettings {
+    #[doc = "Set the field `action_settings`.\n"]
+    pub fn set_action_settings(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<RecaptchaEnterpriseKey_WebSettings_ChallengeSettings_ActionSettings>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.action_settings = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.action_settings = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `default_settings`.\n"]
+    pub fn set_default_settings(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<RecaptchaEnterpriseKey_WebSettings_ChallengeSettings_DefaultSettings>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.default_settings = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.default_settings = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for RecaptchaEnterpriseKey_WebSettings_ChallengeSettings {
+    type O = terrars::BlockAssignable<RecaptchaEnterpriseKey_WebSettings_ChallengeSettings>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildRecaptchaEnterpriseKey_WebSettings_ChallengeSettings {}
+
+impl BuildRecaptchaEnterpriseKey_WebSettings_ChallengeSettings {
+    pub fn build(self) -> RecaptchaEnterpriseKey_WebSettings_ChallengeSettings {
+        RecaptchaEnterpriseKey_WebSettings_ChallengeSettings {
+            action_settings: core::default::Default::default(),
+            default_settings: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct RecaptchaEnterpriseKey_WebSettings_ChallengeSettingsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for RecaptchaEnterpriseKey_WebSettings_ChallengeSettingsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> RecaptchaEnterpriseKey_WebSettings_ChallengeSettingsRef {
+        RecaptchaEnterpriseKey_WebSettings_ChallengeSettingsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl RecaptchaEnterpriseKey_WebSettings_ChallengeSettingsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `default_settings` after provisioning.\n"]
+    pub fn default_settings(
+        &self,
+    ) -> terrars::ListRef<RecaptchaEnterpriseKey_WebSettings_ChallengeSettings_DefaultSettingsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.default_settings", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct RecaptchaEnterpriseKey_WebSettingsDynamic {
+    challenge_settings: std
+    ::option
+    ::Option<terrars::DynamicBlock<RecaptchaEnterpriseKey_WebSettings_ChallengeSettings>>,
+}
+
+#[derive(Serialize)]
+pub struct RecaptchaEnterpriseKey_WebSettings {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allow_all_domains: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -905,9 +1219,12 @@ pub struct RecaptchaEnterpriseKeyWebSettingsEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     challenge_security_preference: std::option::Option<terrars::PrimField<std::string::String>>,
     integration_type: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    challenge_settings: std::option::Option<std::vec::Vec<RecaptchaEnterpriseKey_WebSettings_ChallengeSettings>>,
+    dynamic: RecaptchaEnterpriseKey_WebSettingsDynamic,
 }
 
-impl RecaptchaEnterpriseKeyWebSettingsEl {
+impl RecaptchaEnterpriseKey_WebSettings {
     #[doc = "Set the field `allow_all_domains`.\nIf set to true, it means allowed_domains will not be enforced."]
     pub fn set_allow_all_domains(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.allow_all_domains = std::option::Option::Some(v.into());
@@ -940,10 +1257,26 @@ impl RecaptchaEnterpriseKeyWebSettingsEl {
         self.challenge_security_preference = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `challenge_settings`.\n"]
+    pub fn set_challenge_settings(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<RecaptchaEnterpriseKey_WebSettings_ChallengeSettings>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.challenge_settings = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.challenge_settings = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
 }
 
-impl terrars::ToListMappable for RecaptchaEnterpriseKeyWebSettingsEl {
-    type O = terrars::BlockAssignable<RecaptchaEnterpriseKeyWebSettingsEl>;
+impl terrars::ToListMappable for RecaptchaEnterpriseKey_WebSettings {
+    type O = terrars::BlockAssignable<RecaptchaEnterpriseKey_WebSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -954,39 +1287,43 @@ impl terrars::ToListMappable for RecaptchaEnterpriseKeyWebSettingsEl {
     }
 }
 
-pub struct BuildRecaptchaEnterpriseKeyWebSettingsEl {
+pub struct BuildRecaptchaEnterpriseKey_WebSettings {
     #[doc =
-        "Required. Describes how this key is integrated with the website. Possible values: SCORE, CHECKBOX, INVISIBLE"]
+        "Required. Describes how this key is integrated with the website. Possible values: SCORE, CHECKBOX, INVISIBLE, POLICY_BASED_CHALLENGE"]
     pub integration_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildRecaptchaEnterpriseKeyWebSettingsEl {
-    pub fn build(self) -> RecaptchaEnterpriseKeyWebSettingsEl {
-        RecaptchaEnterpriseKeyWebSettingsEl {
+impl BuildRecaptchaEnterpriseKey_WebSettings {
+    pub fn build(self) -> RecaptchaEnterpriseKey_WebSettings {
+        RecaptchaEnterpriseKey_WebSettings {
             allow_all_domains: core::default::Default::default(),
             allow_amp_traffic: core::default::Default::default(),
             allowed_domains: core::default::Default::default(),
             challenge_security_preference: core::default::Default::default(),
             integration_type: self.integration_type,
+            challenge_settings: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct RecaptchaEnterpriseKeyWebSettingsElRef {
+#[allow(dead_code)]
+pub struct RecaptchaEnterpriseKey_WebSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RecaptchaEnterpriseKeyWebSettingsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> RecaptchaEnterpriseKeyWebSettingsElRef {
-        RecaptchaEnterpriseKeyWebSettingsElRef {
+impl terrars::Ref for RecaptchaEnterpriseKey_WebSettingsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> RecaptchaEnterpriseKey_WebSettingsRef {
+        RecaptchaEnterpriseKey_WebSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RecaptchaEnterpriseKeyWebSettingsElRef {
+impl RecaptchaEnterpriseKey_WebSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1016,17 +1353,13 @@ impl RecaptchaEnterpriseKeyWebSettingsElRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `integration_type` after provisioning.\nRequired. Describes how this key is integrated with the website. Possible values: SCORE, CHECKBOX, INVISIBLE"]
+        "Get a reference to the value of field `integration_type` after provisioning.\nRequired. Describes how this key is integrated with the website. Possible values: SCORE, CHECKBOX, INVISIBLE, POLICY_BASED_CHALLENGE"]
     pub fn integration_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.integration_type", self.base))
     }
-}
 
-#[derive(Serialize, Default)]
-struct RecaptchaEnterpriseKeyDynamic {
-    android_settings: std::option::Option<terrars::DynamicBlock<RecaptchaEnterpriseKeyAndroidSettingsEl>>,
-    ios_settings: std::option::Option<terrars::DynamicBlock<RecaptchaEnterpriseKeyIosSettingsEl>>,
-    testing_options: std::option::Option<terrars::DynamicBlock<RecaptchaEnterpriseKeyTestingOptionsEl>>,
-    waf_settings: std::option::Option<terrars::DynamicBlock<RecaptchaEnterpriseKeyWafSettingsEl>>,
-    web_settings: std::option::Option<terrars::DynamicBlock<RecaptchaEnterpriseKeyWebSettingsEl>>,
+    #[doc = "Get a reference to the value of field `challenge_settings` after provisioning.\n"]
+    pub fn challenge_settings(&self) -> terrars::ListRef<RecaptchaEnterpriseKey_WebSettings_ChallengeSettingsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.challenge_settings", self.base))
+    }
 }

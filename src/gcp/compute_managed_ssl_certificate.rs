@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeManagedSslCertificateData {
+struct ComputeManagedSslCertificateData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,7 +21,7 @@ struct ComputeManagedSslCertificateData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    certificate_id: std::option::Option<terrars::PrimField<f64>>,
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -31,16 +33,16 @@ struct ComputeManagedSslCertificateData {
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    managed: std::option::Option<std::vec::Vec<ComputeManagedSslCertificateManagedEl>>,
+    managed: std::option::Option<std::vec::Vec<ComputeManagedSslCertificate_Managed>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComputeManagedSslCertificateTimeoutsEl>,
+    timeouts: std::option::Option<ComputeManagedSslCertificate_Timeouts>,
     dynamic: ComputeManagedSslCertificateDynamic,
 }
 
 struct ComputeManagedSslCertificate_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeManagedSslCertificateData>,
+    data: std::cell::RefCell<ComputeManagedSslCertificateData_>,
 }
 
 #[derive(Clone)]
@@ -140,9 +142,10 @@ impl ComputeManagedSslCertificate {
         self
     }
 
-    #[doc = "Set the field `certificate_id`.\nThe unique identifier for the resource."]
-    pub fn set_certificate_id(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.0.data.borrow_mut().certificate_id = std::option::Option::Some(v.into());
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
         self
     }
 
@@ -159,7 +162,7 @@ impl ComputeManagedSslCertificate {
     }
 
     #[doc =
-        "Set the field `name`.\nName of the resource. Provided by the client when the resource is\ncreated. The name must be 1-63 characters long, and comply with\nRFC1035. Specifically, the name must be 1-63 characters long and match\nthe regular expression '[a-z]([-a-z0-9]*[a-z0-9])?' which means the\nfirst character must be a lowercase letter, and all following\ncharacters must be a dash, lowercase letter, or digit, except the last\ncharacter, which cannot be a dash.\n\n\nThese are in the same namespace as the managed SSL certificates."]
+        "Set the field `name`.\nName of the resource. Provided by the client when the resource is\ncreated. The name must be 1-63 characters long, and comply with\nRFC1035. Specifically, the name must be 1-63 characters long and match\nthe regular expression '[a-z]([-a-z0-9]*[a-z0-9])?' which means the\nfirst character must be a lowercase letter, and all following\ncharacters must be a dash, lowercase letter, or digit, except the last\ncharacter, which cannot be a dash.\n\nThese are in the same namespace as the managed SSL certificates."]
     pub fn set_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().name = std::option::Option::Some(v.into());
         self
@@ -181,7 +184,7 @@ impl ComputeManagedSslCertificate {
     #[doc = "Set the field `managed`.\n"]
     pub fn set_managed(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeManagedSslCertificateManagedEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeManagedSslCertificate_Managed>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -195,7 +198,7 @@ impl ComputeManagedSslCertificate {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeManagedSslCertificateTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeManagedSslCertificate_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -210,6 +213,12 @@ impl ComputeManagedSslCertificate {
         "Get a reference to the value of field `creation_timestamp` after provisioning.\nCreation timestamp in RFC3339 text format."]
     pub fn creation_timestamp(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_timestamp", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -230,7 +239,7 @@ impl ComputeManagedSslCertificate {
     }
 
     #[doc =
-        "Get a reference to the value of field `name` after provisioning.\nName of the resource. Provided by the client when the resource is\ncreated. The name must be 1-63 characters long, and comply with\nRFC1035. Specifically, the name must be 1-63 characters long and match\nthe regular expression '[a-z]([-a-z0-9]*[a-z0-9])?' which means the\nfirst character must be a lowercase letter, and all following\ncharacters must be a dash, lowercase letter, or digit, except the last\ncharacter, which cannot be a dash.\n\n\nThese are in the same namespace as the managed SSL certificates."]
+        "Get a reference to the value of field `name` after provisioning.\nName of the resource. Provided by the client when the resource is\ncreated. The name must be 1-63 characters long, and comply with\nRFC1035. Specifically, the name must be 1-63 characters long and match\nthe regular expression '[a-z]([-a-z0-9]*[a-z0-9])?' which means the\nfirst character must be a lowercase letter, and all following\ncharacters must be a dash, lowercase letter, or digit, except the last\ncharacter, which cannot be a dash.\n\nThese are in the same namespace as the managed SSL certificates."]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
@@ -258,13 +267,13 @@ impl ComputeManagedSslCertificate {
     }
 
     #[doc = "Get a reference to the value of field `managed` after provisioning.\n"]
-    pub fn managed(&self) -> terrars::ListRef<ComputeManagedSslCertificateManagedElRef> {
+    pub fn managed(&self) -> terrars::ListRef<ComputeManagedSslCertificate_ManagedRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.managed", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeManagedSslCertificateTimeoutsElRef {
-        ComputeManagedSslCertificateTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ComputeManagedSslCertificate_TimeoutsRef {
+        ComputeManagedSslCertificate_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -311,13 +320,13 @@ impl BuildComputeManagedSslCertificate {
         let out = ComputeManagedSslCertificate(std::rc::Rc::new(ComputeManagedSslCertificate_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeManagedSslCertificateData {
+            data: std::cell::RefCell::new(ComputeManagedSslCertificateData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
-                certificate_id: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: core::default::Default::default(),
@@ -369,6 +378,12 @@ impl ComputeManagedSslCertificateRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nAn optional description of this resource."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -386,7 +401,7 @@ impl ComputeManagedSslCertificateRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `name` after provisioning.\nName of the resource. Provided by the client when the resource is\ncreated. The name must be 1-63 characters long, and comply with\nRFC1035. Specifically, the name must be 1-63 characters long and match\nthe regular expression '[a-z]([-a-z0-9]*[a-z0-9])?' which means the\nfirst character must be a lowercase letter, and all following\ncharacters must be a dash, lowercase letter, or digit, except the last\ncharacter, which cannot be a dash.\n\n\nThese are in the same namespace as the managed SSL certificates."]
+        "Get a reference to the value of field `name` after provisioning.\nName of the resource. Provided by the client when the resource is\ncreated. The name must be 1-63 characters long, and comply with\nRFC1035. Specifically, the name must be 1-63 characters long and match\nthe regular expression '[a-z]([-a-z0-9]*[a-z0-9])?' which means the\nfirst character must be a lowercase letter, and all following\ncharacters must be a dash, lowercase letter, or digit, except the last\ncharacter, which cannot be a dash.\n\nThese are in the same namespace as the managed SSL certificates."]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
@@ -414,28 +429,33 @@ impl ComputeManagedSslCertificateRef {
     }
 
     #[doc = "Get a reference to the value of field `managed` after provisioning.\n"]
-    pub fn managed(&self) -> terrars::ListRef<ComputeManagedSslCertificateManagedElRef> {
+    pub fn managed(&self) -> terrars::ListRef<ComputeManagedSslCertificate_ManagedRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.managed", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeManagedSslCertificateTimeoutsElRef {
-        ComputeManagedSslCertificateTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ComputeManagedSslCertificate_TimeoutsRef {
+        ComputeManagedSslCertificate_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct ComputeManagedSslCertificateDynamic {
+    managed: std::option::Option<terrars::DynamicBlock<ComputeManagedSslCertificate_Managed>>,
+}
+
 #[derive(Serialize)]
-pub struct ComputeManagedSslCertificateManagedEl {
+pub struct ComputeManagedSslCertificate_Managed {
     domains: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeManagedSslCertificateManagedEl { }
+impl ComputeManagedSslCertificate_Managed { }
 
-impl terrars::ToListMappable for ComputeManagedSslCertificateManagedEl {
-    type O = terrars::BlockAssignable<ComputeManagedSslCertificateManagedEl>;
+impl terrars::ToListMappable for ComputeManagedSslCertificate_Managed {
+    type O = terrars::BlockAssignable<ComputeManagedSslCertificate_Managed>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -446,33 +466,35 @@ impl terrars::ToListMappable for ComputeManagedSslCertificateManagedEl {
     }
 }
 
-pub struct BuildComputeManagedSslCertificateManagedEl {
+pub struct BuildComputeManagedSslCertificate_Managed {
     #[doc =
         "Domains for which a managed SSL certificate will be valid.  Currently,\nthere can be up to 100 domains in this list."]
     pub domains: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildComputeManagedSslCertificateManagedEl {
-    pub fn build(self) -> ComputeManagedSslCertificateManagedEl {
-        ComputeManagedSslCertificateManagedEl { domains: self.domains }
+impl BuildComputeManagedSslCertificate_Managed {
+    pub fn build(self) -> ComputeManagedSslCertificate_Managed {
+        ComputeManagedSslCertificate_Managed { domains: self.domains }
     }
 }
 
-pub struct ComputeManagedSslCertificateManagedElRef {
+#[allow(dead_code)]
+pub struct ComputeManagedSslCertificate_ManagedRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeManagedSslCertificateManagedElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeManagedSslCertificateManagedElRef {
-        ComputeManagedSslCertificateManagedElRef {
+impl terrars::Ref for ComputeManagedSslCertificate_ManagedRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeManagedSslCertificate_ManagedRef {
+        ComputeManagedSslCertificate_ManagedRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeManagedSslCertificateManagedElRef {
+impl ComputeManagedSslCertificate_ManagedRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -485,14 +507,14 @@ impl ComputeManagedSslCertificateManagedElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeManagedSslCertificateTimeoutsEl {
+pub struct ComputeManagedSslCertificate_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeManagedSslCertificateTimeoutsEl {
+impl ComputeManagedSslCertificate_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -506,8 +528,8 @@ impl ComputeManagedSslCertificateTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeManagedSslCertificateTimeoutsEl {
-    type O = terrars::BlockAssignable<ComputeManagedSslCertificateTimeoutsEl>;
+impl terrars::ToListMappable for ComputeManagedSslCertificate_Timeouts {
+    type O = terrars::BlockAssignable<ComputeManagedSslCertificate_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -518,32 +540,34 @@ impl terrars::ToListMappable for ComputeManagedSslCertificateTimeoutsEl {
     }
 }
 
-pub struct BuildComputeManagedSslCertificateTimeoutsEl {}
+pub struct BuildComputeManagedSslCertificate_Timeouts {}
 
-impl BuildComputeManagedSslCertificateTimeoutsEl {
-    pub fn build(self) -> ComputeManagedSslCertificateTimeoutsEl {
-        ComputeManagedSslCertificateTimeoutsEl {
+impl BuildComputeManagedSslCertificate_Timeouts {
+    pub fn build(self) -> ComputeManagedSslCertificate_Timeouts {
+        ComputeManagedSslCertificate_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeManagedSslCertificateTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComputeManagedSslCertificate_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeManagedSslCertificateTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeManagedSslCertificateTimeoutsElRef {
-        ComputeManagedSslCertificateTimeoutsElRef {
+impl terrars::Ref for ComputeManagedSslCertificate_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeManagedSslCertificate_TimeoutsRef {
+        ComputeManagedSslCertificate_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeManagedSslCertificateTimeoutsElRef {
+impl ComputeManagedSslCertificate_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -557,9 +581,4 @@ impl ComputeManagedSslCertificateTimeoutsElRef {
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ComputeManagedSslCertificateDynamic {
-    managed: std::option::Option<terrars::DynamicBlock<ComputeManagedSslCertificateManagedEl>>,
 }

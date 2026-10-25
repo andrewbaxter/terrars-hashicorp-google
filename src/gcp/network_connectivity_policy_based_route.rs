@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct NetworkConnectivityPolicyBasedRouteData {
+struct NetworkConnectivityPolicyBasedRouteData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct NetworkConnectivityPolicyBasedRouteData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -35,22 +39,22 @@ struct NetworkConnectivityPolicyBasedRouteData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<NetworkConnectivityPolicyBasedRouteFilterEl>>,
+    filter: std::option::Option<std::vec::Vec<NetworkConnectivityPolicyBasedRoute_Filter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     interconnect_attachment: std
     ::option
-    ::Option<std::vec::Vec<NetworkConnectivityPolicyBasedRouteInterconnectAttachmentEl>>,
+    ::Option<std::vec::Vec<NetworkConnectivityPolicyBasedRoute_InterconnectAttachment>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<NetworkConnectivityPolicyBasedRouteTimeoutsEl>,
+    timeouts: std::option::Option<NetworkConnectivityPolicyBasedRoute_Timeouts>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    virtual_machine: std::option::Option<std::vec::Vec<NetworkConnectivityPolicyBasedRouteVirtualMachineEl>>,
+    virtual_machine: std::option::Option<std::vec::Vec<NetworkConnectivityPolicyBasedRoute_VirtualMachine>>,
     dynamic: NetworkConnectivityPolicyBasedRouteDynamic,
 }
 
 struct NetworkConnectivityPolicyBasedRoute_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<NetworkConnectivityPolicyBasedRouteData>,
+    data: std::cell::RefCell<NetworkConnectivityPolicyBasedRouteData_>,
 }
 
 #[derive(Clone)]
@@ -150,6 +154,13 @@ impl NetworkConnectivityPolicyBasedRoute {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nAn optional description of this resource."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -202,7 +213,7 @@ impl NetworkConnectivityPolicyBasedRoute {
     #[doc = "Set the field `filter`.\n"]
     pub fn set_filter(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<NetworkConnectivityPolicyBasedRouteFilterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<NetworkConnectivityPolicyBasedRoute_Filter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -223,7 +234,7 @@ impl NetworkConnectivityPolicyBasedRoute {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<NetworkConnectivityPolicyBasedRouteInterconnectAttachmentEl>>,
+                    ::Into<terrars::BlockAssignable<NetworkConnectivityPolicyBasedRoute_InterconnectAttachment>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -237,7 +248,7 @@ impl NetworkConnectivityPolicyBasedRoute {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<NetworkConnectivityPolicyBasedRouteTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<NetworkConnectivityPolicyBasedRoute_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -245,7 +256,7 @@ impl NetworkConnectivityPolicyBasedRoute {
     #[doc = "Set the field `virtual_machine`.\n"]
     pub fn set_virtual_machine(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<NetworkConnectivityPolicyBasedRouteVirtualMachineEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<NetworkConnectivityPolicyBasedRoute_VirtualMachine>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -262,6 +273,12 @@ impl NetworkConnectivityPolicyBasedRoute {
         "Get a reference to the value of field `create_time` after provisioning.\nTime when the policy-based route was created."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -340,32 +357,32 @@ impl NetworkConnectivityPolicyBasedRoute {
 
     #[doc =
         "Get a reference to the value of field `warnings` after provisioning.\nIf potential misconfigurations are detected for this route, this field will be populated with warning messages."]
-    pub fn warnings(&self) -> terrars::ListRef<NetworkConnectivityPolicyBasedRouteWarningsElRef> {
+    pub fn warnings(&self) -> terrars::ListRef<NetworkConnectivityPolicyBasedRoute_WarningsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.warnings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `filter` after provisioning.\n"]
-    pub fn filter(&self) -> terrars::ListRef<NetworkConnectivityPolicyBasedRouteFilterElRef> {
+    pub fn filter(&self) -> terrars::ListRef<NetworkConnectivityPolicyBasedRoute_FilterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.filter", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `interconnect_attachment` after provisioning.\n"]
     pub fn interconnect_attachment(
         &self,
-    ) -> terrars::ListRef<NetworkConnectivityPolicyBasedRouteInterconnectAttachmentElRef> {
+    ) -> terrars::ListRef<NetworkConnectivityPolicyBasedRoute_InterconnectAttachmentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.interconnect_attachment", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NetworkConnectivityPolicyBasedRouteTimeoutsElRef {
-        NetworkConnectivityPolicyBasedRouteTimeoutsElRef::new(
+    pub fn timeouts(&self) -> NetworkConnectivityPolicyBasedRoute_TimeoutsRef {
+        NetworkConnectivityPolicyBasedRoute_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 
     #[doc = "Get a reference to the value of field `virtual_machine` after provisioning.\n"]
-    pub fn virtual_machine(&self) -> terrars::ListRef<NetworkConnectivityPolicyBasedRouteVirtualMachineElRef> {
+    pub fn virtual_machine(&self) -> terrars::ListRef<NetworkConnectivityPolicyBasedRoute_VirtualMachineRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.virtual_machine", self.extract_ref()))
     }
 }
@@ -415,12 +432,13 @@ impl BuildNetworkConnectivityPolicyBasedRoute {
         let out = NetworkConnectivityPolicyBasedRoute(std::rc::Rc::new(NetworkConnectivityPolicyBasedRoute_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(NetworkConnectivityPolicyBasedRouteData {
+            data: std::cell::RefCell::new(NetworkConnectivityPolicyBasedRouteData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 labels: core::default::Default::default(),
@@ -472,6 +490,12 @@ impl NetworkConnectivityPolicyBasedRouteRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nAn optional description of this resource."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -547,38 +571,47 @@ impl NetworkConnectivityPolicyBasedRouteRef {
 
     #[doc =
         "Get a reference to the value of field `warnings` after provisioning.\nIf potential misconfigurations are detected for this route, this field will be populated with warning messages."]
-    pub fn warnings(&self) -> terrars::ListRef<NetworkConnectivityPolicyBasedRouteWarningsElRef> {
+    pub fn warnings(&self) -> terrars::ListRef<NetworkConnectivityPolicyBasedRoute_WarningsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.warnings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `filter` after provisioning.\n"]
-    pub fn filter(&self) -> terrars::ListRef<NetworkConnectivityPolicyBasedRouteFilterElRef> {
+    pub fn filter(&self) -> terrars::ListRef<NetworkConnectivityPolicyBasedRoute_FilterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.filter", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `interconnect_attachment` after provisioning.\n"]
     pub fn interconnect_attachment(
         &self,
-    ) -> terrars::ListRef<NetworkConnectivityPolicyBasedRouteInterconnectAttachmentElRef> {
+    ) -> terrars::ListRef<NetworkConnectivityPolicyBasedRoute_InterconnectAttachmentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.interconnect_attachment", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NetworkConnectivityPolicyBasedRouteTimeoutsElRef {
-        NetworkConnectivityPolicyBasedRouteTimeoutsElRef::new(
+    pub fn timeouts(&self) -> NetworkConnectivityPolicyBasedRoute_TimeoutsRef {
+        NetworkConnectivityPolicyBasedRoute_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 
     #[doc = "Get a reference to the value of field `virtual_machine` after provisioning.\n"]
-    pub fn virtual_machine(&self) -> terrars::ListRef<NetworkConnectivityPolicyBasedRouteVirtualMachineElRef> {
+    pub fn virtual_machine(&self) -> terrars::ListRef<NetworkConnectivityPolicyBasedRoute_VirtualMachineRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.virtual_machine", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct NetworkConnectivityPolicyBasedRouteDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<NetworkConnectivityPolicyBasedRoute_Filter>>,
+    interconnect_attachment: std
+    ::option
+    ::Option<terrars::DynamicBlock<NetworkConnectivityPolicyBasedRoute_InterconnectAttachment>>,
+    virtual_machine: std::option::Option<terrars::DynamicBlock<NetworkConnectivityPolicyBasedRoute_VirtualMachine>>,
+}
+
 #[derive(Serialize)]
-pub struct NetworkConnectivityPolicyBasedRouteWarningsEl {
+pub struct NetworkConnectivityPolicyBasedRoute_Warnings {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     code: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -587,7 +620,7 @@ pub struct NetworkConnectivityPolicyBasedRouteWarningsEl {
     warning_message: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl NetworkConnectivityPolicyBasedRouteWarningsEl {
+impl NetworkConnectivityPolicyBasedRoute_Warnings {
     #[doc = "Set the field `code`.\n"]
     pub fn set_code(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.code = std::option::Option::Some(v.into());
@@ -610,8 +643,8 @@ impl NetworkConnectivityPolicyBasedRouteWarningsEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkConnectivityPolicyBasedRouteWarningsEl {
-    type O = terrars::BlockAssignable<NetworkConnectivityPolicyBasedRouteWarningsEl>;
+impl terrars::ToListMappable for NetworkConnectivityPolicyBasedRoute_Warnings {
+    type O = terrars::BlockAssignable<NetworkConnectivityPolicyBasedRoute_Warnings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -622,11 +655,11 @@ impl terrars::ToListMappable for NetworkConnectivityPolicyBasedRouteWarningsEl {
     }
 }
 
-pub struct BuildNetworkConnectivityPolicyBasedRouteWarningsEl {}
+pub struct BuildNetworkConnectivityPolicyBasedRoute_Warnings {}
 
-impl BuildNetworkConnectivityPolicyBasedRouteWarningsEl {
-    pub fn build(self) -> NetworkConnectivityPolicyBasedRouteWarningsEl {
-        NetworkConnectivityPolicyBasedRouteWarningsEl {
+impl BuildNetworkConnectivityPolicyBasedRoute_Warnings {
+    pub fn build(self) -> NetworkConnectivityPolicyBasedRoute_Warnings {
+        NetworkConnectivityPolicyBasedRoute_Warnings {
             code: core::default::Default::default(),
             data: core::default::Default::default(),
             warning_message: core::default::Default::default(),
@@ -634,24 +667,26 @@ impl BuildNetworkConnectivityPolicyBasedRouteWarningsEl {
     }
 }
 
-pub struct NetworkConnectivityPolicyBasedRouteWarningsElRef {
+#[allow(dead_code)]
+pub struct NetworkConnectivityPolicyBasedRoute_WarningsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkConnectivityPolicyBasedRouteWarningsElRef {
+impl terrars::Ref for NetworkConnectivityPolicyBasedRoute_WarningsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkConnectivityPolicyBasedRouteWarningsElRef {
-        NetworkConnectivityPolicyBasedRouteWarningsElRef {
+    ) -> NetworkConnectivityPolicyBasedRoute_WarningsRef {
+        NetworkConnectivityPolicyBasedRoute_WarningsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkConnectivityPolicyBasedRouteWarningsElRef {
+impl NetworkConnectivityPolicyBasedRoute_WarningsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -673,7 +708,7 @@ impl NetworkConnectivityPolicyBasedRouteWarningsElRef {
 }
 
 #[derive(Serialize)]
-pub struct NetworkConnectivityPolicyBasedRouteFilterEl {
+pub struct NetworkConnectivityPolicyBasedRoute_Filter {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dest_range: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -683,9 +718,9 @@ pub struct NetworkConnectivityPolicyBasedRouteFilterEl {
     src_range: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl NetworkConnectivityPolicyBasedRouteFilterEl {
+impl NetworkConnectivityPolicyBasedRoute_Filter {
     #[doc =
-        "Set the field `dest_range`.\nThe destination IP range of outgoing packets that this policy-based route applies to. Default is \"0.0.0.0/0\" if protocol version is IPv4."]
+        "Set the field `dest_range`.\nThe destination IP range of outgoing packets that this policy-based route applies to. Default is \"0.0.0.0/0\"."]
     pub fn set_dest_range(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.dest_range = std::option::Option::Some(v.into());
         self
@@ -699,15 +734,15 @@ impl NetworkConnectivityPolicyBasedRouteFilterEl {
     }
 
     #[doc =
-        "Set the field `src_range`.\nThe source IP range of outgoing packets that this policy-based route applies to. Default is \"0.0.0.0/0\" if protocol version is IPv4."]
+        "Set the field `src_range`.\nThe source IP range of outgoing packets that this policy-based route applies to. Default is \"0.0.0.0/0\"."]
     pub fn set_src_range(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.src_range = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for NetworkConnectivityPolicyBasedRouteFilterEl {
-    type O = terrars::BlockAssignable<NetworkConnectivityPolicyBasedRouteFilterEl>;
+impl terrars::ToListMappable for NetworkConnectivityPolicyBasedRoute_Filter {
+    type O = terrars::BlockAssignable<NetworkConnectivityPolicyBasedRoute_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -718,14 +753,14 @@ impl terrars::ToListMappable for NetworkConnectivityPolicyBasedRouteFilterEl {
     }
 }
 
-pub struct BuildNetworkConnectivityPolicyBasedRouteFilterEl {
-    #[doc = "Internet protocol versions this policy-based route applies to. Possible values: [\"IPV4\"]"]
+pub struct BuildNetworkConnectivityPolicyBasedRoute_Filter {
+    #[doc = "Internet protocol versions this policy-based route applies to. Possible values: [\"IPV4\", \"IPV6\"]"]
     pub protocol_version: terrars::PrimField<std::string::String>,
 }
 
-impl BuildNetworkConnectivityPolicyBasedRouteFilterEl {
-    pub fn build(self) -> NetworkConnectivityPolicyBasedRouteFilterEl {
-        NetworkConnectivityPolicyBasedRouteFilterEl {
+impl BuildNetworkConnectivityPolicyBasedRoute_Filter {
+    pub fn build(self) -> NetworkConnectivityPolicyBasedRoute_Filter {
+        NetworkConnectivityPolicyBasedRoute_Filter {
             dest_range: core::default::Default::default(),
             ip_protocol: core::default::Default::default(),
             protocol_version: self.protocol_version,
@@ -734,30 +769,29 @@ impl BuildNetworkConnectivityPolicyBasedRouteFilterEl {
     }
 }
 
-pub struct NetworkConnectivityPolicyBasedRouteFilterElRef {
+#[allow(dead_code)]
+pub struct NetworkConnectivityPolicyBasedRoute_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkConnectivityPolicyBasedRouteFilterElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> NetworkConnectivityPolicyBasedRouteFilterElRef {
-        NetworkConnectivityPolicyBasedRouteFilterElRef {
+impl terrars::Ref for NetworkConnectivityPolicyBasedRoute_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkConnectivityPolicyBasedRoute_FilterRef {
+        NetworkConnectivityPolicyBasedRoute_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkConnectivityPolicyBasedRouteFilterElRef {
+impl NetworkConnectivityPolicyBasedRoute_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `dest_range` after provisioning.\nThe destination IP range of outgoing packets that this policy-based route applies to. Default is \"0.0.0.0/0\" if protocol version is IPv4."]
+        "Get a reference to the value of field `dest_range` after provisioning.\nThe destination IP range of outgoing packets that this policy-based route applies to. Default is \"0.0.0.0/0\"."]
     pub fn dest_range(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.dest_range", self.base))
     }
@@ -769,27 +803,27 @@ impl NetworkConnectivityPolicyBasedRouteFilterElRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `protocol_version` after provisioning.\nInternet protocol versions this policy-based route applies to. Possible values: [\"IPV4\"]"]
+        "Get a reference to the value of field `protocol_version` after provisioning.\nInternet protocol versions this policy-based route applies to. Possible values: [\"IPV4\", \"IPV6\"]"]
     pub fn protocol_version(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.protocol_version", self.base))
     }
 
     #[doc =
-        "Get a reference to the value of field `src_range` after provisioning.\nThe source IP range of outgoing packets that this policy-based route applies to. Default is \"0.0.0.0/0\" if protocol version is IPv4."]
+        "Get a reference to the value of field `src_range` after provisioning.\nThe source IP range of outgoing packets that this policy-based route applies to. Default is \"0.0.0.0/0\"."]
     pub fn src_range(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.src_range", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct NetworkConnectivityPolicyBasedRouteInterconnectAttachmentEl {
+pub struct NetworkConnectivityPolicyBasedRoute_InterconnectAttachment {
     region: terrars::PrimField<std::string::String>,
 }
 
-impl NetworkConnectivityPolicyBasedRouteInterconnectAttachmentEl { }
+impl NetworkConnectivityPolicyBasedRoute_InterconnectAttachment { }
 
-impl terrars::ToListMappable for NetworkConnectivityPolicyBasedRouteInterconnectAttachmentEl {
-    type O = terrars::BlockAssignable<NetworkConnectivityPolicyBasedRouteInterconnectAttachmentEl>;
+impl terrars::ToListMappable for NetworkConnectivityPolicyBasedRoute_InterconnectAttachment {
+    type O = terrars::BlockAssignable<NetworkConnectivityPolicyBasedRoute_InterconnectAttachment>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -800,36 +834,38 @@ impl terrars::ToListMappable for NetworkConnectivityPolicyBasedRouteInterconnect
     }
 }
 
-pub struct BuildNetworkConnectivityPolicyBasedRouteInterconnectAttachmentEl {
+pub struct BuildNetworkConnectivityPolicyBasedRoute_InterconnectAttachment {
     #[doc =
         "Cloud region to install this policy-based route on for Interconnect attachments. Use 'all' to install it on all Interconnect attachments."]
     pub region: terrars::PrimField<std::string::String>,
 }
 
-impl BuildNetworkConnectivityPolicyBasedRouteInterconnectAttachmentEl {
-    pub fn build(self) -> NetworkConnectivityPolicyBasedRouteInterconnectAttachmentEl {
-        NetworkConnectivityPolicyBasedRouteInterconnectAttachmentEl { region: self.region }
+impl BuildNetworkConnectivityPolicyBasedRoute_InterconnectAttachment {
+    pub fn build(self) -> NetworkConnectivityPolicyBasedRoute_InterconnectAttachment {
+        NetworkConnectivityPolicyBasedRoute_InterconnectAttachment { region: self.region }
     }
 }
 
-pub struct NetworkConnectivityPolicyBasedRouteInterconnectAttachmentElRef {
+#[allow(dead_code)]
+pub struct NetworkConnectivityPolicyBasedRoute_InterconnectAttachmentRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkConnectivityPolicyBasedRouteInterconnectAttachmentElRef {
+impl terrars::Ref for NetworkConnectivityPolicyBasedRoute_InterconnectAttachmentRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkConnectivityPolicyBasedRouteInterconnectAttachmentElRef {
-        NetworkConnectivityPolicyBasedRouteInterconnectAttachmentElRef {
+    ) -> NetworkConnectivityPolicyBasedRoute_InterconnectAttachmentRef {
+        NetworkConnectivityPolicyBasedRoute_InterconnectAttachmentRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkConnectivityPolicyBasedRouteInterconnectAttachmentElRef {
+impl NetworkConnectivityPolicyBasedRoute_InterconnectAttachmentRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -842,14 +878,16 @@ impl NetworkConnectivityPolicyBasedRouteInterconnectAttachmentElRef {
 }
 
 #[derive(Serialize)]
-pub struct NetworkConnectivityPolicyBasedRouteTimeoutsEl {
+pub struct NetworkConnectivityPolicyBasedRoute_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl NetworkConnectivityPolicyBasedRouteTimeoutsEl {
+impl NetworkConnectivityPolicyBasedRoute_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -861,10 +899,16 @@ impl NetworkConnectivityPolicyBasedRouteTimeoutsEl {
         self.delete = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for NetworkConnectivityPolicyBasedRouteTimeoutsEl {
-    type O = terrars::BlockAssignable<NetworkConnectivityPolicyBasedRouteTimeoutsEl>;
+impl terrars::ToListMappable for NetworkConnectivityPolicyBasedRoute_Timeouts {
+    type O = terrars::BlockAssignable<NetworkConnectivityPolicyBasedRoute_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -875,35 +919,38 @@ impl terrars::ToListMappable for NetworkConnectivityPolicyBasedRouteTimeoutsEl {
     }
 }
 
-pub struct BuildNetworkConnectivityPolicyBasedRouteTimeoutsEl {}
+pub struct BuildNetworkConnectivityPolicyBasedRoute_Timeouts {}
 
-impl BuildNetworkConnectivityPolicyBasedRouteTimeoutsEl {
-    pub fn build(self) -> NetworkConnectivityPolicyBasedRouteTimeoutsEl {
-        NetworkConnectivityPolicyBasedRouteTimeoutsEl {
+impl BuildNetworkConnectivityPolicyBasedRoute_Timeouts {
+    pub fn build(self) -> NetworkConnectivityPolicyBasedRoute_Timeouts {
+        NetworkConnectivityPolicyBasedRoute_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
+            update: core::default::Default::default(),
         }
     }
 }
 
-pub struct NetworkConnectivityPolicyBasedRouteTimeoutsElRef {
+#[allow(dead_code)]
+pub struct NetworkConnectivityPolicyBasedRoute_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkConnectivityPolicyBasedRouteTimeoutsElRef {
+impl terrars::Ref for NetworkConnectivityPolicyBasedRoute_TimeoutsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkConnectivityPolicyBasedRouteTimeoutsElRef {
-        NetworkConnectivityPolicyBasedRouteTimeoutsElRef {
+    ) -> NetworkConnectivityPolicyBasedRoute_TimeoutsRef {
+        NetworkConnectivityPolicyBasedRoute_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkConnectivityPolicyBasedRouteTimeoutsElRef {
+impl NetworkConnectivityPolicyBasedRoute_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -917,17 +964,22 @@ impl NetworkConnectivityPolicyBasedRouteTimeoutsElRef {
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct NetworkConnectivityPolicyBasedRouteVirtualMachineEl {
+pub struct NetworkConnectivityPolicyBasedRoute_VirtualMachine {
     tags: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl NetworkConnectivityPolicyBasedRouteVirtualMachineEl { }
+impl NetworkConnectivityPolicyBasedRoute_VirtualMachine { }
 
-impl terrars::ToListMappable for NetworkConnectivityPolicyBasedRouteVirtualMachineEl {
-    type O = terrars::BlockAssignable<NetworkConnectivityPolicyBasedRouteVirtualMachineEl>;
+impl terrars::ToListMappable for NetworkConnectivityPolicyBasedRoute_VirtualMachine {
+    type O = terrars::BlockAssignable<NetworkConnectivityPolicyBasedRoute_VirtualMachine>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -938,36 +990,38 @@ impl terrars::ToListMappable for NetworkConnectivityPolicyBasedRouteVirtualMachi
     }
 }
 
-pub struct BuildNetworkConnectivityPolicyBasedRouteVirtualMachineEl {
+pub struct BuildNetworkConnectivityPolicyBasedRoute_VirtualMachine {
     #[doc =
         "A list of VM instance tags that this policy-based route applies to. VM instances that have ANY of tags specified here will install this PBR."]
     pub tags: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildNetworkConnectivityPolicyBasedRouteVirtualMachineEl {
-    pub fn build(self) -> NetworkConnectivityPolicyBasedRouteVirtualMachineEl {
-        NetworkConnectivityPolicyBasedRouteVirtualMachineEl { tags: self.tags }
+impl BuildNetworkConnectivityPolicyBasedRoute_VirtualMachine {
+    pub fn build(self) -> NetworkConnectivityPolicyBasedRoute_VirtualMachine {
+        NetworkConnectivityPolicyBasedRoute_VirtualMachine { tags: self.tags }
     }
 }
 
-pub struct NetworkConnectivityPolicyBasedRouteVirtualMachineElRef {
+#[allow(dead_code)]
+pub struct NetworkConnectivityPolicyBasedRoute_VirtualMachineRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkConnectivityPolicyBasedRouteVirtualMachineElRef {
+impl terrars::Ref for NetworkConnectivityPolicyBasedRoute_VirtualMachineRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkConnectivityPolicyBasedRouteVirtualMachineElRef {
-        NetworkConnectivityPolicyBasedRouteVirtualMachineElRef {
+    ) -> NetworkConnectivityPolicyBasedRoute_VirtualMachineRef {
+        NetworkConnectivityPolicyBasedRoute_VirtualMachineRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkConnectivityPolicyBasedRouteVirtualMachineElRef {
+impl NetworkConnectivityPolicyBasedRoute_VirtualMachineRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -977,15 +1031,4 @@ impl NetworkConnectivityPolicyBasedRouteVirtualMachineElRef {
     pub fn tags(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tags", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct NetworkConnectivityPolicyBasedRouteDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<NetworkConnectivityPolicyBasedRouteFilterEl>>,
-    interconnect_attachment: std
-    ::option
-    ::Option<terrars::DynamicBlock<NetworkConnectivityPolicyBasedRouteInterconnectAttachmentEl>>,
-    virtual_machine: std
-    ::option
-    ::Option<terrars::DynamicBlock<NetworkConnectivityPolicyBasedRouteVirtualMachineEl>>,
 }

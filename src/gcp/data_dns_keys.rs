@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataDnsKeysData {
+struct DataDnsKeysData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -16,6 +18,8 @@ struct DataDnsKeysData {
     lifecycle: terrars::DatasourceLifecycle,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
     managed_zone: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -24,7 +28,7 @@ struct DataDnsKeysData {
 struct DataDnsKeys_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataDnsKeysData>,
+    data: std::cell::RefCell<DataDnsKeysData_>,
 }
 
 #[derive(Clone)]
@@ -69,37 +73,40 @@ impl DataDnsKeys {
         self
     }
 
-    #[doc = "Set the field `project`.\nThe ID of the project for the Google Cloud."]
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `project`.\n"]
     pub fn set_project(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().project = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc = "Get a reference to the value of field `id` after provisioning.\nDNS keys identifier"]
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc =
-        "Get a reference to the value of field `key_signing_keys` after provisioning.\nA list of Key-signing key (KSK) records."]
-    pub fn key_signing_keys(&self) -> terrars::ListRef<DataDnsKeysKeySigningKeysElRef> {
+    #[doc = "Get a reference to the value of field `key_signing_keys` after provisioning.\n"]
+    pub fn key_signing_keys(&self) -> terrars::ListRef<DataDnsKeys_KeySigningKeysRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.key_signing_keys", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `managed_zone` after provisioning.\nThe Name of the zone."]
+    #[doc = "Get a reference to the value of field `managed_zone` after provisioning.\n"]
     pub fn managed_zone(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.managed_zone", self.extract_ref()))
     }
 
-    #[doc =
-        "Get a reference to the value of field `project` after provisioning.\nThe ID of the project for the Google Cloud."]
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
     pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc =
-        "Get a reference to the value of field `zone_signing_keys` after provisioning.\nA list of Zone-signing key (ZSK) records."]
-    pub fn zone_signing_keys(&self) -> terrars::ListRef<DataDnsKeysZoneSigningKeysElRef> {
+    #[doc = "Get a reference to the value of field `zone_signing_keys` after provisioning.\n"]
+    pub fn zone_signing_keys(&self) -> terrars::ListRef<DataDnsKeys_ZoneSigningKeysRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.zone_signing_keys", self.extract_ref()))
     }
 }
@@ -137,7 +144,7 @@ impl terrars::Datasource_ for DataDnsKeys_ {
 
 pub struct BuildDataDnsKeys {
     pub tf_id: std::string::String,
-    #[doc = "The Name of the zone."]
+    #[doc = ""]
     pub managed_zone: terrars::PrimField<std::string::String>,
 }
 
@@ -146,11 +153,12 @@ impl BuildDataDnsKeys {
         let out = DataDnsKeys(std::rc::Rc::new(DataDnsKeys_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataDnsKeysData {
+            data: std::cell::RefCell::new(DataDnsKeysData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
+                id: core::default::Default::default(),
                 managed_zone: self.managed_zone,
                 project: core::default::Default::default(),
             }),
@@ -183,44 +191,41 @@ impl DataDnsKeysRef {
         self.base.clone()
     }
 
-    #[doc = "Get a reference to the value of field `id` after provisioning.\nDNS keys identifier"]
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc =
-        "Get a reference to the value of field `key_signing_keys` after provisioning.\nA list of Key-signing key (KSK) records."]
-    pub fn key_signing_keys(&self) -> terrars::ListRef<DataDnsKeysKeySigningKeysElRef> {
+    #[doc = "Get a reference to the value of field `key_signing_keys` after provisioning.\n"]
+    pub fn key_signing_keys(&self) -> terrars::ListRef<DataDnsKeys_KeySigningKeysRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.key_signing_keys", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `managed_zone` after provisioning.\nThe Name of the zone."]
+    #[doc = "Get a reference to the value of field `managed_zone` after provisioning.\n"]
     pub fn managed_zone(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.managed_zone", self.extract_ref()))
     }
 
-    #[doc =
-        "Get a reference to the value of field `project` after provisioning.\nThe ID of the project for the Google Cloud."]
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
     pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
-    #[doc =
-        "Get a reference to the value of field `zone_signing_keys` after provisioning.\nA list of Zone-signing key (ZSK) records."]
-    pub fn zone_signing_keys(&self) -> terrars::ListRef<DataDnsKeysZoneSigningKeysElRef> {
+    #[doc = "Get a reference to the value of field `zone_signing_keys` after provisioning.\n"]
+    pub fn zone_signing_keys(&self) -> terrars::ListRef<DataDnsKeys_ZoneSigningKeysRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.zone_signing_keys", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataDnsKeysKeySigningKeysElDigestsEl {
+pub struct DataDnsKeys_KeySigningKeys_Digests {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     digest: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataDnsKeysKeySigningKeysElDigestsEl {
+impl DataDnsKeys_KeySigningKeys_Digests {
     #[doc = "Set the field `digest`.\n"]
     pub fn set_digest(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.digest = std::option::Option::Some(v.into());
@@ -234,8 +239,8 @@ impl DataDnsKeysKeySigningKeysElDigestsEl {
     }
 }
 
-impl terrars::ToListMappable for DataDnsKeysKeySigningKeysElDigestsEl {
-    type O = terrars::BlockAssignable<DataDnsKeysKeySigningKeysElDigestsEl>;
+impl terrars::ToListMappable for DataDnsKeys_KeySigningKeys_Digests {
+    type O = terrars::BlockAssignable<DataDnsKeys_KeySigningKeys_Digests>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -246,32 +251,34 @@ impl terrars::ToListMappable for DataDnsKeysKeySigningKeysElDigestsEl {
     }
 }
 
-pub struct BuildDataDnsKeysKeySigningKeysElDigestsEl {}
+pub struct BuildDataDnsKeys_KeySigningKeys_Digests {}
 
-impl BuildDataDnsKeysKeySigningKeysElDigestsEl {
-    pub fn build(self) -> DataDnsKeysKeySigningKeysElDigestsEl {
-        DataDnsKeysKeySigningKeysElDigestsEl {
+impl BuildDataDnsKeys_KeySigningKeys_Digests {
+    pub fn build(self) -> DataDnsKeys_KeySigningKeys_Digests {
+        DataDnsKeys_KeySigningKeys_Digests {
             digest: core::default::Default::default(),
             type_: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataDnsKeysKeySigningKeysElDigestsElRef {
+#[allow(dead_code)]
+pub struct DataDnsKeys_KeySigningKeys_DigestsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataDnsKeysKeySigningKeysElDigestsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataDnsKeysKeySigningKeysElDigestsElRef {
-        DataDnsKeysKeySigningKeysElDigestsElRef {
+impl terrars::Ref for DataDnsKeys_KeySigningKeys_DigestsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataDnsKeys_KeySigningKeys_DigestsRef {
+        DataDnsKeys_KeySigningKeys_DigestsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataDnsKeysKeySigningKeysElDigestsElRef {
+impl DataDnsKeys_KeySigningKeys_DigestsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -288,7 +295,7 @@ impl DataDnsKeysKeySigningKeysElDigestsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataDnsKeysKeySigningKeysEl {
+pub struct DataDnsKeys_KeySigningKeys {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     algorithm: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -296,7 +303,7 @@ pub struct DataDnsKeysKeySigningKeysEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    digests: std::option::Option<terrars::ListField<DataDnsKeysKeySigningKeysElDigestsEl>>,
+    digests: std::option::Option<terrars::ListField<DataDnsKeys_KeySigningKeys_Digests>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ds_record: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -311,7 +318,7 @@ pub struct DataDnsKeysKeySigningKeysEl {
     public_key: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataDnsKeysKeySigningKeysEl {
+impl DataDnsKeys_KeySigningKeys {
     #[doc = "Set the field `algorithm`.\n"]
     pub fn set_algorithm(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.algorithm = std::option::Option::Some(v.into());
@@ -333,7 +340,7 @@ impl DataDnsKeysKeySigningKeysEl {
     #[doc = "Set the field `digests`.\n"]
     pub fn set_digests(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataDnsKeysKeySigningKeysElDigestsEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataDnsKeys_KeySigningKeys_Digests>>,
     ) -> Self {
         self.digests = std::option::Option::Some(v.into());
         self
@@ -376,8 +383,8 @@ impl DataDnsKeysKeySigningKeysEl {
     }
 }
 
-impl terrars::ToListMappable for DataDnsKeysKeySigningKeysEl {
-    type O = terrars::BlockAssignable<DataDnsKeysKeySigningKeysEl>;
+impl terrars::ToListMappable for DataDnsKeys_KeySigningKeys {
+    type O = terrars::BlockAssignable<DataDnsKeys_KeySigningKeys>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -388,11 +395,11 @@ impl terrars::ToListMappable for DataDnsKeysKeySigningKeysEl {
     }
 }
 
-pub struct BuildDataDnsKeysKeySigningKeysEl {}
+pub struct BuildDataDnsKeys_KeySigningKeys {}
 
-impl BuildDataDnsKeysKeySigningKeysEl {
-    pub fn build(self) -> DataDnsKeysKeySigningKeysEl {
-        DataDnsKeysKeySigningKeysEl {
+impl BuildDataDnsKeys_KeySigningKeys {
+    pub fn build(self) -> DataDnsKeys_KeySigningKeys {
+        DataDnsKeys_KeySigningKeys {
             algorithm: core::default::Default::default(),
             creation_time: core::default::Default::default(),
             description: core::default::Default::default(),
@@ -407,21 +414,23 @@ impl BuildDataDnsKeysKeySigningKeysEl {
     }
 }
 
-pub struct DataDnsKeysKeySigningKeysElRef {
+#[allow(dead_code)]
+pub struct DataDnsKeys_KeySigningKeysRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataDnsKeysKeySigningKeysElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataDnsKeysKeySigningKeysElRef {
-        DataDnsKeysKeySigningKeysElRef {
+impl terrars::Ref for DataDnsKeys_KeySigningKeysRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataDnsKeys_KeySigningKeysRef {
+        DataDnsKeys_KeySigningKeysRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataDnsKeysKeySigningKeysElRef {
+impl DataDnsKeys_KeySigningKeysRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -442,7 +451,7 @@ impl DataDnsKeysKeySigningKeysElRef {
     }
 
     #[doc = "Get a reference to the value of field `digests` after provisioning.\n"]
-    pub fn digests(&self) -> terrars::ListRef<DataDnsKeysKeySigningKeysElDigestsElRef> {
+    pub fn digests(&self) -> terrars::ListRef<DataDnsKeys_KeySigningKeys_DigestsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.digests", self.base))
     }
 
@@ -478,82 +487,7 @@ impl DataDnsKeysKeySigningKeysElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataDnsKeysZoneSigningKeysElDigestsEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    digest: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
-    type_: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DataDnsKeysZoneSigningKeysElDigestsEl {
-    #[doc = "Set the field `digest`.\n"]
-    pub fn set_digest(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.digest = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `type_`.\n"]
-    pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.type_ = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataDnsKeysZoneSigningKeysElDigestsEl {
-    type O = terrars::BlockAssignable<DataDnsKeysZoneSigningKeysElDigestsEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataDnsKeysZoneSigningKeysElDigestsEl {}
-
-impl BuildDataDnsKeysZoneSigningKeysElDigestsEl {
-    pub fn build(self) -> DataDnsKeysZoneSigningKeysElDigestsEl {
-        DataDnsKeysZoneSigningKeysElDigestsEl {
-            digest: core::default::Default::default(),
-            type_: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataDnsKeysZoneSigningKeysElDigestsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataDnsKeysZoneSigningKeysElDigestsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataDnsKeysZoneSigningKeysElDigestsElRef {
-        DataDnsKeysZoneSigningKeysElDigestsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataDnsKeysZoneSigningKeysElDigestsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `digest` after provisioning.\n"]
-    pub fn digest(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.digest", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataDnsKeysZoneSigningKeysEl {
+pub struct DataDnsKeys_ZoneSigningKeys {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     algorithm: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -561,7 +495,7 @@ pub struct DataDnsKeysZoneSigningKeysEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    digests: std::option::Option<terrars::ListField<DataDnsKeysZoneSigningKeysElDigestsEl>>,
+    digests: std::option::Option<terrars::ListField<DataDnsKeys_KeySigningKeys_Digests>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -574,7 +508,7 @@ pub struct DataDnsKeysZoneSigningKeysEl {
     public_key: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataDnsKeysZoneSigningKeysEl {
+impl DataDnsKeys_ZoneSigningKeys {
     #[doc = "Set the field `algorithm`.\n"]
     pub fn set_algorithm(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.algorithm = std::option::Option::Some(v.into());
@@ -596,7 +530,7 @@ impl DataDnsKeysZoneSigningKeysEl {
     #[doc = "Set the field `digests`.\n"]
     pub fn set_digests(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataDnsKeysZoneSigningKeysElDigestsEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataDnsKeys_KeySigningKeys_Digests>>,
     ) -> Self {
         self.digests = std::option::Option::Some(v.into());
         self
@@ -633,8 +567,8 @@ impl DataDnsKeysZoneSigningKeysEl {
     }
 }
 
-impl terrars::ToListMappable for DataDnsKeysZoneSigningKeysEl {
-    type O = terrars::BlockAssignable<DataDnsKeysZoneSigningKeysEl>;
+impl terrars::ToListMappable for DataDnsKeys_ZoneSigningKeys {
+    type O = terrars::BlockAssignable<DataDnsKeys_ZoneSigningKeys>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -645,11 +579,11 @@ impl terrars::ToListMappable for DataDnsKeysZoneSigningKeysEl {
     }
 }
 
-pub struct BuildDataDnsKeysZoneSigningKeysEl {}
+pub struct BuildDataDnsKeys_ZoneSigningKeys {}
 
-impl BuildDataDnsKeysZoneSigningKeysEl {
-    pub fn build(self) -> DataDnsKeysZoneSigningKeysEl {
-        DataDnsKeysZoneSigningKeysEl {
+impl BuildDataDnsKeys_ZoneSigningKeys {
+    pub fn build(self) -> DataDnsKeys_ZoneSigningKeys {
+        DataDnsKeys_ZoneSigningKeys {
             algorithm: core::default::Default::default(),
             creation_time: core::default::Default::default(),
             description: core::default::Default::default(),
@@ -663,21 +597,23 @@ impl BuildDataDnsKeysZoneSigningKeysEl {
     }
 }
 
-pub struct DataDnsKeysZoneSigningKeysElRef {
+#[allow(dead_code)]
+pub struct DataDnsKeys_ZoneSigningKeysRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataDnsKeysZoneSigningKeysElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataDnsKeysZoneSigningKeysElRef {
-        DataDnsKeysZoneSigningKeysElRef {
+impl terrars::Ref for DataDnsKeys_ZoneSigningKeysRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataDnsKeys_ZoneSigningKeysRef {
+        DataDnsKeys_ZoneSigningKeysRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataDnsKeysZoneSigningKeysElRef {
+impl DataDnsKeys_ZoneSigningKeysRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -698,7 +634,7 @@ impl DataDnsKeysZoneSigningKeysElRef {
     }
 
     #[doc = "Get a reference to the value of field `digests` after provisioning.\n"]
-    pub fn digests(&self) -> terrars::ListRef<DataDnsKeysZoneSigningKeysElDigestsElRef> {
+    pub fn digests(&self) -> terrars::ListRef<DataDnsKeys_KeySigningKeys_DigestsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.digests", self.base))
     }
 

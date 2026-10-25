@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct IdentityPlatformOauthIdpConfigData {
+struct IdentityPlatformOauthIdpConfigData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,6 +24,8 @@ struct IdentityPlatformOauthIdpConfigData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     client_secret: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     display_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
@@ -32,13 +36,16 @@ struct IdentityPlatformOauthIdpConfigData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<IdentityPlatformOauthIdpConfigTimeoutsEl>,
+    response_type: std::option::Option<std::vec::Vec<IdentityPlatformOauthIdpConfig_ResponseType>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<IdentityPlatformOauthIdpConfig_Timeouts>,
+    dynamic: IdentityPlatformOauthIdpConfigDynamic,
 }
 
 struct IdentityPlatformOauthIdpConfig_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<IdentityPlatformOauthIdpConfigData>,
+    data: std::cell::RefCell<IdentityPlatformOauthIdpConfigData_>,
 }
 
 #[derive(Clone)]
@@ -144,6 +151,13 @@ impl IdentityPlatformOauthIdpConfig {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `display_name`.\nHuman friendly display name."]
     pub fn set_display_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().display_name = std::option::Option::Some(v.into());
@@ -168,8 +182,24 @@ impl IdentityPlatformOauthIdpConfig {
         self
     }
 
+    #[doc = "Set the field `response_type`.\n"]
+    pub fn set_response_type(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<IdentityPlatformOauthIdpConfig_ResponseType>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().response_type = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.response_type = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<IdentityPlatformOauthIdpConfigTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<IdentityPlatformOauthIdpConfig_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -183,6 +213,12 @@ impl IdentityPlatformOauthIdpConfig {
         "Get a reference to the value of field `client_secret` after provisioning.\nThe client secret of the OAuth client, to enable OIDC code flow."]
     pub fn client_secret(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.client_secret", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `display_name` after provisioning.\nHuman friendly display name."]
@@ -217,9 +253,14 @@ impl IdentityPlatformOauthIdpConfig {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `response_type` after provisioning.\n"]
+    pub fn response_type(&self) -> terrars::ListRef<IdentityPlatformOauthIdpConfig_ResponseTypeRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.response_type", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> IdentityPlatformOauthIdpConfigTimeoutsElRef {
-        IdentityPlatformOauthIdpConfigTimeoutsElRef::new(
+    pub fn timeouts(&self) -> IdentityPlatformOauthIdpConfig_TimeoutsRef {
+        IdentityPlatformOauthIdpConfig_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -272,7 +313,7 @@ impl BuildIdentityPlatformOauthIdpConfig {
         let out = IdentityPlatformOauthIdpConfig(std::rc::Rc::new(IdentityPlatformOauthIdpConfig_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(IdentityPlatformOauthIdpConfigData {
+            data: std::cell::RefCell::new(IdentityPlatformOauthIdpConfigData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -280,13 +321,16 @@ impl BuildIdentityPlatformOauthIdpConfig {
                 provisioner: core::default::Default::default(),
                 client_id: self.client_id,
                 client_secret: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 display_name: core::default::Default::default(),
                 enabled: core::default::Default::default(),
                 id: core::default::Default::default(),
                 issuer: self.issuer,
                 name: self.name,
                 project: core::default::Default::default(),
+                response_type: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -328,6 +372,12 @@ impl IdentityPlatformOauthIdpConfigRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.client_secret", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `display_name` after provisioning.\nHuman friendly display name."]
     pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
@@ -360,17 +410,109 @@ impl IdentityPlatformOauthIdpConfigRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `response_type` after provisioning.\n"]
+    pub fn response_type(&self) -> terrars::ListRef<IdentityPlatformOauthIdpConfig_ResponseTypeRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.response_type", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> IdentityPlatformOauthIdpConfigTimeoutsElRef {
-        IdentityPlatformOauthIdpConfigTimeoutsElRef::new(
+    pub fn timeouts(&self) -> IdentityPlatformOauthIdpConfig_TimeoutsRef {
+        IdentityPlatformOauthIdpConfig_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct IdentityPlatformOauthIdpConfigDynamic {
+    response_type: std::option::Option<terrars::DynamicBlock<IdentityPlatformOauthIdpConfig_ResponseType>>,
+}
+
 #[derive(Serialize)]
-pub struct IdentityPlatformOauthIdpConfigTimeoutsEl {
+pub struct IdentityPlatformOauthIdpConfig_ResponseType {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    code: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id_token: std::option::Option<terrars::PrimField<bool>>,
+}
+
+impl IdentityPlatformOauthIdpConfig_ResponseType {
+    #[doc = "Set the field `code`.\nIf true, authorization code is returned from IdP's authorization endpoint."]
+    pub fn set_code(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.code = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `id_token`.\nIf true, ID token is returned from IdP's authorization endpoint."]
+    pub fn set_id_token(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.id_token = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for IdentityPlatformOauthIdpConfig_ResponseType {
+    type O = terrars::BlockAssignable<IdentityPlatformOauthIdpConfig_ResponseType>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildIdentityPlatformOauthIdpConfig_ResponseType {}
+
+impl BuildIdentityPlatformOauthIdpConfig_ResponseType {
+    pub fn build(self) -> IdentityPlatformOauthIdpConfig_ResponseType {
+        IdentityPlatformOauthIdpConfig_ResponseType {
+            code: core::default::Default::default(),
+            id_token: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct IdentityPlatformOauthIdpConfig_ResponseTypeRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for IdentityPlatformOauthIdpConfig_ResponseTypeRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> IdentityPlatformOauthIdpConfig_ResponseTypeRef {
+        IdentityPlatformOauthIdpConfig_ResponseTypeRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl IdentityPlatformOauthIdpConfig_ResponseTypeRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `code` after provisioning.\nIf true, authorization code is returned from IdP's authorization endpoint."]
+    pub fn code(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.code", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `id_token` after provisioning.\nIf true, ID token is returned from IdP's authorization endpoint."]
+    pub fn id_token(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id_token", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct IdentityPlatformOauthIdpConfig_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -379,7 +521,7 @@ pub struct IdentityPlatformOauthIdpConfigTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl IdentityPlatformOauthIdpConfigTimeoutsEl {
+impl IdentityPlatformOauthIdpConfig_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -399,8 +541,8 @@ impl IdentityPlatformOauthIdpConfigTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for IdentityPlatformOauthIdpConfigTimeoutsEl {
-    type O = terrars::BlockAssignable<IdentityPlatformOauthIdpConfigTimeoutsEl>;
+impl terrars::ToListMappable for IdentityPlatformOauthIdpConfig_Timeouts {
+    type O = terrars::BlockAssignable<IdentityPlatformOauthIdpConfig_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -411,11 +553,11 @@ impl terrars::ToListMappable for IdentityPlatformOauthIdpConfigTimeoutsEl {
     }
 }
 
-pub struct BuildIdentityPlatformOauthIdpConfigTimeoutsEl {}
+pub struct BuildIdentityPlatformOauthIdpConfig_Timeouts {}
 
-impl BuildIdentityPlatformOauthIdpConfigTimeoutsEl {
-    pub fn build(self) -> IdentityPlatformOauthIdpConfigTimeoutsEl {
-        IdentityPlatformOauthIdpConfigTimeoutsEl {
+impl BuildIdentityPlatformOauthIdpConfig_Timeouts {
+    pub fn build(self) -> IdentityPlatformOauthIdpConfig_Timeouts {
+        IdentityPlatformOauthIdpConfig_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -423,21 +565,23 @@ impl BuildIdentityPlatformOauthIdpConfigTimeoutsEl {
     }
 }
 
-pub struct IdentityPlatformOauthIdpConfigTimeoutsElRef {
+#[allow(dead_code)]
+pub struct IdentityPlatformOauthIdpConfig_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IdentityPlatformOauthIdpConfigTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> IdentityPlatformOauthIdpConfigTimeoutsElRef {
-        IdentityPlatformOauthIdpConfigTimeoutsElRef {
+impl terrars::Ref for IdentityPlatformOauthIdpConfig_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IdentityPlatformOauthIdpConfig_TimeoutsRef {
+        IdentityPlatformOauthIdpConfig_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IdentityPlatformOauthIdpConfigTimeoutsElRef {
+impl IdentityPlatformOauthIdpConfig_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct CertificateManagerCertificateMapData {
+struct CertificateManagerCertificateMapData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct CertificateManagerCertificateMapData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -28,13 +32,13 @@ struct CertificateManagerCertificateMapData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<CertificateManagerCertificateMapTimeoutsEl>,
+    timeouts: std::option::Option<CertificateManagerCertificateMap_Timeouts>,
 }
 
 struct CertificateManagerCertificateMap_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CertificateManagerCertificateMapData>,
+    data: std::cell::RefCell<CertificateManagerCertificateMapData_>,
 }
 
 #[derive(Clone)]
@@ -134,6 +138,13 @@ impl CertificateManagerCertificateMap {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nA human-readable description of the resource."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -163,7 +174,7 @@ impl CertificateManagerCertificateMap {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<CertificateManagerCertificateMapTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<CertificateManagerCertificateMap_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -172,6 +183,12 @@ impl CertificateManagerCertificateMap {
         "Get a reference to the value of field `create_time` after provisioning.\nCreation timestamp of a Certificate Map. Timestamp is in RFC3339 UTC \"Zulu\" format,\naccurate to nanoseconds with up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -188,7 +205,7 @@ impl CertificateManagerCertificateMap {
 
     #[doc =
         "Get a reference to the value of field `gclb_targets` after provisioning.\nA list of target proxies that use this Certificate Map"]
-    pub fn gclb_targets(&self) -> terrars::ListRef<CertificateManagerCertificateMapGclbTargetsElRef> {
+    pub fn gclb_targets(&self) -> terrars::ListRef<CertificateManagerCertificateMap_GclbTargetsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.gclb_targets", self.extract_ref()))
     }
 
@@ -227,8 +244,8 @@ impl CertificateManagerCertificateMap {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> CertificateManagerCertificateMapTimeoutsElRef {
-        CertificateManagerCertificateMapTimeoutsElRef::new(
+    pub fn timeouts(&self) -> CertificateManagerCertificateMap_TimeoutsRef {
+        CertificateManagerCertificateMap_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -278,12 +295,13 @@ impl BuildCertificateManagerCertificateMap {
         let out = CertificateManagerCertificateMap(std::rc::Rc::new(CertificateManagerCertificateMap_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CertificateManagerCertificateMapData {
+            data: std::cell::RefCell::new(CertificateManagerCertificateMapData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 labels: core::default::Default::default(),
@@ -327,6 +345,12 @@ impl CertificateManagerCertificateMapRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nA human-readable description of the resource."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -340,7 +364,7 @@ impl CertificateManagerCertificateMapRef {
 
     #[doc =
         "Get a reference to the value of field `gclb_targets` after provisioning.\nA list of target proxies that use this Certificate Map"]
-    pub fn gclb_targets(&self) -> terrars::ListRef<CertificateManagerCertificateMapGclbTargetsElRef> {
+    pub fn gclb_targets(&self) -> terrars::ListRef<CertificateManagerCertificateMap_GclbTargetsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.gclb_targets", self.extract_ref()))
     }
 
@@ -379,8 +403,8 @@ impl CertificateManagerCertificateMapRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> CertificateManagerCertificateMapTimeoutsElRef {
-        CertificateManagerCertificateMapTimeoutsElRef::new(
+    pub fn timeouts(&self) -> CertificateManagerCertificateMap_TimeoutsRef {
+        CertificateManagerCertificateMap_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -388,14 +412,14 @@ impl CertificateManagerCertificateMapRef {
 }
 
 #[derive(Serialize)]
-pub struct CertificateManagerCertificateMapGclbTargetsElIpConfigsEl {
+pub struct CertificateManagerCertificateMap_GclbTargets_IpConfigs {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ip_address: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ports: std::option::Option<terrars::ListField<terrars::PrimField<f64>>>,
 }
 
-impl CertificateManagerCertificateMapGclbTargetsElIpConfigsEl {
+impl CertificateManagerCertificateMap_GclbTargets_IpConfigs {
     #[doc = "Set the field `ip_address`.\n"]
     pub fn set_ip_address(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.ip_address = std::option::Option::Some(v.into());
@@ -409,8 +433,8 @@ impl CertificateManagerCertificateMapGclbTargetsElIpConfigsEl {
     }
 }
 
-impl terrars::ToListMappable for CertificateManagerCertificateMapGclbTargetsElIpConfigsEl {
-    type O = terrars::BlockAssignable<CertificateManagerCertificateMapGclbTargetsElIpConfigsEl>;
+impl terrars::ToListMappable for CertificateManagerCertificateMap_GclbTargets_IpConfigs {
+    type O = terrars::BlockAssignable<CertificateManagerCertificateMap_GclbTargets_IpConfigs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -421,35 +445,37 @@ impl terrars::ToListMappable for CertificateManagerCertificateMapGclbTargetsElIp
     }
 }
 
-pub struct BuildCertificateManagerCertificateMapGclbTargetsElIpConfigsEl {}
+pub struct BuildCertificateManagerCertificateMap_GclbTargets_IpConfigs {}
 
-impl BuildCertificateManagerCertificateMapGclbTargetsElIpConfigsEl {
-    pub fn build(self) -> CertificateManagerCertificateMapGclbTargetsElIpConfigsEl {
-        CertificateManagerCertificateMapGclbTargetsElIpConfigsEl {
+impl BuildCertificateManagerCertificateMap_GclbTargets_IpConfigs {
+    pub fn build(self) -> CertificateManagerCertificateMap_GclbTargets_IpConfigs {
+        CertificateManagerCertificateMap_GclbTargets_IpConfigs {
             ip_address: core::default::Default::default(),
             ports: core::default::Default::default(),
         }
     }
 }
 
-pub struct CertificateManagerCertificateMapGclbTargetsElIpConfigsElRef {
+#[allow(dead_code)]
+pub struct CertificateManagerCertificateMap_GclbTargets_IpConfigsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CertificateManagerCertificateMapGclbTargetsElIpConfigsElRef {
+impl terrars::Ref for CertificateManagerCertificateMap_GclbTargets_IpConfigsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CertificateManagerCertificateMapGclbTargetsElIpConfigsElRef {
-        CertificateManagerCertificateMapGclbTargetsElIpConfigsElRef {
+    ) -> CertificateManagerCertificateMap_GclbTargets_IpConfigsRef {
+        CertificateManagerCertificateMap_GclbTargets_IpConfigsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CertificateManagerCertificateMapGclbTargetsElIpConfigsElRef {
+impl CertificateManagerCertificateMap_GclbTargets_IpConfigsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -466,20 +492,20 @@ impl CertificateManagerCertificateMapGclbTargetsElIpConfigsElRef {
 }
 
 #[derive(Serialize)]
-pub struct CertificateManagerCertificateMapGclbTargetsEl {
+pub struct CertificateManagerCertificateMap_GclbTargets {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ip_configs: std::option::Option<terrars::ListField<CertificateManagerCertificateMapGclbTargetsElIpConfigsEl>>,
+    ip_configs: std::option::Option<terrars::ListField<CertificateManagerCertificateMap_GclbTargets_IpConfigs>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     target_https_proxy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     target_ssl_proxy: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CertificateManagerCertificateMapGclbTargetsEl {
+impl CertificateManagerCertificateMap_GclbTargets {
     #[doc = "Set the field `ip_configs`.\n"]
     pub fn set_ip_configs(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<CertificateManagerCertificateMapGclbTargetsElIpConfigsEl>>,
+        v: impl std::convert::Into<terrars::ListField<CertificateManagerCertificateMap_GclbTargets_IpConfigs>>,
     ) -> Self {
         self.ip_configs = std::option::Option::Some(v.into());
         self
@@ -501,8 +527,8 @@ impl CertificateManagerCertificateMapGclbTargetsEl {
     }
 }
 
-impl terrars::ToListMappable for CertificateManagerCertificateMapGclbTargetsEl {
-    type O = terrars::BlockAssignable<CertificateManagerCertificateMapGclbTargetsEl>;
+impl terrars::ToListMappable for CertificateManagerCertificateMap_GclbTargets {
+    type O = terrars::BlockAssignable<CertificateManagerCertificateMap_GclbTargets>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -513,11 +539,11 @@ impl terrars::ToListMappable for CertificateManagerCertificateMapGclbTargetsEl {
     }
 }
 
-pub struct BuildCertificateManagerCertificateMapGclbTargetsEl {}
+pub struct BuildCertificateManagerCertificateMap_GclbTargets {}
 
-impl BuildCertificateManagerCertificateMapGclbTargetsEl {
-    pub fn build(self) -> CertificateManagerCertificateMapGclbTargetsEl {
-        CertificateManagerCertificateMapGclbTargetsEl {
+impl BuildCertificateManagerCertificateMap_GclbTargets {
+    pub fn build(self) -> CertificateManagerCertificateMap_GclbTargets {
+        CertificateManagerCertificateMap_GclbTargets {
             ip_configs: core::default::Default::default(),
             target_https_proxy: core::default::Default::default(),
             target_ssl_proxy: core::default::Default::default(),
@@ -525,30 +551,32 @@ impl BuildCertificateManagerCertificateMapGclbTargetsEl {
     }
 }
 
-pub struct CertificateManagerCertificateMapGclbTargetsElRef {
+#[allow(dead_code)]
+pub struct CertificateManagerCertificateMap_GclbTargetsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CertificateManagerCertificateMapGclbTargetsElRef {
+impl terrars::Ref for CertificateManagerCertificateMap_GclbTargetsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CertificateManagerCertificateMapGclbTargetsElRef {
-        CertificateManagerCertificateMapGclbTargetsElRef {
+    ) -> CertificateManagerCertificateMap_GclbTargetsRef {
+        CertificateManagerCertificateMap_GclbTargetsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CertificateManagerCertificateMapGclbTargetsElRef {
+impl CertificateManagerCertificateMap_GclbTargetsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `ip_configs` after provisioning.\n"]
-    pub fn ip_configs(&self) -> terrars::ListRef<CertificateManagerCertificateMapGclbTargetsElIpConfigsElRef> {
+    pub fn ip_configs(&self) -> terrars::ListRef<CertificateManagerCertificateMap_GclbTargets_IpConfigsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ip_configs", self.base))
     }
 
@@ -564,7 +592,7 @@ impl CertificateManagerCertificateMapGclbTargetsElRef {
 }
 
 #[derive(Serialize)]
-pub struct CertificateManagerCertificateMapTimeoutsEl {
+pub struct CertificateManagerCertificateMap_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -573,7 +601,7 @@ pub struct CertificateManagerCertificateMapTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CertificateManagerCertificateMapTimeoutsEl {
+impl CertificateManagerCertificateMap_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -593,8 +621,8 @@ impl CertificateManagerCertificateMapTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for CertificateManagerCertificateMapTimeoutsEl {
-    type O = terrars::BlockAssignable<CertificateManagerCertificateMapTimeoutsEl>;
+impl terrars::ToListMappable for CertificateManagerCertificateMap_Timeouts {
+    type O = terrars::BlockAssignable<CertificateManagerCertificateMap_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -605,11 +633,11 @@ impl terrars::ToListMappable for CertificateManagerCertificateMapTimeoutsEl {
     }
 }
 
-pub struct BuildCertificateManagerCertificateMapTimeoutsEl {}
+pub struct BuildCertificateManagerCertificateMap_Timeouts {}
 
-impl BuildCertificateManagerCertificateMapTimeoutsEl {
-    pub fn build(self) -> CertificateManagerCertificateMapTimeoutsEl {
-        CertificateManagerCertificateMapTimeoutsEl {
+impl BuildCertificateManagerCertificateMap_Timeouts {
+    pub fn build(self) -> CertificateManagerCertificateMap_Timeouts {
+        CertificateManagerCertificateMap_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -617,21 +645,23 @@ impl BuildCertificateManagerCertificateMapTimeoutsEl {
     }
 }
 
-pub struct CertificateManagerCertificateMapTimeoutsElRef {
+#[allow(dead_code)]
+pub struct CertificateManagerCertificateMap_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CertificateManagerCertificateMapTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CertificateManagerCertificateMapTimeoutsElRef {
-        CertificateManagerCertificateMapTimeoutsElRef {
+impl terrars::Ref for CertificateManagerCertificateMap_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CertificateManagerCertificateMap_TimeoutsRef {
+        CertificateManagerCertificateMap_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CertificateManagerCertificateMapTimeoutsElRef {
+impl CertificateManagerCertificateMap_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

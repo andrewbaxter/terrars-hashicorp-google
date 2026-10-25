@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataSpannerInstanceData {
+struct DataSpannerInstanceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -30,7 +32,7 @@ struct DataSpannerInstanceData {
 struct DataSpannerInstance_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataSpannerInstanceData>,
+    data: std::cell::RefCell<DataSpannerInstanceData_>,
 }
 
 #[derive(Clone)]
@@ -102,8 +104,8 @@ impl DataSpannerInstance {
     }
 
     #[doc =
-        "Get a reference to the value of field `autoscaling_config` after provisioning.\nThe autoscaling configuration. Autoscaling is enabled if this field is set.\nWhen autoscaling is enabled, num_nodes and processing_units are treated as,\nOUTPUT_ONLY fields and reflect the current compute capacity allocated to\nthe instance."]
-    pub fn autoscaling_config(&self) -> terrars::ListRef<DataSpannerInstanceAutoscalingConfigElRef> {
+        "Get a reference to the value of field `autoscaling_config` after provisioning.\nThe autoscaling configuration. Autoscaling is enabled if this field is set.\nExactly one of either num_nodes, processing_units or autoscaling_config must be\npresent in terraform except when instance_type = FREE_INSTANCE.\nWhen autoscaling is enabled, num_nodes and processing_units are treated as,\nOUTPUT_ONLY fields and reflect the current compute capacity allocated to\nthe instance."]
+    pub fn autoscaling_config(&self) -> terrars::ListRef<DataSpannerInstance_AutoscalingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.autoscaling_config", self.extract_ref()))
     }
 
@@ -114,9 +116,27 @@ impl DataSpannerInstance {
     }
 
     #[doc =
+        "Get a reference to the value of field `default_backup_schedule_type` after provisioning.\nControls the default backup behavior for new databases within the instance.\nNote that 'AUTOMATIC' is not permitted for free instances, as backups and backup schedules are not allowed for free instances.\nif unset or NONE, no default backup schedule will be created for new databases within the instance. Possible values: [\"NONE\", \"AUTOMATIC\"]"]
+    pub fn default_backup_schedule_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.default_backup_schedule_type", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `display_name` after provisioning.\nThe descriptive name for this instance as it appears in UIs. Must be\nunique per project and between 4 and 30 characters in length."]
     pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `edition` after provisioning.\nThe edition selected for this instance. Different editions provide different capabilities at different price points. Possible values: [\"EDITION_UNSPECIFIED\", \"STANDARD\", \"ENTERPRISE\", \"ENTERPRISE_PLUS\"]"]
+    pub fn edition(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.edition", self.extract_ref()))
     }
 
     #[doc =
@@ -137,25 +157,31 @@ impl DataSpannerInstance {
     }
 
     #[doc =
+        "Get a reference to the value of field `instance_type` after provisioning.\nThe type of this instance. The type can be used to distinguish product variants, that can affect aspects like:\nusage restrictions, quotas and billing. Currently this is used to distinguish FREE_INSTANCE vs PROVISIONED instances.\nWhen configured as FREE_INSTANCE, the field 'edition' should not be configured. Possible values: [\"PROVISIONED\", \"FREE_INSTANCE\"]"]
+    pub fn instance_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_type", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `labels` after provisioning.\nAn object containing a list of \"key\": value pairs.\nExample: { \"name\": \"wrench\", \"mass\": \"1.3kg\", \"count\": \"3\" }.\n\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
     pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `name` after provisioning.\nA unique identifier for the instance, which cannot be changed after\nthe instance is created. The name must be between 6 and 30 characters\nin length.\n\n\nIf not provided, a random string starting with 'tf-' will be selected."]
+        "Get a reference to the value of field `name` after provisioning.\nA unique identifier for the instance, which cannot be changed after\nthe instance is created. The name must be between 6 and 30 characters\nin length.\nIf not provided, a random string starting with 'tf-' will be selected."]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `num_nodes` after provisioning.\nThe number of nodes allocated to this instance. Exactly one of either node_count or processing_units\nmust be present in terraform."]
+        "Get a reference to the value of field `num_nodes` after provisioning.\nThe number of nodes allocated to this instance. Exactly one of either num_nodes, processing_units or\nautoscaling_config must be present in terraform except when instance_type = FREE_INSTANCE."]
     pub fn num_nodes(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.num_nodes", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `processing_units` after provisioning.\nThe number of processing units allocated to this instance. Exactly one of processing_units\nor node_count must be present in terraform."]
+        "Get a reference to the value of field `processing_units` after provisioning.\nThe number of processing units allocated to this instance. Exactly one of either num_nodes,\nprocessing_units or autoscaling_config must be present in terraform except when instance_type = FREE_INSTANCE."]
     pub fn processing_units(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.processing_units", self.extract_ref()))
     }
@@ -212,7 +238,7 @@ impl terrars::Datasource_ for DataSpannerInstance_ {
 pub struct BuildDataSpannerInstance {
     pub tf_id: std::string::String,
     #[doc =
-        "A unique identifier for the instance, which cannot be changed after\nthe instance is created. The name must be between 6 and 30 characters\nin length.\n\n\nIf not provided, a random string starting with 'tf-' will be selected."]
+        "A unique identifier for the instance, which cannot be changed after\nthe instance is created. The name must be between 6 and 30 characters\nin length.\nIf not provided, a random string starting with 'tf-' will be selected."]
     pub name: terrars::PrimField<std::string::String>,
 }
 
@@ -221,7 +247,7 @@ impl BuildDataSpannerInstance {
         let out = DataSpannerInstance(std::rc::Rc::new(DataSpannerInstance_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataSpannerInstanceData {
+            data: std::cell::RefCell::new(DataSpannerInstanceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -262,8 +288,8 @@ impl DataSpannerInstanceRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `autoscaling_config` after provisioning.\nThe autoscaling configuration. Autoscaling is enabled if this field is set.\nWhen autoscaling is enabled, num_nodes and processing_units are treated as,\nOUTPUT_ONLY fields and reflect the current compute capacity allocated to\nthe instance."]
-    pub fn autoscaling_config(&self) -> terrars::ListRef<DataSpannerInstanceAutoscalingConfigElRef> {
+        "Get a reference to the value of field `autoscaling_config` after provisioning.\nThe autoscaling configuration. Autoscaling is enabled if this field is set.\nExactly one of either num_nodes, processing_units or autoscaling_config must be\npresent in terraform except when instance_type = FREE_INSTANCE.\nWhen autoscaling is enabled, num_nodes and processing_units are treated as,\nOUTPUT_ONLY fields and reflect the current compute capacity allocated to\nthe instance."]
+    pub fn autoscaling_config(&self) -> terrars::ListRef<DataSpannerInstance_AutoscalingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.autoscaling_config", self.extract_ref()))
     }
 
@@ -274,9 +300,27 @@ impl DataSpannerInstanceRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `default_backup_schedule_type` after provisioning.\nControls the default backup behavior for new databases within the instance.\nNote that 'AUTOMATIC' is not permitted for free instances, as backups and backup schedules are not allowed for free instances.\nif unset or NONE, no default backup schedule will be created for new databases within the instance. Possible values: [\"NONE\", \"AUTOMATIC\"]"]
+    pub fn default_backup_schedule_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.default_backup_schedule_type", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `display_name` after provisioning.\nThe descriptive name for this instance as it appears in UIs. Must be\nunique per project and between 4 and 30 characters in length."]
     pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `edition` after provisioning.\nThe edition selected for this instance. Different editions provide different capabilities at different price points. Possible values: [\"EDITION_UNSPECIFIED\", \"STANDARD\", \"ENTERPRISE\", \"ENTERPRISE_PLUS\"]"]
+    pub fn edition(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.edition", self.extract_ref()))
     }
 
     #[doc =
@@ -297,25 +341,31 @@ impl DataSpannerInstanceRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `instance_type` after provisioning.\nThe type of this instance. The type can be used to distinguish product variants, that can affect aspects like:\nusage restrictions, quotas and billing. Currently this is used to distinguish FREE_INSTANCE vs PROVISIONED instances.\nWhen configured as FREE_INSTANCE, the field 'edition' should not be configured. Possible values: [\"PROVISIONED\", \"FREE_INSTANCE\"]"]
+    pub fn instance_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_type", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `labels` after provisioning.\nAn object containing a list of \"key\": value pairs.\nExample: { \"name\": \"wrench\", \"mass\": \"1.3kg\", \"count\": \"3\" }.\n\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
     pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `name` after provisioning.\nA unique identifier for the instance, which cannot be changed after\nthe instance is created. The name must be between 6 and 30 characters\nin length.\n\n\nIf not provided, a random string starting with 'tf-' will be selected."]
+        "Get a reference to the value of field `name` after provisioning.\nA unique identifier for the instance, which cannot be changed after\nthe instance is created. The name must be between 6 and 30 characters\nin length.\nIf not provided, a random string starting with 'tf-' will be selected."]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `num_nodes` after provisioning.\nThe number of nodes allocated to this instance. Exactly one of either node_count or processing_units\nmust be present in terraform."]
+        "Get a reference to the value of field `num_nodes` after provisioning.\nThe number of nodes allocated to this instance. Exactly one of either num_nodes, processing_units or\nautoscaling_config must be present in terraform except when instance_type = FREE_INSTANCE."]
     pub fn num_nodes(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.num_nodes", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `processing_units` after provisioning.\nThe number of processing units allocated to this instance. Exactly one of processing_units\nor node_count must be present in terraform."]
+        "Get a reference to the value of field `processing_units` after provisioning.\nThe number of processing units allocated to this instance. Exactly one of either num_nodes,\nprocessing_units or autoscaling_config must be present in terraform except when instance_type = FREE_INSTANCE."]
     pub fn processing_units(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.processing_units", self.extract_ref()))
     }
@@ -339,7 +389,7 @@ impl DataSpannerInstanceRef {
 }
 
 #[derive(Serialize)]
-pub struct DataSpannerInstanceAutoscalingConfigElAutoscalingLimitsEl {
+pub struct DataSpannerInstance_AutoscalingConfig_AutoscalingLimits {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max_nodes: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -350,7 +400,7 @@ pub struct DataSpannerInstanceAutoscalingConfigElAutoscalingLimitsEl {
     min_processing_units: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataSpannerInstanceAutoscalingConfigElAutoscalingLimitsEl {
+impl DataSpannerInstance_AutoscalingConfig_AutoscalingLimits {
     #[doc = "Set the field `max_nodes`.\n"]
     pub fn set_max_nodes(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max_nodes = std::option::Option::Some(v.into());
@@ -376,8 +426,8 @@ impl DataSpannerInstanceAutoscalingConfigElAutoscalingLimitsEl {
     }
 }
 
-impl terrars::ToListMappable for DataSpannerInstanceAutoscalingConfigElAutoscalingLimitsEl {
-    type O = terrars::BlockAssignable<DataSpannerInstanceAutoscalingConfigElAutoscalingLimitsEl>;
+impl terrars::ToListMappable for DataSpannerInstance_AutoscalingConfig_AutoscalingLimits {
+    type O = terrars::BlockAssignable<DataSpannerInstance_AutoscalingConfig_AutoscalingLimits>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -388,11 +438,11 @@ impl terrars::ToListMappable for DataSpannerInstanceAutoscalingConfigElAutoscali
     }
 }
 
-pub struct BuildDataSpannerInstanceAutoscalingConfigElAutoscalingLimitsEl {}
+pub struct BuildDataSpannerInstance_AutoscalingConfig_AutoscalingLimits {}
 
-impl BuildDataSpannerInstanceAutoscalingConfigElAutoscalingLimitsEl {
-    pub fn build(self) -> DataSpannerInstanceAutoscalingConfigElAutoscalingLimitsEl {
-        DataSpannerInstanceAutoscalingConfigElAutoscalingLimitsEl {
+impl BuildDataSpannerInstance_AutoscalingConfig_AutoscalingLimits {
+    pub fn build(self) -> DataSpannerInstance_AutoscalingConfig_AutoscalingLimits {
+        DataSpannerInstance_AutoscalingConfig_AutoscalingLimits {
             max_nodes: core::default::Default::default(),
             max_processing_units: core::default::Default::default(),
             min_nodes: core::default::Default::default(),
@@ -401,24 +451,26 @@ impl BuildDataSpannerInstanceAutoscalingConfigElAutoscalingLimitsEl {
     }
 }
 
-pub struct DataSpannerInstanceAutoscalingConfigElAutoscalingLimitsElRef {
+#[allow(dead_code)]
+pub struct DataSpannerInstance_AutoscalingConfig_AutoscalingLimitsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSpannerInstanceAutoscalingConfigElAutoscalingLimitsElRef {
+impl terrars::Ref for DataSpannerInstance_AutoscalingConfig_AutoscalingLimitsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataSpannerInstanceAutoscalingConfigElAutoscalingLimitsElRef {
-        DataSpannerInstanceAutoscalingConfigElAutoscalingLimitsElRef {
+    ) -> DataSpannerInstance_AutoscalingConfig_AutoscalingLimitsRef {
+        DataSpannerInstance_AutoscalingConfig_AutoscalingLimitsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSpannerInstanceAutoscalingConfigElAutoscalingLimitsElRef {
+impl DataSpannerInstance_AutoscalingConfig_AutoscalingLimitsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -445,14 +497,340 @@ impl DataSpannerInstanceAutoscalingConfigElAutoscalingLimitsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataSpannerInstanceAutoscalingConfigElAutoscalingTargetsEl {
+pub struct DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions_Overrides {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    autoscaling_limits: std::option::Option<terrars::ListField<DataSpannerInstance_AutoscalingConfig_AutoscalingLimits>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    autoscaling_target_high_priority_cpu_utilization_percent: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    autoscaling_target_total_cpu_utilization_percent: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    disable_high_priority_cpu_autoscaling: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    disable_total_cpu_autoscaling: std::option::Option<terrars::PrimField<bool>>,
+}
+
+impl DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions_Overrides {
+    #[doc = "Set the field `autoscaling_limits`.\n"]
+    pub fn set_autoscaling_limits(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataSpannerInstance_AutoscalingConfig_AutoscalingLimits>>,
+    ) -> Self {
+        self.autoscaling_limits = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `autoscaling_target_high_priority_cpu_utilization_percent`.\n"]
+    pub fn set_autoscaling_target_high_priority_cpu_utilization_percent(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<f64>>,
+    ) -> Self {
+        self.autoscaling_target_high_priority_cpu_utilization_percent = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `autoscaling_target_total_cpu_utilization_percent`.\n"]
+    pub fn set_autoscaling_target_total_cpu_utilization_percent(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<f64>>,
+    ) -> Self {
+        self.autoscaling_target_total_cpu_utilization_percent = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `disable_high_priority_cpu_autoscaling`.\n"]
+    pub fn set_disable_high_priority_cpu_autoscaling(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<bool>>,
+    ) -> Self {
+        self.disable_high_priority_cpu_autoscaling = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `disable_total_cpu_autoscaling`.\n"]
+    pub fn set_disable_total_cpu_autoscaling(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.disable_total_cpu_autoscaling = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions_Overrides {
+    type O = terrars::BlockAssignable<DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions_Overrides>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions_Overrides {}
+
+impl BuildDataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions_Overrides {
+    pub fn build(self) -> DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions_Overrides {
+        DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions_Overrides {
+            autoscaling_limits: core::default::Default::default(),
+            autoscaling_target_high_priority_cpu_utilization_percent: core::default::Default::default(),
+            autoscaling_target_total_cpu_utilization_percent: core::default::Default::default(),
+            disable_high_priority_cpu_autoscaling: core::default::Default::default(),
+            disable_total_cpu_autoscaling: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions_OverridesRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions_OverridesRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions_OverridesRef {
+        DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions_OverridesRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions_OverridesRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `autoscaling_limits` after provisioning.\n"]
+    pub fn autoscaling_limits(&self) -> terrars::ListRef<DataSpannerInstance_AutoscalingConfig_AutoscalingLimitsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.autoscaling_limits", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `autoscaling_target_high_priority_cpu_utilization_percent` after provisioning.\n"]
+    pub fn autoscaling_target_high_priority_cpu_utilization_percent(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.autoscaling_target_high_priority_cpu_utilization_percent", self.base),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `autoscaling_target_total_cpu_utilization_percent` after provisioning.\n"]
+    pub fn autoscaling_target_total_cpu_utilization_percent(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.autoscaling_target_total_cpu_utilization_percent", self.base),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `disable_high_priority_cpu_autoscaling` after provisioning.\n"]
+    pub fn disable_high_priority_cpu_autoscaling(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.disable_high_priority_cpu_autoscaling", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `disable_total_cpu_autoscaling` after provisioning.\n"]
+    pub fn disable_total_cpu_autoscaling(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.disable_total_cpu_autoscaling", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions_ReplicaSelection {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    location: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions_ReplicaSelection {
+    #[doc = "Set the field `location`.\n"]
+    pub fn set_location(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.location = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions_ReplicaSelection {
+    type O =
+        terrars
+        ::BlockAssignable<DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions_ReplicaSelection>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions_ReplicaSelection {}
+
+impl BuildDataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions_ReplicaSelection {
+    pub fn build(self) -> DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions_ReplicaSelection {
+        DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions_ReplicaSelection {
+            location: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions_ReplicaSelectionRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions_ReplicaSelectionRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions_ReplicaSelectionRef {
+        DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions_ReplicaSelectionRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions_ReplicaSelectionRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `location` after provisioning.\n"]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    overrides: std
+    ::option
+    ::Option<terrars::ListField<DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions_Overrides>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    replica_selection: std
+    ::option
+    ::Option<
+        terrars::ListField<DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions_ReplicaSelection>,
+    >,
+}
+
+impl DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions {
+    #[doc = "Set the field `overrides`.\n"]
+    pub fn set_overrides(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::ListField<DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions_Overrides>,
+                    >,
+    ) -> Self {
+        self.overrides = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `replica_selection`.\n"]
+    pub fn set_replica_selection(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::ListField<
+                            DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions_ReplicaSelection,
+                        >,
+                    >,
+    ) -> Self {
+        self.replica_selection = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions {
+    type O = terrars::BlockAssignable<DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions {}
+
+impl BuildDataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions {
+    pub fn build(self) -> DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions {
+        DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions {
+            overrides: core::default::Default::default(),
+            replica_selection: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptionsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptionsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptionsRef {
+        DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptionsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptionsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `overrides` after provisioning.\n"]
+    pub fn overrides(
+        &self,
+    ) -> terrars::ListRef<DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions_OverridesRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.overrides", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `replica_selection` after provisioning.\n"]
+    pub fn replica_selection(
+        &self,
+    ) -> terrars::ListRef<DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions_ReplicaSelectionRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.replica_selection", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataSpannerInstance_AutoscalingConfig_AutoscalingTargets {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     high_priority_cpu_utilization_percent: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     storage_utilization_percent: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    total_cpu_utilization_percent: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataSpannerInstanceAutoscalingConfigElAutoscalingTargetsEl {
+impl DataSpannerInstance_AutoscalingConfig_AutoscalingTargets {
     #[doc = "Set the field `high_priority_cpu_utilization_percent`.\n"]
     pub fn set_high_priority_cpu_utilization_percent(
         mut self,
@@ -467,10 +845,16 @@ impl DataSpannerInstanceAutoscalingConfigElAutoscalingTargetsEl {
         self.storage_utilization_percent = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `total_cpu_utilization_percent`.\n"]
+    pub fn set_total_cpu_utilization_percent(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.total_cpu_utilization_percent = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for DataSpannerInstanceAutoscalingConfigElAutoscalingTargetsEl {
-    type O = terrars::BlockAssignable<DataSpannerInstanceAutoscalingConfigElAutoscalingTargetsEl>;
+impl terrars::ToListMappable for DataSpannerInstance_AutoscalingConfig_AutoscalingTargets {
+    type O = terrars::BlockAssignable<DataSpannerInstance_AutoscalingConfig_AutoscalingTargets>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -481,35 +865,38 @@ impl terrars::ToListMappable for DataSpannerInstanceAutoscalingConfigElAutoscali
     }
 }
 
-pub struct BuildDataSpannerInstanceAutoscalingConfigElAutoscalingTargetsEl {}
+pub struct BuildDataSpannerInstance_AutoscalingConfig_AutoscalingTargets {}
 
-impl BuildDataSpannerInstanceAutoscalingConfigElAutoscalingTargetsEl {
-    pub fn build(self) -> DataSpannerInstanceAutoscalingConfigElAutoscalingTargetsEl {
-        DataSpannerInstanceAutoscalingConfigElAutoscalingTargetsEl {
+impl BuildDataSpannerInstance_AutoscalingConfig_AutoscalingTargets {
+    pub fn build(self) -> DataSpannerInstance_AutoscalingConfig_AutoscalingTargets {
+        DataSpannerInstance_AutoscalingConfig_AutoscalingTargets {
             high_priority_cpu_utilization_percent: core::default::Default::default(),
             storage_utilization_percent: core::default::Default::default(),
+            total_cpu_utilization_percent: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataSpannerInstanceAutoscalingConfigElAutoscalingTargetsElRef {
+#[allow(dead_code)]
+pub struct DataSpannerInstance_AutoscalingConfig_AutoscalingTargetsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSpannerInstanceAutoscalingConfigElAutoscalingTargetsElRef {
+impl terrars::Ref for DataSpannerInstance_AutoscalingConfig_AutoscalingTargetsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataSpannerInstanceAutoscalingConfigElAutoscalingTargetsElRef {
-        DataSpannerInstanceAutoscalingConfigElAutoscalingTargetsElRef {
+    ) -> DataSpannerInstance_AutoscalingConfig_AutoscalingTargetsRef {
+        DataSpannerInstance_AutoscalingConfig_AutoscalingTargetsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSpannerInstanceAutoscalingConfigElAutoscalingTargetsElRef {
+impl DataSpannerInstance_AutoscalingConfig_AutoscalingTargetsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -523,25 +910,46 @@ impl DataSpannerInstanceAutoscalingConfigElAutoscalingTargetsElRef {
     pub fn storage_utilization_percent(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.storage_utilization_percent", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `total_cpu_utilization_percent` after provisioning.\n"]
+    pub fn total_cpu_utilization_percent(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.total_cpu_utilization_percent", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct DataSpannerInstanceAutoscalingConfigEl {
+pub struct DataSpannerInstance_AutoscalingConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    autoscaling_limits: std
+    asymmetric_autoscaling_options: std
     ::option
-    ::Option<terrars::ListField<DataSpannerInstanceAutoscalingConfigElAutoscalingLimitsEl>>,
+    ::Option<terrars::ListField<DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    autoscaling_limits: std::option::Option<terrars::ListField<DataSpannerInstance_AutoscalingConfig_AutoscalingLimits>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     autoscaling_targets: std
     ::option
-    ::Option<terrars::ListField<DataSpannerInstanceAutoscalingConfigElAutoscalingTargetsEl>>,
+    ::Option<terrars::ListField<DataSpannerInstance_AutoscalingConfig_AutoscalingTargets>>,
 }
 
-impl DataSpannerInstanceAutoscalingConfigEl {
+impl DataSpannerInstance_AutoscalingConfig {
+    #[doc = "Set the field `asymmetric_autoscaling_options`.\n"]
+    pub fn set_asymmetric_autoscaling_options(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::ListField<DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptions>>,
+    ) -> Self {
+        self.asymmetric_autoscaling_options = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `autoscaling_limits`.\n"]
     pub fn set_autoscaling_limits(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataSpannerInstanceAutoscalingConfigElAutoscalingLimitsEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataSpannerInstance_AutoscalingConfig_AutoscalingLimits>>,
     ) -> Self {
         self.autoscaling_limits = std::option::Option::Some(v.into());
         self
@@ -550,15 +958,15 @@ impl DataSpannerInstanceAutoscalingConfigEl {
     #[doc = "Set the field `autoscaling_targets`.\n"]
     pub fn set_autoscaling_targets(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataSpannerInstanceAutoscalingConfigElAutoscalingTargetsEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataSpannerInstance_AutoscalingConfig_AutoscalingTargets>>,
     ) -> Self {
         self.autoscaling_targets = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataSpannerInstanceAutoscalingConfigEl {
-    type O = terrars::BlockAssignable<DataSpannerInstanceAutoscalingConfigEl>;
+impl terrars::ToListMappable for DataSpannerInstance_AutoscalingConfig {
+    type O = terrars::BlockAssignable<DataSpannerInstance_AutoscalingConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -569,43 +977,53 @@ impl terrars::ToListMappable for DataSpannerInstanceAutoscalingConfigEl {
     }
 }
 
-pub struct BuildDataSpannerInstanceAutoscalingConfigEl {}
+pub struct BuildDataSpannerInstance_AutoscalingConfig {}
 
-impl BuildDataSpannerInstanceAutoscalingConfigEl {
-    pub fn build(self) -> DataSpannerInstanceAutoscalingConfigEl {
-        DataSpannerInstanceAutoscalingConfigEl {
+impl BuildDataSpannerInstance_AutoscalingConfig {
+    pub fn build(self) -> DataSpannerInstance_AutoscalingConfig {
+        DataSpannerInstance_AutoscalingConfig {
+            asymmetric_autoscaling_options: core::default::Default::default(),
             autoscaling_limits: core::default::Default::default(),
             autoscaling_targets: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataSpannerInstanceAutoscalingConfigElRef {
+#[allow(dead_code)]
+pub struct DataSpannerInstance_AutoscalingConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSpannerInstanceAutoscalingConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSpannerInstanceAutoscalingConfigElRef {
-        DataSpannerInstanceAutoscalingConfigElRef {
+impl terrars::Ref for DataSpannerInstance_AutoscalingConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSpannerInstance_AutoscalingConfigRef {
+        DataSpannerInstance_AutoscalingConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSpannerInstanceAutoscalingConfigElRef {
+impl DataSpannerInstance_AutoscalingConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
+    #[doc = "Get a reference to the value of field `asymmetric_autoscaling_options` after provisioning.\n"]
+    pub fn asymmetric_autoscaling_options(
+        &self,
+    ) -> terrars::ListRef<DataSpannerInstance_AutoscalingConfig_AsymmetricAutoscalingOptionsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.asymmetric_autoscaling_options", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `autoscaling_limits` after provisioning.\n"]
-    pub fn autoscaling_limits(&self) -> terrars::ListRef<DataSpannerInstanceAutoscalingConfigElAutoscalingLimitsElRef> {
+    pub fn autoscaling_limits(&self) -> terrars::ListRef<DataSpannerInstance_AutoscalingConfig_AutoscalingLimitsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.autoscaling_limits", self.base))
     }
 
     #[doc = "Get a reference to the value of field `autoscaling_targets` after provisioning.\n"]
-    pub fn autoscaling_targets(&self) -> terrars::ListRef<DataSpannerInstanceAutoscalingConfigElAutoscalingTargetsElRef> {
+    pub fn autoscaling_targets(&self) -> terrars::ListRef<DataSpannerInstance_AutoscalingConfig_AutoscalingTargetsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.autoscaling_targets", self.base))
     }
 }

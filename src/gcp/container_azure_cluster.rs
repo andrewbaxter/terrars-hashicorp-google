@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ContainerAzureClusterData {
+struct ContainerAzureClusterData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,6 +26,8 @@ struct ContainerAzureClusterData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     client: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -33,24 +37,24 @@ struct ContainerAzureClusterData {
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     resource_group_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    authorization: std::option::Option<std::vec::Vec<ContainerAzureClusterAuthorizationEl>>,
+    authorization: std::option::Option<std::vec::Vec<ContainerAzureCluster_Authorization>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    azure_services_authentication: std::option::Option<std::vec::Vec<ContainerAzureClusterAzureServicesAuthenticationEl>>,
+    azure_services_authentication: std::option::Option<std::vec::Vec<ContainerAzureCluster_AzureServicesAuthentication>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    control_plane: std::option::Option<std::vec::Vec<ContainerAzureClusterControlPlaneEl>>,
+    control_plane: std::option::Option<std::vec::Vec<ContainerAzureCluster_ControlPlane>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    fleet: std::option::Option<std::vec::Vec<ContainerAzureClusterFleetEl>>,
+    fleet: std::option::Option<std::vec::Vec<ContainerAzureCluster_Fleet>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    networking: std::option::Option<std::vec::Vec<ContainerAzureClusterNetworkingEl>>,
+    networking: std::option::Option<std::vec::Vec<ContainerAzureCluster_Networking>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ContainerAzureClusterTimeoutsEl>,
+    timeouts: std::option::Option<ContainerAzureCluster_Timeouts>,
     dynamic: ContainerAzureClusterDynamic,
 }
 
 struct ContainerAzureCluster_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ContainerAzureClusterData>,
+    data: std::cell::RefCell<ContainerAzureClusterData_>,
 }
 
 #[derive(Clone)]
@@ -168,6 +172,13 @@ impl ContainerAzureCluster {
     }
 
     #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `description`.\nOptional. A human readable description of this cluster. Cannot be longer than 255 UTF-8 encoded bytes."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -189,7 +200,7 @@ impl ContainerAzureCluster {
     #[doc = "Set the field `authorization`.\n"]
     pub fn set_authorization(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureClusterAuthorizationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureCluster_Authorization>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -205,7 +216,7 @@ impl ContainerAzureCluster {
     #[doc = "Set the field `azure_services_authentication`.\n"]
     pub fn set_azure_services_authentication(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureClusterAzureServicesAuthenticationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureCluster_AzureServicesAuthentication>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -221,7 +232,7 @@ impl ContainerAzureCluster {
     #[doc = "Set the field `control_plane`.\n"]
     pub fn set_control_plane(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureClusterControlPlaneEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureCluster_ControlPlane>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -235,7 +246,7 @@ impl ContainerAzureCluster {
     }
 
     #[doc = "Set the field `fleet`.\n"]
-    pub fn set_fleet(self, v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureClusterFleetEl>>) -> Self {
+    pub fn set_fleet(self, v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureCluster_Fleet>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().fleet = std::option::Option::Some(v);
@@ -250,7 +261,7 @@ impl ContainerAzureCluster {
     #[doc = "Set the field `networking`.\n"]
     pub fn set_networking(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureClusterNetworkingEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureCluster_Networking>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -264,7 +275,7 @@ impl ContainerAzureCluster {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ContainerAzureClusterTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ContainerAzureCluster_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -291,6 +302,12 @@ impl ContainerAzureCluster {
         "Get a reference to the value of field `create_time` after provisioning.\nOutput only. The time at which this cluster was created."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -369,40 +386,40 @@ impl ContainerAzureCluster {
 
     #[doc =
         "Get a reference to the value of field `workload_identity_config` after provisioning.\nOutput only. Workload Identity settings."]
-    pub fn workload_identity_config(&self) -> terrars::ListRef<ContainerAzureClusterWorkloadIdentityConfigElRef> {
+    pub fn workload_identity_config(&self) -> terrars::ListRef<ContainerAzureCluster_WorkloadIdentityConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.workload_identity_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `authorization` after provisioning.\n"]
-    pub fn authorization(&self) -> terrars::ListRef<ContainerAzureClusterAuthorizationElRef> {
+    pub fn authorization(&self) -> terrars::ListRef<ContainerAzureCluster_AuthorizationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.authorization", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `azure_services_authentication` after provisioning.\n"]
     pub fn azure_services_authentication(
         &self,
-    ) -> terrars::ListRef<ContainerAzureClusterAzureServicesAuthenticationElRef> {
+    ) -> terrars::ListRef<ContainerAzureCluster_AzureServicesAuthenticationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.azure_services_authentication", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `control_plane` after provisioning.\n"]
-    pub fn control_plane(&self) -> terrars::ListRef<ContainerAzureClusterControlPlaneElRef> {
+    pub fn control_plane(&self) -> terrars::ListRef<ContainerAzureCluster_ControlPlaneRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.control_plane", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `fleet` after provisioning.\n"]
-    pub fn fleet(&self) -> terrars::ListRef<ContainerAzureClusterFleetElRef> {
+    pub fn fleet(&self) -> terrars::ListRef<ContainerAzureCluster_FleetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.fleet", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `networking` after provisioning.\n"]
-    pub fn networking(&self) -> terrars::ListRef<ContainerAzureClusterNetworkingElRef> {
+    pub fn networking(&self) -> terrars::ListRef<ContainerAzureCluster_NetworkingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.networking", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ContainerAzureClusterTimeoutsElRef {
-        ContainerAzureClusterTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ContainerAzureCluster_TimeoutsRef {
+        ContainerAzureCluster_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -456,7 +473,7 @@ impl BuildContainerAzureCluster {
         let out = ContainerAzureCluster(std::rc::Rc::new(ContainerAzureCluster_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ContainerAzureClusterData {
+            data: std::cell::RefCell::new(ContainerAzureClusterData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -465,6 +482,7 @@ impl BuildContainerAzureCluster {
                 annotations: core::default::Default::default(),
                 azure_region: self.azure_region,
                 client: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 location: self.location,
@@ -533,6 +551,12 @@ impl ContainerAzureClusterRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nOptional. A human readable description of this cluster. Cannot be longer than 255 UTF-8 encoded bytes."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -608,45 +632,56 @@ impl ContainerAzureClusterRef {
 
     #[doc =
         "Get a reference to the value of field `workload_identity_config` after provisioning.\nOutput only. Workload Identity settings."]
-    pub fn workload_identity_config(&self) -> terrars::ListRef<ContainerAzureClusterWorkloadIdentityConfigElRef> {
+    pub fn workload_identity_config(&self) -> terrars::ListRef<ContainerAzureCluster_WorkloadIdentityConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.workload_identity_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `authorization` after provisioning.\n"]
-    pub fn authorization(&self) -> terrars::ListRef<ContainerAzureClusterAuthorizationElRef> {
+    pub fn authorization(&self) -> terrars::ListRef<ContainerAzureCluster_AuthorizationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.authorization", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `azure_services_authentication` after provisioning.\n"]
     pub fn azure_services_authentication(
         &self,
-    ) -> terrars::ListRef<ContainerAzureClusterAzureServicesAuthenticationElRef> {
+    ) -> terrars::ListRef<ContainerAzureCluster_AzureServicesAuthenticationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.azure_services_authentication", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `control_plane` after provisioning.\n"]
-    pub fn control_plane(&self) -> terrars::ListRef<ContainerAzureClusterControlPlaneElRef> {
+    pub fn control_plane(&self) -> terrars::ListRef<ContainerAzureCluster_ControlPlaneRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.control_plane", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `fleet` after provisioning.\n"]
-    pub fn fleet(&self) -> terrars::ListRef<ContainerAzureClusterFleetElRef> {
+    pub fn fleet(&self) -> terrars::ListRef<ContainerAzureCluster_FleetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.fleet", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `networking` after provisioning.\n"]
-    pub fn networking(&self) -> terrars::ListRef<ContainerAzureClusterNetworkingElRef> {
+    pub fn networking(&self) -> terrars::ListRef<ContainerAzureCluster_NetworkingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.networking", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ContainerAzureClusterTimeoutsElRef {
-        ContainerAzureClusterTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ContainerAzureCluster_TimeoutsRef {
+        ContainerAzureCluster_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ContainerAzureClusterDynamic {
+    authorization: std::option::Option<terrars::DynamicBlock<ContainerAzureCluster_Authorization>>,
+    azure_services_authentication: std
+    ::option
+    ::Option<terrars::DynamicBlock<ContainerAzureCluster_AzureServicesAuthentication>>,
+    control_plane: std::option::Option<terrars::DynamicBlock<ContainerAzureCluster_ControlPlane>>,
+    fleet: std::option::Option<terrars::DynamicBlock<ContainerAzureCluster_Fleet>>,
+    networking: std::option::Option<terrars::DynamicBlock<ContainerAzureCluster_Networking>>,
+}
+
 #[derive(Serialize)]
-pub struct ContainerAzureClusterWorkloadIdentityConfigEl {
+pub struct ContainerAzureCluster_WorkloadIdentityConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     identity_provider: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -655,7 +690,7 @@ pub struct ContainerAzureClusterWorkloadIdentityConfigEl {
     workload_pool: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ContainerAzureClusterWorkloadIdentityConfigEl {
+impl ContainerAzureCluster_WorkloadIdentityConfig {
     #[doc = "Set the field `identity_provider`.\n"]
     pub fn set_identity_provider(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.identity_provider = std::option::Option::Some(v.into());
@@ -675,8 +710,8 @@ impl ContainerAzureClusterWorkloadIdentityConfigEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAzureClusterWorkloadIdentityConfigEl {
-    type O = terrars::BlockAssignable<ContainerAzureClusterWorkloadIdentityConfigEl>;
+impl terrars::ToListMappable for ContainerAzureCluster_WorkloadIdentityConfig {
+    type O = terrars::BlockAssignable<ContainerAzureCluster_WorkloadIdentityConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -687,11 +722,11 @@ impl terrars::ToListMappable for ContainerAzureClusterWorkloadIdentityConfigEl {
     }
 }
 
-pub struct BuildContainerAzureClusterWorkloadIdentityConfigEl {}
+pub struct BuildContainerAzureCluster_WorkloadIdentityConfig {}
 
-impl BuildContainerAzureClusterWorkloadIdentityConfigEl {
-    pub fn build(self) -> ContainerAzureClusterWorkloadIdentityConfigEl {
-        ContainerAzureClusterWorkloadIdentityConfigEl {
+impl BuildContainerAzureCluster_WorkloadIdentityConfig {
+    pub fn build(self) -> ContainerAzureCluster_WorkloadIdentityConfig {
+        ContainerAzureCluster_WorkloadIdentityConfig {
             identity_provider: core::default::Default::default(),
             issuer_uri: core::default::Default::default(),
             workload_pool: core::default::Default::default(),
@@ -699,24 +734,26 @@ impl BuildContainerAzureClusterWorkloadIdentityConfigEl {
     }
 }
 
-pub struct ContainerAzureClusterWorkloadIdentityConfigElRef {
+#[allow(dead_code)]
+pub struct ContainerAzureCluster_WorkloadIdentityConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAzureClusterWorkloadIdentityConfigElRef {
+impl terrars::Ref for ContainerAzureCluster_WorkloadIdentityConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ContainerAzureClusterWorkloadIdentityConfigElRef {
-        ContainerAzureClusterWorkloadIdentityConfigElRef {
+    ) -> ContainerAzureCluster_WorkloadIdentityConfigRef {
+        ContainerAzureCluster_WorkloadIdentityConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAzureClusterWorkloadIdentityConfigElRef {
+impl ContainerAzureCluster_WorkloadIdentityConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -738,14 +775,14 @@ impl ContainerAzureClusterWorkloadIdentityConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAzureClusterAuthorizationElAdminGroupsEl {
+pub struct ContainerAzureCluster_Authorization_AdminGroups {
     group: terrars::PrimField<std::string::String>,
 }
 
-impl ContainerAzureClusterAuthorizationElAdminGroupsEl { }
+impl ContainerAzureCluster_Authorization_AdminGroups { }
 
-impl terrars::ToListMappable for ContainerAzureClusterAuthorizationElAdminGroupsEl {
-    type O = terrars::BlockAssignable<ContainerAzureClusterAuthorizationElAdminGroupsEl>;
+impl terrars::ToListMappable for ContainerAzureCluster_Authorization_AdminGroups {
+    type O = terrars::BlockAssignable<ContainerAzureCluster_Authorization_AdminGroups>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -756,35 +793,37 @@ impl terrars::ToListMappable for ContainerAzureClusterAuthorizationElAdminGroups
     }
 }
 
-pub struct BuildContainerAzureClusterAuthorizationElAdminGroupsEl {
+pub struct BuildContainerAzureCluster_Authorization_AdminGroups {
     #[doc = "The name of the group, e.g. `my-group@domain.com`."]
     pub group: terrars::PrimField<std::string::String>,
 }
 
-impl BuildContainerAzureClusterAuthorizationElAdminGroupsEl {
-    pub fn build(self) -> ContainerAzureClusterAuthorizationElAdminGroupsEl {
-        ContainerAzureClusterAuthorizationElAdminGroupsEl { group: self.group }
+impl BuildContainerAzureCluster_Authorization_AdminGroups {
+    pub fn build(self) -> ContainerAzureCluster_Authorization_AdminGroups {
+        ContainerAzureCluster_Authorization_AdminGroups { group: self.group }
     }
 }
 
-pub struct ContainerAzureClusterAuthorizationElAdminGroupsElRef {
+#[allow(dead_code)]
+pub struct ContainerAzureCluster_Authorization_AdminGroupsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAzureClusterAuthorizationElAdminGroupsElRef {
+impl terrars::Ref for ContainerAzureCluster_Authorization_AdminGroupsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ContainerAzureClusterAuthorizationElAdminGroupsElRef {
-        ContainerAzureClusterAuthorizationElAdminGroupsElRef {
+    ) -> ContainerAzureCluster_Authorization_AdminGroupsRef {
+        ContainerAzureCluster_Authorization_AdminGroupsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAzureClusterAuthorizationElAdminGroupsElRef {
+impl ContainerAzureCluster_Authorization_AdminGroupsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -797,14 +836,14 @@ impl ContainerAzureClusterAuthorizationElAdminGroupsElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAzureClusterAuthorizationElAdminUsersEl {
+pub struct ContainerAzureCluster_Authorization_AdminUsers {
     username: terrars::PrimField<std::string::String>,
 }
 
-impl ContainerAzureClusterAuthorizationElAdminUsersEl { }
+impl ContainerAzureCluster_Authorization_AdminUsers { }
 
-impl terrars::ToListMappable for ContainerAzureClusterAuthorizationElAdminUsersEl {
-    type O = terrars::BlockAssignable<ContainerAzureClusterAuthorizationElAdminUsersEl>;
+impl terrars::ToListMappable for ContainerAzureCluster_Authorization_AdminUsers {
+    type O = terrars::BlockAssignable<ContainerAzureCluster_Authorization_AdminUsers>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -815,35 +854,37 @@ impl terrars::ToListMappable for ContainerAzureClusterAuthorizationElAdminUsersE
     }
 }
 
-pub struct BuildContainerAzureClusterAuthorizationElAdminUsersEl {
+pub struct BuildContainerAzureCluster_Authorization_AdminUsers {
     #[doc = "The name of the user, e.g. `my-gcp-id@gmail.com`."]
     pub username: terrars::PrimField<std::string::String>,
 }
 
-impl BuildContainerAzureClusterAuthorizationElAdminUsersEl {
-    pub fn build(self) -> ContainerAzureClusterAuthorizationElAdminUsersEl {
-        ContainerAzureClusterAuthorizationElAdminUsersEl { username: self.username }
+impl BuildContainerAzureCluster_Authorization_AdminUsers {
+    pub fn build(self) -> ContainerAzureCluster_Authorization_AdminUsers {
+        ContainerAzureCluster_Authorization_AdminUsers { username: self.username }
     }
 }
 
-pub struct ContainerAzureClusterAuthorizationElAdminUsersElRef {
+#[allow(dead_code)]
+pub struct ContainerAzureCluster_Authorization_AdminUsersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAzureClusterAuthorizationElAdminUsersElRef {
+impl terrars::Ref for ContainerAzureCluster_Authorization_AdminUsersRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ContainerAzureClusterAuthorizationElAdminUsersElRef {
-        ContainerAzureClusterAuthorizationElAdminUsersElRef {
+    ) -> ContainerAzureCluster_Authorization_AdminUsersRef {
+        ContainerAzureCluster_Authorization_AdminUsersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAzureClusterAuthorizationElAdminUsersElRef {
+impl ContainerAzureCluster_Authorization_AdminUsersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -856,25 +897,25 @@ impl ContainerAzureClusterAuthorizationElAdminUsersElRef {
 }
 
 #[derive(Serialize, Default)]
-struct ContainerAzureClusterAuthorizationElDynamic {
-    admin_groups: std::option::Option<terrars::DynamicBlock<ContainerAzureClusterAuthorizationElAdminGroupsEl>>,
-    admin_users: std::option::Option<terrars::DynamicBlock<ContainerAzureClusterAuthorizationElAdminUsersEl>>,
+struct ContainerAzureCluster_AuthorizationDynamic {
+    admin_groups: std::option::Option<terrars::DynamicBlock<ContainerAzureCluster_Authorization_AdminGroups>>,
+    admin_users: std::option::Option<terrars::DynamicBlock<ContainerAzureCluster_Authorization_AdminUsers>>,
 }
 
 #[derive(Serialize)]
-pub struct ContainerAzureClusterAuthorizationEl {
+pub struct ContainerAzureCluster_Authorization {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    admin_groups: std::option::Option<std::vec::Vec<ContainerAzureClusterAuthorizationElAdminGroupsEl>>,
+    admin_groups: std::option::Option<std::vec::Vec<ContainerAzureCluster_Authorization_AdminGroups>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    admin_users: std::option::Option<std::vec::Vec<ContainerAzureClusterAuthorizationElAdminUsersEl>>,
-    dynamic: ContainerAzureClusterAuthorizationElDynamic,
+    admin_users: std::option::Option<std::vec::Vec<ContainerAzureCluster_Authorization_AdminUsers>>,
+    dynamic: ContainerAzureCluster_AuthorizationDynamic,
 }
 
-impl ContainerAzureClusterAuthorizationEl {
+impl ContainerAzureCluster_Authorization {
     #[doc = "Set the field `admin_groups`.\n"]
     pub fn set_admin_groups(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureClusterAuthorizationElAdminGroupsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureCluster_Authorization_AdminGroups>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -890,7 +931,7 @@ impl ContainerAzureClusterAuthorizationEl {
     #[doc = "Set the field `admin_users`.\n"]
     pub fn set_admin_users(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureClusterAuthorizationElAdminUsersEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureCluster_Authorization_AdminUsers>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -904,8 +945,8 @@ impl ContainerAzureClusterAuthorizationEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAzureClusterAuthorizationEl {
-    type O = terrars::BlockAssignable<ContainerAzureClusterAuthorizationEl>;
+impl terrars::ToListMappable for ContainerAzureCluster_Authorization {
+    type O = terrars::BlockAssignable<ContainerAzureCluster_Authorization>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -916,11 +957,11 @@ impl terrars::ToListMappable for ContainerAzureClusterAuthorizationEl {
     }
 }
 
-pub struct BuildContainerAzureClusterAuthorizationEl {}
+pub struct BuildContainerAzureCluster_Authorization {}
 
-impl BuildContainerAzureClusterAuthorizationEl {
-    pub fn build(self) -> ContainerAzureClusterAuthorizationEl {
-        ContainerAzureClusterAuthorizationEl {
+impl BuildContainerAzureCluster_Authorization {
+    pub fn build(self) -> ContainerAzureCluster_Authorization {
+        ContainerAzureCluster_Authorization {
             admin_groups: core::default::Default::default(),
             admin_users: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -928,46 +969,48 @@ impl BuildContainerAzureClusterAuthorizationEl {
     }
 }
 
-pub struct ContainerAzureClusterAuthorizationElRef {
+#[allow(dead_code)]
+pub struct ContainerAzureCluster_AuthorizationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAzureClusterAuthorizationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAzureClusterAuthorizationElRef {
-        ContainerAzureClusterAuthorizationElRef {
+impl terrars::Ref for ContainerAzureCluster_AuthorizationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAzureCluster_AuthorizationRef {
+        ContainerAzureCluster_AuthorizationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAzureClusterAuthorizationElRef {
+impl ContainerAzureCluster_AuthorizationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `admin_groups` after provisioning.\n"]
-    pub fn admin_groups(&self) -> terrars::ListRef<ContainerAzureClusterAuthorizationElAdminGroupsElRef> {
+    pub fn admin_groups(&self) -> terrars::ListRef<ContainerAzureCluster_Authorization_AdminGroupsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.admin_groups", self.base))
     }
 
     #[doc = "Get a reference to the value of field `admin_users` after provisioning.\n"]
-    pub fn admin_users(&self) -> terrars::ListRef<ContainerAzureClusterAuthorizationElAdminUsersElRef> {
+    pub fn admin_users(&self) -> terrars::ListRef<ContainerAzureCluster_Authorization_AdminUsersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.admin_users", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ContainerAzureClusterAzureServicesAuthenticationEl {
+pub struct ContainerAzureCluster_AzureServicesAuthentication {
     application_id: terrars::PrimField<std::string::String>,
     tenant_id: terrars::PrimField<std::string::String>,
 }
 
-impl ContainerAzureClusterAzureServicesAuthenticationEl { }
+impl ContainerAzureCluster_AzureServicesAuthentication { }
 
-impl terrars::ToListMappable for ContainerAzureClusterAzureServicesAuthenticationEl {
-    type O = terrars::BlockAssignable<ContainerAzureClusterAzureServicesAuthenticationEl>;
+impl terrars::ToListMappable for ContainerAzureCluster_AzureServicesAuthentication {
+    type O = terrars::BlockAssignable<ContainerAzureCluster_AzureServicesAuthentication>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -978,40 +1021,42 @@ impl terrars::ToListMappable for ContainerAzureClusterAzureServicesAuthenticatio
     }
 }
 
-pub struct BuildContainerAzureClusterAzureServicesAuthenticationEl {
+pub struct BuildContainerAzureCluster_AzureServicesAuthentication {
     #[doc = "The Azure Active Directory Application ID for Authentication configuration."]
     pub application_id: terrars::PrimField<std::string::String>,
     #[doc = "The Azure Active Directory Tenant ID for Authentication configuration."]
     pub tenant_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildContainerAzureClusterAzureServicesAuthenticationEl {
-    pub fn build(self) -> ContainerAzureClusterAzureServicesAuthenticationEl {
-        ContainerAzureClusterAzureServicesAuthenticationEl {
+impl BuildContainerAzureCluster_AzureServicesAuthentication {
+    pub fn build(self) -> ContainerAzureCluster_AzureServicesAuthentication {
+        ContainerAzureCluster_AzureServicesAuthentication {
             application_id: self.application_id,
             tenant_id: self.tenant_id,
         }
     }
 }
 
-pub struct ContainerAzureClusterAzureServicesAuthenticationElRef {
+#[allow(dead_code)]
+pub struct ContainerAzureCluster_AzureServicesAuthenticationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAzureClusterAzureServicesAuthenticationElRef {
+impl terrars::Ref for ContainerAzureCluster_AzureServicesAuthenticationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ContainerAzureClusterAzureServicesAuthenticationElRef {
-        ContainerAzureClusterAzureServicesAuthenticationElRef {
+    ) -> ContainerAzureCluster_AzureServicesAuthenticationRef {
+        ContainerAzureCluster_AzureServicesAuthenticationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAzureClusterAzureServicesAuthenticationElRef {
+impl ContainerAzureCluster_AzureServicesAuthenticationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1030,14 +1075,14 @@ impl ContainerAzureClusterAzureServicesAuthenticationElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAzureClusterControlPlaneElDatabaseEncryptionEl {
+pub struct ContainerAzureCluster_ControlPlane_DatabaseEncryption {
     key_id: terrars::PrimField<std::string::String>,
 }
 
-impl ContainerAzureClusterControlPlaneElDatabaseEncryptionEl { }
+impl ContainerAzureCluster_ControlPlane_DatabaseEncryption { }
 
-impl terrars::ToListMappable for ContainerAzureClusterControlPlaneElDatabaseEncryptionEl {
-    type O = terrars::BlockAssignable<ContainerAzureClusterControlPlaneElDatabaseEncryptionEl>;
+impl terrars::ToListMappable for ContainerAzureCluster_ControlPlane_DatabaseEncryption {
+    type O = terrars::BlockAssignable<ContainerAzureCluster_ControlPlane_DatabaseEncryption>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1048,36 +1093,38 @@ impl terrars::ToListMappable for ContainerAzureClusterControlPlaneElDatabaseEncr
     }
 }
 
-pub struct BuildContainerAzureClusterControlPlaneElDatabaseEncryptionEl {
+pub struct BuildContainerAzureCluster_ControlPlane_DatabaseEncryption {
     #[doc =
         "The ARM ID of the Azure Key Vault key to encrypt / decrypt data. For example: `/subscriptions/<subscription-id>/resourceGroups/<resource-group-id>/providers/Microsoft.KeyVault/vaults/<key-vault-id>/keys/<key-name>` Encryption will always take the latest version of the key and hence specific version is not supported."]
     pub key_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildContainerAzureClusterControlPlaneElDatabaseEncryptionEl {
-    pub fn build(self) -> ContainerAzureClusterControlPlaneElDatabaseEncryptionEl {
-        ContainerAzureClusterControlPlaneElDatabaseEncryptionEl { key_id: self.key_id }
+impl BuildContainerAzureCluster_ControlPlane_DatabaseEncryption {
+    pub fn build(self) -> ContainerAzureCluster_ControlPlane_DatabaseEncryption {
+        ContainerAzureCluster_ControlPlane_DatabaseEncryption { key_id: self.key_id }
     }
 }
 
-pub struct ContainerAzureClusterControlPlaneElDatabaseEncryptionElRef {
+#[allow(dead_code)]
+pub struct ContainerAzureCluster_ControlPlane_DatabaseEncryptionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAzureClusterControlPlaneElDatabaseEncryptionElRef {
+impl terrars::Ref for ContainerAzureCluster_ControlPlane_DatabaseEncryptionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ContainerAzureClusterControlPlaneElDatabaseEncryptionElRef {
-        ContainerAzureClusterControlPlaneElDatabaseEncryptionElRef {
+    ) -> ContainerAzureCluster_ControlPlane_DatabaseEncryptionRef {
+        ContainerAzureCluster_ControlPlane_DatabaseEncryptionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAzureClusterControlPlaneElDatabaseEncryptionElRef {
+impl ContainerAzureCluster_ControlPlane_DatabaseEncryptionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1090,12 +1137,12 @@ impl ContainerAzureClusterControlPlaneElDatabaseEncryptionElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAzureClusterControlPlaneElMainVolumeEl {
+pub struct ContainerAzureCluster_ControlPlane_MainVolume {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     size_gib: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl ContainerAzureClusterControlPlaneElMainVolumeEl {
+impl ContainerAzureCluster_ControlPlane_MainVolume {
     #[doc =
         "Set the field `size_gib`.\nOptional. The size of the disk, in GiBs. When unspecified, a default value is provided. See the specific reference in the parent resource."]
     pub fn set_size_gib(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -1104,8 +1151,8 @@ impl ContainerAzureClusterControlPlaneElMainVolumeEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAzureClusterControlPlaneElMainVolumeEl {
-    type O = terrars::BlockAssignable<ContainerAzureClusterControlPlaneElMainVolumeEl>;
+impl terrars::ToListMappable for ContainerAzureCluster_ControlPlane_MainVolume {
+    type O = terrars::BlockAssignable<ContainerAzureCluster_ControlPlane_MainVolume>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1116,32 +1163,34 @@ impl terrars::ToListMappable for ContainerAzureClusterControlPlaneElMainVolumeEl
     }
 }
 
-pub struct BuildContainerAzureClusterControlPlaneElMainVolumeEl {}
+pub struct BuildContainerAzureCluster_ControlPlane_MainVolume {}
 
-impl BuildContainerAzureClusterControlPlaneElMainVolumeEl {
-    pub fn build(self) -> ContainerAzureClusterControlPlaneElMainVolumeEl {
-        ContainerAzureClusterControlPlaneElMainVolumeEl { size_gib: core::default::Default::default() }
+impl BuildContainerAzureCluster_ControlPlane_MainVolume {
+    pub fn build(self) -> ContainerAzureCluster_ControlPlane_MainVolume {
+        ContainerAzureCluster_ControlPlane_MainVolume { size_gib: core::default::Default::default() }
     }
 }
 
-pub struct ContainerAzureClusterControlPlaneElMainVolumeElRef {
+#[allow(dead_code)]
+pub struct ContainerAzureCluster_ControlPlane_MainVolumeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAzureClusterControlPlaneElMainVolumeElRef {
+impl terrars::Ref for ContainerAzureCluster_ControlPlane_MainVolumeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ContainerAzureClusterControlPlaneElMainVolumeElRef {
-        ContainerAzureClusterControlPlaneElMainVolumeElRef {
+    ) -> ContainerAzureCluster_ControlPlane_MainVolumeRef {
+        ContainerAzureCluster_ControlPlane_MainVolumeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAzureClusterControlPlaneElMainVolumeElRef {
+impl ContainerAzureCluster_ControlPlane_MainVolumeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1154,15 +1203,15 @@ impl ContainerAzureClusterControlPlaneElMainVolumeElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAzureClusterControlPlaneElProxyConfigEl {
+pub struct ContainerAzureCluster_ControlPlane_ProxyConfig {
     resource_group_id: terrars::PrimField<std::string::String>,
     secret_id: terrars::PrimField<std::string::String>,
 }
 
-impl ContainerAzureClusterControlPlaneElProxyConfigEl { }
+impl ContainerAzureCluster_ControlPlane_ProxyConfig { }
 
-impl terrars::ToListMappable for ContainerAzureClusterControlPlaneElProxyConfigEl {
-    type O = terrars::BlockAssignable<ContainerAzureClusterControlPlaneElProxyConfigEl>;
+impl terrars::ToListMappable for ContainerAzureCluster_ControlPlane_ProxyConfig {
+    type O = terrars::BlockAssignable<ContainerAzureCluster_ControlPlane_ProxyConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1173,7 +1222,7 @@ impl terrars::ToListMappable for ContainerAzureClusterControlPlaneElProxyConfigE
     }
 }
 
-pub struct BuildContainerAzureClusterControlPlaneElProxyConfigEl {
+pub struct BuildContainerAzureCluster_ControlPlane_ProxyConfig {
     #[doc =
         "The ARM ID the of the resource group containing proxy keyvault. Resource group ids are formatted as `/subscriptions/<subscription-id>/resourceGroups/<resource-group-name>`"]
     pub resource_group_id: terrars::PrimField<std::string::String>,
@@ -1182,33 +1231,35 @@ pub struct BuildContainerAzureClusterControlPlaneElProxyConfigEl {
     pub secret_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildContainerAzureClusterControlPlaneElProxyConfigEl {
-    pub fn build(self) -> ContainerAzureClusterControlPlaneElProxyConfigEl {
-        ContainerAzureClusterControlPlaneElProxyConfigEl {
+impl BuildContainerAzureCluster_ControlPlane_ProxyConfig {
+    pub fn build(self) -> ContainerAzureCluster_ControlPlane_ProxyConfig {
+        ContainerAzureCluster_ControlPlane_ProxyConfig {
             resource_group_id: self.resource_group_id,
             secret_id: self.secret_id,
         }
     }
 }
 
-pub struct ContainerAzureClusterControlPlaneElProxyConfigElRef {
+#[allow(dead_code)]
+pub struct ContainerAzureCluster_ControlPlane_ProxyConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAzureClusterControlPlaneElProxyConfigElRef {
+impl terrars::Ref for ContainerAzureCluster_ControlPlane_ProxyConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ContainerAzureClusterControlPlaneElProxyConfigElRef {
-        ContainerAzureClusterControlPlaneElProxyConfigElRef {
+    ) -> ContainerAzureCluster_ControlPlane_ProxyConfigRef {
+        ContainerAzureCluster_ControlPlane_ProxyConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAzureClusterControlPlaneElProxyConfigElRef {
+impl ContainerAzureCluster_ControlPlane_ProxyConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1227,15 +1278,15 @@ impl ContainerAzureClusterControlPlaneElProxyConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAzureClusterControlPlaneElReplicaPlacementsEl {
+pub struct ContainerAzureCluster_ControlPlane_ReplicaPlacements {
     azure_availability_zone: terrars::PrimField<std::string::String>,
     subnet_id: terrars::PrimField<std::string::String>,
 }
 
-impl ContainerAzureClusterControlPlaneElReplicaPlacementsEl { }
+impl ContainerAzureCluster_ControlPlane_ReplicaPlacements { }
 
-impl terrars::ToListMappable for ContainerAzureClusterControlPlaneElReplicaPlacementsEl {
-    type O = terrars::BlockAssignable<ContainerAzureClusterControlPlaneElReplicaPlacementsEl>;
+impl terrars::ToListMappable for ContainerAzureCluster_ControlPlane_ReplicaPlacements {
+    type O = terrars::BlockAssignable<ContainerAzureCluster_ControlPlane_ReplicaPlacements>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1246,7 +1297,7 @@ impl terrars::ToListMappable for ContainerAzureClusterControlPlaneElReplicaPlace
     }
 }
 
-pub struct BuildContainerAzureClusterControlPlaneElReplicaPlacementsEl {
+pub struct BuildContainerAzureCluster_ControlPlane_ReplicaPlacements {
     #[doc =
         "For a given replica, the Azure availability zone where to provision the control plane VM and the ETCD disk."]
     pub azure_availability_zone: terrars::PrimField<std::string::String>,
@@ -1255,33 +1306,35 @@ pub struct BuildContainerAzureClusterControlPlaneElReplicaPlacementsEl {
     pub subnet_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildContainerAzureClusterControlPlaneElReplicaPlacementsEl {
-    pub fn build(self) -> ContainerAzureClusterControlPlaneElReplicaPlacementsEl {
-        ContainerAzureClusterControlPlaneElReplicaPlacementsEl {
+impl BuildContainerAzureCluster_ControlPlane_ReplicaPlacements {
+    pub fn build(self) -> ContainerAzureCluster_ControlPlane_ReplicaPlacements {
+        ContainerAzureCluster_ControlPlane_ReplicaPlacements {
             azure_availability_zone: self.azure_availability_zone,
             subnet_id: self.subnet_id,
         }
     }
 }
 
-pub struct ContainerAzureClusterControlPlaneElReplicaPlacementsElRef {
+#[allow(dead_code)]
+pub struct ContainerAzureCluster_ControlPlane_ReplicaPlacementsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAzureClusterControlPlaneElReplicaPlacementsElRef {
+impl terrars::Ref for ContainerAzureCluster_ControlPlane_ReplicaPlacementsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ContainerAzureClusterControlPlaneElReplicaPlacementsElRef {
-        ContainerAzureClusterControlPlaneElReplicaPlacementsElRef {
+    ) -> ContainerAzureCluster_ControlPlane_ReplicaPlacementsRef {
+        ContainerAzureCluster_ControlPlane_ReplicaPlacementsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAzureClusterControlPlaneElReplicaPlacementsElRef {
+impl ContainerAzureCluster_ControlPlane_ReplicaPlacementsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1300,12 +1353,12 @@ impl ContainerAzureClusterControlPlaneElReplicaPlacementsElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAzureClusterControlPlaneElRootVolumeEl {
+pub struct ContainerAzureCluster_ControlPlane_RootVolume {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     size_gib: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl ContainerAzureClusterControlPlaneElRootVolumeEl {
+impl ContainerAzureCluster_ControlPlane_RootVolume {
     #[doc =
         "Set the field `size_gib`.\nOptional. The size of the disk, in GiBs. When unspecified, a default value is provided. See the specific reference in the parent resource."]
     pub fn set_size_gib(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -1314,8 +1367,8 @@ impl ContainerAzureClusterControlPlaneElRootVolumeEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAzureClusterControlPlaneElRootVolumeEl {
-    type O = terrars::BlockAssignable<ContainerAzureClusterControlPlaneElRootVolumeEl>;
+impl terrars::ToListMappable for ContainerAzureCluster_ControlPlane_RootVolume {
+    type O = terrars::BlockAssignable<ContainerAzureCluster_ControlPlane_RootVolume>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1326,32 +1379,34 @@ impl terrars::ToListMappable for ContainerAzureClusterControlPlaneElRootVolumeEl
     }
 }
 
-pub struct BuildContainerAzureClusterControlPlaneElRootVolumeEl {}
+pub struct BuildContainerAzureCluster_ControlPlane_RootVolume {}
 
-impl BuildContainerAzureClusterControlPlaneElRootVolumeEl {
-    pub fn build(self) -> ContainerAzureClusterControlPlaneElRootVolumeEl {
-        ContainerAzureClusterControlPlaneElRootVolumeEl { size_gib: core::default::Default::default() }
+impl BuildContainerAzureCluster_ControlPlane_RootVolume {
+    pub fn build(self) -> ContainerAzureCluster_ControlPlane_RootVolume {
+        ContainerAzureCluster_ControlPlane_RootVolume { size_gib: core::default::Default::default() }
     }
 }
 
-pub struct ContainerAzureClusterControlPlaneElRootVolumeElRef {
+#[allow(dead_code)]
+pub struct ContainerAzureCluster_ControlPlane_RootVolumeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAzureClusterControlPlaneElRootVolumeElRef {
+impl terrars::Ref for ContainerAzureCluster_ControlPlane_RootVolumeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ContainerAzureClusterControlPlaneElRootVolumeElRef {
-        ContainerAzureClusterControlPlaneElRootVolumeElRef {
+    ) -> ContainerAzureCluster_ControlPlane_RootVolumeRef {
+        ContainerAzureCluster_ControlPlane_RootVolumeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAzureClusterControlPlaneElRootVolumeElRef {
+impl ContainerAzureCluster_ControlPlane_RootVolumeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1364,14 +1419,14 @@ impl ContainerAzureClusterControlPlaneElRootVolumeElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAzureClusterControlPlaneElSshConfigEl {
+pub struct ContainerAzureCluster_ControlPlane_SshConfig {
     authorized_key: terrars::PrimField<std::string::String>,
 }
 
-impl ContainerAzureClusterControlPlaneElSshConfigEl { }
+impl ContainerAzureCluster_ControlPlane_SshConfig { }
 
-impl terrars::ToListMappable for ContainerAzureClusterControlPlaneElSshConfigEl {
-    type O = terrars::BlockAssignable<ContainerAzureClusterControlPlaneElSshConfigEl>;
+impl terrars::ToListMappable for ContainerAzureCluster_ControlPlane_SshConfig {
+    type O = terrars::BlockAssignable<ContainerAzureCluster_ControlPlane_SshConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1382,36 +1437,38 @@ impl terrars::ToListMappable for ContainerAzureClusterControlPlaneElSshConfigEl 
     }
 }
 
-pub struct BuildContainerAzureClusterControlPlaneElSshConfigEl {
+pub struct BuildContainerAzureCluster_ControlPlane_SshConfig {
     #[doc =
         "The SSH public key data for VMs managed by Anthos. This accepts the authorized_keys file format used in OpenSSH according to the sshd(8) manual page."]
     pub authorized_key: terrars::PrimField<std::string::String>,
 }
 
-impl BuildContainerAzureClusterControlPlaneElSshConfigEl {
-    pub fn build(self) -> ContainerAzureClusterControlPlaneElSshConfigEl {
-        ContainerAzureClusterControlPlaneElSshConfigEl { authorized_key: self.authorized_key }
+impl BuildContainerAzureCluster_ControlPlane_SshConfig {
+    pub fn build(self) -> ContainerAzureCluster_ControlPlane_SshConfig {
+        ContainerAzureCluster_ControlPlane_SshConfig { authorized_key: self.authorized_key }
     }
 }
 
-pub struct ContainerAzureClusterControlPlaneElSshConfigElRef {
+#[allow(dead_code)]
+pub struct ContainerAzureCluster_ControlPlane_SshConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAzureClusterControlPlaneElSshConfigElRef {
+impl terrars::Ref for ContainerAzureCluster_ControlPlane_SshConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ContainerAzureClusterControlPlaneElSshConfigElRef {
-        ContainerAzureClusterControlPlaneElSshConfigElRef {
+    ) -> ContainerAzureCluster_ControlPlane_SshConfigRef {
+        ContainerAzureCluster_ControlPlane_SshConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAzureClusterControlPlaneElSshConfigElRef {
+impl ContainerAzureCluster_ControlPlane_SshConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1424,21 +1481,21 @@ impl ContainerAzureClusterControlPlaneElSshConfigElRef {
 }
 
 #[derive(Serialize, Default)]
-struct ContainerAzureClusterControlPlaneElDynamic {
+struct ContainerAzureCluster_ControlPlaneDynamic {
     database_encryption: std
     ::option
-    ::Option<terrars::DynamicBlock<ContainerAzureClusterControlPlaneElDatabaseEncryptionEl>>,
-    main_volume: std::option::Option<terrars::DynamicBlock<ContainerAzureClusterControlPlaneElMainVolumeEl>>,
-    proxy_config: std::option::Option<terrars::DynamicBlock<ContainerAzureClusterControlPlaneElProxyConfigEl>>,
+    ::Option<terrars::DynamicBlock<ContainerAzureCluster_ControlPlane_DatabaseEncryption>>,
+    main_volume: std::option::Option<terrars::DynamicBlock<ContainerAzureCluster_ControlPlane_MainVolume>>,
+    proxy_config: std::option::Option<terrars::DynamicBlock<ContainerAzureCluster_ControlPlane_ProxyConfig>>,
     replica_placements: std
     ::option
-    ::Option<terrars::DynamicBlock<ContainerAzureClusterControlPlaneElReplicaPlacementsEl>>,
-    root_volume: std::option::Option<terrars::DynamicBlock<ContainerAzureClusterControlPlaneElRootVolumeEl>>,
-    ssh_config: std::option::Option<terrars::DynamicBlock<ContainerAzureClusterControlPlaneElSshConfigEl>>,
+    ::Option<terrars::DynamicBlock<ContainerAzureCluster_ControlPlane_ReplicaPlacements>>,
+    root_volume: std::option::Option<terrars::DynamicBlock<ContainerAzureCluster_ControlPlane_RootVolume>>,
+    ssh_config: std::option::Option<terrars::DynamicBlock<ContainerAzureCluster_ControlPlane_SshConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct ContainerAzureClusterControlPlaneEl {
+pub struct ContainerAzureCluster_ControlPlane {
     subnet_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -1446,21 +1503,21 @@ pub struct ContainerAzureClusterControlPlaneEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vm_size: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    database_encryption: std::option::Option<std::vec::Vec<ContainerAzureClusterControlPlaneElDatabaseEncryptionEl>>,
+    database_encryption: std::option::Option<std::vec::Vec<ContainerAzureCluster_ControlPlane_DatabaseEncryption>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    main_volume: std::option::Option<std::vec::Vec<ContainerAzureClusterControlPlaneElMainVolumeEl>>,
+    main_volume: std::option::Option<std::vec::Vec<ContainerAzureCluster_ControlPlane_MainVolume>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    proxy_config: std::option::Option<std::vec::Vec<ContainerAzureClusterControlPlaneElProxyConfigEl>>,
+    proxy_config: std::option::Option<std::vec::Vec<ContainerAzureCluster_ControlPlane_ProxyConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    replica_placements: std::option::Option<std::vec::Vec<ContainerAzureClusterControlPlaneElReplicaPlacementsEl>>,
+    replica_placements: std::option::Option<std::vec::Vec<ContainerAzureCluster_ControlPlane_ReplicaPlacements>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    root_volume: std::option::Option<std::vec::Vec<ContainerAzureClusterControlPlaneElRootVolumeEl>>,
+    root_volume: std::option::Option<std::vec::Vec<ContainerAzureCluster_ControlPlane_RootVolume>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ssh_config: std::option::Option<std::vec::Vec<ContainerAzureClusterControlPlaneElSshConfigEl>>,
-    dynamic: ContainerAzureClusterControlPlaneElDynamic,
+    ssh_config: std::option::Option<std::vec::Vec<ContainerAzureCluster_ControlPlane_SshConfig>>,
+    dynamic: ContainerAzureCluster_ControlPlaneDynamic,
 }
 
-impl ContainerAzureClusterControlPlaneEl {
+impl ContainerAzureCluster_ControlPlane {
     #[doc = "Set the field `tags`.\nOptional. A set of tags to apply to all underlying control plane Azure resources."]
     pub fn set_tags(
         mut self,
@@ -1480,12 +1537,7 @@ impl ContainerAzureClusterControlPlaneEl {
     #[doc = "Set the field `database_encryption`.\n"]
     pub fn set_database_encryption(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<ContainerAzureClusterControlPlaneElDatabaseEncryptionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureCluster_ControlPlane_DatabaseEncryption>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1501,7 +1553,7 @@ impl ContainerAzureClusterControlPlaneEl {
     #[doc = "Set the field `main_volume`.\n"]
     pub fn set_main_volume(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureClusterControlPlaneElMainVolumeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureCluster_ControlPlane_MainVolume>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1517,7 +1569,7 @@ impl ContainerAzureClusterControlPlaneEl {
     #[doc = "Set the field `proxy_config`.\n"]
     pub fn set_proxy_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureClusterControlPlaneElProxyConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureCluster_ControlPlane_ProxyConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1533,7 +1585,7 @@ impl ContainerAzureClusterControlPlaneEl {
     #[doc = "Set the field `replica_placements`.\n"]
     pub fn set_replica_placements(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureClusterControlPlaneElReplicaPlacementsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureCluster_ControlPlane_ReplicaPlacements>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1549,7 +1601,7 @@ impl ContainerAzureClusterControlPlaneEl {
     #[doc = "Set the field `root_volume`.\n"]
     pub fn set_root_volume(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureClusterControlPlaneElRootVolumeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureCluster_ControlPlane_RootVolume>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1565,7 +1617,7 @@ impl ContainerAzureClusterControlPlaneEl {
     #[doc = "Set the field `ssh_config`.\n"]
     pub fn set_ssh_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureClusterControlPlaneElSshConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureCluster_ControlPlane_SshConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1579,8 +1631,8 @@ impl ContainerAzureClusterControlPlaneEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAzureClusterControlPlaneEl {
-    type O = terrars::BlockAssignable<ContainerAzureClusterControlPlaneEl>;
+impl terrars::ToListMappable for ContainerAzureCluster_ControlPlane {
+    type O = terrars::BlockAssignable<ContainerAzureCluster_ControlPlane>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1591,7 +1643,7 @@ impl terrars::ToListMappable for ContainerAzureClusterControlPlaneEl {
     }
 }
 
-pub struct BuildContainerAzureClusterControlPlaneEl {
+pub struct BuildContainerAzureCluster_ControlPlane {
     #[doc =
         "The ARM ID of the subnet where the control plane VMs are deployed. Example: `/subscriptions//resourceGroups//providers/Microsoft.Network/virtualNetworks//subnets/default`."]
     pub subnet_id: terrars::PrimField<std::string::String>,
@@ -1600,9 +1652,9 @@ pub struct BuildContainerAzureClusterControlPlaneEl {
     pub version: terrars::PrimField<std::string::String>,
 }
 
-impl BuildContainerAzureClusterControlPlaneEl {
-    pub fn build(self) -> ContainerAzureClusterControlPlaneEl {
-        ContainerAzureClusterControlPlaneEl {
+impl BuildContainerAzureCluster_ControlPlane {
+    pub fn build(self) -> ContainerAzureCluster_ControlPlane {
+        ContainerAzureCluster_ControlPlane {
             subnet_id: self.subnet_id,
             tags: core::default::Default::default(),
             version: self.version,
@@ -1618,21 +1670,23 @@ impl BuildContainerAzureClusterControlPlaneEl {
     }
 }
 
-pub struct ContainerAzureClusterControlPlaneElRef {
+#[allow(dead_code)]
+pub struct ContainerAzureCluster_ControlPlaneRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAzureClusterControlPlaneElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAzureClusterControlPlaneElRef {
-        ContainerAzureClusterControlPlaneElRef {
+impl terrars::Ref for ContainerAzureCluster_ControlPlaneRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAzureCluster_ControlPlaneRef {
+        ContainerAzureCluster_ControlPlaneRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAzureClusterControlPlaneElRef {
+impl ContainerAzureCluster_ControlPlaneRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1662,43 +1716,43 @@ impl ContainerAzureClusterControlPlaneElRef {
     }
 
     #[doc = "Get a reference to the value of field `database_encryption` after provisioning.\n"]
-    pub fn database_encryption(&self) -> terrars::ListRef<ContainerAzureClusterControlPlaneElDatabaseEncryptionElRef> {
+    pub fn database_encryption(&self) -> terrars::ListRef<ContainerAzureCluster_ControlPlane_DatabaseEncryptionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.database_encryption", self.base))
     }
 
     #[doc = "Get a reference to the value of field `main_volume` after provisioning.\n"]
-    pub fn main_volume(&self) -> terrars::ListRef<ContainerAzureClusterControlPlaneElMainVolumeElRef> {
+    pub fn main_volume(&self) -> terrars::ListRef<ContainerAzureCluster_ControlPlane_MainVolumeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.main_volume", self.base))
     }
 
     #[doc = "Get a reference to the value of field `proxy_config` after provisioning.\n"]
-    pub fn proxy_config(&self) -> terrars::ListRef<ContainerAzureClusterControlPlaneElProxyConfigElRef> {
+    pub fn proxy_config(&self) -> terrars::ListRef<ContainerAzureCluster_ControlPlane_ProxyConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.proxy_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `replica_placements` after provisioning.\n"]
-    pub fn replica_placements(&self) -> terrars::ListRef<ContainerAzureClusterControlPlaneElReplicaPlacementsElRef> {
+    pub fn replica_placements(&self) -> terrars::ListRef<ContainerAzureCluster_ControlPlane_ReplicaPlacementsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.replica_placements", self.base))
     }
 
     #[doc = "Get a reference to the value of field `root_volume` after provisioning.\n"]
-    pub fn root_volume(&self) -> terrars::ListRef<ContainerAzureClusterControlPlaneElRootVolumeElRef> {
+    pub fn root_volume(&self) -> terrars::ListRef<ContainerAzureCluster_ControlPlane_RootVolumeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.root_volume", self.base))
     }
 
     #[doc = "Get a reference to the value of field `ssh_config` after provisioning.\n"]
-    pub fn ssh_config(&self) -> terrars::ListRef<ContainerAzureClusterControlPlaneElSshConfigElRef> {
+    pub fn ssh_config(&self) -> terrars::ListRef<ContainerAzureCluster_ControlPlane_SshConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ssh_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ContainerAzureClusterFleetEl {
+pub struct ContainerAzureCluster_Fleet {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ContainerAzureClusterFleetEl {
+impl ContainerAzureCluster_Fleet {
     #[doc = "Set the field `project`.\nThe number of the Fleet host project where this cluster will be registered."]
     pub fn set_project(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.project = std::option::Option::Some(v.into());
@@ -1706,8 +1760,8 @@ impl ContainerAzureClusterFleetEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAzureClusterFleetEl {
-    type O = terrars::BlockAssignable<ContainerAzureClusterFleetEl>;
+impl terrars::ToListMappable for ContainerAzureCluster_Fleet {
+    type O = terrars::BlockAssignable<ContainerAzureCluster_Fleet>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1718,29 +1772,31 @@ impl terrars::ToListMappable for ContainerAzureClusterFleetEl {
     }
 }
 
-pub struct BuildContainerAzureClusterFleetEl {}
+pub struct BuildContainerAzureCluster_Fleet {}
 
-impl BuildContainerAzureClusterFleetEl {
-    pub fn build(self) -> ContainerAzureClusterFleetEl {
-        ContainerAzureClusterFleetEl { project: core::default::Default::default() }
+impl BuildContainerAzureCluster_Fleet {
+    pub fn build(self) -> ContainerAzureCluster_Fleet {
+        ContainerAzureCluster_Fleet { project: core::default::Default::default() }
     }
 }
 
-pub struct ContainerAzureClusterFleetElRef {
+#[allow(dead_code)]
+pub struct ContainerAzureCluster_FleetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAzureClusterFleetElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAzureClusterFleetElRef {
-        ContainerAzureClusterFleetElRef {
+impl terrars::Ref for ContainerAzureCluster_FleetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAzureCluster_FleetRef {
+        ContainerAzureCluster_FleetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAzureClusterFleetElRef {
+impl ContainerAzureCluster_FleetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1759,16 +1815,16 @@ impl ContainerAzureClusterFleetElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAzureClusterNetworkingEl {
+pub struct ContainerAzureCluster_Networking {
     pod_address_cidr_blocks: terrars::ListField<terrars::PrimField<std::string::String>>,
     service_address_cidr_blocks: terrars::ListField<terrars::PrimField<std::string::String>>,
     virtual_network_id: terrars::PrimField<std::string::String>,
 }
 
-impl ContainerAzureClusterNetworkingEl { }
+impl ContainerAzureCluster_Networking { }
 
-impl terrars::ToListMappable for ContainerAzureClusterNetworkingEl {
-    type O = terrars::BlockAssignable<ContainerAzureClusterNetworkingEl>;
+impl terrars::ToListMappable for ContainerAzureCluster_Networking {
+    type O = terrars::BlockAssignable<ContainerAzureCluster_Networking>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1779,7 +1835,7 @@ impl terrars::ToListMappable for ContainerAzureClusterNetworkingEl {
     }
 }
 
-pub struct BuildContainerAzureClusterNetworkingEl {
+pub struct BuildContainerAzureCluster_Networking {
     #[doc =
         "The IP address range of the pods in this cluster, in CIDR notation (e.g. `10.96.0.0/14`). All pods in the cluster get assigned a unique RFC1918 IPv4 address from these ranges. Only a single range is supported. This field cannot be changed after creation."]
     pub pod_address_cidr_blocks: terrars::ListField<terrars::PrimField<std::string::String>>,
@@ -1791,9 +1847,9 @@ pub struct BuildContainerAzureClusterNetworkingEl {
     pub virtual_network_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildContainerAzureClusterNetworkingEl {
-    pub fn build(self) -> ContainerAzureClusterNetworkingEl {
-        ContainerAzureClusterNetworkingEl {
+impl BuildContainerAzureCluster_Networking {
+    pub fn build(self) -> ContainerAzureCluster_Networking {
+        ContainerAzureCluster_Networking {
             pod_address_cidr_blocks: self.pod_address_cidr_blocks,
             service_address_cidr_blocks: self.service_address_cidr_blocks,
             virtual_network_id: self.virtual_network_id,
@@ -1801,21 +1857,23 @@ impl BuildContainerAzureClusterNetworkingEl {
     }
 }
 
-pub struct ContainerAzureClusterNetworkingElRef {
+#[allow(dead_code)]
+pub struct ContainerAzureCluster_NetworkingRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAzureClusterNetworkingElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAzureClusterNetworkingElRef {
-        ContainerAzureClusterNetworkingElRef {
+impl terrars::Ref for ContainerAzureCluster_NetworkingRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAzureCluster_NetworkingRef {
+        ContainerAzureCluster_NetworkingRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAzureClusterNetworkingElRef {
+impl ContainerAzureCluster_NetworkingRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1840,7 +1898,7 @@ impl ContainerAzureClusterNetworkingElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAzureClusterTimeoutsEl {
+pub struct ContainerAzureCluster_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1849,7 +1907,7 @@ pub struct ContainerAzureClusterTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ContainerAzureClusterTimeoutsEl {
+impl ContainerAzureCluster_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1869,8 +1927,8 @@ impl ContainerAzureClusterTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAzureClusterTimeoutsEl {
-    type O = terrars::BlockAssignable<ContainerAzureClusterTimeoutsEl>;
+impl terrars::ToListMappable for ContainerAzureCluster_Timeouts {
+    type O = terrars::BlockAssignable<ContainerAzureCluster_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1881,11 +1939,11 @@ impl terrars::ToListMappable for ContainerAzureClusterTimeoutsEl {
     }
 }
 
-pub struct BuildContainerAzureClusterTimeoutsEl {}
+pub struct BuildContainerAzureCluster_Timeouts {}
 
-impl BuildContainerAzureClusterTimeoutsEl {
-    pub fn build(self) -> ContainerAzureClusterTimeoutsEl {
-        ContainerAzureClusterTimeoutsEl {
+impl BuildContainerAzureCluster_Timeouts {
+    pub fn build(self) -> ContainerAzureCluster_Timeouts {
+        ContainerAzureCluster_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1893,21 +1951,23 @@ impl BuildContainerAzureClusterTimeoutsEl {
     }
 }
 
-pub struct ContainerAzureClusterTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ContainerAzureCluster_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAzureClusterTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAzureClusterTimeoutsElRef {
-        ContainerAzureClusterTimeoutsElRef {
+impl terrars::Ref for ContainerAzureCluster_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAzureCluster_TimeoutsRef {
+        ContainerAzureCluster_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAzureClusterTimeoutsElRef {
+impl ContainerAzureCluster_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1926,15 +1986,4 @@ impl ContainerAzureClusterTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ContainerAzureClusterDynamic {
-    authorization: std::option::Option<terrars::DynamicBlock<ContainerAzureClusterAuthorizationEl>>,
-    azure_services_authentication: std
-    ::option
-    ::Option<terrars::DynamicBlock<ContainerAzureClusterAzureServicesAuthenticationEl>>,
-    control_plane: std::option::Option<terrars::DynamicBlock<ContainerAzureClusterControlPlaneEl>>,
-    fleet: std::option::Option<terrars::DynamicBlock<ContainerAzureClusterFleetEl>>,
-    networking: std::option::Option<terrars::DynamicBlock<ContainerAzureClusterNetworkingEl>>,
 }

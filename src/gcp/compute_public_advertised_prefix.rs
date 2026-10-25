@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputePublicAdvertisedPrefixData {
+struct ComputePublicAdvertisedPrefixData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,22 +21,29 @@ struct ComputePublicAdvertisedPrefixData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
-    dns_verification_ip: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dns_verification_ip: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     ip_cidr_range: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ipv6_access_type: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    pdp_scope: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComputePublicAdvertisedPrefixTimeoutsEl>,
+    timeouts: std::option::Option<ComputePublicAdvertisedPrefix_Timeouts>,
 }
 
 struct ComputePublicAdvertisedPrefix_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputePublicAdvertisedPrefixData>,
+    data: std::cell::RefCell<ComputePublicAdvertisedPrefixData_>,
 }
 
 #[derive(Clone)]
@@ -134,15 +143,42 @@ impl ComputePublicAdvertisedPrefix {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nAn optional description of this resource."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
         self
     }
 
+    #[doc = "Set the field `dns_verification_ip`.\nThe IPv4 address to be used for reverse DNS verification."]
+    pub fn set_dns_verification_ip(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().dns_verification_ip = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `ipv6_access_type`.\nThe internet access type for IPv6 Public Advertised Prefixes. It can be\nset to one of following:\n  * EXTERNAL: Default access type. The prefix will be announced to the\n  internet. All children PDPs will have access type as EXTERNAL.\n  * INTERNAL: The prefix won’t be announced to the internet. Prefix will\n  be used privately within Google Cloud. All children PDPs will have\n  access type as INTERNAL. Possible values: [\"EXTERNAL\", \"INTERNAL\"]"]
+    pub fn set_ipv6_access_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().ipv6_access_type = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `pdp_scope`.\nSpecifies how child public delegated prefix will be scoped. pdpScope\nmust be one of: GLOBAL, REGIONAL\n* REGIONAL: The public delegated prefix is regional only. The\nprovisioning will take a few minutes.\n* GLOBAL: The public delegated prefix is global only. The provisioning\nwill take ~4 weeks. Possible values: [\"GLOBAL\", \"REGIONAL\"]"]
+    pub fn set_pdp_scope(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().pdp_scope = std::option::Option::Some(v.into());
         self
     }
 
@@ -153,9 +189,15 @@ impl ComputePublicAdvertisedPrefix {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComputePublicAdvertisedPrefixTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputePublicAdvertisedPrefix_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -176,15 +218,27 @@ impl ComputePublicAdvertisedPrefix {
     }
 
     #[doc =
-        "Get a reference to the value of field `ip_cidr_range` after provisioning.\nThe IPv4 address range, in CIDR format, represented by this public advertised prefix."]
+        "Get a reference to the value of field `ip_cidr_range` after provisioning.\nThe address range, in CIDR format, represented by this public advertised prefix."]
     pub fn ip_cidr_range(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_cidr_range", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `ipv6_access_type` after provisioning.\nThe internet access type for IPv6 Public Advertised Prefixes. It can be\nset to one of following:\n  * EXTERNAL: Default access type. The prefix will be announced to the\n  internet. All children PDPs will have access type as EXTERNAL.\n  * INTERNAL: The prefix won’t be announced to the internet. Prefix will\n  be used privately within Google Cloud. All children PDPs will have\n  access type as INTERNAL. Possible values: [\"EXTERNAL\", \"INTERNAL\"]"]
+    pub fn ipv6_access_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv6_access_type", self.extract_ref()))
     }
 
     #[doc =
         "Get a reference to the value of field `name` after provisioning.\nName of the resource. The name must be 1-63 characters long, and\ncomply with RFC1035. Specifically, the name must be 1-63 characters\nlong and match the regular expression '[a-z]([-a-z0-9]*[a-z0-9])?'\nwhich means the first character must be a lowercase letter, and all\nfollowing characters must be a dash, lowercase letter, or digit,\nexcept the last character, which cannot be a dash."]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `pdp_scope` after provisioning.\nSpecifies how child public delegated prefix will be scoped. pdpScope\nmust be one of: GLOBAL, REGIONAL\n* REGIONAL: The public delegated prefix is regional only. The\nprovisioning will take a few minutes.\n* GLOBAL: The public delegated prefix is global only. The provisioning\nwill take ~4 weeks. Possible values: [\"GLOBAL\", \"REGIONAL\"]"]
+    pub fn pdp_scope(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.pdp_scope", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
@@ -197,9 +251,15 @@ impl ComputePublicAdvertisedPrefix {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `shared_secret` after provisioning.\nOutput Only. The shared secret to be used for reverse DNS verification."]
+    pub fn shared_secret(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.shared_secret", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputePublicAdvertisedPrefixTimeoutsElRef {
-        ComputePublicAdvertisedPrefixTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ComputePublicAdvertisedPrefix_TimeoutsRef {
+        ComputePublicAdvertisedPrefix_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -239,9 +299,7 @@ impl terrars::Resource_ for ComputePublicAdvertisedPrefix_ {
 
 pub struct BuildComputePublicAdvertisedPrefix {
     pub tf_id: std::string::String,
-    #[doc = "The IPv4 address to be used for reverse DNS verification."]
-    pub dns_verification_ip: terrars::PrimField<std::string::String>,
-    #[doc = "The IPv4 address range, in CIDR format, represented by this public advertised prefix."]
+    #[doc = "The address range, in CIDR format, represented by this public advertised prefix."]
     pub ip_cidr_range: terrars::PrimField<std::string::String>,
     #[doc =
         "Name of the resource. The name must be 1-63 characters long, and\ncomply with RFC1035. Specifically, the name must be 1-63 characters\nlong and match the regular expression '[a-z]([-a-z0-9]*[a-z0-9])?'\nwhich means the first character must be a lowercase letter, and all\nfollowing characters must be a dash, lowercase letter, or digit,\nexcept the last character, which cannot be a dash."]
@@ -253,17 +311,20 @@ impl BuildComputePublicAdvertisedPrefix {
         let out = ComputePublicAdvertisedPrefix(std::rc::Rc::new(ComputePublicAdvertisedPrefix_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputePublicAdvertisedPrefixData {
+            data: std::cell::RefCell::new(ComputePublicAdvertisedPrefixData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
-                dns_verification_ip: self.dns_verification_ip,
+                dns_verification_ip: core::default::Default::default(),
                 id: core::default::Default::default(),
                 ip_cidr_range: self.ip_cidr_range,
+                ipv6_access_type: core::default::Default::default(),
                 name: self.name,
+                pdp_scope: core::default::Default::default(),
                 project: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
             }),
@@ -297,6 +358,12 @@ impl ComputePublicAdvertisedPrefixRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nAn optional description of this resource."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -314,15 +381,27 @@ impl ComputePublicAdvertisedPrefixRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `ip_cidr_range` after provisioning.\nThe IPv4 address range, in CIDR format, represented by this public advertised prefix."]
+        "Get a reference to the value of field `ip_cidr_range` after provisioning.\nThe address range, in CIDR format, represented by this public advertised prefix."]
     pub fn ip_cidr_range(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_cidr_range", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `ipv6_access_type` after provisioning.\nThe internet access type for IPv6 Public Advertised Prefixes. It can be\nset to one of following:\n  * EXTERNAL: Default access type. The prefix will be announced to the\n  internet. All children PDPs will have access type as EXTERNAL.\n  * INTERNAL: The prefix won’t be announced to the internet. Prefix will\n  be used privately within Google Cloud. All children PDPs will have\n  access type as INTERNAL. Possible values: [\"EXTERNAL\", \"INTERNAL\"]"]
+    pub fn ipv6_access_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv6_access_type", self.extract_ref()))
     }
 
     #[doc =
         "Get a reference to the value of field `name` after provisioning.\nName of the resource. The name must be 1-63 characters long, and\ncomply with RFC1035. Specifically, the name must be 1-63 characters\nlong and match the regular expression '[a-z]([-a-z0-9]*[a-z0-9])?'\nwhich means the first character must be a lowercase letter, and all\nfollowing characters must be a dash, lowercase letter, or digit,\nexcept the last character, which cannot be a dash."]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `pdp_scope` after provisioning.\nSpecifies how child public delegated prefix will be scoped. pdpScope\nmust be one of: GLOBAL, REGIONAL\n* REGIONAL: The public delegated prefix is regional only. The\nprovisioning will take a few minutes.\n* GLOBAL: The public delegated prefix is global only. The provisioning\nwill take ~4 weeks. Possible values: [\"GLOBAL\", \"REGIONAL\"]"]
+    pub fn pdp_scope(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.pdp_scope", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
@@ -335,9 +414,15 @@ impl ComputePublicAdvertisedPrefixRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `shared_secret` after provisioning.\nOutput Only. The shared secret to be used for reverse DNS verification."]
+    pub fn shared_secret(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.shared_secret", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputePublicAdvertisedPrefixTimeoutsElRef {
-        ComputePublicAdvertisedPrefixTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ComputePublicAdvertisedPrefix_TimeoutsRef {
+        ComputePublicAdvertisedPrefix_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -345,14 +430,14 @@ impl ComputePublicAdvertisedPrefixRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputePublicAdvertisedPrefixTimeoutsEl {
+pub struct ComputePublicAdvertisedPrefix_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputePublicAdvertisedPrefixTimeoutsEl {
+impl ComputePublicAdvertisedPrefix_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -366,8 +451,8 @@ impl ComputePublicAdvertisedPrefixTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ComputePublicAdvertisedPrefixTimeoutsEl {
-    type O = terrars::BlockAssignable<ComputePublicAdvertisedPrefixTimeoutsEl>;
+impl terrars::ToListMappable for ComputePublicAdvertisedPrefix_Timeouts {
+    type O = terrars::BlockAssignable<ComputePublicAdvertisedPrefix_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -378,32 +463,34 @@ impl terrars::ToListMappable for ComputePublicAdvertisedPrefixTimeoutsEl {
     }
 }
 
-pub struct BuildComputePublicAdvertisedPrefixTimeoutsEl {}
+pub struct BuildComputePublicAdvertisedPrefix_Timeouts {}
 
-impl BuildComputePublicAdvertisedPrefixTimeoutsEl {
-    pub fn build(self) -> ComputePublicAdvertisedPrefixTimeoutsEl {
-        ComputePublicAdvertisedPrefixTimeoutsEl {
+impl BuildComputePublicAdvertisedPrefix_Timeouts {
+    pub fn build(self) -> ComputePublicAdvertisedPrefix_Timeouts {
+        ComputePublicAdvertisedPrefix_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputePublicAdvertisedPrefixTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComputePublicAdvertisedPrefix_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputePublicAdvertisedPrefixTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputePublicAdvertisedPrefixTimeoutsElRef {
-        ComputePublicAdvertisedPrefixTimeoutsElRef {
+impl terrars::Ref for ComputePublicAdvertisedPrefix_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputePublicAdvertisedPrefix_TimeoutsRef {
+        ComputePublicAdvertisedPrefix_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputePublicAdvertisedPrefixTimeoutsElRef {
+impl ComputePublicAdvertisedPrefix_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

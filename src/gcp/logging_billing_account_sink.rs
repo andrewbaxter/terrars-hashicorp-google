@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct LoggingBillingAccountSinkData {
+struct LoggingBillingAccountSinkData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,6 +22,8 @@ struct LoggingBillingAccountSinkData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     billing_account: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     destination: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -30,16 +34,16 @@ struct LoggingBillingAccountSinkData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    bigquery_options: std::option::Option<std::vec::Vec<LoggingBillingAccountSinkBigqueryOptionsEl>>,
+    bigquery_options: std::option::Option<std::vec::Vec<LoggingBillingAccountSink_BigqueryOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    exclusions: std::option::Option<std::vec::Vec<LoggingBillingAccountSinkExclusionsEl>>,
+    exclusions: std::option::Option<std::vec::Vec<LoggingBillingAccountSink_Exclusions>>,
     dynamic: LoggingBillingAccountSinkDynamic,
 }
 
 struct LoggingBillingAccountSink_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<LoggingBillingAccountSinkData>,
+    data: std::cell::RefCell<LoggingBillingAccountSinkData_>,
 }
 
 #[derive(Clone)]
@@ -140,6 +144,13 @@ impl LoggingBillingAccountSink {
     }
 
     #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `description`.\nA description of this sink. The maximum length of the description is 8000 characters."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -169,7 +180,7 @@ impl LoggingBillingAccountSink {
     #[doc = "Set the field `bigquery_options`.\n"]
     pub fn set_bigquery_options(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LoggingBillingAccountSinkBigqueryOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LoggingBillingAccountSink_BigqueryOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -185,7 +196,7 @@ impl LoggingBillingAccountSink {
     #[doc = "Set the field `exclusions`.\n"]
     pub fn set_exclusions(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LoggingBillingAccountSinkExclusionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LoggingBillingAccountSink_Exclusions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -202,6 +213,12 @@ impl LoggingBillingAccountSink {
         "Get a reference to the value of field `billing_account` after provisioning.\nThe billing account exported to the sink."]
     pub fn billing_account(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.billing_account", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -245,12 +262,12 @@ impl LoggingBillingAccountSink {
     }
 
     #[doc = "Get a reference to the value of field `bigquery_options` after provisioning.\n"]
-    pub fn bigquery_options(&self) -> terrars::ListRef<LoggingBillingAccountSinkBigqueryOptionsElRef> {
+    pub fn bigquery_options(&self) -> terrars::ListRef<LoggingBillingAccountSink_BigqueryOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.bigquery_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `exclusions` after provisioning.\n"]
-    pub fn exclusions(&self) -> terrars::ListRef<LoggingBillingAccountSinkExclusionsElRef> {
+    pub fn exclusions(&self) -> terrars::ListRef<LoggingBillingAccountSink_ExclusionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.exclusions", self.extract_ref()))
     }
 }
@@ -302,13 +319,14 @@ impl BuildLoggingBillingAccountSink {
         let out = LoggingBillingAccountSink(std::rc::Rc::new(LoggingBillingAccountSink_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(LoggingBillingAccountSinkData {
+            data: std::cell::RefCell::new(LoggingBillingAccountSinkData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 billing_account: self.billing_account,
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 destination: self.destination,
                 disabled: core::default::Default::default(),
@@ -355,6 +373,12 @@ impl LoggingBillingAccountSinkRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nA description of this sink. The maximum length of the description is 8000 characters."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -395,25 +419,31 @@ impl LoggingBillingAccountSinkRef {
     }
 
     #[doc = "Get a reference to the value of field `bigquery_options` after provisioning.\n"]
-    pub fn bigquery_options(&self) -> terrars::ListRef<LoggingBillingAccountSinkBigqueryOptionsElRef> {
+    pub fn bigquery_options(&self) -> terrars::ListRef<LoggingBillingAccountSink_BigqueryOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.bigquery_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `exclusions` after provisioning.\n"]
-    pub fn exclusions(&self) -> terrars::ListRef<LoggingBillingAccountSinkExclusionsElRef> {
+    pub fn exclusions(&self) -> terrars::ListRef<LoggingBillingAccountSink_ExclusionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.exclusions", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct LoggingBillingAccountSinkDynamic {
+    bigquery_options: std::option::Option<terrars::DynamicBlock<LoggingBillingAccountSink_BigqueryOptions>>,
+    exclusions: std::option::Option<terrars::DynamicBlock<LoggingBillingAccountSink_Exclusions>>,
+}
+
 #[derive(Serialize)]
-pub struct LoggingBillingAccountSinkBigqueryOptionsEl {
+pub struct LoggingBillingAccountSink_BigqueryOptions {
     use_partitioned_tables: terrars::PrimField<bool>,
 }
 
-impl LoggingBillingAccountSinkBigqueryOptionsEl { }
+impl LoggingBillingAccountSink_BigqueryOptions { }
 
-impl terrars::ToListMappable for LoggingBillingAccountSinkBigqueryOptionsEl {
-    type O = terrars::BlockAssignable<LoggingBillingAccountSinkBigqueryOptionsEl>;
+impl terrars::ToListMappable for LoggingBillingAccountSink_BigqueryOptions {
+    type O = terrars::BlockAssignable<LoggingBillingAccountSink_BigqueryOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -424,33 +454,35 @@ impl terrars::ToListMappable for LoggingBillingAccountSinkBigqueryOptionsEl {
     }
 }
 
-pub struct BuildLoggingBillingAccountSinkBigqueryOptionsEl {
+pub struct BuildLoggingBillingAccountSink_BigqueryOptions {
     #[doc =
         "Whether to use BigQuery's partition tables. By default, Logging creates dated tables based on the log entries' timestamps, e.g. syslog_20170523. With partitioned tables the date suffix is no longer present and special query syntax has to be used instead. In both cases, tables are sharded based on UTC timezone."]
     pub use_partitioned_tables: terrars::PrimField<bool>,
 }
 
-impl BuildLoggingBillingAccountSinkBigqueryOptionsEl {
-    pub fn build(self) -> LoggingBillingAccountSinkBigqueryOptionsEl {
-        LoggingBillingAccountSinkBigqueryOptionsEl { use_partitioned_tables: self.use_partitioned_tables }
+impl BuildLoggingBillingAccountSink_BigqueryOptions {
+    pub fn build(self) -> LoggingBillingAccountSink_BigqueryOptions {
+        LoggingBillingAccountSink_BigqueryOptions { use_partitioned_tables: self.use_partitioned_tables }
     }
 }
 
-pub struct LoggingBillingAccountSinkBigqueryOptionsElRef {
+#[allow(dead_code)]
+pub struct LoggingBillingAccountSink_BigqueryOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LoggingBillingAccountSinkBigqueryOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LoggingBillingAccountSinkBigqueryOptionsElRef {
-        LoggingBillingAccountSinkBigqueryOptionsElRef {
+impl terrars::Ref for LoggingBillingAccountSink_BigqueryOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LoggingBillingAccountSink_BigqueryOptionsRef {
+        LoggingBillingAccountSink_BigqueryOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LoggingBillingAccountSinkBigqueryOptionsElRef {
+impl LoggingBillingAccountSink_BigqueryOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -463,7 +495,7 @@ impl LoggingBillingAccountSinkBigqueryOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct LoggingBillingAccountSinkExclusionsEl {
+pub struct LoggingBillingAccountSink_Exclusions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -472,7 +504,7 @@ pub struct LoggingBillingAccountSinkExclusionsEl {
     name: terrars::PrimField<std::string::String>,
 }
 
-impl LoggingBillingAccountSinkExclusionsEl {
+impl LoggingBillingAccountSink_Exclusions {
     #[doc = "Set the field `description`.\nA description of this exclusion."]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -487,8 +519,8 @@ impl LoggingBillingAccountSinkExclusionsEl {
     }
 }
 
-impl terrars::ToListMappable for LoggingBillingAccountSinkExclusionsEl {
-    type O = terrars::BlockAssignable<LoggingBillingAccountSinkExclusionsEl>;
+impl terrars::ToListMappable for LoggingBillingAccountSink_Exclusions {
+    type O = terrars::BlockAssignable<LoggingBillingAccountSink_Exclusions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -499,7 +531,7 @@ impl terrars::ToListMappable for LoggingBillingAccountSinkExclusionsEl {
     }
 }
 
-pub struct BuildLoggingBillingAccountSinkExclusionsEl {
+pub struct BuildLoggingBillingAccountSink_Exclusions {
     #[doc =
         "An advanced logs filter that matches the log entries to be excluded. By using the sample function, you can exclude less than 100% of the matching log entries"]
     pub filter: terrars::PrimField<std::string::String>,
@@ -508,9 +540,9 @@ pub struct BuildLoggingBillingAccountSinkExclusionsEl {
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLoggingBillingAccountSinkExclusionsEl {
-    pub fn build(self) -> LoggingBillingAccountSinkExclusionsEl {
-        LoggingBillingAccountSinkExclusionsEl {
+impl BuildLoggingBillingAccountSink_Exclusions {
+    pub fn build(self) -> LoggingBillingAccountSink_Exclusions {
+        LoggingBillingAccountSink_Exclusions {
             description: core::default::Default::default(),
             disabled: core::default::Default::default(),
             filter: self.filter,
@@ -519,21 +551,23 @@ impl BuildLoggingBillingAccountSinkExclusionsEl {
     }
 }
 
-pub struct LoggingBillingAccountSinkExclusionsElRef {
+#[allow(dead_code)]
+pub struct LoggingBillingAccountSink_ExclusionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LoggingBillingAccountSinkExclusionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LoggingBillingAccountSinkExclusionsElRef {
-        LoggingBillingAccountSinkExclusionsElRef {
+impl terrars::Ref for LoggingBillingAccountSink_ExclusionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LoggingBillingAccountSink_ExclusionsRef {
+        LoggingBillingAccountSink_ExclusionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LoggingBillingAccountSinkExclusionsElRef {
+impl LoggingBillingAccountSink_ExclusionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -560,10 +594,4 @@ impl LoggingBillingAccountSinkExclusionsElRef {
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct LoggingBillingAccountSinkDynamic {
-    bigquery_options: std::option::Option<terrars::DynamicBlock<LoggingBillingAccountSinkBigqueryOptionsEl>>,
-    exclusions: std::option::Option<terrars::DynamicBlock<LoggingBillingAccountSinkExclusionsEl>>,
 }

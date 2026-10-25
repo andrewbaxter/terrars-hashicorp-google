@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct PrivatecaCertificateTemplateIamBindingData {
+struct PrivatecaCertificateTemplateIamBindingData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,14 +30,14 @@ struct PrivatecaCertificateTemplateIamBindingData {
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<PrivatecaCertificateTemplateIamBindingConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<PrivatecaCertificateTemplateIamBinding_Condition>>,
     dynamic: PrivatecaCertificateTemplateIamBindingDynamic,
 }
 
 struct PrivatecaCertificateTemplateIamBinding_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<PrivatecaCertificateTemplateIamBindingData>,
+    data: std::cell::RefCell<PrivatecaCertificateTemplateIamBindingData_>,
 }
 
 #[derive(Clone)]
@@ -156,7 +158,7 @@ impl PrivatecaCertificateTemplateIamBinding {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<PrivatecaCertificateTemplateIamBindingConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<PrivatecaCertificateTemplateIamBinding_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -205,7 +207,7 @@ impl PrivatecaCertificateTemplateIamBinding {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<PrivatecaCertificateTemplateIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<PrivatecaCertificateTemplateIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -256,7 +258,7 @@ impl BuildPrivatecaCertificateTemplateIamBinding {
         let out = PrivatecaCertificateTemplateIamBinding(std::rc::Rc::new(PrivatecaCertificateTemplateIamBinding_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(PrivatecaCertificateTemplateIamBindingData {
+            data: std::cell::RefCell::new(PrivatecaCertificateTemplateIamBindingData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -336,20 +338,25 @@ impl PrivatecaCertificateTemplateIamBindingRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<PrivatecaCertificateTemplateIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<PrivatecaCertificateTemplateIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct PrivatecaCertificateTemplateIamBindingDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<PrivatecaCertificateTemplateIamBinding_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct PrivatecaCertificateTemplateIamBindingConditionEl {
+pub struct PrivatecaCertificateTemplateIamBinding_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl PrivatecaCertificateTemplateIamBindingConditionEl {
+impl PrivatecaCertificateTemplateIamBinding_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -357,8 +364,8 @@ impl PrivatecaCertificateTemplateIamBindingConditionEl {
     }
 }
 
-impl terrars::ToListMappable for PrivatecaCertificateTemplateIamBindingConditionEl {
-    type O = terrars::BlockAssignable<PrivatecaCertificateTemplateIamBindingConditionEl>;
+impl terrars::ToListMappable for PrivatecaCertificateTemplateIamBinding_Condition {
+    type O = terrars::BlockAssignable<PrivatecaCertificateTemplateIamBinding_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -369,16 +376,16 @@ impl terrars::ToListMappable for PrivatecaCertificateTemplateIamBindingCondition
     }
 }
 
-pub struct BuildPrivatecaCertificateTemplateIamBindingConditionEl {
+pub struct BuildPrivatecaCertificateTemplateIamBinding_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildPrivatecaCertificateTemplateIamBindingConditionEl {
-    pub fn build(self) -> PrivatecaCertificateTemplateIamBindingConditionEl {
-        PrivatecaCertificateTemplateIamBindingConditionEl {
+impl BuildPrivatecaCertificateTemplateIamBinding_Condition {
+    pub fn build(self) -> PrivatecaCertificateTemplateIamBinding_Condition {
+        PrivatecaCertificateTemplateIamBinding_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -386,24 +393,26 @@ impl BuildPrivatecaCertificateTemplateIamBindingConditionEl {
     }
 }
 
-pub struct PrivatecaCertificateTemplateIamBindingConditionElRef {
+#[allow(dead_code)]
+pub struct PrivatecaCertificateTemplateIamBinding_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrivatecaCertificateTemplateIamBindingConditionElRef {
+impl terrars::Ref for PrivatecaCertificateTemplateIamBinding_ConditionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> PrivatecaCertificateTemplateIamBindingConditionElRef {
-        PrivatecaCertificateTemplateIamBindingConditionElRef {
+    ) -> PrivatecaCertificateTemplateIamBinding_ConditionRef {
+        PrivatecaCertificateTemplateIamBinding_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrivatecaCertificateTemplateIamBindingConditionElRef {
+impl PrivatecaCertificateTemplateIamBinding_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -422,9 +431,4 @@ impl PrivatecaCertificateTemplateIamBindingConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct PrivatecaCertificateTemplateIamBindingDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<PrivatecaCertificateTemplateIamBindingConditionEl>>,
 }

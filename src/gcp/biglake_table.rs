@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct BiglakeTableData {
+struct BiglakeTableData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,21 +23,23 @@ struct BiglakeTableData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     database: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    hive_options: std::option::Option<std::vec::Vec<BiglakeTableHiveOptionsEl>>,
+    hive_options: std::option::Option<std::vec::Vec<BiglakeTable_HiveOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<BiglakeTableTimeoutsEl>,
+    timeouts: std::option::Option<BiglakeTable_Timeouts>,
     dynamic: BiglakeTableDynamic,
 }
 
 struct BiglakeTable_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<BiglakeTableData>,
+    data: std::cell::RefCell<BiglakeTableData_>,
 }
 
 #[derive(Clone)]
@@ -141,6 +145,13 @@ impl BiglakeTable {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -156,7 +167,7 @@ impl BiglakeTable {
     #[doc = "Set the field `hive_options`.\n"]
     pub fn set_hive_options(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BiglakeTableHiveOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BiglakeTable_HiveOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -170,7 +181,7 @@ impl BiglakeTable {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<BiglakeTableTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<BiglakeTable_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -190,6 +201,12 @@ impl BiglakeTable {
         "Get a reference to the value of field `delete_time` after provisioning.\nOutput only. The deletion time of the table. Only set after the\ntable is deleted. A timestamp in RFC3339 UTC \"Zulu\" format, with\nnanosecond resolution and up to nine fractional digits. Examples:\n\"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
     pub fn delete_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -228,13 +245,13 @@ impl BiglakeTable {
     }
 
     #[doc = "Get a reference to the value of field `hive_options` after provisioning.\n"]
-    pub fn hive_options(&self) -> terrars::ListRef<BiglakeTableHiveOptionsElRef> {
+    pub fn hive_options(&self) -> terrars::ListRef<BiglakeTable_HiveOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.hive_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> BiglakeTableTimeoutsElRef {
-        BiglakeTableTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> BiglakeTable_TimeoutsRef {
+        BiglakeTable_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -281,13 +298,14 @@ impl BuildBiglakeTable {
         let out = BiglakeTable(std::rc::Rc::new(BiglakeTable_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(BiglakeTableData {
+            data: std::cell::RefCell::new(BiglakeTableData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 database: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
                 type_: core::default::Default::default(),
@@ -342,6 +360,12 @@ impl BiglakeTableRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `etag` after provisioning.\nThe checksum of a table object computed by the server based on the value\nof other fields. It may be sent on update requests to ensure the client\nhas an up-to-date value before proceeding. It is only checked for update\ntable operations."]
     pub fn etag(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.etag", self.extract_ref()))
@@ -377,27 +401,105 @@ impl BiglakeTableRef {
     }
 
     #[doc = "Get a reference to the value of field `hive_options` after provisioning.\n"]
-    pub fn hive_options(&self) -> terrars::ListRef<BiglakeTableHiveOptionsElRef> {
+    pub fn hive_options(&self) -> terrars::ListRef<BiglakeTable_HiveOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.hive_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> BiglakeTableTimeoutsElRef {
-        BiglakeTableTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> BiglakeTable_TimeoutsRef {
+        BiglakeTable_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct BiglakeTableDynamic {
+    hive_options: std::option::Option<terrars::DynamicBlock<BiglakeTable_HiveOptions>>,
+}
+
 #[derive(Serialize)]
-pub struct BiglakeTableHiveOptionsElStorageDescriptorEl {
+pub struct BiglakeTable_HiveOptions_StorageDescriptor_SerdeInfo {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    serialization_lib: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl BiglakeTable_HiveOptions_StorageDescriptor_SerdeInfo {
+    #[doc = "Set the field `serialization_lib`.\nThe fully qualified Java class name of the serialization library."]
+    pub fn set_serialization_lib(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.serialization_lib = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for BiglakeTable_HiveOptions_StorageDescriptor_SerdeInfo {
+    type O = terrars::BlockAssignable<BiglakeTable_HiveOptions_StorageDescriptor_SerdeInfo>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildBiglakeTable_HiveOptions_StorageDescriptor_SerdeInfo {}
+
+impl BuildBiglakeTable_HiveOptions_StorageDescriptor_SerdeInfo {
+    pub fn build(self) -> BiglakeTable_HiveOptions_StorageDescriptor_SerdeInfo {
+        BiglakeTable_HiveOptions_StorageDescriptor_SerdeInfo { serialization_lib: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct BiglakeTable_HiveOptions_StorageDescriptor_SerdeInfoRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for BiglakeTable_HiveOptions_StorageDescriptor_SerdeInfoRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> BiglakeTable_HiveOptions_StorageDescriptor_SerdeInfoRef {
+        BiglakeTable_HiveOptions_StorageDescriptor_SerdeInfoRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl BiglakeTable_HiveOptions_StorageDescriptor_SerdeInfoRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `serialization_lib` after provisioning.\nThe fully qualified Java class name of the serialization library."]
+    pub fn serialization_lib(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.serialization_lib", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct BiglakeTable_HiveOptions_StorageDescriptorDynamic {
+    serde_info: std::option::Option<terrars::DynamicBlock<BiglakeTable_HiveOptions_StorageDescriptor_SerdeInfo>>,
+}
+
+#[derive(Serialize)]
+pub struct BiglakeTable_HiveOptions_StorageDescriptor {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     input_format: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     location_uri: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     output_format: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    serde_info: std::option::Option<std::vec::Vec<BiglakeTable_HiveOptions_StorageDescriptor_SerdeInfo>>,
+    dynamic: BiglakeTable_HiveOptions_StorageDescriptorDynamic,
 }
 
-impl BiglakeTableHiveOptionsElStorageDescriptorEl {
+impl BiglakeTable_HiveOptions_StorageDescriptor {
     #[doc = "Set the field `input_format`.\nThe fully qualified Java class name of the input format."]
     pub fn set_input_format(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.input_format = std::option::Option::Some(v.into());
@@ -416,10 +518,26 @@ impl BiglakeTableHiveOptionsElStorageDescriptorEl {
         self.output_format = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `serde_info`.\n"]
+    pub fn set_serde_info(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<BiglakeTable_HiveOptions_StorageDescriptor_SerdeInfo>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.serde_info = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.serde_info = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
 }
 
-impl terrars::ToListMappable for BiglakeTableHiveOptionsElStorageDescriptorEl {
-    type O = terrars::BlockAssignable<BiglakeTableHiveOptionsElStorageDescriptorEl>;
+impl terrars::ToListMappable for BiglakeTable_HiveOptions_StorageDescriptor {
+    type O = terrars::BlockAssignable<BiglakeTable_HiveOptions_StorageDescriptor>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -430,36 +548,37 @@ impl terrars::ToListMappable for BiglakeTableHiveOptionsElStorageDescriptorEl {
     }
 }
 
-pub struct BuildBiglakeTableHiveOptionsElStorageDescriptorEl {}
+pub struct BuildBiglakeTable_HiveOptions_StorageDescriptor {}
 
-impl BuildBiglakeTableHiveOptionsElStorageDescriptorEl {
-    pub fn build(self) -> BiglakeTableHiveOptionsElStorageDescriptorEl {
-        BiglakeTableHiveOptionsElStorageDescriptorEl {
+impl BuildBiglakeTable_HiveOptions_StorageDescriptor {
+    pub fn build(self) -> BiglakeTable_HiveOptions_StorageDescriptor {
+        BiglakeTable_HiveOptions_StorageDescriptor {
             input_format: core::default::Default::default(),
             location_uri: core::default::Default::default(),
             output_format: core::default::Default::default(),
+            serde_info: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct BiglakeTableHiveOptionsElStorageDescriptorElRef {
+#[allow(dead_code)]
+pub struct BiglakeTable_HiveOptions_StorageDescriptorRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BiglakeTableHiveOptionsElStorageDescriptorElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> BiglakeTableHiveOptionsElStorageDescriptorElRef {
-        BiglakeTableHiveOptionsElStorageDescriptorElRef {
+impl terrars::Ref for BiglakeTable_HiveOptions_StorageDescriptorRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BiglakeTable_HiveOptions_StorageDescriptorRef {
+        BiglakeTable_HiveOptions_StorageDescriptorRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BiglakeTableHiveOptionsElStorageDescriptorElRef {
+impl BiglakeTable_HiveOptions_StorageDescriptorRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -481,25 +600,30 @@ impl BiglakeTableHiveOptionsElStorageDescriptorElRef {
     pub fn output_format(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.output_format", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `serde_info` after provisioning.\n"]
+    pub fn serde_info(&self) -> terrars::ListRef<BiglakeTable_HiveOptions_StorageDescriptor_SerdeInfoRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.serde_info", self.base))
+    }
 }
 
 #[derive(Serialize, Default)]
-struct BiglakeTableHiveOptionsElDynamic {
-    storage_descriptor: std::option::Option<terrars::DynamicBlock<BiglakeTableHiveOptionsElStorageDescriptorEl>>,
+struct BiglakeTable_HiveOptionsDynamic {
+    storage_descriptor: std::option::Option<terrars::DynamicBlock<BiglakeTable_HiveOptions_StorageDescriptor>>,
 }
 
 #[derive(Serialize)]
-pub struct BiglakeTableHiveOptionsEl {
+pub struct BiglakeTable_HiveOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     parameters: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     table_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    storage_descriptor: std::option::Option<std::vec::Vec<BiglakeTableHiveOptionsElStorageDescriptorEl>>,
-    dynamic: BiglakeTableHiveOptionsElDynamic,
+    storage_descriptor: std::option::Option<std::vec::Vec<BiglakeTable_HiveOptions_StorageDescriptor>>,
+    dynamic: BiglakeTable_HiveOptionsDynamic,
 }
 
-impl BiglakeTableHiveOptionsEl {
+impl BiglakeTable_HiveOptions {
     #[doc =
         "Set the field `parameters`.\nStores user supplied Hive table parameters. An object containing a\nlist of \"key\": value pairs.\nExample: { \"name\": \"wrench\", \"mass\": \"1.3kg\", \"count\": \"3\" }."]
     pub fn set_parameters(
@@ -519,7 +643,7 @@ impl BiglakeTableHiveOptionsEl {
     #[doc = "Set the field `storage_descriptor`.\n"]
     pub fn set_storage_descriptor(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BiglakeTableHiveOptionsElStorageDescriptorEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BiglakeTable_HiveOptions_StorageDescriptor>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -533,8 +657,8 @@ impl BiglakeTableHiveOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for BiglakeTableHiveOptionsEl {
-    type O = terrars::BlockAssignable<BiglakeTableHiveOptionsEl>;
+impl terrars::ToListMappable for BiglakeTable_HiveOptions {
+    type O = terrars::BlockAssignable<BiglakeTable_HiveOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -545,11 +669,11 @@ impl terrars::ToListMappable for BiglakeTableHiveOptionsEl {
     }
 }
 
-pub struct BuildBiglakeTableHiveOptionsEl {}
+pub struct BuildBiglakeTable_HiveOptions {}
 
-impl BuildBiglakeTableHiveOptionsEl {
-    pub fn build(self) -> BiglakeTableHiveOptionsEl {
-        BiglakeTableHiveOptionsEl {
+impl BuildBiglakeTable_HiveOptions {
+    pub fn build(self) -> BiglakeTable_HiveOptions {
+        BiglakeTable_HiveOptions {
             parameters: core::default::Default::default(),
             table_type: core::default::Default::default(),
             storage_descriptor: core::default::Default::default(),
@@ -558,21 +682,23 @@ impl BuildBiglakeTableHiveOptionsEl {
     }
 }
 
-pub struct BiglakeTableHiveOptionsElRef {
+#[allow(dead_code)]
+pub struct BiglakeTable_HiveOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BiglakeTableHiveOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BiglakeTableHiveOptionsElRef {
-        BiglakeTableHiveOptionsElRef {
+impl terrars::Ref for BiglakeTable_HiveOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BiglakeTable_HiveOptionsRef {
+        BiglakeTable_HiveOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BiglakeTableHiveOptionsElRef {
+impl BiglakeTable_HiveOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -590,13 +716,13 @@ impl BiglakeTableHiveOptionsElRef {
     }
 
     #[doc = "Get a reference to the value of field `storage_descriptor` after provisioning.\n"]
-    pub fn storage_descriptor(&self) -> terrars::ListRef<BiglakeTableHiveOptionsElStorageDescriptorElRef> {
+    pub fn storage_descriptor(&self) -> terrars::ListRef<BiglakeTable_HiveOptions_StorageDescriptorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.storage_descriptor", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct BiglakeTableTimeoutsEl {
+pub struct BiglakeTable_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -605,7 +731,7 @@ pub struct BiglakeTableTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl BiglakeTableTimeoutsEl {
+impl BiglakeTable_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -625,8 +751,8 @@ impl BiglakeTableTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for BiglakeTableTimeoutsEl {
-    type O = terrars::BlockAssignable<BiglakeTableTimeoutsEl>;
+impl terrars::ToListMappable for BiglakeTable_Timeouts {
+    type O = terrars::BlockAssignable<BiglakeTable_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -637,11 +763,11 @@ impl terrars::ToListMappable for BiglakeTableTimeoutsEl {
     }
 }
 
-pub struct BuildBiglakeTableTimeoutsEl {}
+pub struct BuildBiglakeTable_Timeouts {}
 
-impl BuildBiglakeTableTimeoutsEl {
-    pub fn build(self) -> BiglakeTableTimeoutsEl {
-        BiglakeTableTimeoutsEl {
+impl BuildBiglakeTable_Timeouts {
+    pub fn build(self) -> BiglakeTable_Timeouts {
+        BiglakeTable_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -649,21 +775,23 @@ impl BuildBiglakeTableTimeoutsEl {
     }
 }
 
-pub struct BiglakeTableTimeoutsElRef {
+#[allow(dead_code)]
+pub struct BiglakeTable_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BiglakeTableTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BiglakeTableTimeoutsElRef {
-        BiglakeTableTimeoutsElRef {
+impl terrars::Ref for BiglakeTable_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BiglakeTable_TimeoutsRef {
+        BiglakeTable_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BiglakeTableTimeoutsElRef {
+impl BiglakeTable_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -682,9 +810,4 @@ impl BiglakeTableTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct BiglakeTableDynamic {
-    hive_options: std::option::Option<terrars::DynamicBlock<BiglakeTableHiveOptionsEl>>,
 }

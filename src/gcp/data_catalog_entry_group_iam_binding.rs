@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataCatalogEntryGroupIamBindingData {
+struct DataCatalogEntryGroupIamBindingData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,14 +30,14 @@ struct DataCatalogEntryGroupIamBindingData {
     region: std::option::Option<terrars::PrimField<std::string::String>>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<DataCatalogEntryGroupIamBindingConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<DataCatalogEntryGroupIamBinding_Condition>>,
     dynamic: DataCatalogEntryGroupIamBindingDynamic,
 }
 
 struct DataCatalogEntryGroupIamBinding_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataCatalogEntryGroupIamBindingData>,
+    data: std::cell::RefCell<DataCatalogEntryGroupIamBindingData_>,
 }
 
 #[derive(Clone)]
@@ -156,7 +158,7 @@ impl DataCatalogEntryGroupIamBinding {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataCatalogEntryGroupIamBindingConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataCatalogEntryGroupIamBinding_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -205,7 +207,7 @@ impl DataCatalogEntryGroupIamBinding {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<DataCatalogEntryGroupIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<DataCatalogEntryGroupIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -256,7 +258,7 @@ impl BuildDataCatalogEntryGroupIamBinding {
         let out = DataCatalogEntryGroupIamBinding(std::rc::Rc::new(DataCatalogEntryGroupIamBinding_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataCatalogEntryGroupIamBindingData {
+            data: std::cell::RefCell::new(DataCatalogEntryGroupIamBindingData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -336,20 +338,25 @@ impl DataCatalogEntryGroupIamBindingRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<DataCatalogEntryGroupIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<DataCatalogEntryGroupIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataCatalogEntryGroupIamBindingDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<DataCatalogEntryGroupIamBinding_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct DataCatalogEntryGroupIamBindingConditionEl {
+pub struct DataCatalogEntryGroupIamBinding_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl DataCatalogEntryGroupIamBindingConditionEl {
+impl DataCatalogEntryGroupIamBinding_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -357,8 +364,8 @@ impl DataCatalogEntryGroupIamBindingConditionEl {
     }
 }
 
-impl terrars::ToListMappable for DataCatalogEntryGroupIamBindingConditionEl {
-    type O = terrars::BlockAssignable<DataCatalogEntryGroupIamBindingConditionEl>;
+impl terrars::ToListMappable for DataCatalogEntryGroupIamBinding_Condition {
+    type O = terrars::BlockAssignable<DataCatalogEntryGroupIamBinding_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -369,16 +376,16 @@ impl terrars::ToListMappable for DataCatalogEntryGroupIamBindingConditionEl {
     }
 }
 
-pub struct BuildDataCatalogEntryGroupIamBindingConditionEl {
+pub struct BuildDataCatalogEntryGroupIamBinding_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataCatalogEntryGroupIamBindingConditionEl {
-    pub fn build(self) -> DataCatalogEntryGroupIamBindingConditionEl {
-        DataCatalogEntryGroupIamBindingConditionEl {
+impl BuildDataCatalogEntryGroupIamBinding_Condition {
+    pub fn build(self) -> DataCatalogEntryGroupIamBinding_Condition {
+        DataCatalogEntryGroupIamBinding_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -386,21 +393,23 @@ impl BuildDataCatalogEntryGroupIamBindingConditionEl {
     }
 }
 
-pub struct DataCatalogEntryGroupIamBindingConditionElRef {
+#[allow(dead_code)]
+pub struct DataCatalogEntryGroupIamBinding_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCatalogEntryGroupIamBindingConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCatalogEntryGroupIamBindingConditionElRef {
-        DataCatalogEntryGroupIamBindingConditionElRef {
+impl terrars::Ref for DataCatalogEntryGroupIamBinding_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCatalogEntryGroupIamBinding_ConditionRef {
+        DataCatalogEntryGroupIamBinding_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCatalogEntryGroupIamBindingConditionElRef {
+impl DataCatalogEntryGroupIamBinding_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -419,9 +428,4 @@ impl DataCatalogEntryGroupIamBindingConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataCatalogEntryGroupIamBindingDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<DataCatalogEntryGroupIamBindingConditionEl>>,
 }

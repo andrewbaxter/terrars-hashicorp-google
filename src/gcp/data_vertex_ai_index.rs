@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataVertexAiIndexData {
+struct DataVertexAiIndexData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -27,7 +29,7 @@ struct DataVertexAiIndexData {
 struct DataVertexAiIndex_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataVertexAiIndexData>,
+    data: std::cell::RefCell<DataVertexAiIndexData_>,
 }
 
 #[derive(Clone)]
@@ -91,8 +93,14 @@ impl DataVertexAiIndex {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `deployed_indexes` after provisioning.\nThe pointers to DeployedIndexes created from this Index. An Index can be only deleted if all its DeployedIndexes had been undeployed first."]
-    pub fn deployed_indexes(&self) -> terrars::ListRef<DataVertexAiIndexDeployedIndexesElRef> {
+    pub fn deployed_indexes(&self) -> terrars::ListRef<DataVertexAiIndex_DeployedIndexesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.deployed_indexes", self.extract_ref()))
     }
 
@@ -114,6 +122,12 @@ impl DataVertexAiIndex {
     }
 
     #[doc =
+        "Get a reference to the value of field `encryption_spec` after provisioning.\nCustomer-managed encryption key spec for an Index. If set, this Index and all sub-resources of this Index will be secured by this key."]
+    pub fn encryption_spec(&self) -> terrars::ListRef<DataVertexAiIndex_EncryptionSpecRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_spec", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `etag` after provisioning.\nUsed to perform consistent read-modify-write updates."]
     pub fn etag(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.etag", self.extract_ref()))
@@ -125,7 +139,7 @@ impl DataVertexAiIndex {
     }
 
     #[doc = "Get a reference to the value of field `index_stats` after provisioning.\nStats of the index resource."]
-    pub fn index_stats(&self) -> terrars::ListRef<DataVertexAiIndexIndexStatsElRef> {
+    pub fn index_stats(&self) -> terrars::ListRef<DataVertexAiIndex_IndexStatsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.index_stats", self.extract_ref()))
     }
 
@@ -142,8 +156,8 @@ impl DataVertexAiIndex {
     }
 
     #[doc =
-        "Get a reference to the value of field `metadata` after provisioning.\nAn additional information about the Index"]
-    pub fn metadata(&self) -> terrars::ListRef<DataVertexAiIndexMetadataElRef> {
+        "Get a reference to the value of field `metadata` after provisioning.\nAdditional information about the Index.\nAlthough this field is not marked as required in the API specification, it is currently required when creating an Index and must be provided.\nAttempts to create an Index without this field will result in an API error."]
+    pub fn metadata(&self) -> terrars::ListRef<DataVertexAiIndex_MetadataRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.metadata", self.extract_ref()))
     }
 
@@ -226,7 +240,7 @@ impl BuildDataVertexAiIndex {
         let out = DataVertexAiIndex(std::rc::Rc::new(DataVertexAiIndex_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataVertexAiIndexData {
+            data: std::cell::RefCell::new(DataVertexAiIndexData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -272,8 +286,14 @@ impl DataVertexAiIndexRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `deployed_indexes` after provisioning.\nThe pointers to DeployedIndexes created from this Index. An Index can be only deleted if all its DeployedIndexes had been undeployed first."]
-    pub fn deployed_indexes(&self) -> terrars::ListRef<DataVertexAiIndexDeployedIndexesElRef> {
+    pub fn deployed_indexes(&self) -> terrars::ListRef<DataVertexAiIndex_DeployedIndexesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.deployed_indexes", self.extract_ref()))
     }
 
@@ -295,6 +315,12 @@ impl DataVertexAiIndexRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `encryption_spec` after provisioning.\nCustomer-managed encryption key spec for an Index. If set, this Index and all sub-resources of this Index will be secured by this key."]
+    pub fn encryption_spec(&self) -> terrars::ListRef<DataVertexAiIndex_EncryptionSpecRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_spec", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `etag` after provisioning.\nUsed to perform consistent read-modify-write updates."]
     pub fn etag(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.etag", self.extract_ref()))
@@ -306,7 +332,7 @@ impl DataVertexAiIndexRef {
     }
 
     #[doc = "Get a reference to the value of field `index_stats` after provisioning.\nStats of the index resource."]
-    pub fn index_stats(&self) -> terrars::ListRef<DataVertexAiIndexIndexStatsElRef> {
+    pub fn index_stats(&self) -> terrars::ListRef<DataVertexAiIndex_IndexStatsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.index_stats", self.extract_ref()))
     }
 
@@ -323,8 +349,8 @@ impl DataVertexAiIndexRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `metadata` after provisioning.\nAn additional information about the Index"]
-    pub fn metadata(&self) -> terrars::ListRef<DataVertexAiIndexMetadataElRef> {
+        "Get a reference to the value of field `metadata` after provisioning.\nAdditional information about the Index.\nAlthough this field is not marked as required in the API specification, it is currently required when creating an Index and must be provided.\nAttempts to create an Index without this field will result in an API error."]
+    pub fn metadata(&self) -> terrars::ListRef<DataVertexAiIndex_MetadataRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.metadata", self.extract_ref()))
     }
 
@@ -364,14 +390,14 @@ impl DataVertexAiIndexRef {
 }
 
 #[derive(Serialize)]
-pub struct DataVertexAiIndexDeployedIndexesEl {
+pub struct DataVertexAiIndex_DeployedIndexes {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     deployed_index_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     index_endpoint: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataVertexAiIndexDeployedIndexesEl {
+impl DataVertexAiIndex_DeployedIndexes {
     #[doc = "Set the field `deployed_index_id`.\n"]
     pub fn set_deployed_index_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.deployed_index_id = std::option::Option::Some(v.into());
@@ -385,8 +411,8 @@ impl DataVertexAiIndexDeployedIndexesEl {
     }
 }
 
-impl terrars::ToListMappable for DataVertexAiIndexDeployedIndexesEl {
-    type O = terrars::BlockAssignable<DataVertexAiIndexDeployedIndexesEl>;
+impl terrars::ToListMappable for DataVertexAiIndex_DeployedIndexes {
+    type O = terrars::BlockAssignable<DataVertexAiIndex_DeployedIndexes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -397,32 +423,34 @@ impl terrars::ToListMappable for DataVertexAiIndexDeployedIndexesEl {
     }
 }
 
-pub struct BuildDataVertexAiIndexDeployedIndexesEl {}
+pub struct BuildDataVertexAiIndex_DeployedIndexes {}
 
-impl BuildDataVertexAiIndexDeployedIndexesEl {
-    pub fn build(self) -> DataVertexAiIndexDeployedIndexesEl {
-        DataVertexAiIndexDeployedIndexesEl {
+impl BuildDataVertexAiIndex_DeployedIndexes {
+    pub fn build(self) -> DataVertexAiIndex_DeployedIndexes {
+        DataVertexAiIndex_DeployedIndexes {
             deployed_index_id: core::default::Default::default(),
             index_endpoint: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataVertexAiIndexDeployedIndexesElRef {
+#[allow(dead_code)]
+pub struct DataVertexAiIndex_DeployedIndexesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataVertexAiIndexDeployedIndexesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVertexAiIndexDeployedIndexesElRef {
-        DataVertexAiIndexDeployedIndexesElRef {
+impl terrars::Ref for DataVertexAiIndex_DeployedIndexesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVertexAiIndex_DeployedIndexesRef {
+        DataVertexAiIndex_DeployedIndexesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataVertexAiIndexDeployedIndexesElRef {
+impl DataVertexAiIndex_DeployedIndexesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -439,14 +467,75 @@ impl DataVertexAiIndexDeployedIndexesElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataVertexAiIndexIndexStatsEl {
+pub struct DataVertexAiIndex_EncryptionSpec {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_name: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataVertexAiIndex_EncryptionSpec {
+    #[doc = "Set the field `kms_key_name`.\n"]
+    pub fn set_kms_key_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.kms_key_name = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataVertexAiIndex_EncryptionSpec {
+    type O = terrars::BlockAssignable<DataVertexAiIndex_EncryptionSpec>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataVertexAiIndex_EncryptionSpec {}
+
+impl BuildDataVertexAiIndex_EncryptionSpec {
+    pub fn build(self) -> DataVertexAiIndex_EncryptionSpec {
+        DataVertexAiIndex_EncryptionSpec { kms_key_name: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataVertexAiIndex_EncryptionSpecRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataVertexAiIndex_EncryptionSpecRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVertexAiIndex_EncryptionSpecRef {
+        DataVertexAiIndex_EncryptionSpecRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataVertexAiIndex_EncryptionSpecRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `kms_key_name` after provisioning.\n"]
+    pub fn kms_key_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_name", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataVertexAiIndex_IndexStats {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     shards_count: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vectors_count: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataVertexAiIndexIndexStatsEl {
+impl DataVertexAiIndex_IndexStats {
     #[doc = "Set the field `shards_count`.\n"]
     pub fn set_shards_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.shards_count = std::option::Option::Some(v.into());
@@ -460,8 +549,8 @@ impl DataVertexAiIndexIndexStatsEl {
     }
 }
 
-impl terrars::ToListMappable for DataVertexAiIndexIndexStatsEl {
-    type O = terrars::BlockAssignable<DataVertexAiIndexIndexStatsEl>;
+impl terrars::ToListMappable for DataVertexAiIndex_IndexStats {
+    type O = terrars::BlockAssignable<DataVertexAiIndex_IndexStats>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -472,32 +561,34 @@ impl terrars::ToListMappable for DataVertexAiIndexIndexStatsEl {
     }
 }
 
-pub struct BuildDataVertexAiIndexIndexStatsEl {}
+pub struct BuildDataVertexAiIndex_IndexStats {}
 
-impl BuildDataVertexAiIndexIndexStatsEl {
-    pub fn build(self) -> DataVertexAiIndexIndexStatsEl {
-        DataVertexAiIndexIndexStatsEl {
+impl BuildDataVertexAiIndex_IndexStats {
+    pub fn build(self) -> DataVertexAiIndex_IndexStats {
+        DataVertexAiIndex_IndexStats {
             shards_count: core::default::Default::default(),
             vectors_count: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataVertexAiIndexIndexStatsElRef {
+#[allow(dead_code)]
+pub struct DataVertexAiIndex_IndexStatsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataVertexAiIndexIndexStatsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVertexAiIndexIndexStatsElRef {
-        DataVertexAiIndexIndexStatsElRef {
+impl terrars::Ref for DataVertexAiIndex_IndexStatsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVertexAiIndex_IndexStatsRef {
+        DataVertexAiIndex_IndexStatsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataVertexAiIndexIndexStatsElRef {
+impl DataVertexAiIndex_IndexStatsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -514,12 +605,12 @@ impl DataVertexAiIndexIndexStatsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataVertexAiIndexMetadataElConfigElAlgorithmConfigElBruteForceConfigEl {}
+pub struct DataVertexAiIndex_Metadata_Config_AlgorithmConfig_BruteForceConfig {}
 
-impl DataVertexAiIndexMetadataElConfigElAlgorithmConfigElBruteForceConfigEl { }
+impl DataVertexAiIndex_Metadata_Config_AlgorithmConfig_BruteForceConfig { }
 
-impl terrars::ToListMappable for DataVertexAiIndexMetadataElConfigElAlgorithmConfigElBruteForceConfigEl {
-    type O = terrars::BlockAssignable<DataVertexAiIndexMetadataElConfigElAlgorithmConfigElBruteForceConfigEl>;
+impl terrars::ToListMappable for DataVertexAiIndex_Metadata_Config_AlgorithmConfig_BruteForceConfig {
+    type O = terrars::BlockAssignable<DataVertexAiIndex_Metadata_Config_AlgorithmConfig_BruteForceConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -530,46 +621,48 @@ impl terrars::ToListMappable for DataVertexAiIndexMetadataElConfigElAlgorithmCon
     }
 }
 
-pub struct BuildDataVertexAiIndexMetadataElConfigElAlgorithmConfigElBruteForceConfigEl {}
+pub struct BuildDataVertexAiIndex_Metadata_Config_AlgorithmConfig_BruteForceConfig {}
 
-impl BuildDataVertexAiIndexMetadataElConfigElAlgorithmConfigElBruteForceConfigEl {
-    pub fn build(self) -> DataVertexAiIndexMetadataElConfigElAlgorithmConfigElBruteForceConfigEl {
-        DataVertexAiIndexMetadataElConfigElAlgorithmConfigElBruteForceConfigEl {}
+impl BuildDataVertexAiIndex_Metadata_Config_AlgorithmConfig_BruteForceConfig {
+    pub fn build(self) -> DataVertexAiIndex_Metadata_Config_AlgorithmConfig_BruteForceConfig {
+        DataVertexAiIndex_Metadata_Config_AlgorithmConfig_BruteForceConfig {}
     }
 }
 
-pub struct DataVertexAiIndexMetadataElConfigElAlgorithmConfigElBruteForceConfigElRef {
+#[allow(dead_code)]
+pub struct DataVertexAiIndex_Metadata_Config_AlgorithmConfig_BruteForceConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataVertexAiIndexMetadataElConfigElAlgorithmConfigElBruteForceConfigElRef {
+impl terrars::Ref for DataVertexAiIndex_Metadata_Config_AlgorithmConfig_BruteForceConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataVertexAiIndexMetadataElConfigElAlgorithmConfigElBruteForceConfigElRef {
-        DataVertexAiIndexMetadataElConfigElAlgorithmConfigElBruteForceConfigElRef {
+    ) -> DataVertexAiIndex_Metadata_Config_AlgorithmConfig_BruteForceConfigRef {
+        DataVertexAiIndex_Metadata_Config_AlgorithmConfig_BruteForceConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataVertexAiIndexMetadataElConfigElAlgorithmConfigElBruteForceConfigElRef {
+impl DataVertexAiIndex_Metadata_Config_AlgorithmConfig_BruteForceConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize)]
-pub struct DataVertexAiIndexMetadataElConfigElAlgorithmConfigElTreeAhConfigEl {
+pub struct DataVertexAiIndex_Metadata_Config_AlgorithmConfig_TreeAhConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     leaf_node_embedding_count: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     leaf_nodes_to_search_percent: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataVertexAiIndexMetadataElConfigElAlgorithmConfigElTreeAhConfigEl {
+impl DataVertexAiIndex_Metadata_Config_AlgorithmConfig_TreeAhConfig {
     #[doc = "Set the field `leaf_node_embedding_count`.\n"]
     pub fn set_leaf_node_embedding_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.leaf_node_embedding_count = std::option::Option::Some(v.into());
@@ -583,8 +676,8 @@ impl DataVertexAiIndexMetadataElConfigElAlgorithmConfigElTreeAhConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataVertexAiIndexMetadataElConfigElAlgorithmConfigElTreeAhConfigEl {
-    type O = terrars::BlockAssignable<DataVertexAiIndexMetadataElConfigElAlgorithmConfigElTreeAhConfigEl>;
+impl terrars::ToListMappable for DataVertexAiIndex_Metadata_Config_AlgorithmConfig_TreeAhConfig {
+    type O = terrars::BlockAssignable<DataVertexAiIndex_Metadata_Config_AlgorithmConfig_TreeAhConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -595,35 +688,37 @@ impl terrars::ToListMappable for DataVertexAiIndexMetadataElConfigElAlgorithmCon
     }
 }
 
-pub struct BuildDataVertexAiIndexMetadataElConfigElAlgorithmConfigElTreeAhConfigEl {}
+pub struct BuildDataVertexAiIndex_Metadata_Config_AlgorithmConfig_TreeAhConfig {}
 
-impl BuildDataVertexAiIndexMetadataElConfigElAlgorithmConfigElTreeAhConfigEl {
-    pub fn build(self) -> DataVertexAiIndexMetadataElConfigElAlgorithmConfigElTreeAhConfigEl {
-        DataVertexAiIndexMetadataElConfigElAlgorithmConfigElTreeAhConfigEl {
+impl BuildDataVertexAiIndex_Metadata_Config_AlgorithmConfig_TreeAhConfig {
+    pub fn build(self) -> DataVertexAiIndex_Metadata_Config_AlgorithmConfig_TreeAhConfig {
+        DataVertexAiIndex_Metadata_Config_AlgorithmConfig_TreeAhConfig {
             leaf_node_embedding_count: core::default::Default::default(),
             leaf_nodes_to_search_percent: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataVertexAiIndexMetadataElConfigElAlgorithmConfigElTreeAhConfigElRef {
+#[allow(dead_code)]
+pub struct DataVertexAiIndex_Metadata_Config_AlgorithmConfig_TreeAhConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataVertexAiIndexMetadataElConfigElAlgorithmConfigElTreeAhConfigElRef {
+impl terrars::Ref for DataVertexAiIndex_Metadata_Config_AlgorithmConfig_TreeAhConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataVertexAiIndexMetadataElConfigElAlgorithmConfigElTreeAhConfigElRef {
-        DataVertexAiIndexMetadataElConfigElAlgorithmConfigElTreeAhConfigElRef {
+    ) -> DataVertexAiIndex_Metadata_Config_AlgorithmConfig_TreeAhConfigRef {
+        DataVertexAiIndex_Metadata_Config_AlgorithmConfig_TreeAhConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataVertexAiIndexMetadataElConfigElAlgorithmConfigElTreeAhConfigElRef {
+impl DataVertexAiIndex_Metadata_Config_AlgorithmConfig_TreeAhConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -640,18 +735,18 @@ impl DataVertexAiIndexMetadataElConfigElAlgorithmConfigElTreeAhConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataVertexAiIndexMetadataElConfigElAlgorithmConfigEl {
+pub struct DataVertexAiIndex_Metadata_Config_AlgorithmConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     brute_force_config: std
     ::option
-    ::Option<terrars::ListField<DataVertexAiIndexMetadataElConfigElAlgorithmConfigElBruteForceConfigEl>>,
+    ::Option<terrars::ListField<DataVertexAiIndex_Metadata_Config_AlgorithmConfig_BruteForceConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tree_ah_config: std
     ::option
-    ::Option<terrars::ListField<DataVertexAiIndexMetadataElConfigElAlgorithmConfigElTreeAhConfigEl>>,
+    ::Option<terrars::ListField<DataVertexAiIndex_Metadata_Config_AlgorithmConfig_TreeAhConfig>>,
 }
 
-impl DataVertexAiIndexMetadataElConfigElAlgorithmConfigEl {
+impl DataVertexAiIndex_Metadata_Config_AlgorithmConfig {
     #[doc = "Set the field `brute_force_config`.\n"]
     pub fn set_brute_force_config(
         mut self,
@@ -660,9 +755,7 @@ impl DataVertexAiIndexMetadataElConfigElAlgorithmConfigEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::ListField<DataVertexAiIndexMetadataElConfigElAlgorithmConfigElBruteForceConfigEl>,
-                    >,
+                    ::Into<terrars::ListField<DataVertexAiIndex_Metadata_Config_AlgorithmConfig_BruteForceConfig>>,
     ) -> Self {
         self.brute_force_config = std::option::Option::Some(v.into());
         self
@@ -676,15 +769,15 @@ impl DataVertexAiIndexMetadataElConfigElAlgorithmConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::ListField<DataVertexAiIndexMetadataElConfigElAlgorithmConfigElTreeAhConfigEl>>,
+                    ::Into<terrars::ListField<DataVertexAiIndex_Metadata_Config_AlgorithmConfig_TreeAhConfig>>,
     ) -> Self {
         self.tree_ah_config = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataVertexAiIndexMetadataElConfigElAlgorithmConfigEl {
-    type O = terrars::BlockAssignable<DataVertexAiIndexMetadataElConfigElAlgorithmConfigEl>;
+impl terrars::ToListMappable for DataVertexAiIndex_Metadata_Config_AlgorithmConfig {
+    type O = terrars::BlockAssignable<DataVertexAiIndex_Metadata_Config_AlgorithmConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -695,35 +788,37 @@ impl terrars::ToListMappable for DataVertexAiIndexMetadataElConfigElAlgorithmCon
     }
 }
 
-pub struct BuildDataVertexAiIndexMetadataElConfigElAlgorithmConfigEl {}
+pub struct BuildDataVertexAiIndex_Metadata_Config_AlgorithmConfig {}
 
-impl BuildDataVertexAiIndexMetadataElConfigElAlgorithmConfigEl {
-    pub fn build(self) -> DataVertexAiIndexMetadataElConfigElAlgorithmConfigEl {
-        DataVertexAiIndexMetadataElConfigElAlgorithmConfigEl {
+impl BuildDataVertexAiIndex_Metadata_Config_AlgorithmConfig {
+    pub fn build(self) -> DataVertexAiIndex_Metadata_Config_AlgorithmConfig {
+        DataVertexAiIndex_Metadata_Config_AlgorithmConfig {
             brute_force_config: core::default::Default::default(),
             tree_ah_config: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataVertexAiIndexMetadataElConfigElAlgorithmConfigElRef {
+#[allow(dead_code)]
+pub struct DataVertexAiIndex_Metadata_Config_AlgorithmConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataVertexAiIndexMetadataElConfigElAlgorithmConfigElRef {
+impl terrars::Ref for DataVertexAiIndex_Metadata_Config_AlgorithmConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataVertexAiIndexMetadataElConfigElAlgorithmConfigElRef {
-        DataVertexAiIndexMetadataElConfigElAlgorithmConfigElRef {
+    ) -> DataVertexAiIndex_Metadata_Config_AlgorithmConfigRef {
+        DataVertexAiIndex_Metadata_Config_AlgorithmConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataVertexAiIndexMetadataElConfigElAlgorithmConfigElRef {
+impl DataVertexAiIndex_Metadata_Config_AlgorithmConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -731,22 +826,20 @@ impl DataVertexAiIndexMetadataElConfigElAlgorithmConfigElRef {
     #[doc = "Get a reference to the value of field `brute_force_config` after provisioning.\n"]
     pub fn brute_force_config(
         &self,
-    ) -> terrars::ListRef<DataVertexAiIndexMetadataElConfigElAlgorithmConfigElBruteForceConfigElRef> {
+    ) -> terrars::ListRef<DataVertexAiIndex_Metadata_Config_AlgorithmConfig_BruteForceConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.brute_force_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `tree_ah_config` after provisioning.\n"]
-    pub fn tree_ah_config(
-        &self,
-    ) -> terrars::ListRef<DataVertexAiIndexMetadataElConfigElAlgorithmConfigElTreeAhConfigElRef> {
+    pub fn tree_ah_config(&self) -> terrars::ListRef<DataVertexAiIndex_Metadata_Config_AlgorithmConfig_TreeAhConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tree_ah_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataVertexAiIndexMetadataElConfigEl {
+pub struct DataVertexAiIndex_Metadata_Config {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    algorithm_config: std::option::Option<terrars::ListField<DataVertexAiIndexMetadataElConfigElAlgorithmConfigEl>>,
+    algorithm_config: std::option::Option<terrars::ListField<DataVertexAiIndex_Metadata_Config_AlgorithmConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     approximate_neighbors_count: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -759,11 +852,11 @@ pub struct DataVertexAiIndexMetadataElConfigEl {
     shard_size: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataVertexAiIndexMetadataElConfigEl {
+impl DataVertexAiIndex_Metadata_Config {
     #[doc = "Set the field `algorithm_config`.\n"]
     pub fn set_algorithm_config(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataVertexAiIndexMetadataElConfigElAlgorithmConfigEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataVertexAiIndex_Metadata_Config_AlgorithmConfig>>,
     ) -> Self {
         self.algorithm_config = std::option::Option::Some(v.into());
         self
@@ -803,8 +896,8 @@ impl DataVertexAiIndexMetadataElConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataVertexAiIndexMetadataElConfigEl {
-    type O = terrars::BlockAssignable<DataVertexAiIndexMetadataElConfigEl>;
+impl terrars::ToListMappable for DataVertexAiIndex_Metadata_Config {
+    type O = terrars::BlockAssignable<DataVertexAiIndex_Metadata_Config>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -815,11 +908,11 @@ impl terrars::ToListMappable for DataVertexAiIndexMetadataElConfigEl {
     }
 }
 
-pub struct BuildDataVertexAiIndexMetadataElConfigEl {}
+pub struct BuildDataVertexAiIndex_Metadata_Config {}
 
-impl BuildDataVertexAiIndexMetadataElConfigEl {
-    pub fn build(self) -> DataVertexAiIndexMetadataElConfigEl {
-        DataVertexAiIndexMetadataElConfigEl {
+impl BuildDataVertexAiIndex_Metadata_Config {
+    pub fn build(self) -> DataVertexAiIndex_Metadata_Config {
+        DataVertexAiIndex_Metadata_Config {
             algorithm_config: core::default::Default::default(),
             approximate_neighbors_count: core::default::Default::default(),
             dimensions: core::default::Default::default(),
@@ -830,27 +923,29 @@ impl BuildDataVertexAiIndexMetadataElConfigEl {
     }
 }
 
-pub struct DataVertexAiIndexMetadataElConfigElRef {
+#[allow(dead_code)]
+pub struct DataVertexAiIndex_Metadata_ConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataVertexAiIndexMetadataElConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVertexAiIndexMetadataElConfigElRef {
-        DataVertexAiIndexMetadataElConfigElRef {
+impl terrars::Ref for DataVertexAiIndex_Metadata_ConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVertexAiIndex_Metadata_ConfigRef {
+        DataVertexAiIndex_Metadata_ConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataVertexAiIndexMetadataElConfigElRef {
+impl DataVertexAiIndex_Metadata_ConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `algorithm_config` after provisioning.\n"]
-    pub fn algorithm_config(&self) -> terrars::ListRef<DataVertexAiIndexMetadataElConfigElAlgorithmConfigElRef> {
+    pub fn algorithm_config(&self) -> terrars::ListRef<DataVertexAiIndex_Metadata_Config_AlgorithmConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.algorithm_config", self.base))
     }
 
@@ -881,20 +976,20 @@ impl DataVertexAiIndexMetadataElConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataVertexAiIndexMetadataEl {
+pub struct DataVertexAiIndex_Metadata {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    config: std::option::Option<terrars::ListField<DataVertexAiIndexMetadataElConfigEl>>,
+    config: std::option::Option<terrars::ListField<DataVertexAiIndex_Metadata_Config>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     contents_delta_uri: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     is_complete_overwrite: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataVertexAiIndexMetadataEl {
+impl DataVertexAiIndex_Metadata {
     #[doc = "Set the field `config`.\n"]
     pub fn set_config(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataVertexAiIndexMetadataElConfigEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataVertexAiIndex_Metadata_Config>>,
     ) -> Self {
         self.config = std::option::Option::Some(v.into());
         self
@@ -916,8 +1011,8 @@ impl DataVertexAiIndexMetadataEl {
     }
 }
 
-impl terrars::ToListMappable for DataVertexAiIndexMetadataEl {
-    type O = terrars::BlockAssignable<DataVertexAiIndexMetadataEl>;
+impl terrars::ToListMappable for DataVertexAiIndex_Metadata {
+    type O = terrars::BlockAssignable<DataVertexAiIndex_Metadata>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -928,11 +1023,11 @@ impl terrars::ToListMappable for DataVertexAiIndexMetadataEl {
     }
 }
 
-pub struct BuildDataVertexAiIndexMetadataEl {}
+pub struct BuildDataVertexAiIndex_Metadata {}
 
-impl BuildDataVertexAiIndexMetadataEl {
-    pub fn build(self) -> DataVertexAiIndexMetadataEl {
-        DataVertexAiIndexMetadataEl {
+impl BuildDataVertexAiIndex_Metadata {
+    pub fn build(self) -> DataVertexAiIndex_Metadata {
+        DataVertexAiIndex_Metadata {
             config: core::default::Default::default(),
             contents_delta_uri: core::default::Default::default(),
             is_complete_overwrite: core::default::Default::default(),
@@ -940,27 +1035,29 @@ impl BuildDataVertexAiIndexMetadataEl {
     }
 }
 
-pub struct DataVertexAiIndexMetadataElRef {
+#[allow(dead_code)]
+pub struct DataVertexAiIndex_MetadataRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataVertexAiIndexMetadataElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVertexAiIndexMetadataElRef {
-        DataVertexAiIndexMetadataElRef {
+impl terrars::Ref for DataVertexAiIndex_MetadataRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVertexAiIndex_MetadataRef {
+        DataVertexAiIndex_MetadataRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataVertexAiIndexMetadataElRef {
+impl DataVertexAiIndex_MetadataRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `config` after provisioning.\n"]
-    pub fn config(&self) -> terrars::ListRef<DataVertexAiIndexMetadataElConfigElRef> {
+    pub fn config(&self) -> terrars::ListRef<DataVertexAiIndex_Metadata_ConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.config", self.base))
     }
 

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct PubsubSchemaData {
+struct PubsubSchemaData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,6 +23,8 @@ struct PubsubSchemaData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     definition: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,13 +32,13 @@ struct PubsubSchemaData {
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<PubsubSchemaTimeoutsEl>,
+    timeouts: std::option::Option<PubsubSchema_Timeouts>,
 }
 
 struct PubsubSchema_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<PubsubSchemaData>,
+    data: std::cell::RefCell<PubsubSchemaData_>,
 }
 
 #[derive(Clone)]
@@ -141,6 +145,13 @@ impl PubsubSchema {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -161,7 +172,7 @@ impl PubsubSchema {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<PubsubSchemaTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<PubsubSchema_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -170,6 +181,12 @@ impl PubsubSchema {
         "Get a reference to the value of field `definition` after provisioning.\nThe definition of the schema.\nThis should contain a string representing the full definition of the schema\nthat is a valid schema definition of the type specified in type. Changes\nto the definition commit new [schema revisions](https://cloud.google.com/pubsub/docs/commit-schema-revision).\nA schema can only have up to 20 revisions, so updates that fail with an\nerror indicating that the limit has been reached require manually\n[deleting old revisions](https://cloud.google.com/pubsub/docs/delete-schema-revision)."]
     pub fn definition(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.definition", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -189,14 +206,20 @@ impl PubsubSchema {
     }
 
     #[doc =
+        "Get a reference to the value of field `revision_id` after provisioning.\nOutput only. The revision ID of the schema."]
+    pub fn revision_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.revision_id", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `type_` after provisioning.\nThe type of the schema definition Default value: \"TYPE_UNSPECIFIED\" Possible values: [\"TYPE_UNSPECIFIED\", \"PROTOCOL_BUFFER\", \"AVRO\"]"]
     pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> PubsubSchemaTimeoutsElRef {
-        PubsubSchemaTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> PubsubSchema_TimeoutsRef {
+        PubsubSchema_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -242,13 +265,14 @@ impl BuildPubsubSchema {
         let out = PubsubSchema(std::rc::Rc::new(PubsubSchema_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(PubsubSchemaData {
+            data: std::cell::RefCell::new(PubsubSchemaData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 definition: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
                 project: core::default::Default::default(),
@@ -290,6 +314,12 @@ impl PubsubSchemaRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.definition", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -307,19 +337,25 @@ impl PubsubSchemaRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `revision_id` after provisioning.\nOutput only. The revision ID of the schema."]
+    pub fn revision_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.revision_id", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `type_` after provisioning.\nThe type of the schema definition Default value: \"TYPE_UNSPECIFIED\" Possible values: [\"TYPE_UNSPECIFIED\", \"PROTOCOL_BUFFER\", \"AVRO\"]"]
     pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> PubsubSchemaTimeoutsElRef {
-        PubsubSchemaTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> PubsubSchema_TimeoutsRef {
+        PubsubSchema_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct PubsubSchemaTimeoutsEl {
+pub struct PubsubSchema_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -328,7 +364,7 @@ pub struct PubsubSchemaTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl PubsubSchemaTimeoutsEl {
+impl PubsubSchema_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -348,8 +384,8 @@ impl PubsubSchemaTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for PubsubSchemaTimeoutsEl {
-    type O = terrars::BlockAssignable<PubsubSchemaTimeoutsEl>;
+impl terrars::ToListMappable for PubsubSchema_Timeouts {
+    type O = terrars::BlockAssignable<PubsubSchema_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -360,11 +396,11 @@ impl terrars::ToListMappable for PubsubSchemaTimeoutsEl {
     }
 }
 
-pub struct BuildPubsubSchemaTimeoutsEl {}
+pub struct BuildPubsubSchema_Timeouts {}
 
-impl BuildPubsubSchemaTimeoutsEl {
-    pub fn build(self) -> PubsubSchemaTimeoutsEl {
-        PubsubSchemaTimeoutsEl {
+impl BuildPubsubSchema_Timeouts {
+    pub fn build(self) -> PubsubSchema_Timeouts {
+        PubsubSchema_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -372,21 +408,23 @@ impl BuildPubsubSchemaTimeoutsEl {
     }
 }
 
-pub struct PubsubSchemaTimeoutsElRef {
+#[allow(dead_code)]
+pub struct PubsubSchema_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PubsubSchemaTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> PubsubSchemaTimeoutsElRef {
-        PubsubSchemaTimeoutsElRef {
+impl terrars::Ref for PubsubSchema_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> PubsubSchema_TimeoutsRef {
+        PubsubSchema_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PubsubSchemaTimeoutsElRef {
+impl PubsubSchema_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DnsManagedZoneIamBindingData {
+struct DnsManagedZoneIamBindingData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,14 +28,14 @@ struct DnsManagedZoneIamBindingData {
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<DnsManagedZoneIamBindingConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<DnsManagedZoneIamBinding_Condition>>,
     dynamic: DnsManagedZoneIamBindingDynamic,
 }
 
 struct DnsManagedZoneIamBinding_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DnsManagedZoneIamBindingData>,
+    data: std::cell::RefCell<DnsManagedZoneIamBindingData_>,
 }
 
 #[derive(Clone)]
@@ -148,7 +150,7 @@ impl DnsManagedZoneIamBinding {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DnsManagedZoneIamBindingConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DnsManagedZoneIamBinding_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -192,7 +194,7 @@ impl DnsManagedZoneIamBinding {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<DnsManagedZoneIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<DnsManagedZoneIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -243,7 +245,7 @@ impl BuildDnsManagedZoneIamBinding {
         let out = DnsManagedZoneIamBinding(std::rc::Rc::new(DnsManagedZoneIamBinding_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DnsManagedZoneIamBindingData {
+            data: std::cell::RefCell::new(DnsManagedZoneIamBindingData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -317,20 +319,25 @@ impl DnsManagedZoneIamBindingRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<DnsManagedZoneIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<DnsManagedZoneIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DnsManagedZoneIamBindingDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<DnsManagedZoneIamBinding_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct DnsManagedZoneIamBindingConditionEl {
+pub struct DnsManagedZoneIamBinding_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl DnsManagedZoneIamBindingConditionEl {
+impl DnsManagedZoneIamBinding_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -338,8 +345,8 @@ impl DnsManagedZoneIamBindingConditionEl {
     }
 }
 
-impl terrars::ToListMappable for DnsManagedZoneIamBindingConditionEl {
-    type O = terrars::BlockAssignable<DnsManagedZoneIamBindingConditionEl>;
+impl terrars::ToListMappable for DnsManagedZoneIamBinding_Condition {
+    type O = terrars::BlockAssignable<DnsManagedZoneIamBinding_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -350,16 +357,16 @@ impl terrars::ToListMappable for DnsManagedZoneIamBindingConditionEl {
     }
 }
 
-pub struct BuildDnsManagedZoneIamBindingConditionEl {
+pub struct BuildDnsManagedZoneIamBinding_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDnsManagedZoneIamBindingConditionEl {
-    pub fn build(self) -> DnsManagedZoneIamBindingConditionEl {
-        DnsManagedZoneIamBindingConditionEl {
+impl BuildDnsManagedZoneIamBinding_Condition {
+    pub fn build(self) -> DnsManagedZoneIamBinding_Condition {
+        DnsManagedZoneIamBinding_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -367,21 +374,23 @@ impl BuildDnsManagedZoneIamBindingConditionEl {
     }
 }
 
-pub struct DnsManagedZoneIamBindingConditionElRef {
+#[allow(dead_code)]
+pub struct DnsManagedZoneIamBinding_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DnsManagedZoneIamBindingConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DnsManagedZoneIamBindingConditionElRef {
-        DnsManagedZoneIamBindingConditionElRef {
+impl terrars::Ref for DnsManagedZoneIamBinding_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DnsManagedZoneIamBinding_ConditionRef {
+        DnsManagedZoneIamBinding_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DnsManagedZoneIamBindingConditionElRef {
+impl DnsManagedZoneIamBinding_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -400,9 +409,4 @@ impl DnsManagedZoneIamBindingConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DnsManagedZoneIamBindingDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<DnsManagedZoneIamBindingConditionEl>>,
 }

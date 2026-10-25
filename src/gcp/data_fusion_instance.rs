@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataFusionInstanceData {
+struct DataFusionInstanceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,6 +22,8 @@ struct DataFusionInstanceData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dataproc_service_account: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -38,11 +42,15 @@ struct DataFusionInstanceData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     options: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    patch_revision: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     private_instance: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -50,22 +58,24 @@ struct DataFusionInstanceData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     zone: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    accelerators: std::option::Option<std::vec::Vec<DataFusionInstanceAcceleratorsEl>>,
+    accelerators: std::option::Option<std::vec::Vec<DataFusionInstance_Accelerators>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    crypto_key_config: std::option::Option<std::vec::Vec<DataFusionInstanceCryptoKeyConfigEl>>,
+    crypto_key_config: std::option::Option<std::vec::Vec<DataFusionInstance_CryptoKeyConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    event_publish_config: std::option::Option<std::vec::Vec<DataFusionInstanceEventPublishConfigEl>>,
+    event_publish_config: std::option::Option<std::vec::Vec<DataFusionInstance_EventPublishConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    network_config: std::option::Option<std::vec::Vec<DataFusionInstanceNetworkConfigEl>>,
+    maintenance_policy: std::option::Option<std::vec::Vec<DataFusionInstance_MaintenancePolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataFusionInstanceTimeoutsEl>,
+    network_config: std::option::Option<std::vec::Vec<DataFusionInstance_NetworkConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<DataFusionInstance_Timeouts>,
     dynamic: DataFusionInstanceDynamic,
 }
 
 struct DataFusionInstance_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataFusionInstanceData>,
+    data: std::cell::RefCell<DataFusionInstanceData_>,
 }
 
 #[derive(Clone)]
@@ -175,6 +185,13 @@ impl DataFusionInstance {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nAn optional description of the instance."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -231,6 +248,12 @@ impl DataFusionInstance {
         self
     }
 
+    #[doc = "Set the field `patch_revision`.\nCurrent patch revision of the Data Fusion."]
+    pub fn set_patch_revision(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().patch_revision = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc =
         "Set the field `private_instance`.\nSpecifies whether the Data Fusion instance should be private. If set to\ntrue, all Data Fusion nodes will have private IP addresses and will not be\nable to access the public internet."]
     pub fn set_private_instance(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -250,6 +273,16 @@ impl DataFusionInstance {
         self
     }
 
+    #[doc =
+        "Set the field `tags`.\nA map of resource manager tags.\nResource manager tag keys and values have the same definition as resource manager tags.\nKeys must be in the format tagKeys/{tag_key_id}, and values are in the format tagValues/{tag_value_id}.\nThe field is ignored (both PUT & PATCH) when empty."]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `version`.\nCurrent version of the Data Fusion."]
     pub fn set_version(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().version = std::option::Option::Some(v.into());
@@ -266,7 +299,7 @@ impl DataFusionInstance {
     #[doc = "Set the field `accelerators`.\n"]
     pub fn set_accelerators(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataFusionInstanceAcceleratorsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataFusionInstance_Accelerators>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -282,7 +315,7 @@ impl DataFusionInstance {
     #[doc = "Set the field `crypto_key_config`.\n"]
     pub fn set_crypto_key_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataFusionInstanceCryptoKeyConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataFusionInstance_CryptoKeyConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -298,7 +331,7 @@ impl DataFusionInstance {
     #[doc = "Set the field `event_publish_config`.\n"]
     pub fn set_event_publish_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataFusionInstanceEventPublishConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataFusionInstance_EventPublishConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -311,10 +344,26 @@ impl DataFusionInstance {
         self
     }
 
+    #[doc = "Set the field `maintenance_policy`.\n"]
+    pub fn set_maintenance_policy(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataFusionInstance_MaintenancePolicy>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().maintenance_policy = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.maintenance_policy = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `network_config`.\n"]
     pub fn set_network_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataFusionInstanceNetworkConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataFusionInstance_NetworkConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -328,7 +377,7 @@ impl DataFusionInstance {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataFusionInstanceTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataFusionInstance_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -349,6 +398,12 @@ impl DataFusionInstance {
         "Get a reference to the value of field `dataproc_service_account` after provisioning.\nUser-managed service account to set on Dataproc when Cloud Data Fusion creates Dataproc to run data processing pipelines."]
     pub fn dataproc_service_account(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.dataproc_service_account", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -407,6 +462,12 @@ impl DataFusionInstance {
     }
 
     #[doc =
+        "Get a reference to the value of field `maintenance_events` after provisioning.\nThe maintenance events for this instance."]
+    pub fn maintenance_events(&self) -> terrars::ListRef<DataFusionInstance_MaintenanceEventsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.maintenance_events", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `name` after provisioning.\nThe ID of the instance or a fully qualified identifier for the instance."]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
@@ -422,6 +483,12 @@ impl DataFusionInstance {
         "Get a reference to the value of field `p4_service_account` after provisioning.\nP4 service account for the customer project."]
     pub fn p4_service_account(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.p4_service_account", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `patch_revision` after provisioning.\nCurrent patch revision of the Data Fusion."]
+    pub fn patch_revision(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.patch_revision", self.extract_ref()))
     }
 
     #[doc =
@@ -460,6 +527,12 @@ impl DataFusionInstance {
     }
 
     #[doc =
+        "Get a reference to the value of field `tags` after provisioning.\nA map of resource manager tags.\nResource manager tag keys and values have the same definition as resource manager tags.\nKeys must be in the format tagKeys/{tag_key_id}, and values are in the format tagValues/{tag_value_id}.\nThe field is ignored (both PUT & PATCH) when empty."]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `tenant_project_id` after provisioning.\nThe name of the tenant project."]
     pub fn tenant_project_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.tenant_project_id", self.extract_ref()))
@@ -495,28 +568,33 @@ impl DataFusionInstance {
     }
 
     #[doc = "Get a reference to the value of field `accelerators` after provisioning.\n"]
-    pub fn accelerators(&self) -> terrars::ListRef<DataFusionInstanceAcceleratorsElRef> {
+    pub fn accelerators(&self) -> terrars::ListRef<DataFusionInstance_AcceleratorsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.accelerators", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `crypto_key_config` after provisioning.\n"]
-    pub fn crypto_key_config(&self) -> terrars::ListRef<DataFusionInstanceCryptoKeyConfigElRef> {
+    pub fn crypto_key_config(&self) -> terrars::ListRef<DataFusionInstance_CryptoKeyConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.crypto_key_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `event_publish_config` after provisioning.\n"]
-    pub fn event_publish_config(&self) -> terrars::ListRef<DataFusionInstanceEventPublishConfigElRef> {
+    pub fn event_publish_config(&self) -> terrars::ListRef<DataFusionInstance_EventPublishConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.event_publish_config", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `maintenance_policy` after provisioning.\n"]
+    pub fn maintenance_policy(&self) -> terrars::ListRef<DataFusionInstance_MaintenancePolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.maintenance_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `network_config` after provisioning.\n"]
-    pub fn network_config(&self) -> terrars::ListRef<DataFusionInstanceNetworkConfigElRef> {
+    pub fn network_config(&self) -> terrars::ListRef<DataFusionInstance_NetworkConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataFusionInstanceTimeoutsElRef {
-        DataFusionInstanceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataFusionInstance_TimeoutsRef {
+        DataFusionInstance_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -565,13 +643,14 @@ impl BuildDataFusionInstance {
         let out = DataFusionInstance(std::rc::Rc::new(DataFusionInstance_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataFusionInstanceData {
+            data: std::cell::RefCell::new(DataFusionInstanceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 dataproc_service_account: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 display_name: core::default::Default::default(),
                 enable_rbac: core::default::Default::default(),
@@ -581,15 +660,18 @@ impl BuildDataFusionInstance {
                 labels: core::default::Default::default(),
                 name: self.name,
                 options: core::default::Default::default(),
+                patch_revision: core::default::Default::default(),
                 private_instance: core::default::Default::default(),
                 project: core::default::Default::default(),
                 region: core::default::Default::default(),
+                tags: core::default::Default::default(),
                 type_: self.type_,
                 version: core::default::Default::default(),
                 zone: core::default::Default::default(),
                 accelerators: core::default::Default::default(),
                 crypto_key_config: core::default::Default::default(),
                 event_publish_config: core::default::Default::default(),
+                maintenance_policy: core::default::Default::default(),
                 network_config: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -642,6 +724,12 @@ impl DataFusionInstanceRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nAn optional description of the instance."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -697,6 +785,12 @@ impl DataFusionInstanceRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `maintenance_events` after provisioning.\nThe maintenance events for this instance."]
+    pub fn maintenance_events(&self) -> terrars::ListRef<DataFusionInstance_MaintenanceEventsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.maintenance_events", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `name` after provisioning.\nThe ID of the instance or a fully qualified identifier for the instance."]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
@@ -712,6 +806,12 @@ impl DataFusionInstanceRef {
         "Get a reference to the value of field `p4_service_account` after provisioning.\nP4 service account for the customer project."]
     pub fn p4_service_account(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.p4_service_account", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `patch_revision` after provisioning.\nCurrent patch revision of the Data Fusion."]
+    pub fn patch_revision(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.patch_revision", self.extract_ref()))
     }
 
     #[doc =
@@ -750,6 +850,12 @@ impl DataFusionInstanceRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `tags` after provisioning.\nA map of resource manager tags.\nResource manager tag keys and values have the same definition as resource manager tags.\nKeys must be in the format tagKeys/{tag_key_id}, and values are in the format tagValues/{tag_value_id}.\nThe field is ignored (both PUT & PATCH) when empty."]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `tenant_project_id` after provisioning.\nThe name of the tenant project."]
     pub fn tenant_project_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.tenant_project_id", self.extract_ref()))
@@ -785,41 +891,77 @@ impl DataFusionInstanceRef {
     }
 
     #[doc = "Get a reference to the value of field `accelerators` after provisioning.\n"]
-    pub fn accelerators(&self) -> terrars::ListRef<DataFusionInstanceAcceleratorsElRef> {
+    pub fn accelerators(&self) -> terrars::ListRef<DataFusionInstance_AcceleratorsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.accelerators", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `crypto_key_config` after provisioning.\n"]
-    pub fn crypto_key_config(&self) -> terrars::ListRef<DataFusionInstanceCryptoKeyConfigElRef> {
+    pub fn crypto_key_config(&self) -> terrars::ListRef<DataFusionInstance_CryptoKeyConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.crypto_key_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `event_publish_config` after provisioning.\n"]
-    pub fn event_publish_config(&self) -> terrars::ListRef<DataFusionInstanceEventPublishConfigElRef> {
+    pub fn event_publish_config(&self) -> terrars::ListRef<DataFusionInstance_EventPublishConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.event_publish_config", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `maintenance_policy` after provisioning.\n"]
+    pub fn maintenance_policy(&self) -> terrars::ListRef<DataFusionInstance_MaintenancePolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.maintenance_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `network_config` after provisioning.\n"]
-    pub fn network_config(&self) -> terrars::ListRef<DataFusionInstanceNetworkConfigElRef> {
+    pub fn network_config(&self) -> terrars::ListRef<DataFusionInstance_NetworkConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataFusionInstanceTimeoutsElRef {
-        DataFusionInstanceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataFusionInstance_TimeoutsRef {
+        DataFusionInstance_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
-#[derive(Serialize)]
-pub struct DataFusionInstanceAcceleratorsEl {
-    accelerator_type: terrars::PrimField<std::string::String>,
-    state: terrars::PrimField<std::string::String>,
+#[derive(Serialize, Default)]
+struct DataFusionInstanceDynamic {
+    accelerators: std::option::Option<terrars::DynamicBlock<DataFusionInstance_Accelerators>>,
+    crypto_key_config: std::option::Option<terrars::DynamicBlock<DataFusionInstance_CryptoKeyConfig>>,
+    event_publish_config: std::option::Option<terrars::DynamicBlock<DataFusionInstance_EventPublishConfig>>,
+    maintenance_policy: std::option::Option<terrars::DynamicBlock<DataFusionInstance_MaintenancePolicy>>,
+    network_config: std::option::Option<terrars::DynamicBlock<DataFusionInstance_NetworkConfig>>,
 }
 
-impl DataFusionInstanceAcceleratorsEl { }
+#[derive(Serialize)]
+pub struct DataFusionInstance_MaintenanceEvents {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    end_time: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    start_time: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    state: std::option::Option<terrars::PrimField<std::string::String>>,
+}
 
-impl terrars::ToListMappable for DataFusionInstanceAcceleratorsEl {
-    type O = terrars::BlockAssignable<DataFusionInstanceAcceleratorsEl>;
+impl DataFusionInstance_MaintenanceEvents {
+    #[doc = "Set the field `end_time`.\n"]
+    pub fn set_end_time(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.end_time = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `start_time`.\n"]
+    pub fn set_start_time(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.start_time = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `state`.\n"]
+    pub fn set_state(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.state = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataFusionInstance_MaintenanceEvents {
+    type O = terrars::BlockAssignable<DataFusionInstance_MaintenanceEvents>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -830,7 +972,76 @@ impl terrars::ToListMappable for DataFusionInstanceAcceleratorsEl {
     }
 }
 
-pub struct BuildDataFusionInstanceAcceleratorsEl {
+pub struct BuildDataFusionInstance_MaintenanceEvents {}
+
+impl BuildDataFusionInstance_MaintenanceEvents {
+    pub fn build(self) -> DataFusionInstance_MaintenanceEvents {
+        DataFusionInstance_MaintenanceEvents {
+            end_time: core::default::Default::default(),
+            start_time: core::default::Default::default(),
+            state: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataFusionInstance_MaintenanceEventsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataFusionInstance_MaintenanceEventsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataFusionInstance_MaintenanceEventsRef {
+        DataFusionInstance_MaintenanceEventsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataFusionInstance_MaintenanceEventsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `end_time` after provisioning.\n"]
+    pub fn end_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.end_time", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `start_time` after provisioning.\n"]
+    pub fn start_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.start_time", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataFusionInstance_Accelerators {
+    accelerator_type: terrars::PrimField<std::string::String>,
+    state: terrars::PrimField<std::string::String>,
+}
+
+impl DataFusionInstance_Accelerators { }
+
+impl terrars::ToListMappable for DataFusionInstance_Accelerators {
+    type O = terrars::BlockAssignable<DataFusionInstance_Accelerators>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataFusionInstance_Accelerators {
     #[doc =
         "The type of an accelator for a CDF instance. Possible values: [\"CDC\", \"HEALTHCARE\", \"CCAI_INSIGHTS\"]"]
     pub accelerator_type: terrars::PrimField<std::string::String>,
@@ -838,30 +1049,32 @@ pub struct BuildDataFusionInstanceAcceleratorsEl {
     pub state: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataFusionInstanceAcceleratorsEl {
-    pub fn build(self) -> DataFusionInstanceAcceleratorsEl {
-        DataFusionInstanceAcceleratorsEl {
+impl BuildDataFusionInstance_Accelerators {
+    pub fn build(self) -> DataFusionInstance_Accelerators {
+        DataFusionInstance_Accelerators {
             accelerator_type: self.accelerator_type,
             state: self.state,
         }
     }
 }
 
-pub struct DataFusionInstanceAcceleratorsElRef {
+#[allow(dead_code)]
+pub struct DataFusionInstance_AcceleratorsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataFusionInstanceAcceleratorsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataFusionInstanceAcceleratorsElRef {
-        DataFusionInstanceAcceleratorsElRef {
+impl terrars::Ref for DataFusionInstance_AcceleratorsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataFusionInstance_AcceleratorsRef {
+        DataFusionInstance_AcceleratorsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataFusionInstanceAcceleratorsElRef {
+impl DataFusionInstance_AcceleratorsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -880,14 +1093,14 @@ impl DataFusionInstanceAcceleratorsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataFusionInstanceCryptoKeyConfigEl {
+pub struct DataFusionInstance_CryptoKeyConfig {
     key_reference: terrars::PrimField<std::string::String>,
 }
 
-impl DataFusionInstanceCryptoKeyConfigEl { }
+impl DataFusionInstance_CryptoKeyConfig { }
 
-impl terrars::ToListMappable for DataFusionInstanceCryptoKeyConfigEl {
-    type O = terrars::BlockAssignable<DataFusionInstanceCryptoKeyConfigEl>;
+impl terrars::ToListMappable for DataFusionInstance_CryptoKeyConfig {
+    type O = terrars::BlockAssignable<DataFusionInstance_CryptoKeyConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -898,33 +1111,35 @@ impl terrars::ToListMappable for DataFusionInstanceCryptoKeyConfigEl {
     }
 }
 
-pub struct BuildDataFusionInstanceCryptoKeyConfigEl {
+pub struct BuildDataFusionInstance_CryptoKeyConfig {
     #[doc =
         "The name of the key which is used to encrypt/decrypt customer data. For key in Cloud KMS, the key should be in the format of projects/*/locations/*/keyRings/*/cryptoKeys/*."]
     pub key_reference: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataFusionInstanceCryptoKeyConfigEl {
-    pub fn build(self) -> DataFusionInstanceCryptoKeyConfigEl {
-        DataFusionInstanceCryptoKeyConfigEl { key_reference: self.key_reference }
+impl BuildDataFusionInstance_CryptoKeyConfig {
+    pub fn build(self) -> DataFusionInstance_CryptoKeyConfig {
+        DataFusionInstance_CryptoKeyConfig { key_reference: self.key_reference }
     }
 }
 
-pub struct DataFusionInstanceCryptoKeyConfigElRef {
+#[allow(dead_code)]
+pub struct DataFusionInstance_CryptoKeyConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataFusionInstanceCryptoKeyConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataFusionInstanceCryptoKeyConfigElRef {
-        DataFusionInstanceCryptoKeyConfigElRef {
+impl terrars::Ref for DataFusionInstance_CryptoKeyConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataFusionInstance_CryptoKeyConfigRef {
+        DataFusionInstance_CryptoKeyConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataFusionInstanceCryptoKeyConfigElRef {
+impl DataFusionInstance_CryptoKeyConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -937,15 +1152,15 @@ impl DataFusionInstanceCryptoKeyConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataFusionInstanceEventPublishConfigEl {
+pub struct DataFusionInstance_EventPublishConfig {
     enabled: terrars::PrimField<bool>,
     topic: terrars::PrimField<std::string::String>,
 }
 
-impl DataFusionInstanceEventPublishConfigEl { }
+impl DataFusionInstance_EventPublishConfig { }
 
-impl terrars::ToListMappable for DataFusionInstanceEventPublishConfigEl {
-    type O = terrars::BlockAssignable<DataFusionInstanceEventPublishConfigEl>;
+impl terrars::ToListMappable for DataFusionInstance_EventPublishConfig {
+    type O = terrars::BlockAssignable<DataFusionInstance_EventPublishConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -956,37 +1171,39 @@ impl terrars::ToListMappable for DataFusionInstanceEventPublishConfigEl {
     }
 }
 
-pub struct BuildDataFusionInstanceEventPublishConfigEl {
+pub struct BuildDataFusionInstance_EventPublishConfig {
     #[doc = "Option to enable Event Publishing."]
     pub enabled: terrars::PrimField<bool>,
     #[doc = "The resource name of the Pub/Sub topic. Format: projects/{projectId}/topics/{topic_id}"]
     pub topic: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataFusionInstanceEventPublishConfigEl {
-    pub fn build(self) -> DataFusionInstanceEventPublishConfigEl {
-        DataFusionInstanceEventPublishConfigEl {
+impl BuildDataFusionInstance_EventPublishConfig {
+    pub fn build(self) -> DataFusionInstance_EventPublishConfig {
+        DataFusionInstance_EventPublishConfig {
             enabled: self.enabled,
             topic: self.topic,
         }
     }
 }
 
-pub struct DataFusionInstanceEventPublishConfigElRef {
+#[allow(dead_code)]
+pub struct DataFusionInstance_EventPublishConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataFusionInstanceEventPublishConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataFusionInstanceEventPublishConfigElRef {
-        DataFusionInstanceEventPublishConfigElRef {
+impl terrars::Ref for DataFusionInstance_EventPublishConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataFusionInstance_EventPublishConfigRef {
+        DataFusionInstance_EventPublishConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataFusionInstanceEventPublishConfigElRef {
+impl DataFusionInstance_EventPublishConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1004,15 +1221,16 @@ impl DataFusionInstanceEventPublishConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataFusionInstanceNetworkConfigEl {
-    ip_allocation: terrars::PrimField<std::string::String>,
-    network: terrars::PrimField<std::string::String>,
+pub struct DataFusionInstance_MaintenancePolicy_MaintenanceWindow_RecurringTimeWindow_Window {
+    end_time: terrars::PrimField<std::string::String>,
+    start_time: terrars::PrimField<std::string::String>,
 }
 
-impl DataFusionInstanceNetworkConfigEl { }
+impl DataFusionInstance_MaintenancePolicy_MaintenanceWindow_RecurringTimeWindow_Window { }
 
-impl terrars::ToListMappable for DataFusionInstanceNetworkConfigEl {
-    type O = terrars::BlockAssignable<DataFusionInstanceNetworkConfigEl>;
+impl terrars::ToListMappable for DataFusionInstance_MaintenancePolicy_MaintenanceWindow_RecurringTimeWindow_Window {
+    type O =
+        terrars::BlockAssignable<DataFusionInstance_MaintenancePolicy_MaintenanceWindow_RecurringTimeWindow_Window>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1023,41 +1241,564 @@ impl terrars::ToListMappable for DataFusionInstanceNetworkConfigEl {
     }
 }
 
-pub struct BuildDataFusionInstanceNetworkConfigEl {
-    #[doc =
-        "The IP range in CIDR notation to use for the managed Data Fusion instance\nnodes. This range must not overlap with any other ranges used in the Data Fusion instance network."]
-    pub ip_allocation: terrars::PrimField<std::string::String>,
-    #[doc =
-        "Name of the network in the project with which the tenant project\nwill be peered for executing pipelines. In case of shared VPC where the network resides in another host\nproject the network should specified in the form of projects/{host-project-id}/global/networks/{network}"]
-    pub network: terrars::PrimField<std::string::String>,
+pub struct BuildDataFusionInstance_MaintenancePolicy_MaintenanceWindow_RecurringTimeWindow_Window {
+    #[doc = "The end time of the time window provided in RFC 3339 format."]
+    pub end_time: terrars::PrimField<std::string::String>,
+    #[doc = "The start time of the time window provided in RFC 3339 format."]
+    pub start_time: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataFusionInstanceNetworkConfigEl {
-    pub fn build(self) -> DataFusionInstanceNetworkConfigEl {
-        DataFusionInstanceNetworkConfigEl {
-            ip_allocation: self.ip_allocation,
-            network: self.network,
+impl BuildDataFusionInstance_MaintenancePolicy_MaintenanceWindow_RecurringTimeWindow_Window {
+    pub fn build(self) -> DataFusionInstance_MaintenancePolicy_MaintenanceWindow_RecurringTimeWindow_Window {
+        DataFusionInstance_MaintenancePolicy_MaintenanceWindow_RecurringTimeWindow_Window {
+            end_time: self.end_time,
+            start_time: self.start_time,
         }
     }
 }
 
-pub struct DataFusionInstanceNetworkConfigElRef {
+#[allow(dead_code)]
+pub struct DataFusionInstance_MaintenancePolicy_MaintenanceWindow_RecurringTimeWindow_WindowRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataFusionInstanceNetworkConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataFusionInstanceNetworkConfigElRef {
-        DataFusionInstanceNetworkConfigElRef {
+impl terrars::Ref for DataFusionInstance_MaintenancePolicy_MaintenanceWindow_RecurringTimeWindow_WindowRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataFusionInstance_MaintenancePolicy_MaintenanceWindow_RecurringTimeWindow_WindowRef {
+        DataFusionInstance_MaintenancePolicy_MaintenanceWindow_RecurringTimeWindow_WindowRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataFusionInstanceNetworkConfigElRef {
+impl DataFusionInstance_MaintenancePolicy_MaintenanceWindow_RecurringTimeWindow_WindowRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `end_time` after provisioning.\nThe end time of the time window provided in RFC 3339 format."]
+    pub fn end_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.end_time", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `start_time` after provisioning.\nThe start time of the time window provided in RFC 3339 format."]
+    pub fn start_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.start_time", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct DataFusionInstance_MaintenancePolicy_MaintenanceWindow_RecurringTimeWindowDynamic {
+    window: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<DataFusionInstance_MaintenancePolicy_MaintenanceWindow_RecurringTimeWindow_Window>,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct DataFusionInstance_MaintenancePolicy_MaintenanceWindow_RecurringTimeWindow {
+    recurrence: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    window: std
+    ::option
+    ::Option<std::vec::Vec<DataFusionInstance_MaintenancePolicy_MaintenanceWindow_RecurringTimeWindow_Window>>,
+    dynamic: DataFusionInstance_MaintenancePolicy_MaintenanceWindow_RecurringTimeWindowDynamic,
+}
+
+impl DataFusionInstance_MaintenancePolicy_MaintenanceWindow_RecurringTimeWindow {
+    #[doc = "Set the field `window`.\n"]
+    pub fn set_window(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            DataFusionInstance_MaintenancePolicy_MaintenanceWindow_RecurringTimeWindow_Window,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.window = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.window = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataFusionInstance_MaintenancePolicy_MaintenanceWindow_RecurringTimeWindow {
+    type O = terrars::BlockAssignable<DataFusionInstance_MaintenancePolicy_MaintenanceWindow_RecurringTimeWindow>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataFusionInstance_MaintenancePolicy_MaintenanceWindow_RecurringTimeWindow {
+    #[doc =
+        "An RRULE with format RFC-5545 for how this window reccurs. They go on for the span of time between the start and end time. The only supported FREQ value is \"WEEKLY\". To have something repeat every weekday, use: \"FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR\"."]
+    pub recurrence: terrars::PrimField<std::string::String>,
+}
+
+impl BuildDataFusionInstance_MaintenancePolicy_MaintenanceWindow_RecurringTimeWindow {
+    pub fn build(self) -> DataFusionInstance_MaintenancePolicy_MaintenanceWindow_RecurringTimeWindow {
+        DataFusionInstance_MaintenancePolicy_MaintenanceWindow_RecurringTimeWindow {
+            recurrence: self.recurrence,
+            window: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataFusionInstance_MaintenancePolicy_MaintenanceWindow_RecurringTimeWindowRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataFusionInstance_MaintenancePolicy_MaintenanceWindow_RecurringTimeWindowRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataFusionInstance_MaintenancePolicy_MaintenanceWindow_RecurringTimeWindowRef {
+        DataFusionInstance_MaintenancePolicy_MaintenanceWindow_RecurringTimeWindowRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataFusionInstance_MaintenancePolicy_MaintenanceWindow_RecurringTimeWindowRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `recurrence` after provisioning.\nAn RRULE with format RFC-5545 for how this window reccurs. They go on for the span of time between the start and end time. The only supported FREQ value is \"WEEKLY\". To have something repeat every weekday, use: \"FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR\"."]
+    pub fn recurrence(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.recurrence", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `window` after provisioning.\n"]
+    pub fn window(
+        &self,
+    ) -> terrars::ListRef<DataFusionInstance_MaintenancePolicy_MaintenanceWindow_RecurringTimeWindow_WindowRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.window", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct DataFusionInstance_MaintenancePolicy_MaintenanceWindowDynamic {
+    recurring_time_window: std
+    ::option
+    ::Option<terrars::DynamicBlock<DataFusionInstance_MaintenancePolicy_MaintenanceWindow_RecurringTimeWindow>>,
+}
+
+#[derive(Serialize)]
+pub struct DataFusionInstance_MaintenancePolicy_MaintenanceWindow {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    recurring_time_window: std
+    ::option
+    ::Option<std::vec::Vec<DataFusionInstance_MaintenancePolicy_MaintenanceWindow_RecurringTimeWindow>>,
+    dynamic: DataFusionInstance_MaintenancePolicy_MaintenanceWindowDynamic,
+}
+
+impl DataFusionInstance_MaintenancePolicy_MaintenanceWindow {
+    #[doc = "Set the field `recurring_time_window`.\n"]
+    pub fn set_recurring_time_window(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<DataFusionInstance_MaintenancePolicy_MaintenanceWindow_RecurringTimeWindow>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.recurring_time_window = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.recurring_time_window = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataFusionInstance_MaintenancePolicy_MaintenanceWindow {
+    type O = terrars::BlockAssignable<DataFusionInstance_MaintenancePolicy_MaintenanceWindow>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataFusionInstance_MaintenancePolicy_MaintenanceWindow {}
+
+impl BuildDataFusionInstance_MaintenancePolicy_MaintenanceWindow {
+    pub fn build(self) -> DataFusionInstance_MaintenancePolicy_MaintenanceWindow {
+        DataFusionInstance_MaintenancePolicy_MaintenanceWindow {
+            recurring_time_window: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataFusionInstance_MaintenancePolicy_MaintenanceWindowRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataFusionInstance_MaintenancePolicy_MaintenanceWindowRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataFusionInstance_MaintenancePolicy_MaintenanceWindowRef {
+        DataFusionInstance_MaintenancePolicy_MaintenanceWindowRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataFusionInstance_MaintenancePolicy_MaintenanceWindowRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `recurring_time_window` after provisioning.\n"]
+    pub fn recurring_time_window(
+        &self,
+    ) -> terrars::ListRef<DataFusionInstance_MaintenancePolicy_MaintenanceWindow_RecurringTimeWindowRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.recurring_time_window", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct DataFusionInstance_MaintenancePolicyDynamic {
+    maintenance_window: std
+    ::option
+    ::Option<terrars::DynamicBlock<DataFusionInstance_MaintenancePolicy_MaintenanceWindow>>,
+}
+
+#[derive(Serialize)]
+pub struct DataFusionInstance_MaintenancePolicy {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    maintenance_window: std::option::Option<std::vec::Vec<DataFusionInstance_MaintenancePolicy_MaintenanceWindow>>,
+    dynamic: DataFusionInstance_MaintenancePolicyDynamic,
+}
+
+impl DataFusionInstance_MaintenancePolicy {
+    #[doc = "Set the field `maintenance_window`.\n"]
+    pub fn set_maintenance_window(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataFusionInstance_MaintenancePolicy_MaintenanceWindow>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.maintenance_window = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.maintenance_window = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataFusionInstance_MaintenancePolicy {
+    type O = terrars::BlockAssignable<DataFusionInstance_MaintenancePolicy>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataFusionInstance_MaintenancePolicy {}
+
+impl BuildDataFusionInstance_MaintenancePolicy {
+    pub fn build(self) -> DataFusionInstance_MaintenancePolicy {
+        DataFusionInstance_MaintenancePolicy {
+            maintenance_window: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataFusionInstance_MaintenancePolicyRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataFusionInstance_MaintenancePolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataFusionInstance_MaintenancePolicyRef {
+        DataFusionInstance_MaintenancePolicyRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataFusionInstance_MaintenancePolicyRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `maintenance_window` after provisioning.\n"]
+    pub fn maintenance_window(&self) -> terrars::ListRef<DataFusionInstance_MaintenancePolicy_MaintenanceWindowRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.maintenance_window", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataFusionInstance_NetworkConfig_PrivateServiceConnectConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_attachment: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    unreachable_cidr_block: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataFusionInstance_NetworkConfig_PrivateServiceConnectConfig {
+    #[doc =
+        "Set the field `network_attachment`.\nOptional. The reference to the network attachment used to establish private connectivity.\nIt will be of the form projects/{project-id}/regions/{region}/networkAttachments/{network-attachment-id}.\nThis is required only when using connection type PRIVATE_SERVICE_CONNECT_INTERFACES."]
+    pub fn set_network_attachment(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.network_attachment = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `unreachable_cidr_block`.\nOptional. Input only. The CIDR block to which the CDF instance can't route traffic to in the consumer project VPC.\nThe size of this block should be at least /25. This range should not overlap with the primary address range of any subnetwork used by the network attachment.\nThis range can be used for other purposes in the consumer VPC as long as there is no requirement for CDF to reach destinations using these addresses.\nIf this value is not provided, the server chooses a non RFC 1918 address range. The format of this field is governed by RFC 4632."]
+    pub fn set_unreachable_cidr_block(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.unreachable_cidr_block = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataFusionInstance_NetworkConfig_PrivateServiceConnectConfig {
+    type O = terrars::BlockAssignable<DataFusionInstance_NetworkConfig_PrivateServiceConnectConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataFusionInstance_NetworkConfig_PrivateServiceConnectConfig {}
+
+impl BuildDataFusionInstance_NetworkConfig_PrivateServiceConnectConfig {
+    pub fn build(self) -> DataFusionInstance_NetworkConfig_PrivateServiceConnectConfig {
+        DataFusionInstance_NetworkConfig_PrivateServiceConnectConfig {
+            network_attachment: core::default::Default::default(),
+            unreachable_cidr_block: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataFusionInstance_NetworkConfig_PrivateServiceConnectConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataFusionInstance_NetworkConfig_PrivateServiceConnectConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataFusionInstance_NetworkConfig_PrivateServiceConnectConfigRef {
+        DataFusionInstance_NetworkConfig_PrivateServiceConnectConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataFusionInstance_NetworkConfig_PrivateServiceConnectConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `effective_unreachable_cidr_block` after provisioning.\nOutput only. The CIDR block to which the CDF instance can't route traffic to in the consumer project VPC.\nThe size of this block is /25. The format of this field is governed by RFC 4632."]
+    pub fn effective_unreachable_cidr_block(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.effective_unreachable_cidr_block", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `network_attachment` after provisioning.\nOptional. The reference to the network attachment used to establish private connectivity.\nIt will be of the form projects/{project-id}/regions/{region}/networkAttachments/{network-attachment-id}.\nThis is required only when using connection type PRIVATE_SERVICE_CONNECT_INTERFACES."]
+    pub fn network_attachment(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_attachment", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `unreachable_cidr_block` after provisioning.\nOptional. Input only. The CIDR block to which the CDF instance can't route traffic to in the consumer project VPC.\nThe size of this block should be at least /25. This range should not overlap with the primary address range of any subnetwork used by the network attachment.\nThis range can be used for other purposes in the consumer VPC as long as there is no requirement for CDF to reach destinations using these addresses.\nIf this value is not provided, the server chooses a non RFC 1918 address range. The format of this field is governed by RFC 4632."]
+    pub fn unreachable_cidr_block(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.unreachable_cidr_block", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct DataFusionInstance_NetworkConfigDynamic {
+    private_service_connect_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<DataFusionInstance_NetworkConfig_PrivateServiceConnectConfig>>,
+}
+
+#[derive(Serialize)]
+pub struct DataFusionInstance_NetworkConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    connection_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ip_allocation: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    private_service_connect_config: std
+    ::option
+    ::Option<std::vec::Vec<DataFusionInstance_NetworkConfig_PrivateServiceConnectConfig>>,
+    dynamic: DataFusionInstance_NetworkConfigDynamic,
+}
+
+impl DataFusionInstance_NetworkConfig {
+    #[doc =
+        "Set the field `connection_type`.\nOptional. Type of connection for establishing private IP connectivity between the Data Fusion customer project VPC and\nthe corresponding tenant project from a predefined list of available connection modes.\nIf this field is unspecified for a private instance, VPC peering is used. Possible values: [\"VPC_PEERING\", \"PRIVATE_SERVICE_CONNECT_INTERFACES\"]"]
+    pub fn set_connection_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.connection_type = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `ip_allocation`.\nThe IP range in CIDR notation to use for the managed Data Fusion instance\nnodes. This range must not overlap with any other ranges used in the Data Fusion instance network."]
+    pub fn set_ip_allocation(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.ip_allocation = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `network`.\nName of the network in the project with which the tenant project\nwill be peered for executing pipelines. In case of shared VPC where the network resides in another host\nproject the network should specified in the form of projects/{host-project-id}/global/networks/{network}"]
+    pub fn set_network(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.network = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `private_service_connect_config`.\n"]
+    pub fn set_private_service_connect_config(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<DataFusionInstance_NetworkConfig_PrivateServiceConnectConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.private_service_connect_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.private_service_connect_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataFusionInstance_NetworkConfig {
+    type O = terrars::BlockAssignable<DataFusionInstance_NetworkConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataFusionInstance_NetworkConfig {}
+
+impl BuildDataFusionInstance_NetworkConfig {
+    pub fn build(self) -> DataFusionInstance_NetworkConfig {
+        DataFusionInstance_NetworkConfig {
+            connection_type: core::default::Default::default(),
+            ip_allocation: core::default::Default::default(),
+            network: core::default::Default::default(),
+            private_service_connect_config: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataFusionInstance_NetworkConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataFusionInstance_NetworkConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataFusionInstance_NetworkConfigRef {
+        DataFusionInstance_NetworkConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataFusionInstance_NetworkConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `connection_type` after provisioning.\nOptional. Type of connection for establishing private IP connectivity between the Data Fusion customer project VPC and\nthe corresponding tenant project from a predefined list of available connection modes.\nIf this field is unspecified for a private instance, VPC peering is used. Possible values: [\"VPC_PEERING\", \"PRIVATE_SERVICE_CONNECT_INTERFACES\"]"]
+    pub fn connection_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.connection_type", self.base))
     }
 
     #[doc =
@@ -1071,10 +1812,17 @@ impl DataFusionInstanceNetworkConfigElRef {
     pub fn network(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.network", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `private_service_connect_config` after provisioning.\n"]
+    pub fn private_service_connect_config(
+        &self,
+    ) -> terrars::ListRef<DataFusionInstance_NetworkConfig_PrivateServiceConnectConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.private_service_connect_config", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct DataFusionInstanceTimeoutsEl {
+pub struct DataFusionInstance_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1083,7 +1831,7 @@ pub struct DataFusionInstanceTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataFusionInstanceTimeoutsEl {
+impl DataFusionInstance_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1103,8 +1851,8 @@ impl DataFusionInstanceTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataFusionInstanceTimeoutsEl {
-    type O = terrars::BlockAssignable<DataFusionInstanceTimeoutsEl>;
+impl terrars::ToListMappable for DataFusionInstance_Timeouts {
+    type O = terrars::BlockAssignable<DataFusionInstance_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1115,11 +1863,11 @@ impl terrars::ToListMappable for DataFusionInstanceTimeoutsEl {
     }
 }
 
-pub struct BuildDataFusionInstanceTimeoutsEl {}
+pub struct BuildDataFusionInstance_Timeouts {}
 
-impl BuildDataFusionInstanceTimeoutsEl {
-    pub fn build(self) -> DataFusionInstanceTimeoutsEl {
-        DataFusionInstanceTimeoutsEl {
+impl BuildDataFusionInstance_Timeouts {
+    pub fn build(self) -> DataFusionInstance_Timeouts {
+        DataFusionInstance_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1127,21 +1875,23 @@ impl BuildDataFusionInstanceTimeoutsEl {
     }
 }
 
-pub struct DataFusionInstanceTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataFusionInstance_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataFusionInstanceTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataFusionInstanceTimeoutsElRef {
-        DataFusionInstanceTimeoutsElRef {
+impl terrars::Ref for DataFusionInstance_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataFusionInstance_TimeoutsRef {
+        DataFusionInstance_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataFusionInstanceTimeoutsElRef {
+impl DataFusionInstance_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1160,12 +1910,4 @@ impl DataFusionInstanceTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataFusionInstanceDynamic {
-    accelerators: std::option::Option<terrars::DynamicBlock<DataFusionInstanceAcceleratorsEl>>,
-    crypto_key_config: std::option::Option<terrars::DynamicBlock<DataFusionInstanceCryptoKeyConfigEl>>,
-    event_publish_config: std::option::Option<terrars::DynamicBlock<DataFusionInstanceEventPublishConfigEl>>,
-    network_config: std::option::Option<terrars::DynamicBlock<DataFusionInstanceNetworkConfigEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct BigqueryConnectionData {
+struct BigqueryConnectionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,36 +23,42 @@ struct BigqueryConnectionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     connection_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     friendly_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     location: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    aws: std::option::Option<std::vec::Vec<BigqueryConnectionAwsEl>>,
+    aws: std::option::Option<std::vec::Vec<BigqueryConnection_Aws>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    azure: std::option::Option<std::vec::Vec<BigqueryConnectionAzureEl>>,
+    azure: std::option::Option<std::vec::Vec<BigqueryConnection_Azure>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cloud_resource: std::option::Option<std::vec::Vec<BigqueryConnectionCloudResourceEl>>,
+    cloud_resource: std::option::Option<std::vec::Vec<BigqueryConnection_CloudResource>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cloud_spanner: std::option::Option<std::vec::Vec<BigqueryConnectionCloudSpannerEl>>,
+    cloud_spanner: std::option::Option<std::vec::Vec<BigqueryConnection_CloudSpanner>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cloud_sql: std::option::Option<std::vec::Vec<BigqueryConnectionCloudSqlEl>>,
+    cloud_sql: std::option::Option<std::vec::Vec<BigqueryConnection_CloudSql>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    spark: std::option::Option<std::vec::Vec<BigqueryConnectionSparkEl>>,
+    configuration: std::option::Option<std::vec::Vec<BigqueryConnection_Configuration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<BigqueryConnectionTimeoutsEl>,
+    spark: std::option::Option<std::vec::Vec<BigqueryConnection_Spark>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<BigqueryConnection_Timeouts>,
     dynamic: BigqueryConnectionDynamic,
 }
 
 struct BigqueryConnection_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<BigqueryConnectionData>,
+    data: std::cell::RefCell<BigqueryConnectionData_>,
 }
 
 #[derive(Clone)]
@@ -156,6 +164,13 @@ impl BigqueryConnection {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nA descriptive description for the connection"]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -175,6 +190,13 @@ impl BigqueryConnection {
     }
 
     #[doc =
+        "Set the field `kms_key_name`.\nOptional. The Cloud KMS key that is used for encryption.\n\nExample: projects/[kms_project_id]/locations/[region]/keyRings/[key_region]/cryptoKeys/[key]"]
+    pub fn set_kms_key_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().kms_key_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `location`.\nThe geographic location where the connection should reside.\nCloud SQL instance must be in the same location as the connection\nwith following exceptions: Cloud SQL us-central1 maps to BigQuery US, Cloud SQL europe-west1 maps to BigQuery EU.\nExamples: US, EU, asia-northeast1, us-central1, europe-west1.\nSpanner Connections same as spanner region\nAWS allowed regions are aws-us-east-1\nAzure allowed regions are azure-eastus2"]
     pub fn set_location(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().location = std::option::Option::Some(v.into());
@@ -188,7 +210,7 @@ impl BigqueryConnection {
     }
 
     #[doc = "Set the field `aws`.\n"]
-    pub fn set_aws(self, v: impl std::convert::Into<terrars::BlockAssignable<BigqueryConnectionAwsEl>>) -> Self {
+    pub fn set_aws(self, v: impl std::convert::Into<terrars::BlockAssignable<BigqueryConnection_Aws>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().aws = std::option::Option::Some(v);
@@ -201,7 +223,7 @@ impl BigqueryConnection {
     }
 
     #[doc = "Set the field `azure`.\n"]
-    pub fn set_azure(self, v: impl std::convert::Into<terrars::BlockAssignable<BigqueryConnectionAzureEl>>) -> Self {
+    pub fn set_azure(self, v: impl std::convert::Into<terrars::BlockAssignable<BigqueryConnection_Azure>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().azure = std::option::Option::Some(v);
@@ -216,7 +238,7 @@ impl BigqueryConnection {
     #[doc = "Set the field `cloud_resource`.\n"]
     pub fn set_cloud_resource(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryConnectionCloudResourceEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryConnection_CloudResource>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -232,7 +254,7 @@ impl BigqueryConnection {
     #[doc = "Set the field `cloud_spanner`.\n"]
     pub fn set_cloud_spanner(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryConnectionCloudSpannerEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryConnection_CloudSpanner>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -248,7 +270,7 @@ impl BigqueryConnection {
     #[doc = "Set the field `cloud_sql`.\n"]
     pub fn set_cloud_sql(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryConnectionCloudSqlEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryConnection_CloudSql>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -261,8 +283,24 @@ impl BigqueryConnection {
         self
     }
 
+    #[doc = "Set the field `configuration`.\n"]
+    pub fn set_configuration(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryConnection_Configuration>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `spark`.\n"]
-    pub fn set_spark(self, v: impl std::convert::Into<terrars::BlockAssignable<BigqueryConnectionSparkEl>>) -> Self {
+    pub fn set_spark(self, v: impl std::convert::Into<terrars::BlockAssignable<BigqueryConnection_Spark>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().spark = std::option::Option::Some(v);
@@ -275,7 +313,7 @@ impl BigqueryConnection {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<BigqueryConnectionTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<BigqueryConnection_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -284,6 +322,12 @@ impl BigqueryConnection {
         "Get a reference to the value of field `connection_id` after provisioning.\nOptional connection id that should be assigned to the created connection."]
     pub fn connection_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.connection_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -310,6 +354,12 @@ impl BigqueryConnection {
     }
 
     #[doc =
+        "Get a reference to the value of field `kms_key_name` after provisioning.\nOptional. The Cloud KMS key that is used for encryption.\n\nExample: projects/[kms_project_id]/locations/[region]/keyRings/[key_region]/cryptoKeys/[key]"]
+    pub fn kms_key_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_name", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `location` after provisioning.\nThe geographic location where the connection should reside.\nCloud SQL instance must be in the same location as the connection\nwith following exceptions: Cloud SQL us-central1 maps to BigQuery US, Cloud SQL europe-west1 maps to BigQuery EU.\nExamples: US, EU, asia-northeast1, us-central1, europe-west1.\nSpanner Connections same as spanner region\nAWS allowed regions are aws-us-east-1\nAzure allowed regions are azure-eastus2"]
     pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
@@ -327,38 +377,43 @@ impl BigqueryConnection {
     }
 
     #[doc = "Get a reference to the value of field `aws` after provisioning.\n"]
-    pub fn aws(&self) -> terrars::ListRef<BigqueryConnectionAwsElRef> {
+    pub fn aws(&self) -> terrars::ListRef<BigqueryConnection_AwsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.aws", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `azure` after provisioning.\n"]
-    pub fn azure(&self) -> terrars::ListRef<BigqueryConnectionAzureElRef> {
+    pub fn azure(&self) -> terrars::ListRef<BigqueryConnection_AzureRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.azure", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `cloud_resource` after provisioning.\n"]
-    pub fn cloud_resource(&self) -> terrars::ListRef<BigqueryConnectionCloudResourceElRef> {
+    pub fn cloud_resource(&self) -> terrars::ListRef<BigqueryConnection_CloudResourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cloud_resource", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `cloud_spanner` after provisioning.\n"]
-    pub fn cloud_spanner(&self) -> terrars::ListRef<BigqueryConnectionCloudSpannerElRef> {
+    pub fn cloud_spanner(&self) -> terrars::ListRef<BigqueryConnection_CloudSpannerRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cloud_spanner", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `cloud_sql` after provisioning.\n"]
-    pub fn cloud_sql(&self) -> terrars::ListRef<BigqueryConnectionCloudSqlElRef> {
+    pub fn cloud_sql(&self) -> terrars::ListRef<BigqueryConnection_CloudSqlRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cloud_sql", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `configuration` after provisioning.\n"]
+    pub fn configuration(&self) -> terrars::ListRef<BigqueryConnection_ConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.configuration", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `spark` after provisioning.\n"]
-    pub fn spark(&self) -> terrars::ListRef<BigqueryConnectionSparkElRef> {
+    pub fn spark(&self) -> terrars::ListRef<BigqueryConnection_SparkRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.spark", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> BigqueryConnectionTimeoutsElRef {
-        BigqueryConnectionTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> BigqueryConnection_TimeoutsRef {
+        BigqueryConnection_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -402,16 +457,18 @@ impl BuildBigqueryConnection {
         let out = BigqueryConnection(std::rc::Rc::new(BigqueryConnection_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(BigqueryConnectionData {
+            data: std::cell::RefCell::new(BigqueryConnectionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 connection_id: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 friendly_name: core::default::Default::default(),
                 id: core::default::Default::default(),
+                kms_key_name: core::default::Default::default(),
                 location: core::default::Default::default(),
                 project: core::default::Default::default(),
                 aws: core::default::Default::default(),
@@ -419,6 +476,7 @@ impl BuildBigqueryConnection {
                 cloud_resource: core::default::Default::default(),
                 cloud_spanner: core::default::Default::default(),
                 cloud_sql: core::default::Default::default(),
+                configuration: core::default::Default::default(),
                 spark: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -459,6 +517,12 @@ impl BigqueryConnectionRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nA descriptive description for the connection"]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -482,6 +546,12 @@ impl BigqueryConnectionRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `kms_key_name` after provisioning.\nOptional. The Cloud KMS key that is used for encryption.\n\nExample: projects/[kms_project_id]/locations/[region]/keyRings/[key_region]/cryptoKeys/[key]"]
+    pub fn kms_key_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_name", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `location` after provisioning.\nThe geographic location where the connection should reside.\nCloud SQL instance must be in the same location as the connection\nwith following exceptions: Cloud SQL us-central1 maps to BigQuery US, Cloud SQL europe-west1 maps to BigQuery EU.\nExamples: US, EU, asia-northeast1, us-central1, europe-west1.\nSpanner Connections same as spanner region\nAWS allowed regions are aws-us-east-1\nAzure allowed regions are azure-eastus2"]
     pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
@@ -499,50 +569,66 @@ impl BigqueryConnectionRef {
     }
 
     #[doc = "Get a reference to the value of field `aws` after provisioning.\n"]
-    pub fn aws(&self) -> terrars::ListRef<BigqueryConnectionAwsElRef> {
+    pub fn aws(&self) -> terrars::ListRef<BigqueryConnection_AwsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.aws", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `azure` after provisioning.\n"]
-    pub fn azure(&self) -> terrars::ListRef<BigqueryConnectionAzureElRef> {
+    pub fn azure(&self) -> terrars::ListRef<BigqueryConnection_AzureRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.azure", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `cloud_resource` after provisioning.\n"]
-    pub fn cloud_resource(&self) -> terrars::ListRef<BigqueryConnectionCloudResourceElRef> {
+    pub fn cloud_resource(&self) -> terrars::ListRef<BigqueryConnection_CloudResourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cloud_resource", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `cloud_spanner` after provisioning.\n"]
-    pub fn cloud_spanner(&self) -> terrars::ListRef<BigqueryConnectionCloudSpannerElRef> {
+    pub fn cloud_spanner(&self) -> terrars::ListRef<BigqueryConnection_CloudSpannerRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cloud_spanner", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `cloud_sql` after provisioning.\n"]
-    pub fn cloud_sql(&self) -> terrars::ListRef<BigqueryConnectionCloudSqlElRef> {
+    pub fn cloud_sql(&self) -> terrars::ListRef<BigqueryConnection_CloudSqlRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cloud_sql", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `configuration` after provisioning.\n"]
+    pub fn configuration(&self) -> terrars::ListRef<BigqueryConnection_ConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.configuration", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `spark` after provisioning.\n"]
-    pub fn spark(&self) -> terrars::ListRef<BigqueryConnectionSparkElRef> {
+    pub fn spark(&self) -> terrars::ListRef<BigqueryConnection_SparkRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.spark", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> BigqueryConnectionTimeoutsElRef {
-        BigqueryConnectionTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> BigqueryConnection_TimeoutsRef {
+        BigqueryConnection_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct BigqueryConnectionDynamic {
+    aws: std::option::Option<terrars::DynamicBlock<BigqueryConnection_Aws>>,
+    azure: std::option::Option<terrars::DynamicBlock<BigqueryConnection_Azure>>,
+    cloud_resource: std::option::Option<terrars::DynamicBlock<BigqueryConnection_CloudResource>>,
+    cloud_spanner: std::option::Option<terrars::DynamicBlock<BigqueryConnection_CloudSpanner>>,
+    cloud_sql: std::option::Option<terrars::DynamicBlock<BigqueryConnection_CloudSql>>,
+    configuration: std::option::Option<terrars::DynamicBlock<BigqueryConnection_Configuration>>,
+    spark: std::option::Option<terrars::DynamicBlock<BigqueryConnection_Spark>>,
+}
+
 #[derive(Serialize)]
-pub struct BigqueryConnectionAwsElAccessRoleEl {
+pub struct BigqueryConnection_Aws_AccessRole {
     iam_role_id: terrars::PrimField<std::string::String>,
 }
 
-impl BigqueryConnectionAwsElAccessRoleEl { }
+impl BigqueryConnection_Aws_AccessRole { }
 
-impl terrars::ToListMappable for BigqueryConnectionAwsElAccessRoleEl {
-    type O = terrars::BlockAssignable<BigqueryConnectionAwsElAccessRoleEl>;
+impl terrars::ToListMappable for BigqueryConnection_Aws_AccessRole {
+    type O = terrars::BlockAssignable<BigqueryConnection_Aws_AccessRole>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -553,32 +639,34 @@ impl terrars::ToListMappable for BigqueryConnectionAwsElAccessRoleEl {
     }
 }
 
-pub struct BuildBigqueryConnectionAwsElAccessRoleEl {
+pub struct BuildBigqueryConnection_Aws_AccessRole {
     #[doc = "The user’s AWS IAM Role that trusts the Google-owned AWS IAM user Connection."]
     pub iam_role_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBigqueryConnectionAwsElAccessRoleEl {
-    pub fn build(self) -> BigqueryConnectionAwsElAccessRoleEl {
-        BigqueryConnectionAwsElAccessRoleEl { iam_role_id: self.iam_role_id }
+impl BuildBigqueryConnection_Aws_AccessRole {
+    pub fn build(self) -> BigqueryConnection_Aws_AccessRole {
+        BigqueryConnection_Aws_AccessRole { iam_role_id: self.iam_role_id }
     }
 }
 
-pub struct BigqueryConnectionAwsElAccessRoleElRef {
+#[allow(dead_code)]
+pub struct BigqueryConnection_Aws_AccessRoleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryConnectionAwsElAccessRoleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryConnectionAwsElAccessRoleElRef {
-        BigqueryConnectionAwsElAccessRoleElRef {
+impl terrars::Ref for BigqueryConnection_Aws_AccessRoleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryConnection_Aws_AccessRoleRef {
+        BigqueryConnection_Aws_AccessRoleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryConnectionAwsElAccessRoleElRef {
+impl BigqueryConnection_Aws_AccessRoleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -597,22 +685,22 @@ impl BigqueryConnectionAwsElAccessRoleElRef {
 }
 
 #[derive(Serialize, Default)]
-struct BigqueryConnectionAwsElDynamic {
-    access_role: std::option::Option<terrars::DynamicBlock<BigqueryConnectionAwsElAccessRoleEl>>,
+struct BigqueryConnection_AwsDynamic {
+    access_role: std::option::Option<terrars::DynamicBlock<BigqueryConnection_Aws_AccessRole>>,
 }
 
 #[derive(Serialize)]
-pub struct BigqueryConnectionAwsEl {
+pub struct BigqueryConnection_Aws {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    access_role: std::option::Option<std::vec::Vec<BigqueryConnectionAwsElAccessRoleEl>>,
-    dynamic: BigqueryConnectionAwsElDynamic,
+    access_role: std::option::Option<std::vec::Vec<BigqueryConnection_Aws_AccessRole>>,
+    dynamic: BigqueryConnection_AwsDynamic,
 }
 
-impl BigqueryConnectionAwsEl {
+impl BigqueryConnection_Aws {
     #[doc = "Set the field `access_role`.\n"]
     pub fn set_access_role(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryConnectionAwsElAccessRoleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryConnection_Aws_AccessRole>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -626,8 +714,8 @@ impl BigqueryConnectionAwsEl {
     }
 }
 
-impl terrars::ToListMappable for BigqueryConnectionAwsEl {
-    type O = terrars::BlockAssignable<BigqueryConnectionAwsEl>;
+impl terrars::ToListMappable for BigqueryConnection_Aws {
+    type O = terrars::BlockAssignable<BigqueryConnection_Aws>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -638,50 +726,52 @@ impl terrars::ToListMappable for BigqueryConnectionAwsEl {
     }
 }
 
-pub struct BuildBigqueryConnectionAwsEl {}
+pub struct BuildBigqueryConnection_Aws {}
 
-impl BuildBigqueryConnectionAwsEl {
-    pub fn build(self) -> BigqueryConnectionAwsEl {
-        BigqueryConnectionAwsEl {
+impl BuildBigqueryConnection_Aws {
+    pub fn build(self) -> BigqueryConnection_Aws {
+        BigqueryConnection_Aws {
             access_role: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct BigqueryConnectionAwsElRef {
+#[allow(dead_code)]
+pub struct BigqueryConnection_AwsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryConnectionAwsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryConnectionAwsElRef {
-        BigqueryConnectionAwsElRef {
+impl terrars::Ref for BigqueryConnection_AwsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryConnection_AwsRef {
+        BigqueryConnection_AwsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryConnectionAwsElRef {
+impl BigqueryConnection_AwsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `access_role` after provisioning.\n"]
-    pub fn access_role(&self) -> terrars::ListRef<BigqueryConnectionAwsElAccessRoleElRef> {
+    pub fn access_role(&self) -> terrars::ListRef<BigqueryConnection_Aws_AccessRoleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.access_role", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct BigqueryConnectionAzureEl {
+pub struct BigqueryConnection_Azure {
     customer_tenant_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     federated_application_client_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl BigqueryConnectionAzureEl {
+impl BigqueryConnection_Azure {
     #[doc =
         "Set the field `federated_application_client_id`.\nThe Azure Application (client) ID where the federated credentials will be hosted."]
     pub fn set_federated_application_client_id(
@@ -693,8 +783,8 @@ impl BigqueryConnectionAzureEl {
     }
 }
 
-impl terrars::ToListMappable for BigqueryConnectionAzureEl {
-    type O = terrars::BlockAssignable<BigqueryConnectionAzureEl>;
+impl terrars::ToListMappable for BigqueryConnection_Azure {
+    type O = terrars::BlockAssignable<BigqueryConnection_Azure>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -705,35 +795,37 @@ impl terrars::ToListMappable for BigqueryConnectionAzureEl {
     }
 }
 
-pub struct BuildBigqueryConnectionAzureEl {
+pub struct BuildBigqueryConnection_Azure {
     #[doc = "The id of customer's directory that host the data."]
     pub customer_tenant_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBigqueryConnectionAzureEl {
-    pub fn build(self) -> BigqueryConnectionAzureEl {
-        BigqueryConnectionAzureEl {
+impl BuildBigqueryConnection_Azure {
+    pub fn build(self) -> BigqueryConnection_Azure {
+        BigqueryConnection_Azure {
             customer_tenant_id: self.customer_tenant_id,
             federated_application_client_id: core::default::Default::default(),
         }
     }
 }
 
-pub struct BigqueryConnectionAzureElRef {
+#[allow(dead_code)]
+pub struct BigqueryConnection_AzureRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryConnectionAzureElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryConnectionAzureElRef {
-        BigqueryConnectionAzureElRef {
+impl terrars::Ref for BigqueryConnection_AzureRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryConnection_AzureRef {
+        BigqueryConnection_AzureRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryConnectionAzureElRef {
+impl BigqueryConnection_AzureRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -782,12 +874,12 @@ impl BigqueryConnectionAzureElRef {
 }
 
 #[derive(Serialize)]
-pub struct BigqueryConnectionCloudResourceEl {}
+pub struct BigqueryConnection_CloudResource {}
 
-impl BigqueryConnectionCloudResourceEl { }
+impl BigqueryConnection_CloudResource { }
 
-impl terrars::ToListMappable for BigqueryConnectionCloudResourceEl {
-    type O = terrars::BlockAssignable<BigqueryConnectionCloudResourceEl>;
+impl terrars::ToListMappable for BigqueryConnection_CloudResource {
+    type O = terrars::BlockAssignable<BigqueryConnection_CloudResource>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -798,29 +890,31 @@ impl terrars::ToListMappable for BigqueryConnectionCloudResourceEl {
     }
 }
 
-pub struct BuildBigqueryConnectionCloudResourceEl {}
+pub struct BuildBigqueryConnection_CloudResource {}
 
-impl BuildBigqueryConnectionCloudResourceEl {
-    pub fn build(self) -> BigqueryConnectionCloudResourceEl {
-        BigqueryConnectionCloudResourceEl {}
+impl BuildBigqueryConnection_CloudResource {
+    pub fn build(self) -> BigqueryConnection_CloudResource {
+        BigqueryConnection_CloudResource {}
     }
 }
 
-pub struct BigqueryConnectionCloudResourceElRef {
+#[allow(dead_code)]
+pub struct BigqueryConnection_CloudResourceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryConnectionCloudResourceElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryConnectionCloudResourceElRef {
-        BigqueryConnectionCloudResourceElRef {
+impl terrars::Ref for BigqueryConnection_CloudResourceRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryConnection_CloudResourceRef {
+        BigqueryConnection_CloudResourceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryConnectionCloudResourceElRef {
+impl BigqueryConnection_CloudResourceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -833,7 +927,7 @@ impl BigqueryConnectionCloudResourceElRef {
 }
 
 #[derive(Serialize)]
-pub struct BigqueryConnectionCloudSpannerEl {
+pub struct BigqueryConnection_CloudSpanner {
     database: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     database_role: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -847,7 +941,7 @@ pub struct BigqueryConnectionCloudSpannerEl {
     use_serverless_analytics: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl BigqueryConnectionCloudSpannerEl {
+impl BigqueryConnection_CloudSpanner {
     #[doc =
         "Set the field `database_role`.\nCloud Spanner database role for fine-grained access control. The Cloud Spanner admin should have provisioned the database role with appropriate permissions, such as 'SELECT' and 'INSERT'. Other users should only use roles provided by their Cloud Spanner admins. The database role name must start with a letter, and can only contain letters, numbers, and underscores. For more details, see https://cloud.google.com/spanner/docs/fgac-about."]
     pub fn set_database_role(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -883,8 +977,8 @@ impl BigqueryConnectionCloudSpannerEl {
     }
 }
 
-impl terrars::ToListMappable for BigqueryConnectionCloudSpannerEl {
-    type O = terrars::BlockAssignable<BigqueryConnectionCloudSpannerEl>;
+impl terrars::ToListMappable for BigqueryConnection_CloudSpanner {
+    type O = terrars::BlockAssignable<BigqueryConnection_CloudSpanner>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -895,14 +989,14 @@ impl terrars::ToListMappable for BigqueryConnectionCloudSpannerEl {
     }
 }
 
-pub struct BuildBigqueryConnectionCloudSpannerEl {
+pub struct BuildBigqueryConnection_CloudSpanner {
     #[doc = "Cloud Spanner database in the form 'project/instance/database'."]
     pub database: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBigqueryConnectionCloudSpannerEl {
-    pub fn build(self) -> BigqueryConnectionCloudSpannerEl {
-        BigqueryConnectionCloudSpannerEl {
+impl BuildBigqueryConnection_CloudSpanner {
+    pub fn build(self) -> BigqueryConnection_CloudSpanner {
+        BigqueryConnection_CloudSpanner {
             database: self.database,
             database_role: core::default::Default::default(),
             max_parallelism: core::default::Default::default(),
@@ -913,21 +1007,23 @@ impl BuildBigqueryConnectionCloudSpannerEl {
     }
 }
 
-pub struct BigqueryConnectionCloudSpannerElRef {
+#[allow(dead_code)]
+pub struct BigqueryConnection_CloudSpannerRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryConnectionCloudSpannerElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryConnectionCloudSpannerElRef {
-        BigqueryConnectionCloudSpannerElRef {
+impl terrars::Ref for BigqueryConnection_CloudSpannerRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryConnection_CloudSpannerRef {
+        BigqueryConnection_CloudSpannerRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryConnectionCloudSpannerElRef {
+impl BigqueryConnection_CloudSpannerRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -970,15 +1066,42 @@ impl BigqueryConnectionCloudSpannerElRef {
 }
 
 #[derive(Serialize)]
-pub struct BigqueryConnectionCloudSqlElCredentialEl {
-    password: terrars::PrimField<std::string::String>,
+pub struct BigqueryConnection_CloudSql_Credential {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    password: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    password_wo: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    password_wo_version: std::option::Option<terrars::PrimField<std::string::String>>,
     username: terrars::PrimField<std::string::String>,
 }
 
-impl BigqueryConnectionCloudSqlElCredentialEl { }
+impl BigqueryConnection_CloudSql_Credential {
+    #[doc = "Set the field `password`.\nPassword for database."]
+    pub fn set_password(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.password = std::option::Option::Some(v.into());
+        self
+    }
 
-impl terrars::ToListMappable for BigqueryConnectionCloudSqlElCredentialEl {
-    type O = terrars::BlockAssignable<BigqueryConnectionCloudSqlElCredentialEl>;
+    #[doc = "Set the field `password_wo`.\nPassword for database."]
+    pub fn set_password_wo(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.password_wo = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `password_wo_version`.\nTriggers update of 'password_wo' write-only. Increment this value when an update to 'password_wo' is needed. For more info see [updating write-only arguments](/docs/providers/google/guides/using_write_only_arguments.html#updating-write-only-arguments)"]
+    pub fn set_password_wo_version(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.password_wo_version = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for BigqueryConnection_CloudSql_Credential {
+    type O = terrars::BlockAssignable<BigqueryConnection_CloudSql_Credential>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -989,37 +1112,39 @@ impl terrars::ToListMappable for BigqueryConnectionCloudSqlElCredentialEl {
     }
 }
 
-pub struct BuildBigqueryConnectionCloudSqlElCredentialEl {
-    #[doc = "Password for database."]
-    pub password: terrars::PrimField<std::string::String>,
+pub struct BuildBigqueryConnection_CloudSql_Credential {
     #[doc = "Username for database."]
     pub username: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBigqueryConnectionCloudSqlElCredentialEl {
-    pub fn build(self) -> BigqueryConnectionCloudSqlElCredentialEl {
-        BigqueryConnectionCloudSqlElCredentialEl {
-            password: self.password,
+impl BuildBigqueryConnection_CloudSql_Credential {
+    pub fn build(self) -> BigqueryConnection_CloudSql_Credential {
+        BigqueryConnection_CloudSql_Credential {
+            password: core::default::Default::default(),
+            password_wo: core::default::Default::default(),
+            password_wo_version: core::default::Default::default(),
             username: self.username,
         }
     }
 }
 
-pub struct BigqueryConnectionCloudSqlElCredentialElRef {
+#[allow(dead_code)]
+pub struct BigqueryConnection_CloudSql_CredentialRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryConnectionCloudSqlElCredentialElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryConnectionCloudSqlElCredentialElRef {
-        BigqueryConnectionCloudSqlElCredentialElRef {
+impl terrars::Ref for BigqueryConnection_CloudSql_CredentialRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryConnection_CloudSql_CredentialRef {
+        BigqueryConnection_CloudSql_CredentialRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryConnectionCloudSqlElCredentialElRef {
+impl BigqueryConnection_CloudSql_CredentialRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1029,6 +1154,17 @@ impl BigqueryConnectionCloudSqlElCredentialElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.password", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `password_wo` after provisioning.\nPassword for database."]
+    pub fn password_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.password_wo", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `password_wo_version` after provisioning.\nTriggers update of 'password_wo' write-only. Increment this value when an update to 'password_wo' is needed. For more info see [updating write-only arguments](/docs/providers/google/guides/using_write_only_arguments.html#updating-write-only-arguments)"]
+    pub fn password_wo_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.password_wo_version", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `username` after provisioning.\nUsername for database."]
     pub fn username(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.username", self.base))
@@ -1036,26 +1172,26 @@ impl BigqueryConnectionCloudSqlElCredentialElRef {
 }
 
 #[derive(Serialize, Default)]
-struct BigqueryConnectionCloudSqlElDynamic {
-    credential: std::option::Option<terrars::DynamicBlock<BigqueryConnectionCloudSqlElCredentialEl>>,
+struct BigqueryConnection_CloudSqlDynamic {
+    credential: std::option::Option<terrars::DynamicBlock<BigqueryConnection_CloudSql_Credential>>,
 }
 
 #[derive(Serialize)]
-pub struct BigqueryConnectionCloudSqlEl {
+pub struct BigqueryConnection_CloudSql {
     database: terrars::PrimField<std::string::String>,
     instance_id: terrars::PrimField<std::string::String>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    credential: std::option::Option<std::vec::Vec<BigqueryConnectionCloudSqlElCredentialEl>>,
-    dynamic: BigqueryConnectionCloudSqlElDynamic,
+    credential: std::option::Option<std::vec::Vec<BigqueryConnection_CloudSql_Credential>>,
+    dynamic: BigqueryConnection_CloudSqlDynamic,
 }
 
-impl BigqueryConnectionCloudSqlEl {
+impl BigqueryConnection_CloudSql {
     #[doc = "Set the field `credential`.\n"]
     pub fn set_credential(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryConnectionCloudSqlElCredentialEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryConnection_CloudSql_Credential>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1069,8 +1205,8 @@ impl BigqueryConnectionCloudSqlEl {
     }
 }
 
-impl terrars::ToListMappable for BigqueryConnectionCloudSqlEl {
-    type O = terrars::BlockAssignable<BigqueryConnectionCloudSqlEl>;
+impl terrars::ToListMappable for BigqueryConnection_CloudSql {
+    type O = terrars::BlockAssignable<BigqueryConnection_CloudSql>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1081,7 +1217,7 @@ impl terrars::ToListMappable for BigqueryConnectionCloudSqlEl {
     }
 }
 
-pub struct BuildBigqueryConnectionCloudSqlEl {
+pub struct BuildBigqueryConnection_CloudSql {
     #[doc = "Database name."]
     pub database: terrars::PrimField<std::string::String>,
     #[doc = "Cloud SQL instance ID in the form project:location:instance."]
@@ -1091,9 +1227,9 @@ pub struct BuildBigqueryConnectionCloudSqlEl {
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBigqueryConnectionCloudSqlEl {
-    pub fn build(self) -> BigqueryConnectionCloudSqlEl {
-        BigqueryConnectionCloudSqlEl {
+impl BuildBigqueryConnection_CloudSql {
+    pub fn build(self) -> BigqueryConnection_CloudSql {
+        BigqueryConnection_CloudSql {
             database: self.database,
             instance_id: self.instance_id,
             type_: self.type_,
@@ -1103,21 +1239,23 @@ impl BuildBigqueryConnectionCloudSqlEl {
     }
 }
 
-pub struct BigqueryConnectionCloudSqlElRef {
+#[allow(dead_code)]
+pub struct BigqueryConnection_CloudSqlRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryConnectionCloudSqlElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryConnectionCloudSqlElRef {
-        BigqueryConnectionCloudSqlElRef {
+impl terrars::Ref for BigqueryConnection_CloudSqlRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryConnection_CloudSqlRef {
+        BigqueryConnection_CloudSqlRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryConnectionCloudSqlElRef {
+impl BigqueryConnection_CloudSqlRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1146,28 +1284,39 @@ impl BigqueryConnectionCloudSqlElRef {
     }
 
     #[doc = "Get a reference to the value of field `credential` after provisioning.\n"]
-    pub fn credential(&self) -> terrars::ListRef<BigqueryConnectionCloudSqlElCredentialElRef> {
+    pub fn credential(&self) -> terrars::ListRef<BigqueryConnection_CloudSql_CredentialRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.credential", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct BigqueryConnectionSparkElMetastoreServiceConfigEl {
+pub struct BigqueryConnection_Configuration_Asset {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    metastore_service: std::option::Option<terrars::PrimField<std::string::String>>,
+    database: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    google_cloud_resource: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl BigqueryConnectionSparkElMetastoreServiceConfigEl {
+impl BigqueryConnection_Configuration_Asset {
+    #[doc = "Set the field `database`.\nThe name of the database."]
+    pub fn set_database(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.database = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc =
-        "Set the field `metastore_service`.\nResource name of an existing Dataproc Metastore service in the form of projects/[projectId]/locations/[region]/services/[serviceId]."]
-    pub fn set_metastore_service(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.metastore_service = std::option::Option::Some(v.into());
+        "Set the field `google_cloud_resource`.\nThe full resource name of the Google Cloud resource.\nFor AlloyDB, this is in the format of\n'//alloydb.googleapis.com/projects/{project}/locations/{region}/clusters/{cluster}/instances/{instance}'."]
+    pub fn set_google_cloud_resource(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.google_cloud_resource = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for BigqueryConnectionSparkElMetastoreServiceConfigEl {
-    type O = terrars::BlockAssignable<BigqueryConnectionSparkElMetastoreServiceConfigEl>;
+impl terrars::ToListMappable for BigqueryConnection_Configuration_Asset {
+    type O = terrars::BlockAssignable<BigqueryConnection_Configuration_Asset>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1178,32 +1327,764 @@ impl terrars::ToListMappable for BigqueryConnectionSparkElMetastoreServiceConfig
     }
 }
 
-pub struct BuildBigqueryConnectionSparkElMetastoreServiceConfigEl {}
+pub struct BuildBigqueryConnection_Configuration_Asset {}
 
-impl BuildBigqueryConnectionSparkElMetastoreServiceConfigEl {
-    pub fn build(self) -> BigqueryConnectionSparkElMetastoreServiceConfigEl {
-        BigqueryConnectionSparkElMetastoreServiceConfigEl { metastore_service: core::default::Default::default() }
+impl BuildBigqueryConnection_Configuration_Asset {
+    pub fn build(self) -> BigqueryConnection_Configuration_Asset {
+        BigqueryConnection_Configuration_Asset {
+            database: core::default::Default::default(),
+            google_cloud_resource: core::default::Default::default(),
+        }
     }
 }
 
-pub struct BigqueryConnectionSparkElMetastoreServiceConfigElRef {
+#[allow(dead_code)]
+pub struct BigqueryConnection_Configuration_AssetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryConnectionSparkElMetastoreServiceConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> BigqueryConnectionSparkElMetastoreServiceConfigElRef {
-        BigqueryConnectionSparkElMetastoreServiceConfigElRef {
+impl terrars::Ref for BigqueryConnection_Configuration_AssetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryConnection_Configuration_AssetRef {
+        BigqueryConnection_Configuration_AssetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryConnectionSparkElMetastoreServiceConfigElRef {
+impl BigqueryConnection_Configuration_AssetRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `database` after provisioning.\nThe name of the database."]
+    pub fn database(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.database", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `google_cloud_resource` after provisioning.\nThe full resource name of the Google Cloud resource.\nFor AlloyDB, this is in the format of\n'//alloydb.googleapis.com/projects/{project}/locations/{region}/clusters/{cluster}/instances/{instance}'."]
+    pub fn google_cloud_resource(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.google_cloud_resource", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct BigqueryConnection_Configuration_Authentication_UsernamePassword_Password {
+    plaintext: terrars::PrimField<std::string::String>,
+}
+
+impl BigqueryConnection_Configuration_Authentication_UsernamePassword_Password { }
+
+impl terrars::ToListMappable for BigqueryConnection_Configuration_Authentication_UsernamePassword_Password {
+    type O = terrars::BlockAssignable<BigqueryConnection_Configuration_Authentication_UsernamePassword_Password>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildBigqueryConnection_Configuration_Authentication_UsernamePassword_Password {
+    #[doc = "The plaintext password."]
+    pub plaintext: terrars::PrimField<std::string::String>,
+}
+
+impl BuildBigqueryConnection_Configuration_Authentication_UsernamePassword_Password {
+    pub fn build(self) -> BigqueryConnection_Configuration_Authentication_UsernamePassword_Password {
+        BigqueryConnection_Configuration_Authentication_UsernamePassword_Password { plaintext: self.plaintext }
+    }
+}
+
+#[allow(dead_code)]
+pub struct BigqueryConnection_Configuration_Authentication_UsernamePassword_PasswordRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for BigqueryConnection_Configuration_Authentication_UsernamePassword_PasswordRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> BigqueryConnection_Configuration_Authentication_UsernamePassword_PasswordRef {
+        BigqueryConnection_Configuration_Authentication_UsernamePassword_PasswordRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl BigqueryConnection_Configuration_Authentication_UsernamePassword_PasswordRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `plaintext` after provisioning.\nThe plaintext password."]
+    pub fn plaintext(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.plaintext", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `secret_type` after provisioning.\nOutput only. The type of the secret."]
+    pub fn secret_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_type", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct BigqueryConnection_Configuration_Authentication_UsernamePasswordDynamic {
+    password: std
+    ::option
+    ::Option<terrars::DynamicBlock<BigqueryConnection_Configuration_Authentication_UsernamePassword_Password>>,
+}
+
+#[derive(Serialize)]
+pub struct BigqueryConnection_Configuration_Authentication_UsernamePassword {
+    username: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    password: std
+    ::option
+    ::Option<std::vec::Vec<BigqueryConnection_Configuration_Authentication_UsernamePassword_Password>>,
+    dynamic: BigqueryConnection_Configuration_Authentication_UsernamePasswordDynamic,
+}
+
+impl BigqueryConnection_Configuration_Authentication_UsernamePassword {
+    #[doc = "Set the field `password`.\n"]
+    pub fn set_password(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<BigqueryConnection_Configuration_Authentication_UsernamePassword_Password>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.password = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.password = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for BigqueryConnection_Configuration_Authentication_UsernamePassword {
+    type O = terrars::BlockAssignable<BigqueryConnection_Configuration_Authentication_UsernamePassword>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildBigqueryConnection_Configuration_Authentication_UsernamePassword {
+    #[doc = "Username for the connector."]
+    pub username: terrars::PrimField<std::string::String>,
+}
+
+impl BuildBigqueryConnection_Configuration_Authentication_UsernamePassword {
+    pub fn build(self) -> BigqueryConnection_Configuration_Authentication_UsernamePassword {
+        BigqueryConnection_Configuration_Authentication_UsernamePassword {
+            username: self.username,
+            password: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct BigqueryConnection_Configuration_Authentication_UsernamePasswordRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for BigqueryConnection_Configuration_Authentication_UsernamePasswordRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> BigqueryConnection_Configuration_Authentication_UsernamePasswordRef {
+        BigqueryConnection_Configuration_Authentication_UsernamePasswordRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl BigqueryConnection_Configuration_Authentication_UsernamePasswordRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `username` after provisioning.\nUsername for the connector."]
+    pub fn username(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.username", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `password` after provisioning.\n"]
+    pub fn password(
+        &self,
+    ) -> terrars::ListRef<BigqueryConnection_Configuration_Authentication_UsernamePassword_PasswordRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.password", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct BigqueryConnection_Configuration_AuthenticationDynamic {
+    username_password: std
+    ::option
+    ::Option<terrars::DynamicBlock<BigqueryConnection_Configuration_Authentication_UsernamePassword>>,
+}
+
+#[derive(Serialize)]
+pub struct BigqueryConnection_Configuration_Authentication {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    username_password: std
+    ::option
+    ::Option<std::vec::Vec<BigqueryConnection_Configuration_Authentication_UsernamePassword>>,
+    dynamic: BigqueryConnection_Configuration_AuthenticationDynamic,
+}
+
+impl BigqueryConnection_Configuration_Authentication {
+    #[doc = "Set the field `username_password`.\n"]
+    pub fn set_username_password(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<BigqueryConnection_Configuration_Authentication_UsernamePassword>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.username_password = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.username_password = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for BigqueryConnection_Configuration_Authentication {
+    type O = terrars::BlockAssignable<BigqueryConnection_Configuration_Authentication>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildBigqueryConnection_Configuration_Authentication {}
+
+impl BuildBigqueryConnection_Configuration_Authentication {
+    pub fn build(self) -> BigqueryConnection_Configuration_Authentication {
+        BigqueryConnection_Configuration_Authentication {
+            username_password: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct BigqueryConnection_Configuration_AuthenticationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for BigqueryConnection_Configuration_AuthenticationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> BigqueryConnection_Configuration_AuthenticationRef {
+        BigqueryConnection_Configuration_AuthenticationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl BigqueryConnection_Configuration_AuthenticationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `service_account` after provisioning.\nOutput only. The service account used for authenticating with the connector."]
+    pub fn service_account(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_account", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `username_password` after provisioning.\n"]
+    pub fn username_password(
+        &self,
+    ) -> terrars::ListRef<BigqueryConnection_Configuration_Authentication_UsernamePasswordRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.username_password", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct BigqueryConnection_Configuration_Endpoint {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    host_port: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl BigqueryConnection_Configuration_Endpoint {
+    #[doc = "Set the field `host_port`.\nHost and port in the format of 'host:port' for the connector endpoint."]
+    pub fn set_host_port(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.host_port = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for BigqueryConnection_Configuration_Endpoint {
+    type O = terrars::BlockAssignable<BigqueryConnection_Configuration_Endpoint>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildBigqueryConnection_Configuration_Endpoint {}
+
+impl BuildBigqueryConnection_Configuration_Endpoint {
+    pub fn build(self) -> BigqueryConnection_Configuration_Endpoint {
+        BigqueryConnection_Configuration_Endpoint { host_port: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct BigqueryConnection_Configuration_EndpointRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for BigqueryConnection_Configuration_EndpointRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryConnection_Configuration_EndpointRef {
+        BigqueryConnection_Configuration_EndpointRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl BigqueryConnection_Configuration_EndpointRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `host_port` after provisioning.\nHost and port in the format of 'host:port' for the connector endpoint."]
+    pub fn host_port(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.host_port", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct BigqueryConnection_Configuration_Network_PrivateServiceConnect {
+    network_attachment: terrars::PrimField<std::string::String>,
+}
+
+impl BigqueryConnection_Configuration_Network_PrivateServiceConnect { }
+
+impl terrars::ToListMappable for BigqueryConnection_Configuration_Network_PrivateServiceConnect {
+    type O = terrars::BlockAssignable<BigqueryConnection_Configuration_Network_PrivateServiceConnect>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildBigqueryConnection_Configuration_Network_PrivateServiceConnect {
+    #[doc =
+        "The resource name of a network attachment in the format of\n'projects/{project}/regions/{region}/networkAttachments/{networkAttachment}'."]
+    pub network_attachment: terrars::PrimField<std::string::String>,
+}
+
+impl BuildBigqueryConnection_Configuration_Network_PrivateServiceConnect {
+    pub fn build(self) -> BigqueryConnection_Configuration_Network_PrivateServiceConnect {
+        BigqueryConnection_Configuration_Network_PrivateServiceConnect {
+            network_attachment: self.network_attachment,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct BigqueryConnection_Configuration_Network_PrivateServiceConnectRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for BigqueryConnection_Configuration_Network_PrivateServiceConnectRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> BigqueryConnection_Configuration_Network_PrivateServiceConnectRef {
+        BigqueryConnection_Configuration_Network_PrivateServiceConnectRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl BigqueryConnection_Configuration_Network_PrivateServiceConnectRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `network_attachment` after provisioning.\nThe resource name of a network attachment in the format of\n'projects/{project}/regions/{region}/networkAttachments/{networkAttachment}'."]
+    pub fn network_attachment(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_attachment", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct BigqueryConnection_Configuration_NetworkDynamic {
+    private_service_connect: std
+    ::option
+    ::Option<terrars::DynamicBlock<BigqueryConnection_Configuration_Network_PrivateServiceConnect>>,
+}
+
+#[derive(Serialize)]
+pub struct BigqueryConnection_Configuration_Network {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    private_service_connect: std
+    ::option
+    ::Option<std::vec::Vec<BigqueryConnection_Configuration_Network_PrivateServiceConnect>>,
+    dynamic: BigqueryConnection_Configuration_NetworkDynamic,
+}
+
+impl BigqueryConnection_Configuration_Network {
+    #[doc = "Set the field `private_service_connect`.\n"]
+    pub fn set_private_service_connect(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<BigqueryConnection_Configuration_Network_PrivateServiceConnect>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.private_service_connect = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.private_service_connect = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for BigqueryConnection_Configuration_Network {
+    type O = terrars::BlockAssignable<BigqueryConnection_Configuration_Network>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildBigqueryConnection_Configuration_Network {}
+
+impl BuildBigqueryConnection_Configuration_Network {
+    pub fn build(self) -> BigqueryConnection_Configuration_Network {
+        BigqueryConnection_Configuration_Network {
+            private_service_connect: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct BigqueryConnection_Configuration_NetworkRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for BigqueryConnection_Configuration_NetworkRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryConnection_Configuration_NetworkRef {
+        BigqueryConnection_Configuration_NetworkRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl BigqueryConnection_Configuration_NetworkRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `private_service_connect` after provisioning.\n"]
+    pub fn private_service_connect(
+        &self,
+    ) -> terrars::ListRef<BigqueryConnection_Configuration_Network_PrivateServiceConnectRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.private_service_connect", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct BigqueryConnection_ConfigurationDynamic {
+    asset: std::option::Option<terrars::DynamicBlock<BigqueryConnection_Configuration_Asset>>,
+    authentication: std::option::Option<terrars::DynamicBlock<BigqueryConnection_Configuration_Authentication>>,
+    endpoint: std::option::Option<terrars::DynamicBlock<BigqueryConnection_Configuration_Endpoint>>,
+    network: std::option::Option<terrars::DynamicBlock<BigqueryConnection_Configuration_Network>>,
+}
+
+#[derive(Serialize)]
+pub struct BigqueryConnection_Configuration {
+    connector_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    asset: std::option::Option<std::vec::Vec<BigqueryConnection_Configuration_Asset>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    authentication: std::option::Option<std::vec::Vec<BigqueryConnection_Configuration_Authentication>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    endpoint: std::option::Option<std::vec::Vec<BigqueryConnection_Configuration_Endpoint>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network: std::option::Option<std::vec::Vec<BigqueryConnection_Configuration_Network>>,
+    dynamic: BigqueryConnection_ConfigurationDynamic,
+}
+
+impl BigqueryConnection_Configuration {
+    #[doc = "Set the field `asset`.\n"]
+    pub fn set_asset(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryConnection_Configuration_Asset>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.asset = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.asset = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `authentication`.\n"]
+    pub fn set_authentication(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryConnection_Configuration_Authentication>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.authentication = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.authentication = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `endpoint`.\n"]
+    pub fn set_endpoint(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryConnection_Configuration_Endpoint>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.endpoint = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.endpoint = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `network`.\n"]
+    pub fn set_network(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryConnection_Configuration_Network>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.network = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.network = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for BigqueryConnection_Configuration {
+    type O = terrars::BlockAssignable<BigqueryConnection_Configuration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildBigqueryConnection_Configuration {
+    #[doc =
+        "The ID of the connector. Possible values include 'google-alloydb', 'google-cloudsql-mysql',\n'google-cloudsql-postgres', and other connector IDs supported by the BigQuery Connector framework."]
+    pub connector_id: terrars::PrimField<std::string::String>,
+}
+
+impl BuildBigqueryConnection_Configuration {
+    pub fn build(self) -> BigqueryConnection_Configuration {
+        BigqueryConnection_Configuration {
+            connector_id: self.connector_id,
+            asset: core::default::Default::default(),
+            authentication: core::default::Default::default(),
+            endpoint: core::default::Default::default(),
+            network: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct BigqueryConnection_ConfigurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for BigqueryConnection_ConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryConnection_ConfigurationRef {
+        BigqueryConnection_ConfigurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl BigqueryConnection_ConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `connector_id` after provisioning.\nThe ID of the connector. Possible values include 'google-alloydb', 'google-cloudsql-mysql',\n'google-cloudsql-postgres', and other connector IDs supported by the BigQuery Connector framework."]
+    pub fn connector_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.connector_id", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `asset` after provisioning.\n"]
+    pub fn asset(&self) -> terrars::ListRef<BigqueryConnection_Configuration_AssetRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.asset", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `authentication` after provisioning.\n"]
+    pub fn authentication(&self) -> terrars::ListRef<BigqueryConnection_Configuration_AuthenticationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.authentication", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `endpoint` after provisioning.\n"]
+    pub fn endpoint(&self) -> terrars::ListRef<BigqueryConnection_Configuration_EndpointRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.endpoint", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `network` after provisioning.\n"]
+    pub fn network(&self) -> terrars::ListRef<BigqueryConnection_Configuration_NetworkRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.network", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct BigqueryConnection_Spark_MetastoreServiceConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metastore_service: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl BigqueryConnection_Spark_MetastoreServiceConfig {
+    #[doc =
+        "Set the field `metastore_service`.\nResource name of an existing Dataproc Metastore service in the form of projects/[projectId]/locations/[region]/services/[serviceId]."]
+    pub fn set_metastore_service(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.metastore_service = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for BigqueryConnection_Spark_MetastoreServiceConfig {
+    type O = terrars::BlockAssignable<BigqueryConnection_Spark_MetastoreServiceConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildBigqueryConnection_Spark_MetastoreServiceConfig {}
+
+impl BuildBigqueryConnection_Spark_MetastoreServiceConfig {
+    pub fn build(self) -> BigqueryConnection_Spark_MetastoreServiceConfig {
+        BigqueryConnection_Spark_MetastoreServiceConfig { metastore_service: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct BigqueryConnection_Spark_MetastoreServiceConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for BigqueryConnection_Spark_MetastoreServiceConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> BigqueryConnection_Spark_MetastoreServiceConfigRef {
+        BigqueryConnection_Spark_MetastoreServiceConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl BigqueryConnection_Spark_MetastoreServiceConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1216,12 +2097,12 @@ impl BigqueryConnectionSparkElMetastoreServiceConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct BigqueryConnectionSparkElSparkHistoryServerConfigEl {
+pub struct BigqueryConnection_Spark_SparkHistoryServerConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dataproc_cluster: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl BigqueryConnectionSparkElSparkHistoryServerConfigEl {
+impl BigqueryConnection_Spark_SparkHistoryServerConfig {
     #[doc =
         "Set the field `dataproc_cluster`.\nResource name of an existing Dataproc Cluster to act as a Spark History Server for the connection if the form of projects/[projectId]/regions/[region]/clusters/[cluster_name]."]
     pub fn set_dataproc_cluster(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1230,8 +2111,8 @@ impl BigqueryConnectionSparkElSparkHistoryServerConfigEl {
     }
 }
 
-impl terrars::ToListMappable for BigqueryConnectionSparkElSparkHistoryServerConfigEl {
-    type O = terrars::BlockAssignable<BigqueryConnectionSparkElSparkHistoryServerConfigEl>;
+impl terrars::ToListMappable for BigqueryConnection_Spark_SparkHistoryServerConfig {
+    type O = terrars::BlockAssignable<BigqueryConnection_Spark_SparkHistoryServerConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1242,32 +2123,34 @@ impl terrars::ToListMappable for BigqueryConnectionSparkElSparkHistoryServerConf
     }
 }
 
-pub struct BuildBigqueryConnectionSparkElSparkHistoryServerConfigEl {}
+pub struct BuildBigqueryConnection_Spark_SparkHistoryServerConfig {}
 
-impl BuildBigqueryConnectionSparkElSparkHistoryServerConfigEl {
-    pub fn build(self) -> BigqueryConnectionSparkElSparkHistoryServerConfigEl {
-        BigqueryConnectionSparkElSparkHistoryServerConfigEl { dataproc_cluster: core::default::Default::default() }
+impl BuildBigqueryConnection_Spark_SparkHistoryServerConfig {
+    pub fn build(self) -> BigqueryConnection_Spark_SparkHistoryServerConfig {
+        BigqueryConnection_Spark_SparkHistoryServerConfig { dataproc_cluster: core::default::Default::default() }
     }
 }
 
-pub struct BigqueryConnectionSparkElSparkHistoryServerConfigElRef {
+#[allow(dead_code)]
+pub struct BigqueryConnection_Spark_SparkHistoryServerConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryConnectionSparkElSparkHistoryServerConfigElRef {
+impl terrars::Ref for BigqueryConnection_Spark_SparkHistoryServerConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> BigqueryConnectionSparkElSparkHistoryServerConfigElRef {
-        BigqueryConnectionSparkElSparkHistoryServerConfigElRef {
+    ) -> BigqueryConnection_Spark_SparkHistoryServerConfigRef {
+        BigqueryConnection_Spark_SparkHistoryServerConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryConnectionSparkElSparkHistoryServerConfigElRef {
+impl BigqueryConnection_Spark_SparkHistoryServerConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1280,29 +2163,29 @@ impl BigqueryConnectionSparkElSparkHistoryServerConfigElRef {
 }
 
 #[derive(Serialize, Default)]
-struct BigqueryConnectionSparkElDynamic {
+struct BigqueryConnection_SparkDynamic {
     metastore_service_config: std
     ::option
-    ::Option<terrars::DynamicBlock<BigqueryConnectionSparkElMetastoreServiceConfigEl>>,
+    ::Option<terrars::DynamicBlock<BigqueryConnection_Spark_MetastoreServiceConfig>>,
     spark_history_server_config: std
     ::option
-    ::Option<terrars::DynamicBlock<BigqueryConnectionSparkElSparkHistoryServerConfigEl>>,
+    ::Option<terrars::DynamicBlock<BigqueryConnection_Spark_SparkHistoryServerConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct BigqueryConnectionSparkEl {
+pub struct BigqueryConnection_Spark {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    metastore_service_config: std::option::Option<std::vec::Vec<BigqueryConnectionSparkElMetastoreServiceConfigEl>>,
+    metastore_service_config: std::option::Option<std::vec::Vec<BigqueryConnection_Spark_MetastoreServiceConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    spark_history_server_config: std::option::Option<std::vec::Vec<BigqueryConnectionSparkElSparkHistoryServerConfigEl>>,
-    dynamic: BigqueryConnectionSparkElDynamic,
+    spark_history_server_config: std::option::Option<std::vec::Vec<BigqueryConnection_Spark_SparkHistoryServerConfig>>,
+    dynamic: BigqueryConnection_SparkDynamic,
 }
 
-impl BigqueryConnectionSparkEl {
+impl BigqueryConnection_Spark {
     #[doc = "Set the field `metastore_service_config`.\n"]
     pub fn set_metastore_service_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryConnectionSparkElMetastoreServiceConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryConnection_Spark_MetastoreServiceConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1318,7 +2201,7 @@ impl BigqueryConnectionSparkEl {
     #[doc = "Set the field `spark_history_server_config`.\n"]
     pub fn set_spark_history_server_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryConnectionSparkElSparkHistoryServerConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryConnection_Spark_SparkHistoryServerConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1332,8 +2215,8 @@ impl BigqueryConnectionSparkEl {
     }
 }
 
-impl terrars::ToListMappable for BigqueryConnectionSparkEl {
-    type O = terrars::BlockAssignable<BigqueryConnectionSparkEl>;
+impl terrars::ToListMappable for BigqueryConnection_Spark {
+    type O = terrars::BlockAssignable<BigqueryConnection_Spark>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1344,11 +2227,11 @@ impl terrars::ToListMappable for BigqueryConnectionSparkEl {
     }
 }
 
-pub struct BuildBigqueryConnectionSparkEl {}
+pub struct BuildBigqueryConnection_Spark {}
 
-impl BuildBigqueryConnectionSparkEl {
-    pub fn build(self) -> BigqueryConnectionSparkEl {
-        BigqueryConnectionSparkEl {
+impl BuildBigqueryConnection_Spark {
+    pub fn build(self) -> BigqueryConnection_Spark {
+        BigqueryConnection_Spark {
             metastore_service_config: core::default::Default::default(),
             spark_history_server_config: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1356,21 +2239,23 @@ impl BuildBigqueryConnectionSparkEl {
     }
 }
 
-pub struct BigqueryConnectionSparkElRef {
+#[allow(dead_code)]
+pub struct BigqueryConnection_SparkRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryConnectionSparkElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryConnectionSparkElRef {
-        BigqueryConnectionSparkElRef {
+impl terrars::Ref for BigqueryConnection_SparkRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryConnection_SparkRef {
+        BigqueryConnection_SparkRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryConnectionSparkElRef {
+impl BigqueryConnection_SparkRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1382,20 +2267,18 @@ impl BigqueryConnectionSparkElRef {
     }
 
     #[doc = "Get a reference to the value of field `metastore_service_config` after provisioning.\n"]
-    pub fn metastore_service_config(&self) -> terrars::ListRef<BigqueryConnectionSparkElMetastoreServiceConfigElRef> {
+    pub fn metastore_service_config(&self) -> terrars::ListRef<BigqueryConnection_Spark_MetastoreServiceConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.metastore_service_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `spark_history_server_config` after provisioning.\n"]
-    pub fn spark_history_server_config(
-        &self,
-    ) -> terrars::ListRef<BigqueryConnectionSparkElSparkHistoryServerConfigElRef> {
+    pub fn spark_history_server_config(&self) -> terrars::ListRef<BigqueryConnection_Spark_SparkHistoryServerConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.spark_history_server_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct BigqueryConnectionTimeoutsEl {
+pub struct BigqueryConnection_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1404,7 +2287,7 @@ pub struct BigqueryConnectionTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl BigqueryConnectionTimeoutsEl {
+impl BigqueryConnection_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1424,8 +2307,8 @@ impl BigqueryConnectionTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for BigqueryConnectionTimeoutsEl {
-    type O = terrars::BlockAssignable<BigqueryConnectionTimeoutsEl>;
+impl terrars::ToListMappable for BigqueryConnection_Timeouts {
+    type O = terrars::BlockAssignable<BigqueryConnection_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1436,11 +2319,11 @@ impl terrars::ToListMappable for BigqueryConnectionTimeoutsEl {
     }
 }
 
-pub struct BuildBigqueryConnectionTimeoutsEl {}
+pub struct BuildBigqueryConnection_Timeouts {}
 
-impl BuildBigqueryConnectionTimeoutsEl {
-    pub fn build(self) -> BigqueryConnectionTimeoutsEl {
-        BigqueryConnectionTimeoutsEl {
+impl BuildBigqueryConnection_Timeouts {
+    pub fn build(self) -> BigqueryConnection_Timeouts {
+        BigqueryConnection_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1448,21 +2331,23 @@ impl BuildBigqueryConnectionTimeoutsEl {
     }
 }
 
-pub struct BigqueryConnectionTimeoutsElRef {
+#[allow(dead_code)]
+pub struct BigqueryConnection_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryConnectionTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryConnectionTimeoutsElRef {
-        BigqueryConnectionTimeoutsElRef {
+impl terrars::Ref for BigqueryConnection_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryConnection_TimeoutsRef {
+        BigqueryConnection_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryConnectionTimeoutsElRef {
+impl BigqueryConnection_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1481,14 +2366,4 @@ impl BigqueryConnectionTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct BigqueryConnectionDynamic {
-    aws: std::option::Option<terrars::DynamicBlock<BigqueryConnectionAwsEl>>,
-    azure: std::option::Option<terrars::DynamicBlock<BigqueryConnectionAzureEl>>,
-    cloud_resource: std::option::Option<terrars::DynamicBlock<BigqueryConnectionCloudResourceEl>>,
-    cloud_spanner: std::option::Option<terrars::DynamicBlock<BigqueryConnectionCloudSpannerEl>>,
-    cloud_sql: std::option::Option<terrars::DynamicBlock<BigqueryConnectionCloudSqlEl>>,
-    spark: std::option::Option<terrars::DynamicBlock<BigqueryConnectionSparkEl>>,
 }

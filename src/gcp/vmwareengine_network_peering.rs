@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct VmwareengineNetworkPeeringData {
+struct VmwareengineNetworkPeeringData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct VmwareengineNetworkPeeringData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -37,13 +41,13 @@ struct VmwareengineNetworkPeeringData {
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     vmware_engine_network: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<VmwareengineNetworkPeeringTimeoutsEl>,
+    timeouts: std::option::Option<VmwareengineNetworkPeering_Timeouts>,
 }
 
 struct VmwareengineNetworkPeering_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<VmwareengineNetworkPeeringData>,
+    data: std::cell::RefCell<VmwareengineNetworkPeeringData_>,
 }
 
 #[derive(Clone)]
@@ -143,6 +147,13 @@ impl VmwareengineNetworkPeering {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nUser-provided description for this network peering."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -190,7 +201,7 @@ impl VmwareengineNetworkPeering {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<VmwareengineNetworkPeeringTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<VmwareengineNetworkPeering_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -199,6 +210,12 @@ impl VmwareengineNetworkPeering {
         "Get a reference to the value of field `create_time` after provisioning.\nCreation time of this resource.\nA timestamp in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and\nup to nine fractional digits. Examples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -254,7 +271,7 @@ impl VmwareengineNetworkPeering {
     }
 
     #[doc =
-        "Get a reference to the value of field `peer_network_type` after provisioning.\nThe type of the network to peer with the VMware Engine network. Possible values: [\"STANDARD\", \"VMWARE_ENGINE_NETWORK\", \"PRIVATE_SERVICES_ACCESS\", \"NETAPP_CLOUD_VOLUMES\", \"THIRD_PARTY_SERVICE\", \"DELL_POWERSCALE\"]"]
+        "Get a reference to the value of field `peer_network_type` after provisioning.\nThe type of the network to peer with the VMware Engine network. Possible values: [\"STANDARD\", \"VMWARE_ENGINE_NETWORK\", \"PRIVATE_SERVICES_ACCESS\", \"NETAPP_CLOUD_VOLUMES\", \"THIRD_PARTY_SERVICE\", \"DELL_POWERSCALE\", \"GOOGLE_CLOUD_NETAPP_VOLUMES\"]"]
     pub fn peer_network_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.peer_network_type", self.extract_ref()))
     }
@@ -304,8 +321,8 @@ impl VmwareengineNetworkPeering {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> VmwareengineNetworkPeeringTimeoutsElRef {
-        VmwareengineNetworkPeeringTimeoutsElRef::new(
+    pub fn timeouts(&self) -> VmwareengineNetworkPeering_TimeoutsRef {
+        VmwareengineNetworkPeering_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -351,7 +368,7 @@ pub struct BuildVmwareengineNetworkPeering {
         "The relative resource name of the network to peer with a standard VMware Engine network.\nThe provided network can be a consumer VPC network or another standard VMware Engine network."]
     pub peer_network: terrars::PrimField<std::string::String>,
     #[doc =
-        "The type of the network to peer with the VMware Engine network. Possible values: [\"STANDARD\", \"VMWARE_ENGINE_NETWORK\", \"PRIVATE_SERVICES_ACCESS\", \"NETAPP_CLOUD_VOLUMES\", \"THIRD_PARTY_SERVICE\", \"DELL_POWERSCALE\"]"]
+        "The type of the network to peer with the VMware Engine network. Possible values: [\"STANDARD\", \"VMWARE_ENGINE_NETWORK\", \"PRIVATE_SERVICES_ACCESS\", \"NETAPP_CLOUD_VOLUMES\", \"THIRD_PARTY_SERVICE\", \"DELL_POWERSCALE\", \"GOOGLE_CLOUD_NETAPP_VOLUMES\"]"]
     pub peer_network_type: terrars::PrimField<std::string::String>,
     #[doc =
         "The relative resource name of the VMware Engine network. Specify the name in the following form:\nprojects/{project}/locations/{location}/vmwareEngineNetworks/{vmwareEngineNetworkId} where {project}\ncan either be a project number or a project ID."]
@@ -363,12 +380,13 @@ impl BuildVmwareengineNetworkPeering {
         let out = VmwareengineNetworkPeering(std::rc::Rc::new(VmwareengineNetworkPeering_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(VmwareengineNetworkPeeringData {
+            data: std::cell::RefCell::new(VmwareengineNetworkPeeringData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 export_custom_routes: core::default::Default::default(),
                 export_custom_routes_with_public_ip: core::default::Default::default(),
@@ -418,6 +436,12 @@ impl VmwareengineNetworkPeeringRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nUser-provided description for this network peering."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -470,7 +494,7 @@ impl VmwareengineNetworkPeeringRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `peer_network_type` after provisioning.\nThe type of the network to peer with the VMware Engine network. Possible values: [\"STANDARD\", \"VMWARE_ENGINE_NETWORK\", \"PRIVATE_SERVICES_ACCESS\", \"NETAPP_CLOUD_VOLUMES\", \"THIRD_PARTY_SERVICE\", \"DELL_POWERSCALE\"]"]
+        "Get a reference to the value of field `peer_network_type` after provisioning.\nThe type of the network to peer with the VMware Engine network. Possible values: [\"STANDARD\", \"VMWARE_ENGINE_NETWORK\", \"PRIVATE_SERVICES_ACCESS\", \"NETAPP_CLOUD_VOLUMES\", \"THIRD_PARTY_SERVICE\", \"DELL_POWERSCALE\", \"GOOGLE_CLOUD_NETAPP_VOLUMES\"]"]
     pub fn peer_network_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.peer_network_type", self.extract_ref()))
     }
@@ -520,8 +544,8 @@ impl VmwareengineNetworkPeeringRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> VmwareengineNetworkPeeringTimeoutsElRef {
-        VmwareengineNetworkPeeringTimeoutsElRef::new(
+    pub fn timeouts(&self) -> VmwareengineNetworkPeering_TimeoutsRef {
+        VmwareengineNetworkPeering_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -529,7 +553,7 @@ impl VmwareengineNetworkPeeringRef {
 }
 
 #[derive(Serialize)]
-pub struct VmwareengineNetworkPeeringTimeoutsEl {
+pub struct VmwareengineNetworkPeering_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -538,7 +562,7 @@ pub struct VmwareengineNetworkPeeringTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl VmwareengineNetworkPeeringTimeoutsEl {
+impl VmwareengineNetworkPeering_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -558,8 +582,8 @@ impl VmwareengineNetworkPeeringTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for VmwareengineNetworkPeeringTimeoutsEl {
-    type O = terrars::BlockAssignable<VmwareengineNetworkPeeringTimeoutsEl>;
+impl terrars::ToListMappable for VmwareengineNetworkPeering_Timeouts {
+    type O = terrars::BlockAssignable<VmwareengineNetworkPeering_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -570,11 +594,11 @@ impl terrars::ToListMappable for VmwareengineNetworkPeeringTimeoutsEl {
     }
 }
 
-pub struct BuildVmwareengineNetworkPeeringTimeoutsEl {}
+pub struct BuildVmwareengineNetworkPeering_Timeouts {}
 
-impl BuildVmwareengineNetworkPeeringTimeoutsEl {
-    pub fn build(self) -> VmwareengineNetworkPeeringTimeoutsEl {
-        VmwareengineNetworkPeeringTimeoutsEl {
+impl BuildVmwareengineNetworkPeering_Timeouts {
+    pub fn build(self) -> VmwareengineNetworkPeering_Timeouts {
+        VmwareengineNetworkPeering_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -582,21 +606,23 @@ impl BuildVmwareengineNetworkPeeringTimeoutsEl {
     }
 }
 
-pub struct VmwareengineNetworkPeeringTimeoutsElRef {
+#[allow(dead_code)]
+pub struct VmwareengineNetworkPeering_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for VmwareengineNetworkPeeringTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> VmwareengineNetworkPeeringTimeoutsElRef {
-        VmwareengineNetworkPeeringTimeoutsElRef {
+impl terrars::Ref for VmwareengineNetworkPeering_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> VmwareengineNetworkPeering_TimeoutsRef {
+        VmwareengineNetworkPeering_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl VmwareengineNetworkPeeringTimeoutsElRef {
+impl VmwareengineNetworkPeering_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

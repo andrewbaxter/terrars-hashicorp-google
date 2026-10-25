@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeImageIamBindingData {
+struct ComputeImageIamBindingData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,14 +28,14 @@ struct ComputeImageIamBindingData {
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<ComputeImageIamBindingConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<ComputeImageIamBinding_Condition>>,
     dynamic: ComputeImageIamBindingDynamic,
 }
 
 struct ComputeImageIamBinding_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeImageIamBindingData>,
+    data: std::cell::RefCell<ComputeImageIamBindingData_>,
 }
 
 #[derive(Clone)]
@@ -148,7 +150,7 @@ impl ComputeImageIamBinding {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeImageIamBindingConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeImageIamBinding_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -192,7 +194,7 @@ impl ComputeImageIamBinding {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<ComputeImageIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<ComputeImageIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -243,7 +245,7 @@ impl BuildComputeImageIamBinding {
         let out = ComputeImageIamBinding(std::rc::Rc::new(ComputeImageIamBinding_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeImageIamBindingData {
+            data: std::cell::RefCell::new(ComputeImageIamBindingData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -317,20 +319,25 @@ impl ComputeImageIamBindingRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<ComputeImageIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<ComputeImageIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ComputeImageIamBindingDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<ComputeImageIamBinding_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct ComputeImageIamBindingConditionEl {
+pub struct ComputeImageIamBinding_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl ComputeImageIamBindingConditionEl {
+impl ComputeImageIamBinding_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -338,8 +345,8 @@ impl ComputeImageIamBindingConditionEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeImageIamBindingConditionEl {
-    type O = terrars::BlockAssignable<ComputeImageIamBindingConditionEl>;
+impl terrars::ToListMappable for ComputeImageIamBinding_Condition {
+    type O = terrars::BlockAssignable<ComputeImageIamBinding_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -350,16 +357,16 @@ impl terrars::ToListMappable for ComputeImageIamBindingConditionEl {
     }
 }
 
-pub struct BuildComputeImageIamBindingConditionEl {
+pub struct BuildComputeImageIamBinding_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputeImageIamBindingConditionEl {
-    pub fn build(self) -> ComputeImageIamBindingConditionEl {
-        ComputeImageIamBindingConditionEl {
+impl BuildComputeImageIamBinding_Condition {
+    pub fn build(self) -> ComputeImageIamBinding_Condition {
+        ComputeImageIamBinding_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -367,21 +374,23 @@ impl BuildComputeImageIamBindingConditionEl {
     }
 }
 
-pub struct ComputeImageIamBindingConditionElRef {
+#[allow(dead_code)]
+pub struct ComputeImageIamBinding_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeImageIamBindingConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeImageIamBindingConditionElRef {
-        ComputeImageIamBindingConditionElRef {
+impl terrars::Ref for ComputeImageIamBinding_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeImageIamBinding_ConditionRef {
+        ComputeImageIamBinding_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeImageIamBindingConditionElRef {
+impl ComputeImageIamBinding_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -400,9 +409,4 @@ impl ComputeImageIamBindingConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ComputeImageIamBindingDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<ComputeImageIamBindingConditionEl>>,
 }

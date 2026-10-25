@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct CloudRunV2JobData {
+struct CloudRunV2JobData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,6 +27,10 @@ struct CloudRunV2JobData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     client_version: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_protection: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -35,18 +41,24 @@ struct CloudRunV2JobData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    binary_authorization: std::option::Option<std::vec::Vec<CloudRunV2JobBinaryAuthorizationEl>>,
+    run_execution_token: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    template: std::option::Option<std::vec::Vec<CloudRunV2JobTemplateEl>>,
+    start_execution_token: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<CloudRunV2JobTimeoutsEl>,
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    binary_authorization: std::option::Option<std::vec::Vec<CloudRunV2Job_BinaryAuthorization>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    template: std::option::Option<std::vec::Vec<CloudRunV2Job_Template>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<CloudRunV2Job_Timeouts>,
     dynamic: CloudRunV2JobDynamic,
 }
 
 struct CloudRunV2Job_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CloudRunV2JobData>,
+    data: std::cell::RefCell<CloudRunV2JobData_>,
 }
 
 #[derive(Clone)]
@@ -168,6 +180,20 @@ impl CloudRunV2Job {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `deletion_protection`.\nWhether Terraform will be prevented from destroying the job. Defaults to true.\nWhen a'terraform destroy' or 'terraform apply' would delete the job,\nthe command will fail if this field is not set to false in Terraform state.\nWhen the field is set to true or unset in Terraform state, a 'terraform apply'\nor 'terraform destroy' that would delete the job will fail.\nWhen the field is set to false, deleting the job is allowed."]
+    pub fn set_deletion_protection(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().deletion_protection = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -175,7 +201,7 @@ impl CloudRunV2Job {
     }
 
     #[doc =
-        "Set the field `labels`.\nUnstructured key value map that can be used to organize and categorize objects. User-provided labels are shared with Google's billing system, so they can be used to filter, or break down billing charges by team, component,\nenvironment, state, etc. For more information, visit https://cloud.google.com/resource-manager/docs/creating-managing-labels or https://cloud.google.com/run/docs/configuring/labels.\n\nCloud Run API v2 does not support labels with 'run.googleapis.com', 'cloud.googleapis.com', 'serving.knative.dev', or 'autoscaling.knative.dev' namespaces, and they will be rejected.\nAll system labels in v1 now have a corresponding field in v2 Job.\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
+        "Set the field `labels`.\nUnstructured key value map that can be used to organize and categorize objects. User-provided labels are shared with Google's billing system, so they can be used to filter, or break down billing charges by team, component,\nenvironment, state, etc. For more information, visit https://docs.cloud.google.com/resource-manager/docs/creating-managing-labels or https://cloud.google.com/run/docs/configuring/labels.\n\nCloud Run API v2 does not support labels with 'run.googleapis.com', 'cloud.googleapis.com', 'serving.knative.dev', or 'autoscaling.knative.dev' namespaces, and they will be rejected.\nAll system labels in v1 now have a corresponding field in v2 Job.\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
     pub fn set_labels(
         self,
         v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -197,10 +223,34 @@ impl CloudRunV2Job {
         self
     }
 
+    #[doc =
+        "Set the field `run_execution_token`.\nA unique string used as a suffix creating a new execution upon job create or update. The Job will become ready when the execution is successfully completed.\nThe sum of job name and token length must be fewer than 63 characters."]
+    pub fn set_run_execution_token(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().run_execution_token = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `start_execution_token`.\nA unique string used as a suffix creating a new execution upon job create or update. The Job will become ready when the execution is successfully started.\nThe sum of job name and token length must be fewer than 63 characters."]
+    pub fn set_start_execution_token(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().start_execution_token = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `tags`.\nA map of resource manager tags.\nResource manager tag keys and values have the same definition as resource manager tags.\nKeys must be in the format tagKeys/{tag_key_id}, and values are in the format tagValues/{tag_value_id}."]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `binary_authorization`.\n"]
     pub fn set_binary_authorization(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudRunV2JobBinaryAuthorizationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudRunV2Job_BinaryAuthorization>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -214,7 +264,7 @@ impl CloudRunV2Job {
     }
 
     #[doc = "Set the field `template`.\n"]
-    pub fn set_template(self, v: impl std::convert::Into<terrars::BlockAssignable<CloudRunV2JobTemplateEl>>) -> Self {
+    pub fn set_template(self, v: impl std::convert::Into<terrars::BlockAssignable<CloudRunV2Job_Template>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().template = std::option::Option::Some(v);
@@ -227,7 +277,7 @@ impl CloudRunV2Job {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<CloudRunV2JobTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<CloudRunV2Job_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -252,7 +302,7 @@ impl CloudRunV2Job {
 
     #[doc =
         "Get a reference to the value of field `conditions` after provisioning.\nThe Conditions of all other associated sub-resources. They contain additional diagnostics information in case the Job does not reach its desired state. See comments in reconciling for additional information on 'reconciliation' process in Cloud Run."]
-    pub fn conditions(&self) -> terrars::ListRef<CloudRunV2JobConditionsElRef> {
+    pub fn conditions(&self) -> terrars::ListRef<CloudRunV2Job_ConditionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.conditions", self.extract_ref()))
     }
 
@@ -270,6 +320,18 @@ impl CloudRunV2Job {
     #[doc = "Get a reference to the value of field `delete_time` after provisioning.\nThe deletion time."]
     pub fn delete_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_protection` after provisioning.\nWhether Terraform will be prevented from destroying the job. Defaults to true.\nWhen a'terraform destroy' or 'terraform apply' would delete the job,\nthe command will fail if this field is not set to false in Terraform state.\nWhen the field is set to true or unset in Terraform state, a 'terraform apply'\nor 'terraform destroy' that would delete the job will fail.\nWhen the field is set to false, deleting the job is allowed."]
+    pub fn deletion_protection(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_protection", self.extract_ref()))
     }
 
     #[doc =
@@ -297,7 +359,7 @@ impl CloudRunV2Job {
     }
 
     #[doc =
-        "Get a reference to the value of field `expire_time` after provisioning.\nFor a deleted resource, the time after which it will be permamently deleted."]
+        "Get a reference to the value of field `expire_time` after provisioning.\nFor a deleted resource, the time after which it will be permanently deleted."]
     pub fn expire_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.expire_time", self.extract_ref()))
     }
@@ -314,7 +376,7 @@ impl CloudRunV2Job {
     }
 
     #[doc =
-        "Get a reference to the value of field `labels` after provisioning.\nUnstructured key value map that can be used to organize and categorize objects. User-provided labels are shared with Google's billing system, so they can be used to filter, or break down billing charges by team, component,\nenvironment, state, etc. For more information, visit https://cloud.google.com/resource-manager/docs/creating-managing-labels or https://cloud.google.com/run/docs/configuring/labels.\n\nCloud Run API v2 does not support labels with 'run.googleapis.com', 'cloud.googleapis.com', 'serving.knative.dev', or 'autoscaling.knative.dev' namespaces, and they will be rejected.\nAll system labels in v1 now have a corresponding field in v2 Job.\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
+        "Get a reference to the value of field `labels` after provisioning.\nUnstructured key value map that can be used to organize and categorize objects. User-provided labels are shared with Google's billing system, so they can be used to filter, or break down billing charges by team, component,\nenvironment, state, etc. For more information, visit https://docs.cloud.google.com/resource-manager/docs/creating-managing-labels or https://cloud.google.com/run/docs/configuring/labels.\n\nCloud Run API v2 does not support labels with 'run.googleapis.com', 'cloud.googleapis.com', 'serving.knative.dev', or 'autoscaling.knative.dev' namespaces, and they will be rejected.\nAll system labels in v1 now have a corresponding field in v2 Job.\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
     pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
     }
@@ -327,7 +389,7 @@ impl CloudRunV2Job {
 
     #[doc =
         "Get a reference to the value of field `latest_created_execution` after provisioning.\nName of the last created execution."]
-    pub fn latest_created_execution(&self) -> terrars::ListRef<CloudRunV2JobLatestCreatedExecutionElRef> {
+    pub fn latest_created_execution(&self) -> terrars::ListRef<CloudRunV2Job_LatestCreatedExecutionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.latest_created_execution", self.extract_ref()))
     }
 
@@ -365,8 +427,26 @@ impl CloudRunV2Job {
     }
 
     #[doc =
+        "Get a reference to the value of field `run_execution_token` after provisioning.\nA unique string used as a suffix creating a new execution upon job create or update. The Job will become ready when the execution is successfully completed.\nThe sum of job name and token length must be fewer than 63 characters."]
+    pub fn run_execution_token(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.run_execution_token", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `start_execution_token` after provisioning.\nA unique string used as a suffix creating a new execution upon job create or update. The Job will become ready when the execution is successfully started.\nThe sum of job name and token length must be fewer than 63 characters."]
+    pub fn start_execution_token(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.start_execution_token", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `tags` after provisioning.\nA map of resource manager tags.\nResource manager tag keys and values have the same definition as resource manager tags.\nKeys must be in the format tagKeys/{tag_key_id}, and values are in the format tagValues/{tag_value_id}."]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `terminal_condition` after provisioning.\nThe Condition of this Job, containing its readiness status, and detailed error information in case it did not reach the desired state"]
-    pub fn terminal_condition(&self) -> terrars::ListRef<CloudRunV2JobTerminalConditionElRef> {
+    pub fn terminal_condition(&self) -> terrars::ListRef<CloudRunV2Job_TerminalConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.terminal_condition", self.extract_ref()))
     }
 
@@ -388,18 +468,18 @@ impl CloudRunV2Job {
     }
 
     #[doc = "Get a reference to the value of field `binary_authorization` after provisioning.\n"]
-    pub fn binary_authorization(&self) -> terrars::ListRef<CloudRunV2JobBinaryAuthorizationElRef> {
+    pub fn binary_authorization(&self) -> terrars::ListRef<CloudRunV2Job_BinaryAuthorizationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.binary_authorization", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `template` after provisioning.\n"]
-    pub fn template(&self) -> terrars::ListRef<CloudRunV2JobTemplateElRef> {
+    pub fn template(&self) -> terrars::ListRef<CloudRunV2Job_TemplateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.template", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> CloudRunV2JobTimeoutsElRef {
-        CloudRunV2JobTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> CloudRunV2Job_TimeoutsRef {
+        CloudRunV2Job_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -447,7 +527,7 @@ impl BuildCloudRunV2Job {
         let out = CloudRunV2Job(std::rc::Rc::new(CloudRunV2Job_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CloudRunV2JobData {
+            data: std::cell::RefCell::new(CloudRunV2JobData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -456,12 +536,17 @@ impl BuildCloudRunV2Job {
                 annotations: core::default::Default::default(),
                 client: core::default::Default::default(),
                 client_version: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
+                deletion_protection: core::default::Default::default(),
                 id: core::default::Default::default(),
                 labels: core::default::Default::default(),
                 launch_stage: core::default::Default::default(),
                 location: self.location,
                 name: self.name,
                 project: core::default::Default::default(),
+                run_execution_token: core::default::Default::default(),
+                start_execution_token: core::default::Default::default(),
+                tags: core::default::Default::default(),
                 binary_authorization: core::default::Default::default(),
                 template: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
@@ -516,7 +601,7 @@ impl CloudRunV2JobRef {
 
     #[doc =
         "Get a reference to the value of field `conditions` after provisioning.\nThe Conditions of all other associated sub-resources. They contain additional diagnostics information in case the Job does not reach its desired state. See comments in reconciling for additional information on 'reconciliation' process in Cloud Run."]
-    pub fn conditions(&self) -> terrars::ListRef<CloudRunV2JobConditionsElRef> {
+    pub fn conditions(&self) -> terrars::ListRef<CloudRunV2Job_ConditionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.conditions", self.extract_ref()))
     }
 
@@ -534,6 +619,18 @@ impl CloudRunV2JobRef {
     #[doc = "Get a reference to the value of field `delete_time` after provisioning.\nThe deletion time."]
     pub fn delete_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_protection` after provisioning.\nWhether Terraform will be prevented from destroying the job. Defaults to true.\nWhen a'terraform destroy' or 'terraform apply' would delete the job,\nthe command will fail if this field is not set to false in Terraform state.\nWhen the field is set to true or unset in Terraform state, a 'terraform apply'\nor 'terraform destroy' that would delete the job will fail.\nWhen the field is set to false, deleting the job is allowed."]
+    pub fn deletion_protection(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_protection", self.extract_ref()))
     }
 
     #[doc =
@@ -561,7 +658,7 @@ impl CloudRunV2JobRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `expire_time` after provisioning.\nFor a deleted resource, the time after which it will be permamently deleted."]
+        "Get a reference to the value of field `expire_time` after provisioning.\nFor a deleted resource, the time after which it will be permanently deleted."]
     pub fn expire_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.expire_time", self.extract_ref()))
     }
@@ -578,7 +675,7 @@ impl CloudRunV2JobRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `labels` after provisioning.\nUnstructured key value map that can be used to organize and categorize objects. User-provided labels are shared with Google's billing system, so they can be used to filter, or break down billing charges by team, component,\nenvironment, state, etc. For more information, visit https://cloud.google.com/resource-manager/docs/creating-managing-labels or https://cloud.google.com/run/docs/configuring/labels.\n\nCloud Run API v2 does not support labels with 'run.googleapis.com', 'cloud.googleapis.com', 'serving.knative.dev', or 'autoscaling.knative.dev' namespaces, and they will be rejected.\nAll system labels in v1 now have a corresponding field in v2 Job.\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
+        "Get a reference to the value of field `labels` after provisioning.\nUnstructured key value map that can be used to organize and categorize objects. User-provided labels are shared with Google's billing system, so they can be used to filter, or break down billing charges by team, component,\nenvironment, state, etc. For more information, visit https://docs.cloud.google.com/resource-manager/docs/creating-managing-labels or https://cloud.google.com/run/docs/configuring/labels.\n\nCloud Run API v2 does not support labels with 'run.googleapis.com', 'cloud.googleapis.com', 'serving.knative.dev', or 'autoscaling.knative.dev' namespaces, and they will be rejected.\nAll system labels in v1 now have a corresponding field in v2 Job.\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
     pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
     }
@@ -591,7 +688,7 @@ impl CloudRunV2JobRef {
 
     #[doc =
         "Get a reference to the value of field `latest_created_execution` after provisioning.\nName of the last created execution."]
-    pub fn latest_created_execution(&self) -> terrars::ListRef<CloudRunV2JobLatestCreatedExecutionElRef> {
+    pub fn latest_created_execution(&self) -> terrars::ListRef<CloudRunV2Job_LatestCreatedExecutionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.latest_created_execution", self.extract_ref()))
     }
 
@@ -629,8 +726,26 @@ impl CloudRunV2JobRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `run_execution_token` after provisioning.\nA unique string used as a suffix creating a new execution upon job create or update. The Job will become ready when the execution is successfully completed.\nThe sum of job name and token length must be fewer than 63 characters."]
+    pub fn run_execution_token(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.run_execution_token", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `start_execution_token` after provisioning.\nA unique string used as a suffix creating a new execution upon job create or update. The Job will become ready when the execution is successfully started.\nThe sum of job name and token length must be fewer than 63 characters."]
+    pub fn start_execution_token(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.start_execution_token", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `tags` after provisioning.\nA map of resource manager tags.\nResource manager tag keys and values have the same definition as resource manager tags.\nKeys must be in the format tagKeys/{tag_key_id}, and values are in the format tagValues/{tag_value_id}."]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `terminal_condition` after provisioning.\nThe Condition of this Job, containing its readiness status, and detailed error information in case it did not reach the desired state"]
-    pub fn terminal_condition(&self) -> terrars::ListRef<CloudRunV2JobTerminalConditionElRef> {
+    pub fn terminal_condition(&self) -> terrars::ListRef<CloudRunV2Job_TerminalConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.terminal_condition", self.extract_ref()))
     }
 
@@ -652,23 +767,29 @@ impl CloudRunV2JobRef {
     }
 
     #[doc = "Get a reference to the value of field `binary_authorization` after provisioning.\n"]
-    pub fn binary_authorization(&self) -> terrars::ListRef<CloudRunV2JobBinaryAuthorizationElRef> {
+    pub fn binary_authorization(&self) -> terrars::ListRef<CloudRunV2Job_BinaryAuthorizationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.binary_authorization", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `template` after provisioning.\n"]
-    pub fn template(&self) -> terrars::ListRef<CloudRunV2JobTemplateElRef> {
+    pub fn template(&self) -> terrars::ListRef<CloudRunV2Job_TemplateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.template", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> CloudRunV2JobTimeoutsElRef {
-        CloudRunV2JobTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> CloudRunV2Job_TimeoutsRef {
+        CloudRunV2Job_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct CloudRunV2JobDynamic {
+    binary_authorization: std::option::Option<terrars::DynamicBlock<CloudRunV2Job_BinaryAuthorization>>,
+    template: std::option::Option<terrars::DynamicBlock<CloudRunV2Job_Template>>,
+}
+
 #[derive(Serialize)]
-pub struct CloudRunV2JobConditionsEl {
+pub struct CloudRunV2Job_Conditions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     execution_reason: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -687,7 +808,7 @@ pub struct CloudRunV2JobConditionsEl {
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CloudRunV2JobConditionsEl {
+impl CloudRunV2Job_Conditions {
     #[doc = "Set the field `execution_reason`.\n"]
     pub fn set_execution_reason(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.execution_reason = std::option::Option::Some(v.into());
@@ -740,8 +861,8 @@ impl CloudRunV2JobConditionsEl {
     }
 }
 
-impl terrars::ToListMappable for CloudRunV2JobConditionsEl {
-    type O = terrars::BlockAssignable<CloudRunV2JobConditionsEl>;
+impl terrars::ToListMappable for CloudRunV2Job_Conditions {
+    type O = terrars::BlockAssignable<CloudRunV2Job_Conditions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -752,11 +873,11 @@ impl terrars::ToListMappable for CloudRunV2JobConditionsEl {
     }
 }
 
-pub struct BuildCloudRunV2JobConditionsEl {}
+pub struct BuildCloudRunV2Job_Conditions {}
 
-impl BuildCloudRunV2JobConditionsEl {
-    pub fn build(self) -> CloudRunV2JobConditionsEl {
-        CloudRunV2JobConditionsEl {
+impl BuildCloudRunV2Job_Conditions {
+    pub fn build(self) -> CloudRunV2Job_Conditions {
+        CloudRunV2Job_Conditions {
             execution_reason: core::default::Default::default(),
             last_transition_time: core::default::Default::default(),
             message: core::default::Default::default(),
@@ -769,21 +890,23 @@ impl BuildCloudRunV2JobConditionsEl {
     }
 }
 
-pub struct CloudRunV2JobConditionsElRef {
+#[allow(dead_code)]
+pub struct CloudRunV2Job_ConditionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudRunV2JobConditionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudRunV2JobConditionsElRef {
-        CloudRunV2JobConditionsElRef {
+impl terrars::Ref for CloudRunV2Job_ConditionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudRunV2Job_ConditionsRef {
+        CloudRunV2Job_ConditionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudRunV2JobConditionsElRef {
+impl CloudRunV2Job_ConditionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -830,7 +953,7 @@ impl CloudRunV2JobConditionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudRunV2JobLatestCreatedExecutionEl {
+pub struct CloudRunV2Job_LatestCreatedExecution {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     completion_time: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -839,7 +962,7 @@ pub struct CloudRunV2JobLatestCreatedExecutionEl {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CloudRunV2JobLatestCreatedExecutionEl {
+impl CloudRunV2Job_LatestCreatedExecution {
     #[doc = "Set the field `completion_time`.\n"]
     pub fn set_completion_time(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.completion_time = std::option::Option::Some(v.into());
@@ -859,8 +982,8 @@ impl CloudRunV2JobLatestCreatedExecutionEl {
     }
 }
 
-impl terrars::ToListMappable for CloudRunV2JobLatestCreatedExecutionEl {
-    type O = terrars::BlockAssignable<CloudRunV2JobLatestCreatedExecutionEl>;
+impl terrars::ToListMappable for CloudRunV2Job_LatestCreatedExecution {
+    type O = terrars::BlockAssignable<CloudRunV2Job_LatestCreatedExecution>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -871,11 +994,11 @@ impl terrars::ToListMappable for CloudRunV2JobLatestCreatedExecutionEl {
     }
 }
 
-pub struct BuildCloudRunV2JobLatestCreatedExecutionEl {}
+pub struct BuildCloudRunV2Job_LatestCreatedExecution {}
 
-impl BuildCloudRunV2JobLatestCreatedExecutionEl {
-    pub fn build(self) -> CloudRunV2JobLatestCreatedExecutionEl {
-        CloudRunV2JobLatestCreatedExecutionEl {
+impl BuildCloudRunV2Job_LatestCreatedExecution {
+    pub fn build(self) -> CloudRunV2Job_LatestCreatedExecution {
+        CloudRunV2Job_LatestCreatedExecution {
             completion_time: core::default::Default::default(),
             create_time: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -883,21 +1006,23 @@ impl BuildCloudRunV2JobLatestCreatedExecutionEl {
     }
 }
 
-pub struct CloudRunV2JobLatestCreatedExecutionElRef {
+#[allow(dead_code)]
+pub struct CloudRunV2Job_LatestCreatedExecutionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudRunV2JobLatestCreatedExecutionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudRunV2JobLatestCreatedExecutionElRef {
-        CloudRunV2JobLatestCreatedExecutionElRef {
+impl terrars::Ref for CloudRunV2Job_LatestCreatedExecutionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudRunV2Job_LatestCreatedExecutionRef {
+        CloudRunV2Job_LatestCreatedExecutionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudRunV2JobLatestCreatedExecutionElRef {
+impl CloudRunV2Job_LatestCreatedExecutionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -919,7 +1044,7 @@ impl CloudRunV2JobLatestCreatedExecutionElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudRunV2JobTerminalConditionEl {
+pub struct CloudRunV2Job_TerminalCondition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     execution_reason: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -938,7 +1063,7 @@ pub struct CloudRunV2JobTerminalConditionEl {
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CloudRunV2JobTerminalConditionEl {
+impl CloudRunV2Job_TerminalCondition {
     #[doc = "Set the field `execution_reason`.\n"]
     pub fn set_execution_reason(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.execution_reason = std::option::Option::Some(v.into());
@@ -991,8 +1116,8 @@ impl CloudRunV2JobTerminalConditionEl {
     }
 }
 
-impl terrars::ToListMappable for CloudRunV2JobTerminalConditionEl {
-    type O = terrars::BlockAssignable<CloudRunV2JobTerminalConditionEl>;
+impl terrars::ToListMappable for CloudRunV2Job_TerminalCondition {
+    type O = terrars::BlockAssignable<CloudRunV2Job_TerminalCondition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1003,11 +1128,11 @@ impl terrars::ToListMappable for CloudRunV2JobTerminalConditionEl {
     }
 }
 
-pub struct BuildCloudRunV2JobTerminalConditionEl {}
+pub struct BuildCloudRunV2Job_TerminalCondition {}
 
-impl BuildCloudRunV2JobTerminalConditionEl {
-    pub fn build(self) -> CloudRunV2JobTerminalConditionEl {
-        CloudRunV2JobTerminalConditionEl {
+impl BuildCloudRunV2Job_TerminalCondition {
+    pub fn build(self) -> CloudRunV2Job_TerminalCondition {
+        CloudRunV2Job_TerminalCondition {
             execution_reason: core::default::Default::default(),
             last_transition_time: core::default::Default::default(),
             message: core::default::Default::default(),
@@ -1020,21 +1145,23 @@ impl BuildCloudRunV2JobTerminalConditionEl {
     }
 }
 
-pub struct CloudRunV2JobTerminalConditionElRef {
+#[allow(dead_code)]
+pub struct CloudRunV2Job_TerminalConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudRunV2JobTerminalConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudRunV2JobTerminalConditionElRef {
-        CloudRunV2JobTerminalConditionElRef {
+impl terrars::Ref for CloudRunV2Job_TerminalConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudRunV2Job_TerminalConditionRef {
+        CloudRunV2Job_TerminalConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudRunV2JobTerminalConditionElRef {
+impl CloudRunV2Job_TerminalConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1081,14 +1208,16 @@ impl CloudRunV2JobTerminalConditionElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudRunV2JobBinaryAuthorizationEl {
+pub struct CloudRunV2Job_BinaryAuthorization {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     breakglass_justification: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     use_default: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl CloudRunV2JobBinaryAuthorizationEl {
+impl CloudRunV2Job_BinaryAuthorization {
     #[doc =
         "Set the field `breakglass_justification`.\nIf present, indicates to use Breakglass using this justification. If useDefault is False, then it must be empty. For more information on breakglass, see https://cloud.google.com/binary-authorization/docs/using-breakglass"]
     pub fn set_breakglass_justification(
@@ -1100,6 +1229,13 @@ impl CloudRunV2JobBinaryAuthorizationEl {
     }
 
     #[doc =
+        "Set the field `policy`.\nThe path to a binary authorization policy. Format: projects/{project}/platforms/cloudRun/{policy-name}"]
+    pub fn set_policy(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `use_default`.\nIf True, indicates to use the default project's binary authorization policy. If False, binary authorization will be disabled."]
     pub fn set_use_default(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.use_default = std::option::Option::Some(v.into());
@@ -1107,8 +1243,8 @@ impl CloudRunV2JobBinaryAuthorizationEl {
     }
 }
 
-impl terrars::ToListMappable for CloudRunV2JobBinaryAuthorizationEl {
-    type O = terrars::BlockAssignable<CloudRunV2JobBinaryAuthorizationEl>;
+impl terrars::ToListMappable for CloudRunV2Job_BinaryAuthorization {
+    type O = terrars::BlockAssignable<CloudRunV2Job_BinaryAuthorization>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1119,32 +1255,35 @@ impl terrars::ToListMappable for CloudRunV2JobBinaryAuthorizationEl {
     }
 }
 
-pub struct BuildCloudRunV2JobBinaryAuthorizationEl {}
+pub struct BuildCloudRunV2Job_BinaryAuthorization {}
 
-impl BuildCloudRunV2JobBinaryAuthorizationEl {
-    pub fn build(self) -> CloudRunV2JobBinaryAuthorizationEl {
-        CloudRunV2JobBinaryAuthorizationEl {
+impl BuildCloudRunV2Job_BinaryAuthorization {
+    pub fn build(self) -> CloudRunV2Job_BinaryAuthorization {
+        CloudRunV2Job_BinaryAuthorization {
             breakglass_justification: core::default::Default::default(),
+            policy: core::default::Default::default(),
             use_default: core::default::Default::default(),
         }
     }
 }
 
-pub struct CloudRunV2JobBinaryAuthorizationElRef {
+#[allow(dead_code)]
+pub struct CloudRunV2Job_BinaryAuthorizationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudRunV2JobBinaryAuthorizationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudRunV2JobBinaryAuthorizationElRef {
-        CloudRunV2JobBinaryAuthorizationElRef {
+impl terrars::Ref for CloudRunV2Job_BinaryAuthorizationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudRunV2Job_BinaryAuthorizationRef {
+        CloudRunV2Job_BinaryAuthorizationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudRunV2JobBinaryAuthorizationElRef {
+impl CloudRunV2Job_BinaryAuthorizationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1156,6 +1295,12 @@ impl CloudRunV2JobBinaryAuthorizationElRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `policy` after provisioning.\nThe path to a binary authorization policy. Format: projects/{project}/platforms/cloudRun/{policy-name}"]
+    pub fn policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy", self.base))
+    }
+
+    #[doc =
         "Get a reference to the value of field `use_default` after provisioning.\nIf True, indicates to use the default project's binary authorization policy. If False, binary authorization will be disabled."]
     pub fn use_default(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.use_default", self.base))
@@ -1163,15 +1308,15 @@ impl CloudRunV2JobBinaryAuthorizationElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceElSecretKeyRefEl {
+pub struct CloudRunV2Job_Template_Template_Containers_Env_ValueSource_SecretKeyRef {
     secret: terrars::PrimField<std::string::String>,
     version: terrars::PrimField<std::string::String>,
 }
 
-impl CloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceElSecretKeyRefEl { }
+impl CloudRunV2Job_Template_Template_Containers_Env_ValueSource_SecretKeyRef { }
 
-impl terrars::ToListMappable for CloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceElSecretKeyRefEl {
-    type O = terrars::BlockAssignable<CloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceElSecretKeyRefEl>;
+impl terrars::ToListMappable for CloudRunV2Job_Template_Template_Containers_Env_ValueSource_SecretKeyRef {
+    type O = terrars::BlockAssignable<CloudRunV2Job_Template_Template_Containers_Env_ValueSource_SecretKeyRef>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1182,7 +1327,7 @@ impl terrars::ToListMappable for CloudRunV2JobTemplateElTemplateElContainersElEn
     }
 }
 
-pub struct BuildCloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceElSecretKeyRefEl {
+pub struct BuildCloudRunV2Job_Template_Template_Containers_Env_ValueSource_SecretKeyRef {
     #[doc =
         "The name of the secret in Cloud Secret Manager. Format: {secretName} if the secret is in the same project. projects/{project}/secrets/{secretName} if the secret is in a different project."]
     pub secret: terrars::PrimField<std::string::String>,
@@ -1191,33 +1336,35 @@ pub struct BuildCloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceElS
     pub version: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceElSecretKeyRefEl {
-    pub fn build(self) -> CloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceElSecretKeyRefEl {
-        CloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceElSecretKeyRefEl {
+impl BuildCloudRunV2Job_Template_Template_Containers_Env_ValueSource_SecretKeyRef {
+    pub fn build(self) -> CloudRunV2Job_Template_Template_Containers_Env_ValueSource_SecretKeyRef {
+        CloudRunV2Job_Template_Template_Containers_Env_ValueSource_SecretKeyRef {
             secret: self.secret,
             version: self.version,
         }
     }
 }
 
-pub struct CloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceElSecretKeyRefElRef {
+#[allow(dead_code)]
+pub struct CloudRunV2Job_Template_Template_Containers_Env_ValueSource_SecretKeyRefRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceElSecretKeyRefElRef {
+impl terrars::Ref for CloudRunV2Job_Template_Template_Containers_Env_ValueSource_SecretKeyRefRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceElSecretKeyRefElRef {
-        CloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceElSecretKeyRefElRef {
+    ) -> CloudRunV2Job_Template_Template_Containers_Env_ValueSource_SecretKeyRefRef {
+        CloudRunV2Job_Template_Template_Containers_Env_ValueSource_SecretKeyRefRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceElSecretKeyRefElRef {
+impl CloudRunV2Job_Template_Template_Containers_Env_ValueSource_SecretKeyRefRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1236,22 +1383,22 @@ impl CloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceElSecretKeyRef
 }
 
 #[derive(Serialize, Default)]
-struct CloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceElDynamic {
+struct CloudRunV2Job_Template_Template_Containers_Env_ValueSourceDynamic {
     secret_key_ref: std
     ::option
-    ::Option<terrars::DynamicBlock<CloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceElSecretKeyRefEl>>,
+    ::Option<terrars::DynamicBlock<CloudRunV2Job_Template_Template_Containers_Env_ValueSource_SecretKeyRef>>,
 }
 
 #[derive(Serialize)]
-pub struct CloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceEl {
+pub struct CloudRunV2Job_Template_Template_Containers_Env_ValueSource {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     secret_key_ref: std
     ::option
-    ::Option<std::vec::Vec<CloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceElSecretKeyRefEl>>,
-    dynamic: CloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceElDynamic,
+    ::Option<std::vec::Vec<CloudRunV2Job_Template_Template_Containers_Env_ValueSource_SecretKeyRef>>,
+    dynamic: CloudRunV2Job_Template_Template_Containers_Env_ValueSourceDynamic,
 }
 
-impl CloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceEl {
+impl CloudRunV2Job_Template_Template_Containers_Env_ValueSource {
     #[doc = "Set the field `secret_key_ref`.\n"]
     pub fn set_secret_key_ref(
         mut self,
@@ -1262,9 +1409,7 @@ impl CloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            CloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceElSecretKeyRefEl,
-                        >,
+                        ::BlockAssignable<CloudRunV2Job_Template_Template_Containers_Env_ValueSource_SecretKeyRef>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1279,8 +1424,8 @@ impl CloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceEl {
     }
 }
 
-impl terrars::ToListMappable for CloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceEl {
-    type O = terrars::BlockAssignable<CloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceEl>;
+impl terrars::ToListMappable for CloudRunV2Job_Template_Template_Containers_Env_ValueSource {
+    type O = terrars::BlockAssignable<CloudRunV2Job_Template_Template_Containers_Env_ValueSource>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1291,35 +1436,37 @@ impl terrars::ToListMappable for CloudRunV2JobTemplateElTemplateElContainersElEn
     }
 }
 
-pub struct BuildCloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceEl {}
+pub struct BuildCloudRunV2Job_Template_Template_Containers_Env_ValueSource {}
 
-impl BuildCloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceEl {
-    pub fn build(self) -> CloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceEl {
-        CloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceEl {
+impl BuildCloudRunV2Job_Template_Template_Containers_Env_ValueSource {
+    pub fn build(self) -> CloudRunV2Job_Template_Template_Containers_Env_ValueSource {
+        CloudRunV2Job_Template_Template_Containers_Env_ValueSource {
             secret_key_ref: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct CloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceElRef {
+#[allow(dead_code)]
+pub struct CloudRunV2Job_Template_Template_Containers_Env_ValueSourceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceElRef {
+impl terrars::Ref for CloudRunV2Job_Template_Template_Containers_Env_ValueSourceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceElRef {
-        CloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceElRef {
+    ) -> CloudRunV2Job_Template_Template_Containers_Env_ValueSourceRef {
+        CloudRunV2Job_Template_Template_Containers_Env_ValueSourceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceElRef {
+impl CloudRunV2Job_Template_Template_Containers_Env_ValueSourceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1327,31 +1474,31 @@ impl CloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceElRef {
     #[doc = "Get a reference to the value of field `secret_key_ref` after provisioning.\n"]
     pub fn secret_key_ref(
         &self,
-    ) -> terrars::ListRef<CloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceElSecretKeyRefElRef> {
+    ) -> terrars::ListRef<CloudRunV2Job_Template_Template_Containers_Env_ValueSource_SecretKeyRefRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.secret_key_ref", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct CloudRunV2JobTemplateElTemplateElContainersElEnvElDynamic {
+struct CloudRunV2Job_Template_Template_Containers_EnvDynamic {
     value_source: std
     ::option
-    ::Option<terrars::DynamicBlock<CloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceEl>>,
+    ::Option<terrars::DynamicBlock<CloudRunV2Job_Template_Template_Containers_Env_ValueSource>>,
 }
 
 #[derive(Serialize)]
-pub struct CloudRunV2JobTemplateElTemplateElContainersElEnvEl {
+pub struct CloudRunV2Job_Template_Template_Containers_Env {
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     value: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    value_source: std::option::Option<std::vec::Vec<CloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceEl>>,
-    dynamic: CloudRunV2JobTemplateElTemplateElContainersElEnvElDynamic,
+    value_source: std::option::Option<std::vec::Vec<CloudRunV2Job_Template_Template_Containers_Env_ValueSource>>,
+    dynamic: CloudRunV2Job_Template_Template_Containers_EnvDynamic,
 }
 
-impl CloudRunV2JobTemplateElTemplateElContainersElEnvEl {
+impl CloudRunV2Job_Template_Template_Containers_Env {
     #[doc =
-        "Set the field `value`.\nVariable references $(VAR_NAME) are expanded using the previous defined environment variables in the container and any route environment variables. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Defaults to \"\", and the maximum length is 32768 bytes"]
+        "Set the field `value`.\nLiteral value of the environment variable. Defaults to \"\" and the maximum allowed length is 32768 characters. Variable references are not supported in Cloud Run."]
     pub fn set_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.value = std::option::Option::Some(v.into());
         self
@@ -1365,7 +1512,7 @@ impl CloudRunV2JobTemplateElTemplateElContainersElEnvEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<CloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceEl>>,
+                    ::Into<terrars::BlockAssignable<CloudRunV2Job_Template_Template_Containers_Env_ValueSource>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1379,8 +1526,8 @@ impl CloudRunV2JobTemplateElTemplateElContainersElEnvEl {
     }
 }
 
-impl terrars::ToListMappable for CloudRunV2JobTemplateElTemplateElContainersElEnvEl {
-    type O = terrars::BlockAssignable<CloudRunV2JobTemplateElTemplateElContainersElEnvEl>;
+impl terrars::ToListMappable for CloudRunV2Job_Template_Template_Containers_Env {
+    type O = terrars::BlockAssignable<CloudRunV2Job_Template_Template_Containers_Env>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1391,14 +1538,14 @@ impl terrars::ToListMappable for CloudRunV2JobTemplateElTemplateElContainersElEn
     }
 }
 
-pub struct BuildCloudRunV2JobTemplateElTemplateElContainersElEnvEl {
+pub struct BuildCloudRunV2Job_Template_Template_Containers_Env {
     #[doc = "Name of the environment variable. Must be a C_IDENTIFIER, and mnay not exceed 32768 characters."]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudRunV2JobTemplateElTemplateElContainersElEnvEl {
-    pub fn build(self) -> CloudRunV2JobTemplateElTemplateElContainersElEnvEl {
-        CloudRunV2JobTemplateElTemplateElContainersElEnvEl {
+impl BuildCloudRunV2Job_Template_Template_Containers_Env {
+    pub fn build(self) -> CloudRunV2Job_Template_Template_Containers_Env {
+        CloudRunV2Job_Template_Template_Containers_Env {
             name: self.name,
             value: core::default::Default::default(),
             value_source: core::default::Default::default(),
@@ -1407,24 +1554,26 @@ impl BuildCloudRunV2JobTemplateElTemplateElContainersElEnvEl {
     }
 }
 
-pub struct CloudRunV2JobTemplateElTemplateElContainersElEnvElRef {
+#[allow(dead_code)]
+pub struct CloudRunV2Job_Template_Template_Containers_EnvRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudRunV2JobTemplateElTemplateElContainersElEnvElRef {
+impl terrars::Ref for CloudRunV2Job_Template_Template_Containers_EnvRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudRunV2JobTemplateElTemplateElContainersElEnvElRef {
-        CloudRunV2JobTemplateElTemplateElContainersElEnvElRef {
+    ) -> CloudRunV2Job_Template_Template_Containers_EnvRef {
+        CloudRunV2Job_Template_Template_Containers_EnvRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudRunV2JobTemplateElTemplateElContainersElEnvElRef {
+impl CloudRunV2Job_Template_Template_Containers_EnvRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1436,26 +1585,26 @@ impl CloudRunV2JobTemplateElTemplateElContainersElEnvElRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `value` after provisioning.\nVariable references $(VAR_NAME) are expanded using the previous defined environment variables in the container and any route environment variables. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. Defaults to \"\", and the maximum length is 32768 bytes"]
+        "Get a reference to the value of field `value` after provisioning.\nLiteral value of the environment variable. Defaults to \"\" and the maximum allowed length is 32768 characters. Variable references are not supported in Cloud Run."]
     pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
 
     #[doc = "Get a reference to the value of field `value_source` after provisioning.\n"]
-    pub fn value_source(&self) -> terrars::ListRef<CloudRunV2JobTemplateElTemplateElContainersElEnvElValueSourceElRef> {
+    pub fn value_source(&self) -> terrars::ListRef<CloudRunV2Job_Template_Template_Containers_Env_ValueSourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.value_source", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct CloudRunV2JobTemplateElTemplateElContainersElPortsEl {
+pub struct CloudRunV2Job_Template_Template_Containers_Ports {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     container_port: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CloudRunV2JobTemplateElTemplateElContainersElPortsEl {
+impl CloudRunV2Job_Template_Template_Containers_Ports {
     #[doc =
         "Set the field `container_port`.\nPort number the container listens on. This must be a valid TCP port number, 0 < containerPort < 65536."]
     pub fn set_container_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -1471,8 +1620,8 @@ impl CloudRunV2JobTemplateElTemplateElContainersElPortsEl {
     }
 }
 
-impl terrars::ToListMappable for CloudRunV2JobTemplateElTemplateElContainersElPortsEl {
-    type O = terrars::BlockAssignable<CloudRunV2JobTemplateElTemplateElContainersElPortsEl>;
+impl terrars::ToListMappable for CloudRunV2Job_Template_Template_Containers_Ports {
+    type O = terrars::BlockAssignable<CloudRunV2Job_Template_Template_Containers_Ports>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1483,35 +1632,37 @@ impl terrars::ToListMappable for CloudRunV2JobTemplateElTemplateElContainersElPo
     }
 }
 
-pub struct BuildCloudRunV2JobTemplateElTemplateElContainersElPortsEl {}
+pub struct BuildCloudRunV2Job_Template_Template_Containers_Ports {}
 
-impl BuildCloudRunV2JobTemplateElTemplateElContainersElPortsEl {
-    pub fn build(self) -> CloudRunV2JobTemplateElTemplateElContainersElPortsEl {
-        CloudRunV2JobTemplateElTemplateElContainersElPortsEl {
+impl BuildCloudRunV2Job_Template_Template_Containers_Ports {
+    pub fn build(self) -> CloudRunV2Job_Template_Template_Containers_Ports {
+        CloudRunV2Job_Template_Template_Containers_Ports {
             container_port: core::default::Default::default(),
             name: core::default::Default::default(),
         }
     }
 }
 
-pub struct CloudRunV2JobTemplateElTemplateElContainersElPortsElRef {
+#[allow(dead_code)]
+pub struct CloudRunV2Job_Template_Template_Containers_PortsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudRunV2JobTemplateElTemplateElContainersElPortsElRef {
+impl terrars::Ref for CloudRunV2Job_Template_Template_Containers_PortsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudRunV2JobTemplateElTemplateElContainersElPortsElRef {
-        CloudRunV2JobTemplateElTemplateElContainersElPortsElRef {
+    ) -> CloudRunV2Job_Template_Template_Containers_PortsRef {
+        CloudRunV2Job_Template_Template_Containers_PortsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudRunV2JobTemplateElTemplateElContainersElPortsElRef {
+impl CloudRunV2Job_Template_Template_Containers_PortsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1530,14 +1681,14 @@ impl CloudRunV2JobTemplateElTemplateElContainersElPortsElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudRunV2JobTemplateElTemplateElContainersElResourcesEl {
+pub struct CloudRunV2Job_Template_Template_Containers_Resources {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     limits: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
-impl CloudRunV2JobTemplateElTemplateElContainersElResourcesEl {
+impl CloudRunV2Job_Template_Template_Containers_Resources {
     #[doc =
-        "Set the field `limits`.\nOnly memory and CPU are supported. Use key 'cpu' for CPU limit and 'memory' for memory limit. Note: The only supported values for CPU are '1', '2', '4', and '8'. Setting 4 CPU requires at least 2Gi of memory. The values of the map is string form of the 'quantity' k8s type: https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go"]
+        "Set the field `limits`.\nOnly memory, CPU, and nvidia.com/gpu are supported. Use key 'cpu' for CPU limit, 'memory' for memory limit, 'nvidia.com/gpu' for gpu limit. Note: The only supported values for CPU are '1', '2', '4', '6', and '8'. Setting 4 CPU requires at least 2Gi of memory, setting 6 or more CPU requires at least 4Gi of memory. The values of the map is string form of the 'quantity' k8s type: https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go"]
     pub fn set_limits(
         mut self,
         v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -1547,8 +1698,8 @@ impl CloudRunV2JobTemplateElTemplateElContainersElResourcesEl {
     }
 }
 
-impl terrars::ToListMappable for CloudRunV2JobTemplateElTemplateElContainersElResourcesEl {
-    type O = terrars::BlockAssignable<CloudRunV2JobTemplateElTemplateElContainersElResourcesEl>;
+impl terrars::ToListMappable for CloudRunV2Job_Template_Template_Containers_Resources {
+    type O = terrars::BlockAssignable<CloudRunV2Job_Template_Template_Containers_Resources>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1559,53 +1710,71 @@ impl terrars::ToListMappable for CloudRunV2JobTemplateElTemplateElContainersElRe
     }
 }
 
-pub struct BuildCloudRunV2JobTemplateElTemplateElContainersElResourcesEl {}
+pub struct BuildCloudRunV2Job_Template_Template_Containers_Resources {}
 
-impl BuildCloudRunV2JobTemplateElTemplateElContainersElResourcesEl {
-    pub fn build(self) -> CloudRunV2JobTemplateElTemplateElContainersElResourcesEl {
-        CloudRunV2JobTemplateElTemplateElContainersElResourcesEl { limits: core::default::Default::default() }
+impl BuildCloudRunV2Job_Template_Template_Containers_Resources {
+    pub fn build(self) -> CloudRunV2Job_Template_Template_Containers_Resources {
+        CloudRunV2Job_Template_Template_Containers_Resources { limits: core::default::Default::default() }
     }
 }
 
-pub struct CloudRunV2JobTemplateElTemplateElContainersElResourcesElRef {
+#[allow(dead_code)]
+pub struct CloudRunV2Job_Template_Template_Containers_ResourcesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudRunV2JobTemplateElTemplateElContainersElResourcesElRef {
+impl terrars::Ref for CloudRunV2Job_Template_Template_Containers_ResourcesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudRunV2JobTemplateElTemplateElContainersElResourcesElRef {
-        CloudRunV2JobTemplateElTemplateElContainersElResourcesElRef {
+    ) -> CloudRunV2Job_Template_Template_Containers_ResourcesRef {
+        CloudRunV2Job_Template_Template_Containers_ResourcesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudRunV2JobTemplateElTemplateElContainersElResourcesElRef {
+impl CloudRunV2Job_Template_Template_Containers_ResourcesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `limits` after provisioning.\nOnly memory and CPU are supported. Use key 'cpu' for CPU limit and 'memory' for memory limit. Note: The only supported values for CPU are '1', '2', '4', and '8'. Setting 4 CPU requires at least 2Gi of memory. The values of the map is string form of the 'quantity' k8s type: https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go"]
+        "Get a reference to the value of field `limits` after provisioning.\nOnly memory, CPU, and nvidia.com/gpu are supported. Use key 'cpu' for CPU limit, 'memory' for memory limit, 'nvidia.com/gpu' for gpu limit. Note: The only supported values for CPU are '1', '2', '4', '6', and '8'. Setting 4 CPU requires at least 2Gi of memory, setting 6 or more CPU requires at least 4Gi of memory. The values of the map is string form of the 'quantity' k8s type: https://github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go"]
     pub fn limits(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.limits", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct CloudRunV2JobTemplateElTemplateElContainersElVolumeMountsEl {
-    mount_path: terrars::PrimField<std::string::String>,
-    name: terrars::PrimField<std::string::String>,
+pub struct CloudRunV2Job_Template_Template_Containers_StartupProbe_Grpc {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    port: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    service: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CloudRunV2JobTemplateElTemplateElContainersElVolumeMountsEl { }
+impl CloudRunV2Job_Template_Template_Containers_StartupProbe_Grpc {
+    #[doc =
+        "Set the field `port`.\nPort number to access on the container. Number must be in the range 1 to 65535.\nIf not specified, defaults to the same value as container.ports[0].containerPort."]
+    pub fn set_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.port = std::option::Option::Some(v.into());
+        self
+    }
 
-impl terrars::ToListMappable for CloudRunV2JobTemplateElTemplateElContainersElVolumeMountsEl {
-    type O = terrars::BlockAssignable<CloudRunV2JobTemplateElTemplateElContainersElVolumeMountsEl>;
+    #[doc =
+        "Set the field `service`.\nThe name of the service to place in the gRPC HealthCheckRequest\n(see https://github.com/grpc/grpc/blob/master/doc/health-checking.md).\nIf this is not specified, the default behavior is defined by gRPC."]
+    pub fn set_service(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.service = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for CloudRunV2Job_Template_Template_Containers_StartupProbe_Grpc {
+    type O = terrars::BlockAssignable<CloudRunV2Job_Template_Template_Containers_StartupProbe_Grpc>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1616,7 +1785,571 @@ impl terrars::ToListMappable for CloudRunV2JobTemplateElTemplateElContainersElVo
     }
 }
 
-pub struct BuildCloudRunV2JobTemplateElTemplateElContainersElVolumeMountsEl {
+pub struct BuildCloudRunV2Job_Template_Template_Containers_StartupProbe_Grpc {}
+
+impl BuildCloudRunV2Job_Template_Template_Containers_StartupProbe_Grpc {
+    pub fn build(self) -> CloudRunV2Job_Template_Template_Containers_StartupProbe_Grpc {
+        CloudRunV2Job_Template_Template_Containers_StartupProbe_Grpc {
+            port: core::default::Default::default(),
+            service: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CloudRunV2Job_Template_Template_Containers_StartupProbe_GrpcRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CloudRunV2Job_Template_Template_Containers_StartupProbe_GrpcRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CloudRunV2Job_Template_Template_Containers_StartupProbe_GrpcRef {
+        CloudRunV2Job_Template_Template_Containers_StartupProbe_GrpcRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CloudRunV2Job_Template_Template_Containers_StartupProbe_GrpcRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `port` after provisioning.\nPort number to access on the container. Number must be in the range 1 to 65535.\nIf not specified, defaults to the same value as container.ports[0].containerPort."]
+    pub fn port(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `service` after provisioning.\nThe name of the service to place in the gRPC HealthCheckRequest\n(see https://github.com/grpc/grpc/blob/master/doc/health-checking.md).\nIf this is not specified, the default behavior is defined by gRPC."]
+    pub fn service(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct CloudRunV2Job_Template_Template_Containers_StartupProbe_HttpGet_HttpHeaders {
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    value: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl CloudRunV2Job_Template_Template_Containers_StartupProbe_HttpGet_HttpHeaders {
+    #[doc = "Set the field `value`.\nThe header field value."]
+    pub fn set_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.value = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for CloudRunV2Job_Template_Template_Containers_StartupProbe_HttpGet_HttpHeaders {
+    type O = terrars::BlockAssignable<CloudRunV2Job_Template_Template_Containers_StartupProbe_HttpGet_HttpHeaders>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCloudRunV2Job_Template_Template_Containers_StartupProbe_HttpGet_HttpHeaders {
+    #[doc = "The header field name."]
+    pub name: terrars::PrimField<std::string::String>,
+}
+
+impl BuildCloudRunV2Job_Template_Template_Containers_StartupProbe_HttpGet_HttpHeaders {
+    pub fn build(self) -> CloudRunV2Job_Template_Template_Containers_StartupProbe_HttpGet_HttpHeaders {
+        CloudRunV2Job_Template_Template_Containers_StartupProbe_HttpGet_HttpHeaders {
+            name: self.name,
+            value: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CloudRunV2Job_Template_Template_Containers_StartupProbe_HttpGet_HttpHeadersRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CloudRunV2Job_Template_Template_Containers_StartupProbe_HttpGet_HttpHeadersRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CloudRunV2Job_Template_Template_Containers_StartupProbe_HttpGet_HttpHeadersRef {
+        CloudRunV2Job_Template_Template_Containers_StartupProbe_HttpGet_HttpHeadersRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CloudRunV2Job_Template_Template_Containers_StartupProbe_HttpGet_HttpHeadersRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `name` after provisioning.\nThe header field name."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `value` after provisioning.\nThe header field value."]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct CloudRunV2Job_Template_Template_Containers_StartupProbe_HttpGetDynamic {
+    http_headers: std
+    ::option
+    ::Option<terrars::DynamicBlock<CloudRunV2Job_Template_Template_Containers_StartupProbe_HttpGet_HttpHeaders>>,
+}
+
+#[derive(Serialize)]
+pub struct CloudRunV2Job_Template_Template_Containers_StartupProbe_HttpGet {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    path: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    port: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    http_headers: std
+    ::option
+    ::Option<std::vec::Vec<CloudRunV2Job_Template_Template_Containers_StartupProbe_HttpGet_HttpHeaders>>,
+    dynamic: CloudRunV2Job_Template_Template_Containers_StartupProbe_HttpGetDynamic,
+}
+
+impl CloudRunV2Job_Template_Template_Containers_StartupProbe_HttpGet {
+    #[doc = "Set the field `path`.\nPath to access on the HTTP server. If set, it should not be empty string."]
+    pub fn set_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.path = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `port`.\nPort number to access on the container. Number must be in the range 1 to 65535.\nIf not specified, defaults to the same value as container.ports[0].containerPort."]
+    pub fn set_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.port = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `http_headers`.\n"]
+    pub fn set_http_headers(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<CloudRunV2Job_Template_Template_Containers_StartupProbe_HttpGet_HttpHeaders>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.http_headers = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.http_headers = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for CloudRunV2Job_Template_Template_Containers_StartupProbe_HttpGet {
+    type O = terrars::BlockAssignable<CloudRunV2Job_Template_Template_Containers_StartupProbe_HttpGet>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCloudRunV2Job_Template_Template_Containers_StartupProbe_HttpGet {}
+
+impl BuildCloudRunV2Job_Template_Template_Containers_StartupProbe_HttpGet {
+    pub fn build(self) -> CloudRunV2Job_Template_Template_Containers_StartupProbe_HttpGet {
+        CloudRunV2Job_Template_Template_Containers_StartupProbe_HttpGet {
+            path: core::default::Default::default(),
+            port: core::default::Default::default(),
+            http_headers: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CloudRunV2Job_Template_Template_Containers_StartupProbe_HttpGetRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CloudRunV2Job_Template_Template_Containers_StartupProbe_HttpGetRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CloudRunV2Job_Template_Template_Containers_StartupProbe_HttpGetRef {
+        CloudRunV2Job_Template_Template_Containers_StartupProbe_HttpGetRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CloudRunV2Job_Template_Template_Containers_StartupProbe_HttpGetRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `path` after provisioning.\nPath to access on the HTTP server. If set, it should not be empty string."]
+    pub fn path(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.path", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `port` after provisioning.\nPort number to access on the container. Number must be in the range 1 to 65535.\nIf not specified, defaults to the same value as container.ports[0].containerPort."]
+    pub fn port(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `http_headers` after provisioning.\n"]
+    pub fn http_headers(
+        &self,
+    ) -> terrars::ListRef<CloudRunV2Job_Template_Template_Containers_StartupProbe_HttpGet_HttpHeadersRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.http_headers", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct CloudRunV2Job_Template_Template_Containers_StartupProbe_TcpSocket {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    port: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl CloudRunV2Job_Template_Template_Containers_StartupProbe_TcpSocket {
+    #[doc =
+        "Set the field `port`.\nPort number to access on the container. Number must be in the range 1 to 65535.\nIf not specified, defaults to the same value as container.ports[0].containerPort."]
+    pub fn set_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.port = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for CloudRunV2Job_Template_Template_Containers_StartupProbe_TcpSocket {
+    type O = terrars::BlockAssignable<CloudRunV2Job_Template_Template_Containers_StartupProbe_TcpSocket>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCloudRunV2Job_Template_Template_Containers_StartupProbe_TcpSocket {}
+
+impl BuildCloudRunV2Job_Template_Template_Containers_StartupProbe_TcpSocket {
+    pub fn build(self) -> CloudRunV2Job_Template_Template_Containers_StartupProbe_TcpSocket {
+        CloudRunV2Job_Template_Template_Containers_StartupProbe_TcpSocket { port: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CloudRunV2Job_Template_Template_Containers_StartupProbe_TcpSocketRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CloudRunV2Job_Template_Template_Containers_StartupProbe_TcpSocketRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CloudRunV2Job_Template_Template_Containers_StartupProbe_TcpSocketRef {
+        CloudRunV2Job_Template_Template_Containers_StartupProbe_TcpSocketRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CloudRunV2Job_Template_Template_Containers_StartupProbe_TcpSocketRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `port` after provisioning.\nPort number to access on the container. Number must be in the range 1 to 65535.\nIf not specified, defaults to the same value as container.ports[0].containerPort."]
+    pub fn port(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct CloudRunV2Job_Template_Template_Containers_StartupProbeDynamic {
+    grpc: std::option::Option<terrars::DynamicBlock<CloudRunV2Job_Template_Template_Containers_StartupProbe_Grpc>>,
+    http_get: std
+    ::option
+    ::Option<terrars::DynamicBlock<CloudRunV2Job_Template_Template_Containers_StartupProbe_HttpGet>>,
+    tcp_socket: std
+    ::option
+    ::Option<terrars::DynamicBlock<CloudRunV2Job_Template_Template_Containers_StartupProbe_TcpSocket>>,
+}
+
+#[derive(Serialize)]
+pub struct CloudRunV2Job_Template_Template_Containers_StartupProbe {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    failure_threshold: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    initial_delay_seconds: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    period_seconds: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeout_seconds: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    grpc: std::option::Option<std::vec::Vec<CloudRunV2Job_Template_Template_Containers_StartupProbe_Grpc>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    http_get: std::option::Option<std::vec::Vec<CloudRunV2Job_Template_Template_Containers_StartupProbe_HttpGet>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tcp_socket: std::option::Option<std::vec::Vec<CloudRunV2Job_Template_Template_Containers_StartupProbe_TcpSocket>>,
+    dynamic: CloudRunV2Job_Template_Template_Containers_StartupProbeDynamic,
+}
+
+impl CloudRunV2Job_Template_Template_Containers_StartupProbe {
+    #[doc =
+        "Set the field `failure_threshold`.\nMinimum consecutive failures for the probe to be considered failed after\nhaving succeeded. Defaults to 3. Minimum value is 1."]
+    pub fn set_failure_threshold(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.failure_threshold = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `initial_delay_seconds`.\nNumber of seconds after the container has started before the probe is\ninitiated.\nDefaults to 0 seconds. Minimum value is 0. Maximum value is 240."]
+    pub fn set_initial_delay_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.initial_delay_seconds = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `period_seconds`.\nHow often (in seconds) to perform the probe.\nDefault to 10 seconds. Minimum value is 1. Maximum value is 240."]
+    pub fn set_period_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.period_seconds = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `timeout_seconds`.\nNumber of seconds after which the probe times out.\nDefaults to 1 second. Minimum value is 1. Maximum value is 3600.\nMust be smaller than periodSeconds."]
+    pub fn set_timeout_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.timeout_seconds = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `grpc`.\n"]
+    pub fn set_grpc(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<CloudRunV2Job_Template_Template_Containers_StartupProbe_Grpc>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.grpc = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.grpc = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `http_get`.\n"]
+    pub fn set_http_get(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<CloudRunV2Job_Template_Template_Containers_StartupProbe_HttpGet>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.http_get = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.http_get = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `tcp_socket`.\n"]
+    pub fn set_tcp_socket(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<CloudRunV2Job_Template_Template_Containers_StartupProbe_TcpSocket>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.tcp_socket = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.tcp_socket = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for CloudRunV2Job_Template_Template_Containers_StartupProbe {
+    type O = terrars::BlockAssignable<CloudRunV2Job_Template_Template_Containers_StartupProbe>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCloudRunV2Job_Template_Template_Containers_StartupProbe {}
+
+impl BuildCloudRunV2Job_Template_Template_Containers_StartupProbe {
+    pub fn build(self) -> CloudRunV2Job_Template_Template_Containers_StartupProbe {
+        CloudRunV2Job_Template_Template_Containers_StartupProbe {
+            failure_threshold: core::default::Default::default(),
+            initial_delay_seconds: core::default::Default::default(),
+            period_seconds: core::default::Default::default(),
+            timeout_seconds: core::default::Default::default(),
+            grpc: core::default::Default::default(),
+            http_get: core::default::Default::default(),
+            tcp_socket: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CloudRunV2Job_Template_Template_Containers_StartupProbeRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CloudRunV2Job_Template_Template_Containers_StartupProbeRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CloudRunV2Job_Template_Template_Containers_StartupProbeRef {
+        CloudRunV2Job_Template_Template_Containers_StartupProbeRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CloudRunV2Job_Template_Template_Containers_StartupProbeRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `failure_threshold` after provisioning.\nMinimum consecutive failures for the probe to be considered failed after\nhaving succeeded. Defaults to 3. Minimum value is 1."]
+    pub fn failure_threshold(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.failure_threshold", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `initial_delay_seconds` after provisioning.\nNumber of seconds after the container has started before the probe is\ninitiated.\nDefaults to 0 seconds. Minimum value is 0. Maximum value is 240."]
+    pub fn initial_delay_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.initial_delay_seconds", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `period_seconds` after provisioning.\nHow often (in seconds) to perform the probe.\nDefault to 10 seconds. Minimum value is 1. Maximum value is 240."]
+    pub fn period_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.period_seconds", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `timeout_seconds` after provisioning.\nNumber of seconds after which the probe times out.\nDefaults to 1 second. Minimum value is 1. Maximum value is 3600.\nMust be smaller than periodSeconds."]
+    pub fn timeout_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.timeout_seconds", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `grpc` after provisioning.\n"]
+    pub fn grpc(&self) -> terrars::ListRef<CloudRunV2Job_Template_Template_Containers_StartupProbe_GrpcRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.grpc", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `http_get` after provisioning.\n"]
+    pub fn http_get(&self) -> terrars::ListRef<CloudRunV2Job_Template_Template_Containers_StartupProbe_HttpGetRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.http_get", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `tcp_socket` after provisioning.\n"]
+    pub fn tcp_socket(&self) -> terrars::ListRef<CloudRunV2Job_Template_Template_Containers_StartupProbe_TcpSocketRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.tcp_socket", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct CloudRunV2Job_Template_Template_Containers_VolumeMounts {
+    mount_path: terrars::PrimField<std::string::String>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sub_path: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl CloudRunV2Job_Template_Template_Containers_VolumeMounts {
+    #[doc = "Set the field `sub_path`.\nPath within the volume from which the container's volume should be mounted."]
+    pub fn set_sub_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.sub_path = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for CloudRunV2Job_Template_Template_Containers_VolumeMounts {
+    type O = terrars::BlockAssignable<CloudRunV2Job_Template_Template_Containers_VolumeMounts>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCloudRunV2Job_Template_Template_Containers_VolumeMounts {
     #[doc =
         "Path within the container at which the volume should be mounted. Must not contain ':'. For Cloud SQL volumes, it can be left empty, or must otherwise be /cloudsql. All instances defined in the Volume will be available as /cloudsql/[instance]. For more information on Cloud SQL volumes, visit https://cloud.google.com/sql/docs/mysql/connect-run"]
     pub mount_path: terrars::PrimField<std::string::String>,
@@ -1624,33 +2357,36 @@ pub struct BuildCloudRunV2JobTemplateElTemplateElContainersElVolumeMountsEl {
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudRunV2JobTemplateElTemplateElContainersElVolumeMountsEl {
-    pub fn build(self) -> CloudRunV2JobTemplateElTemplateElContainersElVolumeMountsEl {
-        CloudRunV2JobTemplateElTemplateElContainersElVolumeMountsEl {
+impl BuildCloudRunV2Job_Template_Template_Containers_VolumeMounts {
+    pub fn build(self) -> CloudRunV2Job_Template_Template_Containers_VolumeMounts {
+        CloudRunV2Job_Template_Template_Containers_VolumeMounts {
             mount_path: self.mount_path,
             name: self.name,
+            sub_path: core::default::Default::default(),
         }
     }
 }
 
-pub struct CloudRunV2JobTemplateElTemplateElContainersElVolumeMountsElRef {
+#[allow(dead_code)]
+pub struct CloudRunV2Job_Template_Template_Containers_VolumeMountsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudRunV2JobTemplateElTemplateElContainersElVolumeMountsElRef {
+impl terrars::Ref for CloudRunV2Job_Template_Template_Containers_VolumeMountsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudRunV2JobTemplateElTemplateElContainersElVolumeMountsElRef {
-        CloudRunV2JobTemplateElTemplateElContainersElVolumeMountsElRef {
+    ) -> CloudRunV2Job_Template_Template_Containers_VolumeMountsRef {
+        CloudRunV2Job_Template_Template_Containers_VolumeMountsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudRunV2JobTemplateElTemplateElContainersElVolumeMountsElRef {
+impl CloudRunV2Job_Template_Template_Containers_VolumeMountsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1665,43 +2401,58 @@ impl CloudRunV2JobTemplateElTemplateElContainersElVolumeMountsElRef {
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
+
+    #[doc =
+        "Get a reference to the value of field `sub_path` after provisioning.\nPath within the volume from which the container's volume should be mounted."]
+    pub fn sub_path(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sub_path", self.base))
+    }
 }
 
 #[derive(Serialize, Default)]
-struct CloudRunV2JobTemplateElTemplateElContainersElDynamic {
-    env: std::option::Option<terrars::DynamicBlock<CloudRunV2JobTemplateElTemplateElContainersElEnvEl>>,
-    ports: std::option::Option<terrars::DynamicBlock<CloudRunV2JobTemplateElTemplateElContainersElPortsEl>>,
-    resources: std::option::Option<terrars::DynamicBlock<CloudRunV2JobTemplateElTemplateElContainersElResourcesEl>>,
+struct CloudRunV2Job_Template_Template_ContainersDynamic {
+    env: std::option::Option<terrars::DynamicBlock<CloudRunV2Job_Template_Template_Containers_Env>>,
+    ports: std::option::Option<terrars::DynamicBlock<CloudRunV2Job_Template_Template_Containers_Ports>>,
+    resources: std::option::Option<terrars::DynamicBlock<CloudRunV2Job_Template_Template_Containers_Resources>>,
+    startup_probe: std
+    ::option
+    ::Option<terrars::DynamicBlock<CloudRunV2Job_Template_Template_Containers_StartupProbe>>,
     volume_mounts: std
     ::option
-    ::Option<terrars::DynamicBlock<CloudRunV2JobTemplateElTemplateElContainersElVolumeMountsEl>>,
+    ::Option<terrars::DynamicBlock<CloudRunV2Job_Template_Template_Containers_VolumeMounts>>,
 }
 
 #[derive(Serialize)]
-pub struct CloudRunV2JobTemplateElTemplateElContainersEl {
+pub struct CloudRunV2Job_Template_Template_Containers {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     args: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     command: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    depends_on: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     image: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sandbox_launcher: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     working_dir: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    env: std::option::Option<std::vec::Vec<CloudRunV2JobTemplateElTemplateElContainersElEnvEl>>,
+    env: std::option::Option<std::vec::Vec<CloudRunV2Job_Template_Template_Containers_Env>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ports: std::option::Option<std::vec::Vec<CloudRunV2JobTemplateElTemplateElContainersElPortsEl>>,
+    ports: std::option::Option<std::vec::Vec<CloudRunV2Job_Template_Template_Containers_Ports>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    resources: std::option::Option<std::vec::Vec<CloudRunV2JobTemplateElTemplateElContainersElResourcesEl>>,
+    resources: std::option::Option<std::vec::Vec<CloudRunV2Job_Template_Template_Containers_Resources>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    volume_mounts: std::option::Option<std::vec::Vec<CloudRunV2JobTemplateElTemplateElContainersElVolumeMountsEl>>,
-    dynamic: CloudRunV2JobTemplateElTemplateElContainersElDynamic,
+    startup_probe: std::option::Option<std::vec::Vec<CloudRunV2Job_Template_Template_Containers_StartupProbe>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    volume_mounts: std::option::Option<std::vec::Vec<CloudRunV2Job_Template_Template_Containers_VolumeMounts>>,
+    dynamic: CloudRunV2Job_Template_Template_ContainersDynamic,
 }
 
-impl CloudRunV2JobTemplateElTemplateElContainersEl {
+impl CloudRunV2Job_Template_Template_Containers {
     #[doc =
-        "Set the field `args`.\nArguments to the entrypoint. The docker image's CMD is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell"]
+        "Set the field `args`.\nArguments to the entrypoint. The docker image's CMD is used if this is not provided. Variable references are not supported in Cloud Run."]
     pub fn set_args(
         mut self,
         v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
@@ -1720,9 +2471,25 @@ impl CloudRunV2JobTemplateElTemplateElContainersEl {
         self
     }
 
+    #[doc = "Set the field `depends_on`.\nNames of the containers that must start before this container."]
+    pub fn set_depends_on(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.depends_on = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `name`.\nName of the container specified as a DNS_LABEL."]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `sandbox_launcher`.\nIndicates that this container can act as a sandbox supervisor and launch sandboxes."]
+    pub fn set_sandbox_launcher(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.sandbox_launcher = std::option::Option::Some(v.into());
         self
     }
 
@@ -1736,7 +2503,7 @@ impl CloudRunV2JobTemplateElTemplateElContainersEl {
     #[doc = "Set the field `env`.\n"]
     pub fn set_env(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudRunV2JobTemplateElTemplateElContainersElEnvEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudRunV2Job_Template_Template_Containers_Env>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1752,7 +2519,7 @@ impl CloudRunV2JobTemplateElTemplateElContainersEl {
     #[doc = "Set the field `ports`.\n"]
     pub fn set_ports(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudRunV2JobTemplateElTemplateElContainersElPortsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudRunV2Job_Template_Template_Containers_Ports>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1768,12 +2535,7 @@ impl CloudRunV2JobTemplateElTemplateElContainersEl {
     #[doc = "Set the field `resources`.\n"]
     pub fn set_resources(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<CloudRunV2JobTemplateElTemplateElContainersElResourcesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudRunV2Job_Template_Template_Containers_Resources>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1781,6 +2543,27 @@ impl CloudRunV2JobTemplateElTemplateElContainersEl {
             },
             terrars::BlockAssignable::Dynamic(d) => {
                 self.dynamic.resources = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `startup_probe`.\n"]
+    pub fn set_startup_probe(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<CloudRunV2Job_Template_Template_Containers_StartupProbe>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.startup_probe = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.startup_probe = std::option::Option::Some(d);
             },
         }
         self
@@ -1794,7 +2577,7 @@ impl CloudRunV2JobTemplateElTemplateElContainersEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<CloudRunV2JobTemplateElTemplateElContainersElVolumeMountsEl>>,
+                    ::Into<terrars::BlockAssignable<CloudRunV2Job_Template_Template_Containers_VolumeMounts>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1808,8 +2591,8 @@ impl CloudRunV2JobTemplateElTemplateElContainersEl {
     }
 }
 
-impl terrars::ToListMappable for CloudRunV2JobTemplateElTemplateElContainersEl {
-    type O = terrars::BlockAssignable<CloudRunV2JobTemplateElTemplateElContainersEl>;
+impl terrars::ToListMappable for CloudRunV2Job_Template_Template_Containers {
+    type O = terrars::BlockAssignable<CloudRunV2Job_Template_Template_Containers>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1820,53 +2603,55 @@ impl terrars::ToListMappable for CloudRunV2JobTemplateElTemplateElContainersEl {
     }
 }
 
-pub struct BuildCloudRunV2JobTemplateElTemplateElContainersEl {
+pub struct BuildCloudRunV2Job_Template_Template_Containers {
     #[doc =
         "URL of the Container image in Google Container Registry or Google Artifact Registry. More info: https://kubernetes.io/docs/concepts/containers/images"]
     pub image: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudRunV2JobTemplateElTemplateElContainersEl {
-    pub fn build(self) -> CloudRunV2JobTemplateElTemplateElContainersEl {
-        CloudRunV2JobTemplateElTemplateElContainersEl {
+impl BuildCloudRunV2Job_Template_Template_Containers {
+    pub fn build(self) -> CloudRunV2Job_Template_Template_Containers {
+        CloudRunV2Job_Template_Template_Containers {
             args: core::default::Default::default(),
             command: core::default::Default::default(),
+            depends_on: core::default::Default::default(),
             image: self.image,
             name: core::default::Default::default(),
+            sandbox_launcher: core::default::Default::default(),
             working_dir: core::default::Default::default(),
             env: core::default::Default::default(),
             ports: core::default::Default::default(),
             resources: core::default::Default::default(),
+            startup_probe: core::default::Default::default(),
             volume_mounts: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct CloudRunV2JobTemplateElTemplateElContainersElRef {
+#[allow(dead_code)]
+pub struct CloudRunV2Job_Template_Template_ContainersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudRunV2JobTemplateElTemplateElContainersElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> CloudRunV2JobTemplateElTemplateElContainersElRef {
-        CloudRunV2JobTemplateElTemplateElContainersElRef {
+impl terrars::Ref for CloudRunV2Job_Template_Template_ContainersRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudRunV2Job_Template_Template_ContainersRef {
+        CloudRunV2Job_Template_Template_ContainersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudRunV2JobTemplateElTemplateElContainersElRef {
+impl CloudRunV2Job_Template_Template_ContainersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `args` after provisioning.\nArguments to the entrypoint. The docker image's CMD is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell"]
+        "Get a reference to the value of field `args` after provisioning.\nArguments to the entrypoint. The docker image's CMD is used if this is not provided. Variable references are not supported in Cloud Run."]
     pub fn args(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.args", self.base))
     }
@@ -1875,6 +2660,12 @@ impl CloudRunV2JobTemplateElTemplateElContainersElRef {
         "Get a reference to the value of field `command` after provisioning.\nEntrypoint array. Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment. If a variable cannot be resolved, the reference in the input string will be unchanged. The $(VAR_NAME) syntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped references will never be expanded, regardless of whether the variable exists or not. More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell"]
     pub fn command(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.command", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `depends_on` after provisioning.\nNames of the containers that must start before this container."]
+    pub fn depends_on(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.depends_on", self.base))
     }
 
     #[doc =
@@ -1890,39 +2681,107 @@ impl CloudRunV2JobTemplateElTemplateElContainersElRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `sandbox_launcher` after provisioning.\nIndicates that this container can act as a sandbox supervisor and launch sandboxes."]
+    pub fn sandbox_launcher(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sandbox_launcher", self.base))
+    }
+
+    #[doc =
         "Get a reference to the value of field `working_dir` after provisioning.\nContainer's working directory. If not specified, the container runtime's default will be used, which might be configured in the container image."]
     pub fn working_dir(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.working_dir", self.base))
     }
 
-    #[doc = "Get a reference to the value of field `env` after provisioning.\n"]
-    pub fn env(&self) -> terrars::ListRef<CloudRunV2JobTemplateElTemplateElContainersElEnvElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.env", self.base))
-    }
-
     #[doc = "Get a reference to the value of field `ports` after provisioning.\n"]
-    pub fn ports(&self) -> terrars::ListRef<CloudRunV2JobTemplateElTemplateElContainersElPortsElRef> {
+    pub fn ports(&self) -> terrars::ListRef<CloudRunV2Job_Template_Template_Containers_PortsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ports", self.base))
     }
 
     #[doc = "Get a reference to the value of field `resources` after provisioning.\n"]
-    pub fn resources(&self) -> terrars::ListRef<CloudRunV2JobTemplateElTemplateElContainersElResourcesElRef> {
+    pub fn resources(&self) -> terrars::ListRef<CloudRunV2Job_Template_Template_Containers_ResourcesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.resources", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `startup_probe` after provisioning.\n"]
+    pub fn startup_probe(&self) -> terrars::ListRef<CloudRunV2Job_Template_Template_Containers_StartupProbeRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.startup_probe", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `volume_mounts` after provisioning.\n"]
-    pub fn volume_mounts(&self) -> terrars::ListRef<CloudRunV2JobTemplateElTemplateElContainersElVolumeMountsElRef> {
+    pub fn volume_mounts(&self) -> terrars::ListRef<CloudRunV2Job_Template_Template_Containers_VolumeMountsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.volume_mounts", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct CloudRunV2JobTemplateElTemplateElVolumesElCloudSqlInstanceEl {
+pub struct CloudRunV2Job_Template_Template_NodeSelector {
+    accelerator: terrars::PrimField<std::string::String>,
+}
+
+impl CloudRunV2Job_Template_Template_NodeSelector { }
+
+impl terrars::ToListMappable for CloudRunV2Job_Template_Template_NodeSelector {
+    type O = terrars::BlockAssignable<CloudRunV2Job_Template_Template_NodeSelector>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCloudRunV2Job_Template_Template_NodeSelector {
+    #[doc =
+        "The GPU to attach to an instance. See https://cloud.google.com/run/docs/configuring/jobs/gpu for configuring GPU."]
+    pub accelerator: terrars::PrimField<std::string::String>,
+}
+
+impl BuildCloudRunV2Job_Template_Template_NodeSelector {
+    pub fn build(self) -> CloudRunV2Job_Template_Template_NodeSelector {
+        CloudRunV2Job_Template_Template_NodeSelector { accelerator: self.accelerator }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CloudRunV2Job_Template_Template_NodeSelectorRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CloudRunV2Job_Template_Template_NodeSelectorRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CloudRunV2Job_Template_Template_NodeSelectorRef {
+        CloudRunV2Job_Template_Template_NodeSelectorRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CloudRunV2Job_Template_Template_NodeSelectorRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `accelerator` after provisioning.\nThe GPU to attach to an instance. See https://cloud.google.com/run/docs/configuring/jobs/gpu for configuring GPU."]
+    pub fn accelerator(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.accelerator", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct CloudRunV2Job_Template_Template_Volumes_CloudSqlInstance {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     instances: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl CloudRunV2JobTemplateElTemplateElVolumesElCloudSqlInstanceEl {
+impl CloudRunV2Job_Template_Template_Volumes_CloudSqlInstance {
     #[doc =
         "Set the field `instances`.\nThe Cloud SQL instance connection names, as can be found in https://console.cloud.google.com/sql/instances. Visit https://cloud.google.com/sql/docs/mysql/connect-run for more information on how to connect Cloud SQL and Cloud Run. Format: {project}:{location}:{instance}"]
     pub fn set_instances(
@@ -1934,8 +2793,8 @@ impl CloudRunV2JobTemplateElTemplateElVolumesElCloudSqlInstanceEl {
     }
 }
 
-impl terrars::ToListMappable for CloudRunV2JobTemplateElTemplateElVolumesElCloudSqlInstanceEl {
-    type O = terrars::BlockAssignable<CloudRunV2JobTemplateElTemplateElVolumesElCloudSqlInstanceEl>;
+impl terrars::ToListMappable for CloudRunV2Job_Template_Template_Volumes_CloudSqlInstance {
+    type O = terrars::BlockAssignable<CloudRunV2Job_Template_Template_Volumes_CloudSqlInstance>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1946,32 +2805,34 @@ impl terrars::ToListMappable for CloudRunV2JobTemplateElTemplateElVolumesElCloud
     }
 }
 
-pub struct BuildCloudRunV2JobTemplateElTemplateElVolumesElCloudSqlInstanceEl {}
+pub struct BuildCloudRunV2Job_Template_Template_Volumes_CloudSqlInstance {}
 
-impl BuildCloudRunV2JobTemplateElTemplateElVolumesElCloudSqlInstanceEl {
-    pub fn build(self) -> CloudRunV2JobTemplateElTemplateElVolumesElCloudSqlInstanceEl {
-        CloudRunV2JobTemplateElTemplateElVolumesElCloudSqlInstanceEl { instances: core::default::Default::default() }
+impl BuildCloudRunV2Job_Template_Template_Volumes_CloudSqlInstance {
+    pub fn build(self) -> CloudRunV2Job_Template_Template_Volumes_CloudSqlInstance {
+        CloudRunV2Job_Template_Template_Volumes_CloudSqlInstance { instances: core::default::Default::default() }
     }
 }
 
-pub struct CloudRunV2JobTemplateElTemplateElVolumesElCloudSqlInstanceElRef {
+#[allow(dead_code)]
+pub struct CloudRunV2Job_Template_Template_Volumes_CloudSqlInstanceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudRunV2JobTemplateElTemplateElVolumesElCloudSqlInstanceElRef {
+impl terrars::Ref for CloudRunV2Job_Template_Template_Volumes_CloudSqlInstanceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudRunV2JobTemplateElTemplateElVolumesElCloudSqlInstanceElRef {
-        CloudRunV2JobTemplateElTemplateElVolumesElCloudSqlInstanceElRef {
+    ) -> CloudRunV2Job_Template_Template_Volumes_CloudSqlInstanceRef {
+        CloudRunV2Job_Template_Template_Volumes_CloudSqlInstanceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudRunV2JobTemplateElTemplateElVolumesElCloudSqlInstanceElRef {
+impl CloudRunV2Job_Template_Template_Volumes_CloudSqlInstanceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1984,24 +2845,31 @@ impl CloudRunV2JobTemplateElTemplateElVolumesElCloudSqlInstanceElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudRunV2JobTemplateElTemplateElVolumesElSecretElItemsEl {
+pub struct CloudRunV2Job_Template_Template_Volumes_EmptyDir {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    mode: std::option::Option<terrars::PrimField<f64>>,
-    path: terrars::PrimField<std::string::String>,
-    version: terrars::PrimField<std::string::String>,
+    medium: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    size_limit: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CloudRunV2JobTemplateElTemplateElVolumesElSecretElItemsEl {
+impl CloudRunV2Job_Template_Template_Volumes_EmptyDir {
     #[doc =
-        "Set the field `mode`.\nInteger octal mode bits to use on this file, must be a value between 01 and 0777 (octal). If 0 or not set, the Volume's default mode will be used."]
-    pub fn set_mode(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.mode = std::option::Option::Some(v.into());
+        "Set the field `medium`.\nThe different types of medium supported for EmptyDir. Default value: \"MEMORY\" Possible values: [\"MEMORY\", \"DISK\"]"]
+    pub fn set_medium(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.medium = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `size_limit`.\nLimit on the storage usable by this EmptyDir volume. The size limit is also applicable for memory medium. The maximum usage on memory medium EmptyDir would be the minimum value between the SizeLimit specified here and the sum of memory limits of all containers in a pod. This field's values are of the 'Quantity' k8s type: https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/. The default is nil which means that the limit is undefined. More info: https://kubernetes.io/docs/concepts/storage/volumes/#emptydir."]
+    pub fn set_size_limit(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.size_limit = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for CloudRunV2JobTemplateElTemplateElVolumesElSecretElItemsEl {
-    type O = terrars::BlockAssignable<CloudRunV2JobTemplateElTemplateElVolumesElSecretElItemsEl>;
+impl terrars::ToListMappable for CloudRunV2Job_Template_Template_Volumes_EmptyDir {
+    type O = terrars::BlockAssignable<CloudRunV2Job_Template_Template_Volumes_EmptyDir>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2012,7 +2880,276 @@ impl terrars::ToListMappable for CloudRunV2JobTemplateElTemplateElVolumesElSecre
     }
 }
 
-pub struct BuildCloudRunV2JobTemplateElTemplateElVolumesElSecretElItemsEl {
+pub struct BuildCloudRunV2Job_Template_Template_Volumes_EmptyDir {}
+
+impl BuildCloudRunV2Job_Template_Template_Volumes_EmptyDir {
+    pub fn build(self) -> CloudRunV2Job_Template_Template_Volumes_EmptyDir {
+        CloudRunV2Job_Template_Template_Volumes_EmptyDir {
+            medium: core::default::Default::default(),
+            size_limit: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CloudRunV2Job_Template_Template_Volumes_EmptyDirRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CloudRunV2Job_Template_Template_Volumes_EmptyDirRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CloudRunV2Job_Template_Template_Volumes_EmptyDirRef {
+        CloudRunV2Job_Template_Template_Volumes_EmptyDirRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CloudRunV2Job_Template_Template_Volumes_EmptyDirRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `medium` after provisioning.\nThe different types of medium supported for EmptyDir. Default value: \"MEMORY\" Possible values: [\"MEMORY\", \"DISK\"]"]
+    pub fn medium(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.medium", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `size_limit` after provisioning.\nLimit on the storage usable by this EmptyDir volume. The size limit is also applicable for memory medium. The maximum usage on memory medium EmptyDir would be the minimum value between the SizeLimit specified here and the sum of memory limits of all containers in a pod. This field's values are of the 'Quantity' k8s type: https://kubernetes.io/docs/reference/kubernetes-api/common-definitions/quantity/. The default is nil which means that the limit is undefined. More info: https://kubernetes.io/docs/concepts/storage/volumes/#emptydir."]
+    pub fn size_limit(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.size_limit", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct CloudRunV2Job_Template_Template_Volumes_Gcs {
+    bucket: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mount_options: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    read_only: std::option::Option<terrars::PrimField<bool>>,
+}
+
+impl CloudRunV2Job_Template_Template_Volumes_Gcs {
+    #[doc =
+        "Set the field `mount_options`.\nA list of flags to pass to the gcsfuse command for configuring this volume.\nFlags should be passed without leading dashes."]
+    pub fn set_mount_options(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.mount_options = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `read_only`.\nIf true, mount this volume as read-only in all mounts. If false, mount this volume as read-write."]
+    pub fn set_read_only(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.read_only = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for CloudRunV2Job_Template_Template_Volumes_Gcs {
+    type O = terrars::BlockAssignable<CloudRunV2Job_Template_Template_Volumes_Gcs>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCloudRunV2Job_Template_Template_Volumes_Gcs {
+    #[doc =
+        "Name of the cloud storage bucket to back the volume. The resource service account must have permission to access the bucket."]
+    pub bucket: terrars::PrimField<std::string::String>,
+}
+
+impl BuildCloudRunV2Job_Template_Template_Volumes_Gcs {
+    pub fn build(self) -> CloudRunV2Job_Template_Template_Volumes_Gcs {
+        CloudRunV2Job_Template_Template_Volumes_Gcs {
+            bucket: self.bucket,
+            mount_options: core::default::Default::default(),
+            read_only: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CloudRunV2Job_Template_Template_Volumes_GcsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CloudRunV2Job_Template_Template_Volumes_GcsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CloudRunV2Job_Template_Template_Volumes_GcsRef {
+        CloudRunV2Job_Template_Template_Volumes_GcsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CloudRunV2Job_Template_Template_Volumes_GcsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `bucket` after provisioning.\nName of the cloud storage bucket to back the volume. The resource service account must have permission to access the bucket."]
+    pub fn bucket(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `mount_options` after provisioning.\nA list of flags to pass to the gcsfuse command for configuring this volume.\nFlags should be passed without leading dashes."]
+    pub fn mount_options(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.mount_options", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `read_only` after provisioning.\nIf true, mount this volume as read-only in all mounts. If false, mount this volume as read-write."]
+    pub fn read_only(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.read_only", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct CloudRunV2Job_Template_Template_Volumes_Nfs {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    path: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    read_only: std::option::Option<terrars::PrimField<bool>>,
+    server: terrars::PrimField<std::string::String>,
+}
+
+impl CloudRunV2Job_Template_Template_Volumes_Nfs {
+    #[doc = "Set the field `path`.\nPath that is exported by the NFS server."]
+    pub fn set_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.path = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `read_only`.\nIf true, mount this volume as read-only in all mounts."]
+    pub fn set_read_only(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.read_only = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for CloudRunV2Job_Template_Template_Volumes_Nfs {
+    type O = terrars::BlockAssignable<CloudRunV2Job_Template_Template_Volumes_Nfs>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCloudRunV2Job_Template_Template_Volumes_Nfs {
+    #[doc = "Hostname or IP address of the NFS server."]
+    pub server: terrars::PrimField<std::string::String>,
+}
+
+impl BuildCloudRunV2Job_Template_Template_Volumes_Nfs {
+    pub fn build(self) -> CloudRunV2Job_Template_Template_Volumes_Nfs {
+        CloudRunV2Job_Template_Template_Volumes_Nfs {
+            path: core::default::Default::default(),
+            read_only: core::default::Default::default(),
+            server: self.server,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CloudRunV2Job_Template_Template_Volumes_NfsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CloudRunV2Job_Template_Template_Volumes_NfsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CloudRunV2Job_Template_Template_Volumes_NfsRef {
+        CloudRunV2Job_Template_Template_Volumes_NfsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CloudRunV2Job_Template_Template_Volumes_NfsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `path` after provisioning.\nPath that is exported by the NFS server."]
+    pub fn path(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.path", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `read_only` after provisioning.\nIf true, mount this volume as read-only in all mounts."]
+    pub fn read_only(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.read_only", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `server` after provisioning.\nHostname or IP address of the NFS server."]
+    pub fn server(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.server", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct CloudRunV2Job_Template_Template_Volumes_Secret_Items {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mode: std::option::Option<terrars::PrimField<f64>>,
+    path: terrars::PrimField<std::string::String>,
+    version: terrars::PrimField<std::string::String>,
+}
+
+impl CloudRunV2Job_Template_Template_Volumes_Secret_Items {
+    #[doc =
+        "Set the field `mode`.\nInteger octal mode bits to use on this file, must be a value between 01 and 0777 (octal). If 0 or not set, the Volume's default mode will be used."]
+    pub fn set_mode(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.mode = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for CloudRunV2Job_Template_Template_Volumes_Secret_Items {
+    type O = terrars::BlockAssignable<CloudRunV2Job_Template_Template_Volumes_Secret_Items>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCloudRunV2Job_Template_Template_Volumes_Secret_Items {
     #[doc = "The relative path of the secret in the container."]
     pub path: terrars::PrimField<std::string::String>,
     #[doc =
@@ -2020,9 +3157,9 @@ pub struct BuildCloudRunV2JobTemplateElTemplateElVolumesElSecretElItemsEl {
     pub version: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudRunV2JobTemplateElTemplateElVolumesElSecretElItemsEl {
-    pub fn build(self) -> CloudRunV2JobTemplateElTemplateElVolumesElSecretElItemsEl {
-        CloudRunV2JobTemplateElTemplateElVolumesElSecretElItemsEl {
+impl BuildCloudRunV2Job_Template_Template_Volumes_Secret_Items {
+    pub fn build(self) -> CloudRunV2Job_Template_Template_Volumes_Secret_Items {
+        CloudRunV2Job_Template_Template_Volumes_Secret_Items {
             mode: core::default::Default::default(),
             path: self.path,
             version: self.version,
@@ -2030,24 +3167,26 @@ impl BuildCloudRunV2JobTemplateElTemplateElVolumesElSecretElItemsEl {
     }
 }
 
-pub struct CloudRunV2JobTemplateElTemplateElVolumesElSecretElItemsElRef {
+#[allow(dead_code)]
+pub struct CloudRunV2Job_Template_Template_Volumes_Secret_ItemsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudRunV2JobTemplateElTemplateElVolumesElSecretElItemsElRef {
+impl terrars::Ref for CloudRunV2Job_Template_Template_Volumes_Secret_ItemsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudRunV2JobTemplateElTemplateElVolumesElSecretElItemsElRef {
-        CloudRunV2JobTemplateElTemplateElVolumesElSecretElItemsElRef {
+    ) -> CloudRunV2Job_Template_Template_Volumes_Secret_ItemsRef {
+        CloudRunV2Job_Template_Template_Volumes_Secret_ItemsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudRunV2JobTemplateElTemplateElVolumesElSecretElItemsElRef {
+impl CloudRunV2Job_Template_Template_Volumes_Secret_ItemsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2072,21 +3211,21 @@ impl CloudRunV2JobTemplateElTemplateElVolumesElSecretElItemsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct CloudRunV2JobTemplateElTemplateElVolumesElSecretElDynamic {
-    items: std::option::Option<terrars::DynamicBlock<CloudRunV2JobTemplateElTemplateElVolumesElSecretElItemsEl>>,
+struct CloudRunV2Job_Template_Template_Volumes_SecretDynamic {
+    items: std::option::Option<terrars::DynamicBlock<CloudRunV2Job_Template_Template_Volumes_Secret_Items>>,
 }
 
 #[derive(Serialize)]
-pub struct CloudRunV2JobTemplateElTemplateElVolumesElSecretEl {
+pub struct CloudRunV2Job_Template_Template_Volumes_Secret {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     default_mode: std::option::Option<terrars::PrimField<f64>>,
     secret: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    items: std::option::Option<std::vec::Vec<CloudRunV2JobTemplateElTemplateElVolumesElSecretElItemsEl>>,
-    dynamic: CloudRunV2JobTemplateElTemplateElVolumesElSecretElDynamic,
+    items: std::option::Option<std::vec::Vec<CloudRunV2Job_Template_Template_Volumes_Secret_Items>>,
+    dynamic: CloudRunV2Job_Template_Template_Volumes_SecretDynamic,
 }
 
-impl CloudRunV2JobTemplateElTemplateElVolumesElSecretEl {
+impl CloudRunV2Job_Template_Template_Volumes_Secret {
     #[doc =
         "Set the field `default_mode`.\nInteger representation of mode bits to use on created files by default. Must be a value between 0000 and 0777 (octal), defaulting to 0444. Directories within the path are not affected by this setting."]
     pub fn set_default_mode(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -2097,12 +3236,7 @@ impl CloudRunV2JobTemplateElTemplateElVolumesElSecretEl {
     #[doc = "Set the field `items`.\n"]
     pub fn set_items(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<CloudRunV2JobTemplateElTemplateElVolumesElSecretElItemsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudRunV2Job_Template_Template_Volumes_Secret_Items>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2116,8 +3250,8 @@ impl CloudRunV2JobTemplateElTemplateElVolumesElSecretEl {
     }
 }
 
-impl terrars::ToListMappable for CloudRunV2JobTemplateElTemplateElVolumesElSecretEl {
-    type O = terrars::BlockAssignable<CloudRunV2JobTemplateElTemplateElVolumesElSecretEl>;
+impl terrars::ToListMappable for CloudRunV2Job_Template_Template_Volumes_Secret {
+    type O = terrars::BlockAssignable<CloudRunV2Job_Template_Template_Volumes_Secret>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2128,15 +3262,15 @@ impl terrars::ToListMappable for CloudRunV2JobTemplateElTemplateElVolumesElSecre
     }
 }
 
-pub struct BuildCloudRunV2JobTemplateElTemplateElVolumesElSecretEl {
+pub struct BuildCloudRunV2Job_Template_Template_Volumes_Secret {
     #[doc =
         "The name of the secret in Cloud Secret Manager. Format: {secret} if the secret is in the same project. projects/{project}/secrets/{secret} if the secret is in a different project."]
     pub secret: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudRunV2JobTemplateElTemplateElVolumesElSecretEl {
-    pub fn build(self) -> CloudRunV2JobTemplateElTemplateElVolumesElSecretEl {
-        CloudRunV2JobTemplateElTemplateElVolumesElSecretEl {
+impl BuildCloudRunV2Job_Template_Template_Volumes_Secret {
+    pub fn build(self) -> CloudRunV2Job_Template_Template_Volumes_Secret {
+        CloudRunV2Job_Template_Template_Volumes_Secret {
             default_mode: core::default::Default::default(),
             secret: self.secret,
             items: core::default::Default::default(),
@@ -2145,24 +3279,26 @@ impl BuildCloudRunV2JobTemplateElTemplateElVolumesElSecretEl {
     }
 }
 
-pub struct CloudRunV2JobTemplateElTemplateElVolumesElSecretElRef {
+#[allow(dead_code)]
+pub struct CloudRunV2Job_Template_Template_Volumes_SecretRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudRunV2JobTemplateElTemplateElVolumesElSecretElRef {
+impl terrars::Ref for CloudRunV2Job_Template_Template_Volumes_SecretRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudRunV2JobTemplateElTemplateElVolumesElSecretElRef {
-        CloudRunV2JobTemplateElTemplateElVolumesElSecretElRef {
+    ) -> CloudRunV2Job_Template_Template_Volumes_SecretRef {
+        CloudRunV2Job_Template_Template_Volumes_SecretRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudRunV2JobTemplateElTemplateElVolumesElSecretElRef {
+impl CloudRunV2Job_Template_Template_Volumes_SecretRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2180,30 +3316,39 @@ impl CloudRunV2JobTemplateElTemplateElVolumesElSecretElRef {
     }
 
     #[doc = "Get a reference to the value of field `items` after provisioning.\n"]
-    pub fn items(&self) -> terrars::ListRef<CloudRunV2JobTemplateElTemplateElVolumesElSecretElItemsElRef> {
+    pub fn items(&self) -> terrars::ListRef<CloudRunV2Job_Template_Template_Volumes_Secret_ItemsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.items", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct CloudRunV2JobTemplateElTemplateElVolumesElDynamic {
+struct CloudRunV2Job_Template_Template_VolumesDynamic {
     cloud_sql_instance: std
     ::option
-    ::Option<terrars::DynamicBlock<CloudRunV2JobTemplateElTemplateElVolumesElCloudSqlInstanceEl>>,
-    secret: std::option::Option<terrars::DynamicBlock<CloudRunV2JobTemplateElTemplateElVolumesElSecretEl>>,
+    ::Option<terrars::DynamicBlock<CloudRunV2Job_Template_Template_Volumes_CloudSqlInstance>>,
+    empty_dir: std::option::Option<terrars::DynamicBlock<CloudRunV2Job_Template_Template_Volumes_EmptyDir>>,
+    gcs: std::option::Option<terrars::DynamicBlock<CloudRunV2Job_Template_Template_Volumes_Gcs>>,
+    nfs: std::option::Option<terrars::DynamicBlock<CloudRunV2Job_Template_Template_Volumes_Nfs>>,
+    secret: std::option::Option<terrars::DynamicBlock<CloudRunV2Job_Template_Template_Volumes_Secret>>,
 }
 
 #[derive(Serialize)]
-pub struct CloudRunV2JobTemplateElTemplateElVolumesEl {
+pub struct CloudRunV2Job_Template_Template_Volumes {
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cloud_sql_instance: std::option::Option<std::vec::Vec<CloudRunV2JobTemplateElTemplateElVolumesElCloudSqlInstanceEl>>,
+    cloud_sql_instance: std::option::Option<std::vec::Vec<CloudRunV2Job_Template_Template_Volumes_CloudSqlInstance>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    secret: std::option::Option<std::vec::Vec<CloudRunV2JobTemplateElTemplateElVolumesElSecretEl>>,
-    dynamic: CloudRunV2JobTemplateElTemplateElVolumesElDynamic,
+    empty_dir: std::option::Option<std::vec::Vec<CloudRunV2Job_Template_Template_Volumes_EmptyDir>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gcs: std::option::Option<std::vec::Vec<CloudRunV2Job_Template_Template_Volumes_Gcs>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    nfs: std::option::Option<std::vec::Vec<CloudRunV2Job_Template_Template_Volumes_Nfs>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secret: std::option::Option<std::vec::Vec<CloudRunV2Job_Template_Template_Volumes_Secret>>,
+    dynamic: CloudRunV2Job_Template_Template_VolumesDynamic,
 }
 
-impl CloudRunV2JobTemplateElTemplateElVolumesEl {
+impl CloudRunV2Job_Template_Template_Volumes {
     #[doc = "Set the field `cloud_sql_instance`.\n"]
     pub fn set_cloud_sql_instance(
         mut self,
@@ -2212,7 +3357,7 @@ impl CloudRunV2JobTemplateElTemplateElVolumesEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<CloudRunV2JobTemplateElTemplateElVolumesElCloudSqlInstanceEl>>,
+                    ::Into<terrars::BlockAssignable<CloudRunV2Job_Template_Template_Volumes_CloudSqlInstance>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2225,10 +3370,58 @@ impl CloudRunV2JobTemplateElTemplateElVolumesEl {
         self
     }
 
+    #[doc = "Set the field `empty_dir`.\n"]
+    pub fn set_empty_dir(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudRunV2Job_Template_Template_Volumes_EmptyDir>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.empty_dir = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.empty_dir = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `gcs`.\n"]
+    pub fn set_gcs(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudRunV2Job_Template_Template_Volumes_Gcs>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.gcs = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.gcs = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `nfs`.\n"]
+    pub fn set_nfs(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudRunV2Job_Template_Template_Volumes_Nfs>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.nfs = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.nfs = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `secret`.\n"]
     pub fn set_secret(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudRunV2JobTemplateElTemplateElVolumesElSecretEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudRunV2Job_Template_Template_Volumes_Secret>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2242,8 +3435,8 @@ impl CloudRunV2JobTemplateElTemplateElVolumesEl {
     }
 }
 
-impl terrars::ToListMappable for CloudRunV2JobTemplateElTemplateElVolumesEl {
-    type O = terrars::BlockAssignable<CloudRunV2JobTemplateElTemplateElVolumesEl>;
+impl terrars::ToListMappable for CloudRunV2Job_Template_Template_Volumes {
+    type O = terrars::BlockAssignable<CloudRunV2Job_Template_Template_Volumes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2254,37 +3447,42 @@ impl terrars::ToListMappable for CloudRunV2JobTemplateElTemplateElVolumesEl {
     }
 }
 
-pub struct BuildCloudRunV2JobTemplateElTemplateElVolumesEl {
+pub struct BuildCloudRunV2Job_Template_Template_Volumes {
     #[doc = "Volume's name."]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudRunV2JobTemplateElTemplateElVolumesEl {
-    pub fn build(self) -> CloudRunV2JobTemplateElTemplateElVolumesEl {
-        CloudRunV2JobTemplateElTemplateElVolumesEl {
+impl BuildCloudRunV2Job_Template_Template_Volumes {
+    pub fn build(self) -> CloudRunV2Job_Template_Template_Volumes {
+        CloudRunV2Job_Template_Template_Volumes {
             name: self.name,
             cloud_sql_instance: core::default::Default::default(),
+            empty_dir: core::default::Default::default(),
+            gcs: core::default::Default::default(),
+            nfs: core::default::Default::default(),
             secret: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct CloudRunV2JobTemplateElTemplateElVolumesElRef {
+#[allow(dead_code)]
+pub struct CloudRunV2Job_Template_Template_VolumesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudRunV2JobTemplateElTemplateElVolumesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudRunV2JobTemplateElTemplateElVolumesElRef {
-        CloudRunV2JobTemplateElTemplateElVolumesElRef {
+impl terrars::Ref for CloudRunV2Job_Template_Template_VolumesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudRunV2Job_Template_Template_VolumesRef {
+        CloudRunV2Job_Template_Template_VolumesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudRunV2JobTemplateElTemplateElVolumesElRef {
+impl CloudRunV2Job_Template_Template_VolumesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2295,20 +3493,33 @@ impl CloudRunV2JobTemplateElTemplateElVolumesElRef {
     }
 
     #[doc = "Get a reference to the value of field `cloud_sql_instance` after provisioning.\n"]
-    pub fn cloud_sql_instance(
-        &self,
-    ) -> terrars::ListRef<CloudRunV2JobTemplateElTemplateElVolumesElCloudSqlInstanceElRef> {
+    pub fn cloud_sql_instance(&self) -> terrars::ListRef<CloudRunV2Job_Template_Template_Volumes_CloudSqlInstanceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cloud_sql_instance", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `empty_dir` after provisioning.\n"]
+    pub fn empty_dir(&self) -> terrars::ListRef<CloudRunV2Job_Template_Template_Volumes_EmptyDirRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.empty_dir", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `gcs` after provisioning.\n"]
+    pub fn gcs(&self) -> terrars::ListRef<CloudRunV2Job_Template_Template_Volumes_GcsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.gcs", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `nfs` after provisioning.\n"]
+    pub fn nfs(&self) -> terrars::ListRef<CloudRunV2Job_Template_Template_Volumes_NfsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.nfs", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `secret` after provisioning.\n"]
-    pub fn secret(&self) -> terrars::ListRef<CloudRunV2JobTemplateElTemplateElVolumesElSecretElRef> {
+    pub fn secret(&self) -> terrars::ListRef<CloudRunV2Job_Template_Template_Volumes_SecretRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.secret", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct CloudRunV2JobTemplateElTemplateElVpcAccessElNetworkInterfacesEl {
+pub struct CloudRunV2Job_Template_Template_VpcAccess_NetworkInterfaces {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     network: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2317,7 +3528,7 @@ pub struct CloudRunV2JobTemplateElTemplateElVpcAccessElNetworkInterfacesEl {
     tags: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl CloudRunV2JobTemplateElTemplateElVpcAccessElNetworkInterfacesEl {
+impl CloudRunV2Job_Template_Template_VpcAccess_NetworkInterfaces {
     #[doc =
         "Set the field `network`.\nThe VPC network that the Cloud Run resource will be able to send traffic to. At least one of network or subnetwork must be specified. If both\nnetwork and subnetwork are specified, the given VPC subnetwork must belong to the given VPC network. If network is not specified, it will be\nlooked up from the subnetwork."]
     pub fn set_network(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -2342,8 +3553,8 @@ impl CloudRunV2JobTemplateElTemplateElVpcAccessElNetworkInterfacesEl {
     }
 }
 
-impl terrars::ToListMappable for CloudRunV2JobTemplateElTemplateElVpcAccessElNetworkInterfacesEl {
-    type O = terrars::BlockAssignable<CloudRunV2JobTemplateElTemplateElVpcAccessElNetworkInterfacesEl>;
+impl terrars::ToListMappable for CloudRunV2Job_Template_Template_VpcAccess_NetworkInterfaces {
+    type O = terrars::BlockAssignable<CloudRunV2Job_Template_Template_VpcAccess_NetworkInterfaces>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2354,11 +3565,11 @@ impl terrars::ToListMappable for CloudRunV2JobTemplateElTemplateElVpcAccessElNet
     }
 }
 
-pub struct BuildCloudRunV2JobTemplateElTemplateElVpcAccessElNetworkInterfacesEl {}
+pub struct BuildCloudRunV2Job_Template_Template_VpcAccess_NetworkInterfaces {}
 
-impl BuildCloudRunV2JobTemplateElTemplateElVpcAccessElNetworkInterfacesEl {
-    pub fn build(self) -> CloudRunV2JobTemplateElTemplateElVpcAccessElNetworkInterfacesEl {
-        CloudRunV2JobTemplateElTemplateElVpcAccessElNetworkInterfacesEl {
+impl BuildCloudRunV2Job_Template_Template_VpcAccess_NetworkInterfaces {
+    pub fn build(self) -> CloudRunV2Job_Template_Template_VpcAccess_NetworkInterfaces {
+        CloudRunV2Job_Template_Template_VpcAccess_NetworkInterfaces {
             network: core::default::Default::default(),
             subnetwork: core::default::Default::default(),
             tags: core::default::Default::default(),
@@ -2366,24 +3577,26 @@ impl BuildCloudRunV2JobTemplateElTemplateElVpcAccessElNetworkInterfacesEl {
     }
 }
 
-pub struct CloudRunV2JobTemplateElTemplateElVpcAccessElNetworkInterfacesElRef {
+#[allow(dead_code)]
+pub struct CloudRunV2Job_Template_Template_VpcAccess_NetworkInterfacesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudRunV2JobTemplateElTemplateElVpcAccessElNetworkInterfacesElRef {
+impl terrars::Ref for CloudRunV2Job_Template_Template_VpcAccess_NetworkInterfacesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudRunV2JobTemplateElTemplateElVpcAccessElNetworkInterfacesElRef {
-        CloudRunV2JobTemplateElTemplateElVpcAccessElNetworkInterfacesElRef {
+    ) -> CloudRunV2Job_Template_Template_VpcAccess_NetworkInterfacesRef {
+        CloudRunV2Job_Template_Template_VpcAccess_NetworkInterfacesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudRunV2JobTemplateElTemplateElVpcAccessElNetworkInterfacesElRef {
+impl CloudRunV2Job_Template_Template_VpcAccess_NetworkInterfacesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2408,26 +3621,24 @@ impl CloudRunV2JobTemplateElTemplateElVpcAccessElNetworkInterfacesElRef {
 }
 
 #[derive(Serialize, Default)]
-struct CloudRunV2JobTemplateElTemplateElVpcAccessElDynamic {
+struct CloudRunV2Job_Template_Template_VpcAccessDynamic {
     network_interfaces: std
     ::option
-    ::Option<terrars::DynamicBlock<CloudRunV2JobTemplateElTemplateElVpcAccessElNetworkInterfacesEl>>,
+    ::Option<terrars::DynamicBlock<CloudRunV2Job_Template_Template_VpcAccess_NetworkInterfaces>>,
 }
 
 #[derive(Serialize)]
-pub struct CloudRunV2JobTemplateElTemplateElVpcAccessEl {
+pub struct CloudRunV2Job_Template_Template_VpcAccess {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     connector: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     egress: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    network_interfaces: std
-    ::option
-    ::Option<std::vec::Vec<CloudRunV2JobTemplateElTemplateElVpcAccessElNetworkInterfacesEl>>,
-    dynamic: CloudRunV2JobTemplateElTemplateElVpcAccessElDynamic,
+    network_interfaces: std::option::Option<std::vec::Vec<CloudRunV2Job_Template_Template_VpcAccess_NetworkInterfaces>>,
+    dynamic: CloudRunV2Job_Template_Template_VpcAccessDynamic,
 }
 
-impl CloudRunV2JobTemplateElTemplateElVpcAccessEl {
+impl CloudRunV2Job_Template_Template_VpcAccess {
     #[doc =
         "Set the field `connector`.\nVPC Access connector name. Format: projects/{project}/locations/{location}/connectors/{connector}, where {project} can be project id or number."]
     pub fn set_connector(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -2450,7 +3661,7 @@ impl CloudRunV2JobTemplateElTemplateElVpcAccessEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<CloudRunV2JobTemplateElTemplateElVpcAccessElNetworkInterfacesEl>>,
+                    ::Into<terrars::BlockAssignable<CloudRunV2Job_Template_Template_VpcAccess_NetworkInterfaces>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2464,8 +3675,8 @@ impl CloudRunV2JobTemplateElTemplateElVpcAccessEl {
     }
 }
 
-impl terrars::ToListMappable for CloudRunV2JobTemplateElTemplateElVpcAccessEl {
-    type O = terrars::BlockAssignable<CloudRunV2JobTemplateElTemplateElVpcAccessEl>;
+impl terrars::ToListMappable for CloudRunV2Job_Template_Template_VpcAccess {
+    type O = terrars::BlockAssignable<CloudRunV2Job_Template_Template_VpcAccess>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2476,11 +3687,11 @@ impl terrars::ToListMappable for CloudRunV2JobTemplateElTemplateElVpcAccessEl {
     }
 }
 
-pub struct BuildCloudRunV2JobTemplateElTemplateElVpcAccessEl {}
+pub struct BuildCloudRunV2Job_Template_Template_VpcAccess {}
 
-impl BuildCloudRunV2JobTemplateElTemplateElVpcAccessEl {
-    pub fn build(self) -> CloudRunV2JobTemplateElTemplateElVpcAccessEl {
-        CloudRunV2JobTemplateElTemplateElVpcAccessEl {
+impl BuildCloudRunV2Job_Template_Template_VpcAccess {
+    pub fn build(self) -> CloudRunV2Job_Template_Template_VpcAccess {
+        CloudRunV2Job_Template_Template_VpcAccess {
             connector: core::default::Default::default(),
             egress: core::default::Default::default(),
             network_interfaces: core::default::Default::default(),
@@ -2489,24 +3700,23 @@ impl BuildCloudRunV2JobTemplateElTemplateElVpcAccessEl {
     }
 }
 
-pub struct CloudRunV2JobTemplateElTemplateElVpcAccessElRef {
+#[allow(dead_code)]
+pub struct CloudRunV2Job_Template_Template_VpcAccessRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudRunV2JobTemplateElTemplateElVpcAccessElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> CloudRunV2JobTemplateElTemplateElVpcAccessElRef {
-        CloudRunV2JobTemplateElTemplateElVpcAccessElRef {
+impl terrars::Ref for CloudRunV2Job_Template_Template_VpcAccessRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudRunV2Job_Template_Template_VpcAccessRef {
+        CloudRunV2Job_Template_Template_VpcAccessRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudRunV2JobTemplateElTemplateElVpcAccessElRef {
+impl CloudRunV2Job_Template_Template_VpcAccessRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2524,26 +3734,27 @@ impl CloudRunV2JobTemplateElTemplateElVpcAccessElRef {
     }
 
     #[doc = "Get a reference to the value of field `network_interfaces` after provisioning.\n"]
-    pub fn network_interfaces(
-        &self,
-    ) -> terrars::ListRef<CloudRunV2JobTemplateElTemplateElVpcAccessElNetworkInterfacesElRef> {
+    pub fn network_interfaces(&self) -> terrars::ListRef<CloudRunV2Job_Template_Template_VpcAccess_NetworkInterfacesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_interfaces", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct CloudRunV2JobTemplateElTemplateElDynamic {
-    containers: std::option::Option<terrars::DynamicBlock<CloudRunV2JobTemplateElTemplateElContainersEl>>,
-    volumes: std::option::Option<terrars::DynamicBlock<CloudRunV2JobTemplateElTemplateElVolumesEl>>,
-    vpc_access: std::option::Option<terrars::DynamicBlock<CloudRunV2JobTemplateElTemplateElVpcAccessEl>>,
+struct CloudRunV2Job_Template_TemplateDynamic {
+    containers: std::option::Option<terrars::DynamicBlock<CloudRunV2Job_Template_Template_Containers>>,
+    node_selector: std::option::Option<terrars::DynamicBlock<CloudRunV2Job_Template_Template_NodeSelector>>,
+    volumes: std::option::Option<terrars::DynamicBlock<CloudRunV2Job_Template_Template_Volumes>>,
+    vpc_access: std::option::Option<terrars::DynamicBlock<CloudRunV2Job_Template_Template_VpcAccess>>,
 }
 
 #[derive(Serialize)]
-pub struct CloudRunV2JobTemplateElTemplateEl {
+pub struct CloudRunV2Job_Template_Template {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     encryption_key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     execution_environment: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    gpu_zonal_redundancy_disabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max_retries: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2551,15 +3762,17 @@ pub struct CloudRunV2JobTemplateElTemplateEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     timeout: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    containers: std::option::Option<std::vec::Vec<CloudRunV2JobTemplateElTemplateElContainersEl>>,
+    containers: std::option::Option<std::vec::Vec<CloudRunV2Job_Template_Template_Containers>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    volumes: std::option::Option<std::vec::Vec<CloudRunV2JobTemplateElTemplateElVolumesEl>>,
+    node_selector: std::option::Option<std::vec::Vec<CloudRunV2Job_Template_Template_NodeSelector>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpc_access: std::option::Option<std::vec::Vec<CloudRunV2JobTemplateElTemplateElVpcAccessEl>>,
-    dynamic: CloudRunV2JobTemplateElTemplateElDynamic,
+    volumes: std::option::Option<std::vec::Vec<CloudRunV2Job_Template_Template_Volumes>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vpc_access: std::option::Option<std::vec::Vec<CloudRunV2Job_Template_Template_VpcAccess>>,
+    dynamic: CloudRunV2Job_Template_TemplateDynamic,
 }
 
-impl CloudRunV2JobTemplateElTemplateEl {
+impl CloudRunV2Job_Template_Template {
     #[doc =
         "Set the field `encryption_key`.\nA reference to a customer managed encryption key (CMEK) to use to encrypt this container image. For more information, go to https://cloud.google.com/run/docs/securing/using-cmek"]
     pub fn set_encryption_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -2577,7 +3790,15 @@ impl CloudRunV2JobTemplateElTemplateEl {
         self
     }
 
-    #[doc = "Set the field `max_retries`.\nNumber of retries allowed per Task, before marking this Task failed."]
+    #[doc =
+        "Set the field `gpu_zonal_redundancy_disabled`.\nTrue if GPU zonal redundancy is disabled on this execution."]
+    pub fn set_gpu_zonal_redundancy_disabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.gpu_zonal_redundancy_disabled = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `max_retries`.\nNumber of retries allowed per Task, before marking this Task failed. Defaults to 3. Minimum value is 0."]
     pub fn set_max_retries(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max_retries = std::option::Option::Some(v.into());
         self
@@ -2600,7 +3821,7 @@ impl CloudRunV2JobTemplateElTemplateEl {
     #[doc = "Set the field `containers`.\n"]
     pub fn set_containers(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudRunV2JobTemplateElTemplateElContainersEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudRunV2Job_Template_Template_Containers>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2613,10 +3834,26 @@ impl CloudRunV2JobTemplateElTemplateEl {
         self
     }
 
+    #[doc = "Set the field `node_selector`.\n"]
+    pub fn set_node_selector(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudRunV2Job_Template_Template_NodeSelector>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.node_selector = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.node_selector = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `volumes`.\n"]
     pub fn set_volumes(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudRunV2JobTemplateElTemplateElVolumesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudRunV2Job_Template_Template_Volumes>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2632,7 +3869,7 @@ impl CloudRunV2JobTemplateElTemplateEl {
     #[doc = "Set the field `vpc_access`.\n"]
     pub fn set_vpc_access(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudRunV2JobTemplateElTemplateElVpcAccessEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudRunV2Job_Template_Template_VpcAccess>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2646,8 +3883,8 @@ impl CloudRunV2JobTemplateElTemplateEl {
     }
 }
 
-impl terrars::ToListMappable for CloudRunV2JobTemplateElTemplateEl {
-    type O = terrars::BlockAssignable<CloudRunV2JobTemplateElTemplateEl>;
+impl terrars::ToListMappable for CloudRunV2Job_Template_Template {
+    type O = terrars::BlockAssignable<CloudRunV2Job_Template_Template>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2658,17 +3895,19 @@ impl terrars::ToListMappable for CloudRunV2JobTemplateElTemplateEl {
     }
 }
 
-pub struct BuildCloudRunV2JobTemplateElTemplateEl {}
+pub struct BuildCloudRunV2Job_Template_Template {}
 
-impl BuildCloudRunV2JobTemplateElTemplateEl {
-    pub fn build(self) -> CloudRunV2JobTemplateElTemplateEl {
-        CloudRunV2JobTemplateElTemplateEl {
+impl BuildCloudRunV2Job_Template_Template {
+    pub fn build(self) -> CloudRunV2Job_Template_Template {
+        CloudRunV2Job_Template_Template {
             encryption_key: core::default::Default::default(),
             execution_environment: core::default::Default::default(),
+            gpu_zonal_redundancy_disabled: core::default::Default::default(),
             max_retries: core::default::Default::default(),
             service_account: core::default::Default::default(),
             timeout: core::default::Default::default(),
             containers: core::default::Default::default(),
+            node_selector: core::default::Default::default(),
             volumes: core::default::Default::default(),
             vpc_access: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -2676,21 +3915,23 @@ impl BuildCloudRunV2JobTemplateElTemplateEl {
     }
 }
 
-pub struct CloudRunV2JobTemplateElTemplateElRef {
+#[allow(dead_code)]
+pub struct CloudRunV2Job_Template_TemplateRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudRunV2JobTemplateElTemplateElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudRunV2JobTemplateElTemplateElRef {
-        CloudRunV2JobTemplateElTemplateElRef {
+impl terrars::Ref for CloudRunV2Job_Template_TemplateRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudRunV2Job_Template_TemplateRef {
+        CloudRunV2Job_Template_TemplateRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudRunV2JobTemplateElTemplateElRef {
+impl CloudRunV2Job_Template_TemplateRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2708,7 +3949,13 @@ impl CloudRunV2JobTemplateElTemplateElRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `max_retries` after provisioning.\nNumber of retries allowed per Task, before marking this Task failed."]
+        "Get a reference to the value of field `gpu_zonal_redundancy_disabled` after provisioning.\nTrue if GPU zonal redundancy is disabled on this execution."]
+    pub fn gpu_zonal_redundancy_disabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.gpu_zonal_redundancy_disabled", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `max_retries` after provisioning.\nNumber of retries allowed per Task, before marking this Task failed. Defaults to 3. Minimum value is 0."]
     pub fn max_retries(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_retries", self.base))
     }
@@ -2726,30 +3973,37 @@ impl CloudRunV2JobTemplateElTemplateElRef {
     }
 
     #[doc = "Get a reference to the value of field `containers` after provisioning.\n"]
-    pub fn containers(&self) -> terrars::ListRef<CloudRunV2JobTemplateElTemplateElContainersElRef> {
+    pub fn containers(&self) -> terrars::ListRef<CloudRunV2Job_Template_Template_ContainersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.containers", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `node_selector` after provisioning.\n"]
+    pub fn node_selector(&self) -> terrars::ListRef<CloudRunV2Job_Template_Template_NodeSelectorRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.node_selector", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `volumes` after provisioning.\n"]
-    pub fn volumes(&self) -> terrars::ListRef<CloudRunV2JobTemplateElTemplateElVolumesElRef> {
+    pub fn volumes(&self) -> terrars::ListRef<CloudRunV2Job_Template_Template_VolumesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.volumes", self.base))
     }
 
     #[doc = "Get a reference to the value of field `vpc_access` after provisioning.\n"]
-    pub fn vpc_access(&self) -> terrars::ListRef<CloudRunV2JobTemplateElTemplateElVpcAccessElRef> {
+    pub fn vpc_access(&self) -> terrars::ListRef<CloudRunV2Job_Template_Template_VpcAccessRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_access", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct CloudRunV2JobTemplateElDynamic {
-    template: std::option::Option<terrars::DynamicBlock<CloudRunV2JobTemplateElTemplateEl>>,
+struct CloudRunV2Job_TemplateDynamic {
+    template: std::option::Option<terrars::DynamicBlock<CloudRunV2Job_Template_Template>>,
 }
 
 #[derive(Serialize)]
-pub struct CloudRunV2JobTemplateEl {
+pub struct CloudRunV2Job_Template {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     annotations: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delay_execution: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2757,11 +4011,11 @@ pub struct CloudRunV2JobTemplateEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     task_count: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    template: std::option::Option<std::vec::Vec<CloudRunV2JobTemplateElTemplateEl>>,
-    dynamic: CloudRunV2JobTemplateElDynamic,
+    template: std::option::Option<std::vec::Vec<CloudRunV2Job_Template_Template>>,
+    dynamic: CloudRunV2Job_TemplateDynamic,
 }
 
-impl CloudRunV2JobTemplateEl {
+impl CloudRunV2Job_Template {
     #[doc =
         "Set the field `annotations`.\nUnstructured key value map that may be set by external tools to store and arbitrary metadata. They are not queryable and should be preserved when modifying objects.\n\nCloud Run API v2 does not support annotations with 'run.googleapis.com', 'cloud.googleapis.com', 'serving.knative.dev', or 'autoscaling.knative.dev' namespaces, and they will be rejected.\nAll system annotations in v1 now have a corresponding field in v2 ExecutionTemplate.\n\nThis field follows Kubernetes annotations' namespacing, limits, and rules."]
     pub fn set_annotations(
@@ -2773,7 +4027,14 @@ impl CloudRunV2JobTemplateEl {
     }
 
     #[doc =
-        "Set the field `labels`.\nUnstructured key value map that can be used to organize and categorize objects. User-provided labels are shared with Google's billing system, so they can be used to filter,\nor break down billing charges by team, component, environment, state, etc. For more information, visit https://cloud.google.com/resource-manager/docs/creating-managing-labels or\nhttps://cloud.google.com/run/docs/configuring/labels.\n\nCloud Run API v2 does not support labels with 'run.googleapis.com', 'cloud.googleapis.com', 'serving.knative.dev', or 'autoscaling.knative.dev' namespaces, and they will be rejected.\nAll system labels in v1 now have a corresponding field in v2 ExecutionTemplate."]
+        "Set the field `delay_execution`.\nIf true, the system will start the execution within the next 12 hours depending on available capacity."]
+    pub fn set_delay_execution(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.delay_execution = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `labels`.\nUnstructured key value map that can be used to organize and categorize objects. User-provided labels are shared with Google's billing system, so they can be used to filter,\nor break down billing charges by team, component, environment, state, etc. For more information, visit https://docs.cloud.google.com/resource-manager/docs/creating-managing-labels or\nhttps://cloud.google.com/run/docs/configuring/labels.\n\nCloud Run API v2 does not support labels with 'run.googleapis.com', 'cloud.googleapis.com', 'serving.knative.dev', or 'autoscaling.knative.dev' namespaces, and they will be rejected.\nAll system labels in v1 now have a corresponding field in v2 ExecutionTemplate."]
     pub fn set_labels(
         mut self,
         v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -2799,7 +4060,7 @@ impl CloudRunV2JobTemplateEl {
     #[doc = "Set the field `template`.\n"]
     pub fn set_template(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudRunV2JobTemplateElTemplateEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudRunV2Job_Template_Template>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2813,8 +4074,8 @@ impl CloudRunV2JobTemplateEl {
     }
 }
 
-impl terrars::ToListMappable for CloudRunV2JobTemplateEl {
-    type O = terrars::BlockAssignable<CloudRunV2JobTemplateEl>;
+impl terrars::ToListMappable for CloudRunV2Job_Template {
+    type O = terrars::BlockAssignable<CloudRunV2Job_Template>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2825,12 +4086,13 @@ impl terrars::ToListMappable for CloudRunV2JobTemplateEl {
     }
 }
 
-pub struct BuildCloudRunV2JobTemplateEl {}
+pub struct BuildCloudRunV2Job_Template {}
 
-impl BuildCloudRunV2JobTemplateEl {
-    pub fn build(self) -> CloudRunV2JobTemplateEl {
-        CloudRunV2JobTemplateEl {
+impl BuildCloudRunV2Job_Template {
+    pub fn build(self) -> CloudRunV2Job_Template {
+        CloudRunV2Job_Template {
             annotations: core::default::Default::default(),
+            delay_execution: core::default::Default::default(),
             labels: core::default::Default::default(),
             parallelism: core::default::Default::default(),
             task_count: core::default::Default::default(),
@@ -2840,21 +4102,23 @@ impl BuildCloudRunV2JobTemplateEl {
     }
 }
 
-pub struct CloudRunV2JobTemplateElRef {
+#[allow(dead_code)]
+pub struct CloudRunV2Job_TemplateRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudRunV2JobTemplateElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudRunV2JobTemplateElRef {
-        CloudRunV2JobTemplateElRef {
+impl terrars::Ref for CloudRunV2Job_TemplateRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudRunV2Job_TemplateRef {
+        CloudRunV2Job_TemplateRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudRunV2JobTemplateElRef {
+impl CloudRunV2Job_TemplateRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2866,7 +4130,13 @@ impl CloudRunV2JobTemplateElRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `labels` after provisioning.\nUnstructured key value map that can be used to organize and categorize objects. User-provided labels are shared with Google's billing system, so they can be used to filter,\nor break down billing charges by team, component, environment, state, etc. For more information, visit https://cloud.google.com/resource-manager/docs/creating-managing-labels or\nhttps://cloud.google.com/run/docs/configuring/labels.\n\nCloud Run API v2 does not support labels with 'run.googleapis.com', 'cloud.googleapis.com', 'serving.knative.dev', or 'autoscaling.knative.dev' namespaces, and they will be rejected.\nAll system labels in v1 now have a corresponding field in v2 ExecutionTemplate."]
+        "Get a reference to the value of field `delay_execution` after provisioning.\nIf true, the system will start the execution within the next 12 hours depending on available capacity."]
+    pub fn delay_execution(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delay_execution", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `labels` after provisioning.\nUnstructured key value map that can be used to organize and categorize objects. User-provided labels are shared with Google's billing system, so they can be used to filter,\nor break down billing charges by team, component, environment, state, etc. For more information, visit https://docs.cloud.google.com/resource-manager/docs/creating-managing-labels or\nhttps://cloud.google.com/run/docs/configuring/labels.\n\nCloud Run API v2 does not support labels with 'run.googleapis.com', 'cloud.googleapis.com', 'serving.knative.dev', or 'autoscaling.knative.dev' namespaces, and they will be rejected.\nAll system labels in v1 now have a corresponding field in v2 ExecutionTemplate."]
     pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.base))
     }
@@ -2884,13 +4154,13 @@ impl CloudRunV2JobTemplateElRef {
     }
 
     #[doc = "Get a reference to the value of field `template` after provisioning.\n"]
-    pub fn template(&self) -> terrars::ListRef<CloudRunV2JobTemplateElTemplateElRef> {
+    pub fn template(&self) -> terrars::ListRef<CloudRunV2Job_Template_TemplateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.template", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct CloudRunV2JobTimeoutsEl {
+pub struct CloudRunV2Job_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2899,7 +4169,7 @@ pub struct CloudRunV2JobTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CloudRunV2JobTimeoutsEl {
+impl CloudRunV2Job_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -2919,8 +4189,8 @@ impl CloudRunV2JobTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for CloudRunV2JobTimeoutsEl {
-    type O = terrars::BlockAssignable<CloudRunV2JobTimeoutsEl>;
+impl terrars::ToListMappable for CloudRunV2Job_Timeouts {
+    type O = terrars::BlockAssignable<CloudRunV2Job_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2931,11 +4201,11 @@ impl terrars::ToListMappable for CloudRunV2JobTimeoutsEl {
     }
 }
 
-pub struct BuildCloudRunV2JobTimeoutsEl {}
+pub struct BuildCloudRunV2Job_Timeouts {}
 
-impl BuildCloudRunV2JobTimeoutsEl {
-    pub fn build(self) -> CloudRunV2JobTimeoutsEl {
-        CloudRunV2JobTimeoutsEl {
+impl BuildCloudRunV2Job_Timeouts {
+    pub fn build(self) -> CloudRunV2Job_Timeouts {
+        CloudRunV2Job_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -2943,21 +4213,23 @@ impl BuildCloudRunV2JobTimeoutsEl {
     }
 }
 
-pub struct CloudRunV2JobTimeoutsElRef {
+#[allow(dead_code)]
+pub struct CloudRunV2Job_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudRunV2JobTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudRunV2JobTimeoutsElRef {
-        CloudRunV2JobTimeoutsElRef {
+impl terrars::Ref for CloudRunV2Job_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudRunV2Job_TimeoutsRef {
+        CloudRunV2Job_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudRunV2JobTimeoutsElRef {
+impl CloudRunV2Job_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2976,10 +4248,4 @@ impl CloudRunV2JobTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct CloudRunV2JobDynamic {
-    binary_authorization: std::option::Option<terrars::DynamicBlock<CloudRunV2JobBinaryAuthorizationEl>>,
-    template: std::option::Option<terrars::DynamicBlock<CloudRunV2JobTemplateEl>>,
 }

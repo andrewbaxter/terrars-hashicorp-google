@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct FirebaserulesRulesetData {
+struct FirebaserulesRulesetData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,20 +21,22 @@ struct FirebaserulesRulesetData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    source: std::option::Option<std::vec::Vec<FirebaserulesRulesetSourceEl>>,
+    source: std::option::Option<std::vec::Vec<FirebaserulesRuleset_Source>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<FirebaserulesRulesetTimeoutsEl>,
+    timeouts: std::option::Option<FirebaserulesRuleset_Timeouts>,
     dynamic: FirebaserulesRulesetDynamic,
 }
 
 struct FirebaserulesRuleset_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<FirebaserulesRulesetData>,
+    data: std::cell::RefCell<FirebaserulesRulesetData_>,
 }
 
 #[derive(Clone)]
@@ -132,6 +136,13 @@ impl FirebaserulesRuleset {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -145,7 +156,7 @@ impl FirebaserulesRuleset {
     }
 
     #[doc = "Set the field `source`.\n"]
-    pub fn set_source(self, v: impl std::convert::Into<terrars::BlockAssignable<FirebaserulesRulesetSourceEl>>) -> Self {
+    pub fn set_source(self, v: impl std::convert::Into<terrars::BlockAssignable<FirebaserulesRuleset_Source>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().source = std::option::Option::Some(v);
@@ -158,7 +169,7 @@ impl FirebaserulesRuleset {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<FirebaserulesRulesetTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<FirebaserulesRuleset_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -169,6 +180,12 @@ impl FirebaserulesRuleset {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -176,7 +193,7 @@ impl FirebaserulesRuleset {
 
     #[doc =
         "Get a reference to the value of field `metadata` after provisioning.\nOutput only. The metadata for this ruleset."]
-    pub fn metadata(&self) -> terrars::ListRef<FirebaserulesRulesetMetadataElRef> {
+    pub fn metadata(&self) -> terrars::ListRef<FirebaserulesRuleset_MetadataRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.metadata", self.extract_ref()))
     }
 
@@ -192,13 +209,13 @@ impl FirebaserulesRuleset {
     }
 
     #[doc = "Get a reference to the value of field `source` after provisioning.\n"]
-    pub fn source(&self) -> terrars::ListRef<FirebaserulesRulesetSourceElRef> {
+    pub fn source(&self) -> terrars::ListRef<FirebaserulesRuleset_SourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> FirebaserulesRulesetTimeoutsElRef {
-        FirebaserulesRulesetTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> FirebaserulesRuleset_TimeoutsRef {
+        FirebaserulesRuleset_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -242,12 +259,13 @@ impl BuildFirebaserulesRuleset {
         let out = FirebaserulesRuleset(std::rc::Rc::new(FirebaserulesRuleset_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(FirebaserulesRulesetData {
+            data: std::cell::RefCell::new(FirebaserulesRulesetData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 project: core::default::Default::default(),
                 source: core::default::Default::default(),
@@ -289,6 +307,12 @@ impl FirebaserulesRulesetRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -296,7 +320,7 @@ impl FirebaserulesRulesetRef {
 
     #[doc =
         "Get a reference to the value of field `metadata` after provisioning.\nOutput only. The metadata for this ruleset."]
-    pub fn metadata(&self) -> terrars::ListRef<FirebaserulesRulesetMetadataElRef> {
+    pub fn metadata(&self) -> terrars::ListRef<FirebaserulesRuleset_MetadataRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.metadata", self.extract_ref()))
     }
 
@@ -312,23 +336,28 @@ impl FirebaserulesRulesetRef {
     }
 
     #[doc = "Get a reference to the value of field `source` after provisioning.\n"]
-    pub fn source(&self) -> terrars::ListRef<FirebaserulesRulesetSourceElRef> {
+    pub fn source(&self) -> terrars::ListRef<FirebaserulesRuleset_SourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> FirebaserulesRulesetTimeoutsElRef {
-        FirebaserulesRulesetTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> FirebaserulesRuleset_TimeoutsRef {
+        FirebaserulesRuleset_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct FirebaserulesRulesetDynamic {
+    source: std::option::Option<terrars::DynamicBlock<FirebaserulesRuleset_Source>>,
+}
+
 #[derive(Serialize)]
-pub struct FirebaserulesRulesetMetadataEl {
+pub struct FirebaserulesRuleset_Metadata {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     services: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl FirebaserulesRulesetMetadataEl {
+impl FirebaserulesRuleset_Metadata {
     #[doc = "Set the field `services`.\n"]
     pub fn set_services(
         mut self,
@@ -339,8 +368,8 @@ impl FirebaserulesRulesetMetadataEl {
     }
 }
 
-impl terrars::ToListMappable for FirebaserulesRulesetMetadataEl {
-    type O = terrars::BlockAssignable<FirebaserulesRulesetMetadataEl>;
+impl terrars::ToListMappable for FirebaserulesRuleset_Metadata {
+    type O = terrars::BlockAssignable<FirebaserulesRuleset_Metadata>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -351,29 +380,31 @@ impl terrars::ToListMappable for FirebaserulesRulesetMetadataEl {
     }
 }
 
-pub struct BuildFirebaserulesRulesetMetadataEl {}
+pub struct BuildFirebaserulesRuleset_Metadata {}
 
-impl BuildFirebaserulesRulesetMetadataEl {
-    pub fn build(self) -> FirebaserulesRulesetMetadataEl {
-        FirebaserulesRulesetMetadataEl { services: core::default::Default::default() }
+impl BuildFirebaserulesRuleset_Metadata {
+    pub fn build(self) -> FirebaserulesRuleset_Metadata {
+        FirebaserulesRuleset_Metadata { services: core::default::Default::default() }
     }
 }
 
-pub struct FirebaserulesRulesetMetadataElRef {
+#[allow(dead_code)]
+pub struct FirebaserulesRuleset_MetadataRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FirebaserulesRulesetMetadataElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FirebaserulesRulesetMetadataElRef {
-        FirebaserulesRulesetMetadataElRef {
+impl terrars::Ref for FirebaserulesRuleset_MetadataRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FirebaserulesRuleset_MetadataRef {
+        FirebaserulesRuleset_MetadataRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FirebaserulesRulesetMetadataElRef {
+impl FirebaserulesRuleset_MetadataRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -385,14 +416,14 @@ impl FirebaserulesRulesetMetadataElRef {
 }
 
 #[derive(Serialize)]
-pub struct FirebaserulesRulesetSourceElFilesEl {
+pub struct FirebaserulesRuleset_Source_Files {
     content: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     fingerprint: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
 }
 
-impl FirebaserulesRulesetSourceElFilesEl {
+impl FirebaserulesRuleset_Source_Files {
     #[doc = "Set the field `fingerprint`.\nFingerprint (e.g. github sha) associated with the `File`."]
     pub fn set_fingerprint(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.fingerprint = std::option::Option::Some(v.into());
@@ -400,8 +431,8 @@ impl FirebaserulesRulesetSourceElFilesEl {
     }
 }
 
-impl terrars::ToListMappable for FirebaserulesRulesetSourceElFilesEl {
-    type O = terrars::BlockAssignable<FirebaserulesRulesetSourceElFilesEl>;
+impl terrars::ToListMappable for FirebaserulesRuleset_Source_Files {
+    type O = terrars::BlockAssignable<FirebaserulesRuleset_Source_Files>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -412,16 +443,16 @@ impl terrars::ToListMappable for FirebaserulesRulesetSourceElFilesEl {
     }
 }
 
-pub struct BuildFirebaserulesRulesetSourceElFilesEl {
+pub struct BuildFirebaserulesRuleset_Source_Files {
     #[doc = "Textual Content."]
     pub content: terrars::PrimField<std::string::String>,
     #[doc = "File name."]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildFirebaserulesRulesetSourceElFilesEl {
-    pub fn build(self) -> FirebaserulesRulesetSourceElFilesEl {
-        FirebaserulesRulesetSourceElFilesEl {
+impl BuildFirebaserulesRuleset_Source_Files {
+    pub fn build(self) -> FirebaserulesRuleset_Source_Files {
+        FirebaserulesRuleset_Source_Files {
             content: self.content,
             fingerprint: core::default::Default::default(),
             name: self.name,
@@ -429,21 +460,23 @@ impl BuildFirebaserulesRulesetSourceElFilesEl {
     }
 }
 
-pub struct FirebaserulesRulesetSourceElFilesElRef {
+#[allow(dead_code)]
+pub struct FirebaserulesRuleset_Source_FilesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FirebaserulesRulesetSourceElFilesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FirebaserulesRulesetSourceElFilesElRef {
-        FirebaserulesRulesetSourceElFilesElRef {
+impl terrars::Ref for FirebaserulesRuleset_Source_FilesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FirebaserulesRuleset_Source_FilesRef {
+        FirebaserulesRuleset_Source_FilesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FirebaserulesRulesetSourceElFilesElRef {
+impl FirebaserulesRuleset_Source_FilesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -466,20 +499,20 @@ impl FirebaserulesRulesetSourceElFilesElRef {
 }
 
 #[derive(Serialize, Default)]
-struct FirebaserulesRulesetSourceElDynamic {
-    files: std::option::Option<terrars::DynamicBlock<FirebaserulesRulesetSourceElFilesEl>>,
+struct FirebaserulesRuleset_SourceDynamic {
+    files: std::option::Option<terrars::DynamicBlock<FirebaserulesRuleset_Source_Files>>,
 }
 
 #[derive(Serialize)]
-pub struct FirebaserulesRulesetSourceEl {
+pub struct FirebaserulesRuleset_Source {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     language: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    files: std::option::Option<std::vec::Vec<FirebaserulesRulesetSourceElFilesEl>>,
-    dynamic: FirebaserulesRulesetSourceElDynamic,
+    files: std::option::Option<std::vec::Vec<FirebaserulesRuleset_Source_Files>>,
+    dynamic: FirebaserulesRuleset_SourceDynamic,
 }
 
-impl FirebaserulesRulesetSourceEl {
+impl FirebaserulesRuleset_Source {
     #[doc =
         "Set the field `language`.\n`Language` of the `Source` bundle. If unspecified, the language will default to `FIREBASE_RULES`. Possible values: LANGUAGE_UNSPECIFIED, FIREBASE_RULES, EVENT_FLOW_TRIGGERS"]
     pub fn set_language(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -490,7 +523,7 @@ impl FirebaserulesRulesetSourceEl {
     #[doc = "Set the field `files`.\n"]
     pub fn set_files(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<FirebaserulesRulesetSourceElFilesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<FirebaserulesRuleset_Source_Files>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -504,8 +537,8 @@ impl FirebaserulesRulesetSourceEl {
     }
 }
 
-impl terrars::ToListMappable for FirebaserulesRulesetSourceEl {
-    type O = terrars::BlockAssignable<FirebaserulesRulesetSourceEl>;
+impl terrars::ToListMappable for FirebaserulesRuleset_Source {
+    type O = terrars::BlockAssignable<FirebaserulesRuleset_Source>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -516,11 +549,11 @@ impl terrars::ToListMappable for FirebaserulesRulesetSourceEl {
     }
 }
 
-pub struct BuildFirebaserulesRulesetSourceEl {}
+pub struct BuildFirebaserulesRuleset_Source {}
 
-impl BuildFirebaserulesRulesetSourceEl {
-    pub fn build(self) -> FirebaserulesRulesetSourceEl {
-        FirebaserulesRulesetSourceEl {
+impl BuildFirebaserulesRuleset_Source {
+    pub fn build(self) -> FirebaserulesRuleset_Source {
+        FirebaserulesRuleset_Source {
             language: core::default::Default::default(),
             files: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -528,21 +561,23 @@ impl BuildFirebaserulesRulesetSourceEl {
     }
 }
 
-pub struct FirebaserulesRulesetSourceElRef {
+#[allow(dead_code)]
+pub struct FirebaserulesRuleset_SourceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FirebaserulesRulesetSourceElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FirebaserulesRulesetSourceElRef {
-        FirebaserulesRulesetSourceElRef {
+impl terrars::Ref for FirebaserulesRuleset_SourceRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FirebaserulesRuleset_SourceRef {
+        FirebaserulesRuleset_SourceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FirebaserulesRulesetSourceElRef {
+impl FirebaserulesRuleset_SourceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -554,20 +589,20 @@ impl FirebaserulesRulesetSourceElRef {
     }
 
     #[doc = "Get a reference to the value of field `files` after provisioning.\n"]
-    pub fn files(&self) -> terrars::ListRef<FirebaserulesRulesetSourceElFilesElRef> {
+    pub fn files(&self) -> terrars::ListRef<FirebaserulesRuleset_Source_FilesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.files", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct FirebaserulesRulesetTimeoutsEl {
+pub struct FirebaserulesRuleset_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl FirebaserulesRulesetTimeoutsEl {
+impl FirebaserulesRuleset_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -581,8 +616,8 @@ impl FirebaserulesRulesetTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for FirebaserulesRulesetTimeoutsEl {
-    type O = terrars::BlockAssignable<FirebaserulesRulesetTimeoutsEl>;
+impl terrars::ToListMappable for FirebaserulesRuleset_Timeouts {
+    type O = terrars::BlockAssignable<FirebaserulesRuleset_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -593,32 +628,34 @@ impl terrars::ToListMappable for FirebaserulesRulesetTimeoutsEl {
     }
 }
 
-pub struct BuildFirebaserulesRulesetTimeoutsEl {}
+pub struct BuildFirebaserulesRuleset_Timeouts {}
 
-impl BuildFirebaserulesRulesetTimeoutsEl {
-    pub fn build(self) -> FirebaserulesRulesetTimeoutsEl {
-        FirebaserulesRulesetTimeoutsEl {
+impl BuildFirebaserulesRuleset_Timeouts {
+    pub fn build(self) -> FirebaserulesRuleset_Timeouts {
+        FirebaserulesRuleset_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct FirebaserulesRulesetTimeoutsElRef {
+#[allow(dead_code)]
+pub struct FirebaserulesRuleset_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FirebaserulesRulesetTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FirebaserulesRulesetTimeoutsElRef {
-        FirebaserulesRulesetTimeoutsElRef {
+impl terrars::Ref for FirebaserulesRuleset_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FirebaserulesRuleset_TimeoutsRef {
+        FirebaserulesRuleset_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FirebaserulesRulesetTimeoutsElRef {
+impl FirebaserulesRuleset_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -632,9 +669,4 @@ impl FirebaserulesRulesetTimeoutsElRef {
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct FirebaserulesRulesetDynamic {
-    source: std::option::Option<terrars::DynamicBlock<FirebaserulesRulesetSourceEl>>,
 }

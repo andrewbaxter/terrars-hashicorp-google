@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct CloudRunV2ServiceIamMemberData {
+struct CloudRunV2ServiceIamMemberData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,14 +30,14 @@ struct CloudRunV2ServiceIamMemberData {
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<CloudRunV2ServiceIamMemberConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<CloudRunV2ServiceIamMember_Condition>>,
     dynamic: CloudRunV2ServiceIamMemberDynamic,
 }
 
 struct CloudRunV2ServiceIamMember_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CloudRunV2ServiceIamMemberData>,
+    data: std::cell::RefCell<CloudRunV2ServiceIamMemberData_>,
 }
 
 #[derive(Clone)]
@@ -156,7 +158,7 @@ impl CloudRunV2ServiceIamMember {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudRunV2ServiceIamMemberConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudRunV2ServiceIamMember_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -205,7 +207,7 @@ impl CloudRunV2ServiceIamMember {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<CloudRunV2ServiceIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<CloudRunV2ServiceIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -256,7 +258,7 @@ impl BuildCloudRunV2ServiceIamMember {
         let out = CloudRunV2ServiceIamMember(std::rc::Rc::new(CloudRunV2ServiceIamMember_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CloudRunV2ServiceIamMemberData {
+            data: std::cell::RefCell::new(CloudRunV2ServiceIamMemberData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -336,20 +338,25 @@ impl CloudRunV2ServiceIamMemberRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<CloudRunV2ServiceIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<CloudRunV2ServiceIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct CloudRunV2ServiceIamMemberDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<CloudRunV2ServiceIamMember_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct CloudRunV2ServiceIamMemberConditionEl {
+pub struct CloudRunV2ServiceIamMember_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl CloudRunV2ServiceIamMemberConditionEl {
+impl CloudRunV2ServiceIamMember_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -357,8 +364,8 @@ impl CloudRunV2ServiceIamMemberConditionEl {
     }
 }
 
-impl terrars::ToListMappable for CloudRunV2ServiceIamMemberConditionEl {
-    type O = terrars::BlockAssignable<CloudRunV2ServiceIamMemberConditionEl>;
+impl terrars::ToListMappable for CloudRunV2ServiceIamMember_Condition {
+    type O = terrars::BlockAssignable<CloudRunV2ServiceIamMember_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -369,16 +376,16 @@ impl terrars::ToListMappable for CloudRunV2ServiceIamMemberConditionEl {
     }
 }
 
-pub struct BuildCloudRunV2ServiceIamMemberConditionEl {
+pub struct BuildCloudRunV2ServiceIamMember_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudRunV2ServiceIamMemberConditionEl {
-    pub fn build(self) -> CloudRunV2ServiceIamMemberConditionEl {
-        CloudRunV2ServiceIamMemberConditionEl {
+impl BuildCloudRunV2ServiceIamMember_Condition {
+    pub fn build(self) -> CloudRunV2ServiceIamMember_Condition {
+        CloudRunV2ServiceIamMember_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -386,21 +393,23 @@ impl BuildCloudRunV2ServiceIamMemberConditionEl {
     }
 }
 
-pub struct CloudRunV2ServiceIamMemberConditionElRef {
+#[allow(dead_code)]
+pub struct CloudRunV2ServiceIamMember_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudRunV2ServiceIamMemberConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudRunV2ServiceIamMemberConditionElRef {
-        CloudRunV2ServiceIamMemberConditionElRef {
+impl terrars::Ref for CloudRunV2ServiceIamMember_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudRunV2ServiceIamMember_ConditionRef {
+        CloudRunV2ServiceIamMember_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudRunV2ServiceIamMemberConditionElRef {
+impl CloudRunV2ServiceIamMember_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -419,9 +428,4 @@ impl CloudRunV2ServiceIamMemberConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct CloudRunV2ServiceIamMemberDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<CloudRunV2ServiceIamMemberConditionEl>>,
 }

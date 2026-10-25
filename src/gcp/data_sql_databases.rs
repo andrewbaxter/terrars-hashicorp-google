@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataSqlDatabasesData {
+struct DataSqlDatabasesData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -26,7 +28,7 @@ struct DataSqlDatabasesData {
 struct DataSqlDatabases_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataSqlDatabasesData>,
+    data: std::cell::RefCell<DataSqlDatabasesData_>,
 }
 
 #[derive(Clone)]
@@ -84,7 +86,7 @@ impl DataSqlDatabases {
     }
 
     #[doc = "Get a reference to the value of field `databases` after provisioning.\n"]
-    pub fn databases(&self) -> terrars::ListRef<DataSqlDatabasesDatabasesElRef> {
+    pub fn databases(&self) -> terrars::ListRef<DataSqlDatabases_DatabasesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.databases", self.extract_ref()))
     }
 
@@ -148,7 +150,7 @@ impl BuildDataSqlDatabases {
         let out = DataSqlDatabases(std::rc::Rc::new(DataSqlDatabases_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataSqlDatabasesData {
+            data: std::cell::RefCell::new(DataSqlDatabasesData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -187,7 +189,7 @@ impl DataSqlDatabasesRef {
     }
 
     #[doc = "Get a reference to the value of field `databases` after provisioning.\n"]
-    pub fn databases(&self) -> terrars::ListRef<DataSqlDatabasesDatabasesElRef> {
+    pub fn databases(&self) -> terrars::ListRef<DataSqlDatabases_DatabasesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.databases", self.extract_ref()))
     }
 
@@ -210,7 +212,7 @@ impl DataSqlDatabasesRef {
 }
 
 #[derive(Serialize)]
-pub struct DataSqlDatabasesDatabasesEl {
+pub struct DataSqlDatabases_Databases {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     charset: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -227,7 +229,7 @@ pub struct DataSqlDatabasesDatabasesEl {
     self_link: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataSqlDatabasesDatabasesEl {
+impl DataSqlDatabases_Databases {
     #[doc = "Set the field `charset`.\n"]
     pub fn set_charset(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.charset = std::option::Option::Some(v.into());
@@ -271,8 +273,8 @@ impl DataSqlDatabasesDatabasesEl {
     }
 }
 
-impl terrars::ToListMappable for DataSqlDatabasesDatabasesEl {
-    type O = terrars::BlockAssignable<DataSqlDatabasesDatabasesEl>;
+impl terrars::ToListMappable for DataSqlDatabases_Databases {
+    type O = terrars::BlockAssignable<DataSqlDatabases_Databases>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -283,11 +285,11 @@ impl terrars::ToListMappable for DataSqlDatabasesDatabasesEl {
     }
 }
 
-pub struct BuildDataSqlDatabasesDatabasesEl {}
+pub struct BuildDataSqlDatabases_Databases {}
 
-impl BuildDataSqlDatabasesDatabasesEl {
-    pub fn build(self) -> DataSqlDatabasesDatabasesEl {
-        DataSqlDatabasesDatabasesEl {
+impl BuildDataSqlDatabases_Databases {
+    pub fn build(self) -> DataSqlDatabases_Databases {
+        DataSqlDatabases_Databases {
             charset: core::default::Default::default(),
             collation: core::default::Default::default(),
             deletion_policy: core::default::Default::default(),
@@ -299,21 +301,23 @@ impl BuildDataSqlDatabasesDatabasesEl {
     }
 }
 
-pub struct DataSqlDatabasesDatabasesElRef {
+#[allow(dead_code)]
+pub struct DataSqlDatabases_DatabasesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSqlDatabasesDatabasesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSqlDatabasesDatabasesElRef {
-        DataSqlDatabasesDatabasesElRef {
+impl terrars::Ref for DataSqlDatabases_DatabasesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSqlDatabases_DatabasesRef {
+        DataSqlDatabases_DatabasesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSqlDatabasesDatabasesElRef {
+impl DataSqlDatabases_DatabasesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

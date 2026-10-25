@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ApigeeOrganizationData {
+struct ApigeeOrganizationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,9 +23,17 @@ struct ApigeeOrganizationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     analytics_region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    api_consumer_data_encryption_key_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    api_consumer_data_location: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     authorized_network: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     billing_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    control_plane_encryption_key_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -40,16 +50,16 @@ struct ApigeeOrganizationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     runtime_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    properties: std::option::Option<std::vec::Vec<ApigeeOrganizationPropertiesEl>>,
+    properties: std::option::Option<std::vec::Vec<ApigeeOrganization_Properties>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ApigeeOrganizationTimeoutsEl>,
+    timeouts: std::option::Option<ApigeeOrganization_Timeouts>,
     dynamic: ApigeeOrganizationDynamic,
 }
 
 struct ApigeeOrganization_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ApigeeOrganizationData>,
+    data: std::cell::RefCell<ApigeeOrganizationData_>,
 }
 
 #[derive(Clone)]
@@ -157,6 +167,26 @@ impl ApigeeOrganization {
     }
 
     #[doc =
+        "Set the field `api_consumer_data_encryption_key_name`.\nCloud KMS key name used for encrypting API consumer data."]
+    pub fn set_api_consumer_data_encryption_key_name(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().api_consumer_data_encryption_key_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `api_consumer_data_location`.\nThis field is needed only for customers using non-default data residency regions.\nApigee stores some control plane data only in single region.\nThis field determines which single region Apigee should use."]
+    pub fn set_api_consumer_data_location(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().api_consumer_data_location = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `authorized_network`.\nCompute Engine network used for Service Networking to be peered with Apigee runtime instances.\nSee [Getting started with the Service Networking API](https://cloud.google.com/service-infrastructure/docs/service-networking/getting-started).\nValid only when 'RuntimeType' is set to CLOUD. The value can be updated only when there are no runtime instances. For example: \"default\"."]
     pub fn set_authorized_network(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().authorized_network = std::option::Option::Some(v.into());
@@ -167,6 +197,23 @@ impl ApigeeOrganization {
         "Set the field `billing_type`.\nBilling type of the Apigee organization. See [Apigee pricing](https://cloud.google.com/apigee/pricing)."]
     pub fn set_billing_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().billing_type = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `control_plane_encryption_key_name`.\nCloud KMS key name used for encrypting control plane data that is stored in a multi region.\nOnly used for the data residency region \"US\" or \"EU\"."]
+    pub fn set_control_plane_encryption_key_name(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().control_plane_encryption_key_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
         self
     }
 
@@ -222,7 +269,7 @@ impl ApigeeOrganization {
     #[doc = "Set the field `properties`.\n"]
     pub fn set_properties(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ApigeeOrganizationPropertiesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApigeeOrganization_Properties>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -236,7 +283,7 @@ impl ApigeeOrganization {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ApigeeOrganizationTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ApigeeOrganization_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -245,6 +292,21 @@ impl ApigeeOrganization {
         "Get a reference to the value of field `analytics_region` after provisioning.\nPrimary GCP region for analytics data storage. For valid values, see [Create an Apigee organization](https://cloud.google.com/apigee/docs/api-platform/get-started/create-org)."]
     pub fn analytics_region(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.analytics_region", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `api_consumer_data_encryption_key_name` after provisioning.\nCloud KMS key name used for encrypting API consumer data."]
+    pub fn api_consumer_data_encryption_key_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.api_consumer_data_encryption_key_name", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `api_consumer_data_location` after provisioning.\nThis field is needed only for customers using non-default data residency regions.\nApigee stores some control plane data only in single region.\nThis field determines which single region Apigee should use."]
+    pub fn api_consumer_data_location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.api_consumer_data_location", self.extract_ref()))
     }
 
     #[doc =
@@ -269,6 +331,21 @@ impl ApigeeOrganization {
         "Get a reference to the value of field `ca_certificate` after provisioning.\nOutput only. Base64-encoded public certificate for the root CA of the Apigee organization.\nValid only when 'RuntimeType' is CLOUD. A base64-encoded string."]
     pub fn ca_certificate(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ca_certificate", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `control_plane_encryption_key_name` after provisioning.\nCloud KMS key name used for encrypting control plane data that is stored in a multi region.\nOnly used for the data residency region \"US\" or \"EU\"."]
+    pub fn control_plane_encryption_key_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.control_plane_encryption_key_name", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -334,13 +411,13 @@ impl ApigeeOrganization {
     }
 
     #[doc = "Get a reference to the value of field `properties` after provisioning.\n"]
-    pub fn properties(&self) -> terrars::ListRef<ApigeeOrganizationPropertiesElRef> {
+    pub fn properties(&self) -> terrars::ListRef<ApigeeOrganization_PropertiesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.properties", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ApigeeOrganizationTimeoutsElRef {
-        ApigeeOrganizationTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ApigeeOrganization_TimeoutsRef {
+        ApigeeOrganization_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -386,15 +463,19 @@ impl BuildApigeeOrganization {
         let out = ApigeeOrganization(std::rc::Rc::new(ApigeeOrganization_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ApigeeOrganizationData {
+            data: std::cell::RefCell::new(ApigeeOrganizationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 analytics_region: core::default::Default::default(),
+                api_consumer_data_encryption_key_name: core::default::Default::default(),
+                api_consumer_data_location: core::default::Default::default(),
                 authorized_network: core::default::Default::default(),
                 billing_type: core::default::Default::default(),
+                control_plane_encryption_key_name: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 disable_vpc_peering: core::default::Default::default(),
                 display_name: core::default::Default::default(),
@@ -443,6 +524,21 @@ impl ApigeeOrganizationRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `api_consumer_data_encryption_key_name` after provisioning.\nCloud KMS key name used for encrypting API consumer data."]
+    pub fn api_consumer_data_encryption_key_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.api_consumer_data_encryption_key_name", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `api_consumer_data_location` after provisioning.\nThis field is needed only for customers using non-default data residency regions.\nApigee stores some control plane data only in single region.\nThis field determines which single region Apigee should use."]
+    pub fn api_consumer_data_location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.api_consumer_data_location", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `apigee_project_id` after provisioning.\nOutput only. Project ID of the Apigee Tenant Project."]
     pub fn apigee_project_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.apigee_project_id", self.extract_ref()))
@@ -464,6 +560,21 @@ impl ApigeeOrganizationRef {
         "Get a reference to the value of field `ca_certificate` after provisioning.\nOutput only. Base64-encoded public certificate for the root CA of the Apigee organization.\nValid only when 'RuntimeType' is CLOUD. A base64-encoded string."]
     pub fn ca_certificate(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ca_certificate", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `control_plane_encryption_key_name` after provisioning.\nCloud KMS key name used for encrypting control plane data that is stored in a multi region.\nOnly used for the data residency region \"US\" or \"EU\"."]
+    pub fn control_plane_encryption_key_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.control_plane_encryption_key_name", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -529,25 +640,30 @@ impl ApigeeOrganizationRef {
     }
 
     #[doc = "Get a reference to the value of field `properties` after provisioning.\n"]
-    pub fn properties(&self) -> terrars::ListRef<ApigeeOrganizationPropertiesElRef> {
+    pub fn properties(&self) -> terrars::ListRef<ApigeeOrganization_PropertiesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.properties", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ApigeeOrganizationTimeoutsElRef {
-        ApigeeOrganizationTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ApigeeOrganization_TimeoutsRef {
+        ApigeeOrganization_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ApigeeOrganizationDynamic {
+    properties: std::option::Option<terrars::DynamicBlock<ApigeeOrganization_Properties>>,
+}
+
 #[derive(Serialize)]
-pub struct ApigeeOrganizationPropertiesElPropertyEl {
+pub struct ApigeeOrganization_Properties_Property {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ApigeeOrganizationPropertiesElPropertyEl {
+impl ApigeeOrganization_Properties_Property {
     #[doc = "Set the field `name`.\nName of the property."]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
@@ -561,8 +677,8 @@ impl ApigeeOrganizationPropertiesElPropertyEl {
     }
 }
 
-impl terrars::ToListMappable for ApigeeOrganizationPropertiesElPropertyEl {
-    type O = terrars::BlockAssignable<ApigeeOrganizationPropertiesElPropertyEl>;
+impl terrars::ToListMappable for ApigeeOrganization_Properties_Property {
+    type O = terrars::BlockAssignable<ApigeeOrganization_Properties_Property>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -573,32 +689,34 @@ impl terrars::ToListMappable for ApigeeOrganizationPropertiesElPropertyEl {
     }
 }
 
-pub struct BuildApigeeOrganizationPropertiesElPropertyEl {}
+pub struct BuildApigeeOrganization_Properties_Property {}
 
-impl BuildApigeeOrganizationPropertiesElPropertyEl {
-    pub fn build(self) -> ApigeeOrganizationPropertiesElPropertyEl {
-        ApigeeOrganizationPropertiesElPropertyEl {
+impl BuildApigeeOrganization_Properties_Property {
+    pub fn build(self) -> ApigeeOrganization_Properties_Property {
+        ApigeeOrganization_Properties_Property {
             name: core::default::Default::default(),
             value: core::default::Default::default(),
         }
     }
 }
 
-pub struct ApigeeOrganizationPropertiesElPropertyElRef {
+#[allow(dead_code)]
+pub struct ApigeeOrganization_Properties_PropertyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApigeeOrganizationPropertiesElPropertyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ApigeeOrganizationPropertiesElPropertyElRef {
-        ApigeeOrganizationPropertiesElPropertyElRef {
+impl terrars::Ref for ApigeeOrganization_Properties_PropertyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApigeeOrganization_Properties_PropertyRef {
+        ApigeeOrganization_Properties_PropertyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApigeeOrganizationPropertiesElPropertyElRef {
+impl ApigeeOrganization_Properties_PropertyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -615,22 +733,22 @@ impl ApigeeOrganizationPropertiesElPropertyElRef {
 }
 
 #[derive(Serialize, Default)]
-struct ApigeeOrganizationPropertiesElDynamic {
-    property: std::option::Option<terrars::DynamicBlock<ApigeeOrganizationPropertiesElPropertyEl>>,
+struct ApigeeOrganization_PropertiesDynamic {
+    property: std::option::Option<terrars::DynamicBlock<ApigeeOrganization_Properties_Property>>,
 }
 
 #[derive(Serialize)]
-pub struct ApigeeOrganizationPropertiesEl {
+pub struct ApigeeOrganization_Properties {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    property: std::option::Option<std::vec::Vec<ApigeeOrganizationPropertiesElPropertyEl>>,
-    dynamic: ApigeeOrganizationPropertiesElDynamic,
+    property: std::option::Option<std::vec::Vec<ApigeeOrganization_Properties_Property>>,
+    dynamic: ApigeeOrganization_PropertiesDynamic,
 }
 
-impl ApigeeOrganizationPropertiesEl {
+impl ApigeeOrganization_Properties {
     #[doc = "Set the field `property`.\n"]
     pub fn set_property(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ApigeeOrganizationPropertiesElPropertyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApigeeOrganization_Properties_Property>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -644,8 +762,8 @@ impl ApigeeOrganizationPropertiesEl {
     }
 }
 
-impl terrars::ToListMappable for ApigeeOrganizationPropertiesEl {
-    type O = terrars::BlockAssignable<ApigeeOrganizationPropertiesEl>;
+impl terrars::ToListMappable for ApigeeOrganization_Properties {
+    type O = terrars::BlockAssignable<ApigeeOrganization_Properties>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -656,44 +774,46 @@ impl terrars::ToListMappable for ApigeeOrganizationPropertiesEl {
     }
 }
 
-pub struct BuildApigeeOrganizationPropertiesEl {}
+pub struct BuildApigeeOrganization_Properties {}
 
-impl BuildApigeeOrganizationPropertiesEl {
-    pub fn build(self) -> ApigeeOrganizationPropertiesEl {
-        ApigeeOrganizationPropertiesEl {
+impl BuildApigeeOrganization_Properties {
+    pub fn build(self) -> ApigeeOrganization_Properties {
+        ApigeeOrganization_Properties {
             property: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct ApigeeOrganizationPropertiesElRef {
+#[allow(dead_code)]
+pub struct ApigeeOrganization_PropertiesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApigeeOrganizationPropertiesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ApigeeOrganizationPropertiesElRef {
-        ApigeeOrganizationPropertiesElRef {
+impl terrars::Ref for ApigeeOrganization_PropertiesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApigeeOrganization_PropertiesRef {
+        ApigeeOrganization_PropertiesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApigeeOrganizationPropertiesElRef {
+impl ApigeeOrganization_PropertiesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `property` after provisioning.\n"]
-    pub fn property(&self) -> terrars::ListRef<ApigeeOrganizationPropertiesElPropertyElRef> {
+    pub fn property(&self) -> terrars::ListRef<ApigeeOrganization_Properties_PropertyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.property", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ApigeeOrganizationTimeoutsEl {
+pub struct ApigeeOrganization_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -702,7 +822,7 @@ pub struct ApigeeOrganizationTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ApigeeOrganizationTimeoutsEl {
+impl ApigeeOrganization_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -722,8 +842,8 @@ impl ApigeeOrganizationTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ApigeeOrganizationTimeoutsEl {
-    type O = terrars::BlockAssignable<ApigeeOrganizationTimeoutsEl>;
+impl terrars::ToListMappable for ApigeeOrganization_Timeouts {
+    type O = terrars::BlockAssignable<ApigeeOrganization_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -734,11 +854,11 @@ impl terrars::ToListMappable for ApigeeOrganizationTimeoutsEl {
     }
 }
 
-pub struct BuildApigeeOrganizationTimeoutsEl {}
+pub struct BuildApigeeOrganization_Timeouts {}
 
-impl BuildApigeeOrganizationTimeoutsEl {
-    pub fn build(self) -> ApigeeOrganizationTimeoutsEl {
-        ApigeeOrganizationTimeoutsEl {
+impl BuildApigeeOrganization_Timeouts {
+    pub fn build(self) -> ApigeeOrganization_Timeouts {
+        ApigeeOrganization_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -746,21 +866,23 @@ impl BuildApigeeOrganizationTimeoutsEl {
     }
 }
 
-pub struct ApigeeOrganizationTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ApigeeOrganization_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApigeeOrganizationTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ApigeeOrganizationTimeoutsElRef {
-        ApigeeOrganizationTimeoutsElRef {
+impl terrars::Ref for ApigeeOrganization_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApigeeOrganization_TimeoutsRef {
+        ApigeeOrganization_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApigeeOrganizationTimeoutsElRef {
+impl ApigeeOrganization_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -779,9 +901,4 @@ impl ApigeeOrganizationTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ApigeeOrganizationDynamic {
-    properties: std::option::Option<terrars::DynamicBlock<ApigeeOrganizationPropertiesEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataRedisInstanceData {
+struct DataRedisInstanceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -28,7 +30,7 @@ struct DataRedisInstanceData {
 struct DataRedisInstance_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataRedisInstanceData>,
+    data: std::cell::RefCell<DataRedisInstanceData_>,
 }
 
 #[derive(Clone)]
@@ -140,6 +142,18 @@ impl DataRedisInstance {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_protection` after provisioning.\nWhether Terraform will be prevented from destroying the instance.\nWhen a'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is not set to false in Terraform state.\nWhen the field is set to true or unset in Terraform state, a 'terraform apply'\nor 'terraform destroy' that would delete the instance will fail.\nWhen the field is set to false, deleting the instance is allowed."]
+    pub fn deletion_protection(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_protection", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `display_name` after provisioning.\nAn arbitrary and optional user-provided name for the instance."]
     pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
@@ -149,6 +163,12 @@ impl DataRedisInstance {
         "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
     pub fn effective_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `effective_reserved_ip_range` after provisioning.\nThe CIDR range of internal addresses that are reserved for this\ninstance. If not provided, the service will choose an unused /29\nblock, for example, 10.0.0.0/29 or 192.168.0.0/29. Ranges must be\nunique and non-overlapping with existing subnets in an authorized\nnetwork."]
+    pub fn effective_reserved_ip_range(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.effective_reserved_ip_range", self.extract_ref()))
     }
 
     #[doc =
@@ -176,14 +196,20 @@ impl DataRedisInstance {
 
     #[doc =
         "Get a reference to the value of field `maintenance_policy` after provisioning.\nMaintenance policy for an instance."]
-    pub fn maintenance_policy(&self) -> terrars::ListRef<DataRedisInstanceMaintenancePolicyElRef> {
+    pub fn maintenance_policy(&self) -> terrars::ListRef<DataRedisInstance_MaintenancePolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.maintenance_policy", self.extract_ref()))
     }
 
     #[doc =
         "Get a reference to the value of field `maintenance_schedule` after provisioning.\nUpcoming maintenance schedule."]
-    pub fn maintenance_schedule(&self) -> terrars::ListRef<DataRedisInstanceMaintenanceScheduleElRef> {
+    pub fn maintenance_schedule(&self) -> terrars::ListRef<DataRedisInstance_MaintenanceScheduleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.maintenance_schedule", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `maintenance_version` after provisioning.\nThe self service update maintenance version."]
+    pub fn maintenance_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.maintenance_version", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `memory_size_gb` after provisioning.\nRedis memory size in GiB."]
@@ -198,13 +224,13 @@ impl DataRedisInstance {
     }
 
     #[doc = "Get a reference to the value of field `nodes` after provisioning.\nOutput only. Info per node."]
-    pub fn nodes(&self) -> terrars::ListRef<DataRedisInstanceNodesElRef> {
+    pub fn nodes(&self) -> terrars::ListRef<DataRedisInstance_NodesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.nodes", self.extract_ref()))
     }
 
     #[doc =
         "Get a reference to the value of field `persistence_config` after provisioning.\nPersistence configuration for an instance."]
-    pub fn persistence_config(&self) -> terrars::ListRef<DataRedisInstancePersistenceConfigElRef> {
+    pub fn persistence_config(&self) -> terrars::ListRef<DataRedisInstance_PersistenceConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.persistence_config", self.extract_ref()))
     }
 
@@ -281,7 +307,7 @@ impl DataRedisInstance {
 
     #[doc =
         "Get a reference to the value of field `server_ca_certs` after provisioning.\nList of server CA certificates for the instance."]
-    pub fn server_ca_certs(&self) -> terrars::ListRef<DataRedisInstanceServerCaCertsElRef> {
+    pub fn server_ca_certs(&self) -> terrars::ListRef<DataRedisInstance_ServerCaCertsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.server_ca_certs", self.extract_ref()))
     }
 
@@ -346,7 +372,7 @@ impl BuildDataRedisInstance {
         let out = DataRedisInstance(std::rc::Rc::new(DataRedisInstance_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataRedisInstanceData {
+            data: std::cell::RefCell::new(DataRedisInstanceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -434,6 +460,18 @@ impl DataRedisInstanceRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_protection` after provisioning.\nWhether Terraform will be prevented from destroying the instance.\nWhen a'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is not set to false in Terraform state.\nWhen the field is set to true or unset in Terraform state, a 'terraform apply'\nor 'terraform destroy' that would delete the instance will fail.\nWhen the field is set to false, deleting the instance is allowed."]
+    pub fn deletion_protection(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_protection", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `display_name` after provisioning.\nAn arbitrary and optional user-provided name for the instance."]
     pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
@@ -443,6 +481,12 @@ impl DataRedisInstanceRef {
         "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
     pub fn effective_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `effective_reserved_ip_range` after provisioning.\nThe CIDR range of internal addresses that are reserved for this\ninstance. If not provided, the service will choose an unused /29\nblock, for example, 10.0.0.0/29 or 192.168.0.0/29. Ranges must be\nunique and non-overlapping with existing subnets in an authorized\nnetwork."]
+    pub fn effective_reserved_ip_range(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.effective_reserved_ip_range", self.extract_ref()))
     }
 
     #[doc =
@@ -470,14 +514,20 @@ impl DataRedisInstanceRef {
 
     #[doc =
         "Get a reference to the value of field `maintenance_policy` after provisioning.\nMaintenance policy for an instance."]
-    pub fn maintenance_policy(&self) -> terrars::ListRef<DataRedisInstanceMaintenancePolicyElRef> {
+    pub fn maintenance_policy(&self) -> terrars::ListRef<DataRedisInstance_MaintenancePolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.maintenance_policy", self.extract_ref()))
     }
 
     #[doc =
         "Get a reference to the value of field `maintenance_schedule` after provisioning.\nUpcoming maintenance schedule."]
-    pub fn maintenance_schedule(&self) -> terrars::ListRef<DataRedisInstanceMaintenanceScheduleElRef> {
+    pub fn maintenance_schedule(&self) -> terrars::ListRef<DataRedisInstance_MaintenanceScheduleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.maintenance_schedule", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `maintenance_version` after provisioning.\nThe self service update maintenance version."]
+    pub fn maintenance_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.maintenance_version", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `memory_size_gb` after provisioning.\nRedis memory size in GiB."]
@@ -492,13 +542,13 @@ impl DataRedisInstanceRef {
     }
 
     #[doc = "Get a reference to the value of field `nodes` after provisioning.\nOutput only. Info per node."]
-    pub fn nodes(&self) -> terrars::ListRef<DataRedisInstanceNodesElRef> {
+    pub fn nodes(&self) -> terrars::ListRef<DataRedisInstance_NodesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.nodes", self.extract_ref()))
     }
 
     #[doc =
         "Get a reference to the value of field `persistence_config` after provisioning.\nPersistence configuration for an instance."]
-    pub fn persistence_config(&self) -> terrars::ListRef<DataRedisInstancePersistenceConfigElRef> {
+    pub fn persistence_config(&self) -> terrars::ListRef<DataRedisInstance_PersistenceConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.persistence_config", self.extract_ref()))
     }
 
@@ -575,7 +625,7 @@ impl DataRedisInstanceRef {
 
     #[doc =
         "Get a reference to the value of field `server_ca_certs` after provisioning.\nList of server CA certificates for the instance."]
-    pub fn server_ca_certs(&self) -> terrars::ListRef<DataRedisInstanceServerCaCertsElRef> {
+    pub fn server_ca_certs(&self) -> terrars::ListRef<DataRedisInstance_ServerCaCertsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.server_ca_certs", self.extract_ref()))
     }
 
@@ -599,7 +649,7 @@ impl DataRedisInstanceRef {
 }
 
 #[derive(Serialize)]
-pub struct DataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTimeEl {
+pub struct DataRedisInstance_MaintenancePolicy_WeeklyMaintenanceWindow_StartTime {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     hours: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -610,7 +660,7 @@ pub struct DataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTim
     seconds: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTimeEl {
+impl DataRedisInstance_MaintenancePolicy_WeeklyMaintenanceWindow_StartTime {
     #[doc = "Set the field `hours`.\n"]
     pub fn set_hours(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.hours = std::option::Option::Some(v.into());
@@ -636,8 +686,8 @@ impl DataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTimeEl {
     }
 }
 
-impl terrars::ToListMappable for DataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTimeEl {
-    type O = terrars::BlockAssignable<DataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTimeEl>;
+impl terrars::ToListMappable for DataRedisInstance_MaintenancePolicy_WeeklyMaintenanceWindow_StartTime {
+    type O = terrars::BlockAssignable<DataRedisInstance_MaintenancePolicy_WeeklyMaintenanceWindow_StartTime>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -648,11 +698,11 @@ impl terrars::ToListMappable for DataRedisInstanceMaintenancePolicyElWeeklyMaint
     }
 }
 
-pub struct BuildDataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTimeEl {}
+pub struct BuildDataRedisInstance_MaintenancePolicy_WeeklyMaintenanceWindow_StartTime {}
 
-impl BuildDataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTimeEl {
-    pub fn build(self) -> DataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTimeEl {
-        DataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTimeEl {
+impl BuildDataRedisInstance_MaintenancePolicy_WeeklyMaintenanceWindow_StartTime {
+    pub fn build(self) -> DataRedisInstance_MaintenancePolicy_WeeklyMaintenanceWindow_StartTime {
+        DataRedisInstance_MaintenancePolicy_WeeklyMaintenanceWindow_StartTime {
             hours: core::default::Default::default(),
             minutes: core::default::Default::default(),
             nanos: core::default::Default::default(),
@@ -661,24 +711,26 @@ impl BuildDataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTime
     }
 }
 
-pub struct DataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTimeElRef {
+#[allow(dead_code)]
+pub struct DataRedisInstance_MaintenancePolicy_WeeklyMaintenanceWindow_StartTimeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTimeElRef {
+impl terrars::Ref for DataRedisInstance_MaintenancePolicy_WeeklyMaintenanceWindow_StartTimeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTimeElRef {
-        DataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTimeElRef {
+    ) -> DataRedisInstance_MaintenancePolicy_WeeklyMaintenanceWindow_StartTimeRef {
+        DataRedisInstance_MaintenancePolicy_WeeklyMaintenanceWindow_StartTimeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTimeElRef {
+impl DataRedisInstance_MaintenancePolicy_WeeklyMaintenanceWindow_StartTimeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -705,7 +757,7 @@ impl DataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTimeElRef
 }
 
 #[derive(Serialize)]
-pub struct DataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowEl {
+pub struct DataRedisInstance_MaintenancePolicy_WeeklyMaintenanceWindow {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     day: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -713,10 +765,10 @@ pub struct DataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     start_time: std
     ::option
-    ::Option<terrars::ListField<DataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTimeEl>>,
+    ::Option<terrars::ListField<DataRedisInstance_MaintenancePolicy_WeeklyMaintenanceWindow_StartTime>>,
 }
 
-impl DataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowEl {
+impl DataRedisInstance_MaintenancePolicy_WeeklyMaintenanceWindow {
     #[doc = "Set the field `day`.\n"]
     pub fn set_day(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.day = std::option::Option::Some(v.into());
@@ -737,17 +789,15 @@ impl DataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::ListField<DataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTimeEl>,
-                    >,
+                    ::Into<terrars::ListField<DataRedisInstance_MaintenancePolicy_WeeklyMaintenanceWindow_StartTime>>,
     ) -> Self {
         self.start_time = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowEl {
-    type O = terrars::BlockAssignable<DataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowEl>;
+impl terrars::ToListMappable for DataRedisInstance_MaintenancePolicy_WeeklyMaintenanceWindow {
+    type O = terrars::BlockAssignable<DataRedisInstance_MaintenancePolicy_WeeklyMaintenanceWindow>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -758,11 +808,11 @@ impl terrars::ToListMappable for DataRedisInstanceMaintenancePolicyElWeeklyMaint
     }
 }
 
-pub struct BuildDataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowEl {}
+pub struct BuildDataRedisInstance_MaintenancePolicy_WeeklyMaintenanceWindow {}
 
-impl BuildDataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowEl {
-    pub fn build(self) -> DataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowEl {
-        DataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowEl {
+impl BuildDataRedisInstance_MaintenancePolicy_WeeklyMaintenanceWindow {
+    pub fn build(self) -> DataRedisInstance_MaintenancePolicy_WeeklyMaintenanceWindow {
+        DataRedisInstance_MaintenancePolicy_WeeklyMaintenanceWindow {
             day: core::default::Default::default(),
             duration: core::default::Default::default(),
             start_time: core::default::Default::default(),
@@ -770,24 +820,26 @@ impl BuildDataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowEl {
     }
 }
 
-pub struct DataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowElRef {
+#[allow(dead_code)]
+pub struct DataRedisInstance_MaintenancePolicy_WeeklyMaintenanceWindowRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowElRef {
+impl terrars::Ref for DataRedisInstance_MaintenancePolicy_WeeklyMaintenanceWindowRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowElRef {
-        DataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowElRef {
+    ) -> DataRedisInstance_MaintenancePolicy_WeeklyMaintenanceWindowRef {
+        DataRedisInstance_MaintenancePolicy_WeeklyMaintenanceWindowRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowElRef {
+impl DataRedisInstance_MaintenancePolicy_WeeklyMaintenanceWindowRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -805,13 +857,13 @@ impl DataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowElRef {
     #[doc = "Get a reference to the value of field `start_time` after provisioning.\n"]
     pub fn start_time(
         &self,
-    ) -> terrars::ListRef<DataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowElStartTimeElRef> {
+    ) -> terrars::ListRef<DataRedisInstance_MaintenancePolicy_WeeklyMaintenanceWindow_StartTimeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.start_time", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataRedisInstanceMaintenancePolicyEl {
+pub struct DataRedisInstance_MaintenancePolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create_time: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -821,10 +873,10 @@ pub struct DataRedisInstanceMaintenancePolicyEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     weekly_maintenance_window: std
     ::option
-    ::Option<terrars::ListField<DataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowEl>>,
+    ::Option<terrars::ListField<DataRedisInstance_MaintenancePolicy_WeeklyMaintenanceWindow>>,
 }
 
-impl DataRedisInstanceMaintenancePolicyEl {
+impl DataRedisInstance_MaintenancePolicy {
     #[doc = "Set the field `create_time`.\n"]
     pub fn set_create_time(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create_time = std::option::Option::Some(v.into());
@@ -846,20 +898,15 @@ impl DataRedisInstanceMaintenancePolicyEl {
     #[doc = "Set the field `weekly_maintenance_window`.\n"]
     pub fn set_weekly_maintenance_window(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::ListField<DataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataRedisInstance_MaintenancePolicy_WeeklyMaintenanceWindow>>,
     ) -> Self {
         self.weekly_maintenance_window = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataRedisInstanceMaintenancePolicyEl {
-    type O = terrars::BlockAssignable<DataRedisInstanceMaintenancePolicyEl>;
+impl terrars::ToListMappable for DataRedisInstance_MaintenancePolicy {
+    type O = terrars::BlockAssignable<DataRedisInstance_MaintenancePolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -870,11 +917,11 @@ impl terrars::ToListMappable for DataRedisInstanceMaintenancePolicyEl {
     }
 }
 
-pub struct BuildDataRedisInstanceMaintenancePolicyEl {}
+pub struct BuildDataRedisInstance_MaintenancePolicy {}
 
-impl BuildDataRedisInstanceMaintenancePolicyEl {
-    pub fn build(self) -> DataRedisInstanceMaintenancePolicyEl {
-        DataRedisInstanceMaintenancePolicyEl {
+impl BuildDataRedisInstance_MaintenancePolicy {
+    pub fn build(self) -> DataRedisInstance_MaintenancePolicy {
+        DataRedisInstance_MaintenancePolicy {
             create_time: core::default::Default::default(),
             description: core::default::Default::default(),
             update_time: core::default::Default::default(),
@@ -883,21 +930,23 @@ impl BuildDataRedisInstanceMaintenancePolicyEl {
     }
 }
 
-pub struct DataRedisInstanceMaintenancePolicyElRef {
+#[allow(dead_code)]
+pub struct DataRedisInstance_MaintenancePolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataRedisInstanceMaintenancePolicyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataRedisInstanceMaintenancePolicyElRef {
-        DataRedisInstanceMaintenancePolicyElRef {
+impl terrars::Ref for DataRedisInstance_MaintenancePolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataRedisInstance_MaintenancePolicyRef {
+        DataRedisInstance_MaintenancePolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataRedisInstanceMaintenancePolicyElRef {
+impl DataRedisInstance_MaintenancePolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -920,13 +969,13 @@ impl DataRedisInstanceMaintenancePolicyElRef {
     #[doc = "Get a reference to the value of field `weekly_maintenance_window` after provisioning.\n"]
     pub fn weekly_maintenance_window(
         &self,
-    ) -> terrars::ListRef<DataRedisInstanceMaintenancePolicyElWeeklyMaintenanceWindowElRef> {
+    ) -> terrars::ListRef<DataRedisInstance_MaintenancePolicy_WeeklyMaintenanceWindowRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.weekly_maintenance_window", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataRedisInstanceMaintenanceScheduleEl {
+pub struct DataRedisInstance_MaintenanceSchedule {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     end_time: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -935,7 +984,7 @@ pub struct DataRedisInstanceMaintenanceScheduleEl {
     start_time: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataRedisInstanceMaintenanceScheduleEl {
+impl DataRedisInstance_MaintenanceSchedule {
     #[doc = "Set the field `end_time`.\n"]
     pub fn set_end_time(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.end_time = std::option::Option::Some(v.into());
@@ -958,8 +1007,8 @@ impl DataRedisInstanceMaintenanceScheduleEl {
     }
 }
 
-impl terrars::ToListMappable for DataRedisInstanceMaintenanceScheduleEl {
-    type O = terrars::BlockAssignable<DataRedisInstanceMaintenanceScheduleEl>;
+impl terrars::ToListMappable for DataRedisInstance_MaintenanceSchedule {
+    type O = terrars::BlockAssignable<DataRedisInstance_MaintenanceSchedule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -970,11 +1019,11 @@ impl terrars::ToListMappable for DataRedisInstanceMaintenanceScheduleEl {
     }
 }
 
-pub struct BuildDataRedisInstanceMaintenanceScheduleEl {}
+pub struct BuildDataRedisInstance_MaintenanceSchedule {}
 
-impl BuildDataRedisInstanceMaintenanceScheduleEl {
-    pub fn build(self) -> DataRedisInstanceMaintenanceScheduleEl {
-        DataRedisInstanceMaintenanceScheduleEl {
+impl BuildDataRedisInstance_MaintenanceSchedule {
+    pub fn build(self) -> DataRedisInstance_MaintenanceSchedule {
+        DataRedisInstance_MaintenanceSchedule {
             end_time: core::default::Default::default(),
             schedule_deadline_time: core::default::Default::default(),
             start_time: core::default::Default::default(),
@@ -982,21 +1031,23 @@ impl BuildDataRedisInstanceMaintenanceScheduleEl {
     }
 }
 
-pub struct DataRedisInstanceMaintenanceScheduleElRef {
+#[allow(dead_code)]
+pub struct DataRedisInstance_MaintenanceScheduleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataRedisInstanceMaintenanceScheduleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataRedisInstanceMaintenanceScheduleElRef {
-        DataRedisInstanceMaintenanceScheduleElRef {
+impl terrars::Ref for DataRedisInstance_MaintenanceScheduleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataRedisInstance_MaintenanceScheduleRef {
+        DataRedisInstance_MaintenanceScheduleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataRedisInstanceMaintenanceScheduleElRef {
+impl DataRedisInstance_MaintenanceScheduleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1018,14 +1069,14 @@ impl DataRedisInstanceMaintenanceScheduleElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataRedisInstanceNodesEl {
+pub struct DataRedisInstance_Nodes {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     zone: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataRedisInstanceNodesEl {
+impl DataRedisInstance_Nodes {
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.id = std::option::Option::Some(v.into());
@@ -1039,8 +1090,8 @@ impl DataRedisInstanceNodesEl {
     }
 }
 
-impl terrars::ToListMappable for DataRedisInstanceNodesEl {
-    type O = terrars::BlockAssignable<DataRedisInstanceNodesEl>;
+impl terrars::ToListMappable for DataRedisInstance_Nodes {
+    type O = terrars::BlockAssignable<DataRedisInstance_Nodes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1051,32 +1102,34 @@ impl terrars::ToListMappable for DataRedisInstanceNodesEl {
     }
 }
 
-pub struct BuildDataRedisInstanceNodesEl {}
+pub struct BuildDataRedisInstance_Nodes {}
 
-impl BuildDataRedisInstanceNodesEl {
-    pub fn build(self) -> DataRedisInstanceNodesEl {
-        DataRedisInstanceNodesEl {
+impl BuildDataRedisInstance_Nodes {
+    pub fn build(self) -> DataRedisInstance_Nodes {
+        DataRedisInstance_Nodes {
             id: core::default::Default::default(),
             zone: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataRedisInstanceNodesElRef {
+#[allow(dead_code)]
+pub struct DataRedisInstance_NodesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataRedisInstanceNodesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataRedisInstanceNodesElRef {
-        DataRedisInstanceNodesElRef {
+impl terrars::Ref for DataRedisInstance_NodesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataRedisInstance_NodesRef {
+        DataRedisInstance_NodesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataRedisInstanceNodesElRef {
+impl DataRedisInstance_NodesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1093,7 +1146,7 @@ impl DataRedisInstanceNodesElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataRedisInstancePersistenceConfigEl {
+pub struct DataRedisInstance_PersistenceConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     persistence_mode: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1104,7 +1157,7 @@ pub struct DataRedisInstancePersistenceConfigEl {
     rdb_snapshot_start_time: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataRedisInstancePersistenceConfigEl {
+impl DataRedisInstance_PersistenceConfig {
     #[doc = "Set the field `persistence_mode`.\n"]
     pub fn set_persistence_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.persistence_mode = std::option::Option::Some(v.into());
@@ -1139,8 +1192,8 @@ impl DataRedisInstancePersistenceConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataRedisInstancePersistenceConfigEl {
-    type O = terrars::BlockAssignable<DataRedisInstancePersistenceConfigEl>;
+impl terrars::ToListMappable for DataRedisInstance_PersistenceConfig {
+    type O = terrars::BlockAssignable<DataRedisInstance_PersistenceConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1151,11 +1204,11 @@ impl terrars::ToListMappable for DataRedisInstancePersistenceConfigEl {
     }
 }
 
-pub struct BuildDataRedisInstancePersistenceConfigEl {}
+pub struct BuildDataRedisInstance_PersistenceConfig {}
 
-impl BuildDataRedisInstancePersistenceConfigEl {
-    pub fn build(self) -> DataRedisInstancePersistenceConfigEl {
-        DataRedisInstancePersistenceConfigEl {
+impl BuildDataRedisInstance_PersistenceConfig {
+    pub fn build(self) -> DataRedisInstance_PersistenceConfig {
+        DataRedisInstance_PersistenceConfig {
             persistence_mode: core::default::Default::default(),
             rdb_next_snapshot_time: core::default::Default::default(),
             rdb_snapshot_period: core::default::Default::default(),
@@ -1164,21 +1217,23 @@ impl BuildDataRedisInstancePersistenceConfigEl {
     }
 }
 
-pub struct DataRedisInstancePersistenceConfigElRef {
+#[allow(dead_code)]
+pub struct DataRedisInstance_PersistenceConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataRedisInstancePersistenceConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataRedisInstancePersistenceConfigElRef {
-        DataRedisInstancePersistenceConfigElRef {
+impl terrars::Ref for DataRedisInstance_PersistenceConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataRedisInstance_PersistenceConfigRef {
+        DataRedisInstance_PersistenceConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataRedisInstancePersistenceConfigElRef {
+impl DataRedisInstance_PersistenceConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1205,7 +1260,7 @@ impl DataRedisInstancePersistenceConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataRedisInstanceServerCaCertsEl {
+pub struct DataRedisInstance_ServerCaCerts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cert: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1218,7 +1273,7 @@ pub struct DataRedisInstanceServerCaCertsEl {
     sha1_fingerprint: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataRedisInstanceServerCaCertsEl {
+impl DataRedisInstance_ServerCaCerts {
     #[doc = "Set the field `cert`.\n"]
     pub fn set_cert(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.cert = std::option::Option::Some(v.into());
@@ -1250,8 +1305,8 @@ impl DataRedisInstanceServerCaCertsEl {
     }
 }
 
-impl terrars::ToListMappable for DataRedisInstanceServerCaCertsEl {
-    type O = terrars::BlockAssignable<DataRedisInstanceServerCaCertsEl>;
+impl terrars::ToListMappable for DataRedisInstance_ServerCaCerts {
+    type O = terrars::BlockAssignable<DataRedisInstance_ServerCaCerts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1262,11 +1317,11 @@ impl terrars::ToListMappable for DataRedisInstanceServerCaCertsEl {
     }
 }
 
-pub struct BuildDataRedisInstanceServerCaCertsEl {}
+pub struct BuildDataRedisInstance_ServerCaCerts {}
 
-impl BuildDataRedisInstanceServerCaCertsEl {
-    pub fn build(self) -> DataRedisInstanceServerCaCertsEl {
-        DataRedisInstanceServerCaCertsEl {
+impl BuildDataRedisInstance_ServerCaCerts {
+    pub fn build(self) -> DataRedisInstance_ServerCaCerts {
+        DataRedisInstance_ServerCaCerts {
             cert: core::default::Default::default(),
             create_time: core::default::Default::default(),
             expire_time: core::default::Default::default(),
@@ -1276,21 +1331,23 @@ impl BuildDataRedisInstanceServerCaCertsEl {
     }
 }
 
-pub struct DataRedisInstanceServerCaCertsElRef {
+#[allow(dead_code)]
+pub struct DataRedisInstance_ServerCaCertsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataRedisInstanceServerCaCertsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataRedisInstanceServerCaCertsElRef {
-        DataRedisInstanceServerCaCertsElRef {
+impl terrars::Ref for DataRedisInstance_ServerCaCertsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataRedisInstance_ServerCaCertsRef {
+        DataRedisInstance_ServerCaCertsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataRedisInstanceServerCaCertsElRef {
+impl DataRedisInstance_ServerCaCertsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

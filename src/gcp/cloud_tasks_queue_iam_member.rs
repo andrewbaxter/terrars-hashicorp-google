@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct CloudTasksQueueIamMemberData {
+struct CloudTasksQueueIamMemberData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,14 +30,14 @@ struct CloudTasksQueueIamMemberData {
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<CloudTasksQueueIamMemberConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<CloudTasksQueueIamMember_Condition>>,
     dynamic: CloudTasksQueueIamMemberDynamic,
 }
 
 struct CloudTasksQueueIamMember_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CloudTasksQueueIamMemberData>,
+    data: std::cell::RefCell<CloudTasksQueueIamMemberData_>,
 }
 
 #[derive(Clone)]
@@ -156,7 +158,7 @@ impl CloudTasksQueueIamMember {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudTasksQueueIamMemberConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudTasksQueueIamMember_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -205,7 +207,7 @@ impl CloudTasksQueueIamMember {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<CloudTasksQueueIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<CloudTasksQueueIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -256,7 +258,7 @@ impl BuildCloudTasksQueueIamMember {
         let out = CloudTasksQueueIamMember(std::rc::Rc::new(CloudTasksQueueIamMember_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CloudTasksQueueIamMemberData {
+            data: std::cell::RefCell::new(CloudTasksQueueIamMemberData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -336,20 +338,25 @@ impl CloudTasksQueueIamMemberRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<CloudTasksQueueIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<CloudTasksQueueIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct CloudTasksQueueIamMemberDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<CloudTasksQueueIamMember_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct CloudTasksQueueIamMemberConditionEl {
+pub struct CloudTasksQueueIamMember_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl CloudTasksQueueIamMemberConditionEl {
+impl CloudTasksQueueIamMember_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -357,8 +364,8 @@ impl CloudTasksQueueIamMemberConditionEl {
     }
 }
 
-impl terrars::ToListMappable for CloudTasksQueueIamMemberConditionEl {
-    type O = terrars::BlockAssignable<CloudTasksQueueIamMemberConditionEl>;
+impl terrars::ToListMappable for CloudTasksQueueIamMember_Condition {
+    type O = terrars::BlockAssignable<CloudTasksQueueIamMember_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -369,16 +376,16 @@ impl terrars::ToListMappable for CloudTasksQueueIamMemberConditionEl {
     }
 }
 
-pub struct BuildCloudTasksQueueIamMemberConditionEl {
+pub struct BuildCloudTasksQueueIamMember_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudTasksQueueIamMemberConditionEl {
-    pub fn build(self) -> CloudTasksQueueIamMemberConditionEl {
-        CloudTasksQueueIamMemberConditionEl {
+impl BuildCloudTasksQueueIamMember_Condition {
+    pub fn build(self) -> CloudTasksQueueIamMember_Condition {
+        CloudTasksQueueIamMember_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -386,21 +393,23 @@ impl BuildCloudTasksQueueIamMemberConditionEl {
     }
 }
 
-pub struct CloudTasksQueueIamMemberConditionElRef {
+#[allow(dead_code)]
+pub struct CloudTasksQueueIamMember_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudTasksQueueIamMemberConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudTasksQueueIamMemberConditionElRef {
-        CloudTasksQueueIamMemberConditionElRef {
+impl terrars::Ref for CloudTasksQueueIamMember_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudTasksQueueIamMember_ConditionRef {
+        CloudTasksQueueIamMember_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudTasksQueueIamMemberConditionElRef {
+impl CloudTasksQueueIamMember_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -419,9 +428,4 @@ impl CloudTasksQueueIamMemberConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct CloudTasksQueueIamMemberDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<CloudTasksQueueIamMemberConditionEl>>,
 }

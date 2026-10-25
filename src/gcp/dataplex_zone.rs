@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataplexZoneData {
+struct DataplexZoneData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct DataplexZoneData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -34,18 +38,18 @@ struct DataplexZoneData {
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    discovery_spec: std::option::Option<std::vec::Vec<DataplexZoneDiscoverySpecEl>>,
+    discovery_spec: std::option::Option<std::vec::Vec<DataplexZone_DiscoverySpec>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    resource_spec: std::option::Option<std::vec::Vec<DataplexZoneResourceSpecEl>>,
+    resource_spec: std::option::Option<std::vec::Vec<DataplexZone_ResourceSpec>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataplexZoneTimeoutsEl>,
+    timeouts: std::option::Option<DataplexZone_Timeouts>,
     dynamic: DataplexZoneDynamic,
 }
 
 struct DataplexZone_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataplexZoneData>,
+    data: std::cell::RefCell<DataplexZoneData_>,
 }
 
 #[derive(Clone)]
@@ -145,6 +149,13 @@ impl DataplexZone {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nOptional. Description of the zone."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -182,7 +193,7 @@ impl DataplexZone {
     #[doc = "Set the field `discovery_spec`.\n"]
     pub fn set_discovery_spec(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataplexZoneDiscoverySpecEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataplexZone_DiscoverySpec>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -198,7 +209,7 @@ impl DataplexZone {
     #[doc = "Set the field `resource_spec`.\n"]
     pub fn set_resource_spec(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataplexZoneResourceSpecEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataplexZone_ResourceSpec>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -212,14 +223,14 @@ impl DataplexZone {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataplexZoneTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataplexZone_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
     #[doc =
         "Get a reference to the value of field `asset_status` after provisioning.\nOutput only. Aggregated status of the underlying assets of the zone."]
-    pub fn asset_status(&self) -> terrars::ListRef<DataplexZoneAssetStatusElRef> {
+    pub fn asset_status(&self) -> terrars::ListRef<DataplexZone_AssetStatusRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.asset_status", self.extract_ref()))
     }
 
@@ -227,6 +238,12 @@ impl DataplexZone {
         "Get a reference to the value of field `create_time` after provisioning.\nOutput only. The time when the zone was created."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -309,18 +326,18 @@ impl DataplexZone {
     }
 
     #[doc = "Get a reference to the value of field `discovery_spec` after provisioning.\n"]
-    pub fn discovery_spec(&self) -> terrars::ListRef<DataplexZoneDiscoverySpecElRef> {
+    pub fn discovery_spec(&self) -> terrars::ListRef<DataplexZone_DiscoverySpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.discovery_spec", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `resource_spec` after provisioning.\n"]
-    pub fn resource_spec(&self) -> terrars::ListRef<DataplexZoneResourceSpecElRef> {
+    pub fn resource_spec(&self) -> terrars::ListRef<DataplexZone_ResourceSpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.resource_spec", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataplexZoneTimeoutsElRef {
-        DataplexZoneTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataplexZone_TimeoutsRef {
+        DataplexZone_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -372,12 +389,13 @@ impl BuildDataplexZone {
         let out = DataplexZone(std::rc::Rc::new(DataplexZone_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataplexZoneData {
+            data: std::cell::RefCell::new(DataplexZoneData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 display_name: core::default::Default::default(),
                 id: core::default::Default::default(),
@@ -423,7 +441,7 @@ impl DataplexZoneRef {
 
     #[doc =
         "Get a reference to the value of field `asset_status` after provisioning.\nOutput only. Aggregated status of the underlying assets of the zone."]
-    pub fn asset_status(&self) -> terrars::ListRef<DataplexZoneAssetStatusElRef> {
+    pub fn asset_status(&self) -> terrars::ListRef<DataplexZone_AssetStatusRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.asset_status", self.extract_ref()))
     }
 
@@ -431,6 +449,12 @@ impl DataplexZoneRef {
         "Get a reference to the value of field `create_time` after provisioning.\nOutput only. The time when the zone was created."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -513,23 +537,29 @@ impl DataplexZoneRef {
     }
 
     #[doc = "Get a reference to the value of field `discovery_spec` after provisioning.\n"]
-    pub fn discovery_spec(&self) -> terrars::ListRef<DataplexZoneDiscoverySpecElRef> {
+    pub fn discovery_spec(&self) -> terrars::ListRef<DataplexZone_DiscoverySpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.discovery_spec", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `resource_spec` after provisioning.\n"]
-    pub fn resource_spec(&self) -> terrars::ListRef<DataplexZoneResourceSpecElRef> {
+    pub fn resource_spec(&self) -> terrars::ListRef<DataplexZone_ResourceSpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.resource_spec", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataplexZoneTimeoutsElRef {
-        DataplexZoneTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataplexZone_TimeoutsRef {
+        DataplexZone_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataplexZoneDynamic {
+    discovery_spec: std::option::Option<terrars::DynamicBlock<DataplexZone_DiscoverySpec>>,
+    resource_spec: std::option::Option<terrars::DynamicBlock<DataplexZone_ResourceSpec>>,
+}
+
 #[derive(Serialize)]
-pub struct DataplexZoneAssetStatusEl {
+pub struct DataplexZone_AssetStatus {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     active_assets: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -538,7 +568,7 @@ pub struct DataplexZoneAssetStatusEl {
     update_time: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataplexZoneAssetStatusEl {
+impl DataplexZone_AssetStatus {
     #[doc = "Set the field `active_assets`.\n"]
     pub fn set_active_assets(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.active_assets = std::option::Option::Some(v.into());
@@ -558,8 +588,8 @@ impl DataplexZoneAssetStatusEl {
     }
 }
 
-impl terrars::ToListMappable for DataplexZoneAssetStatusEl {
-    type O = terrars::BlockAssignable<DataplexZoneAssetStatusEl>;
+impl terrars::ToListMappable for DataplexZone_AssetStatus {
+    type O = terrars::BlockAssignable<DataplexZone_AssetStatus>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -570,11 +600,11 @@ impl terrars::ToListMappable for DataplexZoneAssetStatusEl {
     }
 }
 
-pub struct BuildDataplexZoneAssetStatusEl {}
+pub struct BuildDataplexZone_AssetStatus {}
 
-impl BuildDataplexZoneAssetStatusEl {
-    pub fn build(self) -> DataplexZoneAssetStatusEl {
-        DataplexZoneAssetStatusEl {
+impl BuildDataplexZone_AssetStatus {
+    pub fn build(self) -> DataplexZone_AssetStatus {
+        DataplexZone_AssetStatus {
             active_assets: core::default::Default::default(),
             security_policy_applying_assets: core::default::Default::default(),
             update_time: core::default::Default::default(),
@@ -582,21 +612,23 @@ impl BuildDataplexZoneAssetStatusEl {
     }
 }
 
-pub struct DataplexZoneAssetStatusElRef {
+#[allow(dead_code)]
+pub struct DataplexZone_AssetStatusRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataplexZoneAssetStatusElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexZoneAssetStatusElRef {
-        DataplexZoneAssetStatusElRef {
+impl terrars::Ref for DataplexZone_AssetStatusRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexZone_AssetStatusRef {
+        DataplexZone_AssetStatusRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataplexZoneAssetStatusElRef {
+impl DataplexZone_AssetStatusRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -618,7 +650,7 @@ impl DataplexZoneAssetStatusElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataplexZoneDiscoverySpecElCsvOptionsEl {
+pub struct DataplexZone_DiscoverySpec_CsvOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delimiter: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -629,7 +661,7 @@ pub struct DataplexZoneDiscoverySpecElCsvOptionsEl {
     header_rows: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataplexZoneDiscoverySpecElCsvOptionsEl {
+impl DataplexZone_DiscoverySpec_CsvOptions {
     #[doc = "Set the field `delimiter`.\nOptional. The delimiter being used to separate values. This defaults to ','."]
     pub fn set_delimiter(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.delimiter = std::option::Option::Some(v.into());
@@ -657,8 +689,8 @@ impl DataplexZoneDiscoverySpecElCsvOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for DataplexZoneDiscoverySpecElCsvOptionsEl {
-    type O = terrars::BlockAssignable<DataplexZoneDiscoverySpecElCsvOptionsEl>;
+impl terrars::ToListMappable for DataplexZone_DiscoverySpec_CsvOptions {
+    type O = terrars::BlockAssignable<DataplexZone_DiscoverySpec_CsvOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -669,11 +701,11 @@ impl terrars::ToListMappable for DataplexZoneDiscoverySpecElCsvOptionsEl {
     }
 }
 
-pub struct BuildDataplexZoneDiscoverySpecElCsvOptionsEl {}
+pub struct BuildDataplexZone_DiscoverySpec_CsvOptions {}
 
-impl BuildDataplexZoneDiscoverySpecElCsvOptionsEl {
-    pub fn build(self) -> DataplexZoneDiscoverySpecElCsvOptionsEl {
-        DataplexZoneDiscoverySpecElCsvOptionsEl {
+impl BuildDataplexZone_DiscoverySpec_CsvOptions {
+    pub fn build(self) -> DataplexZone_DiscoverySpec_CsvOptions {
+        DataplexZone_DiscoverySpec_CsvOptions {
             delimiter: core::default::Default::default(),
             disable_type_inference: core::default::Default::default(),
             encoding: core::default::Default::default(),
@@ -682,21 +714,23 @@ impl BuildDataplexZoneDiscoverySpecElCsvOptionsEl {
     }
 }
 
-pub struct DataplexZoneDiscoverySpecElCsvOptionsElRef {
+#[allow(dead_code)]
+pub struct DataplexZone_DiscoverySpec_CsvOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataplexZoneDiscoverySpecElCsvOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexZoneDiscoverySpecElCsvOptionsElRef {
-        DataplexZoneDiscoverySpecElCsvOptionsElRef {
+impl terrars::Ref for DataplexZone_DiscoverySpec_CsvOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexZone_DiscoverySpec_CsvOptionsRef {
+        DataplexZone_DiscoverySpec_CsvOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataplexZoneDiscoverySpecElCsvOptionsElRef {
+impl DataplexZone_DiscoverySpec_CsvOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -727,14 +761,14 @@ impl DataplexZoneDiscoverySpecElCsvOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataplexZoneDiscoverySpecElJsonOptionsEl {
+pub struct DataplexZone_DiscoverySpec_JsonOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     disable_type_inference: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     encoding: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataplexZoneDiscoverySpecElJsonOptionsEl {
+impl DataplexZone_DiscoverySpec_JsonOptions {
     #[doc =
         "Set the field `disable_type_inference`.\nOptional. Whether to disable the inference of data type for Json data. If true, all columns will be registered as their primitive types (strings, number or boolean)."]
     pub fn set_disable_type_inference(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -749,8 +783,8 @@ impl DataplexZoneDiscoverySpecElJsonOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for DataplexZoneDiscoverySpecElJsonOptionsEl {
-    type O = terrars::BlockAssignable<DataplexZoneDiscoverySpecElJsonOptionsEl>;
+impl terrars::ToListMappable for DataplexZone_DiscoverySpec_JsonOptions {
+    type O = terrars::BlockAssignable<DataplexZone_DiscoverySpec_JsonOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -761,32 +795,34 @@ impl terrars::ToListMappable for DataplexZoneDiscoverySpecElJsonOptionsEl {
     }
 }
 
-pub struct BuildDataplexZoneDiscoverySpecElJsonOptionsEl {}
+pub struct BuildDataplexZone_DiscoverySpec_JsonOptions {}
 
-impl BuildDataplexZoneDiscoverySpecElJsonOptionsEl {
-    pub fn build(self) -> DataplexZoneDiscoverySpecElJsonOptionsEl {
-        DataplexZoneDiscoverySpecElJsonOptionsEl {
+impl BuildDataplexZone_DiscoverySpec_JsonOptions {
+    pub fn build(self) -> DataplexZone_DiscoverySpec_JsonOptions {
+        DataplexZone_DiscoverySpec_JsonOptions {
             disable_type_inference: core::default::Default::default(),
             encoding: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataplexZoneDiscoverySpecElJsonOptionsElRef {
+#[allow(dead_code)]
+pub struct DataplexZone_DiscoverySpec_JsonOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataplexZoneDiscoverySpecElJsonOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexZoneDiscoverySpecElJsonOptionsElRef {
-        DataplexZoneDiscoverySpecElJsonOptionsElRef {
+impl terrars::Ref for DataplexZone_DiscoverySpec_JsonOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexZone_DiscoverySpec_JsonOptionsRef {
+        DataplexZone_DiscoverySpec_JsonOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataplexZoneDiscoverySpecElJsonOptionsElRef {
+impl DataplexZone_DiscoverySpec_JsonOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -805,13 +841,13 @@ impl DataplexZoneDiscoverySpecElJsonOptionsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct DataplexZoneDiscoverySpecElDynamic {
-    csv_options: std::option::Option<terrars::DynamicBlock<DataplexZoneDiscoverySpecElCsvOptionsEl>>,
-    json_options: std::option::Option<terrars::DynamicBlock<DataplexZoneDiscoverySpecElJsonOptionsEl>>,
+struct DataplexZone_DiscoverySpecDynamic {
+    csv_options: std::option::Option<terrars::DynamicBlock<DataplexZone_DiscoverySpec_CsvOptions>>,
+    json_options: std::option::Option<terrars::DynamicBlock<DataplexZone_DiscoverySpec_JsonOptions>>,
 }
 
 #[derive(Serialize)]
-pub struct DataplexZoneDiscoverySpecEl {
+pub struct DataplexZone_DiscoverySpec {
     enabled: terrars::PrimField<bool>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     exclude_patterns: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
@@ -820,13 +856,13 @@ pub struct DataplexZoneDiscoverySpecEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     schedule: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    csv_options: std::option::Option<std::vec::Vec<DataplexZoneDiscoverySpecElCsvOptionsEl>>,
+    csv_options: std::option::Option<std::vec::Vec<DataplexZone_DiscoverySpec_CsvOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    json_options: std::option::Option<std::vec::Vec<DataplexZoneDiscoverySpecElJsonOptionsEl>>,
-    dynamic: DataplexZoneDiscoverySpecElDynamic,
+    json_options: std::option::Option<std::vec::Vec<DataplexZone_DiscoverySpec_JsonOptions>>,
+    dynamic: DataplexZone_DiscoverySpecDynamic,
 }
 
-impl DataplexZoneDiscoverySpecEl {
+impl DataplexZone_DiscoverySpec {
     #[doc =
         "Set the field `exclude_patterns`.\nOptional. The list of patterns to apply for selecting data to exclude during discovery. For Cloud Storage bucket assets, these are interpreted as glob patterns used to match object names. For BigQuery dataset assets, these are interpreted as patterns to match table names."]
     pub fn set_exclude_patterns(
@@ -857,7 +893,7 @@ impl DataplexZoneDiscoverySpecEl {
     #[doc = "Set the field `csv_options`.\n"]
     pub fn set_csv_options(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataplexZoneDiscoverySpecElCsvOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataplexZone_DiscoverySpec_CsvOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -873,7 +909,7 @@ impl DataplexZoneDiscoverySpecEl {
     #[doc = "Set the field `json_options`.\n"]
     pub fn set_json_options(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataplexZoneDiscoverySpecElJsonOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataplexZone_DiscoverySpec_JsonOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -887,8 +923,8 @@ impl DataplexZoneDiscoverySpecEl {
     }
 }
 
-impl terrars::ToListMappable for DataplexZoneDiscoverySpecEl {
-    type O = terrars::BlockAssignable<DataplexZoneDiscoverySpecEl>;
+impl terrars::ToListMappable for DataplexZone_DiscoverySpec {
+    type O = terrars::BlockAssignable<DataplexZone_DiscoverySpec>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -899,14 +935,14 @@ impl terrars::ToListMappable for DataplexZoneDiscoverySpecEl {
     }
 }
 
-pub struct BuildDataplexZoneDiscoverySpecEl {
+pub struct BuildDataplexZone_DiscoverySpec {
     #[doc = "Required. Whether discovery is enabled."]
     pub enabled: terrars::PrimField<bool>,
 }
 
-impl BuildDataplexZoneDiscoverySpecEl {
-    pub fn build(self) -> DataplexZoneDiscoverySpecEl {
-        DataplexZoneDiscoverySpecEl {
+impl BuildDataplexZone_DiscoverySpec {
+    pub fn build(self) -> DataplexZone_DiscoverySpec {
+        DataplexZone_DiscoverySpec {
             enabled: self.enabled,
             exclude_patterns: core::default::Default::default(),
             include_patterns: core::default::Default::default(),
@@ -918,21 +954,23 @@ impl BuildDataplexZoneDiscoverySpecEl {
     }
 }
 
-pub struct DataplexZoneDiscoverySpecElRef {
+#[allow(dead_code)]
+pub struct DataplexZone_DiscoverySpecRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataplexZoneDiscoverySpecElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexZoneDiscoverySpecElRef {
-        DataplexZoneDiscoverySpecElRef {
+impl terrars::Ref for DataplexZone_DiscoverySpecRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexZone_DiscoverySpecRef {
+        DataplexZone_DiscoverySpecRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataplexZoneDiscoverySpecElRef {
+impl DataplexZone_DiscoverySpecRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -962,25 +1000,25 @@ impl DataplexZoneDiscoverySpecElRef {
     }
 
     #[doc = "Get a reference to the value of field `csv_options` after provisioning.\n"]
-    pub fn csv_options(&self) -> terrars::ListRef<DataplexZoneDiscoverySpecElCsvOptionsElRef> {
+    pub fn csv_options(&self) -> terrars::ListRef<DataplexZone_DiscoverySpec_CsvOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.csv_options", self.base))
     }
 
     #[doc = "Get a reference to the value of field `json_options` after provisioning.\n"]
-    pub fn json_options(&self) -> terrars::ListRef<DataplexZoneDiscoverySpecElJsonOptionsElRef> {
+    pub fn json_options(&self) -> terrars::ListRef<DataplexZone_DiscoverySpec_JsonOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.json_options", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataplexZoneResourceSpecEl {
+pub struct DataplexZone_ResourceSpec {
     location_type: terrars::PrimField<std::string::String>,
 }
 
-impl DataplexZoneResourceSpecEl { }
+impl DataplexZone_ResourceSpec { }
 
-impl terrars::ToListMappable for DataplexZoneResourceSpecEl {
-    type O = terrars::BlockAssignable<DataplexZoneResourceSpecEl>;
+impl terrars::ToListMappable for DataplexZone_ResourceSpec {
+    type O = terrars::BlockAssignable<DataplexZone_ResourceSpec>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -991,33 +1029,35 @@ impl terrars::ToListMappable for DataplexZoneResourceSpecEl {
     }
 }
 
-pub struct BuildDataplexZoneResourceSpecEl {
+pub struct BuildDataplexZone_ResourceSpec {
     #[doc =
         "Required. Immutable. The location type of the resources that are allowed to be attached to the assets within this zone. Possible values: LOCATION_TYPE_UNSPECIFIED, SINGLE_REGION, MULTI_REGION"]
     pub location_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataplexZoneResourceSpecEl {
-    pub fn build(self) -> DataplexZoneResourceSpecEl {
-        DataplexZoneResourceSpecEl { location_type: self.location_type }
+impl BuildDataplexZone_ResourceSpec {
+    pub fn build(self) -> DataplexZone_ResourceSpec {
+        DataplexZone_ResourceSpec { location_type: self.location_type }
     }
 }
 
-pub struct DataplexZoneResourceSpecElRef {
+#[allow(dead_code)]
+pub struct DataplexZone_ResourceSpecRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataplexZoneResourceSpecElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexZoneResourceSpecElRef {
-        DataplexZoneResourceSpecElRef {
+impl terrars::Ref for DataplexZone_ResourceSpecRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexZone_ResourceSpecRef {
+        DataplexZone_ResourceSpecRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataplexZoneResourceSpecElRef {
+impl DataplexZone_ResourceSpecRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1030,7 +1070,7 @@ impl DataplexZoneResourceSpecElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataplexZoneTimeoutsEl {
+pub struct DataplexZone_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1039,7 +1079,7 @@ pub struct DataplexZoneTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataplexZoneTimeoutsEl {
+impl DataplexZone_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1059,8 +1099,8 @@ impl DataplexZoneTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataplexZoneTimeoutsEl {
-    type O = terrars::BlockAssignable<DataplexZoneTimeoutsEl>;
+impl terrars::ToListMappable for DataplexZone_Timeouts {
+    type O = terrars::BlockAssignable<DataplexZone_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1071,11 +1111,11 @@ impl terrars::ToListMappable for DataplexZoneTimeoutsEl {
     }
 }
 
-pub struct BuildDataplexZoneTimeoutsEl {}
+pub struct BuildDataplexZone_Timeouts {}
 
-impl BuildDataplexZoneTimeoutsEl {
-    pub fn build(self) -> DataplexZoneTimeoutsEl {
-        DataplexZoneTimeoutsEl {
+impl BuildDataplexZone_Timeouts {
+    pub fn build(self) -> DataplexZone_Timeouts {
+        DataplexZone_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1083,21 +1123,23 @@ impl BuildDataplexZoneTimeoutsEl {
     }
 }
 
-pub struct DataplexZoneTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataplexZone_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataplexZoneTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexZoneTimeoutsElRef {
-        DataplexZoneTimeoutsElRef {
+impl terrars::Ref for DataplexZone_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexZone_TimeoutsRef {
+        DataplexZone_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataplexZoneTimeoutsElRef {
+impl DataplexZone_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1116,10 +1158,4 @@ impl DataplexZoneTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataplexZoneDynamic {
-    discovery_spec: std::option::Option<terrars::DynamicBlock<DataplexZoneDiscoverySpecEl>>,
-    resource_spec: std::option::Option<terrars::DynamicBlock<DataplexZoneResourceSpecEl>>,
 }

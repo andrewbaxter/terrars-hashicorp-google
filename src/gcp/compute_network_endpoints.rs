@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeNetworkEndpointsData {
+struct ComputeNetworkEndpointsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct ComputeNetworkEndpointsData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     network_endpoint_group: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,16 +30,16 @@ struct ComputeNetworkEndpointsData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     zone: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    network_endpoints: std::option::Option<std::vec::Vec<ComputeNetworkEndpointsNetworkEndpointsEl>>,
+    network_endpoints: std::option::Option<std::vec::Vec<ComputeNetworkEndpoints_NetworkEndpoints>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComputeNetworkEndpointsTimeoutsEl>,
+    timeouts: std::option::Option<ComputeNetworkEndpoints_Timeouts>,
     dynamic: ComputeNetworkEndpointsDynamic,
 }
 
 struct ComputeNetworkEndpoints_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeNetworkEndpointsData>,
+    data: std::cell::RefCell<ComputeNetworkEndpointsData_>,
 }
 
 #[derive(Clone)]
@@ -135,6 +139,13 @@ impl ComputeNetworkEndpoints {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -156,7 +167,7 @@ impl ComputeNetworkEndpoints {
     #[doc = "Set the field `network_endpoints`.\n"]
     pub fn set_network_endpoints(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeNetworkEndpointsNetworkEndpointsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeNetworkEndpoints_NetworkEndpoints>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -170,9 +181,15 @@ impl ComputeNetworkEndpoints {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeNetworkEndpointsTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeNetworkEndpoints_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -198,8 +215,8 @@ impl ComputeNetworkEndpoints {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeNetworkEndpointsTimeoutsElRef {
-        ComputeNetworkEndpointsTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeNetworkEndpoints_TimeoutsRef {
+        ComputeNetworkEndpoints_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -245,12 +262,13 @@ impl BuildComputeNetworkEndpoints {
         let out = ComputeNetworkEndpoints(std::rc::Rc::new(ComputeNetworkEndpoints_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeNetworkEndpointsData {
+            data: std::cell::RefCell::new(ComputeNetworkEndpointsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 network_endpoint_group: self.network_endpoint_group,
                 project: core::default::Default::default(),
@@ -288,6 +306,12 @@ impl ComputeNetworkEndpointsRef {
         &self.shared
     }
 
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -311,25 +335,38 @@ impl ComputeNetworkEndpointsRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeNetworkEndpointsTimeoutsElRef {
-        ComputeNetworkEndpointsTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeNetworkEndpoints_TimeoutsRef {
+        ComputeNetworkEndpoints_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ComputeNetworkEndpointsDynamic {
+    network_endpoints: std::option::Option<terrars::DynamicBlock<ComputeNetworkEndpoints_NetworkEndpoints>>,
+}
+
 #[derive(Serialize)]
-pub struct ComputeNetworkEndpointsNetworkEndpointsEl {
+pub struct ComputeNetworkEndpoints_NetworkEndpoints {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     instance: std::option::Option<terrars::PrimField<std::string::String>>,
-    ip_address: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ip_address: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     port: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl ComputeNetworkEndpointsNetworkEndpointsEl {
+impl ComputeNetworkEndpoints_NetworkEndpoints {
     #[doc =
         "Set the field `instance`.\nThe name for a specific VM instance that the IP address belongs to.\nThis is required for network endpoints of type GCE_VM_IP_PORT.\nThe instance must be in the same zone as the network endpoint group."]
     pub fn set_instance(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.instance = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `ip_address`.\nIPv4 address of network endpoint. The IP address must belong\nto a VM in GCE (either the primary IP or as part of an aliased IP\nrange).\n**Note** 'ip_address' is required unless the Network Endpoint Group is created with the type of 'GCE_VM_IP_DEDICATED_BACKEND'"]
+    pub fn set_ip_address(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.ip_address = std::option::Option::Some(v.into());
         self
     }
 
@@ -341,8 +378,8 @@ impl ComputeNetworkEndpointsNetworkEndpointsEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeNetworkEndpointsNetworkEndpointsEl {
-    type O = terrars::BlockAssignable<ComputeNetworkEndpointsNetworkEndpointsEl>;
+impl terrars::ToListMappable for ComputeNetworkEndpoints_NetworkEndpoints {
+    type O = terrars::BlockAssignable<ComputeNetworkEndpoints_NetworkEndpoints>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -353,37 +390,35 @@ impl terrars::ToListMappable for ComputeNetworkEndpointsNetworkEndpointsEl {
     }
 }
 
-pub struct BuildComputeNetworkEndpointsNetworkEndpointsEl {
-    #[doc =
-        "IPv4 address of network endpoint. The IP address must belong\nto a VM in GCE (either the primary IP or as part of an aliased IP\nrange)."]
-    pub ip_address: terrars::PrimField<std::string::String>,
-}
+pub struct BuildComputeNetworkEndpoints_NetworkEndpoints {}
 
-impl BuildComputeNetworkEndpointsNetworkEndpointsEl {
-    pub fn build(self) -> ComputeNetworkEndpointsNetworkEndpointsEl {
-        ComputeNetworkEndpointsNetworkEndpointsEl {
+impl BuildComputeNetworkEndpoints_NetworkEndpoints {
+    pub fn build(self) -> ComputeNetworkEndpoints_NetworkEndpoints {
+        ComputeNetworkEndpoints_NetworkEndpoints {
             instance: core::default::Default::default(),
-            ip_address: self.ip_address,
+            ip_address: core::default::Default::default(),
             port: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeNetworkEndpointsNetworkEndpointsElRef {
+#[allow(dead_code)]
+pub struct ComputeNetworkEndpoints_NetworkEndpointsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeNetworkEndpointsNetworkEndpointsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeNetworkEndpointsNetworkEndpointsElRef {
-        ComputeNetworkEndpointsNetworkEndpointsElRef {
+impl terrars::Ref for ComputeNetworkEndpoints_NetworkEndpointsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeNetworkEndpoints_NetworkEndpointsRef {
+        ComputeNetworkEndpoints_NetworkEndpointsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeNetworkEndpointsNetworkEndpointsElRef {
+impl ComputeNetworkEndpoints_NetworkEndpointsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -395,7 +430,7 @@ impl ComputeNetworkEndpointsNetworkEndpointsElRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `ip_address` after provisioning.\nIPv4 address of network endpoint. The IP address must belong\nto a VM in GCE (either the primary IP or as part of an aliased IP\nrange)."]
+        "Get a reference to the value of field `ip_address` after provisioning.\nIPv4 address of network endpoint. The IP address must belong\nto a VM in GCE (either the primary IP or as part of an aliased IP\nrange).\n**Note** 'ip_address' is required unless the Network Endpoint Group is created with the type of 'GCE_VM_IP_DEDICATED_BACKEND'"]
     pub fn ip_address(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_address", self.base))
     }
@@ -408,7 +443,7 @@ impl ComputeNetworkEndpointsNetworkEndpointsElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeNetworkEndpointsTimeoutsEl {
+pub struct ComputeNetworkEndpoints_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -417,7 +452,7 @@ pub struct ComputeNetworkEndpointsTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeNetworkEndpointsTimeoutsEl {
+impl ComputeNetworkEndpoints_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -437,8 +472,8 @@ impl ComputeNetworkEndpointsTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeNetworkEndpointsTimeoutsEl {
-    type O = terrars::BlockAssignable<ComputeNetworkEndpointsTimeoutsEl>;
+impl terrars::ToListMappable for ComputeNetworkEndpoints_Timeouts {
+    type O = terrars::BlockAssignable<ComputeNetworkEndpoints_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -449,11 +484,11 @@ impl terrars::ToListMappable for ComputeNetworkEndpointsTimeoutsEl {
     }
 }
 
-pub struct BuildComputeNetworkEndpointsTimeoutsEl {}
+pub struct BuildComputeNetworkEndpoints_Timeouts {}
 
-impl BuildComputeNetworkEndpointsTimeoutsEl {
-    pub fn build(self) -> ComputeNetworkEndpointsTimeoutsEl {
-        ComputeNetworkEndpointsTimeoutsEl {
+impl BuildComputeNetworkEndpoints_Timeouts {
+    pub fn build(self) -> ComputeNetworkEndpoints_Timeouts {
+        ComputeNetworkEndpoints_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -461,21 +496,23 @@ impl BuildComputeNetworkEndpointsTimeoutsEl {
     }
 }
 
-pub struct ComputeNetworkEndpointsTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComputeNetworkEndpoints_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeNetworkEndpointsTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeNetworkEndpointsTimeoutsElRef {
-        ComputeNetworkEndpointsTimeoutsElRef {
+impl terrars::Ref for ComputeNetworkEndpoints_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeNetworkEndpoints_TimeoutsRef {
+        ComputeNetworkEndpoints_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeNetworkEndpointsTimeoutsElRef {
+impl ComputeNetworkEndpoints_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -494,9 +531,4 @@ impl ComputeNetworkEndpointsTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ComputeNetworkEndpointsDynamic {
-    network_endpoints: std::option::Option<terrars::DynamicBlock<ComputeNetworkEndpointsNetworkEndpointsEl>>,
 }

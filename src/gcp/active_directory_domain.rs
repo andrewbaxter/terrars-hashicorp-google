@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ActiveDirectoryDomainData {
+struct ActiveDirectoryDomainData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,6 +24,10 @@ struct ActiveDirectoryDomainData {
     admin: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     authorized_networks: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_protection: std::option::Option<terrars::PrimField<bool>>,
     domain_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -32,13 +38,13 @@ struct ActiveDirectoryDomainData {
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     reserved_ip_range: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ActiveDirectoryDomainTimeoutsEl>,
+    timeouts: std::option::Option<ActiveDirectoryDomain_Timeouts>,
 }
 
 struct ActiveDirectoryDomain_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ActiveDirectoryDomainData>,
+    data: std::cell::RefCell<ActiveDirectoryDomainData_>,
 }
 
 #[derive(Clone)]
@@ -155,6 +161,20 @@ impl ActiveDirectoryDomain {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `deletion_protection`.\nWhether Terraform will be prevented from destroying the domain. Defaults to true.\nWhen a'terraform destroy' or 'terraform apply' would delete the domain,\nthe command will fail if this field is not set to false in Terraform state.\nWhen the field is set to true or unset in Terraform state, a 'terraform apply'\nor 'terraform destroy' that would delete the domain will fail.\nWhen the field is set to false, deleting the domain is allowed."]
+    pub fn set_deletion_protection(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().deletion_protection = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -178,7 +198,7 @@ impl ActiveDirectoryDomain {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ActiveDirectoryDomainTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ActiveDirectoryDomain_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -196,7 +216,19 @@ impl ActiveDirectoryDomain {
     }
 
     #[doc =
-        "Get a reference to the value of field `domain_name` after provisioning.\nThe fully qualified domain name. e.g. mydomain.myorganization.com, with the restrictions,\nhttps://cloud.google.com/managed-microsoft-ad/reference/rest/v1/projects.locations.global.domains."]
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_protection` after provisioning.\nWhether Terraform will be prevented from destroying the domain. Defaults to true.\nWhen a'terraform destroy' or 'terraform apply' would delete the domain,\nthe command will fail if this field is not set to false in Terraform state.\nWhen the field is set to true or unset in Terraform state, a 'terraform apply'\nor 'terraform destroy' that would delete the domain will fail.\nWhen the field is set to false, deleting the domain is allowed."]
+    pub fn deletion_protection(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_protection", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `domain_name` after provisioning.\nThe fully qualified domain name. e.g. mydomain.myorganization.com, with the restrictions\nof https://cloud.google.com/managed-microsoft-ad/reference/rest/v1/projects.locations.global.domains."]
     pub fn domain_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain_name", self.extract_ref()))
     }
@@ -254,8 +286,8 @@ impl ActiveDirectoryDomain {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ActiveDirectoryDomainTimeoutsElRef {
-        ActiveDirectoryDomainTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ActiveDirectoryDomain_TimeoutsRef {
+        ActiveDirectoryDomain_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -293,7 +325,7 @@ impl terrars::Resource_ for ActiveDirectoryDomain_ {
 pub struct BuildActiveDirectoryDomain {
     pub tf_id: std::string::String,
     #[doc =
-        "The fully qualified domain name. e.g. mydomain.myorganization.com, with the restrictions,\nhttps://cloud.google.com/managed-microsoft-ad/reference/rest/v1/projects.locations.global.domains."]
+        "The fully qualified domain name. e.g. mydomain.myorganization.com, with the restrictions\nof https://cloud.google.com/managed-microsoft-ad/reference/rest/v1/projects.locations.global.domains."]
     pub domain_name: terrars::PrimField<std::string::String>,
     #[doc =
         "Locations where domain needs to be provisioned. [regions][compute/docs/regions-zones/]\ne.g. us-west1 or us-east4 Service supports up to 4 locations at once. Each location will use a /26 block."]
@@ -308,7 +340,7 @@ impl BuildActiveDirectoryDomain {
         let out = ActiveDirectoryDomain(std::rc::Rc::new(ActiveDirectoryDomain_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ActiveDirectoryDomainData {
+            data: std::cell::RefCell::new(ActiveDirectoryDomainData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -316,6 +348,8 @@ impl BuildActiveDirectoryDomain {
                 provisioner: core::default::Default::default(),
                 admin: core::default::Default::default(),
                 authorized_networks: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
+                deletion_protection: core::default::Default::default(),
                 domain_name: self.domain_name,
                 id: core::default::Default::default(),
                 labels: core::default::Default::default(),
@@ -366,7 +400,19 @@ impl ActiveDirectoryDomainRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `domain_name` after provisioning.\nThe fully qualified domain name. e.g. mydomain.myorganization.com, with the restrictions,\nhttps://cloud.google.com/managed-microsoft-ad/reference/rest/v1/projects.locations.global.domains."]
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_protection` after provisioning.\nWhether Terraform will be prevented from destroying the domain. Defaults to true.\nWhen a'terraform destroy' or 'terraform apply' would delete the domain,\nthe command will fail if this field is not set to false in Terraform state.\nWhen the field is set to true or unset in Terraform state, a 'terraform apply'\nor 'terraform destroy' that would delete the domain will fail.\nWhen the field is set to false, deleting the domain is allowed."]
+    pub fn deletion_protection(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_protection", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `domain_name` after provisioning.\nThe fully qualified domain name. e.g. mydomain.myorganization.com, with the restrictions\nof https://cloud.google.com/managed-microsoft-ad/reference/rest/v1/projects.locations.global.domains."]
     pub fn domain_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain_name", self.extract_ref()))
     }
@@ -424,13 +470,13 @@ impl ActiveDirectoryDomainRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ActiveDirectoryDomainTimeoutsElRef {
-        ActiveDirectoryDomainTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ActiveDirectoryDomain_TimeoutsRef {
+        ActiveDirectoryDomain_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct ActiveDirectoryDomainTimeoutsEl {
+pub struct ActiveDirectoryDomain_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -439,7 +485,7 @@ pub struct ActiveDirectoryDomainTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ActiveDirectoryDomainTimeoutsEl {
+impl ActiveDirectoryDomain_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -459,8 +505,8 @@ impl ActiveDirectoryDomainTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ActiveDirectoryDomainTimeoutsEl {
-    type O = terrars::BlockAssignable<ActiveDirectoryDomainTimeoutsEl>;
+impl terrars::ToListMappable for ActiveDirectoryDomain_Timeouts {
+    type O = terrars::BlockAssignable<ActiveDirectoryDomain_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -471,11 +517,11 @@ impl terrars::ToListMappable for ActiveDirectoryDomainTimeoutsEl {
     }
 }
 
-pub struct BuildActiveDirectoryDomainTimeoutsEl {}
+pub struct BuildActiveDirectoryDomain_Timeouts {}
 
-impl BuildActiveDirectoryDomainTimeoutsEl {
-    pub fn build(self) -> ActiveDirectoryDomainTimeoutsEl {
-        ActiveDirectoryDomainTimeoutsEl {
+impl BuildActiveDirectoryDomain_Timeouts {
+    pub fn build(self) -> ActiveDirectoryDomain_Timeouts {
+        ActiveDirectoryDomain_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -483,21 +529,23 @@ impl BuildActiveDirectoryDomainTimeoutsEl {
     }
 }
 
-pub struct ActiveDirectoryDomainTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ActiveDirectoryDomain_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ActiveDirectoryDomainTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ActiveDirectoryDomainTimeoutsElRef {
-        ActiveDirectoryDomainTimeoutsElRef {
+impl terrars::Ref for ActiveDirectoryDomain_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ActiveDirectoryDomain_TimeoutsRef {
+        ActiveDirectoryDomain_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ActiveDirectoryDomainTimeoutsElRef {
+impl ActiveDirectoryDomain_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

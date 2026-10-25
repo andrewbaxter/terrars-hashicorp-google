@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataVmwareengineNetworkPolicyData {
+struct DataVmwareengineNetworkPolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -27,7 +29,7 @@ struct DataVmwareengineNetworkPolicyData {
 struct DataVmwareengineNetworkPolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataVmwareengineNetworkPolicyData>,
+    data: std::cell::RefCell<DataVmwareengineNetworkPolicyData_>,
 }
 
 #[derive(Clone)]
@@ -91,6 +93,12 @@ impl DataVmwareengineNetworkPolicy {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nUser-provided description for this network policy."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -104,7 +112,7 @@ impl DataVmwareengineNetworkPolicy {
 
     #[doc =
         "Get a reference to the value of field `external_ip` after provisioning.\nNetwork service that allows External IP addresses to be assigned to VMware workloads.\nThis service can only be enabled when internetAccess is also enabled."]
-    pub fn external_ip(&self) -> terrars::ListRef<DataVmwareengineNetworkPolicyExternalIpElRef> {
+    pub fn external_ip(&self) -> terrars::ListRef<DataVmwareengineNetworkPolicy_ExternalIpRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.external_ip", self.extract_ref()))
     }
 
@@ -115,7 +123,7 @@ impl DataVmwareengineNetworkPolicy {
 
     #[doc =
         "Get a reference to the value of field `internet_access` after provisioning.\nNetwork service that allows VMware workloads to access the internet."]
-    pub fn internet_access(&self) -> terrars::ListRef<DataVmwareengineNetworkPolicyInternetAccessElRef> {
+    pub fn internet_access(&self) -> terrars::ListRef<DataVmwareengineNetworkPolicy_InternetAccessRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.internet_access", self.extract_ref()))
     }
 
@@ -208,7 +216,7 @@ impl BuildDataVmwareengineNetworkPolicy {
         let out = DataVmwareengineNetworkPolicy(std::rc::Rc::new(DataVmwareengineNetworkPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataVmwareengineNetworkPolicyData {
+            data: std::cell::RefCell::new(DataVmwareengineNetworkPolicyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -254,6 +262,12 @@ impl DataVmwareengineNetworkPolicyRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nUser-provided description for this network policy."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -267,7 +281,7 @@ impl DataVmwareengineNetworkPolicyRef {
 
     #[doc =
         "Get a reference to the value of field `external_ip` after provisioning.\nNetwork service that allows External IP addresses to be assigned to VMware workloads.\nThis service can only be enabled when internetAccess is also enabled."]
-    pub fn external_ip(&self) -> terrars::ListRef<DataVmwareengineNetworkPolicyExternalIpElRef> {
+    pub fn external_ip(&self) -> terrars::ListRef<DataVmwareengineNetworkPolicy_ExternalIpRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.external_ip", self.extract_ref()))
     }
 
@@ -278,7 +292,7 @@ impl DataVmwareengineNetworkPolicyRef {
 
     #[doc =
         "Get a reference to the value of field `internet_access` after provisioning.\nNetwork service that allows VMware workloads to access the internet."]
-    pub fn internet_access(&self) -> terrars::ListRef<DataVmwareengineNetworkPolicyInternetAccessElRef> {
+    pub fn internet_access(&self) -> terrars::ListRef<DataVmwareengineNetworkPolicy_InternetAccessRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.internet_access", self.extract_ref()))
     }
 
@@ -327,14 +341,14 @@ impl DataVmwareengineNetworkPolicyRef {
 }
 
 #[derive(Serialize)]
-pub struct DataVmwareengineNetworkPolicyExternalIpEl {
+pub struct DataVmwareengineNetworkPolicy_ExternalIp {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     state: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataVmwareengineNetworkPolicyExternalIpEl {
+impl DataVmwareengineNetworkPolicy_ExternalIp {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -348,8 +362,8 @@ impl DataVmwareengineNetworkPolicyExternalIpEl {
     }
 }
 
-impl terrars::ToListMappable for DataVmwareengineNetworkPolicyExternalIpEl {
-    type O = terrars::BlockAssignable<DataVmwareengineNetworkPolicyExternalIpEl>;
+impl terrars::ToListMappable for DataVmwareengineNetworkPolicy_ExternalIp {
+    type O = terrars::BlockAssignable<DataVmwareengineNetworkPolicy_ExternalIp>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -360,32 +374,34 @@ impl terrars::ToListMappable for DataVmwareengineNetworkPolicyExternalIpEl {
     }
 }
 
-pub struct BuildDataVmwareengineNetworkPolicyExternalIpEl {}
+pub struct BuildDataVmwareengineNetworkPolicy_ExternalIp {}
 
-impl BuildDataVmwareengineNetworkPolicyExternalIpEl {
-    pub fn build(self) -> DataVmwareengineNetworkPolicyExternalIpEl {
-        DataVmwareengineNetworkPolicyExternalIpEl {
+impl BuildDataVmwareengineNetworkPolicy_ExternalIp {
+    pub fn build(self) -> DataVmwareengineNetworkPolicy_ExternalIp {
+        DataVmwareengineNetworkPolicy_ExternalIp {
             enabled: core::default::Default::default(),
             state: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataVmwareengineNetworkPolicyExternalIpElRef {
+#[allow(dead_code)]
+pub struct DataVmwareengineNetworkPolicy_ExternalIpRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataVmwareengineNetworkPolicyExternalIpElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVmwareengineNetworkPolicyExternalIpElRef {
-        DataVmwareengineNetworkPolicyExternalIpElRef {
+impl terrars::Ref for DataVmwareengineNetworkPolicy_ExternalIpRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVmwareengineNetworkPolicy_ExternalIpRef {
+        DataVmwareengineNetworkPolicy_ExternalIpRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataVmwareengineNetworkPolicyExternalIpElRef {
+impl DataVmwareengineNetworkPolicy_ExternalIpRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -402,14 +418,14 @@ impl DataVmwareengineNetworkPolicyExternalIpElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataVmwareengineNetworkPolicyInternetAccessEl {
+pub struct DataVmwareengineNetworkPolicy_InternetAccess {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     state: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataVmwareengineNetworkPolicyInternetAccessEl {
+impl DataVmwareengineNetworkPolicy_InternetAccess {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -423,8 +439,8 @@ impl DataVmwareengineNetworkPolicyInternetAccessEl {
     }
 }
 
-impl terrars::ToListMappable for DataVmwareengineNetworkPolicyInternetAccessEl {
-    type O = terrars::BlockAssignable<DataVmwareengineNetworkPolicyInternetAccessEl>;
+impl terrars::ToListMappable for DataVmwareengineNetworkPolicy_InternetAccess {
+    type O = terrars::BlockAssignable<DataVmwareengineNetworkPolicy_InternetAccess>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -435,35 +451,37 @@ impl terrars::ToListMappable for DataVmwareengineNetworkPolicyInternetAccessEl {
     }
 }
 
-pub struct BuildDataVmwareengineNetworkPolicyInternetAccessEl {}
+pub struct BuildDataVmwareengineNetworkPolicy_InternetAccess {}
 
-impl BuildDataVmwareengineNetworkPolicyInternetAccessEl {
-    pub fn build(self) -> DataVmwareengineNetworkPolicyInternetAccessEl {
-        DataVmwareengineNetworkPolicyInternetAccessEl {
+impl BuildDataVmwareengineNetworkPolicy_InternetAccess {
+    pub fn build(self) -> DataVmwareengineNetworkPolicy_InternetAccess {
+        DataVmwareengineNetworkPolicy_InternetAccess {
             enabled: core::default::Default::default(),
             state: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataVmwareengineNetworkPolicyInternetAccessElRef {
+#[allow(dead_code)]
+pub struct DataVmwareengineNetworkPolicy_InternetAccessRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataVmwareengineNetworkPolicyInternetAccessElRef {
+impl terrars::Ref for DataVmwareengineNetworkPolicy_InternetAccessRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataVmwareengineNetworkPolicyInternetAccessElRef {
-        DataVmwareengineNetworkPolicyInternetAccessElRef {
+    ) -> DataVmwareengineNetworkPolicy_InternetAccessRef {
+        DataVmwareengineNetworkPolicy_InternetAccessRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataVmwareengineNetworkPolicyInternetAccessElRef {
+impl DataVmwareengineNetworkPolicy_InternetAccessRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

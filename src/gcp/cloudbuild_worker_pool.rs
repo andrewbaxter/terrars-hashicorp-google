@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct CloudbuildWorkerPoolData {
+struct CloudbuildWorkerPoolData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,6 +23,8 @@ struct CloudbuildWorkerPoolData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     annotations: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     display_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -29,18 +33,20 @@ struct CloudbuildWorkerPoolData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    network_config: std::option::Option<std::vec::Vec<CloudbuildWorkerPoolNetworkConfigEl>>,
+    network_config: std::option::Option<std::vec::Vec<CloudbuildWorkerPool_NetworkConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<CloudbuildWorkerPoolTimeoutsEl>,
+    private_service_connect: std::option::Option<std::vec::Vec<CloudbuildWorkerPool_PrivateServiceConnect>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    worker_config: std::option::Option<std::vec::Vec<CloudbuildWorkerPoolWorkerConfigEl>>,
+    timeouts: std::option::Option<CloudbuildWorkerPool_Timeouts>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    worker_config: std::option::Option<std::vec::Vec<CloudbuildWorkerPool_WorkerConfig>>,
     dynamic: CloudbuildWorkerPoolDynamic,
 }
 
 struct CloudbuildWorkerPool_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CloudbuildWorkerPoolData>,
+    data: std::cell::RefCell<CloudbuildWorkerPoolData_>,
 }
 
 #[derive(Clone)]
@@ -151,6 +157,13 @@ impl CloudbuildWorkerPool {
     }
 
     #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `display_name`.\nA user-specified, human-readable name for the `WorkerPool`. If provided, this value must be 1-63 characters."]
     pub fn set_display_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().display_name = std::option::Option::Some(v.into());
@@ -172,7 +185,7 @@ impl CloudbuildWorkerPool {
     #[doc = "Set the field `network_config`.\n"]
     pub fn set_network_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudbuildWorkerPoolNetworkConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudbuildWorkerPool_NetworkConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -185,8 +198,24 @@ impl CloudbuildWorkerPool {
         self
     }
 
+    #[doc = "Set the field `private_service_connect`.\n"]
+    pub fn set_private_service_connect(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudbuildWorkerPool_PrivateServiceConnect>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().private_service_connect = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.private_service_connect = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<CloudbuildWorkerPoolTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<CloudbuildWorkerPool_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -194,7 +223,7 @@ impl CloudbuildWorkerPool {
     #[doc = "Set the field `worker_config`.\n"]
     pub fn set_worker_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudbuildWorkerPoolWorkerConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudbuildWorkerPool_WorkerConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -223,6 +252,12 @@ impl CloudbuildWorkerPool {
         "Get a reference to the value of field `delete_time` after provisioning.\nOutput only. Time at which the request to delete the `WorkerPool` was received."]
     pub fn delete_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -276,17 +311,22 @@ impl CloudbuildWorkerPool {
     }
 
     #[doc = "Get a reference to the value of field `network_config` after provisioning.\n"]
-    pub fn network_config(&self) -> terrars::ListRef<CloudbuildWorkerPoolNetworkConfigElRef> {
+    pub fn network_config(&self) -> terrars::ListRef<CloudbuildWorkerPool_NetworkConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_config", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `private_service_connect` after provisioning.\n"]
+    pub fn private_service_connect(&self) -> terrars::ListRef<CloudbuildWorkerPool_PrivateServiceConnectRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.private_service_connect", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> CloudbuildWorkerPoolTimeoutsElRef {
-        CloudbuildWorkerPoolTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> CloudbuildWorkerPool_TimeoutsRef {
+        CloudbuildWorkerPool_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `worker_config` after provisioning.\n"]
-    pub fn worker_config(&self) -> terrars::ListRef<CloudbuildWorkerPoolWorkerConfigElRef> {
+    pub fn worker_config(&self) -> terrars::ListRef<CloudbuildWorkerPool_WorkerConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.worker_config", self.extract_ref()))
     }
 }
@@ -335,19 +375,21 @@ impl BuildCloudbuildWorkerPool {
         let out = CloudbuildWorkerPool(std::rc::Rc::new(CloudbuildWorkerPool_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CloudbuildWorkerPoolData {
+            data: std::cell::RefCell::new(CloudbuildWorkerPoolData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 annotations: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 display_name: core::default::Default::default(),
                 id: core::default::Default::default(),
                 location: self.location,
                 name: self.name,
                 project: core::default::Default::default(),
                 network_config: core::default::Default::default(),
+                private_service_connect: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 worker_config: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -400,6 +442,12 @@ impl CloudbuildWorkerPoolRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `display_name` after provisioning.\nA user-specified, human-readable name for the `WorkerPool`. If provided, this value must be 1-63 characters."]
     pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
@@ -450,29 +498,41 @@ impl CloudbuildWorkerPoolRef {
     }
 
     #[doc = "Get a reference to the value of field `network_config` after provisioning.\n"]
-    pub fn network_config(&self) -> terrars::ListRef<CloudbuildWorkerPoolNetworkConfigElRef> {
+    pub fn network_config(&self) -> terrars::ListRef<CloudbuildWorkerPool_NetworkConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_config", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `private_service_connect` after provisioning.\n"]
+    pub fn private_service_connect(&self) -> terrars::ListRef<CloudbuildWorkerPool_PrivateServiceConnectRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.private_service_connect", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> CloudbuildWorkerPoolTimeoutsElRef {
-        CloudbuildWorkerPoolTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> CloudbuildWorkerPool_TimeoutsRef {
+        CloudbuildWorkerPool_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `worker_config` after provisioning.\n"]
-    pub fn worker_config(&self) -> terrars::ListRef<CloudbuildWorkerPoolWorkerConfigElRef> {
+    pub fn worker_config(&self) -> terrars::ListRef<CloudbuildWorkerPool_WorkerConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.worker_config", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct CloudbuildWorkerPoolDynamic {
+    network_config: std::option::Option<terrars::DynamicBlock<CloudbuildWorkerPool_NetworkConfig>>,
+    private_service_connect: std::option::Option<terrars::DynamicBlock<CloudbuildWorkerPool_PrivateServiceConnect>>,
+    worker_config: std::option::Option<terrars::DynamicBlock<CloudbuildWorkerPool_WorkerConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct CloudbuildWorkerPoolNetworkConfigEl {
+pub struct CloudbuildWorkerPool_NetworkConfig {
     peered_network: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     peered_network_ip_range: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CloudbuildWorkerPoolNetworkConfigEl {
+impl CloudbuildWorkerPool_NetworkConfig {
     #[doc =
         "Set the field `peered_network_ip_range`.\nOptional. Immutable. Subnet IP range within the peered network. This is specified in CIDR notation with a slash and the subnet prefix size. You can optionally specify an IP address before the subnet prefix value. e.g. `192.168.0.0/29` would specify an IP range starting at 192.168.0.0 with a prefix size of 29 bits. `/16` would specify a prefix size of 16 bits, with an automatically determined IP within the peered VPC. If unspecified, a value of `/24` will be used."]
     pub fn set_peered_network_ip_range(
@@ -484,8 +544,8 @@ impl CloudbuildWorkerPoolNetworkConfigEl {
     }
 }
 
-impl terrars::ToListMappable for CloudbuildWorkerPoolNetworkConfigEl {
-    type O = terrars::BlockAssignable<CloudbuildWorkerPoolNetworkConfigEl>;
+impl terrars::ToListMappable for CloudbuildWorkerPool_NetworkConfig {
+    type O = terrars::BlockAssignable<CloudbuildWorkerPool_NetworkConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -496,36 +556,38 @@ impl terrars::ToListMappable for CloudbuildWorkerPoolNetworkConfigEl {
     }
 }
 
-pub struct BuildCloudbuildWorkerPoolNetworkConfigEl {
+pub struct BuildCloudbuildWorkerPool_NetworkConfig {
     #[doc =
         "Required. Immutable. The network definition that the workers are peered to. If this section is left empty, the workers will be peered to `WorkerPool.project_id` on the service producer network. Must be in the format `projects/{project}/global/networks/{network}`, where `{project}` is a project number, such as `12345`, and `{network}` is the name of a VPC network in the project. See [Understanding network configuration options](https://cloud.google.com/cloud-build/docs/custom-workers/set-up-custom-worker-pool-environment#understanding_the_network_configuration_options)"]
     pub peered_network: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudbuildWorkerPoolNetworkConfigEl {
-    pub fn build(self) -> CloudbuildWorkerPoolNetworkConfigEl {
-        CloudbuildWorkerPoolNetworkConfigEl {
+impl BuildCloudbuildWorkerPool_NetworkConfig {
+    pub fn build(self) -> CloudbuildWorkerPool_NetworkConfig {
+        CloudbuildWorkerPool_NetworkConfig {
             peered_network: self.peered_network,
             peered_network_ip_range: core::default::Default::default(),
         }
     }
 }
 
-pub struct CloudbuildWorkerPoolNetworkConfigElRef {
+#[allow(dead_code)]
+pub struct CloudbuildWorkerPool_NetworkConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudbuildWorkerPoolNetworkConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudbuildWorkerPoolNetworkConfigElRef {
-        CloudbuildWorkerPoolNetworkConfigElRef {
+impl terrars::Ref for CloudbuildWorkerPool_NetworkConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudbuildWorkerPool_NetworkConfigRef {
+        CloudbuildWorkerPool_NetworkConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudbuildWorkerPoolNetworkConfigElRef {
+impl CloudbuildWorkerPool_NetworkConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -544,7 +606,84 @@ impl CloudbuildWorkerPoolNetworkConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudbuildWorkerPoolTimeoutsEl {
+pub struct CloudbuildWorkerPool_PrivateServiceConnect {
+    network_attachment: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    route_all_traffic: std::option::Option<terrars::PrimField<bool>>,
+}
+
+impl CloudbuildWorkerPool_PrivateServiceConnect {
+    #[doc =
+        "Set the field `route_all_traffic`.\nImmutable. Route all traffic through PSC interface. Enable this if you want full control of traffic in the private pool. Configure Cloud NAT for the subnet of network attachment if you need to access public Internet. If false, Only route private IPs, e.g. 10.0.0.0/8, 172.16.0.0/12, and 192.168.0.0/16 through PSC interface."]
+    pub fn set_route_all_traffic(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.route_all_traffic = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for CloudbuildWorkerPool_PrivateServiceConnect {
+    type O = terrars::BlockAssignable<CloudbuildWorkerPool_PrivateServiceConnect>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCloudbuildWorkerPool_PrivateServiceConnect {
+    #[doc =
+        "Required. Immutable. The network attachment that the worker network interface is connected to. Must be in the format `projects/{project}/regions/{region}/networkAttachments/{networkAttachment}`. The region of network attachment must be the same as the worker pool. See [Network Attachments](https://cloud.google.com/vpc/docs/about-network-attachments)"]
+    pub network_attachment: terrars::PrimField<std::string::String>,
+}
+
+impl BuildCloudbuildWorkerPool_PrivateServiceConnect {
+    pub fn build(self) -> CloudbuildWorkerPool_PrivateServiceConnect {
+        CloudbuildWorkerPool_PrivateServiceConnect {
+            network_attachment: self.network_attachment,
+            route_all_traffic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CloudbuildWorkerPool_PrivateServiceConnectRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CloudbuildWorkerPool_PrivateServiceConnectRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudbuildWorkerPool_PrivateServiceConnectRef {
+        CloudbuildWorkerPool_PrivateServiceConnectRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CloudbuildWorkerPool_PrivateServiceConnectRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `network_attachment` after provisioning.\nRequired. Immutable. The network attachment that the worker network interface is connected to. Must be in the format `projects/{project}/regions/{region}/networkAttachments/{networkAttachment}`. The region of network attachment must be the same as the worker pool. See [Network Attachments](https://cloud.google.com/vpc/docs/about-network-attachments)"]
+    pub fn network_attachment(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_attachment", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `route_all_traffic` after provisioning.\nImmutable. Route all traffic through PSC interface. Enable this if you want full control of traffic in the private pool. Configure Cloud NAT for the subnet of network attachment if you need to access public Internet. If false, Only route private IPs, e.g. 10.0.0.0/8, 172.16.0.0/12, and 192.168.0.0/16 through PSC interface."]
+    pub fn route_all_traffic(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.route_all_traffic", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct CloudbuildWorkerPool_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -553,7 +692,7 @@ pub struct CloudbuildWorkerPoolTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CloudbuildWorkerPoolTimeoutsEl {
+impl CloudbuildWorkerPool_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -573,8 +712,8 @@ impl CloudbuildWorkerPoolTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for CloudbuildWorkerPoolTimeoutsEl {
-    type O = terrars::BlockAssignable<CloudbuildWorkerPoolTimeoutsEl>;
+impl terrars::ToListMappable for CloudbuildWorkerPool_Timeouts {
+    type O = terrars::BlockAssignable<CloudbuildWorkerPool_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -585,11 +724,11 @@ impl terrars::ToListMappable for CloudbuildWorkerPoolTimeoutsEl {
     }
 }
 
-pub struct BuildCloudbuildWorkerPoolTimeoutsEl {}
+pub struct BuildCloudbuildWorkerPool_Timeouts {}
 
-impl BuildCloudbuildWorkerPoolTimeoutsEl {
-    pub fn build(self) -> CloudbuildWorkerPoolTimeoutsEl {
-        CloudbuildWorkerPoolTimeoutsEl {
+impl BuildCloudbuildWorkerPool_Timeouts {
+    pub fn build(self) -> CloudbuildWorkerPool_Timeouts {
+        CloudbuildWorkerPool_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -597,21 +736,23 @@ impl BuildCloudbuildWorkerPoolTimeoutsEl {
     }
 }
 
-pub struct CloudbuildWorkerPoolTimeoutsElRef {
+#[allow(dead_code)]
+pub struct CloudbuildWorkerPool_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudbuildWorkerPoolTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudbuildWorkerPoolTimeoutsElRef {
-        CloudbuildWorkerPoolTimeoutsElRef {
+impl terrars::Ref for CloudbuildWorkerPool_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudbuildWorkerPool_TimeoutsRef {
+        CloudbuildWorkerPool_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudbuildWorkerPoolTimeoutsElRef {
+impl CloudbuildWorkerPool_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -633,20 +774,29 @@ impl CloudbuildWorkerPoolTimeoutsElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudbuildWorkerPoolWorkerConfigEl {
+pub struct CloudbuildWorkerPool_WorkerConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     disk_size_gb: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_nested_virtualization: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     machine_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     no_external_ip: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl CloudbuildWorkerPoolWorkerConfigEl {
+impl CloudbuildWorkerPool_WorkerConfig {
     #[doc =
         "Set the field `disk_size_gb`.\nSize of the disk attached to the worker, in GB. See [Worker pool config file](https://cloud.google.com/cloud-build/docs/custom-workers/worker-pool-config-file). Specify a value of up to 1000. If `0` is specified, Cloud Build will use a standard disk size."]
     pub fn set_disk_size_gb(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.disk_size_gb = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `enable_nested_virtualization`.\nEnable nested virtualization on the worker, if supported by the machine type. See [Worker pool config file](https://cloud.google.com/build/docs/private-pools/worker-pool-config-file-schema). If left blank, Cloud Build will set this to false."]
+    pub fn set_enable_nested_virtualization(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enable_nested_virtualization = std::option::Option::Some(v.into());
         self
     }
 
@@ -665,8 +815,8 @@ impl CloudbuildWorkerPoolWorkerConfigEl {
     }
 }
 
-impl terrars::ToListMappable for CloudbuildWorkerPoolWorkerConfigEl {
-    type O = terrars::BlockAssignable<CloudbuildWorkerPoolWorkerConfigEl>;
+impl terrars::ToListMappable for CloudbuildWorkerPool_WorkerConfig {
+    type O = terrars::BlockAssignable<CloudbuildWorkerPool_WorkerConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -677,33 +827,36 @@ impl terrars::ToListMappable for CloudbuildWorkerPoolWorkerConfigEl {
     }
 }
 
-pub struct BuildCloudbuildWorkerPoolWorkerConfigEl {}
+pub struct BuildCloudbuildWorkerPool_WorkerConfig {}
 
-impl BuildCloudbuildWorkerPoolWorkerConfigEl {
-    pub fn build(self) -> CloudbuildWorkerPoolWorkerConfigEl {
-        CloudbuildWorkerPoolWorkerConfigEl {
+impl BuildCloudbuildWorkerPool_WorkerConfig {
+    pub fn build(self) -> CloudbuildWorkerPool_WorkerConfig {
+        CloudbuildWorkerPool_WorkerConfig {
             disk_size_gb: core::default::Default::default(),
+            enable_nested_virtualization: core::default::Default::default(),
             machine_type: core::default::Default::default(),
             no_external_ip: core::default::Default::default(),
         }
     }
 }
 
-pub struct CloudbuildWorkerPoolWorkerConfigElRef {
+#[allow(dead_code)]
+pub struct CloudbuildWorkerPool_WorkerConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudbuildWorkerPoolWorkerConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudbuildWorkerPoolWorkerConfigElRef {
-        CloudbuildWorkerPoolWorkerConfigElRef {
+impl terrars::Ref for CloudbuildWorkerPool_WorkerConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudbuildWorkerPool_WorkerConfigRef {
+        CloudbuildWorkerPool_WorkerConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudbuildWorkerPoolWorkerConfigElRef {
+impl CloudbuildWorkerPool_WorkerConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -712,6 +865,12 @@ impl CloudbuildWorkerPoolWorkerConfigElRef {
         "Get a reference to the value of field `disk_size_gb` after provisioning.\nSize of the disk attached to the worker, in GB. See [Worker pool config file](https://cloud.google.com/cloud-build/docs/custom-workers/worker-pool-config-file). Specify a value of up to 1000. If `0` is specified, Cloud Build will use a standard disk size."]
     pub fn disk_size_gb(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.disk_size_gb", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `enable_nested_virtualization` after provisioning.\nEnable nested virtualization on the worker, if supported by the machine type. See [Worker pool config file](https://cloud.google.com/build/docs/private-pools/worker-pool-config-file-schema). If left blank, Cloud Build will set this to false."]
+    pub fn enable_nested_virtualization(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_nested_virtualization", self.base))
     }
 
     #[doc =
@@ -725,10 +884,4 @@ impl CloudbuildWorkerPoolWorkerConfigElRef {
     pub fn no_external_ip(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.no_external_ip", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct CloudbuildWorkerPoolDynamic {
-    network_config: std::option::Option<terrars::DynamicBlock<CloudbuildWorkerPoolNetworkConfigEl>>,
-    worker_config: std::option::Option<terrars::DynamicBlock<CloudbuildWorkerPoolWorkerConfigEl>>,
 }

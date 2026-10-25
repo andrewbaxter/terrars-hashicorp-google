@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct MonitoringUptimeCheckConfigData {
+struct MonitoringUptimeCheckConfigData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,9 +22,13 @@ struct MonitoringUptimeCheckConfigData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     checker_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     display_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    log_check_failures: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     period: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -33,26 +39,26 @@ struct MonitoringUptimeCheckConfigData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     user_labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    content_matchers: std::option::Option<std::vec::Vec<MonitoringUptimeCheckConfigContentMatchersEl>>,
+    content_matchers: std::option::Option<std::vec::Vec<MonitoringUptimeCheckConfig_ContentMatchers>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    http_check: std::option::Option<std::vec::Vec<MonitoringUptimeCheckConfigHttpCheckEl>>,
+    http_check: std::option::Option<std::vec::Vec<MonitoringUptimeCheckConfig_HttpCheck>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    monitored_resource: std::option::Option<std::vec::Vec<MonitoringUptimeCheckConfigMonitoredResourceEl>>,
+    monitored_resource: std::option::Option<std::vec::Vec<MonitoringUptimeCheckConfig_MonitoredResource>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    resource_group: std::option::Option<std::vec::Vec<MonitoringUptimeCheckConfigResourceGroupEl>>,
+    resource_group: std::option::Option<std::vec::Vec<MonitoringUptimeCheckConfig_ResourceGroup>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    synthetic_monitor: std::option::Option<std::vec::Vec<MonitoringUptimeCheckConfigSyntheticMonitorEl>>,
+    synthetic_monitor: std::option::Option<std::vec::Vec<MonitoringUptimeCheckConfig_SyntheticMonitor>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tcp_check: std::option::Option<std::vec::Vec<MonitoringUptimeCheckConfigTcpCheckEl>>,
+    tcp_check: std::option::Option<std::vec::Vec<MonitoringUptimeCheckConfig_TcpCheck>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<MonitoringUptimeCheckConfigTimeoutsEl>,
+    timeouts: std::option::Option<MonitoringUptimeCheckConfig_Timeouts>,
     dynamic: MonitoringUptimeCheckConfigDynamic,
 }
 
 struct MonitoringUptimeCheckConfig_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<MonitoringUptimeCheckConfigData>,
+    data: std::cell::RefCell<MonitoringUptimeCheckConfigData_>,
 }
 
 #[derive(Clone)]
@@ -159,9 +165,23 @@ impl MonitoringUptimeCheckConfig {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `log_check_failures`.\nSpecifies whether to log the results of failed probes to Cloud Logging."]
+    pub fn set_log_check_failures(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().log_check_failures = std::option::Option::Some(v.into());
         self
     }
 
@@ -201,7 +221,7 @@ impl MonitoringUptimeCheckConfig {
     #[doc = "Set the field `content_matchers`.\n"]
     pub fn set_content_matchers(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringUptimeCheckConfigContentMatchersEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringUptimeCheckConfig_ContentMatchers>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -217,7 +237,7 @@ impl MonitoringUptimeCheckConfig {
     #[doc = "Set the field `http_check`.\n"]
     pub fn set_http_check(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringUptimeCheckConfigHttpCheckEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringUptimeCheckConfig_HttpCheck>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -233,7 +253,7 @@ impl MonitoringUptimeCheckConfig {
     #[doc = "Set the field `monitored_resource`.\n"]
     pub fn set_monitored_resource(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringUptimeCheckConfigMonitoredResourceEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringUptimeCheckConfig_MonitoredResource>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -249,7 +269,7 @@ impl MonitoringUptimeCheckConfig {
     #[doc = "Set the field `resource_group`.\n"]
     pub fn set_resource_group(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringUptimeCheckConfigResourceGroupEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringUptimeCheckConfig_ResourceGroup>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -265,7 +285,7 @@ impl MonitoringUptimeCheckConfig {
     #[doc = "Set the field `synthetic_monitor`.\n"]
     pub fn set_synthetic_monitor(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringUptimeCheckConfigSyntheticMonitorEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringUptimeCheckConfig_SyntheticMonitor>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -281,7 +301,7 @@ impl MonitoringUptimeCheckConfig {
     #[doc = "Set the field `tcp_check`.\n"]
     pub fn set_tcp_check(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringUptimeCheckConfigTcpCheckEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringUptimeCheckConfig_TcpCheck>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -295,7 +315,7 @@ impl MonitoringUptimeCheckConfig {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<MonitoringUptimeCheckConfigTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<MonitoringUptimeCheckConfig_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -307,6 +327,12 @@ impl MonitoringUptimeCheckConfig {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `display_name` after provisioning.\nA human-friendly name for the uptime check configuration. The display name should be unique within a Stackdriver Workspace in order to make it easier to identify; however, uniqueness is not enforced."]
     pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
@@ -315,6 +341,12 @@ impl MonitoringUptimeCheckConfig {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `log_check_failures` after provisioning.\nSpecifies whether to log the results of failed probes to Cloud Logging."]
+    pub fn log_check_failures(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.log_check_failures", self.extract_ref()))
     }
 
     #[doc =
@@ -358,38 +390,38 @@ impl MonitoringUptimeCheckConfig {
     }
 
     #[doc = "Get a reference to the value of field `content_matchers` after provisioning.\n"]
-    pub fn content_matchers(&self) -> terrars::ListRef<MonitoringUptimeCheckConfigContentMatchersElRef> {
+    pub fn content_matchers(&self) -> terrars::ListRef<MonitoringUptimeCheckConfig_ContentMatchersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.content_matchers", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `http_check` after provisioning.\n"]
-    pub fn http_check(&self) -> terrars::ListRef<MonitoringUptimeCheckConfigHttpCheckElRef> {
+    pub fn http_check(&self) -> terrars::ListRef<MonitoringUptimeCheckConfig_HttpCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.http_check", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `monitored_resource` after provisioning.\n"]
-    pub fn monitored_resource(&self) -> terrars::ListRef<MonitoringUptimeCheckConfigMonitoredResourceElRef> {
+    pub fn monitored_resource(&self) -> terrars::ListRef<MonitoringUptimeCheckConfig_MonitoredResourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.monitored_resource", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `resource_group` after provisioning.\n"]
-    pub fn resource_group(&self) -> terrars::ListRef<MonitoringUptimeCheckConfigResourceGroupElRef> {
+    pub fn resource_group(&self) -> terrars::ListRef<MonitoringUptimeCheckConfig_ResourceGroupRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.resource_group", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `synthetic_monitor` after provisioning.\n"]
-    pub fn synthetic_monitor(&self) -> terrars::ListRef<MonitoringUptimeCheckConfigSyntheticMonitorElRef> {
+    pub fn synthetic_monitor(&self) -> terrars::ListRef<MonitoringUptimeCheckConfig_SyntheticMonitorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.synthetic_monitor", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tcp_check` after provisioning.\n"]
-    pub fn tcp_check(&self) -> terrars::ListRef<MonitoringUptimeCheckConfigTcpCheckElRef> {
+    pub fn tcp_check(&self) -> terrars::ListRef<MonitoringUptimeCheckConfig_TcpCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tcp_check", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> MonitoringUptimeCheckConfigTimeoutsElRef {
-        MonitoringUptimeCheckConfigTimeoutsElRef::new(
+    pub fn timeouts(&self) -> MonitoringUptimeCheckConfig_TimeoutsRef {
+        MonitoringUptimeCheckConfig_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -442,15 +474,17 @@ impl BuildMonitoringUptimeCheckConfig {
         let out = MonitoringUptimeCheckConfig(std::rc::Rc::new(MonitoringUptimeCheckConfig_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(MonitoringUptimeCheckConfigData {
+            data: std::cell::RefCell::new(MonitoringUptimeCheckConfigData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 checker_type: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 display_name: self.display_name,
                 id: core::default::Default::default(),
+                log_check_failures: core::default::Default::default(),
                 period: core::default::Default::default(),
                 project: core::default::Default::default(),
                 selected_regions: core::default::Default::default(),
@@ -501,6 +535,12 @@ impl MonitoringUptimeCheckConfigRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `display_name` after provisioning.\nA human-friendly name for the uptime check configuration. The display name should be unique within a Stackdriver Workspace in order to make it easier to identify; however, uniqueness is not enforced."]
     pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
@@ -509,6 +549,12 @@ impl MonitoringUptimeCheckConfigRef {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `log_check_failures` after provisioning.\nSpecifies whether to log the results of failed probes to Cloud Logging."]
+    pub fn log_check_failures(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.log_check_failures", self.extract_ref()))
     }
 
     #[doc =
@@ -552,52 +598,62 @@ impl MonitoringUptimeCheckConfigRef {
     }
 
     #[doc = "Get a reference to the value of field `content_matchers` after provisioning.\n"]
-    pub fn content_matchers(&self) -> terrars::ListRef<MonitoringUptimeCheckConfigContentMatchersElRef> {
+    pub fn content_matchers(&self) -> terrars::ListRef<MonitoringUptimeCheckConfig_ContentMatchersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.content_matchers", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `http_check` after provisioning.\n"]
-    pub fn http_check(&self) -> terrars::ListRef<MonitoringUptimeCheckConfigHttpCheckElRef> {
+    pub fn http_check(&self) -> terrars::ListRef<MonitoringUptimeCheckConfig_HttpCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.http_check", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `monitored_resource` after provisioning.\n"]
-    pub fn monitored_resource(&self) -> terrars::ListRef<MonitoringUptimeCheckConfigMonitoredResourceElRef> {
+    pub fn monitored_resource(&self) -> terrars::ListRef<MonitoringUptimeCheckConfig_MonitoredResourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.monitored_resource", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `resource_group` after provisioning.\n"]
-    pub fn resource_group(&self) -> terrars::ListRef<MonitoringUptimeCheckConfigResourceGroupElRef> {
+    pub fn resource_group(&self) -> terrars::ListRef<MonitoringUptimeCheckConfig_ResourceGroupRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.resource_group", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `synthetic_monitor` after provisioning.\n"]
-    pub fn synthetic_monitor(&self) -> terrars::ListRef<MonitoringUptimeCheckConfigSyntheticMonitorElRef> {
+    pub fn synthetic_monitor(&self) -> terrars::ListRef<MonitoringUptimeCheckConfig_SyntheticMonitorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.synthetic_monitor", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tcp_check` after provisioning.\n"]
-    pub fn tcp_check(&self) -> terrars::ListRef<MonitoringUptimeCheckConfigTcpCheckElRef> {
+    pub fn tcp_check(&self) -> terrars::ListRef<MonitoringUptimeCheckConfig_TcpCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tcp_check", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> MonitoringUptimeCheckConfigTimeoutsElRef {
-        MonitoringUptimeCheckConfigTimeoutsElRef::new(
+    pub fn timeouts(&self) -> MonitoringUptimeCheckConfig_TimeoutsRef {
+        MonitoringUptimeCheckConfig_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct MonitoringUptimeCheckConfigDynamic {
+    content_matchers: std::option::Option<terrars::DynamicBlock<MonitoringUptimeCheckConfig_ContentMatchers>>,
+    http_check: std::option::Option<terrars::DynamicBlock<MonitoringUptimeCheckConfig_HttpCheck>>,
+    monitored_resource: std::option::Option<terrars::DynamicBlock<MonitoringUptimeCheckConfig_MonitoredResource>>,
+    resource_group: std::option::Option<terrars::DynamicBlock<MonitoringUptimeCheckConfig_ResourceGroup>>,
+    synthetic_monitor: std::option::Option<terrars::DynamicBlock<MonitoringUptimeCheckConfig_SyntheticMonitor>>,
+    tcp_check: std::option::Option<terrars::DynamicBlock<MonitoringUptimeCheckConfig_TcpCheck>>,
+}
+
 #[derive(Serialize)]
-pub struct MonitoringUptimeCheckConfigContentMatchersElJsonPathMatcherEl {
+pub struct MonitoringUptimeCheckConfig_ContentMatchers_JsonPathMatcher {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     json_matcher: std::option::Option<terrars::PrimField<std::string::String>>,
     json_path: terrars::PrimField<std::string::String>,
 }
 
-impl MonitoringUptimeCheckConfigContentMatchersElJsonPathMatcherEl {
+impl MonitoringUptimeCheckConfig_ContentMatchers_JsonPathMatcher {
     #[doc =
         "Set the field `json_matcher`.\nOptions to perform JSONPath content matching. Default value: \"EXACT_MATCH\" Possible values: [\"EXACT_MATCH\", \"REGEX_MATCH\"]"]
     pub fn set_json_matcher(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -606,8 +662,8 @@ impl MonitoringUptimeCheckConfigContentMatchersElJsonPathMatcherEl {
     }
 }
 
-impl terrars::ToListMappable for MonitoringUptimeCheckConfigContentMatchersElJsonPathMatcherEl {
-    type O = terrars::BlockAssignable<MonitoringUptimeCheckConfigContentMatchersElJsonPathMatcherEl>;
+impl terrars::ToListMappable for MonitoringUptimeCheckConfig_ContentMatchers_JsonPathMatcher {
+    type O = terrars::BlockAssignable<MonitoringUptimeCheckConfig_ContentMatchers_JsonPathMatcher>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -618,38 +674,40 @@ impl terrars::ToListMappable for MonitoringUptimeCheckConfigContentMatchersElJso
     }
 }
 
-pub struct BuildMonitoringUptimeCheckConfigContentMatchersElJsonPathMatcherEl {
+pub struct BuildMonitoringUptimeCheckConfig_ContentMatchers_JsonPathMatcher {
     #[doc = "JSONPath within the response output pointing to the expected 'ContentMatcher::content' to match against."]
     pub json_path: terrars::PrimField<std::string::String>,
 }
 
-impl BuildMonitoringUptimeCheckConfigContentMatchersElJsonPathMatcherEl {
-    pub fn build(self) -> MonitoringUptimeCheckConfigContentMatchersElJsonPathMatcherEl {
-        MonitoringUptimeCheckConfigContentMatchersElJsonPathMatcherEl {
+impl BuildMonitoringUptimeCheckConfig_ContentMatchers_JsonPathMatcher {
+    pub fn build(self) -> MonitoringUptimeCheckConfig_ContentMatchers_JsonPathMatcher {
+        MonitoringUptimeCheckConfig_ContentMatchers_JsonPathMatcher {
             json_matcher: core::default::Default::default(),
             json_path: self.json_path,
         }
     }
 }
 
-pub struct MonitoringUptimeCheckConfigContentMatchersElJsonPathMatcherElRef {
+#[allow(dead_code)]
+pub struct MonitoringUptimeCheckConfig_ContentMatchers_JsonPathMatcherRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MonitoringUptimeCheckConfigContentMatchersElJsonPathMatcherElRef {
+impl terrars::Ref for MonitoringUptimeCheckConfig_ContentMatchers_JsonPathMatcherRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> MonitoringUptimeCheckConfigContentMatchersElJsonPathMatcherElRef {
-        MonitoringUptimeCheckConfigContentMatchersElJsonPathMatcherElRef {
+    ) -> MonitoringUptimeCheckConfig_ContentMatchers_JsonPathMatcherRef {
+        MonitoringUptimeCheckConfig_ContentMatchers_JsonPathMatcherRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MonitoringUptimeCheckConfigContentMatchersElJsonPathMatcherElRef {
+impl MonitoringUptimeCheckConfig_ContentMatchers_JsonPathMatcherRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -668,23 +726,23 @@ impl MonitoringUptimeCheckConfigContentMatchersElJsonPathMatcherElRef {
 }
 
 #[derive(Serialize, Default)]
-struct MonitoringUptimeCheckConfigContentMatchersElDynamic {
+struct MonitoringUptimeCheckConfig_ContentMatchersDynamic {
     json_path_matcher: std
     ::option
-    ::Option<terrars::DynamicBlock<MonitoringUptimeCheckConfigContentMatchersElJsonPathMatcherEl>>,
+    ::Option<terrars::DynamicBlock<MonitoringUptimeCheckConfig_ContentMatchers_JsonPathMatcher>>,
 }
 
 #[derive(Serialize)]
-pub struct MonitoringUptimeCheckConfigContentMatchersEl {
+pub struct MonitoringUptimeCheckConfig_ContentMatchers {
     content: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     matcher: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    json_path_matcher: std::option::Option<std::vec::Vec<MonitoringUptimeCheckConfigContentMatchersElJsonPathMatcherEl>>,
-    dynamic: MonitoringUptimeCheckConfigContentMatchersElDynamic,
+    json_path_matcher: std::option::Option<std::vec::Vec<MonitoringUptimeCheckConfig_ContentMatchers_JsonPathMatcher>>,
+    dynamic: MonitoringUptimeCheckConfig_ContentMatchersDynamic,
 }
 
-impl MonitoringUptimeCheckConfigContentMatchersEl {
+impl MonitoringUptimeCheckConfig_ContentMatchers {
     #[doc =
         "Set the field `matcher`.\nThe type of content matcher that will be applied to the server output, compared to the content string when the check is run. Default value: \"CONTAINS_STRING\" Possible values: [\"CONTAINS_STRING\", \"NOT_CONTAINS_STRING\", \"MATCHES_REGEX\", \"NOT_MATCHES_REGEX\", \"MATCHES_JSON_PATH\", \"NOT_MATCHES_JSON_PATH\"]"]
     pub fn set_matcher(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -700,7 +758,7 @@ impl MonitoringUptimeCheckConfigContentMatchersEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<MonitoringUptimeCheckConfigContentMatchersElJsonPathMatcherEl>>,
+                    ::Into<terrars::BlockAssignable<MonitoringUptimeCheckConfig_ContentMatchers_JsonPathMatcher>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -714,8 +772,8 @@ impl MonitoringUptimeCheckConfigContentMatchersEl {
     }
 }
 
-impl terrars::ToListMappable for MonitoringUptimeCheckConfigContentMatchersEl {
-    type O = terrars::BlockAssignable<MonitoringUptimeCheckConfigContentMatchersEl>;
+impl terrars::ToListMappable for MonitoringUptimeCheckConfig_ContentMatchers {
+    type O = terrars::BlockAssignable<MonitoringUptimeCheckConfig_ContentMatchers>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -726,14 +784,14 @@ impl terrars::ToListMappable for MonitoringUptimeCheckConfigContentMatchersEl {
     }
 }
 
-pub struct BuildMonitoringUptimeCheckConfigContentMatchersEl {
+pub struct BuildMonitoringUptimeCheckConfig_ContentMatchers {
     #[doc = "String or regex content to match (max 1024 bytes)"]
     pub content: terrars::PrimField<std::string::String>,
 }
 
-impl BuildMonitoringUptimeCheckConfigContentMatchersEl {
-    pub fn build(self) -> MonitoringUptimeCheckConfigContentMatchersEl {
-        MonitoringUptimeCheckConfigContentMatchersEl {
+impl BuildMonitoringUptimeCheckConfig_ContentMatchers {
+    pub fn build(self) -> MonitoringUptimeCheckConfig_ContentMatchers {
+        MonitoringUptimeCheckConfig_ContentMatchers {
             content: self.content,
             matcher: core::default::Default::default(),
             json_path_matcher: core::default::Default::default(),
@@ -742,24 +800,26 @@ impl BuildMonitoringUptimeCheckConfigContentMatchersEl {
     }
 }
 
-pub struct MonitoringUptimeCheckConfigContentMatchersElRef {
+#[allow(dead_code)]
+pub struct MonitoringUptimeCheckConfig_ContentMatchersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MonitoringUptimeCheckConfigContentMatchersElRef {
+impl terrars::Ref for MonitoringUptimeCheckConfig_ContentMatchersRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> MonitoringUptimeCheckConfigContentMatchersElRef {
-        MonitoringUptimeCheckConfigContentMatchersElRef {
+    ) -> MonitoringUptimeCheckConfig_ContentMatchersRef {
+        MonitoringUptimeCheckConfig_ContentMatchersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MonitoringUptimeCheckConfigContentMatchersElRef {
+impl MonitoringUptimeCheckConfig_ContentMatchersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -777,22 +837,20 @@ impl MonitoringUptimeCheckConfigContentMatchersElRef {
     }
 
     #[doc = "Get a reference to the value of field `json_path_matcher` after provisioning.\n"]
-    pub fn json_path_matcher(
-        &self,
-    ) -> terrars::ListRef<MonitoringUptimeCheckConfigContentMatchersElJsonPathMatcherElRef> {
+    pub fn json_path_matcher(&self) -> terrars::ListRef<MonitoringUptimeCheckConfig_ContentMatchers_JsonPathMatcherRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.json_path_matcher", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct MonitoringUptimeCheckConfigHttpCheckElAcceptedResponseStatusCodesEl {
+pub struct MonitoringUptimeCheckConfig_HttpCheck_AcceptedResponseStatusCodes {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     status_class: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     status_value: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl MonitoringUptimeCheckConfigHttpCheckElAcceptedResponseStatusCodesEl {
+impl MonitoringUptimeCheckConfig_HttpCheck_AcceptedResponseStatusCodes {
     #[doc =
         "Set the field `status_class`.\nA class of status codes to accept. Possible values: [\"STATUS_CLASS_1XX\", \"STATUS_CLASS_2XX\", \"STATUS_CLASS_3XX\", \"STATUS_CLASS_4XX\", \"STATUS_CLASS_5XX\", \"STATUS_CLASS_ANY\"]"]
     pub fn set_status_class(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -807,8 +865,8 @@ impl MonitoringUptimeCheckConfigHttpCheckElAcceptedResponseStatusCodesEl {
     }
 }
 
-impl terrars::ToListMappable for MonitoringUptimeCheckConfigHttpCheckElAcceptedResponseStatusCodesEl {
-    type O = terrars::BlockAssignable<MonitoringUptimeCheckConfigHttpCheckElAcceptedResponseStatusCodesEl>;
+impl terrars::ToListMappable for MonitoringUptimeCheckConfig_HttpCheck_AcceptedResponseStatusCodes {
+    type O = terrars::BlockAssignable<MonitoringUptimeCheckConfig_HttpCheck_AcceptedResponseStatusCodes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -819,35 +877,37 @@ impl terrars::ToListMappable for MonitoringUptimeCheckConfigHttpCheckElAcceptedR
     }
 }
 
-pub struct BuildMonitoringUptimeCheckConfigHttpCheckElAcceptedResponseStatusCodesEl {}
+pub struct BuildMonitoringUptimeCheckConfig_HttpCheck_AcceptedResponseStatusCodes {}
 
-impl BuildMonitoringUptimeCheckConfigHttpCheckElAcceptedResponseStatusCodesEl {
-    pub fn build(self) -> MonitoringUptimeCheckConfigHttpCheckElAcceptedResponseStatusCodesEl {
-        MonitoringUptimeCheckConfigHttpCheckElAcceptedResponseStatusCodesEl {
+impl BuildMonitoringUptimeCheckConfig_HttpCheck_AcceptedResponseStatusCodes {
+    pub fn build(self) -> MonitoringUptimeCheckConfig_HttpCheck_AcceptedResponseStatusCodes {
+        MonitoringUptimeCheckConfig_HttpCheck_AcceptedResponseStatusCodes {
             status_class: core::default::Default::default(),
             status_value: core::default::Default::default(),
         }
     }
 }
 
-pub struct MonitoringUptimeCheckConfigHttpCheckElAcceptedResponseStatusCodesElRef {
+#[allow(dead_code)]
+pub struct MonitoringUptimeCheckConfig_HttpCheck_AcceptedResponseStatusCodesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MonitoringUptimeCheckConfigHttpCheckElAcceptedResponseStatusCodesElRef {
+impl terrars::Ref for MonitoringUptimeCheckConfig_HttpCheck_AcceptedResponseStatusCodesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> MonitoringUptimeCheckConfigHttpCheckElAcceptedResponseStatusCodesElRef {
-        MonitoringUptimeCheckConfigHttpCheckElAcceptedResponseStatusCodesElRef {
+    ) -> MonitoringUptimeCheckConfig_HttpCheck_AcceptedResponseStatusCodesRef {
+        MonitoringUptimeCheckConfig_HttpCheck_AcceptedResponseStatusCodesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MonitoringUptimeCheckConfigHttpCheckElAcceptedResponseStatusCodesElRef {
+impl MonitoringUptimeCheckConfig_HttpCheck_AcceptedResponseStatusCodesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -865,15 +925,42 @@ impl MonitoringUptimeCheckConfigHttpCheckElAcceptedResponseStatusCodesElRef {
 }
 
 #[derive(Serialize)]
-pub struct MonitoringUptimeCheckConfigHttpCheckElAuthInfoEl {
-    password: terrars::PrimField<std::string::String>,
+pub struct MonitoringUptimeCheckConfig_HttpCheck_AuthInfo {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    password: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    password_wo: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    password_wo_version: std::option::Option<terrars::PrimField<std::string::String>>,
     username: terrars::PrimField<std::string::String>,
 }
 
-impl MonitoringUptimeCheckConfigHttpCheckElAuthInfoEl { }
+impl MonitoringUptimeCheckConfig_HttpCheck_AuthInfo {
+    #[doc = "Set the field `password`.\nThe password to authenticate."]
+    pub fn set_password(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.password = std::option::Option::Some(v.into());
+        self
+    }
 
-impl terrars::ToListMappable for MonitoringUptimeCheckConfigHttpCheckElAuthInfoEl {
-    type O = terrars::BlockAssignable<MonitoringUptimeCheckConfigHttpCheckElAuthInfoEl>;
+    #[doc = "Set the field `password_wo`.\nThe password to authenticate."]
+    pub fn set_password_wo(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.password_wo = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `password_wo_version`.\nTriggers update of 'password_wo' write-only. Increment this value when an update to 'password_wo' is needed. For more info see [updating write-only arguments](/docs/providers/google/guides/using_write_only_arguments.html#updating-write-only-arguments)"]
+    pub fn set_password_wo_version(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.password_wo_version = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for MonitoringUptimeCheckConfig_HttpCheck_AuthInfo {
+    type O = terrars::BlockAssignable<MonitoringUptimeCheckConfig_HttpCheck_AuthInfo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -884,40 +971,42 @@ impl terrars::ToListMappable for MonitoringUptimeCheckConfigHttpCheckElAuthInfoE
     }
 }
 
-pub struct BuildMonitoringUptimeCheckConfigHttpCheckElAuthInfoEl {
-    #[doc = "The password to authenticate."]
-    pub password: terrars::PrimField<std::string::String>,
+pub struct BuildMonitoringUptimeCheckConfig_HttpCheck_AuthInfo {
     #[doc = "The username to authenticate."]
     pub username: terrars::PrimField<std::string::String>,
 }
 
-impl BuildMonitoringUptimeCheckConfigHttpCheckElAuthInfoEl {
-    pub fn build(self) -> MonitoringUptimeCheckConfigHttpCheckElAuthInfoEl {
-        MonitoringUptimeCheckConfigHttpCheckElAuthInfoEl {
-            password: self.password,
+impl BuildMonitoringUptimeCheckConfig_HttpCheck_AuthInfo {
+    pub fn build(self) -> MonitoringUptimeCheckConfig_HttpCheck_AuthInfo {
+        MonitoringUptimeCheckConfig_HttpCheck_AuthInfo {
+            password: core::default::Default::default(),
+            password_wo: core::default::Default::default(),
+            password_wo_version: core::default::Default::default(),
             username: self.username,
         }
     }
 }
 
-pub struct MonitoringUptimeCheckConfigHttpCheckElAuthInfoElRef {
+#[allow(dead_code)]
+pub struct MonitoringUptimeCheckConfig_HttpCheck_AuthInfoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MonitoringUptimeCheckConfigHttpCheckElAuthInfoElRef {
+impl terrars::Ref for MonitoringUptimeCheckConfig_HttpCheck_AuthInfoRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> MonitoringUptimeCheckConfigHttpCheckElAuthInfoElRef {
-        MonitoringUptimeCheckConfigHttpCheckElAuthInfoElRef {
+    ) -> MonitoringUptimeCheckConfig_HttpCheck_AuthInfoRef {
+        MonitoringUptimeCheckConfig_HttpCheck_AuthInfoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MonitoringUptimeCheckConfigHttpCheckElAuthInfoElRef {
+impl MonitoringUptimeCheckConfig_HttpCheck_AuthInfoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -927,6 +1016,17 @@ impl MonitoringUptimeCheckConfigHttpCheckElAuthInfoElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.password", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `password_wo` after provisioning.\nThe password to authenticate."]
+    pub fn password_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.password_wo", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `password_wo_version` after provisioning.\nTriggers update of 'password_wo' write-only. Increment this value when an update to 'password_wo' is needed. For more info see [updating write-only arguments](/docs/providers/google/guides/using_write_only_arguments.html#updating-write-only-arguments)"]
+    pub fn password_wo_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.password_wo_version", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `username` after provisioning.\nThe username to authenticate."]
     pub fn username(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.username", self.base))
@@ -934,14 +1034,14 @@ impl MonitoringUptimeCheckConfigHttpCheckElAuthInfoElRef {
 }
 
 #[derive(Serialize)]
-pub struct MonitoringUptimeCheckConfigHttpCheckElPingConfigEl {
+pub struct MonitoringUptimeCheckConfig_TcpCheck_PingConfig {
     pings_count: terrars::PrimField<f64>,
 }
 
-impl MonitoringUptimeCheckConfigHttpCheckElPingConfigEl { }
+impl MonitoringUptimeCheckConfig_TcpCheck_PingConfig { }
 
-impl terrars::ToListMappable for MonitoringUptimeCheckConfigHttpCheckElPingConfigEl {
-    type O = terrars::BlockAssignable<MonitoringUptimeCheckConfigHttpCheckElPingConfigEl>;
+impl terrars::ToListMappable for MonitoringUptimeCheckConfig_TcpCheck_PingConfig {
+    type O = terrars::BlockAssignable<MonitoringUptimeCheckConfig_TcpCheck_PingConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -952,35 +1052,37 @@ impl terrars::ToListMappable for MonitoringUptimeCheckConfigHttpCheckElPingConfi
     }
 }
 
-pub struct BuildMonitoringUptimeCheckConfigHttpCheckElPingConfigEl {
+pub struct BuildMonitoringUptimeCheckConfig_TcpCheck_PingConfig {
     #[doc = "Number of ICMP pings. A maximum of 3 ICMP pings is currently supported."]
     pub pings_count: terrars::PrimField<f64>,
 }
 
-impl BuildMonitoringUptimeCheckConfigHttpCheckElPingConfigEl {
-    pub fn build(self) -> MonitoringUptimeCheckConfigHttpCheckElPingConfigEl {
-        MonitoringUptimeCheckConfigHttpCheckElPingConfigEl { pings_count: self.pings_count }
+impl BuildMonitoringUptimeCheckConfig_TcpCheck_PingConfig {
+    pub fn build(self) -> MonitoringUptimeCheckConfig_TcpCheck_PingConfig {
+        MonitoringUptimeCheckConfig_TcpCheck_PingConfig { pings_count: self.pings_count }
     }
 }
 
-pub struct MonitoringUptimeCheckConfigHttpCheckElPingConfigElRef {
+#[allow(dead_code)]
+pub struct MonitoringUptimeCheckConfig_TcpCheck_PingConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MonitoringUptimeCheckConfigHttpCheckElPingConfigElRef {
+impl terrars::Ref for MonitoringUptimeCheckConfig_TcpCheck_PingConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> MonitoringUptimeCheckConfigHttpCheckElPingConfigElRef {
-        MonitoringUptimeCheckConfigHttpCheckElPingConfigElRef {
+    ) -> MonitoringUptimeCheckConfig_TcpCheck_PingConfigRef {
+        MonitoringUptimeCheckConfig_TcpCheck_PingConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MonitoringUptimeCheckConfigHttpCheckElPingConfigElRef {
+impl MonitoringUptimeCheckConfig_TcpCheck_PingConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -992,17 +1094,86 @@ impl MonitoringUptimeCheckConfigHttpCheckElPingConfigElRef {
     }
 }
 
+#[derive(Serialize)]
+pub struct MonitoringUptimeCheckConfig_HttpCheck_ServiceAgentAuthentication {
+    #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
+    type_: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl MonitoringUptimeCheckConfig_HttpCheck_ServiceAgentAuthentication {
+    #[doc =
+        "Set the field `type_`.\nThe type of authentication to use. Possible values: [\"SERVICE_AGENT_AUTHENTICATION_TYPE_UNSPECIFIED\", \"OIDC_TOKEN\"]"]
+    pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.type_ = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for MonitoringUptimeCheckConfig_HttpCheck_ServiceAgentAuthentication {
+    type O = terrars::BlockAssignable<MonitoringUptimeCheckConfig_HttpCheck_ServiceAgentAuthentication>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildMonitoringUptimeCheckConfig_HttpCheck_ServiceAgentAuthentication {}
+
+impl BuildMonitoringUptimeCheckConfig_HttpCheck_ServiceAgentAuthentication {
+    pub fn build(self) -> MonitoringUptimeCheckConfig_HttpCheck_ServiceAgentAuthentication {
+        MonitoringUptimeCheckConfig_HttpCheck_ServiceAgentAuthentication { type_: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct MonitoringUptimeCheckConfig_HttpCheck_ServiceAgentAuthenticationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for MonitoringUptimeCheckConfig_HttpCheck_ServiceAgentAuthenticationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> MonitoringUptimeCheckConfig_HttpCheck_ServiceAgentAuthenticationRef {
+        MonitoringUptimeCheckConfig_HttpCheck_ServiceAgentAuthenticationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl MonitoringUptimeCheckConfig_HttpCheck_ServiceAgentAuthenticationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `type_` after provisioning.\nThe type of authentication to use. Possible values: [\"SERVICE_AGENT_AUTHENTICATION_TYPE_UNSPECIFIED\", \"OIDC_TOKEN\"]"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    }
+}
+
 #[derive(Serialize, Default)]
-struct MonitoringUptimeCheckConfigHttpCheckElDynamic {
+struct MonitoringUptimeCheckConfig_HttpCheckDynamic {
     accepted_response_status_codes: std
     ::option
-    ::Option<terrars::DynamicBlock<MonitoringUptimeCheckConfigHttpCheckElAcceptedResponseStatusCodesEl>>,
-    auth_info: std::option::Option<terrars::DynamicBlock<MonitoringUptimeCheckConfigHttpCheckElAuthInfoEl>>,
-    ping_config: std::option::Option<terrars::DynamicBlock<MonitoringUptimeCheckConfigHttpCheckElPingConfigEl>>,
+    ::Option<terrars::DynamicBlock<MonitoringUptimeCheckConfig_HttpCheck_AcceptedResponseStatusCodes>>,
+    auth_info: std::option::Option<terrars::DynamicBlock<MonitoringUptimeCheckConfig_HttpCheck_AuthInfo>>,
+    ping_config: std::option::Option<terrars::DynamicBlock<MonitoringUptimeCheckConfig_TcpCheck_PingConfig>>,
+    service_agent_authentication: std
+    ::option
+    ::Option<terrars::DynamicBlock<MonitoringUptimeCheckConfig_HttpCheck_ServiceAgentAuthentication>>,
 }
 
 #[derive(Serialize)]
-pub struct MonitoringUptimeCheckConfigHttpCheckEl {
+pub struct MonitoringUptimeCheckConfig_HttpCheck {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     body: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1026,15 +1197,19 @@ pub struct MonitoringUptimeCheckConfigHttpCheckEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     accepted_response_status_codes: std
     ::option
-    ::Option<std::vec::Vec<MonitoringUptimeCheckConfigHttpCheckElAcceptedResponseStatusCodesEl>>,
+    ::Option<std::vec::Vec<MonitoringUptimeCheckConfig_HttpCheck_AcceptedResponseStatusCodes>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    auth_info: std::option::Option<std::vec::Vec<MonitoringUptimeCheckConfigHttpCheckElAuthInfoEl>>,
+    auth_info: std::option::Option<std::vec::Vec<MonitoringUptimeCheckConfig_HttpCheck_AuthInfo>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ping_config: std::option::Option<std::vec::Vec<MonitoringUptimeCheckConfigHttpCheckElPingConfigEl>>,
-    dynamic: MonitoringUptimeCheckConfigHttpCheckElDynamic,
+    ping_config: std::option::Option<std::vec::Vec<MonitoringUptimeCheckConfig_TcpCheck_PingConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    service_agent_authentication: std
+    ::option
+    ::Option<std::vec::Vec<MonitoringUptimeCheckConfig_HttpCheck_ServiceAgentAuthentication>>,
+    dynamic: MonitoringUptimeCheckConfig_HttpCheckDynamic,
 }
 
-impl MonitoringUptimeCheckConfigHttpCheckEl {
+impl MonitoringUptimeCheckConfig_HttpCheck {
     #[doc =
         "Set the field `body`.\nThe request body associated with the HTTP POST request. If 'content_type' is 'URL_ENCODED', the body passed in must be URL-encoded. Users can provide a 'Content-Length' header via the 'headers' field or the API will do so. If the 'request_method' is 'GET' and 'body' is not empty, the API will return an error. The maximum byte size is 1 megabyte. Note - As with all bytes fields JSON representations are base64 encoded. e.g. 'foo=bar' in URL-encoded form is 'foo%3Dbar' and in base64 encoding is 'Zm9vJTI1M0RiYXI='."]
     pub fn set_body(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1119,7 +1294,7 @@ impl MonitoringUptimeCheckConfigHttpCheckEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<MonitoringUptimeCheckConfigHttpCheckElAcceptedResponseStatusCodesEl>,
+                        terrars::BlockAssignable<MonitoringUptimeCheckConfig_HttpCheck_AcceptedResponseStatusCodes>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1136,7 +1311,7 @@ impl MonitoringUptimeCheckConfigHttpCheckEl {
     #[doc = "Set the field `auth_info`.\n"]
     pub fn set_auth_info(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringUptimeCheckConfigHttpCheckElAuthInfoEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringUptimeCheckConfig_HttpCheck_AuthInfo>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1152,7 +1327,7 @@ impl MonitoringUptimeCheckConfigHttpCheckEl {
     #[doc = "Set the field `ping_config`.\n"]
     pub fn set_ping_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringUptimeCheckConfigHttpCheckElPingConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringUptimeCheckConfig_TcpCheck_PingConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1164,10 +1339,33 @@ impl MonitoringUptimeCheckConfigHttpCheckEl {
         }
         self
     }
+
+    #[doc = "Set the field `service_agent_authentication`.\n"]
+    pub fn set_service_agent_authentication(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<MonitoringUptimeCheckConfig_HttpCheck_ServiceAgentAuthentication>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.service_agent_authentication = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.service_agent_authentication = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
 }
 
-impl terrars::ToListMappable for MonitoringUptimeCheckConfigHttpCheckEl {
-    type O = terrars::BlockAssignable<MonitoringUptimeCheckConfigHttpCheckEl>;
+impl terrars::ToListMappable for MonitoringUptimeCheckConfig_HttpCheck {
+    type O = terrars::BlockAssignable<MonitoringUptimeCheckConfig_HttpCheck>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1178,11 +1376,11 @@ impl terrars::ToListMappable for MonitoringUptimeCheckConfigHttpCheckEl {
     }
 }
 
-pub struct BuildMonitoringUptimeCheckConfigHttpCheckEl {}
+pub struct BuildMonitoringUptimeCheckConfig_HttpCheck {}
 
-impl BuildMonitoringUptimeCheckConfigHttpCheckEl {
-    pub fn build(self) -> MonitoringUptimeCheckConfigHttpCheckEl {
-        MonitoringUptimeCheckConfigHttpCheckEl {
+impl BuildMonitoringUptimeCheckConfig_HttpCheck {
+    pub fn build(self) -> MonitoringUptimeCheckConfig_HttpCheck {
+        MonitoringUptimeCheckConfig_HttpCheck {
             body: core::default::Default::default(),
             content_type: core::default::Default::default(),
             custom_content_type: core::default::Default::default(),
@@ -1196,26 +1394,29 @@ impl BuildMonitoringUptimeCheckConfigHttpCheckEl {
             accepted_response_status_codes: core::default::Default::default(),
             auth_info: core::default::Default::default(),
             ping_config: core::default::Default::default(),
+            service_agent_authentication: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct MonitoringUptimeCheckConfigHttpCheckElRef {
+#[allow(dead_code)]
+pub struct MonitoringUptimeCheckConfig_HttpCheckRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MonitoringUptimeCheckConfigHttpCheckElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitoringUptimeCheckConfigHttpCheckElRef {
-        MonitoringUptimeCheckConfigHttpCheckElRef {
+impl terrars::Ref for MonitoringUptimeCheckConfig_HttpCheckRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitoringUptimeCheckConfig_HttpCheckRef {
+        MonitoringUptimeCheckConfig_HttpCheckRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MonitoringUptimeCheckConfigHttpCheckElRef {
+impl MonitoringUptimeCheckConfig_HttpCheckRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1283,32 +1484,39 @@ impl MonitoringUptimeCheckConfigHttpCheckElRef {
     #[doc = "Get a reference to the value of field `accepted_response_status_codes` after provisioning.\n"]
     pub fn accepted_response_status_codes(
         &self,
-    ) -> terrars::ListRef<MonitoringUptimeCheckConfigHttpCheckElAcceptedResponseStatusCodesElRef> {
+    ) -> terrars::ListRef<MonitoringUptimeCheckConfig_HttpCheck_AcceptedResponseStatusCodesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.accepted_response_status_codes", self.base))
     }
 
     #[doc = "Get a reference to the value of field `auth_info` after provisioning.\n"]
-    pub fn auth_info(&self) -> terrars::ListRef<MonitoringUptimeCheckConfigHttpCheckElAuthInfoElRef> {
+    pub fn auth_info(&self) -> terrars::ListRef<MonitoringUptimeCheckConfig_HttpCheck_AuthInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.auth_info", self.base))
     }
 
     #[doc = "Get a reference to the value of field `ping_config` after provisioning.\n"]
-    pub fn ping_config(&self) -> terrars::ListRef<MonitoringUptimeCheckConfigHttpCheckElPingConfigElRef> {
+    pub fn ping_config(&self) -> terrars::ListRef<MonitoringUptimeCheckConfig_TcpCheck_PingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ping_config", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `service_agent_authentication` after provisioning.\n"]
+    pub fn service_agent_authentication(
+        &self,
+    ) -> terrars::ListRef<MonitoringUptimeCheckConfig_HttpCheck_ServiceAgentAuthenticationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.service_agent_authentication", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct MonitoringUptimeCheckConfigMonitoredResourceEl {
+pub struct MonitoringUptimeCheckConfig_MonitoredResource {
     labels: terrars::RecField<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl MonitoringUptimeCheckConfigMonitoredResourceEl { }
+impl MonitoringUptimeCheckConfig_MonitoredResource { }
 
-impl terrars::ToListMappable for MonitoringUptimeCheckConfigMonitoredResourceEl {
-    type O = terrars::BlockAssignable<MonitoringUptimeCheckConfigMonitoredResourceEl>;
+impl terrars::ToListMappable for MonitoringUptimeCheckConfig_MonitoredResource {
+    type O = terrars::BlockAssignable<MonitoringUptimeCheckConfig_MonitoredResource>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1319,7 +1527,7 @@ impl terrars::ToListMappable for MonitoringUptimeCheckConfigMonitoredResourceEl 
     }
 }
 
-pub struct BuildMonitoringUptimeCheckConfigMonitoredResourceEl {
+pub struct BuildMonitoringUptimeCheckConfig_MonitoredResource {
     #[doc =
         "Values for all of the labels listed in the associated monitored resource descriptor. For example, Compute Engine VM instances use the labels 'project_id', 'instance_id', and 'zone'."]
     pub labels: terrars::RecField<terrars::PrimField<std::string::String>>,
@@ -1328,33 +1536,35 @@ pub struct BuildMonitoringUptimeCheckConfigMonitoredResourceEl {
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildMonitoringUptimeCheckConfigMonitoredResourceEl {
-    pub fn build(self) -> MonitoringUptimeCheckConfigMonitoredResourceEl {
-        MonitoringUptimeCheckConfigMonitoredResourceEl {
+impl BuildMonitoringUptimeCheckConfig_MonitoredResource {
+    pub fn build(self) -> MonitoringUptimeCheckConfig_MonitoredResource {
+        MonitoringUptimeCheckConfig_MonitoredResource {
             labels: self.labels,
             type_: self.type_,
         }
     }
 }
 
-pub struct MonitoringUptimeCheckConfigMonitoredResourceElRef {
+#[allow(dead_code)]
+pub struct MonitoringUptimeCheckConfig_MonitoredResourceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MonitoringUptimeCheckConfigMonitoredResourceElRef {
+impl terrars::Ref for MonitoringUptimeCheckConfig_MonitoredResourceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> MonitoringUptimeCheckConfigMonitoredResourceElRef {
-        MonitoringUptimeCheckConfigMonitoredResourceElRef {
+    ) -> MonitoringUptimeCheckConfig_MonitoredResourceRef {
+        MonitoringUptimeCheckConfig_MonitoredResourceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MonitoringUptimeCheckConfigMonitoredResourceElRef {
+impl MonitoringUptimeCheckConfig_MonitoredResourceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1373,14 +1583,14 @@ impl MonitoringUptimeCheckConfigMonitoredResourceElRef {
 }
 
 #[derive(Serialize)]
-pub struct MonitoringUptimeCheckConfigResourceGroupEl {
+pub struct MonitoringUptimeCheckConfig_ResourceGroup {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     group_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resource_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl MonitoringUptimeCheckConfigResourceGroupEl {
+impl MonitoringUptimeCheckConfig_ResourceGroup {
     #[doc = "Set the field `group_id`.\nThe group of resources being monitored. Should be the 'name' of a group"]
     pub fn set_group_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.group_id = std::option::Option::Some(v.into());
@@ -1395,8 +1605,8 @@ impl MonitoringUptimeCheckConfigResourceGroupEl {
     }
 }
 
-impl terrars::ToListMappable for MonitoringUptimeCheckConfigResourceGroupEl {
-    type O = terrars::BlockAssignable<MonitoringUptimeCheckConfigResourceGroupEl>;
+impl terrars::ToListMappable for MonitoringUptimeCheckConfig_ResourceGroup {
+    type O = terrars::BlockAssignable<MonitoringUptimeCheckConfig_ResourceGroup>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1407,32 +1617,34 @@ impl terrars::ToListMappable for MonitoringUptimeCheckConfigResourceGroupEl {
     }
 }
 
-pub struct BuildMonitoringUptimeCheckConfigResourceGroupEl {}
+pub struct BuildMonitoringUptimeCheckConfig_ResourceGroup {}
 
-impl BuildMonitoringUptimeCheckConfigResourceGroupEl {
-    pub fn build(self) -> MonitoringUptimeCheckConfigResourceGroupEl {
-        MonitoringUptimeCheckConfigResourceGroupEl {
+impl BuildMonitoringUptimeCheckConfig_ResourceGroup {
+    pub fn build(self) -> MonitoringUptimeCheckConfig_ResourceGroup {
+        MonitoringUptimeCheckConfig_ResourceGroup {
             group_id: core::default::Default::default(),
             resource_type: core::default::Default::default(),
         }
     }
 }
 
-pub struct MonitoringUptimeCheckConfigResourceGroupElRef {
+#[allow(dead_code)]
+pub struct MonitoringUptimeCheckConfig_ResourceGroupRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MonitoringUptimeCheckConfigResourceGroupElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitoringUptimeCheckConfigResourceGroupElRef {
-        MonitoringUptimeCheckConfigResourceGroupElRef {
+impl terrars::Ref for MonitoringUptimeCheckConfig_ResourceGroupRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitoringUptimeCheckConfig_ResourceGroupRef {
+        MonitoringUptimeCheckConfig_ResourceGroupRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MonitoringUptimeCheckConfigResourceGroupElRef {
+impl MonitoringUptimeCheckConfig_ResourceGroupRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1451,14 +1663,14 @@ impl MonitoringUptimeCheckConfigResourceGroupElRef {
 }
 
 #[derive(Serialize)]
-pub struct MonitoringUptimeCheckConfigSyntheticMonitorElCloudFunctionV2El {
+pub struct MonitoringUptimeCheckConfig_SyntheticMonitor_CloudFunctionV2 {
     name: terrars::PrimField<std::string::String>,
 }
 
-impl MonitoringUptimeCheckConfigSyntheticMonitorElCloudFunctionV2El { }
+impl MonitoringUptimeCheckConfig_SyntheticMonitor_CloudFunctionV2 { }
 
-impl terrars::ToListMappable for MonitoringUptimeCheckConfigSyntheticMonitorElCloudFunctionV2El {
-    type O = terrars::BlockAssignable<MonitoringUptimeCheckConfigSyntheticMonitorElCloudFunctionV2El>;
+impl terrars::ToListMappable for MonitoringUptimeCheckConfig_SyntheticMonitor_CloudFunctionV2 {
+    type O = terrars::BlockAssignable<MonitoringUptimeCheckConfig_SyntheticMonitor_CloudFunctionV2>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1469,35 +1681,37 @@ impl terrars::ToListMappable for MonitoringUptimeCheckConfigSyntheticMonitorElCl
     }
 }
 
-pub struct BuildMonitoringUptimeCheckConfigSyntheticMonitorElCloudFunctionV2El {
+pub struct BuildMonitoringUptimeCheckConfig_SyntheticMonitor_CloudFunctionV2 {
     #[doc = "The fully qualified name of the cloud function resource."]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildMonitoringUptimeCheckConfigSyntheticMonitorElCloudFunctionV2El {
-    pub fn build(self) -> MonitoringUptimeCheckConfigSyntheticMonitorElCloudFunctionV2El {
-        MonitoringUptimeCheckConfigSyntheticMonitorElCloudFunctionV2El { name: self.name }
+impl BuildMonitoringUptimeCheckConfig_SyntheticMonitor_CloudFunctionV2 {
+    pub fn build(self) -> MonitoringUptimeCheckConfig_SyntheticMonitor_CloudFunctionV2 {
+        MonitoringUptimeCheckConfig_SyntheticMonitor_CloudFunctionV2 { name: self.name }
     }
 }
 
-pub struct MonitoringUptimeCheckConfigSyntheticMonitorElCloudFunctionV2ElRef {
+#[allow(dead_code)]
+pub struct MonitoringUptimeCheckConfig_SyntheticMonitor_CloudFunctionV2Ref {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MonitoringUptimeCheckConfigSyntheticMonitorElCloudFunctionV2ElRef {
+impl terrars::Ref for MonitoringUptimeCheckConfig_SyntheticMonitor_CloudFunctionV2Ref {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> MonitoringUptimeCheckConfigSyntheticMonitorElCloudFunctionV2ElRef {
-        MonitoringUptimeCheckConfigSyntheticMonitorElCloudFunctionV2ElRef {
+    ) -> MonitoringUptimeCheckConfig_SyntheticMonitor_CloudFunctionV2Ref {
+        MonitoringUptimeCheckConfig_SyntheticMonitor_CloudFunctionV2Ref {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MonitoringUptimeCheckConfigSyntheticMonitorElCloudFunctionV2ElRef {
+impl MonitoringUptimeCheckConfig_SyntheticMonitor_CloudFunctionV2Ref {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1510,20 +1724,20 @@ impl MonitoringUptimeCheckConfigSyntheticMonitorElCloudFunctionV2ElRef {
 }
 
 #[derive(Serialize, Default)]
-struct MonitoringUptimeCheckConfigSyntheticMonitorElDynamic {
+struct MonitoringUptimeCheckConfig_SyntheticMonitorDynamic {
     cloud_function_v2: std
     ::option
-    ::Option<terrars::DynamicBlock<MonitoringUptimeCheckConfigSyntheticMonitorElCloudFunctionV2El>>,
+    ::Option<terrars::DynamicBlock<MonitoringUptimeCheckConfig_SyntheticMonitor_CloudFunctionV2>>,
 }
 
 #[derive(Serialize)]
-pub struct MonitoringUptimeCheckConfigSyntheticMonitorEl {
+pub struct MonitoringUptimeCheckConfig_SyntheticMonitor {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cloud_function_v2: std::option::Option<std::vec::Vec<MonitoringUptimeCheckConfigSyntheticMonitorElCloudFunctionV2El>>,
-    dynamic: MonitoringUptimeCheckConfigSyntheticMonitorElDynamic,
+    cloud_function_v2: std::option::Option<std::vec::Vec<MonitoringUptimeCheckConfig_SyntheticMonitor_CloudFunctionV2>>,
+    dynamic: MonitoringUptimeCheckConfig_SyntheticMonitorDynamic,
 }
 
-impl MonitoringUptimeCheckConfigSyntheticMonitorEl {
+impl MonitoringUptimeCheckConfig_SyntheticMonitor {
     #[doc = "Set the field `cloud_function_v2`.\n"]
     pub fn set_cloud_function_v2(
         mut self,
@@ -1532,7 +1746,7 @@ impl MonitoringUptimeCheckConfigSyntheticMonitorEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<MonitoringUptimeCheckConfigSyntheticMonitorElCloudFunctionV2El>>,
+                    ::Into<terrars::BlockAssignable<MonitoringUptimeCheckConfig_SyntheticMonitor_CloudFunctionV2>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1546,8 +1760,8 @@ impl MonitoringUptimeCheckConfigSyntheticMonitorEl {
     }
 }
 
-impl terrars::ToListMappable for MonitoringUptimeCheckConfigSyntheticMonitorEl {
-    type O = terrars::BlockAssignable<MonitoringUptimeCheckConfigSyntheticMonitorEl>;
+impl terrars::ToListMappable for MonitoringUptimeCheckConfig_SyntheticMonitor {
+    type O = terrars::BlockAssignable<MonitoringUptimeCheckConfig_SyntheticMonitor>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1558,124 +1772,65 @@ impl terrars::ToListMappable for MonitoringUptimeCheckConfigSyntheticMonitorEl {
     }
 }
 
-pub struct BuildMonitoringUptimeCheckConfigSyntheticMonitorEl {}
+pub struct BuildMonitoringUptimeCheckConfig_SyntheticMonitor {}
 
-impl BuildMonitoringUptimeCheckConfigSyntheticMonitorEl {
-    pub fn build(self) -> MonitoringUptimeCheckConfigSyntheticMonitorEl {
-        MonitoringUptimeCheckConfigSyntheticMonitorEl {
+impl BuildMonitoringUptimeCheckConfig_SyntheticMonitor {
+    pub fn build(self) -> MonitoringUptimeCheckConfig_SyntheticMonitor {
+        MonitoringUptimeCheckConfig_SyntheticMonitor {
             cloud_function_v2: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct MonitoringUptimeCheckConfigSyntheticMonitorElRef {
+#[allow(dead_code)]
+pub struct MonitoringUptimeCheckConfig_SyntheticMonitorRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MonitoringUptimeCheckConfigSyntheticMonitorElRef {
+impl terrars::Ref for MonitoringUptimeCheckConfig_SyntheticMonitorRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> MonitoringUptimeCheckConfigSyntheticMonitorElRef {
-        MonitoringUptimeCheckConfigSyntheticMonitorElRef {
+    ) -> MonitoringUptimeCheckConfig_SyntheticMonitorRef {
+        MonitoringUptimeCheckConfig_SyntheticMonitorRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MonitoringUptimeCheckConfigSyntheticMonitorElRef {
+impl MonitoringUptimeCheckConfig_SyntheticMonitorRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `cloud_function_v2` after provisioning.\n"]
-    pub fn cloud_function_v2(
-        &self,
-    ) -> terrars::ListRef<MonitoringUptimeCheckConfigSyntheticMonitorElCloudFunctionV2ElRef> {
+    pub fn cloud_function_v2(&self) -> terrars::ListRef<MonitoringUptimeCheckConfig_SyntheticMonitor_CloudFunctionV2Ref> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cloud_function_v2", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct MonitoringUptimeCheckConfigTcpCheckElPingConfigEl {
-    pings_count: terrars::PrimField<f64>,
-}
-
-impl MonitoringUptimeCheckConfigTcpCheckElPingConfigEl { }
-
-impl terrars::ToListMappable for MonitoringUptimeCheckConfigTcpCheckElPingConfigEl {
-    type O = terrars::BlockAssignable<MonitoringUptimeCheckConfigTcpCheckElPingConfigEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildMonitoringUptimeCheckConfigTcpCheckElPingConfigEl {
-    #[doc = "Number of ICMP pings. A maximum of 3 ICMP pings is currently supported."]
-    pub pings_count: terrars::PrimField<f64>,
-}
-
-impl BuildMonitoringUptimeCheckConfigTcpCheckElPingConfigEl {
-    pub fn build(self) -> MonitoringUptimeCheckConfigTcpCheckElPingConfigEl {
-        MonitoringUptimeCheckConfigTcpCheckElPingConfigEl { pings_count: self.pings_count }
-    }
-}
-
-pub struct MonitoringUptimeCheckConfigTcpCheckElPingConfigElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for MonitoringUptimeCheckConfigTcpCheckElPingConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> MonitoringUptimeCheckConfigTcpCheckElPingConfigElRef {
-        MonitoringUptimeCheckConfigTcpCheckElPingConfigElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl MonitoringUptimeCheckConfigTcpCheckElPingConfigElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `pings_count` after provisioning.\nNumber of ICMP pings. A maximum of 3 ICMP pings is currently supported."]
-    pub fn pings_count(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.pings_count", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct MonitoringUptimeCheckConfigTcpCheckElDynamic {
-    ping_config: std::option::Option<terrars::DynamicBlock<MonitoringUptimeCheckConfigTcpCheckElPingConfigEl>>,
+struct MonitoringUptimeCheckConfig_TcpCheckDynamic {
+    ping_config: std::option::Option<terrars::DynamicBlock<MonitoringUptimeCheckConfig_TcpCheck_PingConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct MonitoringUptimeCheckConfigTcpCheckEl {
+pub struct MonitoringUptimeCheckConfig_TcpCheck {
     port: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ping_config: std::option::Option<std::vec::Vec<MonitoringUptimeCheckConfigTcpCheckElPingConfigEl>>,
-    dynamic: MonitoringUptimeCheckConfigTcpCheckElDynamic,
+    ping_config: std::option::Option<std::vec::Vec<MonitoringUptimeCheckConfig_TcpCheck_PingConfig>>,
+    dynamic: MonitoringUptimeCheckConfig_TcpCheckDynamic,
 }
 
-impl MonitoringUptimeCheckConfigTcpCheckEl {
+impl MonitoringUptimeCheckConfig_TcpCheck {
     #[doc = "Set the field `ping_config`.\n"]
     pub fn set_ping_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringUptimeCheckConfigTcpCheckElPingConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringUptimeCheckConfig_TcpCheck_PingConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1689,8 +1844,8 @@ impl MonitoringUptimeCheckConfigTcpCheckEl {
     }
 }
 
-impl terrars::ToListMappable for MonitoringUptimeCheckConfigTcpCheckEl {
-    type O = terrars::BlockAssignable<MonitoringUptimeCheckConfigTcpCheckEl>;
+impl terrars::ToListMappable for MonitoringUptimeCheckConfig_TcpCheck {
+    type O = terrars::BlockAssignable<MonitoringUptimeCheckConfig_TcpCheck>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1701,15 +1856,15 @@ impl terrars::ToListMappable for MonitoringUptimeCheckConfigTcpCheckEl {
     }
 }
 
-pub struct BuildMonitoringUptimeCheckConfigTcpCheckEl {
+pub struct BuildMonitoringUptimeCheckConfig_TcpCheck {
     #[doc =
         "The port to the page to run the check against. Will be combined with host (specified within the 'monitored_resource') to construct the full URL."]
     pub port: terrars::PrimField<f64>,
 }
 
-impl BuildMonitoringUptimeCheckConfigTcpCheckEl {
-    pub fn build(self) -> MonitoringUptimeCheckConfigTcpCheckEl {
-        MonitoringUptimeCheckConfigTcpCheckEl {
+impl BuildMonitoringUptimeCheckConfig_TcpCheck {
+    pub fn build(self) -> MonitoringUptimeCheckConfig_TcpCheck {
+        MonitoringUptimeCheckConfig_TcpCheck {
             port: self.port,
             ping_config: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1717,21 +1872,23 @@ impl BuildMonitoringUptimeCheckConfigTcpCheckEl {
     }
 }
 
-pub struct MonitoringUptimeCheckConfigTcpCheckElRef {
+#[allow(dead_code)]
+pub struct MonitoringUptimeCheckConfig_TcpCheckRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MonitoringUptimeCheckConfigTcpCheckElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitoringUptimeCheckConfigTcpCheckElRef {
-        MonitoringUptimeCheckConfigTcpCheckElRef {
+impl terrars::Ref for MonitoringUptimeCheckConfig_TcpCheckRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitoringUptimeCheckConfig_TcpCheckRef {
+        MonitoringUptimeCheckConfig_TcpCheckRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MonitoringUptimeCheckConfigTcpCheckElRef {
+impl MonitoringUptimeCheckConfig_TcpCheckRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1743,13 +1900,13 @@ impl MonitoringUptimeCheckConfigTcpCheckElRef {
     }
 
     #[doc = "Get a reference to the value of field `ping_config` after provisioning.\n"]
-    pub fn ping_config(&self) -> terrars::ListRef<MonitoringUptimeCheckConfigTcpCheckElPingConfigElRef> {
+    pub fn ping_config(&self) -> terrars::ListRef<MonitoringUptimeCheckConfig_TcpCheck_PingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ping_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct MonitoringUptimeCheckConfigTimeoutsEl {
+pub struct MonitoringUptimeCheckConfig_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1758,7 +1915,7 @@ pub struct MonitoringUptimeCheckConfigTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl MonitoringUptimeCheckConfigTimeoutsEl {
+impl MonitoringUptimeCheckConfig_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1778,8 +1935,8 @@ impl MonitoringUptimeCheckConfigTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for MonitoringUptimeCheckConfigTimeoutsEl {
-    type O = terrars::BlockAssignable<MonitoringUptimeCheckConfigTimeoutsEl>;
+impl terrars::ToListMappable for MonitoringUptimeCheckConfig_Timeouts {
+    type O = terrars::BlockAssignable<MonitoringUptimeCheckConfig_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1790,11 +1947,11 @@ impl terrars::ToListMappable for MonitoringUptimeCheckConfigTimeoutsEl {
     }
 }
 
-pub struct BuildMonitoringUptimeCheckConfigTimeoutsEl {}
+pub struct BuildMonitoringUptimeCheckConfig_Timeouts {}
 
-impl BuildMonitoringUptimeCheckConfigTimeoutsEl {
-    pub fn build(self) -> MonitoringUptimeCheckConfigTimeoutsEl {
-        MonitoringUptimeCheckConfigTimeoutsEl {
+impl BuildMonitoringUptimeCheckConfig_Timeouts {
+    pub fn build(self) -> MonitoringUptimeCheckConfig_Timeouts {
+        MonitoringUptimeCheckConfig_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1802,21 +1959,23 @@ impl BuildMonitoringUptimeCheckConfigTimeoutsEl {
     }
 }
 
-pub struct MonitoringUptimeCheckConfigTimeoutsElRef {
+#[allow(dead_code)]
+pub struct MonitoringUptimeCheckConfig_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MonitoringUptimeCheckConfigTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitoringUptimeCheckConfigTimeoutsElRef {
-        MonitoringUptimeCheckConfigTimeoutsElRef {
+impl terrars::Ref for MonitoringUptimeCheckConfig_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitoringUptimeCheckConfig_TimeoutsRef {
+        MonitoringUptimeCheckConfig_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MonitoringUptimeCheckConfigTimeoutsElRef {
+impl MonitoringUptimeCheckConfig_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1835,14 +1994,4 @@ impl MonitoringUptimeCheckConfigTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct MonitoringUptimeCheckConfigDynamic {
-    content_matchers: std::option::Option<terrars::DynamicBlock<MonitoringUptimeCheckConfigContentMatchersEl>>,
-    http_check: std::option::Option<terrars::DynamicBlock<MonitoringUptimeCheckConfigHttpCheckEl>>,
-    monitored_resource: std::option::Option<terrars::DynamicBlock<MonitoringUptimeCheckConfigMonitoredResourceEl>>,
-    resource_group: std::option::Option<terrars::DynamicBlock<MonitoringUptimeCheckConfigResourceGroupEl>>,
-    synthetic_monitor: std::option::Option<terrars::DynamicBlock<MonitoringUptimeCheckConfigSyntheticMonitorEl>>,
-    tcp_check: std::option::Option<terrars::DynamicBlock<MonitoringUptimeCheckConfigTcpCheckEl>>,
 }

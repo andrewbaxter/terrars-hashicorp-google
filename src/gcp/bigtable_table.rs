@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct BigtableTableData {
+struct BigtableTableData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,6 +23,8 @@ struct BigtableTableData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     change_stream_retention: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     deletion_protection: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -29,18 +33,22 @@ struct BigtableTableData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    row_key_schema: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     split_keys: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    column_family: std::option::Option<std::vec::Vec<BigtableTableColumnFamilyEl>>,
+    automated_backup_policy: std::option::Option<std::vec::Vec<BigtableTable_AutomatedBackupPolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<BigtableTableTimeoutsEl>,
+    column_family: std::option::Option<std::vec::Vec<BigtableTable_ColumnFamily>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<BigtableTable_Timeouts>,
     dynamic: BigtableTableDynamic,
 }
 
 struct BigtableTable_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<BigtableTableData>,
+    data: std::cell::RefCell<BigtableTableData_>,
 }
 
 #[derive(Clone)]
@@ -151,6 +159,13 @@ impl BigtableTable {
     }
 
     #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `deletion_protection`.\nA field to make the table protected against data loss i.e. when set to PROTECTED, deleting the table, the column families in the table, and the instance containing the table would be prohibited. If not provided, currently deletion protection will be set to UNPROTECTED as it is the API default value."]
     pub fn set_deletion_protection(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().deletion_protection = std::option::Option::Some(v.into());
@@ -171,6 +186,13 @@ impl BigtableTable {
     }
 
     #[doc =
+        "Set the field `row_key_schema`.\nDefines the row key schema of a table. To create or update a table with a row key schema, specify this argument.\n\t\t\t\t\tNote that in-place update is not supported, and any in-place modification to the schema will lead to failure.\n\t\t\t\t    To update a schema, please clear it (by omitting the field), and update the resource again with a new schema.\\n\n\t\t\t\t\t\n\t\t\t\t\tThe schema must be a valid JSON encoded string representing a Type's struct protobuf message. Note that for bytes sequence (like delimited_bytes.delimiter)\n\t\t\t\t\tthe delimiter must be base64 encoded. For example, if you want to set a delimiter to a single byte character \"#\", it should be set to \"Iw==\", which is the base64 encoding of the byte sequence \"#\"."]
+    pub fn set_row_key_schema(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().row_key_schema = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `split_keys`.\nA list of predefined keys to split the table on. !> Warning: Modifying the split_keys of an existing table will cause Terraform to delete/recreate the entire google_bigtable_table resource."]
     pub fn set_split_keys(
         self,
@@ -180,10 +202,26 @@ impl BigtableTable {
         self
     }
 
+    #[doc = "Set the field `automated_backup_policy`.\n"]
+    pub fn set_automated_backup_policy(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigtableTable_AutomatedBackupPolicy>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().automated_backup_policy = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.automated_backup_policy = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `column_family`.\n"]
     pub fn set_column_family(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BigtableTableColumnFamilyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigtableTable_ColumnFamily>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -197,7 +235,7 @@ impl BigtableTable {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<BigtableTableTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<BigtableTable_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -206,6 +244,12 @@ impl BigtableTable {
         "Get a reference to the value of field `change_stream_retention` after provisioning.\nDuration to retain change stream data for the table. Set to 0 to disable. Must be between 1 and 7 days."]
     pub fn change_stream_retention(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.change_stream_retention", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -238,14 +282,20 @@ impl BigtableTable {
     }
 
     #[doc =
+        "Get a reference to the value of field `row_key_schema` after provisioning.\nDefines the row key schema of a table. To create or update a table with a row key schema, specify this argument.\n\t\t\t\t\tNote that in-place update is not supported, and any in-place modification to the schema will lead to failure.\n\t\t\t\t    To update a schema, please clear it (by omitting the field), and update the resource again with a new schema.\\n\n\t\t\t\t\t\n\t\t\t\t\tThe schema must be a valid JSON encoded string representing a Type's struct protobuf message. Note that for bytes sequence (like delimited_bytes.delimiter)\n\t\t\t\t\tthe delimiter must be base64 encoded. For example, if you want to set a delimiter to a single byte character \"#\", it should be set to \"Iw==\", which is the base64 encoding of the byte sequence \"#\"."]
+    pub fn row_key_schema(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.row_key_schema", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `split_keys` after provisioning.\nA list of predefined keys to split the table on. !> Warning: Modifying the split_keys of an existing table will cause Terraform to delete/recreate the entire google_bigtable_table resource."]
     pub fn split_keys(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.split_keys", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> BigtableTableTimeoutsElRef {
-        BigtableTableTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> BigtableTable_TimeoutsRef {
+        BigtableTable_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -294,19 +344,22 @@ impl BuildBigtableTable {
         let out = BigtableTable(std::rc::Rc::new(BigtableTable_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(BigtableTableData {
+            data: std::cell::RefCell::new(BigtableTableData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 change_stream_retention: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 deletion_protection: core::default::Default::default(),
                 id: core::default::Default::default(),
                 instance_name: self.instance_name,
                 name: self.name,
                 project: core::default::Default::default(),
+                row_key_schema: core::default::Default::default(),
                 split_keys: core::default::Default::default(),
+                automated_backup_policy: core::default::Default::default(),
                 column_family: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -347,6 +400,12 @@ impl BigtableTableRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `deletion_protection` after provisioning.\nA field to make the table protected against data loss i.e. when set to PROTECTED, deleting the table, the column families in the table, and the instance containing the table would be prohibited. If not provided, currently deletion protection will be set to UNPROTECTED as it is the API default value."]
     pub fn deletion_protection(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_protection", self.extract_ref()))
@@ -376,26 +435,65 @@ impl BigtableTableRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `row_key_schema` after provisioning.\nDefines the row key schema of a table. To create or update a table with a row key schema, specify this argument.\n\t\t\t\t\tNote that in-place update is not supported, and any in-place modification to the schema will lead to failure.\n\t\t\t\t    To update a schema, please clear it (by omitting the field), and update the resource again with a new schema.\\n\n\t\t\t\t\t\n\t\t\t\t\tThe schema must be a valid JSON encoded string representing a Type's struct protobuf message. Note that for bytes sequence (like delimited_bytes.delimiter)\n\t\t\t\t\tthe delimiter must be base64 encoded. For example, if you want to set a delimiter to a single byte character \"#\", it should be set to \"Iw==\", which is the base64 encoding of the byte sequence \"#\"."]
+    pub fn row_key_schema(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.row_key_schema", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `split_keys` after provisioning.\nA list of predefined keys to split the table on. !> Warning: Modifying the split_keys of an existing table will cause Terraform to delete/recreate the entire google_bigtable_table resource."]
     pub fn split_keys(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.split_keys", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> BigtableTableTimeoutsElRef {
-        BigtableTableTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> BigtableTable_TimeoutsRef {
+        BigtableTable_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
-#[derive(Serialize)]
-pub struct BigtableTableColumnFamilyEl {
-    family: terrars::PrimField<std::string::String>,
+#[derive(Serialize, Default)]
+struct BigtableTableDynamic {
+    automated_backup_policy: std::option::Option<terrars::DynamicBlock<BigtableTable_AutomatedBackupPolicy>>,
+    column_family: std::option::Option<terrars::DynamicBlock<BigtableTable_ColumnFamily>>,
 }
 
-impl BigtableTableColumnFamilyEl { }
+#[derive(Serialize)]
+pub struct BigtableTable_AutomatedBackupPolicy {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    frequency: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    locations: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    retention_period: std::option::Option<terrars::PrimField<std::string::String>>,
+}
 
-impl terrars::ToListMappable for BigtableTableColumnFamilyEl {
-    type O = terrars::BlockAssignable<BigtableTableColumnFamilyEl>;
+impl BigtableTable_AutomatedBackupPolicy {
+    #[doc = "Set the field `frequency`.\nHow frequently automated backups should occur."]
+    pub fn set_frequency(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.frequency = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `locations`.\nA list of Cloud Bigtable zones where automated backups are allowed to be created. If empty, automated backups will be created in all zones of the instance. Locations are in the format projects/{project}/locations/{zone}. This field can only be set for tables in Enterprise Plus instances."]
+    pub fn set_locations(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.locations = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `retention_period`.\nHow long the automated backups should be retained."]
+    pub fn set_retention_period(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.retention_period = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for BigtableTable_AutomatedBackupPolicy {
+    type O = terrars::BlockAssignable<BigtableTable_AutomatedBackupPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -406,32 +504,116 @@ impl terrars::ToListMappable for BigtableTableColumnFamilyEl {
     }
 }
 
-pub struct BuildBigtableTableColumnFamilyEl {
-    #[doc = "The name of the column family."]
-    pub family: terrars::PrimField<std::string::String>,
-}
+pub struct BuildBigtableTable_AutomatedBackupPolicy {}
 
-impl BuildBigtableTableColumnFamilyEl {
-    pub fn build(self) -> BigtableTableColumnFamilyEl {
-        BigtableTableColumnFamilyEl { family: self.family }
+impl BuildBigtableTable_AutomatedBackupPolicy {
+    pub fn build(self) -> BigtableTable_AutomatedBackupPolicy {
+        BigtableTable_AutomatedBackupPolicy {
+            frequency: core::default::Default::default(),
+            locations: core::default::Default::default(),
+            retention_period: core::default::Default::default(),
+        }
     }
 }
 
-pub struct BigtableTableColumnFamilyElRef {
+#[allow(dead_code)]
+pub struct BigtableTable_AutomatedBackupPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigtableTableColumnFamilyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigtableTableColumnFamilyElRef {
-        BigtableTableColumnFamilyElRef {
+impl terrars::Ref for BigtableTable_AutomatedBackupPolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigtableTable_AutomatedBackupPolicyRef {
+        BigtableTable_AutomatedBackupPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigtableTableColumnFamilyElRef {
+impl BigtableTable_AutomatedBackupPolicyRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `frequency` after provisioning.\nHow frequently automated backups should occur."]
+    pub fn frequency(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.frequency", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `locations` after provisioning.\nA list of Cloud Bigtable zones where automated backups are allowed to be created. If empty, automated backups will be created in all zones of the instance. Locations are in the format projects/{project}/locations/{zone}. This field can only be set for tables in Enterprise Plus instances."]
+    pub fn locations(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.locations", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `retention_period` after provisioning.\nHow long the automated backups should be retained."]
+    pub fn retention_period(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.retention_period", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct BigtableTable_ColumnFamily {
+    family: terrars::PrimField<std::string::String>,
+    #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
+    type_: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl BigtableTable_ColumnFamily {
+    #[doc = "Set the field `type_`.\nThe type of the column family."]
+    pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.type_ = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for BigtableTable_ColumnFamily {
+    type O = terrars::BlockAssignable<BigtableTable_ColumnFamily>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildBigtableTable_ColumnFamily {
+    #[doc = "The name of the column family."]
+    pub family: terrars::PrimField<std::string::String>,
+}
+
+impl BuildBigtableTable_ColumnFamily {
+    pub fn build(self) -> BigtableTable_ColumnFamily {
+        BigtableTable_ColumnFamily {
+            family: self.family,
+            type_: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct BigtableTable_ColumnFamilyRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for BigtableTable_ColumnFamilyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigtableTable_ColumnFamilyRef {
+        BigtableTable_ColumnFamilyRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl BigtableTable_ColumnFamilyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -440,17 +622,22 @@ impl BigtableTableColumnFamilyElRef {
     pub fn family(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.family", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\nThe type of the column family."]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct BigtableTableTimeoutsEl {
+pub struct BigtableTable_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl BigtableTableTimeoutsEl {
+impl BigtableTable_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -464,8 +651,8 @@ impl BigtableTableTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for BigtableTableTimeoutsEl {
-    type O = terrars::BlockAssignable<BigtableTableTimeoutsEl>;
+impl terrars::ToListMappable for BigtableTable_Timeouts {
+    type O = terrars::BlockAssignable<BigtableTable_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -476,32 +663,34 @@ impl terrars::ToListMappable for BigtableTableTimeoutsEl {
     }
 }
 
-pub struct BuildBigtableTableTimeoutsEl {}
+pub struct BuildBigtableTable_Timeouts {}
 
-impl BuildBigtableTableTimeoutsEl {
-    pub fn build(self) -> BigtableTableTimeoutsEl {
-        BigtableTableTimeoutsEl {
+impl BuildBigtableTable_Timeouts {
+    pub fn build(self) -> BigtableTable_Timeouts {
+        BigtableTable_Timeouts {
             create: core::default::Default::default(),
             update: core::default::Default::default(),
         }
     }
 }
 
-pub struct BigtableTableTimeoutsElRef {
+#[allow(dead_code)]
+pub struct BigtableTable_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigtableTableTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigtableTableTimeoutsElRef {
-        BigtableTableTimeoutsElRef {
+impl terrars::Ref for BigtableTable_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigtableTable_TimeoutsRef {
+        BigtableTable_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigtableTableTimeoutsElRef {
+impl BigtableTable_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -515,9 +704,4 @@ impl BigtableTableTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct BigtableTableDynamic {
-    column_family: std::option::Option<terrars::DynamicBlock<BigtableTableColumnFamilyEl>>,
 }

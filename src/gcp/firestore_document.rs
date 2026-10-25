@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct FirestoreDocumentData {
+struct FirestoreDocumentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,6 +23,8 @@ struct FirestoreDocumentData {
     collection: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     database: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     document_id: terrars::PrimField<std::string::String>,
     fields: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,13 +32,13 @@ struct FirestoreDocumentData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<FirestoreDocumentTimeoutsEl>,
+    timeouts: std::option::Option<FirestoreDocument_Timeouts>,
 }
 
 struct FirestoreDocument_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<FirestoreDocumentData>,
+    data: std::cell::RefCell<FirestoreDocumentData_>,
 }
 
 #[derive(Clone)]
@@ -140,6 +144,13 @@ impl FirestoreDocument {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -153,7 +164,7 @@ impl FirestoreDocument {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<FirestoreDocumentTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<FirestoreDocument_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -177,6 +188,12 @@ impl FirestoreDocument {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `document_id` after provisioning.\nThe client-assigned document ID to use for this document during creation."]
     pub fn document_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.document_id", self.extract_ref()))
@@ -194,7 +211,7 @@ impl FirestoreDocument {
     }
 
     #[doc =
-        "Get a reference to the value of field `name` after provisioning.\nA server defined name for this index. Format:\n'projects/{{project_id}}/databases/{{database_id}}/documents/{{path}}/{{document_id}}'"]
+        "Get a reference to the value of field `name` after provisioning.\nA server defined name for this document. Format:\n'projects/{{project_id}}/databases/{{database_id}}/documents/{{path}}/{{document_id}}'"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
@@ -217,8 +234,8 @@ impl FirestoreDocument {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> FirestoreDocumentTimeoutsElRef {
-        FirestoreDocumentTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> FirestoreDocument_TimeoutsRef {
+        FirestoreDocument_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -270,7 +287,7 @@ impl BuildFirestoreDocument {
         let out = FirestoreDocument(std::rc::Rc::new(FirestoreDocument_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(FirestoreDocumentData {
+            data: std::cell::RefCell::new(FirestoreDocumentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -278,6 +295,7 @@ impl BuildFirestoreDocument {
                 provisioner: core::default::Default::default(),
                 collection: self.collection,
                 database: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 document_id: self.document_id,
                 fields: self.fields,
                 id: core::default::Default::default(),
@@ -332,6 +350,12 @@ impl FirestoreDocumentRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `document_id` after provisioning.\nThe client-assigned document ID to use for this document during creation."]
     pub fn document_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.document_id", self.extract_ref()))
@@ -349,7 +373,7 @@ impl FirestoreDocumentRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `name` after provisioning.\nA server defined name for this index. Format:\n'projects/{{project_id}}/databases/{{database_id}}/documents/{{path}}/{{document_id}}'"]
+        "Get a reference to the value of field `name` after provisioning.\nA server defined name for this document. Format:\n'projects/{{project_id}}/databases/{{database_id}}/documents/{{path}}/{{document_id}}'"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
@@ -372,13 +396,13 @@ impl FirestoreDocumentRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> FirestoreDocumentTimeoutsElRef {
-        FirestoreDocumentTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> FirestoreDocument_TimeoutsRef {
+        FirestoreDocument_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct FirestoreDocumentTimeoutsEl {
+pub struct FirestoreDocument_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -387,7 +411,7 @@ pub struct FirestoreDocumentTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl FirestoreDocumentTimeoutsEl {
+impl FirestoreDocument_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -407,8 +431,8 @@ impl FirestoreDocumentTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for FirestoreDocumentTimeoutsEl {
-    type O = terrars::BlockAssignable<FirestoreDocumentTimeoutsEl>;
+impl terrars::ToListMappable for FirestoreDocument_Timeouts {
+    type O = terrars::BlockAssignable<FirestoreDocument_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -419,11 +443,11 @@ impl terrars::ToListMappable for FirestoreDocumentTimeoutsEl {
     }
 }
 
-pub struct BuildFirestoreDocumentTimeoutsEl {}
+pub struct BuildFirestoreDocument_Timeouts {}
 
-impl BuildFirestoreDocumentTimeoutsEl {
-    pub fn build(self) -> FirestoreDocumentTimeoutsEl {
-        FirestoreDocumentTimeoutsEl {
+impl BuildFirestoreDocument_Timeouts {
+    pub fn build(self) -> FirestoreDocument_Timeouts {
+        FirestoreDocument_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -431,21 +455,23 @@ impl BuildFirestoreDocumentTimeoutsEl {
     }
 }
 
-pub struct FirestoreDocumentTimeoutsElRef {
+#[allow(dead_code)]
+pub struct FirestoreDocument_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FirestoreDocumentTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FirestoreDocumentTimeoutsElRef {
-        FirestoreDocumentTimeoutsElRef {
+impl terrars::Ref for FirestoreDocument_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FirestoreDocument_TimeoutsRef {
+        FirestoreDocument_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FirestoreDocumentTimeoutsElRef {
+impl FirestoreDocument_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

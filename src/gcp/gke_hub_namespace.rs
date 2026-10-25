@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct GkeHubNamespaceData {
+struct GkeHubNamespaceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct GkeHubNamespaceData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -30,13 +34,13 @@ struct GkeHubNamespaceData {
     scope_id: terrars::PrimField<std::string::String>,
     scope_namespace_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<GkeHubNamespaceTimeoutsEl>,
+    timeouts: std::option::Option<GkeHubNamespace_Timeouts>,
 }
 
 struct GkeHubNamespace_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<GkeHubNamespaceData>,
+    data: std::cell::RefCell<GkeHubNamespaceData_>,
 }
 
 #[derive(Clone)]
@@ -136,6 +140,13 @@ impl GkeHubNamespace {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -169,7 +180,7 @@ impl GkeHubNamespace {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<GkeHubNamespaceTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<GkeHubNamespace_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -184,6 +195,12 @@ impl GkeHubNamespace {
         "Get a reference to the value of field `delete_time` after provisioning.\nTime the Namespace was deleted in UTC."]
     pub fn delete_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -236,7 +253,7 @@ impl GkeHubNamespace {
     }
 
     #[doc = "Get a reference to the value of field `state` after provisioning.\nState of the namespace resource."]
-    pub fn state(&self) -> terrars::ListRef<GkeHubNamespaceStateElRef> {
+    pub fn state(&self) -> terrars::ListRef<GkeHubNamespace_StateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
     }
 
@@ -258,8 +275,8 @@ impl GkeHubNamespace {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> GkeHubNamespaceTimeoutsElRef {
-        GkeHubNamespaceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> GkeHubNamespace_TimeoutsRef {
+        GkeHubNamespace_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -309,12 +326,13 @@ impl BuildGkeHubNamespace {
         let out = GkeHubNamespace(std::rc::Rc::new(GkeHubNamespace_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(GkeHubNamespaceData {
+            data: std::cell::RefCell::new(GkeHubNamespaceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 labels: core::default::Default::default(),
                 namespace_labels: core::default::Default::default(),
@@ -366,6 +384,12 @@ impl GkeHubNamespaceRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
     pub fn effective_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
@@ -415,7 +439,7 @@ impl GkeHubNamespaceRef {
     }
 
     #[doc = "Get a reference to the value of field `state` after provisioning.\nState of the namespace resource."]
-    pub fn state(&self) -> terrars::ListRef<GkeHubNamespaceStateElRef> {
+    pub fn state(&self) -> terrars::ListRef<GkeHubNamespace_StateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
     }
 
@@ -437,18 +461,18 @@ impl GkeHubNamespaceRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> GkeHubNamespaceTimeoutsElRef {
-        GkeHubNamespaceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> GkeHubNamespace_TimeoutsRef {
+        GkeHubNamespace_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct GkeHubNamespaceStateEl {
+pub struct GkeHubNamespace_State {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     code: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeHubNamespaceStateEl {
+impl GkeHubNamespace_State {
     #[doc = "Set the field `code`.\n"]
     pub fn set_code(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.code = std::option::Option::Some(v.into());
@@ -456,8 +480,8 @@ impl GkeHubNamespaceStateEl {
     }
 }
 
-impl terrars::ToListMappable for GkeHubNamespaceStateEl {
-    type O = terrars::BlockAssignable<GkeHubNamespaceStateEl>;
+impl terrars::ToListMappable for GkeHubNamespace_State {
+    type O = terrars::BlockAssignable<GkeHubNamespace_State>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -468,29 +492,31 @@ impl terrars::ToListMappable for GkeHubNamespaceStateEl {
     }
 }
 
-pub struct BuildGkeHubNamespaceStateEl {}
+pub struct BuildGkeHubNamespace_State {}
 
-impl BuildGkeHubNamespaceStateEl {
-    pub fn build(self) -> GkeHubNamespaceStateEl {
-        GkeHubNamespaceStateEl { code: core::default::Default::default() }
+impl BuildGkeHubNamespace_State {
+    pub fn build(self) -> GkeHubNamespace_State {
+        GkeHubNamespace_State { code: core::default::Default::default() }
     }
 }
 
-pub struct GkeHubNamespaceStateElRef {
+#[allow(dead_code)]
+pub struct GkeHubNamespace_StateRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeHubNamespaceStateElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeHubNamespaceStateElRef {
-        GkeHubNamespaceStateElRef {
+impl terrars::Ref for GkeHubNamespace_StateRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeHubNamespace_StateRef {
+        GkeHubNamespace_StateRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeHubNamespaceStateElRef {
+impl GkeHubNamespace_StateRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -502,7 +528,7 @@ impl GkeHubNamespaceStateElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeHubNamespaceTimeoutsEl {
+pub struct GkeHubNamespace_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -511,7 +537,7 @@ pub struct GkeHubNamespaceTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeHubNamespaceTimeoutsEl {
+impl GkeHubNamespace_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -531,8 +557,8 @@ impl GkeHubNamespaceTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for GkeHubNamespaceTimeoutsEl {
-    type O = terrars::BlockAssignable<GkeHubNamespaceTimeoutsEl>;
+impl terrars::ToListMappable for GkeHubNamespace_Timeouts {
+    type O = terrars::BlockAssignable<GkeHubNamespace_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -543,11 +569,11 @@ impl terrars::ToListMappable for GkeHubNamespaceTimeoutsEl {
     }
 }
 
-pub struct BuildGkeHubNamespaceTimeoutsEl {}
+pub struct BuildGkeHubNamespace_Timeouts {}
 
-impl BuildGkeHubNamespaceTimeoutsEl {
-    pub fn build(self) -> GkeHubNamespaceTimeoutsEl {
-        GkeHubNamespaceTimeoutsEl {
+impl BuildGkeHubNamespace_Timeouts {
+    pub fn build(self) -> GkeHubNamespace_Timeouts {
+        GkeHubNamespace_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -555,21 +581,23 @@ impl BuildGkeHubNamespaceTimeoutsEl {
     }
 }
 
-pub struct GkeHubNamespaceTimeoutsElRef {
+#[allow(dead_code)]
+pub struct GkeHubNamespace_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeHubNamespaceTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeHubNamespaceTimeoutsElRef {
-        GkeHubNamespaceTimeoutsElRef {
+impl terrars::Ref for GkeHubNamespace_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeHubNamespace_TimeoutsRef {
+        GkeHubNamespace_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeHubNamespaceTimeoutsElRef {
+impl GkeHubNamespace_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

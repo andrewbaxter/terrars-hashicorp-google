@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct EdgenetworkSubnetData {
+struct EdgenetworkSubnetData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct EdgenetworkSubnetData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -37,13 +41,13 @@ struct EdgenetworkSubnetData {
     vlan_id: std::option::Option<terrars::PrimField<f64>>,
     zone: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<EdgenetworkSubnetTimeoutsEl>,
+    timeouts: std::option::Option<EdgenetworkSubnet_Timeouts>,
 }
 
 struct EdgenetworkSubnet_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<EdgenetworkSubnetData>,
+    data: std::cell::RefCell<EdgenetworkSubnetData_>,
 }
 
 #[derive(Clone)]
@@ -143,6 +147,13 @@ impl EdgenetworkSubnet {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nA free-text description of the resource. Max length 1024 characters."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -175,7 +186,8 @@ impl EdgenetworkSubnet {
         self
     }
 
-    #[doc = "Set the field `labels`.\nLabels associated with this resource."]
+    #[doc =
+        "Set the field `labels`.\nLabels associated with this resource.\n\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
     pub fn set_labels(
         self,
         v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -197,7 +209,7 @@ impl EdgenetworkSubnet {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<EdgenetworkSubnetTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<EdgenetworkSubnet_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -209,9 +221,21 @@ impl EdgenetworkSubnet {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nA free-text description of the resource. Max length 1024 characters."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
+    pub fn effective_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -231,7 +255,8 @@ impl EdgenetworkSubnet {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ipv6_cidr", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `labels` after provisioning.\nLabels associated with this resource."]
+    #[doc =
+        "Get a reference to the value of field `labels` after provisioning.\nLabels associated with this resource.\n\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
     pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
     }
@@ -272,6 +297,12 @@ impl EdgenetworkSubnet {
     }
 
     #[doc =
+        "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
+    pub fn terraform_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `update_time` after provisioning.\nThe time when the subnet was last updated.\nA timestamp in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine\nfractional digits. Examples: '2014-10-02T15:01:23Z' and '2014-10-02T15:01:23.045123456Z'."]
     pub fn update_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update_time", self.extract_ref()))
@@ -290,8 +321,8 @@ impl EdgenetworkSubnet {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> EdgenetworkSubnetTimeoutsElRef {
-        EdgenetworkSubnetTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> EdgenetworkSubnet_TimeoutsRef {
+        EdgenetworkSubnet_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -344,12 +375,13 @@ impl BuildEdgenetworkSubnet {
         let out = EdgenetworkSubnet(std::rc::Rc::new(EdgenetworkSubnet_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(EdgenetworkSubnetData {
+            data: std::cell::RefCell::new(EdgenetworkSubnetData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 ipv4_cidr: core::default::Default::default(),
@@ -399,9 +431,21 @@ impl EdgenetworkSubnetRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nA free-text description of the resource. Max length 1024 characters."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
+    pub fn effective_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -421,7 +465,8 @@ impl EdgenetworkSubnetRef {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ipv6_cidr", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `labels` after provisioning.\nLabels associated with this resource."]
+    #[doc =
+        "Get a reference to the value of field `labels` after provisioning.\nLabels associated with this resource.\n\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
     pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
     }
@@ -462,6 +507,12 @@ impl EdgenetworkSubnetRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
+    pub fn terraform_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `update_time` after provisioning.\nThe time when the subnet was last updated.\nA timestamp in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine\nfractional digits. Examples: '2014-10-02T15:01:23Z' and '2014-10-02T15:01:23.045123456Z'."]
     pub fn update_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update_time", self.extract_ref()))
@@ -480,20 +531,22 @@ impl EdgenetworkSubnetRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> EdgenetworkSubnetTimeoutsElRef {
-        EdgenetworkSubnetTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> EdgenetworkSubnet_TimeoutsRef {
+        EdgenetworkSubnet_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct EdgenetworkSubnetTimeoutsEl {
+pub struct EdgenetworkSubnet_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EdgenetworkSubnetTimeoutsEl {
+impl EdgenetworkSubnet_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -505,10 +558,16 @@ impl EdgenetworkSubnetTimeoutsEl {
         self.delete = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for EdgenetworkSubnetTimeoutsEl {
-    type O = terrars::BlockAssignable<EdgenetworkSubnetTimeoutsEl>;
+impl terrars::ToListMappable for EdgenetworkSubnet_Timeouts {
+    type O = terrars::BlockAssignable<EdgenetworkSubnet_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -519,32 +578,35 @@ impl terrars::ToListMappable for EdgenetworkSubnetTimeoutsEl {
     }
 }
 
-pub struct BuildEdgenetworkSubnetTimeoutsEl {}
+pub struct BuildEdgenetworkSubnet_Timeouts {}
 
-impl BuildEdgenetworkSubnetTimeoutsEl {
-    pub fn build(self) -> EdgenetworkSubnetTimeoutsEl {
-        EdgenetworkSubnetTimeoutsEl {
+impl BuildEdgenetworkSubnet_Timeouts {
+    pub fn build(self) -> EdgenetworkSubnet_Timeouts {
+        EdgenetworkSubnet_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
+            update: core::default::Default::default(),
         }
     }
 }
 
-pub struct EdgenetworkSubnetTimeoutsElRef {
+#[allow(dead_code)]
+pub struct EdgenetworkSubnet_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EdgenetworkSubnetTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EdgenetworkSubnetTimeoutsElRef {
-        EdgenetworkSubnetTimeoutsElRef {
+impl terrars::Ref for EdgenetworkSubnet_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EdgenetworkSubnet_TimeoutsRef {
+        EdgenetworkSubnet_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EdgenetworkSubnetTimeoutsElRef {
+impl EdgenetworkSubnet_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -557,5 +619,10 @@ impl EdgenetworkSubnetTimeoutsElRef {
     #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
 }

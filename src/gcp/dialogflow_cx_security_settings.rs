@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DialogflowCxSecuritySettingsData {
+struct DialogflowCxSecuritySettingsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,6 +22,8 @@ struct DialogflowCxSecuritySettingsData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     deidentify_template: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     display_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -39,18 +43,18 @@ struct DialogflowCxSecuritySettingsData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     retention_window_days: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    audio_export_settings: std::option::Option<std::vec::Vec<DialogflowCxSecuritySettingsAudioExportSettingsEl>>,
+    audio_export_settings: std::option::Option<std::vec::Vec<DialogflowCxSecuritySettings_AudioExportSettings>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    insights_export_settings: std::option::Option<std::vec::Vec<DialogflowCxSecuritySettingsInsightsExportSettingsEl>>,
+    insights_export_settings: std::option::Option<std::vec::Vec<DialogflowCxSecuritySettings_InsightsExportSettings>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DialogflowCxSecuritySettingsTimeoutsEl>,
+    timeouts: std::option::Option<DialogflowCxSecuritySettings_Timeouts>,
     dynamic: DialogflowCxSecuritySettingsDynamic,
 }
 
 struct DialogflowCxSecuritySettings_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DialogflowCxSecuritySettingsData>,
+    data: std::cell::RefCell<DialogflowCxSecuritySettingsData_>,
 }
 
 #[derive(Clone)]
@@ -157,6 +161,13 @@ impl DialogflowCxSecuritySettings {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -217,7 +228,7 @@ impl DialogflowCxSecuritySettings {
     #[doc = "Set the field `audio_export_settings`.\n"]
     pub fn set_audio_export_settings(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxSecuritySettingsAudioExportSettingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxSecuritySettings_AudioExportSettings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -233,7 +244,7 @@ impl DialogflowCxSecuritySettings {
     #[doc = "Set the field `insights_export_settings`.\n"]
     pub fn set_insights_export_settings(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxSecuritySettingsInsightsExportSettingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxSecuritySettings_InsightsExportSettings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -247,7 +258,7 @@ impl DialogflowCxSecuritySettings {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DialogflowCxSecuritySettingsTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DialogflowCxSecuritySettings_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -256,6 +267,12 @@ impl DialogflowCxSecuritySettings {
         "Get a reference to the value of field `deidentify_template` after provisioning.\n[DLP](https://cloud.google.com/dlp/docs) deidentify template name. Use this template to define de-identification configuration for the content. If empty, Dialogflow replaces sensitive info with [redacted] text.\nNote: deidentifyTemplate must be located in the same region as the SecuritySettings.\nFormat: projects/<Project ID>/locations/<Location ID>/deidentifyTemplates/<Template ID> OR organizations/<Organization ID>/locations/<Location ID>/deidentifyTemplates/<Template ID>"]
     pub fn deidentify_template(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.deidentify_template", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -323,18 +340,18 @@ impl DialogflowCxSecuritySettings {
     }
 
     #[doc = "Get a reference to the value of field `audio_export_settings` after provisioning.\n"]
-    pub fn audio_export_settings(&self) -> terrars::ListRef<DialogflowCxSecuritySettingsAudioExportSettingsElRef> {
+    pub fn audio_export_settings(&self) -> terrars::ListRef<DialogflowCxSecuritySettings_AudioExportSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.audio_export_settings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `insights_export_settings` after provisioning.\n"]
-    pub fn insights_export_settings(&self) -> terrars::ListRef<DialogflowCxSecuritySettingsInsightsExportSettingsElRef> {
+    pub fn insights_export_settings(&self) -> terrars::ListRef<DialogflowCxSecuritySettings_InsightsExportSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.insights_export_settings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DialogflowCxSecuritySettingsTimeoutsElRef {
-        DialogflowCxSecuritySettingsTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DialogflowCxSecuritySettings_TimeoutsRef {
+        DialogflowCxSecuritySettings_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -386,13 +403,14 @@ impl BuildDialogflowCxSecuritySettings {
         let out = DialogflowCxSecuritySettings(std::rc::Rc::new(DialogflowCxSecuritySettings_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DialogflowCxSecuritySettingsData {
+            data: std::cell::RefCell::new(DialogflowCxSecuritySettingsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 deidentify_template: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 display_name: self.display_name,
                 id: core::default::Default::default(),
                 inspect_template: core::default::Default::default(),
@@ -441,6 +459,12 @@ impl DialogflowCxSecuritySettingsRef {
         "Get a reference to the value of field `deidentify_template` after provisioning.\n[DLP](https://cloud.google.com/dlp/docs) deidentify template name. Use this template to define de-identification configuration for the content. If empty, Dialogflow replaces sensitive info with [redacted] text.\nNote: deidentifyTemplate must be located in the same region as the SecuritySettings.\nFormat: projects/<Project ID>/locations/<Location ID>/deidentifyTemplates/<Template ID> OR organizations/<Organization ID>/locations/<Location ID>/deidentifyTemplates/<Template ID>"]
     pub fn deidentify_template(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.deidentify_template", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -508,26 +532,36 @@ impl DialogflowCxSecuritySettingsRef {
     }
 
     #[doc = "Get a reference to the value of field `audio_export_settings` after provisioning.\n"]
-    pub fn audio_export_settings(&self) -> terrars::ListRef<DialogflowCxSecuritySettingsAudioExportSettingsElRef> {
+    pub fn audio_export_settings(&self) -> terrars::ListRef<DialogflowCxSecuritySettings_AudioExportSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.audio_export_settings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `insights_export_settings` after provisioning.\n"]
-    pub fn insights_export_settings(&self) -> terrars::ListRef<DialogflowCxSecuritySettingsInsightsExportSettingsElRef> {
+    pub fn insights_export_settings(&self) -> terrars::ListRef<DialogflowCxSecuritySettings_InsightsExportSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.insights_export_settings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DialogflowCxSecuritySettingsTimeoutsElRef {
-        DialogflowCxSecuritySettingsTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DialogflowCxSecuritySettings_TimeoutsRef {
+        DialogflowCxSecuritySettings_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct DialogflowCxSecuritySettingsDynamic {
+    audio_export_settings: std
+    ::option
+    ::Option<terrars::DynamicBlock<DialogflowCxSecuritySettings_AudioExportSettings>>,
+    insights_export_settings: std
+    ::option
+    ::Option<terrars::DynamicBlock<DialogflowCxSecuritySettings_InsightsExportSettings>>,
+}
+
 #[derive(Serialize)]
-pub struct DialogflowCxSecuritySettingsAudioExportSettingsEl {
+pub struct DialogflowCxSecuritySettings_AudioExportSettings {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     audio_export_pattern: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -538,7 +572,7 @@ pub struct DialogflowCxSecuritySettingsAudioExportSettingsEl {
     gcs_bucket: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DialogflowCxSecuritySettingsAudioExportSettingsEl {
+impl DialogflowCxSecuritySettings_AudioExportSettings {
     #[doc = "Set the field `audio_export_pattern`.\nFilename pattern for exported audio."]
     pub fn set_audio_export_pattern(
         mut self,
@@ -569,8 +603,8 @@ impl DialogflowCxSecuritySettingsAudioExportSettingsEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxSecuritySettingsAudioExportSettingsEl {
-    type O = terrars::BlockAssignable<DialogflowCxSecuritySettingsAudioExportSettingsEl>;
+impl terrars::ToListMappable for DialogflowCxSecuritySettings_AudioExportSettings {
+    type O = terrars::BlockAssignable<DialogflowCxSecuritySettings_AudioExportSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -581,11 +615,11 @@ impl terrars::ToListMappable for DialogflowCxSecuritySettingsAudioExportSettings
     }
 }
 
-pub struct BuildDialogflowCxSecuritySettingsAudioExportSettingsEl {}
+pub struct BuildDialogflowCxSecuritySettings_AudioExportSettings {}
 
-impl BuildDialogflowCxSecuritySettingsAudioExportSettingsEl {
-    pub fn build(self) -> DialogflowCxSecuritySettingsAudioExportSettingsEl {
-        DialogflowCxSecuritySettingsAudioExportSettingsEl {
+impl BuildDialogflowCxSecuritySettings_AudioExportSettings {
+    pub fn build(self) -> DialogflowCxSecuritySettings_AudioExportSettings {
+        DialogflowCxSecuritySettings_AudioExportSettings {
             audio_export_pattern: core::default::Default::default(),
             audio_format: core::default::Default::default(),
             enable_audio_redaction: core::default::Default::default(),
@@ -594,24 +628,26 @@ impl BuildDialogflowCxSecuritySettingsAudioExportSettingsEl {
     }
 }
 
-pub struct DialogflowCxSecuritySettingsAudioExportSettingsElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxSecuritySettings_AudioExportSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxSecuritySettingsAudioExportSettingsElRef {
+impl terrars::Ref for DialogflowCxSecuritySettings_AudioExportSettingsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxSecuritySettingsAudioExportSettingsElRef {
-        DialogflowCxSecuritySettingsAudioExportSettingsElRef {
+    ) -> DialogflowCxSecuritySettings_AudioExportSettingsRef {
+        DialogflowCxSecuritySettings_AudioExportSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxSecuritySettingsAudioExportSettingsElRef {
+impl DialogflowCxSecuritySettings_AudioExportSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -642,14 +678,14 @@ impl DialogflowCxSecuritySettingsAudioExportSettingsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxSecuritySettingsInsightsExportSettingsEl {
+pub struct DialogflowCxSecuritySettings_InsightsExportSettings {
     enable_insights_export: terrars::PrimField<bool>,
 }
 
-impl DialogflowCxSecuritySettingsInsightsExportSettingsEl { }
+impl DialogflowCxSecuritySettings_InsightsExportSettings { }
 
-impl terrars::ToListMappable for DialogflowCxSecuritySettingsInsightsExportSettingsEl {
-    type O = terrars::BlockAssignable<DialogflowCxSecuritySettingsInsightsExportSettingsEl>;
+impl terrars::ToListMappable for DialogflowCxSecuritySettings_InsightsExportSettings {
+    type O = terrars::BlockAssignable<DialogflowCxSecuritySettings_InsightsExportSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -660,35 +696,37 @@ impl terrars::ToListMappable for DialogflowCxSecuritySettingsInsightsExportSetti
     }
 }
 
-pub struct BuildDialogflowCxSecuritySettingsInsightsExportSettingsEl {
+pub struct BuildDialogflowCxSecuritySettings_InsightsExportSettings {
     #[doc = "If enabled, we will automatically exports conversations to Insights and Insights runs its analyzers."]
     pub enable_insights_export: terrars::PrimField<bool>,
 }
 
-impl BuildDialogflowCxSecuritySettingsInsightsExportSettingsEl {
-    pub fn build(self) -> DialogflowCxSecuritySettingsInsightsExportSettingsEl {
-        DialogflowCxSecuritySettingsInsightsExportSettingsEl { enable_insights_export: self.enable_insights_export }
+impl BuildDialogflowCxSecuritySettings_InsightsExportSettings {
+    pub fn build(self) -> DialogflowCxSecuritySettings_InsightsExportSettings {
+        DialogflowCxSecuritySettings_InsightsExportSettings { enable_insights_export: self.enable_insights_export }
     }
 }
 
-pub struct DialogflowCxSecuritySettingsInsightsExportSettingsElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxSecuritySettings_InsightsExportSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxSecuritySettingsInsightsExportSettingsElRef {
+impl terrars::Ref for DialogflowCxSecuritySettings_InsightsExportSettingsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DialogflowCxSecuritySettingsInsightsExportSettingsElRef {
-        DialogflowCxSecuritySettingsInsightsExportSettingsElRef {
+    ) -> DialogflowCxSecuritySettings_InsightsExportSettingsRef {
+        DialogflowCxSecuritySettings_InsightsExportSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxSecuritySettingsInsightsExportSettingsElRef {
+impl DialogflowCxSecuritySettings_InsightsExportSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -701,7 +739,7 @@ impl DialogflowCxSecuritySettingsInsightsExportSettingsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxSecuritySettingsTimeoutsEl {
+pub struct DialogflowCxSecuritySettings_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -710,7 +748,7 @@ pub struct DialogflowCxSecuritySettingsTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DialogflowCxSecuritySettingsTimeoutsEl {
+impl DialogflowCxSecuritySettings_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -730,8 +768,8 @@ impl DialogflowCxSecuritySettingsTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxSecuritySettingsTimeoutsEl {
-    type O = terrars::BlockAssignable<DialogflowCxSecuritySettingsTimeoutsEl>;
+impl terrars::ToListMappable for DialogflowCxSecuritySettings_Timeouts {
+    type O = terrars::BlockAssignable<DialogflowCxSecuritySettings_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -742,11 +780,11 @@ impl terrars::ToListMappable for DialogflowCxSecuritySettingsTimeoutsEl {
     }
 }
 
-pub struct BuildDialogflowCxSecuritySettingsTimeoutsEl {}
+pub struct BuildDialogflowCxSecuritySettings_Timeouts {}
 
-impl BuildDialogflowCxSecuritySettingsTimeoutsEl {
-    pub fn build(self) -> DialogflowCxSecuritySettingsTimeoutsEl {
-        DialogflowCxSecuritySettingsTimeoutsEl {
+impl BuildDialogflowCxSecuritySettings_Timeouts {
+    pub fn build(self) -> DialogflowCxSecuritySettings_Timeouts {
+        DialogflowCxSecuritySettings_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -754,21 +792,23 @@ impl BuildDialogflowCxSecuritySettingsTimeoutsEl {
     }
 }
 
-pub struct DialogflowCxSecuritySettingsTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxSecuritySettings_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxSecuritySettingsTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxSecuritySettingsTimeoutsElRef {
-        DialogflowCxSecuritySettingsTimeoutsElRef {
+impl terrars::Ref for DialogflowCxSecuritySettings_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxSecuritySettings_TimeoutsRef {
+        DialogflowCxSecuritySettings_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxSecuritySettingsTimeoutsElRef {
+impl DialogflowCxSecuritySettings_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -787,14 +827,4 @@ impl DialogflowCxSecuritySettingsTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DialogflowCxSecuritySettingsDynamic {
-    audio_export_settings: std
-    ::option
-    ::Option<terrars::DynamicBlock<DialogflowCxSecuritySettingsAudioExportSettingsEl>>,
-    insights_export_settings: std
-    ::option
-    ::Option<terrars::DynamicBlock<DialogflowCxSecuritySettingsInsightsExportSettingsEl>>,
 }

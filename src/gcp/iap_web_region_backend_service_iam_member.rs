@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct IapWebRegionBackendServiceIamMemberData {
+struct IapWebRegionBackendServiceIamMemberData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,14 +30,14 @@ struct IapWebRegionBackendServiceIamMemberData {
     role: terrars::PrimField<std::string::String>,
     web_region_backend_service: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<IapWebRegionBackendServiceIamMemberConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<IapWebRegionBackendServiceIamMember_Condition>>,
     dynamic: IapWebRegionBackendServiceIamMemberDynamic,
 }
 
 struct IapWebRegionBackendServiceIamMember_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<IapWebRegionBackendServiceIamMemberData>,
+    data: std::cell::RefCell<IapWebRegionBackendServiceIamMemberData_>,
 }
 
 #[derive(Clone)]
@@ -156,7 +158,7 @@ impl IapWebRegionBackendServiceIamMember {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<IapWebRegionBackendServiceIamMemberConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IapWebRegionBackendServiceIamMember_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -205,7 +207,7 @@ impl IapWebRegionBackendServiceIamMember {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<IapWebRegionBackendServiceIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<IapWebRegionBackendServiceIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -256,7 +258,7 @@ impl BuildIapWebRegionBackendServiceIamMember {
         let out = IapWebRegionBackendServiceIamMember(std::rc::Rc::new(IapWebRegionBackendServiceIamMember_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(IapWebRegionBackendServiceIamMemberData {
+            data: std::cell::RefCell::new(IapWebRegionBackendServiceIamMemberData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -336,20 +338,25 @@ impl IapWebRegionBackendServiceIamMemberRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<IapWebRegionBackendServiceIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<IapWebRegionBackendServiceIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct IapWebRegionBackendServiceIamMemberDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<IapWebRegionBackendServiceIamMember_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct IapWebRegionBackendServiceIamMemberConditionEl {
+pub struct IapWebRegionBackendServiceIamMember_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl IapWebRegionBackendServiceIamMemberConditionEl {
+impl IapWebRegionBackendServiceIamMember_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -357,8 +364,8 @@ impl IapWebRegionBackendServiceIamMemberConditionEl {
     }
 }
 
-impl terrars::ToListMappable for IapWebRegionBackendServiceIamMemberConditionEl {
-    type O = terrars::BlockAssignable<IapWebRegionBackendServiceIamMemberConditionEl>;
+impl terrars::ToListMappable for IapWebRegionBackendServiceIamMember_Condition {
+    type O = terrars::BlockAssignable<IapWebRegionBackendServiceIamMember_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -369,16 +376,16 @@ impl terrars::ToListMappable for IapWebRegionBackendServiceIamMemberConditionEl 
     }
 }
 
-pub struct BuildIapWebRegionBackendServiceIamMemberConditionEl {
+pub struct BuildIapWebRegionBackendServiceIamMember_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildIapWebRegionBackendServiceIamMemberConditionEl {
-    pub fn build(self) -> IapWebRegionBackendServiceIamMemberConditionEl {
-        IapWebRegionBackendServiceIamMemberConditionEl {
+impl BuildIapWebRegionBackendServiceIamMember_Condition {
+    pub fn build(self) -> IapWebRegionBackendServiceIamMember_Condition {
+        IapWebRegionBackendServiceIamMember_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -386,24 +393,26 @@ impl BuildIapWebRegionBackendServiceIamMemberConditionEl {
     }
 }
 
-pub struct IapWebRegionBackendServiceIamMemberConditionElRef {
+#[allow(dead_code)]
+pub struct IapWebRegionBackendServiceIamMember_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IapWebRegionBackendServiceIamMemberConditionElRef {
+impl terrars::Ref for IapWebRegionBackendServiceIamMember_ConditionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IapWebRegionBackendServiceIamMemberConditionElRef {
-        IapWebRegionBackendServiceIamMemberConditionElRef {
+    ) -> IapWebRegionBackendServiceIamMember_ConditionRef {
+        IapWebRegionBackendServiceIamMember_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IapWebRegionBackendServiceIamMemberConditionElRef {
+impl IapWebRegionBackendServiceIamMember_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -422,9 +431,4 @@ impl IapWebRegionBackendServiceIamMemberConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct IapWebRegionBackendServiceIamMemberDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<IapWebRegionBackendServiceIamMemberConditionEl>>,
 }

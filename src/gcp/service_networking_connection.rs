@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ServiceNetworkingConnectionData {
+struct ServiceNetworkingConnectionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,18 +21,22 @@ struct ServiceNetworkingConnectionData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     network: terrars::PrimField<std::string::String>,
     reserved_peering_ranges: terrars::ListField<terrars::PrimField<std::string::String>>,
     service: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ServiceNetworkingConnectionTimeoutsEl>,
+    update_on_creation_fail: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<ServiceNetworkingConnection_Timeouts>,
 }
 
 struct ServiceNetworkingConnection_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ServiceNetworkingConnectionData>,
+    data: std::cell::RefCell<ServiceNetworkingConnectionData_>,
 }
 
 #[derive(Clone)]
@@ -130,16 +136,36 @@ impl ServiceNetworkingConnection {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the connection. Defaults to \"DELETE\".\nWhen set to \"PREVENT\", destroying the resource will fail.\nWhen set to \"ABANDON\", the resource is removed from Terraform state without\ndeleting the connection in the API. The VPC peering created by this connection\nis left in place, which will block deletion of the network.\nWhen set to \"DELETE\", the connection is deleted.\nWhen set to \"REMOVE_PEERING\", the connection is deleted, and if the API refuses\nbecause service producer resources still use it, the VPC peering is removed from\nthe network instead so that the network can be deleted. Only use this once the\nservice instances using the connection (such as Cloud SQL) are already deleted."]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
+    #[doc =
+        "Set the field `update_on_creation_fail`.\nWhen set to true, enforce an update of the reserved peering ranges on the existing service networking connection in case of a new connection creation failure."]
+    pub fn set_update_on_creation_fail(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().update_on_creation_fail = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ServiceNetworkingConnectionTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ServiceNetworkingConnection_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the connection. Defaults to \"DELETE\".\nWhen set to \"PREVENT\", destroying the resource will fail.\nWhen set to \"ABANDON\", the resource is removed from Terraform state without\ndeleting the connection in the API. The VPC peering created by this connection\nis left in place, which will block deletion of the network.\nWhen set to \"DELETE\", the connection is deleted.\nWhen set to \"REMOVE_PEERING\", the connection is deleted, and if the API refuses\nbecause service producer resources still use it, the VPC peering is removed from\nthe network instead so that the network can be deleted. Only use this once the\nservice instances using the connection (such as Cloud SQL) are already deleted."]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -170,9 +196,15 @@ impl ServiceNetworkingConnection {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.service", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `update_on_creation_fail` after provisioning.\nWhen set to true, enforce an update of the reserved peering ranges on the existing service networking connection in case of a new connection creation failure."]
+    pub fn update_on_creation_fail(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update_on_creation_fail", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ServiceNetworkingConnectionTimeoutsElRef {
-        ServiceNetworkingConnectionTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ServiceNetworkingConnection_TimeoutsRef {
+        ServiceNetworkingConnection_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -227,16 +259,18 @@ impl BuildServiceNetworkingConnection {
         let out = ServiceNetworkingConnection(std::rc::Rc::new(ServiceNetworkingConnection_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ServiceNetworkingConnectionData {
+            data: std::cell::RefCell::new(ServiceNetworkingConnectionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 network: self.network,
                 reserved_peering_ranges: self.reserved_peering_ranges,
                 service: self.service,
+                update_on_creation_fail: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
             }),
         }));
@@ -268,6 +302,12 @@ impl ServiceNetworkingConnectionRef {
         &self.shared
     }
 
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the connection. Defaults to \"DELETE\".\nWhen set to \"PREVENT\", destroying the resource will fail.\nWhen set to \"ABANDON\", the resource is removed from Terraform state without\ndeleting the connection in the API. The VPC peering created by this connection\nis left in place, which will block deletion of the network.\nWhen set to \"DELETE\", the connection is deleted.\nWhen set to \"REMOVE_PEERING\", the connection is deleted, and if the API refuses\nbecause service producer resources still use it, the VPC peering is removed from\nthe network instead so that the network can be deleted. Only use this once the\nservice instances using the connection (such as Cloud SQL) are already deleted."]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -296,9 +336,15 @@ impl ServiceNetworkingConnectionRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.service", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `update_on_creation_fail` after provisioning.\nWhen set to true, enforce an update of the reserved peering ranges on the existing service networking connection in case of a new connection creation failure."]
+    pub fn update_on_creation_fail(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update_on_creation_fail", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ServiceNetworkingConnectionTimeoutsElRef {
-        ServiceNetworkingConnectionTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ServiceNetworkingConnection_TimeoutsRef {
+        ServiceNetworkingConnection_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -306,7 +352,7 @@ impl ServiceNetworkingConnectionRef {
 }
 
 #[derive(Serialize)]
-pub struct ServiceNetworkingConnectionTimeoutsEl {
+pub struct ServiceNetworkingConnection_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -315,7 +361,7 @@ pub struct ServiceNetworkingConnectionTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ServiceNetworkingConnectionTimeoutsEl {
+impl ServiceNetworkingConnection_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -335,8 +381,8 @@ impl ServiceNetworkingConnectionTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ServiceNetworkingConnectionTimeoutsEl {
-    type O = terrars::BlockAssignable<ServiceNetworkingConnectionTimeoutsEl>;
+impl terrars::ToListMappable for ServiceNetworkingConnection_Timeouts {
+    type O = terrars::BlockAssignable<ServiceNetworkingConnection_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -347,11 +393,11 @@ impl terrars::ToListMappable for ServiceNetworkingConnectionTimeoutsEl {
     }
 }
 
-pub struct BuildServiceNetworkingConnectionTimeoutsEl {}
+pub struct BuildServiceNetworkingConnection_Timeouts {}
 
-impl BuildServiceNetworkingConnectionTimeoutsEl {
-    pub fn build(self) -> ServiceNetworkingConnectionTimeoutsEl {
-        ServiceNetworkingConnectionTimeoutsEl {
+impl BuildServiceNetworkingConnection_Timeouts {
+    pub fn build(self) -> ServiceNetworkingConnection_Timeouts {
+        ServiceNetworkingConnection_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -359,21 +405,23 @@ impl BuildServiceNetworkingConnectionTimeoutsEl {
     }
 }
 
-pub struct ServiceNetworkingConnectionTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ServiceNetworkingConnection_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ServiceNetworkingConnectionTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ServiceNetworkingConnectionTimeoutsElRef {
-        ServiceNetworkingConnectionTimeoutsElRef {
+impl terrars::Ref for ServiceNetworkingConnection_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ServiceNetworkingConnection_TimeoutsRef {
+        ServiceNetworkingConnection_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ServiceNetworkingConnectionTimeoutsElRef {
+impl ServiceNetworkingConnection_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

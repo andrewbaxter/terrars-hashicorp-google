@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeUrlMapData {
+struct ComputeUrlMapData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,6 +23,8 @@ struct ComputeUrlMapData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     default_service: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -28,26 +32,30 @@ struct ComputeUrlMapData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    default_route_action: std::option::Option<std::vec::Vec<ComputeUrlMapDefaultRouteActionEl>>,
+    default_custom_error_response_policy: std
+    ::option
+    ::Option<std::vec::Vec<ComputeUrlMap_DefaultCustomErrorResponsePolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    default_url_redirect: std::option::Option<std::vec::Vec<ComputeUrlMapDefaultUrlRedirectEl>>,
+    default_route_action: std::option::Option<std::vec::Vec<ComputeUrlMap_DefaultRouteAction>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    header_action: std::option::Option<std::vec::Vec<ComputeUrlMapHeaderActionEl>>,
+    default_url_redirect: std::option::Option<std::vec::Vec<ComputeUrlMap_DefaultUrlRedirect>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    host_rule: std::option::Option<std::vec::Vec<ComputeUrlMapHostRuleEl>>,
+    header_action: std::option::Option<std::vec::Vec<ComputeUrlMap_HeaderAction>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    path_matcher: std::option::Option<std::vec::Vec<ComputeUrlMapPathMatcherEl>>,
+    host_rule: std::option::Option<std::vec::Vec<ComputeUrlMap_HostRule>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    test: std::option::Option<std::vec::Vec<ComputeUrlMapTestEl>>,
+    path_matcher: std::option::Option<std::vec::Vec<ComputeUrlMap_PathMatcher>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComputeUrlMapTimeoutsEl>,
+    test: std::option::Option<std::vec::Vec<ComputeUrlMap_Test>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<ComputeUrlMap_Timeouts>,
     dynamic: ComputeUrlMapDynamic,
 }
 
 struct ComputeUrlMap_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeUrlMapData>,
+    data: std::cell::RefCell<ComputeUrlMapData_>,
 }
 
 #[derive(Clone)]
@@ -155,6 +163,13 @@ impl ComputeUrlMap {
     }
 
     #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `description`.\nAn optional description of this resource. Provide this property when you create\nthe resource."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -173,10 +188,26 @@ impl ComputeUrlMap {
         self
     }
 
+    #[doc = "Set the field `default_custom_error_response_policy`.\n"]
+    pub fn set_default_custom_error_response_policy(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMap_DefaultCustomErrorResponsePolicy>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().default_custom_error_response_policy = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.default_custom_error_response_policy = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `default_route_action`.\n"]
     pub fn set_default_route_action(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMapDefaultRouteActionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -192,7 +223,7 @@ impl ComputeUrlMap {
     #[doc = "Set the field `default_url_redirect`.\n"]
     pub fn set_default_url_redirect(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMapDefaultUrlRedirectEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMap_DefaultUrlRedirect>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -208,7 +239,7 @@ impl ComputeUrlMap {
     #[doc = "Set the field `header_action`.\n"]
     pub fn set_header_action(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMapHeaderActionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMap_HeaderAction>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -222,7 +253,7 @@ impl ComputeUrlMap {
     }
 
     #[doc = "Set the field `host_rule`.\n"]
-    pub fn set_host_rule(self, v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMapHostRuleEl>>) -> Self {
+    pub fn set_host_rule(self, v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMap_HostRule>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().host_rule = std::option::Option::Some(v);
@@ -237,7 +268,7 @@ impl ComputeUrlMap {
     #[doc = "Set the field `path_matcher`.\n"]
     pub fn set_path_matcher(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMapPathMatcherEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMap_PathMatcher>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -251,7 +282,7 @@ impl ComputeUrlMap {
     }
 
     #[doc = "Set the field `test`.\n"]
-    pub fn set_test(self, v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMapTestEl>>) -> Self {
+    pub fn set_test(self, v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMap_Test>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().test = std::option::Option::Some(v);
@@ -264,7 +295,7 @@ impl ComputeUrlMap {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeUrlMapTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeUrlMap_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -279,6 +310,12 @@ impl ComputeUrlMap {
         "Get a reference to the value of field `default_service` after provisioning.\nThe backend service or backend bucket to use when none of the given rules match."]
     pub fn default_service(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.default_service", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -320,34 +357,44 @@ impl ComputeUrlMap {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `default_custom_error_response_policy` after provisioning.\n"]
+    pub fn default_custom_error_response_policy(
+        &self,
+    ) -> terrars::ListRef<ComputeUrlMap_DefaultCustomErrorResponsePolicyRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.default_custom_error_response_policy", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `default_route_action` after provisioning.\n"]
-    pub fn default_route_action(&self) -> terrars::ListRef<ComputeUrlMapDefaultRouteActionElRef> {
+    pub fn default_route_action(&self) -> terrars::ListRef<ComputeUrlMap_DefaultRouteActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.default_route_action", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `default_url_redirect` after provisioning.\n"]
-    pub fn default_url_redirect(&self) -> terrars::ListRef<ComputeUrlMapDefaultUrlRedirectElRef> {
+    pub fn default_url_redirect(&self) -> terrars::ListRef<ComputeUrlMap_DefaultUrlRedirectRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.default_url_redirect", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `header_action` after provisioning.\n"]
-    pub fn header_action(&self) -> terrars::ListRef<ComputeUrlMapHeaderActionElRef> {
+    pub fn header_action(&self) -> terrars::ListRef<ComputeUrlMap_HeaderActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.header_action", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `path_matcher` after provisioning.\n"]
-    pub fn path_matcher(&self) -> terrars::ListRef<ComputeUrlMapPathMatcherElRef> {
+    pub fn path_matcher(&self) -> terrars::ListRef<ComputeUrlMap_PathMatcherRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.path_matcher", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `test` after provisioning.\n"]
-    pub fn test(&self) -> terrars::ListRef<ComputeUrlMapTestElRef> {
+    pub fn test(&self) -> terrars::ListRef<ComputeUrlMap_TestRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.test", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeUrlMapTimeoutsElRef {
-        ComputeUrlMapTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeUrlMap_TimeoutsRef {
+        ComputeUrlMap_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -394,17 +441,19 @@ impl BuildComputeUrlMap {
         let out = ComputeUrlMap(std::rc::Rc::new(ComputeUrlMap_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeUrlMapData {
+            data: std::cell::RefCell::new(ComputeUrlMapData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 default_service: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
                 project: core::default::Default::default(),
+                default_custom_error_response_policy: core::default::Default::default(),
                 default_route_action: core::default::Default::default(),
                 default_url_redirect: core::default::Default::default(),
                 header_action: core::default::Default::default(),
@@ -456,6 +505,12 @@ impl ComputeUrlMapRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nAn optional description of this resource. Provide this property when you create\nthe resource."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -494,39 +549,1259 @@ impl ComputeUrlMapRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `default_custom_error_response_policy` after provisioning.\n"]
+    pub fn default_custom_error_response_policy(
+        &self,
+    ) -> terrars::ListRef<ComputeUrlMap_DefaultCustomErrorResponsePolicyRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.default_custom_error_response_policy", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `default_route_action` after provisioning.\n"]
-    pub fn default_route_action(&self) -> terrars::ListRef<ComputeUrlMapDefaultRouteActionElRef> {
+    pub fn default_route_action(&self) -> terrars::ListRef<ComputeUrlMap_DefaultRouteActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.default_route_action", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `default_url_redirect` after provisioning.\n"]
-    pub fn default_url_redirect(&self) -> terrars::ListRef<ComputeUrlMapDefaultUrlRedirectElRef> {
+    pub fn default_url_redirect(&self) -> terrars::ListRef<ComputeUrlMap_DefaultUrlRedirectRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.default_url_redirect", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `header_action` after provisioning.\n"]
-    pub fn header_action(&self) -> terrars::ListRef<ComputeUrlMapHeaderActionElRef> {
+    pub fn header_action(&self) -> terrars::ListRef<ComputeUrlMap_HeaderActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.header_action", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `path_matcher` after provisioning.\n"]
-    pub fn path_matcher(&self) -> terrars::ListRef<ComputeUrlMapPathMatcherElRef> {
+    pub fn path_matcher(&self) -> terrars::ListRef<ComputeUrlMap_PathMatcherRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.path_matcher", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `test` after provisioning.\n"]
-    pub fn test(&self) -> terrars::ListRef<ComputeUrlMapTestElRef> {
+    pub fn test(&self) -> terrars::ListRef<ComputeUrlMap_TestRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.test", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeUrlMapTimeoutsElRef {
-        ComputeUrlMapTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeUrlMap_TimeoutsRef {
+        ComputeUrlMap_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct ComputeUrlMapDynamic {
+    default_custom_error_response_policy: std
+    ::option
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_DefaultCustomErrorResponsePolicy>>,
+    default_route_action: std::option::Option<terrars::DynamicBlock<ComputeUrlMap_DefaultRouteAction>>,
+    default_url_redirect: std::option::Option<terrars::DynamicBlock<ComputeUrlMap_DefaultUrlRedirect>>,
+    header_action: std::option::Option<terrars::DynamicBlock<ComputeUrlMap_HeaderAction>>,
+    host_rule: std::option::Option<terrars::DynamicBlock<ComputeUrlMap_HostRule>>,
+    path_matcher: std::option::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher>>,
+    test: std::option::Option<terrars::DynamicBlock<ComputeUrlMap_Test>>,
+}
+
+#[derive(Serialize)]
+pub struct ComputeUrlMap_DefaultCustomErrorResponsePolicy_ErrorResponseRule {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    match_response_codes: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    override_response_code: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    path: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl ComputeUrlMap_DefaultCustomErrorResponsePolicy_ErrorResponseRule {
+    #[doc =
+        "Set the field `match_response_codes`.\nValid values include:\n- A number between 400 and 599: For example 401 or 503, in which case the load balancer applies the policy if the error code exactly matches this value.\n- 5xx: Load Balancer will apply the policy if the backend service responds with any response code in the range of 500 to 599.\n- 4xx: Load Balancer will apply the policy if the backend service responds with any response code in the range of 400 to 499.\nValues must be unique within matchResponseCodes and across all errorResponseRules of CustomErrorResponsePolicy."]
+    pub fn set_match_response_codes(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.match_response_codes = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `override_response_code`.\nThe HTTP status code returned with the response containing the custom error content.\nIf overrideResponseCode is not supplied, the same response code returned by the original backend bucket or backend service is returned to the client."]
+    pub fn set_override_response_code(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.override_response_code = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `path`.\nThe full path to a file within backendBucket. For example: /errors/defaultError.html\npath must start with a leading slash. path cannot have trailing slashes.\nIf the file is not available in backendBucket or the load balancer cannot reach the BackendBucket, a simple Not Found Error is returned to the client.\nThe value must be from 1 to 1024 characters."]
+    pub fn set_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.path = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeUrlMap_DefaultCustomErrorResponsePolicy_ErrorResponseRule {
+    type O = terrars::BlockAssignable<ComputeUrlMap_DefaultCustomErrorResponsePolicy_ErrorResponseRule>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeUrlMap_DefaultCustomErrorResponsePolicy_ErrorResponseRule {}
+
+impl BuildComputeUrlMap_DefaultCustomErrorResponsePolicy_ErrorResponseRule {
+    pub fn build(self) -> ComputeUrlMap_DefaultCustomErrorResponsePolicy_ErrorResponseRule {
+        ComputeUrlMap_DefaultCustomErrorResponsePolicy_ErrorResponseRule {
+            match_response_codes: core::default::Default::default(),
+            override_response_code: core::default::Default::default(),
+            path: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeUrlMap_DefaultCustomErrorResponsePolicy_ErrorResponseRuleRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeUrlMap_DefaultCustomErrorResponsePolicy_ErrorResponseRuleRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputeUrlMap_DefaultCustomErrorResponsePolicy_ErrorResponseRuleRef {
+        ComputeUrlMap_DefaultCustomErrorResponsePolicy_ErrorResponseRuleRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeUrlMap_DefaultCustomErrorResponsePolicy_ErrorResponseRuleRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `match_response_codes` after provisioning.\nValid values include:\n- A number between 400 and 599: For example 401 or 503, in which case the load balancer applies the policy if the error code exactly matches this value.\n- 5xx: Load Balancer will apply the policy if the backend service responds with any response code in the range of 500 to 599.\n- 4xx: Load Balancer will apply the policy if the backend service responds with any response code in the range of 400 to 499.\nValues must be unique within matchResponseCodes and across all errorResponseRules of CustomErrorResponsePolicy."]
+    pub fn match_response_codes(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.match_response_codes", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `override_response_code` after provisioning.\nThe HTTP status code returned with the response containing the custom error content.\nIf overrideResponseCode is not supplied, the same response code returned by the original backend bucket or backend service is returned to the client."]
+    pub fn override_response_code(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.override_response_code", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `path` after provisioning.\nThe full path to a file within backendBucket. For example: /errors/defaultError.html\npath must start with a leading slash. path cannot have trailing slashes.\nIf the file is not available in backendBucket or the load balancer cannot reach the BackendBucket, a simple Not Found Error is returned to the client.\nThe value must be from 1 to 1024 characters."]
+    pub fn path(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.path", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct ComputeUrlMap_DefaultCustomErrorResponsePolicyDynamic {
+    error_response_rule: std
+    ::option
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_DefaultCustomErrorResponsePolicy_ErrorResponseRule>>,
+}
+
+#[derive(Serialize)]
+pub struct ComputeUrlMap_DefaultCustomErrorResponsePolicy {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    error_service: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    error_response_rule: std
+    ::option
+    ::Option<std::vec::Vec<ComputeUrlMap_DefaultCustomErrorResponsePolicy_ErrorResponseRule>>,
+    dynamic: ComputeUrlMap_DefaultCustomErrorResponsePolicyDynamic,
+}
+
+impl ComputeUrlMap_DefaultCustomErrorResponsePolicy {
+    #[doc =
+        "Set the field `error_service`.\nThe full or partial URL to the BackendBucket resource that contains the custom error content. Examples are:\n\nhttps://www.googleapis.com/compute/v1/projects/project/global/backendBuckets/myBackendBucket\ncompute/v1/projects/project/global/backendBuckets/myBackendBucket\nglobal/backendBuckets/myBackendBucket\n\nIf errorService is not specified at lower levels like pathMatcher, pathRule and routeRule, an errorService specified at a higher level in the UrlMap will be used. If UrlMap.defaultCustomErrorResponsePolicy contains one or more errorResponseRules[], it must specify errorService.\nIf load balancer cannot reach the backendBucket, a simple Not Found Error will be returned, with the original response code (or overrideResponseCode if configured)."]
+    pub fn set_error_service(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.error_service = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `error_response_rule`.\n"]
+    pub fn set_error_response_rule(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<ComputeUrlMap_DefaultCustomErrorResponsePolicy_ErrorResponseRule>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.error_response_rule = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.error_response_rule = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeUrlMap_DefaultCustomErrorResponsePolicy {
+    type O = terrars::BlockAssignable<ComputeUrlMap_DefaultCustomErrorResponsePolicy>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeUrlMap_DefaultCustomErrorResponsePolicy {}
+
+impl BuildComputeUrlMap_DefaultCustomErrorResponsePolicy {
+    pub fn build(self) -> ComputeUrlMap_DefaultCustomErrorResponsePolicy {
+        ComputeUrlMap_DefaultCustomErrorResponsePolicy {
+            error_service: core::default::Default::default(),
+            error_response_rule: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeUrlMap_DefaultCustomErrorResponsePolicyRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeUrlMap_DefaultCustomErrorResponsePolicyRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputeUrlMap_DefaultCustomErrorResponsePolicyRef {
+        ComputeUrlMap_DefaultCustomErrorResponsePolicyRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeUrlMap_DefaultCustomErrorResponsePolicyRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `error_service` after provisioning.\nThe full or partial URL to the BackendBucket resource that contains the custom error content. Examples are:\n\nhttps://www.googleapis.com/compute/v1/projects/project/global/backendBuckets/myBackendBucket\ncompute/v1/projects/project/global/backendBuckets/myBackendBucket\nglobal/backendBuckets/myBackendBucket\n\nIf errorService is not specified at lower levels like pathMatcher, pathRule and routeRule, an errorService specified at a higher level in the UrlMap will be used. If UrlMap.defaultCustomErrorResponsePolicy contains one or more errorResponseRules[], it must specify errorService.\nIf load balancer cannot reach the backendBucket, a simple Not Found Error will be returned, with the original response code (or overrideResponseCode if configured)."]
+    pub fn error_service(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.error_service", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `error_response_rule` after provisioning.\n"]
+    pub fn error_response_rule(
+        &self,
+    ) -> terrars::ListRef<ComputeUrlMap_DefaultCustomErrorResponsePolicy_ErrorResponseRuleRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.error_response_rule", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapDefaultRouteActionElCorsPolicyEl {
+pub struct ComputeUrlMap_DefaultRouteAction_CachePolicy_CacheKeyPolicy {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    excluded_query_parameters: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    include_host: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    include_protocol: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    include_query_string: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    included_cookie_names: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    included_header_names: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    included_query_parameters: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+}
+
+impl ComputeUrlMap_DefaultRouteAction_CachePolicy_CacheKeyPolicy {
+    #[doc =
+        "Set the field `excluded_query_parameters`.\nNames of query string parameters to exclude in cache keys. All other\nparameters will be included. Either specify excludedQueryParameters\nor includedQueryParameters, not both. '&' and '=' will be percent\nencoded and not treated as delimiters. Note: This field applies to\nroutes that use backend services. Attempting to set it on a route that\npoints exclusively to Backend Buckets will result in a configuration\nerror. For routes that point to a Backend Bucket, use\nincludedQueryParameters to define which parameters should be part of\nthe cache key."]
+    pub fn set_excluded_query_parameters(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.excluded_query_parameters = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `include_host`.\nIf true, requests to different hosts will be cached separately. Note:\nThis setting is only applicable to routes that use a Backend Service.\nIt does not affect requests served by a Backend Bucket, as the host is\nnever included in a Backend Bucket's cache key. Attempting to set it on\na route that points exclusively to Backend Buckets will result in a\nconfiguration error."]
+    pub fn set_include_host(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.include_host = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `include_protocol`.\nIf true, http and https requests will be cached separately. Note: This\nsetting is only applicable to routes that use a Backend Service. It\ndoes not affect requests served by a Backend Bucket, as the protocol is\nnever included in a Backend Bucket's cache key. Attempting to set on a\nroute that points exclusively to Backend Buckets will result in a\nconfiguration error."]
+    pub fn set_include_protocol(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.include_protocol = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `include_query_string`.\nIf true, include query string parameters in the cache key according to\nincludedQueryParameters and excludedQueryParameters. If neither is\nset, the entire query string will be included. If false, the query\nstring will be excluded from the cache key entirely. Note: This field\napplies to routes that use backend services. Attempting to set it on a\nroute that points exclusively to Backend Buckets will result in a\nconfiguration error. For routes that point to a Backend Bucket, use\nincludedQueryParameters to define which parameters should be part of\nthe cache key."]
+    pub fn set_include_query_string(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.include_query_string = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `included_cookie_names`.\nAllows HTTP cookies (by name) to be used in the cache key. The\nname=value pair will be used in the cache key Cloud CDN generates.\nNote: This setting is only applicable to routes that use a Backend\nService. It does not affect requests served by a Backend Bucket.\nAttempting to set it on a route that points exclusively to Backend\nBuckets will result in a configuration error. Up to 5 cookie names can\nbe specified."]
+    pub fn set_included_cookie_names(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.included_cookie_names = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `included_header_names`.\nAllows HTTP request headers (by name) to be used in the cache key."]
+    pub fn set_included_header_names(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.included_header_names = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `included_query_parameters`.\nNames of query string parameters to include in cache keys. All other\nparameters will be excluded. Either specify includedQueryParameters\nor excludedQueryParameters, not both. '&' and '=' will be percent\nencoded and not treated as delimiters."]
+    pub fn set_included_query_parameters(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.included_query_parameters = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeUrlMap_DefaultRouteAction_CachePolicy_CacheKeyPolicy {
+    type O = terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_CachePolicy_CacheKeyPolicy>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeUrlMap_DefaultRouteAction_CachePolicy_CacheKeyPolicy {}
+
+impl BuildComputeUrlMap_DefaultRouteAction_CachePolicy_CacheKeyPolicy {
+    pub fn build(self) -> ComputeUrlMap_DefaultRouteAction_CachePolicy_CacheKeyPolicy {
+        ComputeUrlMap_DefaultRouteAction_CachePolicy_CacheKeyPolicy {
+            excluded_query_parameters: core::default::Default::default(),
+            include_host: core::default::Default::default(),
+            include_protocol: core::default::Default::default(),
+            include_query_string: core::default::Default::default(),
+            included_cookie_names: core::default::Default::default(),
+            included_header_names: core::default::Default::default(),
+            included_query_parameters: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeUrlMap_DefaultRouteAction_CachePolicy_CacheKeyPolicyRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeUrlMap_DefaultRouteAction_CachePolicy_CacheKeyPolicyRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputeUrlMap_DefaultRouteAction_CachePolicy_CacheKeyPolicyRef {
+        ComputeUrlMap_DefaultRouteAction_CachePolicy_CacheKeyPolicyRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeUrlMap_DefaultRouteAction_CachePolicy_CacheKeyPolicyRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `excluded_query_parameters` after provisioning.\nNames of query string parameters to exclude in cache keys. All other\nparameters will be included. Either specify excludedQueryParameters\nor includedQueryParameters, not both. '&' and '=' will be percent\nencoded and not treated as delimiters. Note: This field applies to\nroutes that use backend services. Attempting to set it on a route that\npoints exclusively to Backend Buckets will result in a configuration\nerror. For routes that point to a Backend Bucket, use\nincludedQueryParameters to define which parameters should be part of\nthe cache key."]
+    pub fn excluded_query_parameters(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.excluded_query_parameters", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `include_host` after provisioning.\nIf true, requests to different hosts will be cached separately. Note:\nThis setting is only applicable to routes that use a Backend Service.\nIt does not affect requests served by a Backend Bucket, as the host is\nnever included in a Backend Bucket's cache key. Attempting to set it on\na route that points exclusively to Backend Buckets will result in a\nconfiguration error."]
+    pub fn include_host(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.include_host", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `include_protocol` after provisioning.\nIf true, http and https requests will be cached separately. Note: This\nsetting is only applicable to routes that use a Backend Service. It\ndoes not affect requests served by a Backend Bucket, as the protocol is\nnever included in a Backend Bucket's cache key. Attempting to set on a\nroute that points exclusively to Backend Buckets will result in a\nconfiguration error."]
+    pub fn include_protocol(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.include_protocol", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `include_query_string` after provisioning.\nIf true, include query string parameters in the cache key according to\nincludedQueryParameters and excludedQueryParameters. If neither is\nset, the entire query string will be included. If false, the query\nstring will be excluded from the cache key entirely. Note: This field\napplies to routes that use backend services. Attempting to set it on a\nroute that points exclusively to Backend Buckets will result in a\nconfiguration error. For routes that point to a Backend Bucket, use\nincludedQueryParameters to define which parameters should be part of\nthe cache key."]
+    pub fn include_query_string(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.include_query_string", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `included_cookie_names` after provisioning.\nAllows HTTP cookies (by name) to be used in the cache key. The\nname=value pair will be used in the cache key Cloud CDN generates.\nNote: This setting is only applicable to routes that use a Backend\nService. It does not affect requests served by a Backend Bucket.\nAttempting to set it on a route that points exclusively to Backend\nBuckets will result in a configuration error. Up to 5 cookie names can\nbe specified."]
+    pub fn included_cookie_names(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.included_cookie_names", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `included_header_names` after provisioning.\nAllows HTTP request headers (by name) to be used in the cache key."]
+    pub fn included_header_names(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.included_header_names", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `included_query_parameters` after provisioning.\nNames of query string parameters to include in cache keys. All other\nparameters will be excluded. Either specify includedQueryParameters\nor excludedQueryParameters, not both. '&' and '=' will be percent\nencoded and not treated as delimiters."]
+    pub fn included_query_parameters(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.included_query_parameters", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ComputeUrlMap_DefaultRouteAction_CachePolicy_ClientTtl {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    nanos: std::option::Option<terrars::PrimField<f64>>,
+    seconds: terrars::PrimField<std::string::String>,
+}
+
+impl ComputeUrlMap_DefaultRouteAction_CachePolicy_ClientTtl {
+    #[doc = "Set the field `nanos`.\nSpan of time that's a fraction of a second at nanosecond resolution."]
+    pub fn set_nanos(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.nanos = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeUrlMap_DefaultRouteAction_CachePolicy_ClientTtl {
+    type O = terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_CachePolicy_ClientTtl>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeUrlMap_DefaultRouteAction_CachePolicy_ClientTtl {
+    #[doc = "Span of time at a resolution of a second. Must be from 0 to 315,576,000,000 inclusive."]
+    pub seconds: terrars::PrimField<std::string::String>,
+}
+
+impl BuildComputeUrlMap_DefaultRouteAction_CachePolicy_ClientTtl {
+    pub fn build(self) -> ComputeUrlMap_DefaultRouteAction_CachePolicy_ClientTtl {
+        ComputeUrlMap_DefaultRouteAction_CachePolicy_ClientTtl {
+            nanos: core::default::Default::default(),
+            seconds: self.seconds,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeUrlMap_DefaultRouteAction_CachePolicy_ClientTtlRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeUrlMap_DefaultRouteAction_CachePolicy_ClientTtlRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputeUrlMap_DefaultRouteAction_CachePolicy_ClientTtlRef {
+        ComputeUrlMap_DefaultRouteAction_CachePolicy_ClientTtlRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeUrlMap_DefaultRouteAction_CachePolicy_ClientTtlRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `nanos` after provisioning.\nSpan of time that's a fraction of a second at nanosecond resolution."]
+    pub fn nanos(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.nanos", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `seconds` after provisioning.\nSpan of time at a resolution of a second. Must be from 0 to 315,576,000,000 inclusive."]
+    pub fn seconds(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.seconds", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ComputeUrlMap_DefaultRouteAction_CachePolicy_DefaultTtl {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    nanos: std::option::Option<terrars::PrimField<f64>>,
+    seconds: terrars::PrimField<std::string::String>,
+}
+
+impl ComputeUrlMap_DefaultRouteAction_CachePolicy_DefaultTtl {
+    #[doc = "Set the field `nanos`.\nSpan of time that's a fraction of a second at nanosecond resolution."]
+    pub fn set_nanos(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.nanos = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeUrlMap_DefaultRouteAction_CachePolicy_DefaultTtl {
+    type O = terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_CachePolicy_DefaultTtl>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeUrlMap_DefaultRouteAction_CachePolicy_DefaultTtl {
+    #[doc = "Span of time at a resolution of a second. Must be from 0 to 315,576,000,000 inclusive."]
+    pub seconds: terrars::PrimField<std::string::String>,
+}
+
+impl BuildComputeUrlMap_DefaultRouteAction_CachePolicy_DefaultTtl {
+    pub fn build(self) -> ComputeUrlMap_DefaultRouteAction_CachePolicy_DefaultTtl {
+        ComputeUrlMap_DefaultRouteAction_CachePolicy_DefaultTtl {
+            nanos: core::default::Default::default(),
+            seconds: self.seconds,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeUrlMap_DefaultRouteAction_CachePolicy_DefaultTtlRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeUrlMap_DefaultRouteAction_CachePolicy_DefaultTtlRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputeUrlMap_DefaultRouteAction_CachePolicy_DefaultTtlRef {
+        ComputeUrlMap_DefaultRouteAction_CachePolicy_DefaultTtlRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeUrlMap_DefaultRouteAction_CachePolicy_DefaultTtlRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `nanos` after provisioning.\nSpan of time that's a fraction of a second at nanosecond resolution."]
+    pub fn nanos(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.nanos", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `seconds` after provisioning.\nSpan of time at a resolution of a second. Must be from 0 to 315,576,000,000 inclusive."]
+    pub fn seconds(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.seconds", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ComputeUrlMap_DefaultRouteAction_CachePolicy_MaxTtl {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    nanos: std::option::Option<terrars::PrimField<f64>>,
+    seconds: terrars::PrimField<std::string::String>,
+}
+
+impl ComputeUrlMap_DefaultRouteAction_CachePolicy_MaxTtl {
+    #[doc = "Set the field `nanos`.\nSpan of time that's a fraction of a second at nanosecond resolution."]
+    pub fn set_nanos(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.nanos = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeUrlMap_DefaultRouteAction_CachePolicy_MaxTtl {
+    type O = terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_CachePolicy_MaxTtl>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeUrlMap_DefaultRouteAction_CachePolicy_MaxTtl {
+    #[doc = "Span of time at a resolution of a second. Must be from 0 to 315,576,000,000 inclusive."]
+    pub seconds: terrars::PrimField<std::string::String>,
+}
+
+impl BuildComputeUrlMap_DefaultRouteAction_CachePolicy_MaxTtl {
+    pub fn build(self) -> ComputeUrlMap_DefaultRouteAction_CachePolicy_MaxTtl {
+        ComputeUrlMap_DefaultRouteAction_CachePolicy_MaxTtl {
+            nanos: core::default::Default::default(),
+            seconds: self.seconds,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeUrlMap_DefaultRouteAction_CachePolicy_MaxTtlRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeUrlMap_DefaultRouteAction_CachePolicy_MaxTtlRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputeUrlMap_DefaultRouteAction_CachePolicy_MaxTtlRef {
+        ComputeUrlMap_DefaultRouteAction_CachePolicy_MaxTtlRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeUrlMap_DefaultRouteAction_CachePolicy_MaxTtlRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `nanos` after provisioning.\nSpan of time that's a fraction of a second at nanosecond resolution."]
+    pub fn nanos(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.nanos", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `seconds` after provisioning.\nSpan of time at a resolution of a second. Must be from 0 to 315,576,000,000 inclusive."]
+    pub fn seconds(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.seconds", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ComputeUrlMap_DefaultRouteAction_CachePolicy_NegativeCachingPolicy_Ttl {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    nanos: std::option::Option<terrars::PrimField<f64>>,
+    seconds: terrars::PrimField<std::string::String>,
+}
+
+impl ComputeUrlMap_DefaultRouteAction_CachePolicy_NegativeCachingPolicy_Ttl {
+    #[doc = "Set the field `nanos`.\nSpan of time that's a fraction of a second at nanosecond resolution."]
+    pub fn set_nanos(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.nanos = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeUrlMap_DefaultRouteAction_CachePolicy_NegativeCachingPolicy_Ttl {
+    type O = terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_CachePolicy_NegativeCachingPolicy_Ttl>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeUrlMap_DefaultRouteAction_CachePolicy_NegativeCachingPolicy_Ttl {
+    #[doc = "Span of time at a resolution of a second. Must be from 0 to 315,576,000,000 inclusive."]
+    pub seconds: terrars::PrimField<std::string::String>,
+}
+
+impl BuildComputeUrlMap_DefaultRouteAction_CachePolicy_NegativeCachingPolicy_Ttl {
+    pub fn build(self) -> ComputeUrlMap_DefaultRouteAction_CachePolicy_NegativeCachingPolicy_Ttl {
+        ComputeUrlMap_DefaultRouteAction_CachePolicy_NegativeCachingPolicy_Ttl {
+            nanos: core::default::Default::default(),
+            seconds: self.seconds,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeUrlMap_DefaultRouteAction_CachePolicy_NegativeCachingPolicy_TtlRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeUrlMap_DefaultRouteAction_CachePolicy_NegativeCachingPolicy_TtlRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputeUrlMap_DefaultRouteAction_CachePolicy_NegativeCachingPolicy_TtlRef {
+        ComputeUrlMap_DefaultRouteAction_CachePolicy_NegativeCachingPolicy_TtlRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeUrlMap_DefaultRouteAction_CachePolicy_NegativeCachingPolicy_TtlRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `nanos` after provisioning.\nSpan of time that's a fraction of a second at nanosecond resolution."]
+    pub fn nanos(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.nanos", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `seconds` after provisioning.\nSpan of time at a resolution of a second. Must be from 0 to 315,576,000,000 inclusive."]
+    pub fn seconds(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.seconds", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct ComputeUrlMap_DefaultRouteAction_CachePolicy_NegativeCachingPolicyDynamic {
+    ttl: std
+    ::option
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_DefaultRouteAction_CachePolicy_NegativeCachingPolicy_Ttl>>,
+}
+
+#[derive(Serialize)]
+pub struct ComputeUrlMap_DefaultRouteAction_CachePolicy_NegativeCachingPolicy {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    code: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ttl: std::option::Option<std::vec::Vec<ComputeUrlMap_DefaultRouteAction_CachePolicy_NegativeCachingPolicy_Ttl>>,
+    dynamic: ComputeUrlMap_DefaultRouteAction_CachePolicy_NegativeCachingPolicyDynamic,
+}
+
+impl ComputeUrlMap_DefaultRouteAction_CachePolicy_NegativeCachingPolicy {
+    #[doc =
+        "Set the field `code`.\nThe HTTP status code to define a TTL against. Only HTTP status codes\n300, 301, 302, 307, 308, 404, 405, 410, 421, 451 and 501 can be\nspecified as values, and you cannot specify a status code more than\nonce."]
+    pub fn set_code(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.code = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `ttl`.\n"]
+    pub fn set_ttl(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<ComputeUrlMap_DefaultRouteAction_CachePolicy_NegativeCachingPolicy_Ttl>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.ttl = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.ttl = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeUrlMap_DefaultRouteAction_CachePolicy_NegativeCachingPolicy {
+    type O = terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_CachePolicy_NegativeCachingPolicy>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeUrlMap_DefaultRouteAction_CachePolicy_NegativeCachingPolicy {}
+
+impl BuildComputeUrlMap_DefaultRouteAction_CachePolicy_NegativeCachingPolicy {
+    pub fn build(self) -> ComputeUrlMap_DefaultRouteAction_CachePolicy_NegativeCachingPolicy {
+        ComputeUrlMap_DefaultRouteAction_CachePolicy_NegativeCachingPolicy {
+            code: core::default::Default::default(),
+            ttl: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeUrlMap_DefaultRouteAction_CachePolicy_NegativeCachingPolicyRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeUrlMap_DefaultRouteAction_CachePolicy_NegativeCachingPolicyRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputeUrlMap_DefaultRouteAction_CachePolicy_NegativeCachingPolicyRef {
+        ComputeUrlMap_DefaultRouteAction_CachePolicy_NegativeCachingPolicyRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeUrlMap_DefaultRouteAction_CachePolicy_NegativeCachingPolicyRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `code` after provisioning.\nThe HTTP status code to define a TTL against. Only HTTP status codes\n300, 301, 302, 307, 308, 404, 405, 410, 421, 451 and 501 can be\nspecified as values, and you cannot specify a status code more than\nonce."]
+    pub fn code(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.code", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `ttl` after provisioning.\n"]
+    pub fn ttl(&self) -> terrars::ListRef<ComputeUrlMap_DefaultRouteAction_CachePolicy_NegativeCachingPolicy_TtlRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.ttl", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ComputeUrlMap_DefaultRouteAction_CachePolicy_ServeWhileStale {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    nanos: std::option::Option<terrars::PrimField<f64>>,
+    seconds: terrars::PrimField<std::string::String>,
+}
+
+impl ComputeUrlMap_DefaultRouteAction_CachePolicy_ServeWhileStale {
+    #[doc = "Set the field `nanos`.\nSpan of time that's a fraction of a second at nanosecond resolution."]
+    pub fn set_nanos(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.nanos = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeUrlMap_DefaultRouteAction_CachePolicy_ServeWhileStale {
+    type O = terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_CachePolicy_ServeWhileStale>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeUrlMap_DefaultRouteAction_CachePolicy_ServeWhileStale {
+    #[doc = "Span of time at a resolution of a second. Must be from 0 to 315,576,000,000 inclusive."]
+    pub seconds: terrars::PrimField<std::string::String>,
+}
+
+impl BuildComputeUrlMap_DefaultRouteAction_CachePolicy_ServeWhileStale {
+    pub fn build(self) -> ComputeUrlMap_DefaultRouteAction_CachePolicy_ServeWhileStale {
+        ComputeUrlMap_DefaultRouteAction_CachePolicy_ServeWhileStale {
+            nanos: core::default::Default::default(),
+            seconds: self.seconds,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeUrlMap_DefaultRouteAction_CachePolicy_ServeWhileStaleRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeUrlMap_DefaultRouteAction_CachePolicy_ServeWhileStaleRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputeUrlMap_DefaultRouteAction_CachePolicy_ServeWhileStaleRef {
+        ComputeUrlMap_DefaultRouteAction_CachePolicy_ServeWhileStaleRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeUrlMap_DefaultRouteAction_CachePolicy_ServeWhileStaleRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `nanos` after provisioning.\nSpan of time that's a fraction of a second at nanosecond resolution."]
+    pub fn nanos(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.nanos", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `seconds` after provisioning.\nSpan of time at a resolution of a second. Must be from 0 to 315,576,000,000 inclusive."]
+    pub fn seconds(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.seconds", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct ComputeUrlMap_DefaultRouteAction_CachePolicyDynamic {
+    cache_key_policy: std
+    ::option
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_DefaultRouteAction_CachePolicy_CacheKeyPolicy>>,
+    client_ttl: std::option::Option<terrars::DynamicBlock<ComputeUrlMap_DefaultRouteAction_CachePolicy_ClientTtl>>,
+    default_ttl: std::option::Option<terrars::DynamicBlock<ComputeUrlMap_DefaultRouteAction_CachePolicy_DefaultTtl>>,
+    max_ttl: std::option::Option<terrars::DynamicBlock<ComputeUrlMap_DefaultRouteAction_CachePolicy_MaxTtl>>,
+    negative_caching_policy: std
+    ::option
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_DefaultRouteAction_CachePolicy_NegativeCachingPolicy>>,
+    serve_while_stale: std
+    ::option
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_DefaultRouteAction_CachePolicy_ServeWhileStale>>,
+}
+
+#[derive(Serialize)]
+pub struct ComputeUrlMap_DefaultRouteAction_CachePolicy {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cache_bypass_request_header_names: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cache_mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    negative_caching: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    request_coalescing: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cache_key_policy: std::option::Option<std::vec::Vec<ComputeUrlMap_DefaultRouteAction_CachePolicy_CacheKeyPolicy>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    client_ttl: std::option::Option<std::vec::Vec<ComputeUrlMap_DefaultRouteAction_CachePolicy_ClientTtl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    default_ttl: std::option::Option<std::vec::Vec<ComputeUrlMap_DefaultRouteAction_CachePolicy_DefaultTtl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_ttl: std::option::Option<std::vec::Vec<ComputeUrlMap_DefaultRouteAction_CachePolicy_MaxTtl>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    negative_caching_policy: std
+    ::option
+    ::Option<std::vec::Vec<ComputeUrlMap_DefaultRouteAction_CachePolicy_NegativeCachingPolicy>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    serve_while_stale: std::option::Option<std::vec::Vec<ComputeUrlMap_DefaultRouteAction_CachePolicy_ServeWhileStale>>,
+    dynamic: ComputeUrlMap_DefaultRouteAction_CachePolicyDynamic,
+}
+
+impl ComputeUrlMap_DefaultRouteAction_CachePolicy {
+    #[doc =
+        "Set the field `cache_bypass_request_header_names`.\nBypass the cache when the specified request headers are matched by name,\ne.g. Pragma or Authorization headers. Values are case-insensitive. Up to 5\nheader names can be specified. The cache is bypassed for all cacheMode\nvalues."]
+    pub fn set_cache_bypass_request_header_names(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.cache_bypass_request_header_names = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `cache_mode`.\nSpecifies the cache setting for all responses from this route. If not\nspecified, Cloud CDN uses CACHE_ALL_STATIC mode. Possible values: [\"USE_ORIGIN_HEADERS\", \"FORCE_CACHE_ALL\", \"CACHE_ALL_STATIC\"]"]
+    pub fn set_cache_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.cache_mode = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `negative_caching`.\nNegative caching allows per-status code TTLs to be set, in order to apply\nfine-grained caching for common errors or redirects. This can reduce the\nload on your origin and improve end-user experience by reducing response\nlatency. When the cacheMode is set to CACHE_ALL_STATIC or\nUSE_ORIGIN_HEADERS, negative caching applies to responses with the\nspecified response code that lack any Cache-Control, Expires, or\nPragma: no-cache directives. When the cacheMode is set to\nFORCE_CACHE_ALL, negative caching applies to all responses with the\nspecified response code, and overrides any caching headers. By default,\nCloud CDN applies the following TTLs to these HTTP status codes:\n* 300 (Multiple Choice), 301, 308 (Permanent Redirects): 10m\n* 404 (Not Found), 410 (Gone), 451 (Unavailable For Legal Reasons): 120s\n* 405 (Method Not Found), 501 (Not Implemented): 60s\nThese defaults can be overridden in negativeCachingPolicy. If not\nspecified, Cloud CDN applies negative caching by default."]
+    pub fn set_negative_caching(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.negative_caching = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `request_coalescing`.\nIf true then Cloud CDN will combine multiple concurrent cache fill\nrequests into a small number of requests to the origin. If not specified,\nCloud CDN applies request coalescing by default."]
+    pub fn set_request_coalescing(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.request_coalescing = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `cache_key_policy`.\n"]
+    pub fn set_cache_key_policy(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_CachePolicy_CacheKeyPolicy>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.cache_key_policy = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.cache_key_policy = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `client_ttl`.\n"]
+    pub fn set_client_ttl(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_CachePolicy_ClientTtl>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.client_ttl = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.client_ttl = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `default_ttl`.\n"]
+    pub fn set_default_ttl(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_CachePolicy_DefaultTtl>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.default_ttl = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.default_ttl = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `max_ttl`.\n"]
+    pub fn set_max_ttl(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_CachePolicy_MaxTtl>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.max_ttl = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.max_ttl = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `negative_caching_policy`.\n"]
+    pub fn set_negative_caching_policy(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_CachePolicy_NegativeCachingPolicy>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.negative_caching_policy = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.negative_caching_policy = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `serve_while_stale`.\n"]
+    pub fn set_serve_while_stale(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_CachePolicy_ServeWhileStale>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.serve_while_stale = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.serve_while_stale = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeUrlMap_DefaultRouteAction_CachePolicy {
+    type O = terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_CachePolicy>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeUrlMap_DefaultRouteAction_CachePolicy {}
+
+impl BuildComputeUrlMap_DefaultRouteAction_CachePolicy {
+    pub fn build(self) -> ComputeUrlMap_DefaultRouteAction_CachePolicy {
+        ComputeUrlMap_DefaultRouteAction_CachePolicy {
+            cache_bypass_request_header_names: core::default::Default::default(),
+            cache_mode: core::default::Default::default(),
+            negative_caching: core::default::Default::default(),
+            request_coalescing: core::default::Default::default(),
+            cache_key_policy: core::default::Default::default(),
+            client_ttl: core::default::Default::default(),
+            default_ttl: core::default::Default::default(),
+            max_ttl: core::default::Default::default(),
+            negative_caching_policy: core::default::Default::default(),
+            serve_while_stale: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeUrlMap_DefaultRouteAction_CachePolicyRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeUrlMap_DefaultRouteAction_CachePolicyRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputeUrlMap_DefaultRouteAction_CachePolicyRef {
+        ComputeUrlMap_DefaultRouteAction_CachePolicyRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeUrlMap_DefaultRouteAction_CachePolicyRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `cache_bypass_request_header_names` after provisioning.\nBypass the cache when the specified request headers are matched by name,\ne.g. Pragma or Authorization headers. Values are case-insensitive. Up to 5\nheader names can be specified. The cache is bypassed for all cacheMode\nvalues."]
+    pub fn cache_bypass_request_header_names(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cache_bypass_request_header_names", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `cache_mode` after provisioning.\nSpecifies the cache setting for all responses from this route. If not\nspecified, Cloud CDN uses CACHE_ALL_STATIC mode. Possible values: [\"USE_ORIGIN_HEADERS\", \"FORCE_CACHE_ALL\", \"CACHE_ALL_STATIC\"]"]
+    pub fn cache_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cache_mode", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `negative_caching` after provisioning.\nNegative caching allows per-status code TTLs to be set, in order to apply\nfine-grained caching for common errors or redirects. This can reduce the\nload on your origin and improve end-user experience by reducing response\nlatency. When the cacheMode is set to CACHE_ALL_STATIC or\nUSE_ORIGIN_HEADERS, negative caching applies to responses with the\nspecified response code that lack any Cache-Control, Expires, or\nPragma: no-cache directives. When the cacheMode is set to\nFORCE_CACHE_ALL, negative caching applies to all responses with the\nspecified response code, and overrides any caching headers. By default,\nCloud CDN applies the following TTLs to these HTTP status codes:\n* 300 (Multiple Choice), 301, 308 (Permanent Redirects): 10m\n* 404 (Not Found), 410 (Gone), 451 (Unavailable For Legal Reasons): 120s\n* 405 (Method Not Found), 501 (Not Implemented): 60s\nThese defaults can be overridden in negativeCachingPolicy. If not\nspecified, Cloud CDN applies negative caching by default."]
+    pub fn negative_caching(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.negative_caching", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `request_coalescing` after provisioning.\nIf true then Cloud CDN will combine multiple concurrent cache fill\nrequests into a small number of requests to the origin. If not specified,\nCloud CDN applies request coalescing by default."]
+    pub fn request_coalescing(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.request_coalescing", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `cache_key_policy` after provisioning.\n"]
+    pub fn cache_key_policy(&self) -> terrars::ListRef<ComputeUrlMap_DefaultRouteAction_CachePolicy_CacheKeyPolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cache_key_policy", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `client_ttl` after provisioning.\n"]
+    pub fn client_ttl(&self) -> terrars::ListRef<ComputeUrlMap_DefaultRouteAction_CachePolicy_ClientTtlRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.client_ttl", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `default_ttl` after provisioning.\n"]
+    pub fn default_ttl(&self) -> terrars::ListRef<ComputeUrlMap_DefaultRouteAction_CachePolicy_DefaultTtlRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.default_ttl", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `max_ttl` after provisioning.\n"]
+    pub fn max_ttl(&self) -> terrars::ListRef<ComputeUrlMap_DefaultRouteAction_CachePolicy_MaxTtlRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.max_ttl", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `negative_caching_policy` after provisioning.\n"]
+    pub fn negative_caching_policy(
+        &self,
+    ) -> terrars::ListRef<ComputeUrlMap_DefaultRouteAction_CachePolicy_NegativeCachingPolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.negative_caching_policy", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `serve_while_stale` after provisioning.\n"]
+    pub fn serve_while_stale(&self) -> terrars::ListRef<ComputeUrlMap_DefaultRouteAction_CachePolicy_ServeWhileStaleRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.serve_while_stale", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ComputeUrlMap_DefaultRouteAction_CorsPolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allow_credentials: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -545,7 +1820,7 @@ pub struct ComputeUrlMapDefaultRouteActionElCorsPolicyEl {
     max_age: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl ComputeUrlMapDefaultRouteActionElCorsPolicyEl {
+impl ComputeUrlMap_DefaultRouteAction_CorsPolicy {
     #[doc =
         "Set the field `allow_credentials`.\nIn response to a preflight request, setting this to true indicates that the actual request can include user credentials.\nThis translates to the Access-Control-Allow-Credentials header."]
     pub fn set_allow_credentials(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -615,8 +1890,8 @@ impl ComputeUrlMapDefaultRouteActionElCorsPolicyEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapDefaultRouteActionElCorsPolicyEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapDefaultRouteActionElCorsPolicyEl>;
+impl terrars::ToListMappable for ComputeUrlMap_DefaultRouteAction_CorsPolicy {
+    type O = terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_CorsPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -627,11 +1902,11 @@ impl terrars::ToListMappable for ComputeUrlMapDefaultRouteActionElCorsPolicyEl {
     }
 }
 
-pub struct BuildComputeUrlMapDefaultRouteActionElCorsPolicyEl {}
+pub struct BuildComputeUrlMap_DefaultRouteAction_CorsPolicy {}
 
-impl BuildComputeUrlMapDefaultRouteActionElCorsPolicyEl {
-    pub fn build(self) -> ComputeUrlMapDefaultRouteActionElCorsPolicyEl {
-        ComputeUrlMapDefaultRouteActionElCorsPolicyEl {
+impl BuildComputeUrlMap_DefaultRouteAction_CorsPolicy {
+    pub fn build(self) -> ComputeUrlMap_DefaultRouteAction_CorsPolicy {
+        ComputeUrlMap_DefaultRouteAction_CorsPolicy {
             allow_credentials: core::default::Default::default(),
             allow_headers: core::default::Default::default(),
             allow_methods: core::default::Default::default(),
@@ -644,24 +1919,26 @@ impl BuildComputeUrlMapDefaultRouteActionElCorsPolicyEl {
     }
 }
 
-pub struct ComputeUrlMapDefaultRouteActionElCorsPolicyElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_DefaultRouteAction_CorsPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapDefaultRouteActionElCorsPolicyElRef {
+impl terrars::Ref for ComputeUrlMap_DefaultRouteAction_CorsPolicyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapDefaultRouteActionElCorsPolicyElRef {
-        ComputeUrlMapDefaultRouteActionElCorsPolicyElRef {
+    ) -> ComputeUrlMap_DefaultRouteAction_CorsPolicyRef {
+        ComputeUrlMap_DefaultRouteAction_CorsPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapDefaultRouteActionElCorsPolicyElRef {
+impl ComputeUrlMap_DefaultRouteAction_CorsPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -716,14 +1993,14 @@ impl ComputeUrlMapDefaultRouteActionElCorsPolicyElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElAbortEl {
+pub struct ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Abort {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     http_status: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     percentage: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElAbortEl {
+impl ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Abort {
     #[doc =
         "Set the field `http_status`.\nThe HTTP status code used to abort the request.\nThe value must be between 200 and 599 inclusive."]
     pub fn set_http_status(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -739,8 +2016,8 @@ impl ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElAbortEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElAbortEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElAbortEl>;
+impl terrars::ToListMappable for ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Abort {
+    type O = terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Abort>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -751,35 +2028,37 @@ impl terrars::ToListMappable for ComputeUrlMapDefaultRouteActionElFaultInjection
     }
 }
 
-pub struct BuildComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElAbortEl {}
+pub struct BuildComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Abort {}
 
-impl BuildComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElAbortEl {
-    pub fn build(self) -> ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElAbortEl {
-        ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElAbortEl {
+impl BuildComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Abort {
+    pub fn build(self) -> ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Abort {
+        ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Abort {
             http_status: core::default::Default::default(),
             percentage: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElAbortElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_AbortRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElAbortElRef {
+impl terrars::Ref for ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_AbortRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElAbortElRef {
-        ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElAbortElRef {
+    ) -> ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_AbortRef {
+        ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_AbortRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElAbortElRef {
+impl ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_AbortRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -798,14 +2077,14 @@ impl ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElAbortElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl {
+pub struct ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Delay_FixedDelay {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     nanos: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     seconds: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl {
+impl ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Delay_FixedDelay {
     #[doc =
         "Set the field `nanos`.\nSpan of time that's a fraction of a second at nanosecond resolution. Durations less than one second are\nrepresented with a 0 seconds field and a positive nanos field. Must be from 0 to 999,999,999 inclusive."]
     pub fn set_nanos(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -821,8 +2100,8 @@ impl ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl 
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl>;
+impl terrars::ToListMappable for ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Delay_FixedDelay {
+    type O = terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Delay_FixedDelay>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -833,35 +2112,37 @@ impl terrars::ToListMappable for ComputeUrlMapDefaultRouteActionElFaultInjection
     }
 }
 
-pub struct BuildComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl {}
+pub struct BuildComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Delay_FixedDelay {}
 
-impl BuildComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl {
-    pub fn build(self) -> ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl {
-        ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl {
+impl BuildComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Delay_FixedDelay {
+    pub fn build(self) -> ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Delay_FixedDelay {
+        ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Delay_FixedDelay {
             nanos: core::default::Default::default(),
             seconds: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayElFixedDelayElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Delay_FixedDelayRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayElFixedDelayElRef {
+impl terrars::Ref for ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Delay_FixedDelayRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayElFixedDelayElRef {
-        ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayElFixedDelayElRef {
+    ) -> ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Delay_FixedDelayRef {
+        ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Delay_FixedDelayRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayElFixedDelayElRef {
+impl ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Delay_FixedDelayRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -880,24 +2161,24 @@ impl ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayElFixedDelayElR
 }
 
 #[derive(Serialize, Default)]
-struct ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayElDynamic {
+struct ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_DelayDynamic {
     fixed_delay: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl>>,
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Delay_FixedDelay>>,
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayEl {
+pub struct ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Delay {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     percentage: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     fixed_delay: std
     ::option
-    ::Option<std::vec::Vec<ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl>>,
-    dynamic: ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayElDynamic,
+    ::Option<std::vec::Vec<ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Delay_FixedDelay>>,
+    dynamic: ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_DelayDynamic,
 }
 
-impl ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayEl {
+impl ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Delay {
     #[doc =
         "Set the field `percentage`.\nThe percentage of traffic (connections/operations/requests) on which delay will be introduced as part of fault injection.\nThe value must be between 0.0 and 100.0 inclusive."]
     pub fn set_percentage(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -915,7 +2196,7 @@ impl ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl>,
+                        ::BlockAssignable<ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Delay_FixedDelay>,
                     >,
     ) -> Self {
         match v.into() {
@@ -930,8 +2211,8 @@ impl ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayEl>;
+impl terrars::ToListMappable for ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Delay {
+    type O = terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Delay>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -942,11 +2223,11 @@ impl terrars::ToListMappable for ComputeUrlMapDefaultRouteActionElFaultInjection
     }
 }
 
-pub struct BuildComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayEl {}
+pub struct BuildComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Delay {}
 
-impl BuildComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayEl {
-    pub fn build(self) -> ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayEl {
-        ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayEl {
+impl BuildComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Delay {
+    pub fn build(self) -> ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Delay {
+        ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Delay {
             percentage: core::default::Default::default(),
             fixed_delay: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -954,24 +2235,26 @@ impl BuildComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayEl {
     }
 }
 
-pub struct ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_DelayRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayElRef {
+impl terrars::Ref for ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_DelayRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayElRef {
-        ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayElRef {
+    ) -> ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_DelayRef {
+        ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_DelayRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayElRef {
+impl ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_DelayRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -985,29 +2268,27 @@ impl ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayElRef {
     #[doc = "Get a reference to the value of field `fixed_delay` after provisioning.\n"]
     pub fn fixed_delay(
         &self,
-    ) -> terrars::ListRef<ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayElFixedDelayElRef> {
+    ) -> terrars::ListRef<ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Delay_FixedDelayRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.fixed_delay", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDynamic {
-    abort: std::option::Option<terrars::DynamicBlock<ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElAbortEl>>,
-    delay: std
-    ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayEl>>,
+struct ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicyDynamic {
+    abort: std::option::Option<terrars::DynamicBlock<ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Abort>>,
+    delay: std::option::Option<terrars::DynamicBlock<ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Delay>>,
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyEl {
+pub struct ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    abort: std::option::Option<std::vec::Vec<ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElAbortEl>>,
+    abort: std::option::Option<std::vec::Vec<ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Abort>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    delay: std::option::Option<std::vec::Vec<ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayEl>>,
-    dynamic: ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDynamic,
+    delay: std::option::Option<std::vec::Vec<ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Delay>>,
+    dynamic: ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicyDynamic,
 }
 
-impl ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyEl {
+impl ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy {
     #[doc = "Set the field `abort`.\n"]
     pub fn set_abort(
         mut self,
@@ -1016,7 +2297,7 @@ impl ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElAbortEl>>,
+                    ::Into<terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Abort>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1037,7 +2318,7 @@ impl ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayEl>>,
+                    ::Into<terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_Delay>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1051,8 +2332,8 @@ impl ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyEl>;
+impl terrars::ToListMappable for ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy {
+    type O = terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1063,11 +2344,11 @@ impl terrars::ToListMappable for ComputeUrlMapDefaultRouteActionElFaultInjection
     }
 }
 
-pub struct BuildComputeUrlMapDefaultRouteActionElFaultInjectionPolicyEl {}
+pub struct BuildComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy {}
 
-impl BuildComputeUrlMapDefaultRouteActionElFaultInjectionPolicyEl {
-    pub fn build(self) -> ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyEl {
-        ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyEl {
+impl BuildComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy {
+    pub fn build(self) -> ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy {
+        ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy {
             abort: core::default::Default::default(),
             delay: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1075,48 +2356,59 @@ impl BuildComputeUrlMapDefaultRouteActionElFaultInjectionPolicyEl {
     }
 }
 
-pub struct ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElRef {
+impl terrars::Ref for ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElRef {
-        ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElRef {
+    ) -> ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicyRef {
+        ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElRef {
+impl ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `abort` after provisioning.\n"]
-    pub fn abort(&self) -> terrars::ListRef<ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElAbortElRef> {
+    pub fn abort(&self) -> terrars::ListRef<ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_AbortRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.abort", self.base))
     }
 
     #[doc = "Get a reference to the value of field `delay` after provisioning.\n"]
-    pub fn delay(&self) -> terrars::ListRef<ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElDelayElRef> {
+    pub fn delay(&self) -> terrars::ListRef<ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy_DelayRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.delay", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapDefaultRouteActionElRequestMirrorPolicyEl {
-    backend_service: terrars::PrimField<std::string::String>,
+pub struct ComputeUrlMap_DefaultRouteAction_MaxStreamDuration {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    nanos: std::option::Option<terrars::PrimField<f64>>,
+    seconds: terrars::PrimField<std::string::String>,
 }
 
-impl ComputeUrlMapDefaultRouteActionElRequestMirrorPolicyEl { }
+impl ComputeUrlMap_DefaultRouteAction_MaxStreamDuration {
+    #[doc =
+        "Set the field `nanos`.\nSpan of time that's a fraction of a second at nanosecond resolution. Durations less than one second are represented\nwith a 0 seconds field and a positive nanos field. Must be from 0 to 999,999,999 inclusive."]
+    pub fn set_nanos(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.nanos = std::option::Option::Some(v.into());
+        self
+    }
+}
 
-impl terrars::ToListMappable for ComputeUrlMapDefaultRouteActionElRequestMirrorPolicyEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapDefaultRouteActionElRequestMirrorPolicyEl>;
+impl terrars::ToListMappable for ComputeUrlMap_DefaultRouteAction_MaxStreamDuration {
+    type O = terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_MaxStreamDuration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1127,35 +2419,108 @@ impl terrars::ToListMappable for ComputeUrlMapDefaultRouteActionElRequestMirrorP
     }
 }
 
-pub struct BuildComputeUrlMapDefaultRouteActionElRequestMirrorPolicyEl {
-    #[doc = "The full or partial URL to the BackendService resource being mirrored to."]
-    pub backend_service: terrars::PrimField<std::string::String>,
+pub struct BuildComputeUrlMap_DefaultRouteAction_MaxStreamDuration {
+    #[doc =
+        "Span of time at a resolution of a second. Must be from 0 to 315,576,000,000 inclusive.\nNote: these bounds are computed from: 60 sec/min * 60 min/hr * 24 hr/day * 365.25 days/year * 10000 years"]
+    pub seconds: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputeUrlMapDefaultRouteActionElRequestMirrorPolicyEl {
-    pub fn build(self) -> ComputeUrlMapDefaultRouteActionElRequestMirrorPolicyEl {
-        ComputeUrlMapDefaultRouteActionElRequestMirrorPolicyEl { backend_service: self.backend_service }
+impl BuildComputeUrlMap_DefaultRouteAction_MaxStreamDuration {
+    pub fn build(self) -> ComputeUrlMap_DefaultRouteAction_MaxStreamDuration {
+        ComputeUrlMap_DefaultRouteAction_MaxStreamDuration {
+            nanos: core::default::Default::default(),
+            seconds: self.seconds,
+        }
     }
 }
 
-pub struct ComputeUrlMapDefaultRouteActionElRequestMirrorPolicyElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_DefaultRouteAction_MaxStreamDurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapDefaultRouteActionElRequestMirrorPolicyElRef {
+impl terrars::Ref for ComputeUrlMap_DefaultRouteAction_MaxStreamDurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapDefaultRouteActionElRequestMirrorPolicyElRef {
-        ComputeUrlMapDefaultRouteActionElRequestMirrorPolicyElRef {
+    ) -> ComputeUrlMap_DefaultRouteAction_MaxStreamDurationRef {
+        ComputeUrlMap_DefaultRouteAction_MaxStreamDurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapDefaultRouteActionElRequestMirrorPolicyElRef {
+impl ComputeUrlMap_DefaultRouteAction_MaxStreamDurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `nanos` after provisioning.\nSpan of time that's a fraction of a second at nanosecond resolution. Durations less than one second are represented\nwith a 0 seconds field and a positive nanos field. Must be from 0 to 999,999,999 inclusive."]
+    pub fn nanos(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.nanos", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `seconds` after provisioning.\nSpan of time at a resolution of a second. Must be from 0 to 315,576,000,000 inclusive.\nNote: these bounds are computed from: 60 sec/min * 60 min/hr * 24 hr/day * 365.25 days/year * 10000 years"]
+    pub fn seconds(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.seconds", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ComputeUrlMap_DefaultRouteAction_RequestMirrorPolicy {
+    backend_service: terrars::PrimField<std::string::String>,
+}
+
+impl ComputeUrlMap_DefaultRouteAction_RequestMirrorPolicy { }
+
+impl terrars::ToListMappable for ComputeUrlMap_DefaultRouteAction_RequestMirrorPolicy {
+    type O = terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_RequestMirrorPolicy>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeUrlMap_DefaultRouteAction_RequestMirrorPolicy {
+    #[doc = "The full or partial URL to the BackendService resource being mirrored to."]
+    pub backend_service: terrars::PrimField<std::string::String>,
+}
+
+impl BuildComputeUrlMap_DefaultRouteAction_RequestMirrorPolicy {
+    pub fn build(self) -> ComputeUrlMap_DefaultRouteAction_RequestMirrorPolicy {
+        ComputeUrlMap_DefaultRouteAction_RequestMirrorPolicy { backend_service: self.backend_service }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeUrlMap_DefaultRouteAction_RequestMirrorPolicyRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeUrlMap_DefaultRouteAction_RequestMirrorPolicyRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputeUrlMap_DefaultRouteAction_RequestMirrorPolicyRef {
+        ComputeUrlMap_DefaultRouteAction_RequestMirrorPolicyRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeUrlMap_DefaultRouteAction_RequestMirrorPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1168,14 +2533,14 @@ impl ComputeUrlMapDefaultRouteActionElRequestMirrorPolicyElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapDefaultRouteActionElRetryPolicyElPerTryTimeoutEl {
+pub struct ComputeUrlMap_DefaultRouteAction_RetryPolicy_PerTryTimeout {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     nanos: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     seconds: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeUrlMapDefaultRouteActionElRetryPolicyElPerTryTimeoutEl {
+impl ComputeUrlMap_DefaultRouteAction_RetryPolicy_PerTryTimeout {
     #[doc =
         "Set the field `nanos`.\nSpan of time that's a fraction of a second at nanosecond resolution. Durations less than one second are\nrepresented with a 0 seconds field and a positive nanos field. Must be from 0 to 999,999,999 inclusive."]
     pub fn set_nanos(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -1191,8 +2556,8 @@ impl ComputeUrlMapDefaultRouteActionElRetryPolicyElPerTryTimeoutEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapDefaultRouteActionElRetryPolicyElPerTryTimeoutEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapDefaultRouteActionElRetryPolicyElPerTryTimeoutEl>;
+impl terrars::ToListMappable for ComputeUrlMap_DefaultRouteAction_RetryPolicy_PerTryTimeout {
+    type O = terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_RetryPolicy_PerTryTimeout>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1203,35 +2568,37 @@ impl terrars::ToListMappable for ComputeUrlMapDefaultRouteActionElRetryPolicyElP
     }
 }
 
-pub struct BuildComputeUrlMapDefaultRouteActionElRetryPolicyElPerTryTimeoutEl {}
+pub struct BuildComputeUrlMap_DefaultRouteAction_RetryPolicy_PerTryTimeout {}
 
-impl BuildComputeUrlMapDefaultRouteActionElRetryPolicyElPerTryTimeoutEl {
-    pub fn build(self) -> ComputeUrlMapDefaultRouteActionElRetryPolicyElPerTryTimeoutEl {
-        ComputeUrlMapDefaultRouteActionElRetryPolicyElPerTryTimeoutEl {
+impl BuildComputeUrlMap_DefaultRouteAction_RetryPolicy_PerTryTimeout {
+    pub fn build(self) -> ComputeUrlMap_DefaultRouteAction_RetryPolicy_PerTryTimeout {
+        ComputeUrlMap_DefaultRouteAction_RetryPolicy_PerTryTimeout {
             nanos: core::default::Default::default(),
             seconds: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeUrlMapDefaultRouteActionElRetryPolicyElPerTryTimeoutElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_DefaultRouteAction_RetryPolicy_PerTryTimeoutRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapDefaultRouteActionElRetryPolicyElPerTryTimeoutElRef {
+impl terrars::Ref for ComputeUrlMap_DefaultRouteAction_RetryPolicy_PerTryTimeoutRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapDefaultRouteActionElRetryPolicyElPerTryTimeoutElRef {
-        ComputeUrlMapDefaultRouteActionElRetryPolicyElPerTryTimeoutElRef {
+    ) -> ComputeUrlMap_DefaultRouteAction_RetryPolicy_PerTryTimeoutRef {
+        ComputeUrlMap_DefaultRouteAction_RetryPolicy_PerTryTimeoutRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapDefaultRouteActionElRetryPolicyElPerTryTimeoutElRef {
+impl ComputeUrlMap_DefaultRouteAction_RetryPolicy_PerTryTimeoutRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1250,24 +2617,24 @@ impl ComputeUrlMapDefaultRouteActionElRetryPolicyElPerTryTimeoutElRef {
 }
 
 #[derive(Serialize, Default)]
-struct ComputeUrlMapDefaultRouteActionElRetryPolicyElDynamic {
+struct ComputeUrlMap_DefaultRouteAction_RetryPolicyDynamic {
     per_try_timeout: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapDefaultRouteActionElRetryPolicyElPerTryTimeoutEl>>,
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_DefaultRouteAction_RetryPolicy_PerTryTimeout>>,
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapDefaultRouteActionElRetryPolicyEl {
+pub struct ComputeUrlMap_DefaultRouteAction_RetryPolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     num_retries: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     retry_conditions: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    per_try_timeout: std::option::Option<std::vec::Vec<ComputeUrlMapDefaultRouteActionElRetryPolicyElPerTryTimeoutEl>>,
-    dynamic: ComputeUrlMapDefaultRouteActionElRetryPolicyElDynamic,
+    per_try_timeout: std::option::Option<std::vec::Vec<ComputeUrlMap_DefaultRouteAction_RetryPolicy_PerTryTimeout>>,
+    dynamic: ComputeUrlMap_DefaultRouteAction_RetryPolicyDynamic,
 }
 
-impl ComputeUrlMapDefaultRouteActionElRetryPolicyEl {
+impl ComputeUrlMap_DefaultRouteAction_RetryPolicy {
     #[doc =
         "Set the field `num_retries`.\nSpecifies the allowed number retries. This number must be > 0. If not specified, defaults to 1."]
     pub fn set_num_retries(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -1293,7 +2660,7 @@ impl ComputeUrlMapDefaultRouteActionElRetryPolicyEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<ComputeUrlMapDefaultRouteActionElRetryPolicyElPerTryTimeoutEl>>,
+                    ::Into<terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_RetryPolicy_PerTryTimeout>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1307,8 +2674,8 @@ impl ComputeUrlMapDefaultRouteActionElRetryPolicyEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapDefaultRouteActionElRetryPolicyEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapDefaultRouteActionElRetryPolicyEl>;
+impl terrars::ToListMappable for ComputeUrlMap_DefaultRouteAction_RetryPolicy {
+    type O = terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_RetryPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1319,11 +2686,11 @@ impl terrars::ToListMappable for ComputeUrlMapDefaultRouteActionElRetryPolicyEl 
     }
 }
 
-pub struct BuildComputeUrlMapDefaultRouteActionElRetryPolicyEl {}
+pub struct BuildComputeUrlMap_DefaultRouteAction_RetryPolicy {}
 
-impl BuildComputeUrlMapDefaultRouteActionElRetryPolicyEl {
-    pub fn build(self) -> ComputeUrlMapDefaultRouteActionElRetryPolicyEl {
-        ComputeUrlMapDefaultRouteActionElRetryPolicyEl {
+impl BuildComputeUrlMap_DefaultRouteAction_RetryPolicy {
+    pub fn build(self) -> ComputeUrlMap_DefaultRouteAction_RetryPolicy {
+        ComputeUrlMap_DefaultRouteAction_RetryPolicy {
             num_retries: core::default::Default::default(),
             retry_conditions: core::default::Default::default(),
             per_try_timeout: core::default::Default::default(),
@@ -1332,24 +2699,26 @@ impl BuildComputeUrlMapDefaultRouteActionElRetryPolicyEl {
     }
 }
 
-pub struct ComputeUrlMapDefaultRouteActionElRetryPolicyElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_DefaultRouteAction_RetryPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapDefaultRouteActionElRetryPolicyElRef {
+impl terrars::Ref for ComputeUrlMap_DefaultRouteAction_RetryPolicyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapDefaultRouteActionElRetryPolicyElRef {
-        ComputeUrlMapDefaultRouteActionElRetryPolicyElRef {
+    ) -> ComputeUrlMap_DefaultRouteAction_RetryPolicyRef {
+        ComputeUrlMap_DefaultRouteAction_RetryPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapDefaultRouteActionElRetryPolicyElRef {
+impl ComputeUrlMap_DefaultRouteAction_RetryPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1367,20 +2736,20 @@ impl ComputeUrlMapDefaultRouteActionElRetryPolicyElRef {
     }
 
     #[doc = "Get a reference to the value of field `per_try_timeout` after provisioning.\n"]
-    pub fn per_try_timeout(&self) -> terrars::ListRef<ComputeUrlMapDefaultRouteActionElRetryPolicyElPerTryTimeoutElRef> {
+    pub fn per_try_timeout(&self) -> terrars::ListRef<ComputeUrlMap_DefaultRouteAction_RetryPolicy_PerTryTimeoutRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.per_try_timeout", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapDefaultRouteActionElTimeoutEl {
+pub struct ComputeUrlMap_DefaultRouteAction_Timeout {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     nanos: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     seconds: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeUrlMapDefaultRouteActionElTimeoutEl {
+impl ComputeUrlMap_DefaultRouteAction_Timeout {
     #[doc =
         "Set the field `nanos`.\nSpan of time that's a fraction of a second at nanosecond resolution. Durations less than one second are represented\nwith a 0 seconds field and a positive nanos field. Must be from 0 to 999,999,999 inclusive."]
     pub fn set_nanos(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -1396,8 +2765,8 @@ impl ComputeUrlMapDefaultRouteActionElTimeoutEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapDefaultRouteActionElTimeoutEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapDefaultRouteActionElTimeoutEl>;
+impl terrars::ToListMappable for ComputeUrlMap_DefaultRouteAction_Timeout {
+    type O = terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_Timeout>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1408,32 +2777,34 @@ impl terrars::ToListMappable for ComputeUrlMapDefaultRouteActionElTimeoutEl {
     }
 }
 
-pub struct BuildComputeUrlMapDefaultRouteActionElTimeoutEl {}
+pub struct BuildComputeUrlMap_DefaultRouteAction_Timeout {}
 
-impl BuildComputeUrlMapDefaultRouteActionElTimeoutEl {
-    pub fn build(self) -> ComputeUrlMapDefaultRouteActionElTimeoutEl {
-        ComputeUrlMapDefaultRouteActionElTimeoutEl {
+impl BuildComputeUrlMap_DefaultRouteAction_Timeout {
+    pub fn build(self) -> ComputeUrlMap_DefaultRouteAction_Timeout {
+        ComputeUrlMap_DefaultRouteAction_Timeout {
             nanos: core::default::Default::default(),
             seconds: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeUrlMapDefaultRouteActionElTimeoutElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_DefaultRouteAction_TimeoutRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapDefaultRouteActionElTimeoutElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeUrlMapDefaultRouteActionElTimeoutElRef {
-        ComputeUrlMapDefaultRouteActionElTimeoutElRef {
+impl terrars::Ref for ComputeUrlMap_DefaultRouteAction_TimeoutRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeUrlMap_DefaultRouteAction_TimeoutRef {
+        ComputeUrlMap_DefaultRouteAction_TimeoutRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapDefaultRouteActionElTimeoutElRef {
+impl ComputeUrlMap_DefaultRouteAction_TimeoutRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1452,14 +2823,14 @@ impl ComputeUrlMapDefaultRouteActionElTimeoutElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapDefaultRouteActionElUrlRewriteEl {
+pub struct ComputeUrlMap_DefaultRouteAction_UrlRewrite {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     host_rewrite: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     path_prefix_rewrite: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeUrlMapDefaultRouteActionElUrlRewriteEl {
+impl ComputeUrlMap_DefaultRouteAction_UrlRewrite {
     #[doc =
         "Set the field `host_rewrite`.\nPrior to forwarding the request to the selected service, the request's host header is replaced\nwith contents of hostRewrite.\n\nThe value must be between 1 and 255 characters."]
     pub fn set_host_rewrite(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1478,8 +2849,8 @@ impl ComputeUrlMapDefaultRouteActionElUrlRewriteEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapDefaultRouteActionElUrlRewriteEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapDefaultRouteActionElUrlRewriteEl>;
+impl terrars::ToListMappable for ComputeUrlMap_DefaultRouteAction_UrlRewrite {
+    type O = terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_UrlRewrite>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1490,35 +2861,37 @@ impl terrars::ToListMappable for ComputeUrlMapDefaultRouteActionElUrlRewriteEl {
     }
 }
 
-pub struct BuildComputeUrlMapDefaultRouteActionElUrlRewriteEl {}
+pub struct BuildComputeUrlMap_DefaultRouteAction_UrlRewrite {}
 
-impl BuildComputeUrlMapDefaultRouteActionElUrlRewriteEl {
-    pub fn build(self) -> ComputeUrlMapDefaultRouteActionElUrlRewriteEl {
-        ComputeUrlMapDefaultRouteActionElUrlRewriteEl {
+impl BuildComputeUrlMap_DefaultRouteAction_UrlRewrite {
+    pub fn build(self) -> ComputeUrlMap_DefaultRouteAction_UrlRewrite {
+        ComputeUrlMap_DefaultRouteAction_UrlRewrite {
             host_rewrite: core::default::Default::default(),
             path_prefix_rewrite: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeUrlMapDefaultRouteActionElUrlRewriteElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_DefaultRouteAction_UrlRewriteRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapDefaultRouteActionElUrlRewriteElRef {
+impl terrars::Ref for ComputeUrlMap_DefaultRouteAction_UrlRewriteRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapDefaultRouteActionElUrlRewriteElRef {
-        ComputeUrlMapDefaultRouteActionElUrlRewriteElRef {
+    ) -> ComputeUrlMap_DefaultRouteAction_UrlRewriteRef {
+        ComputeUrlMap_DefaultRouteAction_UrlRewriteRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapDefaultRouteActionElUrlRewriteElRef {
+impl ComputeUrlMap_DefaultRouteAction_UrlRewriteRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1537,7 +2910,7 @@ impl ComputeUrlMapDefaultRouteActionElUrlRewriteElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl {
+pub struct ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction_RequestHeadersToAdd {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     header_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1546,7 +2919,7 @@ pub struct ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActio
     replace: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl {
+impl ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction_RequestHeadersToAdd {
     #[doc = "Set the field `header_name`.\nThe name of the header to add."]
     pub fn set_header_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.header_name = std::option::Option::Some(v.into());
@@ -1568,12 +2941,10 @@ impl ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElReq
 }
 
 impl terrars
-::ToListMappable for ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl {
+::ToListMappable for ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction_RequestHeadersToAdd {
     type O =
         terrars
-        ::BlockAssignable<
-            ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl,
-        >;
+        ::BlockAssignable<ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction_RequestHeadersToAdd>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1584,13 +2955,11 @@ impl terrars
     }
 }
 
-pub struct BuildComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl {}
+pub struct BuildComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction_RequestHeadersToAdd {}
 
-impl BuildComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl {
-    pub fn build(
-        self,
-    ) -> ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl {
-        ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl {
+impl BuildComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction_RequestHeadersToAdd {
+    pub fn build(self) -> ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction_RequestHeadersToAdd {
+        ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction_RequestHeadersToAdd {
             header_name: core::default::Default::default(),
             header_value: core::default::Default::default(),
             replace: core::default::Default::default(),
@@ -1598,24 +2967,26 @@ impl BuildComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderAction
     }
 }
 
-pub struct ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction_RequestHeadersToAddRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddElRef {
+impl terrars::Ref for ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction_RequestHeadersToAddRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddElRef {
-        ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddElRef {
+    ) -> ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction_RequestHeadersToAddRef {
+        ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction_RequestHeadersToAddRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddElRef {
+impl ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction_RequestHeadersToAddRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1638,7 +3009,7 @@ impl ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElReq
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl {
+pub struct ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction_ResponseHeadersToAdd {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     header_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1647,7 +3018,7 @@ pub struct ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActio
     replace: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl {
+impl ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction_ResponseHeadersToAdd {
     #[doc = "Set the field `header_name`.\nThe name of the header to add."]
     pub fn set_header_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.header_name = std::option::Option::Some(v.into());
@@ -1669,12 +3040,10 @@ impl ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElRes
 }
 
 impl terrars
-::ToListMappable for ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl {
+::ToListMappable for ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction_ResponseHeadersToAdd {
     type O =
         terrars
-        ::BlockAssignable<
-            ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl,
-        >;
+        ::BlockAssignable<ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction_ResponseHeadersToAdd>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1685,13 +3054,11 @@ impl terrars
     }
 }
 
-pub struct BuildComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl {}
+pub struct BuildComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction_ResponseHeadersToAdd {}
 
-impl BuildComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl {
-    pub fn build(
-        self,
-    ) -> ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl {
-        ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl {
+impl BuildComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction_ResponseHeadersToAdd {
+    pub fn build(self) -> ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction_ResponseHeadersToAdd {
+        ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction_ResponseHeadersToAdd {
             header_name: core::default::Default::default(),
             header_value: core::default::Default::default(),
             replace: core::default::Default::default(),
@@ -1699,25 +3066,26 @@ impl BuildComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderAction
     }
 }
 
-pub struct ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction_ResponseHeadersToAddRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars
-::Ref for ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddElRef {
+impl terrars::Ref for ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction_ResponseHeadersToAddRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddElRef {
-        ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddElRef {
+    ) -> ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction_ResponseHeadersToAddRef {
+        ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction_ResponseHeadersToAddRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddElRef {
+impl ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction_ResponseHeadersToAddRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1740,23 +3108,23 @@ impl ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElRes
 }
 
 #[derive(Serialize, Default)]
-struct ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElDynamic {
+struct ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderActionDynamic {
     request_headers_to_add: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl>,
+        ::DynamicBlock<ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction_RequestHeadersToAdd>,
     >,
     response_headers_to_add: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl>,
+        ::DynamicBlock<ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction_ResponseHeadersToAdd>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionEl {
+pub struct ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     request_headers_to_remove: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1765,18 +3133,18 @@ pub struct ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActio
     request_headers_to_add: std
     ::option
     ::Option<
-        std::vec::Vec<ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl>,
+        std::vec::Vec<ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction_RequestHeadersToAdd>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     response_headers_to_add: std
     ::option
     ::Option<
-        std::vec::Vec<ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl>,
+        std::vec::Vec<ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction_ResponseHeadersToAdd>,
     >,
-    dynamic: ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElDynamic,
+    dynamic: ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderActionDynamic,
 }
 
-impl ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionEl {
+impl ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction {
     #[doc =
         "Set the field `request_headers_to_remove`.\nA list of header names for headers that need to be removed from the request prior to\nforwarding the request to the backendService."]
     pub fn set_request_headers_to_remove(
@@ -1808,7 +3176,7 @@ impl ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl,
+                            ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction_RequestHeadersToAdd,
                         >,
                     >,
     ) -> Self {
@@ -1834,7 +3202,7 @@ impl ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl,
+                            ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction_ResponseHeadersToAdd,
                         >,
                     >,
     ) -> Self {
@@ -1850,8 +3218,8 @@ impl ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionEl>;
+impl terrars::ToListMappable for ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction {
+    type O = terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1862,11 +3230,11 @@ impl terrars::ToListMappable for ComputeUrlMapDefaultRouteActionElWeightedBacken
     }
 }
 
-pub struct BuildComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionEl {}
+pub struct BuildComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction {}
 
-impl BuildComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionEl {
-    pub fn build(self) -> ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionEl {
-        ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionEl {
+impl BuildComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction {
+    pub fn build(self) -> ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction {
+        ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction {
             request_headers_to_remove: core::default::Default::default(),
             response_headers_to_remove: core::default::Default::default(),
             request_headers_to_add: core::default::Default::default(),
@@ -1876,24 +3244,26 @@ impl BuildComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderAction
     }
 }
 
-pub struct ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderActionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElRef {
+impl terrars::Ref for ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderActionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElRef {
-        ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElRef {
+    ) -> ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderActionRef {
+        ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderActionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElRef {
+impl ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderActionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1914,7 +3284,7 @@ impl ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElRef
     pub fn request_headers_to_add(
         &self,
     ) -> terrars
-    ::ListRef<ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddElRef> {
+    ::ListRef<ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction_RequestHeadersToAddRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.request_headers_to_add", self.base))
     }
 
@@ -1922,20 +3292,20 @@ impl ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElRef
     pub fn response_headers_to_add(
         &self,
     ) -> terrars
-    ::ListRef<ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddElRef> {
+    ::ListRef<ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction_ResponseHeadersToAddRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.response_headers_to_add", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElDynamic {
+struct ComputeUrlMap_DefaultRouteAction_WeightedBackendServicesDynamic {
     header_action: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionEl>>,
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction>>,
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapDefaultRouteActionElWeightedBackendServicesEl {
+pub struct ComputeUrlMap_DefaultRouteAction_WeightedBackendServices {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     backend_service: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1943,11 +3313,11 @@ pub struct ComputeUrlMapDefaultRouteActionElWeightedBackendServicesEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     header_action: std
     ::option
-    ::Option<std::vec::Vec<ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionEl>>,
-    dynamic: ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElDynamic,
+    ::Option<std::vec::Vec<ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction>>,
+    dynamic: ComputeUrlMap_DefaultRouteAction_WeightedBackendServicesDynamic,
 }
 
-impl ComputeUrlMapDefaultRouteActionElWeightedBackendServicesEl {
+impl ComputeUrlMap_DefaultRouteAction_WeightedBackendServices {
     #[doc =
         "Set the field `backend_service`.\nThe full or partial URL to the default BackendService resource. Before forwarding the\nrequest to backendService, the loadbalancer applies any relevant headerActions\nspecified as part of this backendServiceWeight."]
     pub fn set_backend_service(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1972,7 +3342,7 @@ impl ComputeUrlMapDefaultRouteActionElWeightedBackendServicesEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionEl>,
+                        ::BlockAssignable<ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderAction>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1987,8 +3357,8 @@ impl ComputeUrlMapDefaultRouteActionElWeightedBackendServicesEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapDefaultRouteActionElWeightedBackendServicesEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapDefaultRouteActionElWeightedBackendServicesEl>;
+impl terrars::ToListMappable for ComputeUrlMap_DefaultRouteAction_WeightedBackendServices {
+    type O = terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_WeightedBackendServices>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1999,11 +3369,11 @@ impl terrars::ToListMappable for ComputeUrlMapDefaultRouteActionElWeightedBacken
     }
 }
 
-pub struct BuildComputeUrlMapDefaultRouteActionElWeightedBackendServicesEl {}
+pub struct BuildComputeUrlMap_DefaultRouteAction_WeightedBackendServices {}
 
-impl BuildComputeUrlMapDefaultRouteActionElWeightedBackendServicesEl {
-    pub fn build(self) -> ComputeUrlMapDefaultRouteActionElWeightedBackendServicesEl {
-        ComputeUrlMapDefaultRouteActionElWeightedBackendServicesEl {
+impl BuildComputeUrlMap_DefaultRouteAction_WeightedBackendServices {
+    pub fn build(self) -> ComputeUrlMap_DefaultRouteAction_WeightedBackendServices {
+        ComputeUrlMap_DefaultRouteAction_WeightedBackendServices {
             backend_service: core::default::Default::default(),
             weight: core::default::Default::default(),
             header_action: core::default::Default::default(),
@@ -2012,24 +3382,26 @@ impl BuildComputeUrlMapDefaultRouteActionElWeightedBackendServicesEl {
     }
 }
 
-pub struct ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_DefaultRouteAction_WeightedBackendServicesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElRef {
+impl terrars::Ref for ComputeUrlMap_DefaultRouteAction_WeightedBackendServicesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElRef {
-        ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElRef {
+    ) -> ComputeUrlMap_DefaultRouteAction_WeightedBackendServicesRef {
+        ComputeUrlMap_DefaultRouteAction_WeightedBackendServicesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElRef {
+impl ComputeUrlMap_DefaultRouteAction_WeightedBackendServicesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2049,54 +3421,78 @@ impl ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElRef {
     #[doc = "Get a reference to the value of field `header_action` after provisioning.\n"]
     pub fn header_action(
         &self,
-    ) -> terrars::ListRef<ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElHeaderActionElRef> {
+    ) -> terrars::ListRef<ComputeUrlMap_DefaultRouteAction_WeightedBackendServices_HeaderActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.header_action", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct ComputeUrlMapDefaultRouteActionElDynamic {
-    cors_policy: std::option::Option<terrars::DynamicBlock<ComputeUrlMapDefaultRouteActionElCorsPolicyEl>>,
+struct ComputeUrlMap_DefaultRouteActionDynamic {
+    cache_policy: std::option::Option<terrars::DynamicBlock<ComputeUrlMap_DefaultRouteAction_CachePolicy>>,
+    cors_policy: std::option::Option<terrars::DynamicBlock<ComputeUrlMap_DefaultRouteAction_CorsPolicy>>,
     fault_injection_policy: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyEl>>,
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy>>,
+    max_stream_duration: std
+    ::option
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_DefaultRouteAction_MaxStreamDuration>>,
     request_mirror_policy: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapDefaultRouteActionElRequestMirrorPolicyEl>>,
-    retry_policy: std::option::Option<terrars::DynamicBlock<ComputeUrlMapDefaultRouteActionElRetryPolicyEl>>,
-    timeout: std::option::Option<terrars::DynamicBlock<ComputeUrlMapDefaultRouteActionElTimeoutEl>>,
-    url_rewrite: std::option::Option<terrars::DynamicBlock<ComputeUrlMapDefaultRouteActionElUrlRewriteEl>>,
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_DefaultRouteAction_RequestMirrorPolicy>>,
+    retry_policy: std::option::Option<terrars::DynamicBlock<ComputeUrlMap_DefaultRouteAction_RetryPolicy>>,
+    timeout: std::option::Option<terrars::DynamicBlock<ComputeUrlMap_DefaultRouteAction_Timeout>>,
+    url_rewrite: std::option::Option<terrars::DynamicBlock<ComputeUrlMap_DefaultRouteAction_UrlRewrite>>,
     weighted_backend_services: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapDefaultRouteActionElWeightedBackendServicesEl>>,
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_DefaultRouteAction_WeightedBackendServices>>,
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapDefaultRouteActionEl {
+pub struct ComputeUrlMap_DefaultRouteAction {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cors_policy: std::option::Option<std::vec::Vec<ComputeUrlMapDefaultRouteActionElCorsPolicyEl>>,
+    cache_policy: std::option::Option<std::vec::Vec<ComputeUrlMap_DefaultRouteAction_CachePolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    fault_injection_policy: std::option::Option<std::vec::Vec<ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyEl>>,
+    cors_policy: std::option::Option<std::vec::Vec<ComputeUrlMap_DefaultRouteAction_CorsPolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    request_mirror_policy: std::option::Option<std::vec::Vec<ComputeUrlMapDefaultRouteActionElRequestMirrorPolicyEl>>,
+    fault_injection_policy: std::option::Option<std::vec::Vec<ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    retry_policy: std::option::Option<std::vec::Vec<ComputeUrlMapDefaultRouteActionElRetryPolicyEl>>,
+    max_stream_duration: std::option::Option<std::vec::Vec<ComputeUrlMap_DefaultRouteAction_MaxStreamDuration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeout: std::option::Option<std::vec::Vec<ComputeUrlMapDefaultRouteActionElTimeoutEl>>,
+    request_mirror_policy: std::option::Option<std::vec::Vec<ComputeUrlMap_DefaultRouteAction_RequestMirrorPolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    url_rewrite: std::option::Option<std::vec::Vec<ComputeUrlMapDefaultRouteActionElUrlRewriteEl>>,
+    retry_policy: std::option::Option<std::vec::Vec<ComputeUrlMap_DefaultRouteAction_RetryPolicy>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeout: std::option::Option<std::vec::Vec<ComputeUrlMap_DefaultRouteAction_Timeout>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    url_rewrite: std::option::Option<std::vec::Vec<ComputeUrlMap_DefaultRouteAction_UrlRewrite>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     weighted_backend_services: std
     ::option
-    ::Option<std::vec::Vec<ComputeUrlMapDefaultRouteActionElWeightedBackendServicesEl>>,
-    dynamic: ComputeUrlMapDefaultRouteActionElDynamic,
+    ::Option<std::vec::Vec<ComputeUrlMap_DefaultRouteAction_WeightedBackendServices>>,
+    dynamic: ComputeUrlMap_DefaultRouteActionDynamic,
 }
 
-impl ComputeUrlMapDefaultRouteActionEl {
+impl ComputeUrlMap_DefaultRouteAction {
+    #[doc = "Set the field `cache_policy`.\n"]
+    pub fn set_cache_policy(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_CachePolicy>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.cache_policy = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.cache_policy = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `cors_policy`.\n"]
     pub fn set_cors_policy(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMapDefaultRouteActionElCorsPolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_CorsPolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2112,12 +3508,7 @@ impl ComputeUrlMapDefaultRouteActionEl {
     #[doc = "Set the field `fault_injection_policy`.\n"]
     pub fn set_fault_injection_policy(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2130,10 +3521,26 @@ impl ComputeUrlMapDefaultRouteActionEl {
         self
     }
 
+    #[doc = "Set the field `max_stream_duration`.\n"]
+    pub fn set_max_stream_duration(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_MaxStreamDuration>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.max_stream_duration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.max_stream_duration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `request_mirror_policy`.\n"]
     pub fn set_request_mirror_policy(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMapDefaultRouteActionElRequestMirrorPolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_RequestMirrorPolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2149,7 +3556,7 @@ impl ComputeUrlMapDefaultRouteActionEl {
     #[doc = "Set the field `retry_policy`.\n"]
     pub fn set_retry_policy(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMapDefaultRouteActionElRetryPolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_RetryPolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2165,7 +3572,7 @@ impl ComputeUrlMapDefaultRouteActionEl {
     #[doc = "Set the field `timeout`.\n"]
     pub fn set_timeout(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMapDefaultRouteActionElTimeoutEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_Timeout>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2181,7 +3588,7 @@ impl ComputeUrlMapDefaultRouteActionEl {
     #[doc = "Set the field `url_rewrite`.\n"]
     pub fn set_url_rewrite(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMapDefaultRouteActionElUrlRewriteEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_UrlRewrite>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2202,7 +3609,7 @@ impl ComputeUrlMapDefaultRouteActionEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<ComputeUrlMapDefaultRouteActionElWeightedBackendServicesEl>>,
+                    ::Into<terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_WeightedBackendServices>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2216,8 +3623,8 @@ impl ComputeUrlMapDefaultRouteActionEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapDefaultRouteActionEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapDefaultRouteActionEl>;
+impl terrars::ToListMappable for ComputeUrlMap_DefaultRouteAction {
+    type O = terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2228,13 +3635,15 @@ impl terrars::ToListMappable for ComputeUrlMapDefaultRouteActionEl {
     }
 }
 
-pub struct BuildComputeUrlMapDefaultRouteActionEl {}
+pub struct BuildComputeUrlMap_DefaultRouteAction {}
 
-impl BuildComputeUrlMapDefaultRouteActionEl {
-    pub fn build(self) -> ComputeUrlMapDefaultRouteActionEl {
-        ComputeUrlMapDefaultRouteActionEl {
+impl BuildComputeUrlMap_DefaultRouteAction {
+    pub fn build(self) -> ComputeUrlMap_DefaultRouteAction {
+        ComputeUrlMap_DefaultRouteAction {
+            cache_policy: core::default::Default::default(),
             cors_policy: core::default::Default::default(),
             fault_injection_policy: core::default::Default::default(),
+            max_stream_duration: core::default::Default::default(),
             request_mirror_policy: core::default::Default::default(),
             retry_policy: core::default::Default::default(),
             timeout: core::default::Default::default(),
@@ -2245,65 +3654,77 @@ impl BuildComputeUrlMapDefaultRouteActionEl {
     }
 }
 
-pub struct ComputeUrlMapDefaultRouteActionElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_DefaultRouteActionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapDefaultRouteActionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeUrlMapDefaultRouteActionElRef {
-        ComputeUrlMapDefaultRouteActionElRef {
+impl terrars::Ref for ComputeUrlMap_DefaultRouteActionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeUrlMap_DefaultRouteActionRef {
+        ComputeUrlMap_DefaultRouteActionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapDefaultRouteActionElRef {
+impl ComputeUrlMap_DefaultRouteActionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
+    #[doc = "Get a reference to the value of field `cache_policy` after provisioning.\n"]
+    pub fn cache_policy(&self) -> terrars::ListRef<ComputeUrlMap_DefaultRouteAction_CachePolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cache_policy", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `cors_policy` after provisioning.\n"]
-    pub fn cors_policy(&self) -> terrars::ListRef<ComputeUrlMapDefaultRouteActionElCorsPolicyElRef> {
+    pub fn cors_policy(&self) -> terrars::ListRef<ComputeUrlMap_DefaultRouteAction_CorsPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cors_policy", self.base))
     }
 
     #[doc = "Get a reference to the value of field `fault_injection_policy` after provisioning.\n"]
-    pub fn fault_injection_policy(&self) -> terrars::ListRef<ComputeUrlMapDefaultRouteActionElFaultInjectionPolicyElRef> {
+    pub fn fault_injection_policy(&self) -> terrars::ListRef<ComputeUrlMap_DefaultRouteAction_FaultInjectionPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.fault_injection_policy", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `max_stream_duration` after provisioning.\n"]
+    pub fn max_stream_duration(&self) -> terrars::ListRef<ComputeUrlMap_DefaultRouteAction_MaxStreamDurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.max_stream_duration", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `request_mirror_policy` after provisioning.\n"]
-    pub fn request_mirror_policy(&self) -> terrars::ListRef<ComputeUrlMapDefaultRouteActionElRequestMirrorPolicyElRef> {
+    pub fn request_mirror_policy(&self) -> terrars::ListRef<ComputeUrlMap_DefaultRouteAction_RequestMirrorPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.request_mirror_policy", self.base))
     }
 
     #[doc = "Get a reference to the value of field `retry_policy` after provisioning.\n"]
-    pub fn retry_policy(&self) -> terrars::ListRef<ComputeUrlMapDefaultRouteActionElRetryPolicyElRef> {
+    pub fn retry_policy(&self) -> terrars::ListRef<ComputeUrlMap_DefaultRouteAction_RetryPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.retry_policy", self.base))
     }
 
     #[doc = "Get a reference to the value of field `timeout` after provisioning.\n"]
-    pub fn timeout(&self) -> terrars::ListRef<ComputeUrlMapDefaultRouteActionElTimeoutElRef> {
+    pub fn timeout(&self) -> terrars::ListRef<ComputeUrlMap_DefaultRouteAction_TimeoutRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.timeout", self.base))
     }
 
     #[doc = "Get a reference to the value of field `url_rewrite` after provisioning.\n"]
-    pub fn url_rewrite(&self) -> terrars::ListRef<ComputeUrlMapDefaultRouteActionElUrlRewriteElRef> {
+    pub fn url_rewrite(&self) -> terrars::ListRef<ComputeUrlMap_DefaultRouteAction_UrlRewriteRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.url_rewrite", self.base))
     }
 
     #[doc = "Get a reference to the value of field `weighted_backend_services` after provisioning.\n"]
     pub fn weighted_backend_services(
         &self,
-    ) -> terrars::ListRef<ComputeUrlMapDefaultRouteActionElWeightedBackendServicesElRef> {
+    ) -> terrars::ListRef<ComputeUrlMap_DefaultRouteAction_WeightedBackendServicesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.weighted_backend_services", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapDefaultUrlRedirectEl {
+pub struct ComputeUrlMap_DefaultUrlRedirect {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     host_redirect: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2317,7 +3738,7 @@ pub struct ComputeUrlMapDefaultUrlRedirectEl {
     strip_query: terrars::PrimField<bool>,
 }
 
-impl ComputeUrlMapDefaultUrlRedirectEl {
+impl ComputeUrlMap_DefaultUrlRedirect {
     #[doc =
         "Set the field `host_redirect`.\nThe host that will be used in the redirect response instead of the one that was\nsupplied in the request. The value must be between 1 and 255 characters."]
     pub fn set_host_redirect(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -2357,8 +3778,8 @@ impl ComputeUrlMapDefaultUrlRedirectEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapDefaultUrlRedirectEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapDefaultUrlRedirectEl>;
+impl terrars::ToListMappable for ComputeUrlMap_DefaultUrlRedirect {
+    type O = terrars::BlockAssignable<ComputeUrlMap_DefaultUrlRedirect>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2369,15 +3790,15 @@ impl terrars::ToListMappable for ComputeUrlMapDefaultUrlRedirectEl {
     }
 }
 
-pub struct BuildComputeUrlMapDefaultUrlRedirectEl {
+pub struct BuildComputeUrlMap_DefaultUrlRedirect {
     #[doc =
         "If set to true, any accompanying query portion of the original URL is removed prior\nto redirecting the request. If set to false, the query portion of the original URL is\nretained. The default is set to false.\n This field is required to ensure an empty block is not set. The normal default value is false."]
     pub strip_query: terrars::PrimField<bool>,
 }
 
-impl BuildComputeUrlMapDefaultUrlRedirectEl {
-    pub fn build(self) -> ComputeUrlMapDefaultUrlRedirectEl {
-        ComputeUrlMapDefaultUrlRedirectEl {
+impl BuildComputeUrlMap_DefaultUrlRedirect {
+    pub fn build(self) -> ComputeUrlMap_DefaultUrlRedirect {
+        ComputeUrlMap_DefaultUrlRedirect {
             host_redirect: core::default::Default::default(),
             https_redirect: core::default::Default::default(),
             path_redirect: core::default::Default::default(),
@@ -2388,21 +3809,23 @@ impl BuildComputeUrlMapDefaultUrlRedirectEl {
     }
 }
 
-pub struct ComputeUrlMapDefaultUrlRedirectElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_DefaultUrlRedirectRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapDefaultUrlRedirectElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeUrlMapDefaultUrlRedirectElRef {
-        ComputeUrlMapDefaultUrlRedirectElRef {
+impl terrars::Ref for ComputeUrlMap_DefaultUrlRedirectRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeUrlMap_DefaultUrlRedirectRef {
+        ComputeUrlMap_DefaultUrlRedirectRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapDefaultUrlRedirectElRef {
+impl ComputeUrlMap_DefaultUrlRedirectRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2445,16 +3868,16 @@ impl ComputeUrlMapDefaultUrlRedirectElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapHeaderActionElRequestHeadersToAddEl {
+pub struct ComputeUrlMap_HeaderAction_RequestHeadersToAdd {
     header_name: terrars::PrimField<std::string::String>,
     header_value: terrars::PrimField<std::string::String>,
     replace: terrars::PrimField<bool>,
 }
 
-impl ComputeUrlMapHeaderActionElRequestHeadersToAddEl { }
+impl ComputeUrlMap_HeaderAction_RequestHeadersToAdd { }
 
-impl terrars::ToListMappable for ComputeUrlMapHeaderActionElRequestHeadersToAddEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapHeaderActionElRequestHeadersToAddEl>;
+impl terrars::ToListMappable for ComputeUrlMap_HeaderAction_RequestHeadersToAdd {
+    type O = terrars::BlockAssignable<ComputeUrlMap_HeaderAction_RequestHeadersToAdd>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2465,7 +3888,7 @@ impl terrars::ToListMappable for ComputeUrlMapHeaderActionElRequestHeadersToAddE
     }
 }
 
-pub struct BuildComputeUrlMapHeaderActionElRequestHeadersToAddEl {
+pub struct BuildComputeUrlMap_HeaderAction_RequestHeadersToAdd {
     #[doc = "The name of the header."]
     pub header_name: terrars::PrimField<std::string::String>,
     #[doc = "The value of the header to add."]
@@ -2475,9 +3898,9 @@ pub struct BuildComputeUrlMapHeaderActionElRequestHeadersToAddEl {
     pub replace: terrars::PrimField<bool>,
 }
 
-impl BuildComputeUrlMapHeaderActionElRequestHeadersToAddEl {
-    pub fn build(self) -> ComputeUrlMapHeaderActionElRequestHeadersToAddEl {
-        ComputeUrlMapHeaderActionElRequestHeadersToAddEl {
+impl BuildComputeUrlMap_HeaderAction_RequestHeadersToAdd {
+    pub fn build(self) -> ComputeUrlMap_HeaderAction_RequestHeadersToAdd {
+        ComputeUrlMap_HeaderAction_RequestHeadersToAdd {
             header_name: self.header_name,
             header_value: self.header_value,
             replace: self.replace,
@@ -2485,24 +3908,26 @@ impl BuildComputeUrlMapHeaderActionElRequestHeadersToAddEl {
     }
 }
 
-pub struct ComputeUrlMapHeaderActionElRequestHeadersToAddElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_HeaderAction_RequestHeadersToAddRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapHeaderActionElRequestHeadersToAddElRef {
+impl terrars::Ref for ComputeUrlMap_HeaderAction_RequestHeadersToAddRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapHeaderActionElRequestHeadersToAddElRef {
-        ComputeUrlMapHeaderActionElRequestHeadersToAddElRef {
+    ) -> ComputeUrlMap_HeaderAction_RequestHeadersToAddRef {
+        ComputeUrlMap_HeaderAction_RequestHeadersToAddRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapHeaderActionElRequestHeadersToAddElRef {
+impl ComputeUrlMap_HeaderAction_RequestHeadersToAddRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2525,16 +3950,16 @@ impl ComputeUrlMapHeaderActionElRequestHeadersToAddElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapHeaderActionElResponseHeadersToAddEl {
+pub struct ComputeUrlMap_HeaderAction_ResponseHeadersToAdd {
     header_name: terrars::PrimField<std::string::String>,
     header_value: terrars::PrimField<std::string::String>,
     replace: terrars::PrimField<bool>,
 }
 
-impl ComputeUrlMapHeaderActionElResponseHeadersToAddEl { }
+impl ComputeUrlMap_HeaderAction_ResponseHeadersToAdd { }
 
-impl terrars::ToListMappable for ComputeUrlMapHeaderActionElResponseHeadersToAddEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapHeaderActionElResponseHeadersToAddEl>;
+impl terrars::ToListMappable for ComputeUrlMap_HeaderAction_ResponseHeadersToAdd {
+    type O = terrars::BlockAssignable<ComputeUrlMap_HeaderAction_ResponseHeadersToAdd>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2545,7 +3970,7 @@ impl terrars::ToListMappable for ComputeUrlMapHeaderActionElResponseHeadersToAdd
     }
 }
 
-pub struct BuildComputeUrlMapHeaderActionElResponseHeadersToAddEl {
+pub struct BuildComputeUrlMap_HeaderAction_ResponseHeadersToAdd {
     #[doc = "The name of the header."]
     pub header_name: terrars::PrimField<std::string::String>,
     #[doc = "The value of the header to add."]
@@ -2555,9 +3980,9 @@ pub struct BuildComputeUrlMapHeaderActionElResponseHeadersToAddEl {
     pub replace: terrars::PrimField<bool>,
 }
 
-impl BuildComputeUrlMapHeaderActionElResponseHeadersToAddEl {
-    pub fn build(self) -> ComputeUrlMapHeaderActionElResponseHeadersToAddEl {
-        ComputeUrlMapHeaderActionElResponseHeadersToAddEl {
+impl BuildComputeUrlMap_HeaderAction_ResponseHeadersToAdd {
+    pub fn build(self) -> ComputeUrlMap_HeaderAction_ResponseHeadersToAdd {
+        ComputeUrlMap_HeaderAction_ResponseHeadersToAdd {
             header_name: self.header_name,
             header_value: self.header_value,
             replace: self.replace,
@@ -2565,24 +3990,26 @@ impl BuildComputeUrlMapHeaderActionElResponseHeadersToAddEl {
     }
 }
 
-pub struct ComputeUrlMapHeaderActionElResponseHeadersToAddElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_HeaderAction_ResponseHeadersToAddRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapHeaderActionElResponseHeadersToAddElRef {
+impl terrars::Ref for ComputeUrlMap_HeaderAction_ResponseHeadersToAddRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapHeaderActionElResponseHeadersToAddElRef {
-        ComputeUrlMapHeaderActionElResponseHeadersToAddElRef {
+    ) -> ComputeUrlMap_HeaderAction_ResponseHeadersToAddRef {
+        ComputeUrlMap_HeaderAction_ResponseHeadersToAddRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapHeaderActionElResponseHeadersToAddElRef {
+impl ComputeUrlMap_HeaderAction_ResponseHeadersToAddRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2605,29 +4032,29 @@ impl ComputeUrlMapHeaderActionElResponseHeadersToAddElRef {
 }
 
 #[derive(Serialize, Default)]
-struct ComputeUrlMapHeaderActionElDynamic {
+struct ComputeUrlMap_HeaderActionDynamic {
     request_headers_to_add: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapHeaderActionElRequestHeadersToAddEl>>,
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_HeaderAction_RequestHeadersToAdd>>,
     response_headers_to_add: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapHeaderActionElResponseHeadersToAddEl>>,
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_HeaderAction_ResponseHeadersToAdd>>,
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapHeaderActionEl {
+pub struct ComputeUrlMap_HeaderAction {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     request_headers_to_remove: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     response_headers_to_remove: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    request_headers_to_add: std::option::Option<std::vec::Vec<ComputeUrlMapHeaderActionElRequestHeadersToAddEl>>,
+    request_headers_to_add: std::option::Option<std::vec::Vec<ComputeUrlMap_HeaderAction_RequestHeadersToAdd>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    response_headers_to_add: std::option::Option<std::vec::Vec<ComputeUrlMapHeaderActionElResponseHeadersToAddEl>>,
-    dynamic: ComputeUrlMapHeaderActionElDynamic,
+    response_headers_to_add: std::option::Option<std::vec::Vec<ComputeUrlMap_HeaderAction_ResponseHeadersToAdd>>,
+    dynamic: ComputeUrlMap_HeaderActionDynamic,
 }
 
-impl ComputeUrlMapHeaderActionEl {
+impl ComputeUrlMap_HeaderAction {
     #[doc =
         "Set the field `request_headers_to_remove`.\nA list of header names for headers that need to be removed from the request\nprior to forwarding the request to the backendService."]
     pub fn set_request_headers_to_remove(
@@ -2651,7 +4078,7 @@ impl ComputeUrlMapHeaderActionEl {
     #[doc = "Set the field `request_headers_to_add`.\n"]
     pub fn set_request_headers_to_add(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMapHeaderActionElRequestHeadersToAddEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMap_HeaderAction_RequestHeadersToAdd>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2667,7 +4094,7 @@ impl ComputeUrlMapHeaderActionEl {
     #[doc = "Set the field `response_headers_to_add`.\n"]
     pub fn set_response_headers_to_add(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMapHeaderActionElResponseHeadersToAddEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMap_HeaderAction_ResponseHeadersToAdd>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2681,8 +4108,8 @@ impl ComputeUrlMapHeaderActionEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapHeaderActionEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapHeaderActionEl>;
+impl terrars::ToListMappable for ComputeUrlMap_HeaderAction {
+    type O = terrars::BlockAssignable<ComputeUrlMap_HeaderAction>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2693,11 +4120,11 @@ impl terrars::ToListMappable for ComputeUrlMapHeaderActionEl {
     }
 }
 
-pub struct BuildComputeUrlMapHeaderActionEl {}
+pub struct BuildComputeUrlMap_HeaderAction {}
 
-impl BuildComputeUrlMapHeaderActionEl {
-    pub fn build(self) -> ComputeUrlMapHeaderActionEl {
-        ComputeUrlMapHeaderActionEl {
+impl BuildComputeUrlMap_HeaderAction {
+    pub fn build(self) -> ComputeUrlMap_HeaderAction {
+        ComputeUrlMap_HeaderAction {
             request_headers_to_remove: core::default::Default::default(),
             response_headers_to_remove: core::default::Default::default(),
             request_headers_to_add: core::default::Default::default(),
@@ -2707,21 +4134,23 @@ impl BuildComputeUrlMapHeaderActionEl {
     }
 }
 
-pub struct ComputeUrlMapHeaderActionElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_HeaderActionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapHeaderActionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeUrlMapHeaderActionElRef {
-        ComputeUrlMapHeaderActionElRef {
+impl terrars::Ref for ComputeUrlMap_HeaderActionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeUrlMap_HeaderActionRef {
+        ComputeUrlMap_HeaderActionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapHeaderActionElRef {
+impl ComputeUrlMap_HeaderActionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2739,25 +4168,25 @@ impl ComputeUrlMapHeaderActionElRef {
     }
 
     #[doc = "Get a reference to the value of field `request_headers_to_add` after provisioning.\n"]
-    pub fn request_headers_to_add(&self) -> terrars::ListRef<ComputeUrlMapHeaderActionElRequestHeadersToAddElRef> {
+    pub fn request_headers_to_add(&self) -> terrars::ListRef<ComputeUrlMap_HeaderAction_RequestHeadersToAddRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.request_headers_to_add", self.base))
     }
 
     #[doc = "Get a reference to the value of field `response_headers_to_add` after provisioning.\n"]
-    pub fn response_headers_to_add(&self) -> terrars::ListRef<ComputeUrlMapHeaderActionElResponseHeadersToAddElRef> {
+    pub fn response_headers_to_add(&self) -> terrars::ListRef<ComputeUrlMap_HeaderAction_ResponseHeadersToAddRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.response_headers_to_add", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapHostRuleEl {
+pub struct ComputeUrlMap_HostRule {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     hosts: terrars::SetField<terrars::PrimField<std::string::String>>,
     path_matcher: terrars::PrimField<std::string::String>,
 }
 
-impl ComputeUrlMapHostRuleEl {
+impl ComputeUrlMap_HostRule {
     #[doc =
         "Set the field `description`.\nAn optional description of this resource. Provide this property when you create\nthe resource."]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -2766,8 +4195,8 @@ impl ComputeUrlMapHostRuleEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapHostRuleEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapHostRuleEl>;
+impl terrars::ToListMappable for ComputeUrlMap_HostRule {
+    type O = terrars::BlockAssignable<ComputeUrlMap_HostRule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2778,7 +4207,7 @@ impl terrars::ToListMappable for ComputeUrlMapHostRuleEl {
     }
 }
 
-pub struct BuildComputeUrlMapHostRuleEl {
+pub struct BuildComputeUrlMap_HostRule {
     #[doc =
         "The list of host patterns to match. They must be valid hostnames, except * will\nmatch any string of ([a-z0-9-.]*). In that case, * must be the first character\nand must be followed in the pattern by either - or .."]
     pub hosts: terrars::SetField<terrars::PrimField<std::string::String>>,
@@ -2787,9 +4216,9 @@ pub struct BuildComputeUrlMapHostRuleEl {
     pub path_matcher: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputeUrlMapHostRuleEl {
-    pub fn build(self) -> ComputeUrlMapHostRuleEl {
-        ComputeUrlMapHostRuleEl {
+impl BuildComputeUrlMap_HostRule {
+    pub fn build(self) -> ComputeUrlMap_HostRule {
+        ComputeUrlMap_HostRule {
             description: core::default::Default::default(),
             hosts: self.hosts,
             path_matcher: self.path_matcher,
@@ -2797,21 +4226,23 @@ impl BuildComputeUrlMapHostRuleEl {
     }
 }
 
-pub struct ComputeUrlMapHostRuleElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_HostRuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapHostRuleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeUrlMapHostRuleElRef {
-        ComputeUrlMapHostRuleElRef {
+impl terrars::Ref for ComputeUrlMap_HostRuleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeUrlMap_HostRuleRef {
+        ComputeUrlMap_HostRuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapHostRuleElRef {
+impl ComputeUrlMap_HostRuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2836,97 +4267,43 @@ impl ComputeUrlMapHostRuleElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElDefaultRouteActionElCorsPolicyEl {
+pub struct ComputeUrlMap_PathMatcher_DefaultCustomErrorResponsePolicy_ErrorResponseRule {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    allow_credentials: std::option::Option<terrars::PrimField<bool>>,
+    match_response_codes: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    allow_headers: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    override_response_code: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    allow_methods: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    allow_origin_regexes: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    allow_origins: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    disabled: std::option::Option<terrars::PrimField<bool>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    expose_headers: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    max_age: std::option::Option<terrars::PrimField<f64>>,
+    path: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeUrlMapPathMatcherElDefaultRouteActionElCorsPolicyEl {
+impl ComputeUrlMap_PathMatcher_DefaultCustomErrorResponsePolicy_ErrorResponseRule {
     #[doc =
-        "Set the field `allow_credentials`.\nIn response to a preflight request, setting this to true indicates that the actual request can include user credentials.\nThis translates to the Access-Control-Allow-Credentials header."]
-    pub fn set_allow_credentials(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.allow_credentials = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `allow_headers`.\nSpecifies the content for the Access-Control-Allow-Headers header."]
-    pub fn set_allow_headers(
+        "Set the field `match_response_codes`.\nValid values include:\n- A number between 400 and 599: For example 401 or 503, in which case the load balancer applies the policy if the error code exactly matches this value.\n- 5xx: Load Balancer will apply the policy if the backend service responds with any response code in the range of 500 to 599.\n- 4xx: Load Balancer will apply the policy if the backend service responds with any response code in the range of 400 to 499.\nValues must be unique within matchResponseCodes and across all errorResponseRules of CustomErrorResponsePolicy."]
+    pub fn set_match_response_codes(
         mut self,
         v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
     ) -> Self {
-        self.allow_headers = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `allow_methods`.\nSpecifies the content for the Access-Control-Allow-Methods header."]
-    pub fn set_allow_methods(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.allow_methods = std::option::Option::Some(v.into());
+        self.match_response_codes = std::option::Option::Some(v.into());
         self
     }
 
     #[doc =
-        "Set the field `allow_origin_regexes`.\nSpecifies the regular expression patterns that match allowed origins. For regular expression grammar\nplease see en.cppreference.com/w/cpp/regex/ecmascript\nAn origin is allowed if it matches either an item in allowOrigins or an item in allowOriginRegexes."]
-    pub fn set_allow_origin_regexes(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.allow_origin_regexes = std::option::Option::Some(v.into());
+        "Set the field `override_response_code`.\nThe HTTP status code returned with the response containing the custom error content.\nIf overrideResponseCode is not supplied, the same response code returned by the original backend bucket or backend service is returned to the client."]
+    pub fn set_override_response_code(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.override_response_code = std::option::Option::Some(v.into());
         self
     }
 
     #[doc =
-        "Set the field `allow_origins`.\nSpecifies the list of origins that will be allowed to do CORS requests.\nAn origin is allowed if it matches either an item in allowOrigins or an item in allowOriginRegexes."]
-    pub fn set_allow_origins(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.allow_origins = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `disabled`.\nIf true, specifies the CORS policy is disabled. The default value is false, which indicates that the CORS policy is in effect."]
-    pub fn set_disabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.disabled = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `expose_headers`.\nSpecifies the content for the Access-Control-Expose-Headers header."]
-    pub fn set_expose_headers(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.expose_headers = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `max_age`.\nSpecifies how long results of a preflight request can be cached in seconds.\nThis translates to the Access-Control-Max-Age header."]
-    pub fn set_max_age(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.max_age = std::option::Option::Some(v.into());
+        "Set the field `path`.\nThe full path to a file within backendBucket . For example: /errors/defaultError.html\npath must start with a leading slash. path cannot have trailing slashes.\nIf the file is not available in backendBucket or the load balancer cannot reach the BackendBucket, a simple Not Found Error is returned to the client.\nThe value must be from 1 to 1024 characters"]
+    pub fn set_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.path = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElDefaultRouteActionElCorsPolicyEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElDefaultRouteActionElCorsPolicyEl>;
+impl terrars::ToListMappable for ComputeUrlMap_PathMatcher_DefaultCustomErrorResponsePolicy_ErrorResponseRule {
+    type O = terrars::BlockAssignable<ComputeUrlMap_PathMatcher_DefaultCustomErrorResponsePolicy_ErrorResponseRule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2937,291 +4314,89 @@ impl terrars::ToListMappable for ComputeUrlMapPathMatcherElDefaultRouteActionElC
     }
 }
 
-pub struct BuildComputeUrlMapPathMatcherElDefaultRouteActionElCorsPolicyEl {}
+pub struct BuildComputeUrlMap_PathMatcher_DefaultCustomErrorResponsePolicy_ErrorResponseRule {}
 
-impl BuildComputeUrlMapPathMatcherElDefaultRouteActionElCorsPolicyEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElDefaultRouteActionElCorsPolicyEl {
-        ComputeUrlMapPathMatcherElDefaultRouteActionElCorsPolicyEl {
-            allow_credentials: core::default::Default::default(),
-            allow_headers: core::default::Default::default(),
-            allow_methods: core::default::Default::default(),
-            allow_origin_regexes: core::default::Default::default(),
-            allow_origins: core::default::Default::default(),
-            disabled: core::default::Default::default(),
-            expose_headers: core::default::Default::default(),
-            max_age: core::default::Default::default(),
+impl BuildComputeUrlMap_PathMatcher_DefaultCustomErrorResponsePolicy_ErrorResponseRule {
+    pub fn build(self) -> ComputeUrlMap_PathMatcher_DefaultCustomErrorResponsePolicy_ErrorResponseRule {
+        ComputeUrlMap_PathMatcher_DefaultCustomErrorResponsePolicy_ErrorResponseRule {
+            match_response_codes: core::default::Default::default(),
+            override_response_code: core::default::Default::default(),
+            path: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeUrlMapPathMatcherElDefaultRouteActionElCorsPolicyElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_PathMatcher_DefaultCustomErrorResponsePolicy_ErrorResponseRuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapPathMatcherElDefaultRouteActionElCorsPolicyElRef {
+impl terrars::Ref for ComputeUrlMap_PathMatcher_DefaultCustomErrorResponsePolicy_ErrorResponseRuleRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElDefaultRouteActionElCorsPolicyElRef {
-        ComputeUrlMapPathMatcherElDefaultRouteActionElCorsPolicyElRef {
+    ) -> ComputeUrlMap_PathMatcher_DefaultCustomErrorResponsePolicy_ErrorResponseRuleRef {
+        ComputeUrlMap_PathMatcher_DefaultCustomErrorResponsePolicy_ErrorResponseRuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapPathMatcherElDefaultRouteActionElCorsPolicyElRef {
+impl ComputeUrlMap_PathMatcher_DefaultCustomErrorResponsePolicy_ErrorResponseRuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `allow_credentials` after provisioning.\nIn response to a preflight request, setting this to true indicates that the actual request can include user credentials.\nThis translates to the Access-Control-Allow-Credentials header."]
-    pub fn allow_credentials(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.allow_credentials", self.base))
+        "Get a reference to the value of field `match_response_codes` after provisioning.\nValid values include:\n- A number between 400 and 599: For example 401 or 503, in which case the load balancer applies the policy if the error code exactly matches this value.\n- 5xx: Load Balancer will apply the policy if the backend service responds with any response code in the range of 500 to 599.\n- 4xx: Load Balancer will apply the policy if the backend service responds with any response code in the range of 400 to 499.\nValues must be unique within matchResponseCodes and across all errorResponseRules of CustomErrorResponsePolicy."]
+    pub fn match_response_codes(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.match_response_codes", self.base))
     }
 
     #[doc =
-        "Get a reference to the value of field `allow_headers` after provisioning.\nSpecifies the content for the Access-Control-Allow-Headers header."]
-    pub fn allow_headers(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.allow_headers", self.base))
+        "Get a reference to the value of field `override_response_code` after provisioning.\nThe HTTP status code returned with the response containing the custom error content.\nIf overrideResponseCode is not supplied, the same response code returned by the original backend bucket or backend service is returned to the client."]
+    pub fn override_response_code(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.override_response_code", self.base))
     }
 
     #[doc =
-        "Get a reference to the value of field `allow_methods` after provisioning.\nSpecifies the content for the Access-Control-Allow-Methods header."]
-    pub fn allow_methods(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.allow_methods", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `allow_origin_regexes` after provisioning.\nSpecifies the regular expression patterns that match allowed origins. For regular expression grammar\nplease see en.cppreference.com/w/cpp/regex/ecmascript\nAn origin is allowed if it matches either an item in allowOrigins or an item in allowOriginRegexes."]
-    pub fn allow_origin_regexes(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.allow_origin_regexes", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `allow_origins` after provisioning.\nSpecifies the list of origins that will be allowed to do CORS requests.\nAn origin is allowed if it matches either an item in allowOrigins or an item in allowOriginRegexes."]
-    pub fn allow_origins(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.allow_origins", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `disabled` after provisioning.\nIf true, specifies the CORS policy is disabled. The default value is false, which indicates that the CORS policy is in effect."]
-    pub fn disabled(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.disabled", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `expose_headers` after provisioning.\nSpecifies the content for the Access-Control-Expose-Headers header."]
-    pub fn expose_headers(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.expose_headers", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `max_age` after provisioning.\nSpecifies how long results of a preflight request can be cached in seconds.\nThis translates to the Access-Control-Max-Age header."]
-    pub fn max_age(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_age", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElAbortEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    http_status: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    percentage: std::option::Option<terrars::PrimField<f64>>,
-}
-
-impl ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElAbortEl {
-    #[doc =
-        "Set the field `http_status`.\nThe HTTP status code used to abort the request.\nThe value must be between 200 and 599 inclusive."]
-    pub fn set_http_status(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.http_status = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `percentage`.\nThe percentage of traffic (connections/operations/requests) which will be aborted as part of fault injection.\nThe value must be between 0.0 and 100.0 inclusive."]
-    pub fn set_percentage(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.percentage = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElAbortEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElAbortEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElAbortEl {}
-
-impl BuildComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElAbortEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElAbortEl {
-        ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElAbortEl {
-            http_status: core::default::Default::default(),
-            percentage: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElAbortElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElAbortElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElAbortElRef {
-        ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElAbortElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElAbortElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `http_status` after provisioning.\nThe HTTP status code used to abort the request.\nThe value must be between 200 and 599 inclusive."]
-    pub fn http_status(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.http_status", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `percentage` after provisioning.\nThe percentage of traffic (connections/operations/requests) which will be aborted as part of fault injection.\nThe value must be between 0.0 and 100.0 inclusive."]
-    pub fn percentage(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.percentage", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    nanos: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    seconds: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl {
-    #[doc =
-        "Set the field `nanos`.\nSpan of time that's a fraction of a second at nanosecond resolution. Durations less than one second are\nrepresented with a 0 seconds field and a positive nanos field. Must be from 0 to 999,999,999 inclusive."]
-    pub fn set_nanos(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.nanos = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `seconds`.\nSpan of time at a resolution of a second. Must be from 0 to 315,576,000,000 inclusive.\nNote: these bounds are computed from: 60 sec/min * 60 min/hr * 24 hr/day * 365.25 days/year * 10000 years"]
-    pub fn set_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.seconds = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl {
-    type O =
-        terrars
-        ::BlockAssignable<ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl {}
-
-impl BuildComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl {
-        ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl {
-            nanos: core::default::Default::default(),
-            seconds: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDelayElFixedDelayElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDelayElFixedDelayElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDelayElFixedDelayElRef {
-        ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDelayElFixedDelayElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDelayElFixedDelayElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `nanos` after provisioning.\nSpan of time that's a fraction of a second at nanosecond resolution. Durations less than one second are\nrepresented with a 0 seconds field and a positive nanos field. Must be from 0 to 999,999,999 inclusive."]
-    pub fn nanos(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.nanos", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `seconds` after provisioning.\nSpan of time at a resolution of a second. Must be from 0 to 315,576,000,000 inclusive.\nNote: these bounds are computed from: 60 sec/min * 60 min/hr * 24 hr/day * 365.25 days/year * 10000 years"]
-    pub fn seconds(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.seconds", self.base))
+        "Get a reference to the value of field `path` after provisioning.\nThe full path to a file within backendBucket . For example: /errors/defaultError.html\npath must start with a leading slash. path cannot have trailing slashes.\nIf the file is not available in backendBucket or the load balancer cannot reach the BackendBucket, a simple Not Found Error is returned to the client.\nThe value must be from 1 to 1024 characters"]
+    pub fn path(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.path", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDelayElDynamic {
-    fixed_delay: std
+struct ComputeUrlMap_PathMatcher_DefaultCustomErrorResponsePolicyDynamic {
+    error_response_rule: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl>,
-    >,
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_DefaultCustomErrorResponsePolicy_ErrorResponseRule>>,
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDelayEl {
+pub struct ComputeUrlMap_PathMatcher_DefaultCustomErrorResponsePolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    percentage: std::option::Option<terrars::PrimField<f64>>,
+    error_service: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    fixed_delay: std
+    error_response_rule: std
     ::option
-    ::Option<std::vec::Vec<ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl>>,
-    dynamic: ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDelayElDynamic,
+    ::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_DefaultCustomErrorResponsePolicy_ErrorResponseRule>>,
+    dynamic: ComputeUrlMap_PathMatcher_DefaultCustomErrorResponsePolicyDynamic,
 }
 
-impl ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDelayEl {
+impl ComputeUrlMap_PathMatcher_DefaultCustomErrorResponsePolicy {
     #[doc =
-        "Set the field `percentage`.\nThe percentage of traffic (connections/operations/requests) on which delay will be introduced as part of fault injection.\nThe value must be between 0.0 and 100.0 inclusive."]
-    pub fn set_percentage(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.percentage = std::option::Option::Some(v.into());
+        "Set the field `error_service`.\nThe full or partial URL to the BackendBucket resource that contains the custom error content. Examples are:\nhttps://www.googleapis.com/compute/v1/projects/project/global/backendBuckets/myBackendBucket\ncompute/v1/projects/project/global/backendBuckets/myBackendBucket\nglobal/backendBuckets/myBackendBucket\nIf errorService is not specified at lower levels like pathMatcher, pathRule and routeRule, an errorService specified at a higher level in the UrlMap will be used. If UrlMap.defaultCustomErrorResponsePolicy contains one or more errorResponseRules[], it must specify errorService.\nIf load balancer cannot reach the backendBucket, a simple Not Found Error will be returned, with the original response code (or overrideResponseCode if configured)."]
+    pub fn set_error_service(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.error_service = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc = "Set the field `fixed_delay`.\n"]
-    pub fn set_fixed_delay(
+    #[doc = "Set the field `error_response_rule`.\n"]
+    pub fn set_error_response_rule(
         mut self,
         v:
             impl
@@ -3231,24 +4406,24 @@ impl ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDelayEl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl,
+                            ComputeUrlMap_PathMatcher_DefaultCustomErrorResponsePolicy_ErrorResponseRule,
                         >,
                     >,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
-                self.fixed_delay = std::option::Option::Some(v);
+                self.error_response_rule = std::option::Option::Some(v);
             },
             terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.fixed_delay = std::option::Option::Some(d);
+                self.dynamic.error_response_rule = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDelayEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDelayEl>;
+impl terrars::ToListMappable for ComputeUrlMap_PathMatcher_DefaultCustomErrorResponsePolicy {
+    type O = terrars::BlockAssignable<ComputeUrlMap_PathMatcher_DefaultCustomErrorResponsePolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3259,1466 +4434,58 @@ impl terrars::ToListMappable for ComputeUrlMapPathMatcherElDefaultRouteActionElF
     }
 }
 
-pub struct BuildComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDelayEl {}
+pub struct BuildComputeUrlMap_PathMatcher_DefaultCustomErrorResponsePolicy {}
 
-impl BuildComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDelayEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDelayEl {
-        ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDelayEl {
-            percentage: core::default::Default::default(),
-            fixed_delay: core::default::Default::default(),
+impl BuildComputeUrlMap_PathMatcher_DefaultCustomErrorResponsePolicy {
+    pub fn build(self) -> ComputeUrlMap_PathMatcher_DefaultCustomErrorResponsePolicy {
+        ComputeUrlMap_PathMatcher_DefaultCustomErrorResponsePolicy {
+            error_service: core::default::Default::default(),
+            error_response_rule: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDelayElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_PathMatcher_DefaultCustomErrorResponsePolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDelayElRef {
+impl terrars::Ref for ComputeUrlMap_PathMatcher_DefaultCustomErrorResponsePolicyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDelayElRef {
-        ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDelayElRef {
+    ) -> ComputeUrlMap_PathMatcher_DefaultCustomErrorResponsePolicyRef {
+        ComputeUrlMap_PathMatcher_DefaultCustomErrorResponsePolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDelayElRef {
+impl ComputeUrlMap_PathMatcher_DefaultCustomErrorResponsePolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `percentage` after provisioning.\nThe percentage of traffic (connections/operations/requests) on which delay will be introduced as part of fault injection.\nThe value must be between 0.0 and 100.0 inclusive."]
-    pub fn percentage(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.percentage", self.base))
+        "Get a reference to the value of field `error_service` after provisioning.\nThe full or partial URL to the BackendBucket resource that contains the custom error content. Examples are:\nhttps://www.googleapis.com/compute/v1/projects/project/global/backendBuckets/myBackendBucket\ncompute/v1/projects/project/global/backendBuckets/myBackendBucket\nglobal/backendBuckets/myBackendBucket\nIf errorService is not specified at lower levels like pathMatcher, pathRule and routeRule, an errorService specified at a higher level in the UrlMap will be used. If UrlMap.defaultCustomErrorResponsePolicy contains one or more errorResponseRules[], it must specify errorService.\nIf load balancer cannot reach the backendBucket, a simple Not Found Error will be returned, with the original response code (or overrideResponseCode if configured)."]
+    pub fn error_service(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.error_service", self.base))
     }
 
-    #[doc = "Get a reference to the value of field `fixed_delay` after provisioning.\n"]
-    pub fn fixed_delay(
+    #[doc = "Get a reference to the value of field `error_response_rule` after provisioning.\n"]
+    pub fn error_response_rule(
         &self,
-    ) -> terrars::ListRef<ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDelayElFixedDelayElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.fixed_delay", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDynamic {
-    abort: std
-    ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElAbortEl>>,
-    delay: std
-    ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDelayEl>>,
-}
-
-#[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    abort: std
-    ::option
-    ::Option<std::vec::Vec<ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElAbortEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    delay: std
-    ::option
-    ::Option<std::vec::Vec<ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDelayEl>>,
-    dynamic: ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDynamic,
-}
-
-impl ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyEl {
-    #[doc = "Set the field `abort`.\n"]
-    pub fn set_abort(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElAbortEl>,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.abort = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.abort = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `delay`.\n"]
-    pub fn set_delay(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDelayEl>,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.delay = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.delay = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyEl {}
-
-impl BuildComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyEl {
-        ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyEl {
-            abort: core::default::Default::default(),
-            delay: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElRef {
-        ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `abort` after provisioning.\n"]
-    pub fn abort(
-        &self,
-    ) -> terrars::ListRef<ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElAbortElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.abort", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `delay` after provisioning.\n"]
-    pub fn delay(
-        &self,
-    ) -> terrars::ListRef<ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElDelayElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.delay", self.base))
+    ) -> terrars::ListRef<ComputeUrlMap_PathMatcher_DefaultCustomErrorResponsePolicy_ErrorResponseRuleRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.error_response_rule", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElDefaultRouteActionElRequestMirrorPolicyEl {
-    backend_service: terrars::PrimField<std::string::String>,
-}
-
-impl ComputeUrlMapPathMatcherElDefaultRouteActionElRequestMirrorPolicyEl { }
-
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElDefaultRouteActionElRequestMirrorPolicyEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElDefaultRouteActionElRequestMirrorPolicyEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildComputeUrlMapPathMatcherElDefaultRouteActionElRequestMirrorPolicyEl {
-    #[doc = "The full or partial URL to the BackendService resource being mirrored to."]
-    pub backend_service: terrars::PrimField<std::string::String>,
-}
-
-impl BuildComputeUrlMapPathMatcherElDefaultRouteActionElRequestMirrorPolicyEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElDefaultRouteActionElRequestMirrorPolicyEl {
-        ComputeUrlMapPathMatcherElDefaultRouteActionElRequestMirrorPolicyEl { backend_service: self.backend_service }
-    }
-}
-
-pub struct ComputeUrlMapPathMatcherElDefaultRouteActionElRequestMirrorPolicyElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for ComputeUrlMapPathMatcherElDefaultRouteActionElRequestMirrorPolicyElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElDefaultRouteActionElRequestMirrorPolicyElRef {
-        ComputeUrlMapPathMatcherElDefaultRouteActionElRequestMirrorPolicyElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl ComputeUrlMapPathMatcherElDefaultRouteActionElRequestMirrorPolicyElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `backend_service` after provisioning.\nThe full or partial URL to the BackendService resource being mirrored to."]
-    pub fn backend_service(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.backend_service", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElDefaultRouteActionElRetryPolicyElPerTryTimeoutEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    nanos: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    seconds: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl ComputeUrlMapPathMatcherElDefaultRouteActionElRetryPolicyElPerTryTimeoutEl {
-    #[doc =
-        "Set the field `nanos`.\nSpan of time that's a fraction of a second at nanosecond resolution. Durations less than one second are\nrepresented with a 0 seconds field and a positive nanos field. Must be from 0 to 999,999,999 inclusive."]
-    pub fn set_nanos(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.nanos = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `seconds`.\nSpan of time at a resolution of a second. Must be from 0 to 315,576,000,000 inclusive.\nNote: these bounds are computed from: 60 sec/min * 60 min/hr * 24 hr/day * 365.25 days/year * 10000 years"]
-    pub fn set_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.seconds = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElDefaultRouteActionElRetryPolicyElPerTryTimeoutEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElDefaultRouteActionElRetryPolicyElPerTryTimeoutEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildComputeUrlMapPathMatcherElDefaultRouteActionElRetryPolicyElPerTryTimeoutEl {}
-
-impl BuildComputeUrlMapPathMatcherElDefaultRouteActionElRetryPolicyElPerTryTimeoutEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElDefaultRouteActionElRetryPolicyElPerTryTimeoutEl {
-        ComputeUrlMapPathMatcherElDefaultRouteActionElRetryPolicyElPerTryTimeoutEl {
-            nanos: core::default::Default::default(),
-            seconds: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct ComputeUrlMapPathMatcherElDefaultRouteActionElRetryPolicyElPerTryTimeoutElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for ComputeUrlMapPathMatcherElDefaultRouteActionElRetryPolicyElPerTryTimeoutElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElDefaultRouteActionElRetryPolicyElPerTryTimeoutElRef {
-        ComputeUrlMapPathMatcherElDefaultRouteActionElRetryPolicyElPerTryTimeoutElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl ComputeUrlMapPathMatcherElDefaultRouteActionElRetryPolicyElPerTryTimeoutElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `nanos` after provisioning.\nSpan of time that's a fraction of a second at nanosecond resolution. Durations less than one second are\nrepresented with a 0 seconds field and a positive nanos field. Must be from 0 to 999,999,999 inclusive."]
-    pub fn nanos(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.nanos", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `seconds` after provisioning.\nSpan of time at a resolution of a second. Must be from 0 to 315,576,000,000 inclusive.\nNote: these bounds are computed from: 60 sec/min * 60 min/hr * 24 hr/day * 365.25 days/year * 10000 years"]
-    pub fn seconds(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.seconds", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct ComputeUrlMapPathMatcherElDefaultRouteActionElRetryPolicyElDynamic {
-    per_try_timeout: std
-    ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElDefaultRouteActionElRetryPolicyElPerTryTimeoutEl>>,
-}
-
-#[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElDefaultRouteActionElRetryPolicyEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    num_retries: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    retry_conditions: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    per_try_timeout: std
-    ::option
-    ::Option<std::vec::Vec<ComputeUrlMapPathMatcherElDefaultRouteActionElRetryPolicyElPerTryTimeoutEl>>,
-    dynamic: ComputeUrlMapPathMatcherElDefaultRouteActionElRetryPolicyElDynamic,
-}
-
-impl ComputeUrlMapPathMatcherElDefaultRouteActionElRetryPolicyEl {
-    #[doc =
-        "Set the field `num_retries`.\nSpecifies the allowed number retries. This number must be > 0. If not specified, defaults to 1."]
-    pub fn set_num_retries(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.num_retries = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `retry_conditions`.\nSpecfies one or more conditions when this retry rule applies. Valid values are:\n\n* 5xx: Loadbalancer will attempt a retry if the backend service responds with any 5xx response code,\n  or if the backend service does not respond at all, example: disconnects, reset, read timeout,\n* connection failure, and refused streams.\n* gateway-error: Similar to 5xx, but only applies to response codes 502, 503 or 504.\n* connect-failure: Loadbalancer will retry on failures connecting to backend services,\n  for example due to connection timeouts.\n* retriable-4xx: Loadbalancer will retry for retriable 4xx response codes.\n  Currently the only retriable error supported is 409.\n* refused-stream:Loadbalancer will retry if the backend service resets the stream with a REFUSED_STREAM error code.\n  This reset type indicates that it is safe to retry.\n* cancelled: Loadbalancer will retry if the gRPC status code in the response header is set to cancelled\n* deadline-exceeded: Loadbalancer will retry if the gRPC status code in the response header is set to deadline-exceeded\n* resource-exhausted: Loadbalancer will retry if the gRPC status code in the response header is set to resource-exhausted\n* unavailable: Loadbalancer will retry if the gRPC status code in the response header is set to unavailable"]
-    pub fn set_retry_conditions(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.retry_conditions = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `per_try_timeout`.\n"]
-    pub fn set_per_try_timeout(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<ComputeUrlMapPathMatcherElDefaultRouteActionElRetryPolicyElPerTryTimeoutEl>,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.per_try_timeout = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.per_try_timeout = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElDefaultRouteActionElRetryPolicyEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElDefaultRouteActionElRetryPolicyEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildComputeUrlMapPathMatcherElDefaultRouteActionElRetryPolicyEl {}
-
-impl BuildComputeUrlMapPathMatcherElDefaultRouteActionElRetryPolicyEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElDefaultRouteActionElRetryPolicyEl {
-        ComputeUrlMapPathMatcherElDefaultRouteActionElRetryPolicyEl {
-            num_retries: core::default::Default::default(),
-            retry_conditions: core::default::Default::default(),
-            per_try_timeout: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct ComputeUrlMapPathMatcherElDefaultRouteActionElRetryPolicyElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for ComputeUrlMapPathMatcherElDefaultRouteActionElRetryPolicyElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElDefaultRouteActionElRetryPolicyElRef {
-        ComputeUrlMapPathMatcherElDefaultRouteActionElRetryPolicyElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl ComputeUrlMapPathMatcherElDefaultRouteActionElRetryPolicyElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `num_retries` after provisioning.\nSpecifies the allowed number retries. This number must be > 0. If not specified, defaults to 1."]
-    pub fn num_retries(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.num_retries", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `retry_conditions` after provisioning.\nSpecfies one or more conditions when this retry rule applies. Valid values are:\n\n* 5xx: Loadbalancer will attempt a retry if the backend service responds with any 5xx response code,\n  or if the backend service does not respond at all, example: disconnects, reset, read timeout,\n* connection failure, and refused streams.\n* gateway-error: Similar to 5xx, but only applies to response codes 502, 503 or 504.\n* connect-failure: Loadbalancer will retry on failures connecting to backend services,\n  for example due to connection timeouts.\n* retriable-4xx: Loadbalancer will retry for retriable 4xx response codes.\n  Currently the only retriable error supported is 409.\n* refused-stream:Loadbalancer will retry if the backend service resets the stream with a REFUSED_STREAM error code.\n  This reset type indicates that it is safe to retry.\n* cancelled: Loadbalancer will retry if the gRPC status code in the response header is set to cancelled\n* deadline-exceeded: Loadbalancer will retry if the gRPC status code in the response header is set to deadline-exceeded\n* resource-exhausted: Loadbalancer will retry if the gRPC status code in the response header is set to resource-exhausted\n* unavailable: Loadbalancer will retry if the gRPC status code in the response header is set to unavailable"]
-    pub fn retry_conditions(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.retry_conditions", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `per_try_timeout` after provisioning.\n"]
-    pub fn per_try_timeout(
-        &self,
-    ) -> terrars::ListRef<ComputeUrlMapPathMatcherElDefaultRouteActionElRetryPolicyElPerTryTimeoutElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.per_try_timeout", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElDefaultRouteActionElTimeoutEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    nanos: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    seconds: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl ComputeUrlMapPathMatcherElDefaultRouteActionElTimeoutEl {
-    #[doc =
-        "Set the field `nanos`.\nSpan of time that's a fraction of a second at nanosecond resolution. Durations less than one second are represented\nwith a 0 seconds field and a positive nanos field. Must be from 0 to 999,999,999 inclusive."]
-    pub fn set_nanos(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.nanos = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `seconds`.\nSpan of time at a resolution of a second. Must be from 0 to 315,576,000,000 inclusive.\nNote: these bounds are computed from: 60 sec/min * 60 min/hr * 24 hr/day * 365.25 days/year * 10000 years"]
-    pub fn set_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.seconds = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElDefaultRouteActionElTimeoutEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElDefaultRouteActionElTimeoutEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildComputeUrlMapPathMatcherElDefaultRouteActionElTimeoutEl {}
-
-impl BuildComputeUrlMapPathMatcherElDefaultRouteActionElTimeoutEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElDefaultRouteActionElTimeoutEl {
-        ComputeUrlMapPathMatcherElDefaultRouteActionElTimeoutEl {
-            nanos: core::default::Default::default(),
-            seconds: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct ComputeUrlMapPathMatcherElDefaultRouteActionElTimeoutElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for ComputeUrlMapPathMatcherElDefaultRouteActionElTimeoutElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElDefaultRouteActionElTimeoutElRef {
-        ComputeUrlMapPathMatcherElDefaultRouteActionElTimeoutElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl ComputeUrlMapPathMatcherElDefaultRouteActionElTimeoutElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `nanos` after provisioning.\nSpan of time that's a fraction of a second at nanosecond resolution. Durations less than one second are represented\nwith a 0 seconds field and a positive nanos field. Must be from 0 to 999,999,999 inclusive."]
-    pub fn nanos(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.nanos", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `seconds` after provisioning.\nSpan of time at a resolution of a second. Must be from 0 to 315,576,000,000 inclusive.\nNote: these bounds are computed from: 60 sec/min * 60 min/hr * 24 hr/day * 365.25 days/year * 10000 years"]
-    pub fn seconds(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.seconds", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElDefaultRouteActionElUrlRewriteEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    host_rewrite: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    path_prefix_rewrite: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl ComputeUrlMapPathMatcherElDefaultRouteActionElUrlRewriteEl {
-    #[doc =
-        "Set the field `host_rewrite`.\nPrior to forwarding the request to the selected service, the request's host header is replaced\nwith contents of hostRewrite.\n\nThe value must be between 1 and 255 characters."]
-    pub fn set_host_rewrite(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.host_rewrite = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `path_prefix_rewrite`.\nPrior to forwarding the request to the selected backend service, the matching portion of the\nrequest's path is replaced by pathPrefixRewrite.\n\nThe value must be between 1 and 1024 characters."]
-    pub fn set_path_prefix_rewrite(
-        mut self,
-        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
-    ) -> Self {
-        self.path_prefix_rewrite = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElDefaultRouteActionElUrlRewriteEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElDefaultRouteActionElUrlRewriteEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildComputeUrlMapPathMatcherElDefaultRouteActionElUrlRewriteEl {}
-
-impl BuildComputeUrlMapPathMatcherElDefaultRouteActionElUrlRewriteEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElDefaultRouteActionElUrlRewriteEl {
-        ComputeUrlMapPathMatcherElDefaultRouteActionElUrlRewriteEl {
-            host_rewrite: core::default::Default::default(),
-            path_prefix_rewrite: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct ComputeUrlMapPathMatcherElDefaultRouteActionElUrlRewriteElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for ComputeUrlMapPathMatcherElDefaultRouteActionElUrlRewriteElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElDefaultRouteActionElUrlRewriteElRef {
-        ComputeUrlMapPathMatcherElDefaultRouteActionElUrlRewriteElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl ComputeUrlMapPathMatcherElDefaultRouteActionElUrlRewriteElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `host_rewrite` after provisioning.\nPrior to forwarding the request to the selected service, the request's host header is replaced\nwith contents of hostRewrite.\n\nThe value must be between 1 and 255 characters."]
-    pub fn host_rewrite(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.host_rewrite", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `path_prefix_rewrite` after provisioning.\nPrior to forwarding the request to the selected backend service, the matching portion of the\nrequest's path is replaced by pathPrefixRewrite.\n\nThe value must be between 1 and 1024 characters."]
-    pub fn path_prefix_rewrite(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.path_prefix_rewrite", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    header_name: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    header_value: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    replace: std::option::Option<terrars::PrimField<bool>>,
-}
-
-impl ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl {
-    #[doc = "Set the field `header_name`.\nThe name of the header to add."]
-    pub fn set_header_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.header_name = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `header_value`.\nThe value of the header to add."]
-    pub fn set_header_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.header_value = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `replace`.\nIf false, headerValue is appended to any values that already exist for the header.\nIf true, headerValue is set for the header, discarding any values that were set for that header."]
-    pub fn set_replace(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.replace = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl {}
-
-impl BuildComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl {
-    pub fn build(
-        self,
-    ) -> ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl {
-        ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl {
-            header_name: core::default::Default::default(),
-            header_value: core::default::Default::default(),
-            replace: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddElRef {
-        ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `header_name` after provisioning.\nThe name of the header to add."]
-    pub fn header_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.header_name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `header_value` after provisioning.\nThe value of the header to add."]
-    pub fn header_value(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.header_value", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `replace` after provisioning.\nIf false, headerValue is appended to any values that already exist for the header.\nIf true, headerValue is set for the header, discarding any values that were set for that header."]
-    pub fn replace(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.replace", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    header_name: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    header_value: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    replace: std::option::Option<terrars::PrimField<bool>>,
-}
-
-impl ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl {
-    #[doc = "Set the field `header_name`.\nThe name of the header to add."]
-    pub fn set_header_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.header_name = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `header_value`.\nThe value of the header to add."]
-    pub fn set_header_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.header_value = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `replace`.\nIf false, headerValue is appended to any values that already exist for the header.\nIf true, headerValue is set for the header, discarding any values that were set for that header."]
-    pub fn set_replace(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.replace = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl {}
-
-impl BuildComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl {
-    pub fn build(
-        self,
-    ) -> ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl {
-        ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl {
-            header_name: core::default::Default::default(),
-            header_value: core::default::Default::default(),
-            replace: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddElRef {
-        ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `header_name` after provisioning.\nThe name of the header to add."]
-    pub fn header_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.header_name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `header_value` after provisioning.\nThe value of the header to add."]
-    pub fn header_value(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.header_value", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `replace` after provisioning.\nIf false, headerValue is appended to any values that already exist for the header.\nIf true, headerValue is set for the header, discarding any values that were set for that header."]
-    pub fn replace(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.replace", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElDynamic {
-    request_headers_to_add: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl,
-        >,
-    >,
-    response_headers_to_add: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl,
-        >,
-    >,
-}
-
-#[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    request_headers_to_remove: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    response_headers_to_remove: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    request_headers_to_add: std
-    ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<
-            ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl,
-        >,
-    >,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    response_headers_to_add: std
-    ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<
-            ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl,
-        >,
-    >,
-    dynamic: ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElDynamic,
-}
-
-impl ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionEl {
-    #[doc =
-        "Set the field `request_headers_to_remove`.\nA list of header names for headers that need to be removed from the request prior to\nforwarding the request to the backendService."]
-    pub fn set_request_headers_to_remove(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.request_headers_to_remove = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `response_headers_to_remove`.\nA list of header names for headers that need to be removed from the response prior to sending the\nresponse back to the client."]
-    pub fn set_response_headers_to_remove(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.response_headers_to_remove = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `request_headers_to_add`.\n"]
-    pub fn set_request_headers_to_add(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.request_headers_to_add = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.request_headers_to_add = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `response_headers_to_add`.\n"]
-    pub fn set_response_headers_to_add(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.response_headers_to_add = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.response_headers_to_add = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionEl {
-    type O =
-        terrars
-        ::BlockAssignable<ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionEl {}
-
-impl BuildComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionEl {
-        ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionEl {
-            request_headers_to_remove: core::default::Default::default(),
-            response_headers_to_remove: core::default::Default::default(),
-            request_headers_to_add: core::default::Default::default(),
-            response_headers_to_add: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElRef {
-        ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `request_headers_to_remove` after provisioning.\nA list of header names for headers that need to be removed from the request prior to\nforwarding the request to the backendService."]
-    pub fn request_headers_to_remove(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.request_headers_to_remove", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `response_headers_to_remove` after provisioning.\nA list of header names for headers that need to be removed from the response prior to sending the\nresponse back to the client."]
-    pub fn response_headers_to_remove(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.response_headers_to_remove", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `request_headers_to_add` after provisioning.\n"]
-    pub fn request_headers_to_add(
-        &self,
-    ) -> terrars
-    ::ListRef<
-        ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddElRef,
-    > {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.request_headers_to_add", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `response_headers_to_add` after provisioning.\n"]
-    pub fn response_headers_to_add(
-        &self,
-    ) -> terrars
-    ::ListRef<
-        ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddElRef,
-    > {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.response_headers_to_add", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElDynamic {
-    header_action: std
-    ::option
-    ::Option<
-        terrars::DynamicBlock<ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionEl>,
-    >,
-}
-
-#[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    backend_service: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    weight: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    header_action: std
-    ::option
-    ::Option<std::vec::Vec<ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionEl>>,
-    dynamic: ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElDynamic,
-}
-
-impl ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesEl {
-    #[doc =
-        "Set the field `backend_service`.\nThe full or partial URL to the default BackendService resource. Before forwarding the\nrequest to backendService, the loadbalancer applies any relevant headerActions\nspecified as part of this backendServiceWeight."]
-    pub fn set_backend_service(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.backend_service = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `weight`.\nSpecifies the fraction of traffic sent to backendService, computed as\nweight / (sum of all weightedBackendService weights in routeAction) .\n\nThe selection of a backend service is determined only for new traffic. Once a user's request\nhas been directed to a backendService, subsequent requests will be sent to the same backendService\nas determined by the BackendService's session affinity policy.\n\nThe value must be between 0 and 1000"]
-    pub fn set_weight(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.weight = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `header_action`.\n"]
-    pub fn set_header_action(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.header_action = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.header_action = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesEl {}
-
-impl BuildComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesEl {
-        ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesEl {
-            backend_service: core::default::Default::default(),
-            weight: core::default::Default::default(),
-            header_action: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElRef {
-        ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `backend_service` after provisioning.\nThe full or partial URL to the default BackendService resource. Before forwarding the\nrequest to backendService, the loadbalancer applies any relevant headerActions\nspecified as part of this backendServiceWeight."]
-    pub fn backend_service(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.backend_service", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `weight` after provisioning.\nSpecifies the fraction of traffic sent to backendService, computed as\nweight / (sum of all weightedBackendService weights in routeAction) .\n\nThe selection of a backend service is determined only for new traffic. Once a user's request\nhas been directed to a backendService, subsequent requests will be sent to the same backendService\nas determined by the BackendService's session affinity policy.\n\nThe value must be between 0 and 1000"]
-    pub fn weight(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.weight", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `header_action` after provisioning.\n"]
-    pub fn header_action(
-        &self,
-    ) -> terrars::ListRef<ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElHeaderActionElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.header_action", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct ComputeUrlMapPathMatcherElDefaultRouteActionElDynamic {
-    cors_policy: std
-    ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElDefaultRouteActionElCorsPolicyEl>>,
-    fault_injection_policy: std
-    ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyEl>>,
-    request_mirror_policy: std
-    ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElDefaultRouteActionElRequestMirrorPolicyEl>>,
-    retry_policy: std
-    ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElDefaultRouteActionElRetryPolicyEl>>,
-    timeout: std::option::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElDefaultRouteActionElTimeoutEl>>,
-    url_rewrite: std
-    ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElDefaultRouteActionElUrlRewriteEl>>,
-    weighted_backend_services: std
-    ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesEl>>,
-}
-
-#[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElDefaultRouteActionEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cors_policy: std::option::Option<std::vec::Vec<ComputeUrlMapPathMatcherElDefaultRouteActionElCorsPolicyEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    fault_injection_policy: std
-    ::option
-    ::Option<std::vec::Vec<ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    request_mirror_policy: std
-    ::option
-    ::Option<std::vec::Vec<ComputeUrlMapPathMatcherElDefaultRouteActionElRequestMirrorPolicyEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    retry_policy: std::option::Option<std::vec::Vec<ComputeUrlMapPathMatcherElDefaultRouteActionElRetryPolicyEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeout: std::option::Option<std::vec::Vec<ComputeUrlMapPathMatcherElDefaultRouteActionElTimeoutEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    url_rewrite: std::option::Option<std::vec::Vec<ComputeUrlMapPathMatcherElDefaultRouteActionElUrlRewriteEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    weighted_backend_services: std
-    ::option
-    ::Option<std::vec::Vec<ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesEl>>,
-    dynamic: ComputeUrlMapPathMatcherElDefaultRouteActionElDynamic,
-}
-
-impl ComputeUrlMapPathMatcherElDefaultRouteActionEl {
-    #[doc = "Set the field `cors_policy`.\n"]
-    pub fn set_cors_policy(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<ComputeUrlMapPathMatcherElDefaultRouteActionElCorsPolicyEl>>,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.cors_policy = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.cors_policy = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `fault_injection_policy`.\n"]
-    pub fn set_fault_injection_policy(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars::BlockAssignable<ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyEl>,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.fault_injection_policy = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.fault_injection_policy = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `request_mirror_policy`.\n"]
-    pub fn set_request_mirror_policy(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars::BlockAssignable<ComputeUrlMapPathMatcherElDefaultRouteActionElRequestMirrorPolicyEl>,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.request_mirror_policy = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.request_mirror_policy = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `retry_policy`.\n"]
-    pub fn set_retry_policy(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<ComputeUrlMapPathMatcherElDefaultRouteActionElRetryPolicyEl>>,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.retry_policy = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.retry_policy = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `timeout`.\n"]
-    pub fn set_timeout(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<ComputeUrlMapPathMatcherElDefaultRouteActionElTimeoutEl>>,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.timeout = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.timeout = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `url_rewrite`.\n"]
-    pub fn set_url_rewrite(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<ComputeUrlMapPathMatcherElDefaultRouteActionElUrlRewriteEl>>,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.url_rewrite = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.url_rewrite = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `weighted_backend_services`.\n"]
-    pub fn set_weighted_backend_services(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesEl>,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.weighted_backend_services = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.weighted_backend_services = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElDefaultRouteActionEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElDefaultRouteActionEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildComputeUrlMapPathMatcherElDefaultRouteActionEl {}
-
-impl BuildComputeUrlMapPathMatcherElDefaultRouteActionEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElDefaultRouteActionEl {
-        ComputeUrlMapPathMatcherElDefaultRouteActionEl {
-            cors_policy: core::default::Default::default(),
-            fault_injection_policy: core::default::Default::default(),
-            request_mirror_policy: core::default::Default::default(),
-            retry_policy: core::default::Default::default(),
-            timeout: core::default::Default::default(),
-            url_rewrite: core::default::Default::default(),
-            weighted_backend_services: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct ComputeUrlMapPathMatcherElDefaultRouteActionElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for ComputeUrlMapPathMatcherElDefaultRouteActionElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElDefaultRouteActionElRef {
-        ComputeUrlMapPathMatcherElDefaultRouteActionElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl ComputeUrlMapPathMatcherElDefaultRouteActionElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `cors_policy` after provisioning.\n"]
-    pub fn cors_policy(&self) -> terrars::ListRef<ComputeUrlMapPathMatcherElDefaultRouteActionElCorsPolicyElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.cors_policy", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `fault_injection_policy` after provisioning.\n"]
-    pub fn fault_injection_policy(
-        &self,
-    ) -> terrars::ListRef<ComputeUrlMapPathMatcherElDefaultRouteActionElFaultInjectionPolicyElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.fault_injection_policy", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `request_mirror_policy` after provisioning.\n"]
-    pub fn request_mirror_policy(
-        &self,
-    ) -> terrars::ListRef<ComputeUrlMapPathMatcherElDefaultRouteActionElRequestMirrorPolicyElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.request_mirror_policy", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `retry_policy` after provisioning.\n"]
-    pub fn retry_policy(&self) -> terrars::ListRef<ComputeUrlMapPathMatcherElDefaultRouteActionElRetryPolicyElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.retry_policy", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `timeout` after provisioning.\n"]
-    pub fn timeout(&self) -> terrars::ListRef<ComputeUrlMapPathMatcherElDefaultRouteActionElTimeoutElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.timeout", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `url_rewrite` after provisioning.\n"]
-    pub fn url_rewrite(&self) -> terrars::ListRef<ComputeUrlMapPathMatcherElDefaultRouteActionElUrlRewriteElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.url_rewrite", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `weighted_backend_services` after provisioning.\n"]
-    pub fn weighted_backend_services(
-        &self,
-    ) -> terrars::ListRef<ComputeUrlMapPathMatcherElDefaultRouteActionElWeightedBackendServicesElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.weighted_backend_services", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElDefaultUrlRedirectEl {
+pub struct ComputeUrlMap_PathMatcher_DefaultUrlRedirect {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     host_redirect: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -4732,7 +4499,7 @@ pub struct ComputeUrlMapPathMatcherElDefaultUrlRedirectEl {
     strip_query: terrars::PrimField<bool>,
 }
 
-impl ComputeUrlMapPathMatcherElDefaultUrlRedirectEl {
+impl ComputeUrlMap_PathMatcher_DefaultUrlRedirect {
     #[doc =
         "Set the field `host_redirect`.\nThe host that will be used in the redirect response instead of the one that was\nsupplied in the request. The value must be between 1 and 255 characters."]
     pub fn set_host_redirect(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -4772,8 +4539,8 @@ impl ComputeUrlMapPathMatcherElDefaultUrlRedirectEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElDefaultUrlRedirectEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElDefaultUrlRedirectEl>;
+impl terrars::ToListMappable for ComputeUrlMap_PathMatcher_DefaultUrlRedirect {
+    type O = terrars::BlockAssignable<ComputeUrlMap_PathMatcher_DefaultUrlRedirect>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4784,15 +4551,15 @@ impl terrars::ToListMappable for ComputeUrlMapPathMatcherElDefaultUrlRedirectEl 
     }
 }
 
-pub struct BuildComputeUrlMapPathMatcherElDefaultUrlRedirectEl {
+pub struct BuildComputeUrlMap_PathMatcher_DefaultUrlRedirect {
     #[doc =
         "If set to true, any accompanying query portion of the original URL is removed prior\nto redirecting the request. If set to false, the query portion of the original URL is\nretained.\n This field is required to ensure an empty block is not set. The normal default value is false."]
     pub strip_query: terrars::PrimField<bool>,
 }
 
-impl BuildComputeUrlMapPathMatcherElDefaultUrlRedirectEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElDefaultUrlRedirectEl {
-        ComputeUrlMapPathMatcherElDefaultUrlRedirectEl {
+impl BuildComputeUrlMap_PathMatcher_DefaultUrlRedirect {
+    pub fn build(self) -> ComputeUrlMap_PathMatcher_DefaultUrlRedirect {
+        ComputeUrlMap_PathMatcher_DefaultUrlRedirect {
             host_redirect: core::default::Default::default(),
             https_redirect: core::default::Default::default(),
             path_redirect: core::default::Default::default(),
@@ -4803,24 +4570,26 @@ impl BuildComputeUrlMapPathMatcherElDefaultUrlRedirectEl {
     }
 }
 
-pub struct ComputeUrlMapPathMatcherElDefaultUrlRedirectElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_PathMatcher_DefaultUrlRedirectRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapPathMatcherElDefaultUrlRedirectElRef {
+impl terrars::Ref for ComputeUrlMap_PathMatcher_DefaultUrlRedirectRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElDefaultUrlRedirectElRef {
-        ComputeUrlMapPathMatcherElDefaultUrlRedirectElRef {
+    ) -> ComputeUrlMap_PathMatcher_DefaultUrlRedirectRef {
+        ComputeUrlMap_PathMatcher_DefaultUrlRedirectRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapPathMatcherElDefaultUrlRedirectElRef {
+impl ComputeUrlMap_PathMatcher_DefaultUrlRedirectRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4863,16 +4632,44 @@ impl ComputeUrlMapPathMatcherElDefaultUrlRedirectElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElHeaderActionElRequestHeadersToAddEl {
-    header_name: terrars::PrimField<std::string::String>,
-    header_value: terrars::PrimField<std::string::String>,
-    replace: terrars::PrimField<bool>,
+pub struct ComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicy_ErrorResponseRule {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    match_response_codes: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    override_response_code: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    path: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeUrlMapPathMatcherElHeaderActionElRequestHeadersToAddEl { }
+impl ComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicy_ErrorResponseRule {
+    #[doc =
+        "Set the field `match_response_codes`.\nValid values include:\n\n- A number between 400 and 599: For example 401 or 503, in which case the load balancer applies the policy if the error code exactly matches this value.\n- 5xx: Load Balancer will apply the policy if the backend service responds with any response code in the range of 500 to 599.\n- 4xx: Load Balancer will apply the policy if the backend service responds with any response code in the range of 400 to 499.\n\nValues must be unique within matchResponseCodes and across all errorResponseRules of CustomErrorResponsePolicy."]
+    pub fn set_match_response_codes(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.match_response_codes = std::option::Option::Some(v.into());
+        self
+    }
 
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElHeaderActionElRequestHeadersToAddEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElHeaderActionElRequestHeadersToAddEl>;
+    #[doc =
+        "Set the field `override_response_code`.\nThe HTTP status code returned with the response containing the custom error content.\nIf overrideResponseCode is not supplied, the same response code returned by the original backend bucket or backend service is returned to the client."]
+    pub fn set_override_response_code(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.override_response_code = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `path`.\nThe full path to a file within backendBucket . For example: /errors/defaultError.html\npath must start with a leading slash. path cannot have trailing slashes.\nIf the file is not available in backendBucket or the load balancer cannot reach the BackendBucket, a simple Not Found Error is returned to the client.\nThe value must be from 1 to 1024 characters"]
+    pub fn set_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.path = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicy_ErrorResponseRule {
+    type O =
+        terrars::BlockAssignable<ComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicy_ErrorResponseRule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4883,238 +4680,116 @@ impl terrars::ToListMappable for ComputeUrlMapPathMatcherElHeaderActionElRequest
     }
 }
 
-pub struct BuildComputeUrlMapPathMatcherElHeaderActionElRequestHeadersToAddEl {
-    #[doc = "The name of the header."]
-    pub header_name: terrars::PrimField<std::string::String>,
-    #[doc = "The value of the header to add."]
-    pub header_value: terrars::PrimField<std::string::String>,
-    #[doc =
-        "If false, headerValue is appended to any values that already exist for the\nheader. If true, headerValue is set for the header, discarding any values that\nwere set for that header."]
-    pub replace: terrars::PrimField<bool>,
-}
+pub struct BuildComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicy_ErrorResponseRule {}
 
-impl BuildComputeUrlMapPathMatcherElHeaderActionElRequestHeadersToAddEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElHeaderActionElRequestHeadersToAddEl {
-        ComputeUrlMapPathMatcherElHeaderActionElRequestHeadersToAddEl {
-            header_name: self.header_name,
-            header_value: self.header_value,
-            replace: self.replace,
+impl BuildComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicy_ErrorResponseRule {
+    pub fn build(self) -> ComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicy_ErrorResponseRule {
+        ComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicy_ErrorResponseRule {
+            match_response_codes: core::default::Default::default(),
+            override_response_code: core::default::Default::default(),
+            path: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeUrlMapPathMatcherElHeaderActionElRequestHeadersToAddElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicy_ErrorResponseRuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapPathMatcherElHeaderActionElRequestHeadersToAddElRef {
+impl terrars::Ref for ComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicy_ErrorResponseRuleRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElHeaderActionElRequestHeadersToAddElRef {
-        ComputeUrlMapPathMatcherElHeaderActionElRequestHeadersToAddElRef {
+    ) -> ComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicy_ErrorResponseRuleRef {
+        ComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicy_ErrorResponseRuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapPathMatcherElHeaderActionElRequestHeadersToAddElRef {
+impl ComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicy_ErrorResponseRuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc = "Get a reference to the value of field `header_name` after provisioning.\nThe name of the header."]
-    pub fn header_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.header_name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `header_value` after provisioning.\nThe value of the header to add."]
-    pub fn header_value(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.header_value", self.base))
+    #[doc =
+        "Get a reference to the value of field `match_response_codes` after provisioning.\nValid values include:\n\n- A number between 400 and 599: For example 401 or 503, in which case the load balancer applies the policy if the error code exactly matches this value.\n- 5xx: Load Balancer will apply the policy if the backend service responds with any response code in the range of 500 to 599.\n- 4xx: Load Balancer will apply the policy if the backend service responds with any response code in the range of 400 to 499.\n\nValues must be unique within matchResponseCodes and across all errorResponseRules of CustomErrorResponsePolicy."]
+    pub fn match_response_codes(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.match_response_codes", self.base))
     }
 
     #[doc =
-        "Get a reference to the value of field `replace` after provisioning.\nIf false, headerValue is appended to any values that already exist for the\nheader. If true, headerValue is set for the header, discarding any values that\nwere set for that header."]
-    pub fn replace(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.replace", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElHeaderActionElResponseHeadersToAddEl {
-    header_name: terrars::PrimField<std::string::String>,
-    header_value: terrars::PrimField<std::string::String>,
-    replace: terrars::PrimField<bool>,
-}
-
-impl ComputeUrlMapPathMatcherElHeaderActionElResponseHeadersToAddEl { }
-
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElHeaderActionElResponseHeadersToAddEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElHeaderActionElResponseHeadersToAddEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildComputeUrlMapPathMatcherElHeaderActionElResponseHeadersToAddEl {
-    #[doc = "The name of the header."]
-    pub header_name: terrars::PrimField<std::string::String>,
-    #[doc = "The value of the header to add."]
-    pub header_value: terrars::PrimField<std::string::String>,
-    #[doc =
-        "If false, headerValue is appended to any values that already exist for the\nheader. If true, headerValue is set for the header, discarding any values that\nwere set for that header."]
-    pub replace: terrars::PrimField<bool>,
-}
-
-impl BuildComputeUrlMapPathMatcherElHeaderActionElResponseHeadersToAddEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElHeaderActionElResponseHeadersToAddEl {
-        ComputeUrlMapPathMatcherElHeaderActionElResponseHeadersToAddEl {
-            header_name: self.header_name,
-            header_value: self.header_value,
-            replace: self.replace,
-        }
-    }
-}
-
-pub struct ComputeUrlMapPathMatcherElHeaderActionElResponseHeadersToAddElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for ComputeUrlMapPathMatcherElHeaderActionElResponseHeadersToAddElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElHeaderActionElResponseHeadersToAddElRef {
-        ComputeUrlMapPathMatcherElHeaderActionElResponseHeadersToAddElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl ComputeUrlMapPathMatcherElHeaderActionElResponseHeadersToAddElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `header_name` after provisioning.\nThe name of the header."]
-    pub fn header_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.header_name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `header_value` after provisioning.\nThe value of the header to add."]
-    pub fn header_value(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.header_value", self.base))
+        "Get a reference to the value of field `override_response_code` after provisioning.\nThe HTTP status code returned with the response containing the custom error content.\nIf overrideResponseCode is not supplied, the same response code returned by the original backend bucket or backend service is returned to the client."]
+    pub fn override_response_code(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.override_response_code", self.base))
     }
 
     #[doc =
-        "Get a reference to the value of field `replace` after provisioning.\nIf false, headerValue is appended to any values that already exist for the\nheader. If true, headerValue is set for the header, discarding any values that\nwere set for that header."]
-    pub fn replace(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.replace", self.base))
+        "Get a reference to the value of field `path` after provisioning.\nThe full path to a file within backendBucket . For example: /errors/defaultError.html\npath must start with a leading slash. path cannot have trailing slashes.\nIf the file is not available in backendBucket or the load balancer cannot reach the BackendBucket, a simple Not Found Error is returned to the client.\nThe value must be from 1 to 1024 characters"]
+    pub fn path(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.path", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct ComputeUrlMapPathMatcherElHeaderActionElDynamic {
-    request_headers_to_add: std
+struct ComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicyDynamic {
+    error_response_rule: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElHeaderActionElRequestHeadersToAddEl>>,
-    response_headers_to_add: std
-    ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElHeaderActionElResponseHeadersToAddEl>>,
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicy_ErrorResponseRule>>,
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElHeaderActionEl {
+pub struct ComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    request_headers_to_remove: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    error_service: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    response_headers_to_remove: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    request_headers_to_add: std
+    error_response_rule: std
     ::option
-    ::Option<std::vec::Vec<ComputeUrlMapPathMatcherElHeaderActionElRequestHeadersToAddEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    response_headers_to_add: std
-    ::option
-    ::Option<std::vec::Vec<ComputeUrlMapPathMatcherElHeaderActionElResponseHeadersToAddEl>>,
-    dynamic: ComputeUrlMapPathMatcherElHeaderActionElDynamic,
+    ::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicy_ErrorResponseRule>>,
+    dynamic: ComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicyDynamic,
 }
 
-impl ComputeUrlMapPathMatcherElHeaderActionEl {
+impl ComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicy {
     #[doc =
-        "Set the field `request_headers_to_remove`.\nA list of header names for headers that need to be removed from the request\nprior to forwarding the request to the backendService."]
-    pub fn set_request_headers_to_remove(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.request_headers_to_remove = std::option::Option::Some(v.into());
+        "Set the field `error_service`.\nThe full or partial URL to the BackendBucket resource that contains the custom error content. Examples are:\n\nhttps://www.googleapis.com/compute/v1/projects/project/global/backendBuckets/myBackendBucket\ncompute/v1/projects/project/global/backendBuckets/myBackendBucket\nglobal/backendBuckets/myBackendBucket\n\nIf errorService is not specified at lower levels like pathMatcher, pathRule and routeRule, an errorService specified at a higher level in the UrlMap will be used. If UrlMap.defaultCustomErrorResponsePolicy contains one or more errorResponseRules[], it must specify errorService.\nIf load balancer cannot reach the backendBucket, a simple Not Found Error will be returned, with the original response code (or overrideResponseCode if configured)."]
+    pub fn set_error_service(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.error_service = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc =
-        "Set the field `response_headers_to_remove`.\nA list of header names for headers that need to be removed from the response\nprior to sending the response back to the client."]
-    pub fn set_response_headers_to_remove(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.response_headers_to_remove = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `request_headers_to_add`.\n"]
-    pub fn set_request_headers_to_add(
+    #[doc = "Set the field `error_response_rule`.\n"]
+    pub fn set_error_response_rule(
         mut self,
         v:
             impl
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<ComputeUrlMapPathMatcherElHeaderActionElRequestHeadersToAddEl>>,
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            ComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicy_ErrorResponseRule,
+                        >,
+                    >,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
-                self.request_headers_to_add = std::option::Option::Some(v);
+                self.error_response_rule = std::option::Option::Some(v);
             },
             terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.request_headers_to_add = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `response_headers_to_add`.\n"]
-    pub fn set_response_headers_to_add(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<ComputeUrlMapPathMatcherElHeaderActionElResponseHeadersToAddEl>>,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.response_headers_to_add = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.response_headers_to_add = std::option::Option::Some(d);
+                self.dynamic.error_response_rule = std::option::Option::Some(d);
             },
         }
         self
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElHeaderActionEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElHeaderActionEl>;
+impl terrars::ToListMappable for ComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicy {
+    type O = terrars::BlockAssignable<ComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5125,68 +4800,58 @@ impl terrars::ToListMappable for ComputeUrlMapPathMatcherElHeaderActionEl {
     }
 }
 
-pub struct BuildComputeUrlMapPathMatcherElHeaderActionEl {}
+pub struct BuildComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicy {}
 
-impl BuildComputeUrlMapPathMatcherElHeaderActionEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElHeaderActionEl {
-        ComputeUrlMapPathMatcherElHeaderActionEl {
-            request_headers_to_remove: core::default::Default::default(),
-            response_headers_to_remove: core::default::Default::default(),
-            request_headers_to_add: core::default::Default::default(),
-            response_headers_to_add: core::default::Default::default(),
+impl BuildComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicy {
+    pub fn build(self) -> ComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicy {
+        ComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicy {
+            error_service: core::default::Default::default(),
+            error_response_rule: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeUrlMapPathMatcherElHeaderActionElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapPathMatcherElHeaderActionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeUrlMapPathMatcherElHeaderActionElRef {
-        ComputeUrlMapPathMatcherElHeaderActionElRef {
+impl terrars::Ref for ComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicyRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicyRef {
+        ComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapPathMatcherElHeaderActionElRef {
+impl ComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `request_headers_to_remove` after provisioning.\nA list of header names for headers that need to be removed from the request\nprior to forwarding the request to the backendService."]
-    pub fn request_headers_to_remove(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.request_headers_to_remove", self.base))
+        "Get a reference to the value of field `error_service` after provisioning.\nThe full or partial URL to the BackendBucket resource that contains the custom error content. Examples are:\n\nhttps://www.googleapis.com/compute/v1/projects/project/global/backendBuckets/myBackendBucket\ncompute/v1/projects/project/global/backendBuckets/myBackendBucket\nglobal/backendBuckets/myBackendBucket\n\nIf errorService is not specified at lower levels like pathMatcher, pathRule and routeRule, an errorService specified at a higher level in the UrlMap will be used. If UrlMap.defaultCustomErrorResponsePolicy contains one or more errorResponseRules[], it must specify errorService.\nIf load balancer cannot reach the backendBucket, a simple Not Found Error will be returned, with the original response code (or overrideResponseCode if configured)."]
+    pub fn error_service(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.error_service", self.base))
     }
 
-    #[doc =
-        "Get a reference to the value of field `response_headers_to_remove` after provisioning.\nA list of header names for headers that need to be removed from the response\nprior to sending the response back to the client."]
-    pub fn response_headers_to_remove(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.response_headers_to_remove", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `request_headers_to_add` after provisioning.\n"]
-    pub fn request_headers_to_add(
+    #[doc = "Get a reference to the value of field `error_response_rule` after provisioning.\n"]
+    pub fn error_response_rule(
         &self,
-    ) -> terrars::ListRef<ComputeUrlMapPathMatcherElHeaderActionElRequestHeadersToAddElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.request_headers_to_add", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `response_headers_to_add` after provisioning.\n"]
-    pub fn response_headers_to_add(
-        &self,
-    ) -> terrars::ListRef<ComputeUrlMapPathMatcherElHeaderActionElResponseHeadersToAddElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.response_headers_to_add", self.base))
+    ) -> terrars::ListRef<ComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicy_ErrorResponseRuleRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.error_response_rule", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElPathRuleElRouteActionElCorsPolicyEl {
+pub struct ComputeUrlMap_PathMatcher_PathRule_RouteAction_CorsPolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allow_credentials: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -5204,7 +4869,7 @@ pub struct ComputeUrlMapPathMatcherElPathRuleElRouteActionElCorsPolicyEl {
     max_age: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElCorsPolicyEl {
+impl ComputeUrlMap_PathMatcher_PathRule_RouteAction_CorsPolicy {
     #[doc =
         "Set the field `allow_credentials`.\nIn response to a preflight request, setting this to true indicates that the\nactual request can include user credentials. This translates to the Access-\nControl-Allow-Credentials header. Defaults to false."]
     pub fn set_allow_credentials(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -5267,8 +4932,8 @@ impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElCorsPolicyEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElPathRuleElRouteActionElCorsPolicyEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElPathRuleElRouteActionElCorsPolicyEl>;
+impl terrars::ToListMappable for ComputeUrlMap_PathMatcher_PathRule_RouteAction_CorsPolicy {
+    type O = terrars::BlockAssignable<ComputeUrlMap_PathMatcher_PathRule_RouteAction_CorsPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5279,14 +4944,14 @@ impl terrars::ToListMappable for ComputeUrlMapPathMatcherElPathRuleElRouteAction
     }
 }
 
-pub struct BuildComputeUrlMapPathMatcherElPathRuleElRouteActionElCorsPolicyEl {
+pub struct BuildComputeUrlMap_PathMatcher_PathRule_RouteAction_CorsPolicy {
     #[doc = "If true, specifies the CORS policy is disabled."]
     pub disabled: terrars::PrimField<bool>,
 }
 
-impl BuildComputeUrlMapPathMatcherElPathRuleElRouteActionElCorsPolicyEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElPathRuleElRouteActionElCorsPolicyEl {
-        ComputeUrlMapPathMatcherElPathRuleElRouteActionElCorsPolicyEl {
+impl BuildComputeUrlMap_PathMatcher_PathRule_RouteAction_CorsPolicy {
+    pub fn build(self) -> ComputeUrlMap_PathMatcher_PathRule_RouteAction_CorsPolicy {
+        ComputeUrlMap_PathMatcher_PathRule_RouteAction_CorsPolicy {
             allow_credentials: core::default::Default::default(),
             allow_headers: core::default::Default::default(),
             allow_methods: core::default::Default::default(),
@@ -5299,24 +4964,26 @@ impl BuildComputeUrlMapPathMatcherElPathRuleElRouteActionElCorsPolicyEl {
     }
 }
 
-pub struct ComputeUrlMapPathMatcherElPathRuleElRouteActionElCorsPolicyElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_PathMatcher_PathRule_RouteAction_CorsPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapPathMatcherElPathRuleElRouteActionElCorsPolicyElRef {
+impl terrars::Ref for ComputeUrlMap_PathMatcher_PathRule_RouteAction_CorsPolicyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElPathRuleElRouteActionElCorsPolicyElRef {
-        ComputeUrlMapPathMatcherElPathRuleElRouteActionElCorsPolicyElRef {
+    ) -> ComputeUrlMap_PathMatcher_PathRule_RouteAction_CorsPolicyRef {
+        ComputeUrlMap_PathMatcher_PathRule_RouteAction_CorsPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElCorsPolicyElRef {
+impl ComputeUrlMap_PathMatcher_PathRule_RouteAction_CorsPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5371,16 +5038,15 @@ impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElCorsPolicyElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElAbortEl {
+pub struct ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Abort {
     http_status: terrars::PrimField<f64>,
     percentage: terrars::PrimField<f64>,
 }
 
-impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElAbortEl { }
+impl ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Abort { }
 
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElAbortEl {
-    type O =
-        terrars::BlockAssignable<ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElAbortEl>;
+impl terrars::ToListMappable for ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Abort {
+    type O = terrars::BlockAssignable<ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Abort>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5391,7 +5057,7 @@ impl terrars::ToListMappable for ComputeUrlMapPathMatcherElPathRuleElRouteAction
     }
 }
 
-pub struct BuildComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElAbortEl {
+pub struct BuildComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Abort {
     #[doc = "The HTTP status code used to abort the request. The value must be between 200\nand 599 inclusive."]
     pub http_status: terrars::PrimField<f64>,
     #[doc =
@@ -5399,33 +5065,35 @@ pub struct BuildComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionP
     pub percentage: terrars::PrimField<f64>,
 }
 
-impl BuildComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElAbortEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElAbortEl {
-        ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElAbortEl {
+impl BuildComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Abort {
+    pub fn build(self) -> ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Abort {
+        ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Abort {
             http_status: self.http_status,
             percentage: self.percentage,
         }
     }
 }
 
-pub struct ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElAbortElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_AbortRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElAbortElRef {
+impl terrars::Ref for ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_AbortRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElAbortElRef {
-        ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElAbortElRef {
+    ) -> ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_AbortRef {
+        ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_AbortRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElAbortElRef {
+impl ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_AbortRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5444,13 +5112,13 @@ impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElAbor
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl {
+pub struct ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Delay_FixedDelay {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     nanos: std::option::Option<terrars::PrimField<f64>>,
     seconds: terrars::PrimField<std::string::String>,
 }
 
-impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl {
+impl ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Delay_FixedDelay {
     #[doc =
         "Set the field `nanos`.\nSpan of time that's a fraction of a second at nanosecond resolution. Durations\nless than one second are represented with a 0 'seconds' field and a positive\n'nanos' field. Must be from 0 to 999,999,999 inclusive."]
     pub fn set_nanos(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -5459,11 +5127,10 @@ impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDela
     }
 }
 
-impl terrars
-::ToListMappable for ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl {
+impl terrars::ToListMappable for ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Delay_FixedDelay {
     type O =
         terrars
-        ::BlockAssignable<ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl>;
+        ::BlockAssignable<ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Delay_FixedDelay>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5474,38 +5141,40 @@ impl terrars
     }
 }
 
-pub struct BuildComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl {
+pub struct BuildComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Delay_FixedDelay {
     #[doc = "Span of time at a resolution of a second. Must be from 0 to 315,576,000,000\ninclusive."]
     pub seconds: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl {
-        ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl {
+impl BuildComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Delay_FixedDelay {
+    pub fn build(self) -> ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Delay_FixedDelay {
+        ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Delay_FixedDelay {
             nanos: core::default::Default::default(),
             seconds: self.seconds,
         }
     }
 }
 
-pub struct ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDelayElFixedDelayElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Delay_FixedDelayRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDelayElFixedDelayElRef {
+impl terrars::Ref for ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Delay_FixedDelayRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDelayElFixedDelayElRef {
-        ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDelayElFixedDelayElRef {
+    ) -> ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Delay_FixedDelayRef {
+        ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Delay_FixedDelayRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDelayElFixedDelayElRef {
+impl ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Delay_FixedDelayRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5524,28 +5193,25 @@ impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDela
 }
 
 #[derive(Serialize, Default)]
-struct ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDelayElDynamic {
+struct ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_DelayDynamic {
     fixed_delay: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl>,
+        terrars::DynamicBlock<ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Delay_FixedDelay>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDelayEl {
+pub struct ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Delay {
     percentage: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     fixed_delay: std
     ::option
-    ::Option<
-        std::vec::Vec<ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl>,
-    >,
-    dynamic: ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDelayElDynamic,
+    ::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Delay_FixedDelay>>,
+    dynamic: ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_DelayDynamic,
 }
 
-impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDelayEl {
+impl ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Delay {
     #[doc = "Set the field `fixed_delay`.\n"]
     pub fn set_fixed_delay(
         mut self,
@@ -5557,7 +5223,7 @@ impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDela
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl,
+                            ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Delay_FixedDelay,
                         >,
                     >,
     ) -> Self {
@@ -5573,9 +5239,8 @@ impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDela
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDelayEl {
-    type O =
-        terrars::BlockAssignable<ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDelayEl>;
+impl terrars::ToListMappable for ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Delay {
+    type O = terrars::BlockAssignable<ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Delay>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5586,15 +5251,15 @@ impl terrars::ToListMappable for ComputeUrlMapPathMatcherElPathRuleElRouteAction
     }
 }
 
-pub struct BuildComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDelayEl {
+pub struct BuildComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Delay {
     #[doc =
         "The percentage of traffic (connections/operations/requests) on which delay will\nbe introduced as part of fault injection. The value must be between 0.0 and\n100.0 inclusive."]
     pub percentage: terrars::PrimField<f64>,
 }
 
-impl BuildComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDelayEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDelayEl {
-        ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDelayEl {
+impl BuildComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Delay {
+    pub fn build(self) -> ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Delay {
+        ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Delay {
             percentage: self.percentage,
             fixed_delay: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -5602,24 +5267,26 @@ impl BuildComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyE
     }
 }
 
-pub struct ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDelayElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_DelayRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDelayElRef {
+impl terrars::Ref for ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_DelayRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDelayElRef {
-        ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDelayElRef {
+    ) -> ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_DelayRef {
+        ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_DelayRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDelayElRef {
+impl ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_DelayRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5633,36 +5300,31 @@ impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDela
     #[doc = "Get a reference to the value of field `fixed_delay` after provisioning.\n"]
     pub fn fixed_delay(
         &self,
-    ) -> terrars
-    ::ListRef<ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDelayElFixedDelayElRef> {
+    ) -> terrars::ListRef<ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Delay_FixedDelayRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.fixed_delay", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDynamic {
+struct ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicyDynamic {
     abort: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElAbortEl>>,
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Abort>>,
     delay: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDelayEl>>,
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Delay>>,
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyEl {
+pub struct ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    abort: std
-    ::option
-    ::Option<std::vec::Vec<ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElAbortEl>>,
+    abort: std::option::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Abort>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    delay: std
-    ::option
-    ::Option<std::vec::Vec<ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDelayEl>>,
-    dynamic: ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDynamic,
+    delay: std::option::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Delay>>,
+    dynamic: ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicyDynamic,
 }
 
-impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyEl {
+impl ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy {
     #[doc = "Set the field `abort`.\n"]
     pub fn set_abort(
         mut self,
@@ -5673,9 +5335,7 @@ impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElAbortEl,
-                        >,
+                        ::BlockAssignable<ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Abort>,
                     >,
     ) -> Self {
         match v.into() {
@@ -5699,9 +5359,7 @@ impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDelayEl,
-                        >,
+                        ::BlockAssignable<ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Delay>,
                     >,
     ) -> Self {
         match v.into() {
@@ -5716,8 +5374,8 @@ impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyEl>;
+impl terrars::ToListMappable for ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy {
+    type O = terrars::BlockAssignable<ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5728,11 +5386,11 @@ impl terrars::ToListMappable for ComputeUrlMapPathMatcherElPathRuleElRouteAction
     }
 }
 
-pub struct BuildComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyEl {}
+pub struct BuildComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy {}
 
-impl BuildComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyEl {
-        ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyEl {
+impl BuildComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy {
+    pub fn build(self) -> ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy {
+        ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy {
             abort: core::default::Default::default(),
             delay: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -5740,24 +5398,26 @@ impl BuildComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyE
     }
 }
 
-pub struct ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElRef {
+impl terrars::Ref for ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElRef {
-        ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElRef {
+    ) -> ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicyRef {
+        ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElRef {
+impl ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5765,27 +5425,36 @@ impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElRef 
     #[doc = "Get a reference to the value of field `abort` after provisioning.\n"]
     pub fn abort(
         &self,
-    ) -> terrars::ListRef<ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElAbortElRef> {
+    ) -> terrars::ListRef<ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_AbortRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.abort", self.base))
     }
 
     #[doc = "Get a reference to the value of field `delay` after provisioning.\n"]
     pub fn delay(
         &self,
-    ) -> terrars::ListRef<ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElDelayElRef> {
+    ) -> terrars::ListRef<ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_DelayRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.delay", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElPathRuleElRouteActionElRequestMirrorPolicyEl {
-    backend_service: terrars::PrimField<std::string::String>,
+pub struct ComputeUrlMap_PathMatcher_PathRule_RouteAction_MaxStreamDuration {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    nanos: std::option::Option<terrars::PrimField<f64>>,
+    seconds: terrars::PrimField<std::string::String>,
 }
 
-impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElRequestMirrorPolicyEl { }
+impl ComputeUrlMap_PathMatcher_PathRule_RouteAction_MaxStreamDuration {
+    #[doc =
+        "Set the field `nanos`.\nSpan of time that's a fraction of a second at nanosecond resolution. Durations\nless than one second are represented with a 0 'seconds' field and a positive\n'nanos' field. Must be from 0 to 999,999,999 inclusive."]
+    pub fn set_nanos(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.nanos = std::option::Option::Some(v.into());
+        self
+    }
+}
 
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElPathRuleElRouteActionElRequestMirrorPolicyEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElPathRuleElRouteActionElRequestMirrorPolicyEl>;
+impl terrars::ToListMappable for ComputeUrlMap_PathMatcher_PathRule_RouteAction_MaxStreamDuration {
+    type O = terrars::BlockAssignable<ComputeUrlMap_PathMatcher_PathRule_RouteAction_MaxStreamDuration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5796,37 +5465,107 @@ impl terrars::ToListMappable for ComputeUrlMapPathMatcherElPathRuleElRouteAction
     }
 }
 
-pub struct BuildComputeUrlMapPathMatcherElPathRuleElRouteActionElRequestMirrorPolicyEl {
-    #[doc = "The BackendService resource being mirrored to."]
-    pub backend_service: terrars::PrimField<std::string::String>,
+pub struct BuildComputeUrlMap_PathMatcher_PathRule_RouteAction_MaxStreamDuration {
+    #[doc = "Span of time at a resolution of a second. Must be from 0 to 315,576,000,000\ninclusive."]
+    pub seconds: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputeUrlMapPathMatcherElPathRuleElRouteActionElRequestMirrorPolicyEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElPathRuleElRouteActionElRequestMirrorPolicyEl {
-        ComputeUrlMapPathMatcherElPathRuleElRouteActionElRequestMirrorPolicyEl {
-            backend_service: self.backend_service,
+impl BuildComputeUrlMap_PathMatcher_PathRule_RouteAction_MaxStreamDuration {
+    pub fn build(self) -> ComputeUrlMap_PathMatcher_PathRule_RouteAction_MaxStreamDuration {
+        ComputeUrlMap_PathMatcher_PathRule_RouteAction_MaxStreamDuration {
+            nanos: core::default::Default::default(),
+            seconds: self.seconds,
         }
     }
 }
 
-pub struct ComputeUrlMapPathMatcherElPathRuleElRouteActionElRequestMirrorPolicyElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_PathMatcher_PathRule_RouteAction_MaxStreamDurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapPathMatcherElPathRuleElRouteActionElRequestMirrorPolicyElRef {
+impl terrars::Ref for ComputeUrlMap_PathMatcher_PathRule_RouteAction_MaxStreamDurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElPathRuleElRouteActionElRequestMirrorPolicyElRef {
-        ComputeUrlMapPathMatcherElPathRuleElRouteActionElRequestMirrorPolicyElRef {
+    ) -> ComputeUrlMap_PathMatcher_PathRule_RouteAction_MaxStreamDurationRef {
+        ComputeUrlMap_PathMatcher_PathRule_RouteAction_MaxStreamDurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElRequestMirrorPolicyElRef {
+impl ComputeUrlMap_PathMatcher_PathRule_RouteAction_MaxStreamDurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `nanos` after provisioning.\nSpan of time that's a fraction of a second at nanosecond resolution. Durations\nless than one second are represented with a 0 'seconds' field and a positive\n'nanos' field. Must be from 0 to 999,999,999 inclusive."]
+    pub fn nanos(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.nanos", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `seconds` after provisioning.\nSpan of time at a resolution of a second. Must be from 0 to 315,576,000,000\ninclusive."]
+    pub fn seconds(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.seconds", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ComputeUrlMap_PathMatcher_PathRule_RouteAction_RequestMirrorPolicy {
+    backend_service: terrars::PrimField<std::string::String>,
+}
+
+impl ComputeUrlMap_PathMatcher_PathRule_RouteAction_RequestMirrorPolicy { }
+
+impl terrars::ToListMappable for ComputeUrlMap_PathMatcher_PathRule_RouteAction_RequestMirrorPolicy {
+    type O = terrars::BlockAssignable<ComputeUrlMap_PathMatcher_PathRule_RouteAction_RequestMirrorPolicy>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeUrlMap_PathMatcher_PathRule_RouteAction_RequestMirrorPolicy {
+    #[doc = "The BackendService resource being mirrored to."]
+    pub backend_service: terrars::PrimField<std::string::String>,
+}
+
+impl BuildComputeUrlMap_PathMatcher_PathRule_RouteAction_RequestMirrorPolicy {
+    pub fn build(self) -> ComputeUrlMap_PathMatcher_PathRule_RouteAction_RequestMirrorPolicy {
+        ComputeUrlMap_PathMatcher_PathRule_RouteAction_RequestMirrorPolicy { backend_service: self.backend_service }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeUrlMap_PathMatcher_PathRule_RouteAction_RequestMirrorPolicyRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeUrlMap_PathMatcher_PathRule_RouteAction_RequestMirrorPolicyRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputeUrlMap_PathMatcher_PathRule_RouteAction_RequestMirrorPolicyRef {
+        ComputeUrlMap_PathMatcher_PathRule_RouteAction_RequestMirrorPolicyRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeUrlMap_PathMatcher_PathRule_RouteAction_RequestMirrorPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5839,13 +5578,13 @@ impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElRequestMirrorPolicyElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyElPerTryTimeoutEl {
+pub struct ComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicy_PerTryTimeout {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     nanos: std::option::Option<terrars::PrimField<f64>>,
     seconds: terrars::PrimField<std::string::String>,
 }
 
-impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyElPerTryTimeoutEl {
+impl ComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicy_PerTryTimeout {
     #[doc =
         "Set the field `nanos`.\nSpan of time that's a fraction of a second at nanosecond resolution. Durations\nless than one second are represented with a 0 'seconds' field and a positive\n'nanos' field. Must be from 0 to 999,999,999 inclusive."]
     pub fn set_nanos(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -5854,8 +5593,8 @@ impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyElPerTryTimeout
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyElPerTryTimeoutEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyElPerTryTimeoutEl>;
+impl terrars::ToListMappable for ComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicy_PerTryTimeout {
+    type O = terrars::BlockAssignable<ComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicy_PerTryTimeout>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5866,38 +5605,40 @@ impl terrars::ToListMappable for ComputeUrlMapPathMatcherElPathRuleElRouteAction
     }
 }
 
-pub struct BuildComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyElPerTryTimeoutEl {
+pub struct BuildComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicy_PerTryTimeout {
     #[doc = "Span of time at a resolution of a second. Must be from 0 to 315,576,000,000\ninclusive."]
     pub seconds: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyElPerTryTimeoutEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyElPerTryTimeoutEl {
-        ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyElPerTryTimeoutEl {
+impl BuildComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicy_PerTryTimeout {
+    pub fn build(self) -> ComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicy_PerTryTimeout {
+        ComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicy_PerTryTimeout {
             nanos: core::default::Default::default(),
             seconds: self.seconds,
         }
     }
 }
 
-pub struct ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyElPerTryTimeoutElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicy_PerTryTimeoutRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyElPerTryTimeoutElRef {
+impl terrars::Ref for ComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicy_PerTryTimeoutRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyElPerTryTimeoutElRef {
-        ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyElPerTryTimeoutElRef {
+    ) -> ComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicy_PerTryTimeoutRef {
+        ComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicy_PerTryTimeoutRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyElPerTryTimeoutElRef {
+impl ComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicy_PerTryTimeoutRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5916,14 +5657,14 @@ impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyElPerTryTimeout
 }
 
 #[derive(Serialize, Default)]
-struct ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyElDynamic {
+struct ComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicyDynamic {
     per_try_timeout: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyElPerTryTimeoutEl>>,
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicy_PerTryTimeout>>,
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyEl {
+pub struct ComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     num_retries: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -5931,11 +5672,11 @@ pub struct ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     per_try_timeout: std
     ::option
-    ::Option<std::vec::Vec<ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyElPerTryTimeoutEl>>,
-    dynamic: ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyElDynamic,
+    ::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicy_PerTryTimeout>>,
+    dynamic: ComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicyDynamic,
 }
 
-impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyEl {
+impl ComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicy {
     #[doc = "Set the field `num_retries`.\nSpecifies the allowed number retries. This number must be > 0."]
     pub fn set_num_retries(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.num_retries = std::option::Option::Some(v.into());
@@ -5943,7 +5684,7 @@ impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyEl {
     }
 
     #[doc =
-        "Set the field `retry_conditions`.\nSpecifies one or more conditions when this retry rule applies. Valid values are:\n\n* 5xx: Loadbalancer will attempt a retry if the backend service responds with\nany 5xx response code, or if the backend service does not respond at all,\nexample: disconnects, reset, read timeout, connection failure, and refused\nstreams.\n* gateway-error: Similar to 5xx, but only applies to response codes\n502, 503 or 504.\n* connect-failure: Loadbalancer will retry on failures\nconnecting to backend services, for example due to connection timeouts.\n* retriable-4xx: Loadbalancer will retry for retriable 4xx response codes.\nCurrently the only retriable error supported is 409.\n* refused-stream: Loadbalancer will retry if the backend service resets the stream with a\nREFUSED_STREAM error code. This reset type indicates that it is safe to retry.\n* cancelled: Loadbalancer will retry if the gRPC status code in the response\nheader is set to cancelled\n* deadline-exceeded: Loadbalancer will retry if the\ngRPC status code in the response header is set to deadline-exceeded\n* resource-exhausted: Loadbalancer will retry if the gRPC status code in the response\nheader is set to resource-exhausted\n* unavailable: Loadbalancer will retry if\nthe gRPC status code in the response header is set to unavailable"]
+        "Set the field `retry_conditions`.\nSpecifies one or more conditions when this retry rule applies. Valid values are:\n\n* 5xx: Loadbalancer will attempt a retry if the backend service responds with\nany 5xx response code, or if the backend service does not respond at all,\nfor example: disconnects, reset, read timeout, connection failure, and refused\nstreams.\n* gateway-error: Similar to 5xx, but only applies to response codes\n502, 503 or 504.\n* connect-failure: Loadbalancer will retry on failures\nconnecting to backend services, for example due to connection timeouts.\n* retriable-4xx: Loadbalancer will retry for retriable 4xx response codes.\nCurrently the only retriable error supported is 409.\n* refused-stream: Loadbalancer will retry if the backend service resets the stream with a\nREFUSED_STREAM error code. This reset type indicates that it is safe to retry.\n* cancelled: Loadbalancer will retry if the gRPC status code in the response\nheader is set to cancelled\n* deadline-exceeded: Loadbalancer will retry if the\ngRPC status code in the response header is set to deadline-exceeded\n* resource-exhausted: Loadbalancer will retry if the gRPC status code in the response\nheader is set to resource-exhausted\n* unavailable: Loadbalancer will retry if\nthe gRPC status code in the response header is set to unavailable"]
     pub fn set_retry_conditions(
         mut self,
         v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
@@ -5962,9 +5703,7 @@ impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyElPerTryTimeoutEl,
-                        >,
+                        ::BlockAssignable<ComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicy_PerTryTimeout>,
                     >,
     ) -> Self {
         match v.into() {
@@ -5979,8 +5718,8 @@ impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyEl>;
+impl terrars::ToListMappable for ComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicy {
+    type O = terrars::BlockAssignable<ComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5991,11 +5730,11 @@ impl terrars::ToListMappable for ComputeUrlMapPathMatcherElPathRuleElRouteAction
     }
 }
 
-pub struct BuildComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyEl {}
+pub struct BuildComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicy {}
 
-impl BuildComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyEl {
-        ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyEl {
+impl BuildComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicy {
+    pub fn build(self) -> ComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicy {
+        ComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicy {
             num_retries: core::default::Default::default(),
             retry_conditions: core::default::Default::default(),
             per_try_timeout: core::default::Default::default(),
@@ -6004,24 +5743,26 @@ impl BuildComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyEl {
     }
 }
 
-pub struct ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyElRef {
+impl terrars::Ref for ComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyElRef {
-        ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyElRef {
+    ) -> ComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicyRef {
+        ComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyElRef {
+impl ComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -6033,7 +5774,7 @@ impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyElRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `retry_conditions` after provisioning.\nSpecifies one or more conditions when this retry rule applies. Valid values are:\n\n* 5xx: Loadbalancer will attempt a retry if the backend service responds with\nany 5xx response code, or if the backend service does not respond at all,\nexample: disconnects, reset, read timeout, connection failure, and refused\nstreams.\n* gateway-error: Similar to 5xx, but only applies to response codes\n502, 503 or 504.\n* connect-failure: Loadbalancer will retry on failures\nconnecting to backend services, for example due to connection timeouts.\n* retriable-4xx: Loadbalancer will retry for retriable 4xx response codes.\nCurrently the only retriable error supported is 409.\n* refused-stream: Loadbalancer will retry if the backend service resets the stream with a\nREFUSED_STREAM error code. This reset type indicates that it is safe to retry.\n* cancelled: Loadbalancer will retry if the gRPC status code in the response\nheader is set to cancelled\n* deadline-exceeded: Loadbalancer will retry if the\ngRPC status code in the response header is set to deadline-exceeded\n* resource-exhausted: Loadbalancer will retry if the gRPC status code in the response\nheader is set to resource-exhausted\n* unavailable: Loadbalancer will retry if\nthe gRPC status code in the response header is set to unavailable"]
+        "Get a reference to the value of field `retry_conditions` after provisioning.\nSpecifies one or more conditions when this retry rule applies. Valid values are:\n\n* 5xx: Loadbalancer will attempt a retry if the backend service responds with\nany 5xx response code, or if the backend service does not respond at all,\nfor example: disconnects, reset, read timeout, connection failure, and refused\nstreams.\n* gateway-error: Similar to 5xx, but only applies to response codes\n502, 503 or 504.\n* connect-failure: Loadbalancer will retry on failures\nconnecting to backend services, for example due to connection timeouts.\n* retriable-4xx: Loadbalancer will retry for retriable 4xx response codes.\nCurrently the only retriable error supported is 409.\n* refused-stream: Loadbalancer will retry if the backend service resets the stream with a\nREFUSED_STREAM error code. This reset type indicates that it is safe to retry.\n* cancelled: Loadbalancer will retry if the gRPC status code in the response\nheader is set to cancelled\n* deadline-exceeded: Loadbalancer will retry if the\ngRPC status code in the response header is set to deadline-exceeded\n* resource-exhausted: Loadbalancer will retry if the gRPC status code in the response\nheader is set to resource-exhausted\n* unavailable: Loadbalancer will retry if\nthe gRPC status code in the response header is set to unavailable"]
     pub fn retry_conditions(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.retry_conditions", self.base))
     }
@@ -6041,19 +5782,19 @@ impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyElRef {
     #[doc = "Get a reference to the value of field `per_try_timeout` after provisioning.\n"]
     pub fn per_try_timeout(
         &self,
-    ) -> terrars::ListRef<ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyElPerTryTimeoutElRef> {
+    ) -> terrars::ListRef<ComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicy_PerTryTimeoutRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.per_try_timeout", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElPathRuleElRouteActionElTimeoutEl {
+pub struct ComputeUrlMap_PathMatcher_PathRule_RouteAction_Timeout {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     nanos: std::option::Option<terrars::PrimField<f64>>,
     seconds: terrars::PrimField<std::string::String>,
 }
 
-impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElTimeoutEl {
+impl ComputeUrlMap_PathMatcher_PathRule_RouteAction_Timeout {
     #[doc =
         "Set the field `nanos`.\nSpan of time that's a fraction of a second at nanosecond resolution. Durations\nless than one second are represented with a 0 'seconds' field and a positive\n'nanos' field. Must be from 0 to 999,999,999 inclusive."]
     pub fn set_nanos(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -6062,8 +5803,8 @@ impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElTimeoutEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElPathRuleElRouteActionElTimeoutEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElPathRuleElRouteActionElTimeoutEl>;
+impl terrars::ToListMappable for ComputeUrlMap_PathMatcher_PathRule_RouteAction_Timeout {
+    type O = terrars::BlockAssignable<ComputeUrlMap_PathMatcher_PathRule_RouteAction_Timeout>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6074,38 +5815,40 @@ impl terrars::ToListMappable for ComputeUrlMapPathMatcherElPathRuleElRouteAction
     }
 }
 
-pub struct BuildComputeUrlMapPathMatcherElPathRuleElRouteActionElTimeoutEl {
+pub struct BuildComputeUrlMap_PathMatcher_PathRule_RouteAction_Timeout {
     #[doc = "Span of time at a resolution of a second. Must be from 0 to 315,576,000,000\ninclusive."]
     pub seconds: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputeUrlMapPathMatcherElPathRuleElRouteActionElTimeoutEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElPathRuleElRouteActionElTimeoutEl {
-        ComputeUrlMapPathMatcherElPathRuleElRouteActionElTimeoutEl {
+impl BuildComputeUrlMap_PathMatcher_PathRule_RouteAction_Timeout {
+    pub fn build(self) -> ComputeUrlMap_PathMatcher_PathRule_RouteAction_Timeout {
+        ComputeUrlMap_PathMatcher_PathRule_RouteAction_Timeout {
             nanos: core::default::Default::default(),
             seconds: self.seconds,
         }
     }
 }
 
-pub struct ComputeUrlMapPathMatcherElPathRuleElRouteActionElTimeoutElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_PathMatcher_PathRule_RouteAction_TimeoutRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapPathMatcherElPathRuleElRouteActionElTimeoutElRef {
+impl terrars::Ref for ComputeUrlMap_PathMatcher_PathRule_RouteAction_TimeoutRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElPathRuleElRouteActionElTimeoutElRef {
-        ComputeUrlMapPathMatcherElPathRuleElRouteActionElTimeoutElRef {
+    ) -> ComputeUrlMap_PathMatcher_PathRule_RouteAction_TimeoutRef {
+        ComputeUrlMap_PathMatcher_PathRule_RouteAction_TimeoutRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElTimeoutElRef {
+impl ComputeUrlMap_PathMatcher_PathRule_RouteAction_TimeoutRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -6124,14 +5867,14 @@ impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElTimeoutElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElPathRuleElRouteActionElUrlRewriteEl {
+pub struct ComputeUrlMap_PathMatcher_PathRule_RouteAction_UrlRewrite {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     host_rewrite: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     path_prefix_rewrite: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElUrlRewriteEl {
+impl ComputeUrlMap_PathMatcher_PathRule_RouteAction_UrlRewrite {
     #[doc =
         "Set the field `host_rewrite`.\nPrior to forwarding the request to the selected service, the request's host\nheader is replaced with contents of hostRewrite. The value must be between 1 and\n255 characters."]
     pub fn set_host_rewrite(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -6150,8 +5893,8 @@ impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElUrlRewriteEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElPathRuleElRouteActionElUrlRewriteEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElPathRuleElRouteActionElUrlRewriteEl>;
+impl terrars::ToListMappable for ComputeUrlMap_PathMatcher_PathRule_RouteAction_UrlRewrite {
+    type O = terrars::BlockAssignable<ComputeUrlMap_PathMatcher_PathRule_RouteAction_UrlRewrite>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6162,35 +5905,37 @@ impl terrars::ToListMappable for ComputeUrlMapPathMatcherElPathRuleElRouteAction
     }
 }
 
-pub struct BuildComputeUrlMapPathMatcherElPathRuleElRouteActionElUrlRewriteEl {}
+pub struct BuildComputeUrlMap_PathMatcher_PathRule_RouteAction_UrlRewrite {}
 
-impl BuildComputeUrlMapPathMatcherElPathRuleElRouteActionElUrlRewriteEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElPathRuleElRouteActionElUrlRewriteEl {
-        ComputeUrlMapPathMatcherElPathRuleElRouteActionElUrlRewriteEl {
+impl BuildComputeUrlMap_PathMatcher_PathRule_RouteAction_UrlRewrite {
+    pub fn build(self) -> ComputeUrlMap_PathMatcher_PathRule_RouteAction_UrlRewrite {
+        ComputeUrlMap_PathMatcher_PathRule_RouteAction_UrlRewrite {
             host_rewrite: core::default::Default::default(),
             path_prefix_rewrite: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeUrlMapPathMatcherElPathRuleElRouteActionElUrlRewriteElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_PathMatcher_PathRule_RouteAction_UrlRewriteRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapPathMatcherElPathRuleElRouteActionElUrlRewriteElRef {
+impl terrars::Ref for ComputeUrlMap_PathMatcher_PathRule_RouteAction_UrlRewriteRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElPathRuleElRouteActionElUrlRewriteElRef {
-        ComputeUrlMapPathMatcherElPathRuleElRouteActionElUrlRewriteElRef {
+    ) -> ComputeUrlMap_PathMatcher_PathRule_RouteAction_UrlRewriteRef {
+        ComputeUrlMap_PathMatcher_PathRule_RouteAction_UrlRewriteRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElUrlRewriteElRef {
+impl ComputeUrlMap_PathMatcher_PathRule_RouteAction_UrlRewriteRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -6208,425 +5953,25 @@ impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElUrlRewriteElRef {
     }
 }
 
-#[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl {
-    header_name: terrars::PrimField<std::string::String>,
-    header_value: terrars::PrimField<std::string::String>,
-    replace: terrars::PrimField<bool>,
-}
-
-impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl { }
-
-impl terrars
-::ToListMappable for ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl {
-    #[doc = "The name of the header."]
-    pub header_name: terrars::PrimField<std::string::String>,
-    #[doc = "The value of the header to add."]
-    pub header_value: terrars::PrimField<std::string::String>,
-    #[doc =
-        "If false, headerValue is appended to any values that already exist for the\nheader. If true, headerValue is set for the header, discarding any values that\nwere set for that header."]
-    pub replace: terrars::PrimField<bool>,
-}
-
-impl BuildComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl {
-    pub fn build(
-        self,
-    ) -> ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl {
-        ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl {
-            header_name: self.header_name,
-            header_value: self.header_value,
-            replace: self.replace,
-        }
-    }
-}
-
-pub struct ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddElRef {
-        ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `header_name` after provisioning.\nThe name of the header."]
-    pub fn header_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.header_name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `header_value` after provisioning.\nThe value of the header to add."]
-    pub fn header_value(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.header_value", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `replace` after provisioning.\nIf false, headerValue is appended to any values that already exist for the\nheader. If true, headerValue is set for the header, discarding any values that\nwere set for that header."]
-    pub fn replace(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.replace", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl {
-    header_name: terrars::PrimField<std::string::String>,
-    header_value: terrars::PrimField<std::string::String>,
-    replace: terrars::PrimField<bool>,
-}
-
-impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl { }
-
-impl terrars
-::ToListMappable for ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl {
-    #[doc = "The name of the header."]
-    pub header_name: terrars::PrimField<std::string::String>,
-    #[doc = "The value of the header to add."]
-    pub header_value: terrars::PrimField<std::string::String>,
-    #[doc =
-        "If false, headerValue is appended to any values that already exist for the\nheader. If true, headerValue is set for the header, discarding any values that\nwere set for that header."]
-    pub replace: terrars::PrimField<bool>,
-}
-
-impl BuildComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl {
-    pub fn build(
-        self,
-    ) -> ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl {
-        ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl {
-            header_name: self.header_name,
-            header_value: self.header_value,
-            replace: self.replace,
-        }
-    }
-}
-
-pub struct ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddElRef {
-        ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `header_name` after provisioning.\nThe name of the header."]
-    pub fn header_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.header_name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `header_value` after provisioning.\nThe value of the header to add."]
-    pub fn header_value(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.header_value", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `replace` after provisioning.\nIf false, headerValue is appended to any values that already exist for the\nheader. If true, headerValue is set for the header, discarding any values that\nwere set for that header."]
-    pub fn replace(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.replace", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElDynamic {
-    request_headers_to_add: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl,
-        >,
-    >,
-    response_headers_to_add: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl,
-        >,
-    >,
+struct ComputeUrlMap_PathMatcher_PathRule_RouteAction_WeightedBackendServicesDynamic {
+    header_action: std::option::Option<terrars::DynamicBlock<ComputeUrlMap_HeaderAction>>,
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    request_headers_to_remove: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    response_headers_to_remove: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    request_headers_to_add: std
-    ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<
-            ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl,
-        >,
-    >,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    response_headers_to_add: std
-    ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<
-            ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl,
-        >,
-    >,
-    dynamic: ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElDynamic,
-}
-
-impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionEl {
-    #[doc =
-        "Set the field `request_headers_to_remove`.\nA list of header names for headers that need to be removed from the request\nprior to forwarding the request to the backendService."]
-    pub fn set_request_headers_to_remove(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.request_headers_to_remove = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `response_headers_to_remove`.\nA list of header names for headers that need to be removed from the response\nprior to sending the response back to the client."]
-    pub fn set_response_headers_to_remove(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.response_headers_to_remove = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `request_headers_to_add`.\n"]
-    pub fn set_request_headers_to_add(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.request_headers_to_add = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.request_headers_to_add = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `response_headers_to_add`.\n"]
-    pub fn set_response_headers_to_add(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.response_headers_to_add = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.response_headers_to_add = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionEl {
-    type O =
-        terrars
-        ::BlockAssignable<ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionEl {}
-
-impl BuildComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionEl {
-        ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionEl {
-            request_headers_to_remove: core::default::Default::default(),
-            response_headers_to_remove: core::default::Default::default(),
-            request_headers_to_add: core::default::Default::default(),
-            response_headers_to_add: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElRef {
-        ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `request_headers_to_remove` after provisioning.\nA list of header names for headers that need to be removed from the request\nprior to forwarding the request to the backendService."]
-    pub fn request_headers_to_remove(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.request_headers_to_remove", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `response_headers_to_remove` after provisioning.\nA list of header names for headers that need to be removed from the response\nprior to sending the response back to the client."]
-    pub fn response_headers_to_remove(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.response_headers_to_remove", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `request_headers_to_add` after provisioning.\n"]
-    pub fn request_headers_to_add(
-        &self,
-    ) -> terrars
-    ::ListRef<
-        ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddElRef,
-    > {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.request_headers_to_add", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `response_headers_to_add` after provisioning.\n"]
-    pub fn response_headers_to_add(
-        &self,
-    ) -> terrars
-    ::ListRef<
-        ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddElRef,
-    > {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.response_headers_to_add", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElDynamic {
-    header_action: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionEl>,
-    >,
-}
-
-#[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesEl {
+pub struct ComputeUrlMap_PathMatcher_PathRule_RouteAction_WeightedBackendServices {
     backend_service: terrars::PrimField<std::string::String>,
     weight: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    header_action: std
-    ::option
-    ::Option<std::vec::Vec<ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionEl>>,
-    dynamic: ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElDynamic,
+    header_action: std::option::Option<std::vec::Vec<ComputeUrlMap_HeaderAction>>,
+    dynamic: ComputeUrlMap_PathMatcher_PathRule_RouteAction_WeightedBackendServicesDynamic,
 }
 
-impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesEl {
+impl ComputeUrlMap_PathMatcher_PathRule_RouteAction_WeightedBackendServices {
     #[doc = "Set the field `header_action`.\n"]
     pub fn set_header_action(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionEl,
-                        >,
-                    >,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMap_HeaderAction>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -6640,8 +5985,8 @@ impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesEl 
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesEl>;
+impl terrars::ToListMappable for ComputeUrlMap_PathMatcher_PathRule_RouteAction_WeightedBackendServices {
+    type O = terrars::BlockAssignable<ComputeUrlMap_PathMatcher_PathRule_RouteAction_WeightedBackendServices>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6652,7 +5997,7 @@ impl terrars::ToListMappable for ComputeUrlMapPathMatcherElPathRuleElRouteAction
     }
 }
 
-pub struct BuildComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesEl {
+pub struct BuildComputeUrlMap_PathMatcher_PathRule_RouteAction_WeightedBackendServices {
     #[doc =
         "The default BackendService resource. Before\nforwarding the request to backendService, the loadbalancer applies any relevant\nheaderActions specified as part of this backendServiceWeight."]
     pub backend_service: terrars::PrimField<std::string::String>,
@@ -6661,9 +6006,9 @@ pub struct BuildComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackend
     pub weight: terrars::PrimField<f64>,
 }
 
-impl BuildComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesEl {
-        ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesEl {
+impl BuildComputeUrlMap_PathMatcher_PathRule_RouteAction_WeightedBackendServices {
+    pub fn build(self) -> ComputeUrlMap_PathMatcher_PathRule_RouteAction_WeightedBackendServices {
+        ComputeUrlMap_PathMatcher_PathRule_RouteAction_WeightedBackendServices {
             backend_service: self.backend_service,
             weight: self.weight,
             header_action: core::default::Default::default(),
@@ -6672,24 +6017,26 @@ impl BuildComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServic
     }
 }
 
-pub struct ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_PathMatcher_PathRule_RouteAction_WeightedBackendServicesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElRef {
+impl terrars::Ref for ComputeUrlMap_PathMatcher_PathRule_RouteAction_WeightedBackendServicesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElRef {
-        ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElRef {
+    ) -> ComputeUrlMap_PathMatcher_PathRule_RouteAction_WeightedBackendServicesRef {
+        ComputeUrlMap_PathMatcher_PathRule_RouteAction_WeightedBackendServicesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElRef {
+impl ComputeUrlMap_PathMatcher_PathRule_RouteAction_WeightedBackendServicesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -6707,63 +6054,86 @@ impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElR
     }
 
     #[doc = "Get a reference to the value of field `header_action` after provisioning.\n"]
-    pub fn header_action(
-        &self,
-    ) -> terrars
-    ::ListRef<ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElHeaderActionElRef> {
+    pub fn header_action(&self) -> terrars::ListRef<ComputeUrlMap_HeaderActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.header_action", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct ComputeUrlMapPathMatcherElPathRuleElRouteActionElDynamic {
+struct ComputeUrlMap_PathMatcher_PathRule_RouteActionDynamic {
+    cache_policy: std::option::Option<terrars::DynamicBlock<ComputeUrlMap_DefaultRouteAction_CachePolicy>>,
     cors_policy: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElPathRuleElRouteActionElCorsPolicyEl>>,
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_PathRule_RouteAction_CorsPolicy>>,
     fault_injection_policy: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyEl>>,
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy>>,
+    max_stream_duration: std
+    ::option
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_PathRule_RouteAction_MaxStreamDuration>>,
     request_mirror_policy: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElPathRuleElRouteActionElRequestMirrorPolicyEl>>,
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_PathRule_RouteAction_RequestMirrorPolicy>>,
     retry_policy: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyEl>>,
-    timeout: std::option::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElPathRuleElRouteActionElTimeoutEl>>,
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicy>>,
+    timeout: std::option::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_PathRule_RouteAction_Timeout>>,
     url_rewrite: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElPathRuleElRouteActionElUrlRewriteEl>>,
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_PathRule_RouteAction_UrlRewrite>>,
     weighted_backend_services: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesEl>>,
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_PathRule_RouteAction_WeightedBackendServices>>,
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElPathRuleElRouteActionEl {
+pub struct ComputeUrlMap_PathMatcher_PathRule_RouteAction {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cors_policy: std::option::Option<std::vec::Vec<ComputeUrlMapPathMatcherElPathRuleElRouteActionElCorsPolicyEl>>,
+    cache_policy: std::option::Option<std::vec::Vec<ComputeUrlMap_DefaultRouteAction_CachePolicy>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cors_policy: std::option::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_PathRule_RouteAction_CorsPolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     fault_injection_policy: std
     ::option
-    ::Option<std::vec::Vec<ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyEl>>,
+    ::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_stream_duration: std
+    ::option
+    ::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_PathRule_RouteAction_MaxStreamDuration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     request_mirror_policy: std
     ::option
-    ::Option<std::vec::Vec<ComputeUrlMapPathMatcherElPathRuleElRouteActionElRequestMirrorPolicyEl>>,
+    ::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_PathRule_RouteAction_RequestMirrorPolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    retry_policy: std::option::Option<std::vec::Vec<ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyEl>>,
+    retry_policy: std::option::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeout: std::option::Option<std::vec::Vec<ComputeUrlMapPathMatcherElPathRuleElRouteActionElTimeoutEl>>,
+    timeout: std::option::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_PathRule_RouteAction_Timeout>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    url_rewrite: std::option::Option<std::vec::Vec<ComputeUrlMapPathMatcherElPathRuleElRouteActionElUrlRewriteEl>>,
+    url_rewrite: std::option::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_PathRule_RouteAction_UrlRewrite>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     weighted_backend_services: std
     ::option
-    ::Option<std::vec::Vec<ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesEl>>,
-    dynamic: ComputeUrlMapPathMatcherElPathRuleElRouteActionElDynamic,
+    ::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_PathRule_RouteAction_WeightedBackendServices>>,
+    dynamic: ComputeUrlMap_PathMatcher_PathRule_RouteActionDynamic,
 }
 
-impl ComputeUrlMapPathMatcherElPathRuleElRouteActionEl {
+impl ComputeUrlMap_PathMatcher_PathRule_RouteAction {
+    #[doc = "Set the field `cache_policy`.\n"]
+    pub fn set_cache_policy(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_CachePolicy>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.cache_policy = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.cache_policy = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `cors_policy`.\n"]
     pub fn set_cors_policy(
         mut self,
@@ -6772,7 +6142,7 @@ impl ComputeUrlMapPathMatcherElPathRuleElRouteActionEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<ComputeUrlMapPathMatcherElPathRuleElRouteActionElCorsPolicyEl>>,
+                    ::Into<terrars::BlockAssignable<ComputeUrlMap_PathMatcher_PathRule_RouteAction_CorsPolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -6794,8 +6164,7 @@ impl ComputeUrlMapPathMatcherElPathRuleElRouteActionEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyEl>,
+                        terrars::BlockAssignable<ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy>,
                     >,
     ) -> Self {
         match v.into() {
@@ -6804,6 +6173,29 @@ impl ComputeUrlMapPathMatcherElPathRuleElRouteActionEl {
             },
             terrars::BlockAssignable::Dynamic(d) => {
                 self.dynamic.fault_injection_policy = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `max_stream_duration`.\n"]
+    pub fn set_max_stream_duration(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<ComputeUrlMap_PathMatcher_PathRule_RouteAction_MaxStreamDuration>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.max_stream_duration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.max_stream_duration = std::option::Option::Some(d);
             },
         }
         self
@@ -6818,8 +6210,7 @@ impl ComputeUrlMapPathMatcherElPathRuleElRouteActionEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<ComputeUrlMapPathMatcherElPathRuleElRouteActionElRequestMirrorPolicyEl>,
+                        terrars::BlockAssignable<ComputeUrlMap_PathMatcher_PathRule_RouteAction_RequestMirrorPolicy>,
                     >,
     ) -> Self {
         match v.into() {
@@ -6841,7 +6232,7 @@ impl ComputeUrlMapPathMatcherElPathRuleElRouteActionEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyEl>>,
+                    ::Into<terrars::BlockAssignable<ComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -6857,12 +6248,7 @@ impl ComputeUrlMapPathMatcherElPathRuleElRouteActionEl {
     #[doc = "Set the field `timeout`.\n"]
     pub fn set_timeout(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<ComputeUrlMapPathMatcherElPathRuleElRouteActionElTimeoutEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMap_PathMatcher_PathRule_RouteAction_Timeout>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -6883,7 +6269,7 @@ impl ComputeUrlMapPathMatcherElPathRuleElRouteActionEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<ComputeUrlMapPathMatcherElPathRuleElRouteActionElUrlRewriteEl>>,
+                    ::Into<terrars::BlockAssignable<ComputeUrlMap_PathMatcher_PathRule_RouteAction_UrlRewrite>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -6906,7 +6292,7 @@ impl ComputeUrlMapPathMatcherElPathRuleElRouteActionEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesEl>,
+                        ::BlockAssignable<ComputeUrlMap_PathMatcher_PathRule_RouteAction_WeightedBackendServices>,
                     >,
     ) -> Self {
         match v.into() {
@@ -6921,8 +6307,8 @@ impl ComputeUrlMapPathMatcherElPathRuleElRouteActionEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElPathRuleElRouteActionEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElPathRuleElRouteActionEl>;
+impl terrars::ToListMappable for ComputeUrlMap_PathMatcher_PathRule_RouteAction {
+    type O = terrars::BlockAssignable<ComputeUrlMap_PathMatcher_PathRule_RouteAction>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6933,13 +6319,15 @@ impl terrars::ToListMappable for ComputeUrlMapPathMatcherElPathRuleElRouteAction
     }
 }
 
-pub struct BuildComputeUrlMapPathMatcherElPathRuleElRouteActionEl {}
+pub struct BuildComputeUrlMap_PathMatcher_PathRule_RouteAction {}
 
-impl BuildComputeUrlMapPathMatcherElPathRuleElRouteActionEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElPathRuleElRouteActionEl {
-        ComputeUrlMapPathMatcherElPathRuleElRouteActionEl {
+impl BuildComputeUrlMap_PathMatcher_PathRule_RouteAction {
+    pub fn build(self) -> ComputeUrlMap_PathMatcher_PathRule_RouteAction {
+        ComputeUrlMap_PathMatcher_PathRule_RouteAction {
+            cache_policy: core::default::Default::default(),
             cors_policy: core::default::Default::default(),
             fault_injection_policy: core::default::Default::default(),
+            max_stream_duration: core::default::Default::default(),
             request_mirror_policy: core::default::Default::default(),
             retry_policy: core::default::Default::default(),
             timeout: core::default::Default::default(),
@@ -6950,72 +6338,86 @@ impl BuildComputeUrlMapPathMatcherElPathRuleElRouteActionEl {
     }
 }
 
-pub struct ComputeUrlMapPathMatcherElPathRuleElRouteActionElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_PathMatcher_PathRule_RouteActionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapPathMatcherElPathRuleElRouteActionElRef {
+impl terrars::Ref for ComputeUrlMap_PathMatcher_PathRule_RouteActionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElPathRuleElRouteActionElRef {
-        ComputeUrlMapPathMatcherElPathRuleElRouteActionElRef {
+    ) -> ComputeUrlMap_PathMatcher_PathRule_RouteActionRef {
+        ComputeUrlMap_PathMatcher_PathRule_RouteActionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapPathMatcherElPathRuleElRouteActionElRef {
+impl ComputeUrlMap_PathMatcher_PathRule_RouteActionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
+    #[doc = "Get a reference to the value of field `cache_policy` after provisioning.\n"]
+    pub fn cache_policy(&self) -> terrars::ListRef<ComputeUrlMap_DefaultRouteAction_CachePolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cache_policy", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `cors_policy` after provisioning.\n"]
-    pub fn cors_policy(&self) -> terrars::ListRef<ComputeUrlMapPathMatcherElPathRuleElRouteActionElCorsPolicyElRef> {
+    pub fn cors_policy(&self) -> terrars::ListRef<ComputeUrlMap_PathMatcher_PathRule_RouteAction_CorsPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cors_policy", self.base))
     }
 
     #[doc = "Get a reference to the value of field `fault_injection_policy` after provisioning.\n"]
     pub fn fault_injection_policy(
         &self,
-    ) -> terrars::ListRef<ComputeUrlMapPathMatcherElPathRuleElRouteActionElFaultInjectionPolicyElRef> {
+    ) -> terrars::ListRef<ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.fault_injection_policy", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `max_stream_duration` after provisioning.\n"]
+    pub fn max_stream_duration(
+        &self,
+    ) -> terrars::ListRef<ComputeUrlMap_PathMatcher_PathRule_RouteAction_MaxStreamDurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.max_stream_duration", self.base))
     }
 
     #[doc = "Get a reference to the value of field `request_mirror_policy` after provisioning.\n"]
     pub fn request_mirror_policy(
         &self,
-    ) -> terrars::ListRef<ComputeUrlMapPathMatcherElPathRuleElRouteActionElRequestMirrorPolicyElRef> {
+    ) -> terrars::ListRef<ComputeUrlMap_PathMatcher_PathRule_RouteAction_RequestMirrorPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.request_mirror_policy", self.base))
     }
 
     #[doc = "Get a reference to the value of field `retry_policy` after provisioning.\n"]
-    pub fn retry_policy(&self) -> terrars::ListRef<ComputeUrlMapPathMatcherElPathRuleElRouteActionElRetryPolicyElRef> {
+    pub fn retry_policy(&self) -> terrars::ListRef<ComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.retry_policy", self.base))
     }
 
     #[doc = "Get a reference to the value of field `timeout` after provisioning.\n"]
-    pub fn timeout(&self) -> terrars::ListRef<ComputeUrlMapPathMatcherElPathRuleElRouteActionElTimeoutElRef> {
+    pub fn timeout(&self) -> terrars::ListRef<ComputeUrlMap_PathMatcher_PathRule_RouteAction_TimeoutRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.timeout", self.base))
     }
 
     #[doc = "Get a reference to the value of field `url_rewrite` after provisioning.\n"]
-    pub fn url_rewrite(&self) -> terrars::ListRef<ComputeUrlMapPathMatcherElPathRuleElRouteActionElUrlRewriteElRef> {
+    pub fn url_rewrite(&self) -> terrars::ListRef<ComputeUrlMap_PathMatcher_PathRule_RouteAction_UrlRewriteRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.url_rewrite", self.base))
     }
 
     #[doc = "Get a reference to the value of field `weighted_backend_services` after provisioning.\n"]
     pub fn weighted_backend_services(
         &self,
-    ) -> terrars::ListRef<ComputeUrlMapPathMatcherElPathRuleElRouteActionElWeightedBackendServicesElRef> {
+    ) -> terrars::ListRef<ComputeUrlMap_PathMatcher_PathRule_RouteAction_WeightedBackendServicesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.weighted_backend_services", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElPathRuleElUrlRedirectEl {
+pub struct ComputeUrlMap_PathMatcher_PathRule_UrlRedirect {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     host_redirect: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -7029,7 +6431,7 @@ pub struct ComputeUrlMapPathMatcherElPathRuleElUrlRedirectEl {
     strip_query: terrars::PrimField<bool>,
 }
 
-impl ComputeUrlMapPathMatcherElPathRuleElUrlRedirectEl {
+impl ComputeUrlMap_PathMatcher_PathRule_UrlRedirect {
     #[doc =
         "Set the field `host_redirect`.\nThe host that will be used in the redirect response instead of the one\nthat was supplied in the request. The value must be between 1 and 255\ncharacters."]
     pub fn set_host_redirect(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -7069,8 +6471,8 @@ impl ComputeUrlMapPathMatcherElPathRuleElUrlRedirectEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElPathRuleElUrlRedirectEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElPathRuleElUrlRedirectEl>;
+impl terrars::ToListMappable for ComputeUrlMap_PathMatcher_PathRule_UrlRedirect {
+    type O = terrars::BlockAssignable<ComputeUrlMap_PathMatcher_PathRule_UrlRedirect>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -7081,15 +6483,15 @@ impl terrars::ToListMappable for ComputeUrlMapPathMatcherElPathRuleElUrlRedirect
     }
 }
 
-pub struct BuildComputeUrlMapPathMatcherElPathRuleElUrlRedirectEl {
+pub struct BuildComputeUrlMap_PathMatcher_PathRule_UrlRedirect {
     #[doc =
         "If set to true, any accompanying query portion of the original URL is\nremoved prior to redirecting the request. If set to false, the query\nportion of the original URL is retained.\n This field is required to ensure an empty block is not set. The normal default value is false."]
     pub strip_query: terrars::PrimField<bool>,
 }
 
-impl BuildComputeUrlMapPathMatcherElPathRuleElUrlRedirectEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElPathRuleElUrlRedirectEl {
-        ComputeUrlMapPathMatcherElPathRuleElUrlRedirectEl {
+impl BuildComputeUrlMap_PathMatcher_PathRule_UrlRedirect {
+    pub fn build(self) -> ComputeUrlMap_PathMatcher_PathRule_UrlRedirect {
+        ComputeUrlMap_PathMatcher_PathRule_UrlRedirect {
             host_redirect: core::default::Default::default(),
             https_redirect: core::default::Default::default(),
             path_redirect: core::default::Default::default(),
@@ -7100,24 +6502,26 @@ impl BuildComputeUrlMapPathMatcherElPathRuleElUrlRedirectEl {
     }
 }
 
-pub struct ComputeUrlMapPathMatcherElPathRuleElUrlRedirectElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_PathMatcher_PathRule_UrlRedirectRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapPathMatcherElPathRuleElUrlRedirectElRef {
+impl terrars::Ref for ComputeUrlMap_PathMatcher_PathRule_UrlRedirectRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElPathRuleElUrlRedirectElRef {
-        ComputeUrlMapPathMatcherElPathRuleElUrlRedirectElRef {
+    ) -> ComputeUrlMap_PathMatcher_PathRule_UrlRedirectRef {
+        ComputeUrlMap_PathMatcher_PathRule_UrlRedirectRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapPathMatcherElPathRuleElUrlRedirectElRef {
+impl ComputeUrlMap_PathMatcher_PathRule_UrlRedirectRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -7160,34 +6564,62 @@ impl ComputeUrlMapPathMatcherElPathRuleElUrlRedirectElRef {
 }
 
 #[derive(Serialize, Default)]
-struct ComputeUrlMapPathMatcherElPathRuleElDynamic {
-    route_action: std::option::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElPathRuleElRouteActionEl>>,
-    url_redirect: std::option::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElPathRuleElUrlRedirectEl>>,
+struct ComputeUrlMap_PathMatcher_PathRuleDynamic {
+    custom_error_response_policy: std
+    ::option
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicy>>,
+    route_action: std::option::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_PathRule_RouteAction>>,
+    url_redirect: std::option::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_PathRule_UrlRedirect>>,
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElPathRuleEl {
+pub struct ComputeUrlMap_PathMatcher_PathRule {
     paths: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     service: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    route_action: std::option::Option<std::vec::Vec<ComputeUrlMapPathMatcherElPathRuleElRouteActionEl>>,
+    custom_error_response_policy: std
+    ::option
+    ::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    url_redirect: std::option::Option<std::vec::Vec<ComputeUrlMapPathMatcherElPathRuleElUrlRedirectEl>>,
-    dynamic: ComputeUrlMapPathMatcherElPathRuleElDynamic,
+    route_action: std::option::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_PathRule_RouteAction>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    url_redirect: std::option::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_PathRule_UrlRedirect>>,
+    dynamic: ComputeUrlMap_PathMatcher_PathRuleDynamic,
 }
 
-impl ComputeUrlMapPathMatcherElPathRuleEl {
+impl ComputeUrlMap_PathMatcher_PathRule {
     #[doc = "Set the field `service`.\nThe backend service or backend bucket to use if any of the given paths match."]
     pub fn set_service(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.service = std::option::Option::Some(v.into());
         self
     }
 
+    #[doc = "Set the field `custom_error_response_policy`.\n"]
+    pub fn set_custom_error_response_policy(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<ComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicy>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.custom_error_response_policy = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.custom_error_response_policy = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `route_action`.\n"]
     pub fn set_route_action(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMapPathMatcherElPathRuleElRouteActionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMap_PathMatcher_PathRule_RouteAction>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -7203,7 +6635,7 @@ impl ComputeUrlMapPathMatcherElPathRuleEl {
     #[doc = "Set the field `url_redirect`.\n"]
     pub fn set_url_redirect(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMapPathMatcherElPathRuleElUrlRedirectEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMap_PathMatcher_PathRule_UrlRedirect>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -7217,8 +6649,8 @@ impl ComputeUrlMapPathMatcherElPathRuleEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElPathRuleEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElPathRuleEl>;
+impl terrars::ToListMappable for ComputeUrlMap_PathMatcher_PathRule {
+    type O = terrars::BlockAssignable<ComputeUrlMap_PathMatcher_PathRule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -7229,17 +6661,18 @@ impl terrars::ToListMappable for ComputeUrlMapPathMatcherElPathRuleEl {
     }
 }
 
-pub struct BuildComputeUrlMapPathMatcherElPathRuleEl {
+pub struct BuildComputeUrlMap_PathMatcher_PathRule {
     #[doc =
         "The list of path patterns to match. Each must start with / and the only place a\n\\* is allowed is at the end following a /. The string fed to the path matcher\ndoes not include any text after the first ? or #, and those chars are not\nallowed here."]
     pub paths: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildComputeUrlMapPathMatcherElPathRuleEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElPathRuleEl {
-        ComputeUrlMapPathMatcherElPathRuleEl {
+impl BuildComputeUrlMap_PathMatcher_PathRule {
+    pub fn build(self) -> ComputeUrlMap_PathMatcher_PathRule {
+        ComputeUrlMap_PathMatcher_PathRule {
             paths: self.paths,
             service: core::default::Default::default(),
+            custom_error_response_policy: core::default::Default::default(),
             route_action: core::default::Default::default(),
             url_redirect: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -7247,21 +6680,23 @@ impl BuildComputeUrlMapPathMatcherElPathRuleEl {
     }
 }
 
-pub struct ComputeUrlMapPathMatcherElPathRuleElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_PathMatcher_PathRuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapPathMatcherElPathRuleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeUrlMapPathMatcherElPathRuleElRef {
-        ComputeUrlMapPathMatcherElPathRuleElRef {
+impl terrars::Ref for ComputeUrlMap_PathMatcher_PathRuleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeUrlMap_PathMatcher_PathRuleRef {
+        ComputeUrlMap_PathMatcher_PathRuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapPathMatcherElPathRuleElRef {
+impl ComputeUrlMap_PathMatcher_PathRuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -7278,359 +6713,34 @@ impl ComputeUrlMapPathMatcherElPathRuleElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.service", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `custom_error_response_policy` after provisioning.\n"]
+    pub fn custom_error_response_policy(
+        &self,
+    ) -> terrars::ListRef<ComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.custom_error_response_policy", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `route_action` after provisioning.\n"]
-    pub fn route_action(&self) -> terrars::ListRef<ComputeUrlMapPathMatcherElPathRuleElRouteActionElRef> {
+    pub fn route_action(&self) -> terrars::ListRef<ComputeUrlMap_PathMatcher_PathRule_RouteActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.route_action", self.base))
     }
 
     #[doc = "Get a reference to the value of field `url_redirect` after provisioning.\n"]
-    pub fn url_redirect(&self) -> terrars::ListRef<ComputeUrlMapPathMatcherElPathRuleElUrlRedirectElRef> {
+    pub fn url_redirect(&self) -> terrars::ListRef<ComputeUrlMap_PathMatcher_PathRule_UrlRedirectRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.url_redirect", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElRouteRulesElHeaderActionElRequestHeadersToAddEl {
-    header_name: terrars::PrimField<std::string::String>,
-    header_value: terrars::PrimField<std::string::String>,
-    replace: terrars::PrimField<bool>,
-}
-
-impl ComputeUrlMapPathMatcherElRouteRulesElHeaderActionElRequestHeadersToAddEl { }
-
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElHeaderActionElRequestHeadersToAddEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesElHeaderActionElRequestHeadersToAddEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildComputeUrlMapPathMatcherElRouteRulesElHeaderActionElRequestHeadersToAddEl {
-    #[doc = "The name of the header."]
-    pub header_name: terrars::PrimField<std::string::String>,
-    #[doc = "The value of the header to add."]
-    pub header_value: terrars::PrimField<std::string::String>,
-    #[doc =
-        "If false, headerValue is appended to any values that already exist for the\nheader. If true, headerValue is set for the header, discarding any values that\nwere set for that header."]
-    pub replace: terrars::PrimField<bool>,
-}
-
-impl BuildComputeUrlMapPathMatcherElRouteRulesElHeaderActionElRequestHeadersToAddEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElRouteRulesElHeaderActionElRequestHeadersToAddEl {
-        ComputeUrlMapPathMatcherElRouteRulesElHeaderActionElRequestHeadersToAddEl {
-            header_name: self.header_name,
-            header_value: self.header_value,
-            replace: self.replace,
-        }
-    }
-}
-
-pub struct ComputeUrlMapPathMatcherElRouteRulesElHeaderActionElRequestHeadersToAddElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for ComputeUrlMapPathMatcherElRouteRulesElHeaderActionElRequestHeadersToAddElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElRouteRulesElHeaderActionElRequestHeadersToAddElRef {
-        ComputeUrlMapPathMatcherElRouteRulesElHeaderActionElRequestHeadersToAddElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl ComputeUrlMapPathMatcherElRouteRulesElHeaderActionElRequestHeadersToAddElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `header_name` after provisioning.\nThe name of the header."]
-    pub fn header_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.header_name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `header_value` after provisioning.\nThe value of the header to add."]
-    pub fn header_value(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.header_value", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `replace` after provisioning.\nIf false, headerValue is appended to any values that already exist for the\nheader. If true, headerValue is set for the header, discarding any values that\nwere set for that header."]
-    pub fn replace(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.replace", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElRouteRulesElHeaderActionElResponseHeadersToAddEl {
-    header_name: terrars::PrimField<std::string::String>,
-    header_value: terrars::PrimField<std::string::String>,
-    replace: terrars::PrimField<bool>,
-}
-
-impl ComputeUrlMapPathMatcherElRouteRulesElHeaderActionElResponseHeadersToAddEl { }
-
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElHeaderActionElResponseHeadersToAddEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesElHeaderActionElResponseHeadersToAddEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildComputeUrlMapPathMatcherElRouteRulesElHeaderActionElResponseHeadersToAddEl {
-    #[doc = "The name of the header."]
-    pub header_name: terrars::PrimField<std::string::String>,
-    #[doc = "The value of the header to add."]
-    pub header_value: terrars::PrimField<std::string::String>,
-    #[doc =
-        "If false, headerValue is appended to any values that already exist for the\nheader. If true, headerValue is set for the header, discarding any values that\nwere set for that header."]
-    pub replace: terrars::PrimField<bool>,
-}
-
-impl BuildComputeUrlMapPathMatcherElRouteRulesElHeaderActionElResponseHeadersToAddEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElRouteRulesElHeaderActionElResponseHeadersToAddEl {
-        ComputeUrlMapPathMatcherElRouteRulesElHeaderActionElResponseHeadersToAddEl {
-            header_name: self.header_name,
-            header_value: self.header_value,
-            replace: self.replace,
-        }
-    }
-}
-
-pub struct ComputeUrlMapPathMatcherElRouteRulesElHeaderActionElResponseHeadersToAddElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for ComputeUrlMapPathMatcherElRouteRulesElHeaderActionElResponseHeadersToAddElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElRouteRulesElHeaderActionElResponseHeadersToAddElRef {
-        ComputeUrlMapPathMatcherElRouteRulesElHeaderActionElResponseHeadersToAddElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl ComputeUrlMapPathMatcherElRouteRulesElHeaderActionElResponseHeadersToAddElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `header_name` after provisioning.\nThe name of the header."]
-    pub fn header_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.header_name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `header_value` after provisioning.\nThe value of the header to add."]
-    pub fn header_value(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.header_value", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `replace` after provisioning.\nIf false, headerValue is appended to any values that already exist for the\nheader. If true, headerValue is set for the header, discarding any values that\nwere set for that header."]
-    pub fn replace(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.replace", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct ComputeUrlMapPathMatcherElRouteRulesElHeaderActionElDynamic {
-    request_headers_to_add: std
-    ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElRouteRulesElHeaderActionElRequestHeadersToAddEl>>,
-    response_headers_to_add: std
-    ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElRouteRulesElHeaderActionElResponseHeadersToAddEl>>,
-}
-
-#[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElRouteRulesElHeaderActionEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    request_headers_to_remove: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    response_headers_to_remove: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    request_headers_to_add: std
-    ::option
-    ::Option<std::vec::Vec<ComputeUrlMapPathMatcherElRouteRulesElHeaderActionElRequestHeadersToAddEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    response_headers_to_add: std
-    ::option
-    ::Option<std::vec::Vec<ComputeUrlMapPathMatcherElRouteRulesElHeaderActionElResponseHeadersToAddEl>>,
-    dynamic: ComputeUrlMapPathMatcherElRouteRulesElHeaderActionElDynamic,
-}
-
-impl ComputeUrlMapPathMatcherElRouteRulesElHeaderActionEl {
-    #[doc =
-        "Set the field `request_headers_to_remove`.\nA list of header names for headers that need to be removed from the request\nprior to forwarding the request to the backendService."]
-    pub fn set_request_headers_to_remove(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.request_headers_to_remove = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `response_headers_to_remove`.\nA list of header names for headers that need to be removed from the response\nprior to sending the response back to the client."]
-    pub fn set_response_headers_to_remove(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.response_headers_to_remove = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `request_headers_to_add`.\n"]
-    pub fn set_request_headers_to_add(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesElHeaderActionElRequestHeadersToAddEl>,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.request_headers_to_add = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.request_headers_to_add = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `response_headers_to_add`.\n"]
-    pub fn set_response_headers_to_add(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesElHeaderActionElResponseHeadersToAddEl>,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.response_headers_to_add = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.response_headers_to_add = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElHeaderActionEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesElHeaderActionEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildComputeUrlMapPathMatcherElRouteRulesElHeaderActionEl {}
-
-impl BuildComputeUrlMapPathMatcherElRouteRulesElHeaderActionEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElRouteRulesElHeaderActionEl {
-        ComputeUrlMapPathMatcherElRouteRulesElHeaderActionEl {
-            request_headers_to_remove: core::default::Default::default(),
-            response_headers_to_remove: core::default::Default::default(),
-            request_headers_to_add: core::default::Default::default(),
-            response_headers_to_add: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct ComputeUrlMapPathMatcherElRouteRulesElHeaderActionElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for ComputeUrlMapPathMatcherElRouteRulesElHeaderActionElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElRouteRulesElHeaderActionElRef {
-        ComputeUrlMapPathMatcherElRouteRulesElHeaderActionElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl ComputeUrlMapPathMatcherElRouteRulesElHeaderActionElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `request_headers_to_remove` after provisioning.\nA list of header names for headers that need to be removed from the request\nprior to forwarding the request to the backendService."]
-    pub fn request_headers_to_remove(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.request_headers_to_remove", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `response_headers_to_remove` after provisioning.\nA list of header names for headers that need to be removed from the response\nprior to sending the response back to the client."]
-    pub fn response_headers_to_remove(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.response_headers_to_remove", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `request_headers_to_add` after provisioning.\n"]
-    pub fn request_headers_to_add(
-        &self,
-    ) -> terrars::ListRef<ComputeUrlMapPathMatcherElRouteRulesElHeaderActionElRequestHeadersToAddElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.request_headers_to_add", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `response_headers_to_add` after provisioning.\n"]
-    pub fn response_headers_to_add(
-        &self,
-    ) -> terrars::ListRef<ComputeUrlMapPathMatcherElRouteRulesElHeaderActionElResponseHeadersToAddElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.response_headers_to_add", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesElRangeMatchEl {
+pub struct ComputeUrlMap_PathMatcher_RouteRules_MatchRules_HeaderMatches_RangeMatch {
     range_end: terrars::PrimField<f64>,
     range_start: terrars::PrimField<f64>,
 }
 
-impl ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesElRangeMatchEl { }
+impl ComputeUrlMap_PathMatcher_RouteRules_MatchRules_HeaderMatches_RangeMatch { }
 
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesElRangeMatchEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesElRangeMatchEl>;
+impl terrars::ToListMappable for ComputeUrlMap_PathMatcher_RouteRules_MatchRules_HeaderMatches_RangeMatch {
+    type O = terrars::BlockAssignable<ComputeUrlMap_PathMatcher_RouteRules_MatchRules_HeaderMatches_RangeMatch>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -7641,40 +6751,42 @@ impl terrars::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElMatchRule
     }
 }
 
-pub struct BuildComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesElRangeMatchEl {
+pub struct BuildComputeUrlMap_PathMatcher_RouteRules_MatchRules_HeaderMatches_RangeMatch {
     #[doc = "The end of the range (exclusive)."]
     pub range_end: terrars::PrimField<f64>,
     #[doc = "The start of the range (inclusive)."]
     pub range_start: terrars::PrimField<f64>,
 }
 
-impl BuildComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesElRangeMatchEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesElRangeMatchEl {
-        ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesElRangeMatchEl {
+impl BuildComputeUrlMap_PathMatcher_RouteRules_MatchRules_HeaderMatches_RangeMatch {
+    pub fn build(self) -> ComputeUrlMap_PathMatcher_RouteRules_MatchRules_HeaderMatches_RangeMatch {
+        ComputeUrlMap_PathMatcher_RouteRules_MatchRules_HeaderMatches_RangeMatch {
             range_end: self.range_end,
             range_start: self.range_start,
         }
     }
 }
 
-pub struct ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesElRangeMatchElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_PathMatcher_RouteRules_MatchRules_HeaderMatches_RangeMatchRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesElRangeMatchElRef {
+impl terrars::Ref for ComputeUrlMap_PathMatcher_RouteRules_MatchRules_HeaderMatches_RangeMatchRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesElRangeMatchElRef {
-        ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesElRangeMatchElRef {
+    ) -> ComputeUrlMap_PathMatcher_RouteRules_MatchRules_HeaderMatches_RangeMatchRef {
+        ComputeUrlMap_PathMatcher_RouteRules_MatchRules_HeaderMatches_RangeMatchRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesElRangeMatchElRef {
+impl ComputeUrlMap_PathMatcher_RouteRules_MatchRules_HeaderMatches_RangeMatchRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -7692,14 +6804,14 @@ impl ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesElRangeMatch
 }
 
 #[derive(Serialize, Default)]
-struct ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesElDynamic {
+struct ComputeUrlMap_PathMatcher_RouteRules_MatchRules_HeaderMatchesDynamic {
     range_match: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesElRangeMatchEl>>,
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_RouteRules_MatchRules_HeaderMatches_RangeMatch>>,
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesEl {
+pub struct ComputeUrlMap_PathMatcher_RouteRules_MatchRules_HeaderMatches {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     exact_match: std::option::Option<terrars::PrimField<std::string::String>>,
     header_name: terrars::PrimField<std::string::String>,
@@ -7716,11 +6828,11 @@ pub struct ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     range_match: std
     ::option
-    ::Option<std::vec::Vec<ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesElRangeMatchEl>>,
-    dynamic: ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesElDynamic,
+    ::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_RouteRules_MatchRules_HeaderMatches_RangeMatch>>,
+    dynamic: ComputeUrlMap_PathMatcher_RouteRules_MatchRules_HeaderMatchesDynamic,
 }
 
-impl ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesEl {
+impl ComputeUrlMap_PathMatcher_RouteRules_MatchRules_HeaderMatches {
     #[doc =
         "Set the field `exact_match`.\nThe value should exactly match contents of exactMatch. Only one of exactMatch,\nprefixMatch, suffixMatch, regexMatch, presentMatch or rangeMatch must be set."]
     pub fn set_exact_match(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -7773,9 +6885,7 @@ impl ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesElRangeMatchEl,
-                        >,
+                        ::BlockAssignable<ComputeUrlMap_PathMatcher_RouteRules_MatchRules_HeaderMatches_RangeMatch>,
                     >,
     ) -> Self {
         match v.into() {
@@ -7790,8 +6900,8 @@ impl ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesEl>;
+impl terrars::ToListMappable for ComputeUrlMap_PathMatcher_RouteRules_MatchRules_HeaderMatches {
+    type O = terrars::BlockAssignable<ComputeUrlMap_PathMatcher_RouteRules_MatchRules_HeaderMatches>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -7802,15 +6912,15 @@ impl terrars::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElMatchRule
     }
 }
 
-pub struct BuildComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesEl {
+pub struct BuildComputeUrlMap_PathMatcher_RouteRules_MatchRules_HeaderMatches {
     #[doc =
         "The name of the HTTP header to match. For matching against the HTTP request's\nauthority, use a headerMatch with the header name \":authority\". For matching a\nrequest's method, use the headerName \":method\"."]
     pub header_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesEl {
-        ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesEl {
+impl BuildComputeUrlMap_PathMatcher_RouteRules_MatchRules_HeaderMatches {
+    pub fn build(self) -> ComputeUrlMap_PathMatcher_RouteRules_MatchRules_HeaderMatches {
+        ComputeUrlMap_PathMatcher_RouteRules_MatchRules_HeaderMatches {
             exact_match: core::default::Default::default(),
             header_name: self.header_name,
             invert_match: core::default::Default::default(),
@@ -7824,24 +6934,26 @@ impl BuildComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesEl {
     }
 }
 
-pub struct ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_PathMatcher_RouteRules_MatchRules_HeaderMatchesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesElRef {
+impl terrars::Ref for ComputeUrlMap_PathMatcher_RouteRules_MatchRules_HeaderMatchesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesElRef {
-        ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesElRef {
+    ) -> ComputeUrlMap_PathMatcher_RouteRules_MatchRules_HeaderMatchesRef {
+        ComputeUrlMap_PathMatcher_RouteRules_MatchRules_HeaderMatchesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesElRef {
+impl ComputeUrlMap_PathMatcher_RouteRules_MatchRules_HeaderMatchesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -7891,22 +7003,21 @@ impl ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesElRef {
     #[doc = "Get a reference to the value of field `range_match` after provisioning.\n"]
     pub fn range_match(
         &self,
-    ) -> terrars::ListRef<ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesElRangeMatchElRef> {
+    ) -> terrars::ListRef<ComputeUrlMap_PathMatcher_RouteRules_MatchRules_HeaderMatches_RangeMatchRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.range_match", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersElFilterLabelsEl {
+pub struct ComputeUrlMap_PathMatcher_RouteRules_MatchRules_MetadataFilters_FilterLabels {
     name: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersElFilterLabelsEl { }
+impl ComputeUrlMap_PathMatcher_RouteRules_MatchRules_MetadataFilters_FilterLabels { }
 
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersElFilterLabelsEl {
-    type O =
-        terrars::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersElFilterLabelsEl>;
+impl terrars::ToListMappable for ComputeUrlMap_PathMatcher_RouteRules_MatchRules_MetadataFilters_FilterLabels {
+    type O = terrars::BlockAssignable<ComputeUrlMap_PathMatcher_RouteRules_MatchRules_MetadataFilters_FilterLabels>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -7917,7 +7028,7 @@ impl terrars::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElMatchRule
     }
 }
 
-pub struct BuildComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersElFilterLabelsEl {
+pub struct BuildComputeUrlMap_PathMatcher_RouteRules_MatchRules_MetadataFilters_FilterLabels {
     #[doc =
         "Name of metadata label. The name can have a maximum length of 1024 characters\nand must be at least 1 character long."]
     pub name: terrars::PrimField<std::string::String>,
@@ -7926,33 +7037,35 @@ pub struct BuildComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFilter
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersElFilterLabelsEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersElFilterLabelsEl {
-        ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersElFilterLabelsEl {
+impl BuildComputeUrlMap_PathMatcher_RouteRules_MatchRules_MetadataFilters_FilterLabels {
+    pub fn build(self) -> ComputeUrlMap_PathMatcher_RouteRules_MatchRules_MetadataFilters_FilterLabels {
+        ComputeUrlMap_PathMatcher_RouteRules_MatchRules_MetadataFilters_FilterLabels {
             name: self.name,
             value: self.value,
         }
     }
 }
 
-pub struct ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersElFilterLabelsElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_PathMatcher_RouteRules_MatchRules_MetadataFilters_FilterLabelsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersElFilterLabelsElRef {
+impl terrars::Ref for ComputeUrlMap_PathMatcher_RouteRules_MatchRules_MetadataFilters_FilterLabelsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersElFilterLabelsElRef {
-        ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersElFilterLabelsElRef {
+    ) -> ComputeUrlMap_PathMatcher_RouteRules_MatchRules_MetadataFilters_FilterLabelsRef {
+        ComputeUrlMap_PathMatcher_RouteRules_MatchRules_MetadataFilters_FilterLabelsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersElFilterLabelsElRef {
+impl ComputeUrlMap_PathMatcher_RouteRules_MatchRules_MetadataFilters_FilterLabelsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -7971,25 +7084,23 @@ impl ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersElFilterLa
 }
 
 #[derive(Serialize, Default)]
-struct ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersElDynamic {
+struct ComputeUrlMap_PathMatcher_RouteRules_MatchRules_MetadataFiltersDynamic {
     filter_labels: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersElFilterLabelsEl>,
-    >,
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_RouteRules_MatchRules_MetadataFilters_FilterLabels>>,
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersEl {
+pub struct ComputeUrlMap_PathMatcher_RouteRules_MatchRules_MetadataFilters {
     filter_match_criteria: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     filter_labels: std
     ::option
-    ::Option<std::vec::Vec<ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersElFilterLabelsEl>>,
-    dynamic: ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersElDynamic,
+    ::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_RouteRules_MatchRules_MetadataFilters_FilterLabels>>,
+    dynamic: ComputeUrlMap_PathMatcher_RouteRules_MatchRules_MetadataFiltersDynamic,
 }
 
-impl ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersEl {
+impl ComputeUrlMap_PathMatcher_RouteRules_MatchRules_MetadataFilters {
     #[doc = "Set the field `filter_labels`.\n"]
     pub fn set_filter_labels(
         mut self,
@@ -8001,7 +7112,7 @@ impl ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersElFilterLabelsEl,
+                            ComputeUrlMap_PathMatcher_RouteRules_MatchRules_MetadataFilters_FilterLabels,
                         >,
                     >,
     ) -> Self {
@@ -8017,8 +7128,8 @@ impl ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersEl>;
+impl terrars::ToListMappable for ComputeUrlMap_PathMatcher_RouteRules_MatchRules_MetadataFilters {
+    type O = terrars::BlockAssignable<ComputeUrlMap_PathMatcher_RouteRules_MatchRules_MetadataFilters>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -8029,15 +7140,15 @@ impl terrars::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElMatchRule
     }
 }
 
-pub struct BuildComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersEl {
+pub struct BuildComputeUrlMap_PathMatcher_RouteRules_MatchRules_MetadataFilters {
     #[doc =
         "Specifies how individual filterLabel matches within the list of filterLabels\ncontribute towards the overall metadataFilter match. Supported values are:\n  - MATCH_ANY: At least one of the filterLabels must have a matching label in the\nprovided metadata.\n  - MATCH_ALL: All filterLabels must have matching labels in\nthe provided metadata. Possible values: [\"MATCH_ALL\", \"MATCH_ANY\"]"]
     pub filter_match_criteria: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersEl {
-        ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersEl {
+impl BuildComputeUrlMap_PathMatcher_RouteRules_MatchRules_MetadataFilters {
+    pub fn build(self) -> ComputeUrlMap_PathMatcher_RouteRules_MatchRules_MetadataFilters {
+        ComputeUrlMap_PathMatcher_RouteRules_MatchRules_MetadataFilters {
             filter_match_criteria: self.filter_match_criteria,
             filter_labels: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -8045,24 +7156,26 @@ impl BuildComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersEl {
     }
 }
 
-pub struct ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_PathMatcher_RouteRules_MatchRules_MetadataFiltersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersElRef {
+impl terrars::Ref for ComputeUrlMap_PathMatcher_RouteRules_MatchRules_MetadataFiltersRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersElRef {
-        ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersElRef {
+    ) -> ComputeUrlMap_PathMatcher_RouteRules_MatchRules_MetadataFiltersRef {
+        ComputeUrlMap_PathMatcher_RouteRules_MatchRules_MetadataFiltersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersElRef {
+impl ComputeUrlMap_PathMatcher_RouteRules_MatchRules_MetadataFiltersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -8076,13 +7189,13 @@ impl ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersElRef {
     #[doc = "Get a reference to the value of field `filter_labels` after provisioning.\n"]
     pub fn filter_labels(
         &self,
-    ) -> terrars::ListRef<ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersElFilterLabelsElRef> {
+    ) -> terrars::ListRef<ComputeUrlMap_PathMatcher_RouteRules_MatchRules_MetadataFilters_FilterLabelsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.filter_labels", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElQueryParameterMatchesEl {
+pub struct ComputeUrlMap_PathMatcher_RouteRules_MatchRules_QueryParameterMatches {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     exact_match: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
@@ -8092,7 +7205,7 @@ pub struct ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElQueryParameterMatch
     regex_match: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElQueryParameterMatchesEl {
+impl ComputeUrlMap_PathMatcher_RouteRules_MatchRules_QueryParameterMatches {
     #[doc =
         "Set the field `exact_match`.\nThe queryParameterMatch matches if the value of the parameter exactly matches\nthe contents of exactMatch. Only one of presentMatch, exactMatch and regexMatch\nmust be set."]
     pub fn set_exact_match(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -8115,8 +7228,8 @@ impl ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElQueryParameterMatchesEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElQueryParameterMatchesEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElQueryParameterMatchesEl>;
+impl terrars::ToListMappable for ComputeUrlMap_PathMatcher_RouteRules_MatchRules_QueryParameterMatches {
+    type O = terrars::BlockAssignable<ComputeUrlMap_PathMatcher_RouteRules_MatchRules_QueryParameterMatches>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -8127,15 +7240,15 @@ impl terrars::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElMatchRule
     }
 }
 
-pub struct BuildComputeUrlMapPathMatcherElRouteRulesElMatchRulesElQueryParameterMatchesEl {
+pub struct BuildComputeUrlMap_PathMatcher_RouteRules_MatchRules_QueryParameterMatches {
     #[doc =
         "The name of the query parameter to match. The query parameter must exist in the\nrequest, in the absence of which the request match fails."]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputeUrlMapPathMatcherElRouteRulesElMatchRulesElQueryParameterMatchesEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElQueryParameterMatchesEl {
-        ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElQueryParameterMatchesEl {
+impl BuildComputeUrlMap_PathMatcher_RouteRules_MatchRules_QueryParameterMatches {
+    pub fn build(self) -> ComputeUrlMap_PathMatcher_RouteRules_MatchRules_QueryParameterMatches {
+        ComputeUrlMap_PathMatcher_RouteRules_MatchRules_QueryParameterMatches {
             exact_match: core::default::Default::default(),
             name: self.name,
             present_match: core::default::Default::default(),
@@ -8144,24 +7257,26 @@ impl BuildComputeUrlMapPathMatcherElRouteRulesElMatchRulesElQueryParameterMatche
     }
 }
 
-pub struct ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElQueryParameterMatchesElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_PathMatcher_RouteRules_MatchRules_QueryParameterMatchesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElQueryParameterMatchesElRef {
+impl terrars::Ref for ComputeUrlMap_PathMatcher_RouteRules_MatchRules_QueryParameterMatchesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElQueryParameterMatchesElRef {
-        ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElQueryParameterMatchesElRef {
+    ) -> ComputeUrlMap_PathMatcher_RouteRules_MatchRules_QueryParameterMatchesRef {
+        ComputeUrlMap_PathMatcher_RouteRules_MatchRules_QueryParameterMatchesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElQueryParameterMatchesElRef {
+impl ComputeUrlMap_PathMatcher_RouteRules_MatchRules_QueryParameterMatchesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -8192,20 +7307,20 @@ impl ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElQueryParameterMatchesElRe
 }
 
 #[derive(Serialize, Default)]
-struct ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElDynamic {
+struct ComputeUrlMap_PathMatcher_RouteRules_MatchRulesDynamic {
     header_matches: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesEl>>,
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_RouteRules_MatchRules_HeaderMatches>>,
     metadata_filters: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersEl>>,
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_RouteRules_MatchRules_MetadataFilters>>,
     query_parameter_matches: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElQueryParameterMatchesEl>>,
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_RouteRules_MatchRules_QueryParameterMatches>>,
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElRouteRulesElMatchRulesEl {
+pub struct ComputeUrlMap_PathMatcher_RouteRules_MatchRules {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     full_path_match: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -8217,19 +7332,17 @@ pub struct ComputeUrlMapPathMatcherElRouteRulesElMatchRulesEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     regex_match: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    header_matches: std::option::Option<std::vec::Vec<ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesEl>>,
+    header_matches: std::option::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_RouteRules_MatchRules_HeaderMatches>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    metadata_filters: std
-    ::option
-    ::Option<std::vec::Vec<ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersEl>>,
+    metadata_filters: std::option::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_RouteRules_MatchRules_MetadataFilters>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     query_parameter_matches: std
     ::option
-    ::Option<std::vec::Vec<ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElQueryParameterMatchesEl>>,
-    dynamic: ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElDynamic,
+    ::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_RouteRules_MatchRules_QueryParameterMatches>>,
+    dynamic: ComputeUrlMap_PathMatcher_RouteRules_MatchRulesDynamic,
 }
 
-impl ComputeUrlMapPathMatcherElRouteRulesElMatchRulesEl {
+impl ComputeUrlMap_PathMatcher_RouteRules_MatchRules {
     #[doc =
         "Set the field `full_path_match`.\nFor satisfying the matchRule condition, the path of the request must exactly\nmatch the value specified in fullPathMatch after removing any query parameters\nand anchor that may be part of the original URL. FullPathMatch must be between 1\nand 1024 characters. Only one of prefixMatch, fullPathMatch or regexMatch must\nbe specified."]
     pub fn set_full_path_match(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -8276,9 +7389,7 @@ impl ComputeUrlMapPathMatcherElRouteRulesElMatchRulesEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<ComputeUrlMap_PathMatcher_RouteRules_MatchRules_HeaderMatches>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -8299,9 +7410,7 @@ impl ComputeUrlMapPathMatcherElRouteRulesElMatchRulesEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<ComputeUrlMap_PathMatcher_RouteRules_MatchRules_MetadataFilters>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -8324,7 +7433,7 @@ impl ComputeUrlMapPathMatcherElRouteRulesElMatchRulesEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElQueryParameterMatchesEl>,
+                        ::BlockAssignable<ComputeUrlMap_PathMatcher_RouteRules_MatchRules_QueryParameterMatches>,
                     >,
     ) -> Self {
         match v.into() {
@@ -8339,8 +7448,8 @@ impl ComputeUrlMapPathMatcherElRouteRulesElMatchRulesEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElMatchRulesEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesElMatchRulesEl>;
+impl terrars::ToListMappable for ComputeUrlMap_PathMatcher_RouteRules_MatchRules {
+    type O = terrars::BlockAssignable<ComputeUrlMap_PathMatcher_RouteRules_MatchRules>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -8351,11 +7460,11 @@ impl terrars::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElMatchRule
     }
 }
 
-pub struct BuildComputeUrlMapPathMatcherElRouteRulesElMatchRulesEl {}
+pub struct BuildComputeUrlMap_PathMatcher_RouteRules_MatchRules {}
 
-impl BuildComputeUrlMapPathMatcherElRouteRulesElMatchRulesEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElRouteRulesElMatchRulesEl {
-        ComputeUrlMapPathMatcherElRouteRulesElMatchRulesEl {
+impl BuildComputeUrlMap_PathMatcher_RouteRules_MatchRules {
+    pub fn build(self) -> ComputeUrlMap_PathMatcher_RouteRules_MatchRules {
+        ComputeUrlMap_PathMatcher_RouteRules_MatchRules {
             full_path_match: core::default::Default::default(),
             ignore_case: core::default::Default::default(),
             path_template_match: core::default::Default::default(),
@@ -8369,24 +7478,26 @@ impl BuildComputeUrlMapPathMatcherElRouteRulesElMatchRulesEl {
     }
 }
 
-pub struct ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_PathMatcher_RouteRules_MatchRulesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElRef {
+impl terrars::Ref for ComputeUrlMap_PathMatcher_RouteRules_MatchRulesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElRef {
-        ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElRef {
+    ) -> ComputeUrlMap_PathMatcher_RouteRules_MatchRulesRef {
+        ComputeUrlMap_PathMatcher_RouteRules_MatchRulesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElRef {
+impl ComputeUrlMap_PathMatcher_RouteRules_MatchRulesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -8422,29 +7533,27 @@ impl ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElRef {
     }
 
     #[doc = "Get a reference to the value of field `header_matches` after provisioning.\n"]
-    pub fn header_matches(
-        &self,
-    ) -> terrars::ListRef<ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElHeaderMatchesElRef> {
+    pub fn header_matches(&self) -> terrars::ListRef<ComputeUrlMap_PathMatcher_RouteRules_MatchRules_HeaderMatchesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.header_matches", self.base))
     }
 
     #[doc = "Get a reference to the value of field `metadata_filters` after provisioning.\n"]
     pub fn metadata_filters(
         &self,
-    ) -> terrars::ListRef<ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElMetadataFiltersElRef> {
+    ) -> terrars::ListRef<ComputeUrlMap_PathMatcher_RouteRules_MatchRules_MetadataFiltersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.metadata_filters", self.base))
     }
 
     #[doc = "Get a reference to the value of field `query_parameter_matches` after provisioning.\n"]
     pub fn query_parameter_matches(
         &self,
-    ) -> terrars::ListRef<ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElQueryParameterMatchesElRef> {
+    ) -> terrars::ListRef<ComputeUrlMap_PathMatcher_RouteRules_MatchRules_QueryParameterMatchesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.query_parameter_matches", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElRouteRulesElRouteActionElCorsPolicyEl {
+pub struct ComputeUrlMap_PathMatcher_RouteRules_RouteAction_CorsPolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allow_credentials: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -8463,7 +7572,7 @@ pub struct ComputeUrlMapPathMatcherElRouteRulesElRouteActionElCorsPolicyEl {
     max_age: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElCorsPolicyEl {
+impl ComputeUrlMap_PathMatcher_RouteRules_RouteAction_CorsPolicy {
     #[doc =
         "Set the field `allow_credentials`.\nIn response to a preflight request, setting this to true indicates that the\nactual request can include user credentials. This translates to the Access-\nControl-Allow-Credentials header. Defaults to false."]
     pub fn set_allow_credentials(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -8533,8 +7642,8 @@ impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElCorsPolicyEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElRouteActionElCorsPolicyEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElCorsPolicyEl>;
+impl terrars::ToListMappable for ComputeUrlMap_PathMatcher_RouteRules_RouteAction_CorsPolicy {
+    type O = terrars::BlockAssignable<ComputeUrlMap_PathMatcher_RouteRules_RouteAction_CorsPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -8545,11 +7654,11 @@ impl terrars::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElRouteActi
     }
 }
 
-pub struct BuildComputeUrlMapPathMatcherElRouteRulesElRouteActionElCorsPolicyEl {}
+pub struct BuildComputeUrlMap_PathMatcher_RouteRules_RouteAction_CorsPolicy {}
 
-impl BuildComputeUrlMapPathMatcherElRouteRulesElRouteActionElCorsPolicyEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElRouteRulesElRouteActionElCorsPolicyEl {
-        ComputeUrlMapPathMatcherElRouteRulesElRouteActionElCorsPolicyEl {
+impl BuildComputeUrlMap_PathMatcher_RouteRules_RouteAction_CorsPolicy {
+    pub fn build(self) -> ComputeUrlMap_PathMatcher_RouteRules_RouteAction_CorsPolicy {
+        ComputeUrlMap_PathMatcher_RouteRules_RouteAction_CorsPolicy {
             allow_credentials: core::default::Default::default(),
             allow_headers: core::default::Default::default(),
             allow_methods: core::default::Default::default(),
@@ -8562,24 +7671,26 @@ impl BuildComputeUrlMapPathMatcherElRouteRulesElRouteActionElCorsPolicyEl {
     }
 }
 
-pub struct ComputeUrlMapPathMatcherElRouteRulesElRouteActionElCorsPolicyElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_PathMatcher_RouteRules_RouteAction_CorsPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapPathMatcherElRouteRulesElRouteActionElCorsPolicyElRef {
+impl terrars::Ref for ComputeUrlMap_PathMatcher_RouteRules_RouteAction_CorsPolicyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElRouteRulesElRouteActionElCorsPolicyElRef {
-        ComputeUrlMapPathMatcherElRouteRulesElRouteActionElCorsPolicyElRef {
+    ) -> ComputeUrlMap_PathMatcher_RouteRules_RouteAction_CorsPolicyRef {
+        ComputeUrlMap_PathMatcher_RouteRules_RouteAction_CorsPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElCorsPolicyElRef {
+impl ComputeUrlMap_PathMatcher_RouteRules_RouteAction_CorsPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -8634,14 +7745,14 @@ impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElCorsPolicyElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElAbortEl {
+pub struct ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy_Abort {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     http_status: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     percentage: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElAbortEl {
+impl ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy_Abort {
     #[doc =
         "Set the field `http_status`.\nThe HTTP status code used to abort the request. The value must be between 200\nand 599 inclusive."]
     pub fn set_http_status(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -8657,9 +7768,8 @@ impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElAb
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElAbortEl {
-    type O =
-        terrars::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElAbortEl>;
+impl terrars::ToListMappable for ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy_Abort {
+    type O = terrars::BlockAssignable<ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy_Abort>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -8670,35 +7780,37 @@ impl terrars::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElRouteActi
     }
 }
 
-pub struct BuildComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElAbortEl {}
+pub struct BuildComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy_Abort {}
 
-impl BuildComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElAbortEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElAbortEl {
-        ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElAbortEl {
+impl BuildComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy_Abort {
+    pub fn build(self) -> ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy_Abort {
+        ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy_Abort {
             http_status: core::default::Default::default(),
             percentage: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElAbortElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy_AbortRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElAbortElRef {
+impl terrars::Ref for ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy_AbortRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElAbortElRef {
-        ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElAbortElRef {
+    ) -> ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy_AbortRef {
+        ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy_AbortRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElAbortElRef {
+impl ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy_AbortRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -8716,114 +7828,27 @@ impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElAb
     }
 }
 
-#[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    nanos: std::option::Option<terrars::PrimField<f64>>,
-    seconds: terrars::PrimField<std::string::String>,
-}
-
-impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl {
-    #[doc =
-        "Set the field `nanos`.\nSpan of time that's a fraction of a second at nanosecond resolution. Durations\nless than one second are represented with a 0 'seconds' field and a positive\n'nanos' field. Must be from 0 to 999,999,999 inclusive."]
-    pub fn set_nanos(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.nanos = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl {
-    #[doc = "Span of time at a resolution of a second. Must be from 0 to 315,576,000,000\ninclusive."]
-    pub seconds: terrars::PrimField<std::string::String>,
-}
-
-impl BuildComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl {
-    pub fn build(
-        self,
-    ) -> ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl {
-        ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl {
-            nanos: core::default::Default::default(),
-            seconds: self.seconds,
-        }
-    }
-}
-
-pub struct ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDelayElFixedDelayElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDelayElFixedDelayElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDelayElFixedDelayElRef {
-        ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDelayElFixedDelayElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDelayElFixedDelayElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `nanos` after provisioning.\nSpan of time that's a fraction of a second at nanosecond resolution. Durations\nless than one second are represented with a 0 'seconds' field and a positive\n'nanos' field. Must be from 0 to 999,999,999 inclusive."]
-    pub fn nanos(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.nanos", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `seconds` after provisioning.\nSpan of time at a resolution of a second. Must be from 0 to 315,576,000,000\ninclusive."]
-    pub fn seconds(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.seconds", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDelayElDynamic {
+struct ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy_DelayDynamic {
     fixed_delay: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl>,
+        terrars::DynamicBlock<ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Delay_FixedDelay>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDelayEl {
+pub struct ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy_Delay {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     percentage: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     fixed_delay: std
     ::option
-    ::Option<
-        std::vec::Vec<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl>,
-    >,
-    dynamic: ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDelayElDynamic,
+    ::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Delay_FixedDelay>>,
+    dynamic: ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy_DelayDynamic,
 }
 
-impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDelayEl {
+impl ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy_Delay {
     #[doc =
         "Set the field `percentage`.\nThe percentage of traffic (connections/operations/requests) on which delay will\nbe introduced as part of fault injection. The value must be between 0.0 and\n100.0 inclusive."]
     pub fn set_percentage(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -8842,7 +7867,7 @@ impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDe
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDelayElFixedDelayEl,
+                            ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Delay_FixedDelay,
                         >,
                     >,
     ) -> Self {
@@ -8858,9 +7883,8 @@ impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDe
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDelayEl {
-    type O =
-        terrars::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDelayEl>;
+impl terrars::ToListMappable for ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy_Delay {
+    type O = terrars::BlockAssignable<ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy_Delay>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -8871,11 +7895,11 @@ impl terrars::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElRouteActi
     }
 }
 
-pub struct BuildComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDelayEl {}
+pub struct BuildComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy_Delay {}
 
-impl BuildComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDelayEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDelayEl {
-        ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDelayEl {
+impl BuildComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy_Delay {
+    pub fn build(self) -> ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy_Delay {
+        ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy_Delay {
             percentage: core::default::Default::default(),
             fixed_delay: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -8883,24 +7907,26 @@ impl BuildComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolic
     }
 }
 
-pub struct ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDelayElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy_DelayRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDelayElRef {
+impl terrars::Ref for ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy_DelayRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDelayElRef {
-        ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDelayElRef {
+    ) -> ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy_DelayRef {
+        ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy_DelayRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDelayElRef {
+impl ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy_DelayRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -8914,38 +7940,35 @@ impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDe
     #[doc = "Get a reference to the value of field `fixed_delay` after provisioning.\n"]
     pub fn fixed_delay(
         &self,
-    ) -> terrars
-    ::ListRef<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDelayElFixedDelayElRef> {
+    ) -> terrars::ListRef<ComputeUrlMap_PathMatcher_PathRule_RouteAction_FaultInjectionPolicy_Delay_FixedDelayRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.fixed_delay", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDynamic {
+struct ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicyDynamic {
     abort: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElAbortEl>>,
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy_Abort>>,
     delay: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDelayEl>,
-    >,
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy_Delay>>,
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyEl {
+pub struct ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     abort: std
     ::option
-    ::Option<std::vec::Vec<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElAbortEl>>,
+    ::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy_Abort>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delay: std
     ::option
-    ::Option<std::vec::Vec<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDelayEl>>,
-    dynamic: ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDynamic,
+    ::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy_Delay>>,
+    dynamic: ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicyDynamic,
 }
 
-impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyEl {
+impl ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy {
     #[doc = "Set the field `abort`.\n"]
     pub fn set_abort(
         mut self,
@@ -8956,9 +7979,7 @@ impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElAbortEl,
-                        >,
+                        ::BlockAssignable<ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy_Abort>,
                     >,
     ) -> Self {
         match v.into() {
@@ -8982,9 +8003,7 @@ impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDelayEl,
-                        >,
+                        ::BlockAssignable<ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy_Delay>,
                     >,
     ) -> Self {
         match v.into() {
@@ -8999,8 +8018,8 @@ impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyEl>;
+impl terrars::ToListMappable for ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy {
+    type O = terrars::BlockAssignable<ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -9011,11 +8030,11 @@ impl terrars::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElRouteActi
     }
 }
 
-pub struct BuildComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyEl {}
+pub struct BuildComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy {}
 
-impl BuildComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyEl {
-        ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyEl {
+impl BuildComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy {
+    pub fn build(self) -> ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy {
+        ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy {
             abort: core::default::Default::default(),
             delay: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -9023,24 +8042,26 @@ impl BuildComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolic
     }
 }
 
-pub struct ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElRef {
+impl terrars::Ref for ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElRef {
-        ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElRef {
+    ) -> ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicyRef {
+        ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElRef {
+impl ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -9048,179 +8069,40 @@ impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElRe
     #[doc = "Get a reference to the value of field `abort` after provisioning.\n"]
     pub fn abort(
         &self,
-    ) -> terrars::ListRef<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElAbortElRef> {
+    ) -> terrars::ListRef<ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy_AbortRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.abort", self.base))
     }
 
     #[doc = "Get a reference to the value of field `delay` after provisioning.\n"]
     pub fn delay(
         &self,
-    ) -> terrars::ListRef<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElDelayElRef> {
+    ) -> terrars::ListRef<ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy_DelayRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.delay", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRequestMirrorPolicyEl {
-    backend_service: terrars::PrimField<std::string::String>,
-}
-
-impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRequestMirrorPolicyEl { }
-
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRequestMirrorPolicyEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRequestMirrorPolicyEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildComputeUrlMapPathMatcherElRouteRulesElRouteActionElRequestMirrorPolicyEl {
-    #[doc = "The BackendService resource being mirrored to."]
-    pub backend_service: terrars::PrimField<std::string::String>,
-}
-
-impl BuildComputeUrlMapPathMatcherElRouteRulesElRouteActionElRequestMirrorPolicyEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRequestMirrorPolicyEl {
-        ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRequestMirrorPolicyEl {
-            backend_service: self.backend_service,
-        }
-    }
-}
-
-pub struct ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRequestMirrorPolicyElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRequestMirrorPolicyElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRequestMirrorPolicyElRef {
-        ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRequestMirrorPolicyElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRequestMirrorPolicyElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `backend_service` after provisioning.\nThe BackendService resource being mirrored to."]
-    pub fn backend_service(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.backend_service", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyElPerTryTimeoutEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    nanos: std::option::Option<terrars::PrimField<f64>>,
-    seconds: terrars::PrimField<std::string::String>,
-}
-
-impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyElPerTryTimeoutEl {
-    #[doc =
-        "Set the field `nanos`.\nSpan of time that's a fraction of a second at nanosecond resolution. Durations\nless than one second are represented with a 0 'seconds' field and a positive\n'nanos' field. Must be from 0 to 999,999,999 inclusive."]
-    pub fn set_nanos(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.nanos = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyElPerTryTimeoutEl {
-    type O =
-        terrars::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyElPerTryTimeoutEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyElPerTryTimeoutEl {
-    #[doc = "Span of time at a resolution of a second. Must be from 0 to 315,576,000,000\ninclusive."]
-    pub seconds: terrars::PrimField<std::string::String>,
-}
-
-impl BuildComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyElPerTryTimeoutEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyElPerTryTimeoutEl {
-        ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyElPerTryTimeoutEl {
-            nanos: core::default::Default::default(),
-            seconds: self.seconds,
-        }
-    }
-}
-
-pub struct ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyElPerTryTimeoutElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyElPerTryTimeoutElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyElPerTryTimeoutElRef {
-        ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyElPerTryTimeoutElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyElPerTryTimeoutElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `nanos` after provisioning.\nSpan of time that's a fraction of a second at nanosecond resolution. Durations\nless than one second are represented with a 0 'seconds' field and a positive\n'nanos' field. Must be from 0 to 999,999,999 inclusive."]
-    pub fn nanos(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.nanos", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `seconds` after provisioning.\nSpan of time at a resolution of a second. Must be from 0 to 315,576,000,000\ninclusive."]
-    pub fn seconds(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.seconds", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyElDynamic {
+struct ComputeUrlMap_PathMatcher_RouteRules_RouteAction_RetryPolicyDynamic {
     per_try_timeout: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyElPerTryTimeoutEl>>,
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicy_PerTryTimeout>>,
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyEl {
+pub struct ComputeUrlMap_PathMatcher_RouteRules_RouteAction_RetryPolicy {
     num_retries: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     retry_conditions: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     per_try_timeout: std
     ::option
-    ::Option<std::vec::Vec<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyElPerTryTimeoutEl>>,
-    dynamic: ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyElDynamic,
+    ::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicy_PerTryTimeout>>,
+    dynamic: ComputeUrlMap_PathMatcher_RouteRules_RouteAction_RetryPolicyDynamic,
 }
 
-impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyEl {
+impl ComputeUrlMap_PathMatcher_RouteRules_RouteAction_RetryPolicy {
     #[doc =
-        "Set the field `retry_conditions`.\nSpecfies one or more conditions when this retry rule applies. Valid values are:\n\n* 5xx: Loadbalancer will attempt a retry if the backend service responds with\n  any 5xx response code, or if the backend service does not respond at all,\n  example: disconnects, reset, read timeout, connection failure, and refused\n  streams.\n* gateway-error: Similar to 5xx, but only applies to response codes\n  502, 503 or 504.\n* connect-failure: Loadbalancer will retry on failures\n  connecting to backend services, for example due to connection timeouts.\n* retriable-4xx: Loadbalancer will retry for retriable 4xx response codes.\n  Currently the only retriable error supported is 409.\n* refused-stream: Loadbalancer will retry if the backend service resets the stream with a\n  REFUSED_STREAM error code. This reset type indicates that it is safe to retry.\n* cancelled: Loadbalancer will retry if the gRPC status code in the response\n  header is set to cancelled\n* deadline-exceeded: Loadbalancer will retry if the\n  gRPC status code in the response header is set to deadline-exceeded\n* resource-exhausted: Loadbalancer will retry if the gRPC status code in the response\n  header is set to resource-exhausted\n* unavailable: Loadbalancer will retry if the gRPC status code in\n  the response header is set to unavailable"]
+        "Set the field `retry_conditions`.\nSpecfies one or more conditions when this retry rule applies. Valid values are:\n\n* 5xx: Loadbalancer will attempt a retry if the backend service responds with\n  any 5xx response code, or if the backend service does not respond at all,\n  for example: disconnects, reset, read timeout, connection failure, and refused\n  streams.\n* gateway-error: Similar to 5xx, but only applies to response codes\n  502, 503 or 504.\n* connect-failure: Loadbalancer will retry on failures\n  connecting to backend services, for example due to connection timeouts.\n* retriable-4xx: Loadbalancer will retry for retriable 4xx response codes.\n  Currently the only retriable error supported is 409.\n* refused-stream: Loadbalancer will retry if the backend service resets the stream with a\n  REFUSED_STREAM error code. This reset type indicates that it is safe to retry.\n* cancelled: Loadbalancer will retry if the gRPC status code in the response\n  header is set to cancelled\n* deadline-exceeded: Loadbalancer will retry if the\n  gRPC status code in the response header is set to deadline-exceeded\n* resource-exhausted: Loadbalancer will retry if the gRPC status code in the response\n  header is set to resource-exhausted\n* unavailable: Loadbalancer will retry if the gRPC status code in\n  the response header is set to unavailable"]
     pub fn set_retry_conditions(
         mut self,
         v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
@@ -9239,9 +8121,7 @@ impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyElPerTryTimeoutEl,
-                        >,
+                        ::BlockAssignable<ComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicy_PerTryTimeout>,
                     >,
     ) -> Self {
         match v.into() {
@@ -9256,8 +8136,8 @@ impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyEl>;
+impl terrars::ToListMappable for ComputeUrlMap_PathMatcher_RouteRules_RouteAction_RetryPolicy {
+    type O = terrars::BlockAssignable<ComputeUrlMap_PathMatcher_RouteRules_RouteAction_RetryPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -9268,14 +8148,14 @@ impl terrars::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElRouteActi
     }
 }
 
-pub struct BuildComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyEl {
+pub struct BuildComputeUrlMap_PathMatcher_RouteRules_RouteAction_RetryPolicy {
     #[doc = "Specifies the allowed number retries. This number must be > 0."]
     pub num_retries: terrars::PrimField<f64>,
 }
 
-impl BuildComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyEl {
-        ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyEl {
+impl BuildComputeUrlMap_PathMatcher_RouteRules_RouteAction_RetryPolicy {
+    pub fn build(self) -> ComputeUrlMap_PathMatcher_RouteRules_RouteAction_RetryPolicy {
+        ComputeUrlMap_PathMatcher_RouteRules_RouteAction_RetryPolicy {
             num_retries: self.num_retries,
             retry_conditions: core::default::Default::default(),
             per_try_timeout: core::default::Default::default(),
@@ -9284,24 +8164,26 @@ impl BuildComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyEl {
     }
 }
 
-pub struct ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_PathMatcher_RouteRules_RouteAction_RetryPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyElRef {
+impl terrars::Ref for ComputeUrlMap_PathMatcher_RouteRules_RouteAction_RetryPolicyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyElRef {
-        ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyElRef {
+    ) -> ComputeUrlMap_PathMatcher_RouteRules_RouteAction_RetryPolicyRef {
+        ComputeUrlMap_PathMatcher_RouteRules_RouteAction_RetryPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyElRef {
+impl ComputeUrlMap_PathMatcher_RouteRules_RouteAction_RetryPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -9313,7 +8195,7 @@ impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyElRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `retry_conditions` after provisioning.\nSpecfies one or more conditions when this retry rule applies. Valid values are:\n\n* 5xx: Loadbalancer will attempt a retry if the backend service responds with\n  any 5xx response code, or if the backend service does not respond at all,\n  example: disconnects, reset, read timeout, connection failure, and refused\n  streams.\n* gateway-error: Similar to 5xx, but only applies to response codes\n  502, 503 or 504.\n* connect-failure: Loadbalancer will retry on failures\n  connecting to backend services, for example due to connection timeouts.\n* retriable-4xx: Loadbalancer will retry for retriable 4xx response codes.\n  Currently the only retriable error supported is 409.\n* refused-stream: Loadbalancer will retry if the backend service resets the stream with a\n  REFUSED_STREAM error code. This reset type indicates that it is safe to retry.\n* cancelled: Loadbalancer will retry if the gRPC status code in the response\n  header is set to cancelled\n* deadline-exceeded: Loadbalancer will retry if the\n  gRPC status code in the response header is set to deadline-exceeded\n* resource-exhausted: Loadbalancer will retry if the gRPC status code in the response\n  header is set to resource-exhausted\n* unavailable: Loadbalancer will retry if the gRPC status code in\n  the response header is set to unavailable"]
+        "Get a reference to the value of field `retry_conditions` after provisioning.\nSpecfies one or more conditions when this retry rule applies. Valid values are:\n\n* 5xx: Loadbalancer will attempt a retry if the backend service responds with\n  any 5xx response code, or if the backend service does not respond at all,\n  for example: disconnects, reset, read timeout, connection failure, and refused\n  streams.\n* gateway-error: Similar to 5xx, but only applies to response codes\n  502, 503 or 504.\n* connect-failure: Loadbalancer will retry on failures\n  connecting to backend services, for example due to connection timeouts.\n* retriable-4xx: Loadbalancer will retry for retriable 4xx response codes.\n  Currently the only retriable error supported is 409.\n* refused-stream: Loadbalancer will retry if the backend service resets the stream with a\n  REFUSED_STREAM error code. This reset type indicates that it is safe to retry.\n* cancelled: Loadbalancer will retry if the gRPC status code in the response\n  header is set to cancelled\n* deadline-exceeded: Loadbalancer will retry if the\n  gRPC status code in the response header is set to deadline-exceeded\n* resource-exhausted: Loadbalancer will retry if the gRPC status code in the response\n  header is set to resource-exhausted\n* unavailable: Loadbalancer will retry if the gRPC status code in\n  the response header is set to unavailable"]
     pub fn retry_conditions(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.retry_conditions", self.base))
     }
@@ -9321,29 +8203,21 @@ impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyElRef {
     #[doc = "Get a reference to the value of field `per_try_timeout` after provisioning.\n"]
     pub fn per_try_timeout(
         &self,
-    ) -> terrars::ListRef<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyElPerTryTimeoutElRef> {
+    ) -> terrars::ListRef<ComputeUrlMap_PathMatcher_PathRule_RouteAction_RetryPolicy_PerTryTimeoutRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.per_try_timeout", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElRouteRulesElRouteActionElTimeoutEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    nanos: std::option::Option<terrars::PrimField<f64>>,
-    seconds: terrars::PrimField<std::string::String>,
+pub struct ComputeUrlMap_PathMatcher_RouteRules_RouteAction_UrlRewrite_RegexRewrite {
+    path_pattern: terrars::PrimField<std::string::String>,
+    path_substitution: terrars::PrimField<std::string::String>,
 }
 
-impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElTimeoutEl {
-    #[doc =
-        "Set the field `nanos`.\nSpan of time that's a fraction of a second at nanosecond resolution. Durations\nless than one second are represented with a 0 'seconds' field and a positive\n'nanos' field. Must be from 0 to 999,999,999 inclusive."]
-    pub fn set_nanos(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.nanos = std::option::Option::Some(v.into());
-        self
-    }
-}
+impl ComputeUrlMap_PathMatcher_RouteRules_RouteAction_UrlRewrite_RegexRewrite { }
 
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElRouteActionElTimeoutEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElTimeoutEl>;
+impl terrars::ToListMappable for ComputeUrlMap_PathMatcher_RouteRules_RouteAction_UrlRewrite_RegexRewrite {
+    type O = terrars::BlockAssignable<ComputeUrlMap_PathMatcher_RouteRules_RouteAction_UrlRewrite_RegexRewrite>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -9354,66 +8228,84 @@ impl terrars::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElRouteActi
     }
 }
 
-pub struct BuildComputeUrlMapPathMatcherElRouteRulesElRouteActionElTimeoutEl {
-    #[doc = "Span of time at a resolution of a second. Must be from 0 to 315,576,000,000\ninclusive."]
-    pub seconds: terrars::PrimField<std::string::String>,
+pub struct BuildComputeUrlMap_PathMatcher_RouteRules_RouteAction_UrlRewrite_RegexRewrite {
+    #[doc =
+        "The regular expression used to match against the URL path.\nIt uses RE2 syntax with the following constraints:\n\n* Any single character operators are allowed.\n* Groups may only contain a submatch operator, and may not\n  contain character repetition (for example, '.*').\n* Character repetition (for example, '.*') may only be used in\n  a regex together with empty string operators, other\n  repetitions, ranges, and repetitions of ranges.\n* Ranges may only contain character ranges, digit ranges, and\n  symbols allowed for ranges."]
+    pub path_pattern: terrars::PrimField<std::string::String>,
+    #[doc =
+        "The substitution used to rewrite the parts of the URL path\nmatched by pathPattern. May reference capture groups from\npathPattern."]
+    pub path_substitution: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputeUrlMapPathMatcherElRouteRulesElRouteActionElTimeoutEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElRouteRulesElRouteActionElTimeoutEl {
-        ComputeUrlMapPathMatcherElRouteRulesElRouteActionElTimeoutEl {
-            nanos: core::default::Default::default(),
-            seconds: self.seconds,
+impl BuildComputeUrlMap_PathMatcher_RouteRules_RouteAction_UrlRewrite_RegexRewrite {
+    pub fn build(self) -> ComputeUrlMap_PathMatcher_RouteRules_RouteAction_UrlRewrite_RegexRewrite {
+        ComputeUrlMap_PathMatcher_RouteRules_RouteAction_UrlRewrite_RegexRewrite {
+            path_pattern: self.path_pattern,
+            path_substitution: self.path_substitution,
         }
     }
 }
 
-pub struct ComputeUrlMapPathMatcherElRouteRulesElRouteActionElTimeoutElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_PathMatcher_RouteRules_RouteAction_UrlRewrite_RegexRewriteRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapPathMatcherElRouteRulesElRouteActionElTimeoutElRef {
+impl terrars::Ref for ComputeUrlMap_PathMatcher_RouteRules_RouteAction_UrlRewrite_RegexRewriteRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElRouteRulesElRouteActionElTimeoutElRef {
-        ComputeUrlMapPathMatcherElRouteRulesElRouteActionElTimeoutElRef {
+    ) -> ComputeUrlMap_PathMatcher_RouteRules_RouteAction_UrlRewrite_RegexRewriteRef {
+        ComputeUrlMap_PathMatcher_RouteRules_RouteAction_UrlRewrite_RegexRewriteRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElTimeoutElRef {
+impl ComputeUrlMap_PathMatcher_RouteRules_RouteAction_UrlRewrite_RegexRewriteRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `nanos` after provisioning.\nSpan of time that's a fraction of a second at nanosecond resolution. Durations\nless than one second are represented with a 0 'seconds' field and a positive\n'nanos' field. Must be from 0 to 999,999,999 inclusive."]
-    pub fn nanos(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.nanos", self.base))
+        "Get a reference to the value of field `path_pattern` after provisioning.\nThe regular expression used to match against the URL path.\nIt uses RE2 syntax with the following constraints:\n\n* Any single character operators are allowed.\n* Groups may only contain a submatch operator, and may not\n  contain character repetition (for example, '.*').\n* Character repetition (for example, '.*') may only be used in\n  a regex together with empty string operators, other\n  repetitions, ranges, and repetitions of ranges.\n* Ranges may only contain character ranges, digit ranges, and\n  symbols allowed for ranges."]
+    pub fn path_pattern(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.path_pattern", self.base))
     }
 
     #[doc =
-        "Get a reference to the value of field `seconds` after provisioning.\nSpan of time at a resolution of a second. Must be from 0 to 315,576,000,000\ninclusive."]
-    pub fn seconds(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.seconds", self.base))
+        "Get a reference to the value of field `path_substitution` after provisioning.\nThe substitution used to rewrite the parts of the URL path\nmatched by pathPattern. May reference capture groups from\npathPattern."]
+    pub fn path_substitution(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.path_substitution", self.base))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ComputeUrlMap_PathMatcher_RouteRules_RouteAction_UrlRewriteDynamic {
+    regex_rewrite: std
+    ::option
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_RouteRules_RouteAction_UrlRewrite_RegexRewrite>>,
+}
+
 #[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElRouteRulesElRouteActionElUrlRewriteEl {
+pub struct ComputeUrlMap_PathMatcher_RouteRules_RouteAction_UrlRewrite {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     host_rewrite: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     path_prefix_rewrite: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     path_template_rewrite: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    regex_rewrite: std
+    ::option
+    ::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_RouteRules_RouteAction_UrlRewrite_RegexRewrite>>,
+    dynamic: ComputeUrlMap_PathMatcher_RouteRules_RouteAction_UrlRewriteDynamic,
 }
 
-impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElUrlRewriteEl {
+impl ComputeUrlMap_PathMatcher_RouteRules_RouteAction_UrlRewrite {
     #[doc =
         "Set the field `host_rewrite`.\nPrior to forwarding the request to the selected service, the request's host\nheader is replaced with contents of hostRewrite. The value must be between 1 and\n255 characters."]
     pub fn set_host_rewrite(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -9422,7 +8314,7 @@ impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElUrlRewriteEl {
     }
 
     #[doc =
-        "Set the field `path_prefix_rewrite`.\nPrior to forwarding the request to the selected backend service, the matching\nportion of the request's path is replaced by pathPrefixRewrite. The value must\nbe between 1 and 1024 characters."]
+        "Set the field `path_prefix_rewrite`.\nPrior to forwarding the request to the selected backend service, the matching\nportion of the request's path is replaced by pathPrefixRewrite. The value must\nbe between 1 and 1024 characters.\n\nOnly one of pathPrefixRewrite, pathTemplateRewrite, or regexRewrite may be\nspecified."]
     pub fn set_path_prefix_rewrite(
         mut self,
         v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
@@ -9432,7 +8324,7 @@ impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElUrlRewriteEl {
     }
 
     #[doc =
-        "Set the field `path_template_rewrite`.\nPrior to forwarding the request to the selected origin, if the\nrequest matched a pathTemplateMatch, the matching portion of the\nrequest's path is replaced re-written using the pattern specified\nby pathTemplateRewrite.\n\npathTemplateRewrite must be between 1 and 255 characters\n(inclusive), must start with a '/', and must only use variables\ncaptured by the route's pathTemplate matchers.\n\npathTemplateRewrite may only be used when all of a route's\nMatchRules specify pathTemplate.\n\nOnly one of pathPrefixRewrite and pathTemplateRewrite may be\nspecified."]
+        "Set the field `path_template_rewrite`.\nPrior to forwarding the request to the selected origin, if the\nrequest matched a pathTemplateMatch, the matching portion of the\nrequest's path is replaced re-written using the pattern specified\nby pathTemplateRewrite.\n\npathTemplateRewrite must be between 1 and 255 characters\n(inclusive), must start with a '/', and must only use variables\ncaptured by the route's pathTemplate matchers.\n\npathTemplateRewrite may only be used when all of a route's\nMatchRules specify pathTemplate.\n\nOnly one of pathPrefixRewrite, pathTemplateRewrite, or regexRewrite may be\nspecified."]
     pub fn set_path_template_rewrite(
         mut self,
         v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
@@ -9440,10 +8332,34 @@ impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElUrlRewriteEl {
         self.path_template_rewrite = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `regex_rewrite`.\n"]
+    pub fn set_regex_rewrite(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<ComputeUrlMap_PathMatcher_RouteRules_RouteAction_UrlRewrite_RegexRewrite>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.regex_rewrite = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.regex_rewrite = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElRouteActionElUrlRewriteEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElUrlRewriteEl>;
+impl terrars::ToListMappable for ComputeUrlMap_PathMatcher_RouteRules_RouteAction_UrlRewrite {
+    type O = terrars::BlockAssignable<ComputeUrlMap_PathMatcher_RouteRules_RouteAction_UrlRewrite>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -9454,36 +8370,40 @@ impl terrars::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElRouteActi
     }
 }
 
-pub struct BuildComputeUrlMapPathMatcherElRouteRulesElRouteActionElUrlRewriteEl {}
+pub struct BuildComputeUrlMap_PathMatcher_RouteRules_RouteAction_UrlRewrite {}
 
-impl BuildComputeUrlMapPathMatcherElRouteRulesElRouteActionElUrlRewriteEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElRouteRulesElRouteActionElUrlRewriteEl {
-        ComputeUrlMapPathMatcherElRouteRulesElRouteActionElUrlRewriteEl {
+impl BuildComputeUrlMap_PathMatcher_RouteRules_RouteAction_UrlRewrite {
+    pub fn build(self) -> ComputeUrlMap_PathMatcher_RouteRules_RouteAction_UrlRewrite {
+        ComputeUrlMap_PathMatcher_RouteRules_RouteAction_UrlRewrite {
             host_rewrite: core::default::Default::default(),
             path_prefix_rewrite: core::default::Default::default(),
             path_template_rewrite: core::default::Default::default(),
+            regex_rewrite: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeUrlMapPathMatcherElRouteRulesElRouteActionElUrlRewriteElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_PathMatcher_RouteRules_RouteAction_UrlRewriteRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapPathMatcherElRouteRulesElRouteActionElUrlRewriteElRef {
+impl terrars::Ref for ComputeUrlMap_PathMatcher_RouteRules_RouteAction_UrlRewriteRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElRouteRulesElRouteActionElUrlRewriteElRef {
-        ComputeUrlMapPathMatcherElRouteRulesElRouteActionElUrlRewriteElRef {
+    ) -> ComputeUrlMap_PathMatcher_RouteRules_RouteAction_UrlRewriteRef {
+        ComputeUrlMap_PathMatcher_RouteRules_RouteAction_UrlRewriteRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElUrlRewriteElRef {
+impl ComputeUrlMap_PathMatcher_RouteRules_RouteAction_UrlRewriteRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -9495,582 +8415,100 @@ impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElUrlRewriteElRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `path_prefix_rewrite` after provisioning.\nPrior to forwarding the request to the selected backend service, the matching\nportion of the request's path is replaced by pathPrefixRewrite. The value must\nbe between 1 and 1024 characters."]
+        "Get a reference to the value of field `path_prefix_rewrite` after provisioning.\nPrior to forwarding the request to the selected backend service, the matching\nportion of the request's path is replaced by pathPrefixRewrite. The value must\nbe between 1 and 1024 characters.\n\nOnly one of pathPrefixRewrite, pathTemplateRewrite, or regexRewrite may be\nspecified."]
     pub fn path_prefix_rewrite(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.path_prefix_rewrite", self.base))
     }
 
     #[doc =
-        "Get a reference to the value of field `path_template_rewrite` after provisioning.\nPrior to forwarding the request to the selected origin, if the\nrequest matched a pathTemplateMatch, the matching portion of the\nrequest's path is replaced re-written using the pattern specified\nby pathTemplateRewrite.\n\npathTemplateRewrite must be between 1 and 255 characters\n(inclusive), must start with a '/', and must only use variables\ncaptured by the route's pathTemplate matchers.\n\npathTemplateRewrite may only be used when all of a route's\nMatchRules specify pathTemplate.\n\nOnly one of pathPrefixRewrite and pathTemplateRewrite may be\nspecified."]
+        "Get a reference to the value of field `path_template_rewrite` after provisioning.\nPrior to forwarding the request to the selected origin, if the\nrequest matched a pathTemplateMatch, the matching portion of the\nrequest's path is replaced re-written using the pattern specified\nby pathTemplateRewrite.\n\npathTemplateRewrite must be between 1 and 255 characters\n(inclusive), must start with a '/', and must only use variables\ncaptured by the route's pathTemplate matchers.\n\npathTemplateRewrite may only be used when all of a route's\nMatchRules specify pathTemplate.\n\nOnly one of pathPrefixRewrite, pathTemplateRewrite, or regexRewrite may be\nspecified."]
     pub fn path_template_rewrite(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.path_template_rewrite", self.base))
     }
-}
 
-#[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl {
-    header_name: terrars::PrimField<std::string::String>,
-    header_value: terrars::PrimField<std::string::String>,
-    replace: terrars::PrimField<bool>,
-}
-
-impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl {
-
-}
-
-impl terrars
-::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl {
-    #[doc = "The name of the header."]
-    pub header_name: terrars::PrimField<std::string::String>,
-    #[doc = "The value of the header to add."]
-    pub header_value: terrars::PrimField<std::string::String>,
-    #[doc =
-        "If false, headerValue is appended to any values that already exist for the\nheader. If true, headerValue is set for the header, discarding any values that\nwere set for that header."]
-    pub replace: terrars::PrimField<bool>,
-}
-
-impl BuildComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl {
-    pub fn build(
-        self,
-    ) -> ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl {
-        ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl {
-            header_name: self.header_name,
-            header_value: self.header_value,
-            replace: self.replace,
-        }
-    }
-}
-
-pub struct ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddElRef {
-        ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `header_name` after provisioning.\nThe name of the header."]
-    pub fn header_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.header_name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `header_value` after provisioning.\nThe value of the header to add."]
-    pub fn header_value(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.header_value", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `replace` after provisioning.\nIf false, headerValue is appended to any values that already exist for the\nheader. If true, headerValue is set for the header, discarding any values that\nwere set for that header."]
-    pub fn replace(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.replace", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl {
-    header_name: terrars::PrimField<std::string::String>,
-    header_value: terrars::PrimField<std::string::String>,
-    replace: terrars::PrimField<bool>,
-}
-
-impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl {
-
-}
-
-impl terrars
-::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl {
-    #[doc = "The name of the header."]
-    pub header_name: terrars::PrimField<std::string::String>,
-    #[doc = "The value of the header to add."]
-    pub header_value: terrars::PrimField<std::string::String>,
-    #[doc =
-        "If false, headerValue is appended to any values that already exist for the\nheader. If true, headerValue is set for the header, discarding any values that\nwere set for that header."]
-    pub replace: terrars::PrimField<bool>,
-}
-
-impl BuildComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl {
-    pub fn build(
-        self,
-    ) -> ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl {
-        ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl {
-            header_name: self.header_name,
-            header_value: self.header_value,
-            replace: self.replace,
-        }
-    }
-}
-
-pub struct ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddElRef {
-        ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `header_name` after provisioning.\nThe name of the header."]
-    pub fn header_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.header_name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `header_value` after provisioning.\nThe value of the header to add."]
-    pub fn header_value(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.header_value", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `replace` after provisioning.\nIf false, headerValue is appended to any values that already exist for the\nheader. If true, headerValue is set for the header, discarding any values that\nwere set for that header."]
-    pub fn replace(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.replace", self.base))
+    #[doc = "Get a reference to the value of field `regex_rewrite` after provisioning.\n"]
+    pub fn regex_rewrite(
+        &self,
+    ) -> terrars::ListRef<ComputeUrlMap_PathMatcher_RouteRules_RouteAction_UrlRewrite_RegexRewriteRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.regex_rewrite", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElDynamic {
-    request_headers_to_add: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl,
-        >,
-    >,
-    response_headers_to_add: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl,
-        >,
-    >,
-}
-
-#[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    request_headers_to_remove: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    response_headers_to_remove: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    request_headers_to_add: std
-    ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<
-            ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl,
-        >,
-    >,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    response_headers_to_add: std
-    ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<
-            ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl,
-        >,
-    >,
-    dynamic: ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElDynamic,
-}
-
-impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionEl {
-    #[doc =
-        "Set the field `request_headers_to_remove`.\nA list of header names for headers that need to be removed from the request\nprior to forwarding the request to the backendService."]
-    pub fn set_request_headers_to_remove(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.request_headers_to_remove = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `response_headers_to_remove`.\nA list of header names for headers that need to be removed from the response\nprior to sending the response back to the client."]
-    pub fn set_response_headers_to_remove(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.response_headers_to_remove = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `request_headers_to_add`.\n"]
-    pub fn set_request_headers_to_add(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.request_headers_to_add = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.request_headers_to_add = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `response_headers_to_add`.\n"]
-    pub fn set_response_headers_to_add(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.response_headers_to_add = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.response_headers_to_add = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionEl {
-    type O =
-        terrars
-        ::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionEl {}
-
-impl BuildComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionEl {
-        ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionEl {
-            request_headers_to_remove: core::default::Default::default(),
-            response_headers_to_remove: core::default::Default::default(),
-            request_headers_to_add: core::default::Default::default(),
-            response_headers_to_add: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElRef {
-        ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `request_headers_to_remove` after provisioning.\nA list of header names for headers that need to be removed from the request\nprior to forwarding the request to the backendService."]
-    pub fn request_headers_to_remove(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.request_headers_to_remove", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `response_headers_to_remove` after provisioning.\nA list of header names for headers that need to be removed from the response\nprior to sending the response back to the client."]
-    pub fn response_headers_to_remove(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.response_headers_to_remove", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `request_headers_to_add` after provisioning.\n"]
-    pub fn request_headers_to_add(
-        &self,
-    ) -> terrars
-    ::ListRef<
-        ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElRequestHeadersToAddElRef,
-    > {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.request_headers_to_add", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `response_headers_to_add` after provisioning.\n"]
-    pub fn response_headers_to_add(
-        &self,
-    ) -> terrars
-    ::ListRef<
-        ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElResponseHeadersToAddElRef,
-    > {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.response_headers_to_add", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElDynamic {
-    header_action: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionEl>,
-    >,
-}
-
-#[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesEl {
-    backend_service: terrars::PrimField<std::string::String>,
-    weight: terrars::PrimField<f64>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    header_action: std
-    ::option
-    ::Option<
-        std::vec::Vec<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionEl>,
-    >,
-    dynamic: ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElDynamic,
-}
-
-impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesEl {
-    #[doc = "Set the field `header_action`.\n"]
-    pub fn set_header_action(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.header_action = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.header_action = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesEl {
-    #[doc =
-        "The default BackendService resource. Before\nforwarding the request to backendService, the loadbalancer applies any relevant\nheaderActions specified as part of this backendServiceWeight."]
-    pub backend_service: terrars::PrimField<std::string::String>,
-    #[doc =
-        "Specifies the fraction of traffic sent to backendService, computed as weight /\n(sum of all weightedBackendService weights in routeAction) . The selection of a\nbackend service is determined only for new traffic. Once a user's request has\nbeen directed to a backendService, subsequent requests will be sent to the same\nbackendService as determined by the BackendService's session affinity policy.\nThe value must be between 0 and 1000"]
-    pub weight: terrars::PrimField<f64>,
-}
-
-impl BuildComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesEl {
-        ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesEl {
-            backend_service: self.backend_service,
-            weight: self.weight,
-            header_action: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElRef {
-        ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `backend_service` after provisioning.\nThe default BackendService resource. Before\nforwarding the request to backendService, the loadbalancer applies any relevant\nheaderActions specified as part of this backendServiceWeight."]
-    pub fn backend_service(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.backend_service", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `weight` after provisioning.\nSpecifies the fraction of traffic sent to backendService, computed as weight /\n(sum of all weightedBackendService weights in routeAction) . The selection of a\nbackend service is determined only for new traffic. Once a user's request has\nbeen directed to a backendService, subsequent requests will be sent to the same\nbackendService as determined by the BackendService's session affinity policy.\nThe value must be between 0 and 1000"]
-    pub fn weight(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.weight", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `header_action` after provisioning.\n"]
-    pub fn header_action(
-        &self,
-    ) -> terrars
-    ::ListRef<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElHeaderActionElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.header_action", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct ComputeUrlMapPathMatcherElRouteRulesElRouteActionElDynamic {
+struct ComputeUrlMap_PathMatcher_RouteRules_RouteActionDynamic {
+    cache_policy: std::option::Option<terrars::DynamicBlock<ComputeUrlMap_DefaultRouteAction_CachePolicy>>,
     cors_policy: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElCorsPolicyEl>>,
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_RouteRules_RouteAction_CorsPolicy>>,
     fault_injection_policy: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyEl>>,
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy>>,
+    max_stream_duration: std
+    ::option
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_PathRule_RouteAction_MaxStreamDuration>>,
     request_mirror_policy: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRequestMirrorPolicyEl>>,
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_PathRule_RouteAction_RequestMirrorPolicy>>,
     retry_policy: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyEl>>,
-    timeout: std
-    ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElTimeoutEl>>,
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_RouteRules_RouteAction_RetryPolicy>>,
+    timeout: std::option::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_PathRule_RouteAction_Timeout>>,
     url_rewrite: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElUrlRewriteEl>>,
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_RouteRules_RouteAction_UrlRewrite>>,
     weighted_backend_services: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesEl>>,
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_PathRule_RouteAction_WeightedBackendServices>>,
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElRouteRulesElRouteActionEl {
+pub struct ComputeUrlMap_PathMatcher_RouteRules_RouteAction {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cors_policy: std::option::Option<std::vec::Vec<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElCorsPolicyEl>>,
+    cache_policy: std::option::Option<std::vec::Vec<ComputeUrlMap_DefaultRouteAction_CachePolicy>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cors_policy: std::option::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_RouteRules_RouteAction_CorsPolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     fault_injection_policy: std
     ::option
-    ::Option<std::vec::Vec<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyEl>>,
+    ::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_stream_duration: std
+    ::option
+    ::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_PathRule_RouteAction_MaxStreamDuration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     request_mirror_policy: std
     ::option
-    ::Option<std::vec::Vec<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRequestMirrorPolicyEl>>,
+    ::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_PathRule_RouteAction_RequestMirrorPolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    retry_policy: std::option::Option<std::vec::Vec<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyEl>>,
+    retry_policy: std::option::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_RouteRules_RouteAction_RetryPolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeout: std::option::Option<std::vec::Vec<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElTimeoutEl>>,
+    timeout: std::option::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_PathRule_RouteAction_Timeout>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    url_rewrite: std::option::Option<std::vec::Vec<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElUrlRewriteEl>>,
+    url_rewrite: std::option::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_RouteRules_RouteAction_UrlRewrite>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     weighted_backend_services: std
     ::option
-    ::Option<std::vec::Vec<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesEl>>,
-    dynamic: ComputeUrlMapPathMatcherElRouteRulesElRouteActionElDynamic,
+    ::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_PathRule_RouteAction_WeightedBackendServices>>,
+    dynamic: ComputeUrlMap_PathMatcher_RouteRules_RouteActionDynamic,
 }
 
-impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionEl {
+impl ComputeUrlMap_PathMatcher_RouteRules_RouteAction {
+    #[doc = "Set the field `cache_policy`.\n"]
+    pub fn set_cache_policy(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction_CachePolicy>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.cache_policy = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.cache_policy = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `cors_policy`.\n"]
     pub fn set_cors_policy(
         mut self,
@@ -10079,7 +8517,7 @@ impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElCorsPolicyEl>>,
+                    ::Into<terrars::BlockAssignable<ComputeUrlMap_PathMatcher_RouteRules_RouteAction_CorsPolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -10102,7 +8540,7 @@ impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyEl>,
+                        ::BlockAssignable<ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicy>,
                     >,
     ) -> Self {
         match v.into() {
@@ -10111,6 +8549,29 @@ impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionEl {
             },
             terrars::BlockAssignable::Dynamic(d) => {
                 self.dynamic.fault_injection_policy = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `max_stream_duration`.\n"]
+    pub fn set_max_stream_duration(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<ComputeUrlMap_PathMatcher_PathRule_RouteAction_MaxStreamDuration>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.max_stream_duration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.max_stream_duration = std::option::Option::Some(d);
             },
         }
         self
@@ -10125,8 +8586,7 @@ impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRequestMirrorPolicyEl>,
+                        terrars::BlockAssignable<ComputeUrlMap_PathMatcher_PathRule_RouteAction_RequestMirrorPolicy>,
                     >,
     ) -> Self {
         match v.into() {
@@ -10148,9 +8608,7 @@ impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<ComputeUrlMap_PathMatcher_RouteRules_RouteAction_RetryPolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -10166,12 +8624,7 @@ impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionEl {
     #[doc = "Set the field `timeout`.\n"]
     pub fn set_timeout(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElTimeoutEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMap_PathMatcher_PathRule_RouteAction_Timeout>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -10192,7 +8645,7 @@ impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElUrlRewriteEl>>,
+                    ::Into<terrars::BlockAssignable<ComputeUrlMap_PathMatcher_RouteRules_RouteAction_UrlRewrite>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -10215,9 +8668,7 @@ impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesEl,
-                        >,
+                        ::BlockAssignable<ComputeUrlMap_PathMatcher_PathRule_RouteAction_WeightedBackendServices>,
                     >,
     ) -> Self {
         match v.into() {
@@ -10232,8 +8683,8 @@ impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElRouteActionEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesElRouteActionEl>;
+impl terrars::ToListMappable for ComputeUrlMap_PathMatcher_RouteRules_RouteAction {
+    type O = terrars::BlockAssignable<ComputeUrlMap_PathMatcher_RouteRules_RouteAction>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -10244,13 +8695,15 @@ impl terrars::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElRouteActi
     }
 }
 
-pub struct BuildComputeUrlMapPathMatcherElRouteRulesElRouteActionEl {}
+pub struct BuildComputeUrlMap_PathMatcher_RouteRules_RouteAction {}
 
-impl BuildComputeUrlMapPathMatcherElRouteRulesElRouteActionEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElRouteRulesElRouteActionEl {
-        ComputeUrlMapPathMatcherElRouteRulesElRouteActionEl {
+impl BuildComputeUrlMap_PathMatcher_RouteRules_RouteAction {
+    pub fn build(self) -> ComputeUrlMap_PathMatcher_RouteRules_RouteAction {
+        ComputeUrlMap_PathMatcher_RouteRules_RouteAction {
+            cache_policy: core::default::Default::default(),
             cors_policy: core::default::Default::default(),
             fault_injection_policy: core::default::Default::default(),
+            max_stream_duration: core::default::Default::default(),
             request_mirror_policy: core::default::Default::default(),
             retry_policy: core::default::Default::default(),
             timeout: core::default::Default::default(),
@@ -10261,72 +8714,86 @@ impl BuildComputeUrlMapPathMatcherElRouteRulesElRouteActionEl {
     }
 }
 
-pub struct ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_PathMatcher_RouteRules_RouteActionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRef {
+impl terrars::Ref for ComputeUrlMap_PathMatcher_RouteRules_RouteActionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRef {
-        ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRef {
+    ) -> ComputeUrlMap_PathMatcher_RouteRules_RouteActionRef {
+        ComputeUrlMap_PathMatcher_RouteRules_RouteActionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRef {
+impl ComputeUrlMap_PathMatcher_RouteRules_RouteActionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
+    #[doc = "Get a reference to the value of field `cache_policy` after provisioning.\n"]
+    pub fn cache_policy(&self) -> terrars::ListRef<ComputeUrlMap_DefaultRouteAction_CachePolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cache_policy", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `cors_policy` after provisioning.\n"]
-    pub fn cors_policy(&self) -> terrars::ListRef<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElCorsPolicyElRef> {
+    pub fn cors_policy(&self) -> terrars::ListRef<ComputeUrlMap_PathMatcher_RouteRules_RouteAction_CorsPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cors_policy", self.base))
     }
 
     #[doc = "Get a reference to the value of field `fault_injection_policy` after provisioning.\n"]
     pub fn fault_injection_policy(
         &self,
-    ) -> terrars::ListRef<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElFaultInjectionPolicyElRef> {
+    ) -> terrars::ListRef<ComputeUrlMap_PathMatcher_RouteRules_RouteAction_FaultInjectionPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.fault_injection_policy", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `max_stream_duration` after provisioning.\n"]
+    pub fn max_stream_duration(
+        &self,
+    ) -> terrars::ListRef<ComputeUrlMap_PathMatcher_PathRule_RouteAction_MaxStreamDurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.max_stream_duration", self.base))
     }
 
     #[doc = "Get a reference to the value of field `request_mirror_policy` after provisioning.\n"]
     pub fn request_mirror_policy(
         &self,
-    ) -> terrars::ListRef<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRequestMirrorPolicyElRef> {
+    ) -> terrars::ListRef<ComputeUrlMap_PathMatcher_PathRule_RouteAction_RequestMirrorPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.request_mirror_policy", self.base))
     }
 
     #[doc = "Get a reference to the value of field `retry_policy` after provisioning.\n"]
-    pub fn retry_policy(&self) -> terrars::ListRef<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRetryPolicyElRef> {
+    pub fn retry_policy(&self) -> terrars::ListRef<ComputeUrlMap_PathMatcher_RouteRules_RouteAction_RetryPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.retry_policy", self.base))
     }
 
     #[doc = "Get a reference to the value of field `timeout` after provisioning.\n"]
-    pub fn timeout(&self) -> terrars::ListRef<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElTimeoutElRef> {
+    pub fn timeout(&self) -> terrars::ListRef<ComputeUrlMap_PathMatcher_PathRule_RouteAction_TimeoutRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.timeout", self.base))
     }
 
     #[doc = "Get a reference to the value of field `url_rewrite` after provisioning.\n"]
-    pub fn url_rewrite(&self) -> terrars::ListRef<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElUrlRewriteElRef> {
+    pub fn url_rewrite(&self) -> terrars::ListRef<ComputeUrlMap_PathMatcher_RouteRules_RouteAction_UrlRewriteRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.url_rewrite", self.base))
     }
 
     #[doc = "Get a reference to the value of field `weighted_backend_services` after provisioning.\n"]
     pub fn weighted_backend_services(
         &self,
-    ) -> terrars::ListRef<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElWeightedBackendServicesElRef> {
+    ) -> terrars::ListRef<ComputeUrlMap_PathMatcher_PathRule_RouteAction_WeightedBackendServicesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.weighted_backend_services", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElRouteRulesElUrlRedirectEl {
+pub struct ComputeUrlMap_PathMatcher_RouteRules_UrlRedirect {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     host_redirect: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -10341,7 +8808,7 @@ pub struct ComputeUrlMapPathMatcherElRouteRulesElUrlRedirectEl {
     strip_query: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl ComputeUrlMapPathMatcherElRouteRulesElUrlRedirectEl {
+impl ComputeUrlMap_PathMatcher_RouteRules_UrlRedirect {
     #[doc =
         "Set the field `host_redirect`.\nThe host that will be used in the redirect response instead of the one that was\nsupplied in the request. The value must be between 1 and 255 characters."]
     pub fn set_host_redirect(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -10388,8 +8855,8 @@ impl ComputeUrlMapPathMatcherElRouteRulesElUrlRedirectEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElUrlRedirectEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesElUrlRedirectEl>;
+impl terrars::ToListMappable for ComputeUrlMap_PathMatcher_RouteRules_UrlRedirect {
+    type O = terrars::BlockAssignable<ComputeUrlMap_PathMatcher_RouteRules_UrlRedirect>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -10400,11 +8867,11 @@ impl terrars::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesElUrlRedire
     }
 }
 
-pub struct BuildComputeUrlMapPathMatcherElRouteRulesElUrlRedirectEl {}
+pub struct BuildComputeUrlMap_PathMatcher_RouteRules_UrlRedirect {}
 
-impl BuildComputeUrlMapPathMatcherElRouteRulesElUrlRedirectEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElRouteRulesElUrlRedirectEl {
-        ComputeUrlMapPathMatcherElRouteRulesElUrlRedirectEl {
+impl BuildComputeUrlMap_PathMatcher_RouteRules_UrlRedirect {
+    pub fn build(self) -> ComputeUrlMap_PathMatcher_RouteRules_UrlRedirect {
+        ComputeUrlMap_PathMatcher_RouteRules_UrlRedirect {
             host_redirect: core::default::Default::default(),
             https_redirect: core::default::Default::default(),
             path_redirect: core::default::Default::default(),
@@ -10415,24 +8882,26 @@ impl BuildComputeUrlMapPathMatcherElRouteRulesElUrlRedirectEl {
     }
 }
 
-pub struct ComputeUrlMapPathMatcherElRouteRulesElUrlRedirectElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_PathMatcher_RouteRules_UrlRedirectRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapPathMatcherElRouteRulesElUrlRedirectElRef {
+impl terrars::Ref for ComputeUrlMap_PathMatcher_RouteRules_UrlRedirectRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeUrlMapPathMatcherElRouteRulesElUrlRedirectElRef {
-        ComputeUrlMapPathMatcherElRouteRulesElUrlRedirectElRef {
+    ) -> ComputeUrlMap_PathMatcher_RouteRules_UrlRedirectRef {
+        ComputeUrlMap_PathMatcher_RouteRules_UrlRedirectRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapPathMatcherElRouteRulesElUrlRedirectElRef {
+impl ComputeUrlMap_PathMatcher_RouteRules_UrlRedirectRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -10475,30 +8944,37 @@ impl ComputeUrlMapPathMatcherElRouteRulesElUrlRedirectElRef {
 }
 
 #[derive(Serialize, Default)]
-struct ComputeUrlMapPathMatcherElRouteRulesElDynamic {
-    header_action: std::option::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElRouteRulesElHeaderActionEl>>,
-    match_rules: std::option::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElRouteRulesElMatchRulesEl>>,
-    route_action: std::option::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElRouteRulesElRouteActionEl>>,
-    url_redirect: std::option::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElRouteRulesElUrlRedirectEl>>,
+struct ComputeUrlMap_PathMatcher_RouteRulesDynamic {
+    custom_error_response_policy: std
+    ::option
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicy>>,
+    header_action: std::option::Option<terrars::DynamicBlock<ComputeUrlMap_HeaderAction>>,
+    match_rules: std::option::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_RouteRules_MatchRules>>,
+    route_action: std::option::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_RouteRules_RouteAction>>,
+    url_redirect: std::option::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_RouteRules_UrlRedirect>>,
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherElRouteRulesEl {
+pub struct ComputeUrlMap_PathMatcher_RouteRules {
     priority: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     service: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    header_action: std::option::Option<std::vec::Vec<ComputeUrlMapPathMatcherElRouteRulesElHeaderActionEl>>,
+    custom_error_response_policy: std
+    ::option
+    ::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    match_rules: std::option::Option<std::vec::Vec<ComputeUrlMapPathMatcherElRouteRulesElMatchRulesEl>>,
+    header_action: std::option::Option<std::vec::Vec<ComputeUrlMap_HeaderAction>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    route_action: std::option::Option<std::vec::Vec<ComputeUrlMapPathMatcherElRouteRulesElRouteActionEl>>,
+    match_rules: std::option::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_RouteRules_MatchRules>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    url_redirect: std::option::Option<std::vec::Vec<ComputeUrlMapPathMatcherElRouteRulesElUrlRedirectEl>>,
-    dynamic: ComputeUrlMapPathMatcherElRouteRulesElDynamic,
+    route_action: std::option::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_RouteRules_RouteAction>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    url_redirect: std::option::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_RouteRules_UrlRedirect>>,
+    dynamic: ComputeUrlMap_PathMatcher_RouteRulesDynamic,
 }
 
-impl ComputeUrlMapPathMatcherElRouteRulesEl {
+impl ComputeUrlMap_PathMatcher_RouteRules {
     #[doc =
         "Set the field `service`.\nThe backend service resource to which traffic is\ndirected if this rule is matched. If routeAction is additionally specified,\nadvanced routing actions like URL Rewrites, etc. take effect prior to sending\nthe request to the backend. However, if service is specified, routeAction cannot\ncontain any weightedBackendService s. Conversely, if routeAction specifies any\nweightedBackendServices, service must not be specified. Only one of urlRedirect,\nservice or routeAction.weightedBackendService must be set."]
     pub fn set_service(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -10506,10 +8982,31 @@ impl ComputeUrlMapPathMatcherElRouteRulesEl {
         self
     }
 
+    #[doc = "Set the field `custom_error_response_policy`.\n"]
+    pub fn set_custom_error_response_policy(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<ComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicy>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.custom_error_response_policy = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.custom_error_response_policy = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `header_action`.\n"]
     pub fn set_header_action(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesElHeaderActionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMap_HeaderAction>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -10525,7 +9022,7 @@ impl ComputeUrlMapPathMatcherElRouteRulesEl {
     #[doc = "Set the field `match_rules`.\n"]
     pub fn set_match_rules(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesElMatchRulesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMap_PathMatcher_RouteRules_MatchRules>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -10541,7 +9038,7 @@ impl ComputeUrlMapPathMatcherElRouteRulesEl {
     #[doc = "Set the field `route_action`.\n"]
     pub fn set_route_action(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesElRouteActionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMap_PathMatcher_RouteRules_RouteAction>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -10557,7 +9054,7 @@ impl ComputeUrlMapPathMatcherElRouteRulesEl {
     #[doc = "Set the field `url_redirect`.\n"]
     pub fn set_url_redirect(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesElUrlRedirectEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMap_PathMatcher_RouteRules_UrlRedirect>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -10571,8 +9068,8 @@ impl ComputeUrlMapPathMatcherElRouteRulesEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesEl>;
+impl terrars::ToListMappable for ComputeUrlMap_PathMatcher_RouteRules {
+    type O = terrars::BlockAssignable<ComputeUrlMap_PathMatcher_RouteRules>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -10583,17 +9080,18 @@ impl terrars::ToListMappable for ComputeUrlMapPathMatcherElRouteRulesEl {
     }
 }
 
-pub struct BuildComputeUrlMapPathMatcherElRouteRulesEl {
+pub struct BuildComputeUrlMap_PathMatcher_RouteRules {
     #[doc =
         "For routeRules within a given pathMatcher, priority determines the order\nin which load balancer will interpret routeRules. RouteRules are evaluated\nin order of priority, from the lowest to highest number. The priority of\na rule decreases as its number increases (1, 2, 3, N+1). The first rule\nthat matches the request is applied.\n\nYou cannot configure two or more routeRules with the same priority.\nPriority for each rule must be set to a number between 0 and\n2147483647 inclusive.\n\nPriority numbers can have gaps, which enable you to add or remove rules\nin the future without affecting the rest of the rules. For example,\n1, 2, 3, 4, 5, 9, 12, 16 is a valid series of priority numbers to which\nyou could add rules numbered from 6 to 8, 10 to 11, and 13 to 15 in the\nfuture without any impact on existing rules."]
     pub priority: terrars::PrimField<f64>,
 }
 
-impl BuildComputeUrlMapPathMatcherElRouteRulesEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherElRouteRulesEl {
-        ComputeUrlMapPathMatcherElRouteRulesEl {
+impl BuildComputeUrlMap_PathMatcher_RouteRules {
+    pub fn build(self) -> ComputeUrlMap_PathMatcher_RouteRules {
+        ComputeUrlMap_PathMatcher_RouteRules {
             priority: self.priority,
             service: core::default::Default::default(),
+            custom_error_response_policy: core::default::Default::default(),
             header_action: core::default::Default::default(),
             match_rules: core::default::Default::default(),
             route_action: core::default::Default::default(),
@@ -10603,21 +9101,23 @@ impl BuildComputeUrlMapPathMatcherElRouteRulesEl {
     }
 }
 
-pub struct ComputeUrlMapPathMatcherElRouteRulesElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_PathMatcher_RouteRulesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapPathMatcherElRouteRulesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeUrlMapPathMatcherElRouteRulesElRef {
-        ComputeUrlMapPathMatcherElRouteRulesElRef {
+impl terrars::Ref for ComputeUrlMap_PathMatcher_RouteRulesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeUrlMap_PathMatcher_RouteRulesRef {
+        ComputeUrlMap_PathMatcher_RouteRulesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapPathMatcherElRouteRulesElRef {
+impl ComputeUrlMap_PathMatcher_RouteRulesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -10634,57 +9134,71 @@ impl ComputeUrlMapPathMatcherElRouteRulesElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.service", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `custom_error_response_policy` after provisioning.\n"]
+    pub fn custom_error_response_policy(
+        &self,
+    ) -> terrars::ListRef<ComputeUrlMap_PathMatcher_PathRule_CustomErrorResponsePolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.custom_error_response_policy", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `header_action` after provisioning.\n"]
-    pub fn header_action(&self) -> terrars::ListRef<ComputeUrlMapPathMatcherElRouteRulesElHeaderActionElRef> {
+    pub fn header_action(&self) -> terrars::ListRef<ComputeUrlMap_HeaderActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.header_action", self.base))
     }
 
     #[doc = "Get a reference to the value of field `match_rules` after provisioning.\n"]
-    pub fn match_rules(&self) -> terrars::ListRef<ComputeUrlMapPathMatcherElRouteRulesElMatchRulesElRef> {
+    pub fn match_rules(&self) -> terrars::ListRef<ComputeUrlMap_PathMatcher_RouteRules_MatchRulesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.match_rules", self.base))
     }
 
     #[doc = "Get a reference to the value of field `route_action` after provisioning.\n"]
-    pub fn route_action(&self) -> terrars::ListRef<ComputeUrlMapPathMatcherElRouteRulesElRouteActionElRef> {
+    pub fn route_action(&self) -> terrars::ListRef<ComputeUrlMap_PathMatcher_RouteRules_RouteActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.route_action", self.base))
     }
 
     #[doc = "Get a reference to the value of field `url_redirect` after provisioning.\n"]
-    pub fn url_redirect(&self) -> terrars::ListRef<ComputeUrlMapPathMatcherElRouteRulesElUrlRedirectElRef> {
+    pub fn url_redirect(&self) -> terrars::ListRef<ComputeUrlMap_PathMatcher_RouteRules_UrlRedirectRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.url_redirect", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct ComputeUrlMapPathMatcherElDynamic {
-    default_route_action: std::option::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElDefaultRouteActionEl>>,
-    default_url_redirect: std::option::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElDefaultUrlRedirectEl>>,
-    header_action: std::option::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElHeaderActionEl>>,
-    path_rule: std::option::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElPathRuleEl>>,
-    route_rules: std::option::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherElRouteRulesEl>>,
+struct ComputeUrlMap_PathMatcherDynamic {
+    default_custom_error_response_policy: std
+    ::option
+    ::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_DefaultCustomErrorResponsePolicy>>,
+    default_route_action: std::option::Option<terrars::DynamicBlock<ComputeUrlMap_DefaultRouteAction>>,
+    default_url_redirect: std::option::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_DefaultUrlRedirect>>,
+    header_action: std::option::Option<terrars::DynamicBlock<ComputeUrlMap_HeaderAction>>,
+    path_rule: std::option::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_PathRule>>,
+    route_rules: std::option::Option<terrars::DynamicBlock<ComputeUrlMap_PathMatcher_RouteRules>>,
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapPathMatcherEl {
+pub struct ComputeUrlMap_PathMatcher {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     default_service: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    default_route_action: std::option::Option<std::vec::Vec<ComputeUrlMapPathMatcherElDefaultRouteActionEl>>,
+    default_custom_error_response_policy: std
+    ::option
+    ::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_DefaultCustomErrorResponsePolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    default_url_redirect: std::option::Option<std::vec::Vec<ComputeUrlMapPathMatcherElDefaultUrlRedirectEl>>,
+    default_route_action: std::option::Option<std::vec::Vec<ComputeUrlMap_DefaultRouteAction>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    header_action: std::option::Option<std::vec::Vec<ComputeUrlMapPathMatcherElHeaderActionEl>>,
+    default_url_redirect: std::option::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_DefaultUrlRedirect>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    path_rule: std::option::Option<std::vec::Vec<ComputeUrlMapPathMatcherElPathRuleEl>>,
+    header_action: std::option::Option<std::vec::Vec<ComputeUrlMap_HeaderAction>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    route_rules: std::option::Option<std::vec::Vec<ComputeUrlMapPathMatcherElRouteRulesEl>>,
-    dynamic: ComputeUrlMapPathMatcherElDynamic,
+    path_rule: std::option::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_PathRule>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    route_rules: std::option::Option<std::vec::Vec<ComputeUrlMap_PathMatcher_RouteRules>>,
+    dynamic: ComputeUrlMap_PathMatcherDynamic,
 }
 
-impl ComputeUrlMapPathMatcherEl {
+impl ComputeUrlMap_PathMatcher {
     #[doc =
         "Set the field `default_service`.\nThe backend service or backend bucket to use when none of the given paths match."]
     pub fn set_default_service(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -10699,10 +9213,31 @@ impl ComputeUrlMapPathMatcherEl {
         self
     }
 
+    #[doc = "Set the field `default_custom_error_response_policy`.\n"]
+    pub fn set_default_custom_error_response_policy(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<ComputeUrlMap_PathMatcher_DefaultCustomErrorResponsePolicy>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.default_custom_error_response_policy = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.default_custom_error_response_policy = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `default_route_action`.\n"]
     pub fn set_default_route_action(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMapPathMatcherElDefaultRouteActionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMap_DefaultRouteAction>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -10718,7 +9253,7 @@ impl ComputeUrlMapPathMatcherEl {
     #[doc = "Set the field `default_url_redirect`.\n"]
     pub fn set_default_url_redirect(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMapPathMatcherElDefaultUrlRedirectEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMap_PathMatcher_DefaultUrlRedirect>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -10734,7 +9269,7 @@ impl ComputeUrlMapPathMatcherEl {
     #[doc = "Set the field `header_action`.\n"]
     pub fn set_header_action(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMapPathMatcherElHeaderActionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMap_HeaderAction>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -10750,7 +9285,7 @@ impl ComputeUrlMapPathMatcherEl {
     #[doc = "Set the field `path_rule`.\n"]
     pub fn set_path_rule(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMapPathMatcherElPathRuleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMap_PathMatcher_PathRule>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -10766,7 +9301,7 @@ impl ComputeUrlMapPathMatcherEl {
     #[doc = "Set the field `route_rules`.\n"]
     pub fn set_route_rules(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMapPathMatcherElRouteRulesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMap_PathMatcher_RouteRules>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -10780,8 +9315,8 @@ impl ComputeUrlMapPathMatcherEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapPathMatcherEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapPathMatcherEl>;
+impl terrars::ToListMappable for ComputeUrlMap_PathMatcher {
+    type O = terrars::BlockAssignable<ComputeUrlMap_PathMatcher>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -10792,17 +9327,18 @@ impl terrars::ToListMappable for ComputeUrlMapPathMatcherEl {
     }
 }
 
-pub struct BuildComputeUrlMapPathMatcherEl {
+pub struct BuildComputeUrlMap_PathMatcher {
     #[doc = "The name to which this PathMatcher is referred by the HostRule."]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputeUrlMapPathMatcherEl {
-    pub fn build(self) -> ComputeUrlMapPathMatcherEl {
-        ComputeUrlMapPathMatcherEl {
+impl BuildComputeUrlMap_PathMatcher {
+    pub fn build(self) -> ComputeUrlMap_PathMatcher {
+        ComputeUrlMap_PathMatcher {
             default_service: core::default::Default::default(),
             description: core::default::Default::default(),
             name: self.name,
+            default_custom_error_response_policy: core::default::Default::default(),
             default_route_action: core::default::Default::default(),
             default_url_redirect: core::default::Default::default(),
             header_action: core::default::Default::default(),
@@ -10813,21 +9349,23 @@ impl BuildComputeUrlMapPathMatcherEl {
     }
 }
 
-pub struct ComputeUrlMapPathMatcherElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_PathMatcherRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapPathMatcherElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeUrlMapPathMatcherElRef {
-        ComputeUrlMapPathMatcherElRef {
+impl terrars::Ref for ComputeUrlMap_PathMatcherRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeUrlMap_PathMatcherRef {
+        ComputeUrlMap_PathMatcherRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapPathMatcherElRef {
+impl ComputeUrlMap_PathMatcherRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -10850,51 +9388,49 @@ impl ComputeUrlMapPathMatcherElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `default_custom_error_response_policy` after provisioning.\n"]
+    pub fn default_custom_error_response_policy(
+        &self,
+    ) -> terrars::ListRef<ComputeUrlMap_PathMatcher_DefaultCustomErrorResponsePolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.default_custom_error_response_policy", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `default_route_action` after provisioning.\n"]
-    pub fn default_route_action(&self) -> terrars::ListRef<ComputeUrlMapPathMatcherElDefaultRouteActionElRef> {
+    pub fn default_route_action(&self) -> terrars::ListRef<ComputeUrlMap_DefaultRouteActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.default_route_action", self.base))
     }
 
     #[doc = "Get a reference to the value of field `default_url_redirect` after provisioning.\n"]
-    pub fn default_url_redirect(&self) -> terrars::ListRef<ComputeUrlMapPathMatcherElDefaultUrlRedirectElRef> {
+    pub fn default_url_redirect(&self) -> terrars::ListRef<ComputeUrlMap_PathMatcher_DefaultUrlRedirectRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.default_url_redirect", self.base))
     }
 
     #[doc = "Get a reference to the value of field `header_action` after provisioning.\n"]
-    pub fn header_action(&self) -> terrars::ListRef<ComputeUrlMapPathMatcherElHeaderActionElRef> {
+    pub fn header_action(&self) -> terrars::ListRef<ComputeUrlMap_HeaderActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.header_action", self.base))
     }
 
     #[doc = "Get a reference to the value of field `path_rule` after provisioning.\n"]
-    pub fn path_rule(&self) -> terrars::ListRef<ComputeUrlMapPathMatcherElPathRuleElRef> {
+    pub fn path_rule(&self) -> terrars::ListRef<ComputeUrlMap_PathMatcher_PathRuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.path_rule", self.base))
     }
 
     #[doc = "Get a reference to the value of field `route_rules` after provisioning.\n"]
-    pub fn route_rules(&self) -> terrars::ListRef<ComputeUrlMapPathMatcherElRouteRulesElRef> {
+    pub fn route_rules(&self) -> terrars::ListRef<ComputeUrlMap_PathMatcher_RouteRulesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.route_rules", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapTestEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    description: std::option::Option<terrars::PrimField<std::string::String>>,
-    host: terrars::PrimField<std::string::String>,
-    path: terrars::PrimField<std::string::String>,
-    service: terrars::PrimField<std::string::String>,
+pub struct ComputeUrlMap_Test_Headers {
+    name: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
-impl ComputeUrlMapTestEl {
-    #[doc = "Set the field `description`.\nDescription of this test case."]
-    pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.description = std::option::Option::Some(v.into());
-        self
-    }
-}
+impl ComputeUrlMap_Test_Headers { }
 
-impl terrars::ToListMappable for ComputeUrlMapTestEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapTestEl>;
+impl terrars::ToListMappable for ComputeUrlMap_Test_Headers {
+    type O = terrars::BlockAssignable<ComputeUrlMap_Test_Headers>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -10905,41 +9441,174 @@ impl terrars::ToListMappable for ComputeUrlMapTestEl {
     }
 }
 
-pub struct BuildComputeUrlMapTestEl {
-    #[doc = "Host portion of the URL."]
-    pub host: terrars::PrimField<std::string::String>,
-    #[doc = "Path portion of the URL."]
-    pub path: terrars::PrimField<std::string::String>,
-    #[doc = "The backend service or backend bucket link that should be matched by this test."]
-    pub service: terrars::PrimField<std::string::String>,
+pub struct BuildComputeUrlMap_Test_Headers {
+    #[doc = "Header name."]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = "Header value."]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputeUrlMapTestEl {
-    pub fn build(self) -> ComputeUrlMapTestEl {
-        ComputeUrlMapTestEl {
-            description: core::default::Default::default(),
-            host: self.host,
-            path: self.path,
-            service: self.service,
+impl BuildComputeUrlMap_Test_Headers {
+    pub fn build(self) -> ComputeUrlMap_Test_Headers {
+        ComputeUrlMap_Test_Headers {
+            name: self.name,
+            value: self.value,
         }
     }
 }
 
-pub struct ComputeUrlMapTestElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_Test_HeadersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapTestElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeUrlMapTestElRef {
-        ComputeUrlMapTestElRef {
+impl terrars::Ref for ComputeUrlMap_Test_HeadersRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeUrlMap_Test_HeadersRef {
+        ComputeUrlMap_Test_HeadersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapTestElRef {
+impl ComputeUrlMap_Test_HeadersRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `name` after provisioning.\nHeader name."]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `value` after provisioning.\nHeader value."]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct ComputeUrlMap_TestDynamic {
+    headers: std::option::Option<terrars::DynamicBlock<ComputeUrlMap_Test_Headers>>,
+}
+
+#[derive(Serialize)]
+pub struct ComputeUrlMap_Test {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    description: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    expected_output_url: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    expected_redirect_response_code: std::option::Option<terrars::PrimField<f64>>,
+    host: terrars::PrimField<std::string::String>,
+    path: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    service: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    headers: std::option::Option<std::vec::Vec<ComputeUrlMap_Test_Headers>>,
+    dynamic: ComputeUrlMap_TestDynamic,
+}
+
+impl ComputeUrlMap_Test {
+    #[doc = "Set the field `description`.\nDescription of this test case."]
+    pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.description = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `expected_output_url`.\nThe expected output URL evaluated by the load balancer containing the scheme, host, path and query parameters.\n\nFor rules that forward requests to backends, the test passes only when expectedOutputUrl matches the request forwarded by the load balancer to backends. For rules with urlRewrite, the test verifies that the forwarded request matches hostRewrite and pathPrefixRewrite in the urlRewrite action. When service is specified, expectedOutputUrl's scheme is ignored.\n\nFor rules with urlRedirect, the test passes only if expectedOutputUrl matches the URL in the load balancer's redirect response. If urlRedirect specifies httpsRedirect, the test passes only if the scheme in expectedOutputUrl is also set to HTTPS. If urlRedirect specifies stripQuery, the test passes only if expectedOutputUrl does not contain any query parameters.\n\nexpectedOutputUrl is optional when service is specified."]
+    pub fn set_expected_output_url(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.expected_output_url = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `expected_redirect_response_code`.\nFor rules with urlRedirect, the test passes only if expectedRedirectResponseCode matches the HTTP status code in load balancer's redirect response.\n\nexpectedRedirectResponseCode cannot be set when service is set."]
+    pub fn set_expected_redirect_response_code(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.expected_redirect_response_code = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `service`.\nThe backend service or backend bucket link that should be matched by this test."]
+    pub fn set_service(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.service = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `headers`.\n"]
+    pub fn set_headers(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeUrlMap_Test_Headers>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.headers = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.headers = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeUrlMap_Test {
+    type O = terrars::BlockAssignable<ComputeUrlMap_Test>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeUrlMap_Test {
+    #[doc = "Host portion of the URL."]
+    pub host: terrars::PrimField<std::string::String>,
+    #[doc = "Path portion of the URL."]
+    pub path: terrars::PrimField<std::string::String>,
+}
+
+impl BuildComputeUrlMap_Test {
+    pub fn build(self) -> ComputeUrlMap_Test {
+        ComputeUrlMap_Test {
+            description: core::default::Default::default(),
+            expected_output_url: core::default::Default::default(),
+            expected_redirect_response_code: core::default::Default::default(),
+            host: self.host,
+            path: self.path,
+            service: core::default::Default::default(),
+            headers: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeUrlMap_TestRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeUrlMap_TestRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeUrlMap_TestRef {
+        ComputeUrlMap_TestRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeUrlMap_TestRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -10947,6 +9616,18 @@ impl ComputeUrlMapTestElRef {
     #[doc = "Get a reference to the value of field `description` after provisioning.\nDescription of this test case."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `expected_output_url` after provisioning.\nThe expected output URL evaluated by the load balancer containing the scheme, host, path and query parameters.\n\nFor rules that forward requests to backends, the test passes only when expectedOutputUrl matches the request forwarded by the load balancer to backends. For rules with urlRewrite, the test verifies that the forwarded request matches hostRewrite and pathPrefixRewrite in the urlRewrite action. When service is specified, expectedOutputUrl's scheme is ignored.\n\nFor rules with urlRedirect, the test passes only if expectedOutputUrl matches the URL in the load balancer's redirect response. If urlRedirect specifies httpsRedirect, the test passes only if the scheme in expectedOutputUrl is also set to HTTPS. If urlRedirect specifies stripQuery, the test passes only if expectedOutputUrl does not contain any query parameters.\n\nexpectedOutputUrl is optional when service is specified."]
+    pub fn expected_output_url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.expected_output_url", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `expected_redirect_response_code` after provisioning.\nFor rules with urlRedirect, the test passes only if expectedRedirectResponseCode matches the HTTP status code in load balancer's redirect response.\n\nexpectedRedirectResponseCode cannot be set when service is set."]
+    pub fn expected_redirect_response_code(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.expected_redirect_response_code", self.base))
     }
 
     #[doc = "Get a reference to the value of field `host` after provisioning.\nHost portion of the URL."]
@@ -10964,10 +9645,15 @@ impl ComputeUrlMapTestElRef {
     pub fn service(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.service", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `headers` after provisioning.\n"]
+    pub fn headers(&self) -> terrars::ListRef<ComputeUrlMap_Test_HeadersRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.headers", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct ComputeUrlMapTimeoutsEl {
+pub struct ComputeUrlMap_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -10976,7 +9662,7 @@ pub struct ComputeUrlMapTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeUrlMapTimeoutsEl {
+impl ComputeUrlMap_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -10996,8 +9682,8 @@ impl ComputeUrlMapTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeUrlMapTimeoutsEl {
-    type O = terrars::BlockAssignable<ComputeUrlMapTimeoutsEl>;
+impl terrars::ToListMappable for ComputeUrlMap_Timeouts {
+    type O = terrars::BlockAssignable<ComputeUrlMap_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -11008,11 +9694,11 @@ impl terrars::ToListMappable for ComputeUrlMapTimeoutsEl {
     }
 }
 
-pub struct BuildComputeUrlMapTimeoutsEl {}
+pub struct BuildComputeUrlMap_Timeouts {}
 
-impl BuildComputeUrlMapTimeoutsEl {
-    pub fn build(self) -> ComputeUrlMapTimeoutsEl {
-        ComputeUrlMapTimeoutsEl {
+impl BuildComputeUrlMap_Timeouts {
+    pub fn build(self) -> ComputeUrlMap_Timeouts {
+        ComputeUrlMap_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -11020,21 +9706,23 @@ impl BuildComputeUrlMapTimeoutsEl {
     }
 }
 
-pub struct ComputeUrlMapTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComputeUrlMap_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeUrlMapTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeUrlMapTimeoutsElRef {
-        ComputeUrlMapTimeoutsElRef {
+impl terrars::Ref for ComputeUrlMap_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeUrlMap_TimeoutsRef {
+        ComputeUrlMap_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeUrlMapTimeoutsElRef {
+impl ComputeUrlMap_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -11053,14 +9741,4 @@ impl ComputeUrlMapTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ComputeUrlMapDynamic {
-    default_route_action: std::option::Option<terrars::DynamicBlock<ComputeUrlMapDefaultRouteActionEl>>,
-    default_url_redirect: std::option::Option<terrars::DynamicBlock<ComputeUrlMapDefaultUrlRedirectEl>>,
-    header_action: std::option::Option<terrars::DynamicBlock<ComputeUrlMapHeaderActionEl>>,
-    host_rule: std::option::Option<terrars::DynamicBlock<ComputeUrlMapHostRuleEl>>,
-    path_matcher: std::option::Option<terrars::DynamicBlock<ComputeUrlMapPathMatcherEl>>,
-    test: std::option::Option<terrars::DynamicBlock<ComputeUrlMapTestEl>>,
 }

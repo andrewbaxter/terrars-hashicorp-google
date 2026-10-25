@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct FolderAccessApprovalSettingsData {
+struct FolderAccessApprovalSettingsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,22 +22,24 @@ struct FolderAccessApprovalSettingsData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     active_key_version: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     folder_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     notification_emails: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    enrolled_services: std::option::Option<std::vec::Vec<FolderAccessApprovalSettingsEnrolledServicesEl>>,
+    enrolled_services: std::option::Option<std::vec::Vec<FolderAccessApprovalSettings_EnrolledServices>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<FolderAccessApprovalSettingsTimeoutsEl>,
+    timeouts: std::option::Option<FolderAccessApprovalSettings_Timeouts>,
     dynamic: FolderAccessApprovalSettingsDynamic,
 }
 
 struct FolderAccessApprovalSettings_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<FolderAccessApprovalSettingsData>,
+    data: std::cell::RefCell<FolderAccessApprovalSettingsData_>,
 }
 
 #[derive(Clone)]
@@ -142,6 +146,13 @@ impl FolderAccessApprovalSettings {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -161,7 +172,7 @@ impl FolderAccessApprovalSettings {
     #[doc = "Set the field `enrolled_services`.\n"]
     pub fn set_enrolled_services(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<FolderAccessApprovalSettingsEnrolledServicesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<FolderAccessApprovalSettings_EnrolledServices>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -175,7 +186,7 @@ impl FolderAccessApprovalSettings {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<FolderAccessApprovalSettingsTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<FolderAccessApprovalSettings_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -193,6 +204,12 @@ impl FolderAccessApprovalSettings {
             self.shared().clone(),
             format!("{}.ancestor_has_active_key_version", self.extract_ref()),
         )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -231,8 +248,8 @@ impl FolderAccessApprovalSettings {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> FolderAccessApprovalSettingsTimeoutsElRef {
-        FolderAccessApprovalSettingsTimeoutsElRef::new(
+    pub fn timeouts(&self) -> FolderAccessApprovalSettings_TimeoutsRef {
+        FolderAccessApprovalSettings_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -281,13 +298,14 @@ impl BuildFolderAccessApprovalSettings {
         let out = FolderAccessApprovalSettings(std::rc::Rc::new(FolderAccessApprovalSettings_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(FolderAccessApprovalSettingsData {
+            data: std::cell::RefCell::new(FolderAccessApprovalSettingsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 active_key_version: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 folder_id: self.folder_id,
                 id: core::default::Default::default(),
                 notification_emails: core::default::Default::default(),
@@ -340,6 +358,12 @@ impl FolderAccessApprovalSettingsRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `enrolled_ancestor` after provisioning.\nIf the field is true, that indicates that at least one service is enrolled for Access Approval in one or more ancestors of the Folder."]
     pub fn enrolled_ancestor(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enrolled_ancestor", self.extract_ref()))
@@ -375,22 +399,27 @@ impl FolderAccessApprovalSettingsRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> FolderAccessApprovalSettingsTimeoutsElRef {
-        FolderAccessApprovalSettingsTimeoutsElRef::new(
+    pub fn timeouts(&self) -> FolderAccessApprovalSettings_TimeoutsRef {
+        FolderAccessApprovalSettings_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct FolderAccessApprovalSettingsDynamic {
+    enrolled_services: std::option::Option<terrars::DynamicBlock<FolderAccessApprovalSettings_EnrolledServices>>,
+}
+
 #[derive(Serialize)]
-pub struct FolderAccessApprovalSettingsEnrolledServicesEl {
+pub struct FolderAccessApprovalSettings_EnrolledServices {
     cloud_product: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enrollment_level: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl FolderAccessApprovalSettingsEnrolledServicesEl {
+impl FolderAccessApprovalSettings_EnrolledServices {
     #[doc =
         "Set the field `enrollment_level`.\nThe enrollment level of the service. Default value: \"BLOCK_ALL\" Possible values: [\"BLOCK_ALL\"]"]
     pub fn set_enrollment_level(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -399,8 +428,8 @@ impl FolderAccessApprovalSettingsEnrolledServicesEl {
     }
 }
 
-impl terrars::ToListMappable for FolderAccessApprovalSettingsEnrolledServicesEl {
-    type O = terrars::BlockAssignable<FolderAccessApprovalSettingsEnrolledServicesEl>;
+impl terrars::ToListMappable for FolderAccessApprovalSettings_EnrolledServices {
+    type O = terrars::BlockAssignable<FolderAccessApprovalSettings_EnrolledServices>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -411,39 +440,41 @@ impl terrars::ToListMappable for FolderAccessApprovalSettingsEnrolledServicesEl 
     }
 }
 
-pub struct BuildFolderAccessApprovalSettingsEnrolledServicesEl {
+pub struct BuildFolderAccessApprovalSettings_EnrolledServices {
     #[doc =
         "The product for which Access Approval will be enrolled. Allowed values are listed (case-sensitive):\n  * all\n  * App Engine\n  * BigQuery\n  * Cloud Bigtable\n  * Cloud Key Management Service\n  * Compute Engine\n  * Cloud Dataflow\n  * Cloud Identity and Access Management\n  * Cloud Pub/Sub\n  * Cloud Storage\n  * Persistent Disk\n\nNote: These values are supported as input, but considered a legacy format:\n  * all\n  * appengine.googleapis.com\n  * bigquery.googleapis.com\n  * bigtable.googleapis.com\n  * cloudkms.googleapis.com\n  * compute.googleapis.com\n  * dataflow.googleapis.com\n  * iam.googleapis.com\n  * pubsub.googleapis.com\n  * storage.googleapis.com"]
     pub cloud_product: terrars::PrimField<std::string::String>,
 }
 
-impl BuildFolderAccessApprovalSettingsEnrolledServicesEl {
-    pub fn build(self) -> FolderAccessApprovalSettingsEnrolledServicesEl {
-        FolderAccessApprovalSettingsEnrolledServicesEl {
+impl BuildFolderAccessApprovalSettings_EnrolledServices {
+    pub fn build(self) -> FolderAccessApprovalSettings_EnrolledServices {
+        FolderAccessApprovalSettings_EnrolledServices {
             cloud_product: self.cloud_product,
             enrollment_level: core::default::Default::default(),
         }
     }
 }
 
-pub struct FolderAccessApprovalSettingsEnrolledServicesElRef {
+#[allow(dead_code)]
+pub struct FolderAccessApprovalSettings_EnrolledServicesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FolderAccessApprovalSettingsEnrolledServicesElRef {
+impl terrars::Ref for FolderAccessApprovalSettings_EnrolledServicesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> FolderAccessApprovalSettingsEnrolledServicesElRef {
-        FolderAccessApprovalSettingsEnrolledServicesElRef {
+    ) -> FolderAccessApprovalSettings_EnrolledServicesRef {
+        FolderAccessApprovalSettings_EnrolledServicesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FolderAccessApprovalSettingsEnrolledServicesElRef {
+impl FolderAccessApprovalSettings_EnrolledServicesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -462,7 +493,7 @@ impl FolderAccessApprovalSettingsEnrolledServicesElRef {
 }
 
 #[derive(Serialize)]
-pub struct FolderAccessApprovalSettingsTimeoutsEl {
+pub struct FolderAccessApprovalSettings_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -471,7 +502,7 @@ pub struct FolderAccessApprovalSettingsTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl FolderAccessApprovalSettingsTimeoutsEl {
+impl FolderAccessApprovalSettings_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -491,8 +522,8 @@ impl FolderAccessApprovalSettingsTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for FolderAccessApprovalSettingsTimeoutsEl {
-    type O = terrars::BlockAssignable<FolderAccessApprovalSettingsTimeoutsEl>;
+impl terrars::ToListMappable for FolderAccessApprovalSettings_Timeouts {
+    type O = terrars::BlockAssignable<FolderAccessApprovalSettings_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -503,11 +534,11 @@ impl terrars::ToListMappable for FolderAccessApprovalSettingsTimeoutsEl {
     }
 }
 
-pub struct BuildFolderAccessApprovalSettingsTimeoutsEl {}
+pub struct BuildFolderAccessApprovalSettings_Timeouts {}
 
-impl BuildFolderAccessApprovalSettingsTimeoutsEl {
-    pub fn build(self) -> FolderAccessApprovalSettingsTimeoutsEl {
-        FolderAccessApprovalSettingsTimeoutsEl {
+impl BuildFolderAccessApprovalSettings_Timeouts {
+    pub fn build(self) -> FolderAccessApprovalSettings_Timeouts {
+        FolderAccessApprovalSettings_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -515,21 +546,23 @@ impl BuildFolderAccessApprovalSettingsTimeoutsEl {
     }
 }
 
-pub struct FolderAccessApprovalSettingsTimeoutsElRef {
+#[allow(dead_code)]
+pub struct FolderAccessApprovalSettings_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FolderAccessApprovalSettingsTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FolderAccessApprovalSettingsTimeoutsElRef {
-        FolderAccessApprovalSettingsTimeoutsElRef {
+impl terrars::Ref for FolderAccessApprovalSettings_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FolderAccessApprovalSettings_TimeoutsRef {
+        FolderAccessApprovalSettings_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FolderAccessApprovalSettingsTimeoutsElRef {
+impl FolderAccessApprovalSettings_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -548,9 +581,4 @@ impl FolderAccessApprovalSettingsTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct FolderAccessApprovalSettingsDynamic {
-    enrolled_services: std::option::Option<terrars::DynamicBlock<FolderAccessApprovalSettingsEnrolledServicesEl>>,
 }

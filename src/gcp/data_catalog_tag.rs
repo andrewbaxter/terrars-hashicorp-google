@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataCatalogTagData {
+struct DataCatalogTagData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,21 +23,23 @@ struct DataCatalogTagData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     column: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     parent: std::option::Option<terrars::PrimField<std::string::String>>,
     template: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    fields: std::option::Option<std::vec::Vec<DataCatalogTagFieldsEl>>,
+    fields: std::option::Option<std::vec::Vec<DataCatalogTag_Fields>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataCatalogTagTimeoutsEl>,
+    timeouts: std::option::Option<DataCatalogTag_Timeouts>,
     dynamic: DataCatalogTagDynamic,
 }
 
 struct DataCatalogTag_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataCatalogTagData>,
+    data: std::cell::RefCell<DataCatalogTagData_>,
 }
 
 #[derive(Clone)]
@@ -142,6 +146,13 @@ impl DataCatalogTag {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -156,7 +167,7 @@ impl DataCatalogTag {
     }
 
     #[doc = "Set the field `fields`.\n"]
-    pub fn set_fields(self, v: impl std::convert::Into<terrars::BlockAssignable<DataCatalogTagFieldsEl>>) -> Self {
+    pub fn set_fields(self, v: impl std::convert::Into<terrars::BlockAssignable<DataCatalogTag_Fields>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().fields = std::option::Option::Some(v);
@@ -169,7 +180,7 @@ impl DataCatalogTag {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataCatalogTagTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataCatalogTag_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -178,6 +189,12 @@ impl DataCatalogTag {
         "Get a reference to the value of field `column` after provisioning.\nResources like Entry can have schemas associated with them. This scope allows users to attach tags to an\nindividual column based on that schema.\n\nFor attaching a tag to a nested column, use '.' to separate the column names. Example:\n'outer_column.inner_column'"]
     pub fn column(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.column", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -210,8 +227,8 @@ impl DataCatalogTag {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataCatalogTagTimeoutsElRef {
-        DataCatalogTagTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataCatalogTag_TimeoutsRef {
+        DataCatalogTag_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -258,13 +275,14 @@ impl BuildDataCatalogTag {
         let out = DataCatalogTag(std::rc::Rc::new(DataCatalogTag_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataCatalogTagData {
+            data: std::cell::RefCell::new(DataCatalogTagData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 column: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 parent: core::default::Default::default(),
                 template: self.template,
@@ -307,6 +325,12 @@ impl DataCatalogTagRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.column", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -337,13 +361,18 @@ impl DataCatalogTagRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataCatalogTagTimeoutsElRef {
-        DataCatalogTagTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataCatalogTag_TimeoutsRef {
+        DataCatalogTag_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataCatalogTagDynamic {
+    fields: std::option::Option<terrars::DynamicBlock<DataCatalogTag_Fields>>,
+}
+
 #[derive(Serialize)]
-pub struct DataCatalogTagFieldsEl {
+pub struct DataCatalogTag_Fields {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bool_value: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -357,7 +386,7 @@ pub struct DataCatalogTagFieldsEl {
     timestamp_value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCatalogTagFieldsEl {
+impl DataCatalogTag_Fields {
     #[doc = "Set the field `bool_value`.\nHolds the value for a tag field with boolean type."]
     pub fn set_bool_value(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.bool_value = std::option::Option::Some(v.into());
@@ -389,8 +418,8 @@ impl DataCatalogTagFieldsEl {
     }
 }
 
-impl terrars::ToListMappable for DataCatalogTagFieldsEl {
-    type O = terrars::BlockAssignable<DataCatalogTagFieldsEl>;
+impl terrars::ToListMappable for DataCatalogTag_Fields {
+    type O = terrars::BlockAssignable<DataCatalogTag_Fields>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -401,14 +430,14 @@ impl terrars::ToListMappable for DataCatalogTagFieldsEl {
     }
 }
 
-pub struct BuildDataCatalogTagFieldsEl {
+pub struct BuildDataCatalogTag_Fields {
     #[doc = ""]
     pub field_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataCatalogTagFieldsEl {
-    pub fn build(self) -> DataCatalogTagFieldsEl {
-        DataCatalogTagFieldsEl {
+impl BuildDataCatalogTag_Fields {
+    pub fn build(self) -> DataCatalogTag_Fields {
+        DataCatalogTag_Fields {
             bool_value: core::default::Default::default(),
             double_value: core::default::Default::default(),
             enum_value: core::default::Default::default(),
@@ -419,21 +448,23 @@ impl BuildDataCatalogTagFieldsEl {
     }
 }
 
-pub struct DataCatalogTagFieldsElRef {
+#[allow(dead_code)]
+pub struct DataCatalogTag_FieldsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCatalogTagFieldsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCatalogTagFieldsElRef {
-        DataCatalogTagFieldsElRef {
+impl terrars::Ref for DataCatalogTag_FieldsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCatalogTag_FieldsRef {
+        DataCatalogTag_FieldsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCatalogTagFieldsElRef {
+impl DataCatalogTag_FieldsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -486,7 +517,7 @@ impl DataCatalogTagFieldsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCatalogTagTimeoutsEl {
+pub struct DataCatalogTag_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -495,7 +526,7 @@ pub struct DataCatalogTagTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCatalogTagTimeoutsEl {
+impl DataCatalogTag_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -515,8 +546,8 @@ impl DataCatalogTagTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataCatalogTagTimeoutsEl {
-    type O = terrars::BlockAssignable<DataCatalogTagTimeoutsEl>;
+impl terrars::ToListMappable for DataCatalogTag_Timeouts {
+    type O = terrars::BlockAssignable<DataCatalogTag_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -527,11 +558,11 @@ impl terrars::ToListMappable for DataCatalogTagTimeoutsEl {
     }
 }
 
-pub struct BuildDataCatalogTagTimeoutsEl {}
+pub struct BuildDataCatalogTag_Timeouts {}
 
-impl BuildDataCatalogTagTimeoutsEl {
-    pub fn build(self) -> DataCatalogTagTimeoutsEl {
-        DataCatalogTagTimeoutsEl {
+impl BuildDataCatalogTag_Timeouts {
+    pub fn build(self) -> DataCatalogTag_Timeouts {
+        DataCatalogTag_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -539,21 +570,23 @@ impl BuildDataCatalogTagTimeoutsEl {
     }
 }
 
-pub struct DataCatalogTagTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataCatalogTag_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCatalogTagTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCatalogTagTimeoutsElRef {
-        DataCatalogTagTimeoutsElRef {
+impl terrars::Ref for DataCatalogTag_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCatalogTag_TimeoutsRef {
+        DataCatalogTag_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCatalogTagTimeoutsElRef {
+impl DataCatalogTag_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -572,9 +605,4 @@ impl DataCatalogTagTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataCatalogTagDynamic {
-    fields: std::option::Option<terrars::DynamicBlock<DataCatalogTagFieldsEl>>,
 }

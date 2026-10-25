@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct GkeBackupRestorePlanData {
+struct GkeBackupRestorePlanData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,6 +23,8 @@ struct GkeBackupRestorePlanData {
     backup_plan: terrars::PrimField<std::string::String>,
     cluster: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -31,16 +35,16 @@ struct GkeBackupRestorePlanData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    restore_config: std::option::Option<std::vec::Vec<GkeBackupRestorePlanRestoreConfigEl>>,
+    restore_config: std::option::Option<std::vec::Vec<GkeBackupRestorePlan_RestoreConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<GkeBackupRestorePlanTimeoutsEl>,
+    timeouts: std::option::Option<GkeBackupRestorePlan_Timeouts>,
     dynamic: GkeBackupRestorePlanDynamic,
 }
 
 struct GkeBackupRestorePlan_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<GkeBackupRestorePlanData>,
+    data: std::cell::RefCell<GkeBackupRestorePlanData_>,
 }
 
 #[derive(Clone)]
@@ -140,6 +144,13 @@ impl GkeBackupRestorePlan {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nUser specified descriptive string for this RestorePlan."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -171,7 +182,7 @@ impl GkeBackupRestorePlan {
     #[doc = "Set the field `restore_config`.\n"]
     pub fn set_restore_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeBackupRestorePlanRestoreConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeBackupRestorePlan_RestoreConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -185,7 +196,7 @@ impl GkeBackupRestorePlan {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<GkeBackupRestorePlanTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<GkeBackupRestorePlan_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -197,9 +208,15 @@ impl GkeBackupRestorePlan {
     }
 
     #[doc =
-        "Get a reference to the value of field `cluster` after provisioning.\nThe source cluster from which Restores will be created via this RestorePlan."]
+        "Get a reference to the value of field `cluster` after provisioning.\nThe name of the target cluster to which you want to Restore via this RestorePlan."]
     pub fn cluster(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -265,13 +282,13 @@ impl GkeBackupRestorePlan {
     }
 
     #[doc = "Get a reference to the value of field `restore_config` after provisioning.\n"]
-    pub fn restore_config(&self) -> terrars::ListRef<GkeBackupRestorePlanRestoreConfigElRef> {
+    pub fn restore_config(&self) -> terrars::ListRef<GkeBackupRestorePlan_RestoreConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.restore_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> GkeBackupRestorePlanTimeoutsElRef {
-        GkeBackupRestorePlanTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> GkeBackupRestorePlan_TimeoutsRef {
+        GkeBackupRestorePlan_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -311,7 +328,7 @@ pub struct BuildGkeBackupRestorePlan {
     #[doc =
         "A reference to the BackupPlan from which Backups may be used\nas the source for Restores created via this RestorePlan."]
     pub backup_plan: terrars::PrimField<std::string::String>,
-    #[doc = "The source cluster from which Restores will be created via this RestorePlan."]
+    #[doc = "The name of the target cluster to which you want to Restore via this RestorePlan."]
     pub cluster: terrars::PrimField<std::string::String>,
     #[doc = "The region of the Restore Plan."]
     pub location: terrars::PrimField<std::string::String>,
@@ -324,7 +341,7 @@ impl BuildGkeBackupRestorePlan {
         let out = GkeBackupRestorePlan(std::rc::Rc::new(GkeBackupRestorePlan_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(GkeBackupRestorePlanData {
+            data: std::cell::RefCell::new(GkeBackupRestorePlanData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -332,6 +349,7 @@ impl BuildGkeBackupRestorePlan {
                 provisioner: core::default::Default::default(),
                 backup_plan: self.backup_plan,
                 cluster: self.cluster,
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 labels: core::default::Default::default(),
@@ -378,9 +396,15 @@ impl GkeBackupRestorePlanRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `cluster` after provisioning.\nThe source cluster from which Restores will be created via this RestorePlan."]
+        "Get a reference to the value of field `cluster` after provisioning.\nThe name of the target cluster to which you want to Restore via this RestorePlan."]
     pub fn cluster(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -446,25 +470,30 @@ impl GkeBackupRestorePlanRef {
     }
 
     #[doc = "Get a reference to the value of field `restore_config` after provisioning.\n"]
-    pub fn restore_config(&self) -> terrars::ListRef<GkeBackupRestorePlanRestoreConfigElRef> {
+    pub fn restore_config(&self) -> terrars::ListRef<GkeBackupRestorePlan_RestoreConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.restore_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> GkeBackupRestorePlanTimeoutsElRef {
-        GkeBackupRestorePlanTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> GkeBackupRestorePlan_TimeoutsRef {
+        GkeBackupRestorePlan_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct GkeBackupRestorePlanDynamic {
+    restore_config: std::option::Option<terrars::DynamicBlock<GkeBackupRestorePlan_RestoreConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElExcludedGroupKindsEl {
+pub struct GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope_ExcludedGroupKinds {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resource_group: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resource_kind: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElExcludedGroupKindsEl {
+impl GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope_ExcludedGroupKinds {
     #[doc =
         "Set the field `resource_group`.\nAPI Group string of a Kubernetes resource, e.g.\n\"apiextensions.k8s.io\", \"storage.k8s.io\", etc.\nUse empty string for core group."]
     pub fn set_resource_group(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -480,10 +509,9 @@ impl GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElExcludedGro
     }
 }
 
-impl terrars::ToListMappable for GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElExcludedGroupKindsEl {
+impl terrars::ToListMappable for GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope_ExcludedGroupKinds {
     type O =
-        terrars
-        ::BlockAssignable<GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElExcludedGroupKindsEl>;
+        terrars::BlockAssignable<GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope_ExcludedGroupKinds>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -494,35 +522,37 @@ impl terrars::ToListMappable for GkeBackupRestorePlanRestoreConfigElClusterResou
     }
 }
 
-pub struct BuildGkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElExcludedGroupKindsEl {}
+pub struct BuildGkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope_ExcludedGroupKinds {}
 
-impl BuildGkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElExcludedGroupKindsEl {
-    pub fn build(self) -> GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElExcludedGroupKindsEl {
-        GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElExcludedGroupKindsEl {
+impl BuildGkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope_ExcludedGroupKinds {
+    pub fn build(self) -> GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope_ExcludedGroupKinds {
+        GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope_ExcludedGroupKinds {
             resource_group: core::default::Default::default(),
             resource_kind: core::default::Default::default(),
         }
     }
 }
 
-pub struct GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElExcludedGroupKindsElRef {
+#[allow(dead_code)]
+pub struct GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope_ExcludedGroupKindsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElExcludedGroupKindsElRef {
+impl terrars::Ref for GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope_ExcludedGroupKindsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElExcludedGroupKindsElRef {
-        GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElExcludedGroupKindsElRef {
+    ) -> GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope_ExcludedGroupKindsRef {
+        GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope_ExcludedGroupKindsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElExcludedGroupKindsElRef {
+impl GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope_ExcludedGroupKindsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -541,14 +571,14 @@ impl GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElExcludedGro
 }
 
 #[derive(Serialize)]
-pub struct GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElSelectedGroupKindsEl {
+pub struct GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope_SelectedGroupKinds {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resource_group: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resource_kind: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElSelectedGroupKindsEl {
+impl GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope_SelectedGroupKinds {
     #[doc =
         "Set the field `resource_group`.\nAPI Group string of a Kubernetes resource, e.g.\n\"apiextensions.k8s.io\", \"storage.k8s.io\", etc.\nUse empty string for core group."]
     pub fn set_resource_group(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -564,10 +594,9 @@ impl GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElSelectedGro
     }
 }
 
-impl terrars::ToListMappable for GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElSelectedGroupKindsEl {
+impl terrars::ToListMappable for GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope_SelectedGroupKinds {
     type O =
-        terrars
-        ::BlockAssignable<GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElSelectedGroupKindsEl>;
+        terrars::BlockAssignable<GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope_SelectedGroupKinds>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -578,35 +607,37 @@ impl terrars::ToListMappable for GkeBackupRestorePlanRestoreConfigElClusterResou
     }
 }
 
-pub struct BuildGkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElSelectedGroupKindsEl {}
+pub struct BuildGkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope_SelectedGroupKinds {}
 
-impl BuildGkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElSelectedGroupKindsEl {
-    pub fn build(self) -> GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElSelectedGroupKindsEl {
-        GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElSelectedGroupKindsEl {
+impl BuildGkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope_SelectedGroupKinds {
+    pub fn build(self) -> GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope_SelectedGroupKinds {
+        GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope_SelectedGroupKinds {
             resource_group: core::default::Default::default(),
             resource_kind: core::default::Default::default(),
         }
     }
 }
 
-pub struct GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElSelectedGroupKindsElRef {
+#[allow(dead_code)]
+pub struct GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope_SelectedGroupKindsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElSelectedGroupKindsElRef {
+impl terrars::Ref for GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope_SelectedGroupKindsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElSelectedGroupKindsElRef {
-        GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElSelectedGroupKindsElRef {
+    ) -> GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope_SelectedGroupKindsRef {
+        GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope_SelectedGroupKindsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElSelectedGroupKindsElRef {
+impl GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope_SelectedGroupKindsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -625,21 +656,21 @@ impl GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElSelectedGro
 }
 
 #[derive(Serialize, Default)]
-struct GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElDynamic {
+struct GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScopeDynamic {
     excluded_group_kinds: std
     ::option
     ::Option<
-        terrars::DynamicBlock<GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElExcludedGroupKindsEl>,
+        terrars::DynamicBlock<GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope_ExcludedGroupKinds>,
     >,
     selected_group_kinds: std
     ::option
     ::Option<
-        terrars::DynamicBlock<GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElSelectedGroupKindsEl>,
+        terrars::DynamicBlock<GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope_SelectedGroupKinds>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeEl {
+pub struct GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     all_group_kinds: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -647,15 +678,15 @@ pub struct GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     excluded_group_kinds: std
     ::option
-    ::Option<std::vec::Vec<GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElExcludedGroupKindsEl>>,
+    ::Option<std::vec::Vec<GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope_ExcludedGroupKinds>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     selected_group_kinds: std
     ::option
-    ::Option<std::vec::Vec<GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElSelectedGroupKindsEl>>,
-    dynamic: GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElDynamic,
+    ::Option<std::vec::Vec<GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope_SelectedGroupKinds>>,
+    dynamic: GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScopeDynamic,
 }
 
-impl GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeEl {
+impl GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope {
     #[doc =
         "Set the field `all_group_kinds`.\nIf True, all valid cluster-scoped resources will be restored.\nMutually exclusive to any other field in 'clusterResourceRestoreScope'."]
     pub fn set_all_group_kinds(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -681,7 +712,7 @@ impl GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElExcludedGroupKindsEl,
+                            GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope_ExcludedGroupKinds,
                         >,
                     >,
     ) -> Self {
@@ -707,7 +738,7 @@ impl GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElSelectedGroupKindsEl,
+                            GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope_SelectedGroupKinds,
                         >,
                     >,
     ) -> Self {
@@ -723,8 +754,8 @@ impl GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeEl {
     }
 }
 
-impl terrars::ToListMappable for GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeEl {
-    type O = terrars::BlockAssignable<GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeEl>;
+impl terrars::ToListMappable for GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope {
+    type O = terrars::BlockAssignable<GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -735,11 +766,11 @@ impl terrars::ToListMappable for GkeBackupRestorePlanRestoreConfigElClusterResou
     }
 }
 
-pub struct BuildGkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeEl {}
+pub struct BuildGkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope {}
 
-impl BuildGkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeEl {
-    pub fn build(self) -> GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeEl {
-        GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeEl {
+impl BuildGkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope {
+    pub fn build(self) -> GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope {
+        GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope {
             all_group_kinds: core::default::Default::default(),
             no_group_kinds: core::default::Default::default(),
             excluded_group_kinds: core::default::Default::default(),
@@ -749,24 +780,26 @@ impl BuildGkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeEl {
     }
 }
 
-pub struct GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElRef {
+#[allow(dead_code)]
+pub struct GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScopeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElRef {
+impl terrars::Ref for GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScopeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElRef {
-        GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElRef {
+    ) -> GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScopeRef {
+        GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScopeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElRef {
+impl GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScopeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -786,27 +819,27 @@ impl GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElRef {
     #[doc = "Get a reference to the value of field `excluded_group_kinds` after provisioning.\n"]
     pub fn excluded_group_kinds(
         &self,
-    ) -> terrars::ListRef<GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElExcludedGroupKindsElRef> {
+    ) -> terrars::ListRef<GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope_ExcludedGroupKindsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.excluded_group_kinds", self.base))
     }
 
     #[doc = "Get a reference to the value of field `selected_group_kinds` after provisioning.\n"]
     pub fn selected_group_kinds(
         &self,
-    ) -> terrars::ListRef<GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElSelectedGroupKindsElRef> {
+    ) -> terrars::ListRef<GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope_SelectedGroupKindsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.selected_group_kinds", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct GkeBackupRestorePlanRestoreConfigElExcludedNamespacesEl {
+pub struct GkeBackupRestorePlan_RestoreConfig_ExcludedNamespaces {
     namespaces: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeBackupRestorePlanRestoreConfigElExcludedNamespacesEl { }
+impl GkeBackupRestorePlan_RestoreConfig_ExcludedNamespaces { }
 
-impl terrars::ToListMappable for GkeBackupRestorePlanRestoreConfigElExcludedNamespacesEl {
-    type O = terrars::BlockAssignable<GkeBackupRestorePlanRestoreConfigElExcludedNamespacesEl>;
+impl terrars::ToListMappable for GkeBackupRestorePlan_RestoreConfig_ExcludedNamespaces {
+    type O = terrars::BlockAssignable<GkeBackupRestorePlan_RestoreConfig_ExcludedNamespaces>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -817,35 +850,37 @@ impl terrars::ToListMappable for GkeBackupRestorePlanRestoreConfigElExcludedName
     }
 }
 
-pub struct BuildGkeBackupRestorePlanRestoreConfigElExcludedNamespacesEl {
+pub struct BuildGkeBackupRestorePlan_RestoreConfig_ExcludedNamespaces {
     #[doc = "A list of Kubernetes Namespaces."]
     pub namespaces: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildGkeBackupRestorePlanRestoreConfigElExcludedNamespacesEl {
-    pub fn build(self) -> GkeBackupRestorePlanRestoreConfigElExcludedNamespacesEl {
-        GkeBackupRestorePlanRestoreConfigElExcludedNamespacesEl { namespaces: self.namespaces }
+impl BuildGkeBackupRestorePlan_RestoreConfig_ExcludedNamespaces {
+    pub fn build(self) -> GkeBackupRestorePlan_RestoreConfig_ExcludedNamespaces {
+        GkeBackupRestorePlan_RestoreConfig_ExcludedNamespaces { namespaces: self.namespaces }
     }
 }
 
-pub struct GkeBackupRestorePlanRestoreConfigElExcludedNamespacesElRef {
+#[allow(dead_code)]
+pub struct GkeBackupRestorePlan_RestoreConfig_ExcludedNamespacesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeBackupRestorePlanRestoreConfigElExcludedNamespacesElRef {
+impl terrars::Ref for GkeBackupRestorePlan_RestoreConfig_ExcludedNamespacesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeBackupRestorePlanRestoreConfigElExcludedNamespacesElRef {
-        GkeBackupRestorePlanRestoreConfigElExcludedNamespacesElRef {
+    ) -> GkeBackupRestorePlan_RestoreConfig_ExcludedNamespacesRef {
+        GkeBackupRestorePlan_RestoreConfig_ExcludedNamespacesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeBackupRestorePlanRestoreConfigElExcludedNamespacesElRef {
+impl GkeBackupRestorePlan_RestoreConfig_ExcludedNamespacesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -857,15 +892,32 @@ impl GkeBackupRestorePlanRestoreConfigElExcludedNamespacesElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeBackupRestorePlanRestoreConfigElSelectedApplicationsElNamespacedNamesEl {
-    name: terrars::PrimField<std::string::String>,
-    namespace: terrars::PrimField<std::string::String>,
+pub struct GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies_Requiring {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_group: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_kind: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeBackupRestorePlanRestoreConfigElSelectedApplicationsElNamespacedNamesEl { }
+impl GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies_Requiring {
+    #[doc =
+        "Set the field `resource_group`.\nAPI Group of a Kubernetes resource, e.g.\n\"apiextensions.k8s.io\", \"storage.k8s.io\", etc.\nUse empty string for core group."]
+    pub fn set_resource_group(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.resource_group = std::option::Option::Some(v.into());
+        self
+    }
 
-impl terrars::ToListMappable for GkeBackupRestorePlanRestoreConfigElSelectedApplicationsElNamespacedNamesEl {
-    type O = terrars::BlockAssignable<GkeBackupRestorePlanRestoreConfigElSelectedApplicationsElNamespacedNamesEl>;
+    #[doc =
+        "Set the field `resource_kind`.\nKind of a Kubernetes resource, e.g.\n\"CustomResourceDefinition\", \"StorageClass\", etc."]
+    pub fn set_resource_kind(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.resource_kind = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies_Requiring {
+    type O =
+        terrars::BlockAssignable<GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies_Requiring>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -876,40 +928,434 @@ impl terrars::ToListMappable for GkeBackupRestorePlanRestoreConfigElSelectedAppl
     }
 }
 
-pub struct BuildGkeBackupRestorePlanRestoreConfigElSelectedApplicationsElNamespacedNamesEl {
-    #[doc = "The name of a Kubernetes Resource."]
-    pub name: terrars::PrimField<std::string::String>,
-    #[doc = "The namespace of a Kubernetes Resource."]
-    pub namespace: terrars::PrimField<std::string::String>,
-}
+pub struct BuildGkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies_Requiring {}
 
-impl BuildGkeBackupRestorePlanRestoreConfigElSelectedApplicationsElNamespacedNamesEl {
-    pub fn build(self) -> GkeBackupRestorePlanRestoreConfigElSelectedApplicationsElNamespacedNamesEl {
-        GkeBackupRestorePlanRestoreConfigElSelectedApplicationsElNamespacedNamesEl {
-            name: self.name,
-            namespace: self.namespace,
+impl BuildGkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies_Requiring {
+    pub fn build(self) -> GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies_Requiring {
+        GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies_Requiring {
+            resource_group: core::default::Default::default(),
+            resource_kind: core::default::Default::default(),
         }
     }
 }
 
-pub struct GkeBackupRestorePlanRestoreConfigElSelectedApplicationsElNamespacedNamesElRef {
+#[allow(dead_code)]
+pub struct GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies_RequiringRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeBackupRestorePlanRestoreConfigElSelectedApplicationsElNamespacedNamesElRef {
+impl terrars::Ref for GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies_RequiringRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeBackupRestorePlanRestoreConfigElSelectedApplicationsElNamespacedNamesElRef {
-        GkeBackupRestorePlanRestoreConfigElSelectedApplicationsElNamespacedNamesElRef {
+    ) -> GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies_RequiringRef {
+        GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies_RequiringRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeBackupRestorePlanRestoreConfigElSelectedApplicationsElNamespacedNamesElRef {
+impl GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies_RequiringRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `resource_group` after provisioning.\nAPI Group of a Kubernetes resource, e.g.\n\"apiextensions.k8s.io\", \"storage.k8s.io\", etc.\nUse empty string for core group."]
+    pub fn resource_group(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_group", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `resource_kind` after provisioning.\nKind of a Kubernetes resource, e.g.\n\"CustomResourceDefinition\", \"StorageClass\", etc."]
+    pub fn resource_kind(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_kind", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies_Satisfying {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_group: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_kind: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies_Satisfying {
+    #[doc =
+        "Set the field `resource_group`.\nAPI Group of a Kubernetes resource, e.g.\n\"apiextensions.k8s.io\", \"storage.k8s.io\", etc.\nUse empty string for core group."]
+    pub fn set_resource_group(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.resource_group = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `resource_kind`.\nKind of a Kubernetes resource, e.g.\n\"CustomResourceDefinition\", \"StorageClass\", etc."]
+    pub fn set_resource_kind(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.resource_kind = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies_Satisfying {
+    type O =
+        terrars::BlockAssignable<GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies_Satisfying>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildGkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies_Satisfying {}
+
+impl BuildGkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies_Satisfying {
+    pub fn build(self) -> GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies_Satisfying {
+        GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies_Satisfying {
+            resource_group: core::default::Default::default(),
+            resource_kind: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies_SatisfyingRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies_SatisfyingRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies_SatisfyingRef {
+        GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies_SatisfyingRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies_SatisfyingRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `resource_group` after provisioning.\nAPI Group of a Kubernetes resource, e.g.\n\"apiextensions.k8s.io\", \"storage.k8s.io\", etc.\nUse empty string for core group."]
+    pub fn resource_group(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_group", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `resource_kind` after provisioning.\nKind of a Kubernetes resource, e.g.\n\"CustomResourceDefinition\", \"StorageClass\", etc."]
+    pub fn resource_kind(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_kind", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependenciesDynamic {
+    requiring: std
+    ::option
+    ::Option<terrars::DynamicBlock<GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies_Requiring>>,
+    satisfying: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies_Satisfying>,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    requiring: std
+    ::option
+    ::Option<std::vec::Vec<GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies_Requiring>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    satisfying: std
+    ::option
+    ::Option<std::vec::Vec<GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies_Satisfying>>,
+    dynamic: GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependenciesDynamic,
+}
+
+impl GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies {
+    #[doc = "Set the field `requiring`.\n"]
+    pub fn set_requiring(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies_Requiring,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.requiring = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.requiring = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `satisfying`.\n"]
+    pub fn set_satisfying(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies_Satisfying,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.satisfying = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.satisfying = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies {
+    type O = terrars::BlockAssignable<GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildGkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies {}
+
+impl BuildGkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies {
+    pub fn build(self) -> GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies {
+        GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies {
+            requiring: core::default::Default::default(),
+            satisfying: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependenciesRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependenciesRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependenciesRef {
+        GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependenciesRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependenciesRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `requiring` after provisioning.\n"]
+    pub fn requiring(
+        &self,
+    ) -> terrars::ListRef<GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies_RequiringRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.requiring", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `satisfying` after provisioning.\n"]
+    pub fn satisfying(
+        &self,
+    ) -> terrars::ListRef<GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies_SatisfyingRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.satisfying", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct GkeBackupRestorePlan_RestoreConfig_RestoreOrderDynamic {
+    group_kind_dependencies: std
+    ::option
+    ::Option<terrars::DynamicBlock<GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies>>,
+}
+
+#[derive(Serialize)]
+pub struct GkeBackupRestorePlan_RestoreConfig_RestoreOrder {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    group_kind_dependencies: std
+    ::option
+    ::Option<std::vec::Vec<GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies>>,
+    dynamic: GkeBackupRestorePlan_RestoreConfig_RestoreOrderDynamic,
+}
+
+impl GkeBackupRestorePlan_RestoreConfig_RestoreOrder {
+    #[doc = "Set the field `group_kind_dependencies`.\n"]
+    pub fn set_group_kind_dependencies(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependencies>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.group_kind_dependencies = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.group_kind_dependencies = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for GkeBackupRestorePlan_RestoreConfig_RestoreOrder {
+    type O = terrars::BlockAssignable<GkeBackupRestorePlan_RestoreConfig_RestoreOrder>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildGkeBackupRestorePlan_RestoreConfig_RestoreOrder {}
+
+impl BuildGkeBackupRestorePlan_RestoreConfig_RestoreOrder {
+    pub fn build(self) -> GkeBackupRestorePlan_RestoreConfig_RestoreOrder {
+        GkeBackupRestorePlan_RestoreConfig_RestoreOrder {
+            group_kind_dependencies: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct GkeBackupRestorePlan_RestoreConfig_RestoreOrderRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for GkeBackupRestorePlan_RestoreConfig_RestoreOrderRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GkeBackupRestorePlan_RestoreConfig_RestoreOrderRef {
+        GkeBackupRestorePlan_RestoreConfig_RestoreOrderRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl GkeBackupRestorePlan_RestoreConfig_RestoreOrderRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `group_kind_dependencies` after provisioning.\n"]
+    pub fn group_kind_dependencies(
+        &self,
+    ) -> terrars::ListRef<GkeBackupRestorePlan_RestoreConfig_RestoreOrder_GroupKindDependenciesRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.group_kind_dependencies", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct GkeBackupRestorePlan_RestoreConfig_SelectedApplications_NamespacedNames {
+    name: terrars::PrimField<std::string::String>,
+    namespace: terrars::PrimField<std::string::String>,
+}
+
+impl GkeBackupRestorePlan_RestoreConfig_SelectedApplications_NamespacedNames { }
+
+impl terrars::ToListMappable for GkeBackupRestorePlan_RestoreConfig_SelectedApplications_NamespacedNames {
+    type O = terrars::BlockAssignable<GkeBackupRestorePlan_RestoreConfig_SelectedApplications_NamespacedNames>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildGkeBackupRestorePlan_RestoreConfig_SelectedApplications_NamespacedNames {
+    #[doc = "The name of a Kubernetes Resource."]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = "The namespace of a Kubernetes Resource."]
+    pub namespace: terrars::PrimField<std::string::String>,
+}
+
+impl BuildGkeBackupRestorePlan_RestoreConfig_SelectedApplications_NamespacedNames {
+    pub fn build(self) -> GkeBackupRestorePlan_RestoreConfig_SelectedApplications_NamespacedNames {
+        GkeBackupRestorePlan_RestoreConfig_SelectedApplications_NamespacedNames {
+            name: self.name,
+            namespace: self.namespace,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct GkeBackupRestorePlan_RestoreConfig_SelectedApplications_NamespacedNamesRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for GkeBackupRestorePlan_RestoreConfig_SelectedApplications_NamespacedNamesRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GkeBackupRestorePlan_RestoreConfig_SelectedApplications_NamespacedNamesRef {
+        GkeBackupRestorePlan_RestoreConfig_SelectedApplications_NamespacedNamesRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl GkeBackupRestorePlan_RestoreConfig_SelectedApplications_NamespacedNamesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -927,22 +1373,22 @@ impl GkeBackupRestorePlanRestoreConfigElSelectedApplicationsElNamespacedNamesElR
 }
 
 #[derive(Serialize, Default)]
-struct GkeBackupRestorePlanRestoreConfigElSelectedApplicationsElDynamic {
+struct GkeBackupRestorePlan_RestoreConfig_SelectedApplicationsDynamic {
     namespaced_names: std
     ::option
-    ::Option<terrars::DynamicBlock<GkeBackupRestorePlanRestoreConfigElSelectedApplicationsElNamespacedNamesEl>>,
+    ::Option<terrars::DynamicBlock<GkeBackupRestorePlan_RestoreConfig_SelectedApplications_NamespacedNames>>,
 }
 
 #[derive(Serialize)]
-pub struct GkeBackupRestorePlanRestoreConfigElSelectedApplicationsEl {
+pub struct GkeBackupRestorePlan_RestoreConfig_SelectedApplications {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     namespaced_names: std
     ::option
-    ::Option<std::vec::Vec<GkeBackupRestorePlanRestoreConfigElSelectedApplicationsElNamespacedNamesEl>>,
-    dynamic: GkeBackupRestorePlanRestoreConfigElSelectedApplicationsElDynamic,
+    ::Option<std::vec::Vec<GkeBackupRestorePlan_RestoreConfig_SelectedApplications_NamespacedNames>>,
+    dynamic: GkeBackupRestorePlan_RestoreConfig_SelectedApplicationsDynamic,
 }
 
-impl GkeBackupRestorePlanRestoreConfigElSelectedApplicationsEl {
+impl GkeBackupRestorePlan_RestoreConfig_SelectedApplications {
     #[doc = "Set the field `namespaced_names`.\n"]
     pub fn set_namespaced_names(
         mut self,
@@ -953,7 +1399,7 @@ impl GkeBackupRestorePlanRestoreConfigElSelectedApplicationsEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<GkeBackupRestorePlanRestoreConfigElSelectedApplicationsElNamespacedNamesEl>,
+                        ::BlockAssignable<GkeBackupRestorePlan_RestoreConfig_SelectedApplications_NamespacedNames>,
                     >,
     ) -> Self {
         match v.into() {
@@ -968,8 +1414,8 @@ impl GkeBackupRestorePlanRestoreConfigElSelectedApplicationsEl {
     }
 }
 
-impl terrars::ToListMappable for GkeBackupRestorePlanRestoreConfigElSelectedApplicationsEl {
-    type O = terrars::BlockAssignable<GkeBackupRestorePlanRestoreConfigElSelectedApplicationsEl>;
+impl terrars::ToListMappable for GkeBackupRestorePlan_RestoreConfig_SelectedApplications {
+    type O = terrars::BlockAssignable<GkeBackupRestorePlan_RestoreConfig_SelectedApplications>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -980,35 +1426,37 @@ impl terrars::ToListMappable for GkeBackupRestorePlanRestoreConfigElSelectedAppl
     }
 }
 
-pub struct BuildGkeBackupRestorePlanRestoreConfigElSelectedApplicationsEl {}
+pub struct BuildGkeBackupRestorePlan_RestoreConfig_SelectedApplications {}
 
-impl BuildGkeBackupRestorePlanRestoreConfigElSelectedApplicationsEl {
-    pub fn build(self) -> GkeBackupRestorePlanRestoreConfigElSelectedApplicationsEl {
-        GkeBackupRestorePlanRestoreConfigElSelectedApplicationsEl {
+impl BuildGkeBackupRestorePlan_RestoreConfig_SelectedApplications {
+    pub fn build(self) -> GkeBackupRestorePlan_RestoreConfig_SelectedApplications {
+        GkeBackupRestorePlan_RestoreConfig_SelectedApplications {
             namespaced_names: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct GkeBackupRestorePlanRestoreConfigElSelectedApplicationsElRef {
+#[allow(dead_code)]
+pub struct GkeBackupRestorePlan_RestoreConfig_SelectedApplicationsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeBackupRestorePlanRestoreConfigElSelectedApplicationsElRef {
+impl terrars::Ref for GkeBackupRestorePlan_RestoreConfig_SelectedApplicationsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeBackupRestorePlanRestoreConfigElSelectedApplicationsElRef {
-        GkeBackupRestorePlanRestoreConfigElSelectedApplicationsElRef {
+    ) -> GkeBackupRestorePlan_RestoreConfig_SelectedApplicationsRef {
+        GkeBackupRestorePlan_RestoreConfig_SelectedApplicationsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeBackupRestorePlanRestoreConfigElSelectedApplicationsElRef {
+impl GkeBackupRestorePlan_RestoreConfig_SelectedApplicationsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1016,20 +1464,20 @@ impl GkeBackupRestorePlanRestoreConfigElSelectedApplicationsElRef {
     #[doc = "Get a reference to the value of field `namespaced_names` after provisioning.\n"]
     pub fn namespaced_names(
         &self,
-    ) -> terrars::ListRef<GkeBackupRestorePlanRestoreConfigElSelectedApplicationsElNamespacedNamesElRef> {
+    ) -> terrars::ListRef<GkeBackupRestorePlan_RestoreConfig_SelectedApplications_NamespacedNamesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.namespaced_names", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct GkeBackupRestorePlanRestoreConfigElSelectedNamespacesEl {
+pub struct GkeBackupRestorePlan_RestoreConfig_SelectedNamespaces {
     namespaces: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeBackupRestorePlanRestoreConfigElSelectedNamespacesEl { }
+impl GkeBackupRestorePlan_RestoreConfig_SelectedNamespaces { }
 
-impl terrars::ToListMappable for GkeBackupRestorePlanRestoreConfigElSelectedNamespacesEl {
-    type O = terrars::BlockAssignable<GkeBackupRestorePlanRestoreConfigElSelectedNamespacesEl>;
+impl terrars::ToListMappable for GkeBackupRestorePlan_RestoreConfig_SelectedNamespaces {
+    type O = terrars::BlockAssignable<GkeBackupRestorePlan_RestoreConfig_SelectedNamespaces>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1040,35 +1488,37 @@ impl terrars::ToListMappable for GkeBackupRestorePlanRestoreConfigElSelectedName
     }
 }
 
-pub struct BuildGkeBackupRestorePlanRestoreConfigElSelectedNamespacesEl {
+pub struct BuildGkeBackupRestorePlan_RestoreConfig_SelectedNamespaces {
     #[doc = "A list of Kubernetes Namespaces."]
     pub namespaces: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildGkeBackupRestorePlanRestoreConfigElSelectedNamespacesEl {
-    pub fn build(self) -> GkeBackupRestorePlanRestoreConfigElSelectedNamespacesEl {
-        GkeBackupRestorePlanRestoreConfigElSelectedNamespacesEl { namespaces: self.namespaces }
+impl BuildGkeBackupRestorePlan_RestoreConfig_SelectedNamespaces {
+    pub fn build(self) -> GkeBackupRestorePlan_RestoreConfig_SelectedNamespaces {
+        GkeBackupRestorePlan_RestoreConfig_SelectedNamespaces { namespaces: self.namespaces }
     }
 }
 
-pub struct GkeBackupRestorePlanRestoreConfigElSelectedNamespacesElRef {
+#[allow(dead_code)]
+pub struct GkeBackupRestorePlan_RestoreConfig_SelectedNamespacesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeBackupRestorePlanRestoreConfigElSelectedNamespacesElRef {
+impl terrars::Ref for GkeBackupRestorePlan_RestoreConfig_SelectedNamespacesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeBackupRestorePlanRestoreConfigElSelectedNamespacesElRef {
-        GkeBackupRestorePlanRestoreConfigElSelectedNamespacesElRef {
+    ) -> GkeBackupRestorePlan_RestoreConfig_SelectedNamespacesRef {
+        GkeBackupRestorePlan_RestoreConfig_SelectedNamespacesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeBackupRestorePlanRestoreConfigElSelectedNamespacesElRef {
+impl GkeBackupRestorePlan_RestoreConfig_SelectedNamespacesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1080,7 +1530,7 @@ impl GkeBackupRestorePlanRestoreConfigElSelectedNamespacesElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeBackupRestorePlanRestoreConfigElTransformationRulesElFieldActionsEl {
+pub struct GkeBackupRestorePlan_RestoreConfig_TransformationRules_FieldActions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     from_path: std::option::Option<terrars::PrimField<std::string::String>>,
     op: terrars::PrimField<std::string::String>,
@@ -1090,7 +1540,7 @@ pub struct GkeBackupRestorePlanRestoreConfigElTransformationRulesElFieldActionsE
     value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeBackupRestorePlanRestoreConfigElTransformationRulesElFieldActionsEl {
+impl GkeBackupRestorePlan_RestoreConfig_TransformationRules_FieldActions {
     #[doc =
         "Set the field `from_path`.\nA string containing a JSON Pointer value that references the\nlocation in the target document to move the value from."]
     pub fn set_from_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1113,8 +1563,8 @@ impl GkeBackupRestorePlanRestoreConfigElTransformationRulesElFieldActionsEl {
     }
 }
 
-impl terrars::ToListMappable for GkeBackupRestorePlanRestoreConfigElTransformationRulesElFieldActionsEl {
-    type O = terrars::BlockAssignable<GkeBackupRestorePlanRestoreConfigElTransformationRulesElFieldActionsEl>;
+impl terrars::ToListMappable for GkeBackupRestorePlan_RestoreConfig_TransformationRules_FieldActions {
+    type O = terrars::BlockAssignable<GkeBackupRestorePlan_RestoreConfig_TransformationRules_FieldActions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1125,15 +1575,15 @@ impl terrars::ToListMappable for GkeBackupRestorePlanRestoreConfigElTransformati
     }
 }
 
-pub struct BuildGkeBackupRestorePlanRestoreConfigElTransformationRulesElFieldActionsEl {
+pub struct BuildGkeBackupRestorePlan_RestoreConfig_TransformationRules_FieldActions {
     #[doc =
         "Specifies the operation to perform. Possible values: [\"REMOVE\", \"MOVE\", \"COPY\", \"ADD\", \"TEST\", \"REPLACE\"]"]
     pub op: terrars::PrimField<std::string::String>,
 }
 
-impl BuildGkeBackupRestorePlanRestoreConfigElTransformationRulesElFieldActionsEl {
-    pub fn build(self) -> GkeBackupRestorePlanRestoreConfigElTransformationRulesElFieldActionsEl {
-        GkeBackupRestorePlanRestoreConfigElTransformationRulesElFieldActionsEl {
+impl BuildGkeBackupRestorePlan_RestoreConfig_TransformationRules_FieldActions {
+    pub fn build(self) -> GkeBackupRestorePlan_RestoreConfig_TransformationRules_FieldActions {
+        GkeBackupRestorePlan_RestoreConfig_TransformationRules_FieldActions {
             from_path: core::default::Default::default(),
             op: self.op,
             path: core::default::Default::default(),
@@ -1142,24 +1592,26 @@ impl BuildGkeBackupRestorePlanRestoreConfigElTransformationRulesElFieldActionsEl
     }
 }
 
-pub struct GkeBackupRestorePlanRestoreConfigElTransformationRulesElFieldActionsElRef {
+#[allow(dead_code)]
+pub struct GkeBackupRestorePlan_RestoreConfig_TransformationRules_FieldActionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeBackupRestorePlanRestoreConfigElTransformationRulesElFieldActionsElRef {
+impl terrars::Ref for GkeBackupRestorePlan_RestoreConfig_TransformationRules_FieldActionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeBackupRestorePlanRestoreConfigElTransformationRulesElFieldActionsElRef {
-        GkeBackupRestorePlanRestoreConfigElTransformationRulesElFieldActionsElRef {
+    ) -> GkeBackupRestorePlan_RestoreConfig_TransformationRules_FieldActionsRef {
+        GkeBackupRestorePlan_RestoreConfig_TransformationRules_FieldActionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeBackupRestorePlanRestoreConfigElTransformationRulesElFieldActionsElRef {
+impl GkeBackupRestorePlan_RestoreConfig_TransformationRules_FieldActionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1190,14 +1642,14 @@ impl GkeBackupRestorePlanRestoreConfigElTransformationRulesElFieldActionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct GkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterElGroupKindsEl {
+pub struct GkeBackupRestorePlan_RestoreConfig_TransformationRules_ResourceFilter_GroupKinds {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resource_group: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resource_kind: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterElGroupKindsEl {
+impl GkeBackupRestorePlan_RestoreConfig_TransformationRules_ResourceFilter_GroupKinds {
     #[doc =
         "Set the field `resource_group`.\nAPI Group string of a Kubernetes resource, e.g.\n\"apiextensions.k8s.io\", \"storage.k8s.io\", etc.\nUse empty string for core group."]
     pub fn set_resource_group(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1213,10 +1665,9 @@ impl GkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterElGro
     }
 }
 
-impl terrars::ToListMappable for GkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterElGroupKindsEl {
+impl terrars::ToListMappable for GkeBackupRestorePlan_RestoreConfig_TransformationRules_ResourceFilter_GroupKinds {
     type O =
-        terrars
-        ::BlockAssignable<GkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterElGroupKindsEl>;
+        terrars::BlockAssignable<GkeBackupRestorePlan_RestoreConfig_TransformationRules_ResourceFilter_GroupKinds>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1227,35 +1678,37 @@ impl terrars::ToListMappable for GkeBackupRestorePlanRestoreConfigElTransformati
     }
 }
 
-pub struct BuildGkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterElGroupKindsEl {}
+pub struct BuildGkeBackupRestorePlan_RestoreConfig_TransformationRules_ResourceFilter_GroupKinds {}
 
-impl BuildGkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterElGroupKindsEl {
-    pub fn build(self) -> GkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterElGroupKindsEl {
-        GkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterElGroupKindsEl {
+impl BuildGkeBackupRestorePlan_RestoreConfig_TransformationRules_ResourceFilter_GroupKinds {
+    pub fn build(self) -> GkeBackupRestorePlan_RestoreConfig_TransformationRules_ResourceFilter_GroupKinds {
+        GkeBackupRestorePlan_RestoreConfig_TransformationRules_ResourceFilter_GroupKinds {
             resource_group: core::default::Default::default(),
             resource_kind: core::default::Default::default(),
         }
     }
 }
 
-pub struct GkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterElGroupKindsElRef {
+#[allow(dead_code)]
+pub struct GkeBackupRestorePlan_RestoreConfig_TransformationRules_ResourceFilter_GroupKindsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterElGroupKindsElRef {
+impl terrars::Ref for GkeBackupRestorePlan_RestoreConfig_TransformationRules_ResourceFilter_GroupKindsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterElGroupKindsElRef {
-        GkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterElGroupKindsElRef {
+    ) -> GkeBackupRestorePlan_RestoreConfig_TransformationRules_ResourceFilter_GroupKindsRef {
+        GkeBackupRestorePlan_RestoreConfig_TransformationRules_ResourceFilter_GroupKindsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterElGroupKindsElRef {
+impl GkeBackupRestorePlan_RestoreConfig_TransformationRules_ResourceFilter_GroupKindsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1274,16 +1727,16 @@ impl GkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterElGro
 }
 
 #[derive(Serialize, Default)]
-struct GkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterElDynamic {
+struct GkeBackupRestorePlan_RestoreConfig_TransformationRules_ResourceFilterDynamic {
     group_kinds: std
     ::option
     ::Option<
-        terrars::DynamicBlock<GkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterElGroupKindsEl>,
+        terrars::DynamicBlock<GkeBackupRestorePlan_RestoreConfig_TransformationRules_ResourceFilter_GroupKinds>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct GkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterEl {
+pub struct GkeBackupRestorePlan_RestoreConfig_TransformationRules_ResourceFilter {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     json_path: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1291,11 +1744,11 @@ pub struct GkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilte
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     group_kinds: std
     ::option
-    ::Option<std::vec::Vec<GkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterElGroupKindsEl>>,
-    dynamic: GkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterElDynamic,
+    ::Option<std::vec::Vec<GkeBackupRestorePlan_RestoreConfig_TransformationRules_ResourceFilter_GroupKinds>>,
+    dynamic: GkeBackupRestorePlan_RestoreConfig_TransformationRules_ResourceFilterDynamic,
 }
 
-impl GkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterEl {
+impl GkeBackupRestorePlan_RestoreConfig_TransformationRules_ResourceFilter {
     #[doc =
         "Set the field `json_path`.\nThis is a JSONPath expression that matches specific fields of\ncandidate resources and it operates as a filtering parameter\n(resources that are not matched with this expression will not\nbe candidates for transformation)."]
     pub fn set_json_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1324,7 +1777,7 @@ impl GkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            GkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterElGroupKindsEl,
+                            GkeBackupRestorePlan_RestoreConfig_TransformationRules_ResourceFilter_GroupKinds,
                         >,
                     >,
     ) -> Self {
@@ -1340,8 +1793,8 @@ impl GkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterEl {
     }
 }
 
-impl terrars::ToListMappable for GkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterEl {
-    type O = terrars::BlockAssignable<GkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterEl>;
+impl terrars::ToListMappable for GkeBackupRestorePlan_RestoreConfig_TransformationRules_ResourceFilter {
+    type O = terrars::BlockAssignable<GkeBackupRestorePlan_RestoreConfig_TransformationRules_ResourceFilter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1352,11 +1805,11 @@ impl terrars::ToListMappable for GkeBackupRestorePlanRestoreConfigElTransformati
     }
 }
 
-pub struct BuildGkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterEl {}
+pub struct BuildGkeBackupRestorePlan_RestoreConfig_TransformationRules_ResourceFilter {}
 
-impl BuildGkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterEl {
-    pub fn build(self) -> GkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterEl {
-        GkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterEl {
+impl BuildGkeBackupRestorePlan_RestoreConfig_TransformationRules_ResourceFilter {
+    pub fn build(self) -> GkeBackupRestorePlan_RestoreConfig_TransformationRules_ResourceFilter {
+        GkeBackupRestorePlan_RestoreConfig_TransformationRules_ResourceFilter {
             json_path: core::default::Default::default(),
             namespaces: core::default::Default::default(),
             group_kinds: core::default::Default::default(),
@@ -1365,24 +1818,26 @@ impl BuildGkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilter
     }
 }
 
-pub struct GkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterElRef {
+#[allow(dead_code)]
+pub struct GkeBackupRestorePlan_RestoreConfig_TransformationRules_ResourceFilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterElRef {
+impl terrars::Ref for GkeBackupRestorePlan_RestoreConfig_TransformationRules_ResourceFilterRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterElRef {
-        GkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterElRef {
+    ) -> GkeBackupRestorePlan_RestoreConfig_TransformationRules_ResourceFilterRef {
+        GkeBackupRestorePlan_RestoreConfig_TransformationRules_ResourceFilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterElRef {
+impl GkeBackupRestorePlan_RestoreConfig_TransformationRules_ResourceFilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1402,37 +1857,37 @@ impl GkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterElRef
     #[doc = "Get a reference to the value of field `group_kinds` after provisioning.\n"]
     pub fn group_kinds(
         &self,
-    ) -> terrars::ListRef<GkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterElGroupKindsElRef> {
+    ) -> terrars::ListRef<GkeBackupRestorePlan_RestoreConfig_TransformationRules_ResourceFilter_GroupKindsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.group_kinds", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct GkeBackupRestorePlanRestoreConfigElTransformationRulesElDynamic {
+struct GkeBackupRestorePlan_RestoreConfig_TransformationRulesDynamic {
     field_actions: std
     ::option
-    ::Option<terrars::DynamicBlock<GkeBackupRestorePlanRestoreConfigElTransformationRulesElFieldActionsEl>>,
+    ::Option<terrars::DynamicBlock<GkeBackupRestorePlan_RestoreConfig_TransformationRules_FieldActions>>,
     resource_filter: std
     ::option
-    ::Option<terrars::DynamicBlock<GkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterEl>>,
+    ::Option<terrars::DynamicBlock<GkeBackupRestorePlan_RestoreConfig_TransformationRules_ResourceFilter>>,
 }
 
 #[derive(Serialize)]
-pub struct GkeBackupRestorePlanRestoreConfigElTransformationRulesEl {
+pub struct GkeBackupRestorePlan_RestoreConfig_TransformationRules {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     field_actions: std
     ::option
-    ::Option<std::vec::Vec<GkeBackupRestorePlanRestoreConfigElTransformationRulesElFieldActionsEl>>,
+    ::Option<std::vec::Vec<GkeBackupRestorePlan_RestoreConfig_TransformationRules_FieldActions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resource_filter: std
     ::option
-    ::Option<std::vec::Vec<GkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterEl>>,
-    dynamic: GkeBackupRestorePlanRestoreConfigElTransformationRulesElDynamic,
+    ::Option<std::vec::Vec<GkeBackupRestorePlan_RestoreConfig_TransformationRules_ResourceFilter>>,
+    dynamic: GkeBackupRestorePlan_RestoreConfig_TransformationRulesDynamic,
 }
 
-impl GkeBackupRestorePlanRestoreConfigElTransformationRulesEl {
+impl GkeBackupRestorePlan_RestoreConfig_TransformationRules {
     #[doc =
         "Set the field `description`.\nThe description is a user specified string description\nof the transformation rule."]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1449,8 +1904,7 @@ impl GkeBackupRestorePlanRestoreConfigElTransformationRulesEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<GkeBackupRestorePlanRestoreConfigElTransformationRulesElFieldActionsEl>,
+                        terrars::BlockAssignable<GkeBackupRestorePlan_RestoreConfig_TransformationRules_FieldActions>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1474,7 +1928,7 @@ impl GkeBackupRestorePlanRestoreConfigElTransformationRulesEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<GkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterEl>,
+                        ::BlockAssignable<GkeBackupRestorePlan_RestoreConfig_TransformationRules_ResourceFilter>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1489,8 +1943,8 @@ impl GkeBackupRestorePlanRestoreConfigElTransformationRulesEl {
     }
 }
 
-impl terrars::ToListMappable for GkeBackupRestorePlanRestoreConfigElTransformationRulesEl {
-    type O = terrars::BlockAssignable<GkeBackupRestorePlanRestoreConfigElTransformationRulesEl>;
+impl terrars::ToListMappable for GkeBackupRestorePlan_RestoreConfig_TransformationRules {
+    type O = terrars::BlockAssignable<GkeBackupRestorePlan_RestoreConfig_TransformationRules>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1501,11 +1955,11 @@ impl terrars::ToListMappable for GkeBackupRestorePlanRestoreConfigElTransformati
     }
 }
 
-pub struct BuildGkeBackupRestorePlanRestoreConfigElTransformationRulesEl {}
+pub struct BuildGkeBackupRestorePlan_RestoreConfig_TransformationRules {}
 
-impl BuildGkeBackupRestorePlanRestoreConfigElTransformationRulesEl {
-    pub fn build(self) -> GkeBackupRestorePlanRestoreConfigElTransformationRulesEl {
-        GkeBackupRestorePlanRestoreConfigElTransformationRulesEl {
+impl BuildGkeBackupRestorePlan_RestoreConfig_TransformationRules {
+    pub fn build(self) -> GkeBackupRestorePlan_RestoreConfig_TransformationRules {
+        GkeBackupRestorePlan_RestoreConfig_TransformationRules {
             description: core::default::Default::default(),
             field_actions: core::default::Default::default(),
             resource_filter: core::default::Default::default(),
@@ -1514,24 +1968,26 @@ impl BuildGkeBackupRestorePlanRestoreConfigElTransformationRulesEl {
     }
 }
 
-pub struct GkeBackupRestorePlanRestoreConfigElTransformationRulesElRef {
+#[allow(dead_code)]
+pub struct GkeBackupRestorePlan_RestoreConfig_TransformationRulesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeBackupRestorePlanRestoreConfigElTransformationRulesElRef {
+impl terrars::Ref for GkeBackupRestorePlan_RestoreConfig_TransformationRulesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GkeBackupRestorePlanRestoreConfigElTransformationRulesElRef {
-        GkeBackupRestorePlanRestoreConfigElTransformationRulesElRef {
+    ) -> GkeBackupRestorePlan_RestoreConfig_TransformationRulesRef {
+        GkeBackupRestorePlan_RestoreConfig_TransformationRulesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeBackupRestorePlanRestoreConfigElTransformationRulesElRef {
+impl GkeBackupRestorePlan_RestoreConfig_TransformationRulesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1545,39 +2001,118 @@ impl GkeBackupRestorePlanRestoreConfigElTransformationRulesElRef {
     #[doc = "Get a reference to the value of field `field_actions` after provisioning.\n"]
     pub fn field_actions(
         &self,
-    ) -> terrars::ListRef<GkeBackupRestorePlanRestoreConfigElTransformationRulesElFieldActionsElRef> {
+    ) -> terrars::ListRef<GkeBackupRestorePlan_RestoreConfig_TransformationRules_FieldActionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.field_actions", self.base))
     }
 
     #[doc = "Get a reference to the value of field `resource_filter` after provisioning.\n"]
     pub fn resource_filter(
         &self,
-    ) -> terrars::ListRef<GkeBackupRestorePlanRestoreConfigElTransformationRulesElResourceFilterElRef> {
+    ) -> terrars::ListRef<GkeBackupRestorePlan_RestoreConfig_TransformationRules_ResourceFilterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.resource_filter", self.base))
     }
 }
 
+#[derive(Serialize)]
+pub struct GkeBackupRestorePlan_RestoreConfig_VolumeDataRestorePolicyBindings {
+    policy: terrars::PrimField<std::string::String>,
+    volume_type: terrars::PrimField<std::string::String>,
+}
+
+impl GkeBackupRestorePlan_RestoreConfig_VolumeDataRestorePolicyBindings { }
+
+impl terrars::ToListMappable for GkeBackupRestorePlan_RestoreConfig_VolumeDataRestorePolicyBindings {
+    type O = terrars::BlockAssignable<GkeBackupRestorePlan_RestoreConfig_VolumeDataRestorePolicyBindings>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildGkeBackupRestorePlan_RestoreConfig_VolumeDataRestorePolicyBindings {
+    #[doc =
+        "Specifies the mechanism to be used to restore this volume data.\nSee https://cloud.google.com/kubernetes-engine/docs/add-on/backup-for-gke/reference/rest/v1/RestoreConfig#VolumeDataRestorePolicy\nfor more information on each policy option. Possible values: [\"RESTORE_VOLUME_DATA_FROM_BACKUP\", \"REUSE_VOLUME_HANDLE_FROM_BACKUP\", \"NO_VOLUME_DATA_RESTORATION\"]"]
+    pub policy: terrars::PrimField<std::string::String>,
+    #[doc =
+        "The volume type, as determined by the PVC's\nbound PV, to apply the policy to. Possible values: [\"GCE_PERSISTENT_DISK\"]"]
+    pub volume_type: terrars::PrimField<std::string::String>,
+}
+
+impl BuildGkeBackupRestorePlan_RestoreConfig_VolumeDataRestorePolicyBindings {
+    pub fn build(self) -> GkeBackupRestorePlan_RestoreConfig_VolumeDataRestorePolicyBindings {
+        GkeBackupRestorePlan_RestoreConfig_VolumeDataRestorePolicyBindings {
+            policy: self.policy,
+            volume_type: self.volume_type,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct GkeBackupRestorePlan_RestoreConfig_VolumeDataRestorePolicyBindingsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for GkeBackupRestorePlan_RestoreConfig_VolumeDataRestorePolicyBindingsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GkeBackupRestorePlan_RestoreConfig_VolumeDataRestorePolicyBindingsRef {
+        GkeBackupRestorePlan_RestoreConfig_VolumeDataRestorePolicyBindingsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl GkeBackupRestorePlan_RestoreConfig_VolumeDataRestorePolicyBindingsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `policy` after provisioning.\nSpecifies the mechanism to be used to restore this volume data.\nSee https://cloud.google.com/kubernetes-engine/docs/add-on/backup-for-gke/reference/rest/v1/RestoreConfig#VolumeDataRestorePolicy\nfor more information on each policy option. Possible values: [\"RESTORE_VOLUME_DATA_FROM_BACKUP\", \"REUSE_VOLUME_HANDLE_FROM_BACKUP\", \"NO_VOLUME_DATA_RESTORATION\"]"]
+    pub fn policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `volume_type` after provisioning.\nThe volume type, as determined by the PVC's\nbound PV, to apply the policy to. Possible values: [\"GCE_PERSISTENT_DISK\"]"]
+    pub fn volume_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.volume_type", self.base))
+    }
+}
+
 #[derive(Serialize, Default)]
-struct GkeBackupRestorePlanRestoreConfigElDynamic {
+struct GkeBackupRestorePlan_RestoreConfigDynamic {
     cluster_resource_restore_scope: std
     ::option
-    ::Option<terrars::DynamicBlock<GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeEl>>,
+    ::Option<terrars::DynamicBlock<GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope>>,
     excluded_namespaces: std
     ::option
-    ::Option<terrars::DynamicBlock<GkeBackupRestorePlanRestoreConfigElExcludedNamespacesEl>>,
+    ::Option<terrars::DynamicBlock<GkeBackupRestorePlan_RestoreConfig_ExcludedNamespaces>>,
+    restore_order: std::option::Option<terrars::DynamicBlock<GkeBackupRestorePlan_RestoreConfig_RestoreOrder>>,
     selected_applications: std
     ::option
-    ::Option<terrars::DynamicBlock<GkeBackupRestorePlanRestoreConfigElSelectedApplicationsEl>>,
+    ::Option<terrars::DynamicBlock<GkeBackupRestorePlan_RestoreConfig_SelectedApplications>>,
     selected_namespaces: std
     ::option
-    ::Option<terrars::DynamicBlock<GkeBackupRestorePlanRestoreConfigElSelectedNamespacesEl>>,
+    ::Option<terrars::DynamicBlock<GkeBackupRestorePlan_RestoreConfig_SelectedNamespaces>>,
     transformation_rules: std
     ::option
-    ::Option<terrars::DynamicBlock<GkeBackupRestorePlanRestoreConfigElTransformationRulesEl>>,
+    ::Option<terrars::DynamicBlock<GkeBackupRestorePlan_RestoreConfig_TransformationRules>>,
+    volume_data_restore_policy_bindings: std
+    ::option
+    ::Option<terrars::DynamicBlock<GkeBackupRestorePlan_RestoreConfig_VolumeDataRestorePolicyBindings>>,
 }
 
 #[derive(Serialize)]
-pub struct GkeBackupRestorePlanRestoreConfigEl {
+pub struct GkeBackupRestorePlan_RestoreConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     all_namespaces: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1591,19 +2126,25 @@ pub struct GkeBackupRestorePlanRestoreConfigEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cluster_resource_restore_scope: std
     ::option
-    ::Option<std::vec::Vec<GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeEl>>,
+    ::Option<std::vec::Vec<GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    excluded_namespaces: std::option::Option<std::vec::Vec<GkeBackupRestorePlanRestoreConfigElExcludedNamespacesEl>>,
+    excluded_namespaces: std::option::Option<std::vec::Vec<GkeBackupRestorePlan_RestoreConfig_ExcludedNamespaces>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    selected_applications: std::option::Option<std::vec::Vec<GkeBackupRestorePlanRestoreConfigElSelectedApplicationsEl>>,
+    restore_order: std::option::Option<std::vec::Vec<GkeBackupRestorePlan_RestoreConfig_RestoreOrder>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    selected_namespaces: std::option::Option<std::vec::Vec<GkeBackupRestorePlanRestoreConfigElSelectedNamespacesEl>>,
+    selected_applications: std::option::Option<std::vec::Vec<GkeBackupRestorePlan_RestoreConfig_SelectedApplications>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    transformation_rules: std::option::Option<std::vec::Vec<GkeBackupRestorePlanRestoreConfigElTransformationRulesEl>>,
-    dynamic: GkeBackupRestorePlanRestoreConfigElDynamic,
+    selected_namespaces: std::option::Option<std::vec::Vec<GkeBackupRestorePlan_RestoreConfig_SelectedNamespaces>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    transformation_rules: std::option::Option<std::vec::Vec<GkeBackupRestorePlan_RestoreConfig_TransformationRules>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    volume_data_restore_policy_bindings: std
+    ::option
+    ::Option<std::vec::Vec<GkeBackupRestorePlan_RestoreConfig_VolumeDataRestorePolicyBindings>>,
+    dynamic: GkeBackupRestorePlan_RestoreConfigDynamic,
 }
 
-impl GkeBackupRestorePlanRestoreConfigEl {
+impl GkeBackupRestorePlan_RestoreConfig {
     #[doc =
         "Set the field `all_namespaces`.\nIf True, restore all namespaced resources in the Backup.\nSetting this field to False will result in an error."]
     pub fn set_all_namespaces(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -1622,7 +2163,7 @@ impl GkeBackupRestorePlanRestoreConfigEl {
     }
 
     #[doc =
-        "Set the field `namespaced_resource_restore_mode`.\nDefines the behavior for handling the situation where sets of namespaced resources\nbeing restored already exist in the target cluster.\nThis MUST be set to a value other than 'NAMESPACED_RESOURCE_RESTORE_MODE_UNSPECIFIED'\nif the 'namespacedResourceRestoreScope' is anything other than 'noNamespaces'.\nSee https://cloud.google.com/kubernetes-engine/docs/add-on/backup-for-gke/reference/rest/v1/RestoreConfig#namespacedresourcerestoremode\nfor more information on each mode. Possible values: [\"DELETE_AND_RESTORE\", \"FAIL_ON_CONFLICT\"]"]
+        "Set the field `namespaced_resource_restore_mode`.\nDefines the behavior for handling the situation where sets of namespaced resources\nbeing restored already exist in the target cluster.\nThis MUST be set to a value other than 'NAMESPACED_RESOURCE_RESTORE_MODE_UNSPECIFIED'\nif the 'namespacedResourceRestoreScope' is anything other than 'noNamespaces'.\nSee https://cloud.google.com/kubernetes-engine/docs/add-on/backup-for-gke/reference/rest/v1/RestoreConfig#namespacedresourcerestoremode\nfor more information on each mode. Possible values: [\"DELETE_AND_RESTORE\", \"FAIL_ON_CONFLICT\", \"MERGE_SKIP_ON_CONFLICT\", \"MERGE_REPLACE_VOLUME_ON_CONFLICT\", \"MERGE_REPLACE_ON_CONFLICT\"]"]
     pub fn set_namespaced_resource_restore_mode(
         mut self,
         v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
@@ -1656,9 +2197,7 @@ impl GkeBackupRestorePlanRestoreConfigEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScope>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1674,12 +2213,7 @@ impl GkeBackupRestorePlanRestoreConfigEl {
     #[doc = "Set the field `excluded_namespaces`.\n"]
     pub fn set_excluded_namespaces(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<GkeBackupRestorePlanRestoreConfigElExcludedNamespacesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeBackupRestorePlan_RestoreConfig_ExcludedNamespaces>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1687,6 +2221,22 @@ impl GkeBackupRestorePlanRestoreConfigEl {
             },
             terrars::BlockAssignable::Dynamic(d) => {
                 self.dynamic.excluded_namespaces = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `restore_order`.\n"]
+    pub fn set_restore_order(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeBackupRestorePlan_RestoreConfig_RestoreOrder>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.restore_order = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.restore_order = std::option::Option::Some(d);
             },
         }
         self
@@ -1700,7 +2250,7 @@ impl GkeBackupRestorePlanRestoreConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<GkeBackupRestorePlanRestoreConfigElSelectedApplicationsEl>>,
+                    ::Into<terrars::BlockAssignable<GkeBackupRestorePlan_RestoreConfig_SelectedApplications>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1716,12 +2266,7 @@ impl GkeBackupRestorePlanRestoreConfigEl {
     #[doc = "Set the field `selected_namespaces`.\n"]
     pub fn set_selected_namespaces(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<GkeBackupRestorePlanRestoreConfigElSelectedNamespacesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeBackupRestorePlan_RestoreConfig_SelectedNamespaces>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1737,12 +2282,7 @@ impl GkeBackupRestorePlanRestoreConfigEl {
     #[doc = "Set the field `transformation_rules`.\n"]
     pub fn set_transformation_rules(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<GkeBackupRestorePlanRestoreConfigElTransformationRulesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeBackupRestorePlan_RestoreConfig_TransformationRules>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1754,10 +2294,33 @@ impl GkeBackupRestorePlanRestoreConfigEl {
         }
         self
     }
+
+    #[doc = "Set the field `volume_data_restore_policy_bindings`.\n"]
+    pub fn set_volume_data_restore_policy_bindings(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<GkeBackupRestorePlan_RestoreConfig_VolumeDataRestorePolicyBindings>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.volume_data_restore_policy_bindings = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.volume_data_restore_policy_bindings = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
 }
 
-impl terrars::ToListMappable for GkeBackupRestorePlanRestoreConfigEl {
-    type O = terrars::BlockAssignable<GkeBackupRestorePlanRestoreConfigEl>;
+impl terrars::ToListMappable for GkeBackupRestorePlan_RestoreConfig {
+    type O = terrars::BlockAssignable<GkeBackupRestorePlan_RestoreConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1768,11 +2331,11 @@ impl terrars::ToListMappable for GkeBackupRestorePlanRestoreConfigEl {
     }
 }
 
-pub struct BuildGkeBackupRestorePlanRestoreConfigEl {}
+pub struct BuildGkeBackupRestorePlan_RestoreConfig {}
 
-impl BuildGkeBackupRestorePlanRestoreConfigEl {
-    pub fn build(self) -> GkeBackupRestorePlanRestoreConfigEl {
-        GkeBackupRestorePlanRestoreConfigEl {
+impl BuildGkeBackupRestorePlan_RestoreConfig {
+    pub fn build(self) -> GkeBackupRestorePlan_RestoreConfig {
+        GkeBackupRestorePlan_RestoreConfig {
             all_namespaces: core::default::Default::default(),
             cluster_resource_conflict_policy: core::default::Default::default(),
             namespaced_resource_restore_mode: core::default::Default::default(),
@@ -1780,29 +2343,33 @@ impl BuildGkeBackupRestorePlanRestoreConfigEl {
             volume_data_restore_policy: core::default::Default::default(),
             cluster_resource_restore_scope: core::default::Default::default(),
             excluded_namespaces: core::default::Default::default(),
+            restore_order: core::default::Default::default(),
             selected_applications: core::default::Default::default(),
             selected_namespaces: core::default::Default::default(),
             transformation_rules: core::default::Default::default(),
+            volume_data_restore_policy_bindings: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct GkeBackupRestorePlanRestoreConfigElRef {
+#[allow(dead_code)]
+pub struct GkeBackupRestorePlan_RestoreConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeBackupRestorePlanRestoreConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeBackupRestorePlanRestoreConfigElRef {
-        GkeBackupRestorePlanRestoreConfigElRef {
+impl terrars::Ref for GkeBackupRestorePlan_RestoreConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeBackupRestorePlan_RestoreConfigRef {
+        GkeBackupRestorePlan_RestoreConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeBackupRestorePlanRestoreConfigElRef {
+impl GkeBackupRestorePlan_RestoreConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1820,7 +2387,7 @@ impl GkeBackupRestorePlanRestoreConfigElRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `namespaced_resource_restore_mode` after provisioning.\nDefines the behavior for handling the situation where sets of namespaced resources\nbeing restored already exist in the target cluster.\nThis MUST be set to a value other than 'NAMESPACED_RESOURCE_RESTORE_MODE_UNSPECIFIED'\nif the 'namespacedResourceRestoreScope' is anything other than 'noNamespaces'.\nSee https://cloud.google.com/kubernetes-engine/docs/add-on/backup-for-gke/reference/rest/v1/RestoreConfig#namespacedresourcerestoremode\nfor more information on each mode. Possible values: [\"DELETE_AND_RESTORE\", \"FAIL_ON_CONFLICT\"]"]
+        "Get a reference to the value of field `namespaced_resource_restore_mode` after provisioning.\nDefines the behavior for handling the situation where sets of namespaced resources\nbeing restored already exist in the target cluster.\nThis MUST be set to a value other than 'NAMESPACED_RESOURCE_RESTORE_MODE_UNSPECIFIED'\nif the 'namespacedResourceRestoreScope' is anything other than 'noNamespaces'.\nSee https://cloud.google.com/kubernetes-engine/docs/add-on/backup-for-gke/reference/rest/v1/RestoreConfig#namespacedresourcerestoremode\nfor more information on each mode. Possible values: [\"DELETE_AND_RESTORE\", \"FAIL_ON_CONFLICT\", \"MERGE_SKIP_ON_CONFLICT\", \"MERGE_REPLACE_VOLUME_ON_CONFLICT\", \"MERGE_REPLACE_ON_CONFLICT\"]"]
     pub fn namespaced_resource_restore_mode(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.namespaced_resource_restore_mode", self.base))
     }
@@ -1840,35 +2407,45 @@ impl GkeBackupRestorePlanRestoreConfigElRef {
     #[doc = "Get a reference to the value of field `cluster_resource_restore_scope` after provisioning.\n"]
     pub fn cluster_resource_restore_scope(
         &self,
-    ) -> terrars::ListRef<GkeBackupRestorePlanRestoreConfigElClusterResourceRestoreScopeElRef> {
+    ) -> terrars::ListRef<GkeBackupRestorePlan_RestoreConfig_ClusterResourceRestoreScopeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cluster_resource_restore_scope", self.base))
     }
 
     #[doc = "Get a reference to the value of field `excluded_namespaces` after provisioning.\n"]
-    pub fn excluded_namespaces(&self) -> terrars::ListRef<GkeBackupRestorePlanRestoreConfigElExcludedNamespacesElRef> {
+    pub fn excluded_namespaces(&self) -> terrars::ListRef<GkeBackupRestorePlan_RestoreConfig_ExcludedNamespacesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.excluded_namespaces", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `restore_order` after provisioning.\n"]
+    pub fn restore_order(&self) -> terrars::ListRef<GkeBackupRestorePlan_RestoreConfig_RestoreOrderRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.restore_order", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `selected_applications` after provisioning.\n"]
-    pub fn selected_applications(
-        &self,
-    ) -> terrars::ListRef<GkeBackupRestorePlanRestoreConfigElSelectedApplicationsElRef> {
+    pub fn selected_applications(&self) -> terrars::ListRef<GkeBackupRestorePlan_RestoreConfig_SelectedApplicationsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.selected_applications", self.base))
     }
 
     #[doc = "Get a reference to the value of field `selected_namespaces` after provisioning.\n"]
-    pub fn selected_namespaces(&self) -> terrars::ListRef<GkeBackupRestorePlanRestoreConfigElSelectedNamespacesElRef> {
+    pub fn selected_namespaces(&self) -> terrars::ListRef<GkeBackupRestorePlan_RestoreConfig_SelectedNamespacesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.selected_namespaces", self.base))
     }
 
     #[doc = "Get a reference to the value of field `transformation_rules` after provisioning.\n"]
-    pub fn transformation_rules(&self) -> terrars::ListRef<GkeBackupRestorePlanRestoreConfigElTransformationRulesElRef> {
+    pub fn transformation_rules(&self) -> terrars::ListRef<GkeBackupRestorePlan_RestoreConfig_TransformationRulesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.transformation_rules", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `volume_data_restore_policy_bindings` after provisioning.\n"]
+    pub fn volume_data_restore_policy_bindings(
+        &self,
+    ) -> terrars::ListRef<GkeBackupRestorePlan_RestoreConfig_VolumeDataRestorePolicyBindingsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.volume_data_restore_policy_bindings", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct GkeBackupRestorePlanTimeoutsEl {
+pub struct GkeBackupRestorePlan_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1877,7 +2454,7 @@ pub struct GkeBackupRestorePlanTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GkeBackupRestorePlanTimeoutsEl {
+impl GkeBackupRestorePlan_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1897,8 +2474,8 @@ impl GkeBackupRestorePlanTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for GkeBackupRestorePlanTimeoutsEl {
-    type O = terrars::BlockAssignable<GkeBackupRestorePlanTimeoutsEl>;
+impl terrars::ToListMappable for GkeBackupRestorePlan_Timeouts {
+    type O = terrars::BlockAssignable<GkeBackupRestorePlan_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1909,11 +2486,11 @@ impl terrars::ToListMappable for GkeBackupRestorePlanTimeoutsEl {
     }
 }
 
-pub struct BuildGkeBackupRestorePlanTimeoutsEl {}
+pub struct BuildGkeBackupRestorePlan_Timeouts {}
 
-impl BuildGkeBackupRestorePlanTimeoutsEl {
-    pub fn build(self) -> GkeBackupRestorePlanTimeoutsEl {
-        GkeBackupRestorePlanTimeoutsEl {
+impl BuildGkeBackupRestorePlan_Timeouts {
+    pub fn build(self) -> GkeBackupRestorePlan_Timeouts {
+        GkeBackupRestorePlan_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1921,21 +2498,23 @@ impl BuildGkeBackupRestorePlanTimeoutsEl {
     }
 }
 
-pub struct GkeBackupRestorePlanTimeoutsElRef {
+#[allow(dead_code)]
+pub struct GkeBackupRestorePlan_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeBackupRestorePlanTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeBackupRestorePlanTimeoutsElRef {
-        GkeBackupRestorePlanTimeoutsElRef {
+impl terrars::Ref for GkeBackupRestorePlan_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeBackupRestorePlan_TimeoutsRef {
+        GkeBackupRestorePlan_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeBackupRestorePlanTimeoutsElRef {
+impl GkeBackupRestorePlan_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1954,9 +2533,4 @@ impl GkeBackupRestorePlanTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct GkeBackupRestorePlanDynamic {
-    restore_config: std::option::Option<terrars::DynamicBlock<GkeBackupRestorePlanRestoreConfigEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct MonitoringMetricDescriptorData {
+struct MonitoringMetricDescriptorData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,8 +20,12 @@ struct MonitoringMetricDescriptorData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
-    description: terrars::PrimField<std::string::String>,
-    display_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    description: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    display_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -33,18 +39,18 @@ struct MonitoringMetricDescriptorData {
     unit: std::option::Option<terrars::PrimField<std::string::String>>,
     value_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    labels: std::option::Option<std::vec::Vec<MonitoringMetricDescriptorLabelsEl>>,
+    labels: std::option::Option<std::vec::Vec<MonitoringMetricDescriptor_Labels>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    metadata: std::option::Option<std::vec::Vec<MonitoringMetricDescriptorMetadataEl>>,
+    metadata: std::option::Option<std::vec::Vec<MonitoringMetricDescriptor_Metadata>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<MonitoringMetricDescriptorTimeoutsEl>,
+    timeouts: std::option::Option<MonitoringMetricDescriptor_Timeouts>,
     dynamic: MonitoringMetricDescriptorDynamic,
 }
 
 struct MonitoringMetricDescriptor_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<MonitoringMetricDescriptorData>,
+    data: std::cell::RefCell<MonitoringMetricDescriptorData_>,
 }
 
 #[derive(Clone)]
@@ -144,6 +150,26 @@ impl MonitoringMetricDescriptor {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `description`.\nA detailed description of the metric, which can be used in documentation."]
+    pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `display_name`.\nA concise name for the metric, which can be displayed in user interfaces. Use sentence case without an ending period, for example \"Request count\"."]
+    pub fn set_display_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().display_name = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -173,7 +199,7 @@ impl MonitoringMetricDescriptor {
     #[doc = "Set the field `labels`.\n"]
     pub fn set_labels(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringMetricDescriptorLabelsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringMetricDescriptor_Labels>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -189,7 +215,7 @@ impl MonitoringMetricDescriptor {
     #[doc = "Set the field `metadata`.\n"]
     pub fn set_metadata(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringMetricDescriptorMetadataEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MonitoringMetricDescriptor_Metadata>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -203,9 +229,15 @@ impl MonitoringMetricDescriptor {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<MonitoringMetricDescriptorTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<MonitoringMetricDescriptor_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -273,13 +305,13 @@ impl MonitoringMetricDescriptor {
     }
 
     #[doc = "Get a reference to the value of field `metadata` after provisioning.\n"]
-    pub fn metadata(&self) -> terrars::ListRef<MonitoringMetricDescriptorMetadataElRef> {
+    pub fn metadata(&self) -> terrars::ListRef<MonitoringMetricDescriptor_MetadataRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.metadata", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> MonitoringMetricDescriptorTimeoutsElRef {
-        MonitoringMetricDescriptorTimeoutsElRef::new(
+    pub fn timeouts(&self) -> MonitoringMetricDescriptor_TimeoutsRef {
+        MonitoringMetricDescriptor_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -319,11 +351,6 @@ impl terrars::Resource_ for MonitoringMetricDescriptor_ {
 
 pub struct BuildMonitoringMetricDescriptor {
     pub tf_id: std::string::String,
-    #[doc = "A detailed description of the metric, which can be used in documentation."]
-    pub description: terrars::PrimField<std::string::String>,
-    #[doc =
-        "A concise name for the metric, which can be displayed in user interfaces. Use sentence case without an ending period, for example \"Request count\"."]
-    pub display_name: terrars::PrimField<std::string::String>,
     #[doc =
         "Whether the metric records instantaneous values, changes to a value, etc. Some combinations of metricKind and valueType might not be supported. Possible values: [\"METRIC_KIND_UNSPECIFIED\", \"GAUGE\", \"DELTA\", \"CUMULATIVE\"]"]
     pub metric_kind: terrars::PrimField<std::string::String>,
@@ -340,14 +367,15 @@ impl BuildMonitoringMetricDescriptor {
         let out = MonitoringMetricDescriptor(std::rc::Rc::new(MonitoringMetricDescriptor_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(MonitoringMetricDescriptorData {
+            data: std::cell::RefCell::new(MonitoringMetricDescriptorData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
-                description: self.description,
-                display_name: self.display_name,
+                deletion_policy: core::default::Default::default(),
+                description: core::default::Default::default(),
+                display_name: core::default::Default::default(),
                 id: core::default::Default::default(),
                 launch_stage: core::default::Default::default(),
                 metric_kind: self.metric_kind,
@@ -390,6 +418,12 @@ impl MonitoringMetricDescriptorRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nA detailed description of the metric, which can be used in documentation."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -454,21 +488,27 @@ impl MonitoringMetricDescriptorRef {
     }
 
     #[doc = "Get a reference to the value of field `metadata` after provisioning.\n"]
-    pub fn metadata(&self) -> terrars::ListRef<MonitoringMetricDescriptorMetadataElRef> {
+    pub fn metadata(&self) -> terrars::ListRef<MonitoringMetricDescriptor_MetadataRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.metadata", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> MonitoringMetricDescriptorTimeoutsElRef {
-        MonitoringMetricDescriptorTimeoutsElRef::new(
+    pub fn timeouts(&self) -> MonitoringMetricDescriptor_TimeoutsRef {
+        MonitoringMetricDescriptor_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct MonitoringMetricDescriptorDynamic {
+    labels: std::option::Option<terrars::DynamicBlock<MonitoringMetricDescriptor_Labels>>,
+    metadata: std::option::Option<terrars::DynamicBlock<MonitoringMetricDescriptor_Metadata>>,
+}
+
 #[derive(Serialize)]
-pub struct MonitoringMetricDescriptorLabelsEl {
+pub struct MonitoringMetricDescriptor_Labels {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     key: terrars::PrimField<std::string::String>,
@@ -476,7 +516,7 @@ pub struct MonitoringMetricDescriptorLabelsEl {
     value_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl MonitoringMetricDescriptorLabelsEl {
+impl MonitoringMetricDescriptor_Labels {
     #[doc = "Set the field `description`.\nA human-readable description for the label."]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -491,8 +531,8 @@ impl MonitoringMetricDescriptorLabelsEl {
     }
 }
 
-impl terrars::ToListMappable for MonitoringMetricDescriptorLabelsEl {
-    type O = terrars::BlockAssignable<MonitoringMetricDescriptorLabelsEl>;
+impl terrars::ToListMappable for MonitoringMetricDescriptor_Labels {
+    type O = terrars::BlockAssignable<MonitoringMetricDescriptor_Labels>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -503,15 +543,15 @@ impl terrars::ToListMappable for MonitoringMetricDescriptorLabelsEl {
     }
 }
 
-pub struct BuildMonitoringMetricDescriptorLabelsEl {
+pub struct BuildMonitoringMetricDescriptor_Labels {
     #[doc =
         "The key for this label. The key must not exceed 100 characters. The first character of the key must be an upper- or lower-case letter, the remaining characters must be letters, digits or underscores, and the key must match the regular expression [a-zA-Z][a-zA-Z0-9_]*"]
     pub key: terrars::PrimField<std::string::String>,
 }
 
-impl BuildMonitoringMetricDescriptorLabelsEl {
-    pub fn build(self) -> MonitoringMetricDescriptorLabelsEl {
-        MonitoringMetricDescriptorLabelsEl {
+impl BuildMonitoringMetricDescriptor_Labels {
+    pub fn build(self) -> MonitoringMetricDescriptor_Labels {
+        MonitoringMetricDescriptor_Labels {
             description: core::default::Default::default(),
             key: self.key,
             value_type: core::default::Default::default(),
@@ -519,21 +559,23 @@ impl BuildMonitoringMetricDescriptorLabelsEl {
     }
 }
 
-pub struct MonitoringMetricDescriptorLabelsElRef {
+#[allow(dead_code)]
+pub struct MonitoringMetricDescriptor_LabelsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MonitoringMetricDescriptorLabelsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitoringMetricDescriptorLabelsElRef {
-        MonitoringMetricDescriptorLabelsElRef {
+impl terrars::Ref for MonitoringMetricDescriptor_LabelsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitoringMetricDescriptor_LabelsRef {
+        MonitoringMetricDescriptor_LabelsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MonitoringMetricDescriptorLabelsElRef {
+impl MonitoringMetricDescriptor_LabelsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -558,14 +600,14 @@ impl MonitoringMetricDescriptorLabelsElRef {
 }
 
 #[derive(Serialize)]
-pub struct MonitoringMetricDescriptorMetadataEl {
+pub struct MonitoringMetricDescriptor_Metadata {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ingest_delay: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sample_period: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl MonitoringMetricDescriptorMetadataEl {
+impl MonitoringMetricDescriptor_Metadata {
     #[doc =
         "Set the field `ingest_delay`.\nThe delay of data points caused by ingestion. Data points older than this age are guaranteed to be ingested and available to be read, excluding data loss due to errors. In '[duration format](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf?&_ga=2.264881487.1507873253.1593446723-935052455.1591817775#google.protobuf.Duration)'."]
     pub fn set_ingest_delay(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -581,8 +623,8 @@ impl MonitoringMetricDescriptorMetadataEl {
     }
 }
 
-impl terrars::ToListMappable for MonitoringMetricDescriptorMetadataEl {
-    type O = terrars::BlockAssignable<MonitoringMetricDescriptorMetadataEl>;
+impl terrars::ToListMappable for MonitoringMetricDescriptor_Metadata {
+    type O = terrars::BlockAssignable<MonitoringMetricDescriptor_Metadata>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -593,32 +635,34 @@ impl terrars::ToListMappable for MonitoringMetricDescriptorMetadataEl {
     }
 }
 
-pub struct BuildMonitoringMetricDescriptorMetadataEl {}
+pub struct BuildMonitoringMetricDescriptor_Metadata {}
 
-impl BuildMonitoringMetricDescriptorMetadataEl {
-    pub fn build(self) -> MonitoringMetricDescriptorMetadataEl {
-        MonitoringMetricDescriptorMetadataEl {
+impl BuildMonitoringMetricDescriptor_Metadata {
+    pub fn build(self) -> MonitoringMetricDescriptor_Metadata {
+        MonitoringMetricDescriptor_Metadata {
             ingest_delay: core::default::Default::default(),
             sample_period: core::default::Default::default(),
         }
     }
 }
 
-pub struct MonitoringMetricDescriptorMetadataElRef {
+#[allow(dead_code)]
+pub struct MonitoringMetricDescriptor_MetadataRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MonitoringMetricDescriptorMetadataElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitoringMetricDescriptorMetadataElRef {
-        MonitoringMetricDescriptorMetadataElRef {
+impl terrars::Ref for MonitoringMetricDescriptor_MetadataRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitoringMetricDescriptor_MetadataRef {
+        MonitoringMetricDescriptor_MetadataRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MonitoringMetricDescriptorMetadataElRef {
+impl MonitoringMetricDescriptor_MetadataRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -637,7 +681,7 @@ impl MonitoringMetricDescriptorMetadataElRef {
 }
 
 #[derive(Serialize)]
-pub struct MonitoringMetricDescriptorTimeoutsEl {
+pub struct MonitoringMetricDescriptor_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -646,7 +690,7 @@ pub struct MonitoringMetricDescriptorTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl MonitoringMetricDescriptorTimeoutsEl {
+impl MonitoringMetricDescriptor_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -666,8 +710,8 @@ impl MonitoringMetricDescriptorTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for MonitoringMetricDescriptorTimeoutsEl {
-    type O = terrars::BlockAssignable<MonitoringMetricDescriptorTimeoutsEl>;
+impl terrars::ToListMappable for MonitoringMetricDescriptor_Timeouts {
+    type O = terrars::BlockAssignable<MonitoringMetricDescriptor_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -678,11 +722,11 @@ impl terrars::ToListMappable for MonitoringMetricDescriptorTimeoutsEl {
     }
 }
 
-pub struct BuildMonitoringMetricDescriptorTimeoutsEl {}
+pub struct BuildMonitoringMetricDescriptor_Timeouts {}
 
-impl BuildMonitoringMetricDescriptorTimeoutsEl {
-    pub fn build(self) -> MonitoringMetricDescriptorTimeoutsEl {
-        MonitoringMetricDescriptorTimeoutsEl {
+impl BuildMonitoringMetricDescriptor_Timeouts {
+    pub fn build(self) -> MonitoringMetricDescriptor_Timeouts {
+        MonitoringMetricDescriptor_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -690,21 +734,23 @@ impl BuildMonitoringMetricDescriptorTimeoutsEl {
     }
 }
 
-pub struct MonitoringMetricDescriptorTimeoutsElRef {
+#[allow(dead_code)]
+pub struct MonitoringMetricDescriptor_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MonitoringMetricDescriptorTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitoringMetricDescriptorTimeoutsElRef {
-        MonitoringMetricDescriptorTimeoutsElRef {
+impl terrars::Ref for MonitoringMetricDescriptor_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MonitoringMetricDescriptor_TimeoutsRef {
+        MonitoringMetricDescriptor_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MonitoringMetricDescriptorTimeoutsElRef {
+impl MonitoringMetricDescriptor_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -723,10 +769,4 @@ impl MonitoringMetricDescriptorTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct MonitoringMetricDescriptorDynamic {
-    labels: std::option::Option<terrars::DynamicBlock<MonitoringMetricDescriptorLabelsEl>>,
-    metadata: std::option::Option<terrars::DynamicBlock<MonitoringMetricDescriptorMetadataEl>>,
 }

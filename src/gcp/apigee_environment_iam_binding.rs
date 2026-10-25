@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ApigeeEnvironmentIamBindingData {
+struct ApigeeEnvironmentIamBindingData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,14 +27,14 @@ struct ApigeeEnvironmentIamBindingData {
     org_id: terrars::PrimField<std::string::String>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<ApigeeEnvironmentIamBindingConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<ApigeeEnvironmentIamBinding_Condition>>,
     dynamic: ApigeeEnvironmentIamBindingDynamic,
 }
 
 struct ApigeeEnvironmentIamBinding_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ApigeeEnvironmentIamBindingData>,
+    data: std::cell::RefCell<ApigeeEnvironmentIamBindingData_>,
 }
 
 #[derive(Clone)]
@@ -141,7 +143,7 @@ impl ApigeeEnvironmentIamBinding {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ApigeeEnvironmentIamBindingConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApigeeEnvironmentIamBinding_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -185,7 +187,7 @@ impl ApigeeEnvironmentIamBinding {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<ApigeeEnvironmentIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<ApigeeEnvironmentIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -238,7 +240,7 @@ impl BuildApigeeEnvironmentIamBinding {
         let out = ApigeeEnvironmentIamBinding(std::rc::Rc::new(ApigeeEnvironmentIamBinding_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ApigeeEnvironmentIamBindingData {
+            data: std::cell::RefCell::new(ApigeeEnvironmentIamBindingData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -312,20 +314,25 @@ impl ApigeeEnvironmentIamBindingRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<ApigeeEnvironmentIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<ApigeeEnvironmentIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ApigeeEnvironmentIamBindingDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<ApigeeEnvironmentIamBinding_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct ApigeeEnvironmentIamBindingConditionEl {
+pub struct ApigeeEnvironmentIamBinding_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl ApigeeEnvironmentIamBindingConditionEl {
+impl ApigeeEnvironmentIamBinding_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -333,8 +340,8 @@ impl ApigeeEnvironmentIamBindingConditionEl {
     }
 }
 
-impl terrars::ToListMappable for ApigeeEnvironmentIamBindingConditionEl {
-    type O = terrars::BlockAssignable<ApigeeEnvironmentIamBindingConditionEl>;
+impl terrars::ToListMappable for ApigeeEnvironmentIamBinding_Condition {
+    type O = terrars::BlockAssignable<ApigeeEnvironmentIamBinding_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -345,16 +352,16 @@ impl terrars::ToListMappable for ApigeeEnvironmentIamBindingConditionEl {
     }
 }
 
-pub struct BuildApigeeEnvironmentIamBindingConditionEl {
+pub struct BuildApigeeEnvironmentIamBinding_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildApigeeEnvironmentIamBindingConditionEl {
-    pub fn build(self) -> ApigeeEnvironmentIamBindingConditionEl {
-        ApigeeEnvironmentIamBindingConditionEl {
+impl BuildApigeeEnvironmentIamBinding_Condition {
+    pub fn build(self) -> ApigeeEnvironmentIamBinding_Condition {
+        ApigeeEnvironmentIamBinding_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -362,21 +369,23 @@ impl BuildApigeeEnvironmentIamBindingConditionEl {
     }
 }
 
-pub struct ApigeeEnvironmentIamBindingConditionElRef {
+#[allow(dead_code)]
+pub struct ApigeeEnvironmentIamBinding_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApigeeEnvironmentIamBindingConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ApigeeEnvironmentIamBindingConditionElRef {
-        ApigeeEnvironmentIamBindingConditionElRef {
+impl terrars::Ref for ApigeeEnvironmentIamBinding_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApigeeEnvironmentIamBinding_ConditionRef {
+        ApigeeEnvironmentIamBinding_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApigeeEnvironmentIamBindingConditionElRef {
+impl ApigeeEnvironmentIamBinding_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -395,9 +404,4 @@ impl ApigeeEnvironmentIamBindingConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ApigeeEnvironmentIamBindingDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<ApigeeEnvironmentIamBindingConditionEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct AppEngineDomainMappingData {
+struct AppEngineDomainMappingData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct AppEngineDomainMappingData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     domain_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -26,16 +30,16 @@ struct AppEngineDomainMappingData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ssl_settings: std::option::Option<std::vec::Vec<AppEngineDomainMappingSslSettingsEl>>,
+    ssl_settings: std::option::Option<std::vec::Vec<AppEngineDomainMapping_SslSettings>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<AppEngineDomainMappingTimeoutsEl>,
+    timeouts: std::option::Option<AppEngineDomainMapping_Timeouts>,
     dynamic: AppEngineDomainMappingDynamic,
 }
 
 struct AppEngineDomainMapping_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AppEngineDomainMappingData>,
+    data: std::cell::RefCell<AppEngineDomainMappingData_>,
 }
 
 #[derive(Clone)]
@@ -135,6 +139,13 @@ impl AppEngineDomainMapping {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -157,7 +168,7 @@ impl AppEngineDomainMapping {
     #[doc = "Set the field `ssl_settings`.\n"]
     pub fn set_ssl_settings(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineDomainMappingSslSettingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppEngineDomainMapping_SslSettings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -171,9 +182,15 @@ impl AppEngineDomainMapping {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<AppEngineDomainMappingTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<AppEngineDomainMapping_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -206,18 +223,18 @@ impl AppEngineDomainMapping {
 
     #[doc =
         "Get a reference to the value of field `resource_records` after provisioning.\nThe resource records required to configure this domain mapping. These records must be added to the domain's DNS\nconfiguration in order to serve the application via this domain mapping."]
-    pub fn resource_records(&self) -> terrars::ListRef<AppEngineDomainMappingResourceRecordsElRef> {
+    pub fn resource_records(&self) -> terrars::ListRef<AppEngineDomainMapping_ResourceRecordsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.resource_records", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `ssl_settings` after provisioning.\n"]
-    pub fn ssl_settings(&self) -> terrars::ListRef<AppEngineDomainMappingSslSettingsElRef> {
+    pub fn ssl_settings(&self) -> terrars::ListRef<AppEngineDomainMapping_SslSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ssl_settings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> AppEngineDomainMappingTimeoutsElRef {
-        AppEngineDomainMappingTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> AppEngineDomainMapping_TimeoutsRef {
+        AppEngineDomainMapping_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -263,12 +280,13 @@ impl BuildAppEngineDomainMapping {
         let out = AppEngineDomainMapping(std::rc::Rc::new(AppEngineDomainMapping_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AppEngineDomainMappingData {
+            data: std::cell::RefCell::new(AppEngineDomainMappingData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 domain_name: self.domain_name,
                 id: core::default::Default::default(),
                 override_strategy: core::default::Default::default(),
@@ -307,6 +325,12 @@ impl AppEngineDomainMappingRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `domain_name` after provisioning.\nRelative name of the domain serving the application. Example: example.com."]
     pub fn domain_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain_name", self.extract_ref()))
@@ -336,23 +360,28 @@ impl AppEngineDomainMappingRef {
 
     #[doc =
         "Get a reference to the value of field `resource_records` after provisioning.\nThe resource records required to configure this domain mapping. These records must be added to the domain's DNS\nconfiguration in order to serve the application via this domain mapping."]
-    pub fn resource_records(&self) -> terrars::ListRef<AppEngineDomainMappingResourceRecordsElRef> {
+    pub fn resource_records(&self) -> terrars::ListRef<AppEngineDomainMapping_ResourceRecordsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.resource_records", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `ssl_settings` after provisioning.\n"]
-    pub fn ssl_settings(&self) -> terrars::ListRef<AppEngineDomainMappingSslSettingsElRef> {
+    pub fn ssl_settings(&self) -> terrars::ListRef<AppEngineDomainMapping_SslSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ssl_settings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> AppEngineDomainMappingTimeoutsElRef {
-        AppEngineDomainMappingTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> AppEngineDomainMapping_TimeoutsRef {
+        AppEngineDomainMapping_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct AppEngineDomainMappingDynamic {
+    ssl_settings: std::option::Option<terrars::DynamicBlock<AppEngineDomainMapping_SslSettings>>,
+}
+
 #[derive(Serialize)]
-pub struct AppEngineDomainMappingResourceRecordsEl {
+pub struct AppEngineDomainMapping_ResourceRecords {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -361,7 +390,7 @@ pub struct AppEngineDomainMappingResourceRecordsEl {
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppEngineDomainMappingResourceRecordsEl {
+impl AppEngineDomainMapping_ResourceRecords {
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
@@ -381,8 +410,8 @@ impl AppEngineDomainMappingResourceRecordsEl {
     }
 }
 
-impl terrars::ToListMappable for AppEngineDomainMappingResourceRecordsEl {
-    type O = terrars::BlockAssignable<AppEngineDomainMappingResourceRecordsEl>;
+impl terrars::ToListMappable for AppEngineDomainMapping_ResourceRecords {
+    type O = terrars::BlockAssignable<AppEngineDomainMapping_ResourceRecords>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -393,11 +422,11 @@ impl terrars::ToListMappable for AppEngineDomainMappingResourceRecordsEl {
     }
 }
 
-pub struct BuildAppEngineDomainMappingResourceRecordsEl {}
+pub struct BuildAppEngineDomainMapping_ResourceRecords {}
 
-impl BuildAppEngineDomainMappingResourceRecordsEl {
-    pub fn build(self) -> AppEngineDomainMappingResourceRecordsEl {
-        AppEngineDomainMappingResourceRecordsEl {
+impl BuildAppEngineDomainMapping_ResourceRecords {
+    pub fn build(self) -> AppEngineDomainMapping_ResourceRecords {
+        AppEngineDomainMapping_ResourceRecords {
             name: core::default::Default::default(),
             rrdata: core::default::Default::default(),
             type_: core::default::Default::default(),
@@ -405,21 +434,23 @@ impl BuildAppEngineDomainMappingResourceRecordsEl {
     }
 }
 
-pub struct AppEngineDomainMappingResourceRecordsElRef {
+#[allow(dead_code)]
+pub struct AppEngineDomainMapping_ResourceRecordsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineDomainMappingResourceRecordsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineDomainMappingResourceRecordsElRef {
-        AppEngineDomainMappingResourceRecordsElRef {
+impl terrars::Ref for AppEngineDomainMapping_ResourceRecordsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineDomainMapping_ResourceRecordsRef {
+        AppEngineDomainMapping_ResourceRecordsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineDomainMappingResourceRecordsElRef {
+impl AppEngineDomainMapping_ResourceRecordsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -441,13 +472,13 @@ impl AppEngineDomainMappingResourceRecordsElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppEngineDomainMappingSslSettingsEl {
+pub struct AppEngineDomainMapping_SslSettings {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     certificate_id: std::option::Option<terrars::PrimField<std::string::String>>,
     ssl_management_type: terrars::PrimField<std::string::String>,
 }
 
-impl AppEngineDomainMappingSslSettingsEl {
+impl AppEngineDomainMapping_SslSettings {
     #[doc =
         "Set the field `certificate_id`.\nID of the AuthorizedCertificate resource configuring SSL for the application. Clearing this field will\nremove SSL support.\nBy default, a managed certificate is automatically created for every domain mapping. To omit SSL support\nor to configure SSL manually, specify 'SslManagementType.MANUAL' on a 'CREATE' or 'UPDATE' request. You must be\nauthorized to administer the 'AuthorizedCertificate' resource to manually map it to a DomainMapping resource.\nExample: 12345."]
     pub fn set_certificate_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -456,8 +487,8 @@ impl AppEngineDomainMappingSslSettingsEl {
     }
 }
 
-impl terrars::ToListMappable for AppEngineDomainMappingSslSettingsEl {
-    type O = terrars::BlockAssignable<AppEngineDomainMappingSslSettingsEl>;
+impl terrars::ToListMappable for AppEngineDomainMapping_SslSettings {
+    type O = terrars::BlockAssignable<AppEngineDomainMapping_SslSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -468,36 +499,38 @@ impl terrars::ToListMappable for AppEngineDomainMappingSslSettingsEl {
     }
 }
 
-pub struct BuildAppEngineDomainMappingSslSettingsEl {
+pub struct BuildAppEngineDomainMapping_SslSettings {
     #[doc =
         "SSL management type for this domain. If 'AUTOMATIC', a managed certificate is automatically provisioned.\nIf 'MANUAL', 'certificateId' must be manually specified in order to configure SSL for this domain. Possible values: [\"AUTOMATIC\", \"MANUAL\"]"]
     pub ssl_management_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppEngineDomainMappingSslSettingsEl {
-    pub fn build(self) -> AppEngineDomainMappingSslSettingsEl {
-        AppEngineDomainMappingSslSettingsEl {
+impl BuildAppEngineDomainMapping_SslSettings {
+    pub fn build(self) -> AppEngineDomainMapping_SslSettings {
+        AppEngineDomainMapping_SslSettings {
             certificate_id: core::default::Default::default(),
             ssl_management_type: self.ssl_management_type,
         }
     }
 }
 
-pub struct AppEngineDomainMappingSslSettingsElRef {
+#[allow(dead_code)]
+pub struct AppEngineDomainMapping_SslSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineDomainMappingSslSettingsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineDomainMappingSslSettingsElRef {
-        AppEngineDomainMappingSslSettingsElRef {
+impl terrars::Ref for AppEngineDomainMapping_SslSettingsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineDomainMapping_SslSettingsRef {
+        AppEngineDomainMapping_SslSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineDomainMappingSslSettingsElRef {
+impl AppEngineDomainMapping_SslSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -522,7 +555,7 @@ impl AppEngineDomainMappingSslSettingsElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppEngineDomainMappingTimeoutsEl {
+pub struct AppEngineDomainMapping_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -531,7 +564,7 @@ pub struct AppEngineDomainMappingTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppEngineDomainMappingTimeoutsEl {
+impl AppEngineDomainMapping_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -551,8 +584,8 @@ impl AppEngineDomainMappingTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for AppEngineDomainMappingTimeoutsEl {
-    type O = terrars::BlockAssignable<AppEngineDomainMappingTimeoutsEl>;
+impl terrars::ToListMappable for AppEngineDomainMapping_Timeouts {
+    type O = terrars::BlockAssignable<AppEngineDomainMapping_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -563,11 +596,11 @@ impl terrars::ToListMappable for AppEngineDomainMappingTimeoutsEl {
     }
 }
 
-pub struct BuildAppEngineDomainMappingTimeoutsEl {}
+pub struct BuildAppEngineDomainMapping_Timeouts {}
 
-impl BuildAppEngineDomainMappingTimeoutsEl {
-    pub fn build(self) -> AppEngineDomainMappingTimeoutsEl {
-        AppEngineDomainMappingTimeoutsEl {
+impl BuildAppEngineDomainMapping_Timeouts {
+    pub fn build(self) -> AppEngineDomainMapping_Timeouts {
+        AppEngineDomainMapping_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -575,21 +608,23 @@ impl BuildAppEngineDomainMappingTimeoutsEl {
     }
 }
 
-pub struct AppEngineDomainMappingTimeoutsElRef {
+#[allow(dead_code)]
+pub struct AppEngineDomainMapping_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppEngineDomainMappingTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineDomainMappingTimeoutsElRef {
-        AppEngineDomainMappingTimeoutsElRef {
+impl terrars::Ref for AppEngineDomainMapping_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppEngineDomainMapping_TimeoutsRef {
+        AppEngineDomainMapping_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppEngineDomainMappingTimeoutsElRef {
+impl AppEngineDomainMapping_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -608,9 +643,4 @@ impl AppEngineDomainMappingTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AppEngineDomainMappingDynamic {
-    ssl_settings: std::option::Option<terrars::DynamicBlock<AppEngineDomainMappingSslSettingsEl>>,
 }

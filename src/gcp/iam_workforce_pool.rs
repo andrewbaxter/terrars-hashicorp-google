@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct IamWorkforcePoolData {
+struct IamWorkforcePoolData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct IamWorkforcePoolData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -32,16 +36,16 @@ struct IamWorkforcePoolData {
     session_duration: std::option::Option<terrars::PrimField<std::string::String>>,
     workforce_pool_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    access_restrictions: std::option::Option<std::vec::Vec<IamWorkforcePoolAccessRestrictionsEl>>,
+    access_restrictions: std::option::Option<std::vec::Vec<IamWorkforcePool_AccessRestrictions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<IamWorkforcePoolTimeoutsEl>,
+    timeouts: std::option::Option<IamWorkforcePool_Timeouts>,
     dynamic: IamWorkforcePoolDynamic,
 }
 
 struct IamWorkforcePool_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<IamWorkforcePoolData>,
+    data: std::cell::RefCell<IamWorkforcePoolData_>,
 }
 
 #[derive(Clone)]
@@ -141,6 +145,13 @@ impl IamWorkforcePool {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nA user-specified description of the pool. Cannot exceed 256 characters."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -177,7 +188,7 @@ impl IamWorkforcePool {
     #[doc = "Set the field `access_restrictions`.\n"]
     pub fn set_access_restrictions(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<IamWorkforcePoolAccessRestrictionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IamWorkforcePool_AccessRestrictions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -191,9 +202,15 @@ impl IamWorkforcePool {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<IamWorkforcePoolTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<IamWorkforcePool_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -255,13 +272,13 @@ impl IamWorkforcePool {
     }
 
     #[doc = "Get a reference to the value of field `access_restrictions` after provisioning.\n"]
-    pub fn access_restrictions(&self) -> terrars::ListRef<IamWorkforcePoolAccessRestrictionsElRef> {
+    pub fn access_restrictions(&self) -> terrars::ListRef<IamWorkforcePool_AccessRestrictionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.access_restrictions", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> IamWorkforcePoolTimeoutsElRef {
-        IamWorkforcePoolTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> IamWorkforcePool_TimeoutsRef {
+        IamWorkforcePool_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -312,12 +329,13 @@ impl BuildIamWorkforcePool {
         let out = IamWorkforcePool(std::rc::Rc::new(IamWorkforcePool_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(IamWorkforcePoolData {
+            data: std::cell::RefCell::new(IamWorkforcePoolData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 disabled: core::default::Default::default(),
                 display_name: core::default::Default::default(),
@@ -357,6 +375,12 @@ impl IamWorkforcePoolRef {
 
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -418,23 +442,28 @@ impl IamWorkforcePoolRef {
     }
 
     #[doc = "Get a reference to the value of field `access_restrictions` after provisioning.\n"]
-    pub fn access_restrictions(&self) -> terrars::ListRef<IamWorkforcePoolAccessRestrictionsElRef> {
+    pub fn access_restrictions(&self) -> terrars::ListRef<IamWorkforcePool_AccessRestrictionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.access_restrictions", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> IamWorkforcePoolTimeoutsElRef {
-        IamWorkforcePoolTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> IamWorkforcePool_TimeoutsRef {
+        IamWorkforcePool_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct IamWorkforcePoolDynamic {
+    access_restrictions: std::option::Option<terrars::DynamicBlock<IamWorkforcePool_AccessRestrictions>>,
+}
+
 #[derive(Serialize)]
-pub struct IamWorkforcePoolAccessRestrictionsElAllowedServicesEl {
+pub struct IamWorkforcePool_AccessRestrictions_AllowedServices {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     domain: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl IamWorkforcePoolAccessRestrictionsElAllowedServicesEl {
+impl IamWorkforcePool_AccessRestrictions_AllowedServices {
     #[doc = "Set the field `domain`.\nDomain name of the service.\nExample: console.cloud.google"]
     pub fn set_domain(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.domain = std::option::Option::Some(v.into());
@@ -442,8 +471,8 @@ impl IamWorkforcePoolAccessRestrictionsElAllowedServicesEl {
     }
 }
 
-impl terrars::ToListMappable for IamWorkforcePoolAccessRestrictionsElAllowedServicesEl {
-    type O = terrars::BlockAssignable<IamWorkforcePoolAccessRestrictionsElAllowedServicesEl>;
+impl terrars::ToListMappable for IamWorkforcePool_AccessRestrictions_AllowedServices {
+    type O = terrars::BlockAssignable<IamWorkforcePool_AccessRestrictions_AllowedServices>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -454,32 +483,34 @@ impl terrars::ToListMappable for IamWorkforcePoolAccessRestrictionsElAllowedServ
     }
 }
 
-pub struct BuildIamWorkforcePoolAccessRestrictionsElAllowedServicesEl {}
+pub struct BuildIamWorkforcePool_AccessRestrictions_AllowedServices {}
 
-impl BuildIamWorkforcePoolAccessRestrictionsElAllowedServicesEl {
-    pub fn build(self) -> IamWorkforcePoolAccessRestrictionsElAllowedServicesEl {
-        IamWorkforcePoolAccessRestrictionsElAllowedServicesEl { domain: core::default::Default::default() }
+impl BuildIamWorkforcePool_AccessRestrictions_AllowedServices {
+    pub fn build(self) -> IamWorkforcePool_AccessRestrictions_AllowedServices {
+        IamWorkforcePool_AccessRestrictions_AllowedServices { domain: core::default::Default::default() }
     }
 }
 
-pub struct IamWorkforcePoolAccessRestrictionsElAllowedServicesElRef {
+#[allow(dead_code)]
+pub struct IamWorkforcePool_AccessRestrictions_AllowedServicesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IamWorkforcePoolAccessRestrictionsElAllowedServicesElRef {
+impl terrars::Ref for IamWorkforcePool_AccessRestrictions_AllowedServicesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IamWorkforcePoolAccessRestrictionsElAllowedServicesElRef {
-        IamWorkforcePoolAccessRestrictionsElAllowedServicesElRef {
+    ) -> IamWorkforcePool_AccessRestrictions_AllowedServicesRef {
+        IamWorkforcePool_AccessRestrictions_AllowedServicesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IamWorkforcePoolAccessRestrictionsElAllowedServicesElRef {
+impl IamWorkforcePool_AccessRestrictions_AllowedServicesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -492,22 +523,22 @@ impl IamWorkforcePoolAccessRestrictionsElAllowedServicesElRef {
 }
 
 #[derive(Serialize, Default)]
-struct IamWorkforcePoolAccessRestrictionsElDynamic {
+struct IamWorkforcePool_AccessRestrictionsDynamic {
     allowed_services: std
     ::option
-    ::Option<terrars::DynamicBlock<IamWorkforcePoolAccessRestrictionsElAllowedServicesEl>>,
+    ::Option<terrars::DynamicBlock<IamWorkforcePool_AccessRestrictions_AllowedServices>>,
 }
 
 #[derive(Serialize)]
-pub struct IamWorkforcePoolAccessRestrictionsEl {
+pub struct IamWorkforcePool_AccessRestrictions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     disable_programmatic_signin: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    allowed_services: std::option::Option<std::vec::Vec<IamWorkforcePoolAccessRestrictionsElAllowedServicesEl>>,
-    dynamic: IamWorkforcePoolAccessRestrictionsElDynamic,
+    allowed_services: std::option::Option<std::vec::Vec<IamWorkforcePool_AccessRestrictions_AllowedServices>>,
+    dynamic: IamWorkforcePool_AccessRestrictionsDynamic,
 }
 
-impl IamWorkforcePoolAccessRestrictionsEl {
+impl IamWorkforcePool_AccessRestrictions {
     #[doc =
         "Set the field `disable_programmatic_signin`.\nDisable programmatic sign-in by disabling token issue via the Security Token API endpoint.\nSee [Security Token Service API](https://cloud.google.com/iam/docs/reference/sts/rest)."]
     pub fn set_disable_programmatic_signin(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -518,7 +549,7 @@ impl IamWorkforcePoolAccessRestrictionsEl {
     #[doc = "Set the field `allowed_services`.\n"]
     pub fn set_allowed_services(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<IamWorkforcePoolAccessRestrictionsElAllowedServicesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IamWorkforcePool_AccessRestrictions_AllowedServices>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -532,8 +563,8 @@ impl IamWorkforcePoolAccessRestrictionsEl {
     }
 }
 
-impl terrars::ToListMappable for IamWorkforcePoolAccessRestrictionsEl {
-    type O = terrars::BlockAssignable<IamWorkforcePoolAccessRestrictionsEl>;
+impl terrars::ToListMappable for IamWorkforcePool_AccessRestrictions {
+    type O = terrars::BlockAssignable<IamWorkforcePool_AccessRestrictions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -544,11 +575,11 @@ impl terrars::ToListMappable for IamWorkforcePoolAccessRestrictionsEl {
     }
 }
 
-pub struct BuildIamWorkforcePoolAccessRestrictionsEl {}
+pub struct BuildIamWorkforcePool_AccessRestrictions {}
 
-impl BuildIamWorkforcePoolAccessRestrictionsEl {
-    pub fn build(self) -> IamWorkforcePoolAccessRestrictionsEl {
-        IamWorkforcePoolAccessRestrictionsEl {
+impl BuildIamWorkforcePool_AccessRestrictions {
+    pub fn build(self) -> IamWorkforcePool_AccessRestrictions {
+        IamWorkforcePool_AccessRestrictions {
             disable_programmatic_signin: core::default::Default::default(),
             allowed_services: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -556,21 +587,23 @@ impl BuildIamWorkforcePoolAccessRestrictionsEl {
     }
 }
 
-pub struct IamWorkforcePoolAccessRestrictionsElRef {
+#[allow(dead_code)]
+pub struct IamWorkforcePool_AccessRestrictionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IamWorkforcePoolAccessRestrictionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> IamWorkforcePoolAccessRestrictionsElRef {
-        IamWorkforcePoolAccessRestrictionsElRef {
+impl terrars::Ref for IamWorkforcePool_AccessRestrictionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IamWorkforcePool_AccessRestrictionsRef {
+        IamWorkforcePool_AccessRestrictionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IamWorkforcePoolAccessRestrictionsElRef {
+impl IamWorkforcePool_AccessRestrictionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -582,13 +615,13 @@ impl IamWorkforcePoolAccessRestrictionsElRef {
     }
 
     #[doc = "Get a reference to the value of field `allowed_services` after provisioning.\n"]
-    pub fn allowed_services(&self) -> terrars::ListRef<IamWorkforcePoolAccessRestrictionsElAllowedServicesElRef> {
+    pub fn allowed_services(&self) -> terrars::ListRef<IamWorkforcePool_AccessRestrictions_AllowedServicesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.allowed_services", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct IamWorkforcePoolTimeoutsEl {
+pub struct IamWorkforcePool_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -597,7 +630,7 @@ pub struct IamWorkforcePoolTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl IamWorkforcePoolTimeoutsEl {
+impl IamWorkforcePool_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -617,8 +650,8 @@ impl IamWorkforcePoolTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for IamWorkforcePoolTimeoutsEl {
-    type O = terrars::BlockAssignable<IamWorkforcePoolTimeoutsEl>;
+impl terrars::ToListMappable for IamWorkforcePool_Timeouts {
+    type O = terrars::BlockAssignable<IamWorkforcePool_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -629,11 +662,11 @@ impl terrars::ToListMappable for IamWorkforcePoolTimeoutsEl {
     }
 }
 
-pub struct BuildIamWorkforcePoolTimeoutsEl {}
+pub struct BuildIamWorkforcePool_Timeouts {}
 
-impl BuildIamWorkforcePoolTimeoutsEl {
-    pub fn build(self) -> IamWorkforcePoolTimeoutsEl {
-        IamWorkforcePoolTimeoutsEl {
+impl BuildIamWorkforcePool_Timeouts {
+    pub fn build(self) -> IamWorkforcePool_Timeouts {
+        IamWorkforcePool_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -641,21 +674,23 @@ impl BuildIamWorkforcePoolTimeoutsEl {
     }
 }
 
-pub struct IamWorkforcePoolTimeoutsElRef {
+#[allow(dead_code)]
+pub struct IamWorkforcePool_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IamWorkforcePoolTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> IamWorkforcePoolTimeoutsElRef {
-        IamWorkforcePoolTimeoutsElRef {
+impl terrars::Ref for IamWorkforcePool_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IamWorkforcePool_TimeoutsRef {
+        IamWorkforcePool_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IamWorkforcePoolTimeoutsElRef {
+impl IamWorkforcePool_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -674,9 +709,4 @@ impl IamWorkforcePoolTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct IamWorkforcePoolDynamic {
-    access_restrictions: std::option::Option<terrars::DynamicBlock<IamWorkforcePoolAccessRestrictionsEl>>,
 }

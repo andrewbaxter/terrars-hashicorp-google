@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DialogflowFulfillmentData {
+struct DialogflowFulfillmentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct DialogflowFulfillmentData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     display_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
@@ -26,18 +30,18 @@ struct DialogflowFulfillmentData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    features: std::option::Option<std::vec::Vec<DialogflowFulfillmentFeaturesEl>>,
+    features: std::option::Option<std::vec::Vec<DialogflowFulfillment_Features>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    generic_web_service: std::option::Option<std::vec::Vec<DialogflowFulfillmentGenericWebServiceEl>>,
+    generic_web_service: std::option::Option<std::vec::Vec<DialogflowFulfillment_GenericWebService>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DialogflowFulfillmentTimeoutsEl>,
+    timeouts: std::option::Option<DialogflowFulfillment_Timeouts>,
     dynamic: DialogflowFulfillmentDynamic,
 }
 
 struct DialogflowFulfillment_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DialogflowFulfillmentData>,
+    data: std::cell::RefCell<DialogflowFulfillmentData_>,
 }
 
 #[derive(Clone)]
@@ -137,6 +141,13 @@ impl DialogflowFulfillment {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `enabled`.\nWhether fulfillment is enabled."]
     pub fn set_enabled(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().enabled = std::option::Option::Some(v.into());
@@ -158,7 +169,7 @@ impl DialogflowFulfillment {
     #[doc = "Set the field `features`.\n"]
     pub fn set_features(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowFulfillmentFeaturesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowFulfillment_Features>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -174,7 +185,7 @@ impl DialogflowFulfillment {
     #[doc = "Set the field `generic_web_service`.\n"]
     pub fn set_generic_web_service(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowFulfillmentGenericWebServiceEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowFulfillment_GenericWebService>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -188,9 +199,15 @@ impl DialogflowFulfillment {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DialogflowFulfillmentTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DialogflowFulfillment_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -221,18 +238,18 @@ impl DialogflowFulfillment {
     }
 
     #[doc = "Get a reference to the value of field `features` after provisioning.\n"]
-    pub fn features(&self) -> terrars::ListRef<DialogflowFulfillmentFeaturesElRef> {
+    pub fn features(&self) -> terrars::ListRef<DialogflowFulfillment_FeaturesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.features", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `generic_web_service` after provisioning.\n"]
-    pub fn generic_web_service(&self) -> terrars::ListRef<DialogflowFulfillmentGenericWebServiceElRef> {
+    pub fn generic_web_service(&self) -> terrars::ListRef<DialogflowFulfillment_GenericWebServiceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.generic_web_service", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DialogflowFulfillmentTimeoutsElRef {
-        DialogflowFulfillmentTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DialogflowFulfillment_TimeoutsRef {
+        DialogflowFulfillment_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -278,12 +295,13 @@ impl BuildDialogflowFulfillment {
         let out = DialogflowFulfillment(std::rc::Rc::new(DialogflowFulfillment_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DialogflowFulfillmentData {
+            data: std::cell::RefCell::new(DialogflowFulfillmentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 display_name: self.display_name,
                 enabled: core::default::Default::default(),
                 id: core::default::Default::default(),
@@ -323,6 +341,12 @@ impl DialogflowFulfillmentRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `display_name` after provisioning.\nThe human-readable name of the fulfillment, unique within the agent."]
     pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
@@ -350,31 +374,37 @@ impl DialogflowFulfillmentRef {
     }
 
     #[doc = "Get a reference to the value of field `features` after provisioning.\n"]
-    pub fn features(&self) -> terrars::ListRef<DialogflowFulfillmentFeaturesElRef> {
+    pub fn features(&self) -> terrars::ListRef<DialogflowFulfillment_FeaturesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.features", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `generic_web_service` after provisioning.\n"]
-    pub fn generic_web_service(&self) -> terrars::ListRef<DialogflowFulfillmentGenericWebServiceElRef> {
+    pub fn generic_web_service(&self) -> terrars::ListRef<DialogflowFulfillment_GenericWebServiceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.generic_web_service", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DialogflowFulfillmentTimeoutsElRef {
-        DialogflowFulfillmentTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DialogflowFulfillment_TimeoutsRef {
+        DialogflowFulfillment_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DialogflowFulfillmentDynamic {
+    features: std::option::Option<terrars::DynamicBlock<DialogflowFulfillment_Features>>,
+    generic_web_service: std::option::Option<terrars::DynamicBlock<DialogflowFulfillment_GenericWebService>>,
+}
+
 #[derive(Serialize)]
-pub struct DialogflowFulfillmentFeaturesEl {
+pub struct DialogflowFulfillment_Features {
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl DialogflowFulfillmentFeaturesEl { }
+impl DialogflowFulfillment_Features { }
 
-impl terrars::ToListMappable for DialogflowFulfillmentFeaturesEl {
-    type O = terrars::BlockAssignable<DialogflowFulfillmentFeaturesEl>;
+impl terrars::ToListMappable for DialogflowFulfillment_Features {
+    type O = terrars::BlockAssignable<DialogflowFulfillment_Features>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -385,33 +415,35 @@ impl terrars::ToListMappable for DialogflowFulfillmentFeaturesEl {
     }
 }
 
-pub struct BuildDialogflowFulfillmentFeaturesEl {
+pub struct BuildDialogflowFulfillment_Features {
     #[doc =
         "The type of the feature that enabled for fulfillment.\n* SMALLTALK: Fulfillment is enabled for SmallTalk. Possible values: [\"SMALLTALK\"]"]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDialogflowFulfillmentFeaturesEl {
-    pub fn build(self) -> DialogflowFulfillmentFeaturesEl {
-        DialogflowFulfillmentFeaturesEl { type_: self.type_ }
+impl BuildDialogflowFulfillment_Features {
+    pub fn build(self) -> DialogflowFulfillment_Features {
+        DialogflowFulfillment_Features { type_: self.type_ }
     }
 }
 
-pub struct DialogflowFulfillmentFeaturesElRef {
+#[allow(dead_code)]
+pub struct DialogflowFulfillment_FeaturesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowFulfillmentFeaturesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowFulfillmentFeaturesElRef {
-        DialogflowFulfillmentFeaturesElRef {
+impl terrars::Ref for DialogflowFulfillment_FeaturesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowFulfillment_FeaturesRef {
+        DialogflowFulfillment_FeaturesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowFulfillmentFeaturesElRef {
+impl DialogflowFulfillment_FeaturesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -424,7 +456,7 @@ impl DialogflowFulfillmentFeaturesElRef {
 }
 
 #[derive(Serialize)]
-pub struct DialogflowFulfillmentGenericWebServiceEl {
+pub struct DialogflowFulfillment_GenericWebService {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     password: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -434,7 +466,7 @@ pub struct DialogflowFulfillmentGenericWebServiceEl {
     username: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DialogflowFulfillmentGenericWebServiceEl {
+impl DialogflowFulfillment_GenericWebService {
     #[doc = "Set the field `password`.\nThe password for HTTP Basic authentication."]
     pub fn set_password(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.password = std::option::Option::Some(v.into());
@@ -457,8 +489,8 @@ impl DialogflowFulfillmentGenericWebServiceEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowFulfillmentGenericWebServiceEl {
-    type O = terrars::BlockAssignable<DialogflowFulfillmentGenericWebServiceEl>;
+impl terrars::ToListMappable for DialogflowFulfillment_GenericWebService {
+    type O = terrars::BlockAssignable<DialogflowFulfillment_GenericWebService>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -469,14 +501,14 @@ impl terrars::ToListMappable for DialogflowFulfillmentGenericWebServiceEl {
     }
 }
 
-pub struct BuildDialogflowFulfillmentGenericWebServiceEl {
+pub struct BuildDialogflowFulfillment_GenericWebService {
     #[doc = "The fulfillment URI for receiving POST requests. It must use https protocol."]
     pub uri: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDialogflowFulfillmentGenericWebServiceEl {
-    pub fn build(self) -> DialogflowFulfillmentGenericWebServiceEl {
-        DialogflowFulfillmentGenericWebServiceEl {
+impl BuildDialogflowFulfillment_GenericWebService {
+    pub fn build(self) -> DialogflowFulfillment_GenericWebService {
+        DialogflowFulfillment_GenericWebService {
             password: core::default::Default::default(),
             request_headers: core::default::Default::default(),
             uri: self.uri,
@@ -485,21 +517,23 @@ impl BuildDialogflowFulfillmentGenericWebServiceEl {
     }
 }
 
-pub struct DialogflowFulfillmentGenericWebServiceElRef {
+#[allow(dead_code)]
+pub struct DialogflowFulfillment_GenericWebServiceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowFulfillmentGenericWebServiceElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowFulfillmentGenericWebServiceElRef {
-        DialogflowFulfillmentGenericWebServiceElRef {
+impl terrars::Ref for DialogflowFulfillment_GenericWebServiceRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowFulfillment_GenericWebServiceRef {
+        DialogflowFulfillment_GenericWebServiceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowFulfillmentGenericWebServiceElRef {
+impl DialogflowFulfillment_GenericWebServiceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -530,7 +564,7 @@ impl DialogflowFulfillmentGenericWebServiceElRef {
 }
 
 #[derive(Serialize)]
-pub struct DialogflowFulfillmentTimeoutsEl {
+pub struct DialogflowFulfillment_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -539,7 +573,7 @@ pub struct DialogflowFulfillmentTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DialogflowFulfillmentTimeoutsEl {
+impl DialogflowFulfillment_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -559,8 +593,8 @@ impl DialogflowFulfillmentTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowFulfillmentTimeoutsEl {
-    type O = terrars::BlockAssignable<DialogflowFulfillmentTimeoutsEl>;
+impl terrars::ToListMappable for DialogflowFulfillment_Timeouts {
+    type O = terrars::BlockAssignable<DialogflowFulfillment_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -571,11 +605,11 @@ impl terrars::ToListMappable for DialogflowFulfillmentTimeoutsEl {
     }
 }
 
-pub struct BuildDialogflowFulfillmentTimeoutsEl {}
+pub struct BuildDialogflowFulfillment_Timeouts {}
 
-impl BuildDialogflowFulfillmentTimeoutsEl {
-    pub fn build(self) -> DialogflowFulfillmentTimeoutsEl {
-        DialogflowFulfillmentTimeoutsEl {
+impl BuildDialogflowFulfillment_Timeouts {
+    pub fn build(self) -> DialogflowFulfillment_Timeouts {
+        DialogflowFulfillment_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -583,21 +617,23 @@ impl BuildDialogflowFulfillmentTimeoutsEl {
     }
 }
 
-pub struct DialogflowFulfillmentTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DialogflowFulfillment_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowFulfillmentTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowFulfillmentTimeoutsElRef {
-        DialogflowFulfillmentTimeoutsElRef {
+impl terrars::Ref for DialogflowFulfillment_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowFulfillment_TimeoutsRef {
+        DialogflowFulfillment_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowFulfillmentTimeoutsElRef {
+impl DialogflowFulfillment_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -616,10 +652,4 @@ impl DialogflowFulfillmentTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DialogflowFulfillmentDynamic {
-    features: std::option::Option<terrars::DynamicBlock<DialogflowFulfillmentFeaturesEl>>,
-    generic_web_service: std::option::Option<terrars::DynamicBlock<DialogflowFulfillmentGenericWebServiceEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataprocWorkflowTemplateData {
+struct DataprocWorkflowTemplateData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,6 +23,8 @@ struct DataprocWorkflowTemplateData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dag_timeout: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -31,20 +35,22 @@ struct DataprocWorkflowTemplateData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     version: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    jobs: std::option::Option<std::vec::Vec<DataprocWorkflowTemplateJobsEl>>,
+    encryption_config: std::option::Option<std::vec::Vec<DataprocWorkflowTemplate_EncryptionConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    parameters: std::option::Option<std::vec::Vec<DataprocWorkflowTemplateParametersEl>>,
+    jobs: std::option::Option<std::vec::Vec<DataprocWorkflowTemplate_Jobs>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    placement: std::option::Option<std::vec::Vec<DataprocWorkflowTemplatePlacementEl>>,
+    parameters: std::option::Option<std::vec::Vec<DataprocWorkflowTemplate_Parameters>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataprocWorkflowTemplateTimeoutsEl>,
+    placement: std::option::Option<std::vec::Vec<DataprocWorkflowTemplate_Placement>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<DataprocWorkflowTemplate_Timeouts>,
     dynamic: DataprocWorkflowTemplateDynamic,
 }
 
 struct DataprocWorkflowTemplate_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataprocWorkflowTemplateData>,
+    data: std::cell::RefCell<DataprocWorkflowTemplateData_>,
 }
 
 #[derive(Clone)]
@@ -151,6 +157,13 @@ impl DataprocWorkflowTemplate {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -179,8 +192,24 @@ impl DataprocWorkflowTemplate {
         self
     }
 
+    #[doc = "Set the field `encryption_config`.\n"]
+    pub fn set_encryption_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplate_EncryptionConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().encryption_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.encryption_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `jobs`.\n"]
-    pub fn set_jobs(self, v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplateJobsEl>>) -> Self {
+    pub fn set_jobs(self, v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplate_Jobs>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().jobs = std::option::Option::Some(v);
@@ -195,7 +224,7 @@ impl DataprocWorkflowTemplate {
     #[doc = "Set the field `parameters`.\n"]
     pub fn set_parameters(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplateParametersEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplate_Parameters>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -211,7 +240,7 @@ impl DataprocWorkflowTemplate {
     #[doc = "Set the field `placement`.\n"]
     pub fn set_placement(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplatePlacementEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplate_Placement>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -225,7 +254,7 @@ impl DataprocWorkflowTemplate {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataprocWorkflowTemplateTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataprocWorkflowTemplate_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -240,6 +269,12 @@ impl DataprocWorkflowTemplate {
         "Get a reference to the value of field `dag_timeout` after provisioning.\nOptional. Timeout duration for the DAG of jobs, expressed in seconds (see [JSON representation of duration](https://developers.google.com/protocol-buffers/docs/proto3#json)). The timeout duration must be from 10 minutes (\"600s\") to 24 hours (\"86400s\"). The timer begins when the first job is submitted. If the workflow is running at the end of the timeout period, any remaining jobs are cancelled, the workflow is ended, and if the workflow was running on a [managed cluster](/dataproc/docs/concepts/workflows/using-workflows#configuring_or_selecting_a_cluster), the cluster is deleted."]
     pub fn dag_timeout(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.dag_timeout", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -293,24 +328,29 @@ impl DataprocWorkflowTemplate {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.version", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `encryption_config` after provisioning.\n"]
+    pub fn encryption_config(&self) -> terrars::ListRef<DataprocWorkflowTemplate_EncryptionConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `jobs` after provisioning.\n"]
-    pub fn jobs(&self) -> terrars::ListRef<DataprocWorkflowTemplateJobsElRef> {
+    pub fn jobs(&self) -> terrars::ListRef<DataprocWorkflowTemplate_JobsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.jobs", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `parameters` after provisioning.\n"]
-    pub fn parameters(&self) -> terrars::ListRef<DataprocWorkflowTemplateParametersElRef> {
+    pub fn parameters(&self) -> terrars::ListRef<DataprocWorkflowTemplate_ParametersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.parameters", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `placement` after provisioning.\n"]
-    pub fn placement(&self) -> terrars::ListRef<DataprocWorkflowTemplatePlacementElRef> {
+    pub fn placement(&self) -> terrars::ListRef<DataprocWorkflowTemplate_PlacementRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.placement", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataprocWorkflowTemplateTimeoutsElRef {
-        DataprocWorkflowTemplateTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataprocWorkflowTemplate_TimeoutsRef {
+        DataprocWorkflowTemplate_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -359,19 +399,21 @@ impl BuildDataprocWorkflowTemplate {
         let out = DataprocWorkflowTemplate(std::rc::Rc::new(DataprocWorkflowTemplate_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataprocWorkflowTemplateData {
+            data: std::cell::RefCell::new(DataprocWorkflowTemplateData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 dag_timeout: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 labels: core::default::Default::default(),
                 location: self.location,
                 name: self.name,
                 project: core::default::Default::default(),
                 version: core::default::Default::default(),
+                encryption_config: core::default::Default::default(),
                 jobs: core::default::Default::default(),
                 parameters: core::default::Default::default(),
                 placement: core::default::Default::default(),
@@ -417,6 +459,12 @@ impl DataprocWorkflowTemplateRef {
         "Get a reference to the value of field `dag_timeout` after provisioning.\nOptional. Timeout duration for the DAG of jobs, expressed in seconds (see [JSON representation of duration](https://developers.google.com/protocol-buffers/docs/proto3#json)). The timeout duration must be from 10 minutes (\"600s\") to 24 hours (\"86400s\"). The timer begins when the first job is submitted. If the workflow is running at the end of the timeout period, any remaining jobs are cancelled, the workflow is ended, and if the workflow was running on a [managed cluster](/dataproc/docs/concepts/workflows/using-workflows#configuring_or_selecting_a_cluster), the cluster is deleted."]
     pub fn dag_timeout(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.dag_timeout", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -470,34 +518,109 @@ impl DataprocWorkflowTemplateRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.version", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `encryption_config` after provisioning.\n"]
+    pub fn encryption_config(&self) -> terrars::ListRef<DataprocWorkflowTemplate_EncryptionConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `jobs` after provisioning.\n"]
-    pub fn jobs(&self) -> terrars::ListRef<DataprocWorkflowTemplateJobsElRef> {
+    pub fn jobs(&self) -> terrars::ListRef<DataprocWorkflowTemplate_JobsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.jobs", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `parameters` after provisioning.\n"]
-    pub fn parameters(&self) -> terrars::ListRef<DataprocWorkflowTemplateParametersElRef> {
+    pub fn parameters(&self) -> terrars::ListRef<DataprocWorkflowTemplate_ParametersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.parameters", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `placement` after provisioning.\n"]
-    pub fn placement(&self) -> terrars::ListRef<DataprocWorkflowTemplatePlacementElRef> {
+    pub fn placement(&self) -> terrars::ListRef<DataprocWorkflowTemplate_PlacementRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.placement", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataprocWorkflowTemplateTimeoutsElRef {
-        DataprocWorkflowTemplateTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataprocWorkflowTemplate_TimeoutsRef {
+        DataprocWorkflowTemplate_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct DataprocWorkflowTemplateDynamic {
+    encryption_config: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_EncryptionConfig>>,
+    jobs: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Jobs>>,
+    parameters: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Parameters>>,
+    placement: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Placement>>,
+}
+
+#[derive(Serialize)]
+pub struct DataprocWorkflowTemplate_EncryptionConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataprocWorkflowTemplate_EncryptionConfig {
+    #[doc = "Set the field `kms_key`.\nOptional. The Cloud KMS key name to use for encryption."]
+    pub fn set_kms_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.kms_key = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataprocWorkflowTemplate_EncryptionConfig {
+    type O = terrars::BlockAssignable<DataprocWorkflowTemplate_EncryptionConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataprocWorkflowTemplate_EncryptionConfig {}
+
+impl BuildDataprocWorkflowTemplate_EncryptionConfig {
+    pub fn build(self) -> DataprocWorkflowTemplate_EncryptionConfig {
+        DataprocWorkflowTemplate_EncryptionConfig { kms_key: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_EncryptionConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataprocWorkflowTemplate_EncryptionConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocWorkflowTemplate_EncryptionConfigRef {
+        DataprocWorkflowTemplate_EncryptionConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataprocWorkflowTemplate_EncryptionConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `kms_key` after provisioning.\nOptional. The Cloud KMS key name to use for encryption."]
+    pub fn kms_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataprocWorkflowTemplateJobsElHadoopJobElLoggingConfigEl {
+pub struct DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     driver_log_levels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DataprocWorkflowTemplateJobsElHadoopJobElLoggingConfigEl {
+impl DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfig {
     #[doc =
         "Set the field `driver_log_levels`.\nThe per-package log levels for the driver. This may include \"root\" package name to configure rootLogger. Examples: 'com.google = FATAL', 'root = INFO', 'org.apache = DEBUG'"]
     pub fn set_driver_log_levels(
@@ -509,8 +632,8 @@ impl DataprocWorkflowTemplateJobsElHadoopJobElLoggingConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataprocWorkflowTemplateJobsElHadoopJobElLoggingConfigEl {
-    type O = terrars::BlockAssignable<DataprocWorkflowTemplateJobsElHadoopJobElLoggingConfigEl>;
+impl terrars::ToListMappable for DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfig {
+    type O = terrars::BlockAssignable<DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -521,34 +644,34 @@ impl terrars::ToListMappable for DataprocWorkflowTemplateJobsElHadoopJobElLoggin
     }
 }
 
-pub struct BuildDataprocWorkflowTemplateJobsElHadoopJobElLoggingConfigEl {}
+pub struct BuildDataprocWorkflowTemplate_Jobs_PigJob_LoggingConfig {}
 
-impl BuildDataprocWorkflowTemplateJobsElHadoopJobElLoggingConfigEl {
-    pub fn build(self) -> DataprocWorkflowTemplateJobsElHadoopJobElLoggingConfigEl {
-        DataprocWorkflowTemplateJobsElHadoopJobElLoggingConfigEl {
-            driver_log_levels: core::default::Default::default(),
-        }
+impl BuildDataprocWorkflowTemplate_Jobs_PigJob_LoggingConfig {
+    pub fn build(self) -> DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfig {
+        DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfig { driver_log_levels: core::default::Default::default() }
     }
 }
 
-pub struct DataprocWorkflowTemplateJobsElHadoopJobElLoggingConfigElRef {
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocWorkflowTemplateJobsElHadoopJobElLoggingConfigElRef {
+impl terrars::Ref for DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataprocWorkflowTemplateJobsElHadoopJobElLoggingConfigElRef {
-        DataprocWorkflowTemplateJobsElHadoopJobElLoggingConfigElRef {
+    ) -> DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfigRef {
+        DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocWorkflowTemplateJobsElHadoopJobElLoggingConfigElRef {
+impl DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -561,14 +684,12 @@ impl DataprocWorkflowTemplateJobsElHadoopJobElLoggingConfigElRef {
 }
 
 #[derive(Serialize, Default)]
-struct DataprocWorkflowTemplateJobsElHadoopJobElDynamic {
-    logging_config: std
-    ::option
-    ::Option<terrars::DynamicBlock<DataprocWorkflowTemplateJobsElHadoopJobElLoggingConfigEl>>,
+struct DataprocWorkflowTemplate_Jobs_HadoopJobDynamic {
+    logging_config: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct DataprocWorkflowTemplateJobsElHadoopJobEl {
+pub struct DataprocWorkflowTemplate_Jobs_HadoopJob {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     archive_uris: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -584,11 +705,11 @@ pub struct DataprocWorkflowTemplateJobsElHadoopJobEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     properties: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    logging_config: std::option::Option<std::vec::Vec<DataprocWorkflowTemplateJobsElHadoopJobElLoggingConfigEl>>,
-    dynamic: DataprocWorkflowTemplateJobsElHadoopJobElDynamic,
+    logging_config: std::option::Option<std::vec::Vec<DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfig>>,
+    dynamic: DataprocWorkflowTemplate_Jobs_HadoopJobDynamic,
 }
 
-impl DataprocWorkflowTemplateJobsElHadoopJobEl {
+impl DataprocWorkflowTemplate_Jobs_HadoopJob {
     #[doc =
         "Set the field `archive_uris`.\nOptional. HCFS URIs of archives to be extracted in the working directory of Hadoop drivers and tasks. Supported file types: .jar, .tar, .tar.gz, .tgz, or .zip."]
     pub fn set_archive_uris(
@@ -656,12 +777,7 @@ impl DataprocWorkflowTemplateJobsElHadoopJobEl {
     #[doc = "Set the field `logging_config`.\n"]
     pub fn set_logging_config(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<DataprocWorkflowTemplateJobsElHadoopJobElLoggingConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -675,8 +791,8 @@ impl DataprocWorkflowTemplateJobsElHadoopJobEl {
     }
 }
 
-impl terrars::ToListMappable for DataprocWorkflowTemplateJobsElHadoopJobEl {
-    type O = terrars::BlockAssignable<DataprocWorkflowTemplateJobsElHadoopJobEl>;
+impl terrars::ToListMappable for DataprocWorkflowTemplate_Jobs_HadoopJob {
+    type O = terrars::BlockAssignable<DataprocWorkflowTemplate_Jobs_HadoopJob>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -687,11 +803,11 @@ impl terrars::ToListMappable for DataprocWorkflowTemplateJobsElHadoopJobEl {
     }
 }
 
-pub struct BuildDataprocWorkflowTemplateJobsElHadoopJobEl {}
+pub struct BuildDataprocWorkflowTemplate_Jobs_HadoopJob {}
 
-impl BuildDataprocWorkflowTemplateJobsElHadoopJobEl {
-    pub fn build(self) -> DataprocWorkflowTemplateJobsElHadoopJobEl {
-        DataprocWorkflowTemplateJobsElHadoopJobEl {
+impl BuildDataprocWorkflowTemplate_Jobs_HadoopJob {
+    pub fn build(self) -> DataprocWorkflowTemplate_Jobs_HadoopJob {
+        DataprocWorkflowTemplate_Jobs_HadoopJob {
             archive_uris: core::default::Default::default(),
             args: core::default::Default::default(),
             file_uris: core::default::Default::default(),
@@ -705,21 +821,23 @@ impl BuildDataprocWorkflowTemplateJobsElHadoopJobEl {
     }
 }
 
-pub struct DataprocWorkflowTemplateJobsElHadoopJobElRef {
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Jobs_HadoopJobRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocWorkflowTemplateJobsElHadoopJobElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocWorkflowTemplateJobsElHadoopJobElRef {
-        DataprocWorkflowTemplateJobsElHadoopJobElRef {
+impl terrars::Ref for DataprocWorkflowTemplate_Jobs_HadoopJobRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocWorkflowTemplate_Jobs_HadoopJobRef {
+        DataprocWorkflowTemplate_Jobs_HadoopJobRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocWorkflowTemplateJobsElHadoopJobElRef {
+impl DataprocWorkflowTemplate_Jobs_HadoopJobRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -767,20 +885,20 @@ impl DataprocWorkflowTemplateJobsElHadoopJobElRef {
     }
 
     #[doc = "Get a reference to the value of field `logging_config` after provisioning.\n"]
-    pub fn logging_config(&self) -> terrars::ListRef<DataprocWorkflowTemplateJobsElHadoopJobElLoggingConfigElRef> {
+    pub fn logging_config(&self) -> terrars::ListRef<DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataprocWorkflowTemplateJobsElHiveJobElQueryListEl {
+pub struct DataprocWorkflowTemplate_Jobs_PigJob_QueryList {
     queries: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl DataprocWorkflowTemplateJobsElHiveJobElQueryListEl { }
+impl DataprocWorkflowTemplate_Jobs_PigJob_QueryList { }
 
-impl terrars::ToListMappable for DataprocWorkflowTemplateJobsElHiveJobElQueryListEl {
-    type O = terrars::BlockAssignable<DataprocWorkflowTemplateJobsElHiveJobElQueryListEl>;
+impl terrars::ToListMappable for DataprocWorkflowTemplate_Jobs_PigJob_QueryList {
+    type O = terrars::BlockAssignable<DataprocWorkflowTemplate_Jobs_PigJob_QueryList>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -791,36 +909,38 @@ impl terrars::ToListMappable for DataprocWorkflowTemplateJobsElHiveJobElQueryLis
     }
 }
 
-pub struct BuildDataprocWorkflowTemplateJobsElHiveJobElQueryListEl {
+pub struct BuildDataprocWorkflowTemplate_Jobs_PigJob_QueryList {
     #[doc =
         "Required. The queries to execute. You do not need to end a query expression with a semicolon. Multiple queries can be specified in one string by separating each with a semicolon. Here is an example of a Dataproc API snippet that uses a QueryList to specify a HiveJob: \"hiveJob\": { \"queryList\": { \"queries\": [ \"query1\", \"query2\", \"query3;query4\", ] } }"]
     pub queries: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataprocWorkflowTemplateJobsElHiveJobElQueryListEl {
-    pub fn build(self) -> DataprocWorkflowTemplateJobsElHiveJobElQueryListEl {
-        DataprocWorkflowTemplateJobsElHiveJobElQueryListEl { queries: self.queries }
+impl BuildDataprocWorkflowTemplate_Jobs_PigJob_QueryList {
+    pub fn build(self) -> DataprocWorkflowTemplate_Jobs_PigJob_QueryList {
+        DataprocWorkflowTemplate_Jobs_PigJob_QueryList { queries: self.queries }
     }
 }
 
-pub struct DataprocWorkflowTemplateJobsElHiveJobElQueryListElRef {
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Jobs_PigJob_QueryListRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocWorkflowTemplateJobsElHiveJobElQueryListElRef {
+impl terrars::Ref for DataprocWorkflowTemplate_Jobs_PigJob_QueryListRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataprocWorkflowTemplateJobsElHiveJobElQueryListElRef {
-        DataprocWorkflowTemplateJobsElHiveJobElQueryListElRef {
+    ) -> DataprocWorkflowTemplate_Jobs_PigJob_QueryListRef {
+        DataprocWorkflowTemplate_Jobs_PigJob_QueryListRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocWorkflowTemplateJobsElHiveJobElQueryListElRef {
+impl DataprocWorkflowTemplate_Jobs_PigJob_QueryListRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -833,12 +953,12 @@ impl DataprocWorkflowTemplateJobsElHiveJobElQueryListElRef {
 }
 
 #[derive(Serialize, Default)]
-struct DataprocWorkflowTemplateJobsElHiveJobElDynamic {
-    query_list: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplateJobsElHiveJobElQueryListEl>>,
+struct DataprocWorkflowTemplate_Jobs_HiveJobDynamic {
+    query_list: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Jobs_PigJob_QueryList>>,
 }
 
 #[derive(Serialize)]
-pub struct DataprocWorkflowTemplateJobsElHiveJobEl {
+pub struct DataprocWorkflowTemplate_Jobs_HiveJob {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     continue_on_failure: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -850,11 +970,11 @@ pub struct DataprocWorkflowTemplateJobsElHiveJobEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     script_variables: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    query_list: std::option::Option<std::vec::Vec<DataprocWorkflowTemplateJobsElHiveJobElQueryListEl>>,
-    dynamic: DataprocWorkflowTemplateJobsElHiveJobElDynamic,
+    query_list: std::option::Option<std::vec::Vec<DataprocWorkflowTemplate_Jobs_PigJob_QueryList>>,
+    dynamic: DataprocWorkflowTemplate_Jobs_HiveJobDynamic,
 }
 
-impl DataprocWorkflowTemplateJobsElHiveJobEl {
+impl DataprocWorkflowTemplate_Jobs_HiveJob {
     #[doc =
         "Set the field `continue_on_failure`.\nOptional. Whether to continue executing queries if a query fails. The default value is `false`. Setting to `true` can be useful when executing independent parallel queries."]
     pub fn set_continue_on_failure(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -901,7 +1021,7 @@ impl DataprocWorkflowTemplateJobsElHiveJobEl {
     #[doc = "Set the field `query_list`.\n"]
     pub fn set_query_list(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplateJobsElHiveJobElQueryListEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplate_Jobs_PigJob_QueryList>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -915,8 +1035,8 @@ impl DataprocWorkflowTemplateJobsElHiveJobEl {
     }
 }
 
-impl terrars::ToListMappable for DataprocWorkflowTemplateJobsElHiveJobEl {
-    type O = terrars::BlockAssignable<DataprocWorkflowTemplateJobsElHiveJobEl>;
+impl terrars::ToListMappable for DataprocWorkflowTemplate_Jobs_HiveJob {
+    type O = terrars::BlockAssignable<DataprocWorkflowTemplate_Jobs_HiveJob>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -927,11 +1047,11 @@ impl terrars::ToListMappable for DataprocWorkflowTemplateJobsElHiveJobEl {
     }
 }
 
-pub struct BuildDataprocWorkflowTemplateJobsElHiveJobEl {}
+pub struct BuildDataprocWorkflowTemplate_Jobs_HiveJob {}
 
-impl BuildDataprocWorkflowTemplateJobsElHiveJobEl {
-    pub fn build(self) -> DataprocWorkflowTemplateJobsElHiveJobEl {
-        DataprocWorkflowTemplateJobsElHiveJobEl {
+impl BuildDataprocWorkflowTemplate_Jobs_HiveJob {
+    pub fn build(self) -> DataprocWorkflowTemplate_Jobs_HiveJob {
+        DataprocWorkflowTemplate_Jobs_HiveJob {
             continue_on_failure: core::default::Default::default(),
             jar_file_uris: core::default::Default::default(),
             properties: core::default::Default::default(),
@@ -943,21 +1063,23 @@ impl BuildDataprocWorkflowTemplateJobsElHiveJobEl {
     }
 }
 
-pub struct DataprocWorkflowTemplateJobsElHiveJobElRef {
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Jobs_HiveJobRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocWorkflowTemplateJobsElHiveJobElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocWorkflowTemplateJobsElHiveJobElRef {
-        DataprocWorkflowTemplateJobsElHiveJobElRef {
+impl terrars::Ref for DataprocWorkflowTemplate_Jobs_HiveJobRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocWorkflowTemplate_Jobs_HiveJobRef {
+        DataprocWorkflowTemplate_Jobs_HiveJobRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocWorkflowTemplateJobsElHiveJobElRef {
+impl DataprocWorkflowTemplate_Jobs_HiveJobRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -993,148 +1115,19 @@ impl DataprocWorkflowTemplateJobsElHiveJobElRef {
     }
 
     #[doc = "Get a reference to the value of field `query_list` after provisioning.\n"]
-    pub fn query_list(&self) -> terrars::ListRef<DataprocWorkflowTemplateJobsElHiveJobElQueryListElRef> {
+    pub fn query_list(&self) -> terrars::ListRef<DataprocWorkflowTemplate_Jobs_PigJob_QueryListRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.query_list", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct DataprocWorkflowTemplateJobsElPigJobElLoggingConfigEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    driver_log_levels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
-}
-
-impl DataprocWorkflowTemplateJobsElPigJobElLoggingConfigEl {
-    #[doc =
-        "Set the field `driver_log_levels`.\nThe per-package log levels for the driver. This may include \"root\" package name to configure rootLogger. Examples: 'com.google = FATAL', 'root = INFO', 'org.apache = DEBUG'"]
-    pub fn set_driver_log_levels(
-        mut self,
-        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.driver_log_levels = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataprocWorkflowTemplateJobsElPigJobElLoggingConfigEl {
-    type O = terrars::BlockAssignable<DataprocWorkflowTemplateJobsElPigJobElLoggingConfigEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataprocWorkflowTemplateJobsElPigJobElLoggingConfigEl {}
-
-impl BuildDataprocWorkflowTemplateJobsElPigJobElLoggingConfigEl {
-    pub fn build(self) -> DataprocWorkflowTemplateJobsElPigJobElLoggingConfigEl {
-        DataprocWorkflowTemplateJobsElPigJobElLoggingConfigEl {
-            driver_log_levels: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataprocWorkflowTemplateJobsElPigJobElLoggingConfigElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataprocWorkflowTemplateJobsElPigJobElLoggingConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataprocWorkflowTemplateJobsElPigJobElLoggingConfigElRef {
-        DataprocWorkflowTemplateJobsElPigJobElLoggingConfigElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataprocWorkflowTemplateJobsElPigJobElLoggingConfigElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `driver_log_levels` after provisioning.\nThe per-package log levels for the driver. This may include \"root\" package name to configure rootLogger. Examples: 'com.google = FATAL', 'root = INFO', 'org.apache = DEBUG'"]
-    pub fn driver_log_levels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
-        terrars::RecRef::new(self.shared().clone(), format!("{}.driver_log_levels", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataprocWorkflowTemplateJobsElPigJobElQueryListEl {
-    queries: terrars::ListField<terrars::PrimField<std::string::String>>,
-}
-
-impl DataprocWorkflowTemplateJobsElPigJobElQueryListEl { }
-
-impl terrars::ToListMappable for DataprocWorkflowTemplateJobsElPigJobElQueryListEl {
-    type O = terrars::BlockAssignable<DataprocWorkflowTemplateJobsElPigJobElQueryListEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataprocWorkflowTemplateJobsElPigJobElQueryListEl {
-    #[doc =
-        "Required. The queries to execute. You do not need to end a query expression with a semicolon. Multiple queries can be specified in one string by separating each with a semicolon. Here is an example of a Dataproc API snippet that uses a QueryList to specify a HiveJob: \"hiveJob\": { \"queryList\": { \"queries\": [ \"query1\", \"query2\", \"query3;query4\", ] } }"]
-    pub queries: terrars::ListField<terrars::PrimField<std::string::String>>,
-}
-
-impl BuildDataprocWorkflowTemplateJobsElPigJobElQueryListEl {
-    pub fn build(self) -> DataprocWorkflowTemplateJobsElPigJobElQueryListEl {
-        DataprocWorkflowTemplateJobsElPigJobElQueryListEl { queries: self.queries }
-    }
-}
-
-pub struct DataprocWorkflowTemplateJobsElPigJobElQueryListElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataprocWorkflowTemplateJobsElPigJobElQueryListElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataprocWorkflowTemplateJobsElPigJobElQueryListElRef {
-        DataprocWorkflowTemplateJobsElPigJobElQueryListElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataprocWorkflowTemplateJobsElPigJobElQueryListElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `queries` after provisioning.\nRequired. The queries to execute. You do not need to end a query expression with a semicolon. Multiple queries can be specified in one string by separating each with a semicolon. Here is an example of a Dataproc API snippet that uses a QueryList to specify a HiveJob: \"hiveJob\": { \"queryList\": { \"queries\": [ \"query1\", \"query2\", \"query3;query4\", ] } }"]
-    pub fn queries(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.queries", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct DataprocWorkflowTemplateJobsElPigJobElDynamic {
-    logging_config: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplateJobsElPigJobElLoggingConfigEl>>,
-    query_list: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplateJobsElPigJobElQueryListEl>>,
+struct DataprocWorkflowTemplate_Jobs_PigJobDynamic {
+    logging_config: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfig>>,
+    query_list: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Jobs_PigJob_QueryList>>,
 }
 
 #[derive(Serialize)]
-pub struct DataprocWorkflowTemplateJobsElPigJobEl {
+pub struct DataprocWorkflowTemplate_Jobs_PigJob {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     continue_on_failure: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1146,13 +1139,13 @@ pub struct DataprocWorkflowTemplateJobsElPigJobEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     script_variables: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    logging_config: std::option::Option<std::vec::Vec<DataprocWorkflowTemplateJobsElPigJobElLoggingConfigEl>>,
+    logging_config: std::option::Option<std::vec::Vec<DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    query_list: std::option::Option<std::vec::Vec<DataprocWorkflowTemplateJobsElPigJobElQueryListEl>>,
-    dynamic: DataprocWorkflowTemplateJobsElPigJobElDynamic,
+    query_list: std::option::Option<std::vec::Vec<DataprocWorkflowTemplate_Jobs_PigJob_QueryList>>,
+    dynamic: DataprocWorkflowTemplate_Jobs_PigJobDynamic,
 }
 
-impl DataprocWorkflowTemplateJobsElPigJobEl {
+impl DataprocWorkflowTemplate_Jobs_PigJob {
     #[doc =
         "Set the field `continue_on_failure`.\nOptional. Whether to continue executing queries if a query fails. The default value is `false`. Setting to `true` can be useful when executing independent parallel queries."]
     pub fn set_continue_on_failure(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -1199,7 +1192,7 @@ impl DataprocWorkflowTemplateJobsElPigJobEl {
     #[doc = "Set the field `logging_config`.\n"]
     pub fn set_logging_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplateJobsElPigJobElLoggingConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1215,7 +1208,7 @@ impl DataprocWorkflowTemplateJobsElPigJobEl {
     #[doc = "Set the field `query_list`.\n"]
     pub fn set_query_list(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplateJobsElPigJobElQueryListEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplate_Jobs_PigJob_QueryList>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1229,8 +1222,8 @@ impl DataprocWorkflowTemplateJobsElPigJobEl {
     }
 }
 
-impl terrars::ToListMappable for DataprocWorkflowTemplateJobsElPigJobEl {
-    type O = terrars::BlockAssignable<DataprocWorkflowTemplateJobsElPigJobEl>;
+impl terrars::ToListMappable for DataprocWorkflowTemplate_Jobs_PigJob {
+    type O = terrars::BlockAssignable<DataprocWorkflowTemplate_Jobs_PigJob>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1241,11 +1234,11 @@ impl terrars::ToListMappable for DataprocWorkflowTemplateJobsElPigJobEl {
     }
 }
 
-pub struct BuildDataprocWorkflowTemplateJobsElPigJobEl {}
+pub struct BuildDataprocWorkflowTemplate_Jobs_PigJob {}
 
-impl BuildDataprocWorkflowTemplateJobsElPigJobEl {
-    pub fn build(self) -> DataprocWorkflowTemplateJobsElPigJobEl {
-        DataprocWorkflowTemplateJobsElPigJobEl {
+impl BuildDataprocWorkflowTemplate_Jobs_PigJob {
+    pub fn build(self) -> DataprocWorkflowTemplate_Jobs_PigJob {
+        DataprocWorkflowTemplate_Jobs_PigJob {
             continue_on_failure: core::default::Default::default(),
             jar_file_uris: core::default::Default::default(),
             properties: core::default::Default::default(),
@@ -1258,21 +1251,23 @@ impl BuildDataprocWorkflowTemplateJobsElPigJobEl {
     }
 }
 
-pub struct DataprocWorkflowTemplateJobsElPigJobElRef {
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Jobs_PigJobRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocWorkflowTemplateJobsElPigJobElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocWorkflowTemplateJobsElPigJobElRef {
-        DataprocWorkflowTemplateJobsElPigJobElRef {
+impl terrars::Ref for DataprocWorkflowTemplate_Jobs_PigJobRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocWorkflowTemplate_Jobs_PigJobRef {
+        DataprocWorkflowTemplate_Jobs_PigJobRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocWorkflowTemplateJobsElPigJobElRef {
+impl DataprocWorkflowTemplate_Jobs_PigJobRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1308,155 +1303,24 @@ impl DataprocWorkflowTemplateJobsElPigJobElRef {
     }
 
     #[doc = "Get a reference to the value of field `logging_config` after provisioning.\n"]
-    pub fn logging_config(&self) -> terrars::ListRef<DataprocWorkflowTemplateJobsElPigJobElLoggingConfigElRef> {
+    pub fn logging_config(&self) -> terrars::ListRef<DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `query_list` after provisioning.\n"]
-    pub fn query_list(&self) -> terrars::ListRef<DataprocWorkflowTemplateJobsElPigJobElQueryListElRef> {
+    pub fn query_list(&self) -> terrars::ListRef<DataprocWorkflowTemplate_Jobs_PigJob_QueryListRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.query_list", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct DataprocWorkflowTemplateJobsElPrestoJobElLoggingConfigEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    driver_log_levels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
-}
-
-impl DataprocWorkflowTemplateJobsElPrestoJobElLoggingConfigEl {
-    #[doc =
-        "Set the field `driver_log_levels`.\nThe per-package log levels for the driver. This may include \"root\" package name to configure rootLogger. Examples: 'com.google = FATAL', 'root = INFO', 'org.apache = DEBUG'"]
-    pub fn set_driver_log_levels(
-        mut self,
-        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.driver_log_levels = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataprocWorkflowTemplateJobsElPrestoJobElLoggingConfigEl {
-    type O = terrars::BlockAssignable<DataprocWorkflowTemplateJobsElPrestoJobElLoggingConfigEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataprocWorkflowTemplateJobsElPrestoJobElLoggingConfigEl {}
-
-impl BuildDataprocWorkflowTemplateJobsElPrestoJobElLoggingConfigEl {
-    pub fn build(self) -> DataprocWorkflowTemplateJobsElPrestoJobElLoggingConfigEl {
-        DataprocWorkflowTemplateJobsElPrestoJobElLoggingConfigEl {
-            driver_log_levels: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataprocWorkflowTemplateJobsElPrestoJobElLoggingConfigElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataprocWorkflowTemplateJobsElPrestoJobElLoggingConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataprocWorkflowTemplateJobsElPrestoJobElLoggingConfigElRef {
-        DataprocWorkflowTemplateJobsElPrestoJobElLoggingConfigElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataprocWorkflowTemplateJobsElPrestoJobElLoggingConfigElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `driver_log_levels` after provisioning.\nThe per-package log levels for the driver. This may include \"root\" package name to configure rootLogger. Examples: 'com.google = FATAL', 'root = INFO', 'org.apache = DEBUG'"]
-    pub fn driver_log_levels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
-        terrars::RecRef::new(self.shared().clone(), format!("{}.driver_log_levels", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataprocWorkflowTemplateJobsElPrestoJobElQueryListEl {
-    queries: terrars::ListField<terrars::PrimField<std::string::String>>,
-}
-
-impl DataprocWorkflowTemplateJobsElPrestoJobElQueryListEl { }
-
-impl terrars::ToListMappable for DataprocWorkflowTemplateJobsElPrestoJobElQueryListEl {
-    type O = terrars::BlockAssignable<DataprocWorkflowTemplateJobsElPrestoJobElQueryListEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataprocWorkflowTemplateJobsElPrestoJobElQueryListEl {
-    #[doc =
-        "Required. The queries to execute. You do not need to end a query expression with a semicolon. Multiple queries can be specified in one string by separating each with a semicolon. Here is an example of a Dataproc API snippet that uses a QueryList to specify a HiveJob: \"hiveJob\": { \"queryList\": { \"queries\": [ \"query1\", \"query2\", \"query3;query4\", ] } }"]
-    pub queries: terrars::ListField<terrars::PrimField<std::string::String>>,
-}
-
-impl BuildDataprocWorkflowTemplateJobsElPrestoJobElQueryListEl {
-    pub fn build(self) -> DataprocWorkflowTemplateJobsElPrestoJobElQueryListEl {
-        DataprocWorkflowTemplateJobsElPrestoJobElQueryListEl { queries: self.queries }
-    }
-}
-
-pub struct DataprocWorkflowTemplateJobsElPrestoJobElQueryListElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataprocWorkflowTemplateJobsElPrestoJobElQueryListElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataprocWorkflowTemplateJobsElPrestoJobElQueryListElRef {
-        DataprocWorkflowTemplateJobsElPrestoJobElQueryListElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataprocWorkflowTemplateJobsElPrestoJobElQueryListElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `queries` after provisioning.\nRequired. The queries to execute. You do not need to end a query expression with a semicolon. Multiple queries can be specified in one string by separating each with a semicolon. Here is an example of a Dataproc API snippet that uses a QueryList to specify a HiveJob: \"hiveJob\": { \"queryList\": { \"queries\": [ \"query1\", \"query2\", \"query3;query4\", ] } }"]
-    pub fn queries(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.queries", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct DataprocWorkflowTemplateJobsElPrestoJobElDynamic {
-    logging_config: std
-    ::option
-    ::Option<terrars::DynamicBlock<DataprocWorkflowTemplateJobsElPrestoJobElLoggingConfigEl>>,
-    query_list: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplateJobsElPrestoJobElQueryListEl>>,
+struct DataprocWorkflowTemplate_Jobs_PrestoJobDynamic {
+    logging_config: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfig>>,
+    query_list: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Jobs_PigJob_QueryList>>,
 }
 
 #[derive(Serialize)]
-pub struct DataprocWorkflowTemplateJobsElPrestoJobEl {
+pub struct DataprocWorkflowTemplate_Jobs_PrestoJob {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     client_tags: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1468,13 +1332,13 @@ pub struct DataprocWorkflowTemplateJobsElPrestoJobEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     query_file_uri: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    logging_config: std::option::Option<std::vec::Vec<DataprocWorkflowTemplateJobsElPrestoJobElLoggingConfigEl>>,
+    logging_config: std::option::Option<std::vec::Vec<DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    query_list: std::option::Option<std::vec::Vec<DataprocWorkflowTemplateJobsElPrestoJobElQueryListEl>>,
-    dynamic: DataprocWorkflowTemplateJobsElPrestoJobElDynamic,
+    query_list: std::option::Option<std::vec::Vec<DataprocWorkflowTemplate_Jobs_PigJob_QueryList>>,
+    dynamic: DataprocWorkflowTemplate_Jobs_PrestoJobDynamic,
 }
 
-impl DataprocWorkflowTemplateJobsElPrestoJobEl {
+impl DataprocWorkflowTemplate_Jobs_PrestoJob {
     #[doc = "Set the field `client_tags`.\nOptional. Presto client tags to attach to this query"]
     pub fn set_client_tags(
         mut self,
@@ -1517,12 +1381,7 @@ impl DataprocWorkflowTemplateJobsElPrestoJobEl {
     #[doc = "Set the field `logging_config`.\n"]
     pub fn set_logging_config(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<DataprocWorkflowTemplateJobsElPrestoJobElLoggingConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1538,7 +1397,7 @@ impl DataprocWorkflowTemplateJobsElPrestoJobEl {
     #[doc = "Set the field `query_list`.\n"]
     pub fn set_query_list(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplateJobsElPrestoJobElQueryListEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplate_Jobs_PigJob_QueryList>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1552,8 +1411,8 @@ impl DataprocWorkflowTemplateJobsElPrestoJobEl {
     }
 }
 
-impl terrars::ToListMappable for DataprocWorkflowTemplateJobsElPrestoJobEl {
-    type O = terrars::BlockAssignable<DataprocWorkflowTemplateJobsElPrestoJobEl>;
+impl terrars::ToListMappable for DataprocWorkflowTemplate_Jobs_PrestoJob {
+    type O = terrars::BlockAssignable<DataprocWorkflowTemplate_Jobs_PrestoJob>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1564,11 +1423,11 @@ impl terrars::ToListMappable for DataprocWorkflowTemplateJobsElPrestoJobEl {
     }
 }
 
-pub struct BuildDataprocWorkflowTemplateJobsElPrestoJobEl {}
+pub struct BuildDataprocWorkflowTemplate_Jobs_PrestoJob {}
 
-impl BuildDataprocWorkflowTemplateJobsElPrestoJobEl {
-    pub fn build(self) -> DataprocWorkflowTemplateJobsElPrestoJobEl {
-        DataprocWorkflowTemplateJobsElPrestoJobEl {
+impl BuildDataprocWorkflowTemplate_Jobs_PrestoJob {
+    pub fn build(self) -> DataprocWorkflowTemplate_Jobs_PrestoJob {
+        DataprocWorkflowTemplate_Jobs_PrestoJob {
             client_tags: core::default::Default::default(),
             continue_on_failure: core::default::Default::default(),
             output_format: core::default::Default::default(),
@@ -1581,21 +1440,23 @@ impl BuildDataprocWorkflowTemplateJobsElPrestoJobEl {
     }
 }
 
-pub struct DataprocWorkflowTemplateJobsElPrestoJobElRef {
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Jobs_PrestoJobRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocWorkflowTemplateJobsElPrestoJobElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocWorkflowTemplateJobsElPrestoJobElRef {
-        DataprocWorkflowTemplateJobsElPrestoJobElRef {
+impl terrars::Ref for DataprocWorkflowTemplate_Jobs_PrestoJobRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocWorkflowTemplate_Jobs_PrestoJobRef {
+        DataprocWorkflowTemplate_Jobs_PrestoJobRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocWorkflowTemplateJobsElPrestoJobElRef {
+impl DataprocWorkflowTemplate_Jobs_PrestoJobRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1631,94 +1492,23 @@ impl DataprocWorkflowTemplateJobsElPrestoJobElRef {
     }
 
     #[doc = "Get a reference to the value of field `logging_config` after provisioning.\n"]
-    pub fn logging_config(&self) -> terrars::ListRef<DataprocWorkflowTemplateJobsElPrestoJobElLoggingConfigElRef> {
+    pub fn logging_config(&self) -> terrars::ListRef<DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `query_list` after provisioning.\n"]
-    pub fn query_list(&self) -> terrars::ListRef<DataprocWorkflowTemplateJobsElPrestoJobElQueryListElRef> {
+    pub fn query_list(&self) -> terrars::ListRef<DataprocWorkflowTemplate_Jobs_PigJob_QueryListRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.query_list", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct DataprocWorkflowTemplateJobsElPysparkJobElLoggingConfigEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    driver_log_levels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
-}
-
-impl DataprocWorkflowTemplateJobsElPysparkJobElLoggingConfigEl {
-    #[doc =
-        "Set the field `driver_log_levels`.\nThe per-package log levels for the driver. This may include \"root\" package name to configure rootLogger. Examples: 'com.google = FATAL', 'root = INFO', 'org.apache = DEBUG'"]
-    pub fn set_driver_log_levels(
-        mut self,
-        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.driver_log_levels = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataprocWorkflowTemplateJobsElPysparkJobElLoggingConfigEl {
-    type O = terrars::BlockAssignable<DataprocWorkflowTemplateJobsElPysparkJobElLoggingConfigEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataprocWorkflowTemplateJobsElPysparkJobElLoggingConfigEl {}
-
-impl BuildDataprocWorkflowTemplateJobsElPysparkJobElLoggingConfigEl {
-    pub fn build(self) -> DataprocWorkflowTemplateJobsElPysparkJobElLoggingConfigEl {
-        DataprocWorkflowTemplateJobsElPysparkJobElLoggingConfigEl {
-            driver_log_levels: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataprocWorkflowTemplateJobsElPysparkJobElLoggingConfigElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataprocWorkflowTemplateJobsElPysparkJobElLoggingConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataprocWorkflowTemplateJobsElPysparkJobElLoggingConfigElRef {
-        DataprocWorkflowTemplateJobsElPysparkJobElLoggingConfigElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataprocWorkflowTemplateJobsElPysparkJobElLoggingConfigElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `driver_log_levels` after provisioning.\nThe per-package log levels for the driver. This may include \"root\" package name to configure rootLogger. Examples: 'com.google = FATAL', 'root = INFO', 'org.apache = DEBUG'"]
-    pub fn driver_log_levels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
-        terrars::RecRef::new(self.shared().clone(), format!("{}.driver_log_levels", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct DataprocWorkflowTemplateJobsElPysparkJobElDynamic {
-    logging_config: std
-    ::option
-    ::Option<terrars::DynamicBlock<DataprocWorkflowTemplateJobsElPysparkJobElLoggingConfigEl>>,
+struct DataprocWorkflowTemplate_Jobs_PysparkJobDynamic {
+    logging_config: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct DataprocWorkflowTemplateJobsElPysparkJobEl {
+pub struct DataprocWorkflowTemplate_Jobs_PysparkJob {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     archive_uris: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1733,11 +1523,11 @@ pub struct DataprocWorkflowTemplateJobsElPysparkJobEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     python_file_uris: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    logging_config: std::option::Option<std::vec::Vec<DataprocWorkflowTemplateJobsElPysparkJobElLoggingConfigEl>>,
-    dynamic: DataprocWorkflowTemplateJobsElPysparkJobElDynamic,
+    logging_config: std::option::Option<std::vec::Vec<DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfig>>,
+    dynamic: DataprocWorkflowTemplate_Jobs_PysparkJobDynamic,
 }
 
-impl DataprocWorkflowTemplateJobsElPysparkJobEl {
+impl DataprocWorkflowTemplate_Jobs_PysparkJob {
     #[doc =
         "Set the field `archive_uris`.\nOptional. HCFS URIs of archives to be extracted into the working directory of each executor. Supported file types: .jar, .tar, .tar.gz, .tgz, and .zip."]
     pub fn set_archive_uris(
@@ -1801,12 +1591,7 @@ impl DataprocWorkflowTemplateJobsElPysparkJobEl {
     #[doc = "Set the field `logging_config`.\n"]
     pub fn set_logging_config(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<DataprocWorkflowTemplateJobsElPysparkJobElLoggingConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1820,8 +1605,8 @@ impl DataprocWorkflowTemplateJobsElPysparkJobEl {
     }
 }
 
-impl terrars::ToListMappable for DataprocWorkflowTemplateJobsElPysparkJobEl {
-    type O = terrars::BlockAssignable<DataprocWorkflowTemplateJobsElPysparkJobEl>;
+impl terrars::ToListMappable for DataprocWorkflowTemplate_Jobs_PysparkJob {
+    type O = terrars::BlockAssignable<DataprocWorkflowTemplate_Jobs_PysparkJob>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1832,14 +1617,14 @@ impl terrars::ToListMappable for DataprocWorkflowTemplateJobsElPysparkJobEl {
     }
 }
 
-pub struct BuildDataprocWorkflowTemplateJobsElPysparkJobEl {
+pub struct BuildDataprocWorkflowTemplate_Jobs_PysparkJob {
     #[doc = "Required. The HCFS URI of the main Python file to use as the driver. Must be a .py file."]
     pub main_python_file_uri: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataprocWorkflowTemplateJobsElPysparkJobEl {
-    pub fn build(self) -> DataprocWorkflowTemplateJobsElPysparkJobEl {
-        DataprocWorkflowTemplateJobsElPysparkJobEl {
+impl BuildDataprocWorkflowTemplate_Jobs_PysparkJob {
+    pub fn build(self) -> DataprocWorkflowTemplate_Jobs_PysparkJob {
+        DataprocWorkflowTemplate_Jobs_PysparkJob {
             archive_uris: core::default::Default::default(),
             args: core::default::Default::default(),
             file_uris: core::default::Default::default(),
@@ -1853,21 +1638,23 @@ impl BuildDataprocWorkflowTemplateJobsElPysparkJobEl {
     }
 }
 
-pub struct DataprocWorkflowTemplateJobsElPysparkJobElRef {
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Jobs_PysparkJobRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocWorkflowTemplateJobsElPysparkJobElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocWorkflowTemplateJobsElPysparkJobElRef {
-        DataprocWorkflowTemplateJobsElPysparkJobElRef {
+impl terrars::Ref for DataprocWorkflowTemplate_Jobs_PysparkJobRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocWorkflowTemplate_Jobs_PysparkJobRef {
+        DataprocWorkflowTemplate_Jobs_PysparkJobRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocWorkflowTemplateJobsElPysparkJobElRef {
+impl DataprocWorkflowTemplate_Jobs_PysparkJobRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1915,20 +1702,20 @@ impl DataprocWorkflowTemplateJobsElPysparkJobElRef {
     }
 
     #[doc = "Get a reference to the value of field `logging_config` after provisioning.\n"]
-    pub fn logging_config(&self) -> terrars::ListRef<DataprocWorkflowTemplateJobsElPysparkJobElLoggingConfigElRef> {
+    pub fn logging_config(&self) -> terrars::ListRef<DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataprocWorkflowTemplateJobsElSchedulingEl {
+pub struct DataprocWorkflowTemplate_Jobs_Scheduling {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max_failures_per_hour: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max_failures_total: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataprocWorkflowTemplateJobsElSchedulingEl {
+impl DataprocWorkflowTemplate_Jobs_Scheduling {
     #[doc =
         "Set the field `max_failures_per_hour`.\nOptional. Maximum number of times per hour a driver may be restarted as a result of driver exiting with non-zero code before job is reported failed. A job may be reported as thrashing if driver exits with non-zero code 4 times within 10 minute window. Maximum value is 10."]
     pub fn set_max_failures_per_hour(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -1944,8 +1731,8 @@ impl DataprocWorkflowTemplateJobsElSchedulingEl {
     }
 }
 
-impl terrars::ToListMappable for DataprocWorkflowTemplateJobsElSchedulingEl {
-    type O = terrars::BlockAssignable<DataprocWorkflowTemplateJobsElSchedulingEl>;
+impl terrars::ToListMappable for DataprocWorkflowTemplate_Jobs_Scheduling {
+    type O = terrars::BlockAssignable<DataprocWorkflowTemplate_Jobs_Scheduling>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1956,32 +1743,34 @@ impl terrars::ToListMappable for DataprocWorkflowTemplateJobsElSchedulingEl {
     }
 }
 
-pub struct BuildDataprocWorkflowTemplateJobsElSchedulingEl {}
+pub struct BuildDataprocWorkflowTemplate_Jobs_Scheduling {}
 
-impl BuildDataprocWorkflowTemplateJobsElSchedulingEl {
-    pub fn build(self) -> DataprocWorkflowTemplateJobsElSchedulingEl {
-        DataprocWorkflowTemplateJobsElSchedulingEl {
+impl BuildDataprocWorkflowTemplate_Jobs_Scheduling {
+    pub fn build(self) -> DataprocWorkflowTemplate_Jobs_Scheduling {
+        DataprocWorkflowTemplate_Jobs_Scheduling {
             max_failures_per_hour: core::default::Default::default(),
             max_failures_total: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataprocWorkflowTemplateJobsElSchedulingElRef {
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Jobs_SchedulingRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocWorkflowTemplateJobsElSchedulingElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocWorkflowTemplateJobsElSchedulingElRef {
-        DataprocWorkflowTemplateJobsElSchedulingElRef {
+impl terrars::Ref for DataprocWorkflowTemplate_Jobs_SchedulingRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocWorkflowTemplate_Jobs_SchedulingRef {
+        DataprocWorkflowTemplate_Jobs_SchedulingRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocWorkflowTemplateJobsElSchedulingElRef {
+impl DataprocWorkflowTemplate_Jobs_SchedulingRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1999,84 +1788,13 @@ impl DataprocWorkflowTemplateJobsElSchedulingElRef {
     }
 }
 
-#[derive(Serialize)]
-pub struct DataprocWorkflowTemplateJobsElSparkJobElLoggingConfigEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    driver_log_levels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
-}
-
-impl DataprocWorkflowTemplateJobsElSparkJobElLoggingConfigEl {
-    #[doc =
-        "Set the field `driver_log_levels`.\nThe per-package log levels for the driver. This may include \"root\" package name to configure rootLogger. Examples: 'com.google = FATAL', 'root = INFO', 'org.apache = DEBUG'"]
-    pub fn set_driver_log_levels(
-        mut self,
-        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.driver_log_levels = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataprocWorkflowTemplateJobsElSparkJobElLoggingConfigEl {
-    type O = terrars::BlockAssignable<DataprocWorkflowTemplateJobsElSparkJobElLoggingConfigEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataprocWorkflowTemplateJobsElSparkJobElLoggingConfigEl {}
-
-impl BuildDataprocWorkflowTemplateJobsElSparkJobElLoggingConfigEl {
-    pub fn build(self) -> DataprocWorkflowTemplateJobsElSparkJobElLoggingConfigEl {
-        DataprocWorkflowTemplateJobsElSparkJobElLoggingConfigEl {
-            driver_log_levels: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataprocWorkflowTemplateJobsElSparkJobElLoggingConfigElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataprocWorkflowTemplateJobsElSparkJobElLoggingConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataprocWorkflowTemplateJobsElSparkJobElLoggingConfigElRef {
-        DataprocWorkflowTemplateJobsElSparkJobElLoggingConfigElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataprocWorkflowTemplateJobsElSparkJobElLoggingConfigElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `driver_log_levels` after provisioning.\nThe per-package log levels for the driver. This may include \"root\" package name to configure rootLogger. Examples: 'com.google = FATAL', 'root = INFO', 'org.apache = DEBUG'"]
-    pub fn driver_log_levels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
-        terrars::RecRef::new(self.shared().clone(), format!("{}.driver_log_levels", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct DataprocWorkflowTemplateJobsElSparkJobElDynamic {
-    logging_config: std
-    ::option
-    ::Option<terrars::DynamicBlock<DataprocWorkflowTemplateJobsElSparkJobElLoggingConfigEl>>,
+struct DataprocWorkflowTemplate_Jobs_SparkJobDynamic {
+    logging_config: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct DataprocWorkflowTemplateJobsElSparkJobEl {
+pub struct DataprocWorkflowTemplate_Jobs_SparkJob {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     archive_uris: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2092,11 +1810,11 @@ pub struct DataprocWorkflowTemplateJobsElSparkJobEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     properties: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    logging_config: std::option::Option<std::vec::Vec<DataprocWorkflowTemplateJobsElSparkJobElLoggingConfigEl>>,
-    dynamic: DataprocWorkflowTemplateJobsElSparkJobElDynamic,
+    logging_config: std::option::Option<std::vec::Vec<DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfig>>,
+    dynamic: DataprocWorkflowTemplate_Jobs_SparkJobDynamic,
 }
 
-impl DataprocWorkflowTemplateJobsElSparkJobEl {
+impl DataprocWorkflowTemplate_Jobs_SparkJob {
     #[doc =
         "Set the field `archive_uris`.\nOptional. HCFS URIs of archives to be extracted into the working directory of each executor. Supported file types: .jar, .tar, .tar.gz, .tgz, and .zip."]
     pub fn set_archive_uris(
@@ -2163,12 +1881,7 @@ impl DataprocWorkflowTemplateJobsElSparkJobEl {
     #[doc = "Set the field `logging_config`.\n"]
     pub fn set_logging_config(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<DataprocWorkflowTemplateJobsElSparkJobElLoggingConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2182,8 +1895,8 @@ impl DataprocWorkflowTemplateJobsElSparkJobEl {
     }
 }
 
-impl terrars::ToListMappable for DataprocWorkflowTemplateJobsElSparkJobEl {
-    type O = terrars::BlockAssignable<DataprocWorkflowTemplateJobsElSparkJobEl>;
+impl terrars::ToListMappable for DataprocWorkflowTemplate_Jobs_SparkJob {
+    type O = terrars::BlockAssignable<DataprocWorkflowTemplate_Jobs_SparkJob>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2194,11 +1907,11 @@ impl terrars::ToListMappable for DataprocWorkflowTemplateJobsElSparkJobEl {
     }
 }
 
-pub struct BuildDataprocWorkflowTemplateJobsElSparkJobEl {}
+pub struct BuildDataprocWorkflowTemplate_Jobs_SparkJob {}
 
-impl BuildDataprocWorkflowTemplateJobsElSparkJobEl {
-    pub fn build(self) -> DataprocWorkflowTemplateJobsElSparkJobEl {
-        DataprocWorkflowTemplateJobsElSparkJobEl {
+impl BuildDataprocWorkflowTemplate_Jobs_SparkJob {
+    pub fn build(self) -> DataprocWorkflowTemplate_Jobs_SparkJob {
+        DataprocWorkflowTemplate_Jobs_SparkJob {
             archive_uris: core::default::Default::default(),
             args: core::default::Default::default(),
             file_uris: core::default::Default::default(),
@@ -2212,21 +1925,23 @@ impl BuildDataprocWorkflowTemplateJobsElSparkJobEl {
     }
 }
 
-pub struct DataprocWorkflowTemplateJobsElSparkJobElRef {
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Jobs_SparkJobRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocWorkflowTemplateJobsElSparkJobElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocWorkflowTemplateJobsElSparkJobElRef {
-        DataprocWorkflowTemplateJobsElSparkJobElRef {
+impl terrars::Ref for DataprocWorkflowTemplate_Jobs_SparkJobRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocWorkflowTemplate_Jobs_SparkJobRef {
+        DataprocWorkflowTemplate_Jobs_SparkJobRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocWorkflowTemplateJobsElSparkJobElRef {
+impl DataprocWorkflowTemplate_Jobs_SparkJobRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2274,89 +1989,18 @@ impl DataprocWorkflowTemplateJobsElSparkJobElRef {
     }
 
     #[doc = "Get a reference to the value of field `logging_config` after provisioning.\n"]
-    pub fn logging_config(&self) -> terrars::ListRef<DataprocWorkflowTemplateJobsElSparkJobElLoggingConfigElRef> {
+    pub fn logging_config(&self) -> terrars::ListRef<DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging_config", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct DataprocWorkflowTemplateJobsElSparkRJobElLoggingConfigEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    driver_log_levels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
-}
-
-impl DataprocWorkflowTemplateJobsElSparkRJobElLoggingConfigEl {
-    #[doc =
-        "Set the field `driver_log_levels`.\nThe per-package log levels for the driver. This may include \"root\" package name to configure rootLogger. Examples: 'com.google = FATAL', 'root = INFO', 'org.apache = DEBUG'"]
-    pub fn set_driver_log_levels(
-        mut self,
-        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.driver_log_levels = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataprocWorkflowTemplateJobsElSparkRJobElLoggingConfigEl {
-    type O = terrars::BlockAssignable<DataprocWorkflowTemplateJobsElSparkRJobElLoggingConfigEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataprocWorkflowTemplateJobsElSparkRJobElLoggingConfigEl {}
-
-impl BuildDataprocWorkflowTemplateJobsElSparkRJobElLoggingConfigEl {
-    pub fn build(self) -> DataprocWorkflowTemplateJobsElSparkRJobElLoggingConfigEl {
-        DataprocWorkflowTemplateJobsElSparkRJobElLoggingConfigEl {
-            driver_log_levels: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataprocWorkflowTemplateJobsElSparkRJobElLoggingConfigElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataprocWorkflowTemplateJobsElSparkRJobElLoggingConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataprocWorkflowTemplateJobsElSparkRJobElLoggingConfigElRef {
-        DataprocWorkflowTemplateJobsElSparkRJobElLoggingConfigElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataprocWorkflowTemplateJobsElSparkRJobElLoggingConfigElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `driver_log_levels` after provisioning.\nThe per-package log levels for the driver. This may include \"root\" package name to configure rootLogger. Examples: 'com.google = FATAL', 'root = INFO', 'org.apache = DEBUG'"]
-    pub fn driver_log_levels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
-        terrars::RecRef::new(self.shared().clone(), format!("{}.driver_log_levels", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct DataprocWorkflowTemplateJobsElSparkRJobElDynamic {
-    logging_config: std
-    ::option
-    ::Option<terrars::DynamicBlock<DataprocWorkflowTemplateJobsElSparkRJobElLoggingConfigEl>>,
+struct DataprocWorkflowTemplate_Jobs_SparkRJobDynamic {
+    logging_config: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct DataprocWorkflowTemplateJobsElSparkRJobEl {
+pub struct DataprocWorkflowTemplate_Jobs_SparkRJob {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     archive_uris: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2367,11 +2011,11 @@ pub struct DataprocWorkflowTemplateJobsElSparkRJobEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     properties: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    logging_config: std::option::Option<std::vec::Vec<DataprocWorkflowTemplateJobsElSparkRJobElLoggingConfigEl>>,
-    dynamic: DataprocWorkflowTemplateJobsElSparkRJobElDynamic,
+    logging_config: std::option::Option<std::vec::Vec<DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfig>>,
+    dynamic: DataprocWorkflowTemplate_Jobs_SparkRJobDynamic,
 }
 
-impl DataprocWorkflowTemplateJobsElSparkRJobEl {
+impl DataprocWorkflowTemplate_Jobs_SparkRJob {
     #[doc =
         "Set the field `archive_uris`.\nOptional. HCFS URIs of archives to be extracted into the working directory of each executor. Supported file types: .jar, .tar, .tar.gz, .tgz, and .zip."]
     pub fn set_archive_uris(
@@ -2415,12 +2059,7 @@ impl DataprocWorkflowTemplateJobsElSparkRJobEl {
     #[doc = "Set the field `logging_config`.\n"]
     pub fn set_logging_config(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<DataprocWorkflowTemplateJobsElSparkRJobElLoggingConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2434,8 +2073,8 @@ impl DataprocWorkflowTemplateJobsElSparkRJobEl {
     }
 }
 
-impl terrars::ToListMappable for DataprocWorkflowTemplateJobsElSparkRJobEl {
-    type O = terrars::BlockAssignable<DataprocWorkflowTemplateJobsElSparkRJobEl>;
+impl terrars::ToListMappable for DataprocWorkflowTemplate_Jobs_SparkRJob {
+    type O = terrars::BlockAssignable<DataprocWorkflowTemplate_Jobs_SparkRJob>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2446,14 +2085,14 @@ impl terrars::ToListMappable for DataprocWorkflowTemplateJobsElSparkRJobEl {
     }
 }
 
-pub struct BuildDataprocWorkflowTemplateJobsElSparkRJobEl {
+pub struct BuildDataprocWorkflowTemplate_Jobs_SparkRJob {
     #[doc = "Required. The HCFS URI of the main R file to use as the driver. Must be a .R file."]
     pub main_r_file_uri: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataprocWorkflowTemplateJobsElSparkRJobEl {
-    pub fn build(self) -> DataprocWorkflowTemplateJobsElSparkRJobEl {
-        DataprocWorkflowTemplateJobsElSparkRJobEl {
+impl BuildDataprocWorkflowTemplate_Jobs_SparkRJob {
+    pub fn build(self) -> DataprocWorkflowTemplate_Jobs_SparkRJob {
+        DataprocWorkflowTemplate_Jobs_SparkRJob {
             archive_uris: core::default::Default::default(),
             args: core::default::Default::default(),
             file_uris: core::default::Default::default(),
@@ -2465,21 +2104,23 @@ impl BuildDataprocWorkflowTemplateJobsElSparkRJobEl {
     }
 }
 
-pub struct DataprocWorkflowTemplateJobsElSparkRJobElRef {
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Jobs_SparkRJobRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocWorkflowTemplateJobsElSparkRJobElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocWorkflowTemplateJobsElSparkRJobElRef {
-        DataprocWorkflowTemplateJobsElSparkRJobElRef {
+impl terrars::Ref for DataprocWorkflowTemplate_Jobs_SparkRJobRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocWorkflowTemplate_Jobs_SparkRJobRef {
+        DataprocWorkflowTemplate_Jobs_SparkRJobRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocWorkflowTemplateJobsElSparkRJobElRef {
+impl DataprocWorkflowTemplate_Jobs_SparkRJobRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2515,150 +2156,19 @@ impl DataprocWorkflowTemplateJobsElSparkRJobElRef {
     }
 
     #[doc = "Get a reference to the value of field `logging_config` after provisioning.\n"]
-    pub fn logging_config(&self) -> terrars::ListRef<DataprocWorkflowTemplateJobsElSparkRJobElLoggingConfigElRef> {
+    pub fn logging_config(&self) -> terrars::ListRef<DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging_config", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct DataprocWorkflowTemplateJobsElSparkSqlJobElLoggingConfigEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    driver_log_levels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
-}
-
-impl DataprocWorkflowTemplateJobsElSparkSqlJobElLoggingConfigEl {
-    #[doc =
-        "Set the field `driver_log_levels`.\nThe per-package log levels for the driver. This may include \"root\" package name to configure rootLogger. Examples: 'com.google = FATAL', 'root = INFO', 'org.apache = DEBUG'"]
-    pub fn set_driver_log_levels(
-        mut self,
-        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.driver_log_levels = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataprocWorkflowTemplateJobsElSparkSqlJobElLoggingConfigEl {
-    type O = terrars::BlockAssignable<DataprocWorkflowTemplateJobsElSparkSqlJobElLoggingConfigEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataprocWorkflowTemplateJobsElSparkSqlJobElLoggingConfigEl {}
-
-impl BuildDataprocWorkflowTemplateJobsElSparkSqlJobElLoggingConfigEl {
-    pub fn build(self) -> DataprocWorkflowTemplateJobsElSparkSqlJobElLoggingConfigEl {
-        DataprocWorkflowTemplateJobsElSparkSqlJobElLoggingConfigEl {
-            driver_log_levels: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataprocWorkflowTemplateJobsElSparkSqlJobElLoggingConfigElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataprocWorkflowTemplateJobsElSparkSqlJobElLoggingConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataprocWorkflowTemplateJobsElSparkSqlJobElLoggingConfigElRef {
-        DataprocWorkflowTemplateJobsElSparkSqlJobElLoggingConfigElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataprocWorkflowTemplateJobsElSparkSqlJobElLoggingConfigElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `driver_log_levels` after provisioning.\nThe per-package log levels for the driver. This may include \"root\" package name to configure rootLogger. Examples: 'com.google = FATAL', 'root = INFO', 'org.apache = DEBUG'"]
-    pub fn driver_log_levels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
-        terrars::RecRef::new(self.shared().clone(), format!("{}.driver_log_levels", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataprocWorkflowTemplateJobsElSparkSqlJobElQueryListEl {
-    queries: terrars::ListField<terrars::PrimField<std::string::String>>,
-}
-
-impl DataprocWorkflowTemplateJobsElSparkSqlJobElQueryListEl { }
-
-impl terrars::ToListMappable for DataprocWorkflowTemplateJobsElSparkSqlJobElQueryListEl {
-    type O = terrars::BlockAssignable<DataprocWorkflowTemplateJobsElSparkSqlJobElQueryListEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataprocWorkflowTemplateJobsElSparkSqlJobElQueryListEl {
-    #[doc =
-        "Required. The queries to execute. You do not need to end a query expression with a semicolon. Multiple queries can be specified in one string by separating each with a semicolon. Here is an example of a Dataproc API snippet that uses a QueryList to specify a HiveJob: \"hiveJob\": { \"queryList\": { \"queries\": [ \"query1\", \"query2\", \"query3;query4\", ] } }"]
-    pub queries: terrars::ListField<terrars::PrimField<std::string::String>>,
-}
-
-impl BuildDataprocWorkflowTemplateJobsElSparkSqlJobElQueryListEl {
-    pub fn build(self) -> DataprocWorkflowTemplateJobsElSparkSqlJobElQueryListEl {
-        DataprocWorkflowTemplateJobsElSparkSqlJobElQueryListEl { queries: self.queries }
-    }
-}
-
-pub struct DataprocWorkflowTemplateJobsElSparkSqlJobElQueryListElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataprocWorkflowTemplateJobsElSparkSqlJobElQueryListElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataprocWorkflowTemplateJobsElSparkSqlJobElQueryListElRef {
-        DataprocWorkflowTemplateJobsElSparkSqlJobElQueryListElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataprocWorkflowTemplateJobsElSparkSqlJobElQueryListElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `queries` after provisioning.\nRequired. The queries to execute. You do not need to end a query expression with a semicolon. Multiple queries can be specified in one string by separating each with a semicolon. Here is an example of a Dataproc API snippet that uses a QueryList to specify a HiveJob: \"hiveJob\": { \"queryList\": { \"queries\": [ \"query1\", \"query2\", \"query3;query4\", ] } }"]
-    pub fn queries(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.queries", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct DataprocWorkflowTemplateJobsElSparkSqlJobElDynamic {
-    logging_config: std
-    ::option
-    ::Option<terrars::DynamicBlock<DataprocWorkflowTemplateJobsElSparkSqlJobElLoggingConfigEl>>,
-    query_list: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplateJobsElSparkSqlJobElQueryListEl>>,
+struct DataprocWorkflowTemplate_Jobs_SparkSqlJobDynamic {
+    logging_config: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfig>>,
+    query_list: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Jobs_PigJob_QueryList>>,
 }
 
 #[derive(Serialize)]
-pub struct DataprocWorkflowTemplateJobsElSparkSqlJobEl {
+pub struct DataprocWorkflowTemplate_Jobs_SparkSqlJob {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     jar_file_uris: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2668,13 +2178,13 @@ pub struct DataprocWorkflowTemplateJobsElSparkSqlJobEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     script_variables: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    logging_config: std::option::Option<std::vec::Vec<DataprocWorkflowTemplateJobsElSparkSqlJobElLoggingConfigEl>>,
+    logging_config: std::option::Option<std::vec::Vec<DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    query_list: std::option::Option<std::vec::Vec<DataprocWorkflowTemplateJobsElSparkSqlJobElQueryListEl>>,
-    dynamic: DataprocWorkflowTemplateJobsElSparkSqlJobElDynamic,
+    query_list: std::option::Option<std::vec::Vec<DataprocWorkflowTemplate_Jobs_PigJob_QueryList>>,
+    dynamic: DataprocWorkflowTemplate_Jobs_SparkSqlJobDynamic,
 }
 
-impl DataprocWorkflowTemplateJobsElSparkSqlJobEl {
+impl DataprocWorkflowTemplate_Jobs_SparkSqlJob {
     #[doc = "Set the field `jar_file_uris`.\nOptional. HCFS URIs of jar files to be added to the Spark CLASSPATH."]
     pub fn set_jar_file_uris(
         mut self,
@@ -2713,12 +2223,7 @@ impl DataprocWorkflowTemplateJobsElSparkSqlJobEl {
     #[doc = "Set the field `logging_config`.\n"]
     pub fn set_logging_config(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<DataprocWorkflowTemplateJobsElSparkSqlJobElLoggingConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2734,7 +2239,7 @@ impl DataprocWorkflowTemplateJobsElSparkSqlJobEl {
     #[doc = "Set the field `query_list`.\n"]
     pub fn set_query_list(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplateJobsElSparkSqlJobElQueryListEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplate_Jobs_PigJob_QueryList>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2748,8 +2253,8 @@ impl DataprocWorkflowTemplateJobsElSparkSqlJobEl {
     }
 }
 
-impl terrars::ToListMappable for DataprocWorkflowTemplateJobsElSparkSqlJobEl {
-    type O = terrars::BlockAssignable<DataprocWorkflowTemplateJobsElSparkSqlJobEl>;
+impl terrars::ToListMappable for DataprocWorkflowTemplate_Jobs_SparkSqlJob {
+    type O = terrars::BlockAssignable<DataprocWorkflowTemplate_Jobs_SparkSqlJob>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2760,11 +2265,11 @@ impl terrars::ToListMappable for DataprocWorkflowTemplateJobsElSparkSqlJobEl {
     }
 }
 
-pub struct BuildDataprocWorkflowTemplateJobsElSparkSqlJobEl {}
+pub struct BuildDataprocWorkflowTemplate_Jobs_SparkSqlJob {}
 
-impl BuildDataprocWorkflowTemplateJobsElSparkSqlJobEl {
-    pub fn build(self) -> DataprocWorkflowTemplateJobsElSparkSqlJobEl {
-        DataprocWorkflowTemplateJobsElSparkSqlJobEl {
+impl BuildDataprocWorkflowTemplate_Jobs_SparkSqlJob {
+    pub fn build(self) -> DataprocWorkflowTemplate_Jobs_SparkSqlJob {
+        DataprocWorkflowTemplate_Jobs_SparkSqlJob {
             jar_file_uris: core::default::Default::default(),
             properties: core::default::Default::default(),
             query_file_uri: core::default::Default::default(),
@@ -2776,24 +2281,23 @@ impl BuildDataprocWorkflowTemplateJobsElSparkSqlJobEl {
     }
 }
 
-pub struct DataprocWorkflowTemplateJobsElSparkSqlJobElRef {
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Jobs_SparkSqlJobRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocWorkflowTemplateJobsElSparkSqlJobElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataprocWorkflowTemplateJobsElSparkSqlJobElRef {
-        DataprocWorkflowTemplateJobsElSparkSqlJobElRef {
+impl terrars::Ref for DataprocWorkflowTemplate_Jobs_SparkSqlJobRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocWorkflowTemplate_Jobs_SparkSqlJobRef {
+        DataprocWorkflowTemplate_Jobs_SparkSqlJobRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocWorkflowTemplateJobsElSparkSqlJobElRef {
+impl DataprocWorkflowTemplate_Jobs_SparkSqlJobRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2823,58 +2327,58 @@ impl DataprocWorkflowTemplateJobsElSparkSqlJobElRef {
     }
 
     #[doc = "Get a reference to the value of field `logging_config` after provisioning.\n"]
-    pub fn logging_config(&self) -> terrars::ListRef<DataprocWorkflowTemplateJobsElSparkSqlJobElLoggingConfigElRef> {
+    pub fn logging_config(&self) -> terrars::ListRef<DataprocWorkflowTemplate_Jobs_PigJob_LoggingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `query_list` after provisioning.\n"]
-    pub fn query_list(&self) -> terrars::ListRef<DataprocWorkflowTemplateJobsElSparkSqlJobElQueryListElRef> {
+    pub fn query_list(&self) -> terrars::ListRef<DataprocWorkflowTemplate_Jobs_PigJob_QueryListRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.query_list", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct DataprocWorkflowTemplateJobsElDynamic {
-    hadoop_job: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplateJobsElHadoopJobEl>>,
-    hive_job: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplateJobsElHiveJobEl>>,
-    pig_job: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplateJobsElPigJobEl>>,
-    presto_job: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplateJobsElPrestoJobEl>>,
-    pyspark_job: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplateJobsElPysparkJobEl>>,
-    scheduling: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplateJobsElSchedulingEl>>,
-    spark_job: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplateJobsElSparkJobEl>>,
-    spark_r_job: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplateJobsElSparkRJobEl>>,
-    spark_sql_job: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplateJobsElSparkSqlJobEl>>,
+struct DataprocWorkflowTemplate_JobsDynamic {
+    hadoop_job: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Jobs_HadoopJob>>,
+    hive_job: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Jobs_HiveJob>>,
+    pig_job: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Jobs_PigJob>>,
+    presto_job: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Jobs_PrestoJob>>,
+    pyspark_job: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Jobs_PysparkJob>>,
+    scheduling: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Jobs_Scheduling>>,
+    spark_job: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Jobs_SparkJob>>,
+    spark_r_job: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Jobs_SparkRJob>>,
+    spark_sql_job: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Jobs_SparkSqlJob>>,
 }
 
 #[derive(Serialize)]
-pub struct DataprocWorkflowTemplateJobsEl {
+pub struct DataprocWorkflowTemplate_Jobs {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     prerequisite_step_ids: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     step_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    hadoop_job: std::option::Option<std::vec::Vec<DataprocWorkflowTemplateJobsElHadoopJobEl>>,
+    hadoop_job: std::option::Option<std::vec::Vec<DataprocWorkflowTemplate_Jobs_HadoopJob>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    hive_job: std::option::Option<std::vec::Vec<DataprocWorkflowTemplateJobsElHiveJobEl>>,
+    hive_job: std::option::Option<std::vec::Vec<DataprocWorkflowTemplate_Jobs_HiveJob>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    pig_job: std::option::Option<std::vec::Vec<DataprocWorkflowTemplateJobsElPigJobEl>>,
+    pig_job: std::option::Option<std::vec::Vec<DataprocWorkflowTemplate_Jobs_PigJob>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    presto_job: std::option::Option<std::vec::Vec<DataprocWorkflowTemplateJobsElPrestoJobEl>>,
+    presto_job: std::option::Option<std::vec::Vec<DataprocWorkflowTemplate_Jobs_PrestoJob>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    pyspark_job: std::option::Option<std::vec::Vec<DataprocWorkflowTemplateJobsElPysparkJobEl>>,
+    pyspark_job: std::option::Option<std::vec::Vec<DataprocWorkflowTemplate_Jobs_PysparkJob>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    scheduling: std::option::Option<std::vec::Vec<DataprocWorkflowTemplateJobsElSchedulingEl>>,
+    scheduling: std::option::Option<std::vec::Vec<DataprocWorkflowTemplate_Jobs_Scheduling>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    spark_job: std::option::Option<std::vec::Vec<DataprocWorkflowTemplateJobsElSparkJobEl>>,
+    spark_job: std::option::Option<std::vec::Vec<DataprocWorkflowTemplate_Jobs_SparkJob>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    spark_r_job: std::option::Option<std::vec::Vec<DataprocWorkflowTemplateJobsElSparkRJobEl>>,
+    spark_r_job: std::option::Option<std::vec::Vec<DataprocWorkflowTemplate_Jobs_SparkRJob>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    spark_sql_job: std::option::Option<std::vec::Vec<DataprocWorkflowTemplateJobsElSparkSqlJobEl>>,
-    dynamic: DataprocWorkflowTemplateJobsElDynamic,
+    spark_sql_job: std::option::Option<std::vec::Vec<DataprocWorkflowTemplate_Jobs_SparkSqlJob>>,
+    dynamic: DataprocWorkflowTemplate_JobsDynamic,
 }
 
-impl DataprocWorkflowTemplateJobsEl {
+impl DataprocWorkflowTemplate_Jobs {
     #[doc =
         "Set the field `labels`.\nOptional. The labels to associate with this job. Label keys must be between 1 and 63 characters long, and must conform to the following regular expression: p{Ll}p{Lo}{0,62} Label values must be between 1 and 63 characters long, and must conform to the following regular expression: [p{Ll}p{Lo}p{N}_-]{0,63} No more than 32 labels can be associated with a given job."]
     pub fn set_labels(
@@ -2898,7 +2402,7 @@ impl DataprocWorkflowTemplateJobsEl {
     #[doc = "Set the field `hadoop_job`.\n"]
     pub fn set_hadoop_job(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplateJobsElHadoopJobEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplate_Jobs_HadoopJob>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2914,7 +2418,7 @@ impl DataprocWorkflowTemplateJobsEl {
     #[doc = "Set the field `hive_job`.\n"]
     pub fn set_hive_job(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplateJobsElHiveJobEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplate_Jobs_HiveJob>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2930,7 +2434,7 @@ impl DataprocWorkflowTemplateJobsEl {
     #[doc = "Set the field `pig_job`.\n"]
     pub fn set_pig_job(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplateJobsElPigJobEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplate_Jobs_PigJob>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2946,7 +2450,7 @@ impl DataprocWorkflowTemplateJobsEl {
     #[doc = "Set the field `presto_job`.\n"]
     pub fn set_presto_job(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplateJobsElPrestoJobEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplate_Jobs_PrestoJob>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2962,7 +2466,7 @@ impl DataprocWorkflowTemplateJobsEl {
     #[doc = "Set the field `pyspark_job`.\n"]
     pub fn set_pyspark_job(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplateJobsElPysparkJobEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplate_Jobs_PysparkJob>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2978,7 +2482,7 @@ impl DataprocWorkflowTemplateJobsEl {
     #[doc = "Set the field `scheduling`.\n"]
     pub fn set_scheduling(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplateJobsElSchedulingEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplate_Jobs_Scheduling>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2994,7 +2498,7 @@ impl DataprocWorkflowTemplateJobsEl {
     #[doc = "Set the field `spark_job`.\n"]
     pub fn set_spark_job(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplateJobsElSparkJobEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplate_Jobs_SparkJob>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3010,7 +2514,7 @@ impl DataprocWorkflowTemplateJobsEl {
     #[doc = "Set the field `spark_r_job`.\n"]
     pub fn set_spark_r_job(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplateJobsElSparkRJobEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplate_Jobs_SparkRJob>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3026,7 +2530,7 @@ impl DataprocWorkflowTemplateJobsEl {
     #[doc = "Set the field `spark_sql_job`.\n"]
     pub fn set_spark_sql_job(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplateJobsElSparkSqlJobEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplate_Jobs_SparkSqlJob>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3040,8 +2544,8 @@ impl DataprocWorkflowTemplateJobsEl {
     }
 }
 
-impl terrars::ToListMappable for DataprocWorkflowTemplateJobsEl {
-    type O = terrars::BlockAssignable<DataprocWorkflowTemplateJobsEl>;
+impl terrars::ToListMappable for DataprocWorkflowTemplate_Jobs {
+    type O = terrars::BlockAssignable<DataprocWorkflowTemplate_Jobs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3052,15 +2556,15 @@ impl terrars::ToListMappable for DataprocWorkflowTemplateJobsEl {
     }
 }
 
-pub struct BuildDataprocWorkflowTemplateJobsEl {
+pub struct BuildDataprocWorkflowTemplate_Jobs {
     #[doc =
         "Required. The step id. The id must be unique among all jobs within the template. The step id is used as prefix for job id, as job `goog-dataproc-workflow-step-id` label, and in prerequisiteStepIds field from other steps. The id must contain only letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens (-). Cannot begin or end with underscore or hyphen. Must consist of between 3 and 50 characters."]
     pub step_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataprocWorkflowTemplateJobsEl {
-    pub fn build(self) -> DataprocWorkflowTemplateJobsEl {
-        DataprocWorkflowTemplateJobsEl {
+impl BuildDataprocWorkflowTemplate_Jobs {
+    pub fn build(self) -> DataprocWorkflowTemplate_Jobs {
+        DataprocWorkflowTemplate_Jobs {
             labels: core::default::Default::default(),
             prerequisite_step_ids: core::default::Default::default(),
             step_id: self.step_id,
@@ -3078,21 +2582,23 @@ impl BuildDataprocWorkflowTemplateJobsEl {
     }
 }
 
-pub struct DataprocWorkflowTemplateJobsElRef {
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_JobsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocWorkflowTemplateJobsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocWorkflowTemplateJobsElRef {
-        DataprocWorkflowTemplateJobsElRef {
+impl terrars::Ref for DataprocWorkflowTemplate_JobsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocWorkflowTemplate_JobsRef {
+        DataprocWorkflowTemplate_JobsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocWorkflowTemplateJobsElRef {
+impl DataprocWorkflowTemplate_JobsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3116,60 +2622,60 @@ impl DataprocWorkflowTemplateJobsElRef {
     }
 
     #[doc = "Get a reference to the value of field `hadoop_job` after provisioning.\n"]
-    pub fn hadoop_job(&self) -> terrars::ListRef<DataprocWorkflowTemplateJobsElHadoopJobElRef> {
+    pub fn hadoop_job(&self) -> terrars::ListRef<DataprocWorkflowTemplate_Jobs_HadoopJobRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.hadoop_job", self.base))
     }
 
     #[doc = "Get a reference to the value of field `hive_job` after provisioning.\n"]
-    pub fn hive_job(&self) -> terrars::ListRef<DataprocWorkflowTemplateJobsElHiveJobElRef> {
+    pub fn hive_job(&self) -> terrars::ListRef<DataprocWorkflowTemplate_Jobs_HiveJobRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.hive_job", self.base))
     }
 
     #[doc = "Get a reference to the value of field `pig_job` after provisioning.\n"]
-    pub fn pig_job(&self) -> terrars::ListRef<DataprocWorkflowTemplateJobsElPigJobElRef> {
+    pub fn pig_job(&self) -> terrars::ListRef<DataprocWorkflowTemplate_Jobs_PigJobRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.pig_job", self.base))
     }
 
     #[doc = "Get a reference to the value of field `presto_job` after provisioning.\n"]
-    pub fn presto_job(&self) -> terrars::ListRef<DataprocWorkflowTemplateJobsElPrestoJobElRef> {
+    pub fn presto_job(&self) -> terrars::ListRef<DataprocWorkflowTemplate_Jobs_PrestoJobRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.presto_job", self.base))
     }
 
     #[doc = "Get a reference to the value of field `pyspark_job` after provisioning.\n"]
-    pub fn pyspark_job(&self) -> terrars::ListRef<DataprocWorkflowTemplateJobsElPysparkJobElRef> {
+    pub fn pyspark_job(&self) -> terrars::ListRef<DataprocWorkflowTemplate_Jobs_PysparkJobRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.pyspark_job", self.base))
     }
 
     #[doc = "Get a reference to the value of field `scheduling` after provisioning.\n"]
-    pub fn scheduling(&self) -> terrars::ListRef<DataprocWorkflowTemplateJobsElSchedulingElRef> {
+    pub fn scheduling(&self) -> terrars::ListRef<DataprocWorkflowTemplate_Jobs_SchedulingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.scheduling", self.base))
     }
 
     #[doc = "Get a reference to the value of field `spark_job` after provisioning.\n"]
-    pub fn spark_job(&self) -> terrars::ListRef<DataprocWorkflowTemplateJobsElSparkJobElRef> {
+    pub fn spark_job(&self) -> terrars::ListRef<DataprocWorkflowTemplate_Jobs_SparkJobRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.spark_job", self.base))
     }
 
     #[doc = "Get a reference to the value of field `spark_r_job` after provisioning.\n"]
-    pub fn spark_r_job(&self) -> terrars::ListRef<DataprocWorkflowTemplateJobsElSparkRJobElRef> {
+    pub fn spark_r_job(&self) -> terrars::ListRef<DataprocWorkflowTemplate_Jobs_SparkRJobRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.spark_r_job", self.base))
     }
 
     #[doc = "Get a reference to the value of field `spark_sql_job` after provisioning.\n"]
-    pub fn spark_sql_job(&self) -> terrars::ListRef<DataprocWorkflowTemplateJobsElSparkSqlJobElRef> {
+    pub fn spark_sql_job(&self) -> terrars::ListRef<DataprocWorkflowTemplate_Jobs_SparkSqlJobRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.spark_sql_job", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataprocWorkflowTemplateParametersElValidationElRegexEl {
+pub struct DataprocWorkflowTemplate_Parameters_Validation_Regex {
     regexes: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl DataprocWorkflowTemplateParametersElValidationElRegexEl { }
+impl DataprocWorkflowTemplate_Parameters_Validation_Regex { }
 
-impl terrars::ToListMappable for DataprocWorkflowTemplateParametersElValidationElRegexEl {
-    type O = terrars::BlockAssignable<DataprocWorkflowTemplateParametersElValidationElRegexEl>;
+impl terrars::ToListMappable for DataprocWorkflowTemplate_Parameters_Validation_Regex {
+    type O = terrars::BlockAssignable<DataprocWorkflowTemplate_Parameters_Validation_Regex>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3180,36 +2686,38 @@ impl terrars::ToListMappable for DataprocWorkflowTemplateParametersElValidationE
     }
 }
 
-pub struct BuildDataprocWorkflowTemplateParametersElValidationElRegexEl {
+pub struct BuildDataprocWorkflowTemplate_Parameters_Validation_Regex {
     #[doc =
         "Required. RE2 regular expressions used to validate the parameter's value. The value must match the regex in its entirety (substring matches are not sufficient)."]
     pub regexes: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataprocWorkflowTemplateParametersElValidationElRegexEl {
-    pub fn build(self) -> DataprocWorkflowTemplateParametersElValidationElRegexEl {
-        DataprocWorkflowTemplateParametersElValidationElRegexEl { regexes: self.regexes }
+impl BuildDataprocWorkflowTemplate_Parameters_Validation_Regex {
+    pub fn build(self) -> DataprocWorkflowTemplate_Parameters_Validation_Regex {
+        DataprocWorkflowTemplate_Parameters_Validation_Regex { regexes: self.regexes }
     }
 }
 
-pub struct DataprocWorkflowTemplateParametersElValidationElRegexElRef {
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Parameters_Validation_RegexRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocWorkflowTemplateParametersElValidationElRegexElRef {
+impl terrars::Ref for DataprocWorkflowTemplate_Parameters_Validation_RegexRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataprocWorkflowTemplateParametersElValidationElRegexElRef {
-        DataprocWorkflowTemplateParametersElValidationElRegexElRef {
+    ) -> DataprocWorkflowTemplate_Parameters_Validation_RegexRef {
+        DataprocWorkflowTemplate_Parameters_Validation_RegexRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocWorkflowTemplateParametersElValidationElRegexElRef {
+impl DataprocWorkflowTemplate_Parameters_Validation_RegexRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3222,14 +2730,14 @@ impl DataprocWorkflowTemplateParametersElValidationElRegexElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataprocWorkflowTemplateParametersElValidationElValuesEl {
+pub struct DataprocWorkflowTemplate_Parameters_Validation_Values {
     values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl DataprocWorkflowTemplateParametersElValidationElValuesEl { }
+impl DataprocWorkflowTemplate_Parameters_Validation_Values { }
 
-impl terrars::ToListMappable for DataprocWorkflowTemplateParametersElValidationElValuesEl {
-    type O = terrars::BlockAssignable<DataprocWorkflowTemplateParametersElValidationElValuesEl>;
+impl terrars::ToListMappable for DataprocWorkflowTemplate_Parameters_Validation_Values {
+    type O = terrars::BlockAssignable<DataprocWorkflowTemplate_Parameters_Validation_Values>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3240,35 +2748,37 @@ impl terrars::ToListMappable for DataprocWorkflowTemplateParametersElValidationE
     }
 }
 
-pub struct BuildDataprocWorkflowTemplateParametersElValidationElValuesEl {
+pub struct BuildDataprocWorkflowTemplate_Parameters_Validation_Values {
     #[doc = "Required. List of allowed values for the parameter."]
     pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataprocWorkflowTemplateParametersElValidationElValuesEl {
-    pub fn build(self) -> DataprocWorkflowTemplateParametersElValidationElValuesEl {
-        DataprocWorkflowTemplateParametersElValidationElValuesEl { values: self.values }
+impl BuildDataprocWorkflowTemplate_Parameters_Validation_Values {
+    pub fn build(self) -> DataprocWorkflowTemplate_Parameters_Validation_Values {
+        DataprocWorkflowTemplate_Parameters_Validation_Values { values: self.values }
     }
 }
 
-pub struct DataprocWorkflowTemplateParametersElValidationElValuesElRef {
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Parameters_Validation_ValuesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocWorkflowTemplateParametersElValidationElValuesElRef {
+impl terrars::Ref for DataprocWorkflowTemplate_Parameters_Validation_ValuesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataprocWorkflowTemplateParametersElValidationElValuesElRef {
-        DataprocWorkflowTemplateParametersElValidationElValuesElRef {
+    ) -> DataprocWorkflowTemplate_Parameters_Validation_ValuesRef {
+        DataprocWorkflowTemplate_Parameters_Validation_ValuesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocWorkflowTemplateParametersElValidationElValuesElRef {
+impl DataprocWorkflowTemplate_Parameters_Validation_ValuesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3281,30 +2791,25 @@ impl DataprocWorkflowTemplateParametersElValidationElValuesElRef {
 }
 
 #[derive(Serialize, Default)]
-struct DataprocWorkflowTemplateParametersElValidationElDynamic {
-    regex: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplateParametersElValidationElRegexEl>>,
-    values: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplateParametersElValidationElValuesEl>>,
+struct DataprocWorkflowTemplate_Parameters_ValidationDynamic {
+    regex: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Parameters_Validation_Regex>>,
+    values: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Parameters_Validation_Values>>,
 }
 
 #[derive(Serialize)]
-pub struct DataprocWorkflowTemplateParametersElValidationEl {
+pub struct DataprocWorkflowTemplate_Parameters_Validation {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    regex: std::option::Option<std::vec::Vec<DataprocWorkflowTemplateParametersElValidationElRegexEl>>,
+    regex: std::option::Option<std::vec::Vec<DataprocWorkflowTemplate_Parameters_Validation_Regex>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    values: std::option::Option<std::vec::Vec<DataprocWorkflowTemplateParametersElValidationElValuesEl>>,
-    dynamic: DataprocWorkflowTemplateParametersElValidationElDynamic,
+    values: std::option::Option<std::vec::Vec<DataprocWorkflowTemplate_Parameters_Validation_Values>>,
+    dynamic: DataprocWorkflowTemplate_Parameters_ValidationDynamic,
 }
 
-impl DataprocWorkflowTemplateParametersElValidationEl {
+impl DataprocWorkflowTemplate_Parameters_Validation {
     #[doc = "Set the field `regex`.\n"]
     pub fn set_regex(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<DataprocWorkflowTemplateParametersElValidationElRegexEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplate_Parameters_Validation_Regex>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3320,12 +2825,7 @@ impl DataprocWorkflowTemplateParametersElValidationEl {
     #[doc = "Set the field `values`.\n"]
     pub fn set_values(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<DataprocWorkflowTemplateParametersElValidationElValuesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplate_Parameters_Validation_Values>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3339,8 +2839,8 @@ impl DataprocWorkflowTemplateParametersElValidationEl {
     }
 }
 
-impl terrars::ToListMappable for DataprocWorkflowTemplateParametersElValidationEl {
-    type O = terrars::BlockAssignable<DataprocWorkflowTemplateParametersElValidationEl>;
+impl terrars::ToListMappable for DataprocWorkflowTemplate_Parameters_Validation {
+    type O = terrars::BlockAssignable<DataprocWorkflowTemplate_Parameters_Validation>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3351,11 +2851,11 @@ impl terrars::ToListMappable for DataprocWorkflowTemplateParametersElValidationE
     }
 }
 
-pub struct BuildDataprocWorkflowTemplateParametersElValidationEl {}
+pub struct BuildDataprocWorkflowTemplate_Parameters_Validation {}
 
-impl BuildDataprocWorkflowTemplateParametersElValidationEl {
-    pub fn build(self) -> DataprocWorkflowTemplateParametersElValidationEl {
-        DataprocWorkflowTemplateParametersElValidationEl {
+impl BuildDataprocWorkflowTemplate_Parameters_Validation {
+    pub fn build(self) -> DataprocWorkflowTemplate_Parameters_Validation {
+        DataprocWorkflowTemplate_Parameters_Validation {
             regex: core::default::Default::default(),
             values: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -3363,56 +2863,58 @@ impl BuildDataprocWorkflowTemplateParametersElValidationEl {
     }
 }
 
-pub struct DataprocWorkflowTemplateParametersElValidationElRef {
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Parameters_ValidationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocWorkflowTemplateParametersElValidationElRef {
+impl terrars::Ref for DataprocWorkflowTemplate_Parameters_ValidationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataprocWorkflowTemplateParametersElValidationElRef {
-        DataprocWorkflowTemplateParametersElValidationElRef {
+    ) -> DataprocWorkflowTemplate_Parameters_ValidationRef {
+        DataprocWorkflowTemplate_Parameters_ValidationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocWorkflowTemplateParametersElValidationElRef {
+impl DataprocWorkflowTemplate_Parameters_ValidationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `regex` after provisioning.\n"]
-    pub fn regex(&self) -> terrars::ListRef<DataprocWorkflowTemplateParametersElValidationElRegexElRef> {
+    pub fn regex(&self) -> terrars::ListRef<DataprocWorkflowTemplate_Parameters_Validation_RegexRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.regex", self.base))
     }
 
     #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> terrars::ListRef<DataprocWorkflowTemplateParametersElValidationElValuesElRef> {
+    pub fn values(&self) -> terrars::ListRef<DataprocWorkflowTemplate_Parameters_Validation_ValuesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct DataprocWorkflowTemplateParametersElDynamic {
-    validation: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplateParametersElValidationEl>>,
+struct DataprocWorkflowTemplate_ParametersDynamic {
+    validation: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Parameters_Validation>>,
 }
 
 #[derive(Serialize)]
-pub struct DataprocWorkflowTemplateParametersEl {
+pub struct DataprocWorkflowTemplate_Parameters {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     fields: terrars::ListField<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    validation: std::option::Option<std::vec::Vec<DataprocWorkflowTemplateParametersElValidationEl>>,
-    dynamic: DataprocWorkflowTemplateParametersElDynamic,
+    validation: std::option::Option<std::vec::Vec<DataprocWorkflowTemplate_Parameters_Validation>>,
+    dynamic: DataprocWorkflowTemplate_ParametersDynamic,
 }
 
-impl DataprocWorkflowTemplateParametersEl {
+impl DataprocWorkflowTemplate_Parameters {
     #[doc =
         "Set the field `description`.\nOptional. Brief description of the parameter. Must not exceed 1024 characters."]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -3423,7 +2925,7 @@ impl DataprocWorkflowTemplateParametersEl {
     #[doc = "Set the field `validation`.\n"]
     pub fn set_validation(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplateParametersElValidationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplate_Parameters_Validation>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3437,8 +2939,8 @@ impl DataprocWorkflowTemplateParametersEl {
     }
 }
 
-impl terrars::ToListMappable for DataprocWorkflowTemplateParametersEl {
-    type O = terrars::BlockAssignable<DataprocWorkflowTemplateParametersEl>;
+impl terrars::ToListMappable for DataprocWorkflowTemplate_Parameters {
+    type O = terrars::BlockAssignable<DataprocWorkflowTemplate_Parameters>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3449,7 +2951,7 @@ impl terrars::ToListMappable for DataprocWorkflowTemplateParametersEl {
     }
 }
 
-pub struct BuildDataprocWorkflowTemplateParametersEl {
+pub struct BuildDataprocWorkflowTemplate_Parameters {
     #[doc =
         "Required. Paths to all fields that the parameter replaces. A field is allowed to appear in at most one parameter's list of field paths. A field path is similar in syntax to a google.protobuf.FieldMask. For example, a field path that references the zone field of a workflow template's cluster selector would be specified as `placement.clusterSelector.zone`. Also, field paths can reference fields using the following syntax: * Values in maps can be referenced by key: * labels['key'] * placement.clusterSelector.clusterLabels['key'] * placement.managedCluster.labels['key'] * placement.clusterSelector.clusterLabels['key'] * jobs['step-id'].labels['key'] * Jobs in the jobs list can be referenced by step-id: * jobs['step-id'].hadoopJob.mainJarFileUri * jobs['step-id'].hiveJob.queryFileUri * jobs['step-id'].pySparkJob.mainPythonFileUri * jobs['step-id'].hadoopJob.jarFileUris[0] * jobs['step-id'].hadoopJob.archiveUris[0] * jobs['step-id'].hadoopJob.fileUris[0] * jobs['step-id'].pySparkJob.pythonFileUris[0] * Items in repeated fields can be referenced by a zero-based index: * jobs['step-id'].sparkJob.args[0] * Other examples: * jobs['step-id'].hadoopJob.properties['key'] * jobs['step-id'].hadoopJob.args[0] * jobs['step-id'].hiveJob.scriptVariables['key'] * jobs['step-id'].hadoopJob.mainJarFileUri * placement.clusterSelector.zone It may not be possible to parameterize maps and repeated fields in their entirety since only individual map values and individual items in repeated fields can be referenced. For example, the following field paths are invalid: - placement.clusterSelector.clusterLabels - jobs['step-id'].sparkJob.args"]
     pub fields: terrars::ListField<terrars::PrimField<std::string::String>>,
@@ -3458,9 +2960,9 @@ pub struct BuildDataprocWorkflowTemplateParametersEl {
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataprocWorkflowTemplateParametersEl {
-    pub fn build(self) -> DataprocWorkflowTemplateParametersEl {
-        DataprocWorkflowTemplateParametersEl {
+impl BuildDataprocWorkflowTemplate_Parameters {
+    pub fn build(self) -> DataprocWorkflowTemplate_Parameters {
+        DataprocWorkflowTemplate_Parameters {
             description: core::default::Default::default(),
             fields: self.fields,
             name: self.name,
@@ -3470,21 +2972,23 @@ impl BuildDataprocWorkflowTemplateParametersEl {
     }
 }
 
-pub struct DataprocWorkflowTemplateParametersElRef {
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_ParametersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocWorkflowTemplateParametersElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocWorkflowTemplateParametersElRef {
-        DataprocWorkflowTemplateParametersElRef {
+impl terrars::Ref for DataprocWorkflowTemplate_ParametersRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocWorkflowTemplate_ParametersRef {
+        DataprocWorkflowTemplate_ParametersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocWorkflowTemplateParametersElRef {
+impl DataprocWorkflowTemplate_ParametersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3508,19 +3012,19 @@ impl DataprocWorkflowTemplateParametersElRef {
     }
 
     #[doc = "Get a reference to the value of field `validation` after provisioning.\n"]
-    pub fn validation(&self) -> terrars::ListRef<DataprocWorkflowTemplateParametersElValidationElRef> {
+    pub fn validation(&self) -> terrars::ListRef<DataprocWorkflowTemplate_Parameters_ValidationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.validation", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataprocWorkflowTemplatePlacementElClusterSelectorEl {
+pub struct DataprocWorkflowTemplate_Placement_ClusterSelector {
     cluster_labels: terrars::RecField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     zone: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataprocWorkflowTemplatePlacementElClusterSelectorEl {
+impl DataprocWorkflowTemplate_Placement_ClusterSelector {
     #[doc =
         "Set the field `zone`.\nOptional. The zone where workflow process executes. This parameter does not affect the selection of the cluster. If unspecified, the zone of the first cluster matching the selector is used."]
     pub fn set_zone(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -3529,8 +3033,8 @@ impl DataprocWorkflowTemplatePlacementElClusterSelectorEl {
     }
 }
 
-impl terrars::ToListMappable for DataprocWorkflowTemplatePlacementElClusterSelectorEl {
-    type O = terrars::BlockAssignable<DataprocWorkflowTemplatePlacementElClusterSelectorEl>;
+impl terrars::ToListMappable for DataprocWorkflowTemplate_Placement_ClusterSelector {
+    type O = terrars::BlockAssignable<DataprocWorkflowTemplate_Placement_ClusterSelector>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3541,38 +3045,40 @@ impl terrars::ToListMappable for DataprocWorkflowTemplatePlacementElClusterSelec
     }
 }
 
-pub struct BuildDataprocWorkflowTemplatePlacementElClusterSelectorEl {
+pub struct BuildDataprocWorkflowTemplate_Placement_ClusterSelector {
     #[doc = "Required. The cluster labels. Cluster must have all labels to match."]
     pub cluster_labels: terrars::RecField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataprocWorkflowTemplatePlacementElClusterSelectorEl {
-    pub fn build(self) -> DataprocWorkflowTemplatePlacementElClusterSelectorEl {
-        DataprocWorkflowTemplatePlacementElClusterSelectorEl {
+impl BuildDataprocWorkflowTemplate_Placement_ClusterSelector {
+    pub fn build(self) -> DataprocWorkflowTemplate_Placement_ClusterSelector {
+        DataprocWorkflowTemplate_Placement_ClusterSelector {
             cluster_labels: self.cluster_labels,
             zone: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataprocWorkflowTemplatePlacementElClusterSelectorElRef {
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Placement_ClusterSelectorRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocWorkflowTemplatePlacementElClusterSelectorElRef {
+impl terrars::Ref for DataprocWorkflowTemplate_Placement_ClusterSelectorRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataprocWorkflowTemplatePlacementElClusterSelectorElRef {
-        DataprocWorkflowTemplatePlacementElClusterSelectorElRef {
+    ) -> DataprocWorkflowTemplate_Placement_ClusterSelectorRef {
+        DataprocWorkflowTemplate_Placement_ClusterSelectorRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocWorkflowTemplatePlacementElClusterSelectorElRef {
+impl DataprocWorkflowTemplate_Placement_ClusterSelectorRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3591,12 +3097,12 @@ impl DataprocWorkflowTemplatePlacementElClusterSelectorElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElAutoscalingConfigEl {
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_AutoscalingConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     policy: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElAutoscalingConfigEl {
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_AutoscalingConfig {
     #[doc =
         "Set the field `policy`.\nOptional. The autoscaling policy used by the cluster. Only resource names including projectid and location (region) are valid. Examples: * `https://www.googleapis.com/compute/v1/projects/[project_id]/locations/[dataproc_region]/autoscalingPolicies/[policy_id]` * `projects/[project_id]/locations/[dataproc_region]/autoscalingPolicies/[policy_id]` Note that the policy must be in the same project and Dataproc region."]
     pub fn set_policy(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -3605,9 +3111,8 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElAutoscalingConfi
     }
 }
 
-impl terrars::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElAutoscalingConfigEl {
-    type O =
-        terrars::BlockAssignable<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElAutoscalingConfigEl>;
+impl terrars::ToListMappable for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_AutoscalingConfig {
+    type O = terrars::BlockAssignable<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_AutoscalingConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3618,34 +3123,36 @@ impl terrars::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClust
     }
 }
 
-pub struct BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElAutoscalingConfigEl {}
+pub struct BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_AutoscalingConfig {}
 
-impl BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElAutoscalingConfigEl {
-    pub fn build(self) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElAutoscalingConfigEl {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElAutoscalingConfigEl {
+impl BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_AutoscalingConfig {
+    pub fn build(self) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_AutoscalingConfig {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_AutoscalingConfig {
             policy: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElAutoscalingConfigElRef {
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_AutoscalingConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElAutoscalingConfigElRef {
+impl terrars::Ref for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_AutoscalingConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElAutoscalingConfigElRef {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElAutoscalingConfigElRef {
+    ) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_AutoscalingConfigRef {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_AutoscalingConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElAutoscalingConfigElRef {
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_AutoscalingConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3658,12 +3165,12 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElAutoscalingConfi
 }
 
 #[derive(Serialize)]
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElEncryptionConfigEl {
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_EncryptionConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     gce_pd_kms_key_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElEncryptionConfigEl {
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_EncryptionConfig {
     #[doc =
         "Set the field `gce_pd_kms_key_name`.\nOptional. The Cloud KMS key name to use for PD disk encryption for all instances in the cluster."]
     pub fn set_gce_pd_kms_key_name(
@@ -3675,8 +3182,8 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElEncryptionConfig
     }
 }
 
-impl terrars::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElEncryptionConfigEl {
-    type O = terrars::BlockAssignable<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElEncryptionConfigEl>;
+impl terrars::ToListMappable for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_EncryptionConfig {
+    type O = terrars::BlockAssignable<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_EncryptionConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3687,34 +3194,36 @@ impl terrars::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClust
     }
 }
 
-pub struct BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElEncryptionConfigEl {}
+pub struct BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_EncryptionConfig {}
 
-impl BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElEncryptionConfigEl {
-    pub fn build(self) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElEncryptionConfigEl {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElEncryptionConfigEl {
+impl BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_EncryptionConfig {
+    pub fn build(self) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_EncryptionConfig {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_EncryptionConfig {
             gce_pd_kms_key_name: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElEncryptionConfigElRef {
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_EncryptionConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElEncryptionConfigElRef {
+impl terrars::Ref for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_EncryptionConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElEncryptionConfigElRef {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElEncryptionConfigElRef {
+    ) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_EncryptionConfigRef {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_EncryptionConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElEncryptionConfigElRef {
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_EncryptionConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3727,12 +3236,12 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElEncryptionConfig
 }
 
 #[derive(Serialize)]
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElEndpointConfigEl {
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_EndpointConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_http_port_access: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElEndpointConfigEl {
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_EndpointConfig {
     #[doc =
         "Set the field `enable_http_port_access`.\nOptional. If true, enable http access to specific ports on the cluster from external sources. Defaults to false."]
     pub fn set_enable_http_port_access(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -3741,8 +3250,8 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElEndpointConfigEl
     }
 }
 
-impl terrars::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElEndpointConfigEl {
-    type O = terrars::BlockAssignable<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElEndpointConfigEl>;
+impl terrars::ToListMappable for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_EndpointConfig {
+    type O = terrars::BlockAssignable<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_EndpointConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3753,34 +3262,36 @@ impl terrars::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClust
     }
 }
 
-pub struct BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElEndpointConfigEl {}
+pub struct BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_EndpointConfig {}
 
-impl BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElEndpointConfigEl {
-    pub fn build(self) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElEndpointConfigEl {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElEndpointConfigEl {
+impl BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_EndpointConfig {
+    pub fn build(self) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_EndpointConfig {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_EndpointConfig {
             enable_http_port_access: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElEndpointConfigElRef {
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_EndpointConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElEndpointConfigElRef {
+impl terrars::Ref for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_EndpointConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElEndpointConfigElRef {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElEndpointConfigElRef {
+    ) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_EndpointConfigRef {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_EndpointConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElEndpointConfigElRef {
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_EndpointConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3799,18 +3310,18 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElEndpointConfigEl
 }
 
 #[derive(Serialize)]
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElNodeGroupAffinityEl {
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_NodeGroupAffinity {
     node_group: terrars::PrimField<std::string::String>,
 }
 
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElNodeGroupAffinityEl { }
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_NodeGroupAffinity { }
 
 impl terrars
-::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElNodeGroupAffinityEl {
+::ToListMappable for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_NodeGroupAffinity {
     type O =
         terrars
         ::BlockAssignable<
-            DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElNodeGroupAffinityEl,
+            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_NodeGroupAffinity,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -3822,41 +3333,42 @@ impl terrars
     }
 }
 
-pub struct BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElNodeGroupAffinityEl {
+pub struct BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_NodeGroupAffinity {
     #[doc =
         "Required. The URI of a sole-tenant [node group resource](https://cloud.google.com/compute/docs/reference/rest/v1/nodeGroups) that the cluster will be created on. A full URL, partial URI, or node group name are valid. Examples: * `https://www.googleapis.com/compute/v1/projects/[project_id]/zones/us-central1-a/nodeGroups/node-group-1` * `projects/[project_id]/zones/us-central1-a/nodeGroups/node-group-1` * `node-group-1`"]
     pub node_group: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElNodeGroupAffinityEl {
+impl BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_NodeGroupAffinity {
     pub fn build(
         self,
-    ) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElNodeGroupAffinityEl {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElNodeGroupAffinityEl {
+    ) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_NodeGroupAffinity {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_NodeGroupAffinity {
             node_group: self.node_group,
         }
     }
 }
 
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElNodeGroupAffinityElRef {
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_NodeGroupAffinityRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars
-::Ref for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElNodeGroupAffinityElRef {
+impl terrars::Ref for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_NodeGroupAffinityRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElNodeGroupAffinityElRef {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElNodeGroupAffinityElRef {
+    ) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_NodeGroupAffinityRef {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_NodeGroupAffinityRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElNodeGroupAffinityElRef {
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_NodeGroupAffinityRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3869,7 +3381,7 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfig
 }
 
 #[derive(Serialize)]
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElReservationAffinityEl {
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_ReservationAffinity {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     consume_reservation_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3878,7 +3390,7 @@ pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceCluster
     values: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElReservationAffinityEl {
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_ReservationAffinity {
     #[doc =
         "Set the field `consume_reservation_type`.\nOptional. Type of reservation to consume Possible values: TYPE_UNSPECIFIED, NO_RESERVATION, ANY_RESERVATION, SPECIFIC_RESERVATION"]
     pub fn set_consume_reservation_type(
@@ -3906,11 +3418,11 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfig
 }
 
 impl terrars
-::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElReservationAffinityEl {
+::ToListMappable for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_ReservationAffinity {
     type O =
         terrars
         ::BlockAssignable<
-            DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElReservationAffinityEl,
+            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_ReservationAffinity,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -3922,13 +3434,13 @@ impl terrars
     }
 }
 
-pub struct BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElReservationAffinityEl {}
+pub struct BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_ReservationAffinity {}
 
-impl BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElReservationAffinityEl {
+impl BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_ReservationAffinity {
     pub fn build(
         self,
-    ) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElReservationAffinityEl {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElReservationAffinityEl {
+    ) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_ReservationAffinity {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_ReservationAffinity {
             consume_reservation_type: core::default::Default::default(),
             key: core::default::Default::default(),
             values: core::default::Default::default(),
@@ -3936,25 +3448,27 @@ impl BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterC
     }
 }
 
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElReservationAffinityElRef {
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_ReservationAffinityRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElReservationAffinityElRef {
+::Ref for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_ReservationAffinityRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElReservationAffinityElRef {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElReservationAffinityElRef {
+    ) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_ReservationAffinityRef {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_ReservationAffinityRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElReservationAffinityElRef {
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_ReservationAffinityRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3979,7 +3493,7 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfig
 }
 
 #[derive(Serialize)]
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElShieldedInstanceConfigEl {
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_ShieldedInstanceConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_integrity_monitoring: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3988,7 +3502,7 @@ pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceCluster
     enable_vtpm: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElShieldedInstanceConfigEl {
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_ShieldedInstanceConfig {
     #[doc =
         "Set the field `enable_integrity_monitoring`.\nOptional. Defines whether instances have integrity monitoring enabled. Integrity monitoring compares the most recent boot measurements to the integrity policy baseline and returns a pair of pass/fail results depending on whether they match or not."]
     pub fn set_enable_integrity_monitoring(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -4012,11 +3526,11 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfig
 }
 
 impl terrars
-::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElShieldedInstanceConfigEl {
+::ToListMappable for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_ShieldedInstanceConfig {
     type O =
         terrars
         ::BlockAssignable<
-            DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElShieldedInstanceConfigEl,
+            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_ShieldedInstanceConfig,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -4028,13 +3542,13 @@ impl terrars
     }
 }
 
-pub struct BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElShieldedInstanceConfigEl {}
+pub struct BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_ShieldedInstanceConfig {}
 
-impl BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElShieldedInstanceConfigEl {
+impl BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_ShieldedInstanceConfig {
     pub fn build(
         self,
-    ) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElShieldedInstanceConfigEl {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElShieldedInstanceConfigEl {
+    ) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_ShieldedInstanceConfig {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_ShieldedInstanceConfig {
             enable_integrity_monitoring: core::default::Default::default(),
             enable_secure_boot: core::default::Default::default(),
             enable_vtpm: core::default::Default::default(),
@@ -4042,25 +3556,27 @@ impl BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterC
     }
 }
 
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElShieldedInstanceConfigElRef {
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_ShieldedInstanceConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElShieldedInstanceConfigElRef {
+::Ref for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_ShieldedInstanceConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElShieldedInstanceConfigElRef {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElShieldedInstanceConfigElRef {
+    ) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_ShieldedInstanceConfigRef {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_ShieldedInstanceConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElShieldedInstanceConfigElRef {
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_ShieldedInstanceConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4085,35 +3601,31 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfig
 }
 
 #[derive(Serialize, Default)]
-struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElDynamic {
+struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfigDynamic {
     node_group_affinity: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElNodeGroupAffinityEl,
-        >,
+        ::DynamicBlock<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_NodeGroupAffinity>,
     >,
     reservation_affinity: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElReservationAffinityEl,
-        >,
+        ::DynamicBlock<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_ReservationAffinity>,
     >,
     shielded_instance_config: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElShieldedInstanceConfigEl,
+            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_ShieldedInstanceConfig,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigEl {
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     internal_ip_only: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -4136,17 +3648,13 @@ pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceCluster
     node_group_affinity: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElNodeGroupAffinityEl>,
+        std::vec::Vec<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_NodeGroupAffinity>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     reservation_affinity: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElReservationAffinityEl>,
+        std::vec::Vec<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_ReservationAffinity>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     shielded_instance_config: std
@@ -4154,12 +3662,12 @@ pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceCluster
     ::Option<
         std
         ::vec
-        ::Vec<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElShieldedInstanceConfigEl>,
+        ::Vec<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_ShieldedInstanceConfig>,
     >,
-    dynamic: DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElDynamic,
+    dynamic: DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfigDynamic,
 }
 
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigEl {
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig {
     #[doc =
         "Set the field `internal_ip_only`.\nOptional. If true, all instances in the cluster will only have internal IP addresses. By default, clusters are not restricted to internal IP addresses, and will have ephemeral external IP addresses assigned to each instance. This `internal_ip_only` restriction can only be enabled for subnetwork enabled networks, and all off-cluster dependencies must be configured to be accessible without external IP addresses."]
     pub fn set_internal_ip_only(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -4246,7 +3754,7 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfig
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElNodeGroupAffinityEl,
+                            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_NodeGroupAffinity,
                         >,
                     >,
     ) -> Self {
@@ -4272,7 +3780,7 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfig
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElReservationAffinityEl,
+                            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_ReservationAffinity,
                         >,
                     >,
     ) -> Self {
@@ -4298,7 +3806,7 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfig
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElShieldedInstanceConfigEl,
+                            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_ShieldedInstanceConfig,
                         >,
                     >,
     ) -> Self {
@@ -4314,8 +3822,8 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfig
     }
 }
 
-impl terrars::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigEl {
-    type O = terrars::BlockAssignable<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigEl>;
+impl terrars::ToListMappable for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig {
+    type O = terrars::BlockAssignable<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4326,11 +3834,11 @@ impl terrars::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClust
     }
 }
 
-pub struct BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigEl {}
+pub struct BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig {}
 
-impl BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigEl {
-    pub fn build(self) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigEl {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigEl {
+impl BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig {
+    pub fn build(self) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig {
             internal_ip_only: core::default::Default::default(),
             metadata: core::default::Default::default(),
             network: core::default::Default::default(),
@@ -4348,24 +3856,26 @@ impl BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterC
     }
 }
 
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElRef {
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElRef {
+impl terrars::Ref for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElRef {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElRef {
+    ) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfigRef {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElRef {
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4428,7 +3938,7 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfig
     pub fn node_group_affinity(
         &self,
     ) -> terrars
-    ::ListRef<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElNodeGroupAffinityElRef> {
+    ::ListRef<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_NodeGroupAffinityRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.node_group_affinity", self.base))
     }
 
@@ -4436,7 +3946,7 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfig
     pub fn reservation_affinity(
         &self,
     ) -> terrars
-    ::ListRef<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElReservationAffinityElRef> {
+    ::ListRef<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_ReservationAffinityRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.reservation_affinity", self.base))
     }
 
@@ -4444,22 +3954,20 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfig
     pub fn shielded_instance_config(
         &self,
     ) -> terrars
-    ::ListRef<
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElShieldedInstanceConfigElRef,
-    > {
+    ::ListRef<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig_ShieldedInstanceConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.shielded_instance_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElInitializationActionsEl {
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_InitializationActions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     executable_file: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     execution_timeout: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElInitializationActionsEl {
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_InitializationActions {
     #[doc = "Set the field `executable_file`.\nRequired. Cloud Storage URI of executable file."]
     pub fn set_executable_file(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.executable_file = std::option::Option::Some(v.into());
@@ -4474,9 +3982,9 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElInitializationAc
     }
 }
 
-impl terrars::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElInitializationActionsEl {
+impl terrars::ToListMappable for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_InitializationActions {
     type O =
-        terrars::BlockAssignable<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElInitializationActionsEl>;
+        terrars::BlockAssignable<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_InitializationActions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4487,35 +3995,37 @@ impl terrars::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClust
     }
 }
 
-pub struct BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElInitializationActionsEl {}
+pub struct BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_InitializationActions {}
 
-impl BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElInitializationActionsEl {
-    pub fn build(self) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElInitializationActionsEl {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElInitializationActionsEl {
+impl BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_InitializationActions {
+    pub fn build(self) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_InitializationActions {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_InitializationActions {
             executable_file: core::default::Default::default(),
             execution_timeout: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElInitializationActionsElRef {
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_InitializationActionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElInitializationActionsElRef {
+impl terrars::Ref for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_InitializationActionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElInitializationActionsElRef {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElInitializationActionsElRef {
+    ) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_InitializationActionsRef {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_InitializationActionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElInitializationActionsElRef {
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_InitializationActionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4534,7 +4044,7 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElInitializationAc
 }
 
 #[derive(Serialize)]
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElLifecycleConfigEl {
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_LifecycleConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     auto_delete_time: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -4543,7 +4053,7 @@ pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElLifecycleC
     idle_delete_ttl: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElLifecycleConfigEl {
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_LifecycleConfig {
     #[doc =
         "Set the field `auto_delete_time`.\nOptional. The time when cluster will be auto-deleted (see JSON representation of [Timestamp](https://developers.google.com/protocol-buffers/docs/proto3#json))."]
     pub fn set_auto_delete_time(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -4566,8 +4076,8 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElLifecycleConfigE
     }
 }
 
-impl terrars::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElLifecycleConfigEl {
-    type O = terrars::BlockAssignable<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElLifecycleConfigEl>;
+impl terrars::ToListMappable for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_LifecycleConfig {
+    type O = terrars::BlockAssignable<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_LifecycleConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4578,11 +4088,11 @@ impl terrars::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClust
     }
 }
 
-pub struct BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElLifecycleConfigEl {}
+pub struct BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_LifecycleConfig {}
 
-impl BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElLifecycleConfigEl {
-    pub fn build(self) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElLifecycleConfigEl {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElLifecycleConfigEl {
+impl BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_LifecycleConfig {
+    pub fn build(self) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_LifecycleConfig {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_LifecycleConfig {
             auto_delete_time: core::default::Default::default(),
             auto_delete_ttl: core::default::Default::default(),
             idle_delete_ttl: core::default::Default::default(),
@@ -4590,24 +4100,26 @@ impl BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElLifecycleCo
     }
 }
 
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElLifecycleConfigElRef {
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_LifecycleConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElLifecycleConfigElRef {
+impl terrars::Ref for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_LifecycleConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElLifecycleConfigElRef {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElLifecycleConfigElRef {
+    ) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_LifecycleConfigRef {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_LifecycleConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElLifecycleConfigElRef {
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_LifecycleConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4638,14 +4150,14 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElLifecycleConfigE
 }
 
 #[derive(Serialize)]
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElManagedGroupConfigEl {
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_ManagedGroupConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     instance_group_manager_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     instance_template_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElManagedGroupConfigEl {
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_ManagedGroupConfig {
     #[doc = "Set the field `instance_group_manager_name`.\n"]
     pub fn set_instance_group_manager_name(
         mut self,
@@ -4666,12 +4178,10 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElMa
 }
 
 impl terrars
-::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElManagedGroupConfigEl {
+::ToListMappable for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_ManagedGroupConfig {
     type O =
         terrars
-        ::BlockAssignable<
-            DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElManagedGroupConfigEl,
-        >;
+        ::BlockAssignable<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_ManagedGroupConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4682,37 +4192,37 @@ impl terrars
     }
 }
 
-pub struct BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElManagedGroupConfigEl {}
+pub struct BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_ManagedGroupConfig {}
 
-impl BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElManagedGroupConfigEl {
-    pub fn build(
-        self,
-    ) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElManagedGroupConfigEl {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElManagedGroupConfigEl {
+impl BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_ManagedGroupConfig {
+    pub fn build(self) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_ManagedGroupConfig {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_ManagedGroupConfig {
             instance_group_manager_name: core::default::Default::default(),
             instance_template_name: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElManagedGroupConfigElRef {
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_ManagedGroupConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElManagedGroupConfigElRef {
+impl terrars::Ref for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_ManagedGroupConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElManagedGroupConfigElRef {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElManagedGroupConfigElRef {
+    ) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_ManagedGroupConfigRef {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_ManagedGroupConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElManagedGroupConfigElRef {
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_ManagedGroupConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4729,14 +4239,14 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElMa
 }
 
 #[derive(Serialize)]
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElAcceleratorsEl {
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_Accelerators {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     accelerator_count: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     accelerator_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElAcceleratorsEl {
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_Accelerators {
     #[doc =
         "Set the field `accelerator_count`.\nThe number of the accelerator cards of this type exposed to this instance."]
     pub fn set_accelerator_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -4752,11 +4262,9 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElAc
     }
 }
 
-impl terrars
-::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElAcceleratorsEl {
+impl terrars::ToListMappable for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_Accelerators {
     type O =
-        terrars
-        ::BlockAssignable<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElAcceleratorsEl>;
+        terrars::BlockAssignable<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_Accelerators>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4767,35 +4275,37 @@ impl terrars
     }
 }
 
-pub struct BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElAcceleratorsEl {}
+pub struct BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_Accelerators {}
 
-impl BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElAcceleratorsEl {
-    pub fn build(self) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElAcceleratorsEl {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElAcceleratorsEl {
+impl BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_Accelerators {
+    pub fn build(self) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_Accelerators {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_Accelerators {
             accelerator_count: core::default::Default::default(),
             accelerator_type: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElAcceleratorsElRef {
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_AcceleratorsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElAcceleratorsElRef {
+impl terrars::Ref for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_AcceleratorsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElAcceleratorsElRef {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElAcceleratorsElRef {
+    ) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_AcceleratorsRef {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_AcceleratorsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElAcceleratorsElRef {
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_AcceleratorsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4814,41 +4324,62 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElAc
 }
 
 #[derive(Serialize)]
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElDiskConfigEl {
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfig_AttachedDiskConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    boot_disk_size_gb: std::option::Option<terrars::PrimField<f64>>,
+    disk_size_gb: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    boot_disk_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    disk_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    num_local_ssds: std::option::Option<terrars::PrimField<f64>>,
+    provisioned_iops: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provisioned_throughput: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
+    type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElDiskConfigEl {
-    #[doc = "Set the field `boot_disk_size_gb`.\nOptional. Size in GB of the boot disk (default is 500GB)."]
-    pub fn set_boot_disk_size_gb(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.boot_disk_size_gb = std::option::Option::Some(v.into());
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfig_AttachedDiskConfig {
+    #[doc = "Set the field `disk_size_gb`.\nOptional. Size of the attached disk, specified in GB."]
+    pub fn set_disk_size_gb(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.disk_size_gb = std::option::Option::Some(v.into());
         self
     }
 
     #[doc =
-        "Set the field `boot_disk_type`.\nOptional. Type of the boot disk (default is \"pd-standard\"). Valid values: \"pd-balanced\" (Persistent Disk Balanced Solid State Drive), \"pd-ssd\" (Persistent Disk Solid State Drive), or \"pd-standard\" (Persistent Disk Hard Disk Drive). See [Disk types](https://cloud.google.com/compute/docs/disks#disk-types)."]
-    pub fn set_boot_disk_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.boot_disk_type = std::option::Option::Some(v.into());
+        "Set the field `disk_type`.\nOptional. The disk type of the attached disk. Currently only supports Hyperdisks: `hyperdisk-balanced`, `hyperdisk-extreme`, `hyperdisk-ml`, `hyperdisk-throughput`."]
+    pub fn set_disk_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.disk_type = std::option::Option::Some(v.into());
         self
     }
 
     #[doc =
-        "Set the field `num_local_ssds`.\nOptional. Number of attached SSDs, from 0 to 4 (default is 0). If SSDs are not attached, the boot disk is used to store runtime logs and [HDFS](https://hadoop.apache.org/docs/r1.2.1/hdfs_user_guide.html) data. If one or more SSDs are attached, this runtime bulk data is spread across them, and the boot disk contains only basic config and installed binaries."]
-    pub fn set_num_local_ssds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.num_local_ssds = std::option::Option::Some(v.into());
+        "Set the field `provisioned_iops`.\nOptional. Indicates how many IOPS to provision for the disk. This sets the number of I/O operations per second that the disk can handle."]
+    pub fn set_provisioned_iops(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.provisioned_iops = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `provisioned_throughput`.\nOptional. Indicates how much throughput to provision for the disk. This sets the number of throughput mb per second that the disk can handle."]
+    pub fn set_provisioned_throughput(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.provisioned_throughput = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `type_`.\nOptional. Attached disk type. Currently only supports Hyperdisks: `hyperdisk-balanced`, `hyperdisk-extreme`, `hyperdisk-ml`, `hyperdisk-throughput`."]
+    pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.type_ = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElDiskConfigEl {
+impl terrars
+::ToListMappable for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfig_AttachedDiskConfig {
     type O =
         terrars
-        ::BlockAssignable<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElDiskConfigEl>;
+        ::BlockAssignable<
+            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfig_AttachedDiskConfig,
+        >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4859,609 +4390,677 @@ impl terrars::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClust
     }
 }
 
-pub struct BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElDiskConfigEl {}
+pub struct BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfig_AttachedDiskConfig {}
 
-impl BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElDiskConfigEl {
-    pub fn build(self) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElDiskConfigEl {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElDiskConfigEl {
-            boot_disk_size_gb: core::default::Default::default(),
-            boot_disk_type: core::default::Default::default(),
-            num_local_ssds: core::default::Default::default(),
+impl BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfig_AttachedDiskConfig {
+    pub fn build(
+        self,
+    ) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfig_AttachedDiskConfig {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfig_AttachedDiskConfig {
+            disk_size_gb: core::default::Default::default(),
+            disk_type: core::default::Default::default(),
+            provisioned_iops: core::default::Default::default(),
+            provisioned_throughput: core::default::Default::default(),
+            type_: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElDiskConfigElRef {
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfig_AttachedDiskConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElDiskConfigElRef {
+impl terrars
+::Ref for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfig_AttachedDiskConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElDiskConfigElRef {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElDiskConfigElRef {
+    ) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfig_AttachedDiskConfigRef {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfig_AttachedDiskConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElDiskConfigElRef {
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfig_AttachedDiskConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `boot_disk_size_gb` after provisioning.\nOptional. Size in GB of the boot disk (default is 500GB)."]
-    pub fn boot_disk_size_gb(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.boot_disk_size_gb", self.base))
+        "Get a reference to the value of field `disk_size_gb` after provisioning.\nOptional. Size of the attached disk, specified in GB."]
+    pub fn disk_size_gb(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.disk_size_gb", self.base))
     }
 
     #[doc =
-        "Get a reference to the value of field `boot_disk_type` after provisioning.\nOptional. Type of the boot disk (default is \"pd-standard\"). Valid values: \"pd-balanced\" (Persistent Disk Balanced Solid State Drive), \"pd-ssd\" (Persistent Disk Solid State Drive), or \"pd-standard\" (Persistent Disk Hard Disk Drive). See [Disk types](https://cloud.google.com/compute/docs/disks#disk-types)."]
-    pub fn boot_disk_type(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.boot_disk_type", self.base))
+        "Get a reference to the value of field `disk_type` after provisioning.\nOptional. The disk type of the attached disk. Currently only supports Hyperdisks: `hyperdisk-balanced`, `hyperdisk-extreme`, `hyperdisk-ml`, `hyperdisk-throughput`."]
+    pub fn disk_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.disk_type", self.base))
     }
 
     #[doc =
-        "Get a reference to the value of field `num_local_ssds` after provisioning.\nOptional. Number of attached SSDs, from 0 to 4 (default is 0). If SSDs are not attached, the boot disk is used to store runtime logs and [HDFS](https://hadoop.apache.org/docs/r1.2.1/hdfs_user_guide.html) data. If one or more SSDs are attached, this runtime bulk data is spread across them, and the boot disk contains only basic config and installed binaries."]
-    pub fn num_local_ssds(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.num_local_ssds", self.base))
+        "Get a reference to the value of field `provisioned_iops` after provisioning.\nOptional. Indicates how many IOPS to provision for the disk. This sets the number of I/O operations per second that the disk can handle."]
+    pub fn provisioned_iops(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.provisioned_iops", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `provisioned_throughput` after provisioning.\nOptional. Indicates how much throughput to provision for the disk. This sets the number of throughput mb per second that the disk can handle."]
+    pub fn provisioned_throughput(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.provisioned_throughput", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `type_` after provisioning.\nOptional. Attached disk type. Currently only supports Hyperdisks: `hyperdisk-balanced`, `hyperdisk-extreme`, `hyperdisk-ml`, `hyperdisk-throughput`."]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElDynamic {
-    accelerators: std
-    ::option
-    ::Option<
-        terrars::DynamicBlock<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElAcceleratorsEl>,
-    >,
-    disk_config: std
-    ::option
-    ::Option<
-        terrars::DynamicBlock<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElDiskConfigEl>,
-    >,
-}
-
-#[derive(Serialize)]
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    image: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    machine_type: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    min_cpu_platform: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    num_instances: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    preemptibility: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    accelerators: std
-    ::option
-    ::Option<std::vec::Vec<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElAcceleratorsEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    disk_config: std
-    ::option
-    ::Option<std::vec::Vec<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElDiskConfigEl>>,
-    dynamic: DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElDynamic,
-}
-
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigEl {
-    #[doc =
-        "Set the field `image`.\nOptional. The Compute Engine image resource used for cluster instances. The URI can represent an image or image family. Image examples: * `https://www.googleapis.com/compute/beta/projects/[project_id]/global/images/[image-id]` * `projects/[project_id]/global/images/[image-id]` * `image-id` Image family examples. Dataproc will use the most recent image from the family: * `https://www.googleapis.com/compute/beta/projects/[project_id]/global/images/family/[custom-image-family-name]` * `projects/[project_id]/global/images/family/[custom-image-family-name]` If the URI is unspecified, it will be inferred from `SoftwareConfig.image_version` or the system default."]
-    pub fn set_image(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.image = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `machine_type`.\nOptional. The Compute Engine machine type used for cluster instances. A full URL, partial URI, or short name are valid. Examples: * `https://www.googleapis.com/compute/v1/projects/[project_id]/zones/us-east1-a/machineTypes/n1-standard-2` * `projects/[project_id]/zones/us-east1-a/machineTypes/n1-standard-2` * `n1-standard-2` **Auto Zone Exception**: If you are using the Dataproc [Auto Zone Placement](https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/auto-zone#using_auto_zone_placement) feature, you must use the short name of the machine type resource, for example, `n1-standard-2`."]
-    pub fn set_machine_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.machine_type = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `min_cpu_platform`.\nOptional. Specifies the minimum cpu platform for the Instance Group. See [Dataproc -> Minimum CPU Platform](https://cloud.google.com/dataproc/docs/concepts/compute/dataproc-min-cpu)."]
-    pub fn set_min_cpu_platform(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.min_cpu_platform = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `num_instances`.\nOptional. The number of VM instances in the instance group. For [HA cluster](/dataproc/docs/concepts/configuring-clusters/high-availability) [master_config](#FIELDS.master_config) groups, **must be set to 3**. For standard cluster [master_config](#FIELDS.master_config) groups, **must be set to 1**."]
-    pub fn set_num_instances(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.num_instances = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `preemptibility`.\nOptional. Specifies the preemptibility of the instance group. The default value for master and worker groups is `NON_PREEMPTIBLE`. This default cannot be changed. The default value for secondary instances is `PREEMPTIBLE`. Possible values: PREEMPTIBILITY_UNSPECIFIED, NON_PREEMPTIBLE, PREEMPTIBLE"]
-    pub fn set_preemptibility(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.preemptibility = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `accelerators`.\n"]
-    pub fn set_accelerators(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElAcceleratorsEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.accelerators = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.accelerators = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `disk_config`.\n"]
-    pub fn set_disk_config(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElDiskConfigEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.disk_config = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.disk_config = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigEl {
-    type O = terrars::BlockAssignable<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigEl {}
-
-impl BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigEl {
-    pub fn build(self) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigEl {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigEl {
-            image: core::default::Default::default(),
-            machine_type: core::default::Default::default(),
-            min_cpu_platform: core::default::Default::default(),
-            num_instances: core::default::Default::default(),
-            preemptibility: core::default::Default::default(),
-            accelerators: core::default::Default::default(),
-            disk_config: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElRef {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `image` after provisioning.\nOptional. The Compute Engine image resource used for cluster instances. The URI can represent an image or image family. Image examples: * `https://www.googleapis.com/compute/beta/projects/[project_id]/global/images/[image-id]` * `projects/[project_id]/global/images/[image-id]` * `image-id` Image family examples. Dataproc will use the most recent image from the family: * `https://www.googleapis.com/compute/beta/projects/[project_id]/global/images/family/[custom-image-family-name]` * `projects/[project_id]/global/images/family/[custom-image-family-name]` If the URI is unspecified, it will be inferred from `SoftwareConfig.image_version` or the system default."]
-    pub fn image(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.image", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `instance_names` after provisioning.\nOutput only. The list of instance names. Dataproc derives the names from `cluster_name`, `num_instances`, and the instance group."]
-    pub fn instance_names(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.instance_names", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `is_preemptible` after provisioning.\nOutput only. Specifies that this instance group contains preemptible instances."]
-    pub fn is_preemptible(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.is_preemptible", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `machine_type` after provisioning.\nOptional. The Compute Engine machine type used for cluster instances. A full URL, partial URI, or short name are valid. Examples: * `https://www.googleapis.com/compute/v1/projects/[project_id]/zones/us-east1-a/machineTypes/n1-standard-2` * `projects/[project_id]/zones/us-east1-a/machineTypes/n1-standard-2` * `n1-standard-2` **Auto Zone Exception**: If you are using the Dataproc [Auto Zone Placement](https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/auto-zone#using_auto_zone_placement) feature, you must use the short name of the machine type resource, for example, `n1-standard-2`."]
-    pub fn machine_type(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.machine_type", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `managed_group_config` after provisioning.\nOutput only. The config for Compute Engine Instance Group Manager that manages this group. This is only used for preemptible instance groups."]
-    pub fn managed_group_config(
-        &self,
-    ) -> terrars
-    ::ListRef<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElManagedGroupConfigElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.managed_group_config", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `min_cpu_platform` after provisioning.\nOptional. Specifies the minimum cpu platform for the Instance Group. See [Dataproc -> Minimum CPU Platform](https://cloud.google.com/dataproc/docs/concepts/compute/dataproc-min-cpu)."]
-    pub fn min_cpu_platform(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_cpu_platform", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `num_instances` after provisioning.\nOptional. The number of VM instances in the instance group. For [HA cluster](/dataproc/docs/concepts/configuring-clusters/high-availability) [master_config](#FIELDS.master_config) groups, **must be set to 3**. For standard cluster [master_config](#FIELDS.master_config) groups, **must be set to 1**."]
-    pub fn num_instances(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.num_instances", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `preemptibility` after provisioning.\nOptional. Specifies the preemptibility of the instance group. The default value for master and worker groups is `NON_PREEMPTIBLE`. This default cannot be changed. The default value for secondary instances is `PREEMPTIBLE`. Possible values: PREEMPTIBILITY_UNSPECIFIED, NON_PREEMPTIBLE, PREEMPTIBLE"]
-    pub fn preemptibility(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.preemptibility", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `accelerators` after provisioning.\n"]
-    pub fn accelerators(
-        &self,
-    ) -> terrars::ListRef<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElAcceleratorsElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.accelerators", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `disk_config` after provisioning.\n"]
-    pub fn disk_config(
-        &self,
-    ) -> terrars::ListRef<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElDiskConfigElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.disk_config", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElManagedGroupConfigEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    instance_group_manager_name: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    instance_template_name: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElManagedGroupConfigEl {
-    #[doc = "Set the field `instance_group_manager_name`.\n"]
-    pub fn set_instance_group_manager_name(
-        mut self,
-        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
-    ) -> Self {
-        self.instance_group_manager_name = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `instance_template_name`.\n"]
-    pub fn set_instance_template_name(
-        mut self,
-        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
-    ) -> Self {
-        self.instance_template_name = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElManagedGroupConfigEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElManagedGroupConfigEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElManagedGroupConfigEl {}
-
-impl BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElManagedGroupConfigEl {
-    pub fn build(
-        self,
-    ) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElManagedGroupConfigEl {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElManagedGroupConfigEl {
-            instance_group_manager_name: core::default::Default::default(),
-            instance_template_name: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElManagedGroupConfigElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElManagedGroupConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElManagedGroupConfigElRef {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElManagedGroupConfigElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElManagedGroupConfigElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `instance_group_manager_name` after provisioning.\n"]
-    pub fn instance_group_manager_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_group_manager_name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `instance_template_name` after provisioning.\n"]
-    pub fn instance_template_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_template_name", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElAcceleratorsEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    accelerator_count: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    accelerator_type: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElAcceleratorsEl {
-    #[doc =
-        "Set the field `accelerator_count`.\nThe number of the accelerator cards of this type exposed to this instance."]
-    pub fn set_accelerator_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.accelerator_count = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `accelerator_type`.\nFull URL, partial URI, or short name of the accelerator type resource to expose to this instance. See [Compute Engine AcceleratorTypes](https://cloud.google.com/compute/docs/reference/beta/acceleratorTypes). Examples: * `https://www.googleapis.com/compute/beta/projects/[project_id]/zones/us-east1-a/acceleratorTypes/nvidia-tesla-k80` * `projects/[project_id]/zones/us-east1-a/acceleratorTypes/nvidia-tesla-k80` * `nvidia-tesla-k80` **Auto Zone Exception**: If you are using the Dataproc [Auto Zone Placement](https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/auto-zone#using_auto_zone_placement) feature, you must use the short name of the accelerator type resource, for example, `nvidia-tesla-k80`."]
-    pub fn set_accelerator_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.accelerator_type = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElAcceleratorsEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElAcceleratorsEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElAcceleratorsEl {}
-
-impl BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElAcceleratorsEl {
-    pub fn build(
-        self,
-    ) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElAcceleratorsEl {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElAcceleratorsEl {
-            accelerator_count: core::default::Default::default(),
-            accelerator_type: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElAcceleratorsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElAcceleratorsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElAcceleratorsElRef {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElAcceleratorsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElAcceleratorsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `accelerator_count` after provisioning.\nThe number of the accelerator cards of this type exposed to this instance."]
-    pub fn accelerator_count(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.accelerator_count", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `accelerator_type` after provisioning.\nFull URL, partial URI, or short name of the accelerator type resource to expose to this instance. See [Compute Engine AcceleratorTypes](https://cloud.google.com/compute/docs/reference/beta/acceleratorTypes). Examples: * `https://www.googleapis.com/compute/beta/projects/[project_id]/zones/us-east1-a/acceleratorTypes/nvidia-tesla-k80` * `projects/[project_id]/zones/us-east1-a/acceleratorTypes/nvidia-tesla-k80` * `nvidia-tesla-k80` **Auto Zone Exception**: If you are using the Dataproc [Auto Zone Placement](https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/auto-zone#using_auto_zone_placement) feature, you must use the short name of the accelerator type resource, for example, `nvidia-tesla-k80`."]
-    pub fn accelerator_type(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.accelerator_type", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElDiskConfigEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    boot_disk_size_gb: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    boot_disk_type: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    num_local_ssds: std::option::Option<terrars::PrimField<f64>>,
-}
-
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElDiskConfigEl {
-    #[doc = "Set the field `boot_disk_size_gb`.\nOptional. Size in GB of the boot disk (default is 500GB)."]
-    pub fn set_boot_disk_size_gb(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.boot_disk_size_gb = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `boot_disk_type`.\nOptional. Type of the boot disk (default is \"pd-standard\"). Valid values: \"pd-balanced\" (Persistent Disk Balanced Solid State Drive), \"pd-ssd\" (Persistent Disk Solid State Drive), or \"pd-standard\" (Persistent Disk Hard Disk Drive). See [Disk types](https://cloud.google.com/compute/docs/disks#disk-types)."]
-    pub fn set_boot_disk_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.boot_disk_type = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `num_local_ssds`.\nOptional. Number of attached SSDs, from 0 to 4 (default is 0). If SSDs are not attached, the boot disk is used to store runtime logs and [HDFS](https://hadoop.apache.org/docs/r1.2.1/hdfs_user_guide.html) data. If one or more SSDs are attached, this runtime bulk data is spread across them, and the boot disk contains only basic config and installed binaries."]
-    pub fn set_num_local_ssds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.num_local_ssds = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElDiskConfigEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElDiskConfigEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElDiskConfigEl {}
-
-impl BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElDiskConfigEl {
-    pub fn build(
-        self,
-    ) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElDiskConfigEl {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElDiskConfigEl {
-            boot_disk_size_gb: core::default::Default::default(),
-            boot_disk_type: core::default::Default::default(),
-            num_local_ssds: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElDiskConfigElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElDiskConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElDiskConfigElRef {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElDiskConfigElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElDiskConfigElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `boot_disk_size_gb` after provisioning.\nOptional. Size in GB of the boot disk (default is 500GB)."]
-    pub fn boot_disk_size_gb(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.boot_disk_size_gb", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `boot_disk_type` after provisioning.\nOptional. Type of the boot disk (default is \"pd-standard\"). Valid values: \"pd-balanced\" (Persistent Disk Balanced Solid State Drive), \"pd-ssd\" (Persistent Disk Solid State Drive), or \"pd-standard\" (Persistent Disk Hard Disk Drive). See [Disk types](https://cloud.google.com/compute/docs/disks#disk-types)."]
-    pub fn boot_disk_type(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.boot_disk_type", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `num_local_ssds` after provisioning.\nOptional. Number of attached SSDs, from 0 to 4 (default is 0). If SSDs are not attached, the boot disk is used to store runtime logs and [HDFS](https://hadoop.apache.org/docs/r1.2.1/hdfs_user_guide.html) data. If one or more SSDs are attached, this runtime bulk data is spread across them, and the boot disk contains only basic config and installed binaries."]
-    pub fn num_local_ssds(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.num_local_ssds", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElDynamic {
-    accelerators: std
+struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfigDynamic {
+    attached_disk_config: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElAcceleratorsEl,
+            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfig_AttachedDiskConfig,
         >,
-    >,
-    disk_config: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElDiskConfigEl>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigEl {
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    boot_disk_provisioned_iops: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    boot_disk_provisioned_throughput: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    boot_disk_size_gb: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    boot_disk_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    local_ssd_interface: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    num_local_ssds: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    attached_disk_config: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfig_AttachedDiskConfig>,
+    >,
+    dynamic: DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfigDynamic,
+}
+
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfig {
+    #[doc =
+        "Set the field `boot_disk_provisioned_iops`.\nOptional. Indicates how many IOPS to provision for the disk. This sets the number of I/O operations per second that the disk can handle. This field is supported only if boot_disk_type is hyperdisk-balanced."]
+    pub fn set_boot_disk_provisioned_iops(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.boot_disk_provisioned_iops = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `boot_disk_provisioned_throughput`.\nOptional. Indicates how much throughput to provision for the disk. This sets the number of throughput mb per second that the disk can handle. Values must be greater than or equal to 1. This field is supported only if boot_disk_type is hyperdisk-balanced."]
+    pub fn set_boot_disk_provisioned_throughput(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.boot_disk_provisioned_throughput = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `boot_disk_size_gb`.\nOptional. Size in GB of the boot disk (default is 500GB)."]
+    pub fn set_boot_disk_size_gb(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.boot_disk_size_gb = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `boot_disk_type`.\nOptional. Type of the boot disk (default is \"pd-standard\"). Valid values: \"pd-balanced\" (Persistent Disk Balanced Solid State Drive), \"pd-ssd\" (Persistent Disk Solid State Drive), or \"pd-standard\" (Persistent Disk Hard Disk Drive). See [Disk types](https://cloud.google.com/compute/docs/disks#disk-types)."]
+    pub fn set_boot_disk_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.boot_disk_type = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `local_ssd_interface`.\nOptional. Interface type of local SSDs (default is \"scsi\"). Valid values: \"scsi\" (Small Computer System Interface), \"nvme\" (Non-Volatile Memory Express)."]
+    pub fn set_local_ssd_interface(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.local_ssd_interface = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `num_local_ssds`.\nOptional. Number of attached SSDs, from 0 to 8 (default is 0). If SSDs are not attached, the boot disk is used to store runtime logs and [HDFS](https://hadoop.apache.org/docs/r1.2.1/hdfs_user_guide.html) data. If one or more SSDs are attached, this runtime bulk data is spread across them, and the boot disk contains only basic config and installed binaries."]
+    pub fn set_num_local_ssds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.num_local_ssds = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `attached_disk_config`.\n"]
+    pub fn set_attached_disk_config(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfig_AttachedDiskConfig,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.attached_disk_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.attached_disk_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfig {
+    type O =
+        terrars::BlockAssignable<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfig {}
+
+impl BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfig {
+    pub fn build(self) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfig {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfig {
+            boot_disk_provisioned_iops: core::default::Default::default(),
+            boot_disk_provisioned_throughput: core::default::Default::default(),
+            boot_disk_size_gb: core::default::Default::default(),
+            boot_disk_type: core::default::Default::default(),
+            local_ssd_interface: core::default::Default::default(),
+            num_local_ssds: core::default::Default::default(),
+            attached_disk_config: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfigRef {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `boot_disk_provisioned_iops` after provisioning.\nOptional. Indicates how many IOPS to provision for the disk. This sets the number of I/O operations per second that the disk can handle. This field is supported only if boot_disk_type is hyperdisk-balanced."]
+    pub fn boot_disk_provisioned_iops(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.boot_disk_provisioned_iops", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `boot_disk_provisioned_throughput` after provisioning.\nOptional. Indicates how much throughput to provision for the disk. This sets the number of throughput mb per second that the disk can handle. Values must be greater than or equal to 1. This field is supported only if boot_disk_type is hyperdisk-balanced."]
+    pub fn boot_disk_provisioned_throughput(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.boot_disk_provisioned_throughput", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `boot_disk_size_gb` after provisioning.\nOptional. Size in GB of the boot disk (default is 500GB)."]
+    pub fn boot_disk_size_gb(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.boot_disk_size_gb", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `boot_disk_type` after provisioning.\nOptional. Type of the boot disk (default is \"pd-standard\"). Valid values: \"pd-balanced\" (Persistent Disk Balanced Solid State Drive), \"pd-ssd\" (Persistent Disk Solid State Drive), or \"pd-standard\" (Persistent Disk Hard Disk Drive). See [Disk types](https://cloud.google.com/compute/docs/disks#disk-types)."]
+    pub fn boot_disk_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.boot_disk_type", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `local_ssd_interface` after provisioning.\nOptional. Interface type of local SSDs (default is \"scsi\"). Valid values: \"scsi\" (Small Computer System Interface), \"nvme\" (Non-Volatile Memory Express)."]
+    pub fn local_ssd_interface(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.local_ssd_interface", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `num_local_ssds` after provisioning.\nOptional. Number of attached SSDs, from 0 to 8 (default is 0). If SSDs are not attached, the boot disk is used to store runtime logs and [HDFS](https://hadoop.apache.org/docs/r1.2.1/hdfs_user_guide.html) data. If one or more SSDs are attached, this runtime bulk data is spread across them, and the boot disk contains only basic config and installed binaries."]
+    pub fn num_local_ssds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.num_local_ssds", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `attached_disk_config` after provisioning.\n"]
+    pub fn attached_disk_config(
+        &self,
+    ) -> terrars
+    ::ListRef<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfig_AttachedDiskConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.attached_disk_config", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy_InstanceSelectionResults {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    machine_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vm_count: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy_InstanceSelectionResults {
+    #[doc = "Set the field `machine_type`.\n"]
+    pub fn set_machine_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.machine_type = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `vm_count`.\n"]
+    pub fn set_vm_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.vm_count = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy_InstanceSelectionResults {
+    type O =
+        terrars
+        ::BlockAssignable<
+            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy_InstanceSelectionResults,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy_InstanceSelectionResults {}
+
+impl BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy_InstanceSelectionResults {
+    pub fn build(
+        self,
+    ) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy_InstanceSelectionResults {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy_InstanceSelectionResults {
+            machine_type: core::default::Default::default(),
+            vm_count: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy_InstanceSelectionResultsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy_InstanceSelectionResultsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy_InstanceSelectionResultsRef {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy_InstanceSelectionResultsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy_InstanceSelectionResultsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `machine_type` after provisioning.\n"]
+    pub fn machine_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.machine_type", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `vm_count` after provisioning.\n"]
+    pub fn vm_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vm_count", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy_InstanceSelectionListDynamic {
+    disk_config: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfig>,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy_InstanceSelectionList {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    machine_types: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    rank: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    disk_config: std
+    ::option
+    ::Option<std::vec::Vec<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfig>>,
+    dynamic: DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy_InstanceSelectionListDynamic,
+}
+
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy_InstanceSelectionList {
+    #[doc = "Set the field `machine_types`.\nOptional. Full machine-type names, e.g. \"n1-standard-16\"."]
+    pub fn set_machine_types(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.machine_types = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `rank`.\nOptional. Preference of this instance selection. Lower number means higher preference. Dataproc will first try to create a VM based on the machine-type with priority rank and fallback to next rank based on availability. Machine types and instance selections with the same priority have the same preference."]
+    pub fn set_rank(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.rank = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `disk_config`.\n"]
+    pub fn set_disk_config(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfig,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.disk_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.disk_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy_InstanceSelectionList {
+    type O =
+        terrars
+        ::BlockAssignable<
+            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy_InstanceSelectionList,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy_InstanceSelectionList {}
+
+impl BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy_InstanceSelectionList {
+    pub fn build(
+        self,
+    ) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy_InstanceSelectionList {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy_InstanceSelectionList {
+            machine_types: core::default::Default::default(),
+            rank: core::default::Default::default(),
+            disk_config: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy_InstanceSelectionListRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy_InstanceSelectionListRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy_InstanceSelectionListRef {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy_InstanceSelectionListRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy_InstanceSelectionListRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `machine_types` after provisioning.\nOptional. Full machine-type names, e.g. \"n1-standard-16\"."]
+    pub fn machine_types(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.machine_types", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `rank` after provisioning.\nOptional. Preference of this instance selection. Lower number means higher preference. Dataproc will first try to create a VM based on the machine-type with priority rank and fallback to next rank based on availability. Machine types and instance selections with the same priority have the same preference."]
+    pub fn rank(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rank", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `disk_config` after provisioning.\n"]
+    pub fn disk_config(
+        &self,
+    ) -> terrars::ListRef<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.disk_config", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicyDynamic {
+    instance_selection_list: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy_InstanceSelectionList,
+        >,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    instance_selection_list: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
+            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy_InstanceSelectionList,
+        >,
+    >,
+    dynamic: DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicyDynamic,
+}
+
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy {
+    #[doc = "Set the field `instance_selection_list`.\n"]
+    pub fn set_instance_selection_list(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy_InstanceSelectionList,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.instance_selection_list = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.instance_selection_list = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy {
+    type O =
+        terrars
+        ::BlockAssignable<
+            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy {}
+
+impl BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy {
+    pub fn build(
+        self,
+    ) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy {
+            instance_selection_list: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicyRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicyRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicyRef {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicyRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicyRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `instance_machine_types` after provisioning.\nOutput only. A map of instance names to their machine type."]
+    pub fn instance_machine_types(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.instance_machine_types", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `instance_selection_results` after provisioning.\nOutput only. A list of instance selection results that were successfully allocated."]
+    pub fn instance_selection_results(
+        &self,
+    ) -> terrars
+    ::ListRef<
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy_InstanceSelectionResultsRef,
+    > {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.instance_selection_results", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `instance_selection_list` after provisioning.\n"]
+    pub fn instance_selection_list(
+        &self,
+    ) -> terrars
+    ::ListRef<
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy_InstanceSelectionListRef,
+    > {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.instance_selection_list", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfigDynamic {
+    accelerators: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_Accelerators>,
+    >,
+    disk_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfig>>,
+    instance_flexibility_policy: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy,
+        >,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     image: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -5475,21 +5074,21 @@ pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryW
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     accelerators: std
     ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElAcceleratorsEl>,
-    >,
+    ::Option<std::vec::Vec<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_Accelerators>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     disk_config: std
     ::option
+    ::Option<std::vec::Vec<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    instance_flexibility_policy: std
+    ::option
     ::Option<
-        std::vec::Vec<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElDiskConfigEl>,
+        std::vec::Vec<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy>,
     >,
-    dynamic: DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElDynamic,
+    dynamic: DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfigDynamic,
 }
 
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigEl {
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig {
     #[doc =
         "Set the field `image`.\nOptional. The Compute Engine image resource used for cluster instances. The URI can represent an image or image family. Image examples: * `https://www.googleapis.com/compute/beta/projects/[project_id]/global/images/[image-id]` * `projects/[project_id]/global/images/[image-id]` * `image-id` Image family examples. Dataproc will use the most recent image from the family: * `https://www.googleapis.com/compute/beta/projects/[project_id]/global/images/family/[custom-image-family-name]` * `projects/[project_id]/global/images/family/[custom-image-family-name]` If the URI is unspecified, it will be inferred from `SoftwareConfig.image_version` or the system default."]
     pub fn set_image(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -5536,7 +5135,7 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerC
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElAcceleratorsEl,
+                            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_Accelerators,
                         >,
                     >,
     ) -> Self {
@@ -5562,7 +5161,7 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerC
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElDiskConfigEl,
+                            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfig,
                         >,
                     >,
     ) -> Self {
@@ -5576,11 +5175,36 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerC
         }
         self
     }
+
+    #[doc = "Set the field `instance_flexibility_policy`.\n"]
+    pub fn set_instance_flexibility_policy(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.instance_flexibility_policy = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.instance_flexibility_policy = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
 }
 
-impl terrars::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigEl {
-    type O =
-        terrars::BlockAssignable<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigEl>;
+impl terrars::ToListMappable for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig {
+    type O = terrars::BlockAssignable<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5591,11 +5215,11 @@ impl terrars::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClust
     }
 }
 
-pub struct BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigEl {}
+pub struct BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig {}
 
-impl BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigEl {
-    pub fn build(self) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigEl {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigEl {
+impl BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig {
+    pub fn build(self) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig {
             image: core::default::Default::default(),
             machine_type: core::default::Default::default(),
             min_cpu_platform: core::default::Default::default(),
@@ -5603,29 +5227,32 @@ impl BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWo
             preemptibility: core::default::Default::default(),
             accelerators: core::default::Default::default(),
             disk_config: core::default::Default::default(),
+            instance_flexibility_policy: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElRef {
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElRef {
+impl terrars::Ref for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElRef {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElRef {
+    ) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfigRef {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElRef {
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5659,9 +5286,7 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerC
     pub fn managed_group_config(
         &self,
     ) -> terrars
-    ::ListRef<
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElManagedGroupConfigElRef,
-    > {
+    ::ListRef<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_ManagedGroupConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.managed_group_config", self.base))
     }
 
@@ -5686,22 +5311,615 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerC
     #[doc = "Get a reference to the value of field `accelerators` after provisioning.\n"]
     pub fn accelerators(
         &self,
-    ) -> terrars
-    ::ListRef<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElAcceleratorsElRef> {
+    ) -> terrars::ListRef<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_AcceleratorsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.accelerators", self.base))
     }
 
     #[doc = "Get a reference to the value of field `disk_config` after provisioning.\n"]
     pub fn disk_config(
         &self,
-    ) -> terrars
-    ::ListRef<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElDiskConfigElRef> {
+    ) -> terrars::ListRef<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.disk_config", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `instance_flexibility_policy` after provisioning.\n"]
+    pub fn instance_flexibility_policy(
+        &self,
+    ) -> terrars
+    ::ListRef<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.instance_flexibility_policy", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigElKerberosConfigEl {
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig_InstanceFlexibilityPolicy_ProvisioningModelMix {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    standard_capacity_base: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    standard_capacity_percent_above_base: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig_InstanceFlexibilityPolicy_ProvisioningModelMix {
+    #[doc =
+        "Set the field `standard_capacity_base`.\nOptional. The base capacity that will always use Standard VMs to avoid risk of premature allocation."]
+    pub fn set_standard_capacity_base(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.standard_capacity_base = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `standard_capacity_percent_above_base`.\nOptional. The percentage of target capacity that will use Standard VMs above standardCapacityBase."]
+    pub fn set_standard_capacity_percent_above_base(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<f64>>,
+    ) -> Self {
+        self.standard_capacity_percent_above_base = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig_InstanceFlexibilityPolicy_ProvisioningModelMix {
+    type O =
+        terrars
+        ::BlockAssignable<
+            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig_InstanceFlexibilityPolicy_ProvisioningModelMix,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig_InstanceFlexibilityPolicy_ProvisioningModelMix {}
+
+impl BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig_InstanceFlexibilityPolicy_ProvisioningModelMix {
+    pub fn build(
+        self,
+    ) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig_InstanceFlexibilityPolicy_ProvisioningModelMix {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig_InstanceFlexibilityPolicy_ProvisioningModelMix {
+            standard_capacity_base: core::default::Default::default(),
+            standard_capacity_percent_above_base: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig_InstanceFlexibilityPolicy_ProvisioningModelMixRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig_InstanceFlexibilityPolicy_ProvisioningModelMixRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig_InstanceFlexibilityPolicy_ProvisioningModelMixRef {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig_InstanceFlexibilityPolicy_ProvisioningModelMixRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig_InstanceFlexibilityPolicy_ProvisioningModelMixRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `standard_capacity_base` after provisioning.\nOptional. The base capacity that will always use Standard VMs to avoid risk of premature allocation."]
+    pub fn standard_capacity_base(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.standard_capacity_base", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `standard_capacity_percent_above_base` after provisioning.\nOptional. The percentage of target capacity that will use Standard VMs above standardCapacityBase."]
+    pub fn standard_capacity_percent_above_base(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.standard_capacity_percent_above_base", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig_InstanceFlexibilityPolicyDynamic {
+    instance_selection_list: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy_InstanceSelectionList,
+        >,
+    >,
+    provisioning_model_mix: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig_InstanceFlexibilityPolicy_ProvisioningModelMix,
+        >,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig_InstanceFlexibilityPolicy {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    instance_selection_list: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
+            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy_InstanceSelectionList,
+        >,
+    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provisioning_model_mix: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
+            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig_InstanceFlexibilityPolicy_ProvisioningModelMix,
+        >,
+    >,
+    dynamic: DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig_InstanceFlexibilityPolicyDynamic,
+}
+
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig_InstanceFlexibilityPolicy {
+    #[doc = "Set the field `instance_selection_list`.\n"]
+    pub fn set_instance_selection_list(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy_InstanceSelectionList,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.instance_selection_list = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.instance_selection_list = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `provisioning_model_mix`.\n"]
+    pub fn set_provisioning_model_mix(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig_InstanceFlexibilityPolicy_ProvisioningModelMix,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.provisioning_model_mix = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.provisioning_model_mix = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig_InstanceFlexibilityPolicy {
+    type O =
+        terrars
+        ::BlockAssignable<
+            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig_InstanceFlexibilityPolicy,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig_InstanceFlexibilityPolicy {}
+
+impl BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig_InstanceFlexibilityPolicy {
+    pub fn build(
+        self,
+    ) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig_InstanceFlexibilityPolicy {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig_InstanceFlexibilityPolicy {
+            instance_selection_list: core::default::Default::default(),
+            provisioning_model_mix: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig_InstanceFlexibilityPolicyRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig_InstanceFlexibilityPolicyRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig_InstanceFlexibilityPolicyRef {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig_InstanceFlexibilityPolicyRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig_InstanceFlexibilityPolicyRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `instance_machine_types` after provisioning.\nOutput only. A map of instance names to their machine type."]
+    pub fn instance_machine_types(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.instance_machine_types", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `instance_selection_results` after provisioning.\nOutput only. A list of instance selection results that were successfully allocated."]
+    pub fn instance_selection_results(
+        &self,
+    ) -> terrars
+    ::ListRef<
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy_InstanceSelectionResultsRef,
+    > {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.instance_selection_results", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `instance_selection_list` after provisioning.\n"]
+    pub fn instance_selection_list(
+        &self,
+    ) -> terrars
+    ::ListRef<
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy_InstanceSelectionListRef,
+    > {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.instance_selection_list", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `provisioning_model_mix` after provisioning.\n"]
+    pub fn provisioning_model_mix(
+        &self,
+    ) -> terrars
+    ::ListRef<
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig_InstanceFlexibilityPolicy_ProvisioningModelMixRef,
+    > {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.provisioning_model_mix", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfigDynamic {
+    accelerators: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_Accelerators>,
+    >,
+    disk_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfig>>,
+    instance_flexibility_policy: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig_InstanceFlexibilityPolicy,
+        >,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    image: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    machine_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    min_cpu_platform: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    num_instances: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    preemptibility: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    accelerators: std
+    ::option
+    ::Option<std::vec::Vec<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_Accelerators>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    disk_config: std
+    ::option
+    ::Option<std::vec::Vec<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    instance_flexibility_policy: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
+            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig_InstanceFlexibilityPolicy,
+        >,
+    >,
+    dynamic: DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfigDynamic,
+}
+
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig {
+    #[doc =
+        "Set the field `image`.\nOptional. The Compute Engine image resource used for cluster instances. The URI can represent an image or image family. Image examples: * `https://www.googleapis.com/compute/beta/projects/[project_id]/global/images/[image-id]` * `projects/[project_id]/global/images/[image-id]` * `image-id` Image family examples. Dataproc will use the most recent image from the family: * `https://www.googleapis.com/compute/beta/projects/[project_id]/global/images/family/[custom-image-family-name]` * `projects/[project_id]/global/images/family/[custom-image-family-name]` If the URI is unspecified, it will be inferred from `SoftwareConfig.image_version` or the system default."]
+    pub fn set_image(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.image = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `machine_type`.\nOptional. The Compute Engine machine type used for cluster instances. A full URL, partial URI, or short name are valid. Examples: * `https://www.googleapis.com/compute/v1/projects/[project_id]/zones/us-east1-a/machineTypes/n1-standard-2` * `projects/[project_id]/zones/us-east1-a/machineTypes/n1-standard-2` * `n1-standard-2` **Auto Zone Exception**: If you are using the Dataproc [Auto Zone Placement](https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/auto-zone#using_auto_zone_placement) feature, you must use the short name of the machine type resource, for example, `n1-standard-2`."]
+    pub fn set_machine_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.machine_type = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `min_cpu_platform`.\nOptional. Specifies the minimum cpu platform for the Instance Group. See [Dataproc -> Minimum CPU Platform](https://cloud.google.com/dataproc/docs/concepts/compute/dataproc-min-cpu)."]
+    pub fn set_min_cpu_platform(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.min_cpu_platform = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `num_instances`.\nOptional. The number of VM instances in the instance group. For [HA cluster](/dataproc/docs/concepts/configuring-clusters/high-availability) [master_config](#FIELDS.master_config) groups, **must be set to 3**. For standard cluster [master_config](#FIELDS.master_config) groups, **must be set to 1**."]
+    pub fn set_num_instances(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.num_instances = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `preemptibility`.\nOptional. Specifies the preemptibility of the instance group. The default value for master and worker groups is `NON_PREEMPTIBLE`. This default cannot be changed. The default value for secondary instances is `PREEMPTIBLE`. Possible values: PREEMPTIBILITY_UNSPECIFIED, NON_PREEMPTIBLE, PREEMPTIBLE"]
+    pub fn set_preemptibility(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.preemptibility = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `accelerators`.\n"]
+    pub fn set_accelerators(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_Accelerators,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.accelerators = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.accelerators = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `disk_config`.\n"]
+    pub fn set_disk_config(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfig,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.disk_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.disk_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `instance_flexibility_policy`.\n"]
+    pub fn set_instance_flexibility_policy(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig_InstanceFlexibilityPolicy,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.instance_flexibility_policy = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.instance_flexibility_policy = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig {
+    type O =
+        terrars::BlockAssignable<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig {}
+
+impl BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig {
+    pub fn build(self) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig {
+            image: core::default::Default::default(),
+            machine_type: core::default::Default::default(),
+            min_cpu_platform: core::default::Default::default(),
+            num_instances: core::default::Default::default(),
+            preemptibility: core::default::Default::default(),
+            accelerators: core::default::Default::default(),
+            disk_config: core::default::Default::default(),
+            instance_flexibility_policy: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfigRef {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `image` after provisioning.\nOptional. The Compute Engine image resource used for cluster instances. The URI can represent an image or image family. Image examples: * `https://www.googleapis.com/compute/beta/projects/[project_id]/global/images/[image-id]` * `projects/[project_id]/global/images/[image-id]` * `image-id` Image family examples. Dataproc will use the most recent image from the family: * `https://www.googleapis.com/compute/beta/projects/[project_id]/global/images/family/[custom-image-family-name]` * `projects/[project_id]/global/images/family/[custom-image-family-name]` If the URI is unspecified, it will be inferred from `SoftwareConfig.image_version` or the system default."]
+    pub fn image(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.image", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `instance_names` after provisioning.\nOutput only. The list of instance names. Dataproc derives the names from `cluster_name`, `num_instances`, and the instance group."]
+    pub fn instance_names(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.instance_names", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `is_preemptible` after provisioning.\nOutput only. Specifies that this instance group contains preemptible instances."]
+    pub fn is_preemptible(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.is_preemptible", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `machine_type` after provisioning.\nOptional. The Compute Engine machine type used for cluster instances. A full URL, partial URI, or short name are valid. Examples: * `https://www.googleapis.com/compute/v1/projects/[project_id]/zones/us-east1-a/machineTypes/n1-standard-2` * `projects/[project_id]/zones/us-east1-a/machineTypes/n1-standard-2` * `n1-standard-2` **Auto Zone Exception**: If you are using the Dataproc [Auto Zone Placement](https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/auto-zone#using_auto_zone_placement) feature, you must use the short name of the machine type resource, for example, `n1-standard-2`."]
+    pub fn machine_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.machine_type", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `managed_group_config` after provisioning.\nOutput only. The config for Compute Engine Instance Group Manager that manages this group. This is only used for preemptible instance groups."]
+    pub fn managed_group_config(
+        &self,
+    ) -> terrars
+    ::ListRef<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_ManagedGroupConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.managed_group_config", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `min_cpu_platform` after provisioning.\nOptional. Specifies the minimum cpu platform for the Instance Group. See [Dataproc -> Minimum CPU Platform](https://cloud.google.com/dataproc/docs/concepts/compute/dataproc-min-cpu)."]
+    pub fn min_cpu_platform(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_cpu_platform", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `num_instances` after provisioning.\nOptional. The number of VM instances in the instance group. For [HA cluster](/dataproc/docs/concepts/configuring-clusters/high-availability) [master_config](#FIELDS.master_config) groups, **must be set to 3**. For standard cluster [master_config](#FIELDS.master_config) groups, **must be set to 1**."]
+    pub fn num_instances(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.num_instances", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `preemptibility` after provisioning.\nOptional. Specifies the preemptibility of the instance group. The default value for master and worker groups is `NON_PREEMPTIBLE`. This default cannot be changed. The default value for secondary instances is `PREEMPTIBLE`. Possible values: PREEMPTIBILITY_UNSPECIFIED, NON_PREEMPTIBLE, PREEMPTIBLE"]
+    pub fn preemptibility(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.preemptibility", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `accelerators` after provisioning.\n"]
+    pub fn accelerators(
+        &self,
+    ) -> terrars::ListRef<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_AcceleratorsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.accelerators", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `disk_config` after provisioning.\n"]
+    pub fn disk_config(
+        &self,
+    ) -> terrars::ListRef<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.disk_config", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `instance_flexibility_policy` after provisioning.\n"]
+    pub fn instance_flexibility_policy(
+        &self,
+    ) -> terrars
+    ::ListRef<
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig_InstanceFlexibilityPolicyRef,
+    > {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.instance_flexibility_policy", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecurityConfig_KerberosConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cross_realm_trust_admin_server: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -5734,7 +5952,7 @@ pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityCo
     truststore_password: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigElKerberosConfigEl {
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecurityConfig_KerberosConfig {
     #[doc =
         "Set the field `cross_realm_trust_admin_server`.\nOptional. The admin server (IP or hostname) for the remote trusted realm in a cross realm trust relationship."]
     pub fn set_cross_realm_trust_admin_server(
@@ -5859,12 +6077,10 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigEl
 }
 
 impl terrars
-::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigElKerberosConfigEl {
+::ToListMappable for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecurityConfig_KerberosConfig {
     type O =
         terrars
-        ::BlockAssignable<
-            DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigElKerberosConfigEl,
-        >;
+        ::BlockAssignable<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecurityConfig_KerberosConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5875,13 +6091,11 @@ impl terrars
     }
 }
 
-pub struct BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigElKerberosConfigEl {}
+pub struct BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecurityConfig_KerberosConfig {}
 
-impl BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigElKerberosConfigEl {
-    pub fn build(
-        self,
-    ) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigElKerberosConfigEl {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigElKerberosConfigEl {
+impl BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecurityConfig_KerberosConfig {
+    pub fn build(self) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecurityConfig_KerberosConfig {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecurityConfig_KerberosConfig {
             cross_realm_trust_admin_server: core::default::Default::default(),
             cross_realm_trust_kdc: core::default::Default::default(),
             cross_realm_trust_realm: core::default::Default::default(),
@@ -5901,24 +6115,26 @@ impl BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityCon
     }
 }
 
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigElKerberosConfigElRef {
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecurityConfig_KerberosConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigElKerberosConfigElRef {
+impl terrars::Ref for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecurityConfig_KerberosConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigElKerberosConfigElRef {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigElKerberosConfigElRef {
+    ) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecurityConfig_KerberosConfigRef {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecurityConfig_KerberosConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigElKerberosConfigElRef {
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecurityConfig_KerberosConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -6015,27 +6231,24 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigEl
 }
 
 #[derive(Serialize, Default)]
-struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigElDynamic {
+struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecurityConfigDynamic {
     kerberos_config: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigElKerberosConfigEl>,
+        terrars::DynamicBlock<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecurityConfig_KerberosConfig>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigEl {
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecurityConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kerberos_config: std
     ::option
-    ::Option<
-        std::vec::Vec<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigElKerberosConfigEl>,
-    >,
-    dynamic: DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigElDynamic,
+    ::Option<std::vec::Vec<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecurityConfig_KerberosConfig>>,
+    dynamic: DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecurityConfigDynamic,
 }
 
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigEl {
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecurityConfig {
     #[doc = "Set the field `kerberos_config`.\n"]
     pub fn set_kerberos_config(
         mut self,
@@ -6047,7 +6260,7 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigEl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigElKerberosConfigEl,
+                            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecurityConfig_KerberosConfig,
                         >,
                     >,
     ) -> Self {
@@ -6063,8 +6276,8 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigEl
     }
 }
 
-impl terrars::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigEl {
-    type O = terrars::BlockAssignable<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigEl>;
+impl terrars::ToListMappable for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecurityConfig {
+    type O = terrars::BlockAssignable<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecurityConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6075,35 +6288,37 @@ impl terrars::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClust
     }
 }
 
-pub struct BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigEl {}
+pub struct BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecurityConfig {}
 
-impl BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigEl {
-    pub fn build(self) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigEl {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigEl {
+impl BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecurityConfig {
+    pub fn build(self) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecurityConfig {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecurityConfig {
             kerberos_config: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigElRef {
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecurityConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigElRef {
+impl terrars::Ref for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecurityConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigElRef {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigElRef {
+    ) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecurityConfigRef {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecurityConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigElRef {
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecurityConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -6111,14 +6326,13 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigEl
     #[doc = "Get a reference to the value of field `kerberos_config` after provisioning.\n"]
     pub fn kerberos_config(
         &self,
-    ) -> terrars
-    ::ListRef<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigElKerberosConfigElRef> {
+    ) -> terrars::ListRef<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecurityConfig_KerberosConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.kerberos_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSoftwareConfigEl {
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SoftwareConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     image_version: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -6127,7 +6341,7 @@ pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSoftwareCo
     properties: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSoftwareConfigEl {
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SoftwareConfig {
     #[doc =
         "Set the field `image_version`.\nOptional. The version of software inside the cluster. It must be one of the supported [Dataproc Versions](https://cloud.google.com/dataproc/docs/concepts/versioning/dataproc-versions#supported_dataproc_versions), such as \"1.2\" (including a subminor version, such as \"1.2.29\"), or the [\"preview\" version](https://cloud.google.com/dataproc/docs/concepts/versioning/dataproc-versions#other_versions). If unspecified, it defaults to the latest Debian version."]
     pub fn set_image_version(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -6155,8 +6369,8 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSoftwareConfigEl
     }
 }
 
-impl terrars::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSoftwareConfigEl {
-    type O = terrars::BlockAssignable<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSoftwareConfigEl>;
+impl terrars::ToListMappable for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SoftwareConfig {
+    type O = terrars::BlockAssignable<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SoftwareConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6167,11 +6381,11 @@ impl terrars::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClust
     }
 }
 
-pub struct BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElSoftwareConfigEl {}
+pub struct BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_SoftwareConfig {}
 
-impl BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElSoftwareConfigEl {
-    pub fn build(self) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSoftwareConfigEl {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSoftwareConfigEl {
+impl BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_SoftwareConfig {
+    pub fn build(self) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SoftwareConfig {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SoftwareConfig {
             image_version: core::default::Default::default(),
             optional_components: core::default::Default::default(),
             properties: core::default::Default::default(),
@@ -6179,24 +6393,26 @@ impl BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElSoftwareCon
     }
 }
 
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSoftwareConfigElRef {
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SoftwareConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSoftwareConfigElRef {
+impl terrars::Ref for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SoftwareConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSoftwareConfigElRef {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSoftwareConfigElRef {
+    ) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SoftwareConfigRef {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SoftwareConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSoftwareConfigElRef {
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SoftwareConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -6220,297 +6436,28 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSoftwareConfigEl
     }
 }
 
-#[derive(Serialize)]
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElManagedGroupConfigEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    instance_group_manager_name: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    instance_template_name: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElManagedGroupConfigEl {
-    #[doc = "Set the field `instance_group_manager_name`.\n"]
-    pub fn set_instance_group_manager_name(
-        mut self,
-        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
-    ) -> Self {
-        self.instance_group_manager_name = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `instance_template_name`.\n"]
-    pub fn set_instance_template_name(
-        mut self,
-        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
-    ) -> Self {
-        self.instance_template_name = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElManagedGroupConfigEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElManagedGroupConfigEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElManagedGroupConfigEl {}
-
-impl BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElManagedGroupConfigEl {
-    pub fn build(
-        self,
-    ) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElManagedGroupConfigEl {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElManagedGroupConfigEl {
-            instance_group_manager_name: core::default::Default::default(),
-            instance_template_name: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElManagedGroupConfigElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElManagedGroupConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElManagedGroupConfigElRef {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElManagedGroupConfigElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElManagedGroupConfigElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `instance_group_manager_name` after provisioning.\n"]
-    pub fn instance_group_manager_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_group_manager_name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `instance_template_name` after provisioning.\n"]
-    pub fn instance_template_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_template_name", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElAcceleratorsEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    accelerator_count: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    accelerator_type: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElAcceleratorsEl {
-    #[doc =
-        "Set the field `accelerator_count`.\nThe number of the accelerator cards of this type exposed to this instance."]
-    pub fn set_accelerator_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.accelerator_count = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `accelerator_type`.\nFull URL, partial URI, or short name of the accelerator type resource to expose to this instance. See [Compute Engine AcceleratorTypes](https://cloud.google.com/compute/docs/reference/beta/acceleratorTypes). Examples: * `https://www.googleapis.com/compute/beta/projects/[project_id]/zones/us-east1-a/acceleratorTypes/nvidia-tesla-k80` * `projects/[project_id]/zones/us-east1-a/acceleratorTypes/nvidia-tesla-k80` * `nvidia-tesla-k80` **Auto Zone Exception**: If you are using the Dataproc [Auto Zone Placement](https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/auto-zone#using_auto_zone_placement) feature, you must use the short name of the accelerator type resource, for example, `nvidia-tesla-k80`."]
-    pub fn set_accelerator_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.accelerator_type = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElAcceleratorsEl {
-    type O =
-        terrars
-        ::BlockAssignable<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElAcceleratorsEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElAcceleratorsEl {}
-
-impl BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElAcceleratorsEl {
-    pub fn build(self) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElAcceleratorsEl {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElAcceleratorsEl {
-            accelerator_count: core::default::Default::default(),
-            accelerator_type: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElAcceleratorsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElAcceleratorsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElAcceleratorsElRef {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElAcceleratorsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElAcceleratorsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `accelerator_count` after provisioning.\nThe number of the accelerator cards of this type exposed to this instance."]
-    pub fn accelerator_count(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.accelerator_count", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `accelerator_type` after provisioning.\nFull URL, partial URI, or short name of the accelerator type resource to expose to this instance. See [Compute Engine AcceleratorTypes](https://cloud.google.com/compute/docs/reference/beta/acceleratorTypes). Examples: * `https://www.googleapis.com/compute/beta/projects/[project_id]/zones/us-east1-a/acceleratorTypes/nvidia-tesla-k80` * `projects/[project_id]/zones/us-east1-a/acceleratorTypes/nvidia-tesla-k80` * `nvidia-tesla-k80` **Auto Zone Exception**: If you are using the Dataproc [Auto Zone Placement](https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/auto-zone#using_auto_zone_placement) feature, you must use the short name of the accelerator type resource, for example, `nvidia-tesla-k80`."]
-    pub fn accelerator_type(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.accelerator_type", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElDiskConfigEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    boot_disk_size_gb: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    boot_disk_type: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    num_local_ssds: std::option::Option<terrars::PrimField<f64>>,
-}
-
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElDiskConfigEl {
-    #[doc = "Set the field `boot_disk_size_gb`.\nOptional. Size in GB of the boot disk (default is 500GB)."]
-    pub fn set_boot_disk_size_gb(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.boot_disk_size_gb = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `boot_disk_type`.\nOptional. Type of the boot disk (default is \"pd-standard\"). Valid values: \"pd-balanced\" (Persistent Disk Balanced Solid State Drive), \"pd-ssd\" (Persistent Disk Solid State Drive), or \"pd-standard\" (Persistent Disk Hard Disk Drive). See [Disk types](https://cloud.google.com/compute/docs/disks#disk-types)."]
-    pub fn set_boot_disk_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.boot_disk_type = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `num_local_ssds`.\nOptional. Number of attached SSDs, from 0 to 4 (default is 0). If SSDs are not attached, the boot disk is used to store runtime logs and [HDFS](https://hadoop.apache.org/docs/r1.2.1/hdfs_user_guide.html) data. If one or more SSDs are attached, this runtime bulk data is spread across them, and the boot disk contains only basic config and installed binaries."]
-    pub fn set_num_local_ssds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.num_local_ssds = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElDiskConfigEl {
-    type O =
-        terrars
-        ::BlockAssignable<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElDiskConfigEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElDiskConfigEl {}
-
-impl BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElDiskConfigEl {
-    pub fn build(self) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElDiskConfigEl {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElDiskConfigEl {
-            boot_disk_size_gb: core::default::Default::default(),
-            boot_disk_type: core::default::Default::default(),
-            num_local_ssds: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElDiskConfigElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElDiskConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElDiskConfigElRef {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElDiskConfigElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElDiskConfigElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `boot_disk_size_gb` after provisioning.\nOptional. Size in GB of the boot disk (default is 500GB)."]
-    pub fn boot_disk_size_gb(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.boot_disk_size_gb", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `boot_disk_type` after provisioning.\nOptional. Type of the boot disk (default is \"pd-standard\"). Valid values: \"pd-balanced\" (Persistent Disk Balanced Solid State Drive), \"pd-ssd\" (Persistent Disk Solid State Drive), or \"pd-standard\" (Persistent Disk Hard Disk Drive). See [Disk types](https://cloud.google.com/compute/docs/disks#disk-types)."]
-    pub fn boot_disk_type(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.boot_disk_type", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `num_local_ssds` after provisioning.\nOptional. Number of attached SSDs, from 0 to 4 (default is 0). If SSDs are not attached, the boot disk is used to store runtime logs and [HDFS](https://hadoop.apache.org/docs/r1.2.1/hdfs_user_guide.html) data. If one or more SSDs are attached, this runtime bulk data is spread across them, and the boot disk contains only basic config and installed binaries."]
-    pub fn num_local_ssds(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.num_local_ssds", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElDynamic {
+struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_WorkerConfigDynamic {
     accelerators: std
     ::option
     ::Option<
-        terrars::DynamicBlock<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElAcceleratorsEl>,
+        terrars::DynamicBlock<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_Accelerators>,
     >,
     disk_config: std
     ::option
+    ::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfig>>,
+    instance_flexibility_policy: std
+    ::option
     ::Option<
-        terrars::DynamicBlock<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElDiskConfigEl>,
+        terrars
+        ::DynamicBlock<
+            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy,
+        >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigEl {
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_WorkerConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     image: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -6524,15 +6471,21 @@ pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConf
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     accelerators: std
     ::option
-    ::Option<std::vec::Vec<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElAcceleratorsEl>>,
+    ::Option<std::vec::Vec<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_Accelerators>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     disk_config: std
     ::option
-    ::Option<std::vec::Vec<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElDiskConfigEl>>,
-    dynamic: DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElDynamic,
+    ::Option<std::vec::Vec<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    instance_flexibility_policy: std
+    ::option
+    ::Option<
+        std::vec::Vec<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy>,
+    >,
+    dynamic: DataprocWorkflowTemplate_Placement_ManagedCluster_Config_WorkerConfigDynamic,
 }
 
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigEl {
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_WorkerConfig {
     #[doc =
         "Set the field `image`.\nOptional. The Compute Engine image resource used for cluster instances. The URI can represent an image or image family. Image examples: * `https://www.googleapis.com/compute/beta/projects/[project_id]/global/images/[image-id]` * `projects/[project_id]/global/images/[image-id]` * `image-id` Image family examples. Dataproc will use the most recent image from the family: * `https://www.googleapis.com/compute/beta/projects/[project_id]/global/images/family/[custom-image-family-name]` * `projects/[project_id]/global/images/family/[custom-image-family-name]` If the URI is unspecified, it will be inferred from `SoftwareConfig.image_version` or the system default."]
     pub fn set_image(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -6579,7 +6532,7 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElAcceleratorsEl,
+                            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_Accelerators,
                         >,
                     >,
     ) -> Self {
@@ -6605,7 +6558,7 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElDiskConfigEl,
+                            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfig,
                         >,
                     >,
     ) -> Self {
@@ -6619,10 +6572,36 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigEl {
         }
         self
     }
+
+    #[doc = "Set the field `instance_flexibility_policy`.\n"]
+    pub fn set_instance_flexibility_policy(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicy,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.instance_flexibility_policy = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.instance_flexibility_policy = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
 }
 
-impl terrars::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigEl {
-    type O = terrars::BlockAssignable<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigEl>;
+impl terrars::ToListMappable for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_WorkerConfig {
+    type O = terrars::BlockAssignable<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_WorkerConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6633,11 +6612,11 @@ impl terrars::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClust
     }
 }
 
-pub struct BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigEl {}
+pub struct BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_WorkerConfig {}
 
-impl BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigEl {
-    pub fn build(self) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigEl {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigEl {
+impl BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config_WorkerConfig {
+    pub fn build(self) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_WorkerConfig {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_WorkerConfig {
             image: core::default::Default::default(),
             machine_type: core::default::Default::default(),
             min_cpu_platform: core::default::Default::default(),
@@ -6645,29 +6624,32 @@ impl BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfi
             preemptibility: core::default::Default::default(),
             accelerators: core::default::Default::default(),
             disk_config: core::default::Default::default(),
+            instance_flexibility_policy: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElRef {
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config_WorkerConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElRef {
+impl terrars::Ref for DataprocWorkflowTemplate_Placement_ManagedCluster_Config_WorkerConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElRef {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElRef {
+    ) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config_WorkerConfigRef {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config_WorkerConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElRef {
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config_WorkerConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -6701,7 +6683,7 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElRe
     pub fn managed_group_config(
         &self,
     ) -> terrars
-    ::ListRef<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElManagedGroupConfigElRef> {
+    ::ListRef<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_ManagedGroupConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.managed_group_config", self.base))
     }
 
@@ -6726,61 +6708,65 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElRe
     #[doc = "Get a reference to the value of field `accelerators` after provisioning.\n"]
     pub fn accelerators(
         &self,
-    ) -> terrars::ListRef<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElAcceleratorsElRef> {
+    ) -> terrars::ListRef<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_AcceleratorsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.accelerators", self.base))
     }
 
     #[doc = "Get a reference to the value of field `disk_config` after provisioning.\n"]
     pub fn disk_config(
         &self,
-    ) -> terrars::ListRef<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElDiskConfigElRef> {
+    ) -> terrars::ListRef<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_DiskConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.disk_config", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `instance_flexibility_policy` after provisioning.\n"]
+    pub fn instance_flexibility_policy(
+        &self,
+    ) -> terrars
+    ::ListRef<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig_InstanceFlexibilityPolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.instance_flexibility_policy", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElDynamic {
+struct DataprocWorkflowTemplate_Placement_ManagedCluster_ConfigDynamic {
     autoscaling_config: std
     ::option
-    ::Option<terrars::DynamicBlock<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElAutoscalingConfigEl>>,
+    ::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_AutoscalingConfig>>,
     encryption_config: std
     ::option
-    ::Option<terrars::DynamicBlock<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElEncryptionConfigEl>>,
+    ::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_EncryptionConfig>>,
     endpoint_config: std
     ::option
-    ::Option<terrars::DynamicBlock<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElEndpointConfigEl>>,
+    ::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_EndpointConfig>>,
     gce_cluster_config: std
     ::option
-    ::Option<terrars::DynamicBlock<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigEl>>,
+    ::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig>>,
     initialization_actions: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElInitializationActionsEl>,
-    >,
+    ::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_InitializationActions>>,
     lifecycle_config: std
     ::option
-    ::Option<terrars::DynamicBlock<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElLifecycleConfigEl>>,
+    ::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_LifecycleConfig>>,
     master_config: std
     ::option
-    ::Option<terrars::DynamicBlock<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigEl>>,
+    ::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig>>,
     secondary_worker_config: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigEl>,
-    >,
+    ::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig>>,
     security_config: std
     ::option
-    ::Option<terrars::DynamicBlock<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigEl>>,
+    ::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecurityConfig>>,
     software_config: std
     ::option
-    ::Option<terrars::DynamicBlock<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSoftwareConfigEl>>,
+    ::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SoftwareConfig>>,
     worker_config: std
     ::option
-    ::Option<terrars::DynamicBlock<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigEl>>,
+    ::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_WorkerConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigEl {
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_Config {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     staging_bucket: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -6788,51 +6774,51 @@ pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     autoscaling_config: std
     ::option
-    ::Option<std::vec::Vec<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElAutoscalingConfigEl>>,
+    ::Option<std::vec::Vec<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_AutoscalingConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     encryption_config: std
     ::option
-    ::Option<std::vec::Vec<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElEncryptionConfigEl>>,
+    ::Option<std::vec::Vec<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_EncryptionConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     endpoint_config: std
     ::option
-    ::Option<std::vec::Vec<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElEndpointConfigEl>>,
+    ::Option<std::vec::Vec<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_EndpointConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     gce_cluster_config: std
     ::option
-    ::Option<std::vec::Vec<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigEl>>,
+    ::Option<std::vec::Vec<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     initialization_actions: std
     ::option
-    ::Option<std::vec::Vec<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElInitializationActionsEl>>,
+    ::Option<std::vec::Vec<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_InitializationActions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     lifecycle_config: std
     ::option
-    ::Option<std::vec::Vec<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElLifecycleConfigEl>>,
+    ::Option<std::vec::Vec<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_LifecycleConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     master_config: std
     ::option
-    ::Option<std::vec::Vec<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigEl>>,
+    ::Option<std::vec::Vec<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     secondary_worker_config: std
     ::option
-    ::Option<std::vec::Vec<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigEl>>,
+    ::Option<std::vec::Vec<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     security_config: std
     ::option
-    ::Option<std::vec::Vec<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigEl>>,
+    ::Option<std::vec::Vec<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecurityConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     software_config: std
     ::option
-    ::Option<std::vec::Vec<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSoftwareConfigEl>>,
+    ::Option<std::vec::Vec<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SoftwareConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     worker_config: std
     ::option
-    ::Option<std::vec::Vec<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigEl>>,
-    dynamic: DataprocWorkflowTemplatePlacementElManagedClusterElConfigElDynamic,
+    ::Option<std::vec::Vec<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_WorkerConfig>>,
+    dynamic: DataprocWorkflowTemplate_Placement_ManagedCluster_ConfigDynamic,
 }
 
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigEl {
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_Config {
     #[doc =
         "Set the field `staging_bucket`.\nOptional. A Cloud Storage bucket used to stage job dependencies, config files, and job driver console output. If you do not specify a staging bucket, Cloud Dataproc will determine a Cloud Storage location (US, ASIA, or EU) for your cluster's staging bucket according to the Compute Engine zone where your cluster is deployed, and then create and manage this project-level, per-location bucket (see [Dataproc staging bucket](https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/staging-bucket)). **This field requires a Cloud Storage bucket name, not a URI to a Cloud Storage bucket.**"]
     pub fn set_staging_bucket(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -6857,9 +6843,7 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            DataprocWorkflowTemplatePlacementElManagedClusterElConfigElAutoscalingConfigEl,
-                        >,
+                        ::BlockAssignable<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_AutoscalingConfig>,
                     >,
     ) -> Self {
         match v.into() {
@@ -6883,9 +6867,7 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            DataprocWorkflowTemplatePlacementElManagedClusterElConfigElEncryptionConfigEl,
-                        >,
+                        ::BlockAssignable<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_EncryptionConfig>,
                     >,
     ) -> Self {
         match v.into() {
@@ -6909,7 +6891,7 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElEndpointConfigEl>,
+                        ::BlockAssignable<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_EndpointConfig>,
                     >,
     ) -> Self {
         match v.into() {
@@ -6933,9 +6915,7 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigEl,
-                        >,
+                        ::BlockAssignable<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfig>,
                     >,
     ) -> Self {
         match v.into() {
@@ -6960,7 +6940,7 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataprocWorkflowTemplatePlacementElManagedClusterElConfigElInitializationActionsEl,
+                            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_InitializationActions,
                         >,
                     >,
     ) -> Self {
@@ -6985,9 +6965,7 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            DataprocWorkflowTemplatePlacementElManagedClusterElConfigElLifecycleConfigEl,
-                        >,
+                        ::BlockAssignable<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_LifecycleConfig>,
                     >,
     ) -> Self {
         match v.into() {
@@ -7011,7 +6989,7 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigEl>,
+                        ::BlockAssignable<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfig>,
                     >,
     ) -> Self {
         match v.into() {
@@ -7036,7 +7014,7 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigEl,
+                            DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfig,
                         >,
                     >,
     ) -> Self {
@@ -7061,7 +7039,7 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigEl>,
+                        ::BlockAssignable<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecurityConfig>,
                     >,
     ) -> Self {
         match v.into() {
@@ -7085,7 +7063,7 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSoftwareConfigEl>,
+                        ::BlockAssignable<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SoftwareConfig>,
                     >,
     ) -> Self {
         match v.into() {
@@ -7109,7 +7087,7 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigEl>,
+                        ::BlockAssignable<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_WorkerConfig>,
                     >,
     ) -> Self {
         match v.into() {
@@ -7124,8 +7102,8 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClusterElConfigEl {
-    type O = terrars::BlockAssignable<DataprocWorkflowTemplatePlacementElManagedClusterElConfigEl>;
+impl terrars::ToListMappable for DataprocWorkflowTemplate_Placement_ManagedCluster_Config {
+    type O = terrars::BlockAssignable<DataprocWorkflowTemplate_Placement_ManagedCluster_Config>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -7136,11 +7114,11 @@ impl terrars::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClust
     }
 }
 
-pub struct BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigEl {}
+pub struct BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config {}
 
-impl BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigEl {
-    pub fn build(self) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigEl {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigEl {
+impl BuildDataprocWorkflowTemplate_Placement_ManagedCluster_Config {
+    pub fn build(self) -> DataprocWorkflowTemplate_Placement_ManagedCluster_Config {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_Config {
             staging_bucket: core::default::Default::default(),
             temp_bucket: core::default::Default::default(),
             autoscaling_config: core::default::Default::default(),
@@ -7159,24 +7137,26 @@ impl BuildDataprocWorkflowTemplatePlacementElManagedClusterElConfigEl {
     }
 }
 
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElConfigElRef {
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster_ConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocWorkflowTemplatePlacementElManagedClusterElConfigElRef {
+impl terrars::Ref for DataprocWorkflowTemplate_Placement_ManagedCluster_ConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataprocWorkflowTemplatePlacementElManagedClusterElConfigElRef {
-        DataprocWorkflowTemplatePlacementElManagedClusterElConfigElRef {
+    ) -> DataprocWorkflowTemplate_Placement_ManagedCluster_ConfigRef {
+        DataprocWorkflowTemplate_Placement_ManagedCluster_ConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElRef {
+impl DataprocWorkflowTemplate_Placement_ManagedCluster_ConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -7196,97 +7176,97 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElConfigElRef {
     #[doc = "Get a reference to the value of field `autoscaling_config` after provisioning.\n"]
     pub fn autoscaling_config(
         &self,
-    ) -> terrars::ListRef<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElAutoscalingConfigElRef> {
+    ) -> terrars::ListRef<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_AutoscalingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.autoscaling_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `encryption_config` after provisioning.\n"]
     pub fn encryption_config(
         &self,
-    ) -> terrars::ListRef<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElEncryptionConfigElRef> {
+    ) -> terrars::ListRef<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_EncryptionConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `endpoint_config` after provisioning.\n"]
     pub fn endpoint_config(
         &self,
-    ) -> terrars::ListRef<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElEndpointConfigElRef> {
+    ) -> terrars::ListRef<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_EndpointConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.endpoint_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `gce_cluster_config` after provisioning.\n"]
     pub fn gce_cluster_config(
         &self,
-    ) -> terrars::ListRef<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElGceClusterConfigElRef> {
+    ) -> terrars::ListRef<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_GceClusterConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.gce_cluster_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `initialization_actions` after provisioning.\n"]
     pub fn initialization_actions(
         &self,
-    ) -> terrars::ListRef<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElInitializationActionsElRef> {
+    ) -> terrars::ListRef<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_InitializationActionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.initialization_actions", self.base))
     }
 
     #[doc = "Get a reference to the value of field `lifecycle_config` after provisioning.\n"]
     pub fn lifecycle_config(
         &self,
-    ) -> terrars::ListRef<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElLifecycleConfigElRef> {
+    ) -> terrars::ListRef<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_LifecycleConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.lifecycle_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `master_config` after provisioning.\n"]
     pub fn master_config(
         &self,
-    ) -> terrars::ListRef<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElMasterConfigElRef> {
+    ) -> terrars::ListRef<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_MasterConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.master_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `secondary_worker_config` after provisioning.\n"]
     pub fn secondary_worker_config(
         &self,
-    ) -> terrars::ListRef<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecondaryWorkerConfigElRef> {
+    ) -> terrars::ListRef<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecondaryWorkerConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.secondary_worker_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `security_config` after provisioning.\n"]
     pub fn security_config(
         &self,
-    ) -> terrars::ListRef<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSecurityConfigElRef> {
+    ) -> terrars::ListRef<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SecurityConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.security_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `software_config` after provisioning.\n"]
     pub fn software_config(
         &self,
-    ) -> terrars::ListRef<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElSoftwareConfigElRef> {
+    ) -> terrars::ListRef<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_SoftwareConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.software_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `worker_config` after provisioning.\n"]
     pub fn worker_config(
         &self,
-    ) -> terrars::ListRef<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElWorkerConfigElRef> {
+    ) -> terrars::ListRef<DataprocWorkflowTemplate_Placement_ManagedCluster_Config_WorkerConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.worker_config", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct DataprocWorkflowTemplatePlacementElManagedClusterElDynamic {
-    config: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplatePlacementElManagedClusterElConfigEl>>,
+struct DataprocWorkflowTemplate_Placement_ManagedClusterDynamic {
+    config: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Placement_ManagedCluster_Config>>,
 }
 
 #[derive(Serialize)]
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterEl {
+pub struct DataprocWorkflowTemplate_Placement_ManagedCluster {
     cluster_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    config: std::option::Option<std::vec::Vec<DataprocWorkflowTemplatePlacementElManagedClusterElConfigEl>>,
-    dynamic: DataprocWorkflowTemplatePlacementElManagedClusterElDynamic,
+    config: std::option::Option<std::vec::Vec<DataprocWorkflowTemplate_Placement_ManagedCluster_Config>>,
+    dynamic: DataprocWorkflowTemplate_Placement_ManagedClusterDynamic,
 }
 
-impl DataprocWorkflowTemplatePlacementElManagedClusterEl {
+impl DataprocWorkflowTemplate_Placement_ManagedCluster {
     #[doc =
         "Set the field `labels`.\nOptional. The labels to associate with this cluster. Label keys must be between 1 and 63 characters long, and must conform to the following PCRE regular expression: p{Ll}p{Lo}{0,62} Label values must be between 1 and 63 characters long, and must conform to the following PCRE regular expression: [p{Ll}p{Lo}p{N}_-]{0,63} No more than 32 labels can be associated with a given cluster."]
     pub fn set_labels(
@@ -7305,7 +7285,7 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<DataprocWorkflowTemplatePlacementElManagedClusterElConfigEl>>,
+                    ::Into<terrars::BlockAssignable<DataprocWorkflowTemplate_Placement_ManagedCluster_Config>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -7319,8 +7299,8 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterEl {
     }
 }
 
-impl terrars::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClusterEl {
-    type O = terrars::BlockAssignable<DataprocWorkflowTemplatePlacementElManagedClusterEl>;
+impl terrars::ToListMappable for DataprocWorkflowTemplate_Placement_ManagedCluster {
+    type O = terrars::BlockAssignable<DataprocWorkflowTemplate_Placement_ManagedCluster>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -7331,15 +7311,15 @@ impl terrars::ToListMappable for DataprocWorkflowTemplatePlacementElManagedClust
     }
 }
 
-pub struct BuildDataprocWorkflowTemplatePlacementElManagedClusterEl {
+pub struct BuildDataprocWorkflowTemplate_Placement_ManagedCluster {
     #[doc =
         "Required. The cluster name prefix. A unique cluster name will be formed by appending a random suffix. The name must contain only lower-case letters (a-z), numbers (0-9), and hyphens (-). Must begin with a letter. Cannot begin or end with hyphen. Must consist of between 2 and 35 characters."]
     pub cluster_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataprocWorkflowTemplatePlacementElManagedClusterEl {
-    pub fn build(self) -> DataprocWorkflowTemplatePlacementElManagedClusterEl {
-        DataprocWorkflowTemplatePlacementElManagedClusterEl {
+impl BuildDataprocWorkflowTemplate_Placement_ManagedCluster {
+    pub fn build(self) -> DataprocWorkflowTemplate_Placement_ManagedCluster {
+        DataprocWorkflowTemplate_Placement_ManagedCluster {
             cluster_name: self.cluster_name,
             labels: core::default::Default::default(),
             config: core::default::Default::default(),
@@ -7348,24 +7328,26 @@ impl BuildDataprocWorkflowTemplatePlacementElManagedClusterEl {
     }
 }
 
-pub struct DataprocWorkflowTemplatePlacementElManagedClusterElRef {
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_Placement_ManagedClusterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocWorkflowTemplatePlacementElManagedClusterElRef {
+impl terrars::Ref for DataprocWorkflowTemplate_Placement_ManagedClusterRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataprocWorkflowTemplatePlacementElManagedClusterElRef {
-        DataprocWorkflowTemplatePlacementElManagedClusterElRef {
+    ) -> DataprocWorkflowTemplate_Placement_ManagedClusterRef {
+        DataprocWorkflowTemplate_Placement_ManagedClusterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocWorkflowTemplatePlacementElManagedClusterElRef {
+impl DataprocWorkflowTemplate_Placement_ManagedClusterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -7383,35 +7365,31 @@ impl DataprocWorkflowTemplatePlacementElManagedClusterElRef {
     }
 
     #[doc = "Get a reference to the value of field `config` after provisioning.\n"]
-    pub fn config(&self) -> terrars::ListRef<DataprocWorkflowTemplatePlacementElManagedClusterElConfigElRef> {
+    pub fn config(&self) -> terrars::ListRef<DataprocWorkflowTemplate_Placement_ManagedCluster_ConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.config", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct DataprocWorkflowTemplatePlacementElDynamic {
-    cluster_selector: std
-    ::option
-    ::Option<terrars::DynamicBlock<DataprocWorkflowTemplatePlacementElClusterSelectorEl>>,
-    managed_cluster: std
-    ::option
-    ::Option<terrars::DynamicBlock<DataprocWorkflowTemplatePlacementElManagedClusterEl>>,
+struct DataprocWorkflowTemplate_PlacementDynamic {
+    cluster_selector: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Placement_ClusterSelector>>,
+    managed_cluster: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplate_Placement_ManagedCluster>>,
 }
 
 #[derive(Serialize)]
-pub struct DataprocWorkflowTemplatePlacementEl {
+pub struct DataprocWorkflowTemplate_Placement {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cluster_selector: std::option::Option<std::vec::Vec<DataprocWorkflowTemplatePlacementElClusterSelectorEl>>,
+    cluster_selector: std::option::Option<std::vec::Vec<DataprocWorkflowTemplate_Placement_ClusterSelector>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    managed_cluster: std::option::Option<std::vec::Vec<DataprocWorkflowTemplatePlacementElManagedClusterEl>>,
-    dynamic: DataprocWorkflowTemplatePlacementElDynamic,
+    managed_cluster: std::option::Option<std::vec::Vec<DataprocWorkflowTemplate_Placement_ManagedCluster>>,
+    dynamic: DataprocWorkflowTemplate_PlacementDynamic,
 }
 
-impl DataprocWorkflowTemplatePlacementEl {
+impl DataprocWorkflowTemplate_Placement {
     #[doc = "Set the field `cluster_selector`.\n"]
     pub fn set_cluster_selector(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplatePlacementElClusterSelectorEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplate_Placement_ClusterSelector>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -7427,7 +7405,7 @@ impl DataprocWorkflowTemplatePlacementEl {
     #[doc = "Set the field `managed_cluster`.\n"]
     pub fn set_managed_cluster(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplatePlacementElManagedClusterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocWorkflowTemplate_Placement_ManagedCluster>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -7441,8 +7419,8 @@ impl DataprocWorkflowTemplatePlacementEl {
     }
 }
 
-impl terrars::ToListMappable for DataprocWorkflowTemplatePlacementEl {
-    type O = terrars::BlockAssignable<DataprocWorkflowTemplatePlacementEl>;
+impl terrars::ToListMappable for DataprocWorkflowTemplate_Placement {
+    type O = terrars::BlockAssignable<DataprocWorkflowTemplate_Placement>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -7453,11 +7431,11 @@ impl terrars::ToListMappable for DataprocWorkflowTemplatePlacementEl {
     }
 }
 
-pub struct BuildDataprocWorkflowTemplatePlacementEl {}
+pub struct BuildDataprocWorkflowTemplate_Placement {}
 
-impl BuildDataprocWorkflowTemplatePlacementEl {
-    pub fn build(self) -> DataprocWorkflowTemplatePlacementEl {
-        DataprocWorkflowTemplatePlacementEl {
+impl BuildDataprocWorkflowTemplate_Placement {
+    pub fn build(self) -> DataprocWorkflowTemplate_Placement {
+        DataprocWorkflowTemplate_Placement {
             cluster_selector: core::default::Default::default(),
             managed_cluster: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -7465,45 +7443,49 @@ impl BuildDataprocWorkflowTemplatePlacementEl {
     }
 }
 
-pub struct DataprocWorkflowTemplatePlacementElRef {
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_PlacementRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocWorkflowTemplatePlacementElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocWorkflowTemplatePlacementElRef {
-        DataprocWorkflowTemplatePlacementElRef {
+impl terrars::Ref for DataprocWorkflowTemplate_PlacementRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocWorkflowTemplate_PlacementRef {
+        DataprocWorkflowTemplate_PlacementRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocWorkflowTemplatePlacementElRef {
+impl DataprocWorkflowTemplate_PlacementRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `cluster_selector` after provisioning.\n"]
-    pub fn cluster_selector(&self) -> terrars::ListRef<DataprocWorkflowTemplatePlacementElClusterSelectorElRef> {
+    pub fn cluster_selector(&self) -> terrars::ListRef<DataprocWorkflowTemplate_Placement_ClusterSelectorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cluster_selector", self.base))
     }
 
     #[doc = "Get a reference to the value of field `managed_cluster` after provisioning.\n"]
-    pub fn managed_cluster(&self) -> terrars::ListRef<DataprocWorkflowTemplatePlacementElManagedClusterElRef> {
+    pub fn managed_cluster(&self) -> terrars::ListRef<DataprocWorkflowTemplate_Placement_ManagedClusterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.managed_cluster", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataprocWorkflowTemplateTimeoutsEl {
+pub struct DataprocWorkflowTemplate_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataprocWorkflowTemplateTimeoutsEl {
+impl DataprocWorkflowTemplate_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -7515,10 +7497,16 @@ impl DataprocWorkflowTemplateTimeoutsEl {
         self.delete = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for DataprocWorkflowTemplateTimeoutsEl {
-    type O = terrars::BlockAssignable<DataprocWorkflowTemplateTimeoutsEl>;
+impl terrars::ToListMappable for DataprocWorkflowTemplate_Timeouts {
+    type O = terrars::BlockAssignable<DataprocWorkflowTemplate_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -7529,32 +7517,35 @@ impl terrars::ToListMappable for DataprocWorkflowTemplateTimeoutsEl {
     }
 }
 
-pub struct BuildDataprocWorkflowTemplateTimeoutsEl {}
+pub struct BuildDataprocWorkflowTemplate_Timeouts {}
 
-impl BuildDataprocWorkflowTemplateTimeoutsEl {
-    pub fn build(self) -> DataprocWorkflowTemplateTimeoutsEl {
-        DataprocWorkflowTemplateTimeoutsEl {
+impl BuildDataprocWorkflowTemplate_Timeouts {
+    pub fn build(self) -> DataprocWorkflowTemplate_Timeouts {
+        DataprocWorkflowTemplate_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
+            update: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataprocWorkflowTemplateTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataprocWorkflowTemplate_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocWorkflowTemplateTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocWorkflowTemplateTimeoutsElRef {
-        DataprocWorkflowTemplateTimeoutsElRef {
+impl terrars::Ref for DataprocWorkflowTemplate_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocWorkflowTemplate_TimeoutsRef {
+        DataprocWorkflowTemplate_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocWorkflowTemplateTimeoutsElRef {
+impl DataprocWorkflowTemplate_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -7568,11 +7559,9 @@ impl DataprocWorkflowTemplateTimeoutsElRef {
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
-}
 
-#[derive(Serialize, Default)]
-struct DataprocWorkflowTemplateDynamic {
-    jobs: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplateJobsEl>>,
-    parameters: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplateParametersEl>>,
-    placement: std::option::Option<terrars::DynamicBlock<DataprocWorkflowTemplatePlacementEl>>,
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    }
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataComposerImageVersionsData {
+struct DataComposerImageVersionsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -27,7 +29,7 @@ struct DataComposerImageVersionsData {
 struct DataComposerImageVersions_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataComposerImageVersionsData>,
+    data: std::cell::RefCell<DataComposerImageVersionsData_>,
 }
 
 #[derive(Clone)]
@@ -96,7 +98,7 @@ impl DataComposerImageVersions {
     }
 
     #[doc = "Get a reference to the value of field `image_versions` after provisioning.\n"]
-    pub fn image_versions(&self) -> terrars::ListRef<DataComposerImageVersionsImageVersionsElRef> {
+    pub fn image_versions(&self) -> terrars::ListRef<DataComposerImageVersions_ImageVersionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.image_versions", self.extract_ref()))
     }
 
@@ -151,7 +153,7 @@ impl BuildDataComposerImageVersions {
         let out = DataComposerImageVersions(std::rc::Rc::new(DataComposerImageVersions_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataComposerImageVersionsData {
+            data: std::cell::RefCell::new(DataComposerImageVersionsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -195,7 +197,7 @@ impl DataComposerImageVersionsRef {
     }
 
     #[doc = "Get a reference to the value of field `image_versions` after provisioning.\n"]
-    pub fn image_versions(&self) -> terrars::ListRef<DataComposerImageVersionsImageVersionsElRef> {
+    pub fn image_versions(&self) -> terrars::ListRef<DataComposerImageVersions_ImageVersionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.image_versions", self.extract_ref()))
     }
 
@@ -211,14 +213,14 @@ impl DataComposerImageVersionsRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComposerImageVersionsImageVersionsEl {
+pub struct DataComposerImageVersions_ImageVersions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     image_version_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     supported_python_versions: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DataComposerImageVersionsImageVersionsEl {
+impl DataComposerImageVersions_ImageVersions {
     #[doc = "Set the field `image_version_id`.\n"]
     pub fn set_image_version_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.image_version_id = std::option::Option::Some(v.into());
@@ -235,8 +237,8 @@ impl DataComposerImageVersionsImageVersionsEl {
     }
 }
 
-impl terrars::ToListMappable for DataComposerImageVersionsImageVersionsEl {
-    type O = terrars::BlockAssignable<DataComposerImageVersionsImageVersionsEl>;
+impl terrars::ToListMappable for DataComposerImageVersions_ImageVersions {
+    type O = terrars::BlockAssignable<DataComposerImageVersions_ImageVersions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -247,32 +249,34 @@ impl terrars::ToListMappable for DataComposerImageVersionsImageVersionsEl {
     }
 }
 
-pub struct BuildDataComposerImageVersionsImageVersionsEl {}
+pub struct BuildDataComposerImageVersions_ImageVersions {}
 
-impl BuildDataComposerImageVersionsImageVersionsEl {
-    pub fn build(self) -> DataComposerImageVersionsImageVersionsEl {
-        DataComposerImageVersionsImageVersionsEl {
+impl BuildDataComposerImageVersions_ImageVersions {
+    pub fn build(self) -> DataComposerImageVersions_ImageVersions {
+        DataComposerImageVersions_ImageVersions {
             image_version_id: core::default::Default::default(),
             supported_python_versions: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataComposerImageVersionsImageVersionsElRef {
+#[allow(dead_code)]
+pub struct DataComposerImageVersions_ImageVersionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComposerImageVersionsImageVersionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComposerImageVersionsImageVersionsElRef {
-        DataComposerImageVersionsImageVersionsElRef {
+impl terrars::Ref for DataComposerImageVersions_ImageVersionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComposerImageVersions_ImageVersionsRef {
+        DataComposerImageVersions_ImageVersionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComposerImageVersionsImageVersionsElRef {
+impl DataComposerImageVersions_ImageVersionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

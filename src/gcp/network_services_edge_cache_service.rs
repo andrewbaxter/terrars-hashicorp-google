@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct NetworkServicesEdgeCacheServiceData {
+struct NetworkServicesEdgeCacheServiceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct NetworkServicesEdgeCacheServiceData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -40,18 +44,18 @@ struct NetworkServicesEdgeCacheServiceData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ssl_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    log_config: std::option::Option<std::vec::Vec<NetworkServicesEdgeCacheServiceLogConfigEl>>,
+    log_config: std::option::Option<std::vec::Vec<NetworkServicesEdgeCacheService_LogConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    routing: std::option::Option<std::vec::Vec<NetworkServicesEdgeCacheServiceRoutingEl>>,
+    routing: std::option::Option<std::vec::Vec<NetworkServicesEdgeCacheService_Routing>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<NetworkServicesEdgeCacheServiceTimeoutsEl>,
+    timeouts: std::option::Option<NetworkServicesEdgeCacheService_Timeouts>,
     dynamic: NetworkServicesEdgeCacheServiceDynamic,
 }
 
 struct NetworkServicesEdgeCacheService_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<NetworkServicesEdgeCacheServiceData>,
+    data: std::cell::RefCell<NetworkServicesEdgeCacheServiceData_>,
 }
 
 #[derive(Clone)]
@@ -151,6 +155,13 @@ impl NetworkServicesEdgeCacheService {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nA human-readable description of the resource."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -226,7 +237,7 @@ impl NetworkServicesEdgeCacheService {
     #[doc = "Set the field `log_config`.\n"]
     pub fn set_log_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<NetworkServicesEdgeCacheServiceLogConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<NetworkServicesEdgeCacheService_LogConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -242,7 +253,7 @@ impl NetworkServicesEdgeCacheService {
     #[doc = "Set the field `routing`.\n"]
     pub fn set_routing(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<NetworkServicesEdgeCacheServiceRoutingEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<NetworkServicesEdgeCacheService_Routing>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -256,9 +267,15 @@ impl NetworkServicesEdgeCacheService {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<NetworkServicesEdgeCacheServiceTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<NetworkServicesEdgeCacheService_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -350,18 +367,18 @@ impl NetworkServicesEdgeCacheService {
     }
 
     #[doc = "Get a reference to the value of field `log_config` after provisioning.\n"]
-    pub fn log_config(&self) -> terrars::ListRef<NetworkServicesEdgeCacheServiceLogConfigElRef> {
+    pub fn log_config(&self) -> terrars::ListRef<NetworkServicesEdgeCacheService_LogConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.log_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `routing` after provisioning.\n"]
-    pub fn routing(&self) -> terrars::ListRef<NetworkServicesEdgeCacheServiceRoutingElRef> {
+    pub fn routing(&self) -> terrars::ListRef<NetworkServicesEdgeCacheService_RoutingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.routing", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NetworkServicesEdgeCacheServiceTimeoutsElRef {
-        NetworkServicesEdgeCacheServiceTimeoutsElRef::new(
+    pub fn timeouts(&self) -> NetworkServicesEdgeCacheService_TimeoutsRef {
+        NetworkServicesEdgeCacheService_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -411,12 +428,13 @@ impl BuildNetworkServicesEdgeCacheService {
         let out = NetworkServicesEdgeCacheService(std::rc::Rc::new(NetworkServicesEdgeCacheService_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(NetworkServicesEdgeCacheServiceData {
+            data: std::cell::RefCell::new(NetworkServicesEdgeCacheServiceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 disable_http2: core::default::Default::default(),
                 disable_quic: core::default::Default::default(),
@@ -460,6 +478,12 @@ impl NetworkServicesEdgeCacheServiceRef {
 
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -551,33 +575,39 @@ impl NetworkServicesEdgeCacheServiceRef {
     }
 
     #[doc = "Get a reference to the value of field `log_config` after provisioning.\n"]
-    pub fn log_config(&self) -> terrars::ListRef<NetworkServicesEdgeCacheServiceLogConfigElRef> {
+    pub fn log_config(&self) -> terrars::ListRef<NetworkServicesEdgeCacheService_LogConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.log_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `routing` after provisioning.\n"]
-    pub fn routing(&self) -> terrars::ListRef<NetworkServicesEdgeCacheServiceRoutingElRef> {
+    pub fn routing(&self) -> terrars::ListRef<NetworkServicesEdgeCacheService_RoutingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.routing", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NetworkServicesEdgeCacheServiceTimeoutsElRef {
-        NetworkServicesEdgeCacheServiceTimeoutsElRef::new(
+    pub fn timeouts(&self) -> NetworkServicesEdgeCacheService_TimeoutsRef {
+        NetworkServicesEdgeCacheService_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct NetworkServicesEdgeCacheServiceDynamic {
+    log_config: std::option::Option<terrars::DynamicBlock<NetworkServicesEdgeCacheService_LogConfig>>,
+    routing: std::option::Option<terrars::DynamicBlock<NetworkServicesEdgeCacheService_Routing>>,
+}
+
 #[derive(Serialize)]
-pub struct NetworkServicesEdgeCacheServiceLogConfigEl {
+pub struct NetworkServicesEdgeCacheService_LogConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sample_rate: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl NetworkServicesEdgeCacheServiceLogConfigEl {
+impl NetworkServicesEdgeCacheService_LogConfig {
     #[doc = "Set the field `enable`.\nSpecifies whether to enable logging for traffic served by this service."]
     pub fn set_enable(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enable = std::option::Option::Some(v.into());
@@ -592,8 +622,8 @@ impl NetworkServicesEdgeCacheServiceLogConfigEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkServicesEdgeCacheServiceLogConfigEl {
-    type O = terrars::BlockAssignable<NetworkServicesEdgeCacheServiceLogConfigEl>;
+impl terrars::ToListMappable for NetworkServicesEdgeCacheService_LogConfig {
+    type O = terrars::BlockAssignable<NetworkServicesEdgeCacheService_LogConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -604,32 +634,34 @@ impl terrars::ToListMappable for NetworkServicesEdgeCacheServiceLogConfigEl {
     }
 }
 
-pub struct BuildNetworkServicesEdgeCacheServiceLogConfigEl {}
+pub struct BuildNetworkServicesEdgeCacheService_LogConfig {}
 
-impl BuildNetworkServicesEdgeCacheServiceLogConfigEl {
-    pub fn build(self) -> NetworkServicesEdgeCacheServiceLogConfigEl {
-        NetworkServicesEdgeCacheServiceLogConfigEl {
+impl BuildNetworkServicesEdgeCacheService_LogConfig {
+    pub fn build(self) -> NetworkServicesEdgeCacheService_LogConfig {
+        NetworkServicesEdgeCacheService_LogConfig {
             enable: core::default::Default::default(),
             sample_rate: core::default::Default::default(),
         }
     }
 }
 
-pub struct NetworkServicesEdgeCacheServiceLogConfigElRef {
+#[allow(dead_code)]
+pub struct NetworkServicesEdgeCacheService_LogConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkServicesEdgeCacheServiceLogConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkServicesEdgeCacheServiceLogConfigElRef {
-        NetworkServicesEdgeCacheServiceLogConfigElRef {
+impl terrars::Ref for NetworkServicesEdgeCacheService_LogConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkServicesEdgeCacheService_LogConfigRef {
+        NetworkServicesEdgeCacheService_LogConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkServicesEdgeCacheServiceLogConfigElRef {
+impl NetworkServicesEdgeCacheService_LogConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -648,14 +680,14 @@ impl NetworkServicesEdgeCacheServiceLogConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct NetworkServicesEdgeCacheServiceRoutingElHostRuleEl {
+pub struct NetworkServicesEdgeCacheService_Routing_HostRule {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     hosts: terrars::ListField<terrars::PrimField<std::string::String>>,
     path_matcher: terrars::PrimField<std::string::String>,
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElHostRuleEl {
+impl NetworkServicesEdgeCacheService_Routing_HostRule {
     #[doc = "Set the field `description`.\nA human-readable description of the hostRule."]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -663,8 +695,8 @@ impl NetworkServicesEdgeCacheServiceRoutingElHostRuleEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkServicesEdgeCacheServiceRoutingElHostRuleEl {
-    type O = terrars::BlockAssignable<NetworkServicesEdgeCacheServiceRoutingElHostRuleEl>;
+impl terrars::ToListMappable for NetworkServicesEdgeCacheService_Routing_HostRule {
+    type O = terrars::BlockAssignable<NetworkServicesEdgeCacheService_Routing_HostRule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -675,7 +707,7 @@ impl terrars::ToListMappable for NetworkServicesEdgeCacheServiceRoutingElHostRul
     }
 }
 
-pub struct BuildNetworkServicesEdgeCacheServiceRoutingElHostRuleEl {
+pub struct BuildNetworkServicesEdgeCacheService_Routing_HostRule {
     #[doc =
         "The list of host patterns to match.\n\nHost patterns must be valid hostnames. Ports are not allowed. Wildcard hosts are supported in the suffix or prefix form. * matches any string of ([a-z0-9-.]*). It does not match the empty string.\n\nWhen multiple hosts are specified, hosts are matched in the following priority:\n\n  1. Exact domain names: ''www.foo.com''.\n  2. Suffix domain wildcards: ''*.foo.com'' or ''*-bar.foo.com''.\n  3. Prefix domain wildcards: ''foo.*'' or ''foo-*''.\n  4. Special wildcard ''*'' matching any domain.\n\n  Notes:\n\n    The wildcard will not match the empty string. e.g. ''*-bar.foo.com'' will match ''baz-bar.foo.com'' but not ''-bar.foo.com''. The longest wildcards match first. Only a single host in the entire service can match on ''*''. A domain must be unique across all configured hosts within a service.\n\n    Hosts are matched against the HTTP Host header, or for HTTP/2 and HTTP/3, the \":authority\" header, from the incoming request.\n\n    You may specify up to 10 hosts."]
     pub hosts: terrars::ListField<terrars::PrimField<std::string::String>>,
@@ -683,9 +715,9 @@ pub struct BuildNetworkServicesEdgeCacheServiceRoutingElHostRuleEl {
     pub path_matcher: terrars::PrimField<std::string::String>,
 }
 
-impl BuildNetworkServicesEdgeCacheServiceRoutingElHostRuleEl {
-    pub fn build(self) -> NetworkServicesEdgeCacheServiceRoutingElHostRuleEl {
-        NetworkServicesEdgeCacheServiceRoutingElHostRuleEl {
+impl BuildNetworkServicesEdgeCacheService_Routing_HostRule {
+    pub fn build(self) -> NetworkServicesEdgeCacheService_Routing_HostRule {
+        NetworkServicesEdgeCacheService_Routing_HostRule {
             description: core::default::Default::default(),
             hosts: self.hosts,
             path_matcher: self.path_matcher,
@@ -693,24 +725,26 @@ impl BuildNetworkServicesEdgeCacheServiceRoutingElHostRuleEl {
     }
 }
 
-pub struct NetworkServicesEdgeCacheServiceRoutingElHostRuleElRef {
+#[allow(dead_code)]
+pub struct NetworkServicesEdgeCacheService_Routing_HostRuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkServicesEdgeCacheServiceRoutingElHostRuleElRef {
+impl terrars::Ref for NetworkServicesEdgeCacheService_Routing_HostRuleRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkServicesEdgeCacheServiceRoutingElHostRuleElRef {
-        NetworkServicesEdgeCacheServiceRoutingElHostRuleElRef {
+    ) -> NetworkServicesEdgeCacheService_Routing_HostRuleRef {
+        NetworkServicesEdgeCacheService_Routing_HostRuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElHostRuleElRef {
+impl NetworkServicesEdgeCacheService_Routing_HostRuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -735,14 +769,14 @@ impl NetworkServicesEdgeCacheServiceRoutingElHostRuleElRef {
 }
 
 #[derive(Serialize)]
-pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRequestHeaderToAddEl {
+pub struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_RequestHeaderToAdd {
     header_name: terrars::PrimField<std::string::String>,
     header_value: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     replace: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRequestHeaderToAddEl {
+impl NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_RequestHeaderToAdd {
     #[doc = "Set the field `replace`.\nWhether to replace all existing headers with the same name."]
     pub fn set_replace(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.replace = std::option::Option::Some(v.into());
@@ -751,11 +785,11 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActio
 }
 
 impl terrars
-::ToListMappable for NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRequestHeaderToAddEl {
+::ToListMappable for NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_RequestHeaderToAdd {
     type O =
         terrars
         ::BlockAssignable<
-            NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRequestHeaderToAddEl,
+            NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_RequestHeaderToAdd,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -767,18 +801,18 @@ impl terrars
     }
 }
 
-pub struct BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRequestHeaderToAddEl {
+pub struct BuildNetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_RequestHeaderToAdd {
     #[doc = "The name of the header to add."]
     pub header_name: terrars::PrimField<std::string::String>,
     #[doc = "The value of the header to add."]
     pub header_value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRequestHeaderToAddEl {
+impl BuildNetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_RequestHeaderToAdd {
     pub fn build(
         self,
-    ) -> NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRequestHeaderToAddEl {
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRequestHeaderToAddEl {
+    ) -> NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_RequestHeaderToAdd {
+        NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_RequestHeaderToAdd {
             header_name: self.header_name,
             header_value: self.header_value,
             replace: core::default::Default::default(),
@@ -786,25 +820,27 @@ impl BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeader
     }
 }
 
-pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRequestHeaderToAddElRef {
+#[allow(dead_code)]
+pub struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_RequestHeaderToAddRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRequestHeaderToAddElRef {
+::Ref for NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_RequestHeaderToAddRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRequestHeaderToAddElRef {
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRequestHeaderToAddElRef {
+    ) -> NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_RequestHeaderToAddRef {
+        NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_RequestHeaderToAddRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRequestHeaderToAddElRef {
+impl NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_RequestHeaderToAddRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -827,18 +863,18 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActio
 }
 
 #[derive(Serialize)]
-pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRequestHeaderToRemoveEl {
+pub struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_RequestHeaderToRemove {
     header_name: terrars::PrimField<std::string::String>,
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRequestHeaderToRemoveEl { }
+impl NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_RequestHeaderToRemove { }
 
 impl terrars
-::ToListMappable for NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRequestHeaderToRemoveEl {
+::ToListMappable for NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_RequestHeaderToRemove {
     type O =
         terrars
         ::BlockAssignable<
-            NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRequestHeaderToRemoveEl,
+            NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_RequestHeaderToRemove,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -850,40 +886,42 @@ impl terrars
     }
 }
 
-pub struct BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRequestHeaderToRemoveEl {
+pub struct BuildNetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_RequestHeaderToRemove {
     #[doc = "The name of the header to remove."]
     pub header_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRequestHeaderToRemoveEl {
+impl BuildNetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_RequestHeaderToRemove {
     pub fn build(
         self,
-    ) -> NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRequestHeaderToRemoveEl {
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRequestHeaderToRemoveEl {
+    ) -> NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_RequestHeaderToRemove {
+        NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_RequestHeaderToRemove {
             header_name: self.header_name,
         }
     }
 }
 
-pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRequestHeaderToRemoveElRef {
+#[allow(dead_code)]
+pub struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_RequestHeaderToRemoveRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRequestHeaderToRemoveElRef {
+::Ref for NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_RequestHeaderToRemoveRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRequestHeaderToRemoveElRef {
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRequestHeaderToRemoveElRef {
+    ) -> NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_RequestHeaderToRemoveRef {
+        NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_RequestHeaderToRemoveRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRequestHeaderToRemoveElRef {
+impl NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_RequestHeaderToRemoveRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -896,14 +934,14 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActio
 }
 
 #[derive(Serialize)]
-pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElResponseHeaderToAddEl {
+pub struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_ResponseHeaderToAdd {
     header_name: terrars::PrimField<std::string::String>,
     header_value: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     replace: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElResponseHeaderToAddEl {
+impl NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_ResponseHeaderToAdd {
     #[doc = "Set the field `replace`.\nWhether to replace all existing headers with the same name."]
     pub fn set_replace(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.replace = std::option::Option::Some(v.into());
@@ -912,11 +950,11 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActio
 }
 
 impl terrars
-::ToListMappable for NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElResponseHeaderToAddEl {
+::ToListMappable for NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_ResponseHeaderToAdd {
     type O =
         terrars
         ::BlockAssignable<
-            NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElResponseHeaderToAddEl,
+            NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_ResponseHeaderToAdd,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -928,18 +966,18 @@ impl terrars
     }
 }
 
-pub struct BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElResponseHeaderToAddEl {
+pub struct BuildNetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_ResponseHeaderToAdd {
     #[doc = "The name of the header to add."]
     pub header_name: terrars::PrimField<std::string::String>,
     #[doc = "The value of the header to add."]
     pub header_value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElResponseHeaderToAddEl {
+impl BuildNetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_ResponseHeaderToAdd {
     pub fn build(
         self,
-    ) -> NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElResponseHeaderToAddEl {
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElResponseHeaderToAddEl {
+    ) -> NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_ResponseHeaderToAdd {
+        NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_ResponseHeaderToAdd {
             header_name: self.header_name,
             header_value: self.header_value,
             replace: core::default::Default::default(),
@@ -947,25 +985,27 @@ impl BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeader
     }
 }
 
-pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElResponseHeaderToAddElRef {
+#[allow(dead_code)]
+pub struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_ResponseHeaderToAddRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElResponseHeaderToAddElRef {
+::Ref for NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_ResponseHeaderToAddRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElResponseHeaderToAddElRef {
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElResponseHeaderToAddElRef {
+    ) -> NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_ResponseHeaderToAddRef {
+        NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_ResponseHeaderToAddRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElResponseHeaderToAddElRef {
+impl NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_ResponseHeaderToAddRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -988,18 +1028,18 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActio
 }
 
 #[derive(Serialize)]
-pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElResponseHeaderToRemoveEl {
+pub struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_ResponseHeaderToRemove {
     header_name: terrars::PrimField<std::string::String>,
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElResponseHeaderToRemoveEl { }
+impl NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_ResponseHeaderToRemove { }
 
 impl terrars
-::ToListMappable for NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElResponseHeaderToRemoveEl {
+::ToListMappable for NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_ResponseHeaderToRemove {
     type O =
         terrars
         ::BlockAssignable<
-            NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElResponseHeaderToRemoveEl,
+            NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_ResponseHeaderToRemove,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -1011,41 +1051,43 @@ impl terrars
     }
 }
 
-pub struct BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElResponseHeaderToRemoveEl {
+pub struct BuildNetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_ResponseHeaderToRemove {
     #[doc =
         "Headers to remove from the response prior to sending it back to the client.\n\nResponse headers are only sent to the client, and do not have an effect on the cache serving the response."]
     pub header_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElResponseHeaderToRemoveEl {
+impl BuildNetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_ResponseHeaderToRemove {
     pub fn build(
         self,
-    ) -> NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElResponseHeaderToRemoveEl {
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElResponseHeaderToRemoveEl {
+    ) -> NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_ResponseHeaderToRemove {
+        NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_ResponseHeaderToRemove {
             header_name: self.header_name,
         }
     }
 }
 
-pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElResponseHeaderToRemoveElRef {
+#[allow(dead_code)]
+pub struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_ResponseHeaderToRemoveRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElResponseHeaderToRemoveElRef {
+::Ref for NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_ResponseHeaderToRemoveRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElResponseHeaderToRemoveElRef {
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElResponseHeaderToRemoveElRef {
+    ) -> NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_ResponseHeaderToRemoveRef {
+        NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_ResponseHeaderToRemoveRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElResponseHeaderToRemoveElRef {
+impl NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_ResponseHeaderToRemoveRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1058,50 +1100,44 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActio
 }
 
 #[derive(Serialize, Default)]
-struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElDynamic {
+struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderActionDynamic {
     request_header_to_add: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRequestHeaderToAddEl,
-        >,
+        ::DynamicBlock<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_RequestHeaderToAdd>,
     >,
     request_header_to_remove: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRequestHeaderToRemoveEl,
+            NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_RequestHeaderToRemove,
         >,
     >,
     response_header_to_add: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElResponseHeaderToAddEl,
-        >,
+        ::DynamicBlock<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_ResponseHeaderToAdd>,
     >,
     response_header_to_remove: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElResponseHeaderToRemoveEl,
+            NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_ResponseHeaderToRemove,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionEl {
+pub struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     request_header_to_add: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRequestHeaderToAddEl>,
+        std::vec::Vec<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_RequestHeaderToAdd>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     request_header_to_remove: std
@@ -1109,15 +1145,13 @@ pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeade
     ::Option<
         std
         ::vec
-        ::Vec<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRequestHeaderToRemoveEl>,
+        ::Vec<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_RequestHeaderToRemove>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     response_header_to_add: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElResponseHeaderToAddEl>,
+        std::vec::Vec<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_ResponseHeaderToAdd>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     response_header_to_remove: std
@@ -1125,12 +1159,12 @@ pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeade
     ::Option<
         std
         ::vec
-        ::Vec<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElResponseHeaderToRemoveEl>,
+        ::Vec<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_ResponseHeaderToRemove>,
     >,
-    dynamic: NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElDynamic,
+    dynamic: NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderActionDynamic,
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionEl {
+impl NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction {
     #[doc = "Set the field `request_header_to_add`.\n"]
     pub fn set_request_header_to_add(
         mut self,
@@ -1142,7 +1176,7 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActio
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRequestHeaderToAddEl,
+                            NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_RequestHeaderToAdd,
                         >,
                     >,
     ) -> Self {
@@ -1168,7 +1202,7 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActio
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRequestHeaderToRemoveEl,
+                            NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_RequestHeaderToRemove,
                         >,
                     >,
     ) -> Self {
@@ -1194,7 +1228,7 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActio
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElResponseHeaderToAddEl,
+                            NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_ResponseHeaderToAdd,
                         >,
                     >,
     ) -> Self {
@@ -1220,7 +1254,7 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActio
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElResponseHeaderToRemoveEl,
+                            NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_ResponseHeaderToRemove,
                         >,
                     >,
     ) -> Self {
@@ -1236,9 +1270,8 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActio
     }
 }
 
-impl terrars::ToListMappable for NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionEl {
-    type O =
-        terrars::BlockAssignable<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionEl>;
+impl terrars::ToListMappable for NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction {
+    type O = terrars::BlockAssignable<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1249,11 +1282,11 @@ impl terrars::ToListMappable for NetworkServicesEdgeCacheServiceRoutingElPathMat
     }
 }
 
-pub struct BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionEl {}
+pub struct BuildNetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction {}
 
-impl BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionEl {
-    pub fn build(self) -> NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionEl {
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionEl {
+impl BuildNetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction {
+    pub fn build(self) -> NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction {
+        NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction {
             request_header_to_add: core::default::Default::default(),
             request_header_to_remove: core::default::Default::default(),
             response_header_to_add: core::default::Default::default(),
@@ -1263,24 +1296,26 @@ impl BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeader
     }
 }
 
-pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRef {
+#[allow(dead_code)]
+pub struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderActionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRef {
+impl terrars::Ref for NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderActionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRef {
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRef {
+    ) -> NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderActionRef {
+        NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderActionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRef {
+impl NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderActionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1289,7 +1324,7 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActio
     pub fn request_header_to_add(
         &self,
     ) -> terrars
-    ::ListRef<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRequestHeaderToAddElRef> {
+    ::ListRef<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_RequestHeaderToAddRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.request_header_to_add", self.base))
     }
 
@@ -1297,9 +1332,7 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActio
     pub fn request_header_to_remove(
         &self,
     ) -> terrars
-    ::ListRef<
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRequestHeaderToRemoveElRef,
-    > {
+    ::ListRef<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_RequestHeaderToRemoveRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.request_header_to_remove", self.base))
     }
 
@@ -1307,7 +1340,7 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActio
     pub fn response_header_to_add(
         &self,
     ) -> terrars
-    ::ListRef<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElResponseHeaderToAddElRef> {
+    ::ListRef<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_ResponseHeaderToAddRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.response_header_to_add", self.base))
     }
 
@@ -1315,15 +1348,13 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActio
     pub fn response_header_to_remove(
         &self,
     ) -> terrars
-    ::ListRef<
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElResponseHeaderToRemoveElRef,
-    > {
+    ::ListRef<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction_ResponseHeaderToRemoveRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.response_header_to_remove", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElHeaderMatchEl {
+pub struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule_HeaderMatch {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     exact_match: std::option::Option<terrars::PrimField<std::string::String>>,
     header_name: terrars::PrimField<std::string::String>,
@@ -1337,7 +1368,7 @@ pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatch
     suffix_match: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElHeaderMatchEl {
+impl NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule_HeaderMatch {
     #[doc = "Set the field `exact_match`.\nThe value of the header should exactly match contents of exactMatch."]
     pub fn set_exact_match(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.exact_match = std::option::Option::Some(v.into());
@@ -1371,11 +1402,10 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleEl
     }
 }
 
-impl terrars
-::ToListMappable for NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElHeaderMatchEl {
+impl terrars::ToListMappable for NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule_HeaderMatch {
     type O =
         terrars
-        ::BlockAssignable<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElHeaderMatchEl>;
+        ::BlockAssignable<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule_HeaderMatch>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1386,14 +1416,14 @@ impl terrars
     }
 }
 
-pub struct BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElHeaderMatchEl {
+pub struct BuildNetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule_HeaderMatch {
     #[doc = "The header name to match on."]
     pub header_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElHeaderMatchEl {
-    pub fn build(self) -> NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElHeaderMatchEl {
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElHeaderMatchEl {
+impl BuildNetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule_HeaderMatch {
+    pub fn build(self) -> NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule_HeaderMatch {
+        NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule_HeaderMatch {
             exact_match: core::default::Default::default(),
             header_name: self.header_name,
             invert_match: core::default::Default::default(),
@@ -1404,24 +1434,26 @@ impl BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchR
     }
 }
 
-pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElHeaderMatchElRef {
+#[allow(dead_code)]
+pub struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule_HeaderMatchRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElHeaderMatchElRef {
+impl terrars::Ref for NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule_HeaderMatchRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElHeaderMatchElRef {
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElHeaderMatchElRef {
+    ) -> NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule_HeaderMatchRef {
+        NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule_HeaderMatchRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElHeaderMatchElRef {
+impl NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule_HeaderMatchRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1463,7 +1495,7 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleEl
 }
 
 #[derive(Serialize)]
-pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElQueryParameterMatchEl {
+pub struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule_QueryParameterMatch {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     exact_match: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
@@ -1471,7 +1503,7 @@ pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatch
     present_match: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElQueryParameterMatchEl {
+impl NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule_QueryParameterMatch {
     #[doc =
         "Set the field `exact_match`.\nThe queryParameterMatch matches if the value of the parameter exactly matches the contents of exactMatch."]
     pub fn set_exact_match(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1488,11 +1520,11 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleEl
 }
 
 impl terrars
-::ToListMappable for NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElQueryParameterMatchEl {
+::ToListMappable for NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule_QueryParameterMatch {
     type O =
         terrars
         ::BlockAssignable<
-            NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElQueryParameterMatchEl,
+            NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule_QueryParameterMatch,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -1504,17 +1536,17 @@ impl terrars
     }
 }
 
-pub struct BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElQueryParameterMatchEl {
+pub struct BuildNetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule_QueryParameterMatch {
     #[doc =
         "The name of the query parameter to match. The query parameter must exist in the request, in the absence of which the request match fails."]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElQueryParameterMatchEl {
+impl BuildNetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule_QueryParameterMatch {
     pub fn build(
         self,
-    ) -> NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElQueryParameterMatchEl {
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElQueryParameterMatchEl {
+    ) -> NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule_QueryParameterMatch {
+        NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule_QueryParameterMatch {
             exact_match: core::default::Default::default(),
             name: self.name,
             present_match: core::default::Default::default(),
@@ -1522,25 +1554,26 @@ impl BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchR
     }
 }
 
-pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElQueryParameterMatchElRef {
+#[allow(dead_code)]
+pub struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule_QueryParameterMatchRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars
-::Ref for NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElQueryParameterMatchElRef {
+impl terrars::Ref for NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule_QueryParameterMatchRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElQueryParameterMatchElRef {
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElQueryParameterMatchElRef {
+    ) -> NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule_QueryParameterMatchRef {
+        NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule_QueryParameterMatchRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElQueryParameterMatchElRef {
+impl NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule_QueryParameterMatchRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1565,25 +1598,22 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleEl
 }
 
 #[derive(Serialize, Default)]
-struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElDynamic {
+struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRuleDynamic {
     header_match: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElHeaderMatchEl>,
+        terrars::DynamicBlock<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule_HeaderMatch>,
     >,
     query_parameter_match: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElQueryParameterMatchEl,
-        >,
+        ::DynamicBlock<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule_QueryParameterMatch>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleEl {
+pub struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     full_path_match: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1595,19 +1625,17 @@ pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatch
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     header_match: std
     ::option
-    ::Option<std::vec::Vec<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElHeaderMatchEl>>,
+    ::Option<std::vec::Vec<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule_HeaderMatch>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     query_parameter_match: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElQueryParameterMatchEl>,
+        std::vec::Vec<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule_QueryParameterMatch>,
     >,
-    dynamic: NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElDynamic,
+    dynamic: NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRuleDynamic,
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleEl {
+impl NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule {
     #[doc =
         "Set the field `full_path_match`.\nFor satisfying the matchRule condition, the path of the request must exactly match the value specified in fullPathMatch after removing any query parameters and anchor that may be part of the original URL."]
     pub fn set_full_path_match(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1649,7 +1677,7 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleEl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElHeaderMatchEl,
+                            NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule_HeaderMatch,
                         >,
                     >,
     ) -> Self {
@@ -1675,7 +1703,7 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleEl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElQueryParameterMatchEl,
+                            NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule_QueryParameterMatch,
                         >,
                     >,
     ) -> Self {
@@ -1691,8 +1719,8 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleEl
     }
 }
 
-impl terrars::ToListMappable for NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleEl {
-    type O = terrars::BlockAssignable<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleEl>;
+impl terrars::ToListMappable for NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule {
+    type O = terrars::BlockAssignable<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1703,11 +1731,11 @@ impl terrars::ToListMappable for NetworkServicesEdgeCacheServiceRoutingElPathMat
     }
 }
 
-pub struct BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleEl {}
+pub struct BuildNetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule {}
 
-impl BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleEl {
-    pub fn build(self) -> NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleEl {
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleEl {
+impl BuildNetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule {
+    pub fn build(self) -> NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule {
+        NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule {
             full_path_match: core::default::Default::default(),
             ignore_case: core::default::Default::default(),
             path_template_match: core::default::Default::default(),
@@ -1719,24 +1747,26 @@ impl BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchR
     }
 }
 
-pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElRef {
+#[allow(dead_code)]
+pub struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElRef {
+impl terrars::Ref for NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRuleRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElRef {
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElRef {
+    ) -> NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRuleRef {
+        NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElRef {
+impl NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1768,8 +1798,7 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleEl
     #[doc = "Get a reference to the value of field `header_match` after provisioning.\n"]
     pub fn header_match(
         &self,
-    ) -> terrars
-    ::ListRef<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElHeaderMatchElRef> {
+    ) -> terrars::ListRef<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule_HeaderMatchRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.header_match", self.base))
     }
 
@@ -1777,13 +1806,13 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleEl
     pub fn query_parameter_match(
         &self,
     ) -> terrars
-    ::ListRef<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElQueryParameterMatchElRef> {
+    ::ListRef<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule_QueryParameterMatchRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.query_parameter_match", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElAddSignaturesEl {
+pub struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_AddSignatures {
     actions: terrars::ListField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     copied_parameters: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
@@ -1795,7 +1824,7 @@ pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRoute
     token_ttl: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElAddSignaturesEl {
+impl NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_AddSignatures {
     #[doc =
         "Set the field `copied_parameters`.\nThe parameters to copy from the verified token to the generated token.\n\nOnly the following parameters may be copied:\n\n  * 'PathGlobs'\n  * 'paths'\n  * 'acl'\n  * 'URLPrefix'\n  * 'IPRanges'\n  * 'SessionID'\n  * 'id'\n  * 'Data'\n  * 'data'\n  * 'payload'\n  * 'Headers'\n\nYou may specify up to 6 parameters to copy.  A given parameter is be copied only if the parameter exists in the verified token.  Parameter names are matched exactly as specified.  The order of the parameters does not matter.  Duplicates are not allowed.\n\nThis field may only be specified when the GENERATE_COOKIE or GENERATE_TOKEN_HLS_COOKIELESS actions are specified."]
     pub fn set_copied_parameters(
@@ -1832,11 +1861,11 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteAction
 }
 
 impl terrars
-::ToListMappable for NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElAddSignaturesEl {
+::ToListMappable for NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_AddSignatures {
     type O =
         terrars
         ::BlockAssignable<
-            NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElAddSignaturesEl,
+            NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_AddSignatures,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -1848,17 +1877,17 @@ impl terrars
     }
 }
 
-pub struct BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElAddSignaturesEl {
+pub struct BuildNetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_AddSignatures {
     #[doc =
         "The actions to take to add signatures to responses. Possible values: [\"GENERATE_COOKIE\", \"GENERATE_TOKEN_HLS_COOKIELESS\", \"PROPAGATE_TOKEN_HLS_COOKIELESS\"]"]
     pub actions: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElAddSignaturesEl {
+impl BuildNetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_AddSignatures {
     pub fn build(
         self,
-    ) -> NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElAddSignaturesEl {
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElAddSignaturesEl {
+    ) -> NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_AddSignatures {
+        NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_AddSignatures {
             actions: self.actions,
             copied_parameters: core::default::Default::default(),
             keyset: core::default::Default::default(),
@@ -1868,25 +1897,27 @@ impl BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteA
     }
 }
 
-pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElAddSignaturesElRef {
+#[allow(dead_code)]
+pub struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_AddSignaturesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElAddSignaturesElRef {
+::Ref for NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_AddSignaturesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElAddSignaturesElRef {
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElAddSignaturesElRef {
+    ) -> NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_AddSignaturesRef {
+        NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_AddSignaturesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElAddSignaturesElRef {
+impl NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_AddSignaturesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1923,7 +1954,7 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteAction
 }
 
 #[derive(Serialize)]
-pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElCacheKeyPolicyEl {
+pub struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_CacheKeyPolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     exclude_host: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1940,7 +1971,7 @@ pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRoute
     included_query_parameters: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElCacheKeyPolicyEl {
+impl NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_CacheKeyPolicy {
     #[doc =
         "Set the field `exclude_host`.\nIf true, requests to different hosts will be cached separately.\n\nNote: this should only be enabled if hosts share the same origin and content. Removing the host from the cache key may inadvertently result in different objects being cached than intended, depending on which route the first user matched."]
     pub fn set_exclude_host(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -2003,11 +2034,11 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteAction
 }
 
 impl terrars
-::ToListMappable for NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElCacheKeyPolicyEl {
+::ToListMappable for NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_CacheKeyPolicy {
     type O =
         terrars
         ::BlockAssignable<
-            NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElCacheKeyPolicyEl,
+            NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_CacheKeyPolicy,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -2019,13 +2050,13 @@ impl terrars
     }
 }
 
-pub struct BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElCacheKeyPolicyEl {}
+pub struct BuildNetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_CacheKeyPolicy {}
 
-impl BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElCacheKeyPolicyEl {
+impl BuildNetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_CacheKeyPolicy {
     pub fn build(
         self,
-    ) -> NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElCacheKeyPolicyEl {
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElCacheKeyPolicyEl {
+    ) -> NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_CacheKeyPolicy {
+        NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_CacheKeyPolicy {
             exclude_host: core::default::Default::default(),
             exclude_query_string: core::default::Default::default(),
             excluded_query_parameters: core::default::Default::default(),
@@ -2037,25 +2068,27 @@ impl BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteA
     }
 }
 
-pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElCacheKeyPolicyElRef {
+#[allow(dead_code)]
+pub struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_CacheKeyPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElCacheKeyPolicyElRef {
+::Ref for NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_CacheKeyPolicyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElCacheKeyPolicyElRef {
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElCacheKeyPolicyElRef {
+    ) -> NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_CacheKeyPolicyRef {
+        NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_CacheKeyPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElCacheKeyPolicyElRef {
+impl NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_CacheKeyPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2104,14 +2137,14 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteAction
 }
 
 #[derive(Serialize)]
-pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElSignedTokenOptionsEl {
+pub struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_SignedTokenOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allowed_signature_algorithms: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     token_query_parameter: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElSignedTokenOptionsEl {
+impl NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_SignedTokenOptions {
     #[doc =
         "Set the field `allowed_signature_algorithms`.\nThe allowed signature algorithms to use.\n\nDefaults to using only ED25519.\n\nYou may specify up to 3 signature algorithms to use. Possible values: [\"ED25519\", \"HMAC_SHA_256\", \"HMAC_SHA1\"]"]
     pub fn set_allowed_signature_algorithms(
@@ -2134,11 +2167,11 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteAction
 }
 
 impl terrars
-::ToListMappable for NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElSignedTokenOptionsEl {
+::ToListMappable for NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_SignedTokenOptions {
     type O =
         terrars
         ::BlockAssignable<
-            NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElSignedTokenOptionsEl,
+            NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_SignedTokenOptions,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -2150,38 +2183,40 @@ impl terrars
     }
 }
 
-pub struct BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElSignedTokenOptionsEl {}
+pub struct BuildNetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_SignedTokenOptions {}
 
-impl BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElSignedTokenOptionsEl {
+impl BuildNetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_SignedTokenOptions {
     pub fn build(
         self,
-    ) -> NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElSignedTokenOptionsEl {
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElSignedTokenOptionsEl {
+    ) -> NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_SignedTokenOptions {
+        NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_SignedTokenOptions {
             allowed_signature_algorithms: core::default::Default::default(),
             token_query_parameter: core::default::Default::default(),
         }
     }
 }
 
-pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElSignedTokenOptionsElRef {
+#[allow(dead_code)]
+pub struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_SignedTokenOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElSignedTokenOptionsElRef {
+::Ref for NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_SignedTokenOptionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElSignedTokenOptionsElRef {
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElSignedTokenOptionsElRef {
+    ) -> NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_SignedTokenOptionsRef {
+        NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_SignedTokenOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElSignedTokenOptionsElRef {
+impl NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_SignedTokenOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2200,13 +2235,13 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteAction
 }
 
 #[derive(Serialize, Default)]
-struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElDynamic {
+struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicyDynamic {
     add_signatures: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElAddSignaturesEl,
+            NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_AddSignatures,
         >,
     >,
     cache_key_policy: std
@@ -2214,7 +2249,7 @@ struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActi
     ::Option<
         terrars
         ::DynamicBlock<
-            NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElCacheKeyPolicyEl,
+            NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_CacheKeyPolicy,
         >,
     >,
     signed_token_options: std
@@ -2222,13 +2257,13 @@ struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActi
     ::Option<
         terrars
         ::DynamicBlock<
-            NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElSignedTokenOptionsEl,
+            NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_SignedTokenOptions,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyEl {
+pub struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cache_mode: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2253,7 +2288,7 @@ pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRoute
     ::Option<
         std
         ::vec
-        ::Vec<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElAddSignaturesEl>,
+        ::Vec<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_AddSignatures>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cache_key_policy: std
@@ -2261,9 +2296,7 @@ pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRoute
     ::Option<
         std
         ::vec
-        ::Vec<
-            NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElCacheKeyPolicyEl,
-        >,
+        ::Vec<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_CacheKeyPolicy>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     signed_token_options: std
@@ -2271,14 +2304,12 @@ pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRoute
     ::Option<
         std
         ::vec
-        ::Vec<
-            NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElSignedTokenOptionsEl,
-        >,
+        ::Vec<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_SignedTokenOptions>,
     >,
-    dynamic: NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElDynamic,
+    dynamic: NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicyDynamic,
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyEl {
+impl NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy {
     #[doc =
         "Set the field `cache_mode`.\nCache modes allow users to control the behaviour of the cache, what content it should cache automatically, whether to respect origin headers, or whether to unconditionally cache all responses.\n\nFor all cache modes, Cache-Control headers will be passed to the client. Use clientTtl to override what is sent to the client. Possible values: [\"CACHE_ALL_STATIC\", \"USE_ORIGIN_HEADERS\", \"FORCE_CACHE_ALL\", \"BYPASS_CACHE\"]"]
     pub fn set_cache_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -2365,7 +2396,7 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteAction
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElAddSignaturesEl,
+                            NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_AddSignatures,
                         >,
                     >,
     ) -> Self {
@@ -2391,7 +2422,7 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteAction
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElCacheKeyPolicyEl,
+                            NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_CacheKeyPolicy,
                         >,
                     >,
     ) -> Self {
@@ -2417,7 +2448,7 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteAction
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElSignedTokenOptionsEl,
+                            NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_SignedTokenOptions,
                         >,
                     >,
     ) -> Self {
@@ -2433,11 +2464,10 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteAction
     }
 }
 
-impl terrars
-::ToListMappable for NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyEl {
+impl terrars::ToListMappable for NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy {
     type O =
         terrars
-        ::BlockAssignable<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyEl>;
+        ::BlockAssignable<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2448,11 +2478,11 @@ impl terrars
     }
 }
 
-pub struct BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyEl {}
+pub struct BuildNetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy {}
 
-impl BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyEl {
-    pub fn build(self) -> NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyEl {
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyEl {
+impl BuildNetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy {
+    pub fn build(self) -> NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy {
+        NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy {
             cache_mode: core::default::Default::default(),
             client_ttl: core::default::Default::default(),
             default_ttl: core::default::Default::default(),
@@ -2470,24 +2500,26 @@ impl BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteA
     }
 }
 
-pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElRef {
+#[allow(dead_code)]
+pub struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElRef {
+impl terrars::Ref for NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElRef {
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElRef {
+    ) -> NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicyRef {
+        NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElRef {
+impl NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2550,9 +2582,7 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteAction
     pub fn add_signatures(
         &self,
     ) -> terrars
-    ::ListRef<
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElAddSignaturesElRef,
-    > {
+    ::ListRef<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_AddSignaturesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.add_signatures", self.base))
     }
 
@@ -2560,9 +2590,7 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteAction
     pub fn cache_key_policy(
         &self,
     ) -> terrars
-    ::ListRef<
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElCacheKeyPolicyElRef,
-    > {
+    ::ListRef<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_CacheKeyPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cache_key_policy", self.base))
     }
 
@@ -2571,14 +2599,14 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteAction
         &self,
     ) -> terrars
     ::ListRef<
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElSignedTokenOptionsElRef,
+        NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy_SignedTokenOptionsRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.signed_token_options", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCorsPolicyEl {
+pub struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CorsPolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allow_credentials: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2594,7 +2622,7 @@ pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRoute
     max_age: terrars::PrimField<std::string::String>,
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCorsPolicyEl {
+impl NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CorsPolicy {
     #[doc =
         "Set the field `allow_credentials`.\nIn response to a preflight request, setting this to true indicates that the actual request can include user credentials.\n\nThis translates to the Access-Control-Allow-Credentials response header."]
     pub fn set_allow_credentials(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -2650,11 +2678,10 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteAction
     }
 }
 
-impl terrars
-::ToListMappable for NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCorsPolicyEl {
+impl terrars::ToListMappable for NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CorsPolicy {
     type O =
         terrars
-        ::BlockAssignable<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCorsPolicyEl>;
+        ::BlockAssignable<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CorsPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2665,15 +2692,15 @@ impl terrars
     }
 }
 
-pub struct BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCorsPolicyEl {
+pub struct BuildNetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CorsPolicy {
     #[doc =
         "Specifies how long results of a preflight request can be cached by a client in seconds. Note that many browser clients enforce a maximum TTL of 600s (10 minutes).\n\n- Setting the value to -1 forces a pre-flight check for all requests (not recommended)\n- A maximum TTL of 86400s can be set, but note that (as above) some clients may force pre-flight checks at a more regular interval.\n- This translates to the Access-Control-Max-Age header.\n\nA duration in seconds with up to nine fractional digits, terminated by 's'. Example: \"3.5s\"."]
     pub max_age: terrars::PrimField<std::string::String>,
 }
 
-impl BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCorsPolicyEl {
-    pub fn build(self) -> NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCorsPolicyEl {
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCorsPolicyEl {
+impl BuildNetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CorsPolicy {
+    pub fn build(self) -> NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CorsPolicy {
+        NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CorsPolicy {
             allow_credentials: core::default::Default::default(),
             allow_headers: core::default::Default::default(),
             allow_methods: core::default::Default::default(),
@@ -2685,24 +2712,26 @@ impl BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteA
     }
 }
 
-pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCorsPolicyElRef {
+#[allow(dead_code)]
+pub struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CorsPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCorsPolicyElRef {
+impl terrars::Ref for NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CorsPolicyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCorsPolicyElRef {
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCorsPolicyElRef {
+    ) -> NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CorsPolicyRef {
+        NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CorsPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCorsPolicyElRef {
+impl NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CorsPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2751,7 +2780,7 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteAction
 }
 
 #[derive(Serialize)]
-pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElUrlRewriteEl {
+pub struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_UrlRewrite {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     host_rewrite: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2760,7 +2789,7 @@ pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRoute
     path_template_rewrite: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElUrlRewriteEl {
+impl NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_UrlRewrite {
     #[doc =
         "Set the field `host_rewrite`.\nPrior to forwarding the request to the selected origin, the request's host header is replaced with contents of hostRewrite."]
     pub fn set_host_rewrite(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -2789,11 +2818,10 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteAction
     }
 }
 
-impl terrars
-::ToListMappable for NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElUrlRewriteEl {
+impl terrars::ToListMappable for NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_UrlRewrite {
     type O =
         terrars
-        ::BlockAssignable<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElUrlRewriteEl>;
+        ::BlockAssignable<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_UrlRewrite>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2804,11 +2832,11 @@ impl terrars
     }
 }
 
-pub struct BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElUrlRewriteEl {}
+pub struct BuildNetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_UrlRewrite {}
 
-impl BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElUrlRewriteEl {
-    pub fn build(self) -> NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElUrlRewriteEl {
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElUrlRewriteEl {
+impl BuildNetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_UrlRewrite {
+    pub fn build(self) -> NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_UrlRewrite {
+        NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_UrlRewrite {
             host_rewrite: core::default::Default::default(),
             path_prefix_rewrite: core::default::Default::default(),
             path_template_rewrite: core::default::Default::default(),
@@ -2816,24 +2844,26 @@ impl BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteA
     }
 }
 
-pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElUrlRewriteElRef {
+#[allow(dead_code)]
+pub struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_UrlRewriteRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElUrlRewriteElRef {
+impl terrars::Ref for NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_UrlRewriteRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElUrlRewriteElRef {
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElUrlRewriteElRef {
+    ) -> NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_UrlRewriteRef {
+        NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_UrlRewriteRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElUrlRewriteElRef {
+impl NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_UrlRewriteRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2858,49 +2888,51 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteAction
 }
 
 #[derive(Serialize, Default)]
-struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElDynamic {
+struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteActionDynamic {
     cdn_policy: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyEl>,
+        terrars::DynamicBlock<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy>,
     >,
     cors_policy: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCorsPolicyEl>,
+        terrars::DynamicBlock<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CorsPolicy>,
     >,
     url_rewrite: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElUrlRewriteEl>,
+        terrars::DynamicBlock<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_UrlRewrite>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionEl {
+pub struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    compression_mode: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cdn_policy: std
     ::option
-    ::Option<std::vec::Vec<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyEl>>,
+    ::Option<std::vec::Vec<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cors_policy: std
     ::option
-    ::Option<
-        std::vec::Vec<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCorsPolicyEl>,
-    >,
+    ::Option<std::vec::Vec<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CorsPolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     url_rewrite: std
     ::option
-    ::Option<
-        std::vec::Vec<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElUrlRewriteEl>,
-    >,
-    dynamic: NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElDynamic,
+    ::Option<std::vec::Vec<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_UrlRewrite>>,
+    dynamic: NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteActionDynamic,
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionEl {
+impl NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction {
+    #[doc =
+        "Set the field `compression_mode`.\nSetting the compression mode to automatic enables dynamic compression for every eligible response.\n\nWhen dynamic compression is enabled, it is recommended to also set a cache policy to maximize efficiency. Possible values: [\"DISABLED\", \"AUTOMATIC\"]"]
+    pub fn set_compression_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.compression_mode = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `cdn_policy`.\n"]
     pub fn set_cdn_policy(
         mut self,
@@ -2912,7 +2944,7 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteAction
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyEl,
+                            NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicy,
                         >,
                     >,
     ) -> Self {
@@ -2938,7 +2970,7 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteAction
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCorsPolicyEl,
+                            NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CorsPolicy,
                         >,
                     >,
     ) -> Self {
@@ -2964,7 +2996,7 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteAction
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElUrlRewriteEl,
+                            NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_UrlRewrite,
                         >,
                     >,
     ) -> Self {
@@ -2980,8 +3012,8 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteAction
     }
 }
 
-impl terrars::ToListMappable for NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionEl {
-    type O = terrars::BlockAssignable<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionEl>;
+impl terrars::ToListMappable for NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction {
+    type O = terrars::BlockAssignable<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2992,11 +3024,12 @@ impl terrars::ToListMappable for NetworkServicesEdgeCacheServiceRoutingElPathMat
     }
 }
 
-pub struct BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionEl {}
+pub struct BuildNetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction {}
 
-impl BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionEl {
-    pub fn build(self) -> NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionEl {
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionEl {
+impl BuildNetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction {
+    pub fn build(self) -> NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction {
+        NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction {
+            compression_mode: core::default::Default::default(),
             cdn_policy: core::default::Default::default(),
             cors_policy: core::default::Default::default(),
             url_rewrite: core::default::Default::default(),
@@ -3005,55 +3038,131 @@ impl BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteA
     }
 }
 
-pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElRef {
+#[allow(dead_code)]
+pub struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteActionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElRef {
+impl terrars::Ref for NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteActionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElRef {
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElRef {
+    ) -> NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteActionRef {
+        NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteActionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElRef {
+impl NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteActionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `compression_mode` after provisioning.\nSetting the compression mode to automatic enables dynamic compression for every eligible response.\n\nWhen dynamic compression is enabled, it is recommended to also set a cache policy to maximize efficiency. Possible values: [\"DISABLED\", \"AUTOMATIC\"]"]
+    pub fn compression_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.compression_mode", self.base))
     }
 
     #[doc = "Get a reference to the value of field `cdn_policy` after provisioning.\n"]
     pub fn cdn_policy(
         &self,
-    ) -> terrars
-    ::ListRef<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCdnPolicyElRef> {
+    ) -> terrars::ListRef<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CdnPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cdn_policy", self.base))
     }
 
     #[doc = "Get a reference to the value of field `cors_policy` after provisioning.\n"]
     pub fn cors_policy(
         &self,
-    ) -> terrars
-    ::ListRef<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElCorsPolicyElRef> {
+    ) -> terrars::ListRef<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_CorsPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cors_policy", self.base))
     }
 
     #[doc = "Get a reference to the value of field `url_rewrite` after provisioning.\n"]
     pub fn url_rewrite(
         &self,
-    ) -> terrars
-    ::ListRef<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElUrlRewriteElRef> {
+    ) -> terrars::ListRef<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction_UrlRewriteRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.url_rewrite", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElUrlRedirectEl {
+pub struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteMethods {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    allowed_methods: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+}
+
+impl NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteMethods {
+    #[doc =
+        "Set the field `allowed_methods`.\nThe non-empty set of HTTP methods that are allowed for this route.\n\nAny combination of \"GET\", \"HEAD\", \"OPTIONS\", \"PUT\", \"POST\", \"DELETE\", and \"PATCH\"."]
+    pub fn set_allowed_methods(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.allowed_methods = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteMethods {
+    type O = terrars::BlockAssignable<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteMethods>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildNetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteMethods {}
+
+impl BuildNetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteMethods {
+    pub fn build(self) -> NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteMethods {
+        NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteMethods {
+            allowed_methods: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteMethodsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteMethodsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteMethodsRef {
+        NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteMethodsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteMethodsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `allowed_methods` after provisioning.\nThe non-empty set of HTTP methods that are allowed for this route.\n\nAny combination of \"GET\", \"HEAD\", \"OPTIONS\", \"PUT\", \"POST\", \"DELETE\", and \"PATCH\"."]
+    pub fn allowed_methods(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.allowed_methods", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_UrlRedirect {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     host_redirect: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3068,7 +3177,7 @@ pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElUrlRe
     strip_query: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElUrlRedirectEl {
+impl NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_UrlRedirect {
     #[doc =
         "Set the field `host_redirect`.\nThe host that will be used in the redirect response instead of the one that was supplied in the request."]
     pub fn set_host_redirect(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -3115,8 +3224,8 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElUrlRedirect
     }
 }
 
-impl terrars::ToListMappable for NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElUrlRedirectEl {
-    type O = terrars::BlockAssignable<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElUrlRedirectEl>;
+impl terrars::ToListMappable for NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_UrlRedirect {
+    type O = terrars::BlockAssignable<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_UrlRedirect>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3127,11 +3236,11 @@ impl terrars::ToListMappable for NetworkServicesEdgeCacheServiceRoutingElPathMat
     }
 }
 
-pub struct BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElUrlRedirectEl {}
+pub struct BuildNetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_UrlRedirect {}
 
-impl BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElUrlRedirectEl {
-    pub fn build(self) -> NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElUrlRedirectEl {
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElUrlRedirectEl {
+impl BuildNetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_UrlRedirect {
+    pub fn build(self) -> NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_UrlRedirect {
+        NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_UrlRedirect {
             host_redirect: core::default::Default::default(),
             https_redirect: core::default::Default::default(),
             path_redirect: core::default::Default::default(),
@@ -3142,24 +3251,26 @@ impl BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElUrlRed
     }
 }
 
-pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElUrlRedirectElRef {
+#[allow(dead_code)]
+pub struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_UrlRedirectRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElUrlRedirectElRef {
+impl terrars::Ref for NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_UrlRedirectRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElUrlRedirectElRef {
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElUrlRedirectElRef {
+    ) -> NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_UrlRedirectRef {
+        NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_UrlRedirectRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElUrlRedirectElRef {
+impl NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_UrlRedirectRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3202,23 +3313,26 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElUrlRedirect
 }
 
 #[derive(Serialize, Default)]
-struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElDynamic {
+struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRuleDynamic {
     header_action: std
     ::option
-    ::Option<terrars::DynamicBlock<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionEl>>,
+    ::Option<terrars::DynamicBlock<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction>>,
     match_rule: std
     ::option
-    ::Option<terrars::DynamicBlock<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleEl>>,
+    ::Option<terrars::DynamicBlock<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule>>,
     route_action: std
     ::option
-    ::Option<terrars::DynamicBlock<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionEl>>,
+    ::Option<terrars::DynamicBlock<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction>>,
+    route_methods: std
+    ::option
+    ::Option<terrars::DynamicBlock<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteMethods>>,
     url_redirect: std
     ::option
-    ::Option<terrars::DynamicBlock<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElUrlRedirectEl>>,
+    ::Option<terrars::DynamicBlock<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_UrlRedirect>>,
 }
 
 #[derive(Serialize)]
-pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleEl {
+pub struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3227,23 +3341,27 @@ pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     header_action: std
     ::option
-    ::Option<std::vec::Vec<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionEl>>,
+    ::Option<std::vec::Vec<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     match_rule: std
     ::option
-    ::Option<std::vec::Vec<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleEl>>,
+    ::Option<std::vec::Vec<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     route_action: std
     ::option
-    ::Option<std::vec::Vec<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionEl>>,
+    ::Option<std::vec::Vec<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    route_methods: std
+    ::option
+    ::Option<std::vec::Vec<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteMethods>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     url_redirect: std
     ::option
-    ::Option<std::vec::Vec<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElUrlRedirectEl>>,
-    dynamic: NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElDynamic,
+    ::Option<std::vec::Vec<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_UrlRedirect>>,
+    dynamic: NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRuleDynamic,
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleEl {
+impl NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule {
     #[doc = "Set the field `description`.\nA human-readable description of the routeRule."]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -3267,9 +3385,7 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionEl,
-                        >,
+                        ::BlockAssignable<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderAction>,
                     >,
     ) -> Self {
         match v.into() {
@@ -3293,7 +3409,7 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleEl>,
+                        ::BlockAssignable<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRule>,
                     >,
     ) -> Self {
         match v.into() {
@@ -3317,9 +3433,7 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionEl,
-                        >,
+                        ::BlockAssignable<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteAction>,
                     >,
     ) -> Self {
         match v.into() {
@@ -3328,6 +3442,30 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleEl {
             },
             terrars::BlockAssignable::Dynamic(d) => {
                 self.dynamic.route_action = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `route_methods`.\n"]
+    pub fn set_route_methods(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteMethods>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.route_methods = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.route_methods = std::option::Option::Some(d);
             },
         }
         self
@@ -3343,9 +3481,7 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElUrlRedirectEl,
-                        >,
+                        ::BlockAssignable<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_UrlRedirect>,
                     >,
     ) -> Self {
         match v.into() {
@@ -3360,8 +3496,8 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleEl {
-    type O = terrars::BlockAssignable<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleEl>;
+impl terrars::ToListMappable for NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule {
+    type O = terrars::BlockAssignable<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3372,45 +3508,48 @@ impl terrars::ToListMappable for NetworkServicesEdgeCacheServiceRoutingElPathMat
     }
 }
 
-pub struct BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleEl {
+pub struct BuildNetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule {
     #[doc =
         "The priority of this route rule, where 1 is the highest priority.\n\nYou cannot configure two or more routeRules with the same priority. Priority for each rule must be set to a number between 1 and 999 inclusive.\n\nPriority numbers can have gaps, which enable you to add or remove rules in the future without affecting the rest of the rules. For example, 1, 2, 3, 4, 5, 9, 12, 16 is a valid series of priority numbers\nto which you could add rules numbered from 6 to 8, 10 to 11, and 13 to 15 in the future without any impact on existing rules."]
     pub priority: terrars::PrimField<std::string::String>,
 }
 
-impl BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleEl {
-    pub fn build(self) -> NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleEl {
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleEl {
+impl BuildNetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule {
+    pub fn build(self) -> NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule {
+        NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule {
             description: core::default::Default::default(),
             origin: core::default::Default::default(),
             priority: self.priority,
             header_action: core::default::Default::default(),
             match_rule: core::default::Default::default(),
             route_action: core::default::Default::default(),
+            route_methods: core::default::Default::default(),
             url_redirect: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRef {
+#[allow(dead_code)]
+pub struct NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRef {
+impl terrars::Ref for NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRuleRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRef {
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRef {
+    ) -> NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRuleRef {
+        NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRef {
+impl NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3436,50 +3575,57 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRef {
     #[doc = "Get a reference to the value of field `header_action` after provisioning.\n"]
     pub fn header_action(
         &self,
-    ) -> terrars::ListRef<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElHeaderActionElRef> {
+    ) -> terrars::ListRef<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_HeaderActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.header_action", self.base))
     }
 
     #[doc = "Get a reference to the value of field `match_rule` after provisioning.\n"]
     pub fn match_rule(
         &self,
-    ) -> terrars::ListRef<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElMatchRuleElRef> {
+    ) -> terrars::ListRef<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_MatchRuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.match_rule", self.base))
     }
 
     #[doc = "Get a reference to the value of field `route_action` after provisioning.\n"]
     pub fn route_action(
         &self,
-    ) -> terrars::ListRef<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRouteActionElRef> {
+    ) -> terrars::ListRef<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.route_action", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `route_methods` after provisioning.\n"]
+    pub fn route_methods(
+        &self,
+    ) -> terrars::ListRef<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_RouteMethodsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.route_methods", self.base))
     }
 
     #[doc = "Get a reference to the value of field `url_redirect` after provisioning.\n"]
     pub fn url_redirect(
         &self,
-    ) -> terrars::ListRef<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElUrlRedirectElRef> {
+    ) -> terrars::ListRef<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule_UrlRedirectRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.url_redirect", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElDynamic {
+struct NetworkServicesEdgeCacheService_Routing_PathMatcherDynamic {
     route_rule: std
     ::option
-    ::Option<terrars::DynamicBlock<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleEl>>,
+    ::Option<terrars::DynamicBlock<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule>>,
 }
 
 #[derive(Serialize)]
-pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherEl {
+pub struct NetworkServicesEdgeCacheService_Routing_PathMatcher {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    route_rule: std::option::Option<std::vec::Vec<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleEl>>,
-    dynamic: NetworkServicesEdgeCacheServiceRoutingElPathMatcherElDynamic,
+    route_rule: std::option::Option<std::vec::Vec<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule>>,
+    dynamic: NetworkServicesEdgeCacheService_Routing_PathMatcherDynamic,
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherEl {
+impl NetworkServicesEdgeCacheService_Routing_PathMatcher {
     #[doc = "Set the field `description`.\nA human-readable description of the resource."]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -3494,9 +3640,7 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRule>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3510,8 +3654,8 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkServicesEdgeCacheServiceRoutingElPathMatcherEl {
-    type O = terrars::BlockAssignable<NetworkServicesEdgeCacheServiceRoutingElPathMatcherEl>;
+impl terrars::ToListMappable for NetworkServicesEdgeCacheService_Routing_PathMatcher {
+    type O = terrars::BlockAssignable<NetworkServicesEdgeCacheService_Routing_PathMatcher>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3522,14 +3666,14 @@ impl terrars::ToListMappable for NetworkServicesEdgeCacheServiceRoutingElPathMat
     }
 }
 
-pub struct BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherEl {
+pub struct BuildNetworkServicesEdgeCacheService_Routing_PathMatcher {
     #[doc = "The name to which this PathMatcher is referred by the HostRule."]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherEl {
-    pub fn build(self) -> NetworkServicesEdgeCacheServiceRoutingElPathMatcherEl {
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherEl {
+impl BuildNetworkServicesEdgeCacheService_Routing_PathMatcher {
+    pub fn build(self) -> NetworkServicesEdgeCacheService_Routing_PathMatcher {
+        NetworkServicesEdgeCacheService_Routing_PathMatcher {
             description: core::default::Default::default(),
             name: self.name,
             route_rule: core::default::Default::default(),
@@ -3538,24 +3682,26 @@ impl BuildNetworkServicesEdgeCacheServiceRoutingElPathMatcherEl {
     }
 }
 
-pub struct NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRef {
+#[allow(dead_code)]
+pub struct NetworkServicesEdgeCacheService_Routing_PathMatcherRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRef {
+impl terrars::Ref for NetworkServicesEdgeCacheService_Routing_PathMatcherRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRef {
-        NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRef {
+    ) -> NetworkServicesEdgeCacheService_Routing_PathMatcherRef {
+        NetworkServicesEdgeCacheService_Routing_PathMatcherRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRef {
+impl NetworkServicesEdgeCacheService_Routing_PathMatcherRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3573,31 +3719,31 @@ impl NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRef {
     }
 
     #[doc = "Get a reference to the value of field `route_rule` after provisioning.\n"]
-    pub fn route_rule(&self) -> terrars::ListRef<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRouteRuleElRef> {
+    pub fn route_rule(&self) -> terrars::ListRef<NetworkServicesEdgeCacheService_Routing_PathMatcher_RouteRuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.route_rule", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct NetworkServicesEdgeCacheServiceRoutingElDynamic {
-    host_rule: std::option::Option<terrars::DynamicBlock<NetworkServicesEdgeCacheServiceRoutingElHostRuleEl>>,
-    path_matcher: std::option::Option<terrars::DynamicBlock<NetworkServicesEdgeCacheServiceRoutingElPathMatcherEl>>,
+struct NetworkServicesEdgeCacheService_RoutingDynamic {
+    host_rule: std::option::Option<terrars::DynamicBlock<NetworkServicesEdgeCacheService_Routing_HostRule>>,
+    path_matcher: std::option::Option<terrars::DynamicBlock<NetworkServicesEdgeCacheService_Routing_PathMatcher>>,
 }
 
 #[derive(Serialize)]
-pub struct NetworkServicesEdgeCacheServiceRoutingEl {
+pub struct NetworkServicesEdgeCacheService_Routing {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    host_rule: std::option::Option<std::vec::Vec<NetworkServicesEdgeCacheServiceRoutingElHostRuleEl>>,
+    host_rule: std::option::Option<std::vec::Vec<NetworkServicesEdgeCacheService_Routing_HostRule>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    path_matcher: std::option::Option<std::vec::Vec<NetworkServicesEdgeCacheServiceRoutingElPathMatcherEl>>,
-    dynamic: NetworkServicesEdgeCacheServiceRoutingElDynamic,
+    path_matcher: std::option::Option<std::vec::Vec<NetworkServicesEdgeCacheService_Routing_PathMatcher>>,
+    dynamic: NetworkServicesEdgeCacheService_RoutingDynamic,
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingEl {
+impl NetworkServicesEdgeCacheService_Routing {
     #[doc = "Set the field `host_rule`.\n"]
     pub fn set_host_rule(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<NetworkServicesEdgeCacheServiceRoutingElHostRuleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<NetworkServicesEdgeCacheService_Routing_HostRule>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3613,7 +3759,7 @@ impl NetworkServicesEdgeCacheServiceRoutingEl {
     #[doc = "Set the field `path_matcher`.\n"]
     pub fn set_path_matcher(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<NetworkServicesEdgeCacheServiceRoutingElPathMatcherEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<NetworkServicesEdgeCacheService_Routing_PathMatcher>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3627,8 +3773,8 @@ impl NetworkServicesEdgeCacheServiceRoutingEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkServicesEdgeCacheServiceRoutingEl {
-    type O = terrars::BlockAssignable<NetworkServicesEdgeCacheServiceRoutingEl>;
+impl terrars::ToListMappable for NetworkServicesEdgeCacheService_Routing {
+    type O = terrars::BlockAssignable<NetworkServicesEdgeCacheService_Routing>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3639,11 +3785,11 @@ impl terrars::ToListMappable for NetworkServicesEdgeCacheServiceRoutingEl {
     }
 }
 
-pub struct BuildNetworkServicesEdgeCacheServiceRoutingEl {}
+pub struct BuildNetworkServicesEdgeCacheService_Routing {}
 
-impl BuildNetworkServicesEdgeCacheServiceRoutingEl {
-    pub fn build(self) -> NetworkServicesEdgeCacheServiceRoutingEl {
-        NetworkServicesEdgeCacheServiceRoutingEl {
+impl BuildNetworkServicesEdgeCacheService_Routing {
+    pub fn build(self) -> NetworkServicesEdgeCacheService_Routing {
+        NetworkServicesEdgeCacheService_Routing {
             host_rule: core::default::Default::default(),
             path_matcher: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -3651,38 +3797,40 @@ impl BuildNetworkServicesEdgeCacheServiceRoutingEl {
     }
 }
 
-pub struct NetworkServicesEdgeCacheServiceRoutingElRef {
+#[allow(dead_code)]
+pub struct NetworkServicesEdgeCacheService_RoutingRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkServicesEdgeCacheServiceRoutingElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkServicesEdgeCacheServiceRoutingElRef {
-        NetworkServicesEdgeCacheServiceRoutingElRef {
+impl terrars::Ref for NetworkServicesEdgeCacheService_RoutingRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkServicesEdgeCacheService_RoutingRef {
+        NetworkServicesEdgeCacheService_RoutingRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkServicesEdgeCacheServiceRoutingElRef {
+impl NetworkServicesEdgeCacheService_RoutingRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `host_rule` after provisioning.\n"]
-    pub fn host_rule(&self) -> terrars::ListRef<NetworkServicesEdgeCacheServiceRoutingElHostRuleElRef> {
+    pub fn host_rule(&self) -> terrars::ListRef<NetworkServicesEdgeCacheService_Routing_HostRuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.host_rule", self.base))
     }
 
     #[doc = "Get a reference to the value of field `path_matcher` after provisioning.\n"]
-    pub fn path_matcher(&self) -> terrars::ListRef<NetworkServicesEdgeCacheServiceRoutingElPathMatcherElRef> {
+    pub fn path_matcher(&self) -> terrars::ListRef<NetworkServicesEdgeCacheService_Routing_PathMatcherRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.path_matcher", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct NetworkServicesEdgeCacheServiceTimeoutsEl {
+pub struct NetworkServicesEdgeCacheService_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3691,7 +3839,7 @@ pub struct NetworkServicesEdgeCacheServiceTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl NetworkServicesEdgeCacheServiceTimeoutsEl {
+impl NetworkServicesEdgeCacheService_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -3711,8 +3859,8 @@ impl NetworkServicesEdgeCacheServiceTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkServicesEdgeCacheServiceTimeoutsEl {
-    type O = terrars::BlockAssignable<NetworkServicesEdgeCacheServiceTimeoutsEl>;
+impl terrars::ToListMappable for NetworkServicesEdgeCacheService_Timeouts {
+    type O = terrars::BlockAssignable<NetworkServicesEdgeCacheService_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3723,11 +3871,11 @@ impl terrars::ToListMappable for NetworkServicesEdgeCacheServiceTimeoutsEl {
     }
 }
 
-pub struct BuildNetworkServicesEdgeCacheServiceTimeoutsEl {}
+pub struct BuildNetworkServicesEdgeCacheService_Timeouts {}
 
-impl BuildNetworkServicesEdgeCacheServiceTimeoutsEl {
-    pub fn build(self) -> NetworkServicesEdgeCacheServiceTimeoutsEl {
-        NetworkServicesEdgeCacheServiceTimeoutsEl {
+impl BuildNetworkServicesEdgeCacheService_Timeouts {
+    pub fn build(self) -> NetworkServicesEdgeCacheService_Timeouts {
+        NetworkServicesEdgeCacheService_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -3735,21 +3883,23 @@ impl BuildNetworkServicesEdgeCacheServiceTimeoutsEl {
     }
 }
 
-pub struct NetworkServicesEdgeCacheServiceTimeoutsElRef {
+#[allow(dead_code)]
+pub struct NetworkServicesEdgeCacheService_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkServicesEdgeCacheServiceTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkServicesEdgeCacheServiceTimeoutsElRef {
-        NetworkServicesEdgeCacheServiceTimeoutsElRef {
+impl terrars::Ref for NetworkServicesEdgeCacheService_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkServicesEdgeCacheService_TimeoutsRef {
+        NetworkServicesEdgeCacheService_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkServicesEdgeCacheServiceTimeoutsElRef {
+impl NetworkServicesEdgeCacheService_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3768,10 +3918,4 @@ impl NetworkServicesEdgeCacheServiceTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct NetworkServicesEdgeCacheServiceDynamic {
-    log_config: std::option::Option<terrars::DynamicBlock<NetworkServicesEdgeCacheServiceLogConfigEl>>,
-    routing: std::option::Option<terrars::DynamicBlock<NetworkServicesEdgeCacheServiceRoutingEl>>,
 }

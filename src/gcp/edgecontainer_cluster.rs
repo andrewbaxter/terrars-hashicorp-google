@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct EdgecontainerClusterData {
+struct EdgecontainerClusterData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,6 +22,8 @@ struct EdgecontainerClusterData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     default_max_pods_per_node: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     external_load_balancer_ipv4_address_pools: std
     ::option
@@ -37,28 +41,28 @@ struct EdgecontainerClusterData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     target_version: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    authorization: std::option::Option<std::vec::Vec<EdgecontainerClusterAuthorizationEl>>,
+    authorization: std::option::Option<std::vec::Vec<EdgecontainerCluster_Authorization>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    control_plane: std::option::Option<std::vec::Vec<EdgecontainerClusterControlPlaneEl>>,
+    control_plane: std::option::Option<std::vec::Vec<EdgecontainerCluster_ControlPlane>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    control_plane_encryption: std::option::Option<std::vec::Vec<EdgecontainerClusterControlPlaneEncryptionEl>>,
+    control_plane_encryption: std::option::Option<std::vec::Vec<EdgecontainerCluster_ControlPlaneEncryption>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    fleet: std::option::Option<std::vec::Vec<EdgecontainerClusterFleetEl>>,
+    fleet: std::option::Option<std::vec::Vec<EdgecontainerCluster_Fleet>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    maintenance_policy: std::option::Option<std::vec::Vec<EdgecontainerClusterMaintenancePolicyEl>>,
+    maintenance_policy: std::option::Option<std::vec::Vec<EdgecontainerCluster_MaintenancePolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    networking: std::option::Option<std::vec::Vec<EdgecontainerClusterNetworkingEl>>,
+    networking: std::option::Option<std::vec::Vec<EdgecontainerCluster_Networking>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    system_addons_config: std::option::Option<std::vec::Vec<EdgecontainerClusterSystemAddonsConfigEl>>,
+    system_addons_config: std::option::Option<std::vec::Vec<EdgecontainerCluster_SystemAddonsConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<EdgecontainerClusterTimeoutsEl>,
+    timeouts: std::option::Option<EdgecontainerCluster_Timeouts>,
     dynamic: EdgecontainerClusterDynamic,
 }
 
 struct EdgecontainerCluster_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<EdgecontainerClusterData>,
+    data: std::cell::RefCell<EdgecontainerClusterData_>,
 }
 
 #[derive(Clone)]
@@ -166,6 +170,13 @@ impl EdgecontainerCluster {
     }
 
     #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `external_load_balancer_ipv4_address_pools`.\nAddress pools for cluster data plane external load balancing."]
     pub fn set_external_load_balancer_ipv4_address_pools(
         self,
@@ -213,7 +224,7 @@ impl EdgecontainerCluster {
     #[doc = "Set the field `authorization`.\n"]
     pub fn set_authorization(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EdgecontainerClusterAuthorizationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EdgecontainerCluster_Authorization>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -229,7 +240,7 @@ impl EdgecontainerCluster {
     #[doc = "Set the field `control_plane`.\n"]
     pub fn set_control_plane(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EdgecontainerClusterControlPlaneEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EdgecontainerCluster_ControlPlane>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -245,7 +256,7 @@ impl EdgecontainerCluster {
     #[doc = "Set the field `control_plane_encryption`.\n"]
     pub fn set_control_plane_encryption(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EdgecontainerClusterControlPlaneEncryptionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EdgecontainerCluster_ControlPlaneEncryption>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -259,7 +270,7 @@ impl EdgecontainerCluster {
     }
 
     #[doc = "Set the field `fleet`.\n"]
-    pub fn set_fleet(self, v: impl std::convert::Into<terrars::BlockAssignable<EdgecontainerClusterFleetEl>>) -> Self {
+    pub fn set_fleet(self, v: impl std::convert::Into<terrars::BlockAssignable<EdgecontainerCluster_Fleet>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().fleet = std::option::Option::Some(v);
@@ -274,7 +285,7 @@ impl EdgecontainerCluster {
     #[doc = "Set the field `maintenance_policy`.\n"]
     pub fn set_maintenance_policy(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EdgecontainerClusterMaintenancePolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EdgecontainerCluster_MaintenancePolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -290,7 +301,7 @@ impl EdgecontainerCluster {
     #[doc = "Set the field `networking`.\n"]
     pub fn set_networking(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EdgecontainerClusterNetworkingEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EdgecontainerCluster_Networking>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -306,7 +317,7 @@ impl EdgecontainerCluster {
     #[doc = "Set the field `system_addons_config`.\n"]
     pub fn set_system_addons_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EdgecontainerClusterSystemAddonsConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EdgecontainerCluster_SystemAddonsConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -320,7 +331,7 @@ impl EdgecontainerCluster {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<EdgecontainerClusterTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<EdgecontainerCluster_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -347,6 +358,12 @@ impl EdgecontainerCluster {
         "Get a reference to the value of field `default_max_pods_per_node` after provisioning.\nThe default maximum number of pods per node used if a maximum value is not\nspecified explicitly for a node pool in this cluster. If unspecified, the\nKubernetes default value will be used."]
     pub fn default_max_pods_per_node(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.default_max_pods_per_node", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -388,7 +405,7 @@ impl EdgecontainerCluster {
 
     #[doc =
         "Get a reference to the value of field `maintenance_events` after provisioning.\nAll the maintenance events scheduled for the cluster, including the ones\nongoing, planned for the future and done in the past (up to 90 days)."]
-    pub fn maintenance_events(&self) -> terrars::ListRef<EdgecontainerClusterMaintenanceEventsElRef> {
+    pub fn maintenance_events(&self) -> terrars::ListRef<EdgecontainerCluster_MaintenanceEventsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.maintenance_events", self.extract_ref()))
     }
 
@@ -444,43 +461,43 @@ impl EdgecontainerCluster {
     }
 
     #[doc = "Get a reference to the value of field `authorization` after provisioning.\n"]
-    pub fn authorization(&self) -> terrars::ListRef<EdgecontainerClusterAuthorizationElRef> {
+    pub fn authorization(&self) -> terrars::ListRef<EdgecontainerCluster_AuthorizationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.authorization", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `control_plane` after provisioning.\n"]
-    pub fn control_plane(&self) -> terrars::ListRef<EdgecontainerClusterControlPlaneElRef> {
+    pub fn control_plane(&self) -> terrars::ListRef<EdgecontainerCluster_ControlPlaneRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.control_plane", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `control_plane_encryption` after provisioning.\n"]
-    pub fn control_plane_encryption(&self) -> terrars::ListRef<EdgecontainerClusterControlPlaneEncryptionElRef> {
+    pub fn control_plane_encryption(&self) -> terrars::ListRef<EdgecontainerCluster_ControlPlaneEncryptionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.control_plane_encryption", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `fleet` after provisioning.\n"]
-    pub fn fleet(&self) -> terrars::ListRef<EdgecontainerClusterFleetElRef> {
+    pub fn fleet(&self) -> terrars::ListRef<EdgecontainerCluster_FleetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.fleet", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `maintenance_policy` after provisioning.\n"]
-    pub fn maintenance_policy(&self) -> terrars::ListRef<EdgecontainerClusterMaintenancePolicyElRef> {
+    pub fn maintenance_policy(&self) -> terrars::ListRef<EdgecontainerCluster_MaintenancePolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.maintenance_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `networking` after provisioning.\n"]
-    pub fn networking(&self) -> terrars::ListRef<EdgecontainerClusterNetworkingElRef> {
+    pub fn networking(&self) -> terrars::ListRef<EdgecontainerCluster_NetworkingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.networking", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `system_addons_config` after provisioning.\n"]
-    pub fn system_addons_config(&self) -> terrars::ListRef<EdgecontainerClusterSystemAddonsConfigElRef> {
+    pub fn system_addons_config(&self) -> terrars::ListRef<EdgecontainerCluster_SystemAddonsConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.system_addons_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> EdgecontainerClusterTimeoutsElRef {
-        EdgecontainerClusterTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> EdgecontainerCluster_TimeoutsRef {
+        EdgecontainerCluster_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -528,13 +545,14 @@ impl BuildEdgecontainerCluster {
         let out = EdgecontainerCluster(std::rc::Rc::new(EdgecontainerCluster_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(EdgecontainerClusterData {
+            data: std::cell::RefCell::new(EdgecontainerClusterData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 default_max_pods_per_node: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 external_load_balancer_ipv4_address_pools: core::default::Default::default(),
                 id: core::default::Default::default(),
                 labels: core::default::Default::default(),
@@ -607,6 +625,12 @@ impl EdgecontainerClusterRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
     pub fn effective_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
@@ -645,7 +669,7 @@ impl EdgecontainerClusterRef {
 
     #[doc =
         "Get a reference to the value of field `maintenance_events` after provisioning.\nAll the maintenance events scheduled for the cluster, including the ones\nongoing, planned for the future and done in the past (up to 90 days)."]
-    pub fn maintenance_events(&self) -> terrars::ListRef<EdgecontainerClusterMaintenanceEventsElRef> {
+    pub fn maintenance_events(&self) -> terrars::ListRef<EdgecontainerCluster_MaintenanceEventsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.maintenance_events", self.extract_ref()))
     }
 
@@ -701,48 +725,61 @@ impl EdgecontainerClusterRef {
     }
 
     #[doc = "Get a reference to the value of field `authorization` after provisioning.\n"]
-    pub fn authorization(&self) -> terrars::ListRef<EdgecontainerClusterAuthorizationElRef> {
+    pub fn authorization(&self) -> terrars::ListRef<EdgecontainerCluster_AuthorizationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.authorization", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `control_plane` after provisioning.\n"]
-    pub fn control_plane(&self) -> terrars::ListRef<EdgecontainerClusterControlPlaneElRef> {
+    pub fn control_plane(&self) -> terrars::ListRef<EdgecontainerCluster_ControlPlaneRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.control_plane", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `control_plane_encryption` after provisioning.\n"]
-    pub fn control_plane_encryption(&self) -> terrars::ListRef<EdgecontainerClusterControlPlaneEncryptionElRef> {
+    pub fn control_plane_encryption(&self) -> terrars::ListRef<EdgecontainerCluster_ControlPlaneEncryptionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.control_plane_encryption", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `fleet` after provisioning.\n"]
-    pub fn fleet(&self) -> terrars::ListRef<EdgecontainerClusterFleetElRef> {
+    pub fn fleet(&self) -> terrars::ListRef<EdgecontainerCluster_FleetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.fleet", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `maintenance_policy` after provisioning.\n"]
-    pub fn maintenance_policy(&self) -> terrars::ListRef<EdgecontainerClusterMaintenancePolicyElRef> {
+    pub fn maintenance_policy(&self) -> terrars::ListRef<EdgecontainerCluster_MaintenancePolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.maintenance_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `networking` after provisioning.\n"]
-    pub fn networking(&self) -> terrars::ListRef<EdgecontainerClusterNetworkingElRef> {
+    pub fn networking(&self) -> terrars::ListRef<EdgecontainerCluster_NetworkingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.networking", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `system_addons_config` after provisioning.\n"]
-    pub fn system_addons_config(&self) -> terrars::ListRef<EdgecontainerClusterSystemAddonsConfigElRef> {
+    pub fn system_addons_config(&self) -> terrars::ListRef<EdgecontainerCluster_SystemAddonsConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.system_addons_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> EdgecontainerClusterTimeoutsElRef {
-        EdgecontainerClusterTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> EdgecontainerCluster_TimeoutsRef {
+        EdgecontainerCluster_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct EdgecontainerClusterDynamic {
+    authorization: std::option::Option<terrars::DynamicBlock<EdgecontainerCluster_Authorization>>,
+    control_plane: std::option::Option<terrars::DynamicBlock<EdgecontainerCluster_ControlPlane>>,
+    control_plane_encryption: std
+    ::option
+    ::Option<terrars::DynamicBlock<EdgecontainerCluster_ControlPlaneEncryption>>,
+    fleet: std::option::Option<terrars::DynamicBlock<EdgecontainerCluster_Fleet>>,
+    maintenance_policy: std::option::Option<terrars::DynamicBlock<EdgecontainerCluster_MaintenancePolicy>>,
+    networking: std::option::Option<terrars::DynamicBlock<EdgecontainerCluster_Networking>>,
+    system_addons_config: std::option::Option<terrars::DynamicBlock<EdgecontainerCluster_SystemAddonsConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct EdgecontainerClusterMaintenanceEventsEl {
+pub struct EdgecontainerCluster_MaintenanceEvents {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create_time: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -765,7 +802,7 @@ pub struct EdgecontainerClusterMaintenanceEventsEl {
     uuid: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EdgecontainerClusterMaintenanceEventsEl {
+impl EdgecontainerCluster_MaintenanceEvents {
     #[doc = "Set the field `create_time`.\n"]
     pub fn set_create_time(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create_time = std::option::Option::Some(v.into());
@@ -827,8 +864,8 @@ impl EdgecontainerClusterMaintenanceEventsEl {
     }
 }
 
-impl terrars::ToListMappable for EdgecontainerClusterMaintenanceEventsEl {
-    type O = terrars::BlockAssignable<EdgecontainerClusterMaintenanceEventsEl>;
+impl terrars::ToListMappable for EdgecontainerCluster_MaintenanceEvents {
+    type O = terrars::BlockAssignable<EdgecontainerCluster_MaintenanceEvents>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -839,11 +876,11 @@ impl terrars::ToListMappable for EdgecontainerClusterMaintenanceEventsEl {
     }
 }
 
-pub struct BuildEdgecontainerClusterMaintenanceEventsEl {}
+pub struct BuildEdgecontainerCluster_MaintenanceEvents {}
 
-impl BuildEdgecontainerClusterMaintenanceEventsEl {
-    pub fn build(self) -> EdgecontainerClusterMaintenanceEventsEl {
-        EdgecontainerClusterMaintenanceEventsEl {
+impl BuildEdgecontainerCluster_MaintenanceEvents {
+    pub fn build(self) -> EdgecontainerCluster_MaintenanceEvents {
+        EdgecontainerCluster_MaintenanceEvents {
             create_time: core::default::Default::default(),
             end_time: core::default::Default::default(),
             operation: core::default::Default::default(),
@@ -858,21 +895,23 @@ impl BuildEdgecontainerClusterMaintenanceEventsEl {
     }
 }
 
-pub struct EdgecontainerClusterMaintenanceEventsElRef {
+#[allow(dead_code)]
+pub struct EdgecontainerCluster_MaintenanceEventsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EdgecontainerClusterMaintenanceEventsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EdgecontainerClusterMaintenanceEventsElRef {
-        EdgecontainerClusterMaintenanceEventsElRef {
+impl terrars::Ref for EdgecontainerCluster_MaintenanceEventsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EdgecontainerCluster_MaintenanceEventsRef {
+        EdgecontainerCluster_MaintenanceEventsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EdgecontainerClusterMaintenanceEventsElRef {
+impl EdgecontainerCluster_MaintenanceEventsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -929,14 +968,14 @@ impl EdgecontainerClusterMaintenanceEventsElRef {
 }
 
 #[derive(Serialize)]
-pub struct EdgecontainerClusterAuthorizationElAdminUsersEl {
+pub struct EdgecontainerCluster_Authorization_AdminUsers {
     username: terrars::PrimField<std::string::String>,
 }
 
-impl EdgecontainerClusterAuthorizationElAdminUsersEl { }
+impl EdgecontainerCluster_Authorization_AdminUsers { }
 
-impl terrars::ToListMappable for EdgecontainerClusterAuthorizationElAdminUsersEl {
-    type O = terrars::BlockAssignable<EdgecontainerClusterAuthorizationElAdminUsersEl>;
+impl terrars::ToListMappable for EdgecontainerCluster_Authorization_AdminUsers {
+    type O = terrars::BlockAssignable<EdgecontainerCluster_Authorization_AdminUsers>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -947,35 +986,37 @@ impl terrars::ToListMappable for EdgecontainerClusterAuthorizationElAdminUsersEl
     }
 }
 
-pub struct BuildEdgecontainerClusterAuthorizationElAdminUsersEl {
+pub struct BuildEdgecontainerCluster_Authorization_AdminUsers {
     #[doc = "An active Google username."]
     pub username: terrars::PrimField<std::string::String>,
 }
 
-impl BuildEdgecontainerClusterAuthorizationElAdminUsersEl {
-    pub fn build(self) -> EdgecontainerClusterAuthorizationElAdminUsersEl {
-        EdgecontainerClusterAuthorizationElAdminUsersEl { username: self.username }
+impl BuildEdgecontainerCluster_Authorization_AdminUsers {
+    pub fn build(self) -> EdgecontainerCluster_Authorization_AdminUsers {
+        EdgecontainerCluster_Authorization_AdminUsers { username: self.username }
     }
 }
 
-pub struct EdgecontainerClusterAuthorizationElAdminUsersElRef {
+#[allow(dead_code)]
+pub struct EdgecontainerCluster_Authorization_AdminUsersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EdgecontainerClusterAuthorizationElAdminUsersElRef {
+impl terrars::Ref for EdgecontainerCluster_Authorization_AdminUsersRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> EdgecontainerClusterAuthorizationElAdminUsersElRef {
-        EdgecontainerClusterAuthorizationElAdminUsersElRef {
+    ) -> EdgecontainerCluster_Authorization_AdminUsersRef {
+        EdgecontainerCluster_Authorization_AdminUsersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EdgecontainerClusterAuthorizationElAdminUsersElRef {
+impl EdgecontainerCluster_Authorization_AdminUsersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -987,22 +1028,22 @@ impl EdgecontainerClusterAuthorizationElAdminUsersElRef {
 }
 
 #[derive(Serialize, Default)]
-struct EdgecontainerClusterAuthorizationElDynamic {
-    admin_users: std::option::Option<terrars::DynamicBlock<EdgecontainerClusterAuthorizationElAdminUsersEl>>,
+struct EdgecontainerCluster_AuthorizationDynamic {
+    admin_users: std::option::Option<terrars::DynamicBlock<EdgecontainerCluster_Authorization_AdminUsers>>,
 }
 
 #[derive(Serialize)]
-pub struct EdgecontainerClusterAuthorizationEl {
+pub struct EdgecontainerCluster_Authorization {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    admin_users: std::option::Option<std::vec::Vec<EdgecontainerClusterAuthorizationElAdminUsersEl>>,
-    dynamic: EdgecontainerClusterAuthorizationElDynamic,
+    admin_users: std::option::Option<std::vec::Vec<EdgecontainerCluster_Authorization_AdminUsers>>,
+    dynamic: EdgecontainerCluster_AuthorizationDynamic,
 }
 
-impl EdgecontainerClusterAuthorizationEl {
+impl EdgecontainerCluster_Authorization {
     #[doc = "Set the field `admin_users`.\n"]
     pub fn set_admin_users(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EdgecontainerClusterAuthorizationElAdminUsersEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EdgecontainerCluster_Authorization_AdminUsers>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1016,8 +1057,8 @@ impl EdgecontainerClusterAuthorizationEl {
     }
 }
 
-impl terrars::ToListMappable for EdgecontainerClusterAuthorizationEl {
-    type O = terrars::BlockAssignable<EdgecontainerClusterAuthorizationEl>;
+impl terrars::ToListMappable for EdgecontainerCluster_Authorization {
+    type O = terrars::BlockAssignable<EdgecontainerCluster_Authorization>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1028,44 +1069,46 @@ impl terrars::ToListMappable for EdgecontainerClusterAuthorizationEl {
     }
 }
 
-pub struct BuildEdgecontainerClusterAuthorizationEl {}
+pub struct BuildEdgecontainerCluster_Authorization {}
 
-impl BuildEdgecontainerClusterAuthorizationEl {
-    pub fn build(self) -> EdgecontainerClusterAuthorizationEl {
-        EdgecontainerClusterAuthorizationEl {
+impl BuildEdgecontainerCluster_Authorization {
+    pub fn build(self) -> EdgecontainerCluster_Authorization {
+        EdgecontainerCluster_Authorization {
             admin_users: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct EdgecontainerClusterAuthorizationElRef {
+#[allow(dead_code)]
+pub struct EdgecontainerCluster_AuthorizationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EdgecontainerClusterAuthorizationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EdgecontainerClusterAuthorizationElRef {
-        EdgecontainerClusterAuthorizationElRef {
+impl terrars::Ref for EdgecontainerCluster_AuthorizationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EdgecontainerCluster_AuthorizationRef {
+        EdgecontainerCluster_AuthorizationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EdgecontainerClusterAuthorizationElRef {
+impl EdgecontainerCluster_AuthorizationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `admin_users` after provisioning.\n"]
-    pub fn admin_users(&self) -> terrars::ListRef<EdgecontainerClusterAuthorizationElAdminUsersElRef> {
+    pub fn admin_users(&self) -> terrars::ListRef<EdgecontainerCluster_Authorization_AdminUsersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.admin_users", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct EdgecontainerClusterControlPlaneElLocalEl {
+pub struct EdgecontainerCluster_ControlPlane_Local {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     machine_filter: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1076,7 +1119,7 @@ pub struct EdgecontainerClusterControlPlaneElLocalEl {
     shared_deployment_policy: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EdgecontainerClusterControlPlaneElLocalEl {
+impl EdgecontainerCluster_ControlPlane_Local {
     #[doc =
         "Set the field `machine_filter`.\nOnly machines matching this filter will be allowed to host control\nplane nodes. The filtering language accepts strings like \"name=<name>\",\nand is documented here: [AIP-160](https://google.aip.dev/160)."]
     pub fn set_machine_filter(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1109,8 +1152,8 @@ impl EdgecontainerClusterControlPlaneElLocalEl {
     }
 }
 
-impl terrars::ToListMappable for EdgecontainerClusterControlPlaneElLocalEl {
-    type O = terrars::BlockAssignable<EdgecontainerClusterControlPlaneElLocalEl>;
+impl terrars::ToListMappable for EdgecontainerCluster_ControlPlane_Local {
+    type O = terrars::BlockAssignable<EdgecontainerCluster_ControlPlane_Local>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1121,11 +1164,11 @@ impl terrars::ToListMappable for EdgecontainerClusterControlPlaneElLocalEl {
     }
 }
 
-pub struct BuildEdgecontainerClusterControlPlaneElLocalEl {}
+pub struct BuildEdgecontainerCluster_ControlPlane_Local {}
 
-impl BuildEdgecontainerClusterControlPlaneElLocalEl {
-    pub fn build(self) -> EdgecontainerClusterControlPlaneElLocalEl {
-        EdgecontainerClusterControlPlaneElLocalEl {
+impl BuildEdgecontainerCluster_ControlPlane_Local {
+    pub fn build(self) -> EdgecontainerCluster_ControlPlane_Local {
+        EdgecontainerCluster_ControlPlane_Local {
             machine_filter: core::default::Default::default(),
             node_count: core::default::Default::default(),
             node_location: core::default::Default::default(),
@@ -1134,21 +1177,23 @@ impl BuildEdgecontainerClusterControlPlaneElLocalEl {
     }
 }
 
-pub struct EdgecontainerClusterControlPlaneElLocalElRef {
+#[allow(dead_code)]
+pub struct EdgecontainerCluster_ControlPlane_LocalRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EdgecontainerClusterControlPlaneElLocalElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EdgecontainerClusterControlPlaneElLocalElRef {
-        EdgecontainerClusterControlPlaneElLocalElRef {
+impl terrars::Ref for EdgecontainerCluster_ControlPlane_LocalRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EdgecontainerCluster_ControlPlane_LocalRef {
+        EdgecontainerCluster_ControlPlane_LocalRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EdgecontainerClusterControlPlaneElLocalElRef {
+impl EdgecontainerCluster_ControlPlane_LocalRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1179,12 +1224,12 @@ impl EdgecontainerClusterControlPlaneElLocalElRef {
 }
 
 #[derive(Serialize)]
-pub struct EdgecontainerClusterControlPlaneElRemoteEl {
+pub struct EdgecontainerCluster_ControlPlane_Remote {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     node_location: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EdgecontainerClusterControlPlaneElRemoteEl {
+impl EdgecontainerCluster_ControlPlane_Remote {
     #[doc =
         "Set the field `node_location`.\nName of the Google Distributed Cloud Edge zones where this node pool\nwill be created. For example: 'us-central1-edge-customer-a'."]
     pub fn set_node_location(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1193,8 +1238,8 @@ impl EdgecontainerClusterControlPlaneElRemoteEl {
     }
 }
 
-impl terrars::ToListMappable for EdgecontainerClusterControlPlaneElRemoteEl {
-    type O = terrars::BlockAssignable<EdgecontainerClusterControlPlaneElRemoteEl>;
+impl terrars::ToListMappable for EdgecontainerCluster_ControlPlane_Remote {
+    type O = terrars::BlockAssignable<EdgecontainerCluster_ControlPlane_Remote>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1205,29 +1250,31 @@ impl terrars::ToListMappable for EdgecontainerClusterControlPlaneElRemoteEl {
     }
 }
 
-pub struct BuildEdgecontainerClusterControlPlaneElRemoteEl {}
+pub struct BuildEdgecontainerCluster_ControlPlane_Remote {}
 
-impl BuildEdgecontainerClusterControlPlaneElRemoteEl {
-    pub fn build(self) -> EdgecontainerClusterControlPlaneElRemoteEl {
-        EdgecontainerClusterControlPlaneElRemoteEl { node_location: core::default::Default::default() }
+impl BuildEdgecontainerCluster_ControlPlane_Remote {
+    pub fn build(self) -> EdgecontainerCluster_ControlPlane_Remote {
+        EdgecontainerCluster_ControlPlane_Remote { node_location: core::default::Default::default() }
     }
 }
 
-pub struct EdgecontainerClusterControlPlaneElRemoteElRef {
+#[allow(dead_code)]
+pub struct EdgecontainerCluster_ControlPlane_RemoteRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EdgecontainerClusterControlPlaneElRemoteElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EdgecontainerClusterControlPlaneElRemoteElRef {
-        EdgecontainerClusterControlPlaneElRemoteElRef {
+impl terrars::Ref for EdgecontainerCluster_ControlPlane_RemoteRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EdgecontainerCluster_ControlPlane_RemoteRef {
+        EdgecontainerCluster_ControlPlane_RemoteRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EdgecontainerClusterControlPlaneElRemoteElRef {
+impl EdgecontainerCluster_ControlPlane_RemoteRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1240,25 +1287,25 @@ impl EdgecontainerClusterControlPlaneElRemoteElRef {
 }
 
 #[derive(Serialize, Default)]
-struct EdgecontainerClusterControlPlaneElDynamic {
-    local: std::option::Option<terrars::DynamicBlock<EdgecontainerClusterControlPlaneElLocalEl>>,
-    remote: std::option::Option<terrars::DynamicBlock<EdgecontainerClusterControlPlaneElRemoteEl>>,
+struct EdgecontainerCluster_ControlPlaneDynamic {
+    local: std::option::Option<terrars::DynamicBlock<EdgecontainerCluster_ControlPlane_Local>>,
+    remote: std::option::Option<terrars::DynamicBlock<EdgecontainerCluster_ControlPlane_Remote>>,
 }
 
 #[derive(Serialize)]
-pub struct EdgecontainerClusterControlPlaneEl {
+pub struct EdgecontainerCluster_ControlPlane {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    local: std::option::Option<std::vec::Vec<EdgecontainerClusterControlPlaneElLocalEl>>,
+    local: std::option::Option<std::vec::Vec<EdgecontainerCluster_ControlPlane_Local>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    remote: std::option::Option<std::vec::Vec<EdgecontainerClusterControlPlaneElRemoteEl>>,
-    dynamic: EdgecontainerClusterControlPlaneElDynamic,
+    remote: std::option::Option<std::vec::Vec<EdgecontainerCluster_ControlPlane_Remote>>,
+    dynamic: EdgecontainerCluster_ControlPlaneDynamic,
 }
 
-impl EdgecontainerClusterControlPlaneEl {
+impl EdgecontainerCluster_ControlPlane {
     #[doc = "Set the field `local`.\n"]
     pub fn set_local(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EdgecontainerClusterControlPlaneElLocalEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EdgecontainerCluster_ControlPlane_Local>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1274,7 +1321,7 @@ impl EdgecontainerClusterControlPlaneEl {
     #[doc = "Set the field `remote`.\n"]
     pub fn set_remote(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EdgecontainerClusterControlPlaneElRemoteEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EdgecontainerCluster_ControlPlane_Remote>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1288,8 +1335,8 @@ impl EdgecontainerClusterControlPlaneEl {
     }
 }
 
-impl terrars::ToListMappable for EdgecontainerClusterControlPlaneEl {
-    type O = terrars::BlockAssignable<EdgecontainerClusterControlPlaneEl>;
+impl terrars::ToListMappable for EdgecontainerCluster_ControlPlane {
+    type O = terrars::BlockAssignable<EdgecontainerCluster_ControlPlane>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1300,11 +1347,11 @@ impl terrars::ToListMappable for EdgecontainerClusterControlPlaneEl {
     }
 }
 
-pub struct BuildEdgecontainerClusterControlPlaneEl {}
+pub struct BuildEdgecontainerCluster_ControlPlane {}
 
-impl BuildEdgecontainerClusterControlPlaneEl {
-    pub fn build(self) -> EdgecontainerClusterControlPlaneEl {
-        EdgecontainerClusterControlPlaneEl {
+impl BuildEdgecontainerCluster_ControlPlane {
+    pub fn build(self) -> EdgecontainerCluster_ControlPlane {
+        EdgecontainerCluster_ControlPlane {
             local: core::default::Default::default(),
             remote: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1312,45 +1359,47 @@ impl BuildEdgecontainerClusterControlPlaneEl {
     }
 }
 
-pub struct EdgecontainerClusterControlPlaneElRef {
+#[allow(dead_code)]
+pub struct EdgecontainerCluster_ControlPlaneRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EdgecontainerClusterControlPlaneElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EdgecontainerClusterControlPlaneElRef {
-        EdgecontainerClusterControlPlaneElRef {
+impl terrars::Ref for EdgecontainerCluster_ControlPlaneRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EdgecontainerCluster_ControlPlaneRef {
+        EdgecontainerCluster_ControlPlaneRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EdgecontainerClusterControlPlaneElRef {
+impl EdgecontainerCluster_ControlPlaneRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `local` after provisioning.\n"]
-    pub fn local(&self) -> terrars::ListRef<EdgecontainerClusterControlPlaneElLocalElRef> {
+    pub fn local(&self) -> terrars::ListRef<EdgecontainerCluster_ControlPlane_LocalRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.local", self.base))
     }
 
     #[doc = "Get a reference to the value of field `remote` after provisioning.\n"]
-    pub fn remote(&self) -> terrars::ListRef<EdgecontainerClusterControlPlaneElRemoteElRef> {
+    pub fn remote(&self) -> terrars::ListRef<EdgecontainerCluster_ControlPlane_RemoteRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.remote", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct EdgecontainerClusterControlPlaneEncryptionElKmsStatusEl {
+pub struct EdgecontainerCluster_ControlPlaneEncryption_KmsStatus {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     code: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     message: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EdgecontainerClusterControlPlaneEncryptionElKmsStatusEl {
+impl EdgecontainerCluster_ControlPlaneEncryption_KmsStatus {
     #[doc = "Set the field `code`.\n"]
     pub fn set_code(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.code = std::option::Option::Some(v.into());
@@ -1364,8 +1413,8 @@ impl EdgecontainerClusterControlPlaneEncryptionElKmsStatusEl {
     }
 }
 
-impl terrars::ToListMappable for EdgecontainerClusterControlPlaneEncryptionElKmsStatusEl {
-    type O = terrars::BlockAssignable<EdgecontainerClusterControlPlaneEncryptionElKmsStatusEl>;
+impl terrars::ToListMappable for EdgecontainerCluster_ControlPlaneEncryption_KmsStatus {
+    type O = terrars::BlockAssignable<EdgecontainerCluster_ControlPlaneEncryption_KmsStatus>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1376,35 +1425,37 @@ impl terrars::ToListMappable for EdgecontainerClusterControlPlaneEncryptionElKms
     }
 }
 
-pub struct BuildEdgecontainerClusterControlPlaneEncryptionElKmsStatusEl {}
+pub struct BuildEdgecontainerCluster_ControlPlaneEncryption_KmsStatus {}
 
-impl BuildEdgecontainerClusterControlPlaneEncryptionElKmsStatusEl {
-    pub fn build(self) -> EdgecontainerClusterControlPlaneEncryptionElKmsStatusEl {
-        EdgecontainerClusterControlPlaneEncryptionElKmsStatusEl {
+impl BuildEdgecontainerCluster_ControlPlaneEncryption_KmsStatus {
+    pub fn build(self) -> EdgecontainerCluster_ControlPlaneEncryption_KmsStatus {
+        EdgecontainerCluster_ControlPlaneEncryption_KmsStatus {
             code: core::default::Default::default(),
             message: core::default::Default::default(),
         }
     }
 }
 
-pub struct EdgecontainerClusterControlPlaneEncryptionElKmsStatusElRef {
+#[allow(dead_code)]
+pub struct EdgecontainerCluster_ControlPlaneEncryption_KmsStatusRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EdgecontainerClusterControlPlaneEncryptionElKmsStatusElRef {
+impl terrars::Ref for EdgecontainerCluster_ControlPlaneEncryption_KmsStatusRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> EdgecontainerClusterControlPlaneEncryptionElKmsStatusElRef {
-        EdgecontainerClusterControlPlaneEncryptionElKmsStatusElRef {
+    ) -> EdgecontainerCluster_ControlPlaneEncryption_KmsStatusRef {
+        EdgecontainerCluster_ControlPlaneEncryption_KmsStatusRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EdgecontainerClusterControlPlaneEncryptionElKmsStatusElRef {
+impl EdgecontainerCluster_ControlPlaneEncryption_KmsStatusRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1421,12 +1472,12 @@ impl EdgecontainerClusterControlPlaneEncryptionElKmsStatusElRef {
 }
 
 #[derive(Serialize)]
-pub struct EdgecontainerClusterControlPlaneEncryptionEl {
+pub struct EdgecontainerCluster_ControlPlaneEncryption {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EdgecontainerClusterControlPlaneEncryptionEl {
+impl EdgecontainerCluster_ControlPlaneEncryption {
     #[doc =
         "Set the field `kms_key`.\nThe Cloud KMS CryptoKey e.g.\nprojects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys/{cryptoKey}\nto use for protecting control plane disks. If not specified, a\nGoogle-managed key will be used instead."]
     pub fn set_kms_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1435,8 +1486,8 @@ impl EdgecontainerClusterControlPlaneEncryptionEl {
     }
 }
 
-impl terrars::ToListMappable for EdgecontainerClusterControlPlaneEncryptionEl {
-    type O = terrars::BlockAssignable<EdgecontainerClusterControlPlaneEncryptionEl>;
+impl terrars::ToListMappable for EdgecontainerCluster_ControlPlaneEncryption {
+    type O = terrars::BlockAssignable<EdgecontainerCluster_ControlPlaneEncryption>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1447,32 +1498,34 @@ impl terrars::ToListMappable for EdgecontainerClusterControlPlaneEncryptionEl {
     }
 }
 
-pub struct BuildEdgecontainerClusterControlPlaneEncryptionEl {}
+pub struct BuildEdgecontainerCluster_ControlPlaneEncryption {}
 
-impl BuildEdgecontainerClusterControlPlaneEncryptionEl {
-    pub fn build(self) -> EdgecontainerClusterControlPlaneEncryptionEl {
-        EdgecontainerClusterControlPlaneEncryptionEl { kms_key: core::default::Default::default() }
+impl BuildEdgecontainerCluster_ControlPlaneEncryption {
+    pub fn build(self) -> EdgecontainerCluster_ControlPlaneEncryption {
+        EdgecontainerCluster_ControlPlaneEncryption { kms_key: core::default::Default::default() }
     }
 }
 
-pub struct EdgecontainerClusterControlPlaneEncryptionElRef {
+#[allow(dead_code)]
+pub struct EdgecontainerCluster_ControlPlaneEncryptionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EdgecontainerClusterControlPlaneEncryptionElRef {
+impl terrars::Ref for EdgecontainerCluster_ControlPlaneEncryptionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> EdgecontainerClusterControlPlaneEncryptionElRef {
-        EdgecontainerClusterControlPlaneEncryptionElRef {
+    ) -> EdgecontainerCluster_ControlPlaneEncryptionRef {
+        EdgecontainerCluster_ControlPlaneEncryptionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EdgecontainerClusterControlPlaneEncryptionElRef {
+impl EdgecontainerCluster_ControlPlaneEncryptionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1497,20 +1550,20 @@ impl EdgecontainerClusterControlPlaneEncryptionElRef {
 
     #[doc =
         "Get a reference to the value of field `kms_status` after provisioning.\nError status returned by Cloud KMS when using this key. This field may be\npopulated only if 'kms_key_state' is not 'KMS_KEY_STATE_KEY_AVAILABLE'.\nIf populated, this field contains the error status reported by Cloud KMS."]
-    pub fn kms_status(&self) -> terrars::ListRef<EdgecontainerClusterControlPlaneEncryptionElKmsStatusElRef> {
+    pub fn kms_status(&self) -> terrars::ListRef<EdgecontainerCluster_ControlPlaneEncryption_KmsStatusRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.kms_status", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct EdgecontainerClusterFleetEl {
+pub struct EdgecontainerCluster_Fleet {
     project: terrars::PrimField<std::string::String>,
 }
 
-impl EdgecontainerClusterFleetEl { }
+impl EdgecontainerCluster_Fleet { }
 
-impl terrars::ToListMappable for EdgecontainerClusterFleetEl {
-    type O = terrars::BlockAssignable<EdgecontainerClusterFleetEl>;
+impl terrars::ToListMappable for EdgecontainerCluster_Fleet {
+    type O = terrars::BlockAssignable<EdgecontainerCluster_Fleet>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1521,33 +1574,35 @@ impl terrars::ToListMappable for EdgecontainerClusterFleetEl {
     }
 }
 
-pub struct BuildEdgecontainerClusterFleetEl {
+pub struct BuildEdgecontainerCluster_Fleet {
     #[doc =
         "The name of the Fleet host project where this cluster will be registered.\nProject names are formatted as\n'projects/<project-number>'."]
     pub project: terrars::PrimField<std::string::String>,
 }
 
-impl BuildEdgecontainerClusterFleetEl {
-    pub fn build(self) -> EdgecontainerClusterFleetEl {
-        EdgecontainerClusterFleetEl { project: self.project }
+impl BuildEdgecontainerCluster_Fleet {
+    pub fn build(self) -> EdgecontainerCluster_Fleet {
+        EdgecontainerCluster_Fleet { project: self.project }
     }
 }
 
-pub struct EdgecontainerClusterFleetElRef {
+#[allow(dead_code)]
+pub struct EdgecontainerCluster_FleetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EdgecontainerClusterFleetElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EdgecontainerClusterFleetElRef {
-        EdgecontainerClusterFleetElRef {
+impl terrars::Ref for EdgecontainerCluster_FleetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EdgecontainerCluster_FleetRef {
+        EdgecontainerCluster_FleetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EdgecontainerClusterFleetElRef {
+impl EdgecontainerCluster_FleetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1566,14 +1621,14 @@ impl EdgecontainerClusterFleetElRef {
 }
 
 #[derive(Serialize)]
-pub struct EdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowElWindowEl {
+pub struct EdgecontainerCluster_MaintenancePolicy_MaintenanceExclusions_Window {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     end_time: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     start_time: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowElWindowEl {
+impl EdgecontainerCluster_MaintenancePolicy_MaintenanceExclusions_Window {
     #[doc =
         "Set the field `end_time`.\nThe time that the window ends. The end time must take place after the\nstart time."]
     pub fn set_end_time(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1588,8 +1643,8 @@ impl EdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowElWindowEl {
     }
 }
 
-impl terrars::ToListMappable for EdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowElWindowEl {
-    type O = terrars::BlockAssignable<EdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowElWindowEl>;
+impl terrars::ToListMappable for EdgecontainerCluster_MaintenancePolicy_MaintenanceExclusions_Window {
+    type O = terrars::BlockAssignable<EdgecontainerCluster_MaintenancePolicy_MaintenanceExclusions_Window>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1600,35 +1655,37 @@ impl terrars::ToListMappable for EdgecontainerClusterMaintenancePolicyElWindowEl
     }
 }
 
-pub struct BuildEdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowElWindowEl {}
+pub struct BuildEdgecontainerCluster_MaintenancePolicy_MaintenanceExclusions_Window {}
 
-impl BuildEdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowElWindowEl {
-    pub fn build(self) -> EdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowElWindowEl {
-        EdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowElWindowEl {
+impl BuildEdgecontainerCluster_MaintenancePolicy_MaintenanceExclusions_Window {
+    pub fn build(self) -> EdgecontainerCluster_MaintenancePolicy_MaintenanceExclusions_Window {
+        EdgecontainerCluster_MaintenancePolicy_MaintenanceExclusions_Window {
             end_time: core::default::Default::default(),
             start_time: core::default::Default::default(),
         }
     }
 }
 
-pub struct EdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowElWindowElRef {
+#[allow(dead_code)]
+pub struct EdgecontainerCluster_MaintenancePolicy_MaintenanceExclusions_WindowRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowElWindowElRef {
+impl terrars::Ref for EdgecontainerCluster_MaintenancePolicy_MaintenanceExclusions_WindowRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> EdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowElWindowElRef {
-        EdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowElWindowElRef {
+    ) -> EdgecontainerCluster_MaintenancePolicy_MaintenanceExclusions_WindowRef {
+        EdgecontainerCluster_MaintenancePolicy_MaintenanceExclusions_WindowRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowElWindowElRef {
+impl EdgecontainerCluster_MaintenancePolicy_MaintenanceExclusions_WindowRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1647,22 +1704,128 @@ impl EdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowElWindowElRef
 }
 
 #[derive(Serialize, Default)]
-struct EdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowElDynamic {
+struct EdgecontainerCluster_MaintenancePolicy_MaintenanceExclusionsDynamic {
     window: std
     ::option
-    ::Option<terrars::DynamicBlock<EdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowElWindowEl>>,
+    ::Option<terrars::DynamicBlock<EdgecontainerCluster_MaintenancePolicy_MaintenanceExclusions_Window>>,
 }
 
 #[derive(Serialize)]
-pub struct EdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowEl {
+pub struct EdgecontainerCluster_MaintenancePolicy_MaintenanceExclusions {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    window: std::option::Option<std::vec::Vec<EdgecontainerCluster_MaintenancePolicy_MaintenanceExclusions_Window>>,
+    dynamic: EdgecontainerCluster_MaintenancePolicy_MaintenanceExclusionsDynamic,
+}
+
+impl EdgecontainerCluster_MaintenancePolicy_MaintenanceExclusions {
+    #[doc = "Set the field `id`.\nA unique (per cluster) id for the window."]
+    pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `window`.\n"]
+    pub fn set_window(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<EdgecontainerCluster_MaintenancePolicy_MaintenanceExclusions_Window>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.window = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.window = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for EdgecontainerCluster_MaintenancePolicy_MaintenanceExclusions {
+    type O = terrars::BlockAssignable<EdgecontainerCluster_MaintenancePolicy_MaintenanceExclusions>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildEdgecontainerCluster_MaintenancePolicy_MaintenanceExclusions {}
+
+impl BuildEdgecontainerCluster_MaintenancePolicy_MaintenanceExclusions {
+    pub fn build(self) -> EdgecontainerCluster_MaintenancePolicy_MaintenanceExclusions {
+        EdgecontainerCluster_MaintenancePolicy_MaintenanceExclusions {
+            id: core::default::Default::default(),
+            window: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct EdgecontainerCluster_MaintenancePolicy_MaintenanceExclusionsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for EdgecontainerCluster_MaintenancePolicy_MaintenanceExclusionsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> EdgecontainerCluster_MaintenancePolicy_MaintenanceExclusionsRef {
+        EdgecontainerCluster_MaintenancePolicy_MaintenanceExclusionsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl EdgecontainerCluster_MaintenancePolicy_MaintenanceExclusionsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `id` after provisioning.\nA unique (per cluster) id for the window."]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `window` after provisioning.\n"]
+    pub fn window(&self) -> terrars::ListRef<EdgecontainerCluster_MaintenancePolicy_MaintenanceExclusions_WindowRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.window", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct EdgecontainerCluster_MaintenancePolicy_Window_RecurringWindowDynamic {
+    window: std
+    ::option
+    ::Option<terrars::DynamicBlock<EdgecontainerCluster_MaintenancePolicy_MaintenanceExclusions_Window>>,
+}
+
+#[derive(Serialize)]
+pub struct EdgecontainerCluster_MaintenancePolicy_Window_RecurringWindow {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     recurrence: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    window: std::option::Option<std::vec::Vec<EdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowElWindowEl>>,
-    dynamic: EdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowElDynamic,
+    window: std::option::Option<std::vec::Vec<EdgecontainerCluster_MaintenancePolicy_MaintenanceExclusions_Window>>,
+    dynamic: EdgecontainerCluster_MaintenancePolicy_Window_RecurringWindowDynamic,
 }
 
-impl EdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowEl {
+impl EdgecontainerCluster_MaintenancePolicy_Window_RecurringWindow {
     #[doc =
         "Set the field `recurrence`.\nAn RRULE (https://tools.ietf.org/html/rfc5545#section-3.8.5.3) for how\nthis window recurs. They go on for the span of time between the start and\nend time."]
     pub fn set_recurrence(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1679,8 +1842,7 @@ impl EdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<EdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowElWindowEl>,
+                        terrars::BlockAssignable<EdgecontainerCluster_MaintenancePolicy_MaintenanceExclusions_Window>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1695,8 +1857,8 @@ impl EdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowEl {
     }
 }
 
-impl terrars::ToListMappable for EdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowEl {
-    type O = terrars::BlockAssignable<EdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowEl>;
+impl terrars::ToListMappable for EdgecontainerCluster_MaintenancePolicy_Window_RecurringWindow {
+    type O = terrars::BlockAssignable<EdgecontainerCluster_MaintenancePolicy_Window_RecurringWindow>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1707,11 +1869,11 @@ impl terrars::ToListMappable for EdgecontainerClusterMaintenancePolicyElWindowEl
     }
 }
 
-pub struct BuildEdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowEl {}
+pub struct BuildEdgecontainerCluster_MaintenancePolicy_Window_RecurringWindow {}
 
-impl BuildEdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowEl {
-    pub fn build(self) -> EdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowEl {
-        EdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowEl {
+impl BuildEdgecontainerCluster_MaintenancePolicy_Window_RecurringWindow {
+    pub fn build(self) -> EdgecontainerCluster_MaintenancePolicy_Window_RecurringWindow {
+        EdgecontainerCluster_MaintenancePolicy_Window_RecurringWindow {
             recurrence: core::default::Default::default(),
             window: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1719,24 +1881,26 @@ impl BuildEdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowEl {
     }
 }
 
-pub struct EdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowElRef {
+#[allow(dead_code)]
+pub struct EdgecontainerCluster_MaintenancePolicy_Window_RecurringWindowRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowElRef {
+impl terrars::Ref for EdgecontainerCluster_MaintenancePolicy_Window_RecurringWindowRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> EdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowElRef {
-        EdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowElRef {
+    ) -> EdgecontainerCluster_MaintenancePolicy_Window_RecurringWindowRef {
+        EdgecontainerCluster_MaintenancePolicy_Window_RecurringWindowRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowElRef {
+impl EdgecontainerCluster_MaintenancePolicy_Window_RecurringWindowRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1748,30 +1912,26 @@ impl EdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowElRef {
     }
 
     #[doc = "Get a reference to the value of field `window` after provisioning.\n"]
-    pub fn window(
-        &self,
-    ) -> terrars::ListRef<EdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowElWindowElRef> {
+    pub fn window(&self) -> terrars::ListRef<EdgecontainerCluster_MaintenancePolicy_MaintenanceExclusions_WindowRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.window", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct EdgecontainerClusterMaintenancePolicyElWindowElDynamic {
+struct EdgecontainerCluster_MaintenancePolicy_WindowDynamic {
     recurring_window: std
     ::option
-    ::Option<terrars::DynamicBlock<EdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowEl>>,
+    ::Option<terrars::DynamicBlock<EdgecontainerCluster_MaintenancePolicy_Window_RecurringWindow>>,
 }
 
 #[derive(Serialize)]
-pub struct EdgecontainerClusterMaintenancePolicyElWindowEl {
+pub struct EdgecontainerCluster_MaintenancePolicy_Window {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    recurring_window: std
-    ::option
-    ::Option<std::vec::Vec<EdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowEl>>,
-    dynamic: EdgecontainerClusterMaintenancePolicyElWindowElDynamic,
+    recurring_window: std::option::Option<std::vec::Vec<EdgecontainerCluster_MaintenancePolicy_Window_RecurringWindow>>,
+    dynamic: EdgecontainerCluster_MaintenancePolicy_WindowDynamic,
 }
 
-impl EdgecontainerClusterMaintenancePolicyElWindowEl {
+impl EdgecontainerCluster_MaintenancePolicy_Window {
     #[doc = "Set the field `recurring_window`.\n"]
     pub fn set_recurring_window(
         mut self,
@@ -1780,9 +1940,7 @@ impl EdgecontainerClusterMaintenancePolicyElWindowEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<EdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<EdgecontainerCluster_MaintenancePolicy_Window_RecurringWindow>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1796,8 +1954,8 @@ impl EdgecontainerClusterMaintenancePolicyElWindowEl {
     }
 }
 
-impl terrars::ToListMappable for EdgecontainerClusterMaintenancePolicyElWindowEl {
-    type O = terrars::BlockAssignable<EdgecontainerClusterMaintenancePolicyElWindowEl>;
+impl terrars::ToListMappable for EdgecontainerCluster_MaintenancePolicy_Window {
+    type O = terrars::BlockAssignable<EdgecontainerCluster_MaintenancePolicy_Window>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1808,64 +1966,92 @@ impl terrars::ToListMappable for EdgecontainerClusterMaintenancePolicyElWindowEl
     }
 }
 
-pub struct BuildEdgecontainerClusterMaintenancePolicyElWindowEl {}
+pub struct BuildEdgecontainerCluster_MaintenancePolicy_Window {}
 
-impl BuildEdgecontainerClusterMaintenancePolicyElWindowEl {
-    pub fn build(self) -> EdgecontainerClusterMaintenancePolicyElWindowEl {
-        EdgecontainerClusterMaintenancePolicyElWindowEl {
+impl BuildEdgecontainerCluster_MaintenancePolicy_Window {
+    pub fn build(self) -> EdgecontainerCluster_MaintenancePolicy_Window {
+        EdgecontainerCluster_MaintenancePolicy_Window {
             recurring_window: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct EdgecontainerClusterMaintenancePolicyElWindowElRef {
+#[allow(dead_code)]
+pub struct EdgecontainerCluster_MaintenancePolicy_WindowRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EdgecontainerClusterMaintenancePolicyElWindowElRef {
+impl terrars::Ref for EdgecontainerCluster_MaintenancePolicy_WindowRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> EdgecontainerClusterMaintenancePolicyElWindowElRef {
-        EdgecontainerClusterMaintenancePolicyElWindowElRef {
+    ) -> EdgecontainerCluster_MaintenancePolicy_WindowRef {
+        EdgecontainerCluster_MaintenancePolicy_WindowRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EdgecontainerClusterMaintenancePolicyElWindowElRef {
+impl EdgecontainerCluster_MaintenancePolicy_WindowRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `recurring_window` after provisioning.\n"]
-    pub fn recurring_window(
-        &self,
-    ) -> terrars::ListRef<EdgecontainerClusterMaintenancePolicyElWindowElRecurringWindowElRef> {
+    pub fn recurring_window(&self) -> terrars::ListRef<EdgecontainerCluster_MaintenancePolicy_Window_RecurringWindowRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.recurring_window", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct EdgecontainerClusterMaintenancePolicyElDynamic {
-    window: std::option::Option<terrars::DynamicBlock<EdgecontainerClusterMaintenancePolicyElWindowEl>>,
+struct EdgecontainerCluster_MaintenancePolicyDynamic {
+    maintenance_exclusions: std
+    ::option
+    ::Option<terrars::DynamicBlock<EdgecontainerCluster_MaintenancePolicy_MaintenanceExclusions>>,
+    window: std::option::Option<terrars::DynamicBlock<EdgecontainerCluster_MaintenancePolicy_Window>>,
 }
 
 #[derive(Serialize)]
-pub struct EdgecontainerClusterMaintenancePolicyEl {
+pub struct EdgecontainerCluster_MaintenancePolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    window: std::option::Option<std::vec::Vec<EdgecontainerClusterMaintenancePolicyElWindowEl>>,
-    dynamic: EdgecontainerClusterMaintenancePolicyElDynamic,
+    maintenance_exclusions: std
+    ::option
+    ::Option<std::vec::Vec<EdgecontainerCluster_MaintenancePolicy_MaintenanceExclusions>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    window: std::option::Option<std::vec::Vec<EdgecontainerCluster_MaintenancePolicy_Window>>,
+    dynamic: EdgecontainerCluster_MaintenancePolicyDynamic,
 }
 
-impl EdgecontainerClusterMaintenancePolicyEl {
+impl EdgecontainerCluster_MaintenancePolicy {
+    #[doc = "Set the field `maintenance_exclusions`.\n"]
+    pub fn set_maintenance_exclusions(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<EdgecontainerCluster_MaintenancePolicy_MaintenanceExclusions>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.maintenance_exclusions = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.maintenance_exclusions = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `window`.\n"]
     pub fn set_window(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EdgecontainerClusterMaintenancePolicyElWindowEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EdgecontainerCluster_MaintenancePolicy_Window>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1879,8 +2065,8 @@ impl EdgecontainerClusterMaintenancePolicyEl {
     }
 }
 
-impl terrars::ToListMappable for EdgecontainerClusterMaintenancePolicyEl {
-    type O = terrars::BlockAssignable<EdgecontainerClusterMaintenancePolicyEl>;
+impl terrars::ToListMappable for EdgecontainerCluster_MaintenancePolicy {
+    type O = terrars::BlockAssignable<EdgecontainerCluster_MaintenancePolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1891,44 +2077,54 @@ impl terrars::ToListMappable for EdgecontainerClusterMaintenancePolicyEl {
     }
 }
 
-pub struct BuildEdgecontainerClusterMaintenancePolicyEl {}
+pub struct BuildEdgecontainerCluster_MaintenancePolicy {}
 
-impl BuildEdgecontainerClusterMaintenancePolicyEl {
-    pub fn build(self) -> EdgecontainerClusterMaintenancePolicyEl {
-        EdgecontainerClusterMaintenancePolicyEl {
+impl BuildEdgecontainerCluster_MaintenancePolicy {
+    pub fn build(self) -> EdgecontainerCluster_MaintenancePolicy {
+        EdgecontainerCluster_MaintenancePolicy {
+            maintenance_exclusions: core::default::Default::default(),
             window: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct EdgecontainerClusterMaintenancePolicyElRef {
+#[allow(dead_code)]
+pub struct EdgecontainerCluster_MaintenancePolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EdgecontainerClusterMaintenancePolicyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EdgecontainerClusterMaintenancePolicyElRef {
-        EdgecontainerClusterMaintenancePolicyElRef {
+impl terrars::Ref for EdgecontainerCluster_MaintenancePolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EdgecontainerCluster_MaintenancePolicyRef {
+        EdgecontainerCluster_MaintenancePolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EdgecontainerClusterMaintenancePolicyElRef {
+impl EdgecontainerCluster_MaintenancePolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
+    #[doc = "Get a reference to the value of field `maintenance_exclusions` after provisioning.\n"]
+    pub fn maintenance_exclusions(
+        &self,
+    ) -> terrars::ListRef<EdgecontainerCluster_MaintenancePolicy_MaintenanceExclusionsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.maintenance_exclusions", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `window` after provisioning.\n"]
-    pub fn window(&self) -> terrars::ListRef<EdgecontainerClusterMaintenancePolicyElWindowElRef> {
+    pub fn window(&self) -> terrars::ListRef<EdgecontainerCluster_MaintenancePolicy_WindowRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.window", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct EdgecontainerClusterNetworkingEl {
+pub struct EdgecontainerCluster_Networking {
     cluster_ipv4_cidr_blocks: terrars::ListField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cluster_ipv6_cidr_blocks: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
@@ -1937,7 +2133,7 @@ pub struct EdgecontainerClusterNetworkingEl {
     services_ipv6_cidr_blocks: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl EdgecontainerClusterNetworkingEl {
+impl EdgecontainerCluster_Networking {
     #[doc =
         "Set the field `cluster_ipv6_cidr_blocks`.\nIf specified, dual stack mode is enabled and all pods in the cluster are\nassigned an IPv6 address from these blocks alongside from an IPv4\naddress. Only a single block is supported. This field cannot be changed\nafter creation."]
     pub fn set_cluster_ipv6_cidr_blocks(
@@ -1959,8 +2155,8 @@ impl EdgecontainerClusterNetworkingEl {
     }
 }
 
-impl terrars::ToListMappable for EdgecontainerClusterNetworkingEl {
-    type O = terrars::BlockAssignable<EdgecontainerClusterNetworkingEl>;
+impl terrars::ToListMappable for EdgecontainerCluster_Networking {
+    type O = terrars::BlockAssignable<EdgecontainerCluster_Networking>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1971,7 +2167,7 @@ impl terrars::ToListMappable for EdgecontainerClusterNetworkingEl {
     }
 }
 
-pub struct BuildEdgecontainerClusterNetworkingEl {
+pub struct BuildEdgecontainerCluster_Networking {
     #[doc =
         "All pods in the cluster are assigned an RFC1918 IPv4 address from these\nblocks. Only a single block is supported. This field cannot be changed\nafter creation."]
     pub cluster_ipv4_cidr_blocks: terrars::ListField<terrars::PrimField<std::string::String>>,
@@ -1980,9 +2176,9 @@ pub struct BuildEdgecontainerClusterNetworkingEl {
     pub services_ipv4_cidr_blocks: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildEdgecontainerClusterNetworkingEl {
-    pub fn build(self) -> EdgecontainerClusterNetworkingEl {
-        EdgecontainerClusterNetworkingEl {
+impl BuildEdgecontainerCluster_Networking {
+    pub fn build(self) -> EdgecontainerCluster_Networking {
+        EdgecontainerCluster_Networking {
             cluster_ipv4_cidr_blocks: self.cluster_ipv4_cidr_blocks,
             cluster_ipv6_cidr_blocks: core::default::Default::default(),
             services_ipv4_cidr_blocks: self.services_ipv4_cidr_blocks,
@@ -1991,21 +2187,23 @@ impl BuildEdgecontainerClusterNetworkingEl {
     }
 }
 
-pub struct EdgecontainerClusterNetworkingElRef {
+#[allow(dead_code)]
+pub struct EdgecontainerCluster_NetworkingRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EdgecontainerClusterNetworkingElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EdgecontainerClusterNetworkingElRef {
-        EdgecontainerClusterNetworkingElRef {
+impl terrars::Ref for EdgecontainerCluster_NetworkingRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EdgecontainerCluster_NetworkingRef {
+        EdgecontainerCluster_NetworkingRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EdgecontainerClusterNetworkingElRef {
+impl EdgecontainerCluster_NetworkingRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2042,14 +2240,14 @@ impl EdgecontainerClusterNetworkingElRef {
 }
 
 #[derive(Serialize)]
-pub struct EdgecontainerClusterSystemAddonsConfigElIngressEl {
+pub struct EdgecontainerCluster_SystemAddonsConfig_Ingress {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     disabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ipv4_vip: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EdgecontainerClusterSystemAddonsConfigElIngressEl {
+impl EdgecontainerCluster_SystemAddonsConfig_Ingress {
     #[doc = "Set the field `disabled`.\nWhether Ingress is disabled."]
     pub fn set_disabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.disabled = std::option::Option::Some(v.into());
@@ -2063,8 +2261,8 @@ impl EdgecontainerClusterSystemAddonsConfigElIngressEl {
     }
 }
 
-impl terrars::ToListMappable for EdgecontainerClusterSystemAddonsConfigElIngressEl {
-    type O = terrars::BlockAssignable<EdgecontainerClusterSystemAddonsConfigElIngressEl>;
+impl terrars::ToListMappable for EdgecontainerCluster_SystemAddonsConfig_Ingress {
+    type O = terrars::BlockAssignable<EdgecontainerCluster_SystemAddonsConfig_Ingress>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2075,35 +2273,37 @@ impl terrars::ToListMappable for EdgecontainerClusterSystemAddonsConfigElIngress
     }
 }
 
-pub struct BuildEdgecontainerClusterSystemAddonsConfigElIngressEl {}
+pub struct BuildEdgecontainerCluster_SystemAddonsConfig_Ingress {}
 
-impl BuildEdgecontainerClusterSystemAddonsConfigElIngressEl {
-    pub fn build(self) -> EdgecontainerClusterSystemAddonsConfigElIngressEl {
-        EdgecontainerClusterSystemAddonsConfigElIngressEl {
+impl BuildEdgecontainerCluster_SystemAddonsConfig_Ingress {
+    pub fn build(self) -> EdgecontainerCluster_SystemAddonsConfig_Ingress {
+        EdgecontainerCluster_SystemAddonsConfig_Ingress {
             disabled: core::default::Default::default(),
             ipv4_vip: core::default::Default::default(),
         }
     }
 }
 
-pub struct EdgecontainerClusterSystemAddonsConfigElIngressElRef {
+#[allow(dead_code)]
+pub struct EdgecontainerCluster_SystemAddonsConfig_IngressRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EdgecontainerClusterSystemAddonsConfigElIngressElRef {
+impl terrars::Ref for EdgecontainerCluster_SystemAddonsConfig_IngressRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> EdgecontainerClusterSystemAddonsConfigElIngressElRef {
-        EdgecontainerClusterSystemAddonsConfigElIngressElRef {
+    ) -> EdgecontainerCluster_SystemAddonsConfig_IngressRef {
+        EdgecontainerCluster_SystemAddonsConfig_IngressRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EdgecontainerClusterSystemAddonsConfigElIngressElRef {
+impl EdgecontainerCluster_SystemAddonsConfig_IngressRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2120,22 +2320,22 @@ impl EdgecontainerClusterSystemAddonsConfigElIngressElRef {
 }
 
 #[derive(Serialize, Default)]
-struct EdgecontainerClusterSystemAddonsConfigElDynamic {
-    ingress: std::option::Option<terrars::DynamicBlock<EdgecontainerClusterSystemAddonsConfigElIngressEl>>,
+struct EdgecontainerCluster_SystemAddonsConfigDynamic {
+    ingress: std::option::Option<terrars::DynamicBlock<EdgecontainerCluster_SystemAddonsConfig_Ingress>>,
 }
 
 #[derive(Serialize)]
-pub struct EdgecontainerClusterSystemAddonsConfigEl {
+pub struct EdgecontainerCluster_SystemAddonsConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ingress: std::option::Option<std::vec::Vec<EdgecontainerClusterSystemAddonsConfigElIngressEl>>,
-    dynamic: EdgecontainerClusterSystemAddonsConfigElDynamic,
+    ingress: std::option::Option<std::vec::Vec<EdgecontainerCluster_SystemAddonsConfig_Ingress>>,
+    dynamic: EdgecontainerCluster_SystemAddonsConfigDynamic,
 }
 
-impl EdgecontainerClusterSystemAddonsConfigEl {
+impl EdgecontainerCluster_SystemAddonsConfig {
     #[doc = "Set the field `ingress`.\n"]
     pub fn set_ingress(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EdgecontainerClusterSystemAddonsConfigElIngressEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EdgecontainerCluster_SystemAddonsConfig_Ingress>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2149,8 +2349,8 @@ impl EdgecontainerClusterSystemAddonsConfigEl {
     }
 }
 
-impl terrars::ToListMappable for EdgecontainerClusterSystemAddonsConfigEl {
-    type O = terrars::BlockAssignable<EdgecontainerClusterSystemAddonsConfigEl>;
+impl terrars::ToListMappable for EdgecontainerCluster_SystemAddonsConfig {
+    type O = terrars::BlockAssignable<EdgecontainerCluster_SystemAddonsConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2161,44 +2361,46 @@ impl terrars::ToListMappable for EdgecontainerClusterSystemAddonsConfigEl {
     }
 }
 
-pub struct BuildEdgecontainerClusterSystemAddonsConfigEl {}
+pub struct BuildEdgecontainerCluster_SystemAddonsConfig {}
 
-impl BuildEdgecontainerClusterSystemAddonsConfigEl {
-    pub fn build(self) -> EdgecontainerClusterSystemAddonsConfigEl {
-        EdgecontainerClusterSystemAddonsConfigEl {
+impl BuildEdgecontainerCluster_SystemAddonsConfig {
+    pub fn build(self) -> EdgecontainerCluster_SystemAddonsConfig {
+        EdgecontainerCluster_SystemAddonsConfig {
             ingress: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct EdgecontainerClusterSystemAddonsConfigElRef {
+#[allow(dead_code)]
+pub struct EdgecontainerCluster_SystemAddonsConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EdgecontainerClusterSystemAddonsConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EdgecontainerClusterSystemAddonsConfigElRef {
-        EdgecontainerClusterSystemAddonsConfigElRef {
+impl terrars::Ref for EdgecontainerCluster_SystemAddonsConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EdgecontainerCluster_SystemAddonsConfigRef {
+        EdgecontainerCluster_SystemAddonsConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EdgecontainerClusterSystemAddonsConfigElRef {
+impl EdgecontainerCluster_SystemAddonsConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `ingress` after provisioning.\n"]
-    pub fn ingress(&self) -> terrars::ListRef<EdgecontainerClusterSystemAddonsConfigElIngressElRef> {
+    pub fn ingress(&self) -> terrars::ListRef<EdgecontainerCluster_SystemAddonsConfig_IngressRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ingress", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct EdgecontainerClusterTimeoutsEl {
+pub struct EdgecontainerCluster_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2207,7 +2409,7 @@ pub struct EdgecontainerClusterTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EdgecontainerClusterTimeoutsEl {
+impl EdgecontainerCluster_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -2227,8 +2429,8 @@ impl EdgecontainerClusterTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for EdgecontainerClusterTimeoutsEl {
-    type O = terrars::BlockAssignable<EdgecontainerClusterTimeoutsEl>;
+impl terrars::ToListMappable for EdgecontainerCluster_Timeouts {
+    type O = terrars::BlockAssignable<EdgecontainerCluster_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2239,11 +2441,11 @@ impl terrars::ToListMappable for EdgecontainerClusterTimeoutsEl {
     }
 }
 
-pub struct BuildEdgecontainerClusterTimeoutsEl {}
+pub struct BuildEdgecontainerCluster_Timeouts {}
 
-impl BuildEdgecontainerClusterTimeoutsEl {
-    pub fn build(self) -> EdgecontainerClusterTimeoutsEl {
-        EdgecontainerClusterTimeoutsEl {
+impl BuildEdgecontainerCluster_Timeouts {
+    pub fn build(self) -> EdgecontainerCluster_Timeouts {
+        EdgecontainerCluster_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -2251,21 +2453,23 @@ impl BuildEdgecontainerClusterTimeoutsEl {
     }
 }
 
-pub struct EdgecontainerClusterTimeoutsElRef {
+#[allow(dead_code)]
+pub struct EdgecontainerCluster_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EdgecontainerClusterTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EdgecontainerClusterTimeoutsElRef {
-        EdgecontainerClusterTimeoutsElRef {
+impl terrars::Ref for EdgecontainerCluster_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EdgecontainerCluster_TimeoutsRef {
+        EdgecontainerCluster_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EdgecontainerClusterTimeoutsElRef {
+impl EdgecontainerCluster_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2284,17 +2488,4 @@ impl EdgecontainerClusterTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct EdgecontainerClusterDynamic {
-    authorization: std::option::Option<terrars::DynamicBlock<EdgecontainerClusterAuthorizationEl>>,
-    control_plane: std::option::Option<terrars::DynamicBlock<EdgecontainerClusterControlPlaneEl>>,
-    control_plane_encryption: std
-    ::option
-    ::Option<terrars::DynamicBlock<EdgecontainerClusterControlPlaneEncryptionEl>>,
-    fleet: std::option::Option<terrars::DynamicBlock<EdgecontainerClusterFleetEl>>,
-    maintenance_policy: std::option::Option<terrars::DynamicBlock<EdgecontainerClusterMaintenancePolicyEl>>,
-    networking: std::option::Option<terrars::DynamicBlock<EdgecontainerClusterNetworkingEl>>,
-    system_addons_config: std::option::Option<terrars::DynamicBlock<EdgecontainerClusterSystemAddonsConfigEl>>,
 }

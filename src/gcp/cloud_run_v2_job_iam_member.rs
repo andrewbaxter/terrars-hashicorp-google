@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct CloudRunV2JobIamMemberData {
+struct CloudRunV2JobIamMemberData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,14 +30,14 @@ struct CloudRunV2JobIamMemberData {
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<CloudRunV2JobIamMemberConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<CloudRunV2JobIamMember_Condition>>,
     dynamic: CloudRunV2JobIamMemberDynamic,
 }
 
 struct CloudRunV2JobIamMember_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CloudRunV2JobIamMemberData>,
+    data: std::cell::RefCell<CloudRunV2JobIamMemberData_>,
 }
 
 #[derive(Clone)]
@@ -156,7 +158,7 @@ impl CloudRunV2JobIamMember {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudRunV2JobIamMemberConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudRunV2JobIamMember_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -205,7 +207,7 @@ impl CloudRunV2JobIamMember {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<CloudRunV2JobIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<CloudRunV2JobIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -256,7 +258,7 @@ impl BuildCloudRunV2JobIamMember {
         let out = CloudRunV2JobIamMember(std::rc::Rc::new(CloudRunV2JobIamMember_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CloudRunV2JobIamMemberData {
+            data: std::cell::RefCell::new(CloudRunV2JobIamMemberData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -336,20 +338,25 @@ impl CloudRunV2JobIamMemberRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<CloudRunV2JobIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<CloudRunV2JobIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct CloudRunV2JobIamMemberDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<CloudRunV2JobIamMember_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct CloudRunV2JobIamMemberConditionEl {
+pub struct CloudRunV2JobIamMember_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl CloudRunV2JobIamMemberConditionEl {
+impl CloudRunV2JobIamMember_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -357,8 +364,8 @@ impl CloudRunV2JobIamMemberConditionEl {
     }
 }
 
-impl terrars::ToListMappable for CloudRunV2JobIamMemberConditionEl {
-    type O = terrars::BlockAssignable<CloudRunV2JobIamMemberConditionEl>;
+impl terrars::ToListMappable for CloudRunV2JobIamMember_Condition {
+    type O = terrars::BlockAssignable<CloudRunV2JobIamMember_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -369,16 +376,16 @@ impl terrars::ToListMappable for CloudRunV2JobIamMemberConditionEl {
     }
 }
 
-pub struct BuildCloudRunV2JobIamMemberConditionEl {
+pub struct BuildCloudRunV2JobIamMember_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudRunV2JobIamMemberConditionEl {
-    pub fn build(self) -> CloudRunV2JobIamMemberConditionEl {
-        CloudRunV2JobIamMemberConditionEl {
+impl BuildCloudRunV2JobIamMember_Condition {
+    pub fn build(self) -> CloudRunV2JobIamMember_Condition {
+        CloudRunV2JobIamMember_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -386,21 +393,23 @@ impl BuildCloudRunV2JobIamMemberConditionEl {
     }
 }
 
-pub struct CloudRunV2JobIamMemberConditionElRef {
+#[allow(dead_code)]
+pub struct CloudRunV2JobIamMember_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudRunV2JobIamMemberConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudRunV2JobIamMemberConditionElRef {
-        CloudRunV2JobIamMemberConditionElRef {
+impl terrars::Ref for CloudRunV2JobIamMember_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudRunV2JobIamMember_ConditionRef {
+        CloudRunV2JobIamMember_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudRunV2JobIamMemberConditionElRef {
+impl CloudRunV2JobIamMember_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -419,9 +428,4 @@ impl CloudRunV2JobIamMemberConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct CloudRunV2JobIamMemberDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<CloudRunV2JobIamMemberConditionEl>>,
 }

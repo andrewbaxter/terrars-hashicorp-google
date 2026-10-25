@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataBigtableTableIamPolicyData {
+struct DataBigtableTableIamPolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -18,7 +20,7 @@ struct DataBigtableTableIamPolicyData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
-    instance: terrars::PrimField<std::string::String>,
+    instance_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     table: terrars::PrimField<std::string::String>,
@@ -27,7 +29,7 @@ struct DataBigtableTableIamPolicyData {
 struct DataBigtableTableIamPolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataBigtableTableIamPolicyData>,
+    data: std::cell::RefCell<DataBigtableTableIamPolicyData_>,
 }
 
 #[derive(Clone)]
@@ -94,9 +96,9 @@ impl DataBigtableTableIamPolicy {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `instance` after provisioning.\n"]
-    pub fn instance(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `instance_name` after provisioning.\n"]
+    pub fn instance_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_name", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `policy_data` after provisioning.\n"]
@@ -149,7 +151,7 @@ impl terrars::Datasource_ for DataBigtableTableIamPolicy_ {
 pub struct BuildDataBigtableTableIamPolicy {
     pub tf_id: std::string::String,
     #[doc = ""]
-    pub instance: terrars::PrimField<std::string::String>,
+    pub instance_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub table: terrars::PrimField<std::string::String>,
 }
@@ -159,13 +161,13 @@ impl BuildDataBigtableTableIamPolicy {
         let out = DataBigtableTableIamPolicy(std::rc::Rc::new(DataBigtableTableIamPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataBigtableTableIamPolicyData {
+            data: std::cell::RefCell::new(DataBigtableTableIamPolicyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
-                instance: self.instance,
+                instance_name: self.instance_name,
                 project: core::default::Default::default(),
                 table: self.table,
             }),
@@ -208,9 +210,9 @@ impl DataBigtableTableIamPolicyRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `instance` after provisioning.\n"]
-    pub fn instance(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `instance_name` after provisioning.\n"]
+    pub fn instance_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_name", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `policy_data` after provisioning.\n"]

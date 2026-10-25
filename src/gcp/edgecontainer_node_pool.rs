@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct EdgecontainerNodePoolData {
+struct EdgecontainerNodePoolData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct EdgecontainerNodePoolData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     cluster: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -32,18 +36,18 @@ struct EdgecontainerNodePoolData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    local_disk_encryption: std::option::Option<std::vec::Vec<EdgecontainerNodePoolLocalDiskEncryptionEl>>,
+    local_disk_encryption: std::option::Option<std::vec::Vec<EdgecontainerNodePool_LocalDiskEncryption>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    node_config: std::option::Option<std::vec::Vec<EdgecontainerNodePoolNodeConfigEl>>,
+    node_config: std::option::Option<std::vec::Vec<EdgecontainerNodePool_NodeConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<EdgecontainerNodePoolTimeoutsEl>,
+    timeouts: std::option::Option<EdgecontainerNodePool_Timeouts>,
     dynamic: EdgecontainerNodePoolDynamic,
 }
 
 struct EdgecontainerNodePool_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<EdgecontainerNodePoolData>,
+    data: std::cell::RefCell<EdgecontainerNodePoolData_>,
 }
 
 #[derive(Clone)]
@@ -143,6 +147,13 @@ impl EdgecontainerNodePool {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -175,7 +186,7 @@ impl EdgecontainerNodePool {
     #[doc = "Set the field `local_disk_encryption`.\n"]
     pub fn set_local_disk_encryption(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EdgecontainerNodePoolLocalDiskEncryptionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EdgecontainerNodePool_LocalDiskEncryption>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -191,7 +202,7 @@ impl EdgecontainerNodePool {
     #[doc = "Set the field `node_config`.\n"]
     pub fn set_node_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EdgecontainerNodePoolNodeConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EdgecontainerNodePool_NodeConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -205,7 +216,7 @@ impl EdgecontainerNodePool {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<EdgecontainerNodePoolTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<EdgecontainerNodePool_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -220,6 +231,12 @@ impl EdgecontainerNodePool {
         "Get a reference to the value of field `create_time` after provisioning.\nThe time when the node pool was created."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -290,18 +307,18 @@ impl EdgecontainerNodePool {
     }
 
     #[doc = "Get a reference to the value of field `local_disk_encryption` after provisioning.\n"]
-    pub fn local_disk_encryption(&self) -> terrars::ListRef<EdgecontainerNodePoolLocalDiskEncryptionElRef> {
+    pub fn local_disk_encryption(&self) -> terrars::ListRef<EdgecontainerNodePool_LocalDiskEncryptionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.local_disk_encryption", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `node_config` after provisioning.\n"]
-    pub fn node_config(&self) -> terrars::ListRef<EdgecontainerNodePoolNodeConfigElRef> {
+    pub fn node_config(&self) -> terrars::ListRef<EdgecontainerNodePool_NodeConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.node_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> EdgecontainerNodePoolTimeoutsElRef {
-        EdgecontainerNodePoolTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> EdgecontainerNodePool_TimeoutsRef {
+        EdgecontainerNodePool_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -356,13 +373,14 @@ impl BuildEdgecontainerNodePool {
         let out = EdgecontainerNodePool(std::rc::Rc::new(EdgecontainerNodePool_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(EdgecontainerNodePoolData {
+            data: std::cell::RefCell::new(EdgecontainerNodePoolData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 cluster: self.cluster,
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 labels: core::default::Default::default(),
                 location: self.location,
@@ -418,6 +436,12 @@ impl EdgecontainerNodePoolRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
     pub fn effective_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
@@ -485,28 +509,34 @@ impl EdgecontainerNodePoolRef {
     }
 
     #[doc = "Get a reference to the value of field `local_disk_encryption` after provisioning.\n"]
-    pub fn local_disk_encryption(&self) -> terrars::ListRef<EdgecontainerNodePoolLocalDiskEncryptionElRef> {
+    pub fn local_disk_encryption(&self) -> terrars::ListRef<EdgecontainerNodePool_LocalDiskEncryptionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.local_disk_encryption", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `node_config` after provisioning.\n"]
-    pub fn node_config(&self) -> terrars::ListRef<EdgecontainerNodePoolNodeConfigElRef> {
+    pub fn node_config(&self) -> terrars::ListRef<EdgecontainerNodePool_NodeConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.node_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> EdgecontainerNodePoolTimeoutsElRef {
-        EdgecontainerNodePoolTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> EdgecontainerNodePool_TimeoutsRef {
+        EdgecontainerNodePool_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct EdgecontainerNodePoolDynamic {
+    local_disk_encryption: std::option::Option<terrars::DynamicBlock<EdgecontainerNodePool_LocalDiskEncryption>>,
+    node_config: std::option::Option<terrars::DynamicBlock<EdgecontainerNodePool_NodeConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct EdgecontainerNodePoolLocalDiskEncryptionEl {
+pub struct EdgecontainerNodePool_LocalDiskEncryption {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EdgecontainerNodePoolLocalDiskEncryptionEl {
+impl EdgecontainerNodePool_LocalDiskEncryption {
     #[doc =
         "Set the field `kms_key`.\nThe Cloud KMS CryptoKey e.g. projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys/{cryptoKey} to use for protecting node local disks.\nIf not specified, a Google-managed key will be used instead."]
     pub fn set_kms_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -515,8 +545,8 @@ impl EdgecontainerNodePoolLocalDiskEncryptionEl {
     }
 }
 
-impl terrars::ToListMappable for EdgecontainerNodePoolLocalDiskEncryptionEl {
-    type O = terrars::BlockAssignable<EdgecontainerNodePoolLocalDiskEncryptionEl>;
+impl terrars::ToListMappable for EdgecontainerNodePool_LocalDiskEncryption {
+    type O = terrars::BlockAssignable<EdgecontainerNodePool_LocalDiskEncryption>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -527,29 +557,31 @@ impl terrars::ToListMappable for EdgecontainerNodePoolLocalDiskEncryptionEl {
     }
 }
 
-pub struct BuildEdgecontainerNodePoolLocalDiskEncryptionEl {}
+pub struct BuildEdgecontainerNodePool_LocalDiskEncryption {}
 
-impl BuildEdgecontainerNodePoolLocalDiskEncryptionEl {
-    pub fn build(self) -> EdgecontainerNodePoolLocalDiskEncryptionEl {
-        EdgecontainerNodePoolLocalDiskEncryptionEl { kms_key: core::default::Default::default() }
+impl BuildEdgecontainerNodePool_LocalDiskEncryption {
+    pub fn build(self) -> EdgecontainerNodePool_LocalDiskEncryption {
+        EdgecontainerNodePool_LocalDiskEncryption { kms_key: core::default::Default::default() }
     }
 }
 
-pub struct EdgecontainerNodePoolLocalDiskEncryptionElRef {
+#[allow(dead_code)]
+pub struct EdgecontainerNodePool_LocalDiskEncryptionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EdgecontainerNodePoolLocalDiskEncryptionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EdgecontainerNodePoolLocalDiskEncryptionElRef {
-        EdgecontainerNodePoolLocalDiskEncryptionElRef {
+impl terrars::Ref for EdgecontainerNodePool_LocalDiskEncryptionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EdgecontainerNodePool_LocalDiskEncryptionRef {
+        EdgecontainerNodePool_LocalDiskEncryptionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EdgecontainerNodePoolLocalDiskEncryptionElRef {
+impl EdgecontainerNodePool_LocalDiskEncryptionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -574,12 +606,12 @@ impl EdgecontainerNodePoolLocalDiskEncryptionElRef {
 }
 
 #[derive(Serialize)]
-pub struct EdgecontainerNodePoolNodeConfigEl {
+pub struct EdgecontainerNodePool_NodeConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
-impl EdgecontainerNodePoolNodeConfigEl {
+impl EdgecontainerNodePool_NodeConfig {
     #[doc = "Set the field `labels`.\n\"The Kubernetes node labels\""]
     pub fn set_labels(
         mut self,
@@ -590,8 +622,8 @@ impl EdgecontainerNodePoolNodeConfigEl {
     }
 }
 
-impl terrars::ToListMappable for EdgecontainerNodePoolNodeConfigEl {
-    type O = terrars::BlockAssignable<EdgecontainerNodePoolNodeConfigEl>;
+impl terrars::ToListMappable for EdgecontainerNodePool_NodeConfig {
+    type O = terrars::BlockAssignable<EdgecontainerNodePool_NodeConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -602,29 +634,31 @@ impl terrars::ToListMappable for EdgecontainerNodePoolNodeConfigEl {
     }
 }
 
-pub struct BuildEdgecontainerNodePoolNodeConfigEl {}
+pub struct BuildEdgecontainerNodePool_NodeConfig {}
 
-impl BuildEdgecontainerNodePoolNodeConfigEl {
-    pub fn build(self) -> EdgecontainerNodePoolNodeConfigEl {
-        EdgecontainerNodePoolNodeConfigEl { labels: core::default::Default::default() }
+impl BuildEdgecontainerNodePool_NodeConfig {
+    pub fn build(self) -> EdgecontainerNodePool_NodeConfig {
+        EdgecontainerNodePool_NodeConfig { labels: core::default::Default::default() }
     }
 }
 
-pub struct EdgecontainerNodePoolNodeConfigElRef {
+#[allow(dead_code)]
+pub struct EdgecontainerNodePool_NodeConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EdgecontainerNodePoolNodeConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EdgecontainerNodePoolNodeConfigElRef {
-        EdgecontainerNodePoolNodeConfigElRef {
+impl terrars::Ref for EdgecontainerNodePool_NodeConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EdgecontainerNodePool_NodeConfigRef {
+        EdgecontainerNodePool_NodeConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EdgecontainerNodePoolNodeConfigElRef {
+impl EdgecontainerNodePool_NodeConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -636,7 +670,7 @@ impl EdgecontainerNodePoolNodeConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct EdgecontainerNodePoolTimeoutsEl {
+pub struct EdgecontainerNodePool_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -645,7 +679,7 @@ pub struct EdgecontainerNodePoolTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EdgecontainerNodePoolTimeoutsEl {
+impl EdgecontainerNodePool_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -665,8 +699,8 @@ impl EdgecontainerNodePoolTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for EdgecontainerNodePoolTimeoutsEl {
-    type O = terrars::BlockAssignable<EdgecontainerNodePoolTimeoutsEl>;
+impl terrars::ToListMappable for EdgecontainerNodePool_Timeouts {
+    type O = terrars::BlockAssignable<EdgecontainerNodePool_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -677,11 +711,11 @@ impl terrars::ToListMappable for EdgecontainerNodePoolTimeoutsEl {
     }
 }
 
-pub struct BuildEdgecontainerNodePoolTimeoutsEl {}
+pub struct BuildEdgecontainerNodePool_Timeouts {}
 
-impl BuildEdgecontainerNodePoolTimeoutsEl {
-    pub fn build(self) -> EdgecontainerNodePoolTimeoutsEl {
-        EdgecontainerNodePoolTimeoutsEl {
+impl BuildEdgecontainerNodePool_Timeouts {
+    pub fn build(self) -> EdgecontainerNodePool_Timeouts {
+        EdgecontainerNodePool_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -689,21 +723,23 @@ impl BuildEdgecontainerNodePoolTimeoutsEl {
     }
 }
 
-pub struct EdgecontainerNodePoolTimeoutsElRef {
+#[allow(dead_code)]
+pub struct EdgecontainerNodePool_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EdgecontainerNodePoolTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EdgecontainerNodePoolTimeoutsElRef {
-        EdgecontainerNodePoolTimeoutsElRef {
+impl terrars::Ref for EdgecontainerNodePool_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EdgecontainerNodePool_TimeoutsRef {
+        EdgecontainerNodePool_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EdgecontainerNodePoolTimeoutsElRef {
+impl EdgecontainerNodePool_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -722,10 +758,4 @@ impl EdgecontainerNodePoolTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct EdgecontainerNodePoolDynamic {
-    local_disk_encryption: std::option::Option<terrars::DynamicBlock<EdgecontainerNodePoolLocalDiskEncryptionEl>>,
-    node_config: std::option::Option<terrars::DynamicBlock<EdgecontainerNodePoolNodeConfigEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataLossPreventionJobTriggerData {
+struct DataLossPreventionJobTriggerData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct DataLossPreventionJobTriggerData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -30,18 +34,18 @@ struct DataLossPreventionJobTriggerData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     trigger_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    inspect_job: std::option::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobEl>>,
+    inspect_job: std::option::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataLossPreventionJobTriggerTimeoutsEl>,
+    timeouts: std::option::Option<DataLossPreventionJobTrigger_Timeouts>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    triggers: std::option::Option<std::vec::Vec<DataLossPreventionJobTriggerTriggersEl>>,
+    triggers: std::option::Option<std::vec::Vec<DataLossPreventionJobTrigger_Triggers>>,
     dynamic: DataLossPreventionJobTriggerDynamic,
 }
 
 struct DataLossPreventionJobTrigger_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataLossPreventionJobTriggerData>,
+    data: std::cell::RefCell<DataLossPreventionJobTriggerData_>,
 }
 
 #[derive(Clone)]
@@ -141,6 +145,13 @@ impl DataLossPreventionJobTrigger {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nA description of the job trigger."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -176,7 +187,7 @@ impl DataLossPreventionJobTrigger {
     #[doc = "Set the field `inspect_job`.\n"]
     pub fn set_inspect_job(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataLossPreventionJobTriggerInspectJobEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -190,7 +201,7 @@ impl DataLossPreventionJobTrigger {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataLossPreventionJobTriggerTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataLossPreventionJobTrigger_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -198,7 +209,7 @@ impl DataLossPreventionJobTrigger {
     #[doc = "Set the field `triggers`.\n"]
     pub fn set_triggers(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataLossPreventionJobTriggerTriggersEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataLossPreventionJobTrigger_Triggers>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -215,6 +226,12 @@ impl DataLossPreventionJobTrigger {
         "Get a reference to the value of field `create_time` after provisioning.\nThe creation timestamp of an inspectTemplate. Set by the server."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -271,20 +288,20 @@ impl DataLossPreventionJobTrigger {
     }
 
     #[doc = "Get a reference to the value of field `inspect_job` after provisioning.\n"]
-    pub fn inspect_job(&self) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElRef> {
+    pub fn inspect_job(&self) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJobRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.inspect_job", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataLossPreventionJobTriggerTimeoutsElRef {
-        DataLossPreventionJobTriggerTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DataLossPreventionJobTrigger_TimeoutsRef {
+        DataLossPreventionJobTrigger_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 
     #[doc = "Get a reference to the value of field `triggers` after provisioning.\n"]
-    pub fn triggers(&self) -> terrars::ListRef<DataLossPreventionJobTriggerTriggersElRef> {
+    pub fn triggers(&self) -> terrars::ListRef<DataLossPreventionJobTrigger_TriggersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.triggers", self.extract_ref()))
     }
 }
@@ -332,12 +349,13 @@ impl BuildDataLossPreventionJobTrigger {
         let out = DataLossPreventionJobTrigger(std::rc::Rc::new(DataLossPreventionJobTrigger_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataLossPreventionJobTriggerData {
+            data: std::cell::RefCell::new(DataLossPreventionJobTriggerData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 display_name: core::default::Default::default(),
                 id: core::default::Default::default(),
@@ -382,6 +400,12 @@ impl DataLossPreventionJobTriggerRef {
         "Get a reference to the value of field `create_time` after provisioning.\nThe creation timestamp of an inspectTemplate. Set by the server."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -438,26 +462,32 @@ impl DataLossPreventionJobTriggerRef {
     }
 
     #[doc = "Get a reference to the value of field `inspect_job` after provisioning.\n"]
-    pub fn inspect_job(&self) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElRef> {
+    pub fn inspect_job(&self) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJobRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.inspect_job", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataLossPreventionJobTriggerTimeoutsElRef {
-        DataLossPreventionJobTriggerTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DataLossPreventionJobTrigger_TimeoutsRef {
+        DataLossPreventionJobTrigger_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 
     #[doc = "Get a reference to the value of field `triggers` after provisioning.\n"]
-    pub fn triggers(&self) -> terrars::ListRef<DataLossPreventionJobTriggerTriggersElRef> {
+    pub fn triggers(&self) -> terrars::ListRef<DataLossPreventionJobTrigger_TriggersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.triggers", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataLossPreventionJobTriggerDynamic {
+    inspect_job: std::option::Option<terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob>>,
+    triggers: std::option::Option<terrars::DynamicBlock<DataLossPreventionJobTrigger_Triggers>>,
+}
+
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationConfigEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     deidentify_template: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -466,7 +496,7 @@ pub struct DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransfor
     structured_deidentify_template: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationConfigEl {
+impl DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationConfig {
     #[doc =
         "Set the field `deidentify_template`.\nIf this template is specified, it will serve as the default de-identify template."]
     pub fn set_deidentify_template(
@@ -498,10 +528,9 @@ impl DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformation
     }
 }
 
-impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationConfigEl {
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationConfig {
     type O =
-        terrars
-        ::BlockAssignable<DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationConfigEl>;
+        terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -512,11 +541,11 @@ impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElActions
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationConfigEl {}
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationConfig {}
 
-impl BuildDataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationConfigEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationConfigEl {
-        DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationConfigEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationConfig {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationConfig {
+        DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationConfig {
             deidentify_template: core::default::Default::default(),
             image_redact_template: core::default::Default::default(),
             structured_deidentify_template: core::default::Default::default(),
@@ -524,24 +553,26 @@ impl BuildDataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransform
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationConfigElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationConfigElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationConfigElRef {
-        DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationConfigElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationConfigRef {
+        DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationConfigElRef {
+impl DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -566,14 +597,14 @@ impl DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformation
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationDetailsStorageConfigElTableEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationDetailsStorageConfig_Table {
     dataset_id: terrars::PrimField<std::string::String>,
     project_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     table_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationDetailsStorageConfigElTableEl {
+impl DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationDetailsStorageConfig_Table {
     #[doc =
         "Set the field `table_id`.\nThe ID of the table. The ID must contain only letters (a-z,\nA-Z), numbers (0-9), or underscores (_). The maximum length\nis 1,024 characters."]
     pub fn set_table_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -583,11 +614,11 @@ impl DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformation
 }
 
 impl terrars
-::ToListMappable for DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationDetailsStorageConfigElTableEl {
+::ToListMappable for DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationDetailsStorageConfig_Table {
     type O =
         terrars
         ::BlockAssignable<
-            DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationDetailsStorageConfigElTableEl,
+            DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationDetailsStorageConfig_Table,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -599,18 +630,18 @@ impl terrars
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationDetailsStorageConfigElTableEl {
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationDetailsStorageConfig_Table {
     #[doc = "The ID of the dataset containing this table."]
     pub dataset_id: terrars::PrimField<std::string::String>,
     #[doc = "The ID of the project containing this table."]
     pub project_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationDetailsStorageConfigElTableEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationDetailsStorageConfig_Table {
     pub fn build(
         self,
-    ) -> DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationDetailsStorageConfigElTableEl {
-        DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationDetailsStorageConfigElTableEl {
+    ) -> DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationDetailsStorageConfig_Table {
+        DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationDetailsStorageConfig_Table {
             dataset_id: self.dataset_id,
             project_id: self.project_id,
             table_id: core::default::Default::default(),
@@ -618,25 +649,27 @@ impl BuildDataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransform
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationDetailsStorageConfigElTableElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationDetailsStorageConfig_TableRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationDetailsStorageConfigElTableElRef {
+::Ref for DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationDetailsStorageConfig_TableRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationDetailsStorageConfigElTableElRef {
-        DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationDetailsStorageConfigElTableElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationDetailsStorageConfig_TableRef {
+        DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationDetailsStorageConfig_TableRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationDetailsStorageConfigElTableElRef {
+impl DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationDetailsStorageConfig_TableRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -661,33 +694,31 @@ impl DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformation
 }
 
 #[derive(Serialize, Default)]
-struct DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationDetailsStorageConfigElDynamic {
+struct DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationDetailsStorageConfigDynamic {
     table: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationDetailsStorageConfigElTableEl,
+            DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationDetailsStorageConfig_Table,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationDetailsStorageConfigEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationDetailsStorageConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     table: std
     ::option
     ::Option<
         std
         ::vec
-        ::Vec<
-            DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationDetailsStorageConfigElTableEl,
-        >,
+        ::Vec<DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationDetailsStorageConfig_Table>,
     >,
-    dynamic: DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationDetailsStorageConfigElDynamic,
+    dynamic: DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationDetailsStorageConfigDynamic,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationDetailsStorageConfigEl {
+impl DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationDetailsStorageConfig {
     #[doc = "Set the field `table`.\n"]
     pub fn set_table(
         mut self,
@@ -699,7 +730,7 @@ impl DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformation
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationDetailsStorageConfigElTableEl,
+                            DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationDetailsStorageConfig_Table,
                         >,
                     >,
     ) -> Self {
@@ -716,11 +747,11 @@ impl DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformation
 }
 
 impl terrars
-::ToListMappable for DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationDetailsStorageConfigEl {
+::ToListMappable for DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationDetailsStorageConfig {
     type O =
         terrars
         ::BlockAssignable<
-            DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationDetailsStorageConfigEl,
+            DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationDetailsStorageConfig,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -732,38 +763,40 @@ impl terrars
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationDetailsStorageConfigEl {}
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationDetailsStorageConfig {}
 
-impl BuildDataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationDetailsStorageConfigEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationDetailsStorageConfig {
     pub fn build(
         self,
-    ) -> DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationDetailsStorageConfigEl {
-        DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationDetailsStorageConfigEl {
+    ) -> DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationDetailsStorageConfig {
+        DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationDetailsStorageConfig {
             table: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationDetailsStorageConfigElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationDetailsStorageConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationDetailsStorageConfigElRef {
+::Ref for DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationDetailsStorageConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationDetailsStorageConfigElRef {
-        DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationDetailsStorageConfigElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationDetailsStorageConfigRef {
+        DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationDetailsStorageConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationDetailsStorageConfigElRef {
+impl DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationDetailsStorageConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -772,51 +805,43 @@ impl DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformation
     pub fn table(
         &self,
     ) -> terrars
-    ::ListRef<
-        DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationDetailsStorageConfigElTableElRef,
-    > {
+    ::ListRef<DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationDetailsStorageConfig_TableRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.table", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElDynamic {
+struct DataLossPreventionJobTrigger_InspectJob_Actions_DeidentifyDynamic {
     transformation_config: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationConfigEl>,
-    >,
+    ::Option<terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationConfig>>,
     transformation_details_storage_config: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationDetailsStorageConfigEl,
-        >,
+        ::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationDetailsStorageConfig>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify {
     cloud_storage_output: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     file_types_to_transform: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     transformation_config: std
     ::option
-    ::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationConfigEl>>,
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     transformation_details_storage_config: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationDetailsStorageConfigEl>,
+        std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationDetailsStorageConfig>,
     >,
-    dynamic: DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElDynamic,
+    dynamic: DataLossPreventionJobTrigger_InspectJob_Actions_DeidentifyDynamic,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyEl {
+impl DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify {
     #[doc =
         "Set the field `file_types_to_transform`.\nList of user-specified file type groups to transform. If specified, only the files with these filetypes will be transformed.\n\nIf empty, all supported files will be transformed. Supported types may be automatically added over time.\n\nIf a file type is set in this field that isn't supported by the Deidentify action then the job will fail and will not be successfully created/started. Possible values: [\"IMAGE\", \"TEXT_FILE\", \"CSV\", \"TSV\"]"]
     pub fn set_file_types_to_transform(
@@ -838,7 +863,7 @@ impl DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationConfigEl,
+                            DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationConfig,
                         >,
                     >,
     ) -> Self {
@@ -864,7 +889,7 @@ impl DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationDetailsStorageConfigEl,
+                            DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationDetailsStorageConfig,
                         >,
                     >,
     ) -> Self {
@@ -880,8 +905,8 @@ impl DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyEl {
     }
 }
 
-impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyEl {
-    type O = terrars::BlockAssignable<DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyEl>;
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify {
+    type O = terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -892,15 +917,15 @@ impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElActions
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElActionsElDeidentifyEl {
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_Actions_Deidentify {
     #[doc =
         "User settable Cloud Storage bucket and folders to store de-identified files.\n\nThis field must be set for cloud storage deidentification.\n\nThe output Cloud Storage bucket must be different from the input bucket.\n\nDe-identified files will overwrite files in the output path.\n\nForm of: gs://bucket/folder/ or gs://bucket"]
     pub cloud_storage_output: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataLossPreventionJobTriggerInspectJobElActionsElDeidentifyEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyEl {
-        DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_Actions_Deidentify {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify {
+        DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify {
             cloud_storage_output: self.cloud_storage_output,
             file_types_to_transform: core::default::Default::default(),
             transformation_config: core::default::Default::default(),
@@ -910,24 +935,26 @@ impl BuildDataLossPreventionJobTriggerInspectJobElActionsElDeidentifyEl {
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_Actions_DeidentifyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_Actions_DeidentifyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElRef {
-        DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_Actions_DeidentifyRef {
+        DataLossPreventionJobTrigger_InspectJob_Actions_DeidentifyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElRef {
+impl DataLossPreventionJobTrigger_InspectJob_Actions_DeidentifyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -947,7 +974,7 @@ impl DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElRef {
     #[doc = "Get a reference to the value of field `transformation_config` after provisioning.\n"]
     pub fn transformation_config(
         &self,
-    ) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationConfigElRef> {
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.transformation_config", self.base))
     }
 
@@ -955,18 +982,18 @@ impl DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElRef {
     pub fn transformation_details_storage_config(
         &self,
     ) -> terrars
-    ::ListRef<DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElTransformationDetailsStorageConfigElRef> {
+    ::ListRef<DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify_TransformationDetailsStorageConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.transformation_details_storage_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElActionsElJobNotificationEmailsEl {}
+pub struct DataLossPreventionJobTrigger_InspectJob_Actions_JobNotificationEmails {}
 
-impl DataLossPreventionJobTriggerInspectJobElActionsElJobNotificationEmailsEl { }
+impl DataLossPreventionJobTrigger_InspectJob_Actions_JobNotificationEmails { }
 
-impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElActionsElJobNotificationEmailsEl {
-    type O = terrars::BlockAssignable<DataLossPreventionJobTriggerInspectJobElActionsElJobNotificationEmailsEl>;
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_Actions_JobNotificationEmails {
+    type O = terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_Actions_JobNotificationEmails>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -977,46 +1004,48 @@ impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElActions
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElActionsElJobNotificationEmailsEl {}
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_Actions_JobNotificationEmails {}
 
-impl BuildDataLossPreventionJobTriggerInspectJobElActionsElJobNotificationEmailsEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElActionsElJobNotificationEmailsEl {
-        DataLossPreventionJobTriggerInspectJobElActionsElJobNotificationEmailsEl {}
+impl BuildDataLossPreventionJobTrigger_InspectJob_Actions_JobNotificationEmails {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_Actions_JobNotificationEmails {
+        DataLossPreventionJobTrigger_InspectJob_Actions_JobNotificationEmails {}
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElActionsElJobNotificationEmailsElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_Actions_JobNotificationEmailsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElActionsElJobNotificationEmailsElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_Actions_JobNotificationEmailsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElActionsElJobNotificationEmailsElRef {
-        DataLossPreventionJobTriggerInspectJobElActionsElJobNotificationEmailsElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_Actions_JobNotificationEmailsRef {
+        DataLossPreventionJobTrigger_InspectJob_Actions_JobNotificationEmailsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElActionsElJobNotificationEmailsElRef {
+impl DataLossPreventionJobTrigger_InspectJob_Actions_JobNotificationEmailsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElActionsElPubSubEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_Actions_PubSub {
     topic: terrars::PrimField<std::string::String>,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElActionsElPubSubEl { }
+impl DataLossPreventionJobTrigger_InspectJob_Actions_PubSub { }
 
-impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElActionsElPubSubEl {
-    type O = terrars::BlockAssignable<DataLossPreventionJobTriggerInspectJobElActionsElPubSubEl>;
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_Actions_PubSub {
+    type O = terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_Actions_PubSub>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1027,35 +1056,37 @@ impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElActions
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElActionsElPubSubEl {
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_Actions_PubSub {
     #[doc = "Cloud Pub/Sub topic to send notifications to."]
     pub topic: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataLossPreventionJobTriggerInspectJobElActionsElPubSubEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElActionsElPubSubEl {
-        DataLossPreventionJobTriggerInspectJobElActionsElPubSubEl { topic: self.topic }
+impl BuildDataLossPreventionJobTrigger_InspectJob_Actions_PubSub {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_Actions_PubSub {
+        DataLossPreventionJobTrigger_InspectJob_Actions_PubSub { topic: self.topic }
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElActionsElPubSubElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_Actions_PubSubRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElActionsElPubSubElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_Actions_PubSubRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElActionsElPubSubElRef {
-        DataLossPreventionJobTriggerInspectJobElActionsElPubSubElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_Actions_PubSubRef {
+        DataLossPreventionJobTrigger_InspectJob_Actions_PubSubRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElActionsElPubSubElRef {
+impl DataLossPreventionJobTrigger_InspectJob_Actions_PubSubRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1068,14 +1099,168 @@ impl DataLossPreventionJobTriggerInspectJobElActionsElPubSubElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElActionsElPublishFindingsToCloudDataCatalogEl {}
+pub struct DataLossPreventionJobTrigger_InspectJob_Actions_PublishFindingsToDataplexCatalog {}
 
-impl DataLossPreventionJobTriggerInspectJobElActionsElPublishFindingsToCloudDataCatalogEl { }
+impl DataLossPreventionJobTrigger_InspectJob_Actions_PublishFindingsToDataplexCatalog { }
 
-impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElActionsElPublishFindingsToCloudDataCatalogEl {
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_Actions_PublishFindingsToDataplexCatalog {
+    type O =
+        terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_Actions_PublishFindingsToDataplexCatalog>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_Actions_PublishFindingsToDataplexCatalog {}
+
+impl BuildDataLossPreventionJobTrigger_InspectJob_Actions_PublishFindingsToDataplexCatalog {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_Actions_PublishFindingsToDataplexCatalog {
+        DataLossPreventionJobTrigger_InspectJob_Actions_PublishFindingsToDataplexCatalog {}
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_Actions_PublishFindingsToDataplexCatalogRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_Actions_PublishFindingsToDataplexCatalogRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataLossPreventionJobTrigger_InspectJob_Actions_PublishFindingsToDataplexCatalogRef {
+        DataLossPreventionJobTrigger_InspectJob_Actions_PublishFindingsToDataplexCatalogRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataLossPreventionJobTrigger_InspectJob_Actions_PublishFindingsToDataplexCatalogRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataLossPreventionJobTrigger_InspectJob_Actions_PublishSummaryToCscc {}
+
+impl DataLossPreventionJobTrigger_InspectJob_Actions_PublishSummaryToCscc { }
+
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_Actions_PublishSummaryToCscc {
+    type O = terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_Actions_PublishSummaryToCscc>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_Actions_PublishSummaryToCscc {}
+
+impl BuildDataLossPreventionJobTrigger_InspectJob_Actions_PublishSummaryToCscc {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_Actions_PublishSummaryToCscc {
+        DataLossPreventionJobTrigger_InspectJob_Actions_PublishSummaryToCscc {}
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_Actions_PublishSummaryToCsccRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_Actions_PublishSummaryToCsccRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataLossPreventionJobTrigger_InspectJob_Actions_PublishSummaryToCsccRef {
+        DataLossPreventionJobTrigger_InspectJob_Actions_PublishSummaryToCsccRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataLossPreventionJobTrigger_InspectJob_Actions_PublishSummaryToCsccRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataLossPreventionJobTrigger_InspectJob_Actions_PublishToStackdriver {}
+
+impl DataLossPreventionJobTrigger_InspectJob_Actions_PublishToStackdriver { }
+
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_Actions_PublishToStackdriver {
+    type O = terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_Actions_PublishToStackdriver>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_Actions_PublishToStackdriver {}
+
+impl BuildDataLossPreventionJobTrigger_InspectJob_Actions_PublishToStackdriver {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_Actions_PublishToStackdriver {
+        DataLossPreventionJobTrigger_InspectJob_Actions_PublishToStackdriver {}
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_Actions_PublishToStackdriverRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_Actions_PublishToStackdriverRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataLossPreventionJobTrigger_InspectJob_Actions_PublishToStackdriverRef {
+        DataLossPreventionJobTrigger_InspectJob_Actions_PublishToStackdriverRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataLossPreventionJobTrigger_InspectJob_Actions_PublishToStackdriverRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig_StoragePath {
+    path: terrars::PrimField<std::string::String>,
+}
+
+impl DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig_StoragePath { }
+
+impl terrars
+::ToListMappable for DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig_StoragePath {
     type O =
         terrars
-        ::BlockAssignable<DataLossPreventionJobTriggerInspectJobElActionsElPublishFindingsToCloudDataCatalogEl>;
+        ::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig_StoragePath>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1086,142 +1271,58 @@ impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElActions
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElActionsElPublishFindingsToCloudDataCatalogEl {}
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig_StoragePath {
+    #[doc =
+        "A URL representing a file or path (no wildcards) in Cloud Storage.\nExample: 'gs://[BUCKET_NAME]/dictionary.txt'"]
+    pub path: terrars::PrimField<std::string::String>,
+}
 
-impl BuildDataLossPreventionJobTriggerInspectJobElActionsElPublishFindingsToCloudDataCatalogEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElActionsElPublishFindingsToCloudDataCatalogEl {
-        DataLossPreventionJobTriggerInspectJobElActionsElPublishFindingsToCloudDataCatalogEl {}
+impl BuildDataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig_StoragePath {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig_StoragePath {
+        DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig_StoragePath { path: self.path }
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElActionsElPublishFindingsToCloudDataCatalogElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig_StoragePathRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElActionsElPublishFindingsToCloudDataCatalogElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig_StoragePathRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElActionsElPublishFindingsToCloudDataCatalogElRef {
-        DataLossPreventionJobTriggerInspectJobElActionsElPublishFindingsToCloudDataCatalogElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig_StoragePathRef {
+        DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig_StoragePathRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElActionsElPublishFindingsToCloudDataCatalogElRef {
+impl DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig_StoragePathRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `path` after provisioning.\nA URL representing a file or path (no wildcards) in Cloud Storage.\nExample: 'gs://[BUCKET_NAME]/dictionary.txt'"]
+    pub fn path(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.path", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElActionsElPublishSummaryToCsccEl {}
-
-impl DataLossPreventionJobTriggerInspectJobElActionsElPublishSummaryToCsccEl { }
-
-impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElActionsElPublishSummaryToCsccEl {
-    type O = terrars::BlockAssignable<DataLossPreventionJobTriggerInspectJobElActionsElPublishSummaryToCsccEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataLossPreventionJobTriggerInspectJobElActionsElPublishSummaryToCsccEl {}
-
-impl BuildDataLossPreventionJobTriggerInspectJobElActionsElPublishSummaryToCsccEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElActionsElPublishSummaryToCsccEl {
-        DataLossPreventionJobTriggerInspectJobElActionsElPublishSummaryToCsccEl {}
-    }
-}
-
-pub struct DataLossPreventionJobTriggerInspectJobElActionsElPublishSummaryToCsccElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElActionsElPublishSummaryToCsccElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElActionsElPublishSummaryToCsccElRef {
-        DataLossPreventionJobTriggerInspectJobElActionsElPublishSummaryToCsccElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataLossPreventionJobTriggerInspectJobElActionsElPublishSummaryToCsccElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElActionsElPublishToStackdriverEl {}
-
-impl DataLossPreventionJobTriggerInspectJobElActionsElPublishToStackdriverEl { }
-
-impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElActionsElPublishToStackdriverEl {
-    type O = terrars::BlockAssignable<DataLossPreventionJobTriggerInspectJobElActionsElPublishToStackdriverEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataLossPreventionJobTriggerInspectJobElActionsElPublishToStackdriverEl {}
-
-impl BuildDataLossPreventionJobTriggerInspectJobElActionsElPublishToStackdriverEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElActionsElPublishToStackdriverEl {
-        DataLossPreventionJobTriggerInspectJobElActionsElPublishToStackdriverEl {}
-    }
-}
-
-pub struct DataLossPreventionJobTriggerInspectJobElActionsElPublishToStackdriverElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElActionsElPublishToStackdriverElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElActionsElPublishToStackdriverElRef {
-        DataLossPreventionJobTriggerInspectJobElActionsElPublishToStackdriverElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataLossPreventionJobTriggerInspectJobElActionsElPublishToStackdriverElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfigElTableEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig_Table {
     dataset_id: terrars::PrimField<std::string::String>,
     project_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     table_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfigElTableEl {
+impl DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig_Table {
     #[doc =
         "Set the field `table_id`.\nName of the table. If is not set a new one will be generated for you with the following format:\n'dlp_googleapis_yyyy_mm_dd_[dlp_job_id]'. Pacific timezone will be used for generating the date details."]
     pub fn set_table_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1230,10 +1331,9 @@ impl DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfig
     }
 }
 
-impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfigElTableEl {
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig_Table {
     type O =
-        terrars
-        ::BlockAssignable<DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfigElTableEl>;
+        terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig_Table>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1244,16 +1344,16 @@ impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElActions
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfigElTableEl {
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig_Table {
     #[doc = "Dataset ID of the table."]
     pub dataset_id: terrars::PrimField<std::string::String>,
     #[doc = "The Google Cloud Platform project ID of the project containing the table."]
     pub project_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfigElTableEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfigElTableEl {
-        DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfigElTableEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig_Table {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig_Table {
+        DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig_Table {
             dataset_id: self.dataset_id,
             project_id: self.project_id,
             table_id: core::default::Default::default(),
@@ -1261,24 +1361,26 @@ impl BuildDataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputC
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfigElTableElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig_TableRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfigElTableElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig_TableRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfigElTableElRef {
-        DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfigElTableElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig_TableRef {
+        DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig_TableRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfigElTableElRef {
+impl DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig_TableRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1302,30 +1404,63 @@ impl DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfig
 }
 
 #[derive(Serialize, Default)]
-struct DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfigElDynamic {
-    table: std
+struct DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfigDynamic {
+    storage_path: std
     ::option
     ::Option<
-        terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfigElTableEl>,
+        terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig_StoragePath>,
     >,
+    table: std
+    ::option
+    ::Option<terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig_Table>>,
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfigEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     output_schema: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    storage_path: std
+    ::option
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig_StoragePath>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     table: std
     ::option
-    ::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfigElTableEl>>,
-    dynamic: DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfigElDynamic,
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig_Table>>,
+    dynamic: DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfigDynamic,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfigEl {
+impl DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig {
     #[doc =
         "Set the field `output_schema`.\nSchema used for writing the findings for Inspect jobs. This field is only used for\nInspect and must be unspecified for Risk jobs. Columns are derived from the Finding\nobject. If appending to an existing table, any columns from the predefined schema\nthat are missing will be added. No columns in the existing table will be deleted.\n\nIf unspecified, then all available columns will be used for a new table or an (existing)\ntable with no schema, and no changes will be made to an existing table that has a schema.\nOnly for use with external storage. Possible values: [\"BASIC_COLUMNS\", \"GCS_COLUMNS\", \"DATASTORE_COLUMNS\", \"BIG_QUERY_COLUMNS\", \"ALL_COLUMNS\"]"]
     pub fn set_output_schema(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.output_schema = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `storage_path`.\n"]
+    pub fn set_storage_path(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig_StoragePath,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.storage_path = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.storage_path = std::option::Option::Some(d);
+            },
+        }
         self
     }
 
@@ -1340,7 +1475,7 @@ impl DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfig
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfigElTableEl,
+                            DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig_Table,
                         >,
                     >,
     ) -> Self {
@@ -1356,8 +1491,8 @@ impl DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfig
     }
 }
 
-impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfigEl {
-    type O = terrars::BlockAssignable<DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfigEl>;
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig {
+    type O = terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1368,36 +1503,39 @@ impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElActions
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfigEl {}
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig {}
 
-impl BuildDataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfigEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfigEl {
-        DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfigEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig {
+        DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig {
             output_schema: core::default::Default::default(),
+            storage_path: core::default::Default::default(),
             table: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfigElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfigElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfigElRef {
-        DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfigElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfigRef {
+        DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfigElRef {
+impl DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1408,31 +1546,38 @@ impl DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfig
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.output_schema", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `storage_path` after provisioning.\n"]
+    pub fn storage_path(
+        &self,
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig_StoragePathRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.storage_path", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `table` after provisioning.\n"]
     pub fn table(
         &self,
-    ) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfigElTableElRef> {
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig_TableRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.table", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElDynamic {
+struct DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindingsDynamic {
     output_config: std
     ::option
-    ::Option<terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfigEl>>,
+    ::Option<terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     output_config: std
     ::option
-    ::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfigEl>>,
-    dynamic: DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElDynamic,
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig>>,
+    dynamic: DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindingsDynamic,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsEl {
+impl DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings {
     #[doc = "Set the field `output_config`.\n"]
     pub fn set_output_config(
         mut self,
@@ -1443,9 +1588,7 @@ impl DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfigEl,
-                        >,
+                        ::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfig>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1460,8 +1603,8 @@ impl DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsEl {
     }
 }
 
-impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsEl {
-    type O = terrars::BlockAssignable<DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsEl>;
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings {
+    type O = terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1472,35 +1615,37 @@ impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElActions
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsEl {}
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings {}
 
-impl BuildDataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsEl {
-        DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings {
+        DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings {
             output_config: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindingsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElRef {
-        DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindingsRef {
+        DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElRef {
+impl DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1508,64 +1653,62 @@ impl DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElRef {
     #[doc = "Get a reference to the value of field `output_config` after provisioning.\n"]
     pub fn output_config(
         &self,
-    ) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElOutputConfigElRef> {
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings_OutputConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.output_config", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct DataLossPreventionJobTriggerInspectJobElActionsElDynamic {
+struct DataLossPreventionJobTrigger_InspectJob_ActionsDynamic {
     deidentify: std
     ::option
-    ::Option<terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyEl>>,
+    ::Option<terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify>>,
     job_notification_emails: std
     ::option
-    ::Option<terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobElActionsElJobNotificationEmailsEl>>,
-    pub_sub: std::option::Option<terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobElActionsElPubSubEl>>,
-    publish_findings_to_cloud_data_catalog: std
+    ::Option<terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_Actions_JobNotificationEmails>>,
+    pub_sub: std::option::Option<terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_Actions_PubSub>>,
+    publish_findings_to_dataplex_catalog: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobElActionsElPublishFindingsToCloudDataCatalogEl>,
-    >,
+    ::Option<terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_Actions_PublishFindingsToDataplexCatalog>>,
     publish_summary_to_cscc: std
     ::option
-    ::Option<terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobElActionsElPublishSummaryToCsccEl>>,
+    ::Option<terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_Actions_PublishSummaryToCscc>>,
     publish_to_stackdriver: std
     ::option
-    ::Option<terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobElActionsElPublishToStackdriverEl>>,
+    ::Option<terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_Actions_PublishToStackdriver>>,
     save_findings: std
     ::option
-    ::Option<terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsEl>>,
+    ::Option<terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings>>,
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElActionsEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_Actions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    deidentify: std::option::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyEl>>,
+    deidentify: std::option::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     job_notification_emails: std
     ::option
-    ::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElActionsElJobNotificationEmailsEl>>,
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_Actions_JobNotificationEmails>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    pub_sub: std::option::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElActionsElPubSubEl>>,
+    pub_sub: std::option::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_Actions_PubSub>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    publish_findings_to_cloud_data_catalog: std
+    publish_findings_to_dataplex_catalog: std
     ::option
-    ::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElActionsElPublishFindingsToCloudDataCatalogEl>>,
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_Actions_PublishFindingsToDataplexCatalog>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     publish_summary_to_cscc: std
     ::option
-    ::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElActionsElPublishSummaryToCsccEl>>,
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_Actions_PublishSummaryToCscc>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     publish_to_stackdriver: std
     ::option
-    ::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElActionsElPublishToStackdriverEl>>,
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_Actions_PublishToStackdriver>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    save_findings: std::option::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsEl>>,
-    dynamic: DataLossPreventionJobTriggerInspectJobElActionsElDynamic,
+    save_findings: std::option::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings>>,
+    dynamic: DataLossPreventionJobTrigger_InspectJob_ActionsDynamic,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElActionsEl {
+impl DataLossPreventionJobTrigger_InspectJob_Actions {
     #[doc = "Set the field `deidentify`.\n"]
     pub fn set_deidentify(
         mut self,
@@ -1574,7 +1717,7 @@ impl DataLossPreventionJobTriggerInspectJobElActionsEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyEl>>,
+                    ::Into<terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_Actions_Deidentify>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1597,7 +1740,7 @@ impl DataLossPreventionJobTriggerInspectJobElActionsEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<DataLossPreventionJobTriggerInspectJobElActionsElJobNotificationEmailsEl>,
+                        ::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_Actions_JobNotificationEmails>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1614,12 +1757,7 @@ impl DataLossPreventionJobTriggerInspectJobElActionsEl {
     #[doc = "Set the field `pub_sub`.\n"]
     pub fn set_pub_sub(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<DataLossPreventionJobTriggerInspectJobElActionsElPubSubEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_Actions_PubSub>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1632,8 +1770,8 @@ impl DataLossPreventionJobTriggerInspectJobElActionsEl {
         self
     }
 
-    #[doc = "Set the field `publish_findings_to_cloud_data_catalog`.\n"]
-    pub fn set_publish_findings_to_cloud_data_catalog(
+    #[doc = "Set the field `publish_findings_to_dataplex_catalog`.\n"]
+    pub fn set_publish_findings_to_dataplex_catalog(
         mut self,
         v:
             impl
@@ -1643,16 +1781,16 @@ impl DataLossPreventionJobTriggerInspectJobElActionsEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElActionsElPublishFindingsToCloudDataCatalogEl,
+                            DataLossPreventionJobTrigger_InspectJob_Actions_PublishFindingsToDataplexCatalog,
                         >,
                     >,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
-                self.publish_findings_to_cloud_data_catalog = std::option::Option::Some(v);
+                self.publish_findings_to_dataplex_catalog = std::option::Option::Some(v);
             },
             terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.publish_findings_to_cloud_data_catalog = std::option::Option::Some(d);
+                self.dynamic.publish_findings_to_dataplex_catalog = std::option::Option::Some(d);
             },
         }
         self
@@ -1667,8 +1805,7 @@ impl DataLossPreventionJobTriggerInspectJobElActionsEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<DataLossPreventionJobTriggerInspectJobElActionsElPublishSummaryToCsccEl>,
+                        terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_Actions_PublishSummaryToCscc>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1691,8 +1828,7 @@ impl DataLossPreventionJobTriggerInspectJobElActionsEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<DataLossPreventionJobTriggerInspectJobElActionsElPublishToStackdriverEl>,
+                        terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_Actions_PublishToStackdriver>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1714,7 +1850,7 @@ impl DataLossPreventionJobTriggerInspectJobElActionsEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsEl>>,
+                    ::Into<terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1728,8 +1864,8 @@ impl DataLossPreventionJobTriggerInspectJobElActionsEl {
     }
 }
 
-impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElActionsEl {
-    type O = terrars::BlockAssignable<DataLossPreventionJobTriggerInspectJobElActionsEl>;
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_Actions {
+    type O = terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_Actions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1740,15 +1876,15 @@ impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElActions
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElActionsEl {}
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_Actions {}
 
-impl BuildDataLossPreventionJobTriggerInspectJobElActionsEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElActionsEl {
-        DataLossPreventionJobTriggerInspectJobElActionsEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_Actions {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_Actions {
+        DataLossPreventionJobTrigger_InspectJob_Actions {
             deidentify: core::default::Default::default(),
             job_notification_emails: core::default::Default::default(),
             pub_sub: core::default::Default::default(),
-            publish_findings_to_cloud_data_catalog: core::default::Default::default(),
+            publish_findings_to_dataplex_catalog: core::default::Default::default(),
             publish_summary_to_cscc: core::default::Default::default(),
             publish_to_stackdriver: core::default::Default::default(),
             save_findings: core::default::Default::default(),
@@ -1757,85 +1893,87 @@ impl BuildDataLossPreventionJobTriggerInspectJobElActionsEl {
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElActionsElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_ActionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElActionsElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_ActionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElActionsElRef {
-        DataLossPreventionJobTriggerInspectJobElActionsElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_ActionsRef {
+        DataLossPreventionJobTrigger_InspectJob_ActionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElActionsElRef {
+impl DataLossPreventionJobTrigger_InspectJob_ActionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `deidentify` after provisioning.\n"]
-    pub fn deidentify(&self) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElActionsElDeidentifyElRef> {
+    pub fn deidentify(&self) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_Actions_DeidentifyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.deidentify", self.base))
     }
 
     #[doc = "Get a reference to the value of field `job_notification_emails` after provisioning.\n"]
     pub fn job_notification_emails(
         &self,
-    ) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElActionsElJobNotificationEmailsElRef> {
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_Actions_JobNotificationEmailsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.job_notification_emails", self.base))
     }
 
     #[doc = "Get a reference to the value of field `pub_sub` after provisioning.\n"]
-    pub fn pub_sub(&self) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElActionsElPubSubElRef> {
+    pub fn pub_sub(&self) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_Actions_PubSubRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.pub_sub", self.base))
     }
 
-    #[doc = "Get a reference to the value of field `publish_findings_to_cloud_data_catalog` after provisioning.\n"]
-    pub fn publish_findings_to_cloud_data_catalog(
+    #[doc = "Get a reference to the value of field `publish_findings_to_dataplex_catalog` after provisioning.\n"]
+    pub fn publish_findings_to_dataplex_catalog(
         &self,
-    ) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElActionsElPublishFindingsToCloudDataCatalogElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.publish_findings_to_cloud_data_catalog", self.base))
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_Actions_PublishFindingsToDataplexCatalogRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.publish_findings_to_dataplex_catalog", self.base))
     }
 
     #[doc = "Get a reference to the value of field `publish_summary_to_cscc` after provisioning.\n"]
     pub fn publish_summary_to_cscc(
         &self,
-    ) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElActionsElPublishSummaryToCsccElRef> {
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_Actions_PublishSummaryToCsccRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.publish_summary_to_cscc", self.base))
     }
 
     #[doc = "Get a reference to the value of field `publish_to_stackdriver` after provisioning.\n"]
     pub fn publish_to_stackdriver(
         &self,
-    ) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElActionsElPublishToStackdriverElRef> {
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_Actions_PublishToStackdriverRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.publish_to_stackdriver", self.base))
     }
 
     #[doc = "Get a reference to the value of field `save_findings` after provisioning.\n"]
-    pub fn save_findings(&self) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElActionsElSaveFindingsElRef> {
+    pub fn save_findings(&self) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_Actions_SaveFindingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.save_findings", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElCloudStoragePathEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary_CloudStoragePath {
     path: terrars::PrimField<std::string::String>,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElCloudStoragePathEl { }
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary_CloudStoragePath { }
 
 impl terrars
-::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElCloudStoragePathEl {
+::ToListMappable for DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary_CloudStoragePath {
     type O =
         terrars
         ::BlockAssignable<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElCloudStoragePathEl,
+            DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary_CloudStoragePath,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -1847,41 +1985,43 @@ impl terrars
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElCloudStoragePathEl {
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary_CloudStoragePath {
     #[doc =
         "A url representing a file or path (no wildcards) in Cloud Storage. Example: 'gs://[BUCKET_NAME]/dictionary.txt'"]
     pub path: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElCloudStoragePathEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary_CloudStoragePath {
     pub fn build(
         self,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElCloudStoragePathEl {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElCloudStoragePathEl {
+    ) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary_CloudStoragePath {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary_CloudStoragePath {
             path: self.path,
         }
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElCloudStoragePathElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary_CloudStoragePathRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElCloudStoragePathElRef {
+::Ref for DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary_CloudStoragePathRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElCloudStoragePathElRef {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElCloudStoragePathElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary_CloudStoragePathRef {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary_CloudStoragePathRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElCloudStoragePathElRef {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary_CloudStoragePathRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1894,19 +2034,17 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDic
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElWordListEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary_WordList {
     words: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElWordListEl { }
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary_WordList { }
 
 impl terrars
-::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElWordListEl {
+::ToListMappable for DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary_WordList {
     type O =
         terrars
-        ::BlockAssignable<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElWordListEl,
-        >;
+        ::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary_WordList>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1917,41 +2055,40 @@ impl terrars
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElWordListEl {
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary_WordList {
     #[doc =
         "Words or phrases defining the dictionary. The dictionary must contain at least one\nphrase and every phrase must contain at least 2 characters that are letters or digits."]
     pub words: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElWordListEl {
-    pub fn build(
-        self,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElWordListEl {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElWordListEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary_WordList {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary_WordList {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary_WordList {
             words: self.words,
         }
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElWordListElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary_WordListRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars
-::Ref for DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElWordListElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary_WordListRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElWordListElRef {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElWordListElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary_WordListRef {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary_WordListRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElWordListElRef {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary_WordListRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1964,43 +2101,43 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDic
 }
 
 #[derive(Serialize, Default)]
-struct DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElDynamic {
+struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_DictionaryDynamic {
     cloud_storage_path: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElCloudStoragePathEl,
+            DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary_CloudStoragePath,
         >,
     >,
     word_list: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElWordListEl>,
+        ::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary_WordList>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cloud_storage_path: std
     ::option
     ::Option<
         std
         ::vec
-        ::Vec<DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElCloudStoragePathEl>,
+        ::Vec<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary_CloudStoragePath>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     word_list: std
     ::option
     ::Option<
-        std::vec::Vec<DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElWordListEl>,
+        std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary_WordList>,
     >,
-    dynamic: DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElDynamic,
+    dynamic: DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_DictionaryDynamic,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryEl {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary {
     #[doc = "Set the field `cloud_storage_path`.\n"]
     pub fn set_cloud_storage_path(
         mut self,
@@ -2012,7 +2149,7 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDic
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElCloudStoragePathEl,
+                            DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary_CloudStoragePath,
                         >,
                     >,
     ) -> Self {
@@ -2038,7 +2175,7 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDic
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElWordListEl,
+                            DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary_WordList,
                         >,
                     >,
     ) -> Self {
@@ -2054,10 +2191,9 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDic
     }
 }
 
-impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryEl {
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary {
     type O =
-        terrars
-        ::BlockAssignable<DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryEl>;
+        terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2068,11 +2204,11 @@ impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspect
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryEl {}
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary {}
 
-impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryEl {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary {
             cloud_storage_path: core::default::Default::default(),
             word_list: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -2080,24 +2216,26 @@ impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypes
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_DictionaryRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_DictionaryRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElRef {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_DictionaryRef {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_DictionaryRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElRef {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_DictionaryRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2106,9 +2244,7 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDic
     pub fn cloud_storage_path(
         &self,
     ) -> terrars
-    ::ListRef<
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElCloudStoragePathElRef,
-    > {
+    ::ListRef<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary_CloudStoragePathRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cloud_storage_path", self.base))
     }
 
@@ -2116,25 +2252,21 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDic
     pub fn word_list(
         &self,
     ) -> terrars
-    ::ListRef<DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElWordListElRef> {
+    ::ListRef<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary_WordListRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.word_list", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInfoTypeElSensitivityScoreEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes_SensitivityScore {
     score: terrars::PrimField<std::string::String>,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInfoTypeElSensitivityScoreEl { }
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes_SensitivityScore { }
 
-impl terrars
-::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInfoTypeElSensitivityScoreEl {
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes_SensitivityScore {
     type O =
-        terrars
-        ::BlockAssignable<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInfoTypeElSensitivityScoreEl,
-        >;
+        terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes_SensitivityScore>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2145,41 +2277,38 @@ impl terrars
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInfoTypeElSensitivityScoreEl {
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes_SensitivityScore {
     #[doc =
         "The sensitivity score applied to the resource. Possible values: [\"SENSITIVITY_LOW\", \"SENSITIVITY_MODERATE\", \"SENSITIVITY_HIGH\"]"]
     pub score: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInfoTypeElSensitivityScoreEl {
-    pub fn build(
-        self,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInfoTypeElSensitivityScoreEl {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInfoTypeElSensitivityScoreEl {
-            score: self.score,
-        }
+impl BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes_SensitivityScore {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes_SensitivityScore {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes_SensitivityScore { score: self.score }
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInfoTypeElSensitivityScoreElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes_SensitivityScoreRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars
-::Ref for DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInfoTypeElSensitivityScoreElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes_SensitivityScoreRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInfoTypeElSensitivityScoreElRef {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInfoTypeElSensitivityScoreElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes_SensitivityScoreRef {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes_SensitivityScoreRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInfoTypeElSensitivityScoreElRef {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes_SensitivityScoreRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2192,34 +2321,27 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInf
 }
 
 #[derive(Serialize, Default)]
-struct DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInfoTypeElDynamic {
+struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_InfoTypeDynamic {
     sensitivity_score: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInfoTypeElSensitivityScoreEl,
-        >,
+        terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes_SensitivityScore>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInfoTypeEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_InfoType {
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     version: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sensitivity_score: std
     ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInfoTypeElSensitivityScoreEl>,
-    >,
-    dynamic: DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInfoTypeElDynamic,
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes_SensitivityScore>>,
+    dynamic: DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_InfoTypeDynamic,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInfoTypeEl {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_InfoType {
     #[doc =
         "Set the field `version`.\nVersion of the information type to use. By default, the version is set to stable."]
     pub fn set_version(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -2238,7 +2360,7 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInf
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInfoTypeElSensitivityScoreEl,
+                            DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes_SensitivityScore,
                         >,
                     >,
     ) -> Self {
@@ -2254,9 +2376,9 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInf
     }
 }
 
-impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInfoTypeEl {
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_InfoType {
     type O =
-        terrars::BlockAssignable<DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInfoTypeEl>;
+        terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_InfoType>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2267,15 +2389,15 @@ impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspect
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInfoTypeEl {
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_InfoType {
     #[doc =
         "Name of the information type. Either a name of your choosing when creating a CustomInfoType, or one of the names\nlisted at https://cloud.google.com/dlp/docs/infotypes-reference when specifying a built-in type."]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInfoTypeEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInfoTypeEl {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInfoTypeEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_InfoType {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_InfoType {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_InfoType {
             name: self.name,
             version: core::default::Default::default(),
             sensitivity_score: core::default::Default::default(),
@@ -2284,24 +2406,26 @@ impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypes
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInfoTypeElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_InfoTypeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInfoTypeElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_InfoTypeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInfoTypeElRef {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInfoTypeElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_InfoTypeRef {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_InfoTypeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInfoTypeElRef {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_InfoTypeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2321,22 +2445,19 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInf
     #[doc = "Get a reference to the value of field `sensitivity_score` after provisioning.\n"]
     pub fn sensitivity_score(
         &self,
-    ) -> terrars
-    ::ListRef<
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInfoTypeElSensitivityScoreElRef,
-    > {
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes_SensitivityScoreRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sensitivity_score", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElRegexEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Regex {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     group_indexes: std::option::Option<terrars::ListField<terrars::PrimField<f64>>>,
     pattern: terrars::PrimField<std::string::String>,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElRegexEl {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Regex {
     #[doc =
         "Set the field `group_indexes`.\nThe index of the submatch to extract as findings. When not specified, the entire match is returned. No more than 3 may be included."]
     pub fn set_group_indexes(
@@ -2348,9 +2469,8 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElReg
     }
 }
 
-impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElRegexEl {
-    type O =
-        terrars::BlockAssignable<DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElRegexEl>;
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Regex {
+    type O = terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Regex>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2361,39 +2481,41 @@ impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspect
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElRegexEl {
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Regex {
     #[doc =
         "Pattern defining the regular expression.\nIts syntax (https://github.com/google/re2/wiki/Syntax) can be found under the google/re2 repository on GitHub."]
     pub pattern: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElRegexEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElRegexEl {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElRegexEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Regex {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Regex {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Regex {
             group_indexes: core::default::Default::default(),
             pattern: self.pattern,
         }
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElRegexElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_RegexRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElRegexElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_RegexRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElRegexElRef {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElRegexElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_RegexRef {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_RegexRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElRegexElRef {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_RegexRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2412,81 +2534,15 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElReg
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElSensitivityScoreEl {
-    score: terrars::PrimField<std::string::String>,
-}
-
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElSensitivityScoreEl { }
-
-impl terrars
-::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElSensitivityScoreEl {
-    type O =
-        terrars
-        ::BlockAssignable<DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElSensitivityScoreEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElSensitivityScoreEl {
-    #[doc =
-        "The sensitivity score applied to the resource. Possible values: [\"SENSITIVITY_LOW\", \"SENSITIVITY_MODERATE\", \"SENSITIVITY_HIGH\"]"]
-    pub score: terrars::PrimField<std::string::String>,
-}
-
-impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElSensitivityScoreEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElSensitivityScoreEl {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElSensitivityScoreEl {
-            score: self.score,
-        }
-    }
-}
-
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElSensitivityScoreElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElSensitivityScoreElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElSensitivityScoreElRef {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElSensitivityScoreElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElSensitivityScoreElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `score` after provisioning.\nThe sensitivity score applied to the resource. Possible values: [\"SENSITIVITY_LOW\", \"SENSITIVITY_MODERATE\", \"SENSITIVITY_HIGH\"]"]
-    pub fn score(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.score", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElStoredTypeEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_StoredType {
     name: terrars::PrimField<std::string::String>,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElStoredTypeEl { }
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_StoredType { }
 
-impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElStoredTypeEl {
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_StoredType {
     type O =
-        terrars
-        ::BlockAssignable<DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElStoredTypeEl>;
+        terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_StoredType>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2497,36 +2553,38 @@ impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspect
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElStoredTypeEl {
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_StoredType {
     #[doc =
         "Resource name of the requested StoredInfoType, for example 'organizations/433245324/storedInfoTypes/432452342'\nor 'projects/project-id/storedInfoTypes/432452342'."]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElStoredTypeEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElStoredTypeEl {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElStoredTypeEl { name: self.name }
+impl BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_StoredType {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_StoredType {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_StoredType { name: self.name }
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElStoredTypeElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_StoredTypeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElStoredTypeElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_StoredTypeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElStoredTypeElRef {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElStoredTypeElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_StoredTypeRef {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_StoredTypeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElStoredTypeElRef {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_StoredTypeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2545,15 +2603,14 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElSto
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElSurrogateTypeEl {}
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_SurrogateType {}
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElSurrogateTypeEl { }
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_SurrogateType { }
 
-impl terrars
-::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElSurrogateTypeEl {
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_SurrogateType {
     type O =
         terrars
-        ::BlockAssignable<DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElSurrogateTypeEl>;
+        ::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_SurrogateType>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2564,72 +2621,65 @@ impl terrars
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElSurrogateTypeEl {}
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_SurrogateType {}
 
-impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElSurrogateTypeEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElSurrogateTypeEl {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElSurrogateTypeEl {}
+impl BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_SurrogateType {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_SurrogateType {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_SurrogateType {}
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElSurrogateTypeElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_SurrogateTypeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElSurrogateTypeElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_SurrogateTypeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElSurrogateTypeElRef {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElSurrogateTypeElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_SurrogateTypeRef {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_SurrogateTypeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElSurrogateTypeElRef {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_SurrogateTypeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize, Default)]
-struct DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDynamic {
+struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypesDynamic {
     dictionary: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryEl>,
-    >,
+    ::Option<terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary>>,
     info_type: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInfoTypeEl>,
-    >,
+    ::Option<terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_InfoType>>,
     regex: std
     ::option
-    ::Option<terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElRegexEl>>,
+    ::Option<terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Regex>>,
     sensitivity_score: std
     ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElSensitivityScoreEl>,
-    >,
+    ::Option<terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes_SensitivityScore>>,
     stored_type: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElStoredTypeEl>,
-    >,
+    ::Option<terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_StoredType>>,
     surrogate_type: std
     ::option
     ::Option<
-        terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElSurrogateTypeEl>,
+        terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_SurrogateType>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     exclusion_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2637,33 +2687,31 @@ pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoType
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dictionary: std
     ::option
-    ::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryEl>>,
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     info_type: std
     ::option
-    ::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInfoTypeEl>>,
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_InfoType>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     regex: std
     ::option
-    ::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElRegexEl>>,
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Regex>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sensitivity_score: std
     ::option
-    ::Option<
-        std::vec::Vec<DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElSensitivityScoreEl>,
-    >,
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes_SensitivityScore>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     stored_type: std
     ::option
-    ::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElStoredTypeEl>>,
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_StoredType>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     surrogate_type: std
     ::option
-    ::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElSurrogateTypeEl>>,
-    dynamic: DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDynamic,
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_SurrogateType>>,
+    dynamic: DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypesDynamic,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesEl {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes {
     #[doc =
         "Set the field `exclusion_type`.\nIf set to EXCLUSION_TYPE_EXCLUDE this infoType will not cause a finding to be returned. It still can be used for rules matching. Possible values: [\"EXCLUSION_TYPE_EXCLUDE\"]"]
     pub fn set_exclusion_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -2689,7 +2737,7 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryEl,
+                            DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary,
                         >,
                     >,
     ) -> Self {
@@ -2715,7 +2763,7 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInfoTypeEl,
+                            DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_InfoType,
                         >,
                     >,
     ) -> Self {
@@ -2740,9 +2788,7 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElRegexEl,
-                        >,
+                        ::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Regex>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2767,7 +2813,7 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElSensitivityScoreEl,
+                            DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes_SensitivityScore,
                         >,
                     >,
     ) -> Self {
@@ -2793,7 +2839,7 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElStoredTypeEl,
+                            DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_StoredType,
                         >,
                     >,
     ) -> Self {
@@ -2819,7 +2865,7 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElSurrogateTypeEl,
+                            DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_SurrogateType,
                         >,
                     >,
     ) -> Self {
@@ -2835,8 +2881,8 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesEl {
     }
 }
 
-impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesEl {
-    type O = terrars::BlockAssignable<DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesEl>;
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes {
+    type O = terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2847,11 +2893,11 @@ impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspect
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesEl {}
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes {}
 
-impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesEl {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes {
             exclusion_type: core::default::Default::default(),
             likelihood: core::default::Default::default(),
             dictionary: core::default::Default::default(),
@@ -2865,24 +2911,26 @@ impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypes
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElRef {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypesRef {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElRef {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2902,131 +2950,68 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElRef
     #[doc = "Get a reference to the value of field `dictionary` after provisioning.\n"]
     pub fn dictionary(
         &self,
-    ) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElDictionaryElRef> {
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_DictionaryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dictionary", self.base))
     }
 
     #[doc = "Get a reference to the value of field `info_type` after provisioning.\n"]
     pub fn info_type(
         &self,
-    ) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElInfoTypeElRef> {
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_InfoTypeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.info_type", self.base))
     }
 
     #[doc = "Get a reference to the value of field `regex` after provisioning.\n"]
     pub fn regex(
         &self,
-    ) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElRegexElRef> {
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_RegexRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.regex", self.base))
     }
 
     #[doc = "Get a reference to the value of field `sensitivity_score` after provisioning.\n"]
     pub fn sensitivity_score(
         &self,
-    ) -> terrars
-    ::ListRef<DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElSensitivityScoreElRef> {
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes_SensitivityScoreRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sensitivity_score", self.base))
     }
 
     #[doc = "Get a reference to the value of field `stored_type` after provisioning.\n"]
     pub fn stored_type(
         &self,
-    ) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElStoredTypeElRef> {
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_StoredTypeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.stored_type", self.base))
     }
 
     #[doc = "Get a reference to the value of field `surrogate_type` after provisioning.\n"]
     pub fn surrogate_type(
         &self,
-    ) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElSurrogateTypeElRef> {
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_SurrogateTypeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.surrogate_type", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesElSensitivityScoreEl {
-    score: terrars::PrimField<std::string::String>,
-}
-
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesElSensitivityScoreEl { }
-
-impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesElSensitivityScoreEl {
-    type O =
-        terrars
-        ::BlockAssignable<DataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesElSensitivityScoreEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesElSensitivityScoreEl {
-    #[doc =
-        "The sensitivity score applied to the resource. Possible values: [\"SENSITIVITY_LOW\", \"SENSITIVITY_MODERATE\", \"SENSITIVITY_HIGH\"]"]
-    pub score: terrars::PrimField<std::string::String>,
-}
-
-impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesElSensitivityScoreEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesElSensitivityScoreEl {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesElSensitivityScoreEl { score: self.score }
-    }
-}
-
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesElSensitivityScoreElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesElSensitivityScoreElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesElSensitivityScoreElRef {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesElSensitivityScoreElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesElSensitivityScoreElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `score` after provisioning.\nThe sensitivity score applied to the resource. Possible values: [\"SENSITIVITY_LOW\", \"SENSITIVITY_MODERATE\", \"SENSITIVITY_HIGH\"]"]
-    pub fn score(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.score", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct DataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesElDynamic {
+struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypesDynamic {
     sensitivity_score: std
     ::option
     ::Option<
-        terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesElSensitivityScoreEl>,
+        terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes_SensitivityScore>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes {
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     version: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sensitivity_score: std
     ::option
-    ::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesElSensitivityScoreEl>>,
-    dynamic: DataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesElDynamic,
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes_SensitivityScore>>,
+    dynamic: DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypesDynamic,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesEl {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes {
     #[doc =
         "Set the field `version`.\nVersion of the information type to use. By default, the version is set to stable"]
     pub fn set_version(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -3045,7 +3030,7 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesElSensitivityScoreEl,
+                            DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes_SensitivityScore,
                         >,
                     >,
     ) -> Self {
@@ -3061,8 +3046,8 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesEl {
     }
 }
 
-impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesEl {
-    type O = terrars::BlockAssignable<DataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesEl>;
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes {
+    type O = terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3073,15 +3058,15 @@ impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspect
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesEl {
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes {
     #[doc =
         "Name of the information type. Either a name of your choosing when creating a CustomInfoType, or one of the names listed\nat https://cloud.google.com/dlp/docs/infotypes-reference when specifying a built-in type."]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesEl {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes {
             name: self.name,
             version: core::default::Default::default(),
             sensitivity_score: core::default::Default::default(),
@@ -3090,24 +3075,26 @@ impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesEl {
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesElRef {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypesRef {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesElRef {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3127,114 +3114,33 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesElRef {
     #[doc = "Get a reference to the value of field `sensitivity_score` after provisioning.\n"]
     pub fn sensitivity_score(
         &self,
-    ) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesElSensitivityScoreElRef> {
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes_SensitivityScoreRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sensitivity_score", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElSensitivityScoreEl {
-    score: terrars::PrimField<std::string::String>,
-}
-
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElSensitivityScoreEl {
-
-}
-
-impl terrars
-::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElSensitivityScoreEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElSensitivityScoreEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElSensitivityScoreEl {
-    #[doc =
-        "The sensitivity score applied to the resource. Possible values: [\"SENSITIVITY_LOW\", \"SENSITIVITY_MODERATE\", \"SENSITIVITY_HIGH\"]"]
-    pub score: terrars::PrimField<std::string::String>,
-}
-
-impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElSensitivityScoreEl {
-    pub fn build(
-        self,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElSensitivityScoreEl {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElSensitivityScoreEl {
-            score: self.score,
-        }
-    }
-}
-
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElSensitivityScoreElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElSensitivityScoreElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElSensitivityScoreElRef {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElSensitivityScoreElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElSensitivityScoreElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `score` after provisioning.\nThe sensitivity score applied to the resource. Possible values: [\"SENSITIVITY_LOW\", \"SENSITIVITY_MODERATE\", \"SENSITIVITY_HIGH\"]"]
-    pub fn score(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.score", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElDynamic {
+struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits_MaxFindingsPerInfoType_InfoTypeDynamic {
     sensitivity_score: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElSensitivityScoreEl,
-        >,
+        terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes_SensitivityScore>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits_MaxFindingsPerInfoType_InfoType {
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     version: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sensitivity_score: std
     ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElSensitivityScoreEl,
-        >,
-    >,
-    dynamic: DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElDynamic,
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes_SensitivityScore>>,
+    dynamic: DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits_MaxFindingsPerInfoType_InfoTypeDynamic,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeEl {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits_MaxFindingsPerInfoType_InfoType {
     #[doc =
         "Set the field `version`.\nVersion of the information type to use. By default, the version is set to stable"]
     pub fn set_version(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -3253,7 +3159,7 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsP
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElSensitivityScoreEl,
+                            DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes_SensitivityScore,
                         >,
                     >,
     ) -> Self {
@@ -3270,11 +3176,11 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsP
 }
 
 impl terrars
-::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeEl {
+::ToListMappable for DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits_MaxFindingsPerInfoType_InfoType {
     type O =
         terrars
         ::BlockAssignable<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeEl,
+            DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits_MaxFindingsPerInfoType_InfoType,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -3286,17 +3192,17 @@ impl terrars
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeEl {
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits_MaxFindingsPerInfoType_InfoType {
     #[doc =
         "Name of the information type. Either a name of your choosing when creating a CustomInfoType, or one of the names listed\nat https://cloud.google.com/dlp/docs/infotypes-reference when specifying a built-in type."]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits_MaxFindingsPerInfoType_InfoType {
     pub fn build(
         self,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeEl {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeEl {
+    ) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits_MaxFindingsPerInfoType_InfoType {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits_MaxFindingsPerInfoType_InfoType {
             name: self.name,
             version: core::default::Default::default(),
             sensitivity_score: core::default::Default::default(),
@@ -3305,25 +3211,26 @@ impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFind
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits_MaxFindingsPerInfoType_InfoTypeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars
-::Ref for DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits_MaxFindingsPerInfoType_InfoTypeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElRef {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits_MaxFindingsPerInfoType_InfoTypeRef {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits_MaxFindingsPerInfoType_InfoTypeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElRef {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits_MaxFindingsPerInfoType_InfoTypeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3343,42 +3250,35 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsP
     #[doc = "Get a reference to the value of field `sensitivity_score` after provisioning.\n"]
     pub fn sensitivity_score(
         &self,
-    ) -> terrars
-    ::ListRef<
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElSensitivityScoreElRef,
-    > {
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes_SensitivityScoreRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sensitivity_score", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElDynamic {
+struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits_MaxFindingsPerInfoTypeDynamic {
     info_type: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeEl,
-        >,
+        ::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits_MaxFindingsPerInfoType_InfoType>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits_MaxFindingsPerInfoType {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max_findings: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     info_type: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeEl>,
+        std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits_MaxFindingsPerInfoType_InfoType>,
     >,
-    dynamic: DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElDynamic,
+    dynamic: DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits_MaxFindingsPerInfoTypeDynamic,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeEl {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits_MaxFindingsPerInfoType {
     #[doc = "Set the field `max_findings`.\nMax findings limit for the given infoType."]
     pub fn set_max_findings(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max_findings = std::option::Option::Some(v.into());
@@ -3396,7 +3296,7 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsP
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeEl,
+                            DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits_MaxFindingsPerInfoType_InfoType,
                         >,
                     >,
     ) -> Self {
@@ -3412,11 +3312,10 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsP
     }
 }
 
-impl terrars
-::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeEl {
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits_MaxFindingsPerInfoType {
     type O =
         terrars
-        ::BlockAssignable<DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeEl>;
+        ::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits_MaxFindingsPerInfoType>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3427,11 +3326,11 @@ impl terrars
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeEl {}
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits_MaxFindingsPerInfoType {}
 
-impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeEl {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits_MaxFindingsPerInfoType {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits_MaxFindingsPerInfoType {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits_MaxFindingsPerInfoType {
             max_findings: core::default::Default::default(),
             info_type: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -3439,24 +3338,26 @@ impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFind
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits_MaxFindingsPerInfoTypeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits_MaxFindingsPerInfoTypeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElRef {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits_MaxFindingsPerInfoTypeRef {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits_MaxFindingsPerInfoTypeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElRef {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits_MaxFindingsPerInfoTypeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3471,22 +3372,22 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsP
     pub fn info_type(
         &self,
     ) -> terrars
-    ::ListRef<DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElInfoTypeElRef> {
+    ::ListRef<DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits_MaxFindingsPerInfoType_InfoTypeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.info_type", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElDynamic {
+struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_LimitsDynamic {
     max_findings_per_info_type: std
     ::option
     ::Option<
-        terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeEl>,
+        terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits_MaxFindingsPerInfoType>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max_findings_per_item: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3494,11 +3395,11 @@ pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max_findings_per_info_type: std
     ::option
-    ::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeEl>>,
-    dynamic: DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElDynamic,
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits_MaxFindingsPerInfoType>>,
+    dynamic: DataLossPreventionJobTrigger_InspectJob_InspectConfig_LimitsDynamic,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsEl {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits {
     #[doc =
         "Set the field `max_findings_per_item`.\nMax number of findings that will be returned for each item scanned. The maximum returned is 2000."]
     pub fn set_max_findings_per_item(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -3524,7 +3425,7 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeEl,
+                            DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits_MaxFindingsPerInfoType,
                         >,
                     >,
     ) -> Self {
@@ -3540,8 +3441,8 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsEl {
     }
 }
 
-impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsEl {
-    type O = terrars::BlockAssignable<DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsEl>;
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits {
+    type O = terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3552,11 +3453,11 @@ impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspect
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsEl {}
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits {}
 
-impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsEl {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits {
             max_findings_per_item: core::default::Default::default(),
             max_findings_per_request: core::default::Default::default(),
             max_findings_per_info_type: core::default::Default::default(),
@@ -3565,24 +3466,26 @@ impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsEl {
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_LimitsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_InspectConfig_LimitsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElRef {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_LimitsRef {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_LimitsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElRef {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_LimitsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3602,105 +3505,33 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElRef {
     #[doc = "Get a reference to the value of field `max_findings_per_info_type` after provisioning.\n"]
     pub fn max_findings_per_info_type(
         &self,
-    ) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElMaxFindingsPerInfoTypeElRef> {
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits_MaxFindingsPerInfoTypeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.max_findings_per_info_type", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesElSensitivityScoreEl {
-    score: terrars::PrimField<std::string::String>,
-}
-
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesElSensitivityScoreEl { }
-
-impl terrars
-::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesElSensitivityScoreEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesElSensitivityScoreEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesElSensitivityScoreEl {
-    #[doc =
-        "The sensitivity score applied to the resource. Possible values: [\"SENSITIVITY_LOW\", \"SENSITIVITY_MODERATE\", \"SENSITIVITY_HIGH\"]"]
-    pub score: terrars::PrimField<std::string::String>,
-}
-
-impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesElSensitivityScoreEl {
-    pub fn build(
-        self,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesElSensitivityScoreEl {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesElSensitivityScoreEl {
-            score: self.score,
-        }
-    }
-}
-
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesElSensitivityScoreElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesElSensitivityScoreElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesElSensitivityScoreElRef {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesElSensitivityScoreElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesElSensitivityScoreElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `score` after provisioning.\nThe sensitivity score applied to the resource. Possible values: [\"SENSITIVITY_LOW\", \"SENSITIVITY_MODERATE\", \"SENSITIVITY_HIGH\"]"]
-    pub fn score(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.score", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesElDynamic {
+struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_InfoTypesDynamic {
     sensitivity_score: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesElSensitivityScoreEl>,
+        terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes_SensitivityScore>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_InfoTypes {
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     version: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sensitivity_score: std
     ::option
-    ::Option<
-        std::vec::Vec<DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesElSensitivityScoreEl>,
-    >,
-    dynamic: DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesElDynamic,
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes_SensitivityScore>>,
+    dynamic: DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_InfoTypesDynamic,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesEl {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_InfoTypes {
     #[doc =
         "Set the field `version`.\nVersion of the information type to use. By default, the version is set to stable."]
     pub fn set_version(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -3719,7 +3550,7 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesEl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesElSensitivityScoreEl,
+                            DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes_SensitivityScore,
                         >,
                     >,
     ) -> Self {
@@ -3735,8 +3566,8 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesEl
     }
 }
 
-impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesEl {
-    type O = terrars::BlockAssignable<DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesEl>;
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_InfoTypes {
+    type O = terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_InfoTypes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3747,15 +3578,15 @@ impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspect
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesEl {
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_InfoTypes {
     #[doc =
         "Name of the information type. Either a name of your choosing when creating a CustomInfoType, or one of the names listed\nat https://cloud.google.com/dlp/docs/infotypes-reference when specifying a built-in type."]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesEl {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_InfoTypes {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_InfoTypes {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_InfoTypes {
             name: self.name,
             version: core::default::Default::default(),
             sensitivity_score: core::default::Default::default(),
@@ -3764,24 +3595,26 @@ impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTy
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_InfoTypesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_InfoTypesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesElRef {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_InfoTypesRef {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_InfoTypesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesElRef {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_InfoTypesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3801,337 +3634,20 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesEl
     #[doc = "Get a reference to the value of field `sensitivity_score` after provisioning.\n"]
     pub fn sensitivity_score(
         &self,
-    ) -> terrars
-    ::ListRef<DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesElSensitivityScoreElRef> {
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes_SensitivityScoreRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sensitivity_score", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElCloudStoragePathEl {
-    path: terrars::PrimField<std::string::String>,
-}
-
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElCloudStoragePathEl {
-
-}
-
-impl terrars
-::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElCloudStoragePathEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElCloudStoragePathEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElCloudStoragePathEl {
-    #[doc =
-        "A url representing a file or path (no wildcards) in Cloud Storage. Example: 'gs://[BUCKET_NAME]/dictionary.txt'"]
-    pub path: terrars::PrimField<std::string::String>,
-}
-
-impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElCloudStoragePathEl {
-    pub fn build(
-        self,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElCloudStoragePathEl {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElCloudStoragePathEl {
-            path: self.path,
-        }
-    }
-}
-
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElCloudStoragePathElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElCloudStoragePathElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElCloudStoragePathElRef {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElCloudStoragePathElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElCloudStoragePathElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `path` after provisioning.\nA url representing a file or path (no wildcards) in Cloud Storage. Example: 'gs://[BUCKET_NAME]/dictionary.txt'"]
-    pub fn path(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.path", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElWordListEl {
-    words: terrars::ListField<terrars::PrimField<std::string::String>>,
-}
-
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElWordListEl { }
-
-impl terrars
-::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElWordListEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElWordListEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElWordListEl {
-    #[doc =
-        "Words or phrases defining the dictionary. The dictionary must contain at least one\nphrase and every phrase must contain at least 2 characters that are letters or digits."]
-    pub words: terrars::ListField<terrars::PrimField<std::string::String>>,
-}
-
-impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElWordListEl {
-    pub fn build(
-        self,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElWordListEl {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElWordListEl {
-            words: self.words,
-        }
-    }
-}
-
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElWordListElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElWordListElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElWordListElRef {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElWordListElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElWordListElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `words` after provisioning.\nWords or phrases defining the dictionary. The dictionary must contain at least one\nphrase and every phrase must contain at least 2 characters that are letters or digits."]
-    pub fn words(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.words", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElDynamic {
-    cloud_storage_path: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElCloudStoragePathEl,
-        >,
-    >,
-    word_list: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElWordListEl,
-        >,
-    >,
-}
-
-#[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cloud_storage_path: std
-    ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElCloudStoragePathEl,
-        >,
-    >,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    word_list: std
-    ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElWordListEl,
-        >,
-    >,
-    dynamic: DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElDynamic,
-}
-
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryEl {
-    #[doc = "Set the field `cloud_storage_path`.\n"]
-    pub fn set_cloud_storage_path(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElCloudStoragePathEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.cloud_storage_path = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.cloud_storage_path = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `word_list`.\n"]
-    pub fn set_word_list(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElWordListEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.word_list = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.word_list = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryEl {}
-
-impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryEl {
-    pub fn build(
-        self,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryEl {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryEl {
-            cloud_storage_path: core::default::Default::default(),
-            word_list: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElRef {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `cloud_storage_path` after provisioning.\n"]
-    pub fn cloud_storage_path(
-        &self,
-    ) -> terrars
-    ::ListRef<
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElCloudStoragePathElRef,
-    > {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.cloud_storage_path", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `word_list` after provisioning.\n"]
-    pub fn word_list(
-        &self,
-    ) -> terrars
-    ::ListRef<
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElWordListElRef,
-    > {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.word_list", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElHotwordRegexEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_HotwordRegex {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     group_indexes: std::option::Option<terrars::ListField<terrars::PrimField<f64>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     pattern: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElHotwordRegexEl {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_HotwordRegex {
     #[doc =
         "Set the field `group_indexes`.\nThe index of the submatch to extract as findings. When not specified,\nthe entire match is returned. No more than 3 may be included."]
     pub fn set_group_indexes(
@@ -4151,11 +3667,11 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExcl
 }
 
 impl terrars
-::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElHotwordRegexEl {
+::ToListMappable for DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_HotwordRegex {
     type O =
         terrars
         ::BlockAssignable<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElHotwordRegexEl,
+            DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_HotwordRegex,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -4167,38 +3683,39 @@ impl terrars
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElHotwordRegexEl {}
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_HotwordRegex {}
 
-impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElHotwordRegexEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_HotwordRegex {
     pub fn build(
         self,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElHotwordRegexEl {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElHotwordRegexEl {
+    ) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_HotwordRegex {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_HotwordRegex {
             group_indexes: core::default::Default::default(),
             pattern: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElHotwordRegexElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_HotwordRegexRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars
-::Ref for DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElHotwordRegexElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_HotwordRegexRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElHotwordRegexElRef {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElHotwordRegexElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_HotwordRegexRef {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_HotwordRegexRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElHotwordRegexElRef {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_HotwordRegexRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4217,14 +3734,14 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExcl
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElProximityEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_Proximity {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     window_after: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     window_before: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElProximityEl {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_Proximity {
     #[doc =
         "Set the field `window_after`.\nNumber of characters after the finding to consider. Either this or window_before must be specified"]
     pub fn set_window_after(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -4241,12 +3758,10 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExcl
 }
 
 impl terrars
-::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElProximityEl {
+::ToListMappable for DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_Proximity {
     type O =
         terrars
-        ::BlockAssignable<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElProximityEl,
-        >;
+        ::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_Proximity>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4257,38 +3772,37 @@ impl terrars
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElProximityEl {}
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_Proximity {}
 
-impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElProximityEl {
-    pub fn build(
-        self,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElProximityEl {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElProximityEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_Proximity {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_Proximity {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_Proximity {
             window_after: core::default::Default::default(),
             window_before: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElProximityElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_ProximityRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars
-::Ref for DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElProximityElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_ProximityRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElProximityElRef {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElProximityElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_ProximityRef {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_ProximityRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElProximityElRef {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_ProximityRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4307,51 +3821,39 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExcl
 }
 
 #[derive(Serialize, Default)]
-struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElDynamic {
+struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule_ExcludeByHotwordDynamic {
     hotword_regex: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElHotwordRegexEl,
-        >,
+        ::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_HotwordRegex>,
     >,
     proximity: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElProximityEl,
-        >,
+        ::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_Proximity>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule_ExcludeByHotword {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     hotword_regex: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElHotwordRegexEl,
-        >,
+        std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_HotwordRegex>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     proximity: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElProximityEl,
-        >,
+        std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_Proximity>,
     >,
-    dynamic: DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElDynamic,
+    dynamic: DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule_ExcludeByHotwordDynamic,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordEl {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule_ExcludeByHotword {
     #[doc = "Set the field `hotword_regex`.\n"]
     pub fn set_hotword_regex(
         mut self,
@@ -4363,7 +3865,7 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExcl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElHotwordRegexEl,
+                            DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_HotwordRegex,
                         >,
                     >,
     ) -> Self {
@@ -4389,7 +3891,7 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExcl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElProximityEl,
+                            DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_Proximity,
                         >,
                     >,
     ) -> Self {
@@ -4406,11 +3908,11 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExcl
 }
 
 impl terrars
-::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordEl {
+::ToListMappable for DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule_ExcludeByHotword {
     type O =
         terrars
         ::BlockAssignable<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordEl,
+            DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule_ExcludeByHotword,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -4422,13 +3924,13 @@ impl terrars
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordEl {}
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule_ExcludeByHotword {}
 
-impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule_ExcludeByHotword {
     pub fn build(
         self,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordEl {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordEl {
+    ) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule_ExcludeByHotword {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule_ExcludeByHotword {
             hotword_regex: core::default::Default::default(),
             proximity: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -4436,25 +3938,27 @@ impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesE
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule_ExcludeByHotwordRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElRef {
+::Ref for DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule_ExcludeByHotwordRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElRef {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule_ExcludeByHotwordRef {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule_ExcludeByHotwordRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElRef {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule_ExcludeByHotwordRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4463,9 +3967,7 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExcl
     pub fn hotword_regex(
         &self,
     ) -> terrars
-    ::ListRef<
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElHotwordRegexElRef,
-    > {
+    ::ListRef<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_HotwordRegexRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.hotword_regex", self.base))
     }
 
@@ -4473,260 +3975,28 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExcl
     pub fn proximity(
         &self,
     ) -> terrars
-    ::ListRef<
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElProximityElRef,
-    > {
+    ::ListRef<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_ProximityRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.proximity", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElSensitivityScoreEl {
-    score: terrars::PrimField<std::string::String>,
-}
-
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElSensitivityScoreEl {
-
-}
-
-impl terrars
-::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElSensitivityScoreEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElSensitivityScoreEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElSensitivityScoreEl {
-    #[doc =
-        "The sensitivity score applied to the resource. Possible values: [\"SENSITIVITY_LOW\", \"SENSITIVITY_MODERATE\", \"SENSITIVITY_HIGH\"]"]
-    pub score: terrars::PrimField<std::string::String>,
-}
-
-impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElSensitivityScoreEl {
-    pub fn build(
-        self,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElSensitivityScoreEl {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElSensitivityScoreEl {
-            score: self.score,
-        }
-    }
-}
-
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElSensitivityScoreElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElSensitivityScoreElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElSensitivityScoreElRef {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElSensitivityScoreElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElSensitivityScoreElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `score` after provisioning.\nThe sensitivity score applied to the resource. Possible values: [\"SENSITIVITY_LOW\", \"SENSITIVITY_MODERATE\", \"SENSITIVITY_HIGH\"]"]
-    pub fn score(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.score", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElDynamic {
-    sensitivity_score: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElSensitivityScoreEl,
-        >,
-    >,
-}
-
-#[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesEl {
-    name: terrars::PrimField<std::string::String>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    version: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sensitivity_score: std
-    ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElSensitivityScoreEl,
-        >,
-    >,
-    dynamic: DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElDynamic,
-}
-
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesEl {
-    #[doc =
-        "Set the field `version`.\nVersion of the information type to use. By default, the version is set to stable."]
-    pub fn set_version(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.version = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `sensitivity_score`.\n"]
-    pub fn set_sensitivity_score(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElSensitivityScoreEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.sensitivity_score = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.sensitivity_score = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesEl {
-    #[doc =
-        "Name of the information type. Either a name of your choosing when creating a CustomInfoType, or one of the names listed\nat https://cloud.google.com/dlp/docs/infotypes-reference when specifying a built-in type."]
-    pub name: terrars::PrimField<std::string::String>,
-}
-
-impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesEl {
-    pub fn build(
-        self,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesEl {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesEl {
-            name: self.name,
-            version: core::default::Default::default(),
-            sensitivity_score: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElRef {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `name` after provisioning.\nName of the information type. Either a name of your choosing when creating a CustomInfoType, or one of the names listed\nat https://cloud.google.com/dlp/docs/infotypes-reference when specifying a built-in type."]
-    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `version` after provisioning.\nVersion of the information type to use. By default, the version is set to stable."]
-    pub fn version(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.version", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `sensitivity_score` after provisioning.\n"]
-    pub fn sensitivity_score(
-        &self,
-    ) -> terrars
-    ::ListRef<
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElSensitivityScoreElRef,
-    > {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.sensitivity_score", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElDynamic {
+struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule_ExcludeInfoTypesDynamic {
     info_types: std
     ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesEl,
-        >,
-    >,
+    ::Option<terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_InfoTypes>>,
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule_ExcludeInfoTypes {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     info_types: std
     ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesEl,
-        >,
-    >,
-    dynamic: DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElDynamic,
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_InfoTypes>>,
+    dynamic: DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule_ExcludeInfoTypesDynamic,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesEl {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule_ExcludeInfoTypes {
     #[doc = "Set the field `info_types`.\n"]
     pub fn set_info_types(
         mut self,
@@ -4737,9 +4007,7 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExcl
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesEl,
-                        >,
+                        ::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_InfoTypes>,
                     >,
     ) -> Self {
         match v.into() {
@@ -4755,11 +4023,11 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExcl
 }
 
 impl terrars
-::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesEl {
+::ToListMappable for DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule_ExcludeInfoTypes {
     type O =
         terrars
         ::BlockAssignable<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesEl,
+            DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule_ExcludeInfoTypes,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -4771,38 +4039,40 @@ impl terrars
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesEl {}
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule_ExcludeInfoTypes {}
 
-impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule_ExcludeInfoTypes {
     pub fn build(
         self,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesEl {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesEl {
+    ) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule_ExcludeInfoTypes {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule_ExcludeInfoTypes {
             info_types: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule_ExcludeInfoTypesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElRef {
+::Ref for DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule_ExcludeInfoTypesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElRef {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule_ExcludeInfoTypesRef {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule_ExcludeInfoTypesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElRef {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule_ExcludeInfoTypesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4810,118 +4080,22 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExcl
     #[doc = "Get a reference to the value of field `info_types` after provisioning.\n"]
     pub fn info_types(
         &self,
-    ) -> terrars
-    ::ListRef<
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElInfoTypesElRef,
-    > {
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_InfoTypesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.info_types", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElRegexEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    group_indexes: std::option::Option<terrars::ListField<terrars::PrimField<f64>>>,
-    pattern: terrars::PrimField<std::string::String>,
-}
-
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElRegexEl {
-    #[doc =
-        "Set the field `group_indexes`.\nThe index of the submatch to extract as findings. When not specified, the entire match is returned. No more than 3 may be included."]
-    pub fn set_group_indexes(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<f64>>>,
-    ) -> Self {
-        self.group_indexes = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElRegexEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElRegexEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElRegexEl {
-    #[doc =
-        "Pattern defining the regular expression.\nIts syntax (https://github.com/google/re2/wiki/Syntax) can be found under the google/re2 repository on GitHub."]
-    pub pattern: terrars::PrimField<std::string::String>,
-}
-
-impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElRegexEl {
-    pub fn build(
-        self,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElRegexEl {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElRegexEl {
-            group_indexes: core::default::Default::default(),
-            pattern: self.pattern,
-        }
-    }
-}
-
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElRegexElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElRegexElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElRegexElRef {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElRegexElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElRegexElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `group_indexes` after provisioning.\nThe index of the submatch to extract as findings. When not specified, the entire match is returned. No more than 3 may be included."]
-    pub fn group_indexes(&self) -> terrars::ListRef<terrars::PrimExpr<f64>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.group_indexes", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `pattern` after provisioning.\nPattern defining the regular expression.\nIts syntax (https://github.com/google/re2/wiki/Syntax) can be found under the google/re2 repository on GitHub."]
-    pub fn pattern(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.pattern", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDynamic {
+struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRuleDynamic {
     dictionary: std
     ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryEl,
-        >,
-    >,
+    ::Option<terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary>>,
     exclude_by_hotword: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordEl,
+            DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule_ExcludeByHotword,
         >,
     >,
     exclude_info_types: std
@@ -4929,37 +4103,28 @@ struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElEx
     ::Option<
         terrars
         ::DynamicBlock<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesEl,
+            DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule_ExcludeInfoTypes,
         >,
     >,
     regex: std
     ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElRegexEl>,
-    >,
+    ::Option<terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Regex>>,
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule {
     matching_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dictionary: std
     ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryEl>,
-    >,
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     exclude_by_hotword: std
     ::option
     ::Option<
         std
         ::vec
-        ::Vec<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordEl,
-        >,
+        ::Vec<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule_ExcludeByHotword>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     exclude_info_types: std
@@ -4967,20 +4132,16 @@ pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRules
     ::Option<
         std
         ::vec
-        ::Vec<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesEl,
-        >,
+        ::Vec<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule_ExcludeInfoTypes>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     regex: std
     ::option
-    ::Option<
-        std::vec::Vec<DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElRegexEl>,
-    >,
-    dynamic: DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDynamic,
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Regex>>,
+    dynamic: DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRuleDynamic,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleEl {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule {
     #[doc = "Set the field `dictionary`.\n"]
     pub fn set_dictionary(
         mut self,
@@ -4992,7 +4153,7 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExcl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryEl,
+                            DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Dictionary,
                         >,
                     >,
     ) -> Self {
@@ -5018,7 +4179,7 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExcl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordEl,
+                            DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule_ExcludeByHotword,
                         >,
                     >,
     ) -> Self {
@@ -5044,7 +4205,7 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExcl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesEl,
+                            DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule_ExcludeInfoTypes,
                         >,
                     >,
     ) -> Self {
@@ -5069,9 +4230,7 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExcl
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElRegexEl,
-                        >,
+                        ::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_Regex>,
                     >,
     ) -> Self {
         match v.into() {
@@ -5086,11 +4245,9 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExcl
     }
 }
 
-impl terrars
-::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleEl {
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule {
     type O =
-        terrars
-        ::BlockAssignable<DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleEl>;
+        terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5101,15 +4258,15 @@ impl terrars
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleEl {
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule {
     #[doc =
         "How the rule is applied. See the documentation for more information: https://cloud.google.com/dlp/docs/reference/rest/v2/InspectConfig#MatchingType Possible values: [\"MATCHING_TYPE_FULL_MATCH\", \"MATCHING_TYPE_PARTIAL_MATCH\", \"MATCHING_TYPE_INVERSE_MATCH\"]"]
     pub matching_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleEl {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule {
             matching_type: self.matching_type,
             dictionary: core::default::Default::default(),
             exclude_by_hotword: core::default::Default::default(),
@@ -5120,24 +4277,26 @@ impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesE
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRuleRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElRef {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRuleRef {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElRef {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5151,8 +4310,7 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExcl
     #[doc = "Get a reference to the value of field `dictionary` after provisioning.\n"]
     pub fn dictionary(
         &self,
-    ) -> terrars
-    ::ListRef<DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElDictionaryElRef> {
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_DictionaryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dictionary", self.base))
     }
 
@@ -5160,9 +4318,7 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExcl
     pub fn exclude_by_hotword(
         &self,
     ) -> terrars
-    ::ListRef<
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeByHotwordElRef,
-    > {
+    ::ListRef<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule_ExcludeByHotwordRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.exclude_by_hotword", self.base))
     }
 
@@ -5170,123 +4326,27 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExcl
     pub fn exclude_info_types(
         &self,
     ) -> terrars
-    ::ListRef<
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElExcludeInfoTypesElRef,
-    > {
+    ::ListRef<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule_ExcludeInfoTypesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.exclude_info_types", self.base))
     }
 
     #[doc = "Get a reference to the value of field `regex` after provisioning.\n"]
     pub fn regex(
         &self,
-    ) -> terrars
-    ::ListRef<DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElRegexElRef> {
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes_RegexRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.regex", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElHotwordRegexEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    group_indexes: std::option::Option<terrars::ListField<terrars::PrimField<f64>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    pattern: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElHotwordRegexEl {
-    #[doc =
-        "Set the field `group_indexes`.\nThe index of the submatch to extract as findings. When not specified,\nthe entire match is returned. No more than 3 may be included."]
-    pub fn set_group_indexes(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<f64>>>,
-    ) -> Self {
-        self.group_indexes = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `pattern`.\nPattern defining the regular expression. Its syntax\n(https://github.com/google/re2/wiki/Syntax) can be found under the google/re2 repository on GitHub."]
-    pub fn set_pattern(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.pattern = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElHotwordRegexEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElHotwordRegexEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElHotwordRegexEl {}
-
-impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElHotwordRegexEl {
-    pub fn build(
-        self,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElHotwordRegexEl {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElHotwordRegexEl {
-            group_indexes: core::default::Default::default(),
-            pattern: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElHotwordRegexElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElHotwordRegexElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElHotwordRegexElRef {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElHotwordRegexElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElHotwordRegexElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `group_indexes` after provisioning.\nThe index of the submatch to extract as findings. When not specified,\nthe entire match is returned. No more than 3 may be included."]
-    pub fn group_indexes(&self) -> terrars::ListRef<terrars::PrimExpr<f64>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.group_indexes", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `pattern` after provisioning.\nPattern defining the regular expression. Its syntax\n(https://github.com/google/re2/wiki/Syntax) can be found under the google/re2 repository on GitHub."]
-    pub fn pattern(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.pattern", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElLikelihoodAdjustmentEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_LikelihoodAdjustment {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     fixed_likelihood: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     relative_likelihood: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElLikelihoodAdjustmentEl {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_LikelihoodAdjustment {
     #[doc =
         "Set the field `fixed_likelihood`.\nSet the likelihood of a finding to a fixed value. Either this or relative_likelihood can be set. Possible values: [\"VERY_UNLIKELY\", \"UNLIKELY\", \"POSSIBLE\", \"LIKELY\", \"VERY_LIKELY\"]"]
     pub fn set_fixed_likelihood(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -5303,11 +4363,11 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotw
 }
 
 impl terrars
-::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElLikelihoodAdjustmentEl {
+::ToListMappable for DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_LikelihoodAdjustment {
     type O =
         terrars
         ::BlockAssignable<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElLikelihoodAdjustmentEl,
+            DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_LikelihoodAdjustment,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -5319,38 +4379,40 @@ impl terrars
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElLikelihoodAdjustmentEl {}
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_LikelihoodAdjustment {}
 
-impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElLikelihoodAdjustmentEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_LikelihoodAdjustment {
     pub fn build(
         self,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElLikelihoodAdjustmentEl {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElLikelihoodAdjustmentEl {
+    ) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_LikelihoodAdjustment {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_LikelihoodAdjustment {
             fixed_likelihood: core::default::Default::default(),
             relative_likelihood: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElLikelihoodAdjustmentElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_LikelihoodAdjustmentRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElLikelihoodAdjustmentElRef {
+::Ref for DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_LikelihoodAdjustmentRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElLikelihoodAdjustmentElRef {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElLikelihoodAdjustmentElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_LikelihoodAdjustmentRef {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_LikelihoodAdjustmentRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElLikelihoodAdjustmentElRef {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_LikelihoodAdjustmentRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5368,133 +4430,37 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotw
     }
 }
 
-#[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElProximityEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    window_after: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    window_before: std::option::Option<terrars::PrimField<f64>>,
-}
-
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElProximityEl {
-    #[doc =
-        "Set the field `window_after`.\nNumber of characters after the finding to consider. Either this or window_before must be specified"]
-    pub fn set_window_after(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.window_after = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `window_before`.\nNumber of characters before the finding to consider. Either this or window_after must be specified"]
-    pub fn set_window_before(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.window_before = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElProximityEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElProximityEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElProximityEl {}
-
-impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElProximityEl {
-    pub fn build(
-        self,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElProximityEl {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElProximityEl {
-            window_after: core::default::Default::default(),
-            window_before: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElProximityElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElProximityElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElProximityElRef {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElProximityElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElProximityElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `window_after` after provisioning.\nNumber of characters after the finding to consider. Either this or window_before must be specified"]
-    pub fn window_after(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.window_after", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `window_before` after provisioning.\nNumber of characters before the finding to consider. Either this or window_after must be specified"]
-    pub fn window_before(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.window_before", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElDynamic {
+struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRuleDynamic {
     hotword_regex: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElHotwordRegexEl,
-        >,
+        ::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_HotwordRegex>,
     >,
     likelihood_adjustment: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElLikelihoodAdjustmentEl,
+            DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_LikelihoodAdjustment,
         >,
     >,
     proximity: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElProximityEl,
-        >,
+        ::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_Proximity>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     hotword_regex: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElHotwordRegexEl>,
+        std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_HotwordRegex>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     likelihood_adjustment: std
@@ -5502,20 +4468,18 @@ pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRules
     ::Option<
         std
         ::vec
-        ::Vec<
-            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElLikelihoodAdjustmentEl,
-        >,
+        ::Vec<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_LikelihoodAdjustment>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     proximity: std
     ::option
     ::Option<
-        std::vec::Vec<DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElProximityEl>,
+        std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_Proximity>,
     >,
-    dynamic: DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElDynamic,
+    dynamic: DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRuleDynamic,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleEl {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule {
     #[doc = "Set the field `hotword_regex`.\n"]
     pub fn set_hotword_regex(
         mut self,
@@ -5527,7 +4491,7 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotw
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElHotwordRegexEl,
+                            DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_HotwordRegex,
                         >,
                     >,
     ) -> Self {
@@ -5553,7 +4517,7 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotw
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElLikelihoodAdjustmentEl,
+                            DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_LikelihoodAdjustment,
                         >,
                     >,
     ) -> Self {
@@ -5579,7 +4543,7 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotw
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElProximityEl,
+                            DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_Proximity,
                         >,
                     >,
     ) -> Self {
@@ -5595,10 +4559,9 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotw
     }
 }
 
-impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleEl {
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule {
     type O =
-        terrars
-        ::BlockAssignable<DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleEl>;
+        terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5609,11 +4572,11 @@ impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspect
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleEl {}
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule {}
 
-impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleEl {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule {
             hotword_regex: core::default::Default::default(),
             likelihood_adjustment: core::default::Default::default(),
             proximity: core::default::Default::default(),
@@ -5622,24 +4585,26 @@ impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesE
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRuleRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElRef {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRuleRef {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElRef {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5648,7 +4613,7 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotw
     pub fn hotword_regex(
         &self,
     ) -> terrars
-    ::ListRef<DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElHotwordRegexElRef> {
+    ::ListRef<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_HotwordRegexRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.hotword_regex", self.base))
     }
 
@@ -5657,7 +4622,7 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotw
         &self,
     ) -> terrars
     ::ListRef<
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElLikelihoodAdjustmentElRef,
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_LikelihoodAdjustmentRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.likelihood_adjustment", self.base))
     }
@@ -5666,39 +4631,37 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotw
     pub fn proximity(
         &self,
     ) -> terrars
-    ::ListRef<DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElProximityElRef> {
+    ::ListRef<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule_ProximityRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.proximity", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElDynamic {
+struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_RulesDynamic {
     exclusion_rule: std
     ::option
     ::Option<
-        terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleEl>,
+        terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule>,
     >,
     hotword_rule: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleEl>,
-    >,
+    ::Option<terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule>>,
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     exclusion_rule: std
     ::option
-    ::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleEl>>,
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     hotword_rule: std
     ::option
-    ::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleEl>>,
-    dynamic: DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElDynamic,
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule>>,
+    dynamic: DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_RulesDynamic,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesEl {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules {
     #[doc = "Set the field `exclusion_rule`.\n"]
     pub fn set_exclusion_rule(
         mut self,
@@ -5710,7 +4673,7 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleEl,
+                            DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRule,
                         >,
                     >,
     ) -> Self {
@@ -5736,7 +4699,7 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleEl,
+                            DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRule,
                         >,
                     >,
     ) -> Self {
@@ -5752,8 +4715,8 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesEl {
     }
 }
 
-impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesEl {
-    type O = terrars::BlockAssignable<DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesEl>;
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules {
+    type O = terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5764,11 +4727,11 @@ impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspect
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesEl {}
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules {}
 
-impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesEl {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules {
             exclusion_rule: core::default::Default::default(),
             hotword_rule: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -5776,24 +4739,26 @@ impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesE
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_RulesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_RulesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElRef {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_RulesRef {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_RulesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElRef {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_RulesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5801,40 +4766,40 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElRef 
     #[doc = "Get a reference to the value of field `exclusion_rule` after provisioning.\n"]
     pub fn exclusion_rule(
         &self,
-    ) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElExclusionRuleElRef> {
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_ExclusionRuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.exclusion_rule", self.base))
     }
 
     #[doc = "Get a reference to the value of field `hotword_rule` after provisioning.\n"]
     pub fn hotword_rule(
         &self,
-    ) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElHotwordRuleElRef> {
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules_HotwordRuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.hotword_rule", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElDynamic {
+struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSetDynamic {
     info_types: std
     ::option
-    ::Option<terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesEl>>,
+    ::Option<terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_InfoTypes>>,
     rules: std
     ::option
-    ::Option<terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesEl>>,
+    ::Option<terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules>>,
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     info_types: std
     ::option
-    ::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesEl>>,
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_InfoTypes>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    rules: std::option::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesEl>>,
-    dynamic: DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElDynamic,
+    rules: std::option::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules>>,
+    dynamic: DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSetDynamic,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetEl {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet {
     #[doc = "Set the field `info_types`.\n"]
     pub fn set_info_types(
         mut self,
@@ -5845,7 +4810,7 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesEl>,
+                        ::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_InfoTypes>,
                     >,
     ) -> Self {
         match v.into() {
@@ -5868,8 +4833,7 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesEl>,
+                        terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_Rules>,
                     >,
     ) -> Self {
         match v.into() {
@@ -5884,8 +4848,8 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetEl {
     }
 }
 
-impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetEl {
-    type O = terrars::BlockAssignable<DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetEl>;
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet {
+    type O = terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5896,11 +4860,11 @@ impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspect
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetEl {}
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet {}
 
-impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetEl {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet {
             info_types: core::default::Default::default(),
             rules: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -5908,24 +4872,26 @@ impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetEl {
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSetRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRef {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSetRef {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRef {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5933,34 +4899,32 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRef {
     #[doc = "Get a reference to the value of field `info_types` after provisioning.\n"]
     pub fn info_types(
         &self,
-    ) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElInfoTypesElRef> {
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_InfoTypesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.info_types", self.base))
     }
 
     #[doc = "Get a reference to the value of field `rules` after provisioning.\n"]
-    pub fn rules(&self) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRulesElRef> {
+    pub fn rules(&self) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet_RulesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.rules", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct DataLossPreventionJobTriggerInspectJobElInspectConfigElDynamic {
+struct DataLossPreventionJobTrigger_InspectJob_InspectConfigDynamic {
     custom_info_types: std
     ::option
-    ::Option<terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesEl>>,
+    ::Option<terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes>>,
     info_types: std
     ::option
-    ::Option<terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesEl>>,
-    limits: std
-    ::option
-    ::Option<terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsEl>>,
+    ::Option<terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes>>,
+    limits: std::option::Option<terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits>>,
     rule_set: std
     ::option
-    ::Option<terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetEl>>,
+    ::Option<terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet>>,
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     exclude_info_types: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -5970,17 +4934,17 @@ pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     custom_info_types: std
     ::option
-    ::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesEl>>,
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    info_types: std::option::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesEl>>,
+    info_types: std::option::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    limits: std::option::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsEl>>,
+    limits: std::option::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    rule_set: std::option::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetEl>>,
-    dynamic: DataLossPreventionJobTriggerInspectJobElInspectConfigElDynamic,
+    rule_set: std::option::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet>>,
+    dynamic: DataLossPreventionJobTrigger_InspectJob_InspectConfigDynamic,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigEl {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfig {
     #[doc = "Set the field `exclude_info_types`.\nWhen true, excludes type information of the findings."]
     pub fn set_exclude_info_types(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.exclude_info_types = std::option::Option::Some(v.into());
@@ -6011,7 +4975,7 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesEl>,
+                        ::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypes>,
                     >,
     ) -> Self {
         match v.into() {
@@ -6033,9 +4997,7 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<DataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypes>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -6056,7 +5018,7 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsEl>>,
+                    ::Into<terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_InspectConfig_Limits>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -6077,9 +5039,7 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSet>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -6093,8 +5053,8 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspectConfigEl {
-    type O = terrars::BlockAssignable<DataLossPreventionJobTriggerInspectJobElInspectConfigEl>;
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_InspectConfig {
+    type O = terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_InspectConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6105,11 +5065,11 @@ impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElInspect
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElInspectConfigEl {}
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig {}
 
-impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElInspectConfigEl {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_InspectConfig {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_InspectConfig {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfig {
             exclude_info_types: core::default::Default::default(),
             include_quote: core::default::Default::default(),
             min_likelihood: core::default::Default::default(),
@@ -6122,24 +5082,26 @@ impl BuildDataLossPreventionJobTriggerInspectJobElInspectConfigEl {
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElInspectConfigElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_InspectConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElInspectConfigElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_InspectConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElInspectConfigElRef {
-        DataLossPreventionJobTriggerInspectJobElInspectConfigElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_InspectConfigRef {
+        DataLossPreventionJobTrigger_InspectJob_InspectConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRef {
+impl DataLossPreventionJobTrigger_InspectJob_InspectConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -6165,38 +5127,37 @@ impl DataLossPreventionJobTriggerInspectJobElInspectConfigElRef {
     #[doc = "Get a reference to the value of field `custom_info_types` after provisioning.\n"]
     pub fn custom_info_types(
         &self,
-    ) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElInspectConfigElCustomInfoTypesElRef> {
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_InspectConfig_CustomInfoTypesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.custom_info_types", self.base))
     }
 
     #[doc = "Get a reference to the value of field `info_types` after provisioning.\n"]
-    pub fn info_types(&self) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElInspectConfigElInfoTypesElRef> {
+    pub fn info_types(&self) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_InspectConfig_InfoTypesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.info_types", self.base))
     }
 
     #[doc = "Get a reference to the value of field `limits` after provisioning.\n"]
-    pub fn limits(&self) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElInspectConfigElLimitsElRef> {
+    pub fn limits(&self) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_InspectConfig_LimitsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.limits", self.base))
     }
 
     #[doc = "Get a reference to the value of field `rule_set` after provisioning.\n"]
-    pub fn rule_set(&self) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElInspectConfigElRuleSetElRef> {
+    pub fn rule_set(&self) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_InspectConfig_RuleSetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.rule_set", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElExcludedFieldsEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_ExcludedFields {
     name: terrars::PrimField<std::string::String>,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElExcludedFieldsEl { }
+impl DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_ExcludedFields { }
 
-impl terrars
-::ToListMappable for DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElExcludedFieldsEl {
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_ExcludedFields {
     type O =
         terrars
-        ::BlockAssignable<DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElExcludedFieldsEl>;
+        ::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_ExcludedFields>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6207,35 +5168,37 @@ impl terrars
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElExcludedFieldsEl {
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_ExcludedFields {
     #[doc = "Name describing the field excluded from scanning."]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElExcludedFieldsEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElExcludedFieldsEl {
-        DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElExcludedFieldsEl { name: self.name }
+impl BuildDataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_ExcludedFields {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_ExcludedFields {
+        DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_ExcludedFields { name: self.name }
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElExcludedFieldsElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_ExcludedFieldsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElExcludedFieldsElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_ExcludedFieldsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElExcludedFieldsElRef {
-        DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElExcludedFieldsElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_ExcludedFieldsRef {
+        DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_ExcludedFieldsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElExcludedFieldsElRef {
+impl DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_ExcludedFieldsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -6248,19 +5211,17 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElExc
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElIdentifyingFieldsEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_IdentifyingFields {
     name: terrars::PrimField<std::string::String>,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElIdentifyingFieldsEl { }
+impl DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_IdentifyingFields { }
 
 impl terrars
-::ToListMappable for DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElIdentifyingFieldsEl {
+::ToListMappable for DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_IdentifyingFields {
     type O =
         terrars
-        ::BlockAssignable<
-            DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElIdentifyingFieldsEl,
-        >;
+        ::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_IdentifyingFields>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6271,39 +5232,37 @@ impl terrars
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElIdentifyingFieldsEl {
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_IdentifyingFields {
     #[doc = "Name of a BigQuery field to be returned with the findings."]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElIdentifyingFieldsEl {
-    pub fn build(
-        self,
-    ) -> DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElIdentifyingFieldsEl {
-        DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElIdentifyingFieldsEl {
-            name: self.name,
-        }
+impl BuildDataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_IdentifyingFields {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_IdentifyingFields {
+        DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_IdentifyingFields { name: self.name }
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElIdentifyingFieldsElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_IdentifyingFieldsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElIdentifyingFieldsElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_IdentifyingFieldsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElIdentifyingFieldsElRef {
-        DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElIdentifyingFieldsElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_IdentifyingFieldsRef {
+        DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_IdentifyingFieldsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElIdentifyingFieldsElRef {
+impl DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_IdentifyingFieldsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -6316,17 +5275,16 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElIde
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElIncludedFieldsEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_IncludedFields {
     name: terrars::PrimField<std::string::String>,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElIncludedFieldsEl { }
+impl DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_IncludedFields { }
 
-impl terrars
-::ToListMappable for DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElIncludedFieldsEl {
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_IncludedFields {
     type O =
         terrars
-        ::BlockAssignable<DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElIncludedFieldsEl>;
+        ::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_IncludedFields>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6337,35 +5295,37 @@ impl terrars
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElIncludedFieldsEl {
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_IncludedFields {
     #[doc = "Name describing the field to which scanning is limited."]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElIncludedFieldsEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElIncludedFieldsEl {
-        DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElIncludedFieldsEl { name: self.name }
+impl BuildDataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_IncludedFields {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_IncludedFields {
+        DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_IncludedFields { name: self.name }
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElIncludedFieldsElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_IncludedFieldsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElIncludedFieldsElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_IncludedFieldsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElIncludedFieldsElRef {
-        DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElIncludedFieldsElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_IncludedFieldsRef {
+        DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_IncludedFieldsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElIncludedFieldsElRef {
+impl DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_IncludedFieldsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -6378,19 +5338,18 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElInc
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElTableReferenceEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_TableReference {
     dataset_id: terrars::PrimField<std::string::String>,
     project_id: terrars::PrimField<std::string::String>,
     table_id: terrars::PrimField<std::string::String>,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElTableReferenceEl { }
+impl DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_TableReference { }
 
-impl terrars
-::ToListMappable for DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElTableReferenceEl {
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_TableReference {
     type O =
         terrars
-        ::BlockAssignable<DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElTableReferenceEl>;
+        ::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_TableReference>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6401,7 +5360,7 @@ impl terrars
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElTableReferenceEl {
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_TableReference {
     #[doc = "The dataset ID of the table."]
     pub dataset_id: terrars::PrimField<std::string::String>,
     #[doc = "The Google Cloud Platform project ID of the project containing the table."]
@@ -6410,9 +5369,9 @@ pub struct BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryO
     pub table_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElTableReferenceEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElTableReferenceEl {
-        DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElTableReferenceEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_TableReference {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_TableReference {
+        DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_TableReference {
             dataset_id: self.dataset_id,
             project_id: self.project_id,
             table_id: self.table_id,
@@ -6420,24 +5379,26 @@ impl BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptions
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElTableReferenceElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_TableReferenceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElTableReferenceElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_TableReferenceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElTableReferenceElRef {
-        DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElTableReferenceElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_TableReferenceRef {
+        DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_TableReferenceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElTableReferenceElRef {
+impl DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_TableReferenceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -6460,35 +5421,31 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElTab
 }
 
 #[derive(Serialize, Default)]
-struct DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElDynamic {
+struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptionsDynamic {
     excluded_fields: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElExcludedFieldsEl>,
+        terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_ExcludedFields>,
     >,
     identifying_fields: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElIdentifyingFieldsEl>,
+        terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_IdentifyingFields>,
     >,
     included_fields: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElIncludedFieldsEl>,
+        terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_IncludedFields>,
     >,
     table_reference: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElTableReferenceEl>,
+        terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_TableReference>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     rows_limit: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -6498,25 +5455,23 @@ pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOption
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     excluded_fields: std
     ::option
-    ::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElExcludedFieldsEl>>,
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_ExcludedFields>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     identifying_fields: std
     ::option
-    ::Option<
-        std::vec::Vec<DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElIdentifyingFieldsEl>,
-    >,
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_IdentifyingFields>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     included_fields: std
     ::option
-    ::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElIncludedFieldsEl>>,
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_IncludedFields>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     table_reference: std
     ::option
-    ::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElTableReferenceEl>>,
-    dynamic: DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElDynamic,
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_TableReference>>,
+    dynamic: DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptionsDynamic,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsEl {
+impl DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions {
     #[doc =
         "Set the field `rows_limit`.\nMax number of rows to scan. If the table has more rows than this value, the rest of the rows are omitted.\nIf not set, or if set to 0, all rows will be scanned. Only one of rowsLimit and rowsLimitPercent can be\nspecified. Cannot be used in conjunction with TimespanConfig."]
     pub fn set_rows_limit(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -6532,7 +5487,7 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsEl {
     }
 
     #[doc =
-        "Set the field `sample_method`.\nHow to sample rows if not all rows are scanned. Meaningful only when used in conjunction with either\nrowsLimit or rowsLimitPercent. If not specified, rows are scanned in the order BigQuery reads them. Default value: \"TOP\" Possible values: [\"TOP\", \"RANDOM_START\"]"]
+        "Set the field `sample_method`.\nHow to sample rows if not all rows are scanned. Meaningful only when used in conjunction with either\nrowsLimit or rowsLimitPercent. If not specified, rows are scanned in the order BigQuery reads them.\nIf TimespanConfig is set, set this to an empty string to avoid using the default value. Default value: \"TOP\" Possible values: [\"TOP\", \"RANDOM_START\"]"]
     pub fn set_sample_method(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.sample_method = std::option::Option::Some(v.into());
         self
@@ -6549,7 +5504,7 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElExcludedFieldsEl,
+                            DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_ExcludedFields,
                         >,
                     >,
     ) -> Self {
@@ -6575,7 +5530,7 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElIdentifyingFieldsEl,
+                            DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_IdentifyingFields,
                         >,
                     >,
     ) -> Self {
@@ -6601,7 +5556,7 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElIncludedFieldsEl,
+                            DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_IncludedFields,
                         >,
                     >,
     ) -> Self {
@@ -6627,7 +5582,7 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElTableReferenceEl,
+                            DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_TableReference,
                         >,
                     >,
     ) -> Self {
@@ -6643,8 +5598,8 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsEl {
-    type O = terrars::BlockAssignable<DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsEl>;
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions {
+    type O = terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6655,11 +5610,11 @@ impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElStorage
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsEl {}
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions {}
 
-impl BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsEl {
-        DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions {
+        DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions {
             rows_limit: core::default::Default::default(),
             rows_limit_percent: core::default::Default::default(),
             sample_method: core::default::Default::default(),
@@ -6672,24 +5627,26 @@ impl BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptions
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElRef {
-        DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptionsRef {
+        DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElRef {
+impl DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -6707,7 +5664,7 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElRef
     }
 
     #[doc =
-        "Get a reference to the value of field `sample_method` after provisioning.\nHow to sample rows if not all rows are scanned. Meaningful only when used in conjunction with either\nrowsLimit or rowsLimitPercent. If not specified, rows are scanned in the order BigQuery reads them. Default value: \"TOP\" Possible values: [\"TOP\", \"RANDOM_START\"]"]
+        "Get a reference to the value of field `sample_method` after provisioning.\nHow to sample rows if not all rows are scanned. Meaningful only when used in conjunction with either\nrowsLimit or rowsLimitPercent. If not specified, rows are scanned in the order BigQuery reads them.\nIf TimespanConfig is set, set this to an empty string to avoid using the default value. Default value: \"TOP\" Possible values: [\"TOP\", \"RANDOM_START\"]"]
     pub fn sample_method(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.sample_method", self.base))
     }
@@ -6715,38 +5672,34 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElRef
     #[doc = "Get a reference to the value of field `excluded_fields` after provisioning.\n"]
     pub fn excluded_fields(
         &self,
-    ) -> terrars
-    ::ListRef<DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElExcludedFieldsElRef> {
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_ExcludedFieldsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.excluded_fields", self.base))
     }
 
     #[doc = "Get a reference to the value of field `identifying_fields` after provisioning.\n"]
     pub fn identifying_fields(
         &self,
-    ) -> terrars
-    ::ListRef<DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElIdentifyingFieldsElRef> {
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_IdentifyingFieldsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.identifying_fields", self.base))
     }
 
     #[doc = "Get a reference to the value of field `included_fields` after provisioning.\n"]
     pub fn included_fields(
         &self,
-    ) -> terrars
-    ::ListRef<DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElIncludedFieldsElRef> {
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_IncludedFieldsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.included_fields", self.base))
     }
 
     #[doc = "Get a reference to the value of field `table_reference` after provisioning.\n"]
     pub fn table_reference(
         &self,
-    ) -> terrars
-    ::ListRef<DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElTableReferenceElRef> {
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions_TableReferenceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.table_reference", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElFileSetElRegexFileSetEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions_FileSet_RegexFileSet {
     bucket_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     exclude_regex: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
@@ -6754,7 +5707,7 @@ pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOp
     include_regex: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElFileSetElRegexFileSetEl {
+impl DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions_FileSet_RegexFileSet {
     #[doc =
         "Set the field `exclude_regex`.\nA list of regular expressions matching file paths to exclude. All files in the bucket that match at\nleast one of these regular expressions will be excluded from the scan."]
     pub fn set_exclude_regex(
@@ -6777,11 +5730,11 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsE
 }
 
 impl terrars
-::ToListMappable for DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElFileSetElRegexFileSetEl {
+::ToListMappable for DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions_FileSet_RegexFileSet {
     type O =
         terrars
         ::BlockAssignable<
-            DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElFileSetElRegexFileSetEl,
+            DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions_FileSet_RegexFileSet,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -6793,16 +5746,16 @@ impl terrars
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElFileSetElRegexFileSetEl {
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions_FileSet_RegexFileSet {
     #[doc = "The name of a Cloud Storage bucket."]
     pub bucket_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElFileSetElRegexFileSetEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions_FileSet_RegexFileSet {
     pub fn build(
         self,
-    ) -> DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElFileSetElRegexFileSetEl {
-        DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElFileSetElRegexFileSetEl {
+    ) -> DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions_FileSet_RegexFileSet {
+        DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions_FileSet_RegexFileSet {
             bucket_name: self.bucket_name,
             exclude_regex: core::default::Default::default(),
             include_regex: core::default::Default::default(),
@@ -6810,25 +5763,27 @@ impl BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOpt
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElFileSetElRegexFileSetElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions_FileSet_RegexFileSetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElFileSetElRegexFileSetElRef {
+::Ref for DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions_FileSet_RegexFileSetRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElFileSetElRegexFileSetElRef {
-        DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElFileSetElRegexFileSetElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions_FileSet_RegexFileSetRef {
+        DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions_FileSet_RegexFileSetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElFileSetElRegexFileSetElRef {
+impl DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions_FileSet_RegexFileSetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -6853,33 +5808,29 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsE
 }
 
 #[derive(Serialize, Default)]
-struct DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElFileSetElDynamic {
+struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions_FileSetDynamic {
     regex_file_set: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElFileSetElRegexFileSetEl,
-        >,
+        ::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions_FileSet_RegexFileSet>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElFileSetEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions_FileSet {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     url: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     regex_file_set: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElFileSetElRegexFileSetEl>,
+        std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions_FileSet_RegexFileSet>,
     >,
-    dynamic: DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElFileSetElDynamic,
+    dynamic: DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions_FileSetDynamic,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElFileSetEl {
+impl DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions_FileSet {
     #[doc =
         "Set the field `url`.\nThe Cloud Storage url of the file(s) to scan, in the format 'gs://<bucket>/<path>'. Trailing wildcard\nin the path is allowed.\n\nIf the url ends in a trailing slash, the bucket or directory represented by the url will be scanned\nnon-recursively (content in sub-directories will not be scanned). This means that 'gs://mybucket/' is\nequivalent to 'gs://mybucket/*', and 'gs://mybucket/directory/' is equivalent to 'gs://mybucket/directory/*'."]
     pub fn set_url(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -6898,7 +5849,7 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElFileSetElRegexFileSetEl,
+                            DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions_FileSet_RegexFileSet,
                         >,
                     >,
     ) -> Self {
@@ -6914,10 +5865,9 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsE
     }
 }
 
-impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElFileSetEl {
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions_FileSet {
     type O =
-        terrars
-        ::BlockAssignable<DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElFileSetEl>;
+        terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions_FileSet>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6928,11 +5878,11 @@ impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElStorage
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElFileSetEl {}
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions_FileSet {}
 
-impl BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElFileSetEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElFileSetEl {
-        DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElFileSetEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions_FileSet {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions_FileSet {
+        DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions_FileSet {
             url: core::default::Default::default(),
             regex_file_set: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -6940,24 +5890,26 @@ impl BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOpt
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElFileSetElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions_FileSetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElFileSetElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions_FileSetRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElFileSetElRef {
-        DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElFileSetElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions_FileSetRef {
+        DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions_FileSetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElFileSetElRef {
+impl DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions_FileSetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -6972,22 +5924,22 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsE
     pub fn regex_file_set(
         &self,
     ) -> terrars
-    ::ListRef<DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElFileSetElRegexFileSetElRef> {
+    ::ListRef<DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions_FileSet_RegexFileSetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.regex_file_set", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElDynamic {
+struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptionsDynamic {
     file_set: std
     ::option
     ::Option<
-        terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElFileSetEl>,
+        terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions_FileSet>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bytes_limit_per_file: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -7001,11 +5953,11 @@ pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOp
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     file_set: std
     ::option
-    ::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElFileSetEl>>,
-    dynamic: DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElDynamic,
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions_FileSet>>,
+    dynamic: DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptionsDynamic,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsEl {
+impl DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions {
     #[doc =
         "Set the field `bytes_limit_per_file`.\nMax number of bytes to scan from a file. If a scanned file's size is bigger than this value\nthen the rest of the bytes are omitted."]
     pub fn set_bytes_limit_per_file(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -7055,7 +6007,7 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElFileSetEl,
+                            DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions_FileSet,
                         >,
                     >,
     ) -> Self {
@@ -7071,8 +6023,8 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsE
     }
 }
 
-impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsEl {
-    type O = terrars::BlockAssignable<DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsEl>;
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions {
+    type O = terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -7083,11 +6035,11 @@ impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElStorage
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsEl {}
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions {}
 
-impl BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsEl {
-        DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions {
+        DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions {
             bytes_limit_per_file: core::default::Default::default(),
             bytes_limit_per_file_percent: core::default::Default::default(),
             file_types: core::default::Default::default(),
@@ -7099,24 +6051,26 @@ impl BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOpt
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElRef {
-        DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptionsRef {
+        DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElRef {
+impl DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -7154,21 +6108,20 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsE
     #[doc = "Get a reference to the value of field `file_set` after provisioning.\n"]
     pub fn file_set(
         &self,
-    ) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElFileSetElRef> {
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions_FileSetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.file_set", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElKindEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions_Kind {
     name: terrars::PrimField<std::string::String>,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElKindEl { }
+impl DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions_Kind { }
 
-impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElKindEl {
-    type O =
-        terrars::BlockAssignable<DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElKindEl>;
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions_Kind {
+    type O = terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions_Kind>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -7179,35 +6132,37 @@ impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElStorage
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElKindEl {
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions_Kind {
     #[doc = "The name of the Datastore kind."]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElKindEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElKindEl {
-        DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElKindEl { name: self.name }
+impl BuildDataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions_Kind {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions_Kind {
+        DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions_Kind { name: self.name }
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElKindElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions_KindRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElKindElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions_KindRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElKindElRef {
-        DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElKindElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions_KindRef {
+        DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions_KindRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElKindElRef {
+impl DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions_KindRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -7219,13 +6174,13 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElKi
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElPartitionIdEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions_PartitionId {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     namespace_id: std::option::Option<terrars::PrimField<std::string::String>>,
     project_id: terrars::PrimField<std::string::String>,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElPartitionIdEl {
+impl DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions_PartitionId {
     #[doc = "Set the field `namespace_id`.\nIf not empty, the ID of the namespace to which the entities belong."]
     pub fn set_namespace_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.namespace_id = std::option::Option::Some(v.into());
@@ -7233,11 +6188,9 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElPa
     }
 }
 
-impl terrars
-::ToListMappable for DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElPartitionIdEl {
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions_PartitionId {
     type O =
-        terrars
-        ::BlockAssignable<DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElPartitionIdEl>;
+        terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions_PartitionId>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -7248,38 +6201,40 @@ impl terrars
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElPartitionIdEl {
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions_PartitionId {
     #[doc = "The ID of the project to which the entities belong."]
     pub project_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElPartitionIdEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElPartitionIdEl {
-        DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElPartitionIdEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions_PartitionId {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions_PartitionId {
+        DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions_PartitionId {
             namespace_id: core::default::Default::default(),
             project_id: self.project_id,
         }
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElPartitionIdElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions_PartitionIdRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElPartitionIdElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions_PartitionIdRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElPartitionIdElRef {
-        DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElPartitionIdElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions_PartitionIdRef {
+        DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions_PartitionIdRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElPartitionIdElRef {
+impl DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions_PartitionIdRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -7298,31 +6253,29 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElPa
 }
 
 #[derive(Serialize, Default)]
-struct DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElDynamic {
+struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptionsDynamic {
     kind: std
     ::option
-    ::Option<terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElKindEl>>,
+    ::Option<terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions_Kind>>,
     partition_id: std
     ::option
     ::Option<
-        terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElPartitionIdEl>,
+        terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions_PartitionId>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    kind: std
-    ::option
-    ::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElKindEl>>,
+    kind: std::option::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions_Kind>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     partition_id: std
     ::option
-    ::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElPartitionIdEl>>,
-    dynamic: DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElDynamic,
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions_PartitionId>>,
+    dynamic: DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptionsDynamic,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsEl {
+impl DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions {
     #[doc = "Set the field `kind`.\n"]
     pub fn set_kind(
         mut self,
@@ -7333,9 +6286,7 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElKindEl,
-                        >,
+                        ::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions_Kind>,
                     >,
     ) -> Self {
         match v.into() {
@@ -7360,7 +6311,7 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElPartitionIdEl,
+                            DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions_PartitionId,
                         >,
                     >,
     ) -> Self {
@@ -7376,8 +6327,8 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsEl {
-    type O = terrars::BlockAssignable<DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsEl>;
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions {
+    type O = terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -7388,11 +6339,11 @@ impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElStorage
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsEl {}
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions {}
 
-impl BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsEl {
-        DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions {
+        DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions {
             kind: core::default::Default::default(),
             partition_id: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -7400,24 +6351,26 @@ impl BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOption
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElRef {
-        DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptionsRef {
+        DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElRef {
+impl DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -7425,31 +6378,31 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElRe
     #[doc = "Get a reference to the value of field `kind` after provisioning.\n"]
     pub fn kind(
         &self,
-    ) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElKindElRef> {
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions_KindRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.kind", self.base))
     }
 
     #[doc = "Get a reference to the value of field `partition_id` after provisioning.\n"]
     pub fn partition_id(
         &self,
-    ) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElPartitionIdElRef> {
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions_PartitionIdRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.partition_id", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTableOptionsElIdentifyingFieldsEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions_TableOptions_IdentifyingFields {
     name: terrars::PrimField<std::string::String>,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTableOptionsElIdentifyingFieldsEl { }
+impl DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions_TableOptions_IdentifyingFields { }
 
 impl terrars
-::ToListMappable for DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTableOptionsElIdentifyingFieldsEl {
+::ToListMappable for DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions_TableOptions_IdentifyingFields {
     type O =
         terrars
         ::BlockAssignable<
-            DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTableOptionsElIdentifyingFieldsEl,
+            DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions_TableOptions_IdentifyingFields,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -7461,40 +6414,42 @@ impl terrars
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTableOptionsElIdentifyingFieldsEl {
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions_TableOptions_IdentifyingFields {
     #[doc = "Name describing the field."]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTableOptionsElIdentifyingFieldsEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions_TableOptions_IdentifyingFields {
     pub fn build(
         self,
-    ) -> DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTableOptionsElIdentifyingFieldsEl {
-        DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTableOptionsElIdentifyingFieldsEl {
+    ) -> DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions_TableOptions_IdentifyingFields {
+        DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions_TableOptions_IdentifyingFields {
             name: self.name,
         }
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTableOptionsElIdentifyingFieldsElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions_TableOptions_IdentifyingFieldsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTableOptionsElIdentifyingFieldsElRef {
+::Ref for DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions_TableOptions_IdentifyingFieldsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTableOptionsElIdentifyingFieldsElRef {
-        DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTableOptionsElIdentifyingFieldsElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions_TableOptions_IdentifyingFieldsRef {
+        DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions_TableOptions_IdentifyingFieldsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTableOptionsElIdentifyingFieldsElRef {
+impl DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions_TableOptions_IdentifyingFieldsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -7506,31 +6461,31 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTable
 }
 
 #[derive(Serialize, Default)]
-struct DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTableOptionsElDynamic {
+struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions_TableOptionsDynamic {
     identifying_fields: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTableOptionsElIdentifyingFieldsEl,
+            DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions_TableOptions_IdentifyingFields,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTableOptionsEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions_TableOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     identifying_fields: std
     ::option
     ::Option<
         std
         ::vec
-        ::Vec<DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTableOptionsElIdentifyingFieldsEl>,
+        ::Vec<DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions_TableOptions_IdentifyingFields>,
     >,
-    dynamic: DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTableOptionsElDynamic,
+    dynamic: DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions_TableOptionsDynamic,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTableOptionsEl {
+impl DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions_TableOptions {
     #[doc = "Set the field `identifying_fields`.\n"]
     pub fn set_identifying_fields(
         mut self,
@@ -7542,7 +6497,7 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTable
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTableOptionsElIdentifyingFieldsEl,
+                            DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions_TableOptions_IdentifyingFields,
                         >,
                     >,
     ) -> Self {
@@ -7558,10 +6513,9 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTable
     }
 }
 
-impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTableOptionsEl {
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions_TableOptions {
     type O =
-        terrars
-        ::BlockAssignable<DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTableOptionsEl>;
+        terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions_TableOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -7572,35 +6526,37 @@ impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElStorage
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTableOptionsEl {}
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions_TableOptions {}
 
-impl BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTableOptionsEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTableOptionsEl {
-        DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTableOptionsEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions_TableOptions {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions_TableOptions {
+        DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions_TableOptions {
             identifying_fields: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTableOptionsElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions_TableOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTableOptionsElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions_TableOptionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTableOptionsElRef {
-        DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTableOptionsElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions_TableOptionsRef {
+        DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions_TableOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTableOptionsElRef {
+impl DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions_TableOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -7609,24 +6565,22 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTable
     pub fn identifying_fields(
         &self,
     ) -> terrars
-    ::ListRef<
-        DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTableOptionsElIdentifyingFieldsElRef,
-    > {
+    ::ListRef<DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions_TableOptions_IdentifyingFieldsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.identifying_fields", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElDynamic {
+struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptionsDynamic {
     table_options: std
     ::option
     ::Option<
-        terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTableOptionsEl>,
+        terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions_TableOptions>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -7636,11 +6590,11 @@ pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsE
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     table_options: std
     ::option
-    ::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTableOptionsEl>>,
-    dynamic: DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElDynamic,
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions_TableOptions>>,
+    dynamic: DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptionsDynamic,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsEl {
+impl DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions {
     #[doc =
         "Set the field `description`.\nA short description of where the data is coming from. Will be stored once in the job. 256 max length."]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -7679,7 +6633,7 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTableOptionsEl,
+                            DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions_TableOptions,
                         >,
                     >,
     ) -> Self {
@@ -7695,8 +6649,8 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsEl {
-    type O = terrars::BlockAssignable<DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsEl>;
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions {
+    type O = terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -7707,11 +6661,11 @@ impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElStorage
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsEl {}
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions {}
 
-impl BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsEl {
-        DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions {
+        DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions {
             description: core::default::Default::default(),
             labels: core::default::Default::default(),
             required_finding_label_keys: core::default::Default::default(),
@@ -7721,24 +6675,26 @@ impl BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsEl
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElRef {
-        DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptionsRef {
+        DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElRef {
+impl DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -7764,23 +6720,22 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElRef {
     #[doc = "Get a reference to the value of field `table_options` after provisioning.\n"]
     pub fn table_options(
         &self,
-    ) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElTableOptionsElRef> {
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions_TableOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.table_options", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigElTimestampFieldEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_TimespanConfig_TimestampField {
     name: terrars::PrimField<std::string::String>,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigElTimestampFieldEl { }
+impl DataLossPreventionJobTrigger_InspectJob_StorageConfig_TimespanConfig_TimestampField { }
 
-impl terrars
-::ToListMappable for DataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigElTimestampFieldEl {
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_StorageConfig_TimespanConfig_TimestampField {
     type O =
         terrars
-        ::BlockAssignable<DataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigElTimestampFieldEl>;
+        ::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_StorageConfig_TimespanConfig_TimestampField>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -7791,36 +6746,38 @@ impl terrars
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigElTimestampFieldEl {
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_StorageConfig_TimespanConfig_TimestampField {
     #[doc =
         "Specification of the field containing the timestamp of scanned items. Used for data sources like Datastore and BigQuery.\n\nFor BigQuery: Required to filter out rows based on the given start and end times. If not specified and the table was\nmodified between the given start and end times, the entire table will be scanned. The valid data types of the timestamp\nfield are: INTEGER, DATE, TIMESTAMP, or DATETIME BigQuery column.\n\nFor Datastore. Valid data types of the timestamp field are: TIMESTAMP. Datastore entity will be scanned if the\ntimestamp property does not exist or its value is empty or invalid."]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigElTimestampFieldEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigElTimestampFieldEl {
-        DataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigElTimestampFieldEl { name: self.name }
+impl BuildDataLossPreventionJobTrigger_InspectJob_StorageConfig_TimespanConfig_TimestampField {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_StorageConfig_TimespanConfig_TimestampField {
+        DataLossPreventionJobTrigger_InspectJob_StorageConfig_TimespanConfig_TimestampField { name: self.name }
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigElTimestampFieldElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_TimespanConfig_TimestampFieldRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigElTimestampFieldElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_StorageConfig_TimespanConfig_TimestampFieldRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigElTimestampFieldElRef {
-        DataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigElTimestampFieldElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_StorageConfig_TimespanConfig_TimestampFieldRef {
+        DataLossPreventionJobTrigger_InspectJob_StorageConfig_TimespanConfig_TimestampFieldRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigElTimestampFieldElRef {
+impl DataLossPreventionJobTrigger_InspectJob_StorageConfig_TimespanConfig_TimestampFieldRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -7833,16 +6790,16 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigElTime
 }
 
 #[derive(Serialize, Default)]
-struct DataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigElDynamic {
+struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_TimespanConfigDynamic {
     timestamp_field: std
     ::option
     ::Option<
-        terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigElTimestampFieldEl>,
+        terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_StorageConfig_TimespanConfig_TimestampField>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_TimespanConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_auto_population_of_timespan_config: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -7852,11 +6809,11 @@ pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfig
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     timestamp_field: std
     ::option
-    ::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigElTimestampFieldEl>>,
-    dynamic: DataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigElDynamic,
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_StorageConfig_TimespanConfig_TimestampField>>,
+    dynamic: DataLossPreventionJobTrigger_InspectJob_StorageConfig_TimespanConfigDynamic,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigEl {
+impl DataLossPreventionJobTrigger_InspectJob_StorageConfig_TimespanConfig {
     #[doc =
         "Set the field `enable_auto_population_of_timespan_config`.\nWhen the job is started by a JobTrigger we will automatically figure out a valid startTime to avoid\nscanning files that have not been modified since the last time the JobTrigger executed. This will\nbe based on the time of the execution of the last run of the JobTrigger or the timespan endTime\nused in the last run of the JobTrigger."]
     pub fn set_enable_auto_population_of_timespan_config(
@@ -7892,7 +6849,7 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigElTimestampFieldEl,
+                            DataLossPreventionJobTrigger_InspectJob_StorageConfig_TimespanConfig_TimestampField,
                         >,
                     >,
     ) -> Self {
@@ -7908,8 +6865,8 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigEl {
-    type O = terrars::BlockAssignable<DataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigEl>;
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_StorageConfig_TimespanConfig {
+    type O = terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_StorageConfig_TimespanConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -7920,11 +6877,11 @@ impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElStorage
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigEl {}
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_StorageConfig_TimespanConfig {}
 
-impl BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigEl {
-        DataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_StorageConfig_TimespanConfig {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_StorageConfig_TimespanConfig {
+        DataLossPreventionJobTrigger_InspectJob_StorageConfig_TimespanConfig {
             enable_auto_population_of_timespan_config: core::default::Default::default(),
             end_time: core::default::Default::default(),
             start_time: core::default::Default::default(),
@@ -7934,24 +6891,26 @@ impl BuildDataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigE
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_StorageConfig_TimespanConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_StorageConfig_TimespanConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigElRef {
-        DataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_StorageConfig_TimespanConfigRef {
+        DataLossPreventionJobTrigger_InspectJob_StorageConfig_TimespanConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigElRef {
+impl DataLossPreventionJobTrigger_InspectJob_StorageConfig_TimespanConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -7980,56 +6939,56 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigElRef 
     #[doc = "Get a reference to the value of field `timestamp_field` after provisioning.\n"]
     pub fn timestamp_field(
         &self,
-    ) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigElTimestampFieldElRef> {
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_StorageConfig_TimespanConfig_TimestampFieldRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.timestamp_field", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct DataLossPreventionJobTriggerInspectJobElStorageConfigElDynamic {
+struct DataLossPreventionJobTrigger_InspectJob_StorageConfigDynamic {
     big_query_options: std
     ::option
-    ::Option<terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsEl>>,
+    ::Option<terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions>>,
     cloud_storage_options: std
     ::option
-    ::Option<terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsEl>>,
+    ::Option<terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions>>,
     datastore_options: std
     ::option
-    ::Option<terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsEl>>,
+    ::Option<terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions>>,
     hybrid_options: std
     ::option
-    ::Option<terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsEl>>,
+    ::Option<terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions>>,
     timespan_config: std
     ::option
-    ::Option<terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigEl>>,
+    ::Option<terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_StorageConfig_TimespanConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigEl {
+pub struct DataLossPreventionJobTrigger_InspectJob_StorageConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     big_query_options: std
     ::option
-    ::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsEl>>,
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cloud_storage_options: std
     ::option
-    ::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsEl>>,
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     datastore_options: std
     ::option
-    ::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsEl>>,
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     hybrid_options: std
     ::option
-    ::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsEl>>,
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     timespan_config: std
     ::option
-    ::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigEl>>,
-    dynamic: DataLossPreventionJobTriggerInspectJobElStorageConfigElDynamic,
+    ::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_StorageConfig_TimespanConfig>>,
+    dynamic: DataLossPreventionJobTrigger_InspectJob_StorageConfigDynamic,
 }
 
-impl DataLossPreventionJobTriggerInspectJobElStorageConfigEl {
+impl DataLossPreventionJobTrigger_InspectJob_StorageConfig {
     #[doc = "Set the field `big_query_options`.\n"]
     pub fn set_big_query_options(
         mut self,
@@ -8040,7 +6999,7 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsEl>,
+                        ::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptions>,
                     >,
     ) -> Self {
         match v.into() {
@@ -8064,9 +7023,7 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsEl,
-                        >,
+                        ::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptions>,
                     >,
     ) -> Self {
         match v.into() {
@@ -8090,7 +7047,7 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsEl>,
+                        ::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptions>,
                     >,
     ) -> Self {
         match v.into() {
@@ -8113,8 +7070,7 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsEl>,
+                        terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptions>,
                     >,
     ) -> Self {
         match v.into() {
@@ -8137,8 +7093,7 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<DataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigEl>,
+                        terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_StorageConfig_TimespanConfig>,
                     >,
     ) -> Self {
         match v.into() {
@@ -8153,8 +7108,8 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElStorageConfigEl {
-    type O = terrars::BlockAssignable<DataLossPreventionJobTriggerInspectJobElStorageConfigEl>;
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob_StorageConfig {
+    type O = terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_StorageConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -8165,11 +7120,11 @@ impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobElStorage
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobElStorageConfigEl {}
+pub struct BuildDataLossPreventionJobTrigger_InspectJob_StorageConfig {}
 
-impl BuildDataLossPreventionJobTriggerInspectJobElStorageConfigEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobElStorageConfigEl {
-        DataLossPreventionJobTriggerInspectJobElStorageConfigEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob_StorageConfig {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob_StorageConfig {
+        DataLossPreventionJobTrigger_InspectJob_StorageConfig {
             big_query_options: core::default::Default::default(),
             cloud_storage_options: core::default::Default::default(),
             datastore_options: core::default::Default::default(),
@@ -8180,24 +7135,26 @@ impl BuildDataLossPreventionJobTriggerInspectJobElStorageConfigEl {
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElStorageConfigElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJob_StorageConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElStorageConfigElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJob_StorageConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerInspectJobElStorageConfigElRef {
-        DataLossPreventionJobTriggerInspectJobElStorageConfigElRef {
+    ) -> DataLossPreventionJobTrigger_InspectJob_StorageConfigRef {
+        DataLossPreventionJobTrigger_InspectJob_StorageConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElStorageConfigElRef {
+impl DataLossPreventionJobTrigger_InspectJob_StorageConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -8205,64 +7162,64 @@ impl DataLossPreventionJobTriggerInspectJobElStorageConfigElRef {
     #[doc = "Get a reference to the value of field `big_query_options` after provisioning.\n"]
     pub fn big_query_options(
         &self,
-    ) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElStorageConfigElBigQueryOptionsElRef> {
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_StorageConfig_BigQueryOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.big_query_options", self.base))
     }
 
     #[doc = "Get a reference to the value of field `cloud_storage_options` after provisioning.\n"]
     pub fn cloud_storage_options(
         &self,
-    ) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElStorageConfigElCloudStorageOptionsElRef> {
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_StorageConfig_CloudStorageOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cloud_storage_options", self.base))
     }
 
     #[doc = "Get a reference to the value of field `datastore_options` after provisioning.\n"]
     pub fn datastore_options(
         &self,
-    ) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElStorageConfigElDatastoreOptionsElRef> {
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_StorageConfig_DatastoreOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.datastore_options", self.base))
     }
 
     #[doc = "Get a reference to the value of field `hybrid_options` after provisioning.\n"]
     pub fn hybrid_options(
         &self,
-    ) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElStorageConfigElHybridOptionsElRef> {
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_StorageConfig_HybridOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.hybrid_options", self.base))
     }
 
     #[doc = "Get a reference to the value of field `timespan_config` after provisioning.\n"]
     pub fn timespan_config(
         &self,
-    ) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElStorageConfigElTimespanConfigElRef> {
+    ) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_StorageConfig_TimespanConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.timespan_config", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct DataLossPreventionJobTriggerInspectJobElDynamic {
-    actions: std::option::Option<terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobElActionsEl>>,
+struct DataLossPreventionJobTrigger_InspectJobDynamic {
+    actions: std::option::Option<terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_Actions>>,
     inspect_config: std
     ::option
-    ::Option<terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobElInspectConfigEl>>,
+    ::Option<terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_InspectConfig>>,
     storage_config: std
     ::option
-    ::Option<terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobElStorageConfigEl>>,
+    ::Option<terrars::DynamicBlock<DataLossPreventionJobTrigger_InspectJob_StorageConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerInspectJobEl {
+pub struct DataLossPreventionJobTrigger_InspectJob {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     inspect_template_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    actions: std::option::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElActionsEl>>,
+    actions: std::option::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_Actions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    inspect_config: std::option::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElInspectConfigEl>>,
+    inspect_config: std::option::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_InspectConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    storage_config: std::option::Option<std::vec::Vec<DataLossPreventionJobTriggerInspectJobElStorageConfigEl>>,
-    dynamic: DataLossPreventionJobTriggerInspectJobElDynamic,
+    storage_config: std::option::Option<std::vec::Vec<DataLossPreventionJobTrigger_InspectJob_StorageConfig>>,
+    dynamic: DataLossPreventionJobTrigger_InspectJobDynamic,
 }
 
-impl DataLossPreventionJobTriggerInspectJobEl {
+impl DataLossPreventionJobTrigger_InspectJob {
     #[doc = "Set the field `inspect_template_name`.\nThe name of the template to run when this job is triggered."]
     pub fn set_inspect_template_name(
         mut self,
@@ -8275,7 +7232,7 @@ impl DataLossPreventionJobTriggerInspectJobEl {
     #[doc = "Set the field `actions`.\n"]
     pub fn set_actions(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataLossPreventionJobTriggerInspectJobElActionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_Actions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -8291,12 +7248,7 @@ impl DataLossPreventionJobTriggerInspectJobEl {
     #[doc = "Set the field `inspect_config`.\n"]
     pub fn set_inspect_config(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<DataLossPreventionJobTriggerInspectJobElInspectConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_InspectConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -8312,12 +7264,7 @@ impl DataLossPreventionJobTriggerInspectJobEl {
     #[doc = "Set the field `storage_config`.\n"]
     pub fn set_storage_config(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<DataLossPreventionJobTriggerInspectJobElStorageConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob_StorageConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -8331,8 +7278,8 @@ impl DataLossPreventionJobTriggerInspectJobEl {
     }
 }
 
-impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobEl {
-    type O = terrars::BlockAssignable<DataLossPreventionJobTriggerInspectJobEl>;
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_InspectJob {
+    type O = terrars::BlockAssignable<DataLossPreventionJobTrigger_InspectJob>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -8343,11 +7290,11 @@ impl terrars::ToListMappable for DataLossPreventionJobTriggerInspectJobEl {
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerInspectJobEl {}
+pub struct BuildDataLossPreventionJobTrigger_InspectJob {}
 
-impl BuildDataLossPreventionJobTriggerInspectJobEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerInspectJobEl {
-        DataLossPreventionJobTriggerInspectJobEl {
+impl BuildDataLossPreventionJobTrigger_InspectJob {
+    pub fn build(self) -> DataLossPreventionJobTrigger_InspectJob {
+        DataLossPreventionJobTrigger_InspectJob {
             inspect_template_name: core::default::Default::default(),
             actions: core::default::Default::default(),
             inspect_config: core::default::Default::default(),
@@ -8357,21 +7304,23 @@ impl BuildDataLossPreventionJobTriggerInspectJobEl {
     }
 }
 
-pub struct DataLossPreventionJobTriggerInspectJobElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_InspectJobRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerInspectJobElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLossPreventionJobTriggerInspectJobElRef {
-        DataLossPreventionJobTriggerInspectJobElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_InspectJobRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLossPreventionJobTrigger_InspectJobRef {
+        DataLossPreventionJobTrigger_InspectJobRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerInspectJobElRef {
+impl DataLossPreventionJobTrigger_InspectJobRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -8383,23 +7332,23 @@ impl DataLossPreventionJobTriggerInspectJobElRef {
     }
 
     #[doc = "Get a reference to the value of field `actions` after provisioning.\n"]
-    pub fn actions(&self) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElActionsElRef> {
+    pub fn actions(&self) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_ActionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.actions", self.base))
     }
 
     #[doc = "Get a reference to the value of field `inspect_config` after provisioning.\n"]
-    pub fn inspect_config(&self) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElInspectConfigElRef> {
+    pub fn inspect_config(&self) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_InspectConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.inspect_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `storage_config` after provisioning.\n"]
-    pub fn storage_config(&self) -> terrars::ListRef<DataLossPreventionJobTriggerInspectJobElStorageConfigElRef> {
+    pub fn storage_config(&self) -> terrars::ListRef<DataLossPreventionJobTrigger_InspectJob_StorageConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.storage_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerTimeoutsEl {
+pub struct DataLossPreventionJobTrigger_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -8408,7 +7357,7 @@ pub struct DataLossPreventionJobTriggerTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataLossPreventionJobTriggerTimeoutsEl {
+impl DataLossPreventionJobTrigger_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -8428,8 +7377,8 @@ impl DataLossPreventionJobTriggerTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataLossPreventionJobTriggerTimeoutsEl {
-    type O = terrars::BlockAssignable<DataLossPreventionJobTriggerTimeoutsEl>;
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_Timeouts {
+    type O = terrars::BlockAssignable<DataLossPreventionJobTrigger_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -8440,11 +7389,11 @@ impl terrars::ToListMappable for DataLossPreventionJobTriggerTimeoutsEl {
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerTimeoutsEl {}
+pub struct BuildDataLossPreventionJobTrigger_Timeouts {}
 
-impl BuildDataLossPreventionJobTriggerTimeoutsEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerTimeoutsEl {
-        DataLossPreventionJobTriggerTimeoutsEl {
+impl BuildDataLossPreventionJobTrigger_Timeouts {
+    pub fn build(self) -> DataLossPreventionJobTrigger_Timeouts {
+        DataLossPreventionJobTrigger_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -8452,21 +7401,23 @@ impl BuildDataLossPreventionJobTriggerTimeoutsEl {
     }
 }
 
-pub struct DataLossPreventionJobTriggerTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLossPreventionJobTriggerTimeoutsElRef {
-        DataLossPreventionJobTriggerTimeoutsElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLossPreventionJobTrigger_TimeoutsRef {
+        DataLossPreventionJobTrigger_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerTimeoutsElRef {
+impl DataLossPreventionJobTrigger_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -8488,12 +7439,12 @@ impl DataLossPreventionJobTriggerTimeoutsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerTriggersElManualEl {}
+pub struct DataLossPreventionJobTrigger_Triggers_Manual {}
 
-impl DataLossPreventionJobTriggerTriggersElManualEl { }
+impl DataLossPreventionJobTrigger_Triggers_Manual { }
 
-impl terrars::ToListMappable for DataLossPreventionJobTriggerTriggersElManualEl {
-    type O = terrars::BlockAssignable<DataLossPreventionJobTriggerTriggersElManualEl>;
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_Triggers_Manual {
+    type O = terrars::BlockAssignable<DataLossPreventionJobTrigger_Triggers_Manual>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -8504,44 +7455,46 @@ impl terrars::ToListMappable for DataLossPreventionJobTriggerTriggersElManualEl 
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerTriggersElManualEl {}
+pub struct BuildDataLossPreventionJobTrigger_Triggers_Manual {}
 
-impl BuildDataLossPreventionJobTriggerTriggersElManualEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerTriggersElManualEl {
-        DataLossPreventionJobTriggerTriggersElManualEl {}
+impl BuildDataLossPreventionJobTrigger_Triggers_Manual {
+    pub fn build(self) -> DataLossPreventionJobTrigger_Triggers_Manual {
+        DataLossPreventionJobTrigger_Triggers_Manual {}
     }
 }
 
-pub struct DataLossPreventionJobTriggerTriggersElManualElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_Triggers_ManualRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerTriggersElManualElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_Triggers_ManualRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerTriggersElManualElRef {
-        DataLossPreventionJobTriggerTriggersElManualElRef {
+    ) -> DataLossPreventionJobTrigger_Triggers_ManualRef {
+        DataLossPreventionJobTrigger_Triggers_ManualRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerTriggersElManualElRef {
+impl DataLossPreventionJobTrigger_Triggers_ManualRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerTriggersElScheduleEl {
+pub struct DataLossPreventionJobTrigger_Triggers_Schedule {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     recurrence_period_duration: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataLossPreventionJobTriggerTriggersElScheduleEl {
+impl DataLossPreventionJobTrigger_Triggers_Schedule {
     #[doc =
         "Set the field `recurrence_period_duration`.\nWith this option a job is started a regular periodic basis. For example: every day (86400 seconds).\n\nA scheduled start time will be skipped if the previous execution has not ended when its scheduled time occurs.\n\nThis value must be set to a time duration greater than or equal to 1 day and can be no longer than 60 days.\n\nA duration in seconds with up to nine fractional digits, terminated by 's'. Example: \"3.5s\"."]
     pub fn set_recurrence_period_duration(
@@ -8553,8 +7506,8 @@ impl DataLossPreventionJobTriggerTriggersElScheduleEl {
     }
 }
 
-impl terrars::ToListMappable for DataLossPreventionJobTriggerTriggersElScheduleEl {
-    type O = terrars::BlockAssignable<DataLossPreventionJobTriggerTriggersElScheduleEl>;
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_Triggers_Schedule {
+    type O = terrars::BlockAssignable<DataLossPreventionJobTrigger_Triggers_Schedule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -8565,34 +7518,36 @@ impl terrars::ToListMappable for DataLossPreventionJobTriggerTriggersElScheduleE
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerTriggersElScheduleEl {}
+pub struct BuildDataLossPreventionJobTrigger_Triggers_Schedule {}
 
-impl BuildDataLossPreventionJobTriggerTriggersElScheduleEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerTriggersElScheduleEl {
-        DataLossPreventionJobTriggerTriggersElScheduleEl {
+impl BuildDataLossPreventionJobTrigger_Triggers_Schedule {
+    pub fn build(self) -> DataLossPreventionJobTrigger_Triggers_Schedule {
+        DataLossPreventionJobTrigger_Triggers_Schedule {
             recurrence_period_duration: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataLossPreventionJobTriggerTriggersElScheduleElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_Triggers_ScheduleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerTriggersElScheduleElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_Triggers_ScheduleRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLossPreventionJobTriggerTriggersElScheduleElRef {
-        DataLossPreventionJobTriggerTriggersElScheduleElRef {
+    ) -> DataLossPreventionJobTrigger_Triggers_ScheduleRef {
+        DataLossPreventionJobTrigger_Triggers_ScheduleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerTriggersElScheduleElRef {
+impl DataLossPreventionJobTrigger_Triggers_ScheduleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -8605,25 +7560,25 @@ impl DataLossPreventionJobTriggerTriggersElScheduleElRef {
 }
 
 #[derive(Serialize, Default)]
-struct DataLossPreventionJobTriggerTriggersElDynamic {
-    manual: std::option::Option<terrars::DynamicBlock<DataLossPreventionJobTriggerTriggersElManualEl>>,
-    schedule: std::option::Option<terrars::DynamicBlock<DataLossPreventionJobTriggerTriggersElScheduleEl>>,
+struct DataLossPreventionJobTrigger_TriggersDynamic {
+    manual: std::option::Option<terrars::DynamicBlock<DataLossPreventionJobTrigger_Triggers_Manual>>,
+    schedule: std::option::Option<terrars::DynamicBlock<DataLossPreventionJobTrigger_Triggers_Schedule>>,
 }
 
 #[derive(Serialize)]
-pub struct DataLossPreventionJobTriggerTriggersEl {
+pub struct DataLossPreventionJobTrigger_Triggers {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    manual: std::option::Option<std::vec::Vec<DataLossPreventionJobTriggerTriggersElManualEl>>,
+    manual: std::option::Option<std::vec::Vec<DataLossPreventionJobTrigger_Triggers_Manual>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    schedule: std::option::Option<std::vec::Vec<DataLossPreventionJobTriggerTriggersElScheduleEl>>,
-    dynamic: DataLossPreventionJobTriggerTriggersElDynamic,
+    schedule: std::option::Option<std::vec::Vec<DataLossPreventionJobTrigger_Triggers_Schedule>>,
+    dynamic: DataLossPreventionJobTrigger_TriggersDynamic,
 }
 
-impl DataLossPreventionJobTriggerTriggersEl {
+impl DataLossPreventionJobTrigger_Triggers {
     #[doc = "Set the field `manual`.\n"]
     pub fn set_manual(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataLossPreventionJobTriggerTriggersElManualEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataLossPreventionJobTrigger_Triggers_Manual>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -8639,7 +7594,7 @@ impl DataLossPreventionJobTriggerTriggersEl {
     #[doc = "Set the field `schedule`.\n"]
     pub fn set_schedule(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataLossPreventionJobTriggerTriggersElScheduleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataLossPreventionJobTrigger_Triggers_Schedule>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -8653,8 +7608,8 @@ impl DataLossPreventionJobTriggerTriggersEl {
     }
 }
 
-impl terrars::ToListMappable for DataLossPreventionJobTriggerTriggersEl {
-    type O = terrars::BlockAssignable<DataLossPreventionJobTriggerTriggersEl>;
+impl terrars::ToListMappable for DataLossPreventionJobTrigger_Triggers {
+    type O = terrars::BlockAssignable<DataLossPreventionJobTrigger_Triggers>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -8665,11 +7620,11 @@ impl terrars::ToListMappable for DataLossPreventionJobTriggerTriggersEl {
     }
 }
 
-pub struct BuildDataLossPreventionJobTriggerTriggersEl {}
+pub struct BuildDataLossPreventionJobTrigger_Triggers {}
 
-impl BuildDataLossPreventionJobTriggerTriggersEl {
-    pub fn build(self) -> DataLossPreventionJobTriggerTriggersEl {
-        DataLossPreventionJobTriggerTriggersEl {
+impl BuildDataLossPreventionJobTrigger_Triggers {
+    pub fn build(self) -> DataLossPreventionJobTrigger_Triggers {
+        DataLossPreventionJobTrigger_Triggers {
             manual: core::default::Default::default(),
             schedule: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -8677,38 +7632,34 @@ impl BuildDataLossPreventionJobTriggerTriggersEl {
     }
 }
 
-pub struct DataLossPreventionJobTriggerTriggersElRef {
+#[allow(dead_code)]
+pub struct DataLossPreventionJobTrigger_TriggersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLossPreventionJobTriggerTriggersElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLossPreventionJobTriggerTriggersElRef {
-        DataLossPreventionJobTriggerTriggersElRef {
+impl terrars::Ref for DataLossPreventionJobTrigger_TriggersRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLossPreventionJobTrigger_TriggersRef {
+        DataLossPreventionJobTrigger_TriggersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLossPreventionJobTriggerTriggersElRef {
+impl DataLossPreventionJobTrigger_TriggersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `manual` after provisioning.\n"]
-    pub fn manual(&self) -> terrars::ListRef<DataLossPreventionJobTriggerTriggersElManualElRef> {
+    pub fn manual(&self) -> terrars::ListRef<DataLossPreventionJobTrigger_Triggers_ManualRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.manual", self.base))
     }
 
     #[doc = "Get a reference to the value of field `schedule` after provisioning.\n"]
-    pub fn schedule(&self) -> terrars::ListRef<DataLossPreventionJobTriggerTriggersElScheduleElRef> {
+    pub fn schedule(&self) -> terrars::ListRef<DataLossPreventionJobTrigger_Triggers_ScheduleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.schedule", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataLossPreventionJobTriggerDynamic {
-    inspect_job: std::option::Option<terrars::DynamicBlock<DataLossPreventionJobTriggerInspectJobEl>>,
-    triggers: std::option::Option<terrars::DynamicBlock<DataLossPreventionJobTriggerTriggersEl>>,
 }

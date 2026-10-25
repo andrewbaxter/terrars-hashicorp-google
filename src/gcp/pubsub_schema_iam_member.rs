@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct PubsubSchemaIamMemberData {
+struct PubsubSchemaIamMemberData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,14 +28,14 @@ struct PubsubSchemaIamMemberData {
     role: terrars::PrimField<std::string::String>,
     schema: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<PubsubSchemaIamMemberConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<PubsubSchemaIamMember_Condition>>,
     dynamic: PubsubSchemaIamMemberDynamic,
 }
 
 struct PubsubSchemaIamMember_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<PubsubSchemaIamMemberData>,
+    data: std::cell::RefCell<PubsubSchemaIamMemberData_>,
 }
 
 #[derive(Clone)]
@@ -148,7 +150,7 @@ impl PubsubSchemaIamMember {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<PubsubSchemaIamMemberConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<PubsubSchemaIamMember_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -192,7 +194,7 @@ impl PubsubSchemaIamMember {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<PubsubSchemaIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<PubsubSchemaIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -243,7 +245,7 @@ impl BuildPubsubSchemaIamMember {
         let out = PubsubSchemaIamMember(std::rc::Rc::new(PubsubSchemaIamMember_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(PubsubSchemaIamMemberData {
+            data: std::cell::RefCell::new(PubsubSchemaIamMemberData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -317,20 +319,25 @@ impl PubsubSchemaIamMemberRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<PubsubSchemaIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<PubsubSchemaIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct PubsubSchemaIamMemberDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<PubsubSchemaIamMember_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct PubsubSchemaIamMemberConditionEl {
+pub struct PubsubSchemaIamMember_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl PubsubSchemaIamMemberConditionEl {
+impl PubsubSchemaIamMember_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -338,8 +345,8 @@ impl PubsubSchemaIamMemberConditionEl {
     }
 }
 
-impl terrars::ToListMappable for PubsubSchemaIamMemberConditionEl {
-    type O = terrars::BlockAssignable<PubsubSchemaIamMemberConditionEl>;
+impl terrars::ToListMappable for PubsubSchemaIamMember_Condition {
+    type O = terrars::BlockAssignable<PubsubSchemaIamMember_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -350,16 +357,16 @@ impl terrars::ToListMappable for PubsubSchemaIamMemberConditionEl {
     }
 }
 
-pub struct BuildPubsubSchemaIamMemberConditionEl {
+pub struct BuildPubsubSchemaIamMember_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildPubsubSchemaIamMemberConditionEl {
-    pub fn build(self) -> PubsubSchemaIamMemberConditionEl {
-        PubsubSchemaIamMemberConditionEl {
+impl BuildPubsubSchemaIamMember_Condition {
+    pub fn build(self) -> PubsubSchemaIamMember_Condition {
+        PubsubSchemaIamMember_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -367,21 +374,23 @@ impl BuildPubsubSchemaIamMemberConditionEl {
     }
 }
 
-pub struct PubsubSchemaIamMemberConditionElRef {
+#[allow(dead_code)]
+pub struct PubsubSchemaIamMember_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PubsubSchemaIamMemberConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> PubsubSchemaIamMemberConditionElRef {
-        PubsubSchemaIamMemberConditionElRef {
+impl terrars::Ref for PubsubSchemaIamMember_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> PubsubSchemaIamMember_ConditionRef {
+        PubsubSchemaIamMember_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PubsubSchemaIamMemberConditionElRef {
+impl PubsubSchemaIamMember_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -400,9 +409,4 @@ impl PubsubSchemaIamMemberConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct PubsubSchemaIamMemberDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<PubsubSchemaIamMemberConditionEl>>,
 }

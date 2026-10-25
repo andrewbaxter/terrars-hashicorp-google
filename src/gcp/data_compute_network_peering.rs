@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataComputeNetworkPeeringData {
+struct DataComputeNetworkPeeringData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -21,13 +23,13 @@ struct DataComputeNetworkPeeringData {
     name: terrars::PrimField<std::string::String>,
     network: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataComputeNetworkPeeringTimeoutsEl>,
+    timeouts: std::option::Option<DataComputeNetworkPeering_Timeouts>,
 }
 
 struct DataComputeNetworkPeering_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataComputeNetworkPeeringData>,
+    data: std::cell::RefCell<DataComputeNetworkPeeringData_>,
 }
 
 #[derive(Clone)]
@@ -79,9 +81,15 @@ impl DataComputeNetworkPeering {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataComputeNetworkPeeringTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataComputeNetworkPeering_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -151,12 +159,15 @@ impl DataComputeNetworkPeering {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.state_details", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `update_strategy` after provisioning.\nThe update strategy determines the semantics for updates and deletes to the peering connection configuration. The default value is INDEPENDENT. Possible values: [\"INDEPENDENT\", \"CONSENSUS\"]"]
+    pub fn update_strategy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update_strategy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataComputeNetworkPeeringTimeoutsElRef {
-        DataComputeNetworkPeeringTimeoutsElRef::new(
-            self.shared().clone(),
-            format!("{}.timeouts", self.extract_ref()),
-        )
+    pub fn timeouts(&self) -> DataComputeNetworkPeering_TimeoutsRef {
+        DataComputeNetworkPeering_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -204,7 +215,7 @@ impl BuildDataComputeNetworkPeering {
         let out = DataComputeNetworkPeering(std::rc::Rc::new(DataComputeNetworkPeering_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataComputeNetworkPeeringData {
+            data: std::cell::RefCell::new(DataComputeNetworkPeeringData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -241,6 +252,12 @@ impl DataComputeNetworkPeeringRef {
 
     fn extract_ref(&self) -> std::string::String {
         self.base.clone()
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -310,22 +327,25 @@ impl DataComputeNetworkPeeringRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.state_details", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `update_strategy` after provisioning.\nThe update strategy determines the semantics for updates and deletes to the peering connection configuration. The default value is INDEPENDENT. Possible values: [\"INDEPENDENT\", \"CONSENSUS\"]"]
+    pub fn update_strategy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update_strategy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataComputeNetworkPeeringTimeoutsElRef {
-        DataComputeNetworkPeeringTimeoutsElRef::new(
-            self.shared().clone(),
-            format!("{}.timeouts", self.extract_ref()),
-        )
+    pub fn timeouts(&self) -> DataComputeNetworkPeering_TimeoutsRef {
+        DataComputeNetworkPeering_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataComputeNetworkPeeringTimeoutsEl {
+pub struct DataComputeNetworkPeering_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataComputeNetworkPeeringTimeoutsEl {
+impl DataComputeNetworkPeering_Timeouts {
     #[doc = "Set the field `read`.\n"]
     pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.read = std::option::Option::Some(v.into());
@@ -333,8 +353,8 @@ impl DataComputeNetworkPeeringTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeNetworkPeeringTimeoutsEl {
-    type O = terrars::BlockAssignable<DataComputeNetworkPeeringTimeoutsEl>;
+impl terrars::ToListMappable for DataComputeNetworkPeering_Timeouts {
+    type O = terrars::BlockAssignable<DataComputeNetworkPeering_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -345,29 +365,31 @@ impl terrars::ToListMappable for DataComputeNetworkPeeringTimeoutsEl {
     }
 }
 
-pub struct BuildDataComputeNetworkPeeringTimeoutsEl {}
+pub struct BuildDataComputeNetworkPeering_Timeouts {}
 
-impl BuildDataComputeNetworkPeeringTimeoutsEl {
-    pub fn build(self) -> DataComputeNetworkPeeringTimeoutsEl {
-        DataComputeNetworkPeeringTimeoutsEl { read: core::default::Default::default() }
+impl BuildDataComputeNetworkPeering_Timeouts {
+    pub fn build(self) -> DataComputeNetworkPeering_Timeouts {
+        DataComputeNetworkPeering_Timeouts { read: core::default::Default::default() }
     }
 }
 
-pub struct DataComputeNetworkPeeringTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataComputeNetworkPeering_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeNetworkPeeringTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeNetworkPeeringTimeoutsElRef {
-        DataComputeNetworkPeeringTimeoutsElRef {
+impl terrars::Ref for DataComputeNetworkPeering_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeNetworkPeering_TimeoutsRef {
+        DataComputeNetworkPeering_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeNetworkPeeringTimeoutsElRef {
+impl DataComputeNetworkPeering_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

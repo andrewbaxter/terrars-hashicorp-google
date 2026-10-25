@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ContainerAzureNodePoolData {
+struct ContainerAzureNodePoolData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,6 +26,8 @@ struct ContainerAzureNodePoolData {
     azure_availability_zone: std::option::Option<terrars::PrimField<std::string::String>>,
     cluster: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     location: terrars::PrimField<std::string::String>,
     name: terrars::PrimField<std::string::String>,
@@ -32,22 +36,22 @@ struct ContainerAzureNodePoolData {
     subnet_id: terrars::PrimField<std::string::String>,
     version: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    autoscaling: std::option::Option<std::vec::Vec<ContainerAzureNodePoolAutoscalingEl>>,
+    autoscaling: std::option::Option<std::vec::Vec<ContainerAzureNodePool_Autoscaling>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    config: std::option::Option<std::vec::Vec<ContainerAzureNodePoolConfigEl>>,
+    config: std::option::Option<std::vec::Vec<ContainerAzureNodePool_Config>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    management: std::option::Option<std::vec::Vec<ContainerAzureNodePoolManagementEl>>,
+    management: std::option::Option<std::vec::Vec<ContainerAzureNodePool_Management>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    max_pods_constraint: std::option::Option<std::vec::Vec<ContainerAzureNodePoolMaxPodsConstraintEl>>,
+    max_pods_constraint: std::option::Option<std::vec::Vec<ContainerAzureNodePool_MaxPodsConstraint>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ContainerAzureNodePoolTimeoutsEl>,
+    timeouts: std::option::Option<ContainerAzureNodePool_Timeouts>,
     dynamic: ContainerAzureNodePoolDynamic,
 }
 
 struct ContainerAzureNodePool_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ContainerAzureNodePoolData>,
+    data: std::cell::RefCell<ContainerAzureNodePoolData_>,
 }
 
 #[derive(Clone)]
@@ -167,6 +171,13 @@ impl ContainerAzureNodePool {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -182,7 +193,7 @@ impl ContainerAzureNodePool {
     #[doc = "Set the field `autoscaling`.\n"]
     pub fn set_autoscaling(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureNodePoolAutoscalingEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureNodePool_Autoscaling>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -198,7 +209,7 @@ impl ContainerAzureNodePool {
     #[doc = "Set the field `config`.\n"]
     pub fn set_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureNodePoolConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureNodePool_Config>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -214,7 +225,7 @@ impl ContainerAzureNodePool {
     #[doc = "Set the field `management`.\n"]
     pub fn set_management(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureNodePoolManagementEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureNodePool_Management>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -230,7 +241,7 @@ impl ContainerAzureNodePool {
     #[doc = "Set the field `max_pods_constraint`.\n"]
     pub fn set_max_pods_constraint(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureNodePoolMaxPodsConstraintEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureNodePool_MaxPodsConstraint>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -244,7 +255,7 @@ impl ContainerAzureNodePool {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ContainerAzureNodePoolTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ContainerAzureNodePool_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -270,6 +281,12 @@ impl ContainerAzureNodePool {
         "Get a reference to the value of field `create_time` after provisioning.\nOutput only. The time at which this node pool was created."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -341,28 +358,28 @@ impl ContainerAzureNodePool {
     }
 
     #[doc = "Get a reference to the value of field `autoscaling` after provisioning.\n"]
-    pub fn autoscaling(&self) -> terrars::ListRef<ContainerAzureNodePoolAutoscalingElRef> {
+    pub fn autoscaling(&self) -> terrars::ListRef<ContainerAzureNodePool_AutoscalingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.autoscaling", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `config` after provisioning.\n"]
-    pub fn config(&self) -> terrars::ListRef<ContainerAzureNodePoolConfigElRef> {
+    pub fn config(&self) -> terrars::ListRef<ContainerAzureNodePool_ConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `management` after provisioning.\n"]
-    pub fn management(&self) -> terrars::ListRef<ContainerAzureNodePoolManagementElRef> {
+    pub fn management(&self) -> terrars::ListRef<ContainerAzureNodePool_ManagementRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.management", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `max_pods_constraint` after provisioning.\n"]
-    pub fn max_pods_constraint(&self) -> terrars::ListRef<ContainerAzureNodePoolMaxPodsConstraintElRef> {
+    pub fn max_pods_constraint(&self) -> terrars::ListRef<ContainerAzureNodePool_MaxPodsConstraintRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.max_pods_constraint", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ContainerAzureNodePoolTimeoutsElRef {
-        ContainerAzureNodePoolTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ContainerAzureNodePool_TimeoutsRef {
+        ContainerAzureNodePool_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -417,7 +434,7 @@ impl BuildContainerAzureNodePool {
         let out = ContainerAzureNodePool(std::rc::Rc::new(ContainerAzureNodePool_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ContainerAzureNodePoolData {
+            data: std::cell::RefCell::new(ContainerAzureNodePoolData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -426,6 +443,7 @@ impl BuildContainerAzureNodePool {
                 annotations: core::default::Default::default(),
                 azure_availability_zone: core::default::Default::default(),
                 cluster: self.cluster,
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 location: self.location,
                 name: self.name,
@@ -492,6 +510,12 @@ impl ContainerAzureNodePoolRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `effective_annotations` after provisioning.\nAll of annotations (key/value pairs) present on the resource in GCP, including the annotations configured through Terraform, other clients and services."]
     pub fn effective_annotations(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.effective_annotations", self.extract_ref()))
@@ -560,41 +584,49 @@ impl ContainerAzureNodePoolRef {
     }
 
     #[doc = "Get a reference to the value of field `autoscaling` after provisioning.\n"]
-    pub fn autoscaling(&self) -> terrars::ListRef<ContainerAzureNodePoolAutoscalingElRef> {
+    pub fn autoscaling(&self) -> terrars::ListRef<ContainerAzureNodePool_AutoscalingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.autoscaling", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `config` after provisioning.\n"]
-    pub fn config(&self) -> terrars::ListRef<ContainerAzureNodePoolConfigElRef> {
+    pub fn config(&self) -> terrars::ListRef<ContainerAzureNodePool_ConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `management` after provisioning.\n"]
-    pub fn management(&self) -> terrars::ListRef<ContainerAzureNodePoolManagementElRef> {
+    pub fn management(&self) -> terrars::ListRef<ContainerAzureNodePool_ManagementRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.management", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `max_pods_constraint` after provisioning.\n"]
-    pub fn max_pods_constraint(&self) -> terrars::ListRef<ContainerAzureNodePoolMaxPodsConstraintElRef> {
+    pub fn max_pods_constraint(&self) -> terrars::ListRef<ContainerAzureNodePool_MaxPodsConstraintRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.max_pods_constraint", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ContainerAzureNodePoolTimeoutsElRef {
-        ContainerAzureNodePoolTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ContainerAzureNodePool_TimeoutsRef {
+        ContainerAzureNodePool_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ContainerAzureNodePoolDynamic {
+    autoscaling: std::option::Option<terrars::DynamicBlock<ContainerAzureNodePool_Autoscaling>>,
+    config: std::option::Option<terrars::DynamicBlock<ContainerAzureNodePool_Config>>,
+    management: std::option::Option<terrars::DynamicBlock<ContainerAzureNodePool_Management>>,
+    max_pods_constraint: std::option::Option<terrars::DynamicBlock<ContainerAzureNodePool_MaxPodsConstraint>>,
+}
+
 #[derive(Serialize)]
-pub struct ContainerAzureNodePoolAutoscalingEl {
+pub struct ContainerAzureNodePool_Autoscaling {
     max_node_count: terrars::PrimField<f64>,
     min_node_count: terrars::PrimField<f64>,
 }
 
-impl ContainerAzureNodePoolAutoscalingEl { }
+impl ContainerAzureNodePool_Autoscaling { }
 
-impl terrars::ToListMappable for ContainerAzureNodePoolAutoscalingEl {
-    type O = terrars::BlockAssignable<ContainerAzureNodePoolAutoscalingEl>;
+impl terrars::ToListMappable for ContainerAzureNodePool_Autoscaling {
+    type O = terrars::BlockAssignable<ContainerAzureNodePool_Autoscaling>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -605,37 +637,39 @@ impl terrars::ToListMappable for ContainerAzureNodePoolAutoscalingEl {
     }
 }
 
-pub struct BuildContainerAzureNodePoolAutoscalingEl {
+pub struct BuildContainerAzureNodePool_Autoscaling {
     #[doc = "Maximum number of nodes in the node pool. Must be >= min_node_count."]
     pub max_node_count: terrars::PrimField<f64>,
     #[doc = "Minimum number of nodes in the node pool. Must be >= 1 and <= max_node_count."]
     pub min_node_count: terrars::PrimField<f64>,
 }
 
-impl BuildContainerAzureNodePoolAutoscalingEl {
-    pub fn build(self) -> ContainerAzureNodePoolAutoscalingEl {
-        ContainerAzureNodePoolAutoscalingEl {
+impl BuildContainerAzureNodePool_Autoscaling {
+    pub fn build(self) -> ContainerAzureNodePool_Autoscaling {
+        ContainerAzureNodePool_Autoscaling {
             max_node_count: self.max_node_count,
             min_node_count: self.min_node_count,
         }
     }
 }
 
-pub struct ContainerAzureNodePoolAutoscalingElRef {
+#[allow(dead_code)]
+pub struct ContainerAzureNodePool_AutoscalingRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAzureNodePoolAutoscalingElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAzureNodePoolAutoscalingElRef {
-        ContainerAzureNodePoolAutoscalingElRef {
+impl terrars::Ref for ContainerAzureNodePool_AutoscalingRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAzureNodePool_AutoscalingRef {
+        ContainerAzureNodePool_AutoscalingRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAzureNodePoolAutoscalingElRef {
+impl ContainerAzureNodePool_AutoscalingRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -654,15 +688,15 @@ impl ContainerAzureNodePoolAutoscalingElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAzureNodePoolConfigElProxyConfigEl {
+pub struct ContainerAzureNodePool_Config_ProxyConfig {
     resource_group_id: terrars::PrimField<std::string::String>,
     secret_id: terrars::PrimField<std::string::String>,
 }
 
-impl ContainerAzureNodePoolConfigElProxyConfigEl { }
+impl ContainerAzureNodePool_Config_ProxyConfig { }
 
-impl terrars::ToListMappable for ContainerAzureNodePoolConfigElProxyConfigEl {
-    type O = terrars::BlockAssignable<ContainerAzureNodePoolConfigElProxyConfigEl>;
+impl terrars::ToListMappable for ContainerAzureNodePool_Config_ProxyConfig {
+    type O = terrars::BlockAssignable<ContainerAzureNodePool_Config_ProxyConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -673,7 +707,7 @@ impl terrars::ToListMappable for ContainerAzureNodePoolConfigElProxyConfigEl {
     }
 }
 
-pub struct BuildContainerAzureNodePoolConfigElProxyConfigEl {
+pub struct BuildContainerAzureNodePool_Config_ProxyConfig {
     #[doc =
         "The ARM ID the of the resource group containing proxy keyvault. Resource group ids are formatted as `/subscriptions/<subscription-id>/resourceGroups/<resource-group-name>`"]
     pub resource_group_id: terrars::PrimField<std::string::String>,
@@ -682,33 +716,32 @@ pub struct BuildContainerAzureNodePoolConfigElProxyConfigEl {
     pub secret_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildContainerAzureNodePoolConfigElProxyConfigEl {
-    pub fn build(self) -> ContainerAzureNodePoolConfigElProxyConfigEl {
-        ContainerAzureNodePoolConfigElProxyConfigEl {
+impl BuildContainerAzureNodePool_Config_ProxyConfig {
+    pub fn build(self) -> ContainerAzureNodePool_Config_ProxyConfig {
+        ContainerAzureNodePool_Config_ProxyConfig {
             resource_group_id: self.resource_group_id,
             secret_id: self.secret_id,
         }
     }
 }
 
-pub struct ContainerAzureNodePoolConfigElProxyConfigElRef {
+#[allow(dead_code)]
+pub struct ContainerAzureNodePool_Config_ProxyConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAzureNodePoolConfigElProxyConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ContainerAzureNodePoolConfigElProxyConfigElRef {
-        ContainerAzureNodePoolConfigElProxyConfigElRef {
+impl terrars::Ref for ContainerAzureNodePool_Config_ProxyConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAzureNodePool_Config_ProxyConfigRef {
+        ContainerAzureNodePool_Config_ProxyConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAzureNodePoolConfigElProxyConfigElRef {
+impl ContainerAzureNodePool_Config_ProxyConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -727,12 +760,12 @@ impl ContainerAzureNodePoolConfigElProxyConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAzureNodePoolConfigElRootVolumeEl {
+pub struct ContainerAzureNodePool_Config_RootVolume {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     size_gib: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl ContainerAzureNodePoolConfigElRootVolumeEl {
+impl ContainerAzureNodePool_Config_RootVolume {
     #[doc =
         "Set the field `size_gib`.\nOptional. The size of the disk, in GiBs. When unspecified, a default value is provided. See the specific reference in the parent resource."]
     pub fn set_size_gib(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -741,8 +774,8 @@ impl ContainerAzureNodePoolConfigElRootVolumeEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAzureNodePoolConfigElRootVolumeEl {
-    type O = terrars::BlockAssignable<ContainerAzureNodePoolConfigElRootVolumeEl>;
+impl terrars::ToListMappable for ContainerAzureNodePool_Config_RootVolume {
+    type O = terrars::BlockAssignable<ContainerAzureNodePool_Config_RootVolume>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -753,29 +786,31 @@ impl terrars::ToListMappable for ContainerAzureNodePoolConfigElRootVolumeEl {
     }
 }
 
-pub struct BuildContainerAzureNodePoolConfigElRootVolumeEl {}
+pub struct BuildContainerAzureNodePool_Config_RootVolume {}
 
-impl BuildContainerAzureNodePoolConfigElRootVolumeEl {
-    pub fn build(self) -> ContainerAzureNodePoolConfigElRootVolumeEl {
-        ContainerAzureNodePoolConfigElRootVolumeEl { size_gib: core::default::Default::default() }
+impl BuildContainerAzureNodePool_Config_RootVolume {
+    pub fn build(self) -> ContainerAzureNodePool_Config_RootVolume {
+        ContainerAzureNodePool_Config_RootVolume { size_gib: core::default::Default::default() }
     }
 }
 
-pub struct ContainerAzureNodePoolConfigElRootVolumeElRef {
+#[allow(dead_code)]
+pub struct ContainerAzureNodePool_Config_RootVolumeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAzureNodePoolConfigElRootVolumeElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAzureNodePoolConfigElRootVolumeElRef {
-        ContainerAzureNodePoolConfigElRootVolumeElRef {
+impl terrars::Ref for ContainerAzureNodePool_Config_RootVolumeRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAzureNodePool_Config_RootVolumeRef {
+        ContainerAzureNodePool_Config_RootVolumeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAzureNodePoolConfigElRootVolumeElRef {
+impl ContainerAzureNodePool_Config_RootVolumeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -788,14 +823,14 @@ impl ContainerAzureNodePoolConfigElRootVolumeElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAzureNodePoolConfigElSshConfigEl {
+pub struct ContainerAzureNodePool_Config_SshConfig {
     authorized_key: terrars::PrimField<std::string::String>,
 }
 
-impl ContainerAzureNodePoolConfigElSshConfigEl { }
+impl ContainerAzureNodePool_Config_SshConfig { }
 
-impl terrars::ToListMappable for ContainerAzureNodePoolConfigElSshConfigEl {
-    type O = terrars::BlockAssignable<ContainerAzureNodePoolConfigElSshConfigEl>;
+impl terrars::ToListMappable for ContainerAzureNodePool_Config_SshConfig {
+    type O = terrars::BlockAssignable<ContainerAzureNodePool_Config_SshConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -806,33 +841,35 @@ impl terrars::ToListMappable for ContainerAzureNodePoolConfigElSshConfigEl {
     }
 }
 
-pub struct BuildContainerAzureNodePoolConfigElSshConfigEl {
+pub struct BuildContainerAzureNodePool_Config_SshConfig {
     #[doc =
         "The SSH public key data for VMs managed by Anthos. This accepts the authorized_keys file format used in OpenSSH according to the sshd(8) manual page."]
     pub authorized_key: terrars::PrimField<std::string::String>,
 }
 
-impl BuildContainerAzureNodePoolConfigElSshConfigEl {
-    pub fn build(self) -> ContainerAzureNodePoolConfigElSshConfigEl {
-        ContainerAzureNodePoolConfigElSshConfigEl { authorized_key: self.authorized_key }
+impl BuildContainerAzureNodePool_Config_SshConfig {
+    pub fn build(self) -> ContainerAzureNodePool_Config_SshConfig {
+        ContainerAzureNodePool_Config_SshConfig { authorized_key: self.authorized_key }
     }
 }
 
-pub struct ContainerAzureNodePoolConfigElSshConfigElRef {
+#[allow(dead_code)]
+pub struct ContainerAzureNodePool_Config_SshConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAzureNodePoolConfigElSshConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAzureNodePoolConfigElSshConfigElRef {
-        ContainerAzureNodePoolConfigElSshConfigElRef {
+impl terrars::Ref for ContainerAzureNodePool_Config_SshConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAzureNodePool_Config_SshConfigRef {
+        ContainerAzureNodePool_Config_SshConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAzureNodePoolConfigElSshConfigElRef {
+impl ContainerAzureNodePool_Config_SshConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -845,14 +882,14 @@ impl ContainerAzureNodePoolConfigElSshConfigElRef {
 }
 
 #[derive(Serialize, Default)]
-struct ContainerAzureNodePoolConfigElDynamic {
-    proxy_config: std::option::Option<terrars::DynamicBlock<ContainerAzureNodePoolConfigElProxyConfigEl>>,
-    root_volume: std::option::Option<terrars::DynamicBlock<ContainerAzureNodePoolConfigElRootVolumeEl>>,
-    ssh_config: std::option::Option<terrars::DynamicBlock<ContainerAzureNodePoolConfigElSshConfigEl>>,
+struct ContainerAzureNodePool_ConfigDynamic {
+    proxy_config: std::option::Option<terrars::DynamicBlock<ContainerAzureNodePool_Config_ProxyConfig>>,
+    root_volume: std::option::Option<terrars::DynamicBlock<ContainerAzureNodePool_Config_RootVolume>>,
+    ssh_config: std::option::Option<terrars::DynamicBlock<ContainerAzureNodePool_Config_SshConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct ContainerAzureNodePoolConfigEl {
+pub struct ContainerAzureNodePool_Config {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -860,15 +897,15 @@ pub struct ContainerAzureNodePoolConfigEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vm_size: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    proxy_config: std::option::Option<std::vec::Vec<ContainerAzureNodePoolConfigElProxyConfigEl>>,
+    proxy_config: std::option::Option<std::vec::Vec<ContainerAzureNodePool_Config_ProxyConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    root_volume: std::option::Option<std::vec::Vec<ContainerAzureNodePoolConfigElRootVolumeEl>>,
+    root_volume: std::option::Option<std::vec::Vec<ContainerAzureNodePool_Config_RootVolume>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ssh_config: std::option::Option<std::vec::Vec<ContainerAzureNodePoolConfigElSshConfigEl>>,
-    dynamic: ContainerAzureNodePoolConfigElDynamic,
+    ssh_config: std::option::Option<std::vec::Vec<ContainerAzureNodePool_Config_SshConfig>>,
+    dynamic: ContainerAzureNodePool_ConfigDynamic,
 }
 
-impl ContainerAzureNodePoolConfigEl {
+impl ContainerAzureNodePool_Config {
     #[doc =
         "Set the field `labels`.\nOptional. The initial labels assigned to nodes of this node pool. An object containing a list of \"key\": value pairs. Example: { \"name\": \"wrench\", \"mass\": \"1.3kg\", \"count\": \"3\" }."]
     pub fn set_labels(
@@ -899,7 +936,7 @@ impl ContainerAzureNodePoolConfigEl {
     #[doc = "Set the field `proxy_config`.\n"]
     pub fn set_proxy_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureNodePoolConfigElProxyConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureNodePool_Config_ProxyConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -915,7 +952,7 @@ impl ContainerAzureNodePoolConfigEl {
     #[doc = "Set the field `root_volume`.\n"]
     pub fn set_root_volume(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureNodePoolConfigElRootVolumeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureNodePool_Config_RootVolume>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -931,7 +968,7 @@ impl ContainerAzureNodePoolConfigEl {
     #[doc = "Set the field `ssh_config`.\n"]
     pub fn set_ssh_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureNodePoolConfigElSshConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ContainerAzureNodePool_Config_SshConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -945,8 +982,8 @@ impl ContainerAzureNodePoolConfigEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAzureNodePoolConfigEl {
-    type O = terrars::BlockAssignable<ContainerAzureNodePoolConfigEl>;
+impl terrars::ToListMappable for ContainerAzureNodePool_Config {
+    type O = terrars::BlockAssignable<ContainerAzureNodePool_Config>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -957,11 +994,11 @@ impl terrars::ToListMappable for ContainerAzureNodePoolConfigEl {
     }
 }
 
-pub struct BuildContainerAzureNodePoolConfigEl {}
+pub struct BuildContainerAzureNodePool_Config {}
 
-impl BuildContainerAzureNodePoolConfigEl {
-    pub fn build(self) -> ContainerAzureNodePoolConfigEl {
-        ContainerAzureNodePoolConfigEl {
+impl BuildContainerAzureNodePool_Config {
+    pub fn build(self) -> ContainerAzureNodePool_Config {
+        ContainerAzureNodePool_Config {
             labels: core::default::Default::default(),
             tags: core::default::Default::default(),
             vm_size: core::default::Default::default(),
@@ -973,21 +1010,23 @@ impl BuildContainerAzureNodePoolConfigEl {
     }
 }
 
-pub struct ContainerAzureNodePoolConfigElRef {
+#[allow(dead_code)]
+pub struct ContainerAzureNodePool_ConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAzureNodePoolConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAzureNodePoolConfigElRef {
-        ContainerAzureNodePoolConfigElRef {
+impl terrars::Ref for ContainerAzureNodePool_ConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAzureNodePool_ConfigRef {
+        ContainerAzureNodePool_ConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAzureNodePoolConfigElRef {
+impl ContainerAzureNodePool_ConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1011,28 +1050,28 @@ impl ContainerAzureNodePoolConfigElRef {
     }
 
     #[doc = "Get a reference to the value of field `proxy_config` after provisioning.\n"]
-    pub fn proxy_config(&self) -> terrars::ListRef<ContainerAzureNodePoolConfigElProxyConfigElRef> {
+    pub fn proxy_config(&self) -> terrars::ListRef<ContainerAzureNodePool_Config_ProxyConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.proxy_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `root_volume` after provisioning.\n"]
-    pub fn root_volume(&self) -> terrars::ListRef<ContainerAzureNodePoolConfigElRootVolumeElRef> {
+    pub fn root_volume(&self) -> terrars::ListRef<ContainerAzureNodePool_Config_RootVolumeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.root_volume", self.base))
     }
 
     #[doc = "Get a reference to the value of field `ssh_config` after provisioning.\n"]
-    pub fn ssh_config(&self) -> terrars::ListRef<ContainerAzureNodePoolConfigElSshConfigElRef> {
+    pub fn ssh_config(&self) -> terrars::ListRef<ContainerAzureNodePool_Config_SshConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ssh_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ContainerAzureNodePoolManagementEl {
+pub struct ContainerAzureNodePool_Management {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     auto_repair: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl ContainerAzureNodePoolManagementEl {
+impl ContainerAzureNodePool_Management {
     #[doc = "Set the field `auto_repair`.\nOptional. Whether or not the nodes will be automatically repaired."]
     pub fn set_auto_repair(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.auto_repair = std::option::Option::Some(v.into());
@@ -1040,8 +1079,8 @@ impl ContainerAzureNodePoolManagementEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAzureNodePoolManagementEl {
-    type O = terrars::BlockAssignable<ContainerAzureNodePoolManagementEl>;
+impl terrars::ToListMappable for ContainerAzureNodePool_Management {
+    type O = terrars::BlockAssignable<ContainerAzureNodePool_Management>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1052,29 +1091,31 @@ impl terrars::ToListMappable for ContainerAzureNodePoolManagementEl {
     }
 }
 
-pub struct BuildContainerAzureNodePoolManagementEl {}
+pub struct BuildContainerAzureNodePool_Management {}
 
-impl BuildContainerAzureNodePoolManagementEl {
-    pub fn build(self) -> ContainerAzureNodePoolManagementEl {
-        ContainerAzureNodePoolManagementEl { auto_repair: core::default::Default::default() }
+impl BuildContainerAzureNodePool_Management {
+    pub fn build(self) -> ContainerAzureNodePool_Management {
+        ContainerAzureNodePool_Management { auto_repair: core::default::Default::default() }
     }
 }
 
-pub struct ContainerAzureNodePoolManagementElRef {
+#[allow(dead_code)]
+pub struct ContainerAzureNodePool_ManagementRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAzureNodePoolManagementElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAzureNodePoolManagementElRef {
-        ContainerAzureNodePoolManagementElRef {
+impl terrars::Ref for ContainerAzureNodePool_ManagementRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAzureNodePool_ManagementRef {
+        ContainerAzureNodePool_ManagementRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAzureNodePoolManagementElRef {
+impl ContainerAzureNodePool_ManagementRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1087,14 +1128,14 @@ impl ContainerAzureNodePoolManagementElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAzureNodePoolMaxPodsConstraintEl {
+pub struct ContainerAzureNodePool_MaxPodsConstraint {
     max_pods_per_node: terrars::PrimField<f64>,
 }
 
-impl ContainerAzureNodePoolMaxPodsConstraintEl { }
+impl ContainerAzureNodePool_MaxPodsConstraint { }
 
-impl terrars::ToListMappable for ContainerAzureNodePoolMaxPodsConstraintEl {
-    type O = terrars::BlockAssignable<ContainerAzureNodePoolMaxPodsConstraintEl>;
+impl terrars::ToListMappable for ContainerAzureNodePool_MaxPodsConstraint {
+    type O = terrars::BlockAssignable<ContainerAzureNodePool_MaxPodsConstraint>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1105,32 +1146,34 @@ impl terrars::ToListMappable for ContainerAzureNodePoolMaxPodsConstraintEl {
     }
 }
 
-pub struct BuildContainerAzureNodePoolMaxPodsConstraintEl {
+pub struct BuildContainerAzureNodePool_MaxPodsConstraint {
     #[doc = "The maximum number of pods to schedule on a single node."]
     pub max_pods_per_node: terrars::PrimField<f64>,
 }
 
-impl BuildContainerAzureNodePoolMaxPodsConstraintEl {
-    pub fn build(self) -> ContainerAzureNodePoolMaxPodsConstraintEl {
-        ContainerAzureNodePoolMaxPodsConstraintEl { max_pods_per_node: self.max_pods_per_node }
+impl BuildContainerAzureNodePool_MaxPodsConstraint {
+    pub fn build(self) -> ContainerAzureNodePool_MaxPodsConstraint {
+        ContainerAzureNodePool_MaxPodsConstraint { max_pods_per_node: self.max_pods_per_node }
     }
 }
 
-pub struct ContainerAzureNodePoolMaxPodsConstraintElRef {
+#[allow(dead_code)]
+pub struct ContainerAzureNodePool_MaxPodsConstraintRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAzureNodePoolMaxPodsConstraintElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAzureNodePoolMaxPodsConstraintElRef {
-        ContainerAzureNodePoolMaxPodsConstraintElRef {
+impl terrars::Ref for ContainerAzureNodePool_MaxPodsConstraintRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAzureNodePool_MaxPodsConstraintRef {
+        ContainerAzureNodePool_MaxPodsConstraintRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAzureNodePoolMaxPodsConstraintElRef {
+impl ContainerAzureNodePool_MaxPodsConstraintRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1143,7 +1186,7 @@ impl ContainerAzureNodePoolMaxPodsConstraintElRef {
 }
 
 #[derive(Serialize)]
-pub struct ContainerAzureNodePoolTimeoutsEl {
+pub struct ContainerAzureNodePool_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1152,7 +1195,7 @@ pub struct ContainerAzureNodePoolTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ContainerAzureNodePoolTimeoutsEl {
+impl ContainerAzureNodePool_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1172,8 +1215,8 @@ impl ContainerAzureNodePoolTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ContainerAzureNodePoolTimeoutsEl {
-    type O = terrars::BlockAssignable<ContainerAzureNodePoolTimeoutsEl>;
+impl terrars::ToListMappable for ContainerAzureNodePool_Timeouts {
+    type O = terrars::BlockAssignable<ContainerAzureNodePool_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1184,11 +1227,11 @@ impl terrars::ToListMappable for ContainerAzureNodePoolTimeoutsEl {
     }
 }
 
-pub struct BuildContainerAzureNodePoolTimeoutsEl {}
+pub struct BuildContainerAzureNodePool_Timeouts {}
 
-impl BuildContainerAzureNodePoolTimeoutsEl {
-    pub fn build(self) -> ContainerAzureNodePoolTimeoutsEl {
-        ContainerAzureNodePoolTimeoutsEl {
+impl BuildContainerAzureNodePool_Timeouts {
+    pub fn build(self) -> ContainerAzureNodePool_Timeouts {
+        ContainerAzureNodePool_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1196,21 +1239,23 @@ impl BuildContainerAzureNodePoolTimeoutsEl {
     }
 }
 
-pub struct ContainerAzureNodePoolTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ContainerAzureNodePool_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ContainerAzureNodePoolTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAzureNodePoolTimeoutsElRef {
-        ContainerAzureNodePoolTimeoutsElRef {
+impl terrars::Ref for ContainerAzureNodePool_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ContainerAzureNodePool_TimeoutsRef {
+        ContainerAzureNodePool_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ContainerAzureNodePoolTimeoutsElRef {
+impl ContainerAzureNodePool_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1229,12 +1274,4 @@ impl ContainerAzureNodePoolTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ContainerAzureNodePoolDynamic {
-    autoscaling: std::option::Option<terrars::DynamicBlock<ContainerAzureNodePoolAutoscalingEl>>,
-    config: std::option::Option<terrars::DynamicBlock<ContainerAzureNodePoolConfigEl>>,
-    management: std::option::Option<terrars::DynamicBlock<ContainerAzureNodePoolManagementEl>>,
-    max_pods_constraint: std::option::Option<terrars::DynamicBlock<ContainerAzureNodePoolMaxPodsConstraintEl>>,
 }

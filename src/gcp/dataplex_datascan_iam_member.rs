@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataplexDatascanIamMemberData {
+struct DataplexDatascanIamMemberData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,14 +30,14 @@ struct DataplexDatascanIamMemberData {
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<DataplexDatascanIamMemberConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<DataplexDatascanIamMember_Condition>>,
     dynamic: DataplexDatascanIamMemberDynamic,
 }
 
 struct DataplexDatascanIamMember_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataplexDatascanIamMemberData>,
+    data: std::cell::RefCell<DataplexDatascanIamMemberData_>,
 }
 
 #[derive(Clone)]
@@ -156,7 +158,7 @@ impl DataplexDatascanIamMember {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataplexDatascanIamMemberConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataplexDatascanIamMember_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -205,7 +207,7 @@ impl DataplexDatascanIamMember {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<DataplexDatascanIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<DataplexDatascanIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -256,7 +258,7 @@ impl BuildDataplexDatascanIamMember {
         let out = DataplexDatascanIamMember(std::rc::Rc::new(DataplexDatascanIamMember_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataplexDatascanIamMemberData {
+            data: std::cell::RefCell::new(DataplexDatascanIamMemberData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -336,20 +338,25 @@ impl DataplexDatascanIamMemberRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<DataplexDatascanIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<DataplexDatascanIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataplexDatascanIamMemberDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<DataplexDatascanIamMember_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct DataplexDatascanIamMemberConditionEl {
+pub struct DataplexDatascanIamMember_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl DataplexDatascanIamMemberConditionEl {
+impl DataplexDatascanIamMember_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -357,8 +364,8 @@ impl DataplexDatascanIamMemberConditionEl {
     }
 }
 
-impl terrars::ToListMappable for DataplexDatascanIamMemberConditionEl {
-    type O = terrars::BlockAssignable<DataplexDatascanIamMemberConditionEl>;
+impl terrars::ToListMappable for DataplexDatascanIamMember_Condition {
+    type O = terrars::BlockAssignable<DataplexDatascanIamMember_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -369,16 +376,16 @@ impl terrars::ToListMappable for DataplexDatascanIamMemberConditionEl {
     }
 }
 
-pub struct BuildDataplexDatascanIamMemberConditionEl {
+pub struct BuildDataplexDatascanIamMember_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataplexDatascanIamMemberConditionEl {
-    pub fn build(self) -> DataplexDatascanIamMemberConditionEl {
-        DataplexDatascanIamMemberConditionEl {
+impl BuildDataplexDatascanIamMember_Condition {
+    pub fn build(self) -> DataplexDatascanIamMember_Condition {
+        DataplexDatascanIamMember_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -386,21 +393,23 @@ impl BuildDataplexDatascanIamMemberConditionEl {
     }
 }
 
-pub struct DataplexDatascanIamMemberConditionElRef {
+#[allow(dead_code)]
+pub struct DataplexDatascanIamMember_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataplexDatascanIamMemberConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexDatascanIamMemberConditionElRef {
-        DataplexDatascanIamMemberConditionElRef {
+impl terrars::Ref for DataplexDatascanIamMember_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexDatascanIamMember_ConditionRef {
+        DataplexDatascanIamMember_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataplexDatascanIamMemberConditionElRef {
+impl DataplexDatascanIamMember_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -419,9 +428,4 @@ impl DataplexDatascanIamMemberConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataplexDatascanIamMemberDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<DataplexDatascanIamMemberConditionEl>>,
 }

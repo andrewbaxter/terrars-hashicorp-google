@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct IntegrationConnectorsConnectionData {
+struct IntegrationConnectorsConnectionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct IntegrationConnectorsConnectionData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     connector_version: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -36,30 +40,30 @@ struct IntegrationConnectorsConnectionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     suspended: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    auth_config: std::option::Option<std::vec::Vec<IntegrationConnectorsConnectionAuthConfigEl>>,
+    auth_config: std::option::Option<std::vec::Vec<IntegrationConnectorsConnection_AuthConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    config_variable: std::option::Option<std::vec::Vec<IntegrationConnectorsConnectionConfigVariableEl>>,
+    config_variable: std::option::Option<std::vec::Vec<IntegrationConnectorsConnection_ConfigVariable>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    destination_config: std::option::Option<std::vec::Vec<IntegrationConnectorsConnectionDestinationConfigEl>>,
+    destination_config: std::option::Option<std::vec::Vec<IntegrationConnectorsConnection_DestinationConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    eventing_config: std::option::Option<std::vec::Vec<IntegrationConnectorsConnectionEventingConfigEl>>,
+    eventing_config: std::option::Option<std::vec::Vec<IntegrationConnectorsConnection_EventingConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    lock_config: std::option::Option<std::vec::Vec<IntegrationConnectorsConnectionLockConfigEl>>,
+    lock_config: std::option::Option<std::vec::Vec<IntegrationConnectorsConnection_LockConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    log_config: std::option::Option<std::vec::Vec<IntegrationConnectorsConnectionLogConfigEl>>,
+    log_config: std::option::Option<std::vec::Vec<IntegrationConnectorsConnection_LogConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    node_config: std::option::Option<std::vec::Vec<IntegrationConnectorsConnectionNodeConfigEl>>,
+    node_config: std::option::Option<std::vec::Vec<IntegrationConnectorsConnection_NodeConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ssl_config: std::option::Option<std::vec::Vec<IntegrationConnectorsConnectionSslConfigEl>>,
+    ssl_config: std::option::Option<std::vec::Vec<IntegrationConnectorsConnection_SslConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<IntegrationConnectorsConnectionTimeoutsEl>,
+    timeouts: std::option::Option<IntegrationConnectorsConnection_Timeouts>,
     dynamic: IntegrationConnectorsConnectionDynamic,
 }
 
 struct IntegrationConnectorsConnection_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<IntegrationConnectorsConnectionData>,
+    data: std::cell::RefCell<IntegrationConnectorsConnectionData_>,
 }
 
 #[derive(Clone)]
@@ -159,7 +163,14 @@ impl IntegrationConnectorsConnection {
         self
     }
 
-    #[doc = "Set the field `description`.\nAn arbitrary description for the Conection."]
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `description`.\nAn arbitrary description for the Connection."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
         self
@@ -213,7 +224,7 @@ impl IntegrationConnectorsConnection {
     #[doc = "Set the field `auth_config`.\n"]
     pub fn set_auth_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<IntegrationConnectorsConnectionAuthConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IntegrationConnectorsConnection_AuthConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -229,7 +240,7 @@ impl IntegrationConnectorsConnection {
     #[doc = "Set the field `config_variable`.\n"]
     pub fn set_config_variable(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<IntegrationConnectorsConnectionConfigVariableEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IntegrationConnectorsConnection_ConfigVariable>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -245,7 +256,7 @@ impl IntegrationConnectorsConnection {
     #[doc = "Set the field `destination_config`.\n"]
     pub fn set_destination_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<IntegrationConnectorsConnectionDestinationConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IntegrationConnectorsConnection_DestinationConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -261,7 +272,7 @@ impl IntegrationConnectorsConnection {
     #[doc = "Set the field `eventing_config`.\n"]
     pub fn set_eventing_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<IntegrationConnectorsConnectionEventingConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IntegrationConnectorsConnection_EventingConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -277,7 +288,7 @@ impl IntegrationConnectorsConnection {
     #[doc = "Set the field `lock_config`.\n"]
     pub fn set_lock_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<IntegrationConnectorsConnectionLockConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IntegrationConnectorsConnection_LockConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -293,7 +304,7 @@ impl IntegrationConnectorsConnection {
     #[doc = "Set the field `log_config`.\n"]
     pub fn set_log_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<IntegrationConnectorsConnectionLogConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IntegrationConnectorsConnection_LogConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -309,7 +320,7 @@ impl IntegrationConnectorsConnection {
     #[doc = "Set the field `node_config`.\n"]
     pub fn set_node_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<IntegrationConnectorsConnectionNodeConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IntegrationConnectorsConnection_NodeConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -325,7 +336,7 @@ impl IntegrationConnectorsConnection {
     #[doc = "Set the field `ssl_config`.\n"]
     pub fn set_ssl_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<IntegrationConnectorsConnectionSslConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IntegrationConnectorsConnection_SslConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -339,7 +350,7 @@ impl IntegrationConnectorsConnection {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<IntegrationConnectorsConnectionTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<IntegrationConnectorsConnection_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -357,10 +368,10 @@ impl IntegrationConnectorsConnection {
     }
 
     #[doc =
-        "Get a reference to the value of field `connector_version_infra_config` after provisioning.\nThis cofiguration provides infra configs like rate limit threshold which need to be configurable for every connector version."]
+        "Get a reference to the value of field `connector_version_infra_config` after provisioning.\nThis configuration provides infra configs like rate limit threshold which need to be configurable for every connector version."]
     pub fn connector_version_infra_config(
         &self,
-    ) -> terrars::ListRef<IntegrationConnectorsConnectionConnectorVersionInfraConfigElRef> {
+    ) -> terrars::ListRef<IntegrationConnectorsConnection_ConnectorVersionInfraConfigRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.connector_version_infra_config", self.extract_ref()),
@@ -383,7 +394,13 @@ impl IntegrationConnectorsConnection {
     }
 
     #[doc =
-        "Get a reference to the value of field `description` after provisioning.\nAn arbitrary description for the Conection."]
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `description` after provisioning.\nAn arbitrary description for the Connection."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
@@ -401,7 +418,7 @@ impl IntegrationConnectorsConnection {
     }
 
     #[doc = "Get a reference to the value of field `eventing_runtime_data` after provisioning.\nEventing Runtime Data."]
-    pub fn eventing_runtime_data(&self) -> terrars::ListRef<IntegrationConnectorsConnectionEventingRuntimeDataElRef> {
+    pub fn eventing_runtime_data(&self) -> terrars::ListRef<IntegrationConnectorsConnection_EventingRuntimeDataRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.eventing_runtime_data", self.extract_ref()))
     }
 
@@ -445,7 +462,7 @@ impl IntegrationConnectorsConnection {
     }
 
     #[doc = "Get a reference to the value of field `status` after provisioning.\nStatus of the Integration Connector."]
-    pub fn status(&self) -> terrars::ListRef<IntegrationConnectorsConnectionStatusElRef> {
+    pub fn status(&self) -> terrars::ListRef<IntegrationConnectorsConnection_StatusRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
@@ -474,48 +491,48 @@ impl IntegrationConnectorsConnection {
     }
 
     #[doc = "Get a reference to the value of field `auth_config` after provisioning.\n"]
-    pub fn auth_config(&self) -> terrars::ListRef<IntegrationConnectorsConnectionAuthConfigElRef> {
+    pub fn auth_config(&self) -> terrars::ListRef<IntegrationConnectorsConnection_AuthConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.auth_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `config_variable` after provisioning.\n"]
-    pub fn config_variable(&self) -> terrars::ListRef<IntegrationConnectorsConnectionConfigVariableElRef> {
+    pub fn config_variable(&self) -> terrars::ListRef<IntegrationConnectorsConnection_ConfigVariableRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.config_variable", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `destination_config` after provisioning.\n"]
-    pub fn destination_config(&self) -> terrars::ListRef<IntegrationConnectorsConnectionDestinationConfigElRef> {
+    pub fn destination_config(&self) -> terrars::ListRef<IntegrationConnectorsConnection_DestinationConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.destination_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `eventing_config` after provisioning.\n"]
-    pub fn eventing_config(&self) -> terrars::ListRef<IntegrationConnectorsConnectionEventingConfigElRef> {
+    pub fn eventing_config(&self) -> terrars::ListRef<IntegrationConnectorsConnection_EventingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.eventing_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `lock_config` after provisioning.\n"]
-    pub fn lock_config(&self) -> terrars::ListRef<IntegrationConnectorsConnectionLockConfigElRef> {
+    pub fn lock_config(&self) -> terrars::ListRef<IntegrationConnectorsConnection_LockConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.lock_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `log_config` after provisioning.\n"]
-    pub fn log_config(&self) -> terrars::ListRef<IntegrationConnectorsConnectionLogConfigElRef> {
+    pub fn log_config(&self) -> terrars::ListRef<IntegrationConnectorsConnection_LogConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.log_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `node_config` after provisioning.\n"]
-    pub fn node_config(&self) -> terrars::ListRef<IntegrationConnectorsConnectionNodeConfigElRef> {
+    pub fn node_config(&self) -> terrars::ListRef<IntegrationConnectorsConnection_NodeConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.node_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `ssl_config` after provisioning.\n"]
-    pub fn ssl_config(&self) -> terrars::ListRef<IntegrationConnectorsConnectionSslConfigElRef> {
+    pub fn ssl_config(&self) -> terrars::ListRef<IntegrationConnectorsConnection_SslConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ssl_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> IntegrationConnectorsConnectionTimeoutsElRef {
-        IntegrationConnectorsConnectionTimeoutsElRef::new(
+    pub fn timeouts(&self) -> IntegrationConnectorsConnection_TimeoutsRef {
+        IntegrationConnectorsConnection_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -568,13 +585,14 @@ impl BuildIntegrationConnectorsConnection {
         let out = IntegrationConnectorsConnection(std::rc::Rc::new(IntegrationConnectorsConnection_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(IntegrationConnectorsConnectionData {
+            data: std::cell::RefCell::new(IntegrationConnectorsConnectionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 connector_version: self.connector_version,
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 eventing_enablement_type: core::default::Default::default(),
                 id: core::default::Default::default(),
@@ -637,10 +655,10 @@ impl IntegrationConnectorsConnectionRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `connector_version_infra_config` after provisioning.\nThis cofiguration provides infra configs like rate limit threshold which need to be configurable for every connector version."]
+        "Get a reference to the value of field `connector_version_infra_config` after provisioning.\nThis configuration provides infra configs like rate limit threshold which need to be configurable for every connector version."]
     pub fn connector_version_infra_config(
         &self,
-    ) -> terrars::ListRef<IntegrationConnectorsConnectionConnectorVersionInfraConfigElRef> {
+    ) -> terrars::ListRef<IntegrationConnectorsConnection_ConnectorVersionInfraConfigRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.connector_version_infra_config", self.extract_ref()),
@@ -663,7 +681,13 @@ impl IntegrationConnectorsConnectionRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `description` after provisioning.\nAn arbitrary description for the Conection."]
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `description` after provisioning.\nAn arbitrary description for the Connection."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
@@ -681,7 +705,7 @@ impl IntegrationConnectorsConnectionRef {
     }
 
     #[doc = "Get a reference to the value of field `eventing_runtime_data` after provisioning.\nEventing Runtime Data."]
-    pub fn eventing_runtime_data(&self) -> terrars::ListRef<IntegrationConnectorsConnectionEventingRuntimeDataElRef> {
+    pub fn eventing_runtime_data(&self) -> terrars::ListRef<IntegrationConnectorsConnection_EventingRuntimeDataRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.eventing_runtime_data", self.extract_ref()))
     }
 
@@ -725,7 +749,7 @@ impl IntegrationConnectorsConnectionRef {
     }
 
     #[doc = "Get a reference to the value of field `status` after provisioning.\nStatus of the Integration Connector."]
-    pub fn status(&self) -> terrars::ListRef<IntegrationConnectorsConnectionStatusElRef> {
+    pub fn status(&self) -> terrars::ListRef<IntegrationConnectorsConnection_StatusRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
@@ -754,61 +778,75 @@ impl IntegrationConnectorsConnectionRef {
     }
 
     #[doc = "Get a reference to the value of field `auth_config` after provisioning.\n"]
-    pub fn auth_config(&self) -> terrars::ListRef<IntegrationConnectorsConnectionAuthConfigElRef> {
+    pub fn auth_config(&self) -> terrars::ListRef<IntegrationConnectorsConnection_AuthConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.auth_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `config_variable` after provisioning.\n"]
-    pub fn config_variable(&self) -> terrars::ListRef<IntegrationConnectorsConnectionConfigVariableElRef> {
+    pub fn config_variable(&self) -> terrars::ListRef<IntegrationConnectorsConnection_ConfigVariableRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.config_variable", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `destination_config` after provisioning.\n"]
-    pub fn destination_config(&self) -> terrars::ListRef<IntegrationConnectorsConnectionDestinationConfigElRef> {
+    pub fn destination_config(&self) -> terrars::ListRef<IntegrationConnectorsConnection_DestinationConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.destination_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `eventing_config` after provisioning.\n"]
-    pub fn eventing_config(&self) -> terrars::ListRef<IntegrationConnectorsConnectionEventingConfigElRef> {
+    pub fn eventing_config(&self) -> terrars::ListRef<IntegrationConnectorsConnection_EventingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.eventing_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `lock_config` after provisioning.\n"]
-    pub fn lock_config(&self) -> terrars::ListRef<IntegrationConnectorsConnectionLockConfigElRef> {
+    pub fn lock_config(&self) -> terrars::ListRef<IntegrationConnectorsConnection_LockConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.lock_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `log_config` after provisioning.\n"]
-    pub fn log_config(&self) -> terrars::ListRef<IntegrationConnectorsConnectionLogConfigElRef> {
+    pub fn log_config(&self) -> terrars::ListRef<IntegrationConnectorsConnection_LogConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.log_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `node_config` after provisioning.\n"]
-    pub fn node_config(&self) -> terrars::ListRef<IntegrationConnectorsConnectionNodeConfigElRef> {
+    pub fn node_config(&self) -> terrars::ListRef<IntegrationConnectorsConnection_NodeConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.node_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `ssl_config` after provisioning.\n"]
-    pub fn ssl_config(&self) -> terrars::ListRef<IntegrationConnectorsConnectionSslConfigElRef> {
+    pub fn ssl_config(&self) -> terrars::ListRef<IntegrationConnectorsConnection_SslConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ssl_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> IntegrationConnectorsConnectionTimeoutsElRef {
-        IntegrationConnectorsConnectionTimeoutsElRef::new(
+    pub fn timeouts(&self) -> IntegrationConnectorsConnection_TimeoutsRef {
+        IntegrationConnectorsConnection_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct IntegrationConnectorsConnectionDynamic {
+    auth_config: std::option::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_AuthConfig>>,
+    config_variable: std::option::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_ConfigVariable>>,
+    destination_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_DestinationConfig>>,
+    eventing_config: std::option::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_EventingConfig>>,
+    lock_config: std::option::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_LockConfig>>,
+    log_config: std::option::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_LogConfig>>,
+    node_config: std::option::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_NodeConfig>>,
+    ssl_config: std::option::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_SslConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionConnectorVersionInfraConfigEl {
+pub struct IntegrationConnectorsConnection_ConnectorVersionInfraConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ratelimit_threshold: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl IntegrationConnectorsConnectionConnectorVersionInfraConfigEl {
+impl IntegrationConnectorsConnection_ConnectorVersionInfraConfig {
     #[doc = "Set the field `ratelimit_threshold`.\n"]
     pub fn set_ratelimit_threshold(
         mut self,
@@ -819,8 +857,8 @@ impl IntegrationConnectorsConnectionConnectorVersionInfraConfigEl {
     }
 }
 
-impl terrars::ToListMappable for IntegrationConnectorsConnectionConnectorVersionInfraConfigEl {
-    type O = terrars::BlockAssignable<IntegrationConnectorsConnectionConnectorVersionInfraConfigEl>;
+impl terrars::ToListMappable for IntegrationConnectorsConnection_ConnectorVersionInfraConfig {
+    type O = terrars::BlockAssignable<IntegrationConnectorsConnection_ConnectorVersionInfraConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -831,34 +869,36 @@ impl terrars::ToListMappable for IntegrationConnectorsConnectionConnectorVersion
     }
 }
 
-pub struct BuildIntegrationConnectorsConnectionConnectorVersionInfraConfigEl {}
+pub struct BuildIntegrationConnectorsConnection_ConnectorVersionInfraConfig {}
 
-impl BuildIntegrationConnectorsConnectionConnectorVersionInfraConfigEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionConnectorVersionInfraConfigEl {
-        IntegrationConnectorsConnectionConnectorVersionInfraConfigEl {
+impl BuildIntegrationConnectorsConnection_ConnectorVersionInfraConfig {
+    pub fn build(self) -> IntegrationConnectorsConnection_ConnectorVersionInfraConfig {
+        IntegrationConnectorsConnection_ConnectorVersionInfraConfig {
             ratelimit_threshold: core::default::Default::default(),
         }
     }
 }
 
-pub struct IntegrationConnectorsConnectionConnectorVersionInfraConfigElRef {
+#[allow(dead_code)]
+pub struct IntegrationConnectorsConnection_ConnectorVersionInfraConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IntegrationConnectorsConnectionConnectorVersionInfraConfigElRef {
+impl terrars::Ref for IntegrationConnectorsConnection_ConnectorVersionInfraConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IntegrationConnectorsConnectionConnectorVersionInfraConfigElRef {
-        IntegrationConnectorsConnectionConnectorVersionInfraConfigElRef {
+    ) -> IntegrationConnectorsConnection_ConnectorVersionInfraConfigRef {
+        IntegrationConnectorsConnection_ConnectorVersionInfraConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IntegrationConnectorsConnectionConnectorVersionInfraConfigElRef {
+impl IntegrationConnectorsConnection_ConnectorVersionInfraConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -870,14 +910,14 @@ impl IntegrationConnectorsConnectionConnectorVersionInfraConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionEventingRuntimeDataElStatusEl {
+pub struct IntegrationConnectorsConnection_EventingRuntimeData_Status {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     state: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl IntegrationConnectorsConnectionEventingRuntimeDataElStatusEl {
+impl IntegrationConnectorsConnection_EventingRuntimeData_Status {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -891,8 +931,8 @@ impl IntegrationConnectorsConnectionEventingRuntimeDataElStatusEl {
     }
 }
 
-impl terrars::ToListMappable for IntegrationConnectorsConnectionEventingRuntimeDataElStatusEl {
-    type O = terrars::BlockAssignable<IntegrationConnectorsConnectionEventingRuntimeDataElStatusEl>;
+impl terrars::ToListMappable for IntegrationConnectorsConnection_EventingRuntimeData_Status {
+    type O = terrars::BlockAssignable<IntegrationConnectorsConnection_EventingRuntimeData_Status>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -903,35 +943,37 @@ impl terrars::ToListMappable for IntegrationConnectorsConnectionEventingRuntimeD
     }
 }
 
-pub struct BuildIntegrationConnectorsConnectionEventingRuntimeDataElStatusEl {}
+pub struct BuildIntegrationConnectorsConnection_EventingRuntimeData_Status {}
 
-impl BuildIntegrationConnectorsConnectionEventingRuntimeDataElStatusEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionEventingRuntimeDataElStatusEl {
-        IntegrationConnectorsConnectionEventingRuntimeDataElStatusEl {
+impl BuildIntegrationConnectorsConnection_EventingRuntimeData_Status {
+    pub fn build(self) -> IntegrationConnectorsConnection_EventingRuntimeData_Status {
+        IntegrationConnectorsConnection_EventingRuntimeData_Status {
             description: core::default::Default::default(),
             state: core::default::Default::default(),
         }
     }
 }
 
-pub struct IntegrationConnectorsConnectionEventingRuntimeDataElStatusElRef {
+#[allow(dead_code)]
+pub struct IntegrationConnectorsConnection_EventingRuntimeData_StatusRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IntegrationConnectorsConnectionEventingRuntimeDataElStatusElRef {
+impl terrars::Ref for IntegrationConnectorsConnection_EventingRuntimeData_StatusRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IntegrationConnectorsConnectionEventingRuntimeDataElStatusElRef {
-        IntegrationConnectorsConnectionEventingRuntimeDataElStatusElRef {
+    ) -> IntegrationConnectorsConnection_EventingRuntimeData_StatusRef {
+        IntegrationConnectorsConnection_EventingRuntimeData_StatusRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IntegrationConnectorsConnectionEventingRuntimeDataElStatusElRef {
+impl IntegrationConnectorsConnection_EventingRuntimeData_StatusRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -948,14 +990,14 @@ impl IntegrationConnectorsConnectionEventingRuntimeDataElStatusElRef {
 }
 
 #[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionEventingRuntimeDataEl {
+pub struct IntegrationConnectorsConnection_EventingRuntimeData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     events_listener_endpoint: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    status: std::option::Option<terrars::ListField<IntegrationConnectorsConnectionEventingRuntimeDataElStatusEl>>,
+    status: std::option::Option<terrars::ListField<IntegrationConnectorsConnection_EventingRuntimeData_Status>>,
 }
 
-impl IntegrationConnectorsConnectionEventingRuntimeDataEl {
+impl IntegrationConnectorsConnection_EventingRuntimeData {
     #[doc = "Set the field `events_listener_endpoint`.\n"]
     pub fn set_events_listener_endpoint(
         mut self,
@@ -968,15 +1010,15 @@ impl IntegrationConnectorsConnectionEventingRuntimeDataEl {
     #[doc = "Set the field `status`.\n"]
     pub fn set_status(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<IntegrationConnectorsConnectionEventingRuntimeDataElStatusEl>>,
+        v: impl std::convert::Into<terrars::ListField<IntegrationConnectorsConnection_EventingRuntimeData_Status>>,
     ) -> Self {
         self.status = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for IntegrationConnectorsConnectionEventingRuntimeDataEl {
-    type O = terrars::BlockAssignable<IntegrationConnectorsConnectionEventingRuntimeDataEl>;
+impl terrars::ToListMappable for IntegrationConnectorsConnection_EventingRuntimeData {
+    type O = terrars::BlockAssignable<IntegrationConnectorsConnection_EventingRuntimeData>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -987,35 +1029,37 @@ impl terrars::ToListMappable for IntegrationConnectorsConnectionEventingRuntimeD
     }
 }
 
-pub struct BuildIntegrationConnectorsConnectionEventingRuntimeDataEl {}
+pub struct BuildIntegrationConnectorsConnection_EventingRuntimeData {}
 
-impl BuildIntegrationConnectorsConnectionEventingRuntimeDataEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionEventingRuntimeDataEl {
-        IntegrationConnectorsConnectionEventingRuntimeDataEl {
+impl BuildIntegrationConnectorsConnection_EventingRuntimeData {
+    pub fn build(self) -> IntegrationConnectorsConnection_EventingRuntimeData {
+        IntegrationConnectorsConnection_EventingRuntimeData {
             events_listener_endpoint: core::default::Default::default(),
             status: core::default::Default::default(),
         }
     }
 }
 
-pub struct IntegrationConnectorsConnectionEventingRuntimeDataElRef {
+#[allow(dead_code)]
+pub struct IntegrationConnectorsConnection_EventingRuntimeDataRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IntegrationConnectorsConnectionEventingRuntimeDataElRef {
+impl terrars::Ref for IntegrationConnectorsConnection_EventingRuntimeDataRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IntegrationConnectorsConnectionEventingRuntimeDataElRef {
-        IntegrationConnectorsConnectionEventingRuntimeDataElRef {
+    ) -> IntegrationConnectorsConnection_EventingRuntimeDataRef {
+        IntegrationConnectorsConnection_EventingRuntimeDataRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IntegrationConnectorsConnectionEventingRuntimeDataElRef {
+impl IntegrationConnectorsConnection_EventingRuntimeDataRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1026,13 +1070,13 @@ impl IntegrationConnectorsConnectionEventingRuntimeDataElRef {
     }
 
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
-    pub fn status(&self) -> terrars::ListRef<IntegrationConnectorsConnectionEventingRuntimeDataElStatusElRef> {
+    pub fn status(&self) -> terrars::ListRef<IntegrationConnectorsConnection_EventingRuntimeData_StatusRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.status", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionStatusEl {
+pub struct IntegrationConnectorsConnection_Status {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1041,7 +1085,7 @@ pub struct IntegrationConnectorsConnectionStatusEl {
     status: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl IntegrationConnectorsConnectionStatusEl {
+impl IntegrationConnectorsConnection_Status {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -1061,8 +1105,8 @@ impl IntegrationConnectorsConnectionStatusEl {
     }
 }
 
-impl terrars::ToListMappable for IntegrationConnectorsConnectionStatusEl {
-    type O = terrars::BlockAssignable<IntegrationConnectorsConnectionStatusEl>;
+impl terrars::ToListMappable for IntegrationConnectorsConnection_Status {
+    type O = terrars::BlockAssignable<IntegrationConnectorsConnection_Status>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1073,11 +1117,11 @@ impl terrars::ToListMappable for IntegrationConnectorsConnectionStatusEl {
     }
 }
 
-pub struct BuildIntegrationConnectorsConnectionStatusEl {}
+pub struct BuildIntegrationConnectorsConnection_Status {}
 
-impl BuildIntegrationConnectorsConnectionStatusEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionStatusEl {
-        IntegrationConnectorsConnectionStatusEl {
+impl BuildIntegrationConnectorsConnection_Status {
+    pub fn build(self) -> IntegrationConnectorsConnection_Status {
+        IntegrationConnectorsConnection_Status {
             description: core::default::Default::default(),
             state: core::default::Default::default(),
             status: core::default::Default::default(),
@@ -1085,21 +1129,23 @@ impl BuildIntegrationConnectorsConnectionStatusEl {
     }
 }
 
-pub struct IntegrationConnectorsConnectionStatusElRef {
+#[allow(dead_code)]
+pub struct IntegrationConnectorsConnection_StatusRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IntegrationConnectorsConnectionStatusElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> IntegrationConnectorsConnectionStatusElRef {
-        IntegrationConnectorsConnectionStatusElRef {
+impl terrars::Ref for IntegrationConnectorsConnection_StatusRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IntegrationConnectorsConnection_StatusRef {
+        IntegrationConnectorsConnection_StatusRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IntegrationConnectorsConnectionStatusElRef {
+impl IntegrationConnectorsConnection_StatusRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1121,26 +1167,24 @@ impl IntegrationConnectorsConnectionStatusElRef {
 }
 
 #[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElEncryptionKeyValueEl {
+pub struct IntegrationConnectorsConnection_ConfigVariable_EncryptionKeyValue {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElEncryptionKeyValueEl {
+impl IntegrationConnectorsConnection_ConfigVariable_EncryptionKeyValue {
     #[doc =
-        "Set the field `kms_key_name`.\nThe [KMS key name] with which the content of the Operation is encrypted. The expected\nformat: projects/*/locations/*/keyRings/*/cryptoKeys/*.\nWill be empty string if google managed."]
+        "Set the field `kms_key_name`.\nThe [KMS key name] with which the content of the Operation is encrypted. The\nexpected format: projects/*/locations/*/keyRings/*/cryptoKeys/*.\nWill be empty string if google managed."]
     pub fn set_kms_key_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.kms_key_name = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElEncryptionKeyValueEl {
-    type O =
-        terrars
-        ::BlockAssignable<IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElEncryptionKeyValueEl>;
+impl terrars::ToListMappable for IntegrationConnectorsConnection_ConfigVariable_EncryptionKeyValue {
+    type O = terrars::BlockAssignable<IntegrationConnectorsConnection_ConfigVariable_EncryptionKeyValue>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1151,64 +1195,66 @@ impl terrars::ToListMappable for IntegrationConnectorsConnectionAuthConfigElAddi
     }
 }
 
-pub struct BuildIntegrationConnectorsConnectionAuthConfigElAdditionalVariableElEncryptionKeyValueEl {
-    #[doc = "Type of Encription Key Possible values: [\"GOOGLE_MANAGED\", \"CUSTOMER_MANAGED\"]"]
+pub struct BuildIntegrationConnectorsConnection_ConfigVariable_EncryptionKeyValue {
+    #[doc = "Type of Encryption Key Possible values: [\"GOOGLE_MANAGED\", \"CUSTOMER_MANAGED\"]"]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildIntegrationConnectorsConnectionAuthConfigElAdditionalVariableElEncryptionKeyValueEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElEncryptionKeyValueEl {
-        IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElEncryptionKeyValueEl {
+impl BuildIntegrationConnectorsConnection_ConfigVariable_EncryptionKeyValue {
+    pub fn build(self) -> IntegrationConnectorsConnection_ConfigVariable_EncryptionKeyValue {
+        IntegrationConnectorsConnection_ConfigVariable_EncryptionKeyValue {
             kms_key_name: core::default::Default::default(),
             type_: self.type_,
         }
     }
 }
 
-pub struct IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElEncryptionKeyValueElRef {
+#[allow(dead_code)]
+pub struct IntegrationConnectorsConnection_ConfigVariable_EncryptionKeyValueRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElEncryptionKeyValueElRef {
+impl terrars::Ref for IntegrationConnectorsConnection_ConfigVariable_EncryptionKeyValueRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElEncryptionKeyValueElRef {
-        IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElEncryptionKeyValueElRef {
+    ) -> IntegrationConnectorsConnection_ConfigVariable_EncryptionKeyValueRef {
+        IntegrationConnectorsConnection_ConfigVariable_EncryptionKeyValueRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElEncryptionKeyValueElRef {
+impl IntegrationConnectorsConnection_ConfigVariable_EncryptionKeyValueRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `kms_key_name` after provisioning.\nThe [KMS key name] with which the content of the Operation is encrypted. The expected\nformat: projects/*/locations/*/keyRings/*/cryptoKeys/*.\nWill be empty string if google managed."]
+        "Get a reference to the value of field `kms_key_name` after provisioning.\nThe [KMS key name] with which the content of the Operation is encrypted. The\nexpected format: projects/*/locations/*/keyRings/*/cryptoKeys/*.\nWill be empty string if google managed."]
     pub fn kms_key_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_name", self.base))
     }
 
     #[doc =
-        "Get a reference to the value of field `type_` after provisioning.\nType of Encription Key Possible values: [\"GOOGLE_MANAGED\", \"CUSTOMER_MANAGED\"]"]
+        "Get a reference to the value of field `type_` after provisioning.\nType of Encryption Key Possible values: [\"GOOGLE_MANAGED\", \"CUSTOMER_MANAGED\"]"]
     pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElSecretValueEl {
+pub struct IntegrationConnectorsConnection_ConfigVariable_SecretValue {
     secret_version: terrars::PrimField<std::string::String>,
 }
 
-impl IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElSecretValueEl { }
+impl IntegrationConnectorsConnection_ConfigVariable_SecretValue { }
 
-impl terrars::ToListMappable for IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElSecretValueEl {
-    type O = terrars::BlockAssignable<IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElSecretValueEl>;
+impl terrars::ToListMappable for IntegrationConnectorsConnection_ConfigVariable_SecretValue {
+    type O = terrars::BlockAssignable<IntegrationConnectorsConnection_ConfigVariable_SecretValue>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1219,37 +1265,37 @@ impl terrars::ToListMappable for IntegrationConnectorsConnectionAuthConfigElAddi
     }
 }
 
-pub struct BuildIntegrationConnectorsConnectionAuthConfigElAdditionalVariableElSecretValueEl {
+pub struct BuildIntegrationConnectorsConnection_ConfigVariable_SecretValue {
     #[doc = "Secret version of Secret Value for Config variable."]
     pub secret_version: terrars::PrimField<std::string::String>,
 }
 
-impl BuildIntegrationConnectorsConnectionAuthConfigElAdditionalVariableElSecretValueEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElSecretValueEl {
-        IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElSecretValueEl {
-            secret_version: self.secret_version,
-        }
+impl BuildIntegrationConnectorsConnection_ConfigVariable_SecretValue {
+    pub fn build(self) -> IntegrationConnectorsConnection_ConfigVariable_SecretValue {
+        IntegrationConnectorsConnection_ConfigVariable_SecretValue { secret_version: self.secret_version }
     }
 }
 
-pub struct IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElSecretValueElRef {
+#[allow(dead_code)]
+pub struct IntegrationConnectorsConnection_ConfigVariable_SecretValueRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElSecretValueElRef {
+impl terrars::Ref for IntegrationConnectorsConnection_ConfigVariable_SecretValueRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElSecretValueElRef {
-        IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElSecretValueElRef {
+    ) -> IntegrationConnectorsConnection_ConfigVariable_SecretValueRef {
+        IntegrationConnectorsConnection_ConfigVariable_SecretValueRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElSecretValueElRef {
+impl IntegrationConnectorsConnection_ConfigVariable_SecretValueRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1262,19 +1308,17 @@ impl IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElSecretValueE
 }
 
 #[derive(Serialize, Default)]
-struct IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElDynamic {
+struct IntegrationConnectorsConnection_AuthConfig_AdditionalVariableDynamic {
     encryption_key_value: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElEncryptionKeyValueEl>,
-    >,
+    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_ConfigVariable_EncryptionKeyValue>>,
     secret_value: std
     ::option
-    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElSecretValueEl>>,
+    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_ConfigVariable_SecretValue>>,
 }
 
 #[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionAuthConfigElAdditionalVariableEl {
+pub struct IntegrationConnectorsConnection_AuthConfig_AdditionalVariable {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     boolean_value: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1285,15 +1329,13 @@ pub struct IntegrationConnectorsConnectionAuthConfigElAdditionalVariableEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     encryption_key_value: std
     ::option
-    ::Option<std::vec::Vec<IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElEncryptionKeyValueEl>>,
+    ::Option<std::vec::Vec<IntegrationConnectorsConnection_ConfigVariable_EncryptionKeyValue>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    secret_value: std
-    ::option
-    ::Option<std::vec::Vec<IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElSecretValueEl>>,
-    dynamic: IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElDynamic,
+    secret_value: std::option::Option<std::vec::Vec<IntegrationConnectorsConnection_ConfigVariable_SecretValue>>,
+    dynamic: IntegrationConnectorsConnection_AuthConfig_AdditionalVariableDynamic,
 }
 
-impl IntegrationConnectorsConnectionAuthConfigElAdditionalVariableEl {
+impl IntegrationConnectorsConnection_AuthConfig_AdditionalVariable {
     #[doc = "Set the field `boolean_value`.\nBoolean Value of configVariable."]
     pub fn set_boolean_value(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.boolean_value = std::option::Option::Some(v.into());
@@ -1321,10 +1363,7 @@ impl IntegrationConnectorsConnectionAuthConfigElAdditionalVariableEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElEncryptionKeyValueEl,
-                        >,
+                        terrars::BlockAssignable<IntegrationConnectorsConnection_ConfigVariable_EncryptionKeyValue>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1346,12 +1385,7 @@ impl IntegrationConnectorsConnectionAuthConfigElAdditionalVariableEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElSecretValueEl,
-                        >,
-                    >,
+                    ::Into<terrars::BlockAssignable<IntegrationConnectorsConnection_ConfigVariable_SecretValue>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1365,8 +1399,8 @@ impl IntegrationConnectorsConnectionAuthConfigElAdditionalVariableEl {
     }
 }
 
-impl terrars::ToListMappable for IntegrationConnectorsConnectionAuthConfigElAdditionalVariableEl {
-    type O = terrars::BlockAssignable<IntegrationConnectorsConnectionAuthConfigElAdditionalVariableEl>;
+impl terrars::ToListMappable for IntegrationConnectorsConnection_AuthConfig_AdditionalVariable {
+    type O = terrars::BlockAssignable<IntegrationConnectorsConnection_AuthConfig_AdditionalVariable>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1377,14 +1411,14 @@ impl terrars::ToListMappable for IntegrationConnectorsConnectionAuthConfigElAddi
     }
 }
 
-pub struct BuildIntegrationConnectorsConnectionAuthConfigElAdditionalVariableEl {
+pub struct BuildIntegrationConnectorsConnection_AuthConfig_AdditionalVariable {
     #[doc = "Key for the configVariable"]
     pub key: terrars::PrimField<std::string::String>,
 }
 
-impl BuildIntegrationConnectorsConnectionAuthConfigElAdditionalVariableEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionAuthConfigElAdditionalVariableEl {
-        IntegrationConnectorsConnectionAuthConfigElAdditionalVariableEl {
+impl BuildIntegrationConnectorsConnection_AuthConfig_AdditionalVariable {
+    pub fn build(self) -> IntegrationConnectorsConnection_AuthConfig_AdditionalVariable {
+        IntegrationConnectorsConnection_AuthConfig_AdditionalVariable {
             boolean_value: core::default::Default::default(),
             integer_value: core::default::Default::default(),
             key: self.key,
@@ -1396,24 +1430,26 @@ impl BuildIntegrationConnectorsConnectionAuthConfigElAdditionalVariableEl {
     }
 }
 
-pub struct IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElRef {
+#[allow(dead_code)]
+pub struct IntegrationConnectorsConnection_AuthConfig_AdditionalVariableRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElRef {
+impl terrars::Ref for IntegrationConnectorsConnection_AuthConfig_AdditionalVariableRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElRef {
-        IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElRef {
+    ) -> IntegrationConnectorsConnection_AuthConfig_AdditionalVariableRef {
+        IntegrationConnectorsConnection_AuthConfig_AdditionalVariableRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElRef {
+impl IntegrationConnectorsConnection_AuthConfig_AdditionalVariableRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1444,27 +1480,25 @@ impl IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElRef {
     #[doc = "Get a reference to the value of field `encryption_key_value` after provisioning.\n"]
     pub fn encryption_key_value(
         &self,
-    ) -> terrars::ListRef<IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElEncryptionKeyValueElRef> {
+    ) -> terrars::ListRef<IntegrationConnectorsConnection_ConfigVariable_EncryptionKeyValueRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_key_value", self.base))
     }
 
     #[doc = "Get a reference to the value of field `secret_value` after provisioning.\n"]
-    pub fn secret_value(
-        &self,
-    ) -> terrars::ListRef<IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElSecretValueElRef> {
+    pub fn secret_value(&self) -> terrars::ListRef<IntegrationConnectorsConnection_ConfigVariable_SecretValueRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.secret_value", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowElClientSecretEl {
+pub struct IntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlow_ClientSecret {
     secret_version: terrars::PrimField<std::string::String>,
 }
 
-impl IntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowElClientSecretEl { }
+impl IntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlow_ClientSecret { }
 
-impl terrars::ToListMappable for IntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowElClientSecretEl {
-    type O = terrars::BlockAssignable<IntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowElClientSecretEl>;
+impl terrars::ToListMappable for IntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlow_ClientSecret {
+    type O = terrars::BlockAssignable<IntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlow_ClientSecret>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1475,37 +1509,39 @@ impl terrars::ToListMappable for IntegrationConnectorsConnectionAuthConfigElOaut
     }
 }
 
-pub struct BuildIntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowElClientSecretEl {
+pub struct BuildIntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlow_ClientSecret {
     #[doc = "The resource name of the secret version in the format,\nformat as: projects/*/secrets/*/versions/*."]
     pub secret_version: terrars::PrimField<std::string::String>,
 }
 
-impl BuildIntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowElClientSecretEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowElClientSecretEl {
-        IntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowElClientSecretEl {
+impl BuildIntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlow_ClientSecret {
+    pub fn build(self) -> IntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlow_ClientSecret {
+        IntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlow_ClientSecret {
             secret_version: self.secret_version,
         }
     }
 }
 
-pub struct IntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowElClientSecretElRef {
+#[allow(dead_code)]
+pub struct IntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlow_ClientSecretRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowElClientSecretElRef {
+impl terrars::Ref for IntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlow_ClientSecretRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowElClientSecretElRef {
-        IntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowElClientSecretElRef {
+    ) -> IntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlow_ClientSecretRef {
+        IntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlow_ClientSecretRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowElClientSecretElRef {
+impl IntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlow_ClientSecretRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1518,14 +1554,14 @@ impl IntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowElClientSecret
 }
 
 #[derive(Serialize, Default)]
-struct IntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowElDynamic {
+struct IntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlowDynamic {
     client_secret: std
     ::option
-    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowElClientSecretEl>>,
+    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlow_ClientSecret>>,
 }
 
 #[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowEl {
+pub struct IntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlow {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     auth_uri: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1537,11 +1573,11 @@ pub struct IntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     client_secret: std
     ::option
-    ::Option<std::vec::Vec<IntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowElClientSecretEl>>,
-    dynamic: IntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowElDynamic,
+    ::Option<std::vec::Vec<IntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlow_ClientSecret>>,
+    dynamic: IntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlowDynamic,
 }
 
-impl IntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowEl {
+impl IntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlow {
     #[doc = "Set the field `auth_uri`.\nAuth URL for Authorization Code Flow."]
     pub fn set_auth_uri(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.auth_uri = std::option::Option::Some(v.into());
@@ -1579,9 +1615,7 @@ impl IntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            IntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowElClientSecretEl,
-                        >,
+                        ::BlockAssignable<IntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlow_ClientSecret>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1596,8 +1630,8 @@ impl IntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowEl {
     }
 }
 
-impl terrars::ToListMappable for IntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowEl {
-    type O = terrars::BlockAssignable<IntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowEl>;
+impl terrars::ToListMappable for IntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlow {
+    type O = terrars::BlockAssignable<IntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlow>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1608,11 +1642,11 @@ impl terrars::ToListMappable for IntegrationConnectorsConnectionAuthConfigElOaut
     }
 }
 
-pub struct BuildIntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowEl {}
+pub struct BuildIntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlow {}
 
-impl BuildIntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowEl {
-        IntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowEl {
+impl BuildIntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlow {
+    pub fn build(self) -> IntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlow {
+        IntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlow {
             auth_uri: core::default::Default::default(),
             client_id: core::default::Default::default(),
             enable_pkce: core::default::Default::default(),
@@ -1623,24 +1657,26 @@ impl BuildIntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowEl {
     }
 }
 
-pub struct IntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowElRef {
+#[allow(dead_code)]
+pub struct IntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlowRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowElRef {
+impl terrars::Ref for IntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlowRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowElRef {
-        IntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowElRef {
+    ) -> IntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlowRef {
+        IntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlowRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowElRef {
+impl IntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlowRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1672,93 +1708,29 @@ impl IntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowElRef {
     #[doc = "Get a reference to the value of field `client_secret` after provisioning.\n"]
     pub fn client_secret(
         &self,
-    ) -> terrars::ListRef<IntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowElClientSecretElRef> {
+    ) -> terrars::ListRef<IntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlow_ClientSecretRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.client_secret", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsElClientSecretEl {
-    secret_version: terrars::PrimField<std::string::String>,
-}
-
-impl IntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsElClientSecretEl { }
-
-impl terrars::ToListMappable for IntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsElClientSecretEl {
-    type O =
-        terrars::BlockAssignable<IntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsElClientSecretEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildIntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsElClientSecretEl {
-    #[doc = "The resource name of the secret version in the format,\nformat as: projects/*/secrets/*/versions/*."]
-    pub secret_version: terrars::PrimField<std::string::String>,
-}
-
-impl BuildIntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsElClientSecretEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsElClientSecretEl {
-        IntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsElClientSecretEl {
-            secret_version: self.secret_version,
-        }
-    }
-}
-
-pub struct IntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsElClientSecretElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for IntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsElClientSecretElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> IntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsElClientSecretElRef {
-        IntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsElClientSecretElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl IntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsElClientSecretElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `secret_version` after provisioning.\nThe resource name of the secret version in the format,\nformat as: projects/*/secrets/*/versions/*."]
-    pub fn secret_version(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_version", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct IntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsElDynamic {
+struct IntegrationConnectorsConnection_AuthConfig_Oauth2ClientCredentialsDynamic {
     client_secret: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<IntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsElClientSecretEl>,
-    >,
+    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlow_ClientSecret>>,
 }
 
 #[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsEl {
+pub struct IntegrationConnectorsConnection_AuthConfig_Oauth2ClientCredentials {
     client_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     client_secret: std
     ::option
-    ::Option<std::vec::Vec<IntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsElClientSecretEl>>,
-    dynamic: IntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsElDynamic,
+    ::Option<std::vec::Vec<IntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlow_ClientSecret>>,
+    dynamic: IntegrationConnectorsConnection_AuthConfig_Oauth2ClientCredentialsDynamic,
 }
 
-impl IntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsEl {
+impl IntegrationConnectorsConnection_AuthConfig_Oauth2ClientCredentials {
     #[doc = "Set the field `client_secret`.\n"]
     pub fn set_client_secret(
         mut self,
@@ -1769,9 +1741,7 @@ impl IntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            IntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsElClientSecretEl,
-                        >,
+                        ::BlockAssignable<IntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlow_ClientSecret>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1786,8 +1756,8 @@ impl IntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsEl {
     }
 }
 
-impl terrars::ToListMappable for IntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsEl {
-    type O = terrars::BlockAssignable<IntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsEl>;
+impl terrars::ToListMappable for IntegrationConnectorsConnection_AuthConfig_Oauth2ClientCredentials {
+    type O = terrars::BlockAssignable<IntegrationConnectorsConnection_AuthConfig_Oauth2ClientCredentials>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1798,14 +1768,14 @@ impl terrars::ToListMappable for IntegrationConnectorsConnectionAuthConfigElOaut
     }
 }
 
-pub struct BuildIntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsEl {
+pub struct BuildIntegrationConnectorsConnection_AuthConfig_Oauth2ClientCredentials {
     #[doc = "Secret version of Password for Authentication."]
     pub client_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildIntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsEl {
-        IntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsEl {
+impl BuildIntegrationConnectorsConnection_AuthConfig_Oauth2ClientCredentials {
+    pub fn build(self) -> IntegrationConnectorsConnection_AuthConfig_Oauth2ClientCredentials {
+        IntegrationConnectorsConnection_AuthConfig_Oauth2ClientCredentials {
             client_id: self.client_id,
             client_secret: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1813,24 +1783,26 @@ impl BuildIntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsEl {
     }
 }
 
-pub struct IntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsElRef {
+#[allow(dead_code)]
+pub struct IntegrationConnectorsConnection_AuthConfig_Oauth2ClientCredentialsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsElRef {
+impl terrars::Ref for IntegrationConnectorsConnection_AuthConfig_Oauth2ClientCredentialsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsElRef {
-        IntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsElRef {
+    ) -> IntegrationConnectorsConnection_AuthConfig_Oauth2ClientCredentialsRef {
+        IntegrationConnectorsConnection_AuthConfig_Oauth2ClientCredentialsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsElRef {
+impl IntegrationConnectorsConnection_AuthConfig_Oauth2ClientCredentialsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1844,20 +1816,20 @@ impl IntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsElRef {
     #[doc = "Get a reference to the value of field `client_secret` after provisioning.\n"]
     pub fn client_secret(
         &self,
-    ) -> terrars::ListRef<IntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsElClientSecretElRef> {
+    ) -> terrars::ListRef<IntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlow_ClientSecretRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.client_secret", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElClientKeyEl {
+pub struct IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer_ClientKey {
     secret_version: terrars::PrimField<std::string::String>,
 }
 
-impl IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElClientKeyEl { }
+impl IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer_ClientKey { }
 
-impl terrars::ToListMappable for IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElClientKeyEl {
-    type O = terrars::BlockAssignable<IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElClientKeyEl>;
+impl terrars::ToListMappable for IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer_ClientKey {
+    type O = terrars::BlockAssignable<IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer_ClientKey>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1868,37 +1840,37 @@ impl terrars::ToListMappable for IntegrationConnectorsConnectionAuthConfigElOaut
     }
 }
 
-pub struct BuildIntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElClientKeyEl {
+pub struct BuildIntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer_ClientKey {
     #[doc = "The resource name of the secret version in the format,\nformat as: projects/*/secrets/*/versions/*."]
     pub secret_version: terrars::PrimField<std::string::String>,
 }
 
-impl BuildIntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElClientKeyEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElClientKeyEl {
-        IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElClientKeyEl {
-            secret_version: self.secret_version,
-        }
+impl BuildIntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer_ClientKey {
+    pub fn build(self) -> IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer_ClientKey {
+        IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer_ClientKey { secret_version: self.secret_version }
     }
 }
 
-pub struct IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElClientKeyElRef {
+#[allow(dead_code)]
+pub struct IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer_ClientKeyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElClientKeyElRef {
+impl terrars::Ref for IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer_ClientKeyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElClientKeyElRef {
-        IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElClientKeyElRef {
+    ) -> IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer_ClientKeyRef {
+        IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer_ClientKeyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElClientKeyElRef {
+impl IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer_ClientKeyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1911,7 +1883,7 @@ impl IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElClientKeyElRef 
 }
 
 #[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElJwtClaimsEl {
+pub struct IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer_JwtClaims {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     audience: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1920,7 +1892,7 @@ pub struct IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElJwtClaims
     subject: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElJwtClaimsEl {
+impl IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer_JwtClaims {
     #[doc = "Set the field `audience`.\nValue for the \"aud\" claim."]
     pub fn set_audience(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.audience = std::option::Option::Some(v.into());
@@ -1940,8 +1912,8 @@ impl IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElJwtClaimsEl {
     }
 }
 
-impl terrars::ToListMappable for IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElJwtClaimsEl {
-    type O = terrars::BlockAssignable<IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElJwtClaimsEl>;
+impl terrars::ToListMappable for IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer_JwtClaims {
+    type O = terrars::BlockAssignable<IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer_JwtClaims>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1952,11 +1924,11 @@ impl terrars::ToListMappable for IntegrationConnectorsConnectionAuthConfigElOaut
     }
 }
 
-pub struct BuildIntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElJwtClaimsEl {}
+pub struct BuildIntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer_JwtClaims {}
 
-impl BuildIntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElJwtClaimsEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElJwtClaimsEl {
-        IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElJwtClaimsEl {
+impl BuildIntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer_JwtClaims {
+    pub fn build(self) -> IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer_JwtClaims {
+        IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer_JwtClaims {
             audience: core::default::Default::default(),
             issuer: core::default::Default::default(),
             subject: core::default::Default::default(),
@@ -1964,24 +1936,26 @@ impl BuildIntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElJwtClaimsE
     }
 }
 
-pub struct IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElJwtClaimsElRef {
+#[allow(dead_code)]
+pub struct IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer_JwtClaimsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElJwtClaimsElRef {
+impl terrars::Ref for IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer_JwtClaimsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElJwtClaimsElRef {
-        IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElJwtClaimsElRef {
+    ) -> IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer_JwtClaimsRef {
+        IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer_JwtClaimsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElJwtClaimsElRef {
+impl IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer_JwtClaimsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2003,29 +1977,25 @@ impl IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElJwtClaimsElRef 
 }
 
 #[derive(Serialize, Default)]
-struct IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElDynamic {
+struct IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearerDynamic {
     client_key: std
     ::option
-    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElClientKeyEl>>,
+    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer_ClientKey>>,
     jwt_claims: std
     ::option
-    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElJwtClaimsEl>>,
+    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer_JwtClaims>>,
 }
 
 #[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerEl {
+pub struct IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    client_key: std
-    ::option
-    ::Option<std::vec::Vec<IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElClientKeyEl>>,
+    client_key: std::option::Option<std::vec::Vec<IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer_ClientKey>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    jwt_claims: std
-    ::option
-    ::Option<std::vec::Vec<IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElJwtClaimsEl>>,
-    dynamic: IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElDynamic,
+    jwt_claims: std::option::Option<std::vec::Vec<IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer_JwtClaims>>,
+    dynamic: IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearerDynamic,
 }
 
-impl IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerEl {
+impl IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer {
     #[doc = "Set the field `client_key`.\n"]
     pub fn set_client_key(
         mut self,
@@ -2035,8 +2005,7 @@ impl IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElClientKeyEl>,
+                        terrars::BlockAssignable<IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer_ClientKey>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2059,8 +2028,7 @@ impl IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElJwtClaimsEl>,
+                        terrars::BlockAssignable<IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer_JwtClaims>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2075,8 +2043,8 @@ impl IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerEl {
     }
 }
 
-impl terrars::ToListMappable for IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerEl {
-    type O = terrars::BlockAssignable<IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerEl>;
+impl terrars::ToListMappable for IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer {
+    type O = terrars::BlockAssignable<IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2087,11 +2055,11 @@ impl terrars::ToListMappable for IntegrationConnectorsConnectionAuthConfigElOaut
     }
 }
 
-pub struct BuildIntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerEl {}
+pub struct BuildIntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer {}
 
-impl BuildIntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerEl {
-        IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerEl {
+impl BuildIntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer {
+    pub fn build(self) -> IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer {
+        IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer {
             client_key: core::default::Default::default(),
             jwt_claims: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -2099,24 +2067,26 @@ impl BuildIntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerEl {
     }
 }
 
-pub struct IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElRef {
+#[allow(dead_code)]
+pub struct IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearerRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElRef {
+impl terrars::Ref for IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearerRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElRef {
-        IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElRef {
+    ) -> IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearerRef {
+        IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearerRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElRef {
+impl IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearerRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2124,27 +2094,27 @@ impl IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElRef {
     #[doc = "Get a reference to the value of field `client_key` after provisioning.\n"]
     pub fn client_key(
         &self,
-    ) -> terrars::ListRef<IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElClientKeyElRef> {
+    ) -> terrars::ListRef<IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer_ClientKeyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.client_key", self.base))
     }
 
     #[doc = "Get a reference to the value of field `jwt_claims` after provisioning.\n"]
     pub fn jwt_claims(
         &self,
-    ) -> terrars::ListRef<IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElJwtClaimsElRef> {
+    ) -> terrars::ListRef<IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer_JwtClaimsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.jwt_claims", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElSshClientCertEl {
+pub struct IntegrationConnectorsConnection_AuthConfig_SshPublicKey_SshClientCert {
     secret_version: terrars::PrimField<std::string::String>,
 }
 
-impl IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElSshClientCertEl { }
+impl IntegrationConnectorsConnection_AuthConfig_SshPublicKey_SshClientCert { }
 
-impl terrars::ToListMappable for IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElSshClientCertEl {
-    type O = terrars::BlockAssignable<IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElSshClientCertEl>;
+impl terrars::ToListMappable for IntegrationConnectorsConnection_AuthConfig_SshPublicKey_SshClientCert {
+    type O = terrars::BlockAssignable<IntegrationConnectorsConnection_AuthConfig_SshPublicKey_SshClientCert>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2155,37 +2125,37 @@ impl terrars::ToListMappable for IntegrationConnectorsConnectionAuthConfigElSshP
     }
 }
 
-pub struct BuildIntegrationConnectorsConnectionAuthConfigElSshPublicKeyElSshClientCertEl {
+pub struct BuildIntegrationConnectorsConnection_AuthConfig_SshPublicKey_SshClientCert {
     #[doc = "The resource name of the secret version in the format,\nformat as: projects/*/secrets/*/versions/*."]
     pub secret_version: terrars::PrimField<std::string::String>,
 }
 
-impl BuildIntegrationConnectorsConnectionAuthConfigElSshPublicKeyElSshClientCertEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElSshClientCertEl {
-        IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElSshClientCertEl {
-            secret_version: self.secret_version,
-        }
+impl BuildIntegrationConnectorsConnection_AuthConfig_SshPublicKey_SshClientCert {
+    pub fn build(self) -> IntegrationConnectorsConnection_AuthConfig_SshPublicKey_SshClientCert {
+        IntegrationConnectorsConnection_AuthConfig_SshPublicKey_SshClientCert { secret_version: self.secret_version }
     }
 }
 
-pub struct IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElSshClientCertElRef {
+#[allow(dead_code)]
+pub struct IntegrationConnectorsConnection_AuthConfig_SshPublicKey_SshClientCertRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElSshClientCertElRef {
+impl terrars::Ref for IntegrationConnectorsConnection_AuthConfig_SshPublicKey_SshClientCertRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElSshClientCertElRef {
-        IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElSshClientCertElRef {
+    ) -> IntegrationConnectorsConnection_AuthConfig_SshPublicKey_SshClientCertRef {
+        IntegrationConnectorsConnection_AuthConfig_SshPublicKey_SshClientCertRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElSshClientCertElRef {
+impl IntegrationConnectorsConnection_AuthConfig_SshPublicKey_SshClientCertRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2198,14 +2168,14 @@ impl IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElSshClientCertElRef
 }
 
 #[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElSshClientCertPassEl {
+pub struct IntegrationConnectorsConnection_AuthConfig_SshPublicKey_SshClientCertPass {
     secret_version: terrars::PrimField<std::string::String>,
 }
 
-impl IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElSshClientCertPassEl { }
+impl IntegrationConnectorsConnection_AuthConfig_SshPublicKey_SshClientCertPass { }
 
-impl terrars::ToListMappable for IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElSshClientCertPassEl {
-    type O = terrars::BlockAssignable<IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElSshClientCertPassEl>;
+impl terrars::ToListMappable for IntegrationConnectorsConnection_AuthConfig_SshPublicKey_SshClientCertPass {
+    type O = terrars::BlockAssignable<IntegrationConnectorsConnection_AuthConfig_SshPublicKey_SshClientCertPass>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2216,37 +2186,39 @@ impl terrars::ToListMappable for IntegrationConnectorsConnectionAuthConfigElSshP
     }
 }
 
-pub struct BuildIntegrationConnectorsConnectionAuthConfigElSshPublicKeyElSshClientCertPassEl {
+pub struct BuildIntegrationConnectorsConnection_AuthConfig_SshPublicKey_SshClientCertPass {
     #[doc = "The resource name of the secret version in the format,\nformat as: projects/*/secrets/*/versions/*."]
     pub secret_version: terrars::PrimField<std::string::String>,
 }
 
-impl BuildIntegrationConnectorsConnectionAuthConfigElSshPublicKeyElSshClientCertPassEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElSshClientCertPassEl {
-        IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElSshClientCertPassEl {
+impl BuildIntegrationConnectorsConnection_AuthConfig_SshPublicKey_SshClientCertPass {
+    pub fn build(self) -> IntegrationConnectorsConnection_AuthConfig_SshPublicKey_SshClientCertPass {
+        IntegrationConnectorsConnection_AuthConfig_SshPublicKey_SshClientCertPass {
             secret_version: self.secret_version,
         }
     }
 }
 
-pub struct IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElSshClientCertPassElRef {
+#[allow(dead_code)]
+pub struct IntegrationConnectorsConnection_AuthConfig_SshPublicKey_SshClientCertPassRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElSshClientCertPassElRef {
+impl terrars::Ref for IntegrationConnectorsConnection_AuthConfig_SshPublicKey_SshClientCertPassRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElSshClientCertPassElRef {
-        IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElSshClientCertPassElRef {
+    ) -> IntegrationConnectorsConnection_AuthConfig_SshPublicKey_SshClientCertPassRef {
+        IntegrationConnectorsConnection_AuthConfig_SshPublicKey_SshClientCertPassRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElSshClientCertPassElRef {
+impl IntegrationConnectorsConnection_AuthConfig_SshPublicKey_SshClientCertPassRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2259,32 +2231,32 @@ impl IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElSshClientCertPassE
 }
 
 #[derive(Serialize, Default)]
-struct IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElDynamic {
+struct IntegrationConnectorsConnection_AuthConfig_SshPublicKeyDynamic {
     ssh_client_cert: std
     ::option
-    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElSshClientCertEl>>,
+    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_AuthConfig_SshPublicKey_SshClientCert>>,
     ssh_client_cert_pass: std
     ::option
-    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElSshClientCertPassEl>>,
+    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_AuthConfig_SshPublicKey_SshClientCertPass>>,
 }
 
 #[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionAuthConfigElSshPublicKeyEl {
+pub struct IntegrationConnectorsConnection_AuthConfig_SshPublicKey {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cert_type: std::option::Option<terrars::PrimField<std::string::String>>,
     username: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ssh_client_cert: std
     ::option
-    ::Option<std::vec::Vec<IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElSshClientCertEl>>,
+    ::Option<std::vec::Vec<IntegrationConnectorsConnection_AuthConfig_SshPublicKey_SshClientCert>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ssh_client_cert_pass: std
     ::option
-    ::Option<std::vec::Vec<IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElSshClientCertPassEl>>,
-    dynamic: IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElDynamic,
+    ::Option<std::vec::Vec<IntegrationConnectorsConnection_AuthConfig_SshPublicKey_SshClientCertPass>>,
+    dynamic: IntegrationConnectorsConnection_AuthConfig_SshPublicKeyDynamic,
 }
 
-impl IntegrationConnectorsConnectionAuthConfigElSshPublicKeyEl {
+impl IntegrationConnectorsConnection_AuthConfig_SshPublicKey {
     #[doc = "Set the field `cert_type`.\nFormat of SSH Client cert."]
     pub fn set_cert_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.cert_type = std::option::Option::Some(v.into());
@@ -2301,7 +2273,7 @@ impl IntegrationConnectorsConnectionAuthConfigElSshPublicKeyEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElSshClientCertEl>,
+                        ::BlockAssignable<IntegrationConnectorsConnection_AuthConfig_SshPublicKey_SshClientCert>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2325,9 +2297,7 @@ impl IntegrationConnectorsConnectionAuthConfigElSshPublicKeyEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElSshClientCertPassEl,
-                        >,
+                        ::BlockAssignable<IntegrationConnectorsConnection_AuthConfig_SshPublicKey_SshClientCertPass>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2342,8 +2312,8 @@ impl IntegrationConnectorsConnectionAuthConfigElSshPublicKeyEl {
     }
 }
 
-impl terrars::ToListMappable for IntegrationConnectorsConnectionAuthConfigElSshPublicKeyEl {
-    type O = terrars::BlockAssignable<IntegrationConnectorsConnectionAuthConfigElSshPublicKeyEl>;
+impl terrars::ToListMappable for IntegrationConnectorsConnection_AuthConfig_SshPublicKey {
+    type O = terrars::BlockAssignable<IntegrationConnectorsConnection_AuthConfig_SshPublicKey>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2354,14 +2324,14 @@ impl terrars::ToListMappable for IntegrationConnectorsConnectionAuthConfigElSshP
     }
 }
 
-pub struct BuildIntegrationConnectorsConnectionAuthConfigElSshPublicKeyEl {
+pub struct BuildIntegrationConnectorsConnection_AuthConfig_SshPublicKey {
     #[doc = "The user account used to authenticate."]
     pub username: terrars::PrimField<std::string::String>,
 }
 
-impl BuildIntegrationConnectorsConnectionAuthConfigElSshPublicKeyEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionAuthConfigElSshPublicKeyEl {
-        IntegrationConnectorsConnectionAuthConfigElSshPublicKeyEl {
+impl BuildIntegrationConnectorsConnection_AuthConfig_SshPublicKey {
+    pub fn build(self) -> IntegrationConnectorsConnection_AuthConfig_SshPublicKey {
+        IntegrationConnectorsConnection_AuthConfig_SshPublicKey {
             cert_type: core::default::Default::default(),
             username: self.username,
             ssh_client_cert: core::default::Default::default(),
@@ -2371,24 +2341,26 @@ impl BuildIntegrationConnectorsConnectionAuthConfigElSshPublicKeyEl {
     }
 }
 
-pub struct IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElRef {
+#[allow(dead_code)]
+pub struct IntegrationConnectorsConnection_AuthConfig_SshPublicKeyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElRef {
+impl terrars::Ref for IntegrationConnectorsConnection_AuthConfig_SshPublicKeyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElRef {
-        IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElRef {
+    ) -> IntegrationConnectorsConnection_AuthConfig_SshPublicKeyRef {
+        IntegrationConnectorsConnection_AuthConfig_SshPublicKeyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElRef {
+impl IntegrationConnectorsConnection_AuthConfig_SshPublicKeyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2407,27 +2379,27 @@ impl IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElRef {
     #[doc = "Get a reference to the value of field `ssh_client_cert` after provisioning.\n"]
     pub fn ssh_client_cert(
         &self,
-    ) -> terrars::ListRef<IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElSshClientCertElRef> {
+    ) -> terrars::ListRef<IntegrationConnectorsConnection_AuthConfig_SshPublicKey_SshClientCertRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ssh_client_cert", self.base))
     }
 
     #[doc = "Get a reference to the value of field `ssh_client_cert_pass` after provisioning.\n"]
     pub fn ssh_client_cert_pass(
         &self,
-    ) -> terrars::ListRef<IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElSshClientCertPassElRef> {
+    ) -> terrars::ListRef<IntegrationConnectorsConnection_AuthConfig_SshPublicKey_SshClientCertPassRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ssh_client_cert_pass", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionAuthConfigElUserPasswordElPasswordEl {
+pub struct IntegrationConnectorsConnection_AuthConfig_UserPassword_Password {
     secret_version: terrars::PrimField<std::string::String>,
 }
 
-impl IntegrationConnectorsConnectionAuthConfigElUserPasswordElPasswordEl { }
+impl IntegrationConnectorsConnection_AuthConfig_UserPassword_Password { }
 
-impl terrars::ToListMappable for IntegrationConnectorsConnectionAuthConfigElUserPasswordElPasswordEl {
-    type O = terrars::BlockAssignable<IntegrationConnectorsConnectionAuthConfigElUserPasswordElPasswordEl>;
+impl terrars::ToListMappable for IntegrationConnectorsConnection_AuthConfig_UserPassword_Password {
+    type O = terrars::BlockAssignable<IntegrationConnectorsConnection_AuthConfig_UserPassword_Password>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2438,35 +2410,37 @@ impl terrars::ToListMappable for IntegrationConnectorsConnectionAuthConfigElUser
     }
 }
 
-pub struct BuildIntegrationConnectorsConnectionAuthConfigElUserPasswordElPasswordEl {
+pub struct BuildIntegrationConnectorsConnection_AuthConfig_UserPassword_Password {
     #[doc = "The resource name of the secret version in the format,\nformat as: projects/*/secrets/*/versions/*."]
     pub secret_version: terrars::PrimField<std::string::String>,
 }
 
-impl BuildIntegrationConnectorsConnectionAuthConfigElUserPasswordElPasswordEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionAuthConfigElUserPasswordElPasswordEl {
-        IntegrationConnectorsConnectionAuthConfigElUserPasswordElPasswordEl { secret_version: self.secret_version }
+impl BuildIntegrationConnectorsConnection_AuthConfig_UserPassword_Password {
+    pub fn build(self) -> IntegrationConnectorsConnection_AuthConfig_UserPassword_Password {
+        IntegrationConnectorsConnection_AuthConfig_UserPassword_Password { secret_version: self.secret_version }
     }
 }
 
-pub struct IntegrationConnectorsConnectionAuthConfigElUserPasswordElPasswordElRef {
+#[allow(dead_code)]
+pub struct IntegrationConnectorsConnection_AuthConfig_UserPassword_PasswordRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IntegrationConnectorsConnectionAuthConfigElUserPasswordElPasswordElRef {
+impl terrars::Ref for IntegrationConnectorsConnection_AuthConfig_UserPassword_PasswordRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IntegrationConnectorsConnectionAuthConfigElUserPasswordElPasswordElRef {
-        IntegrationConnectorsConnectionAuthConfigElUserPasswordElPasswordElRef {
+    ) -> IntegrationConnectorsConnection_AuthConfig_UserPassword_PasswordRef {
+        IntegrationConnectorsConnection_AuthConfig_UserPassword_PasswordRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IntegrationConnectorsConnectionAuthConfigElUserPasswordElPasswordElRef {
+impl IntegrationConnectorsConnection_AuthConfig_UserPassword_PasswordRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2479,21 +2453,21 @@ impl IntegrationConnectorsConnectionAuthConfigElUserPasswordElPasswordElRef {
 }
 
 #[derive(Serialize, Default)]
-struct IntegrationConnectorsConnectionAuthConfigElUserPasswordElDynamic {
+struct IntegrationConnectorsConnection_AuthConfig_UserPasswordDynamic {
     password: std
     ::option
-    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnectionAuthConfigElUserPasswordElPasswordEl>>,
+    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_AuthConfig_UserPassword_Password>>,
 }
 
 #[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionAuthConfigElUserPasswordEl {
+pub struct IntegrationConnectorsConnection_AuthConfig_UserPassword {
     username: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    password: std::option::Option<std::vec::Vec<IntegrationConnectorsConnectionAuthConfigElUserPasswordElPasswordEl>>,
-    dynamic: IntegrationConnectorsConnectionAuthConfigElUserPasswordElDynamic,
+    password: std::option::Option<std::vec::Vec<IntegrationConnectorsConnection_AuthConfig_UserPassword_Password>>,
+    dynamic: IntegrationConnectorsConnection_AuthConfig_UserPasswordDynamic,
 }
 
-impl IntegrationConnectorsConnectionAuthConfigElUserPasswordEl {
+impl IntegrationConnectorsConnection_AuthConfig_UserPassword {
     #[doc = "Set the field `password`.\n"]
     pub fn set_password(
         mut self,
@@ -2503,7 +2477,7 @@ impl IntegrationConnectorsConnectionAuthConfigElUserPasswordEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<IntegrationConnectorsConnectionAuthConfigElUserPasswordElPasswordEl>,
+                        terrars::BlockAssignable<IntegrationConnectorsConnection_AuthConfig_UserPassword_Password>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2518,8 +2492,8 @@ impl IntegrationConnectorsConnectionAuthConfigElUserPasswordEl {
     }
 }
 
-impl terrars::ToListMappable for IntegrationConnectorsConnectionAuthConfigElUserPasswordEl {
-    type O = terrars::BlockAssignable<IntegrationConnectorsConnectionAuthConfigElUserPasswordEl>;
+impl terrars::ToListMappable for IntegrationConnectorsConnection_AuthConfig_UserPassword {
+    type O = terrars::BlockAssignable<IntegrationConnectorsConnection_AuthConfig_UserPassword>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2530,14 +2504,14 @@ impl terrars::ToListMappable for IntegrationConnectorsConnectionAuthConfigElUser
     }
 }
 
-pub struct BuildIntegrationConnectorsConnectionAuthConfigElUserPasswordEl {
+pub struct BuildIntegrationConnectorsConnection_AuthConfig_UserPassword {
     #[doc = "Username for Authentication."]
     pub username: terrars::PrimField<std::string::String>,
 }
 
-impl BuildIntegrationConnectorsConnectionAuthConfigElUserPasswordEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionAuthConfigElUserPasswordEl {
-        IntegrationConnectorsConnectionAuthConfigElUserPasswordEl {
+impl BuildIntegrationConnectorsConnection_AuthConfig_UserPassword {
+    pub fn build(self) -> IntegrationConnectorsConnection_AuthConfig_UserPassword {
+        IntegrationConnectorsConnection_AuthConfig_UserPassword {
             username: self.username,
             password: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -2545,24 +2519,26 @@ impl BuildIntegrationConnectorsConnectionAuthConfigElUserPasswordEl {
     }
 }
 
-pub struct IntegrationConnectorsConnectionAuthConfigElUserPasswordElRef {
+#[allow(dead_code)]
+pub struct IntegrationConnectorsConnection_AuthConfig_UserPasswordRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IntegrationConnectorsConnectionAuthConfigElUserPasswordElRef {
+impl terrars::Ref for IntegrationConnectorsConnection_AuthConfig_UserPasswordRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IntegrationConnectorsConnectionAuthConfigElUserPasswordElRef {
-        IntegrationConnectorsConnectionAuthConfigElUserPasswordElRef {
+    ) -> IntegrationConnectorsConnection_AuthConfig_UserPasswordRef {
+        IntegrationConnectorsConnection_AuthConfig_UserPasswordRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IntegrationConnectorsConnectionAuthConfigElUserPasswordElRef {
+impl IntegrationConnectorsConnection_AuthConfig_UserPasswordRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2573,60 +2549,60 @@ impl IntegrationConnectorsConnectionAuthConfigElUserPasswordElRef {
     }
 
     #[doc = "Get a reference to the value of field `password` after provisioning.\n"]
-    pub fn password(&self) -> terrars::ListRef<IntegrationConnectorsConnectionAuthConfigElUserPasswordElPasswordElRef> {
+    pub fn password(&self) -> terrars::ListRef<IntegrationConnectorsConnection_AuthConfig_UserPassword_PasswordRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.password", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct IntegrationConnectorsConnectionAuthConfigElDynamic {
+struct IntegrationConnectorsConnection_AuthConfigDynamic {
     additional_variable: std
     ::option
-    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnectionAuthConfigElAdditionalVariableEl>>,
+    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_AuthConfig_AdditionalVariable>>,
     oauth2_auth_code_flow: std
     ::option
-    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowEl>>,
+    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlow>>,
     oauth2_client_credentials: std
     ::option
-    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsEl>>,
+    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_AuthConfig_Oauth2ClientCredentials>>,
     oauth2_jwt_bearer: std
     ::option
-    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerEl>>,
+    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer>>,
     ssh_public_key: std
     ::option
-    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnectionAuthConfigElSshPublicKeyEl>>,
+    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_AuthConfig_SshPublicKey>>,
     user_password: std
     ::option
-    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnectionAuthConfigElUserPasswordEl>>,
+    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_AuthConfig_UserPassword>>,
 }
 
 #[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionAuthConfigEl {
+pub struct IntegrationConnectorsConnection_AuthConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     auth_key: std::option::Option<terrars::PrimField<std::string::String>>,
     auth_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     additional_variable: std
     ::option
-    ::Option<std::vec::Vec<IntegrationConnectorsConnectionAuthConfigElAdditionalVariableEl>>,
+    ::Option<std::vec::Vec<IntegrationConnectorsConnection_AuthConfig_AdditionalVariable>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     oauth2_auth_code_flow: std
     ::option
-    ::Option<std::vec::Vec<IntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowEl>>,
+    ::Option<std::vec::Vec<IntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlow>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     oauth2_client_credentials: std
     ::option
-    ::Option<std::vec::Vec<IntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsEl>>,
+    ::Option<std::vec::Vec<IntegrationConnectorsConnection_AuthConfig_Oauth2ClientCredentials>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    oauth2_jwt_bearer: std::option::Option<std::vec::Vec<IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerEl>>,
+    oauth2_jwt_bearer: std::option::Option<std::vec::Vec<IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ssh_public_key: std::option::Option<std::vec::Vec<IntegrationConnectorsConnectionAuthConfigElSshPublicKeyEl>>,
+    ssh_public_key: std::option::Option<std::vec::Vec<IntegrationConnectorsConnection_AuthConfig_SshPublicKey>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    user_password: std::option::Option<std::vec::Vec<IntegrationConnectorsConnectionAuthConfigElUserPasswordEl>>,
-    dynamic: IntegrationConnectorsConnectionAuthConfigElDynamic,
+    user_password: std::option::Option<std::vec::Vec<IntegrationConnectorsConnection_AuthConfig_UserPassword>>,
+    dynamic: IntegrationConnectorsConnection_AuthConfigDynamic,
 }
 
-impl IntegrationConnectorsConnectionAuthConfigEl {
+impl IntegrationConnectorsConnection_AuthConfig {
     #[doc = "Set the field `auth_key`.\nThe type of authentication configured."]
     pub fn set_auth_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.auth_key = std::option::Option::Some(v.into());
@@ -2641,7 +2617,7 @@ impl IntegrationConnectorsConnectionAuthConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<IntegrationConnectorsConnectionAuthConfigElAdditionalVariableEl>>,
+                    ::Into<terrars::BlockAssignable<IntegrationConnectorsConnection_AuthConfig_AdditionalVariable>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2662,7 +2638,7 @@ impl IntegrationConnectorsConnectionAuthConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<IntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowEl>>,
+                    ::Into<terrars::BlockAssignable<IntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlow>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2684,7 +2660,7 @@ impl IntegrationConnectorsConnectionAuthConfigEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<IntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsEl>,
+                        terrars::BlockAssignable<IntegrationConnectorsConnection_AuthConfig_Oauth2ClientCredentials>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2706,7 +2682,7 @@ impl IntegrationConnectorsConnectionAuthConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerEl>>,
+                    ::Into<terrars::BlockAssignable<IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearer>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2727,7 +2703,7 @@ impl IntegrationConnectorsConnectionAuthConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<IntegrationConnectorsConnectionAuthConfigElSshPublicKeyEl>>,
+                    ::Into<terrars::BlockAssignable<IntegrationConnectorsConnection_AuthConfig_SshPublicKey>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2748,7 +2724,7 @@ impl IntegrationConnectorsConnectionAuthConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<IntegrationConnectorsConnectionAuthConfigElUserPasswordEl>>,
+                    ::Into<terrars::BlockAssignable<IntegrationConnectorsConnection_AuthConfig_UserPassword>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2762,8 +2738,8 @@ impl IntegrationConnectorsConnectionAuthConfigEl {
     }
 }
 
-impl terrars::ToListMappable for IntegrationConnectorsConnectionAuthConfigEl {
-    type O = terrars::BlockAssignable<IntegrationConnectorsConnectionAuthConfigEl>;
+impl terrars::ToListMappable for IntegrationConnectorsConnection_AuthConfig {
+    type O = terrars::BlockAssignable<IntegrationConnectorsConnection_AuthConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2774,15 +2750,15 @@ impl terrars::ToListMappable for IntegrationConnectorsConnectionAuthConfigEl {
     }
 }
 
-pub struct BuildIntegrationConnectorsConnectionAuthConfigEl {
+pub struct BuildIntegrationConnectorsConnection_AuthConfig {
     #[doc =
-        "authType of the Connection Possible values: [\"USER_PASSWORD\", \"OAUTH2_JWT_BEARER\", \"OAUTH2_CLIENT_CREDENTIALS\", \"SSH_PUBLIC_KEY\", \"OAUTH2_AUTH_CODE_FLOW\"]"]
+        "authType of the Connection Possible values: [\"AUTH_TYPE_UNSPECIFIED\", \"USER_PASSWORD\", \"OAUTH2_JWT_BEARER\", \"OAUTH2_CLIENT_CREDENTIALS\", \"SSH_PUBLIC_KEY\", \"OAUTH2_AUTH_CODE_FLOW\"]"]
     pub auth_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildIntegrationConnectorsConnectionAuthConfigEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionAuthConfigEl {
-        IntegrationConnectorsConnectionAuthConfigEl {
+impl BuildIntegrationConnectorsConnection_AuthConfig {
+    pub fn build(self) -> IntegrationConnectorsConnection_AuthConfig {
+        IntegrationConnectorsConnection_AuthConfig {
             auth_key: core::default::Default::default(),
             auth_type: self.auth_type,
             additional_variable: core::default::Default::default(),
@@ -2796,24 +2772,23 @@ impl BuildIntegrationConnectorsConnectionAuthConfigEl {
     }
 }
 
-pub struct IntegrationConnectorsConnectionAuthConfigElRef {
+#[allow(dead_code)]
+pub struct IntegrationConnectorsConnection_AuthConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IntegrationConnectorsConnectionAuthConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> IntegrationConnectorsConnectionAuthConfigElRef {
-        IntegrationConnectorsConnectionAuthConfigElRef {
+impl terrars::Ref for IntegrationConnectorsConnection_AuthConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IntegrationConnectorsConnection_AuthConfigRef {
+        IntegrationConnectorsConnection_AuthConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IntegrationConnectorsConnectionAuthConfigElRef {
+impl IntegrationConnectorsConnection_AuthConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2825,7 +2800,7 @@ impl IntegrationConnectorsConnectionAuthConfigElRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `auth_type` after provisioning.\nauthType of the Connection Possible values: [\"USER_PASSWORD\", \"OAUTH2_JWT_BEARER\", \"OAUTH2_CLIENT_CREDENTIALS\", \"SSH_PUBLIC_KEY\", \"OAUTH2_AUTH_CODE_FLOW\"]"]
+        "Get a reference to the value of field `auth_type` after provisioning.\nauthType of the Connection Possible values: [\"AUTH_TYPE_UNSPECIFIED\", \"USER_PASSWORD\", \"OAUTH2_JWT_BEARER\", \"OAUTH2_CLIENT_CREDENTIALS\", \"SSH_PUBLIC_KEY\", \"OAUTH2_AUTH_CODE_FLOW\"]"]
     pub fn auth_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.auth_type", self.base))
     }
@@ -2833,189 +2808,52 @@ impl IntegrationConnectorsConnectionAuthConfigElRef {
     #[doc = "Get a reference to the value of field `additional_variable` after provisioning.\n"]
     pub fn additional_variable(
         &self,
-    ) -> terrars::ListRef<IntegrationConnectorsConnectionAuthConfigElAdditionalVariableElRef> {
+    ) -> terrars::ListRef<IntegrationConnectorsConnection_AuthConfig_AdditionalVariableRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.additional_variable", self.base))
     }
 
     #[doc = "Get a reference to the value of field `oauth2_auth_code_flow` after provisioning.\n"]
     pub fn oauth2_auth_code_flow(
         &self,
-    ) -> terrars::ListRef<IntegrationConnectorsConnectionAuthConfigElOauth2AuthCodeFlowElRef> {
+    ) -> terrars::ListRef<IntegrationConnectorsConnection_AuthConfig_Oauth2AuthCodeFlowRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.oauth2_auth_code_flow", self.base))
     }
 
     #[doc = "Get a reference to the value of field `oauth2_client_credentials` after provisioning.\n"]
     pub fn oauth2_client_credentials(
         &self,
-    ) -> terrars::ListRef<IntegrationConnectorsConnectionAuthConfigElOauth2ClientCredentialsElRef> {
+    ) -> terrars::ListRef<IntegrationConnectorsConnection_AuthConfig_Oauth2ClientCredentialsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.oauth2_client_credentials", self.base))
     }
 
     #[doc = "Get a reference to the value of field `oauth2_jwt_bearer` after provisioning.\n"]
-    pub fn oauth2_jwt_bearer(&self) -> terrars::ListRef<IntegrationConnectorsConnectionAuthConfigElOauth2JwtBearerElRef> {
+    pub fn oauth2_jwt_bearer(&self) -> terrars::ListRef<IntegrationConnectorsConnection_AuthConfig_Oauth2JwtBearerRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.oauth2_jwt_bearer", self.base))
     }
 
     #[doc = "Get a reference to the value of field `ssh_public_key` after provisioning.\n"]
-    pub fn ssh_public_key(&self) -> terrars::ListRef<IntegrationConnectorsConnectionAuthConfigElSshPublicKeyElRef> {
+    pub fn ssh_public_key(&self) -> terrars::ListRef<IntegrationConnectorsConnection_AuthConfig_SshPublicKeyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ssh_public_key", self.base))
     }
 
     #[doc = "Get a reference to the value of field `user_password` after provisioning.\n"]
-    pub fn user_password(&self) -> terrars::ListRef<IntegrationConnectorsConnectionAuthConfigElUserPasswordElRef> {
+    pub fn user_password(&self) -> terrars::ListRef<IntegrationConnectorsConnection_AuthConfig_UserPasswordRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.user_password", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionConfigVariableElEncryptionKeyValueEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    kms_key_name: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(rename = "type")]
-    type_: terrars::PrimField<std::string::String>,
-}
-
-impl IntegrationConnectorsConnectionConfigVariableElEncryptionKeyValueEl {
-    #[doc =
-        "Set the field `kms_key_name`.\nThe [KMS key name] with which the content of the Operation is encrypted. The expected\nformat: projects/*/locations/*/keyRings/*/cryptoKeys/*.\nWill be empty string if google managed."]
-    pub fn set_kms_key_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.kms_key_name = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for IntegrationConnectorsConnectionConfigVariableElEncryptionKeyValueEl {
-    type O = terrars::BlockAssignable<IntegrationConnectorsConnectionConfigVariableElEncryptionKeyValueEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildIntegrationConnectorsConnectionConfigVariableElEncryptionKeyValueEl {
-    #[doc = "Type of Encription Key Possible values: [\"GOOGLE_MANAGED\", \"CUSTOMER_MANAGED\"]"]
-    pub type_: terrars::PrimField<std::string::String>,
-}
-
-impl BuildIntegrationConnectorsConnectionConfigVariableElEncryptionKeyValueEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionConfigVariableElEncryptionKeyValueEl {
-        IntegrationConnectorsConnectionConfigVariableElEncryptionKeyValueEl {
-            kms_key_name: core::default::Default::default(),
-            type_: self.type_,
-        }
-    }
-}
-
-pub struct IntegrationConnectorsConnectionConfigVariableElEncryptionKeyValueElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for IntegrationConnectorsConnectionConfigVariableElEncryptionKeyValueElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> IntegrationConnectorsConnectionConfigVariableElEncryptionKeyValueElRef {
-        IntegrationConnectorsConnectionConfigVariableElEncryptionKeyValueElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl IntegrationConnectorsConnectionConfigVariableElEncryptionKeyValueElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `kms_key_name` after provisioning.\nThe [KMS key name] with which the content of the Operation is encrypted. The expected\nformat: projects/*/locations/*/keyRings/*/cryptoKeys/*.\nWill be empty string if google managed."]
-    pub fn kms_key_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_name", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `type_` after provisioning.\nType of Encription Key Possible values: [\"GOOGLE_MANAGED\", \"CUSTOMER_MANAGED\"]"]
-    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionConfigVariableElSecretValueEl {
-    secret_version: terrars::PrimField<std::string::String>,
-}
-
-impl IntegrationConnectorsConnectionConfigVariableElSecretValueEl { }
-
-impl terrars::ToListMappable for IntegrationConnectorsConnectionConfigVariableElSecretValueEl {
-    type O = terrars::BlockAssignable<IntegrationConnectorsConnectionConfigVariableElSecretValueEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildIntegrationConnectorsConnectionConfigVariableElSecretValueEl {
-    #[doc = "Secret version of Secret Value for Config variable."]
-    pub secret_version: terrars::PrimField<std::string::String>,
-}
-
-impl BuildIntegrationConnectorsConnectionConfigVariableElSecretValueEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionConfigVariableElSecretValueEl {
-        IntegrationConnectorsConnectionConfigVariableElSecretValueEl { secret_version: self.secret_version }
-    }
-}
-
-pub struct IntegrationConnectorsConnectionConfigVariableElSecretValueElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for IntegrationConnectorsConnectionConfigVariableElSecretValueElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> IntegrationConnectorsConnectionConfigVariableElSecretValueElRef {
-        IntegrationConnectorsConnectionConfigVariableElSecretValueElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl IntegrationConnectorsConnectionConfigVariableElSecretValueElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `secret_version` after provisioning.\nSecret version of Secret Value for Config variable."]
-    pub fn secret_version(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_version", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct IntegrationConnectorsConnectionConfigVariableElDynamic {
+struct IntegrationConnectorsConnection_ConfigVariableDynamic {
     encryption_key_value: std
     ::option
-    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnectionConfigVariableElEncryptionKeyValueEl>>,
+    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_ConfigVariable_EncryptionKeyValue>>,
     secret_value: std
     ::option
-    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnectionConfigVariableElSecretValueEl>>,
+    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_ConfigVariable_SecretValue>>,
 }
 
 #[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionConfigVariableEl {
+pub struct IntegrationConnectorsConnection_ConfigVariable {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     boolean_value: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3026,13 +2864,13 @@ pub struct IntegrationConnectorsConnectionConfigVariableEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     encryption_key_value: std
     ::option
-    ::Option<std::vec::Vec<IntegrationConnectorsConnectionConfigVariableElEncryptionKeyValueEl>>,
+    ::Option<std::vec::Vec<IntegrationConnectorsConnection_ConfigVariable_EncryptionKeyValue>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    secret_value: std::option::Option<std::vec::Vec<IntegrationConnectorsConnectionConfigVariableElSecretValueEl>>,
-    dynamic: IntegrationConnectorsConnectionConfigVariableElDynamic,
+    secret_value: std::option::Option<std::vec::Vec<IntegrationConnectorsConnection_ConfigVariable_SecretValue>>,
+    dynamic: IntegrationConnectorsConnection_ConfigVariableDynamic,
 }
 
-impl IntegrationConnectorsConnectionConfigVariableEl {
+impl IntegrationConnectorsConnection_ConfigVariable {
     #[doc = "Set the field `boolean_value`.\nBoolean Value of configVariable"]
     pub fn set_boolean_value(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.boolean_value = std::option::Option::Some(v.into());
@@ -3060,7 +2898,7 @@ impl IntegrationConnectorsConnectionConfigVariableEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<IntegrationConnectorsConnectionConfigVariableElEncryptionKeyValueEl>,
+                        terrars::BlockAssignable<IntegrationConnectorsConnection_ConfigVariable_EncryptionKeyValue>,
                     >,
     ) -> Self {
         match v.into() {
@@ -3082,7 +2920,7 @@ impl IntegrationConnectorsConnectionConfigVariableEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<IntegrationConnectorsConnectionConfigVariableElSecretValueEl>>,
+                    ::Into<terrars::BlockAssignable<IntegrationConnectorsConnection_ConfigVariable_SecretValue>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3096,8 +2934,8 @@ impl IntegrationConnectorsConnectionConfigVariableEl {
     }
 }
 
-impl terrars::ToListMappable for IntegrationConnectorsConnectionConfigVariableEl {
-    type O = terrars::BlockAssignable<IntegrationConnectorsConnectionConfigVariableEl>;
+impl terrars::ToListMappable for IntegrationConnectorsConnection_ConfigVariable {
+    type O = terrars::BlockAssignable<IntegrationConnectorsConnection_ConfigVariable>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3108,14 +2946,14 @@ impl terrars::ToListMappable for IntegrationConnectorsConnectionConfigVariableEl
     }
 }
 
-pub struct BuildIntegrationConnectorsConnectionConfigVariableEl {
+pub struct BuildIntegrationConnectorsConnection_ConfigVariable {
     #[doc = "Key for the configVariable"]
     pub key: terrars::PrimField<std::string::String>,
 }
 
-impl BuildIntegrationConnectorsConnectionConfigVariableEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionConfigVariableEl {
-        IntegrationConnectorsConnectionConfigVariableEl {
+impl BuildIntegrationConnectorsConnection_ConfigVariable {
+    pub fn build(self) -> IntegrationConnectorsConnection_ConfigVariable {
+        IntegrationConnectorsConnection_ConfigVariable {
             boolean_value: core::default::Default::default(),
             integer_value: core::default::Default::default(),
             key: self.key,
@@ -3127,24 +2965,26 @@ impl BuildIntegrationConnectorsConnectionConfigVariableEl {
     }
 }
 
-pub struct IntegrationConnectorsConnectionConfigVariableElRef {
+#[allow(dead_code)]
+pub struct IntegrationConnectorsConnection_ConfigVariableRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IntegrationConnectorsConnectionConfigVariableElRef {
+impl terrars::Ref for IntegrationConnectorsConnection_ConfigVariableRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IntegrationConnectorsConnectionConfigVariableElRef {
-        IntegrationConnectorsConnectionConfigVariableElRef {
+    ) -> IntegrationConnectorsConnection_ConfigVariableRef {
+        IntegrationConnectorsConnection_ConfigVariableRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IntegrationConnectorsConnectionConfigVariableElRef {
+impl IntegrationConnectorsConnection_ConfigVariableRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3174,18 +3014,18 @@ impl IntegrationConnectorsConnectionConfigVariableElRef {
     #[doc = "Get a reference to the value of field `encryption_key_value` after provisioning.\n"]
     pub fn encryption_key_value(
         &self,
-    ) -> terrars::ListRef<IntegrationConnectorsConnectionConfigVariableElEncryptionKeyValueElRef> {
+    ) -> terrars::ListRef<IntegrationConnectorsConnection_ConfigVariable_EncryptionKeyValueRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_key_value", self.base))
     }
 
     #[doc = "Get a reference to the value of field `secret_value` after provisioning.\n"]
-    pub fn secret_value(&self) -> terrars::ListRef<IntegrationConnectorsConnectionConfigVariableElSecretValueElRef> {
+    pub fn secret_value(&self) -> terrars::ListRef<IntegrationConnectorsConnection_ConfigVariable_SecretValueRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.secret_value", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionDestinationConfigElDestinationEl {
+pub struct IntegrationConnectorsConnection_DestinationConfig_Destination {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     host: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3194,7 +3034,7 @@ pub struct IntegrationConnectorsConnectionDestinationConfigElDestinationEl {
     service_attachment: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl IntegrationConnectorsConnectionDestinationConfigElDestinationEl {
+impl IntegrationConnectorsConnection_DestinationConfig_Destination {
     #[doc = "Set the field `host`.\nFor publicly routable host."]
     pub fn set_host(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.host = std::option::Option::Some(v.into());
@@ -3218,8 +3058,8 @@ impl IntegrationConnectorsConnectionDestinationConfigElDestinationEl {
     }
 }
 
-impl terrars::ToListMappable for IntegrationConnectorsConnectionDestinationConfigElDestinationEl {
-    type O = terrars::BlockAssignable<IntegrationConnectorsConnectionDestinationConfigElDestinationEl>;
+impl terrars::ToListMappable for IntegrationConnectorsConnection_DestinationConfig_Destination {
+    type O = terrars::BlockAssignable<IntegrationConnectorsConnection_DestinationConfig_Destination>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3230,11 +3070,11 @@ impl terrars::ToListMappable for IntegrationConnectorsConnectionDestinationConfi
     }
 }
 
-pub struct BuildIntegrationConnectorsConnectionDestinationConfigElDestinationEl {}
+pub struct BuildIntegrationConnectorsConnection_DestinationConfig_Destination {}
 
-impl BuildIntegrationConnectorsConnectionDestinationConfigElDestinationEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionDestinationConfigElDestinationEl {
-        IntegrationConnectorsConnectionDestinationConfigElDestinationEl {
+impl BuildIntegrationConnectorsConnection_DestinationConfig_Destination {
+    pub fn build(self) -> IntegrationConnectorsConnection_DestinationConfig_Destination {
+        IntegrationConnectorsConnection_DestinationConfig_Destination {
             host: core::default::Default::default(),
             port: core::default::Default::default(),
             service_attachment: core::default::Default::default(),
@@ -3242,24 +3082,26 @@ impl BuildIntegrationConnectorsConnectionDestinationConfigElDestinationEl {
     }
 }
 
-pub struct IntegrationConnectorsConnectionDestinationConfigElDestinationElRef {
+#[allow(dead_code)]
+pub struct IntegrationConnectorsConnection_DestinationConfig_DestinationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IntegrationConnectorsConnectionDestinationConfigElDestinationElRef {
+impl terrars::Ref for IntegrationConnectorsConnection_DestinationConfig_DestinationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IntegrationConnectorsConnectionDestinationConfigElDestinationElRef {
-        IntegrationConnectorsConnectionDestinationConfigElDestinationElRef {
+    ) -> IntegrationConnectorsConnection_DestinationConfig_DestinationRef {
+        IntegrationConnectorsConnection_DestinationConfig_DestinationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IntegrationConnectorsConnectionDestinationConfigElDestinationElRef {
+impl IntegrationConnectorsConnection_DestinationConfig_DestinationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3283,21 +3125,21 @@ impl IntegrationConnectorsConnectionDestinationConfigElDestinationElRef {
 }
 
 #[derive(Serialize, Default)]
-struct IntegrationConnectorsConnectionDestinationConfigElDynamic {
+struct IntegrationConnectorsConnection_DestinationConfigDynamic {
     destination: std
     ::option
-    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnectionDestinationConfigElDestinationEl>>,
+    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_DestinationConfig_Destination>>,
 }
 
 #[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionDestinationConfigEl {
+pub struct IntegrationConnectorsConnection_DestinationConfig {
     key: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    destination: std::option::Option<std::vec::Vec<IntegrationConnectorsConnectionDestinationConfigElDestinationEl>>,
-    dynamic: IntegrationConnectorsConnectionDestinationConfigElDynamic,
+    destination: std::option::Option<std::vec::Vec<IntegrationConnectorsConnection_DestinationConfig_Destination>>,
+    dynamic: IntegrationConnectorsConnection_DestinationConfigDynamic,
 }
 
-impl IntegrationConnectorsConnectionDestinationConfigEl {
+impl IntegrationConnectorsConnection_DestinationConfig {
     #[doc = "Set the field `destination`.\n"]
     pub fn set_destination(
         mut self,
@@ -3306,7 +3148,7 @@ impl IntegrationConnectorsConnectionDestinationConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<IntegrationConnectorsConnectionDestinationConfigElDestinationEl>>,
+                    ::Into<terrars::BlockAssignable<IntegrationConnectorsConnection_DestinationConfig_Destination>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3320,8 +3162,8 @@ impl IntegrationConnectorsConnectionDestinationConfigEl {
     }
 }
 
-impl terrars::ToListMappable for IntegrationConnectorsConnectionDestinationConfigEl {
-    type O = terrars::BlockAssignable<IntegrationConnectorsConnectionDestinationConfigEl>;
+impl terrars::ToListMappable for IntegrationConnectorsConnection_DestinationConfig {
+    type O = terrars::BlockAssignable<IntegrationConnectorsConnection_DestinationConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3332,14 +3174,14 @@ impl terrars::ToListMappable for IntegrationConnectorsConnectionDestinationConfi
     }
 }
 
-pub struct BuildIntegrationConnectorsConnectionDestinationConfigEl {
+pub struct BuildIntegrationConnectorsConnection_DestinationConfig {
     #[doc = "The key is the destination identifier that is supported by the Connector."]
     pub key: terrars::PrimField<std::string::String>,
 }
 
-impl BuildIntegrationConnectorsConnectionDestinationConfigEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionDestinationConfigEl {
-        IntegrationConnectorsConnectionDestinationConfigEl {
+impl BuildIntegrationConnectorsConnection_DestinationConfig {
+    pub fn build(self) -> IntegrationConnectorsConnection_DestinationConfig {
+        IntegrationConnectorsConnection_DestinationConfig {
             key: self.key,
             destination: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -3347,24 +3189,26 @@ impl BuildIntegrationConnectorsConnectionDestinationConfigEl {
     }
 }
 
-pub struct IntegrationConnectorsConnectionDestinationConfigElRef {
+#[allow(dead_code)]
+pub struct IntegrationConnectorsConnection_DestinationConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IntegrationConnectorsConnectionDestinationConfigElRef {
+impl terrars::Ref for IntegrationConnectorsConnection_DestinationConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IntegrationConnectorsConnectionDestinationConfigElRef {
-        IntegrationConnectorsConnectionDestinationConfigElRef {
+    ) -> IntegrationConnectorsConnection_DestinationConfigRef {
+        IntegrationConnectorsConnection_DestinationConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IntegrationConnectorsConnectionDestinationConfigElRef {
+impl IntegrationConnectorsConnection_DestinationConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3376,22 +3220,22 @@ impl IntegrationConnectorsConnectionDestinationConfigElRef {
     }
 
     #[doc = "Get a reference to the value of field `destination` after provisioning.\n"]
-    pub fn destination(&self) -> terrars::ListRef<IntegrationConnectorsConnectionDestinationConfigElDestinationElRef> {
+    pub fn destination(&self) -> terrars::ListRef<IntegrationConnectorsConnection_DestinationConfig_DestinationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.destination", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElEncryptionKeyValueEl {
+pub struct IntegrationConnectorsConnection_SslConfig_AdditionalVariable_EncryptionKeyValue {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElEncryptionKeyValueEl {
+impl IntegrationConnectorsConnection_SslConfig_AdditionalVariable_EncryptionKeyValue {
     #[doc =
-        "Set the field `kms_key_name`.\nThe [KMS key name] with which the content of the Operation is encrypted. The expected\nformat: projects/*/locations/*/keyRings/*/cryptoKeys/*.\nWill be empty string if google managed."]
+        "Set the field `kms_key_name`.\nThe [KMS key name] with which the content of the Operation is encrypted. The\nexpected format: projects/*/locations/*/keyRings/*/cryptoKeys/*.\nWill be empty string if google managed."]
     pub fn set_kms_key_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.kms_key_name = std::option::Option::Some(v.into());
         self
@@ -3405,11 +3249,9 @@ impl IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElEncrypti
     }
 }
 
-impl terrars
-::ToListMappable for IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElEncryptionKeyValueEl {
+impl terrars::ToListMappable for IntegrationConnectorsConnection_SslConfig_AdditionalVariable_EncryptionKeyValue {
     type O =
-        terrars
-        ::BlockAssignable<IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElEncryptionKeyValueEl>;
+        terrars::BlockAssignable<IntegrationConnectorsConnection_SslConfig_AdditionalVariable_EncryptionKeyValue>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3420,41 +3262,43 @@ impl terrars
     }
 }
 
-pub struct BuildIntegrationConnectorsConnectionEventingConfigElAdditionalVariableElEncryptionKeyValueEl {}
+pub struct BuildIntegrationConnectorsConnection_SslConfig_AdditionalVariable_EncryptionKeyValue {}
 
-impl BuildIntegrationConnectorsConnectionEventingConfigElAdditionalVariableElEncryptionKeyValueEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElEncryptionKeyValueEl {
-        IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElEncryptionKeyValueEl {
+impl BuildIntegrationConnectorsConnection_SslConfig_AdditionalVariable_EncryptionKeyValue {
+    pub fn build(self) -> IntegrationConnectorsConnection_SslConfig_AdditionalVariable_EncryptionKeyValue {
+        IntegrationConnectorsConnection_SslConfig_AdditionalVariable_EncryptionKeyValue {
             kms_key_name: core::default::Default::default(),
             type_: core::default::Default::default(),
         }
     }
 }
 
-pub struct IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElEncryptionKeyValueElRef {
+#[allow(dead_code)]
+pub struct IntegrationConnectorsConnection_SslConfig_AdditionalVariable_EncryptionKeyValueRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElEncryptionKeyValueElRef {
+impl terrars::Ref for IntegrationConnectorsConnection_SslConfig_AdditionalVariable_EncryptionKeyValueRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElEncryptionKeyValueElRef {
-        IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElEncryptionKeyValueElRef {
+    ) -> IntegrationConnectorsConnection_SslConfig_AdditionalVariable_EncryptionKeyValueRef {
+        IntegrationConnectorsConnection_SslConfig_AdditionalVariable_EncryptionKeyValueRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElEncryptionKeyValueElRef {
+impl IntegrationConnectorsConnection_SslConfig_AdditionalVariable_EncryptionKeyValueRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `kms_key_name` after provisioning.\nThe [KMS key name] with which the content of the Operation is encrypted. The expected\nformat: projects/*/locations/*/keyRings/*/cryptoKeys/*.\nWill be empty string if google managed."]
+        "Get a reference to the value of field `kms_key_name` after provisioning.\nThe [KMS key name] with which the content of the Operation is encrypted. The\nexpected format: projects/*/locations/*/keyRings/*/cryptoKeys/*.\nWill be empty string if google managed."]
     pub fn kms_key_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_name", self.base))
     }
@@ -3466,84 +3310,18 @@ impl IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElEncrypti
     }
 }
 
-#[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElSecretValueEl {
-    secret_version: terrars::PrimField<std::string::String>,
-}
-
-impl IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElSecretValueEl { }
-
-impl terrars::ToListMappable for IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElSecretValueEl {
-    type O =
-        terrars::BlockAssignable<IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElSecretValueEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildIntegrationConnectorsConnectionEventingConfigElAdditionalVariableElSecretValueEl {
-    #[doc = "Secret version of Secret Value for Config variable."]
-    pub secret_version: terrars::PrimField<std::string::String>,
-}
-
-impl BuildIntegrationConnectorsConnectionEventingConfigElAdditionalVariableElSecretValueEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElSecretValueEl {
-        IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElSecretValueEl {
-            secret_version: self.secret_version,
-        }
-    }
-}
-
-pub struct IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElSecretValueElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElSecretValueElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElSecretValueElRef {
-        IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElSecretValueElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElSecretValueElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `secret_version` after provisioning.\nSecret version of Secret Value for Config variable."]
-    pub fn secret_version(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_version", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElDynamic {
+struct IntegrationConnectorsConnection_SslConfig_AdditionalVariableDynamic {
     encryption_key_value: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElEncryptionKeyValueEl>,
-    >,
+    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_SslConfig_AdditionalVariable_EncryptionKeyValue>>,
     secret_value: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElSecretValueEl>,
-    >,
+    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_ConfigVariable_SecretValue>>,
 }
 
 #[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionEventingConfigElAdditionalVariableEl {
+pub struct IntegrationConnectorsConnection_SslConfig_AdditionalVariable {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     boolean_value: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3554,15 +3332,13 @@ pub struct IntegrationConnectorsConnectionEventingConfigElAdditionalVariableEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     encryption_key_value: std
     ::option
-    ::Option<std::vec::Vec<IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElEncryptionKeyValueEl>>,
+    ::Option<std::vec::Vec<IntegrationConnectorsConnection_SslConfig_AdditionalVariable_EncryptionKeyValue>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    secret_value: std
-    ::option
-    ::Option<std::vec::Vec<IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElSecretValueEl>>,
-    dynamic: IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElDynamic,
+    secret_value: std::option::Option<std::vec::Vec<IntegrationConnectorsConnection_ConfigVariable_SecretValue>>,
+    dynamic: IntegrationConnectorsConnection_SslConfig_AdditionalVariableDynamic,
 }
 
-impl IntegrationConnectorsConnectionEventingConfigElAdditionalVariableEl {
+impl IntegrationConnectorsConnection_SslConfig_AdditionalVariable {
     #[doc = "Set the field `boolean_value`.\nBoolean Value of configVariable."]
     pub fn set_boolean_value(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.boolean_value = std::option::Option::Some(v.into());
@@ -3592,7 +3368,7 @@ impl IntegrationConnectorsConnectionEventingConfigElAdditionalVariableEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElEncryptionKeyValueEl,
+                            IntegrationConnectorsConnection_SslConfig_AdditionalVariable_EncryptionKeyValue,
                         >,
                     >,
     ) -> Self {
@@ -3615,12 +3391,7 @@ impl IntegrationConnectorsConnectionEventingConfigElAdditionalVariableEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElSecretValueEl,
-                        >,
-                    >,
+                    ::Into<terrars::BlockAssignable<IntegrationConnectorsConnection_ConfigVariable_SecretValue>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3634,8 +3405,8 @@ impl IntegrationConnectorsConnectionEventingConfigElAdditionalVariableEl {
     }
 }
 
-impl terrars::ToListMappable for IntegrationConnectorsConnectionEventingConfigElAdditionalVariableEl {
-    type O = terrars::BlockAssignable<IntegrationConnectorsConnectionEventingConfigElAdditionalVariableEl>;
+impl terrars::ToListMappable for IntegrationConnectorsConnection_SslConfig_AdditionalVariable {
+    type O = terrars::BlockAssignable<IntegrationConnectorsConnection_SslConfig_AdditionalVariable>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3646,14 +3417,14 @@ impl terrars::ToListMappable for IntegrationConnectorsConnectionEventingConfigEl
     }
 }
 
-pub struct BuildIntegrationConnectorsConnectionEventingConfigElAdditionalVariableEl {
+pub struct BuildIntegrationConnectorsConnection_SslConfig_AdditionalVariable {
     #[doc = "Key for the configVariable"]
     pub key: terrars::PrimField<std::string::String>,
 }
 
-impl BuildIntegrationConnectorsConnectionEventingConfigElAdditionalVariableEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionEventingConfigElAdditionalVariableEl {
-        IntegrationConnectorsConnectionEventingConfigElAdditionalVariableEl {
+impl BuildIntegrationConnectorsConnection_SslConfig_AdditionalVariable {
+    pub fn build(self) -> IntegrationConnectorsConnection_SslConfig_AdditionalVariable {
+        IntegrationConnectorsConnection_SslConfig_AdditionalVariable {
             boolean_value: core::default::Default::default(),
             integer_value: core::default::Default::default(),
             key: self.key,
@@ -3665,24 +3436,26 @@ impl BuildIntegrationConnectorsConnectionEventingConfigElAdditionalVariableEl {
     }
 }
 
-pub struct IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElRef {
+#[allow(dead_code)]
+pub struct IntegrationConnectorsConnection_SslConfig_AdditionalVariableRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElRef {
+impl terrars::Ref for IntegrationConnectorsConnection_SslConfig_AdditionalVariableRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElRef {
-        IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElRef {
+    ) -> IntegrationConnectorsConnection_SslConfig_AdditionalVariableRef {
+        IntegrationConnectorsConnection_SslConfig_AdditionalVariableRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElRef {
+impl IntegrationConnectorsConnection_SslConfig_AdditionalVariableRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3713,470 +3486,33 @@ impl IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElRef {
     #[doc = "Get a reference to the value of field `encryption_key_value` after provisioning.\n"]
     pub fn encryption_key_value(
         &self,
-    ) -> terrars::ListRef<IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElEncryptionKeyValueElRef> {
+    ) -> terrars::ListRef<IntegrationConnectorsConnection_SslConfig_AdditionalVariable_EncryptionKeyValueRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_key_value", self.base))
     }
 
     #[doc = "Get a reference to the value of field `secret_value` after provisioning.\n"]
-    pub fn secret_value(
-        &self,
-    ) -> terrars::ListRef<IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElSecretValueElRef> {
+    pub fn secret_value(&self) -> terrars::ListRef<IntegrationConnectorsConnection_ConfigVariable_SecretValueRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.secret_value", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElEncryptionKeyValueEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    kms_key_name: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
-    type_: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElEncryptionKeyValueEl {
-    #[doc =
-        "Set the field `kms_key_name`.\nThe [KMS key name] with which the content of the Operation is encrypted. The expected\nformat: projects/*/locations/*/keyRings/*/cryptoKeys/*.\nWill be empty string if google managed."]
-    pub fn set_kms_key_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.kms_key_name = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `type_`.\nType of Encription Key Possible values: [\"GOOGLE_MANAGED\", \"CUSTOMER_MANAGED\"]"]
-    pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.type_ = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElEncryptionKeyValueEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElEncryptionKeyValueEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildIntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElEncryptionKeyValueEl {}
-
-impl BuildIntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElEncryptionKeyValueEl {
-    pub fn build(
-        self,
-    ) -> IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElEncryptionKeyValueEl {
-        IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElEncryptionKeyValueEl {
-            kms_key_name: core::default::Default::default(),
-            type_: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElEncryptionKeyValueElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElEncryptionKeyValueElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElEncryptionKeyValueElRef {
-        IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElEncryptionKeyValueElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElEncryptionKeyValueElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `kms_key_name` after provisioning.\nThe [KMS key name] with which the content of the Operation is encrypted. The expected\nformat: projects/*/locations/*/keyRings/*/cryptoKeys/*.\nWill be empty string if google managed."]
-    pub fn kms_key_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_name", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `type_` after provisioning.\nType of Encription Key Possible values: [\"GOOGLE_MANAGED\", \"CUSTOMER_MANAGED\"]"]
-    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElSecretValueEl {
-    secret_version: terrars::PrimField<std::string::String>,
-}
-
-impl IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElSecretValueEl { }
-
-impl terrars
-::ToListMappable for IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElSecretValueEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElSecretValueEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildIntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElSecretValueEl {
-    #[doc = "Secret version of Secret Value for Config variable."]
-    pub secret_version: terrars::PrimField<std::string::String>,
-}
-
-impl BuildIntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElSecretValueEl {
-    pub fn build(
-        self,
-    ) -> IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElSecretValueEl {
-        IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElSecretValueEl {
-            secret_version: self.secret_version,
-        }
-    }
-}
-
-pub struct IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElSecretValueElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElSecretValueElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElSecretValueElRef {
-        IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElSecretValueElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElSecretValueElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `secret_version` after provisioning.\nSecret version of Secret Value for Config variable."]
-    pub fn secret_version(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_version", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElDynamic {
-    encryption_key_value: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElEncryptionKeyValueEl,
-        >,
-    >,
-    secret_value: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElSecretValueEl>,
-    >,
-}
-
-#[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    boolean_value: std::option::Option<terrars::PrimField<bool>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    integer_value: std::option::Option<terrars::PrimField<f64>>,
-    key: terrars::PrimField<std::string::String>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    string_value: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    encryption_key_value: std
-    ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElEncryptionKeyValueEl>,
-    >,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    secret_value: std
-    ::option
-    ::Option<
-        std::vec::Vec<IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElSecretValueEl>,
-    >,
-    dynamic: IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElDynamic,
-}
-
-impl IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableEl {
-    #[doc = "Set the field `boolean_value`.\nBoolean Value of configVariable."]
-    pub fn set_boolean_value(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.boolean_value = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `integer_value`.\nInteger Value of configVariable."]
-    pub fn set_integer_value(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.integer_value = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `string_value`.\nString Value of configVariabley."]
-    pub fn set_string_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.string_value = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `encryption_key_value`.\n"]
-    pub fn set_encryption_key_value(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElEncryptionKeyValueEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.encryption_key_value = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.encryption_key_value = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `secret_value`.\n"]
-    pub fn set_secret_value(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElSecretValueEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.secret_value = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.secret_value = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableEl {
-    type O =
-        terrars::BlockAssignable<IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildIntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableEl {
-    #[doc = "Key for the configVariable"]
-    pub key: terrars::PrimField<std::string::String>,
-}
-
-impl BuildIntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableEl {
-        IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableEl {
-            boolean_value: core::default::Default::default(),
-            integer_value: core::default::Default::default(),
-            key: self.key,
-            string_value: core::default::Default::default(),
-            encryption_key_value: core::default::Default::default(),
-            secret_value: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElRef {
-        IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `boolean_value` after provisioning.\nBoolean Value of configVariable."]
-    pub fn boolean_value(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.boolean_value", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `integer_value` after provisioning.\nInteger Value of configVariable."]
-    pub fn integer_value(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.integer_value", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `key` after provisioning.\nKey for the configVariable"]
-    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `string_value` after provisioning.\nString Value of configVariabley."]
-    pub fn string_value(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.string_value", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `encryption_key_value` after provisioning.\n"]
-    pub fn encryption_key_value(
-        &self,
-    ) -> terrars
-    ::ListRef<IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElEncryptionKeyValueElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_key_value", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `secret_value` after provisioning.\n"]
-    pub fn secret_value(
-        &self,
-    ) -> terrars
-    ::ListRef<IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElSecretValueElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.secret_value", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordElPasswordEl {
-    secret_version: terrars::PrimField<std::string::String>,
-}
-
-impl IntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordElPasswordEl { }
-
-impl terrars::ToListMappable for IntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordElPasswordEl {
-    type O =
-        terrars
-        ::BlockAssignable<IntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordElPasswordEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildIntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordElPasswordEl {
-    #[doc = "The resource name of the secret version in the format,\nformat as: projects/*/secrets/*/versions/*."]
-    pub secret_version: terrars::PrimField<std::string::String>,
-}
-
-impl BuildIntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordElPasswordEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordElPasswordEl {
-        IntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordElPasswordEl {
-            secret_version: self.secret_version,
-        }
-    }
-}
-
-pub struct IntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordElPasswordElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for IntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordElPasswordElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> IntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordElPasswordElRef {
-        IntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordElPasswordElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl IntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordElPasswordElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `secret_version` after provisioning.\nThe resource name of the secret version in the format,\nformat as: projects/*/secrets/*/versions/*."]
-    pub fn secret_version(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_version", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct IntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordElDynamic {
+struct IntegrationConnectorsConnection_EventingConfig_AuthConfig_UserPasswordDynamic {
     password: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<IntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordElPasswordEl>,
-    >,
+    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_AuthConfig_UserPassword_Password>>,
 }
 
 #[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordEl {
+pub struct IntegrationConnectorsConnection_EventingConfig_AuthConfig_UserPassword {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     username: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    password: std
-    ::option
-    ::Option<std::vec::Vec<IntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordElPasswordEl>>,
-    dynamic: IntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordElDynamic,
+    password: std::option::Option<std::vec::Vec<IntegrationConnectorsConnection_AuthConfig_UserPassword_Password>>,
+    dynamic: IntegrationConnectorsConnection_EventingConfig_AuthConfig_UserPasswordDynamic,
 }
 
-impl IntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordEl {
+impl IntegrationConnectorsConnection_EventingConfig_AuthConfig_UserPassword {
     #[doc = "Set the field `username`.\nUsername for Authentication."]
     pub fn set_username(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.username = std::option::Option::Some(v.into());
@@ -4192,10 +3528,7 @@ impl IntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            IntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordElPasswordEl,
-                        >,
+                        terrars::BlockAssignable<IntegrationConnectorsConnection_AuthConfig_UserPassword_Password>,
                     >,
     ) -> Self {
         match v.into() {
@@ -4210,8 +3543,8 @@ impl IntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordEl {
     }
 }
 
-impl terrars::ToListMappable for IntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordEl {
-    type O = terrars::BlockAssignable<IntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordEl>;
+impl terrars::ToListMappable for IntegrationConnectorsConnection_EventingConfig_AuthConfig_UserPassword {
+    type O = terrars::BlockAssignable<IntegrationConnectorsConnection_EventingConfig_AuthConfig_UserPassword>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4222,11 +3555,11 @@ impl terrars::ToListMappable for IntegrationConnectorsConnectionEventingConfigEl
     }
 }
 
-pub struct BuildIntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordEl {}
+pub struct BuildIntegrationConnectorsConnection_EventingConfig_AuthConfig_UserPassword {}
 
-impl BuildIntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordEl {
-        IntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordEl {
+impl BuildIntegrationConnectorsConnection_EventingConfig_AuthConfig_UserPassword {
+    pub fn build(self) -> IntegrationConnectorsConnection_EventingConfig_AuthConfig_UserPassword {
+        IntegrationConnectorsConnection_EventingConfig_AuthConfig_UserPassword {
             username: core::default::Default::default(),
             password: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -4234,24 +3567,26 @@ impl BuildIntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswor
     }
 }
 
-pub struct IntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordElRef {
+#[allow(dead_code)]
+pub struct IntegrationConnectorsConnection_EventingConfig_AuthConfig_UserPasswordRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordElRef {
+impl terrars::Ref for IntegrationConnectorsConnection_EventingConfig_AuthConfig_UserPasswordRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordElRef {
-        IntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordElRef {
+    ) -> IntegrationConnectorsConnection_EventingConfig_AuthConfig_UserPasswordRef {
+        IntegrationConnectorsConnection_EventingConfig_AuthConfig_UserPasswordRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordElRef {
+impl IntegrationConnectorsConnection_EventingConfig_AuthConfig_UserPasswordRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4262,40 +3597,36 @@ impl IntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordElRe
     }
 
     #[doc = "Get a reference to the value of field `password` after provisioning.\n"]
-    pub fn password(
-        &self,
-    ) -> terrars::ListRef<IntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordElPasswordElRef> {
+    pub fn password(&self) -> terrars::ListRef<IntegrationConnectorsConnection_AuthConfig_UserPassword_PasswordRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.password", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct IntegrationConnectorsConnectionEventingConfigElAuthConfigElDynamic {
+struct IntegrationConnectorsConnection_EventingConfig_AuthConfigDynamic {
     additional_variable: std
     ::option
-    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableEl>>,
+    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_SslConfig_AdditionalVariable>>,
     user_password: std
     ::option
-    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordEl>>,
+    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_EventingConfig_AuthConfig_UserPassword>>,
 }
 
 #[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionEventingConfigElAuthConfigEl {
+pub struct IntegrationConnectorsConnection_EventingConfig_AuthConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     auth_key: std::option::Option<terrars::PrimField<std::string::String>>,
     auth_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    additional_variable: std
-    ::option
-    ::Option<std::vec::Vec<IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableEl>>,
+    additional_variable: std::option::Option<std::vec::Vec<IntegrationConnectorsConnection_SslConfig_AdditionalVariable>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     user_password: std
     ::option
-    ::Option<std::vec::Vec<IntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordEl>>,
-    dynamic: IntegrationConnectorsConnectionEventingConfigElAuthConfigElDynamic,
+    ::Option<std::vec::Vec<IntegrationConnectorsConnection_EventingConfig_AuthConfig_UserPassword>>,
+    dynamic: IntegrationConnectorsConnection_EventingConfig_AuthConfigDynamic,
 }
 
-impl IntegrationConnectorsConnectionEventingConfigElAuthConfigEl {
+impl IntegrationConnectorsConnection_EventingConfig_AuthConfig {
     #[doc = "Set the field `auth_key`.\nThe type of authentication configured."]
     pub fn set_auth_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.auth_key = std::option::Option::Some(v.into());
@@ -4310,12 +3641,7 @@ impl IntegrationConnectorsConnectionEventingConfigElAuthConfigEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableEl,
-                        >,
-                    >,
+                    ::Into<terrars::BlockAssignable<IntegrationConnectorsConnection_SslConfig_AdditionalVariable>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -4338,7 +3664,7 @@ impl IntegrationConnectorsConnectionEventingConfigElAuthConfigEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<IntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordEl>,
+                        ::BlockAssignable<IntegrationConnectorsConnection_EventingConfig_AuthConfig_UserPassword>,
                     >,
     ) -> Self {
         match v.into() {
@@ -4353,8 +3679,8 @@ impl IntegrationConnectorsConnectionEventingConfigElAuthConfigEl {
     }
 }
 
-impl terrars::ToListMappable for IntegrationConnectorsConnectionEventingConfigElAuthConfigEl {
-    type O = terrars::BlockAssignable<IntegrationConnectorsConnectionEventingConfigElAuthConfigEl>;
+impl terrars::ToListMappable for IntegrationConnectorsConnection_EventingConfig_AuthConfig {
+    type O = terrars::BlockAssignable<IntegrationConnectorsConnection_EventingConfig_AuthConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4365,14 +3691,14 @@ impl terrars::ToListMappable for IntegrationConnectorsConnectionEventingConfigEl
     }
 }
 
-pub struct BuildIntegrationConnectorsConnectionEventingConfigElAuthConfigEl {
+pub struct BuildIntegrationConnectorsConnection_EventingConfig_AuthConfig {
     #[doc = "authType of the Connection Possible values: [\"USER_PASSWORD\"]"]
     pub auth_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildIntegrationConnectorsConnectionEventingConfigElAuthConfigEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionEventingConfigElAuthConfigEl {
-        IntegrationConnectorsConnectionEventingConfigElAuthConfigEl {
+impl BuildIntegrationConnectorsConnection_EventingConfig_AuthConfig {
+    pub fn build(self) -> IntegrationConnectorsConnection_EventingConfig_AuthConfig {
+        IntegrationConnectorsConnection_EventingConfig_AuthConfig {
             auth_key: core::default::Default::default(),
             auth_type: self.auth_type,
             additional_variable: core::default::Default::default(),
@@ -4382,24 +3708,26 @@ impl BuildIntegrationConnectorsConnectionEventingConfigElAuthConfigEl {
     }
 }
 
-pub struct IntegrationConnectorsConnectionEventingConfigElAuthConfigElRef {
+#[allow(dead_code)]
+pub struct IntegrationConnectorsConnection_EventingConfig_AuthConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IntegrationConnectorsConnectionEventingConfigElAuthConfigElRef {
+impl terrars::Ref for IntegrationConnectorsConnection_EventingConfig_AuthConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IntegrationConnectorsConnectionEventingConfigElAuthConfigElRef {
-        IntegrationConnectorsConnectionEventingConfigElAuthConfigElRef {
+    ) -> IntegrationConnectorsConnection_EventingConfig_AuthConfigRef {
+        IntegrationConnectorsConnection_EventingConfig_AuthConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IntegrationConnectorsConnectionEventingConfigElAuthConfigElRef {
+impl IntegrationConnectorsConnection_EventingConfig_AuthConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4419,20 +3747,20 @@ impl IntegrationConnectorsConnectionEventingConfigElAuthConfigElRef {
     #[doc = "Get a reference to the value of field `additional_variable` after provisioning.\n"]
     pub fn additional_variable(
         &self,
-    ) -> terrars::ListRef<IntegrationConnectorsConnectionEventingConfigElAuthConfigElAdditionalVariableElRef> {
+    ) -> terrars::ListRef<IntegrationConnectorsConnection_SslConfig_AdditionalVariableRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.additional_variable", self.base))
     }
 
     #[doc = "Get a reference to the value of field `user_password` after provisioning.\n"]
     pub fn user_password(
         &self,
-    ) -> terrars::ListRef<IntegrationConnectorsConnectionEventingConfigElAuthConfigElUserPasswordElRef> {
+    ) -> terrars::ListRef<IntegrationConnectorsConnection_EventingConfig_AuthConfig_UserPasswordRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.user_password", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfigElDestinationEl {
+pub struct IntegrationConnectorsConnection_EventingConfig_RegistrationDestinationConfig_Destination {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     host: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -4441,7 +3769,7 @@ pub struct IntegrationConnectorsConnectionEventingConfigElRegistrationDestinatio
     service_attachment: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl IntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfigElDestinationEl {
+impl IntegrationConnectorsConnection_EventingConfig_RegistrationDestinationConfig_Destination {
     #[doc = "Set the field `host`.\nHost"]
     pub fn set_host(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.host = std::option::Option::Some(v.into());
@@ -4465,12 +3793,10 @@ impl IntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfi
 }
 
 impl terrars
-::ToListMappable for IntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfigElDestinationEl {
+::ToListMappable for IntegrationConnectorsConnection_EventingConfig_RegistrationDestinationConfig_Destination {
     type O =
         terrars
-        ::BlockAssignable<
-            IntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfigElDestinationEl,
-        >;
+        ::BlockAssignable<IntegrationConnectorsConnection_EventingConfig_RegistrationDestinationConfig_Destination>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4481,13 +3807,11 @@ impl terrars
     }
 }
 
-pub struct BuildIntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfigElDestinationEl {}
+pub struct BuildIntegrationConnectorsConnection_EventingConfig_RegistrationDestinationConfig_Destination {}
 
-impl BuildIntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfigElDestinationEl {
-    pub fn build(
-        self,
-    ) -> IntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfigElDestinationEl {
-        IntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfigElDestinationEl {
+impl BuildIntegrationConnectorsConnection_EventingConfig_RegistrationDestinationConfig_Destination {
+    pub fn build(self) -> IntegrationConnectorsConnection_EventingConfig_RegistrationDestinationConfig_Destination {
+        IntegrationConnectorsConnection_EventingConfig_RegistrationDestinationConfig_Destination {
             host: core::default::Default::default(),
             port: core::default::Default::default(),
             service_attachment: core::default::Default::default(),
@@ -4495,24 +3819,26 @@ impl BuildIntegrationConnectorsConnectionEventingConfigElRegistrationDestination
     }
 }
 
-pub struct IntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfigElDestinationElRef {
+#[allow(dead_code)]
+pub struct IntegrationConnectorsConnection_EventingConfig_RegistrationDestinationConfig_DestinationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfigElDestinationElRef {
+impl terrars::Ref for IntegrationConnectorsConnection_EventingConfig_RegistrationDestinationConfig_DestinationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfigElDestinationElRef {
-        IntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfigElDestinationElRef {
+    ) -> IntegrationConnectorsConnection_EventingConfig_RegistrationDestinationConfig_DestinationRef {
+        IntegrationConnectorsConnection_EventingConfig_RegistrationDestinationConfig_DestinationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfigElDestinationElRef {
+impl IntegrationConnectorsConnection_EventingConfig_RegistrationDestinationConfig_DestinationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4534,29 +3860,27 @@ impl IntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfi
 }
 
 #[derive(Serialize, Default)]
-struct IntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfigElDynamic {
+struct IntegrationConnectorsConnection_EventingConfig_RegistrationDestinationConfigDynamic {
     destination: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<IntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfigElDestinationEl>,
+        ::DynamicBlock<IntegrationConnectorsConnection_EventingConfig_RegistrationDestinationConfig_Destination>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfigEl {
+pub struct IntegrationConnectorsConnection_EventingConfig_RegistrationDestinationConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     destination: std
     ::option
-    ::Option<
-        std::vec::Vec<IntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfigElDestinationEl>,
-    >,
-    dynamic: IntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfigElDynamic,
+    ::Option<std::vec::Vec<IntegrationConnectorsConnection_EventingConfig_RegistrationDestinationConfig_Destination>>,
+    dynamic: IntegrationConnectorsConnection_EventingConfig_RegistrationDestinationConfigDynamic,
 }
 
-impl IntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfigEl {
+impl IntegrationConnectorsConnection_EventingConfig_RegistrationDestinationConfig {
     #[doc = "Set the field `key`.\nKey for the connection"]
     pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.key = std::option::Option::Some(v.into());
@@ -4574,7 +3898,7 @@ impl IntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfi
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            IntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfigElDestinationEl,
+                            IntegrationConnectorsConnection_EventingConfig_RegistrationDestinationConfig_Destination,
                         >,
                     >,
     ) -> Self {
@@ -4590,9 +3914,8 @@ impl IntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfi
     }
 }
 
-impl terrars::ToListMappable for IntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfigEl {
-    type O =
-        terrars::BlockAssignable<IntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfigEl>;
+impl terrars::ToListMappable for IntegrationConnectorsConnection_EventingConfig_RegistrationDestinationConfig {
+    type O = terrars::BlockAssignable<IntegrationConnectorsConnection_EventingConfig_RegistrationDestinationConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4603,11 +3926,11 @@ impl terrars::ToListMappable for IntegrationConnectorsConnectionEventingConfigEl
     }
 }
 
-pub struct BuildIntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfigEl {}
+pub struct BuildIntegrationConnectorsConnection_EventingConfig_RegistrationDestinationConfig {}
 
-impl BuildIntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfigEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfigEl {
-        IntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfigEl {
+impl BuildIntegrationConnectorsConnection_EventingConfig_RegistrationDestinationConfig {
+    pub fn build(self) -> IntegrationConnectorsConnection_EventingConfig_RegistrationDestinationConfig {
+        IntegrationConnectorsConnection_EventingConfig_RegistrationDestinationConfig {
             key: core::default::Default::default(),
             destination: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -4615,24 +3938,26 @@ impl BuildIntegrationConnectorsConnectionEventingConfigElRegistrationDestination
     }
 }
 
-pub struct IntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfigElRef {
+#[allow(dead_code)]
+pub struct IntegrationConnectorsConnection_EventingConfig_RegistrationDestinationConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfigElRef {
+impl terrars::Ref for IntegrationConnectorsConnection_EventingConfig_RegistrationDestinationConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfigElRef {
-        IntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfigElRef {
+    ) -> IntegrationConnectorsConnection_EventingConfig_RegistrationDestinationConfigRef {
+        IntegrationConnectorsConnection_EventingConfig_RegistrationDestinationConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfigElRef {
+impl IntegrationConnectorsConnection_EventingConfig_RegistrationDestinationConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4646,42 +3971,40 @@ impl IntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfi
     pub fn destination(
         &self,
     ) -> terrars
-    ::ListRef<IntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfigElDestinationElRef> {
+    ::ListRef<IntegrationConnectorsConnection_EventingConfig_RegistrationDestinationConfig_DestinationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.destination", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct IntegrationConnectorsConnectionEventingConfigElDynamic {
+struct IntegrationConnectorsConnection_EventingConfigDynamic {
     additional_variable: std
     ::option
-    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnectionEventingConfigElAdditionalVariableEl>>,
+    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_SslConfig_AdditionalVariable>>,
     auth_config: std
     ::option
-    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnectionEventingConfigElAuthConfigEl>>,
+    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_EventingConfig_AuthConfig>>,
     registration_destination_config: std
     ::option
-    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfigEl>>,
+    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_EventingConfig_RegistrationDestinationConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionEventingConfigEl {
+pub struct IntegrationConnectorsConnection_EventingConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enrichment_enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    additional_variable: std
-    ::option
-    ::Option<std::vec::Vec<IntegrationConnectorsConnectionEventingConfigElAdditionalVariableEl>>,
+    additional_variable: std::option::Option<std::vec::Vec<IntegrationConnectorsConnection_SslConfig_AdditionalVariable>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    auth_config: std::option::Option<std::vec::Vec<IntegrationConnectorsConnectionEventingConfigElAuthConfigEl>>,
+    auth_config: std::option::Option<std::vec::Vec<IntegrationConnectorsConnection_EventingConfig_AuthConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     registration_destination_config: std
     ::option
-    ::Option<std::vec::Vec<IntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfigEl>>,
-    dynamic: IntegrationConnectorsConnectionEventingConfigElDynamic,
+    ::Option<std::vec::Vec<IntegrationConnectorsConnection_EventingConfig_RegistrationDestinationConfig>>,
+    dynamic: IntegrationConnectorsConnection_EventingConfigDynamic,
 }
 
-impl IntegrationConnectorsConnectionEventingConfigEl {
+impl IntegrationConnectorsConnection_EventingConfig {
     #[doc = "Set the field `enrichment_enabled`.\nEnrichment Enabled."]
     pub fn set_enrichment_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enrichment_enabled = std::option::Option::Some(v.into());
@@ -4696,9 +4019,7 @@ impl IntegrationConnectorsConnectionEventingConfigEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<IntegrationConnectorsConnectionEventingConfigElAdditionalVariableEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<IntegrationConnectorsConnection_SslConfig_AdditionalVariable>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -4719,7 +4040,7 @@ impl IntegrationConnectorsConnectionEventingConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<IntegrationConnectorsConnectionEventingConfigElAuthConfigEl>>,
+                    ::Into<terrars::BlockAssignable<IntegrationConnectorsConnection_EventingConfig_AuthConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -4743,7 +4064,7 @@ impl IntegrationConnectorsConnectionEventingConfigEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            IntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfigEl,
+                            IntegrationConnectorsConnection_EventingConfig_RegistrationDestinationConfig,
                         >,
                     >,
     ) -> Self {
@@ -4759,8 +4080,8 @@ impl IntegrationConnectorsConnectionEventingConfigEl {
     }
 }
 
-impl terrars::ToListMappable for IntegrationConnectorsConnectionEventingConfigEl {
-    type O = terrars::BlockAssignable<IntegrationConnectorsConnectionEventingConfigEl>;
+impl terrars::ToListMappable for IntegrationConnectorsConnection_EventingConfig {
+    type O = terrars::BlockAssignable<IntegrationConnectorsConnection_EventingConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4771,11 +4092,11 @@ impl terrars::ToListMappable for IntegrationConnectorsConnectionEventingConfigEl
     }
 }
 
-pub struct BuildIntegrationConnectorsConnectionEventingConfigEl {}
+pub struct BuildIntegrationConnectorsConnection_EventingConfig {}
 
-impl BuildIntegrationConnectorsConnectionEventingConfigEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionEventingConfigEl {
-        IntegrationConnectorsConnectionEventingConfigEl {
+impl BuildIntegrationConnectorsConnection_EventingConfig {
+    pub fn build(self) -> IntegrationConnectorsConnection_EventingConfig {
+        IntegrationConnectorsConnection_EventingConfig {
             enrichment_enabled: core::default::Default::default(),
             additional_variable: core::default::Default::default(),
             auth_config: core::default::Default::default(),
@@ -4785,24 +4106,26 @@ impl BuildIntegrationConnectorsConnectionEventingConfigEl {
     }
 }
 
-pub struct IntegrationConnectorsConnectionEventingConfigElRef {
+#[allow(dead_code)]
+pub struct IntegrationConnectorsConnection_EventingConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IntegrationConnectorsConnectionEventingConfigElRef {
+impl terrars::Ref for IntegrationConnectorsConnection_EventingConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IntegrationConnectorsConnectionEventingConfigElRef {
-        IntegrationConnectorsConnectionEventingConfigElRef {
+    ) -> IntegrationConnectorsConnection_EventingConfigRef {
+        IntegrationConnectorsConnection_EventingConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IntegrationConnectorsConnectionEventingConfigElRef {
+impl IntegrationConnectorsConnection_EventingConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4815,31 +4138,31 @@ impl IntegrationConnectorsConnectionEventingConfigElRef {
     #[doc = "Get a reference to the value of field `additional_variable` after provisioning.\n"]
     pub fn additional_variable(
         &self,
-    ) -> terrars::ListRef<IntegrationConnectorsConnectionEventingConfigElAdditionalVariableElRef> {
+    ) -> terrars::ListRef<IntegrationConnectorsConnection_SslConfig_AdditionalVariableRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.additional_variable", self.base))
     }
 
     #[doc = "Get a reference to the value of field `auth_config` after provisioning.\n"]
-    pub fn auth_config(&self) -> terrars::ListRef<IntegrationConnectorsConnectionEventingConfigElAuthConfigElRef> {
+    pub fn auth_config(&self) -> terrars::ListRef<IntegrationConnectorsConnection_EventingConfig_AuthConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.auth_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `registration_destination_config` after provisioning.\n"]
     pub fn registration_destination_config(
         &self,
-    ) -> terrars::ListRef<IntegrationConnectorsConnectionEventingConfigElRegistrationDestinationConfigElRef> {
+    ) -> terrars::ListRef<IntegrationConnectorsConnection_EventingConfig_RegistrationDestinationConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.registration_destination_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionLockConfigEl {
+pub struct IntegrationConnectorsConnection_LockConfig {
     locked: terrars::PrimField<bool>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     reason: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl IntegrationConnectorsConnectionLockConfigEl {
+impl IntegrationConnectorsConnection_LockConfig {
     #[doc = "Set the field `reason`.\nDescribes why a connection is locked."]
     pub fn set_reason(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.reason = std::option::Option::Some(v.into());
@@ -4847,8 +4170,8 @@ impl IntegrationConnectorsConnectionLockConfigEl {
     }
 }
 
-impl terrars::ToListMappable for IntegrationConnectorsConnectionLockConfigEl {
-    type O = terrars::BlockAssignable<IntegrationConnectorsConnectionLockConfigEl>;
+impl terrars::ToListMappable for IntegrationConnectorsConnection_LockConfig {
+    type O = terrars::BlockAssignable<IntegrationConnectorsConnection_LockConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4859,38 +4182,37 @@ impl terrars::ToListMappable for IntegrationConnectorsConnectionLockConfigEl {
     }
 }
 
-pub struct BuildIntegrationConnectorsConnectionLockConfigEl {
+pub struct BuildIntegrationConnectorsConnection_LockConfig {
     #[doc = "Indicates whether or not the connection is locked."]
     pub locked: terrars::PrimField<bool>,
 }
 
-impl BuildIntegrationConnectorsConnectionLockConfigEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionLockConfigEl {
-        IntegrationConnectorsConnectionLockConfigEl {
+impl BuildIntegrationConnectorsConnection_LockConfig {
+    pub fn build(self) -> IntegrationConnectorsConnection_LockConfig {
+        IntegrationConnectorsConnection_LockConfig {
             locked: self.locked,
             reason: core::default::Default::default(),
         }
     }
 }
 
-pub struct IntegrationConnectorsConnectionLockConfigElRef {
+#[allow(dead_code)]
+pub struct IntegrationConnectorsConnection_LockConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IntegrationConnectorsConnectionLockConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> IntegrationConnectorsConnectionLockConfigElRef {
-        IntegrationConnectorsConnectionLockConfigElRef {
+impl terrars::Ref for IntegrationConnectorsConnection_LockConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IntegrationConnectorsConnection_LockConfigRef {
+        IntegrationConnectorsConnection_LockConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IntegrationConnectorsConnectionLockConfigElRef {
+impl IntegrationConnectorsConnection_LockConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4908,14 +4230,23 @@ impl IntegrationConnectorsConnectionLockConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionLogConfigEl {
+pub struct IntegrationConnectorsConnection_LogConfig {
     enabled: terrars::PrimField<bool>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    level: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl IntegrationConnectorsConnectionLogConfigEl { }
+impl IntegrationConnectorsConnection_LogConfig {
+    #[doc =
+        "Set the field `level`.\nLog configuration level. Possible values: [\"LOG_LEVEL_UNSPECIFIED\", \"ERROR\", \"INFO\", \"DEBUG\"]"]
+    pub fn set_level(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.level = std::option::Option::Some(v.into());
+        self
+    }
+}
 
-impl terrars::ToListMappable for IntegrationConnectorsConnectionLogConfigEl {
-    type O = terrars::BlockAssignable<IntegrationConnectorsConnectionLogConfigEl>;
+impl terrars::ToListMappable for IntegrationConnectorsConnection_LogConfig {
+    type O = terrars::BlockAssignable<IntegrationConnectorsConnection_LogConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4926,32 +4257,37 @@ impl terrars::ToListMappable for IntegrationConnectorsConnectionLogConfigEl {
     }
 }
 
-pub struct BuildIntegrationConnectorsConnectionLogConfigEl {
+pub struct BuildIntegrationConnectorsConnection_LogConfig {
     #[doc = "Enabled represents whether logging is enabled or not for a connection."]
     pub enabled: terrars::PrimField<bool>,
 }
 
-impl BuildIntegrationConnectorsConnectionLogConfigEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionLogConfigEl {
-        IntegrationConnectorsConnectionLogConfigEl { enabled: self.enabled }
+impl BuildIntegrationConnectorsConnection_LogConfig {
+    pub fn build(self) -> IntegrationConnectorsConnection_LogConfig {
+        IntegrationConnectorsConnection_LogConfig {
+            enabled: self.enabled,
+            level: core::default::Default::default(),
+        }
     }
 }
 
-pub struct IntegrationConnectorsConnectionLogConfigElRef {
+#[allow(dead_code)]
+pub struct IntegrationConnectorsConnection_LogConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IntegrationConnectorsConnectionLogConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> IntegrationConnectorsConnectionLogConfigElRef {
-        IntegrationConnectorsConnectionLogConfigElRef {
+impl terrars::Ref for IntegrationConnectorsConnection_LogConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IntegrationConnectorsConnection_LogConfigRef {
+        IntegrationConnectorsConnection_LogConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IntegrationConnectorsConnectionLogConfigElRef {
+impl IntegrationConnectorsConnection_LogConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4961,17 +4297,23 @@ impl IntegrationConnectorsConnectionLogConfigElRef {
     pub fn enabled(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
+
+    #[doc =
+        "Get a reference to the value of field `level` after provisioning.\nLog configuration level. Possible values: [\"LOG_LEVEL_UNSPECIFIED\", \"ERROR\", \"INFO\", \"DEBUG\"]"]
+    pub fn level(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.level", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionNodeConfigEl {
+pub struct IntegrationConnectorsConnection_NodeConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max_node_count: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min_node_count: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl IntegrationConnectorsConnectionNodeConfigEl {
+impl IntegrationConnectorsConnection_NodeConfig {
     #[doc = "Set the field `max_node_count`.\nMinimum number of nodes in the runtime nodes."]
     pub fn set_max_node_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max_node_count = std::option::Option::Some(v.into());
@@ -4985,8 +4327,8 @@ impl IntegrationConnectorsConnectionNodeConfigEl {
     }
 }
 
-impl terrars::ToListMappable for IntegrationConnectorsConnectionNodeConfigEl {
-    type O = terrars::BlockAssignable<IntegrationConnectorsConnectionNodeConfigEl>;
+impl terrars::ToListMappable for IntegrationConnectorsConnection_NodeConfig {
+    type O = terrars::BlockAssignable<IntegrationConnectorsConnection_NodeConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4997,35 +4339,34 @@ impl terrars::ToListMappable for IntegrationConnectorsConnectionNodeConfigEl {
     }
 }
 
-pub struct BuildIntegrationConnectorsConnectionNodeConfigEl {}
+pub struct BuildIntegrationConnectorsConnection_NodeConfig {}
 
-impl BuildIntegrationConnectorsConnectionNodeConfigEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionNodeConfigEl {
-        IntegrationConnectorsConnectionNodeConfigEl {
+impl BuildIntegrationConnectorsConnection_NodeConfig {
+    pub fn build(self) -> IntegrationConnectorsConnection_NodeConfig {
+        IntegrationConnectorsConnection_NodeConfig {
             max_node_count: core::default::Default::default(),
             min_node_count: core::default::Default::default(),
         }
     }
 }
 
-pub struct IntegrationConnectorsConnectionNodeConfigElRef {
+#[allow(dead_code)]
+pub struct IntegrationConnectorsConnection_NodeConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IntegrationConnectorsConnectionNodeConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> IntegrationConnectorsConnectionNodeConfigElRef {
-        IntegrationConnectorsConnectionNodeConfigElRef {
+impl terrars::Ref for IntegrationConnectorsConnection_NodeConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IntegrationConnectorsConnection_NodeConfigRef {
+        IntegrationConnectorsConnection_NodeConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IntegrationConnectorsConnectionNodeConfigElRef {
+impl IntegrationConnectorsConnection_NodeConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5044,32 +4385,14 @@ impl IntegrationConnectorsConnectionNodeConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionSslConfigElAdditionalVariableElEncryptionKeyValueEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    kms_key_name: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
-    type_: std::option::Option<terrars::PrimField<std::string::String>>,
+pub struct IntegrationConnectorsConnection_SslConfig_ClientCertificate {
+    secret_version: terrars::PrimField<std::string::String>,
 }
 
-impl IntegrationConnectorsConnectionSslConfigElAdditionalVariableElEncryptionKeyValueEl {
-    #[doc =
-        "Set the field `kms_key_name`.\nThe [KMS key name] with which the content of the Operation is encrypted. The expected\nformat: projects/*/locations/*/keyRings/*/cryptoKeys/*.\nWill be empty string if google managed."]
-    pub fn set_kms_key_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.kms_key_name = std::option::Option::Some(v.into());
-        self
-    }
+impl IntegrationConnectorsConnection_SslConfig_ClientCertificate { }
 
-    #[doc =
-        "Set the field `type_`.\nType of Encription Key Possible values: [\"GOOGLE_MANAGED\", \"CUSTOMER_MANAGED\"]"]
-    pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.type_ = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for IntegrationConnectorsConnectionSslConfigElAdditionalVariableElEncryptionKeyValueEl {
-    type O =
-        terrars::BlockAssignable<IntegrationConnectorsConnectionSslConfigElAdditionalVariableElEncryptionKeyValueEl>;
+impl terrars::ToListMappable for IntegrationConnectorsConnection_SslConfig_ClientCertificate {
+    type O = terrars::BlockAssignable<IntegrationConnectorsConnection_SslConfig_ClientCertificate>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5080,61 +4403,57 @@ impl terrars::ToListMappable for IntegrationConnectorsConnectionSslConfigElAddit
     }
 }
 
-pub struct BuildIntegrationConnectorsConnectionSslConfigElAdditionalVariableElEncryptionKeyValueEl {}
+pub struct BuildIntegrationConnectorsConnection_SslConfig_ClientCertificate {
+    #[doc = "Secret version of Secret Value for Config variable."]
+    pub secret_version: terrars::PrimField<std::string::String>,
+}
 
-impl BuildIntegrationConnectorsConnectionSslConfigElAdditionalVariableElEncryptionKeyValueEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionSslConfigElAdditionalVariableElEncryptionKeyValueEl {
-        IntegrationConnectorsConnectionSslConfigElAdditionalVariableElEncryptionKeyValueEl {
-            kms_key_name: core::default::Default::default(),
-            type_: core::default::Default::default(),
-        }
+impl BuildIntegrationConnectorsConnection_SslConfig_ClientCertificate {
+    pub fn build(self) -> IntegrationConnectorsConnection_SslConfig_ClientCertificate {
+        IntegrationConnectorsConnection_SslConfig_ClientCertificate { secret_version: self.secret_version }
     }
 }
 
-pub struct IntegrationConnectorsConnectionSslConfigElAdditionalVariableElEncryptionKeyValueElRef {
+#[allow(dead_code)]
+pub struct IntegrationConnectorsConnection_SslConfig_ClientCertificateRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IntegrationConnectorsConnectionSslConfigElAdditionalVariableElEncryptionKeyValueElRef {
+impl terrars::Ref for IntegrationConnectorsConnection_SslConfig_ClientCertificateRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IntegrationConnectorsConnectionSslConfigElAdditionalVariableElEncryptionKeyValueElRef {
-        IntegrationConnectorsConnectionSslConfigElAdditionalVariableElEncryptionKeyValueElRef {
+    ) -> IntegrationConnectorsConnection_SslConfig_ClientCertificateRef {
+        IntegrationConnectorsConnection_SslConfig_ClientCertificateRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IntegrationConnectorsConnectionSslConfigElAdditionalVariableElEncryptionKeyValueElRef {
+impl IntegrationConnectorsConnection_SslConfig_ClientCertificateRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `kms_key_name` after provisioning.\nThe [KMS key name] with which the content of the Operation is encrypted. The expected\nformat: projects/*/locations/*/keyRings/*/cryptoKeys/*.\nWill be empty string if google managed."]
-    pub fn kms_key_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_name", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `type_` after provisioning.\nType of Encription Key Possible values: [\"GOOGLE_MANAGED\", \"CUSTOMER_MANAGED\"]"]
-    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+        "Get a reference to the value of field `secret_version` after provisioning.\nSecret version of Secret Value for Config variable."]
+    pub fn secret_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_version", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionSslConfigElAdditionalVariableElSecretValueEl {
+pub struct IntegrationConnectorsConnection_SslConfig_ClientPrivateKey {
     secret_version: terrars::PrimField<std::string::String>,
 }
 
-impl IntegrationConnectorsConnectionSslConfigElAdditionalVariableElSecretValueEl { }
+impl IntegrationConnectorsConnection_SslConfig_ClientPrivateKey { }
 
-impl terrars::ToListMappable for IntegrationConnectorsConnectionSslConfigElAdditionalVariableElSecretValueEl {
-    type O = terrars::BlockAssignable<IntegrationConnectorsConnectionSslConfigElAdditionalVariableElSecretValueEl>;
+impl terrars::ToListMappable for IntegrationConnectorsConnection_SslConfig_ClientPrivateKey {
+    type O = terrars::BlockAssignable<IntegrationConnectorsConnection_SslConfig_ClientPrivateKey>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5145,37 +4464,159 @@ impl terrars::ToListMappable for IntegrationConnectorsConnectionSslConfigElAddit
     }
 }
 
-pub struct BuildIntegrationConnectorsConnectionSslConfigElAdditionalVariableElSecretValueEl {
+pub struct BuildIntegrationConnectorsConnection_SslConfig_ClientPrivateKey {
     #[doc = "Secret version of Secret Value for Config variable."]
     pub secret_version: terrars::PrimField<std::string::String>,
 }
 
-impl BuildIntegrationConnectorsConnectionSslConfigElAdditionalVariableElSecretValueEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionSslConfigElAdditionalVariableElSecretValueEl {
-        IntegrationConnectorsConnectionSslConfigElAdditionalVariableElSecretValueEl {
-            secret_version: self.secret_version,
-        }
+impl BuildIntegrationConnectorsConnection_SslConfig_ClientPrivateKey {
+    pub fn build(self) -> IntegrationConnectorsConnection_SslConfig_ClientPrivateKey {
+        IntegrationConnectorsConnection_SslConfig_ClientPrivateKey { secret_version: self.secret_version }
     }
 }
 
-pub struct IntegrationConnectorsConnectionSslConfigElAdditionalVariableElSecretValueElRef {
+#[allow(dead_code)]
+pub struct IntegrationConnectorsConnection_SslConfig_ClientPrivateKeyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IntegrationConnectorsConnectionSslConfigElAdditionalVariableElSecretValueElRef {
+impl terrars::Ref for IntegrationConnectorsConnection_SslConfig_ClientPrivateKeyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IntegrationConnectorsConnectionSslConfigElAdditionalVariableElSecretValueElRef {
-        IntegrationConnectorsConnectionSslConfigElAdditionalVariableElSecretValueElRef {
+    ) -> IntegrationConnectorsConnection_SslConfig_ClientPrivateKeyRef {
+        IntegrationConnectorsConnection_SslConfig_ClientPrivateKeyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IntegrationConnectorsConnectionSslConfigElAdditionalVariableElSecretValueElRef {
+impl IntegrationConnectorsConnection_SslConfig_ClientPrivateKeyRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `secret_version` after provisioning.\nSecret version of Secret Value for Config variable."]
+    pub fn secret_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_version", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct IntegrationConnectorsConnection_SslConfig_ClientPrivateKeyPass {
+    secret_version: terrars::PrimField<std::string::String>,
+}
+
+impl IntegrationConnectorsConnection_SslConfig_ClientPrivateKeyPass { }
+
+impl terrars::ToListMappable for IntegrationConnectorsConnection_SslConfig_ClientPrivateKeyPass {
+    type O = terrars::BlockAssignable<IntegrationConnectorsConnection_SslConfig_ClientPrivateKeyPass>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildIntegrationConnectorsConnection_SslConfig_ClientPrivateKeyPass {
+    #[doc = "Secret version of Secret Value for Config variable."]
+    pub secret_version: terrars::PrimField<std::string::String>,
+}
+
+impl BuildIntegrationConnectorsConnection_SslConfig_ClientPrivateKeyPass {
+    pub fn build(self) -> IntegrationConnectorsConnection_SslConfig_ClientPrivateKeyPass {
+        IntegrationConnectorsConnection_SslConfig_ClientPrivateKeyPass { secret_version: self.secret_version }
+    }
+}
+
+#[allow(dead_code)]
+pub struct IntegrationConnectorsConnection_SslConfig_ClientPrivateKeyPassRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for IntegrationConnectorsConnection_SslConfig_ClientPrivateKeyPassRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> IntegrationConnectorsConnection_SslConfig_ClientPrivateKeyPassRef {
+        IntegrationConnectorsConnection_SslConfig_ClientPrivateKeyPassRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl IntegrationConnectorsConnection_SslConfig_ClientPrivateKeyPassRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `secret_version` after provisioning.\nSecret version of Secret Value for Config variable."]
+    pub fn secret_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_version", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct IntegrationConnectorsConnection_SslConfig_PrivateServerCertificate {
+    secret_version: terrars::PrimField<std::string::String>,
+}
+
+impl IntegrationConnectorsConnection_SslConfig_PrivateServerCertificate { }
+
+impl terrars::ToListMappable for IntegrationConnectorsConnection_SslConfig_PrivateServerCertificate {
+    type O = terrars::BlockAssignable<IntegrationConnectorsConnection_SslConfig_PrivateServerCertificate>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildIntegrationConnectorsConnection_SslConfig_PrivateServerCertificate {
+    #[doc = "Secret version of Secret Value for Config variable."]
+    pub secret_version: terrars::PrimField<std::string::String>,
+}
+
+impl BuildIntegrationConnectorsConnection_SslConfig_PrivateServerCertificate {
+    pub fn build(self) -> IntegrationConnectorsConnection_SslConfig_PrivateServerCertificate {
+        IntegrationConnectorsConnection_SslConfig_PrivateServerCertificate { secret_version: self.secret_version }
+    }
+}
+
+#[allow(dead_code)]
+pub struct IntegrationConnectorsConnection_SslConfig_PrivateServerCertificateRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for IntegrationConnectorsConnection_SslConfig_PrivateServerCertificateRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> IntegrationConnectorsConnection_SslConfig_PrivateServerCertificateRef {
+        IntegrationConnectorsConnection_SslConfig_PrivateServerCertificateRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl IntegrationConnectorsConnection_SslConfig_PrivateServerCertificateRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5188,455 +4629,26 @@ impl IntegrationConnectorsConnectionSslConfigElAdditionalVariableElSecretValueEl
 }
 
 #[derive(Serialize, Default)]
-struct IntegrationConnectorsConnectionSslConfigElAdditionalVariableElDynamic {
-    encryption_key_value: std
-    ::option
-    ::Option<
-        terrars::DynamicBlock<IntegrationConnectorsConnectionSslConfigElAdditionalVariableElEncryptionKeyValueEl>,
-    >,
-    secret_value: std
-    ::option
-    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnectionSslConfigElAdditionalVariableElSecretValueEl>>,
-}
-
-#[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionSslConfigElAdditionalVariableEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    boolean_value: std::option::Option<terrars::PrimField<bool>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    integer_value: std::option::Option<terrars::PrimField<f64>>,
-    key: terrars::PrimField<std::string::String>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    string_value: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    encryption_key_value: std
-    ::option
-    ::Option<std::vec::Vec<IntegrationConnectorsConnectionSslConfigElAdditionalVariableElEncryptionKeyValueEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    secret_value: std
-    ::option
-    ::Option<std::vec::Vec<IntegrationConnectorsConnectionSslConfigElAdditionalVariableElSecretValueEl>>,
-    dynamic: IntegrationConnectorsConnectionSslConfigElAdditionalVariableElDynamic,
-}
-
-impl IntegrationConnectorsConnectionSslConfigElAdditionalVariableEl {
-    #[doc = "Set the field `boolean_value`.\nBoolean Value of configVariable."]
-    pub fn set_boolean_value(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.boolean_value = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `integer_value`.\nInteger Value of configVariable."]
-    pub fn set_integer_value(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.integer_value = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `string_value`.\nString Value of configVariabley."]
-    pub fn set_string_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.string_value = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `encryption_key_value`.\n"]
-    pub fn set_encryption_key_value(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            IntegrationConnectorsConnectionSslConfigElAdditionalVariableElEncryptionKeyValueEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.encryption_key_value = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.encryption_key_value = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `secret_value`.\n"]
-    pub fn set_secret_value(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<IntegrationConnectorsConnectionSslConfigElAdditionalVariableElSecretValueEl>,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.secret_value = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.secret_value = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for IntegrationConnectorsConnectionSslConfigElAdditionalVariableEl {
-    type O = terrars::BlockAssignable<IntegrationConnectorsConnectionSslConfigElAdditionalVariableEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildIntegrationConnectorsConnectionSslConfigElAdditionalVariableEl {
-    #[doc = "Key for the configVariable"]
-    pub key: terrars::PrimField<std::string::String>,
-}
-
-impl BuildIntegrationConnectorsConnectionSslConfigElAdditionalVariableEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionSslConfigElAdditionalVariableEl {
-        IntegrationConnectorsConnectionSslConfigElAdditionalVariableEl {
-            boolean_value: core::default::Default::default(),
-            integer_value: core::default::Default::default(),
-            key: self.key,
-            string_value: core::default::Default::default(),
-            encryption_key_value: core::default::Default::default(),
-            secret_value: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct IntegrationConnectorsConnectionSslConfigElAdditionalVariableElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for IntegrationConnectorsConnectionSslConfigElAdditionalVariableElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> IntegrationConnectorsConnectionSslConfigElAdditionalVariableElRef {
-        IntegrationConnectorsConnectionSslConfigElAdditionalVariableElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl IntegrationConnectorsConnectionSslConfigElAdditionalVariableElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `boolean_value` after provisioning.\nBoolean Value of configVariable."]
-    pub fn boolean_value(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.boolean_value", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `integer_value` after provisioning.\nInteger Value of configVariable."]
-    pub fn integer_value(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.integer_value", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `key` after provisioning.\nKey for the configVariable"]
-    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `string_value` after provisioning.\nString Value of configVariabley."]
-    pub fn string_value(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.string_value", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `encryption_key_value` after provisioning.\n"]
-    pub fn encryption_key_value(
-        &self,
-    ) -> terrars::ListRef<IntegrationConnectorsConnectionSslConfigElAdditionalVariableElEncryptionKeyValueElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_key_value", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `secret_value` after provisioning.\n"]
-    pub fn secret_value(
-        &self,
-    ) -> terrars::ListRef<IntegrationConnectorsConnectionSslConfigElAdditionalVariableElSecretValueElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.secret_value", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionSslConfigElClientCertificateEl {
-    secret_version: terrars::PrimField<std::string::String>,
-}
-
-impl IntegrationConnectorsConnectionSslConfigElClientCertificateEl { }
-
-impl terrars::ToListMappable for IntegrationConnectorsConnectionSslConfigElClientCertificateEl {
-    type O = terrars::BlockAssignable<IntegrationConnectorsConnectionSslConfigElClientCertificateEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildIntegrationConnectorsConnectionSslConfigElClientCertificateEl {
-    #[doc = "Secret version of Secret Value for Config variable."]
-    pub secret_version: terrars::PrimField<std::string::String>,
-}
-
-impl BuildIntegrationConnectorsConnectionSslConfigElClientCertificateEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionSslConfigElClientCertificateEl {
-        IntegrationConnectorsConnectionSslConfigElClientCertificateEl { secret_version: self.secret_version }
-    }
-}
-
-pub struct IntegrationConnectorsConnectionSslConfigElClientCertificateElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for IntegrationConnectorsConnectionSslConfigElClientCertificateElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> IntegrationConnectorsConnectionSslConfigElClientCertificateElRef {
-        IntegrationConnectorsConnectionSslConfigElClientCertificateElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl IntegrationConnectorsConnectionSslConfigElClientCertificateElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `secret_version` after provisioning.\nSecret version of Secret Value for Config variable."]
-    pub fn secret_version(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_version", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionSslConfigElClientPrivateKeyEl {
-    secret_version: terrars::PrimField<std::string::String>,
-}
-
-impl IntegrationConnectorsConnectionSslConfigElClientPrivateKeyEl { }
-
-impl terrars::ToListMappable for IntegrationConnectorsConnectionSslConfigElClientPrivateKeyEl {
-    type O = terrars::BlockAssignable<IntegrationConnectorsConnectionSslConfigElClientPrivateKeyEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildIntegrationConnectorsConnectionSslConfigElClientPrivateKeyEl {
-    #[doc = "Secret version of Secret Value for Config variable."]
-    pub secret_version: terrars::PrimField<std::string::String>,
-}
-
-impl BuildIntegrationConnectorsConnectionSslConfigElClientPrivateKeyEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionSslConfigElClientPrivateKeyEl {
-        IntegrationConnectorsConnectionSslConfigElClientPrivateKeyEl { secret_version: self.secret_version }
-    }
-}
-
-pub struct IntegrationConnectorsConnectionSslConfigElClientPrivateKeyElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for IntegrationConnectorsConnectionSslConfigElClientPrivateKeyElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> IntegrationConnectorsConnectionSslConfigElClientPrivateKeyElRef {
-        IntegrationConnectorsConnectionSslConfigElClientPrivateKeyElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl IntegrationConnectorsConnectionSslConfigElClientPrivateKeyElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `secret_version` after provisioning.\nSecret version of Secret Value for Config variable."]
-    pub fn secret_version(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_version", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionSslConfigElClientPrivateKeyPassEl {
-    secret_version: terrars::PrimField<std::string::String>,
-}
-
-impl IntegrationConnectorsConnectionSslConfigElClientPrivateKeyPassEl { }
-
-impl terrars::ToListMappable for IntegrationConnectorsConnectionSslConfigElClientPrivateKeyPassEl {
-    type O = terrars::BlockAssignable<IntegrationConnectorsConnectionSslConfigElClientPrivateKeyPassEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildIntegrationConnectorsConnectionSslConfigElClientPrivateKeyPassEl {
-    #[doc = "Secret version of Secret Value for Config variable."]
-    pub secret_version: terrars::PrimField<std::string::String>,
-}
-
-impl BuildIntegrationConnectorsConnectionSslConfigElClientPrivateKeyPassEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionSslConfigElClientPrivateKeyPassEl {
-        IntegrationConnectorsConnectionSslConfigElClientPrivateKeyPassEl { secret_version: self.secret_version }
-    }
-}
-
-pub struct IntegrationConnectorsConnectionSslConfigElClientPrivateKeyPassElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for IntegrationConnectorsConnectionSslConfigElClientPrivateKeyPassElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> IntegrationConnectorsConnectionSslConfigElClientPrivateKeyPassElRef {
-        IntegrationConnectorsConnectionSslConfigElClientPrivateKeyPassElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl IntegrationConnectorsConnectionSslConfigElClientPrivateKeyPassElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `secret_version` after provisioning.\nSecret version of Secret Value for Config variable."]
-    pub fn secret_version(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_version", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionSslConfigElPrivateServerCertificateEl {
-    secret_version: terrars::PrimField<std::string::String>,
-}
-
-impl IntegrationConnectorsConnectionSslConfigElPrivateServerCertificateEl { }
-
-impl terrars::ToListMappable for IntegrationConnectorsConnectionSslConfigElPrivateServerCertificateEl {
-    type O = terrars::BlockAssignable<IntegrationConnectorsConnectionSslConfigElPrivateServerCertificateEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildIntegrationConnectorsConnectionSslConfigElPrivateServerCertificateEl {
-    #[doc = "Secret version of Secret Value for Config variable."]
-    pub secret_version: terrars::PrimField<std::string::String>,
-}
-
-impl BuildIntegrationConnectorsConnectionSslConfigElPrivateServerCertificateEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionSslConfigElPrivateServerCertificateEl {
-        IntegrationConnectorsConnectionSslConfigElPrivateServerCertificateEl { secret_version: self.secret_version }
-    }
-}
-
-pub struct IntegrationConnectorsConnectionSslConfigElPrivateServerCertificateElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for IntegrationConnectorsConnectionSslConfigElPrivateServerCertificateElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> IntegrationConnectorsConnectionSslConfigElPrivateServerCertificateElRef {
-        IntegrationConnectorsConnectionSslConfigElPrivateServerCertificateElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl IntegrationConnectorsConnectionSslConfigElPrivateServerCertificateElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `secret_version` after provisioning.\nSecret version of Secret Value for Config variable."]
-    pub fn secret_version(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_version", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct IntegrationConnectorsConnectionSslConfigElDynamic {
+struct IntegrationConnectorsConnection_SslConfigDynamic {
     additional_variable: std
     ::option
-    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnectionSslConfigElAdditionalVariableEl>>,
+    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_SslConfig_AdditionalVariable>>,
     client_certificate: std
     ::option
-    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnectionSslConfigElClientCertificateEl>>,
+    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_SslConfig_ClientCertificate>>,
     client_private_key: std
     ::option
-    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnectionSslConfigElClientPrivateKeyEl>>,
+    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_SslConfig_ClientPrivateKey>>,
     client_private_key_pass: std
     ::option
-    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnectionSslConfigElClientPrivateKeyPassEl>>,
+    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_SslConfig_ClientPrivateKeyPass>>,
     private_server_certificate: std
     ::option
-    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnectionSslConfigElPrivateServerCertificateEl>>,
+    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnection_SslConfig_PrivateServerCertificate>>,
 }
 
 #[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionSslConfigEl {
+pub struct IntegrationConnectorsConnection_SslConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     client_cert_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -5648,25 +4660,23 @@ pub struct IntegrationConnectorsConnectionSslConfigEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     use_ssl: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    additional_variable: std
-    ::option
-    ::Option<std::vec::Vec<IntegrationConnectorsConnectionSslConfigElAdditionalVariableEl>>,
+    additional_variable: std::option::Option<std::vec::Vec<IntegrationConnectorsConnection_SslConfig_AdditionalVariable>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    client_certificate: std::option::Option<std::vec::Vec<IntegrationConnectorsConnectionSslConfigElClientCertificateEl>>,
+    client_certificate: std::option::Option<std::vec::Vec<IntegrationConnectorsConnection_SslConfig_ClientCertificate>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    client_private_key: std::option::Option<std::vec::Vec<IntegrationConnectorsConnectionSslConfigElClientPrivateKeyEl>>,
+    client_private_key: std::option::Option<std::vec::Vec<IntegrationConnectorsConnection_SslConfig_ClientPrivateKey>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     client_private_key_pass: std
     ::option
-    ::Option<std::vec::Vec<IntegrationConnectorsConnectionSslConfigElClientPrivateKeyPassEl>>,
+    ::Option<std::vec::Vec<IntegrationConnectorsConnection_SslConfig_ClientPrivateKeyPass>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     private_server_certificate: std
     ::option
-    ::Option<std::vec::Vec<IntegrationConnectorsConnectionSslConfigElPrivateServerCertificateEl>>,
-    dynamic: IntegrationConnectorsConnectionSslConfigElDynamic,
+    ::Option<std::vec::Vec<IntegrationConnectorsConnection_SslConfig_PrivateServerCertificate>>,
+    dynamic: IntegrationConnectorsConnection_SslConfigDynamic,
 }
 
-impl IntegrationConnectorsConnectionSslConfigEl {
+impl IntegrationConnectorsConnection_SslConfig {
     #[doc = "Set the field `client_cert_type`.\nType of Client Cert (PEM/JKS/.. etc.) Possible values: [\"PEM\"]"]
     pub fn set_client_cert_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.client_cert_type = std::option::Option::Some(v.into());
@@ -5700,7 +4710,7 @@ impl IntegrationConnectorsConnectionSslConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<IntegrationConnectorsConnectionSslConfigElAdditionalVariableEl>>,
+                    ::Into<terrars::BlockAssignable<IntegrationConnectorsConnection_SslConfig_AdditionalVariable>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -5721,7 +4731,7 @@ impl IntegrationConnectorsConnectionSslConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<IntegrationConnectorsConnectionSslConfigElClientCertificateEl>>,
+                    ::Into<terrars::BlockAssignable<IntegrationConnectorsConnection_SslConfig_ClientCertificate>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -5742,7 +4752,7 @@ impl IntegrationConnectorsConnectionSslConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<IntegrationConnectorsConnectionSslConfigElClientPrivateKeyEl>>,
+                    ::Into<terrars::BlockAssignable<IntegrationConnectorsConnection_SslConfig_ClientPrivateKey>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -5763,9 +4773,7 @@ impl IntegrationConnectorsConnectionSslConfigEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<IntegrationConnectorsConnectionSslConfigElClientPrivateKeyPassEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<IntegrationConnectorsConnection_SslConfig_ClientPrivateKeyPass>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -5787,7 +4795,7 @@ impl IntegrationConnectorsConnectionSslConfigEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<IntegrationConnectorsConnectionSslConfigElPrivateServerCertificateEl>,
+                        terrars::BlockAssignable<IntegrationConnectorsConnection_SslConfig_PrivateServerCertificate>,
                     >,
     ) -> Self {
         match v.into() {
@@ -5802,8 +4810,8 @@ impl IntegrationConnectorsConnectionSslConfigEl {
     }
 }
 
-impl terrars::ToListMappable for IntegrationConnectorsConnectionSslConfigEl {
-    type O = terrars::BlockAssignable<IntegrationConnectorsConnectionSslConfigEl>;
+impl terrars::ToListMappable for IntegrationConnectorsConnection_SslConfig {
+    type O = terrars::BlockAssignable<IntegrationConnectorsConnection_SslConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5814,14 +4822,14 @@ impl terrars::ToListMappable for IntegrationConnectorsConnectionSslConfigEl {
     }
 }
 
-pub struct BuildIntegrationConnectorsConnectionSslConfigEl {
+pub struct BuildIntegrationConnectorsConnection_SslConfig {
     #[doc = "Enum for controlling the SSL Type (TLS/MTLS) Possible values: [\"TLS\", \"MTLS\"]"]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildIntegrationConnectorsConnectionSslConfigEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionSslConfigEl {
-        IntegrationConnectorsConnectionSslConfigEl {
+impl BuildIntegrationConnectorsConnection_SslConfig {
+    pub fn build(self) -> IntegrationConnectorsConnection_SslConfig {
+        IntegrationConnectorsConnection_SslConfig {
             client_cert_type: core::default::Default::default(),
             server_cert_type: core::default::Default::default(),
             trust_model: core::default::Default::default(),
@@ -5837,21 +4845,23 @@ impl BuildIntegrationConnectorsConnectionSslConfigEl {
     }
 }
 
-pub struct IntegrationConnectorsConnectionSslConfigElRef {
+#[allow(dead_code)]
+pub struct IntegrationConnectorsConnection_SslConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IntegrationConnectorsConnectionSslConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> IntegrationConnectorsConnectionSslConfigElRef {
-        IntegrationConnectorsConnectionSslConfigElRef {
+impl terrars::Ref for IntegrationConnectorsConnection_SslConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IntegrationConnectorsConnection_SslConfigRef {
+        IntegrationConnectorsConnection_SslConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IntegrationConnectorsConnectionSslConfigElRef {
+impl IntegrationConnectorsConnection_SslConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5888,41 +4898,37 @@ impl IntegrationConnectorsConnectionSslConfigElRef {
     #[doc = "Get a reference to the value of field `additional_variable` after provisioning.\n"]
     pub fn additional_variable(
         &self,
-    ) -> terrars::ListRef<IntegrationConnectorsConnectionSslConfigElAdditionalVariableElRef> {
+    ) -> terrars::ListRef<IntegrationConnectorsConnection_SslConfig_AdditionalVariableRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.additional_variable", self.base))
     }
 
     #[doc = "Get a reference to the value of field `client_certificate` after provisioning.\n"]
-    pub fn client_certificate(
-        &self,
-    ) -> terrars::ListRef<IntegrationConnectorsConnectionSslConfigElClientCertificateElRef> {
+    pub fn client_certificate(&self) -> terrars::ListRef<IntegrationConnectorsConnection_SslConfig_ClientCertificateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.client_certificate", self.base))
     }
 
     #[doc = "Get a reference to the value of field `client_private_key` after provisioning.\n"]
-    pub fn client_private_key(
-        &self,
-    ) -> terrars::ListRef<IntegrationConnectorsConnectionSslConfigElClientPrivateKeyElRef> {
+    pub fn client_private_key(&self) -> terrars::ListRef<IntegrationConnectorsConnection_SslConfig_ClientPrivateKeyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.client_private_key", self.base))
     }
 
     #[doc = "Get a reference to the value of field `client_private_key_pass` after provisioning.\n"]
     pub fn client_private_key_pass(
         &self,
-    ) -> terrars::ListRef<IntegrationConnectorsConnectionSslConfigElClientPrivateKeyPassElRef> {
+    ) -> terrars::ListRef<IntegrationConnectorsConnection_SslConfig_ClientPrivateKeyPassRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.client_private_key_pass", self.base))
     }
 
     #[doc = "Get a reference to the value of field `private_server_certificate` after provisioning.\n"]
     pub fn private_server_certificate(
         &self,
-    ) -> terrars::ListRef<IntegrationConnectorsConnectionSslConfigElPrivateServerCertificateElRef> {
+    ) -> terrars::ListRef<IntegrationConnectorsConnection_SslConfig_PrivateServerCertificateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.private_server_certificate", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct IntegrationConnectorsConnectionTimeoutsEl {
+pub struct IntegrationConnectorsConnection_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -5931,7 +4937,7 @@ pub struct IntegrationConnectorsConnectionTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl IntegrationConnectorsConnectionTimeoutsEl {
+impl IntegrationConnectorsConnection_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -5951,8 +4957,8 @@ impl IntegrationConnectorsConnectionTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for IntegrationConnectorsConnectionTimeoutsEl {
-    type O = terrars::BlockAssignable<IntegrationConnectorsConnectionTimeoutsEl>;
+impl terrars::ToListMappable for IntegrationConnectorsConnection_Timeouts {
+    type O = terrars::BlockAssignable<IntegrationConnectorsConnection_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5963,11 +4969,11 @@ impl terrars::ToListMappable for IntegrationConnectorsConnectionTimeoutsEl {
     }
 }
 
-pub struct BuildIntegrationConnectorsConnectionTimeoutsEl {}
+pub struct BuildIntegrationConnectorsConnection_Timeouts {}
 
-impl BuildIntegrationConnectorsConnectionTimeoutsEl {
-    pub fn build(self) -> IntegrationConnectorsConnectionTimeoutsEl {
-        IntegrationConnectorsConnectionTimeoutsEl {
+impl BuildIntegrationConnectorsConnection_Timeouts {
+    pub fn build(self) -> IntegrationConnectorsConnection_Timeouts {
+        IntegrationConnectorsConnection_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -5975,21 +4981,23 @@ impl BuildIntegrationConnectorsConnectionTimeoutsEl {
     }
 }
 
-pub struct IntegrationConnectorsConnectionTimeoutsElRef {
+#[allow(dead_code)]
+pub struct IntegrationConnectorsConnection_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IntegrationConnectorsConnectionTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> IntegrationConnectorsConnectionTimeoutsElRef {
-        IntegrationConnectorsConnectionTimeoutsElRef {
+impl terrars::Ref for IntegrationConnectorsConnection_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IntegrationConnectorsConnection_TimeoutsRef {
+        IntegrationConnectorsConnection_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IntegrationConnectorsConnectionTimeoutsElRef {
+impl IntegrationConnectorsConnection_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -6008,18 +5016,4 @@ impl IntegrationConnectorsConnectionTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct IntegrationConnectorsConnectionDynamic {
-    auth_config: std::option::Option<terrars::DynamicBlock<IntegrationConnectorsConnectionAuthConfigEl>>,
-    config_variable: std::option::Option<terrars::DynamicBlock<IntegrationConnectorsConnectionConfigVariableEl>>,
-    destination_config: std
-    ::option
-    ::Option<terrars::DynamicBlock<IntegrationConnectorsConnectionDestinationConfigEl>>,
-    eventing_config: std::option::Option<terrars::DynamicBlock<IntegrationConnectorsConnectionEventingConfigEl>>,
-    lock_config: std::option::Option<terrars::DynamicBlock<IntegrationConnectorsConnectionLockConfigEl>>,
-    log_config: std::option::Option<terrars::DynamicBlock<IntegrationConnectorsConnectionLogConfigEl>>,
-    node_config: std::option::Option<terrars::DynamicBlock<IntegrationConnectorsConnectionNodeConfigEl>>,
-    ssl_config: std::option::Option<terrars::DynamicBlock<IntegrationConnectorsConnectionSslConfigEl>>,
 }

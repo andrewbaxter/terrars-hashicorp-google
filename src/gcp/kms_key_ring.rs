@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct KmsKeyRingData {
+struct KmsKeyRingData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,13 +27,13 @@ struct KmsKeyRingData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<KmsKeyRingTimeoutsEl>,
+    timeouts: std::option::Option<KmsKeyRing_Timeouts>,
 }
 
 struct KmsKeyRing_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<KmsKeyRingData>,
+    data: std::cell::RefCell<KmsKeyRingData_>,
 }
 
 #[derive(Clone)]
@@ -144,7 +146,7 @@ impl KmsKeyRing {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<KmsKeyRingTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<KmsKeyRing_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -171,8 +173,8 @@ impl KmsKeyRing {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> KmsKeyRingTimeoutsElRef {
-        KmsKeyRingTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> KmsKeyRing_TimeoutsRef {
+        KmsKeyRing_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -221,7 +223,7 @@ impl BuildKmsKeyRing {
         let out = KmsKeyRing(std::rc::Rc::new(KmsKeyRing_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(KmsKeyRingData {
+            data: std::cell::RefCell::new(KmsKeyRingData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -284,20 +286,20 @@ impl KmsKeyRingRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> KmsKeyRingTimeoutsElRef {
-        KmsKeyRingTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> KmsKeyRing_TimeoutsRef {
+        KmsKeyRing_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct KmsKeyRingTimeoutsEl {
+pub struct KmsKeyRing_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl KmsKeyRingTimeoutsEl {
+impl KmsKeyRing_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -311,8 +313,8 @@ impl KmsKeyRingTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for KmsKeyRingTimeoutsEl {
-    type O = terrars::BlockAssignable<KmsKeyRingTimeoutsEl>;
+impl terrars::ToListMappable for KmsKeyRing_Timeouts {
+    type O = terrars::BlockAssignable<KmsKeyRing_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -323,32 +325,34 @@ impl terrars::ToListMappable for KmsKeyRingTimeoutsEl {
     }
 }
 
-pub struct BuildKmsKeyRingTimeoutsEl {}
+pub struct BuildKmsKeyRing_Timeouts {}
 
-impl BuildKmsKeyRingTimeoutsEl {
-    pub fn build(self) -> KmsKeyRingTimeoutsEl {
-        KmsKeyRingTimeoutsEl {
+impl BuildKmsKeyRing_Timeouts {
+    pub fn build(self) -> KmsKeyRing_Timeouts {
+        KmsKeyRing_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct KmsKeyRingTimeoutsElRef {
+#[allow(dead_code)]
+pub struct KmsKeyRing_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KmsKeyRingTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> KmsKeyRingTimeoutsElRef {
-        KmsKeyRingTimeoutsElRef {
+impl terrars::Ref for KmsKeyRing_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> KmsKeyRing_TimeoutsRef {
+        KmsKeyRing_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KmsKeyRingTimeoutsElRef {
+impl KmsKeyRing_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

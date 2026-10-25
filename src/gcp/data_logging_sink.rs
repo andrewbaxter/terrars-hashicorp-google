@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataLoggingSinkData {
+struct DataLoggingSinkData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -22,7 +24,7 @@ struct DataLoggingSinkData {
 struct DataLoggingSink_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataLoggingSinkData>,
+    data: std::cell::RefCell<DataLoggingSinkData_>,
 }
 
 #[derive(Clone)]
@@ -69,8 +71,14 @@ impl DataLoggingSink {
 
     #[doc =
         "Get a reference to the value of field `bigquery_options` after provisioning.\nOptions that affect sinks exporting data to BigQuery."]
-    pub fn bigquery_options(&self) -> terrars::ListRef<DataLoggingSinkBigqueryOptionsElRef> {
+    pub fn bigquery_options(&self) -> terrars::ListRef<DataLoggingSink_BigqueryOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.bigquery_options", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -93,7 +101,7 @@ impl DataLoggingSink {
 
     #[doc =
         "Get a reference to the value of field `exclusions` after provisioning.\nLog entries that match any of the exclusion filters will not be exported. If a log entry is matched by both filter and one of exclusion's filters, it will not be exported."]
-    pub fn exclusions(&self) -> terrars::ListRef<DataLoggingSinkExclusionsElRef> {
+    pub fn exclusions(&self) -> terrars::ListRef<DataLoggingSink_ExclusionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.exclusions", self.extract_ref()))
     }
 
@@ -164,7 +172,7 @@ impl BuildDataLoggingSink {
         let out = DataLoggingSink(std::rc::Rc::new(DataLoggingSink_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataLoggingSinkData {
+            data: std::cell::RefCell::new(DataLoggingSinkData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -202,8 +210,14 @@ impl DataLoggingSinkRef {
 
     #[doc =
         "Get a reference to the value of field `bigquery_options` after provisioning.\nOptions that affect sinks exporting data to BigQuery."]
-    pub fn bigquery_options(&self) -> terrars::ListRef<DataLoggingSinkBigqueryOptionsElRef> {
+    pub fn bigquery_options(&self) -> terrars::ListRef<DataLoggingSink_BigqueryOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.bigquery_options", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -226,7 +240,7 @@ impl DataLoggingSinkRef {
 
     #[doc =
         "Get a reference to the value of field `exclusions` after provisioning.\nLog entries that match any of the exclusion filters will not be exported. If a log entry is matched by both filter and one of exclusion's filters, it will not be exported."]
-    pub fn exclusions(&self) -> terrars::ListRef<DataLoggingSinkExclusionsElRef> {
+    pub fn exclusions(&self) -> terrars::ListRef<DataLoggingSink_ExclusionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.exclusions", self.extract_ref()))
     }
 
@@ -255,12 +269,12 @@ impl DataLoggingSinkRef {
 }
 
 #[derive(Serialize)]
-pub struct DataLoggingSinkBigqueryOptionsEl {
+pub struct DataLoggingSink_BigqueryOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     use_partitioned_tables: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataLoggingSinkBigqueryOptionsEl {
+impl DataLoggingSink_BigqueryOptions {
     #[doc = "Set the field `use_partitioned_tables`.\n"]
     pub fn set_use_partitioned_tables(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.use_partitioned_tables = std::option::Option::Some(v.into());
@@ -268,8 +282,8 @@ impl DataLoggingSinkBigqueryOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for DataLoggingSinkBigqueryOptionsEl {
-    type O = terrars::BlockAssignable<DataLoggingSinkBigqueryOptionsEl>;
+impl terrars::ToListMappable for DataLoggingSink_BigqueryOptions {
+    type O = terrars::BlockAssignable<DataLoggingSink_BigqueryOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -280,29 +294,31 @@ impl terrars::ToListMappable for DataLoggingSinkBigqueryOptionsEl {
     }
 }
 
-pub struct BuildDataLoggingSinkBigqueryOptionsEl {}
+pub struct BuildDataLoggingSink_BigqueryOptions {}
 
-impl BuildDataLoggingSinkBigqueryOptionsEl {
-    pub fn build(self) -> DataLoggingSinkBigqueryOptionsEl {
-        DataLoggingSinkBigqueryOptionsEl { use_partitioned_tables: core::default::Default::default() }
+impl BuildDataLoggingSink_BigqueryOptions {
+    pub fn build(self) -> DataLoggingSink_BigqueryOptions {
+        DataLoggingSink_BigqueryOptions { use_partitioned_tables: core::default::Default::default() }
     }
 }
 
-pub struct DataLoggingSinkBigqueryOptionsElRef {
+#[allow(dead_code)]
+pub struct DataLoggingSink_BigqueryOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLoggingSinkBigqueryOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLoggingSinkBigqueryOptionsElRef {
-        DataLoggingSinkBigqueryOptionsElRef {
+impl terrars::Ref for DataLoggingSink_BigqueryOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLoggingSink_BigqueryOptionsRef {
+        DataLoggingSink_BigqueryOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLoggingSinkBigqueryOptionsElRef {
+impl DataLoggingSink_BigqueryOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -314,7 +330,7 @@ impl DataLoggingSinkBigqueryOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataLoggingSinkExclusionsEl {
+pub struct DataLoggingSink_Exclusions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -325,7 +341,7 @@ pub struct DataLoggingSinkExclusionsEl {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataLoggingSinkExclusionsEl {
+impl DataLoggingSink_Exclusions {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -351,8 +367,8 @@ impl DataLoggingSinkExclusionsEl {
     }
 }
 
-impl terrars::ToListMappable for DataLoggingSinkExclusionsEl {
-    type O = terrars::BlockAssignable<DataLoggingSinkExclusionsEl>;
+impl terrars::ToListMappable for DataLoggingSink_Exclusions {
+    type O = terrars::BlockAssignable<DataLoggingSink_Exclusions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -363,11 +379,11 @@ impl terrars::ToListMappable for DataLoggingSinkExclusionsEl {
     }
 }
 
-pub struct BuildDataLoggingSinkExclusionsEl {}
+pub struct BuildDataLoggingSink_Exclusions {}
 
-impl BuildDataLoggingSinkExclusionsEl {
-    pub fn build(self) -> DataLoggingSinkExclusionsEl {
-        DataLoggingSinkExclusionsEl {
+impl BuildDataLoggingSink_Exclusions {
+    pub fn build(self) -> DataLoggingSink_Exclusions {
+        DataLoggingSink_Exclusions {
             description: core::default::Default::default(),
             disabled: core::default::Default::default(),
             filter: core::default::Default::default(),
@@ -376,21 +392,23 @@ impl BuildDataLoggingSinkExclusionsEl {
     }
 }
 
-pub struct DataLoggingSinkExclusionsElRef {
+#[allow(dead_code)]
+pub struct DataLoggingSink_ExclusionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLoggingSinkExclusionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLoggingSinkExclusionsElRef {
-        DataLoggingSinkExclusionsElRef {
+impl terrars::Ref for DataLoggingSink_ExclusionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLoggingSink_ExclusionsRef {
+        DataLoggingSink_ExclusionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLoggingSinkExclusionsElRef {
+impl DataLoggingSink_ExclusionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

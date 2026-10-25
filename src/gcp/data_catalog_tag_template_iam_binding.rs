@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataCatalogTagTemplateIamBindingData {
+struct DataCatalogTagTemplateIamBindingData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,14 +30,14 @@ struct DataCatalogTagTemplateIamBindingData {
     role: terrars::PrimField<std::string::String>,
     tag_template: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<DataCatalogTagTemplateIamBindingConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<DataCatalogTagTemplateIamBinding_Condition>>,
     dynamic: DataCatalogTagTemplateIamBindingDynamic,
 }
 
 struct DataCatalogTagTemplateIamBinding_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataCatalogTagTemplateIamBindingData>,
+    data: std::cell::RefCell<DataCatalogTagTemplateIamBindingData_>,
 }
 
 #[derive(Clone)]
@@ -156,7 +158,7 @@ impl DataCatalogTagTemplateIamBinding {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataCatalogTagTemplateIamBindingConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataCatalogTagTemplateIamBinding_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -205,7 +207,7 @@ impl DataCatalogTagTemplateIamBinding {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<DataCatalogTagTemplateIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<DataCatalogTagTemplateIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -256,7 +258,7 @@ impl BuildDataCatalogTagTemplateIamBinding {
         let out = DataCatalogTagTemplateIamBinding(std::rc::Rc::new(DataCatalogTagTemplateIamBinding_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataCatalogTagTemplateIamBindingData {
+            data: std::cell::RefCell::new(DataCatalogTagTemplateIamBindingData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -336,20 +338,25 @@ impl DataCatalogTagTemplateIamBindingRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<DataCatalogTagTemplateIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<DataCatalogTagTemplateIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataCatalogTagTemplateIamBindingDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<DataCatalogTagTemplateIamBinding_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct DataCatalogTagTemplateIamBindingConditionEl {
+pub struct DataCatalogTagTemplateIamBinding_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl DataCatalogTagTemplateIamBindingConditionEl {
+impl DataCatalogTagTemplateIamBinding_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -357,8 +364,8 @@ impl DataCatalogTagTemplateIamBindingConditionEl {
     }
 }
 
-impl terrars::ToListMappable for DataCatalogTagTemplateIamBindingConditionEl {
-    type O = terrars::BlockAssignable<DataCatalogTagTemplateIamBindingConditionEl>;
+impl terrars::ToListMappable for DataCatalogTagTemplateIamBinding_Condition {
+    type O = terrars::BlockAssignable<DataCatalogTagTemplateIamBinding_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -369,16 +376,16 @@ impl terrars::ToListMappable for DataCatalogTagTemplateIamBindingConditionEl {
     }
 }
 
-pub struct BuildDataCatalogTagTemplateIamBindingConditionEl {
+pub struct BuildDataCatalogTagTemplateIamBinding_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataCatalogTagTemplateIamBindingConditionEl {
-    pub fn build(self) -> DataCatalogTagTemplateIamBindingConditionEl {
-        DataCatalogTagTemplateIamBindingConditionEl {
+impl BuildDataCatalogTagTemplateIamBinding_Condition {
+    pub fn build(self) -> DataCatalogTagTemplateIamBinding_Condition {
+        DataCatalogTagTemplateIamBinding_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -386,24 +393,23 @@ impl BuildDataCatalogTagTemplateIamBindingConditionEl {
     }
 }
 
-pub struct DataCatalogTagTemplateIamBindingConditionElRef {
+#[allow(dead_code)]
+pub struct DataCatalogTagTemplateIamBinding_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCatalogTagTemplateIamBindingConditionElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataCatalogTagTemplateIamBindingConditionElRef {
-        DataCatalogTagTemplateIamBindingConditionElRef {
+impl terrars::Ref for DataCatalogTagTemplateIamBinding_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCatalogTagTemplateIamBinding_ConditionRef {
+        DataCatalogTagTemplateIamBinding_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCatalogTagTemplateIamBindingConditionElRef {
+impl DataCatalogTagTemplateIamBinding_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -422,9 +428,4 @@ impl DataCatalogTagTemplateIamBindingConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataCatalogTagTemplateIamBindingDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<DataCatalogTagTemplateIamBindingConditionEl>>,
 }

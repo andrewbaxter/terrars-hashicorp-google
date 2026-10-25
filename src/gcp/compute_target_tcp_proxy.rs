@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeTargetTcpProxyData {
+struct ComputeTargetTcpProxyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,11 +20,16 @@ struct ComputeTargetTcpProxyData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
-    backend_service: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    backend_service: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    load_balancing_scheme: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -31,13 +38,13 @@ struct ComputeTargetTcpProxyData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     proxy_header: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComputeTargetTcpProxyTimeoutsEl>,
+    timeouts: std::option::Option<ComputeTargetTcpProxy_Timeouts>,
 }
 
 struct ComputeTargetTcpProxy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeTargetTcpProxyData>,
+    data: std::cell::RefCell<ComputeTargetTcpProxyData_>,
 }
 
 #[derive(Clone)]
@@ -137,6 +144,20 @@ impl ComputeTargetTcpProxy {
         self
     }
 
+    #[doc =
+        "Set the field `backend_service`.\nA reference to the BackendService resource. This field is optional when\nthe loadBalancingScheme is set to INTERNAL_MANAGED."]
+    pub fn set_backend_service(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().backend_service = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nAn optional description of this resource."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -146,6 +167,13 @@ impl ComputeTargetTcpProxy {
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `load_balancing_scheme`.\nSpecifies the load balancer type. A target TCP proxy created for one type\nof load balancer cannot be used with another. For more information, refer\nto [Summary of types of Google Cloud load balancers](https://docs.cloud.google.com/load-balancing/docs/load-balancing-overview#summary-gclb). Possible values: [\"EXTERNAL\", \"EXTERNAL_MANAGED\", \"INTERNAL_MANAGED\"]"]
+    pub fn set_load_balancing_scheme(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().load_balancing_scheme = std::option::Option::Some(v.into());
         self
     }
 
@@ -170,13 +198,13 @@ impl ComputeTargetTcpProxy {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeTargetTcpProxyTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeTargetTcpProxy_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
     #[doc =
-        "Get a reference to the value of field `backend_service` after provisioning.\nA reference to the BackendService resource."]
+        "Get a reference to the value of field `backend_service` after provisioning.\nA reference to the BackendService resource. This field is optional when\nthe loadBalancingScheme is set to INTERNAL_MANAGED."]
     pub fn backend_service(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.backend_service", self.extract_ref()))
     }
@@ -188,6 +216,12 @@ impl ComputeTargetTcpProxy {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nAn optional description of this resource."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -196,6 +230,12 @@ impl ComputeTargetTcpProxy {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `load_balancing_scheme` after provisioning.\nSpecifies the load balancer type. A target TCP proxy created for one type\nof load balancer cannot be used with another. For more information, refer\nto [Summary of types of Google Cloud load balancers](https://docs.cloud.google.com/load-balancing/docs/load-balancing-overview#summary-gclb). Possible values: [\"EXTERNAL\", \"EXTERNAL_MANAGED\", \"INTERNAL_MANAGED\"]"]
+    pub fn load_balancing_scheme(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.load_balancing_scheme", self.extract_ref()))
     }
 
     #[doc =
@@ -233,8 +273,8 @@ impl ComputeTargetTcpProxy {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeTargetTcpProxyTimeoutsElRef {
-        ComputeTargetTcpProxyTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeTargetTcpProxy_TimeoutsRef {
+        ComputeTargetTcpProxy_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -271,8 +311,6 @@ impl terrars::Resource_ for ComputeTargetTcpProxy_ {
 
 pub struct BuildComputeTargetTcpProxy {
     pub tf_id: std::string::String,
-    #[doc = "A reference to the BackendService resource."]
-    pub backend_service: terrars::PrimField<std::string::String>,
     #[doc =
         "Name of the resource. Provided by the client when the resource is\ncreated. The name must be 1-63 characters long, and comply with\nRFC1035. Specifically, the name must be 1-63 characters long and match\nthe regular expression '[a-z]([-a-z0-9]*[a-z0-9])?' which means the\nfirst character must be a lowercase letter, and all following\ncharacters must be a dash, lowercase letter, or digit, except the last\ncharacter, which cannot be a dash."]
     pub name: terrars::PrimField<std::string::String>,
@@ -283,15 +321,17 @@ impl BuildComputeTargetTcpProxy {
         let out = ComputeTargetTcpProxy(std::rc::Rc::new(ComputeTargetTcpProxy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeTargetTcpProxyData {
+            data: std::cell::RefCell::new(ComputeTargetTcpProxyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
-                backend_service: self.backend_service,
+                backend_service: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
+                load_balancing_scheme: core::default::Default::default(),
                 name: self.name,
                 project: core::default::Default::default(),
                 proxy_bind: core::default::Default::default(),
@@ -328,7 +368,7 @@ impl ComputeTargetTcpProxyRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `backend_service` after provisioning.\nA reference to the BackendService resource."]
+        "Get a reference to the value of field `backend_service` after provisioning.\nA reference to the BackendService resource. This field is optional when\nthe loadBalancingScheme is set to INTERNAL_MANAGED."]
     pub fn backend_service(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.backend_service", self.extract_ref()))
     }
@@ -340,6 +380,12 @@ impl ComputeTargetTcpProxyRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nAn optional description of this resource."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -348,6 +394,12 @@ impl ComputeTargetTcpProxyRef {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `load_balancing_scheme` after provisioning.\nSpecifies the load balancer type. A target TCP proxy created for one type\nof load balancer cannot be used with another. For more information, refer\nto [Summary of types of Google Cloud load balancers](https://docs.cloud.google.com/load-balancing/docs/load-balancing-overview#summary-gclb). Possible values: [\"EXTERNAL\", \"EXTERNAL_MANAGED\", \"INTERNAL_MANAGED\"]"]
+    pub fn load_balancing_scheme(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.load_balancing_scheme", self.extract_ref()))
     }
 
     #[doc =
@@ -385,13 +437,13 @@ impl ComputeTargetTcpProxyRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeTargetTcpProxyTimeoutsElRef {
-        ComputeTargetTcpProxyTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeTargetTcpProxy_TimeoutsRef {
+        ComputeTargetTcpProxy_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeTargetTcpProxyTimeoutsEl {
+pub struct ComputeTargetTcpProxy_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -400,7 +452,7 @@ pub struct ComputeTargetTcpProxyTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeTargetTcpProxyTimeoutsEl {
+impl ComputeTargetTcpProxy_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -420,8 +472,8 @@ impl ComputeTargetTcpProxyTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeTargetTcpProxyTimeoutsEl {
-    type O = terrars::BlockAssignable<ComputeTargetTcpProxyTimeoutsEl>;
+impl terrars::ToListMappable for ComputeTargetTcpProxy_Timeouts {
+    type O = terrars::BlockAssignable<ComputeTargetTcpProxy_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -432,11 +484,11 @@ impl terrars::ToListMappable for ComputeTargetTcpProxyTimeoutsEl {
     }
 }
 
-pub struct BuildComputeTargetTcpProxyTimeoutsEl {}
+pub struct BuildComputeTargetTcpProxy_Timeouts {}
 
-impl BuildComputeTargetTcpProxyTimeoutsEl {
-    pub fn build(self) -> ComputeTargetTcpProxyTimeoutsEl {
-        ComputeTargetTcpProxyTimeoutsEl {
+impl BuildComputeTargetTcpProxy_Timeouts {
+    pub fn build(self) -> ComputeTargetTcpProxy_Timeouts {
+        ComputeTargetTcpProxy_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -444,21 +496,23 @@ impl BuildComputeTargetTcpProxyTimeoutsEl {
     }
 }
 
-pub struct ComputeTargetTcpProxyTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComputeTargetTcpProxy_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeTargetTcpProxyTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeTargetTcpProxyTimeoutsElRef {
-        ComputeTargetTcpProxyTimeoutsElRef {
+impl terrars::Ref for ComputeTargetTcpProxy_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeTargetTcpProxy_TimeoutsRef {
+        ComputeTargetTcpProxy_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeTargetTcpProxyTimeoutsElRef {
+impl ComputeTargetTcpProxy_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

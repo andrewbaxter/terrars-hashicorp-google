@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataprocAutoscalingPolicyIamMemberData {
+struct DataprocAutoscalingPolicyIamMemberData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,14 +30,14 @@ struct DataprocAutoscalingPolicyIamMemberData {
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<DataprocAutoscalingPolicyIamMemberConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<DataprocAutoscalingPolicyIamMember_Condition>>,
     dynamic: DataprocAutoscalingPolicyIamMemberDynamic,
 }
 
 struct DataprocAutoscalingPolicyIamMember_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataprocAutoscalingPolicyIamMemberData>,
+    data: std::cell::RefCell<DataprocAutoscalingPolicyIamMemberData_>,
 }
 
 #[derive(Clone)]
@@ -156,7 +158,7 @@ impl DataprocAutoscalingPolicyIamMember {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataprocAutoscalingPolicyIamMemberConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocAutoscalingPolicyIamMember_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -205,7 +207,7 @@ impl DataprocAutoscalingPolicyIamMember {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<DataprocAutoscalingPolicyIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<DataprocAutoscalingPolicyIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -256,7 +258,7 @@ impl BuildDataprocAutoscalingPolicyIamMember {
         let out = DataprocAutoscalingPolicyIamMember(std::rc::Rc::new(DataprocAutoscalingPolicyIamMember_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataprocAutoscalingPolicyIamMemberData {
+            data: std::cell::RefCell::new(DataprocAutoscalingPolicyIamMemberData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -336,20 +338,25 @@ impl DataprocAutoscalingPolicyIamMemberRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<DataprocAutoscalingPolicyIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<DataprocAutoscalingPolicyIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataprocAutoscalingPolicyIamMemberDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<DataprocAutoscalingPolicyIamMember_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct DataprocAutoscalingPolicyIamMemberConditionEl {
+pub struct DataprocAutoscalingPolicyIamMember_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl DataprocAutoscalingPolicyIamMemberConditionEl {
+impl DataprocAutoscalingPolicyIamMember_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -357,8 +364,8 @@ impl DataprocAutoscalingPolicyIamMemberConditionEl {
     }
 }
 
-impl terrars::ToListMappable for DataprocAutoscalingPolicyIamMemberConditionEl {
-    type O = terrars::BlockAssignable<DataprocAutoscalingPolicyIamMemberConditionEl>;
+impl terrars::ToListMappable for DataprocAutoscalingPolicyIamMember_Condition {
+    type O = terrars::BlockAssignable<DataprocAutoscalingPolicyIamMember_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -369,16 +376,16 @@ impl terrars::ToListMappable for DataprocAutoscalingPolicyIamMemberConditionEl {
     }
 }
 
-pub struct BuildDataprocAutoscalingPolicyIamMemberConditionEl {
+pub struct BuildDataprocAutoscalingPolicyIamMember_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataprocAutoscalingPolicyIamMemberConditionEl {
-    pub fn build(self) -> DataprocAutoscalingPolicyIamMemberConditionEl {
-        DataprocAutoscalingPolicyIamMemberConditionEl {
+impl BuildDataprocAutoscalingPolicyIamMember_Condition {
+    pub fn build(self) -> DataprocAutoscalingPolicyIamMember_Condition {
+        DataprocAutoscalingPolicyIamMember_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -386,24 +393,26 @@ impl BuildDataprocAutoscalingPolicyIamMemberConditionEl {
     }
 }
 
-pub struct DataprocAutoscalingPolicyIamMemberConditionElRef {
+#[allow(dead_code)]
+pub struct DataprocAutoscalingPolicyIamMember_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocAutoscalingPolicyIamMemberConditionElRef {
+impl terrars::Ref for DataprocAutoscalingPolicyIamMember_ConditionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataprocAutoscalingPolicyIamMemberConditionElRef {
-        DataprocAutoscalingPolicyIamMemberConditionElRef {
+    ) -> DataprocAutoscalingPolicyIamMember_ConditionRef {
+        DataprocAutoscalingPolicyIamMember_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocAutoscalingPolicyIamMemberConditionElRef {
+impl DataprocAutoscalingPolicyIamMember_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -422,9 +431,4 @@ impl DataprocAutoscalingPolicyIamMemberConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataprocAutoscalingPolicyIamMemberDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<DataprocAutoscalingPolicyIamMemberConditionEl>>,
 }

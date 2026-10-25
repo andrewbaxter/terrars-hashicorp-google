@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ClouddeployDeliveryPipelineData {
+struct ClouddeployDeliveryPipelineData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,6 +23,8 @@ struct ClouddeployDeliveryPipelineData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     annotations: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -33,16 +37,16 @@ struct ClouddeployDeliveryPipelineData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     suspended: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    serial_pipeline: std::option::Option<std::vec::Vec<ClouddeployDeliveryPipelineSerialPipelineEl>>,
+    serial_pipeline: std::option::Option<std::vec::Vec<ClouddeployDeliveryPipeline_SerialPipeline>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ClouddeployDeliveryPipelineTimeoutsEl>,
+    timeouts: std::option::Option<ClouddeployDeliveryPipeline_Timeouts>,
     dynamic: ClouddeployDeliveryPipelineDynamic,
 }
 
 struct ClouddeployDeliveryPipeline_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ClouddeployDeliveryPipelineData>,
+    data: std::cell::RefCell<ClouddeployDeliveryPipelineData_>,
 }
 
 #[derive(Clone)]
@@ -152,6 +156,13 @@ impl ClouddeployDeliveryPipeline {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nDescription of the `DeliveryPipeline`. Max length is 255 characters."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -190,7 +201,7 @@ impl ClouddeployDeliveryPipeline {
     #[doc = "Set the field `serial_pipeline`.\n"]
     pub fn set_serial_pipeline(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ClouddeployDeliveryPipelineSerialPipelineEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ClouddeployDeliveryPipeline_SerialPipeline>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -204,7 +215,7 @@ impl ClouddeployDeliveryPipeline {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ClouddeployDeliveryPipelineTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ClouddeployDeliveryPipeline_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -217,7 +228,7 @@ impl ClouddeployDeliveryPipeline {
 
     #[doc =
         "Get a reference to the value of field `condition` after provisioning.\nOutput only. Information around the state of the Delivery Pipeline."]
-    pub fn condition(&self) -> terrars::ListRef<ClouddeployDeliveryPipelineConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<ClouddeployDeliveryPipeline_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 
@@ -225,6 +236,12 @@ impl ClouddeployDeliveryPipeline {
         "Get a reference to the value of field `create_time` after provisioning.\nOutput only. Time at which the pipeline was created."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -268,7 +285,7 @@ impl ClouddeployDeliveryPipeline {
     }
 
     #[doc =
-        "Get a reference to the value of field `name` after provisioning.\nName of the `DeliveryPipeline`. Format is [a-z][a-z0-9\\-]{0,62}."]
+        "Get a reference to the value of field `name` after provisioning.\nName of the `DeliveryPipeline`. Format is `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`."]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
@@ -303,13 +320,13 @@ impl ClouddeployDeliveryPipeline {
     }
 
     #[doc = "Get a reference to the value of field `serial_pipeline` after provisioning.\n"]
-    pub fn serial_pipeline(&self) -> terrars::ListRef<ClouddeployDeliveryPipelineSerialPipelineElRef> {
+    pub fn serial_pipeline(&self) -> terrars::ListRef<ClouddeployDeliveryPipeline_SerialPipelineRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.serial_pipeline", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ClouddeployDeliveryPipelineTimeoutsElRef {
-        ClouddeployDeliveryPipelineTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ClouddeployDeliveryPipeline_TimeoutsRef {
+        ClouddeployDeliveryPipeline_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -351,7 +368,7 @@ pub struct BuildClouddeployDeliveryPipeline {
     pub tf_id: std::string::String,
     #[doc = "The location for the resource"]
     pub location: terrars::PrimField<std::string::String>,
-    #[doc = "Name of the `DeliveryPipeline`. Format is [a-z][a-z0-9\\-]{0,62}."]
+    #[doc = "Name of the `DeliveryPipeline`. Format is `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`."]
     pub name: terrars::PrimField<std::string::String>,
 }
 
@@ -360,13 +377,14 @@ impl BuildClouddeployDeliveryPipeline {
         let out = ClouddeployDeliveryPipeline(std::rc::Rc::new(ClouddeployDeliveryPipeline_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ClouddeployDeliveryPipelineData {
+            data: std::cell::RefCell::new(ClouddeployDeliveryPipelineData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 annotations: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 labels: core::default::Default::default(),
@@ -415,7 +433,7 @@ impl ClouddeployDeliveryPipelineRef {
 
     #[doc =
         "Get a reference to the value of field `condition` after provisioning.\nOutput only. Information around the state of the Delivery Pipeline."]
-    pub fn condition(&self) -> terrars::ListRef<ClouddeployDeliveryPipelineConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<ClouddeployDeliveryPipeline_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 
@@ -423,6 +441,12 @@ impl ClouddeployDeliveryPipelineRef {
         "Get a reference to the value of field `create_time` after provisioning.\nOutput only. Time at which the pipeline was created."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -466,7 +490,7 @@ impl ClouddeployDeliveryPipelineRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `name` after provisioning.\nName of the `DeliveryPipeline`. Format is [a-z][a-z0-9\\-]{0,62}."]
+        "Get a reference to the value of field `name` after provisioning.\nName of the `DeliveryPipeline`. Format is `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`."]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
@@ -501,28 +525,33 @@ impl ClouddeployDeliveryPipelineRef {
     }
 
     #[doc = "Get a reference to the value of field `serial_pipeline` after provisioning.\n"]
-    pub fn serial_pipeline(&self) -> terrars::ListRef<ClouddeployDeliveryPipelineSerialPipelineElRef> {
+    pub fn serial_pipeline(&self) -> terrars::ListRef<ClouddeployDeliveryPipeline_SerialPipelineRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.serial_pipeline", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ClouddeployDeliveryPipelineTimeoutsElRef {
-        ClouddeployDeliveryPipelineTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ClouddeployDeliveryPipeline_TimeoutsRef {
+        ClouddeployDeliveryPipeline_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct ClouddeployDeliveryPipelineDynamic {
+    serial_pipeline: std::option::Option<terrars::DynamicBlock<ClouddeployDeliveryPipeline_SerialPipeline>>,
+}
+
 #[derive(Serialize)]
-pub struct ClouddeployDeliveryPipelineConditionElPipelineReadyConditionEl {
+pub struct ClouddeployDeliveryPipeline_Condition_PipelineReadyCondition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     status: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     update_time: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ClouddeployDeliveryPipelineConditionElPipelineReadyConditionEl {
+impl ClouddeployDeliveryPipeline_Condition_PipelineReadyCondition {
     #[doc = "Set the field `status`.\n"]
     pub fn set_status(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.status = std::option::Option::Some(v.into());
@@ -536,8 +565,8 @@ impl ClouddeployDeliveryPipelineConditionElPipelineReadyConditionEl {
     }
 }
 
-impl terrars::ToListMappable for ClouddeployDeliveryPipelineConditionElPipelineReadyConditionEl {
-    type O = terrars::BlockAssignable<ClouddeployDeliveryPipelineConditionElPipelineReadyConditionEl>;
+impl terrars::ToListMappable for ClouddeployDeliveryPipeline_Condition_PipelineReadyCondition {
+    type O = terrars::BlockAssignable<ClouddeployDeliveryPipeline_Condition_PipelineReadyCondition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -548,35 +577,37 @@ impl terrars::ToListMappable for ClouddeployDeliveryPipelineConditionElPipelineR
     }
 }
 
-pub struct BuildClouddeployDeliveryPipelineConditionElPipelineReadyConditionEl {}
+pub struct BuildClouddeployDeliveryPipeline_Condition_PipelineReadyCondition {}
 
-impl BuildClouddeployDeliveryPipelineConditionElPipelineReadyConditionEl {
-    pub fn build(self) -> ClouddeployDeliveryPipelineConditionElPipelineReadyConditionEl {
-        ClouddeployDeliveryPipelineConditionElPipelineReadyConditionEl {
+impl BuildClouddeployDeliveryPipeline_Condition_PipelineReadyCondition {
+    pub fn build(self) -> ClouddeployDeliveryPipeline_Condition_PipelineReadyCondition {
+        ClouddeployDeliveryPipeline_Condition_PipelineReadyCondition {
             status: core::default::Default::default(),
             update_time: core::default::Default::default(),
         }
     }
 }
 
-pub struct ClouddeployDeliveryPipelineConditionElPipelineReadyConditionElRef {
+#[allow(dead_code)]
+pub struct ClouddeployDeliveryPipeline_Condition_PipelineReadyConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ClouddeployDeliveryPipelineConditionElPipelineReadyConditionElRef {
+impl terrars::Ref for ClouddeployDeliveryPipeline_Condition_PipelineReadyConditionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ClouddeployDeliveryPipelineConditionElPipelineReadyConditionElRef {
-        ClouddeployDeliveryPipelineConditionElPipelineReadyConditionElRef {
+    ) -> ClouddeployDeliveryPipeline_Condition_PipelineReadyConditionRef {
+        ClouddeployDeliveryPipeline_Condition_PipelineReadyConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ClouddeployDeliveryPipelineConditionElPipelineReadyConditionElRef {
+impl ClouddeployDeliveryPipeline_Condition_PipelineReadyConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -593,7 +624,7 @@ impl ClouddeployDeliveryPipelineConditionElPipelineReadyConditionElRef {
 }
 
 #[derive(Serialize)]
-pub struct ClouddeployDeliveryPipelineConditionElTargetsPresentConditionEl {
+pub struct ClouddeployDeliveryPipeline_Condition_TargetsPresentCondition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     missing_targets: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -602,7 +633,7 @@ pub struct ClouddeployDeliveryPipelineConditionElTargetsPresentConditionEl {
     update_time: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ClouddeployDeliveryPipelineConditionElTargetsPresentConditionEl {
+impl ClouddeployDeliveryPipeline_Condition_TargetsPresentCondition {
     #[doc = "Set the field `missing_targets`.\n"]
     pub fn set_missing_targets(
         mut self,
@@ -625,8 +656,8 @@ impl ClouddeployDeliveryPipelineConditionElTargetsPresentConditionEl {
     }
 }
 
-impl terrars::ToListMappable for ClouddeployDeliveryPipelineConditionElTargetsPresentConditionEl {
-    type O = terrars::BlockAssignable<ClouddeployDeliveryPipelineConditionElTargetsPresentConditionEl>;
+impl terrars::ToListMappable for ClouddeployDeliveryPipeline_Condition_TargetsPresentCondition {
+    type O = terrars::BlockAssignable<ClouddeployDeliveryPipeline_Condition_TargetsPresentCondition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -637,11 +668,11 @@ impl terrars::ToListMappable for ClouddeployDeliveryPipelineConditionElTargetsPr
     }
 }
 
-pub struct BuildClouddeployDeliveryPipelineConditionElTargetsPresentConditionEl {}
+pub struct BuildClouddeployDeliveryPipeline_Condition_TargetsPresentCondition {}
 
-impl BuildClouddeployDeliveryPipelineConditionElTargetsPresentConditionEl {
-    pub fn build(self) -> ClouddeployDeliveryPipelineConditionElTargetsPresentConditionEl {
-        ClouddeployDeliveryPipelineConditionElTargetsPresentConditionEl {
+impl BuildClouddeployDeliveryPipeline_Condition_TargetsPresentCondition {
+    pub fn build(self) -> ClouddeployDeliveryPipeline_Condition_TargetsPresentCondition {
+        ClouddeployDeliveryPipeline_Condition_TargetsPresentCondition {
             missing_targets: core::default::Default::default(),
             status: core::default::Default::default(),
             update_time: core::default::Default::default(),
@@ -649,24 +680,26 @@ impl BuildClouddeployDeliveryPipelineConditionElTargetsPresentConditionEl {
     }
 }
 
-pub struct ClouddeployDeliveryPipelineConditionElTargetsPresentConditionElRef {
+#[allow(dead_code)]
+pub struct ClouddeployDeliveryPipeline_Condition_TargetsPresentConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ClouddeployDeliveryPipelineConditionElTargetsPresentConditionElRef {
+impl terrars::Ref for ClouddeployDeliveryPipeline_Condition_TargetsPresentConditionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ClouddeployDeliveryPipelineConditionElTargetsPresentConditionElRef {
-        ClouddeployDeliveryPipelineConditionElTargetsPresentConditionElRef {
+    ) -> ClouddeployDeliveryPipeline_Condition_TargetsPresentConditionRef {
+        ClouddeployDeliveryPipeline_Condition_TargetsPresentConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ClouddeployDeliveryPipelineConditionElTargetsPresentConditionElRef {
+impl ClouddeployDeliveryPipeline_Condition_TargetsPresentConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -688,14 +721,14 @@ impl ClouddeployDeliveryPipelineConditionElTargetsPresentConditionElRef {
 }
 
 #[derive(Serialize)]
-pub struct ClouddeployDeliveryPipelineConditionElTargetsTypeConditionEl {
+pub struct ClouddeployDeliveryPipeline_Condition_TargetsTypeCondition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     error_details: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     status: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl ClouddeployDeliveryPipelineConditionElTargetsTypeConditionEl {
+impl ClouddeployDeliveryPipeline_Condition_TargetsTypeCondition {
     #[doc = "Set the field `error_details`.\n"]
     pub fn set_error_details(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.error_details = std::option::Option::Some(v.into());
@@ -709,8 +742,8 @@ impl ClouddeployDeliveryPipelineConditionElTargetsTypeConditionEl {
     }
 }
 
-impl terrars::ToListMappable for ClouddeployDeliveryPipelineConditionElTargetsTypeConditionEl {
-    type O = terrars::BlockAssignable<ClouddeployDeliveryPipelineConditionElTargetsTypeConditionEl>;
+impl terrars::ToListMappable for ClouddeployDeliveryPipeline_Condition_TargetsTypeCondition {
+    type O = terrars::BlockAssignable<ClouddeployDeliveryPipeline_Condition_TargetsTypeCondition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -721,35 +754,37 @@ impl terrars::ToListMappable for ClouddeployDeliveryPipelineConditionElTargetsTy
     }
 }
 
-pub struct BuildClouddeployDeliveryPipelineConditionElTargetsTypeConditionEl {}
+pub struct BuildClouddeployDeliveryPipeline_Condition_TargetsTypeCondition {}
 
-impl BuildClouddeployDeliveryPipelineConditionElTargetsTypeConditionEl {
-    pub fn build(self) -> ClouddeployDeliveryPipelineConditionElTargetsTypeConditionEl {
-        ClouddeployDeliveryPipelineConditionElTargetsTypeConditionEl {
+impl BuildClouddeployDeliveryPipeline_Condition_TargetsTypeCondition {
+    pub fn build(self) -> ClouddeployDeliveryPipeline_Condition_TargetsTypeCondition {
+        ClouddeployDeliveryPipeline_Condition_TargetsTypeCondition {
             error_details: core::default::Default::default(),
             status: core::default::Default::default(),
         }
     }
 }
 
-pub struct ClouddeployDeliveryPipelineConditionElTargetsTypeConditionElRef {
+#[allow(dead_code)]
+pub struct ClouddeployDeliveryPipeline_Condition_TargetsTypeConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ClouddeployDeliveryPipelineConditionElTargetsTypeConditionElRef {
+impl terrars::Ref for ClouddeployDeliveryPipeline_Condition_TargetsTypeConditionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ClouddeployDeliveryPipelineConditionElTargetsTypeConditionElRef {
-        ClouddeployDeliveryPipelineConditionElTargetsTypeConditionElRef {
+    ) -> ClouddeployDeliveryPipeline_Condition_TargetsTypeConditionRef {
+        ClouddeployDeliveryPipeline_Condition_TargetsTypeConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ClouddeployDeliveryPipelineConditionElTargetsTypeConditionElRef {
+impl ClouddeployDeliveryPipeline_Condition_TargetsTypeConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -766,31 +801,26 @@ impl ClouddeployDeliveryPipelineConditionElTargetsTypeConditionElRef {
 }
 
 #[derive(Serialize)]
-pub struct ClouddeployDeliveryPipelineConditionEl {
+pub struct ClouddeployDeliveryPipeline_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     pipeline_ready_condition: std
     ::option
-    ::Option<terrars::ListField<ClouddeployDeliveryPipelineConditionElPipelineReadyConditionEl>>,
+    ::Option<terrars::ListField<ClouddeployDeliveryPipeline_Condition_PipelineReadyCondition>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     targets_present_condition: std
     ::option
-    ::Option<terrars::ListField<ClouddeployDeliveryPipelineConditionElTargetsPresentConditionEl>>,
+    ::Option<terrars::ListField<ClouddeployDeliveryPipeline_Condition_TargetsPresentCondition>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     targets_type_condition: std
     ::option
-    ::Option<terrars::ListField<ClouddeployDeliveryPipelineConditionElTargetsTypeConditionEl>>,
+    ::Option<terrars::ListField<ClouddeployDeliveryPipeline_Condition_TargetsTypeCondition>>,
 }
 
-impl ClouddeployDeliveryPipelineConditionEl {
+impl ClouddeployDeliveryPipeline_Condition {
     #[doc = "Set the field `pipeline_ready_condition`.\n"]
     pub fn set_pipeline_ready_condition(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::ListField<ClouddeployDeliveryPipelineConditionElPipelineReadyConditionEl>>,
+        v: impl std::convert::Into<terrars::ListField<ClouddeployDeliveryPipeline_Condition_PipelineReadyCondition>>,
     ) -> Self {
         self.pipeline_ready_condition = std::option::Option::Some(v.into());
         self
@@ -804,7 +834,7 @@ impl ClouddeployDeliveryPipelineConditionEl {
 
                     std
                     ::convert
-                    ::Into<terrars::ListField<ClouddeployDeliveryPipelineConditionElTargetsPresentConditionEl>>,
+                    ::Into<terrars::ListField<ClouddeployDeliveryPipeline_Condition_TargetsPresentCondition>>,
     ) -> Self {
         self.targets_present_condition = std::option::Option::Some(v.into());
         self
@@ -813,15 +843,15 @@ impl ClouddeployDeliveryPipelineConditionEl {
     #[doc = "Set the field `targets_type_condition`.\n"]
     pub fn set_targets_type_condition(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<ClouddeployDeliveryPipelineConditionElTargetsTypeConditionEl>>,
+        v: impl std::convert::Into<terrars::ListField<ClouddeployDeliveryPipeline_Condition_TargetsTypeCondition>>,
     ) -> Self {
         self.targets_type_condition = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for ClouddeployDeliveryPipelineConditionEl {
-    type O = terrars::BlockAssignable<ClouddeployDeliveryPipelineConditionEl>;
+impl terrars::ToListMappable for ClouddeployDeliveryPipeline_Condition {
+    type O = terrars::BlockAssignable<ClouddeployDeliveryPipeline_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -832,11 +862,11 @@ impl terrars::ToListMappable for ClouddeployDeliveryPipelineConditionEl {
     }
 }
 
-pub struct BuildClouddeployDeliveryPipelineConditionEl {}
+pub struct BuildClouddeployDeliveryPipeline_Condition {}
 
-impl BuildClouddeployDeliveryPipelineConditionEl {
-    pub fn build(self) -> ClouddeployDeliveryPipelineConditionEl {
-        ClouddeployDeliveryPipelineConditionEl {
+impl BuildClouddeployDeliveryPipeline_Condition {
+    pub fn build(self) -> ClouddeployDeliveryPipeline_Condition {
+        ClouddeployDeliveryPipeline_Condition {
             pipeline_ready_condition: core::default::Default::default(),
             targets_present_condition: core::default::Default::default(),
             targets_type_condition: core::default::Default::default(),
@@ -844,21 +874,23 @@ impl BuildClouddeployDeliveryPipelineConditionEl {
     }
 }
 
-pub struct ClouddeployDeliveryPipelineConditionElRef {
+#[allow(dead_code)]
+pub struct ClouddeployDeliveryPipeline_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ClouddeployDeliveryPipelineConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ClouddeployDeliveryPipelineConditionElRef {
-        ClouddeployDeliveryPipelineConditionElRef {
+impl terrars::Ref for ClouddeployDeliveryPipeline_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ClouddeployDeliveryPipeline_ConditionRef {
+        ClouddeployDeliveryPipeline_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ClouddeployDeliveryPipelineConditionElRef {
+impl ClouddeployDeliveryPipeline_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -866,33 +898,33 @@ impl ClouddeployDeliveryPipelineConditionElRef {
     #[doc = "Get a reference to the value of field `pipeline_ready_condition` after provisioning.\n"]
     pub fn pipeline_ready_condition(
         &self,
-    ) -> terrars::ListRef<ClouddeployDeliveryPipelineConditionElPipelineReadyConditionElRef> {
+    ) -> terrars::ListRef<ClouddeployDeliveryPipeline_Condition_PipelineReadyConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.pipeline_ready_condition", self.base))
     }
 
     #[doc = "Get a reference to the value of field `targets_present_condition` after provisioning.\n"]
     pub fn targets_present_condition(
         &self,
-    ) -> terrars::ListRef<ClouddeployDeliveryPipelineConditionElTargetsPresentConditionElRef> {
+    ) -> terrars::ListRef<ClouddeployDeliveryPipeline_Condition_TargetsPresentConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.targets_present_condition", self.base))
     }
 
     #[doc = "Get a reference to the value of field `targets_type_condition` after provisioning.\n"]
     pub fn targets_type_condition(
         &self,
-    ) -> terrars::ListRef<ClouddeployDeliveryPipelineConditionElTargetsTypeConditionElRef> {
+    ) -> terrars::ListRef<ClouddeployDeliveryPipeline_Condition_TargetsTypeConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.targets_type_condition", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElDeployParametersEl {
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_DeployParameters {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     match_target_labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     values: terrars::RecField<terrars::PrimField<std::string::String>>,
 }
 
-impl ClouddeployDeliveryPipelineSerialPipelineElStagesElDeployParametersEl {
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_DeployParameters {
     #[doc =
         "Set the field `match_target_labels`.\nOptional. Deploy parameters are applied to targets with match labels. If unspecified, deploy parameters are applied to all targets (including child targets of a multi-target)."]
     pub fn set_match_target_labels(
@@ -904,8 +936,8 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElDeployParametersEl {
     }
 }
 
-impl terrars::ToListMappable for ClouddeployDeliveryPipelineSerialPipelineElStagesElDeployParametersEl {
-    type O = terrars::BlockAssignable<ClouddeployDeliveryPipelineSerialPipelineElStagesElDeployParametersEl>;
+impl terrars::ToListMappable for ClouddeployDeliveryPipeline_SerialPipeline_Stages_DeployParameters {
+    type O = terrars::BlockAssignable<ClouddeployDeliveryPipeline_SerialPipeline_Stages_DeployParameters>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -916,38 +948,40 @@ impl terrars::ToListMappable for ClouddeployDeliveryPipelineSerialPipelineElStag
     }
 }
 
-pub struct BuildClouddeployDeliveryPipelineSerialPipelineElStagesElDeployParametersEl {
+pub struct BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_DeployParameters {
     #[doc = "Required. Values are deploy parameters in key-value pairs."]
     pub values: terrars::RecField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildClouddeployDeliveryPipelineSerialPipelineElStagesElDeployParametersEl {
-    pub fn build(self) -> ClouddeployDeliveryPipelineSerialPipelineElStagesElDeployParametersEl {
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElDeployParametersEl {
+impl BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_DeployParameters {
+    pub fn build(self) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_DeployParameters {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_DeployParameters {
             match_target_labels: core::default::Default::default(),
             values: self.values,
         }
     }
 }
 
-pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElDeployParametersElRef {
+#[allow(dead_code)]
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_DeployParametersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ClouddeployDeliveryPipelineSerialPipelineElStagesElDeployParametersElRef {
+impl terrars::Ref for ClouddeployDeliveryPipeline_SerialPipeline_Stages_DeployParametersRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ClouddeployDeliveryPipelineSerialPipelineElStagesElDeployParametersElRef {
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElDeployParametersElRef {
+    ) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_DeployParametersRef {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_DeployParametersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ClouddeployDeliveryPipelineSerialPipelineElStagesElDeployParametersElRef {
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_DeployParametersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -966,12 +1000,762 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElDeployParametersElRef {
 }
 
 #[derive(Serialize)]
-pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElPostdeployEl {
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_Tasks_Container {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    args: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    command: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    env: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    image: terrars::PrimField<std::string::String>,
+}
+
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_Tasks_Container {
+    #[doc =
+        "Set the field `args`.\nOptional. Args is the container arguments to use. This overrides the default arguments defined in the container image."]
+    pub fn set_args(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.args = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `command`.\nOptional. Command is the container entrypoint to use. This overrides the default entrypoint defined in the container image."]
+    pub fn set_command(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.command = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `env`.\nOptional. Environment variables that are set in the container."]
+    pub fn set_env(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.env = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_Tasks_Container {
+    type O =
+        terrars
+        ::BlockAssignable<
+            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_Tasks_Container,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_Tasks_Container {
+    #[doc = "Required. Image is the container image to use."]
+    pub image: terrars::PrimField<std::string::String>,
+}
+
+impl BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_Tasks_Container {
+    pub fn build(
+        self,
+    ) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_Tasks_Container {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_Tasks_Container {
+            args: core::default::Default::default(),
+            command: core::default::Default::default(),
+            env: core::default::Default::default(),
+            image: self.image,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_Tasks_ContainerRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_Tasks_ContainerRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_Tasks_ContainerRef {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_Tasks_ContainerRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_Tasks_ContainerRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `args` after provisioning.\nOptional. Args is the container arguments to use. This overrides the default arguments defined in the container image."]
+    pub fn args(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.args", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `command` after provisioning.\nOptional. Command is the container entrypoint to use. This overrides the default entrypoint defined in the container image."]
+    pub fn command(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.command", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `env` after provisioning.\nOptional. Environment variables that are set in the container."]
+    pub fn env(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.env", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `image` after provisioning.\nRequired. Image is the container image to use."]
+    pub fn image(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.image", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_CustomChecks_TaskDynamic {
+    container: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_Tasks_Container>,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_CustomChecks_Task {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    container: std
+    ::option
+    ::Option<
+        std::vec::Vec<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_Tasks_Container>,
+    >,
+    dynamic: ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_CustomChecks_TaskDynamic,
+}
+
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_CustomChecks_Task {
+    #[doc = "Set the field `container`.\n"]
+    pub fn set_container(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_Tasks_Container,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.container = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.container = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_CustomChecks_Task {
+    type O =
+        terrars
+        ::BlockAssignable<
+            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_CustomChecks_Task,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_CustomChecks_Task {}
+
+impl BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_CustomChecks_Task {
+    pub fn build(
+        self,
+    ) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_CustomChecks_Task {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_CustomChecks_Task {
+            container: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_CustomChecks_TaskRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_CustomChecks_TaskRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_CustomChecks_TaskRef {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_CustomChecks_TaskRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_CustomChecks_TaskRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `container` after provisioning.\n"]
+    pub fn container(
+        &self,
+    ) -> terrars
+    ::ListRef<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_Tasks_ContainerRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.container", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_CustomChecksDynamic {
+    task: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_CustomChecks_Task>,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_CustomChecks {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    frequency: std::option::Option<terrars::PrimField<std::string::String>>,
+    id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    task: std
+    ::option
+    ::Option<
+        std::vec::Vec<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_CustomChecks_Task>,
+    >,
+    dynamic: ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_CustomChecksDynamic,
+}
+
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_CustomChecks {
+    #[doc = "Set the field `frequency`.\nOptional. Frequency of the custom check."]
+    pub fn set_frequency(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.frequency = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `task`.\n"]
+    pub fn set_task(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_CustomChecks_Task,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.task = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.task = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_CustomChecks {
+    type O =
+        terrars
+        ::BlockAssignable<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_CustomChecks>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_CustomChecks {
+    #[doc = "Required. Unique identifier for the custom check."]
+    pub id: terrars::PrimField<std::string::String>,
+}
+
+impl BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_CustomChecks {
+    pub fn build(self) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_CustomChecks {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_CustomChecks {
+            frequency: core::default::Default::default(),
+            id: self.id,
+            task: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_CustomChecksRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_CustomChecksRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_CustomChecksRef {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_CustomChecksRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_CustomChecksRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `frequency` after provisioning.\nOptional. Frequency of the custom check."]
+    pub fn frequency(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.frequency", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `id` after provisioning.\nRequired. Unique identifier for the custom check."]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `task` after provisioning.\n"]
+    pub fn task(
+        &self,
+    ) -> terrars
+    ::ListRef<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_CustomChecks_TaskRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.task", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_GoogleCloud_AlertPolicyChecks {
+    alert_policies: terrars::ListField<terrars::PrimField<std::string::String>>,
+    id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+}
+
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_GoogleCloud_AlertPolicyChecks {
+    #[doc = "Set the field `labels`.\nOptional. Labels to filter the alert policies."]
+    pub fn set_labels(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.labels = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_GoogleCloud_AlertPolicyChecks {
+    type O =
+        terrars
+        ::BlockAssignable<
+            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_GoogleCloud_AlertPolicyChecks,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_GoogleCloud_AlertPolicyChecks {
+    #[doc =
+        "Required. The list of alert policy names to check. Format: `projects/{project}/alertPolicies/{alert_policy}`."]
+    pub alert_policies: terrars::ListField<terrars::PrimField<std::string::String>>,
+    #[doc = "Required. Unique identifier for the alert policy check."]
+    pub id: terrars::PrimField<std::string::String>,
+}
+
+impl BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_GoogleCloud_AlertPolicyChecks {
+    pub fn build(
+        self,
+    ) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_GoogleCloud_AlertPolicyChecks {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_GoogleCloud_AlertPolicyChecks {
+            alert_policies: self.alert_policies,
+            id: self.id,
+            labels: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_GoogleCloud_AlertPolicyChecksRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_GoogleCloud_AlertPolicyChecksRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_GoogleCloud_AlertPolicyChecksRef {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_GoogleCloud_AlertPolicyChecksRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_GoogleCloud_AlertPolicyChecksRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `alert_policies` after provisioning.\nRequired. The list of alert policy names to check. Format: `projects/{project}/alertPolicies/{alert_policy}`."]
+    pub fn alert_policies(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.alert_policies", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `id` after provisioning.\nRequired. Unique identifier for the alert policy check."]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `labels` after provisioning.\nOptional. Labels to filter the alert policies."]
+    pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_GoogleCloudDynamic {
+    alert_policy_checks: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_GoogleCloud_AlertPolicyChecks,
+        >,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_GoogleCloud {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    alert_policy_checks: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
+            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_GoogleCloud_AlertPolicyChecks,
+        >,
+    >,
+    dynamic: ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_GoogleCloudDynamic,
+}
+
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_GoogleCloud {
+    #[doc = "Set the field `alert_policy_checks`.\n"]
+    pub fn set_alert_policy_checks(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_GoogleCloud_AlertPolicyChecks,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.alert_policy_checks = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.alert_policy_checks = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_GoogleCloud {
+    type O =
+        terrars
+        ::BlockAssignable<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_GoogleCloud>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_GoogleCloud {}
+
+impl BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_GoogleCloud {
+    pub fn build(self) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_GoogleCloud {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_GoogleCloud {
+            alert_policy_checks: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_GoogleCloudRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_GoogleCloudRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_GoogleCloudRef {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_GoogleCloudRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_GoogleCloudRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `alert_policy_checks` after provisioning.\n"]
+    pub fn alert_policy_checks(
+        &self,
+    ) -> terrars
+    ::ListRef<
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_GoogleCloud_AlertPolicyChecksRef,
+    > {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.alert_policy_checks", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_AnalysisDynamic {
+    custom_checks: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_CustomChecks>,
+    >,
+    google_cloud: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_GoogleCloud>,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis {
+    duration: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_checks: std
+    ::option
+    ::Option<
+        std::vec::Vec<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_CustomChecks>,
+    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    google_cloud: std
+    ::option
+    ::Option<std::vec::Vec<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_GoogleCloud>>,
+    dynamic: ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_AnalysisDynamic,
+}
+
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis {
+    #[doc = "Set the field `custom_checks`.\n"]
+    pub fn set_custom_checks(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_CustomChecks,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.custom_checks = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.custom_checks = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `google_cloud`.\n"]
+    pub fn set_google_cloud(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_GoogleCloud,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.google_cloud = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.google_cloud = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis {
+    type O = terrars::BlockAssignable<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis {
+    #[doc = "Required. Duration of the analysis."]
+    pub duration: terrars::PrimField<std::string::String>,
+}
+
+impl BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis {
+    pub fn build(self) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis {
+            duration: self.duration,
+            custom_checks: core::default::Default::default(),
+            google_cloud: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_AnalysisRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_AnalysisRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_AnalysisRef {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_AnalysisRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_AnalysisRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `duration` after provisioning.\nRequired. Duration of the analysis."]
+    pub fn duration(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.duration", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `custom_checks` after provisioning.\n"]
+    pub fn custom_checks(
+        &self,
+    ) -> terrars
+    ::ListRef<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_CustomChecksRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.custom_checks", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `google_cloud` after provisioning.\n"]
+    pub fn google_cloud(
+        &self,
+    ) -> terrars
+    ::ListRef<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis_GoogleCloudRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.google_cloud", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_Postdeploy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     actions: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElPostdeployEl {
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_Postdeploy {
     #[doc =
         "Set the field `actions`.\nOptional. A sequence of skaffold custom actions to invoke during execution of the postdeploy job."]
     pub fn set_actions(
@@ -984,11 +1768,11 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanary
 }
 
 impl terrars
-::ToListMappable for ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElPostdeployEl {
+::ToListMappable for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_Postdeploy {
     type O =
         terrars
         ::BlockAssignable<
-            ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElPostdeployEl,
+            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_Postdeploy,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -1000,37 +1784,39 @@ impl terrars
     }
 }
 
-pub struct BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElPostdeployEl {}
+pub struct BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_Postdeploy {}
 
-impl BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElPostdeployEl {
+impl BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_Postdeploy {
     pub fn build(
         self,
-    ) -> ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElPostdeployEl {
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElPostdeployEl {
+    ) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_Postdeploy {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_Postdeploy {
             actions: core::default::Default::default(),
         }
     }
 }
 
-pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElPostdeployElRef {
+#[allow(dead_code)]
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_PostdeployRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElPostdeployElRef {
+::Ref for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_PostdeployRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElPostdeployElRef {
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElPostdeployElRef {
+    ) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_PostdeployRef {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_PostdeployRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElPostdeployElRef {
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_PostdeployRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1043,12 +1829,12 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanary
 }
 
 #[derive(Serialize)]
-pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElPredeployEl {
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_Predeploy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     actions: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElPredeployEl {
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_Predeploy {
     #[doc =
         "Set the field `actions`.\nOptional. A sequence of skaffold custom actions to invoke during execution of the predeploy job."]
     pub fn set_actions(
@@ -1061,11 +1847,11 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanary
 }
 
 impl terrars
-::ToListMappable for ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElPredeployEl {
+::ToListMappable for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_Predeploy {
     type O =
         terrars
         ::BlockAssignable<
-            ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElPredeployEl,
+            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_Predeploy,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -1077,37 +1863,38 @@ impl terrars
     }
 }
 
-pub struct BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElPredeployEl {}
+pub struct BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_Predeploy {}
 
-impl BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElPredeployEl {
+impl BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_Predeploy {
     pub fn build(
         self,
-    ) -> ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElPredeployEl {
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElPredeployEl {
+    ) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_Predeploy {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_Predeploy {
             actions: core::default::Default::default(),
         }
     }
 }
 
-pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElPredeployElRef {
+#[allow(dead_code)]
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_PredeployRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars
-::Ref for ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElPredeployElRef {
+impl terrars::Ref for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_PredeployRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElPredeployElRef {
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElPredeployElRef {
+    ) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_PredeployRef {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_PredeployRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElPredeployElRef {
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_PredeployRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1120,53 +1907,296 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanary
 }
 
 #[derive(Serialize, Default)]
-struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElDynamic {
-    postdeploy: std
+struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_TasksDynamic {
+    container: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElPostdeployEl,
-        >,
-    >,
-    predeploy: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElPredeployEl,
-        >,
+        ::DynamicBlock<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_Tasks_Container>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentEl {
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_Tasks {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    container: std
+    ::option
+    ::Option<
+        std::vec::Vec<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_Tasks_Container>,
+    >,
+    dynamic: ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_TasksDynamic,
+}
+
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_Tasks {
+    #[doc = "Set the field `container`.\n"]
+    pub fn set_container(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_Tasks_Container,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.container = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.container = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_Tasks {
+    type O =
+        terrars
+        ::BlockAssignable<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_Tasks>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_Tasks {}
+
+impl BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_Tasks {
+    pub fn build(self) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_Tasks {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_Tasks {
+            container: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_TasksRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_TasksRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_TasksRef {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_TasksRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_TasksRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `container` after provisioning.\n"]
+    pub fn container(
+        &self,
+    ) -> terrars
+    ::ListRef<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_Tasks_ContainerRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.container", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_VerifyConfigDynamic {
+    tasks: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_Tasks>,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_VerifyConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tasks: std
+    ::option
+    ::Option<std::vec::Vec<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_Tasks>>,
+    dynamic: ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_VerifyConfigDynamic,
+}
+
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_VerifyConfig {
+    #[doc = "Set the field `tasks`.\n"]
+    pub fn set_tasks(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_Tasks,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.tasks = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.tasks = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_VerifyConfig {
+    type O =
+        terrars::BlockAssignable<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_VerifyConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_VerifyConfig {}
+
+impl BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_VerifyConfig {
+    pub fn build(self) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_VerifyConfig {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_VerifyConfig {
+            tasks: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_VerifyConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_VerifyConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_VerifyConfigRef {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_VerifyConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_VerifyConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `tasks` after provisioning.\n"]
+    pub fn tasks(
+        &self,
+    ) -> terrars::ListRef<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_TasksRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.tasks", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeploymentDynamic {
+    analysis: std
+    ::option
+    ::Option<terrars::DynamicBlock<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis>>,
+    postdeploy: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_Postdeploy>,
+    >,
+    predeploy: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_Predeploy>,
+    >,
+    verify_config: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_VerifyConfig>,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment {
     percentages: terrars::ListField<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     verify: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    analysis: std
+    ::option
+    ::Option<std::vec::Vec<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     postdeploy: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElPostdeployEl>,
+        std::vec::Vec<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_Postdeploy>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     predeploy: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElPredeployEl>,
+        std::vec::Vec<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_Predeploy>,
     >,
-    dynamic: ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElDynamic,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    verify_config: std
+    ::option
+    ::Option<std::vec::Vec<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_VerifyConfig>>,
+    dynamic: ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeploymentDynamic,
 }
 
-impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentEl {
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment {
     #[doc = "Set the field `verify`.\nWhether to run verify tests after each percentage deployment."]
     pub fn set_verify(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.verify = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `analysis`.\n"]
+    pub fn set_analysis(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.analysis = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.analysis = std::option::Option::Some(d);
+            },
+        }
         self
     }
 
@@ -1181,7 +2211,7 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanary
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElPostdeployEl,
+                            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_Postdeploy,
                         >,
                     >,
     ) -> Self {
@@ -1207,7 +2237,7 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanary
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElPredeployEl,
+                            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_Predeploy,
                         >,
                     >,
     ) -> Self {
@@ -1221,13 +2251,37 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanary
         }
         self
     }
+
+    #[doc = "Set the field `verify_config`.\n"]
+    pub fn set_verify_config(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_VerifyConfig,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.verify_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.verify_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
 }
 
-impl terrars
-::ToListMappable for ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentEl {
+impl terrars::ToListMappable for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment {
     type O =
-        terrars
-        ::BlockAssignable<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentEl>;
+        terrars::BlockAssignable<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1238,42 +2292,46 @@ impl terrars
     }
 }
 
-pub struct BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentEl {
+pub struct BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment {
     #[doc =
         "Required. The percentage based deployments that will occur as a part of a `Rollout`. List is expected in ascending order and each integer n is 0 <= n < 100."]
     pub percentages: terrars::ListField<terrars::PrimField<f64>>,
 }
 
-impl BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentEl {
-    pub fn build(self) -> ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentEl {
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentEl {
+impl BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment {
+    pub fn build(self) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment {
             percentages: self.percentages,
             verify: core::default::Default::default(),
+            analysis: core::default::Default::default(),
             postdeploy: core::default::Default::default(),
             predeploy: core::default::Default::default(),
+            verify_config: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElRef {
+#[allow(dead_code)]
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeploymentRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElRef {
+impl terrars::Ref for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeploymentRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElRef {
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElRef {
+    ) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeploymentRef {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeploymentRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElRef {
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeploymentRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1290,11 +2348,18 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanary
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.verify", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `analysis` after provisioning.\n"]
+    pub fn analysis(
+        &self,
+    ) -> terrars::ListRef<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_AnalysisRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.analysis", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `postdeploy` after provisioning.\n"]
     pub fn postdeploy(
         &self,
     ) -> terrars
-    ::ListRef<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElPostdeployElRef> {
+    ::ListRef<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_PostdeployRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.postdeploy", self.base))
     }
 
@@ -1302,187 +2367,44 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanary
     pub fn predeploy(
         &self,
     ) -> terrars
-    ::ListRef<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElPredeployElRef> {
+    ::ListRef<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_PredeployRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.predeploy", self.base))
     }
-}
 
-#[derive(Serialize)]
-pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElPostdeployEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    actions: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
-}
-
-impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElPostdeployEl {
-    #[doc =
-        "Set the field `actions`.\nOptional. A sequence of skaffold custom actions to invoke during execution of the postdeploy job."]
-    pub fn set_actions(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.actions = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElPostdeployEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElPostdeployEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElPostdeployEl {}
-
-impl BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElPostdeployEl {
-    pub fn build(
-        self,
-    ) -> ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElPostdeployEl {
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElPostdeployEl {
-            actions: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElPostdeployElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElPostdeployElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElPostdeployElRef {
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElPostdeployElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElPostdeployElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `actions` after provisioning.\nOptional. A sequence of skaffold custom actions to invoke during execution of the postdeploy job."]
-    pub fn actions(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.actions", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElPredeployEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    actions: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
-}
-
-impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElPredeployEl {
-    #[doc =
-        "Set the field `actions`.\nOptional. A sequence of skaffold custom actions to invoke during execution of the predeploy job."]
-    pub fn set_actions(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.actions = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElPredeployEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElPredeployEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElPredeployEl {}
-
-impl BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElPredeployEl {
-    pub fn build(
-        self,
-    ) -> ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElPredeployEl {
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElPredeployEl {
-            actions: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElPredeployElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElPredeployElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElPredeployElRef {
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElPredeployElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElPredeployElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `actions` after provisioning.\nOptional. A sequence of skaffold custom actions to invoke during execution of the predeploy job."]
-    pub fn actions(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.actions", self.base))
+    #[doc = "Get a reference to the value of field `verify_config` after provisioning.\n"]
+    pub fn verify_config(
+        &self,
+    ) -> terrars::ListRef<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_VerifyConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.verify_config", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElDynamic {
+struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CustomCanaryDeployment_PhaseConfigsDynamic {
+    analysis: std
+    ::option
+    ::Option<terrars::DynamicBlock<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis>>,
     postdeploy: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElPostdeployEl,
-        >,
+        ::DynamicBlock<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_Postdeploy>,
     >,
     predeploy: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElPredeployEl,
-        >,
+        ::DynamicBlock<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_Predeploy>,
+    >,
+    verify_config: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_VerifyConfig>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsEl {
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CustomCanaryDeployment_PhaseConfigs {
     percentage: terrars::PrimField<f64>,
     phase_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1490,29 +2412,29 @@ pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryEl
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     verify: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    analysis: std
+    ::option
+    ::Option<std::vec::Vec<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     postdeploy: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<
-            ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElPostdeployEl,
-        >,
+        std::vec::Vec<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_Postdeploy>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     predeploy: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<
-            ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElPredeployEl,
-        >,
+        std::vec::Vec<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_Predeploy>,
     >,
-    dynamic: ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElDynamic,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    verify_config: std
+    ::option
+    ::Option<std::vec::Vec<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_VerifyConfig>>,
+    dynamic: ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CustomCanaryDeployment_PhaseConfigsDynamic,
 }
 
-impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsEl {
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CustomCanaryDeployment_PhaseConfigs {
     #[doc =
         "Set the field `profiles`.\nSkaffold profiles to use when rendering the manifest for this phase. These are in addition to the profiles list specified in the `DeliveryPipeline` stage."]
     pub fn set_profiles(
@@ -1529,6 +2451,32 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustom
         self
     }
 
+    #[doc = "Set the field `analysis`.\n"]
+    pub fn set_analysis(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.analysis = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.analysis = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `postdeploy`.\n"]
     pub fn set_postdeploy(
         mut self,
@@ -1540,7 +2488,7 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustom
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElPostdeployEl,
+                            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_Postdeploy,
                         >,
                     >,
     ) -> Self {
@@ -1566,7 +2514,7 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustom
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElPredeployEl,
+                            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_Predeploy,
                         >,
                     >,
     ) -> Self {
@@ -1580,14 +2528,40 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustom
         }
         self
     }
+
+    #[doc = "Set the field `verify_config`.\n"]
+    pub fn set_verify_config(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_VerifyConfig,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.verify_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.verify_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
 }
 
 impl terrars
-::ToListMappable for ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsEl {
+::ToListMappable for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CustomCanaryDeployment_PhaseConfigs {
     type O =
         terrars
         ::BlockAssignable<
-            ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsEl,
+            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CustomCanaryDeployment_PhaseConfigs,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -1599,7 +2573,7 @@ impl terrars
     }
 }
 
-pub struct BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsEl {
+pub struct BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CustomCanaryDeployment_PhaseConfigs {
     #[doc = "Required. Percentage deployment for the phase."]
     pub percentage: terrars::PrimField<f64>,
     #[doc =
@@ -1607,41 +2581,45 @@ pub struct BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCan
     pub phase_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsEl {
+impl BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CustomCanaryDeployment_PhaseConfigs {
     pub fn build(
         self,
-    ) -> ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsEl {
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsEl {
+    ) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CustomCanaryDeployment_PhaseConfigs {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CustomCanaryDeployment_PhaseConfigs {
             percentage: self.percentage,
             phase_id: self.phase_id,
             profiles: core::default::Default::default(),
             verify: core::default::Default::default(),
+            analysis: core::default::Default::default(),
             postdeploy: core::default::Default::default(),
             predeploy: core::default::Default::default(),
+            verify_config: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElRef {
+#[allow(dead_code)]
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CustomCanaryDeployment_PhaseConfigsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElRef {
+::Ref for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CustomCanaryDeployment_PhaseConfigsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElRef {
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElRef {
+    ) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CustomCanaryDeployment_PhaseConfigsRef {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CustomCanaryDeployment_PhaseConfigsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElRef {
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CustomCanaryDeployment_PhaseConfigsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1670,13 +2648,18 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustom
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.verify", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `analysis` after provisioning.\n"]
+    pub fn analysis(
+        &self,
+    ) -> terrars::ListRef<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_AnalysisRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.analysis", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `postdeploy` after provisioning.\n"]
     pub fn postdeploy(
         &self,
     ) -> terrars
-    ::ListRef<
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElPostdeployElRef,
-    > {
+    ::ListRef<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_PostdeployRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.postdeploy", self.base))
     }
 
@@ -1684,41 +2667,44 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustom
     pub fn predeploy(
         &self,
     ) -> terrars
-    ::ListRef<
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElPredeployElRef,
-    > {
+    ::ListRef<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment_PredeployRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.predeploy", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `verify_config` after provisioning.\n"]
+    pub fn verify_config(
+        &self,
+    ) -> terrars::ListRef<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_VerifyConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.verify_config", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElDynamic {
+struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CustomCanaryDeploymentDynamic {
     phase_configs: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsEl,
+            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CustomCanaryDeployment_PhaseConfigs,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentEl {
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CustomCanaryDeployment {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     phase_configs: std
     ::option
     ::Option<
         std
         ::vec
-        ::Vec<
-            ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsEl,
-        >,
+        ::Vec<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CustomCanaryDeployment_PhaseConfigs>,
     >,
-    dynamic: ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElDynamic,
+    dynamic: ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CustomCanaryDeploymentDynamic,
 }
 
-impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentEl {
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CustomCanaryDeployment {
     #[doc = "Set the field `phase_configs`.\n"]
     pub fn set_phase_configs(
         mut self,
@@ -1730,7 +2716,7 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustom
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsEl,
+                            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CustomCanaryDeployment_PhaseConfigs,
                         >,
                     >,
     ) -> Self {
@@ -1747,12 +2733,10 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustom
 }
 
 impl terrars
-::ToListMappable for ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentEl {
+::ToListMappable for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CustomCanaryDeployment {
     type O =
         terrars
-        ::BlockAssignable<
-            ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentEl,
-        >;
+        ::BlockAssignable<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CustomCanaryDeployment>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1763,37 +2747,37 @@ impl terrars
     }
 }
 
-pub struct BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentEl {}
+pub struct BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CustomCanaryDeployment {}
 
-impl BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentEl {
-    pub fn build(
-        self,
-    ) -> ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentEl {
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentEl {
+impl BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CustomCanaryDeployment {
+    pub fn build(self) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CustomCanaryDeployment {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CustomCanaryDeployment {
             phase_configs: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElRef {
+#[allow(dead_code)]
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CustomCanaryDeploymentRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElRef {
+impl terrars::Ref for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CustomCanaryDeploymentRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElRef {
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElRef {
+    ) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CustomCanaryDeploymentRef {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CustomCanaryDeploymentRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElRef {
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CustomCanaryDeploymentRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1803,34 +2787,68 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustom
         &self,
     ) -> terrars
     ::ListRef<
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElPhaseConfigsElRef,
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CustomCanaryDeployment_PhaseConfigsRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.phase_configs", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElCloudRunEl {
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_CloudRun {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     automatic_traffic_control: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    canary_revision_tags: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    prior_revision_tags: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    stable_revision_tags: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElCloudRunEl {
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_CloudRun {
     #[doc =
         "Set the field `automatic_traffic_control`.\nWhether Cloud Deploy should update the traffic stanza in a Cloud Run Service on the user's behalf to facilitate traffic splitting. This is required to be true for CanaryDeployments, but optional for CustomCanaryDeployments."]
     pub fn set_automatic_traffic_control(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.automatic_traffic_control = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc =
+        "Set the field `canary_revision_tags`.\nOptional. A list of tags that are added to the canary revision while the canary phase is in progress."]
+    pub fn set_canary_revision_tags(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.canary_revision_tags = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `prior_revision_tags`.\nOptional. A list of tags that are added to the prior revision while the canary phase is in progress."]
+    pub fn set_prior_revision_tags(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.prior_revision_tags = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `stable_revision_tags`.\nOptional. A list of tags that are added to the final stable revision when the stable phase is applied."]
+    pub fn set_stable_revision_tags(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.stable_revision_tags = std::option::Option::Some(v.into());
+        self
+    }
 }
 
 impl terrars
-::ToListMappable for ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElCloudRunEl {
+::ToListMappable for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_CloudRun {
     type O =
         terrars
-        ::BlockAssignable<
-            ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElCloudRunEl,
-        >;
+        ::BlockAssignable<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_CloudRun>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1841,37 +2859,39 @@ impl terrars
     }
 }
 
-pub struct BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElCloudRunEl {}
+pub struct BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_CloudRun {}
 
-impl BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElCloudRunEl {
-    pub fn build(
-        self,
-    ) -> ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElCloudRunEl {
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElCloudRunEl {
+impl BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_CloudRun {
+    pub fn build(self) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_CloudRun {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_CloudRun {
             automatic_traffic_control: core::default::Default::default(),
+            canary_revision_tags: core::default::Default::default(),
+            prior_revision_tags: core::default::Default::default(),
+            stable_revision_tags: core::default::Default::default(),
         }
     }
 }
 
-pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElCloudRunElRef {
+#[allow(dead_code)]
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_CloudRunRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars
-::Ref for ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElCloudRunElRef {
+impl terrars::Ref for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_CloudRunRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElCloudRunElRef {
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElCloudRunElRef {
+    ) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_CloudRunRef {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_CloudRunRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElCloudRunElRef {
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_CloudRunRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1881,35 +2901,48 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntim
     pub fn automatic_traffic_control(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.automatic_traffic_control", self.base))
     }
+
+    #[doc =
+        "Get a reference to the value of field `canary_revision_tags` after provisioning.\nOptional. A list of tags that are added to the canary revision while the canary phase is in progress."]
+    pub fn canary_revision_tags(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.canary_revision_tags", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `prior_revision_tags` after provisioning.\nOptional. A list of tags that are added to the prior revision while the canary phase is in progress."]
+    pub fn prior_revision_tags(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.prior_revision_tags", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `stable_revision_tags` after provisioning.\nOptional. A list of tags that are added to the final stable revision when the stable phase is applied."]
+    pub fn stable_revision_tags(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.stable_revision_tags", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElGatewayServiceMeshEl {
-    deployment: terrars::PrimField<std::string::String>,
-    http_route: terrars::PrimField<std::string::String>,
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_GatewayServiceMesh_RouteDestinations {
+    destination_ids: terrars::ListField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    route_update_wait_time: std::option::Option<terrars::PrimField<std::string::String>>,
-    service: terrars::PrimField<std::string::String>,
+    propagate_service: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElGatewayServiceMeshEl {
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_GatewayServiceMesh_RouteDestinations {
     #[doc =
-        "Set the field `route_update_wait_time`.\nOptional. The time to wait for route updates to propagate. The maximum configurable time is 3 hours, in seconds format. If unspecified, there is no wait time."]
-    pub fn set_route_update_wait_time(
-        mut self,
-        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
-    ) -> Self {
-        self.route_update_wait_time = std::option::Option::Some(v.into());
+        "Set the field `propagate_service`.\nOptional. Whether to propagate the Kubernetes Service to the route destination clusters. The Service will always be deployed to the Target cluster even if the HTTPRoute is not. This option may be used to facilitiate successful DNS lookup in the route destination clusters. Can only be set to true if destinations are specified."]
+    pub fn set_propagate_service(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.propagate_service = std::option::Option::Some(v.into());
         self
     }
 }
 
 impl terrars
-::ToListMappable for ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElGatewayServiceMeshEl {
+::ToListMappable for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_GatewayServiceMesh_RouteDestinations {
     type O =
         terrars
         ::BlockAssignable<
-            ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElGatewayServiceMeshEl,
+            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_GatewayServiceMesh_RouteDestinations,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -1921,7 +2954,173 @@ impl terrars
     }
 }
 
-pub struct BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElGatewayServiceMeshEl {
+pub struct BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_GatewayServiceMesh_RouteDestinations {
+    #[doc =
+        "Required. The clusters where the Gateway API HTTPRoute resource will be deployed to. Valid entries include the associated entities IDs configured in the Target resource and \"@self\" to include the Target cluster."]
+    pub destination_ids: terrars::ListField<terrars::PrimField<std::string::String>>,
+}
+
+impl BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_GatewayServiceMesh_RouteDestinations {
+    pub fn build(
+        self,
+    ) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_GatewayServiceMesh_RouteDestinations {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_GatewayServiceMesh_RouteDestinations {
+            destination_ids: self.destination_ids,
+            propagate_service: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_GatewayServiceMesh_RouteDestinationsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_GatewayServiceMesh_RouteDestinationsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_GatewayServiceMesh_RouteDestinationsRef {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_GatewayServiceMesh_RouteDestinationsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_GatewayServiceMesh_RouteDestinationsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `destination_ids` after provisioning.\nRequired. The clusters where the Gateway API HTTPRoute resource will be deployed to. Valid entries include the associated entities IDs configured in the Target resource and \"@self\" to include the Target cluster."]
+    pub fn destination_ids(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.destination_ids", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `propagate_service` after provisioning.\nOptional. Whether to propagate the Kubernetes Service to the route destination clusters. The Service will always be deployed to the Target cluster even if the HTTPRoute is not. This option may be used to facilitiate successful DNS lookup in the route destination clusters. Can only be set to true if destinations are specified."]
+    pub fn propagate_service(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.propagate_service", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_GatewayServiceMeshDynamic {
+    route_destinations: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_GatewayServiceMesh_RouteDestinations,
+        >,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_GatewayServiceMesh {
+    deployment: terrars::PrimField<std::string::String>,
+    http_route: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    pod_selector_label: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    route_update_wait_time: std::option::Option<terrars::PrimField<std::string::String>>,
+    service: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    stable_cutback_duration: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    route_destinations: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
+            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_GatewayServiceMesh_RouteDestinations,
+        >,
+    >,
+    dynamic: ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_GatewayServiceMeshDynamic,
+}
+
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_GatewayServiceMesh {
+    #[doc =
+        "Set the field `pod_selector_label`.\nOptional. The label to use when selecting Pods for the Deployment and Service resources. This label must already be present in both resources."]
+    pub fn set_pod_selector_label(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.pod_selector_label = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `route_update_wait_time`.\nOptional. The time to wait for route updates to propagate. The maximum configurable time is 3 hours, in seconds format. If unspecified, there is no wait time."]
+    pub fn set_route_update_wait_time(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.route_update_wait_time = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `stable_cutback_duration`.\nOptional. The amount of time to migrate traffic back from the canary Service to the original Service during the stable phase deployment. If specified, must be between 15s and 3600s. If unspecified, there is no cutback time."]
+    pub fn set_stable_cutback_duration(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.stable_cutback_duration = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `route_destinations`.\n"]
+    pub fn set_route_destinations(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_GatewayServiceMesh_RouteDestinations,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.route_destinations = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.route_destinations = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_GatewayServiceMesh {
+    type O =
+        terrars
+        ::BlockAssignable<
+            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_GatewayServiceMesh,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_GatewayServiceMesh {
     #[doc =
         "Required. Name of the Kubernetes Deployment whose traffic is managed by the specified HTTPRoute and Service."]
     pub deployment: terrars::PrimField<std::string::String>,
@@ -1931,38 +3130,44 @@ pub struct BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCan
     pub service: terrars::PrimField<std::string::String>,
 }
 
-impl BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElGatewayServiceMeshEl {
+impl BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_GatewayServiceMesh {
     pub fn build(
         self,
-    ) -> ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElGatewayServiceMeshEl {
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElGatewayServiceMeshEl {
+    ) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_GatewayServiceMesh {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_GatewayServiceMesh {
             deployment: self.deployment,
             http_route: self.http_route,
+            pod_selector_label: core::default::Default::default(),
             route_update_wait_time: core::default::Default::default(),
             service: self.service,
+            stable_cutback_duration: core::default::Default::default(),
+            route_destinations: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElGatewayServiceMeshElRef {
+#[allow(dead_code)]
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_GatewayServiceMeshRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElGatewayServiceMeshElRef {
+::Ref for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_GatewayServiceMeshRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElGatewayServiceMeshElRef {
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElGatewayServiceMeshElRef {
+    ) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_GatewayServiceMeshRef {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_GatewayServiceMeshRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElGatewayServiceMeshElRef {
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_GatewayServiceMeshRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1980,6 +3185,12 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntim
     }
 
     #[doc =
+        "Get a reference to the value of field `pod_selector_label` after provisioning.\nOptional. The label to use when selecting Pods for the Deployment and Service resources. This label must already be present in both resources."]
+    pub fn pod_selector_label(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.pod_selector_label", self.base))
+    }
+
+    #[doc =
         "Get a reference to the value of field `route_update_wait_time` after provisioning.\nOptional. The time to wait for route updates to propagate. The maximum configurable time is 3 hours, in seconds format. If unspecified, there is no wait time."]
     pub fn route_update_wait_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.route_update_wait_time", self.base))
@@ -1990,31 +3201,59 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntim
     pub fn service(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.service", self.base))
     }
+
+    #[doc =
+        "Get a reference to the value of field `stable_cutback_duration` after provisioning.\nOptional. The amount of time to migrate traffic back from the canary Service to the original Service during the stable phase deployment. If specified, must be between 15s and 3600s. If unspecified, there is no cutback time."]
+    pub fn stable_cutback_duration(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.stable_cutback_duration", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `route_destinations` after provisioning.\n"]
+    pub fn route_destinations(
+        &self,
+    ) -> terrars
+    ::ListRef<
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_GatewayServiceMesh_RouteDestinationsRef,
+    > {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.route_destinations", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElServiceNetworkingEl {
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_ServiceNetworking {
     deployment: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     disable_pod_overprovisioning: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    pod_selector_label: std::option::Option<terrars::PrimField<std::string::String>>,
     service: terrars::PrimField<std::string::String>,
 }
 
-impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElServiceNetworkingEl {
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_ServiceNetworking {
     #[doc =
         "Set the field `disable_pod_overprovisioning`.\nOptional. Whether to disable Pod overprovisioning. If Pod overprovisioning is disabled then Cloud Deploy will limit the number of total Pods used for the deployment strategy to the number of Pods the Deployment has on the cluster."]
     pub fn set_disable_pod_overprovisioning(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.disable_pod_overprovisioning = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc =
+        "Set the field `pod_selector_label`.\nOptional. The label to use when selecting Pods for the Deployment resource. This label must already be present in the Deployment."]
+    pub fn set_pod_selector_label(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.pod_selector_label = std::option::Option::Some(v.into());
+        self
+    }
 }
 
 impl terrars
-::ToListMappable for ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElServiceNetworkingEl {
+::ToListMappable for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_ServiceNetworking {
     type O =
         terrars
         ::BlockAssignable<
-            ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElServiceNetworkingEl,
+            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_ServiceNetworking,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -2026,44 +3265,47 @@ impl terrars
     }
 }
 
-pub struct BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElServiceNetworkingEl {
+pub struct BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_ServiceNetworking {
     #[doc = "Required. Name of the Kubernetes Deployment whose traffic is managed by the specified Service."]
     pub deployment: terrars::PrimField<std::string::String>,
     #[doc = "Required. Name of the Kubernetes Service."]
     pub service: terrars::PrimField<std::string::String>,
 }
 
-impl BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElServiceNetworkingEl {
+impl BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_ServiceNetworking {
     pub fn build(
         self,
-    ) -> ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElServiceNetworkingEl {
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElServiceNetworkingEl {
+    ) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_ServiceNetworking {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_ServiceNetworking {
             deployment: self.deployment,
             disable_pod_overprovisioning: core::default::Default::default(),
+            pod_selector_label: core::default::Default::default(),
             service: self.service,
         }
     }
 }
 
-pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElServiceNetworkingElRef {
+#[allow(dead_code)]
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_ServiceNetworkingRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElServiceNetworkingElRef {
+::Ref for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_ServiceNetworkingRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElServiceNetworkingElRef {
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElServiceNetworkingElRef {
+    ) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_ServiceNetworkingRef {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_ServiceNetworkingRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElServiceNetworkingElRef {
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_ServiceNetworkingRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2081,6 +3323,12 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntim
     }
 
     #[doc =
+        "Get a reference to the value of field `pod_selector_label` after provisioning.\nOptional. The label to use when selecting Pods for the Deployment resource. This label must already be present in the Deployment."]
+    pub fn pod_selector_label(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.pod_selector_label", self.base))
+    }
+
+    #[doc =
         "Get a reference to the value of field `service` after provisioning.\nRequired. Name of the Kubernetes Service."]
     pub fn service(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.service", self.base))
@@ -2088,13 +3336,13 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntim
 }
 
 #[derive(Serialize, Default)]
-struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElDynamic {
+struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_KubernetesDynamic {
     gateway_service_mesh: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElGatewayServiceMeshEl,
+            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_GatewayServiceMesh,
         >,
     >,
     service_networking: std
@@ -2102,13 +3350,13 @@ struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRunt
     ::Option<
         terrars
         ::DynamicBlock<
-            ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElServiceNetworkingEl,
+            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_ServiceNetworking,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesEl {
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     gateway_service_mesh: std
     ::option
@@ -2116,7 +3364,7 @@ pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryEl
         std
         ::vec
         ::Vec<
-            ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElGatewayServiceMeshEl,
+            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_GatewayServiceMesh,
         >,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2126,13 +3374,13 @@ pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryEl
         std
         ::vec
         ::Vec<
-            ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElServiceNetworkingEl,
+            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_ServiceNetworking,
         >,
     >,
-    dynamic: ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElDynamic,
+    dynamic: ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_KubernetesDynamic,
 }
 
-impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesEl {
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes {
     #[doc = "Set the field `gateway_service_mesh`.\n"]
     pub fn set_gateway_service_mesh(
         mut self,
@@ -2144,7 +3392,7 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntim
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElGatewayServiceMeshEl,
+                            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_GatewayServiceMesh,
                         >,
                     >,
     ) -> Self {
@@ -2170,7 +3418,7 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntim
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElServiceNetworkingEl,
+                            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_ServiceNetworking,
                         >,
                     >,
     ) -> Self {
@@ -2187,12 +3435,10 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntim
 }
 
 impl terrars
-::ToListMappable for ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesEl {
+::ToListMappable for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes {
     type O =
         terrars
-        ::BlockAssignable<
-            ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesEl,
-        >;
+        ::BlockAssignable<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2203,13 +3449,11 @@ impl terrars
     }
 }
 
-pub struct BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesEl {}
+pub struct BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes {}
 
-impl BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesEl {
-    pub fn build(
-        self,
-    ) -> ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesEl {
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesEl {
+impl BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes {
+    pub fn build(self) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes {
             gateway_service_mesh: core::default::Default::default(),
             service_networking: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -2217,25 +3461,26 @@ impl BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElR
     }
 }
 
-pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElRef {
+#[allow(dead_code)]
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_KubernetesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars
-::Ref for ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElRef {
+impl terrars::Ref for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_KubernetesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElRef {
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElRef {
+    ) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_KubernetesRef {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_KubernetesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElRef {
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_KubernetesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2245,7 +3490,7 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntim
         &self,
     ) -> terrars
     ::ListRef<
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElGatewayServiceMeshElRef,
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_GatewayServiceMeshRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.gateway_service_mesh", self.base))
     }
@@ -2255,50 +3500,44 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntim
         &self,
     ) -> terrars
     ::ListRef<
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElServiceNetworkingElRef,
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes_ServiceNetworkingRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.service_networking", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElDynamic {
+struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfigDynamic {
     cloud_run: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElCloudRunEl>,
+        ::DynamicBlock<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_CloudRun>,
     >,
     kubernetes: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesEl,
-        >,
+        ::DynamicBlock<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigEl {
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cloud_run: std
     ::option
-    ::Option<
-        std::vec::Vec<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElCloudRunEl>,
-    >,
+    ::Option<std::vec::Vec<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_CloudRun>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kubernetes: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesEl>,
+        std::vec::Vec<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes>,
     >,
-    dynamic: ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElDynamic,
+    dynamic: ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfigDynamic,
 }
 
-impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigEl {
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig {
     #[doc = "Set the field `cloud_run`.\n"]
     pub fn set_cloud_run(
         mut self,
@@ -2310,7 +3549,7 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntim
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElCloudRunEl,
+                            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_CloudRun,
                         >,
                     >,
     ) -> Self {
@@ -2336,7 +3575,7 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntim
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesEl,
+                            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_Kubernetes,
                         >,
                     >,
     ) -> Self {
@@ -2352,10 +3591,9 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntim
     }
 }
 
-impl terrars::ToListMappable for ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigEl {
+impl terrars::ToListMappable for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig {
     type O =
-        terrars
-        ::BlockAssignable<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigEl>;
+        terrars::BlockAssignable<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2366,11 +3604,11 @@ impl terrars::ToListMappable for ClouddeployDeliveryPipelineSerialPipelineElStag
     }
 }
 
-pub struct BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigEl {}
+pub struct BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig {}
 
-impl BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigEl {
-    pub fn build(self) -> ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigEl {
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigEl {
+impl BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig {
+    pub fn build(self) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig {
             cloud_run: core::default::Default::default(),
             kubernetes: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -2378,24 +3616,26 @@ impl BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElR
     }
 }
 
-pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElRef {
+#[allow(dead_code)]
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElRef {
+impl terrars::Ref for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElRef {
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElRef {
+    ) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfigRef {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElRef {
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2404,7 +3644,7 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntim
     pub fn cloud_run(
         &self,
     ) -> terrars
-    ::ListRef<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElCloudRunElRef> {
+    ::ListRef<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_CloudRunRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cloud_run", self.base))
     }
 
@@ -2412,51 +3652,47 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntim
     pub fn kubernetes(
         &self,
     ) -> terrars
-    ::ListRef<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElKubernetesElRef> {
+    ::ListRef<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig_KubernetesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.kubernetes", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElDynamic {
+struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_CanaryDynamic {
     canary_deployment: std
     ::option
     ::Option<
-        terrars::DynamicBlock<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentEl>,
+        terrars::DynamicBlock<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment>,
     >,
     custom_canary_deployment: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentEl>,
+        ::DynamicBlock<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CustomCanaryDeployment>,
     >,
     runtime_config: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigEl>,
-    >,
+    ::Option<terrars::DynamicBlock<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryEl {
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     canary_deployment: std
     ::option
-    ::Option<std::vec::Vec<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentEl>>,
+    ::Option<std::vec::Vec<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     custom_canary_deployment: std
     ::option
-    ::Option<
-        std::vec::Vec<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentEl>,
-    >,
+    ::Option<std::vec::Vec<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CustomCanaryDeployment>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     runtime_config: std
     ::option
-    ::Option<std::vec::Vec<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigEl>>,
-    dynamic: ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElDynamic,
+    ::Option<std::vec::Vec<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig>>,
+    dynamic: ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_CanaryDynamic,
 }
 
-impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryEl {
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary {
     #[doc = "Set the field `canary_deployment`.\n"]
     pub fn set_canary_deployment(
         mut self,
@@ -2468,7 +3704,7 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentEl,
+                            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeployment,
                         >,
                     >,
     ) -> Self {
@@ -2494,7 +3730,7 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentEl,
+                            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CustomCanaryDeployment,
                         >,
                     >,
     ) -> Self {
@@ -2520,7 +3756,7 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigEl,
+                            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfig,
                         >,
                     >,
     ) -> Self {
@@ -2536,8 +3772,8 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryEl {
     }
 }
 
-impl terrars::ToListMappable for ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryEl {
-    type O = terrars::BlockAssignable<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryEl>;
+impl terrars::ToListMappable for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary {
+    type O = terrars::BlockAssignable<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2548,11 +3784,11 @@ impl terrars::ToListMappable for ClouddeployDeliveryPipelineSerialPipelineElStag
     }
 }
 
-pub struct BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryEl {}
+pub struct BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary {}
 
-impl BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryEl {
-    pub fn build(self) -> ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryEl {
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryEl {
+impl BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary {
+    pub fn build(self) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary {
             canary_deployment: core::default::Default::default(),
             custom_canary_deployment: core::default::Default::default(),
             runtime_config: core::default::Default::default(),
@@ -2561,24 +3797,26 @@ impl BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryEl 
     }
 }
 
-pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRef {
+#[allow(dead_code)]
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_CanaryRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRef {
+impl terrars::Ref for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_CanaryRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRef {
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRef {
+    ) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_CanaryRef {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_CanaryRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRef {
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_CanaryRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2586,7 +3824,7 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRef {
     #[doc = "Get a reference to the value of field `canary_deployment` after provisioning.\n"]
     pub fn canary_deployment(
         &self,
-    ) -> terrars::ListRef<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCanaryDeploymentElRef> {
+    ) -> terrars::ListRef<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CanaryDeploymentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.canary_deployment", self.base))
     }
 
@@ -2594,25 +3832,39 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRef {
     pub fn custom_canary_deployment(
         &self,
     ) -> terrars
-    ::ListRef<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElCustomCanaryDeploymentElRef> {
+    ::ListRef<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_CustomCanaryDeploymentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.custom_canary_deployment", self.base))
     }
 
     #[doc = "Get a reference to the value of field `runtime_config` after provisioning.\n"]
     pub fn runtime_config(
         &self,
-    ) -> terrars::ListRef<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRuntimeConfigElRef> {
+    ) -> terrars::ListRef<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary_RuntimeConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.runtime_config", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElPostdeployEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    actions: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+#[derive(Serialize, Default)]
+struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_PostdeployDynamic {
+    tasks: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_Tasks>,
+    >,
 }
 
-impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElPostdeployEl {
+#[derive(Serialize)]
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Postdeploy {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    actions: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tasks: std
+    ::option
+    ::Option<std::vec::Vec<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_Tasks>>,
+    dynamic: ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_PostdeployDynamic,
+}
+
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Postdeploy {
     #[doc =
         "Set the field `actions`.\nOptional. A sequence of skaffold custom actions to invoke during execution of the postdeploy job."]
     pub fn set_actions(
@@ -2622,12 +3874,37 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElPost
         self.actions = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `tasks`.\n"]
+    pub fn set_tasks(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_Tasks,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.tasks = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.tasks = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
 }
 
-impl terrars::ToListMappable for ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElPostdeployEl {
+impl terrars::ToListMappable for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Postdeploy {
     type O =
-        terrars
-        ::BlockAssignable<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElPostdeployEl>;
+        terrars::BlockAssignable<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Postdeploy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2638,34 +3915,38 @@ impl terrars::ToListMappable for ClouddeployDeliveryPipelineSerialPipelineElStag
     }
 }
 
-pub struct BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElPostdeployEl {}
+pub struct BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Postdeploy {}
 
-impl BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElPostdeployEl {
-    pub fn build(self) -> ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElPostdeployEl {
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElPostdeployEl {
+impl BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Postdeploy {
+    pub fn build(self) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Postdeploy {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Postdeploy {
             actions: core::default::Default::default(),
+            tasks: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElPostdeployElRef {
+#[allow(dead_code)]
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_PostdeployRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElPostdeployElRef {
+impl terrars::Ref for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_PostdeployRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElPostdeployElRef {
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElPostdeployElRef {
+    ) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_PostdeployRef {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_PostdeployRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElPostdeployElRef {
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_PostdeployRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2675,15 +3956,36 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElPost
     pub fn actions(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.actions", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `tasks` after provisioning.\n"]
+    pub fn tasks(
+        &self,
+    ) -> terrars::ListRef<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_TasksRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.tasks", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_PredeployDynamic {
+    tasks: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_Tasks>,
+    >,
 }
 
 #[derive(Serialize)]
-pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElPredeployEl {
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     actions: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tasks: std
+    ::option
+    ::Option<std::vec::Vec<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_Tasks>>,
+    dynamic: ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_PredeployDynamic,
 }
 
-impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElPredeployEl {
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy {
     #[doc =
         "Set the field `actions`.\nOptional. A sequence of skaffold custom actions to invoke during execution of the predeploy job."]
     pub fn set_actions(
@@ -2693,11 +3995,36 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElPred
         self.actions = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `tasks`.\n"]
+    pub fn set_tasks(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_Tasks,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.tasks = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.tasks = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
 }
 
-impl terrars::ToListMappable for ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElPredeployEl {
-    type O =
-        terrars::BlockAssignable<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElPredeployEl>;
+impl terrars::ToListMappable for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy {
+    type O = terrars::BlockAssignable<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2708,34 +4035,38 @@ impl terrars::ToListMappable for ClouddeployDeliveryPipelineSerialPipelineElStag
     }
 }
 
-pub struct BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElPredeployEl {}
+pub struct BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy {}
 
-impl BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElPredeployEl {
-    pub fn build(self) -> ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElPredeployEl {
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElPredeployEl {
+impl BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy {
+    pub fn build(self) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy {
             actions: core::default::Default::default(),
+            tasks: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElPredeployElRef {
+#[allow(dead_code)]
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_PredeployRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElPredeployElRef {
+impl terrars::Ref for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_PredeployRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElPredeployElRef {
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElPredeployElRef {
+    ) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_PredeployRef {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_PredeployRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElPredeployElRef {
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_PredeployRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2745,41 +4076,86 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElPred
     pub fn actions(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.actions", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `tasks` after provisioning.\n"]
+    pub fn tasks(
+        &self,
+    ) -> terrars::ListRef<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy_TasksRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.tasks", self.base))
+    }
 }
 
 #[derive(Serialize, Default)]
-struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElDynamic {
+struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_StandardDynamic {
+    analysis: std
+    ::option
+    ::Option<terrars::DynamicBlock<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis>>,
     postdeploy: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElPostdeployEl>,
-    >,
+    ::Option<terrars::DynamicBlock<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Postdeploy>>,
     predeploy: std
     ::option
+    ::Option<terrars::DynamicBlock<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy>>,
+    verify_config: std
+    ::option
     ::Option<
-        terrars::DynamicBlock<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElPredeployEl>,
+        terrars::DynamicBlock<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_VerifyConfig>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardEl {
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     verify: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    analysis: std
+    ::option
+    ::Option<std::vec::Vec<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     postdeploy: std
     ::option
-    ::Option<std::vec::Vec<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElPostdeployEl>>,
+    ::Option<std::vec::Vec<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Postdeploy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     predeploy: std
     ::option
-    ::Option<std::vec::Vec<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElPredeployEl>>,
-    dynamic: ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElDynamic,
+    ::Option<std::vec::Vec<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    verify_config: std
+    ::option
+    ::Option<std::vec::Vec<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_VerifyConfig>>,
+    dynamic: ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_StandardDynamic,
 }
 
-impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardEl {
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard {
     #[doc = "Set the field `verify`.\nWhether to verify a deployment."]
     pub fn set_verify(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.verify = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `analysis`.\n"]
+    pub fn set_analysis(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Analysis,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.analysis = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.analysis = std::option::Option::Some(d);
+            },
+        }
         self
     }
 
@@ -2794,7 +4170,7 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElPostdeployEl,
+                            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Postdeploy,
                         >,
                     >,
     ) -> Self {
@@ -2820,7 +4196,7 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElPredeployEl,
+                            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_Predeploy,
                         >,
                     >,
     ) -> Self {
@@ -2834,10 +4210,36 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardEl {
         }
         self
     }
+
+    #[doc = "Set the field `verify_config`.\n"]
+    pub fn set_verify_config(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_VerifyConfig,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.verify_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.verify_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
 }
 
-impl terrars::ToListMappable for ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardEl {
-    type O = terrars::BlockAssignable<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardEl>;
+impl terrars::ToListMappable for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard {
+    type O = terrars::BlockAssignable<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2848,37 +4250,41 @@ impl terrars::ToListMappable for ClouddeployDeliveryPipelineSerialPipelineElStag
     }
 }
 
-pub struct BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardEl {}
+pub struct BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard {}
 
-impl BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardEl {
-    pub fn build(self) -> ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardEl {
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardEl {
+impl BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard {
+    pub fn build(self) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard {
             verify: core::default::Default::default(),
+            analysis: core::default::Default::default(),
             postdeploy: core::default::Default::default(),
             predeploy: core::default::Default::default(),
+            verify_config: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElRef {
+#[allow(dead_code)]
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_StandardRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElRef {
+impl terrars::Ref for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_StandardRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElRef {
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElRef {
+    ) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_StandardRef {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_StandardRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElRef {
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_StandardRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2888,41 +4294,55 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElRef 
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.verify", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `analysis` after provisioning.\n"]
+    pub fn analysis(
+        &self,
+    ) -> terrars::ListRef<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_AnalysisRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.analysis", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `postdeploy` after provisioning.\n"]
     pub fn postdeploy(
         &self,
-    ) -> terrars::ListRef<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElPostdeployElRef> {
+    ) -> terrars::ListRef<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_PostdeployRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.postdeploy", self.base))
     }
 
     #[doc = "Get a reference to the value of field `predeploy` after provisioning.\n"]
     pub fn predeploy(
         &self,
-    ) -> terrars::ListRef<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElPredeployElRef> {
+    ) -> terrars::ListRef<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_PredeployRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.predeploy", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `verify_config` after provisioning.\n"]
+    pub fn verify_config(
+        &self,
+    ) -> terrars::ListRef<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard_VerifyConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.verify_config", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElDynamic {
+struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_StrategyDynamic {
     canary: std
     ::option
-    ::Option<terrars::DynamicBlock<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryEl>>,
+    ::Option<terrars::DynamicBlock<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary>>,
     standard: std
     ::option
-    ::Option<terrars::DynamicBlock<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardEl>>,
+    ::Option<terrars::DynamicBlock<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard>>,
 }
 
 #[derive(Serialize)]
-pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyEl {
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    canary: std::option::Option<std::vec::Vec<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryEl>>,
+    canary: std::option::Option<std::vec::Vec<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    standard: std::option::Option<std::vec::Vec<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardEl>>,
-    dynamic: ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElDynamic,
+    standard: std::option::Option<std::vec::Vec<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard>>,
+    dynamic: ClouddeployDeliveryPipeline_SerialPipeline_Stages_StrategyDynamic,
 }
 
-impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyEl {
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy {
     #[doc = "Set the field `canary`.\n"]
     pub fn set_canary(
         mut self,
@@ -2932,8 +4352,7 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryEl>,
+                        terrars::BlockAssignable<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Canary>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2956,8 +4375,7 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardEl>,
+                        terrars::BlockAssignable<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_Standard>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2972,8 +4390,8 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyEl {
     }
 }
 
-impl terrars::ToListMappable for ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyEl {
-    type O = terrars::BlockAssignable<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyEl>;
+impl terrars::ToListMappable for ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy {
+    type O = terrars::BlockAssignable<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2984,11 +4402,11 @@ impl terrars::ToListMappable for ClouddeployDeliveryPipelineSerialPipelineElStag
     }
 }
 
-pub struct BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyEl {}
+pub struct BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy {}
 
-impl BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyEl {
-    pub fn build(self) -> ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyEl {
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyEl {
+impl BuildClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy {
+    pub fn build(self) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy {
             canary: core::default::Default::default(),
             standard: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -2996,53 +4414,53 @@ impl BuildClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyEl {
     }
 }
 
-pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElRef {
+#[allow(dead_code)]
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages_StrategyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElRef {
+impl terrars::Ref for ClouddeployDeliveryPipeline_SerialPipeline_Stages_StrategyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElRef {
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElRef {
+    ) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages_StrategyRef {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages_StrategyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElRef {
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages_StrategyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `canary` after provisioning.\n"]
-    pub fn canary(&self) -> terrars::ListRef<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElCanaryElRef> {
+    pub fn canary(&self) -> terrars::ListRef<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_CanaryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.canary", self.base))
     }
 
     #[doc = "Get a reference to the value of field `standard` after provisioning.\n"]
-    pub fn standard(
-        &self,
-    ) -> terrars::ListRef<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElStandardElRef> {
+    pub fn standard(&self) -> terrars::ListRef<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy_StandardRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.standard", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct ClouddeployDeliveryPipelineSerialPipelineElStagesElDynamic {
+struct ClouddeployDeliveryPipeline_SerialPipeline_StagesDynamic {
     deploy_parameters: std
     ::option
-    ::Option<terrars::DynamicBlock<ClouddeployDeliveryPipelineSerialPipelineElStagesElDeployParametersEl>>,
+    ::Option<terrars::DynamicBlock<ClouddeployDeliveryPipeline_SerialPipeline_Stages_DeployParameters>>,
     strategy: std
     ::option
-    ::Option<terrars::DynamicBlock<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyEl>>,
+    ::Option<terrars::DynamicBlock<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy>>,
 }
 
 #[derive(Serialize)]
-pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesEl {
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_Stages {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     profiles: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3050,13 +4468,13 @@ pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     deploy_parameters: std
     ::option
-    ::Option<std::vec::Vec<ClouddeployDeliveryPipelineSerialPipelineElStagesElDeployParametersEl>>,
+    ::Option<std::vec::Vec<ClouddeployDeliveryPipeline_SerialPipeline_Stages_DeployParameters>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    strategy: std::option::Option<std::vec::Vec<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyEl>>,
-    dynamic: ClouddeployDeliveryPipelineSerialPipelineElStagesElDynamic,
+    strategy: std::option::Option<std::vec::Vec<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy>>,
+    dynamic: ClouddeployDeliveryPipeline_SerialPipeline_StagesDynamic,
 }
 
-impl ClouddeployDeliveryPipelineSerialPipelineElStagesEl {
+impl ClouddeployDeliveryPipeline_SerialPipeline_Stages {
     #[doc =
         "Set the field `profiles`.\nSkaffold profiles to use when rendering the manifest for this stage's `Target`."]
     pub fn set_profiles(
@@ -3083,8 +4501,7 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<ClouddeployDeliveryPipelineSerialPipelineElStagesElDeployParametersEl>,
+                        terrars::BlockAssignable<ClouddeployDeliveryPipeline_SerialPipeline_Stages_DeployParameters>,
                     >,
     ) -> Self {
         match v.into() {
@@ -3106,7 +4523,7 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyEl>>,
+                    ::Into<terrars::BlockAssignable<ClouddeployDeliveryPipeline_SerialPipeline_Stages_Strategy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3120,8 +4537,8 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesEl {
     }
 }
 
-impl terrars::ToListMappable for ClouddeployDeliveryPipelineSerialPipelineElStagesEl {
-    type O = terrars::BlockAssignable<ClouddeployDeliveryPipelineSerialPipelineElStagesEl>;
+impl terrars::ToListMappable for ClouddeployDeliveryPipeline_SerialPipeline_Stages {
+    type O = terrars::BlockAssignable<ClouddeployDeliveryPipeline_SerialPipeline_Stages>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3132,11 +4549,11 @@ impl terrars::ToListMappable for ClouddeployDeliveryPipelineSerialPipelineElStag
     }
 }
 
-pub struct BuildClouddeployDeliveryPipelineSerialPipelineElStagesEl {}
+pub struct BuildClouddeployDeliveryPipeline_SerialPipeline_Stages {}
 
-impl BuildClouddeployDeliveryPipelineSerialPipelineElStagesEl {
-    pub fn build(self) -> ClouddeployDeliveryPipelineSerialPipelineElStagesEl {
-        ClouddeployDeliveryPipelineSerialPipelineElStagesEl {
+impl BuildClouddeployDeliveryPipeline_SerialPipeline_Stages {
+    pub fn build(self) -> ClouddeployDeliveryPipeline_SerialPipeline_Stages {
+        ClouddeployDeliveryPipeline_SerialPipeline_Stages {
             profiles: core::default::Default::default(),
             target_id: core::default::Default::default(),
             deploy_parameters: core::default::Default::default(),
@@ -3146,24 +4563,26 @@ impl BuildClouddeployDeliveryPipelineSerialPipelineElStagesEl {
     }
 }
 
-pub struct ClouddeployDeliveryPipelineSerialPipelineElStagesElRef {
+#[allow(dead_code)]
+pub struct ClouddeployDeliveryPipeline_SerialPipeline_StagesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ClouddeployDeliveryPipelineSerialPipelineElStagesElRef {
+impl terrars::Ref for ClouddeployDeliveryPipeline_SerialPipeline_StagesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ClouddeployDeliveryPipelineSerialPipelineElStagesElRef {
-        ClouddeployDeliveryPipelineSerialPipelineElStagesElRef {
+    ) -> ClouddeployDeliveryPipeline_SerialPipeline_StagesRef {
+        ClouddeployDeliveryPipeline_SerialPipeline_StagesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ClouddeployDeliveryPipelineSerialPipelineElStagesElRef {
+impl ClouddeployDeliveryPipeline_SerialPipeline_StagesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3183,33 +4602,33 @@ impl ClouddeployDeliveryPipelineSerialPipelineElStagesElRef {
     #[doc = "Get a reference to the value of field `deploy_parameters` after provisioning.\n"]
     pub fn deploy_parameters(
         &self,
-    ) -> terrars::ListRef<ClouddeployDeliveryPipelineSerialPipelineElStagesElDeployParametersElRef> {
+    ) -> terrars::ListRef<ClouddeployDeliveryPipeline_SerialPipeline_Stages_DeployParametersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.deploy_parameters", self.base))
     }
 
     #[doc = "Get a reference to the value of field `strategy` after provisioning.\n"]
-    pub fn strategy(&self) -> terrars::ListRef<ClouddeployDeliveryPipelineSerialPipelineElStagesElStrategyElRef> {
+    pub fn strategy(&self) -> terrars::ListRef<ClouddeployDeliveryPipeline_SerialPipeline_Stages_StrategyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.strategy", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct ClouddeployDeliveryPipelineSerialPipelineElDynamic {
-    stages: std::option::Option<terrars::DynamicBlock<ClouddeployDeliveryPipelineSerialPipelineElStagesEl>>,
+struct ClouddeployDeliveryPipeline_SerialPipelineDynamic {
+    stages: std::option::Option<terrars::DynamicBlock<ClouddeployDeliveryPipeline_SerialPipeline_Stages>>,
 }
 
 #[derive(Serialize)]
-pub struct ClouddeployDeliveryPipelineSerialPipelineEl {
+pub struct ClouddeployDeliveryPipeline_SerialPipeline {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    stages: std::option::Option<std::vec::Vec<ClouddeployDeliveryPipelineSerialPipelineElStagesEl>>,
-    dynamic: ClouddeployDeliveryPipelineSerialPipelineElDynamic,
+    stages: std::option::Option<std::vec::Vec<ClouddeployDeliveryPipeline_SerialPipeline_Stages>>,
+    dynamic: ClouddeployDeliveryPipeline_SerialPipelineDynamic,
 }
 
-impl ClouddeployDeliveryPipelineSerialPipelineEl {
+impl ClouddeployDeliveryPipeline_SerialPipeline {
     #[doc = "Set the field `stages`.\n"]
     pub fn set_stages(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ClouddeployDeliveryPipelineSerialPipelineElStagesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ClouddeployDeliveryPipeline_SerialPipeline_Stages>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3223,8 +4642,8 @@ impl ClouddeployDeliveryPipelineSerialPipelineEl {
     }
 }
 
-impl terrars::ToListMappable for ClouddeployDeliveryPipelineSerialPipelineEl {
-    type O = terrars::BlockAssignable<ClouddeployDeliveryPipelineSerialPipelineEl>;
+impl terrars::ToListMappable for ClouddeployDeliveryPipeline_SerialPipeline {
+    type O = terrars::BlockAssignable<ClouddeployDeliveryPipeline_SerialPipeline>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3235,47 +4654,46 @@ impl terrars::ToListMappable for ClouddeployDeliveryPipelineSerialPipelineEl {
     }
 }
 
-pub struct BuildClouddeployDeliveryPipelineSerialPipelineEl {}
+pub struct BuildClouddeployDeliveryPipeline_SerialPipeline {}
 
-impl BuildClouddeployDeliveryPipelineSerialPipelineEl {
-    pub fn build(self) -> ClouddeployDeliveryPipelineSerialPipelineEl {
-        ClouddeployDeliveryPipelineSerialPipelineEl {
+impl BuildClouddeployDeliveryPipeline_SerialPipeline {
+    pub fn build(self) -> ClouddeployDeliveryPipeline_SerialPipeline {
+        ClouddeployDeliveryPipeline_SerialPipeline {
             stages: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct ClouddeployDeliveryPipelineSerialPipelineElRef {
+#[allow(dead_code)]
+pub struct ClouddeployDeliveryPipeline_SerialPipelineRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ClouddeployDeliveryPipelineSerialPipelineElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ClouddeployDeliveryPipelineSerialPipelineElRef {
-        ClouddeployDeliveryPipelineSerialPipelineElRef {
+impl terrars::Ref for ClouddeployDeliveryPipeline_SerialPipelineRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ClouddeployDeliveryPipeline_SerialPipelineRef {
+        ClouddeployDeliveryPipeline_SerialPipelineRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ClouddeployDeliveryPipelineSerialPipelineElRef {
+impl ClouddeployDeliveryPipeline_SerialPipelineRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `stages` after provisioning.\n"]
-    pub fn stages(&self) -> terrars::ListRef<ClouddeployDeliveryPipelineSerialPipelineElStagesElRef> {
+    pub fn stages(&self) -> terrars::ListRef<ClouddeployDeliveryPipeline_SerialPipeline_StagesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.stages", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ClouddeployDeliveryPipelineTimeoutsEl {
+pub struct ClouddeployDeliveryPipeline_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3284,7 +4702,7 @@ pub struct ClouddeployDeliveryPipelineTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ClouddeployDeliveryPipelineTimeoutsEl {
+impl ClouddeployDeliveryPipeline_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -3304,8 +4722,8 @@ impl ClouddeployDeliveryPipelineTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ClouddeployDeliveryPipelineTimeoutsEl {
-    type O = terrars::BlockAssignable<ClouddeployDeliveryPipelineTimeoutsEl>;
+impl terrars::ToListMappable for ClouddeployDeliveryPipeline_Timeouts {
+    type O = terrars::BlockAssignable<ClouddeployDeliveryPipeline_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3316,11 +4734,11 @@ impl terrars::ToListMappable for ClouddeployDeliveryPipelineTimeoutsEl {
     }
 }
 
-pub struct BuildClouddeployDeliveryPipelineTimeoutsEl {}
+pub struct BuildClouddeployDeliveryPipeline_Timeouts {}
 
-impl BuildClouddeployDeliveryPipelineTimeoutsEl {
-    pub fn build(self) -> ClouddeployDeliveryPipelineTimeoutsEl {
-        ClouddeployDeliveryPipelineTimeoutsEl {
+impl BuildClouddeployDeliveryPipeline_Timeouts {
+    pub fn build(self) -> ClouddeployDeliveryPipeline_Timeouts {
+        ClouddeployDeliveryPipeline_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -3328,21 +4746,23 @@ impl BuildClouddeployDeliveryPipelineTimeoutsEl {
     }
 }
 
-pub struct ClouddeployDeliveryPipelineTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ClouddeployDeliveryPipeline_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ClouddeployDeliveryPipelineTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ClouddeployDeliveryPipelineTimeoutsElRef {
-        ClouddeployDeliveryPipelineTimeoutsElRef {
+impl terrars::Ref for ClouddeployDeliveryPipeline_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ClouddeployDeliveryPipeline_TimeoutsRef {
+        ClouddeployDeliveryPipeline_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ClouddeployDeliveryPipelineTimeoutsElRef {
+impl ClouddeployDeliveryPipeline_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3361,9 +4781,4 @@ impl ClouddeployDeliveryPipelineTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ClouddeployDeliveryPipelineDynamic {
-    serial_pipeline: std::option::Option<terrars::DynamicBlock<ClouddeployDeliveryPipelineSerialPipelineEl>>,
 }

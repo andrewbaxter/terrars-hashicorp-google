@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct IapAppEngineVersionIamMemberData {
+struct IapAppEngineVersionIamMemberData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,14 +30,14 @@ struct IapAppEngineVersionIamMemberData {
     service: terrars::PrimField<std::string::String>,
     version_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<IapAppEngineVersionIamMemberConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<IapAppEngineVersionIamMember_Condition>>,
     dynamic: IapAppEngineVersionIamMemberDynamic,
 }
 
 struct IapAppEngineVersionIamMember_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<IapAppEngineVersionIamMemberData>,
+    data: std::cell::RefCell<IapAppEngineVersionIamMemberData_>,
 }
 
 #[derive(Clone)]
@@ -150,7 +152,7 @@ impl IapAppEngineVersionIamMember {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<IapAppEngineVersionIamMemberConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IapAppEngineVersionIamMember_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -204,7 +206,7 @@ impl IapAppEngineVersionIamMember {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<IapAppEngineVersionIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<IapAppEngineVersionIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -259,7 +261,7 @@ impl BuildIapAppEngineVersionIamMember {
         let out = IapAppEngineVersionIamMember(std::rc::Rc::new(IapAppEngineVersionIamMember_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(IapAppEngineVersionIamMemberData {
+            data: std::cell::RefCell::new(IapAppEngineVersionIamMemberData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -345,20 +347,25 @@ impl IapAppEngineVersionIamMemberRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<IapAppEngineVersionIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<IapAppEngineVersionIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct IapAppEngineVersionIamMemberDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<IapAppEngineVersionIamMember_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct IapAppEngineVersionIamMemberConditionEl {
+pub struct IapAppEngineVersionIamMember_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl IapAppEngineVersionIamMemberConditionEl {
+impl IapAppEngineVersionIamMember_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -366,8 +373,8 @@ impl IapAppEngineVersionIamMemberConditionEl {
     }
 }
 
-impl terrars::ToListMappable for IapAppEngineVersionIamMemberConditionEl {
-    type O = terrars::BlockAssignable<IapAppEngineVersionIamMemberConditionEl>;
+impl terrars::ToListMappable for IapAppEngineVersionIamMember_Condition {
+    type O = terrars::BlockAssignable<IapAppEngineVersionIamMember_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -378,16 +385,16 @@ impl terrars::ToListMappable for IapAppEngineVersionIamMemberConditionEl {
     }
 }
 
-pub struct BuildIapAppEngineVersionIamMemberConditionEl {
+pub struct BuildIapAppEngineVersionIamMember_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildIapAppEngineVersionIamMemberConditionEl {
-    pub fn build(self) -> IapAppEngineVersionIamMemberConditionEl {
-        IapAppEngineVersionIamMemberConditionEl {
+impl BuildIapAppEngineVersionIamMember_Condition {
+    pub fn build(self) -> IapAppEngineVersionIamMember_Condition {
+        IapAppEngineVersionIamMember_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -395,21 +402,23 @@ impl BuildIapAppEngineVersionIamMemberConditionEl {
     }
 }
 
-pub struct IapAppEngineVersionIamMemberConditionElRef {
+#[allow(dead_code)]
+pub struct IapAppEngineVersionIamMember_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IapAppEngineVersionIamMemberConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> IapAppEngineVersionIamMemberConditionElRef {
-        IapAppEngineVersionIamMemberConditionElRef {
+impl terrars::Ref for IapAppEngineVersionIamMember_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IapAppEngineVersionIamMember_ConditionRef {
+        IapAppEngineVersionIamMember_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IapAppEngineVersionIamMemberConditionElRef {
+impl IapAppEngineVersionIamMember_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -428,9 +437,4 @@ impl IapAppEngineVersionIamMemberConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct IapAppEngineVersionIamMemberDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<IapAppEngineVersionIamMemberConditionEl>>,
 }

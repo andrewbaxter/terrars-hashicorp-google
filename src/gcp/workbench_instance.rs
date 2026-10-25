@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct WorkbenchInstanceData {
+struct WorkbenchInstanceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,7 +21,17 @@ struct WorkbenchInstanceData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    desired_state: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     disable_proxy_access: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_deletion_protection: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_managed_euc: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_third_party_identity: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -33,16 +45,16 @@ struct WorkbenchInstanceData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    gce_setup: std::option::Option<std::vec::Vec<WorkbenchInstanceGceSetupEl>>,
+    gce_setup: std::option::Option<std::vec::Vec<WorkbenchInstance_GceSetup>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<WorkbenchInstanceTimeoutsEl>,
+    timeouts: std::option::Option<WorkbenchInstance_Timeouts>,
     dynamic: WorkbenchInstanceDynamic,
 }
 
 struct WorkbenchInstance_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<WorkbenchInstanceData>,
+    data: std::cell::RefCell<WorkbenchInstanceData_>,
 }
 
 #[derive(Clone)]
@@ -143,9 +155,43 @@ impl WorkbenchInstance {
     }
 
     #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `desired_state`.\nDesired state of the Workbench Instance. Set this field to 'ACTIVE' to start the Instance, and 'STOPPED' to stop the Instance."]
+    pub fn set_desired_state(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().desired_state = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `disable_proxy_access`.\nOptional. If true, the workbench instance will not register with the proxy."]
     pub fn set_disable_proxy_access(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().disable_proxy_access = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `enable_deletion_protection`.\nOptional. If true, deletion protection will be enabled for this Workbench Instance."]
+    pub fn set_enable_deletion_protection(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().enable_deletion_protection = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `enable_managed_euc`.\nFlag to enable managed end user credentials for the instance."]
+    pub fn set_enable_managed_euc(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().enable_managed_euc = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `enable_third_party_identity`.\nFlag that specifies that a notebook can be accessed with third party\nidentity provider."]
+    pub fn set_enable_third_party_identity(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().enable_third_party_identity = std::option::Option::Some(v.into());
         self
     }
 
@@ -162,7 +208,7 @@ impl WorkbenchInstance {
     }
 
     #[doc =
-        "Set the field `instance_owners`.\n'Optional. Input only. The owner of this instance after creation. Format:\n'alias@example.com' Currently supports one owner only. If not specified, all of\nthe service account users of your VM instance''s service account can use the instance.'"]
+        "Set the field `instance_owners`.\n'Optional. Input only. The owner of this instance after creation. Format:\n'alias@example.com' Currently supports one owner only. If not specified, all of\nthe service account users of your VM instance''s service account can use the instance.\nIf specified, sets the access mode to 'Single user'. For more details, see\nhttps://cloud.google.com/vertex-ai/docs/workbench/instances/manage-access-jupyterlab'"]
     pub fn set_instance_owners(
         self,
         v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
@@ -190,7 +236,7 @@ impl WorkbenchInstance {
     #[doc = "Set the field `gce_setup`.\n"]
     pub fn set_gce_setup(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<WorkbenchInstanceGceSetupEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<WorkbenchInstance_GceSetup>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -204,7 +250,7 @@ impl WorkbenchInstance {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<WorkbenchInstanceTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<WorkbenchInstance_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -222,6 +268,18 @@ impl WorkbenchInstance {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `desired_state` after provisioning.\nDesired state of the Workbench Instance. Set this field to 'ACTIVE' to start the Instance, and 'STOPPED' to stop the Instance."]
+    pub fn desired_state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.desired_state", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `disable_proxy_access` after provisioning.\nOptional. If true, the workbench instance will not register with the proxy."]
     pub fn disable_proxy_access(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.disable_proxy_access", self.extract_ref()))
@@ -234,8 +292,26 @@ impl WorkbenchInstance {
     }
 
     #[doc =
+        "Get a reference to the value of field `enable_deletion_protection` after provisioning.\nOptional. If true, deletion protection will be enabled for this Workbench Instance."]
+    pub fn enable_deletion_protection(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_deletion_protection", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `enable_managed_euc` after provisioning.\nFlag to enable managed end user credentials for the instance."]
+    pub fn enable_managed_euc(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_managed_euc", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `enable_third_party_identity` after provisioning.\nFlag that specifies that a notebook can be accessed with third party\nidentity provider."]
+    pub fn enable_third_party_identity(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_third_party_identity", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `health_info` after provisioning.\n'Output only. Additional information about instance health. Example:\nhealthInfo\": { \"docker_proxy_agent_status\": \"1\", \"docker_status\": \"1\", \"jupyterlab_api_status\":\n\"-1\", \"jupyterlab_status\": \"-1\", \"updated\": \"2020-10-18 09:40:03.573409\" }'"]
-    pub fn health_info(&self) -> terrars::ListRef<WorkbenchInstanceHealthInfoElRef> {
+    pub fn health_info(&self) -> terrars::ListRef<WorkbenchInstance_HealthInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.health_info", self.extract_ref()))
     }
 
@@ -257,7 +333,7 @@ impl WorkbenchInstance {
     }
 
     #[doc =
-        "Get a reference to the value of field `instance_owners` after provisioning.\n'Optional. Input only. The owner of this instance after creation. Format:\n'alias@example.com' Currently supports one owner only. If not specified, all of\nthe service account users of your VM instance''s service account can use the instance.'"]
+        "Get a reference to the value of field `instance_owners` after provisioning.\n'Optional. Input only. The owner of this instance after creation. Format:\n'alias@example.com' Currently supports one owner only. If not specified, all of\nthe service account users of your VM instance''s service account can use the instance.\nIf specified, sets the access mode to 'Single user'. For more details, see\nhttps://cloud.google.com/vertex-ai/docs/workbench/instances/manage-access-jupyterlab'"]
     pub fn instance_owners(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.instance_owners", self.extract_ref()))
     }
@@ -311,18 +387,18 @@ impl WorkbenchInstance {
 
     #[doc =
         "Get a reference to the value of field `upgrade_history` after provisioning.\nOutput only. The upgrade history of this instance."]
-    pub fn upgrade_history(&self) -> terrars::ListRef<WorkbenchInstanceUpgradeHistoryElRef> {
+    pub fn upgrade_history(&self) -> terrars::ListRef<WorkbenchInstance_UpgradeHistoryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.upgrade_history", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `gce_setup` after provisioning.\n"]
-    pub fn gce_setup(&self) -> terrars::ListRef<WorkbenchInstanceGceSetupElRef> {
+    pub fn gce_setup(&self) -> terrars::ListRef<WorkbenchInstance_GceSetupRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.gce_setup", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> WorkbenchInstanceTimeoutsElRef {
-        WorkbenchInstanceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> WorkbenchInstance_TimeoutsRef {
+        WorkbenchInstance_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -371,13 +447,18 @@ impl BuildWorkbenchInstance {
         let out = WorkbenchInstance(std::rc::Rc::new(WorkbenchInstance_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(WorkbenchInstanceData {
+            data: std::cell::RefCell::new(WorkbenchInstanceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
+                desired_state: core::default::Default::default(),
                 disable_proxy_access: core::default::Default::default(),
+                enable_deletion_protection: core::default::Default::default(),
+                enable_managed_euc: core::default::Default::default(),
+                enable_third_party_identity: core::default::Default::default(),
                 id: core::default::Default::default(),
                 instance_id: core::default::Default::default(),
                 instance_owners: core::default::Default::default(),
@@ -431,6 +512,18 @@ impl WorkbenchInstanceRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `desired_state` after provisioning.\nDesired state of the Workbench Instance. Set this field to 'ACTIVE' to start the Instance, and 'STOPPED' to stop the Instance."]
+    pub fn desired_state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.desired_state", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `disable_proxy_access` after provisioning.\nOptional. If true, the workbench instance will not register with the proxy."]
     pub fn disable_proxy_access(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.disable_proxy_access", self.extract_ref()))
@@ -443,8 +536,26 @@ impl WorkbenchInstanceRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `enable_deletion_protection` after provisioning.\nOptional. If true, deletion protection will be enabled for this Workbench Instance."]
+    pub fn enable_deletion_protection(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_deletion_protection", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `enable_managed_euc` after provisioning.\nFlag to enable managed end user credentials for the instance."]
+    pub fn enable_managed_euc(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_managed_euc", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `enable_third_party_identity` after provisioning.\nFlag that specifies that a notebook can be accessed with third party\nidentity provider."]
+    pub fn enable_third_party_identity(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_third_party_identity", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `health_info` after provisioning.\n'Output only. Additional information about instance health. Example:\nhealthInfo\": { \"docker_proxy_agent_status\": \"1\", \"docker_status\": \"1\", \"jupyterlab_api_status\":\n\"-1\", \"jupyterlab_status\": \"-1\", \"updated\": \"2020-10-18 09:40:03.573409\" }'"]
-    pub fn health_info(&self) -> terrars::ListRef<WorkbenchInstanceHealthInfoElRef> {
+    pub fn health_info(&self) -> terrars::ListRef<WorkbenchInstance_HealthInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.health_info", self.extract_ref()))
     }
 
@@ -466,7 +577,7 @@ impl WorkbenchInstanceRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `instance_owners` after provisioning.\n'Optional. Input only. The owner of this instance after creation. Format:\n'alias@example.com' Currently supports one owner only. If not specified, all of\nthe service account users of your VM instance''s service account can use the instance.'"]
+        "Get a reference to the value of field `instance_owners` after provisioning.\n'Optional. Input only. The owner of this instance after creation. Format:\n'alias@example.com' Currently supports one owner only. If not specified, all of\nthe service account users of your VM instance''s service account can use the instance.\nIf specified, sets the access mode to 'Single user'. For more details, see\nhttps://cloud.google.com/vertex-ai/docs/workbench/instances/manage-access-jupyterlab'"]
     pub fn instance_owners(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.instance_owners", self.extract_ref()))
     }
@@ -520,28 +631,33 @@ impl WorkbenchInstanceRef {
 
     #[doc =
         "Get a reference to the value of field `upgrade_history` after provisioning.\nOutput only. The upgrade history of this instance."]
-    pub fn upgrade_history(&self) -> terrars::ListRef<WorkbenchInstanceUpgradeHistoryElRef> {
+    pub fn upgrade_history(&self) -> terrars::ListRef<WorkbenchInstance_UpgradeHistoryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.upgrade_history", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `gce_setup` after provisioning.\n"]
-    pub fn gce_setup(&self) -> terrars::ListRef<WorkbenchInstanceGceSetupElRef> {
+    pub fn gce_setup(&self) -> terrars::ListRef<WorkbenchInstance_GceSetupRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.gce_setup", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> WorkbenchInstanceTimeoutsElRef {
-        WorkbenchInstanceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> WorkbenchInstance_TimeoutsRef {
+        WorkbenchInstance_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct WorkbenchInstanceDynamic {
+    gce_setup: std::option::Option<terrars::DynamicBlock<WorkbenchInstance_GceSetup>>,
+}
+
 #[derive(Serialize)]
-pub struct WorkbenchInstanceHealthInfoEl {}
+pub struct WorkbenchInstance_HealthInfo {}
 
-impl WorkbenchInstanceHealthInfoEl { }
+impl WorkbenchInstance_HealthInfo { }
 
-impl terrars::ToListMappable for WorkbenchInstanceHealthInfoEl {
-    type O = terrars::BlockAssignable<WorkbenchInstanceHealthInfoEl>;
+impl terrars::ToListMappable for WorkbenchInstance_HealthInfo {
+    type O = terrars::BlockAssignable<WorkbenchInstance_HealthInfo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -552,36 +668,38 @@ impl terrars::ToListMappable for WorkbenchInstanceHealthInfoEl {
     }
 }
 
-pub struct BuildWorkbenchInstanceHealthInfoEl {}
+pub struct BuildWorkbenchInstance_HealthInfo {}
 
-impl BuildWorkbenchInstanceHealthInfoEl {
-    pub fn build(self) -> WorkbenchInstanceHealthInfoEl {
-        WorkbenchInstanceHealthInfoEl {}
+impl BuildWorkbenchInstance_HealthInfo {
+    pub fn build(self) -> WorkbenchInstance_HealthInfo {
+        WorkbenchInstance_HealthInfo {}
     }
 }
 
-pub struct WorkbenchInstanceHealthInfoElRef {
+#[allow(dead_code)]
+pub struct WorkbenchInstance_HealthInfoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WorkbenchInstanceHealthInfoElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> WorkbenchInstanceHealthInfoElRef {
-        WorkbenchInstanceHealthInfoElRef {
+impl terrars::Ref for WorkbenchInstance_HealthInfoRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> WorkbenchInstance_HealthInfoRef {
+        WorkbenchInstance_HealthInfoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WorkbenchInstanceHealthInfoElRef {
+impl WorkbenchInstance_HealthInfoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize)]
-pub struct WorkbenchInstanceUpgradeHistoryEl {
+pub struct WorkbenchInstance_UpgradeHistory {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     action: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -602,7 +720,7 @@ pub struct WorkbenchInstanceUpgradeHistoryEl {
     vm_image: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl WorkbenchInstanceUpgradeHistoryEl {
+impl WorkbenchInstance_UpgradeHistory {
     #[doc = "Set the field `action`.\n"]
     pub fn set_action(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.action = std::option::Option::Some(v.into());
@@ -658,8 +776,8 @@ impl WorkbenchInstanceUpgradeHistoryEl {
     }
 }
 
-impl terrars::ToListMappable for WorkbenchInstanceUpgradeHistoryEl {
-    type O = terrars::BlockAssignable<WorkbenchInstanceUpgradeHistoryEl>;
+impl terrars::ToListMappable for WorkbenchInstance_UpgradeHistory {
+    type O = terrars::BlockAssignable<WorkbenchInstance_UpgradeHistory>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -670,11 +788,11 @@ impl terrars::ToListMappable for WorkbenchInstanceUpgradeHistoryEl {
     }
 }
 
-pub struct BuildWorkbenchInstanceUpgradeHistoryEl {}
+pub struct BuildWorkbenchInstance_UpgradeHistory {}
 
-impl BuildWorkbenchInstanceUpgradeHistoryEl {
-    pub fn build(self) -> WorkbenchInstanceUpgradeHistoryEl {
-        WorkbenchInstanceUpgradeHistoryEl {
+impl BuildWorkbenchInstance_UpgradeHistory {
+    pub fn build(self) -> WorkbenchInstance_UpgradeHistory {
+        WorkbenchInstance_UpgradeHistory {
             action: core::default::Default::default(),
             container_image: core::default::Default::default(),
             create_time: core::default::Default::default(),
@@ -688,21 +806,23 @@ impl BuildWorkbenchInstanceUpgradeHistoryEl {
     }
 }
 
-pub struct WorkbenchInstanceUpgradeHistoryElRef {
+#[allow(dead_code)]
+pub struct WorkbenchInstance_UpgradeHistoryRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WorkbenchInstanceUpgradeHistoryElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> WorkbenchInstanceUpgradeHistoryElRef {
-        WorkbenchInstanceUpgradeHistoryElRef {
+impl terrars::Ref for WorkbenchInstance_UpgradeHistoryRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> WorkbenchInstance_UpgradeHistoryRef {
+        WorkbenchInstance_UpgradeHistoryRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WorkbenchInstanceUpgradeHistoryElRef {
+impl WorkbenchInstance_UpgradeHistoryRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -754,14 +874,14 @@ impl WorkbenchInstanceUpgradeHistoryElRef {
 }
 
 #[derive(Serialize)]
-pub struct WorkbenchInstanceGceSetupElAcceleratorConfigsEl {
+pub struct WorkbenchInstance_GceSetup_AcceleratorConfigs {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     core_count: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl WorkbenchInstanceGceSetupElAcceleratorConfigsEl {
+impl WorkbenchInstance_GceSetup_AcceleratorConfigs {
     #[doc = "Set the field `core_count`.\nOptional. Count of cores of this accelerator."]
     pub fn set_core_count(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.core_count = std::option::Option::Some(v.into());
@@ -769,15 +889,15 @@ impl WorkbenchInstanceGceSetupElAcceleratorConfigsEl {
     }
 
     #[doc =
-        "Set the field `type_`.\nOptional. Type of this accelerator. Possible values: [\"NVIDIA_TESLA_P100\", \"NVIDIA_TESLA_V100\", \"NVIDIA_TESLA_P4\", \"NVIDIA_TESLA_T4\", \"NVIDIA_TESLA_A100\", \"NVIDIA_A100_80GB\", \"NVIDIA_L4\", \"NVIDIA_TESLA_T4_VWS\", \"NVIDIA_TESLA_P100_VWS\", \"NVIDIA_TESLA_P4_VWS\"]"]
+        "Set the field `type_`.\nOptional. Type of this accelerator. Possible values: [\"NVIDIA_TESLA_P100\", \"NVIDIA_TESLA_V100\", \"NVIDIA_TESLA_P4\", \"NVIDIA_TESLA_T4\", \"NVIDIA_TESLA_A100\", \"NVIDIA_A100_80GB\", \"NVIDIA_L4\", \"NVIDIA_H100_80GB\", \"NVIDIA_H100_MEGA_80GB\", \"NVIDIA_H200_141GB\", \"NVIDIA_B200\", \"NVIDIA_RTX6000\", \"NVIDIA_TESLA_T4_VWS\", \"NVIDIA_TESLA_P100_VWS\", \"NVIDIA_TESLA_P4_VWS\"]"]
     pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.type_ = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for WorkbenchInstanceGceSetupElAcceleratorConfigsEl {
-    type O = terrars::BlockAssignable<WorkbenchInstanceGceSetupElAcceleratorConfigsEl>;
+impl terrars::ToListMappable for WorkbenchInstance_GceSetup_AcceleratorConfigs {
+    type O = terrars::BlockAssignable<WorkbenchInstance_GceSetup_AcceleratorConfigs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -788,35 +908,37 @@ impl terrars::ToListMappable for WorkbenchInstanceGceSetupElAcceleratorConfigsEl
     }
 }
 
-pub struct BuildWorkbenchInstanceGceSetupElAcceleratorConfigsEl {}
+pub struct BuildWorkbenchInstance_GceSetup_AcceleratorConfigs {}
 
-impl BuildWorkbenchInstanceGceSetupElAcceleratorConfigsEl {
-    pub fn build(self) -> WorkbenchInstanceGceSetupElAcceleratorConfigsEl {
-        WorkbenchInstanceGceSetupElAcceleratorConfigsEl {
+impl BuildWorkbenchInstance_GceSetup_AcceleratorConfigs {
+    pub fn build(self) -> WorkbenchInstance_GceSetup_AcceleratorConfigs {
+        WorkbenchInstance_GceSetup_AcceleratorConfigs {
             core_count: core::default::Default::default(),
             type_: core::default::Default::default(),
         }
     }
 }
 
-pub struct WorkbenchInstanceGceSetupElAcceleratorConfigsElRef {
+#[allow(dead_code)]
+pub struct WorkbenchInstance_GceSetup_AcceleratorConfigsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WorkbenchInstanceGceSetupElAcceleratorConfigsElRef {
+impl terrars::Ref for WorkbenchInstance_GceSetup_AcceleratorConfigsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> WorkbenchInstanceGceSetupElAcceleratorConfigsElRef {
-        WorkbenchInstanceGceSetupElAcceleratorConfigsElRef {
+    ) -> WorkbenchInstance_GceSetup_AcceleratorConfigsRef {
+        WorkbenchInstance_GceSetup_AcceleratorConfigsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WorkbenchInstanceGceSetupElAcceleratorConfigsElRef {
+impl WorkbenchInstance_GceSetup_AcceleratorConfigsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -828,14 +950,14 @@ impl WorkbenchInstanceGceSetupElAcceleratorConfigsElRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `type_` after provisioning.\nOptional. Type of this accelerator. Possible values: [\"NVIDIA_TESLA_P100\", \"NVIDIA_TESLA_V100\", \"NVIDIA_TESLA_P4\", \"NVIDIA_TESLA_T4\", \"NVIDIA_TESLA_A100\", \"NVIDIA_A100_80GB\", \"NVIDIA_L4\", \"NVIDIA_TESLA_T4_VWS\", \"NVIDIA_TESLA_P100_VWS\", \"NVIDIA_TESLA_P4_VWS\"]"]
+        "Get a reference to the value of field `type_` after provisioning.\nOptional. Type of this accelerator. Possible values: [\"NVIDIA_TESLA_P100\", \"NVIDIA_TESLA_V100\", \"NVIDIA_TESLA_P4\", \"NVIDIA_TESLA_T4\", \"NVIDIA_TESLA_A100\", \"NVIDIA_A100_80GB\", \"NVIDIA_L4\", \"NVIDIA_H100_80GB\", \"NVIDIA_H100_MEGA_80GB\", \"NVIDIA_H200_141GB\", \"NVIDIA_B200\", \"NVIDIA_RTX6000\", \"NVIDIA_TESLA_T4_VWS\", \"NVIDIA_TESLA_P100_VWS\", \"NVIDIA_TESLA_P4_VWS\"]"]
     pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct WorkbenchInstanceGceSetupElBootDiskEl {
+pub struct WorkbenchInstance_GceSetup_BootDisk {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     disk_encryption: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -846,7 +968,7 @@ pub struct WorkbenchInstanceGceSetupElBootDiskEl {
     kms_key: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl WorkbenchInstanceGceSetupElBootDiskEl {
+impl WorkbenchInstance_GceSetup_BootDisk {
     #[doc =
         "Set the field `disk_encryption`.\nOptional. Input only. Disk encryption method used on the boot and\ndata disks, defaults to GMEK. Possible values: [\"GMEK\", \"CMEK\"]"]
     pub fn set_disk_encryption(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -862,22 +984,22 @@ impl WorkbenchInstanceGceSetupElBootDiskEl {
     }
 
     #[doc =
-        "Set the field `disk_type`.\nOptional. Indicates the type of the disk. Possible values: [\"PD_STANDARD\", \"PD_SSD\", \"PD_BALANCED\", \"PD_EXTREME\"]"]
+        "Set the field `disk_type`.\nOptional. Indicates the type of the disk. Possible values: [\"PD_STANDARD\", \"PD_SSD\", \"PD_BALANCED\", \"PD_EXTREME\", \"HYPERDISK_BALANCED\", \"HYPERDISK_BALANCED_HIGH_AVAILABILITY\", \"HYPERDISK_ML\"]"]
     pub fn set_disk_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.disk_type = std::option::Option::Some(v.into());
         self
     }
 
     #[doc =
-        "Set the field `kms_key`.\n'Optional. Input only. The KMS key used to encrypt the disks, only\napplicable if disk_encryption is CMEK. Format: 'projects/{project_id}/locations/{location}/keyRings/{key_ring_id}/cryptoKeys/{key_id}'\nLearn more about using your own encryption keys.'"]
+        "Set the field `kms_key`.\n'Optional. The KMS key used to encrypt the disks, only\napplicable if disk_encryption is CMEK. Format: 'projects/{project_id}/locations/{location}/keyRings/{key_ring_id}/cryptoKeys/{key_id}'\nLearn more about using your own encryption keys.'"]
     pub fn set_kms_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.kms_key = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for WorkbenchInstanceGceSetupElBootDiskEl {
-    type O = terrars::BlockAssignable<WorkbenchInstanceGceSetupElBootDiskEl>;
+impl terrars::ToListMappable for WorkbenchInstance_GceSetup_BootDisk {
+    type O = terrars::BlockAssignable<WorkbenchInstance_GceSetup_BootDisk>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -888,11 +1010,11 @@ impl terrars::ToListMappable for WorkbenchInstanceGceSetupElBootDiskEl {
     }
 }
 
-pub struct BuildWorkbenchInstanceGceSetupElBootDiskEl {}
+pub struct BuildWorkbenchInstance_GceSetup_BootDisk {}
 
-impl BuildWorkbenchInstanceGceSetupElBootDiskEl {
-    pub fn build(self) -> WorkbenchInstanceGceSetupElBootDiskEl {
-        WorkbenchInstanceGceSetupElBootDiskEl {
+impl BuildWorkbenchInstance_GceSetup_BootDisk {
+    pub fn build(self) -> WorkbenchInstance_GceSetup_BootDisk {
+        WorkbenchInstance_GceSetup_BootDisk {
             disk_encryption: core::default::Default::default(),
             disk_size_gb: core::default::Default::default(),
             disk_type: core::default::Default::default(),
@@ -901,21 +1023,23 @@ impl BuildWorkbenchInstanceGceSetupElBootDiskEl {
     }
 }
 
-pub struct WorkbenchInstanceGceSetupElBootDiskElRef {
+#[allow(dead_code)]
+pub struct WorkbenchInstance_GceSetup_BootDiskRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WorkbenchInstanceGceSetupElBootDiskElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> WorkbenchInstanceGceSetupElBootDiskElRef {
-        WorkbenchInstanceGceSetupElBootDiskElRef {
+impl terrars::Ref for WorkbenchInstance_GceSetup_BootDiskRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> WorkbenchInstance_GceSetup_BootDiskRef {
+        WorkbenchInstance_GceSetup_BootDiskRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WorkbenchInstanceGceSetupElBootDiskElRef {
+impl WorkbenchInstance_GceSetup_BootDiskRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -933,20 +1057,166 @@ impl WorkbenchInstanceGceSetupElBootDiskElRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `disk_type` after provisioning.\nOptional. Indicates the type of the disk. Possible values: [\"PD_STANDARD\", \"PD_SSD\", \"PD_BALANCED\", \"PD_EXTREME\"]"]
+        "Get a reference to the value of field `disk_type` after provisioning.\nOptional. Indicates the type of the disk. Possible values: [\"PD_STANDARD\", \"PD_SSD\", \"PD_BALANCED\", \"PD_EXTREME\", \"HYPERDISK_BALANCED\", \"HYPERDISK_BALANCED_HIGH_AVAILABILITY\", \"HYPERDISK_ML\"]"]
     pub fn disk_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.disk_type", self.base))
     }
 
     #[doc =
-        "Get a reference to the value of field `kms_key` after provisioning.\n'Optional. Input only. The KMS key used to encrypt the disks, only\napplicable if disk_encryption is CMEK. Format: 'projects/{project_id}/locations/{location}/keyRings/{key_ring_id}/cryptoKeys/{key_id}'\nLearn more about using your own encryption keys.'"]
+        "Get a reference to the value of field `kms_key` after provisioning.\n'Optional. The KMS key used to encrypt the disks, only\napplicable if disk_encryption is CMEK. Format: 'projects/{project_id}/locations/{location}/keyRings/{key_ring_id}/cryptoKeys/{key_id}'\nLearn more about using your own encryption keys.'"]
     pub fn kms_key(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct WorkbenchInstanceGceSetupElDataDisksEl {
+pub struct WorkbenchInstance_GceSetup_ConfidentialInstanceConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    confidential_instance_type: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl WorkbenchInstance_GceSetup_ConfidentialInstanceConfig {
+    #[doc =
+        "Set the field `confidential_instance_type`.\nDefines the type of technology used by the confidential instance. Possible values: [\"SEV\"]"]
+    pub fn set_confidential_instance_type(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.confidential_instance_type = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for WorkbenchInstance_GceSetup_ConfidentialInstanceConfig {
+    type O = terrars::BlockAssignable<WorkbenchInstance_GceSetup_ConfidentialInstanceConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildWorkbenchInstance_GceSetup_ConfidentialInstanceConfig {}
+
+impl BuildWorkbenchInstance_GceSetup_ConfidentialInstanceConfig {
+    pub fn build(self) -> WorkbenchInstance_GceSetup_ConfidentialInstanceConfig {
+        WorkbenchInstance_GceSetup_ConfidentialInstanceConfig {
+            confidential_instance_type: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct WorkbenchInstance_GceSetup_ConfidentialInstanceConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for WorkbenchInstance_GceSetup_ConfidentialInstanceConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> WorkbenchInstance_GceSetup_ConfidentialInstanceConfigRef {
+        WorkbenchInstance_GceSetup_ConfidentialInstanceConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl WorkbenchInstance_GceSetup_ConfidentialInstanceConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `confidential_instance_type` after provisioning.\nDefines the type of technology used by the confidential instance. Possible values: [\"SEV\"]"]
+    pub fn confidential_instance_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.confidential_instance_type", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct WorkbenchInstance_GceSetup_ContainerImage {
+    repository: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tag: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl WorkbenchInstance_GceSetup_ContainerImage {
+    #[doc = "Set the field `tag`.\nThe tag of the container image. If not specified, this defaults to the latest tag."]
+    pub fn set_tag(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.tag = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for WorkbenchInstance_GceSetup_ContainerImage {
+    type O = terrars::BlockAssignable<WorkbenchInstance_GceSetup_ContainerImage>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildWorkbenchInstance_GceSetup_ContainerImage {
+    #[doc = "The path to the container image repository.\nFor example: gcr.io/{project_id}/{imageName}"]
+    pub repository: terrars::PrimField<std::string::String>,
+}
+
+impl BuildWorkbenchInstance_GceSetup_ContainerImage {
+    pub fn build(self) -> WorkbenchInstance_GceSetup_ContainerImage {
+        WorkbenchInstance_GceSetup_ContainerImage {
+            repository: self.repository,
+            tag: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct WorkbenchInstance_GceSetup_ContainerImageRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for WorkbenchInstance_GceSetup_ContainerImageRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> WorkbenchInstance_GceSetup_ContainerImageRef {
+        WorkbenchInstance_GceSetup_ContainerImageRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl WorkbenchInstance_GceSetup_ContainerImageRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `repository` after provisioning.\nThe path to the container image repository.\nFor example: gcr.io/{project_id}/{imageName}"]
+    pub fn repository(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.repository", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `tag` after provisioning.\nThe tag of the container image. If not specified, this defaults to the latest tag."]
+    pub fn tag(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tag", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct WorkbenchInstance_GceSetup_DataDisks {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     disk_encryption: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -955,9 +1225,11 @@ pub struct WorkbenchInstanceGceSetupElDataDisksEl {
     disk_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_policies: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl WorkbenchInstanceGceSetupElDataDisksEl {
+impl WorkbenchInstance_GceSetup_DataDisks {
     #[doc =
         "Set the field `disk_encryption`.\nOptional. Input only. Disk encryption method used on the boot\nand data disks, defaults to GMEK. Possible values: [\"GMEK\", \"CMEK\"]"]
     pub fn set_disk_encryption(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -973,22 +1245,31 @@ impl WorkbenchInstanceGceSetupElDataDisksEl {
     }
 
     #[doc =
-        "Set the field `disk_type`.\nOptional. Input only. Indicates the type of the disk. Possible values: [\"PD_STANDARD\", \"PD_SSD\", \"PD_BALANCED\", \"PD_EXTREME\"]"]
+        "Set the field `disk_type`.\nOptional. Input only. Indicates the type of the disk. Possible values: [\"PD_STANDARD\", \"PD_SSD\", \"PD_BALANCED\", \"PD_EXTREME\", \"HYPERDISK_BALANCED\", \"HYPERDISK_EXTREME\", \"HYPERDISK_THROUGHPUT\", \"HYPERDISK_BALANCED_HIGH_AVAILABILITY\", \"HYPERDISK_ML\"]"]
     pub fn set_disk_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.disk_type = std::option::Option::Some(v.into());
         self
     }
 
     #[doc =
-        "Set the field `kms_key`.\n'Optional. Input only. The KMS key used to encrypt the disks,\nonly applicable if disk_encryption is CMEK. Format: 'projects/{project_id}/locations/{location}/keyRings/{key_ring_id}/cryptoKeys/{key_id}'\nLearn more about using your own encryption keys.'"]
+        "Set the field `kms_key`.\n'Optional. The KMS key used to encrypt the disks,\nonly applicable if disk_encryption is CMEK. Format: 'projects/{project_id}/locations/{location}/keyRings/{key_ring_id}/cryptoKeys/{key_id}'\nLearn more about using your own encryption keys.'"]
     pub fn set_kms_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.kms_key = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `resource_policies`.\nOptional. Resource policies applied to this disk."]
+    pub fn set_resource_policies(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.resource_policies = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for WorkbenchInstanceGceSetupElDataDisksEl {
-    type O = terrars::BlockAssignable<WorkbenchInstanceGceSetupElDataDisksEl>;
+impl terrars::ToListMappable for WorkbenchInstance_GceSetup_DataDisks {
+    type O = terrars::BlockAssignable<WorkbenchInstance_GceSetup_DataDisks>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -999,34 +1280,37 @@ impl terrars::ToListMappable for WorkbenchInstanceGceSetupElDataDisksEl {
     }
 }
 
-pub struct BuildWorkbenchInstanceGceSetupElDataDisksEl {}
+pub struct BuildWorkbenchInstance_GceSetup_DataDisks {}
 
-impl BuildWorkbenchInstanceGceSetupElDataDisksEl {
-    pub fn build(self) -> WorkbenchInstanceGceSetupElDataDisksEl {
-        WorkbenchInstanceGceSetupElDataDisksEl {
+impl BuildWorkbenchInstance_GceSetup_DataDisks {
+    pub fn build(self) -> WorkbenchInstance_GceSetup_DataDisks {
+        WorkbenchInstance_GceSetup_DataDisks {
             disk_encryption: core::default::Default::default(),
             disk_size_gb: core::default::Default::default(),
             disk_type: core::default::Default::default(),
             kms_key: core::default::Default::default(),
+            resource_policies: core::default::Default::default(),
         }
     }
 }
 
-pub struct WorkbenchInstanceGceSetupElDataDisksElRef {
+#[allow(dead_code)]
+pub struct WorkbenchInstance_GceSetup_DataDisksRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WorkbenchInstanceGceSetupElDataDisksElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> WorkbenchInstanceGceSetupElDataDisksElRef {
-        WorkbenchInstanceGceSetupElDataDisksElRef {
+impl terrars::Ref for WorkbenchInstance_GceSetup_DataDisksRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> WorkbenchInstance_GceSetup_DataDisksRef {
+        WorkbenchInstance_GceSetup_DataDisksRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WorkbenchInstanceGceSetupElDataDisksElRef {
+impl WorkbenchInstance_GceSetup_DataDisksRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1044,29 +1328,107 @@ impl WorkbenchInstanceGceSetupElDataDisksElRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `disk_type` after provisioning.\nOptional. Input only. Indicates the type of the disk. Possible values: [\"PD_STANDARD\", \"PD_SSD\", \"PD_BALANCED\", \"PD_EXTREME\"]"]
+        "Get a reference to the value of field `disk_type` after provisioning.\nOptional. Input only. Indicates the type of the disk. Possible values: [\"PD_STANDARD\", \"PD_SSD\", \"PD_BALANCED\", \"PD_EXTREME\", \"HYPERDISK_BALANCED\", \"HYPERDISK_EXTREME\", \"HYPERDISK_THROUGHPUT\", \"HYPERDISK_BALANCED_HIGH_AVAILABILITY\", \"HYPERDISK_ML\"]"]
     pub fn disk_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.disk_type", self.base))
     }
 
     #[doc =
-        "Get a reference to the value of field `kms_key` after provisioning.\n'Optional. Input only. The KMS key used to encrypt the disks,\nonly applicable if disk_encryption is CMEK. Format: 'projects/{project_id}/locations/{location}/keyRings/{key_ring_id}/cryptoKeys/{key_id}'\nLearn more about using your own encryption keys.'"]
+        "Get a reference to the value of field `kms_key` after provisioning.\n'Optional. The KMS key used to encrypt the disks,\nonly applicable if disk_encryption is CMEK. Format: 'projects/{project_id}/locations/{location}/keyRings/{key_ring_id}/cryptoKeys/{key_id}'\nLearn more about using your own encryption keys.'"]
     pub fn kms_key(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `resource_policies` after provisioning.\nOptional. Resource policies applied to this disk."]
+    pub fn resource_policies(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.resource_policies", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct WorkbenchInstanceGceSetupElNetworkInterfacesEl {
+pub struct WorkbenchInstance_GceSetup_NetworkInterfaces_AccessConfigs {
+    external_ip: terrars::PrimField<std::string::String>,
+}
+
+impl WorkbenchInstance_GceSetup_NetworkInterfaces_AccessConfigs { }
+
+impl terrars::ToListMappable for WorkbenchInstance_GceSetup_NetworkInterfaces_AccessConfigs {
+    type O = terrars::BlockAssignable<WorkbenchInstance_GceSetup_NetworkInterfaces_AccessConfigs>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildWorkbenchInstance_GceSetup_NetworkInterfaces_AccessConfigs {
+    #[doc =
+        "An external IP address associated with this instance. Specify an unused\nstatic external IP address available to the project or leave this field\nundefined to use an IP from a shared ephemeral IP address pool. If you\nspecify a static external IP address, it must live in the same region as\nthe zone of the instance."]
+    pub external_ip: terrars::PrimField<std::string::String>,
+}
+
+impl BuildWorkbenchInstance_GceSetup_NetworkInterfaces_AccessConfigs {
+    pub fn build(self) -> WorkbenchInstance_GceSetup_NetworkInterfaces_AccessConfigs {
+        WorkbenchInstance_GceSetup_NetworkInterfaces_AccessConfigs { external_ip: self.external_ip }
+    }
+}
+
+#[allow(dead_code)]
+pub struct WorkbenchInstance_GceSetup_NetworkInterfaces_AccessConfigsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for WorkbenchInstance_GceSetup_NetworkInterfaces_AccessConfigsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> WorkbenchInstance_GceSetup_NetworkInterfaces_AccessConfigsRef {
+        WorkbenchInstance_GceSetup_NetworkInterfaces_AccessConfigsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl WorkbenchInstance_GceSetup_NetworkInterfaces_AccessConfigsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `external_ip` after provisioning.\nAn external IP address associated with this instance. Specify an unused\nstatic external IP address available to the project or leave this field\nundefined to use an IP from a shared ephemeral IP address pool. If you\nspecify a static external IP address, it must live in the same region as\nthe zone of the instance."]
+    pub fn external_ip(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.external_ip", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct WorkbenchInstance_GceSetup_NetworkInterfacesDynamic {
+    access_configs: std
+    ::option
+    ::Option<terrars::DynamicBlock<WorkbenchInstance_GceSetup_NetworkInterfaces_AccessConfigs>>,
+}
+
+#[derive(Serialize)]
+pub struct WorkbenchInstance_GceSetup_NetworkInterfaces {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     network: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     nic_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     subnet: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    access_configs: std::option::Option<std::vec::Vec<WorkbenchInstance_GceSetup_NetworkInterfaces_AccessConfigs>>,
+    dynamic: WorkbenchInstance_GceSetup_NetworkInterfacesDynamic,
 }
 
-impl WorkbenchInstanceGceSetupElNetworkInterfacesEl {
+impl WorkbenchInstance_GceSetup_NetworkInterfaces {
     #[doc = "Set the field `network`.\nOptional. The name of the VPC that this VM instance is in."]
     pub fn set_network(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.network = std::option::Option::Some(v.into());
@@ -1085,10 +1447,31 @@ impl WorkbenchInstanceGceSetupElNetworkInterfacesEl {
         self.subnet = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `access_configs`.\n"]
+    pub fn set_access_configs(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<WorkbenchInstance_GceSetup_NetworkInterfaces_AccessConfigs>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.access_configs = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.access_configs = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
 }
 
-impl terrars::ToListMappable for WorkbenchInstanceGceSetupElNetworkInterfacesEl {
-    type O = terrars::BlockAssignable<WorkbenchInstanceGceSetupElNetworkInterfacesEl>;
+impl terrars::ToListMappable for WorkbenchInstance_GceSetup_NetworkInterfaces {
+    type O = terrars::BlockAssignable<WorkbenchInstance_GceSetup_NetworkInterfaces>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1099,36 +1482,40 @@ impl terrars::ToListMappable for WorkbenchInstanceGceSetupElNetworkInterfacesEl 
     }
 }
 
-pub struct BuildWorkbenchInstanceGceSetupElNetworkInterfacesEl {}
+pub struct BuildWorkbenchInstance_GceSetup_NetworkInterfaces {}
 
-impl BuildWorkbenchInstanceGceSetupElNetworkInterfacesEl {
-    pub fn build(self) -> WorkbenchInstanceGceSetupElNetworkInterfacesEl {
-        WorkbenchInstanceGceSetupElNetworkInterfacesEl {
+impl BuildWorkbenchInstance_GceSetup_NetworkInterfaces {
+    pub fn build(self) -> WorkbenchInstance_GceSetup_NetworkInterfaces {
+        WorkbenchInstance_GceSetup_NetworkInterfaces {
             network: core::default::Default::default(),
             nic_type: core::default::Default::default(),
             subnet: core::default::Default::default(),
+            access_configs: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct WorkbenchInstanceGceSetupElNetworkInterfacesElRef {
+#[allow(dead_code)]
+pub struct WorkbenchInstance_GceSetup_NetworkInterfacesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WorkbenchInstanceGceSetupElNetworkInterfacesElRef {
+impl terrars::Ref for WorkbenchInstance_GceSetup_NetworkInterfacesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> WorkbenchInstanceGceSetupElNetworkInterfacesElRef {
-        WorkbenchInstanceGceSetupElNetworkInterfacesElRef {
+    ) -> WorkbenchInstance_GceSetup_NetworkInterfacesRef {
+        WorkbenchInstance_GceSetup_NetworkInterfacesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WorkbenchInstanceGceSetupElNetworkInterfacesElRef {
+impl WorkbenchInstance_GceSetup_NetworkInterfacesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1150,24 +1537,54 @@ impl WorkbenchInstanceGceSetupElNetworkInterfacesElRef {
     pub fn subnet(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.subnet", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `access_configs` after provisioning.\n"]
+    pub fn access_configs(&self) -> terrars::ListRef<WorkbenchInstance_GceSetup_NetworkInterfaces_AccessConfigsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.access_configs", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct WorkbenchInstanceGceSetupElServiceAccountsEl {
+pub struct WorkbenchInstance_GceSetup_ReservationAffinity {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    email: std::option::Option<terrars::PrimField<std::string::String>>,
+    consume_reservation_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    values: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl WorkbenchInstanceGceSetupElServiceAccountsEl {
-    #[doc = "Set the field `email`.\nOptional. Email address of the service account."]
-    pub fn set_email(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.email = std::option::Option::Some(v.into());
+impl WorkbenchInstance_GceSetup_ReservationAffinity {
+    #[doc =
+        "Set the field `consume_reservation_type`.\nSpecifies the type of reservation from which this instance can consume resources:\nRESERVATION_ANY (default), RESERVATION_SPECIFIC, or RESERVATION_NONE. Possible values: [\"RESERVATION_NONE\", \"RESERVATION_ANY\", \"RESERVATION_SPECIFIC\"]"]
+    pub fn set_consume_reservation_type(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.consume_reservation_type = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `key`.\nCorresponds to the label key of a reservation resource. To target a\nRESERVATION_SPECIFIC by name, use compute.googleapis.com/reservation-name\nas the key and specify the name of your reservation as its value."]
+    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.key = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `values`.\nCorresponds to the label values of a reservation resource. This can be\neither a name to a reservation in the same project or\n\"projects/different-project/reservations/some-reservation-name\"\nto target a shared reservation in the same zone but in a different project."]
+    pub fn set_values(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.values = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for WorkbenchInstanceGceSetupElServiceAccountsEl {
-    type O = terrars::BlockAssignable<WorkbenchInstanceGceSetupElServiceAccountsEl>;
+impl terrars::ToListMappable for WorkbenchInstance_GceSetup_ReservationAffinity {
+    type O = terrars::BlockAssignable<WorkbenchInstance_GceSetup_ReservationAffinity>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1178,32 +1595,112 @@ impl terrars::ToListMappable for WorkbenchInstanceGceSetupElServiceAccountsEl {
     }
 }
 
-pub struct BuildWorkbenchInstanceGceSetupElServiceAccountsEl {}
+pub struct BuildWorkbenchInstance_GceSetup_ReservationAffinity {}
 
-impl BuildWorkbenchInstanceGceSetupElServiceAccountsEl {
-    pub fn build(self) -> WorkbenchInstanceGceSetupElServiceAccountsEl {
-        WorkbenchInstanceGceSetupElServiceAccountsEl { email: core::default::Default::default() }
+impl BuildWorkbenchInstance_GceSetup_ReservationAffinity {
+    pub fn build(self) -> WorkbenchInstance_GceSetup_ReservationAffinity {
+        WorkbenchInstance_GceSetup_ReservationAffinity {
+            consume_reservation_type: core::default::Default::default(),
+            key: core::default::Default::default(),
+            values: core::default::Default::default(),
+        }
     }
 }
 
-pub struct WorkbenchInstanceGceSetupElServiceAccountsElRef {
+#[allow(dead_code)]
+pub struct WorkbenchInstance_GceSetup_ReservationAffinityRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WorkbenchInstanceGceSetupElServiceAccountsElRef {
+impl terrars::Ref for WorkbenchInstance_GceSetup_ReservationAffinityRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> WorkbenchInstanceGceSetupElServiceAccountsElRef {
-        WorkbenchInstanceGceSetupElServiceAccountsElRef {
+    ) -> WorkbenchInstance_GceSetup_ReservationAffinityRef {
+        WorkbenchInstance_GceSetup_ReservationAffinityRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WorkbenchInstanceGceSetupElServiceAccountsElRef {
+impl WorkbenchInstance_GceSetup_ReservationAffinityRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `consume_reservation_type` after provisioning.\nSpecifies the type of reservation from which this instance can consume resources:\nRESERVATION_ANY (default), RESERVATION_SPECIFIC, or RESERVATION_NONE. Possible values: [\"RESERVATION_NONE\", \"RESERVATION_ANY\", \"RESERVATION_SPECIFIC\"]"]
+    pub fn consume_reservation_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.consume_reservation_type", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `key` after provisioning.\nCorresponds to the label key of a reservation resource. To target a\nRESERVATION_SPECIFIC by name, use compute.googleapis.com/reservation-name\nas the key and specify the name of your reservation as its value."]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `values` after provisioning.\nCorresponds to the label values of a reservation resource. This can be\neither a name to a reservation in the same project or\n\"projects/different-project/reservations/some-reservation-name\"\nto target a shared reservation in the same zone but in a different project."]
+    pub fn values(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.values", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct WorkbenchInstance_GceSetup_ServiceAccounts {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    email: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl WorkbenchInstance_GceSetup_ServiceAccounts {
+    #[doc = "Set the field `email`.\nOptional. Email address of the service account."]
+    pub fn set_email(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.email = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for WorkbenchInstance_GceSetup_ServiceAccounts {
+    type O = terrars::BlockAssignable<WorkbenchInstance_GceSetup_ServiceAccounts>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildWorkbenchInstance_GceSetup_ServiceAccounts {}
+
+impl BuildWorkbenchInstance_GceSetup_ServiceAccounts {
+    pub fn build(self) -> WorkbenchInstance_GceSetup_ServiceAccounts {
+        WorkbenchInstance_GceSetup_ServiceAccounts { email: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct WorkbenchInstance_GceSetup_ServiceAccountsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for WorkbenchInstance_GceSetup_ServiceAccountsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> WorkbenchInstance_GceSetup_ServiceAccountsRef {
+        WorkbenchInstance_GceSetup_ServiceAccountsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl WorkbenchInstance_GceSetup_ServiceAccountsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1222,7 +1719,107 @@ impl WorkbenchInstanceGceSetupElServiceAccountsElRef {
 }
 
 #[derive(Serialize)]
-pub struct WorkbenchInstanceGceSetupElVmImageEl {
+pub struct WorkbenchInstance_GceSetup_ShieldedInstanceConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_integrity_monitoring: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_secure_boot: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_vtpm: std::option::Option<terrars::PrimField<bool>>,
+}
+
+impl WorkbenchInstance_GceSetup_ShieldedInstanceConfig {
+    #[doc =
+        "Set the field `enable_integrity_monitoring`.\nOptional. Defines whether the VM instance has integrity monitoring\nenabled. Enables monitoring and attestation of the boot integrity of the VM\ninstance. The attestation is performed against the integrity policy baseline.\nThis baseline is initially derived from the implicitly trusted boot image\nwhen the VM instance is created. Enabled by default."]
+    pub fn set_enable_integrity_monitoring(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enable_integrity_monitoring = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `enable_secure_boot`.\nOptional. Defines whether the VM instance has Secure Boot enabled.\nSecure Boot helps ensure that the system only runs authentic software by verifying\nthe digital signature of all boot components, and halting the boot process\nif signature verification fails. Disabled by default."]
+    pub fn set_enable_secure_boot(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enable_secure_boot = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `enable_vtpm`.\nOptional. Defines whether the VM instance has the vTPM enabled.\nEnabled by default."]
+    pub fn set_enable_vtpm(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enable_vtpm = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for WorkbenchInstance_GceSetup_ShieldedInstanceConfig {
+    type O = terrars::BlockAssignable<WorkbenchInstance_GceSetup_ShieldedInstanceConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildWorkbenchInstance_GceSetup_ShieldedInstanceConfig {}
+
+impl BuildWorkbenchInstance_GceSetup_ShieldedInstanceConfig {
+    pub fn build(self) -> WorkbenchInstance_GceSetup_ShieldedInstanceConfig {
+        WorkbenchInstance_GceSetup_ShieldedInstanceConfig {
+            enable_integrity_monitoring: core::default::Default::default(),
+            enable_secure_boot: core::default::Default::default(),
+            enable_vtpm: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct WorkbenchInstance_GceSetup_ShieldedInstanceConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for WorkbenchInstance_GceSetup_ShieldedInstanceConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> WorkbenchInstance_GceSetup_ShieldedInstanceConfigRef {
+        WorkbenchInstance_GceSetup_ShieldedInstanceConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl WorkbenchInstance_GceSetup_ShieldedInstanceConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `enable_integrity_monitoring` after provisioning.\nOptional. Defines whether the VM instance has integrity monitoring\nenabled. Enables monitoring and attestation of the boot integrity of the VM\ninstance. The attestation is performed against the integrity policy baseline.\nThis baseline is initially derived from the implicitly trusted boot image\nwhen the VM instance is created. Enabled by default."]
+    pub fn enable_integrity_monitoring(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_integrity_monitoring", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `enable_secure_boot` after provisioning.\nOptional. Defines whether the VM instance has Secure Boot enabled.\nSecure Boot helps ensure that the system only runs authentic software by verifying\nthe digital signature of all boot components, and halting the boot process\nif signature verification fails. Disabled by default."]
+    pub fn enable_secure_boot(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_secure_boot", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `enable_vtpm` after provisioning.\nOptional. Defines whether the VM instance has the vTPM enabled.\nEnabled by default."]
+    pub fn enable_vtpm(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_vtpm", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct WorkbenchInstance_GceSetup_VmImage {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     family: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1231,7 +1828,7 @@ pub struct WorkbenchInstanceGceSetupElVmImageEl {
     project: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl WorkbenchInstanceGceSetupElVmImageEl {
+impl WorkbenchInstance_GceSetup_VmImage {
     #[doc =
         "Set the field `family`.\nOptional. Use this VM image family to find the image; the newest\nimage in this family will be used."]
     pub fn set_family(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1253,8 +1850,8 @@ impl WorkbenchInstanceGceSetupElVmImageEl {
     }
 }
 
-impl terrars::ToListMappable for WorkbenchInstanceGceSetupElVmImageEl {
-    type O = terrars::BlockAssignable<WorkbenchInstanceGceSetupElVmImageEl>;
+impl terrars::ToListMappable for WorkbenchInstance_GceSetup_VmImage {
+    type O = terrars::BlockAssignable<WorkbenchInstance_GceSetup_VmImage>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1265,11 +1862,11 @@ impl terrars::ToListMappable for WorkbenchInstanceGceSetupElVmImageEl {
     }
 }
 
-pub struct BuildWorkbenchInstanceGceSetupElVmImageEl {}
+pub struct BuildWorkbenchInstance_GceSetup_VmImage {}
 
-impl BuildWorkbenchInstanceGceSetupElVmImageEl {
-    pub fn build(self) -> WorkbenchInstanceGceSetupElVmImageEl {
-        WorkbenchInstanceGceSetupElVmImageEl {
+impl BuildWorkbenchInstance_GceSetup_VmImage {
+    pub fn build(self) -> WorkbenchInstance_GceSetup_VmImage {
+        WorkbenchInstance_GceSetup_VmImage {
             family: core::default::Default::default(),
             name: core::default::Default::default(),
             project: core::default::Default::default(),
@@ -1277,21 +1874,23 @@ impl BuildWorkbenchInstanceGceSetupElVmImageEl {
     }
 }
 
-pub struct WorkbenchInstanceGceSetupElVmImageElRef {
+#[allow(dead_code)]
+pub struct WorkbenchInstance_GceSetup_VmImageRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WorkbenchInstanceGceSetupElVmImageElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> WorkbenchInstanceGceSetupElVmImageElRef {
-        WorkbenchInstanceGceSetupElVmImageElRef {
+impl terrars::Ref for WorkbenchInstance_GceSetup_VmImageRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> WorkbenchInstance_GceSetup_VmImageRef {
+        WorkbenchInstance_GceSetup_VmImageRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WorkbenchInstanceGceSetupElVmImageElRef {
+impl WorkbenchInstance_GceSetup_VmImageRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1316,17 +1915,25 @@ impl WorkbenchInstanceGceSetupElVmImageElRef {
 }
 
 #[derive(Serialize, Default)]
-struct WorkbenchInstanceGceSetupElDynamic {
-    accelerator_configs: std::option::Option<terrars::DynamicBlock<WorkbenchInstanceGceSetupElAcceleratorConfigsEl>>,
-    boot_disk: std::option::Option<terrars::DynamicBlock<WorkbenchInstanceGceSetupElBootDiskEl>>,
-    data_disks: std::option::Option<terrars::DynamicBlock<WorkbenchInstanceGceSetupElDataDisksEl>>,
-    network_interfaces: std::option::Option<terrars::DynamicBlock<WorkbenchInstanceGceSetupElNetworkInterfacesEl>>,
-    service_accounts: std::option::Option<terrars::DynamicBlock<WorkbenchInstanceGceSetupElServiceAccountsEl>>,
-    vm_image: std::option::Option<terrars::DynamicBlock<WorkbenchInstanceGceSetupElVmImageEl>>,
+struct WorkbenchInstance_GceSetupDynamic {
+    accelerator_configs: std::option::Option<terrars::DynamicBlock<WorkbenchInstance_GceSetup_AcceleratorConfigs>>,
+    boot_disk: std::option::Option<terrars::DynamicBlock<WorkbenchInstance_GceSetup_BootDisk>>,
+    confidential_instance_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<WorkbenchInstance_GceSetup_ConfidentialInstanceConfig>>,
+    container_image: std::option::Option<terrars::DynamicBlock<WorkbenchInstance_GceSetup_ContainerImage>>,
+    data_disks: std::option::Option<terrars::DynamicBlock<WorkbenchInstance_GceSetup_DataDisks>>,
+    network_interfaces: std::option::Option<terrars::DynamicBlock<WorkbenchInstance_GceSetup_NetworkInterfaces>>,
+    reservation_affinity: std::option::Option<terrars::DynamicBlock<WorkbenchInstance_GceSetup_ReservationAffinity>>,
+    service_accounts: std::option::Option<terrars::DynamicBlock<WorkbenchInstance_GceSetup_ServiceAccounts>>,
+    shielded_instance_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<WorkbenchInstance_GceSetup_ShieldedInstanceConfig>>,
+    vm_image: std::option::Option<terrars::DynamicBlock<WorkbenchInstance_GceSetup_VmImage>>,
 }
 
 #[derive(Serialize)]
-pub struct WorkbenchInstanceGceSetupEl {
+pub struct WorkbenchInstance_GceSetup {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     disable_public_ip: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1336,23 +1943,35 @@ pub struct WorkbenchInstanceGceSetupEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     metadata: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    min_cpu_platform: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    accelerator_configs: std::option::Option<std::vec::Vec<WorkbenchInstanceGceSetupElAcceleratorConfigsEl>>,
+    accelerator_configs: std::option::Option<std::vec::Vec<WorkbenchInstance_GceSetup_AcceleratorConfigs>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    boot_disk: std::option::Option<std::vec::Vec<WorkbenchInstanceGceSetupElBootDiskEl>>,
+    boot_disk: std::option::Option<std::vec::Vec<WorkbenchInstance_GceSetup_BootDisk>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    data_disks: std::option::Option<std::vec::Vec<WorkbenchInstanceGceSetupElDataDisksEl>>,
+    confidential_instance_config: std
+    ::option
+    ::Option<std::vec::Vec<WorkbenchInstance_GceSetup_ConfidentialInstanceConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    network_interfaces: std::option::Option<std::vec::Vec<WorkbenchInstanceGceSetupElNetworkInterfacesEl>>,
+    container_image: std::option::Option<std::vec::Vec<WorkbenchInstance_GceSetup_ContainerImage>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    service_accounts: std::option::Option<std::vec::Vec<WorkbenchInstanceGceSetupElServiceAccountsEl>>,
+    data_disks: std::option::Option<std::vec::Vec<WorkbenchInstance_GceSetup_DataDisks>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vm_image: std::option::Option<std::vec::Vec<WorkbenchInstanceGceSetupElVmImageEl>>,
-    dynamic: WorkbenchInstanceGceSetupElDynamic,
+    network_interfaces: std::option::Option<std::vec::Vec<WorkbenchInstance_GceSetup_NetworkInterfaces>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    reservation_affinity: std::option::Option<std::vec::Vec<WorkbenchInstance_GceSetup_ReservationAffinity>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    service_accounts: std::option::Option<std::vec::Vec<WorkbenchInstance_GceSetup_ServiceAccounts>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    shielded_instance_config: std::option::Option<std::vec::Vec<WorkbenchInstance_GceSetup_ShieldedInstanceConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vm_image: std::option::Option<std::vec::Vec<WorkbenchInstance_GceSetup_VmImage>>,
+    dynamic: WorkbenchInstance_GceSetupDynamic,
 }
 
-impl WorkbenchInstanceGceSetupEl {
+impl WorkbenchInstance_GceSetup {
     #[doc =
         "Set the field `disable_public_ip`.\nOptional. If true, no external IP will be assigned to this VM instance."]
     pub fn set_disable_public_ip(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -1383,6 +2002,12 @@ impl WorkbenchInstanceGceSetupEl {
         self
     }
 
+    #[doc = "Set the field `min_cpu_platform`.\nOptional. The minimum CPU platform to use for this instance."]
+    pub fn set_min_cpu_platform(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.min_cpu_platform = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc =
         "Set the field `tags`.\nOptional. The Compute Engine tags to add to instance (see [Tagging\ninstances](https://cloud.google.com/compute/docs/label-or-tag-resources#tags))."]
     pub fn set_tags(
@@ -1396,7 +2021,7 @@ impl WorkbenchInstanceGceSetupEl {
     #[doc = "Set the field `accelerator_configs`.\n"]
     pub fn set_accelerator_configs(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<WorkbenchInstanceGceSetupElAcceleratorConfigsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<WorkbenchInstance_GceSetup_AcceleratorConfigs>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1412,7 +2037,7 @@ impl WorkbenchInstanceGceSetupEl {
     #[doc = "Set the field `boot_disk`.\n"]
     pub fn set_boot_disk(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<WorkbenchInstanceGceSetupElBootDiskEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<WorkbenchInstance_GceSetup_BootDisk>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1425,10 +2050,42 @@ impl WorkbenchInstanceGceSetupEl {
         self
     }
 
+    #[doc = "Set the field `confidential_instance_config`.\n"]
+    pub fn set_confidential_instance_config(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<WorkbenchInstance_GceSetup_ConfidentialInstanceConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.confidential_instance_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.confidential_instance_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `container_image`.\n"]
+    pub fn set_container_image(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<WorkbenchInstance_GceSetup_ContainerImage>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.container_image = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.container_image = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `data_disks`.\n"]
     pub fn set_data_disks(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<WorkbenchInstanceGceSetupElDataDisksEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<WorkbenchInstance_GceSetup_DataDisks>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1444,7 +2101,7 @@ impl WorkbenchInstanceGceSetupEl {
     #[doc = "Set the field `network_interfaces`.\n"]
     pub fn set_network_interfaces(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<WorkbenchInstanceGceSetupElNetworkInterfacesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<WorkbenchInstance_GceSetup_NetworkInterfaces>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1457,10 +2114,26 @@ impl WorkbenchInstanceGceSetupEl {
         self
     }
 
+    #[doc = "Set the field `reservation_affinity`.\n"]
+    pub fn set_reservation_affinity(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<WorkbenchInstance_GceSetup_ReservationAffinity>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.reservation_affinity = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.reservation_affinity = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `service_accounts`.\n"]
     pub fn set_service_accounts(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<WorkbenchInstanceGceSetupElServiceAccountsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<WorkbenchInstance_GceSetup_ServiceAccounts>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1473,10 +2146,26 @@ impl WorkbenchInstanceGceSetupEl {
         self
     }
 
+    #[doc = "Set the field `shielded_instance_config`.\n"]
+    pub fn set_shielded_instance_config(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<WorkbenchInstance_GceSetup_ShieldedInstanceConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.shielded_instance_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.shielded_instance_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `vm_image`.\n"]
     pub fn set_vm_image(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<WorkbenchInstanceGceSetupElVmImageEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<WorkbenchInstance_GceSetup_VmImage>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1490,8 +2179,8 @@ impl WorkbenchInstanceGceSetupEl {
     }
 }
 
-impl terrars::ToListMappable for WorkbenchInstanceGceSetupEl {
-    type O = terrars::BlockAssignable<WorkbenchInstanceGceSetupEl>;
+impl terrars::ToListMappable for WorkbenchInstance_GceSetup {
+    type O = terrars::BlockAssignable<WorkbenchInstance_GceSetup>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1502,44 +2191,57 @@ impl terrars::ToListMappable for WorkbenchInstanceGceSetupEl {
     }
 }
 
-pub struct BuildWorkbenchInstanceGceSetupEl {}
+pub struct BuildWorkbenchInstance_GceSetup {}
 
-impl BuildWorkbenchInstanceGceSetupEl {
-    pub fn build(self) -> WorkbenchInstanceGceSetupEl {
-        WorkbenchInstanceGceSetupEl {
+impl BuildWorkbenchInstance_GceSetup {
+    pub fn build(self) -> WorkbenchInstance_GceSetup {
+        WorkbenchInstance_GceSetup {
             disable_public_ip: core::default::Default::default(),
             enable_ip_forwarding: core::default::Default::default(),
             machine_type: core::default::Default::default(),
             metadata: core::default::Default::default(),
+            min_cpu_platform: core::default::Default::default(),
             tags: core::default::Default::default(),
             accelerator_configs: core::default::Default::default(),
             boot_disk: core::default::Default::default(),
+            confidential_instance_config: core::default::Default::default(),
+            container_image: core::default::Default::default(),
             data_disks: core::default::Default::default(),
             network_interfaces: core::default::Default::default(),
+            reservation_affinity: core::default::Default::default(),
             service_accounts: core::default::Default::default(),
+            shielded_instance_config: core::default::Default::default(),
             vm_image: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct WorkbenchInstanceGceSetupElRef {
+#[allow(dead_code)]
+pub struct WorkbenchInstance_GceSetupRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WorkbenchInstanceGceSetupElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> WorkbenchInstanceGceSetupElRef {
-        WorkbenchInstanceGceSetupElRef {
+impl terrars::Ref for WorkbenchInstance_GceSetupRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> WorkbenchInstance_GceSetupRef {
+        WorkbenchInstance_GceSetupRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WorkbenchInstanceGceSetupElRef {
+impl WorkbenchInstance_GceSetupRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `compute_instance_id` after provisioning.\nOutput only. The unique numeric identifier of the underlying Compute Engine VM instance."]
+    pub fn compute_instance_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.compute_instance_id", self.base))
     }
 
     #[doc =
@@ -1567,44 +2269,72 @@ impl WorkbenchInstanceGceSetupElRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `min_cpu_platform` after provisioning.\nOptional. The minimum CPU platform to use for this instance."]
+    pub fn min_cpu_platform(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_cpu_platform", self.base))
+    }
+
+    #[doc =
         "Get a reference to the value of field `tags` after provisioning.\nOptional. The Compute Engine tags to add to instance (see [Tagging\ninstances](https://cloud.google.com/compute/docs/label-or-tag-resources#tags))."]
     pub fn tags(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tags", self.base))
     }
 
     #[doc = "Get a reference to the value of field `accelerator_configs` after provisioning.\n"]
-    pub fn accelerator_configs(&self) -> terrars::ListRef<WorkbenchInstanceGceSetupElAcceleratorConfigsElRef> {
+    pub fn accelerator_configs(&self) -> terrars::ListRef<WorkbenchInstance_GceSetup_AcceleratorConfigsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.accelerator_configs", self.base))
     }
 
     #[doc = "Get a reference to the value of field `boot_disk` after provisioning.\n"]
-    pub fn boot_disk(&self) -> terrars::ListRef<WorkbenchInstanceGceSetupElBootDiskElRef> {
+    pub fn boot_disk(&self) -> terrars::ListRef<WorkbenchInstance_GceSetup_BootDiskRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.boot_disk", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `confidential_instance_config` after provisioning.\n"]
+    pub fn confidential_instance_config(
+        &self,
+    ) -> terrars::ListRef<WorkbenchInstance_GceSetup_ConfidentialInstanceConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.confidential_instance_config", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `container_image` after provisioning.\n"]
+    pub fn container_image(&self) -> terrars::ListRef<WorkbenchInstance_GceSetup_ContainerImageRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.container_image", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `data_disks` after provisioning.\n"]
-    pub fn data_disks(&self) -> terrars::ListRef<WorkbenchInstanceGceSetupElDataDisksElRef> {
+    pub fn data_disks(&self) -> terrars::ListRef<WorkbenchInstance_GceSetup_DataDisksRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.data_disks", self.base))
     }
 
     #[doc = "Get a reference to the value of field `network_interfaces` after provisioning.\n"]
-    pub fn network_interfaces(&self) -> terrars::ListRef<WorkbenchInstanceGceSetupElNetworkInterfacesElRef> {
+    pub fn network_interfaces(&self) -> terrars::ListRef<WorkbenchInstance_GceSetup_NetworkInterfacesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_interfaces", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `reservation_affinity` after provisioning.\n"]
+    pub fn reservation_affinity(&self) -> terrars::ListRef<WorkbenchInstance_GceSetup_ReservationAffinityRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.reservation_affinity", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `service_accounts` after provisioning.\n"]
-    pub fn service_accounts(&self) -> terrars::ListRef<WorkbenchInstanceGceSetupElServiceAccountsElRef> {
+    pub fn service_accounts(&self) -> terrars::ListRef<WorkbenchInstance_GceSetup_ServiceAccountsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.service_accounts", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `shielded_instance_config` after provisioning.\n"]
+    pub fn shielded_instance_config(&self) -> terrars::ListRef<WorkbenchInstance_GceSetup_ShieldedInstanceConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.shielded_instance_config", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `vm_image` after provisioning.\n"]
-    pub fn vm_image(&self) -> terrars::ListRef<WorkbenchInstanceGceSetupElVmImageElRef> {
+    pub fn vm_image(&self) -> terrars::ListRef<WorkbenchInstance_GceSetup_VmImageRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vm_image", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct WorkbenchInstanceTimeoutsEl {
+pub struct WorkbenchInstance_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1613,7 +2343,7 @@ pub struct WorkbenchInstanceTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl WorkbenchInstanceTimeoutsEl {
+impl WorkbenchInstance_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1633,8 +2363,8 @@ impl WorkbenchInstanceTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for WorkbenchInstanceTimeoutsEl {
-    type O = terrars::BlockAssignable<WorkbenchInstanceTimeoutsEl>;
+impl terrars::ToListMappable for WorkbenchInstance_Timeouts {
+    type O = terrars::BlockAssignable<WorkbenchInstance_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1645,11 +2375,11 @@ impl terrars::ToListMappable for WorkbenchInstanceTimeoutsEl {
     }
 }
 
-pub struct BuildWorkbenchInstanceTimeoutsEl {}
+pub struct BuildWorkbenchInstance_Timeouts {}
 
-impl BuildWorkbenchInstanceTimeoutsEl {
-    pub fn build(self) -> WorkbenchInstanceTimeoutsEl {
-        WorkbenchInstanceTimeoutsEl {
+impl BuildWorkbenchInstance_Timeouts {
+    pub fn build(self) -> WorkbenchInstance_Timeouts {
+        WorkbenchInstance_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1657,21 +2387,23 @@ impl BuildWorkbenchInstanceTimeoutsEl {
     }
 }
 
-pub struct WorkbenchInstanceTimeoutsElRef {
+#[allow(dead_code)]
+pub struct WorkbenchInstance_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WorkbenchInstanceTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> WorkbenchInstanceTimeoutsElRef {
-        WorkbenchInstanceTimeoutsElRef {
+impl terrars::Ref for WorkbenchInstance_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> WorkbenchInstance_TimeoutsRef {
+        WorkbenchInstance_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WorkbenchInstanceTimeoutsElRef {
+impl WorkbenchInstance_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1690,9 +2422,4 @@ impl WorkbenchInstanceTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct WorkbenchInstanceDynamic {
-    gce_setup: std::option::Option<terrars::DynamicBlock<WorkbenchInstanceGceSetupEl>>,
 }

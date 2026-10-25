@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataComputeHealthCheckData {
+struct DataComputeHealthCheckData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -26,7 +28,7 @@ struct DataComputeHealthCheckData {
 struct DataComputeHealthCheck_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataComputeHealthCheckData>,
+    data: std::cell::RefCell<DataComputeHealthCheckData_>,
 }
 
 #[derive(Clone)]
@@ -96,14 +98,26 @@ impl DataComputeHealthCheck {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nAn optional description of this resource. Provide this property when\nyou create the resource."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `grpc_health_check` after provisioning.\nA nested object resource"]
-    pub fn grpc_health_check(&self) -> terrars::ListRef<DataComputeHealthCheckGrpcHealthCheckElRef> {
+    #[doc = "Get a reference to the value of field `grpc_health_check` after provisioning.\nA nested object resource."]
+    pub fn grpc_health_check(&self) -> terrars::ListRef<DataComputeHealthCheck_GrpcHealthCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.grpc_health_check", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `grpc_tls_health_check` after provisioning.\nA nested object resource."]
+    pub fn grpc_tls_health_check(&self) -> terrars::ListRef<DataComputeHealthCheck_GrpcTlsHealthCheckRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.grpc_tls_health_check", self.extract_ref()))
     }
 
     #[doc =
@@ -112,18 +126,18 @@ impl DataComputeHealthCheck {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.healthy_threshold", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `http2_health_check` after provisioning.\nA nested object resource"]
-    pub fn http2_health_check(&self) -> terrars::ListRef<DataComputeHealthCheckHttp2HealthCheckElRef> {
+    #[doc = "Get a reference to the value of field `http2_health_check` after provisioning.\nA nested object resource."]
+    pub fn http2_health_check(&self) -> terrars::ListRef<DataComputeHealthCheck_Http2HealthCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.http2_health_check", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `http_health_check` after provisioning.\nA nested object resource"]
-    pub fn http_health_check(&self) -> terrars::ListRef<DataComputeHealthCheckHttpHealthCheckElRef> {
+    #[doc = "Get a reference to the value of field `http_health_check` after provisioning.\nA nested object resource."]
+    pub fn http_health_check(&self) -> terrars::ListRef<DataComputeHealthCheck_HttpHealthCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.http_health_check", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `https_health_check` after provisioning.\nA nested object resource"]
-    pub fn https_health_check(&self) -> terrars::ListRef<DataComputeHealthCheckHttpsHealthCheckElRef> {
+    #[doc = "Get a reference to the value of field `https_health_check` after provisioning.\nA nested object resource."]
+    pub fn https_health_check(&self) -> terrars::ListRef<DataComputeHealthCheck_HttpsHealthCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.https_health_check", self.extract_ref()))
     }
 
@@ -134,7 +148,7 @@ impl DataComputeHealthCheck {
 
     #[doc =
         "Get a reference to the value of field `log_config` after provisioning.\nConfigure logging on this health check."]
-    pub fn log_config(&self) -> terrars::ListRef<DataComputeHealthCheckLogConfigElRef> {
+    pub fn log_config(&self) -> terrars::ListRef<DataComputeHealthCheck_LogConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.log_config", self.extract_ref()))
     }
 
@@ -154,13 +168,19 @@ impl DataComputeHealthCheck {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `ssl_health_check` after provisioning.\nA nested object resource"]
-    pub fn ssl_health_check(&self) -> terrars::ListRef<DataComputeHealthCheckSslHealthCheckElRef> {
+    #[doc =
+        "Get a reference to the value of field `source_regions` after provisioning.\nThe list of cloud regions from which health checks are performed. If\nany regions are specified, then exactly 3 regions should be specified.\nThe region names must be valid names of Google Cloud regions. This can\nonly be set for global health check. If this list is non-empty, then\nthere are restrictions on what other health check fields are supported\nand what other resources can use this health check:\n\n* SSL, HTTP2, and GRPC protocols are not supported.\n\n* The TCP request field is not supported.\n\n* The proxyHeader field for HTTP, HTTPS, and TCP is not supported.\n\n* The checkIntervalSec field must be at least 30.\n\n* The health check cannot be used with BackendService nor with managed\ninstance group auto-healing."]
+    pub fn source_regions(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.source_regions", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ssl_health_check` after provisioning.\nA nested object resource."]
+    pub fn ssl_health_check(&self) -> terrars::ListRef<DataComputeHealthCheck_SslHealthCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ssl_health_check", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `tcp_health_check` after provisioning.\nA nested object resource"]
-    pub fn tcp_health_check(&self) -> terrars::ListRef<DataComputeHealthCheckTcpHealthCheckElRef> {
+    #[doc = "Get a reference to the value of field `tcp_health_check` after provisioning.\nA nested object resource."]
+    pub fn tcp_health_check(&self) -> terrars::ListRef<DataComputeHealthCheck_TcpHealthCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tcp_health_check", self.extract_ref()))
     }
 
@@ -226,7 +246,7 @@ impl BuildDataComputeHealthCheck {
         let out = DataComputeHealthCheck(std::rc::Rc::new(DataComputeHealthCheck_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataComputeHealthCheckData {
+            data: std::cell::RefCell::new(DataComputeHealthCheckData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -277,14 +297,26 @@ impl DataComputeHealthCheckRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nAn optional description of this resource. Provide this property when\nyou create the resource."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `grpc_health_check` after provisioning.\nA nested object resource"]
-    pub fn grpc_health_check(&self) -> terrars::ListRef<DataComputeHealthCheckGrpcHealthCheckElRef> {
+    #[doc = "Get a reference to the value of field `grpc_health_check` after provisioning.\nA nested object resource."]
+    pub fn grpc_health_check(&self) -> terrars::ListRef<DataComputeHealthCheck_GrpcHealthCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.grpc_health_check", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `grpc_tls_health_check` after provisioning.\nA nested object resource."]
+    pub fn grpc_tls_health_check(&self) -> terrars::ListRef<DataComputeHealthCheck_GrpcTlsHealthCheckRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.grpc_tls_health_check", self.extract_ref()))
     }
 
     #[doc =
@@ -293,18 +325,18 @@ impl DataComputeHealthCheckRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.healthy_threshold", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `http2_health_check` after provisioning.\nA nested object resource"]
-    pub fn http2_health_check(&self) -> terrars::ListRef<DataComputeHealthCheckHttp2HealthCheckElRef> {
+    #[doc = "Get a reference to the value of field `http2_health_check` after provisioning.\nA nested object resource."]
+    pub fn http2_health_check(&self) -> terrars::ListRef<DataComputeHealthCheck_Http2HealthCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.http2_health_check", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `http_health_check` after provisioning.\nA nested object resource"]
-    pub fn http_health_check(&self) -> terrars::ListRef<DataComputeHealthCheckHttpHealthCheckElRef> {
+    #[doc = "Get a reference to the value of field `http_health_check` after provisioning.\nA nested object resource."]
+    pub fn http_health_check(&self) -> terrars::ListRef<DataComputeHealthCheck_HttpHealthCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.http_health_check", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `https_health_check` after provisioning.\nA nested object resource"]
-    pub fn https_health_check(&self) -> terrars::ListRef<DataComputeHealthCheckHttpsHealthCheckElRef> {
+    #[doc = "Get a reference to the value of field `https_health_check` after provisioning.\nA nested object resource."]
+    pub fn https_health_check(&self) -> terrars::ListRef<DataComputeHealthCheck_HttpsHealthCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.https_health_check", self.extract_ref()))
     }
 
@@ -315,7 +347,7 @@ impl DataComputeHealthCheckRef {
 
     #[doc =
         "Get a reference to the value of field `log_config` after provisioning.\nConfigure logging on this health check."]
-    pub fn log_config(&self) -> terrars::ListRef<DataComputeHealthCheckLogConfigElRef> {
+    pub fn log_config(&self) -> terrars::ListRef<DataComputeHealthCheck_LogConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.log_config", self.extract_ref()))
     }
 
@@ -335,13 +367,19 @@ impl DataComputeHealthCheckRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.self_link", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `ssl_health_check` after provisioning.\nA nested object resource"]
-    pub fn ssl_health_check(&self) -> terrars::ListRef<DataComputeHealthCheckSslHealthCheckElRef> {
+    #[doc =
+        "Get a reference to the value of field `source_regions` after provisioning.\nThe list of cloud regions from which health checks are performed. If\nany regions are specified, then exactly 3 regions should be specified.\nThe region names must be valid names of Google Cloud regions. This can\nonly be set for global health check. If this list is non-empty, then\nthere are restrictions on what other health check fields are supported\nand what other resources can use this health check:\n\n* SSL, HTTP2, and GRPC protocols are not supported.\n\n* The TCP request field is not supported.\n\n* The proxyHeader field for HTTP, HTTPS, and TCP is not supported.\n\n* The checkIntervalSec field must be at least 30.\n\n* The health check cannot be used with BackendService nor with managed\ninstance group auto-healing."]
+    pub fn source_regions(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.source_regions", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ssl_health_check` after provisioning.\nA nested object resource."]
+    pub fn ssl_health_check(&self) -> terrars::ListRef<DataComputeHealthCheck_SslHealthCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ssl_health_check", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `tcp_health_check` after provisioning.\nA nested object resource"]
-    pub fn tcp_health_check(&self) -> terrars::ListRef<DataComputeHealthCheckTcpHealthCheckElRef> {
+    #[doc = "Get a reference to the value of field `tcp_health_check` after provisioning.\nA nested object resource."]
+    pub fn tcp_health_check(&self) -> terrars::ListRef<DataComputeHealthCheck_TcpHealthCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tcp_health_check", self.extract_ref()))
     }
 
@@ -365,7 +403,7 @@ impl DataComputeHealthCheckRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComputeHealthCheckGrpcHealthCheckEl {
+pub struct DataComputeHealthCheck_GrpcHealthCheck {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     grpc_service_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -376,7 +414,7 @@ pub struct DataComputeHealthCheckGrpcHealthCheckEl {
     port_specification: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataComputeHealthCheckGrpcHealthCheckEl {
+impl DataComputeHealthCheck_GrpcHealthCheck {
     #[doc = "Set the field `grpc_service_name`.\n"]
     pub fn set_grpc_service_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.grpc_service_name = std::option::Option::Some(v.into());
@@ -405,8 +443,8 @@ impl DataComputeHealthCheckGrpcHealthCheckEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeHealthCheckGrpcHealthCheckEl {
-    type O = terrars::BlockAssignable<DataComputeHealthCheckGrpcHealthCheckEl>;
+impl terrars::ToListMappable for DataComputeHealthCheck_GrpcHealthCheck {
+    type O = terrars::BlockAssignable<DataComputeHealthCheck_GrpcHealthCheck>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -417,11 +455,11 @@ impl terrars::ToListMappable for DataComputeHealthCheckGrpcHealthCheckEl {
     }
 }
 
-pub struct BuildDataComputeHealthCheckGrpcHealthCheckEl {}
+pub struct BuildDataComputeHealthCheck_GrpcHealthCheck {}
 
-impl BuildDataComputeHealthCheckGrpcHealthCheckEl {
-    pub fn build(self) -> DataComputeHealthCheckGrpcHealthCheckEl {
-        DataComputeHealthCheckGrpcHealthCheckEl {
+impl BuildDataComputeHealthCheck_GrpcHealthCheck {
+    pub fn build(self) -> DataComputeHealthCheck_GrpcHealthCheck {
+        DataComputeHealthCheck_GrpcHealthCheck {
             grpc_service_name: core::default::Default::default(),
             port: core::default::Default::default(),
             port_name: core::default::Default::default(),
@@ -430,21 +468,23 @@ impl BuildDataComputeHealthCheckGrpcHealthCheckEl {
     }
 }
 
-pub struct DataComputeHealthCheckGrpcHealthCheckElRef {
+#[allow(dead_code)]
+pub struct DataComputeHealthCheck_GrpcHealthCheckRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeHealthCheckGrpcHealthCheckElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeHealthCheckGrpcHealthCheckElRef {
-        DataComputeHealthCheckGrpcHealthCheckElRef {
+impl terrars::Ref for DataComputeHealthCheck_GrpcHealthCheckRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeHealthCheck_GrpcHealthCheckRef {
+        DataComputeHealthCheck_GrpcHealthCheckRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeHealthCheckGrpcHealthCheckElRef {
+impl DataComputeHealthCheck_GrpcHealthCheckRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -471,7 +511,101 @@ impl DataComputeHealthCheckGrpcHealthCheckElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComputeHealthCheckHttp2HealthCheckEl {
+pub struct DataComputeHealthCheck_GrpcTlsHealthCheck {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    grpc_service_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    port: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    port_specification: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataComputeHealthCheck_GrpcTlsHealthCheck {
+    #[doc = "Set the field `grpc_service_name`.\n"]
+    pub fn set_grpc_service_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.grpc_service_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `port`.\n"]
+    pub fn set_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.port = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `port_specification`.\n"]
+    pub fn set_port_specification(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.port_specification = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataComputeHealthCheck_GrpcTlsHealthCheck {
+    type O = terrars::BlockAssignable<DataComputeHealthCheck_GrpcTlsHealthCheck>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataComputeHealthCheck_GrpcTlsHealthCheck {}
+
+impl BuildDataComputeHealthCheck_GrpcTlsHealthCheck {
+    pub fn build(self) -> DataComputeHealthCheck_GrpcTlsHealthCheck {
+        DataComputeHealthCheck_GrpcTlsHealthCheck {
+            grpc_service_name: core::default::Default::default(),
+            port: core::default::Default::default(),
+            port_specification: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataComputeHealthCheck_GrpcTlsHealthCheckRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataComputeHealthCheck_GrpcTlsHealthCheckRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeHealthCheck_GrpcTlsHealthCheckRef {
+        DataComputeHealthCheck_GrpcTlsHealthCheckRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataComputeHealthCheck_GrpcTlsHealthCheckRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `grpc_service_name` after provisioning.\n"]
+    pub fn grpc_service_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.grpc_service_name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `port` after provisioning.\n"]
+    pub fn port(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `port_specification` after provisioning.\n"]
+    pub fn port_specification(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.port_specification", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataComputeHealthCheck_Http2HealthCheck {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     host: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -488,7 +622,7 @@ pub struct DataComputeHealthCheckHttp2HealthCheckEl {
     response: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataComputeHealthCheckHttp2HealthCheckEl {
+impl DataComputeHealthCheck_Http2HealthCheck {
     #[doc = "Set the field `host`.\n"]
     pub fn set_host(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.host = std::option::Option::Some(v.into());
@@ -535,8 +669,8 @@ impl DataComputeHealthCheckHttp2HealthCheckEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeHealthCheckHttp2HealthCheckEl {
-    type O = terrars::BlockAssignable<DataComputeHealthCheckHttp2HealthCheckEl>;
+impl terrars::ToListMappable for DataComputeHealthCheck_Http2HealthCheck {
+    type O = terrars::BlockAssignable<DataComputeHealthCheck_Http2HealthCheck>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -547,11 +681,11 @@ impl terrars::ToListMappable for DataComputeHealthCheckHttp2HealthCheckEl {
     }
 }
 
-pub struct BuildDataComputeHealthCheckHttp2HealthCheckEl {}
+pub struct BuildDataComputeHealthCheck_Http2HealthCheck {}
 
-impl BuildDataComputeHealthCheckHttp2HealthCheckEl {
-    pub fn build(self) -> DataComputeHealthCheckHttp2HealthCheckEl {
-        DataComputeHealthCheckHttp2HealthCheckEl {
+impl BuildDataComputeHealthCheck_Http2HealthCheck {
+    pub fn build(self) -> DataComputeHealthCheck_Http2HealthCheck {
+        DataComputeHealthCheck_Http2HealthCheck {
             host: core::default::Default::default(),
             port: core::default::Default::default(),
             port_name: core::default::Default::default(),
@@ -563,21 +697,23 @@ impl BuildDataComputeHealthCheckHttp2HealthCheckEl {
     }
 }
 
-pub struct DataComputeHealthCheckHttp2HealthCheckElRef {
+#[allow(dead_code)]
+pub struct DataComputeHealthCheck_Http2HealthCheckRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeHealthCheckHttp2HealthCheckElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeHealthCheckHttp2HealthCheckElRef {
-        DataComputeHealthCheckHttp2HealthCheckElRef {
+impl terrars::Ref for DataComputeHealthCheck_Http2HealthCheckRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeHealthCheck_Http2HealthCheckRef {
+        DataComputeHealthCheck_Http2HealthCheckRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeHealthCheckHttp2HealthCheckElRef {
+impl DataComputeHealthCheck_Http2HealthCheckRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -619,7 +755,7 @@ impl DataComputeHealthCheckHttp2HealthCheckElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComputeHealthCheckHttpHealthCheckEl {
+pub struct DataComputeHealthCheck_HttpHealthCheck {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     host: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -636,7 +772,7 @@ pub struct DataComputeHealthCheckHttpHealthCheckEl {
     response: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataComputeHealthCheckHttpHealthCheckEl {
+impl DataComputeHealthCheck_HttpHealthCheck {
     #[doc = "Set the field `host`.\n"]
     pub fn set_host(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.host = std::option::Option::Some(v.into());
@@ -683,8 +819,8 @@ impl DataComputeHealthCheckHttpHealthCheckEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeHealthCheckHttpHealthCheckEl {
-    type O = terrars::BlockAssignable<DataComputeHealthCheckHttpHealthCheckEl>;
+impl terrars::ToListMappable for DataComputeHealthCheck_HttpHealthCheck {
+    type O = terrars::BlockAssignable<DataComputeHealthCheck_HttpHealthCheck>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -695,11 +831,11 @@ impl terrars::ToListMappable for DataComputeHealthCheckHttpHealthCheckEl {
     }
 }
 
-pub struct BuildDataComputeHealthCheckHttpHealthCheckEl {}
+pub struct BuildDataComputeHealthCheck_HttpHealthCheck {}
 
-impl BuildDataComputeHealthCheckHttpHealthCheckEl {
-    pub fn build(self) -> DataComputeHealthCheckHttpHealthCheckEl {
-        DataComputeHealthCheckHttpHealthCheckEl {
+impl BuildDataComputeHealthCheck_HttpHealthCheck {
+    pub fn build(self) -> DataComputeHealthCheck_HttpHealthCheck {
+        DataComputeHealthCheck_HttpHealthCheck {
             host: core::default::Default::default(),
             port: core::default::Default::default(),
             port_name: core::default::Default::default(),
@@ -711,21 +847,23 @@ impl BuildDataComputeHealthCheckHttpHealthCheckEl {
     }
 }
 
-pub struct DataComputeHealthCheckHttpHealthCheckElRef {
+#[allow(dead_code)]
+pub struct DataComputeHealthCheck_HttpHealthCheckRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeHealthCheckHttpHealthCheckElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeHealthCheckHttpHealthCheckElRef {
-        DataComputeHealthCheckHttpHealthCheckElRef {
+impl terrars::Ref for DataComputeHealthCheck_HttpHealthCheckRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeHealthCheck_HttpHealthCheckRef {
+        DataComputeHealthCheck_HttpHealthCheckRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeHealthCheckHttpHealthCheckElRef {
+impl DataComputeHealthCheck_HttpHealthCheckRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -767,7 +905,7 @@ impl DataComputeHealthCheckHttpHealthCheckElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComputeHealthCheckHttpsHealthCheckEl {
+pub struct DataComputeHealthCheck_HttpsHealthCheck {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     host: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -784,7 +922,7 @@ pub struct DataComputeHealthCheckHttpsHealthCheckEl {
     response: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataComputeHealthCheckHttpsHealthCheckEl {
+impl DataComputeHealthCheck_HttpsHealthCheck {
     #[doc = "Set the field `host`.\n"]
     pub fn set_host(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.host = std::option::Option::Some(v.into());
@@ -831,8 +969,8 @@ impl DataComputeHealthCheckHttpsHealthCheckEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeHealthCheckHttpsHealthCheckEl {
-    type O = terrars::BlockAssignable<DataComputeHealthCheckHttpsHealthCheckEl>;
+impl terrars::ToListMappable for DataComputeHealthCheck_HttpsHealthCheck {
+    type O = terrars::BlockAssignable<DataComputeHealthCheck_HttpsHealthCheck>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -843,11 +981,11 @@ impl terrars::ToListMappable for DataComputeHealthCheckHttpsHealthCheckEl {
     }
 }
 
-pub struct BuildDataComputeHealthCheckHttpsHealthCheckEl {}
+pub struct BuildDataComputeHealthCheck_HttpsHealthCheck {}
 
-impl BuildDataComputeHealthCheckHttpsHealthCheckEl {
-    pub fn build(self) -> DataComputeHealthCheckHttpsHealthCheckEl {
-        DataComputeHealthCheckHttpsHealthCheckEl {
+impl BuildDataComputeHealthCheck_HttpsHealthCheck {
+    pub fn build(self) -> DataComputeHealthCheck_HttpsHealthCheck {
+        DataComputeHealthCheck_HttpsHealthCheck {
             host: core::default::Default::default(),
             port: core::default::Default::default(),
             port_name: core::default::Default::default(),
@@ -859,21 +997,23 @@ impl BuildDataComputeHealthCheckHttpsHealthCheckEl {
     }
 }
 
-pub struct DataComputeHealthCheckHttpsHealthCheckElRef {
+#[allow(dead_code)]
+pub struct DataComputeHealthCheck_HttpsHealthCheckRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeHealthCheckHttpsHealthCheckElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeHealthCheckHttpsHealthCheckElRef {
-        DataComputeHealthCheckHttpsHealthCheckElRef {
+impl terrars::Ref for DataComputeHealthCheck_HttpsHealthCheckRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeHealthCheck_HttpsHealthCheckRef {
+        DataComputeHealthCheck_HttpsHealthCheckRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeHealthCheckHttpsHealthCheckElRef {
+impl DataComputeHealthCheck_HttpsHealthCheckRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -915,12 +1055,12 @@ impl DataComputeHealthCheckHttpsHealthCheckElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComputeHealthCheckLogConfigEl {
+pub struct DataComputeHealthCheck_LogConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataComputeHealthCheckLogConfigEl {
+impl DataComputeHealthCheck_LogConfig {
     #[doc = "Set the field `enable`.\n"]
     pub fn set_enable(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enable = std::option::Option::Some(v.into());
@@ -928,8 +1068,8 @@ impl DataComputeHealthCheckLogConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeHealthCheckLogConfigEl {
-    type O = terrars::BlockAssignable<DataComputeHealthCheckLogConfigEl>;
+impl terrars::ToListMappable for DataComputeHealthCheck_LogConfig {
+    type O = terrars::BlockAssignable<DataComputeHealthCheck_LogConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -940,29 +1080,31 @@ impl terrars::ToListMappable for DataComputeHealthCheckLogConfigEl {
     }
 }
 
-pub struct BuildDataComputeHealthCheckLogConfigEl {}
+pub struct BuildDataComputeHealthCheck_LogConfig {}
 
-impl BuildDataComputeHealthCheckLogConfigEl {
-    pub fn build(self) -> DataComputeHealthCheckLogConfigEl {
-        DataComputeHealthCheckLogConfigEl { enable: core::default::Default::default() }
+impl BuildDataComputeHealthCheck_LogConfig {
+    pub fn build(self) -> DataComputeHealthCheck_LogConfig {
+        DataComputeHealthCheck_LogConfig { enable: core::default::Default::default() }
     }
 }
 
-pub struct DataComputeHealthCheckLogConfigElRef {
+#[allow(dead_code)]
+pub struct DataComputeHealthCheck_LogConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeHealthCheckLogConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeHealthCheckLogConfigElRef {
-        DataComputeHealthCheckLogConfigElRef {
+impl terrars::Ref for DataComputeHealthCheck_LogConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeHealthCheck_LogConfigRef {
+        DataComputeHealthCheck_LogConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeHealthCheckLogConfigElRef {
+impl DataComputeHealthCheck_LogConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -974,7 +1116,7 @@ impl DataComputeHealthCheckLogConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComputeHealthCheckSslHealthCheckEl {
+pub struct DataComputeHealthCheck_SslHealthCheck {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     port: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -989,7 +1131,7 @@ pub struct DataComputeHealthCheckSslHealthCheckEl {
     response: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataComputeHealthCheckSslHealthCheckEl {
+impl DataComputeHealthCheck_SslHealthCheck {
     #[doc = "Set the field `port`.\n"]
     pub fn set_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.port = std::option::Option::Some(v.into());
@@ -1030,8 +1172,8 @@ impl DataComputeHealthCheckSslHealthCheckEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeHealthCheckSslHealthCheckEl {
-    type O = terrars::BlockAssignable<DataComputeHealthCheckSslHealthCheckEl>;
+impl terrars::ToListMappable for DataComputeHealthCheck_SslHealthCheck {
+    type O = terrars::BlockAssignable<DataComputeHealthCheck_SslHealthCheck>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1042,11 +1184,11 @@ impl terrars::ToListMappable for DataComputeHealthCheckSslHealthCheckEl {
     }
 }
 
-pub struct BuildDataComputeHealthCheckSslHealthCheckEl {}
+pub struct BuildDataComputeHealthCheck_SslHealthCheck {}
 
-impl BuildDataComputeHealthCheckSslHealthCheckEl {
-    pub fn build(self) -> DataComputeHealthCheckSslHealthCheckEl {
-        DataComputeHealthCheckSslHealthCheckEl {
+impl BuildDataComputeHealthCheck_SslHealthCheck {
+    pub fn build(self) -> DataComputeHealthCheck_SslHealthCheck {
+        DataComputeHealthCheck_SslHealthCheck {
             port: core::default::Default::default(),
             port_name: core::default::Default::default(),
             port_specification: core::default::Default::default(),
@@ -1057,21 +1199,23 @@ impl BuildDataComputeHealthCheckSslHealthCheckEl {
     }
 }
 
-pub struct DataComputeHealthCheckSslHealthCheckElRef {
+#[allow(dead_code)]
+pub struct DataComputeHealthCheck_SslHealthCheckRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeHealthCheckSslHealthCheckElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeHealthCheckSslHealthCheckElRef {
-        DataComputeHealthCheckSslHealthCheckElRef {
+impl terrars::Ref for DataComputeHealthCheck_SslHealthCheckRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeHealthCheck_SslHealthCheckRef {
+        DataComputeHealthCheck_SslHealthCheckRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeHealthCheckSslHealthCheckElRef {
+impl DataComputeHealthCheck_SslHealthCheckRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1108,7 +1252,7 @@ impl DataComputeHealthCheckSslHealthCheckElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComputeHealthCheckTcpHealthCheckEl {
+pub struct DataComputeHealthCheck_TcpHealthCheck {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     port: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1123,7 +1267,7 @@ pub struct DataComputeHealthCheckTcpHealthCheckEl {
     response: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataComputeHealthCheckTcpHealthCheckEl {
+impl DataComputeHealthCheck_TcpHealthCheck {
     #[doc = "Set the field `port`.\n"]
     pub fn set_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.port = std::option::Option::Some(v.into());
@@ -1164,8 +1308,8 @@ impl DataComputeHealthCheckTcpHealthCheckEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeHealthCheckTcpHealthCheckEl {
-    type O = terrars::BlockAssignable<DataComputeHealthCheckTcpHealthCheckEl>;
+impl terrars::ToListMappable for DataComputeHealthCheck_TcpHealthCheck {
+    type O = terrars::BlockAssignable<DataComputeHealthCheck_TcpHealthCheck>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1176,11 +1320,11 @@ impl terrars::ToListMappable for DataComputeHealthCheckTcpHealthCheckEl {
     }
 }
 
-pub struct BuildDataComputeHealthCheckTcpHealthCheckEl {}
+pub struct BuildDataComputeHealthCheck_TcpHealthCheck {}
 
-impl BuildDataComputeHealthCheckTcpHealthCheckEl {
-    pub fn build(self) -> DataComputeHealthCheckTcpHealthCheckEl {
-        DataComputeHealthCheckTcpHealthCheckEl {
+impl BuildDataComputeHealthCheck_TcpHealthCheck {
+    pub fn build(self) -> DataComputeHealthCheck_TcpHealthCheck {
+        DataComputeHealthCheck_TcpHealthCheck {
             port: core::default::Default::default(),
             port_name: core::default::Default::default(),
             port_specification: core::default::Default::default(),
@@ -1191,21 +1335,23 @@ impl BuildDataComputeHealthCheckTcpHealthCheckEl {
     }
 }
 
-pub struct DataComputeHealthCheckTcpHealthCheckElRef {
+#[allow(dead_code)]
+pub struct DataComputeHealthCheck_TcpHealthCheckRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeHealthCheckTcpHealthCheckElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeHealthCheckTcpHealthCheckElRef {
-        DataComputeHealthCheckTcpHealthCheckElRef {
+impl terrars::Ref for DataComputeHealthCheck_TcpHealthCheckRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeHealthCheck_TcpHealthCheckRef {
+        DataComputeHealthCheck_TcpHealthCheckRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeHealthCheckTcpHealthCheckElRef {
+impl DataComputeHealthCheck_TcpHealthCheckRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataCloudIdentityGroupsData {
+struct DataCloudIdentityGroupsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -24,7 +26,7 @@ struct DataCloudIdentityGroupsData {
 struct DataCloudIdentityGroups_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataCloudIdentityGroupsData>,
+    data: std::cell::RefCell<DataCloudIdentityGroupsData_>,
 }
 
 #[derive(Clone)]
@@ -76,7 +78,7 @@ impl DataCloudIdentityGroups {
     }
 
     #[doc = "Get a reference to the value of field `groups` after provisioning.\nList of Cloud Identity groups."]
-    pub fn groups(&self) -> terrars::ListRef<DataCloudIdentityGroupsGroupsElRef> {
+    pub fn groups(&self) -> terrars::ListRef<DataCloudIdentityGroups_GroupsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.groups", self.extract_ref()))
     }
 
@@ -135,7 +137,7 @@ impl BuildDataCloudIdentityGroups {
         let out = DataCloudIdentityGroups(std::rc::Rc::new(DataCloudIdentityGroups_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataCloudIdentityGroupsData {
+            data: std::cell::RefCell::new(DataCloudIdentityGroupsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -173,7 +175,7 @@ impl DataCloudIdentityGroupsRef {
     }
 
     #[doc = "Get a reference to the value of field `groups` after provisioning.\nList of Cloud Identity groups."]
-    pub fn groups(&self) -> terrars::ListRef<DataCloudIdentityGroupsGroupsElRef> {
+    pub fn groups(&self) -> terrars::ListRef<DataCloudIdentityGroups_GroupsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.groups", self.extract_ref()))
     }
 
@@ -190,14 +192,14 @@ impl DataCloudIdentityGroupsRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCloudIdentityGroupsGroupsElAdditionalGroupKeysEl {
+pub struct DataCloudIdentityGroups_Groups_AdditionalGroupKeys {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     namespace: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCloudIdentityGroupsGroupsElAdditionalGroupKeysEl {
+impl DataCloudIdentityGroups_Groups_AdditionalGroupKeys {
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.id = std::option::Option::Some(v.into());
@@ -211,8 +213,8 @@ impl DataCloudIdentityGroupsGroupsElAdditionalGroupKeysEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudIdentityGroupsGroupsElAdditionalGroupKeysEl {
-    type O = terrars::BlockAssignable<DataCloudIdentityGroupsGroupsElAdditionalGroupKeysEl>;
+impl terrars::ToListMappable for DataCloudIdentityGroups_Groups_AdditionalGroupKeys {
+    type O = terrars::BlockAssignable<DataCloudIdentityGroups_Groups_AdditionalGroupKeys>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -223,35 +225,37 @@ impl terrars::ToListMappable for DataCloudIdentityGroupsGroupsElAdditionalGroupK
     }
 }
 
-pub struct BuildDataCloudIdentityGroupsGroupsElAdditionalGroupKeysEl {}
+pub struct BuildDataCloudIdentityGroups_Groups_AdditionalGroupKeys {}
 
-impl BuildDataCloudIdentityGroupsGroupsElAdditionalGroupKeysEl {
-    pub fn build(self) -> DataCloudIdentityGroupsGroupsElAdditionalGroupKeysEl {
-        DataCloudIdentityGroupsGroupsElAdditionalGroupKeysEl {
+impl BuildDataCloudIdentityGroups_Groups_AdditionalGroupKeys {
+    pub fn build(self) -> DataCloudIdentityGroups_Groups_AdditionalGroupKeys {
+        DataCloudIdentityGroups_Groups_AdditionalGroupKeys {
             id: core::default::Default::default(),
             namespace: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataCloudIdentityGroupsGroupsElAdditionalGroupKeysElRef {
+#[allow(dead_code)]
+pub struct DataCloudIdentityGroups_Groups_AdditionalGroupKeysRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudIdentityGroupsGroupsElAdditionalGroupKeysElRef {
+impl terrars::Ref for DataCloudIdentityGroups_Groups_AdditionalGroupKeysRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCloudIdentityGroupsGroupsElAdditionalGroupKeysElRef {
-        DataCloudIdentityGroupsGroupsElAdditionalGroupKeysElRef {
+    ) -> DataCloudIdentityGroups_Groups_AdditionalGroupKeysRef {
+        DataCloudIdentityGroups_Groups_AdditionalGroupKeysRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudIdentityGroupsGroupsElAdditionalGroupKeysElRef {
+impl DataCloudIdentityGroups_Groups_AdditionalGroupKeysRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -268,14 +272,14 @@ impl DataCloudIdentityGroupsGroupsElAdditionalGroupKeysElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCloudIdentityGroupsGroupsElGroupKeyEl {
+pub struct DataCloudIdentityGroups_Groups_GroupKey {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     namespace: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCloudIdentityGroupsGroupsElGroupKeyEl {
+impl DataCloudIdentityGroups_Groups_GroupKey {
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.id = std::option::Option::Some(v.into());
@@ -289,8 +293,8 @@ impl DataCloudIdentityGroupsGroupsElGroupKeyEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudIdentityGroupsGroupsElGroupKeyEl {
-    type O = terrars::BlockAssignable<DataCloudIdentityGroupsGroupsElGroupKeyEl>;
+impl terrars::ToListMappable for DataCloudIdentityGroups_Groups_GroupKey {
+    type O = terrars::BlockAssignable<DataCloudIdentityGroups_Groups_GroupKey>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -301,32 +305,34 @@ impl terrars::ToListMappable for DataCloudIdentityGroupsGroupsElGroupKeyEl {
     }
 }
 
-pub struct BuildDataCloudIdentityGroupsGroupsElGroupKeyEl {}
+pub struct BuildDataCloudIdentityGroups_Groups_GroupKey {}
 
-impl BuildDataCloudIdentityGroupsGroupsElGroupKeyEl {
-    pub fn build(self) -> DataCloudIdentityGroupsGroupsElGroupKeyEl {
-        DataCloudIdentityGroupsGroupsElGroupKeyEl {
+impl BuildDataCloudIdentityGroups_Groups_GroupKey {
+    pub fn build(self) -> DataCloudIdentityGroups_Groups_GroupKey {
+        DataCloudIdentityGroups_Groups_GroupKey {
             id: core::default::Default::default(),
             namespace: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataCloudIdentityGroupsGroupsElGroupKeyElRef {
+#[allow(dead_code)]
+pub struct DataCloudIdentityGroups_Groups_GroupKeyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudIdentityGroupsGroupsElGroupKeyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudIdentityGroupsGroupsElGroupKeyElRef {
-        DataCloudIdentityGroupsGroupsElGroupKeyElRef {
+impl terrars::Ref for DataCloudIdentityGroups_Groups_GroupKeyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudIdentityGroups_Groups_GroupKeyRef {
+        DataCloudIdentityGroups_Groups_GroupKeyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudIdentityGroupsGroupsElGroupKeyElRef {
+impl DataCloudIdentityGroups_Groups_GroupKeyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -343,17 +349,19 @@ impl DataCloudIdentityGroupsGroupsElGroupKeyElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCloudIdentityGroupsGroupsEl {
+pub struct DataCloudIdentityGroups_Groups {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    additional_group_keys: std::option::Option<terrars::ListField<DataCloudIdentityGroupsGroupsElAdditionalGroupKeysEl>>,
+    additional_group_keys: std::option::Option<terrars::ListField<DataCloudIdentityGroups_Groups_AdditionalGroupKeys>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create_time: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     display_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    group_key: std::option::Option<terrars::ListField<DataCloudIdentityGroupsGroupsElGroupKeyEl>>,
+    group_key: std::option::Option<terrars::ListField<DataCloudIdentityGroups_Groups_GroupKey>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     initial_group_config: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -366,11 +374,11 @@ pub struct DataCloudIdentityGroupsGroupsEl {
     update_time: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCloudIdentityGroupsGroupsEl {
+impl DataCloudIdentityGroups_Groups {
     #[doc = "Set the field `additional_group_keys`.\n"]
     pub fn set_additional_group_keys(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataCloudIdentityGroupsGroupsElAdditionalGroupKeysEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataCloudIdentityGroups_Groups_AdditionalGroupKeys>>,
     ) -> Self {
         self.additional_group_keys = std::option::Option::Some(v.into());
         self
@@ -379,6 +387,12 @@ impl DataCloudIdentityGroupsGroupsEl {
     #[doc = "Set the field `create_time`.\n"]
     pub fn set_create_time(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create_time = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `deletion_policy`.\n"]
+    pub fn set_deletion_policy(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.deletion_policy = std::option::Option::Some(v.into());
         self
     }
 
@@ -397,7 +411,7 @@ impl DataCloudIdentityGroupsGroupsEl {
     #[doc = "Set the field `group_key`.\n"]
     pub fn set_group_key(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataCloudIdentityGroupsGroupsElGroupKeyEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataCloudIdentityGroups_Groups_GroupKey>>,
     ) -> Self {
         self.group_key = std::option::Option::Some(v.into());
         self
@@ -440,8 +454,8 @@ impl DataCloudIdentityGroupsGroupsEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudIdentityGroupsGroupsEl {
-    type O = terrars::BlockAssignable<DataCloudIdentityGroupsGroupsEl>;
+impl terrars::ToListMappable for DataCloudIdentityGroups_Groups {
+    type O = terrars::BlockAssignable<DataCloudIdentityGroups_Groups>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -452,13 +466,14 @@ impl terrars::ToListMappable for DataCloudIdentityGroupsGroupsEl {
     }
 }
 
-pub struct BuildDataCloudIdentityGroupsGroupsEl {}
+pub struct BuildDataCloudIdentityGroups_Groups {}
 
-impl BuildDataCloudIdentityGroupsGroupsEl {
-    pub fn build(self) -> DataCloudIdentityGroupsGroupsEl {
-        DataCloudIdentityGroupsGroupsEl {
+impl BuildDataCloudIdentityGroups_Groups {
+    pub fn build(self) -> DataCloudIdentityGroups_Groups {
+        DataCloudIdentityGroups_Groups {
             additional_group_keys: core::default::Default::default(),
             create_time: core::default::Default::default(),
+            deletion_policy: core::default::Default::default(),
             description: core::default::Default::default(),
             display_name: core::default::Default::default(),
             group_key: core::default::Default::default(),
@@ -471,33 +486,40 @@ impl BuildDataCloudIdentityGroupsGroupsEl {
     }
 }
 
-pub struct DataCloudIdentityGroupsGroupsElRef {
+#[allow(dead_code)]
+pub struct DataCloudIdentityGroups_GroupsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudIdentityGroupsGroupsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudIdentityGroupsGroupsElRef {
-        DataCloudIdentityGroupsGroupsElRef {
+impl terrars::Ref for DataCloudIdentityGroups_GroupsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudIdentityGroups_GroupsRef {
+        DataCloudIdentityGroups_GroupsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudIdentityGroupsGroupsElRef {
+impl DataCloudIdentityGroups_GroupsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `additional_group_keys` after provisioning.\n"]
-    pub fn additional_group_keys(&self) -> terrars::ListRef<DataCloudIdentityGroupsGroupsElAdditionalGroupKeysElRef> {
+    pub fn additional_group_keys(&self) -> terrars::ListRef<DataCloudIdentityGroups_Groups_AdditionalGroupKeysRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.additional_group_keys", self.base))
     }
 
     #[doc = "Get a reference to the value of field `create_time` after provisioning.\n"]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `deletion_policy` after provisioning.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.base))
     }
 
     #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
@@ -511,7 +533,7 @@ impl DataCloudIdentityGroupsGroupsElRef {
     }
 
     #[doc = "Get a reference to the value of field `group_key` after provisioning.\n"]
-    pub fn group_key(&self) -> terrars::ListRef<DataCloudIdentityGroupsGroupsElGroupKeyElRef> {
+    pub fn group_key(&self) -> terrars::ListRef<DataCloudIdentityGroups_Groups_GroupKeyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.group_key", self.base))
     }
 

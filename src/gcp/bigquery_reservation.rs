@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct BigqueryReservationData {
+struct BigqueryReservationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,30 +23,36 @@ struct BigqueryReservationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     concurrency: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     edition: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ignore_idle_slots: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    location: std::option::Option<terrars::PrimField<std::string::String>>,
+    labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    multi_region_auxiliary: std::option::Option<terrars::PrimField<bool>>,
+    location: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    reservation_group: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secondary_location: std::option::Option<terrars::PrimField<std::string::String>>,
     slot_capacity: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    autoscale: std::option::Option<std::vec::Vec<BigqueryReservationAutoscaleEl>>,
+    autoscale: std::option::Option<std::vec::Vec<BigqueryReservation_Autoscale>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<BigqueryReservationTimeoutsEl>,
+    timeouts: std::option::Option<BigqueryReservation_Timeouts>,
     dynamic: BigqueryReservationDynamic,
 }
 
 struct BigqueryReservation_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<BigqueryReservationData>,
+    data: std::cell::RefCell<BigqueryReservationData_>,
 }
 
 #[derive(Clone)]
@@ -151,6 +159,13 @@ impl BigqueryReservation {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `edition`.\nThe edition type. Valid values are STANDARD, ENTERPRISE, ENTERPRISE_PLUS"]
     pub fn set_edition(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().edition = std::option::Option::Some(v.into());
@@ -171,16 +186,19 @@ impl BigqueryReservation {
     }
 
     #[doc =
-        "Set the field `location`.\nThe geographic location where the transfer config should reside.\nExamples: US, EU, asia-northeast1. The default value is US."]
-    pub fn set_location(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.0.data.borrow_mut().location = std::option::Option::Some(v.into());
+        "Set the field `labels`.\nThe labels associated with this reservation. You can use these to\norganize and group your reservations.\n\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
+    pub fn set_labels(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().labels = std::option::Option::Some(v.into());
         self
     }
 
     #[doc =
-        "Set the field `multi_region_auxiliary`.\nApplicable only for reservations located within one of the BigQuery multi-regions (US or EU).\nIf set to true, this reservation is placed in the organization's secondary region which is designated for disaster recovery purposes. If false, this reservation is placed in the organization's default region."]
-    pub fn set_multi_region_auxiliary(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().multi_region_auxiliary = std::option::Option::Some(v.into());
+        "Set the field `location`.\nThe geographic location where the transfer config should reside.\nExamples: US, EU, asia-northeast1. The default value is US."]
+    pub fn set_location(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().location = std::option::Option::Some(v.into());
         self
     }
 
@@ -190,10 +208,23 @@ impl BigqueryReservation {
         self
     }
 
+    #[doc = "Set the field `reservation_group`.\nThe reservation group that this reservation belongs to."]
+    pub fn set_reservation_group(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().reservation_group = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `secondary_location`.\nThe current location of the reservation's secondary replica. This field is only set for\nreservations using the managed disaster recovery feature. Users can set this in create\nreservation calls to create a failover reservation or in update reservation calls to convert\na non-failover reservation to a failover reservation(or vice versa)."]
+    pub fn set_secondary_location(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().secondary_location = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `autoscale`.\n"]
     pub fn set_autoscale(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryReservationAutoscaleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryReservation_Autoscale>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -207,7 +238,7 @@ impl BigqueryReservation {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<BigqueryReservationTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<BigqueryReservation_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -219,9 +250,21 @@ impl BigqueryReservation {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `edition` after provisioning.\nThe edition type. Valid values are STANDARD, ENTERPRISE, ENTERPRISE_PLUS"]
     pub fn edition(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.edition", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
+    pub fn effective_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -236,15 +279,15 @@ impl BigqueryReservation {
     }
 
     #[doc =
-        "Get a reference to the value of field `location` after provisioning.\nThe geographic location where the transfer config should reside.\nExamples: US, EU, asia-northeast1. The default value is US."]
-    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
+        "Get a reference to the value of field `labels` after provisioning.\nThe labels associated with this reservation. You can use these to\norganize and group your reservations.\n\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
+    pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `multi_region_auxiliary` after provisioning.\nApplicable only for reservations located within one of the BigQuery multi-regions (US or EU).\nIf set to true, this reservation is placed in the organization's secondary region which is designated for disaster recovery purposes. If false, this reservation is placed in the organization's default region."]
-    pub fn multi_region_auxiliary(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.multi_region_auxiliary", self.extract_ref()))
+        "Get a reference to the value of field `location` after provisioning.\nThe geographic location where the transfer config should reside.\nExamples: US, EU, asia-northeast1. The default value is US."]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
 
     #[doc =
@@ -253,9 +296,39 @@ impl BigqueryReservation {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `original_primary_location` after provisioning.\nThe location where the reservation was originally created. This is set only during the\nfailover reservation's creation. All billing charges for the failover reservation will be\napplied to this location."]
+    pub fn original_primary_location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.original_primary_location", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `primary_location` after provisioning.\nThe current location of the reservation's primary replica. This field is only set for\nreservations using the managed disaster recovery feature."]
+    pub fn primary_location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.primary_location", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
     pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `replication_status` after provisioning.\nThe Disaster Recovery(DR) replication status of the reservation. This is only available for\nthe primary replicas of DR/failover reservations and provides information about the both the\nstaleness of the secondary and the last error encountered while trying to replicate changes\nfrom the primary to the secondary. If this field is blank, it means that the reservation is\neither not a DR reservation or the reservation is a DR secondary or that any replication\noperations on the reservation have succeeded."]
+    pub fn replication_status(&self) -> terrars::ListRef<BigqueryReservation_ReplicationStatusRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.replication_status", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `reservation_group` after provisioning.\nThe reservation group that this reservation belongs to."]
+    pub fn reservation_group(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.reservation_group", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `secondary_location` after provisioning.\nThe current location of the reservation's secondary replica. This field is only set for\nreservations using the managed disaster recovery feature. Users can set this in create\nreservation calls to create a failover reservation or in update reservation calls to convert\na non-failover reservation to a failover reservation(or vice versa)."]
+    pub fn secondary_location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secondary_location", self.extract_ref()))
     }
 
     #[doc =
@@ -264,14 +337,20 @@ impl BigqueryReservation {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.slot_capacity", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
+    pub fn terraform_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `autoscale` after provisioning.\n"]
-    pub fn autoscale(&self) -> terrars::ListRef<BigqueryReservationAutoscaleElRef> {
+    pub fn autoscale(&self) -> terrars::ListRef<BigqueryReservation_AutoscaleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.autoscale", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> BigqueryReservationTimeoutsElRef {
-        BigqueryReservationTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> BigqueryReservation_TimeoutsRef {
+        BigqueryReservation_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -320,20 +399,23 @@ impl BuildBigqueryReservation {
         let out = BigqueryReservation(std::rc::Rc::new(BigqueryReservation_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(BigqueryReservationData {
+            data: std::cell::RefCell::new(BigqueryReservationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 concurrency: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 edition: core::default::Default::default(),
                 id: core::default::Default::default(),
                 ignore_idle_slots: core::default::Default::default(),
+                labels: core::default::Default::default(),
                 location: core::default::Default::default(),
-                multi_region_auxiliary: core::default::Default::default(),
                 name: self.name,
                 project: core::default::Default::default(),
+                reservation_group: core::default::Default::default(),
+                secondary_location: core::default::Default::default(),
                 slot_capacity: self.slot_capacity,
                 autoscale: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
@@ -375,9 +457,21 @@ impl BigqueryReservationRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `edition` after provisioning.\nThe edition type. Valid values are STANDARD, ENTERPRISE, ENTERPRISE_PLUS"]
     pub fn edition(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.edition", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
+    pub fn effective_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -392,15 +486,15 @@ impl BigqueryReservationRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `location` after provisioning.\nThe geographic location where the transfer config should reside.\nExamples: US, EU, asia-northeast1. The default value is US."]
-    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
+        "Get a reference to the value of field `labels` after provisioning.\nThe labels associated with this reservation. You can use these to\norganize and group your reservations.\n\n\n**Note**: This field is non-authoritative, and will only manage the labels present in your configuration.\nPlease refer to the field 'effective_labels' for all of the labels present on the resource."]
+    pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `multi_region_auxiliary` after provisioning.\nApplicable only for reservations located within one of the BigQuery multi-regions (US or EU).\nIf set to true, this reservation is placed in the organization's secondary region which is designated for disaster recovery purposes. If false, this reservation is placed in the organization's default region."]
-    pub fn multi_region_auxiliary(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.multi_region_auxiliary", self.extract_ref()))
+        "Get a reference to the value of field `location` after provisioning.\nThe geographic location where the transfer config should reside.\nExamples: US, EU, asia-northeast1. The default value is US."]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
 
     #[doc =
@@ -409,9 +503,39 @@ impl BigqueryReservationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `original_primary_location` after provisioning.\nThe location where the reservation was originally created. This is set only during the\nfailover reservation's creation. All billing charges for the failover reservation will be\napplied to this location."]
+    pub fn original_primary_location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.original_primary_location", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `primary_location` after provisioning.\nThe current location of the reservation's primary replica. This field is only set for\nreservations using the managed disaster recovery feature."]
+    pub fn primary_location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.primary_location", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
     pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `replication_status` after provisioning.\nThe Disaster Recovery(DR) replication status of the reservation. This is only available for\nthe primary replicas of DR/failover reservations and provides information about the both the\nstaleness of the secondary and the last error encountered while trying to replicate changes\nfrom the primary to the secondary. If this field is blank, it means that the reservation is\neither not a DR reservation or the reservation is a DR secondary or that any replication\noperations on the reservation have succeeded."]
+    pub fn replication_status(&self) -> terrars::ListRef<BigqueryReservation_ReplicationStatusRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.replication_status", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `reservation_group` after provisioning.\nThe reservation group that this reservation belongs to."]
+    pub fn reservation_group(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.reservation_group", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `secondary_location` after provisioning.\nThe current location of the reservation's secondary replica. This field is only set for\nreservations using the managed disaster recovery feature. Users can set this in create\nreservation calls to create a failover reservation or in update reservation calls to convert\na non-failover reservation to a failover reservation(or vice versa)."]
+    pub fn secondary_location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secondary_location", self.extract_ref()))
     }
 
     #[doc =
@@ -420,33 +544,52 @@ impl BigqueryReservationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.slot_capacity", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `terraform_labels` after provisioning.\nThe combination of labels configured directly on the resource\n and default labels configured on the provider."]
+    pub fn terraform_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.terraform_labels", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `autoscale` after provisioning.\n"]
-    pub fn autoscale(&self) -> terrars::ListRef<BigqueryReservationAutoscaleElRef> {
+    pub fn autoscale(&self) -> terrars::ListRef<BigqueryReservation_AutoscaleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.autoscale", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> BigqueryReservationTimeoutsElRef {
-        BigqueryReservationTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> BigqueryReservation_TimeoutsRef {
+        BigqueryReservation_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
-#[derive(Serialize)]
-pub struct BigqueryReservationAutoscaleEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    max_slots: std::option::Option<terrars::PrimField<f64>>,
+#[derive(Serialize, Default)]
+struct BigqueryReservationDynamic {
+    autoscale: std::option::Option<terrars::DynamicBlock<BigqueryReservation_Autoscale>>,
 }
 
-impl BigqueryReservationAutoscaleEl {
-    #[doc = "Set the field `max_slots`.\nNumber of slots to be scaled when needed."]
-    pub fn set_max_slots(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.max_slots = std::option::Option::Some(v.into());
+#[derive(Serialize)]
+pub struct BigqueryReservation_ReplicationStatus_Error {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    code: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    message: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl BigqueryReservation_ReplicationStatus_Error {
+    #[doc = "Set the field `code`.\n"]
+    pub fn set_code(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.code = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `message`.\n"]
+    pub fn set_message(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.message = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for BigqueryReservationAutoscaleEl {
-    type O = terrars::BlockAssignable<BigqueryReservationAutoscaleEl>;
+impl terrars::ToListMappable for BigqueryReservation_ReplicationStatus_Error {
+    type O = terrars::BlockAssignable<BigqueryReservation_ReplicationStatus_Error>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -457,29 +600,200 @@ impl terrars::ToListMappable for BigqueryReservationAutoscaleEl {
     }
 }
 
-pub struct BuildBigqueryReservationAutoscaleEl {}
+pub struct BuildBigqueryReservation_ReplicationStatus_Error {}
 
-impl BuildBigqueryReservationAutoscaleEl {
-    pub fn build(self) -> BigqueryReservationAutoscaleEl {
-        BigqueryReservationAutoscaleEl { max_slots: core::default::Default::default() }
+impl BuildBigqueryReservation_ReplicationStatus_Error {
+    pub fn build(self) -> BigqueryReservation_ReplicationStatus_Error {
+        BigqueryReservation_ReplicationStatus_Error {
+            code: core::default::Default::default(),
+            message: core::default::Default::default(),
+        }
     }
 }
 
-pub struct BigqueryReservationAutoscaleElRef {
+#[allow(dead_code)]
+pub struct BigqueryReservation_ReplicationStatus_ErrorRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryReservationAutoscaleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryReservationAutoscaleElRef {
-        BigqueryReservationAutoscaleElRef {
+impl terrars::Ref for BigqueryReservation_ReplicationStatus_ErrorRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> BigqueryReservation_ReplicationStatus_ErrorRef {
+        BigqueryReservation_ReplicationStatus_ErrorRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryReservationAutoscaleElRef {
+impl BigqueryReservation_ReplicationStatus_ErrorRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `code` after provisioning.\n"]
+    pub fn code(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.code", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `message` after provisioning.\n"]
+    pub fn message(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.message", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct BigqueryReservation_ReplicationStatus {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    error: std::option::Option<terrars::ListField<BigqueryReservation_ReplicationStatus_Error>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    last_error_time: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    last_replication_time: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl BigqueryReservation_ReplicationStatus {
+    #[doc = "Set the field `error`.\n"]
+    pub fn set_error(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<BigqueryReservation_ReplicationStatus_Error>>,
+    ) -> Self {
+        self.error = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `last_error_time`.\n"]
+    pub fn set_last_error_time(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.last_error_time = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `last_replication_time`.\n"]
+    pub fn set_last_replication_time(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.last_replication_time = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for BigqueryReservation_ReplicationStatus {
+    type O = terrars::BlockAssignable<BigqueryReservation_ReplicationStatus>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildBigqueryReservation_ReplicationStatus {}
+
+impl BuildBigqueryReservation_ReplicationStatus {
+    pub fn build(self) -> BigqueryReservation_ReplicationStatus {
+        BigqueryReservation_ReplicationStatus {
+            error: core::default::Default::default(),
+            last_error_time: core::default::Default::default(),
+            last_replication_time: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct BigqueryReservation_ReplicationStatusRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for BigqueryReservation_ReplicationStatusRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryReservation_ReplicationStatusRef {
+        BigqueryReservation_ReplicationStatusRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl BigqueryReservation_ReplicationStatusRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `error` after provisioning.\n"]
+    pub fn error(&self) -> terrars::ListRef<BigqueryReservation_ReplicationStatus_ErrorRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.error", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `last_error_time` after provisioning.\n"]
+    pub fn last_error_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.last_error_time", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `last_replication_time` after provisioning.\n"]
+    pub fn last_replication_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.last_replication_time", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct BigqueryReservation_Autoscale {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_slots: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl BigqueryReservation_Autoscale {
+    #[doc = "Set the field `max_slots`.\nNumber of slots to be scaled when needed."]
+    pub fn set_max_slots(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_slots = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for BigqueryReservation_Autoscale {
+    type O = terrars::BlockAssignable<BigqueryReservation_Autoscale>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildBigqueryReservation_Autoscale {}
+
+impl BuildBigqueryReservation_Autoscale {
+    pub fn build(self) -> BigqueryReservation_Autoscale {
+        BigqueryReservation_Autoscale { max_slots: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct BigqueryReservation_AutoscaleRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for BigqueryReservation_AutoscaleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryReservation_AutoscaleRef {
+        BigqueryReservation_AutoscaleRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl BigqueryReservation_AutoscaleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -498,7 +812,7 @@ impl BigqueryReservationAutoscaleElRef {
 }
 
 #[derive(Serialize)]
-pub struct BigqueryReservationTimeoutsEl {
+pub struct BigqueryReservation_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -507,7 +821,7 @@ pub struct BigqueryReservationTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl BigqueryReservationTimeoutsEl {
+impl BigqueryReservation_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -527,8 +841,8 @@ impl BigqueryReservationTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for BigqueryReservationTimeoutsEl {
-    type O = terrars::BlockAssignable<BigqueryReservationTimeoutsEl>;
+impl terrars::ToListMappable for BigqueryReservation_Timeouts {
+    type O = terrars::BlockAssignable<BigqueryReservation_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -539,11 +853,11 @@ impl terrars::ToListMappable for BigqueryReservationTimeoutsEl {
     }
 }
 
-pub struct BuildBigqueryReservationTimeoutsEl {}
+pub struct BuildBigqueryReservation_Timeouts {}
 
-impl BuildBigqueryReservationTimeoutsEl {
-    pub fn build(self) -> BigqueryReservationTimeoutsEl {
-        BigqueryReservationTimeoutsEl {
+impl BuildBigqueryReservation_Timeouts {
+    pub fn build(self) -> BigqueryReservation_Timeouts {
+        BigqueryReservation_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -551,21 +865,23 @@ impl BuildBigqueryReservationTimeoutsEl {
     }
 }
 
-pub struct BigqueryReservationTimeoutsElRef {
+#[allow(dead_code)]
+pub struct BigqueryReservation_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryReservationTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryReservationTimeoutsElRef {
-        BigqueryReservationTimeoutsElRef {
+impl terrars::Ref for BigqueryReservation_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryReservation_TimeoutsRef {
+        BigqueryReservation_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryReservationTimeoutsElRef {
+impl BigqueryReservation_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -584,9 +900,4 @@ impl BigqueryReservationTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct BigqueryReservationDynamic {
-    autoscale: std::option::Option<terrars::DynamicBlock<BigqueryReservationAutoscaleEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ApigeeInstanceData {
+struct ApigeeInstanceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,6 +22,8 @@ struct ApigeeInstanceData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     consumer_accept_list: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -36,13 +40,16 @@ struct ApigeeInstanceData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     peering_cidr_range: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ApigeeInstanceTimeoutsEl>,
+    access_logging_config: std::option::Option<std::vec::Vec<ApigeeInstance_AccessLoggingConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<ApigeeInstance_Timeouts>,
+    dynamic: ApigeeInstanceDynamic,
 }
 
 struct ApigeeInstance_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ApigeeInstanceData>,
+    data: std::cell::RefCell<ApigeeInstanceData_>,
 }
 
 #[derive(Clone)]
@@ -152,6 +159,13 @@ impl ApigeeInstance {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nDescription of the instance."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -194,8 +208,24 @@ impl ApigeeInstance {
         self
     }
 
+    #[doc = "Set the field `access_logging_config`.\n"]
+    pub fn set_access_logging_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApigeeInstance_AccessLoggingConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().access_logging_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.access_logging_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ApigeeInstanceTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ApigeeInstance_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -204,6 +234,12 @@ impl ApigeeInstance {
         "Get a reference to the value of field `consumer_accept_list` after provisioning.\nOptional. Customer accept list represents the list of projects (id/number) on customer\nside that can privately connect to the service attachment. It is an optional field\nwhich the customers can provide during the instance creation. By default, the customer\nproject associated with the Apigee organization will be included to the list."]
     pub fn consumer_accept_list(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.consumer_accept_list", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `description` after provisioning.\nDescription of the instance."]
@@ -274,9 +310,14 @@ impl ApigeeInstance {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_attachment", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `access_logging_config` after provisioning.\n"]
+    pub fn access_logging_config(&self) -> terrars::ListRef<ApigeeInstance_AccessLoggingConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.access_logging_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ApigeeInstanceTimeoutsElRef {
-        ApigeeInstanceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ApigeeInstance_TimeoutsRef {
+        ApigeeInstance_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -327,13 +368,14 @@ impl BuildApigeeInstance {
         let out = ApigeeInstance(std::rc::Rc::new(ApigeeInstance_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ApigeeInstanceData {
+            data: std::cell::RefCell::new(ApigeeInstanceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 consumer_accept_list: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 disk_encryption_key_name: core::default::Default::default(),
                 display_name: core::default::Default::default(),
@@ -343,7 +385,9 @@ impl BuildApigeeInstance {
                 name: self.name,
                 org_id: self.org_id,
                 peering_cidr_range: core::default::Default::default(),
+                access_logging_config: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -378,6 +422,12 @@ impl ApigeeInstanceRef {
         "Get a reference to the value of field `consumer_accept_list` after provisioning.\nOptional. Customer accept list represents the list of projects (id/number) on customer\nside that can privately connect to the service attachment. It is an optional field\nwhich the customers can provide during the instance creation. By default, the customer\nproject associated with the Apigee organization will be included to the list."]
     pub fn consumer_accept_list(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.consumer_accept_list", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `description` after provisioning.\nDescription of the instance."]
@@ -448,21 +498,109 @@ impl ApigeeInstanceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_attachment", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `access_logging_config` after provisioning.\n"]
+    pub fn access_logging_config(&self) -> terrars::ListRef<ApigeeInstance_AccessLoggingConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.access_logging_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ApigeeInstanceTimeoutsElRef {
-        ApigeeInstanceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ApigeeInstance_TimeoutsRef {
+        ApigeeInstance_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct ApigeeInstanceDynamic {
+    access_logging_config: std::option::Option<terrars::DynamicBlock<ApigeeInstance_AccessLoggingConfig>>,
+}
+
+#[derive(Serialize)]
+pub struct ApigeeInstance_AccessLoggingConfig {
+    enabled: terrars::PrimField<bool>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    filter: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl ApigeeInstance_AccessLoggingConfig {
+    #[doc =
+        "Set the field `filter`.\nShip the access log entries that match the statusCode defined in the filter.\nThe statusCode is the only expected/supported filter field. (Ex: statusCode)\nThe filter will parse it to the Common Expression Language semantics for expression\nevaluation to build the filter condition. (Ex: \"filter\": statusCode >= 200 && statusCode < 300 )"]
+    pub fn set_filter(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.filter = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ApigeeInstance_AccessLoggingConfig {
+    type O = terrars::BlockAssignable<ApigeeInstance_AccessLoggingConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildApigeeInstance_AccessLoggingConfig {
+    #[doc = "Boolean flag that specifies whether the customer access log feature is enabled."]
+    pub enabled: terrars::PrimField<bool>,
+}
+
+impl BuildApigeeInstance_AccessLoggingConfig {
+    pub fn build(self) -> ApigeeInstance_AccessLoggingConfig {
+        ApigeeInstance_AccessLoggingConfig {
+            enabled: self.enabled,
+            filter: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ApigeeInstance_AccessLoggingConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ApigeeInstance_AccessLoggingConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApigeeInstance_AccessLoggingConfigRef {
+        ApigeeInstance_AccessLoggingConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ApigeeInstance_AccessLoggingConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `enabled` after provisioning.\nBoolean flag that specifies whether the customer access log feature is enabled."]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `filter` after provisioning.\nShip the access log entries that match the statusCode defined in the filter.\nThe statusCode is the only expected/supported filter field. (Ex: statusCode)\nThe filter will parse it to the Common Expression Language semantics for expression\nevaluation to build the filter condition. (Ex: \"filter\": statusCode >= 200 && statusCode < 300 )"]
+    pub fn filter(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.filter", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ApigeeInstanceTimeoutsEl {
+pub struct ApigeeInstance_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ApigeeInstanceTimeoutsEl {
+impl ApigeeInstance_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -474,10 +612,16 @@ impl ApigeeInstanceTimeoutsEl {
         self.delete = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for ApigeeInstanceTimeoutsEl {
-    type O = terrars::BlockAssignable<ApigeeInstanceTimeoutsEl>;
+impl terrars::ToListMappable for ApigeeInstance_Timeouts {
+    type O = terrars::BlockAssignable<ApigeeInstance_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -488,32 +632,35 @@ impl terrars::ToListMappable for ApigeeInstanceTimeoutsEl {
     }
 }
 
-pub struct BuildApigeeInstanceTimeoutsEl {}
+pub struct BuildApigeeInstance_Timeouts {}
 
-impl BuildApigeeInstanceTimeoutsEl {
-    pub fn build(self) -> ApigeeInstanceTimeoutsEl {
-        ApigeeInstanceTimeoutsEl {
+impl BuildApigeeInstance_Timeouts {
+    pub fn build(self) -> ApigeeInstance_Timeouts {
+        ApigeeInstance_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
+            update: core::default::Default::default(),
         }
     }
 }
 
-pub struct ApigeeInstanceTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ApigeeInstance_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApigeeInstanceTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ApigeeInstanceTimeoutsElRef {
-        ApigeeInstanceTimeoutsElRef {
+impl terrars::Ref for ApigeeInstance_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApigeeInstance_TimeoutsRef {
+        ApigeeInstance_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApigeeInstanceTimeoutsElRef {
+impl ApigeeInstance_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -526,5 +673,10 @@ impl ApigeeInstanceTimeoutsElRef {
     #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
 }

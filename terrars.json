@@ -1,6 +1,6 @@
 {
     "provider": "hashicorp/google",
-    "version": "5.10.0",
+    "version": "8.8.1",
     "dest": "src/gcp",
 	"exclude": [
 		"data_loss_prevention_deidentify_template"

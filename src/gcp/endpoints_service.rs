@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct EndpointsServiceData {
+struct EndpointsServiceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct EndpointsServiceData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     grpc_config: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -30,13 +34,13 @@ struct EndpointsServiceData {
     protoc_output_base64: std::option::Option<terrars::PrimField<std::string::String>>,
     service_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<EndpointsServiceTimeoutsEl>,
+    timeouts: std::option::Option<EndpointsService_Timeouts>,
 }
 
 struct EndpointsService_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<EndpointsServiceData>,
+    data: std::cell::RefCell<EndpointsServiceData_>,
 }
 
 #[derive(Clone)]
@@ -137,6 +141,13 @@ impl EndpointsService {
     }
 
     #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `grpc_config`.\nThe full text of the Service Config YAML file (Example located here). If provided, must also provide protoc_output_base64. open_api config must not be provided."]
     pub fn set_grpc_config(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().grpc_config = std::option::Option::Some(v.into());
@@ -171,13 +182,13 @@ impl EndpointsService {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<EndpointsServiceTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<EndpointsService_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Get a reference to the value of field `apis` after provisioning.\nA list of API objects."]
-    pub fn apis(&self) -> terrars::ListRef<EndpointsServiceApisElRef> {
+    pub fn apis(&self) -> terrars::ListRef<EndpointsService_ApisRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.apis", self.extract_ref()))
     }
 
@@ -188,13 +199,19 @@ impl EndpointsService {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `dns_address` after provisioning.\nThe address at which the service can be found - usually the same as the service name."]
     pub fn dns_address(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.dns_address", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `endpoints` after provisioning.\nA list of Endpoint objects."]
-    pub fn endpoints(&self) -> terrars::ListRef<EndpointsServiceEndpointsElRef> {
+    pub fn endpoints(&self) -> terrars::ListRef<EndpointsService_EndpointsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.endpoints", self.extract_ref()))
     }
 
@@ -234,8 +251,8 @@ impl EndpointsService {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> EndpointsServiceTimeoutsElRef {
-        EndpointsServiceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> EndpointsService_TimeoutsRef {
+        EndpointsService_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -281,12 +298,13 @@ impl BuildEndpointsService {
         let out = EndpointsService(std::rc::Rc::new(EndpointsService_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(EndpointsServiceData {
+            data: std::cell::RefCell::new(EndpointsServiceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 grpc_config: core::default::Default::default(),
                 id: core::default::Default::default(),
                 openapi_config: core::default::Default::default(),
@@ -325,7 +343,7 @@ impl EndpointsServiceRef {
     }
 
     #[doc = "Get a reference to the value of field `apis` after provisioning.\nA list of API objects."]
-    pub fn apis(&self) -> terrars::ListRef<EndpointsServiceApisElRef> {
+    pub fn apis(&self) -> terrars::ListRef<EndpointsService_ApisRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.apis", self.extract_ref()))
     }
 
@@ -336,13 +354,19 @@ impl EndpointsServiceRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `dns_address` after provisioning.\nThe address at which the service can be found - usually the same as the service name."]
     pub fn dns_address(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.dns_address", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `endpoints` after provisioning.\nA list of Endpoint objects."]
-    pub fn endpoints(&self) -> terrars::ListRef<EndpointsServiceEndpointsElRef> {
+    pub fn endpoints(&self) -> terrars::ListRef<EndpointsService_EndpointsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.endpoints", self.extract_ref()))
     }
 
@@ -382,13 +406,13 @@ impl EndpointsServiceRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> EndpointsServiceTimeoutsElRef {
-        EndpointsServiceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> EndpointsService_TimeoutsRef {
+        EndpointsService_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct EndpointsServiceApisElMethodsEl {
+pub struct EndpointsService_Apis_Methods {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -399,7 +423,7 @@ pub struct EndpointsServiceApisElMethodsEl {
     syntax: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EndpointsServiceApisElMethodsEl {
+impl EndpointsService_Apis_Methods {
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
@@ -425,8 +449,8 @@ impl EndpointsServiceApisElMethodsEl {
     }
 }
 
-impl terrars::ToListMappable for EndpointsServiceApisElMethodsEl {
-    type O = terrars::BlockAssignable<EndpointsServiceApisElMethodsEl>;
+impl terrars::ToListMappable for EndpointsService_Apis_Methods {
+    type O = terrars::BlockAssignable<EndpointsService_Apis_Methods>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -437,11 +461,11 @@ impl terrars::ToListMappable for EndpointsServiceApisElMethodsEl {
     }
 }
 
-pub struct BuildEndpointsServiceApisElMethodsEl {}
+pub struct BuildEndpointsService_Apis_Methods {}
 
-impl BuildEndpointsServiceApisElMethodsEl {
-    pub fn build(self) -> EndpointsServiceApisElMethodsEl {
-        EndpointsServiceApisElMethodsEl {
+impl BuildEndpointsService_Apis_Methods {
+    pub fn build(self) -> EndpointsService_Apis_Methods {
+        EndpointsService_Apis_Methods {
             name: core::default::Default::default(),
             request_type: core::default::Default::default(),
             response_type: core::default::Default::default(),
@@ -450,21 +474,23 @@ impl BuildEndpointsServiceApisElMethodsEl {
     }
 }
 
-pub struct EndpointsServiceApisElMethodsElRef {
+#[allow(dead_code)]
+pub struct EndpointsService_Apis_MethodsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EndpointsServiceApisElMethodsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EndpointsServiceApisElMethodsElRef {
-        EndpointsServiceApisElMethodsElRef {
+impl terrars::Ref for EndpointsService_Apis_MethodsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EndpointsService_Apis_MethodsRef {
+        EndpointsService_Apis_MethodsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EndpointsServiceApisElMethodsElRef {
+impl EndpointsService_Apis_MethodsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -491,9 +517,9 @@ impl EndpointsServiceApisElMethodsElRef {
 }
 
 #[derive(Serialize)]
-pub struct EndpointsServiceApisEl {
+pub struct EndpointsService_Apis {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    methods: std::option::Option<terrars::ListField<EndpointsServiceApisElMethodsEl>>,
+    methods: std::option::Option<terrars::ListField<EndpointsService_Apis_Methods>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -502,12 +528,9 @@ pub struct EndpointsServiceApisEl {
     version: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EndpointsServiceApisEl {
+impl EndpointsService_Apis {
     #[doc = "Set the field `methods`.\n"]
-    pub fn set_methods(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<EndpointsServiceApisElMethodsEl>>,
-    ) -> Self {
+    pub fn set_methods(mut self, v: impl std::convert::Into<terrars::ListField<EndpointsService_Apis_Methods>>) -> Self {
         self.methods = std::option::Option::Some(v.into());
         self
     }
@@ -531,8 +554,8 @@ impl EndpointsServiceApisEl {
     }
 }
 
-impl terrars::ToListMappable for EndpointsServiceApisEl {
-    type O = terrars::BlockAssignable<EndpointsServiceApisEl>;
+impl terrars::ToListMappable for EndpointsService_Apis {
+    type O = terrars::BlockAssignable<EndpointsService_Apis>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -543,11 +566,11 @@ impl terrars::ToListMappable for EndpointsServiceApisEl {
     }
 }
 
-pub struct BuildEndpointsServiceApisEl {}
+pub struct BuildEndpointsService_Apis {}
 
-impl BuildEndpointsServiceApisEl {
-    pub fn build(self) -> EndpointsServiceApisEl {
-        EndpointsServiceApisEl {
+impl BuildEndpointsService_Apis {
+    pub fn build(self) -> EndpointsService_Apis {
+        EndpointsService_Apis {
             methods: core::default::Default::default(),
             name: core::default::Default::default(),
             syntax: core::default::Default::default(),
@@ -556,27 +579,29 @@ impl BuildEndpointsServiceApisEl {
     }
 }
 
-pub struct EndpointsServiceApisElRef {
+#[allow(dead_code)]
+pub struct EndpointsService_ApisRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EndpointsServiceApisElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EndpointsServiceApisElRef {
-        EndpointsServiceApisElRef {
+impl terrars::Ref for EndpointsService_ApisRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EndpointsService_ApisRef {
+        EndpointsService_ApisRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EndpointsServiceApisElRef {
+impl EndpointsService_ApisRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `methods` after provisioning.\n"]
-    pub fn methods(&self) -> terrars::ListRef<EndpointsServiceApisElMethodsElRef> {
+    pub fn methods(&self) -> terrars::ListRef<EndpointsService_Apis_MethodsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.methods", self.base))
     }
 
@@ -597,14 +622,14 @@ impl EndpointsServiceApisElRef {
 }
 
 #[derive(Serialize)]
-pub struct EndpointsServiceEndpointsEl {
+pub struct EndpointsService_Endpoints {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     address: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EndpointsServiceEndpointsEl {
+impl EndpointsService_Endpoints {
     #[doc = "Set the field `address`.\n"]
     pub fn set_address(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.address = std::option::Option::Some(v.into());
@@ -618,8 +643,8 @@ impl EndpointsServiceEndpointsEl {
     }
 }
 
-impl terrars::ToListMappable for EndpointsServiceEndpointsEl {
-    type O = terrars::BlockAssignable<EndpointsServiceEndpointsEl>;
+impl terrars::ToListMappable for EndpointsService_Endpoints {
+    type O = terrars::BlockAssignable<EndpointsService_Endpoints>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -630,32 +655,34 @@ impl terrars::ToListMappable for EndpointsServiceEndpointsEl {
     }
 }
 
-pub struct BuildEndpointsServiceEndpointsEl {}
+pub struct BuildEndpointsService_Endpoints {}
 
-impl BuildEndpointsServiceEndpointsEl {
-    pub fn build(self) -> EndpointsServiceEndpointsEl {
-        EndpointsServiceEndpointsEl {
+impl BuildEndpointsService_Endpoints {
+    pub fn build(self) -> EndpointsService_Endpoints {
+        EndpointsService_Endpoints {
             address: core::default::Default::default(),
             name: core::default::Default::default(),
         }
     }
 }
 
-pub struct EndpointsServiceEndpointsElRef {
+#[allow(dead_code)]
+pub struct EndpointsService_EndpointsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EndpointsServiceEndpointsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EndpointsServiceEndpointsElRef {
-        EndpointsServiceEndpointsElRef {
+impl terrars::Ref for EndpointsService_EndpointsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EndpointsService_EndpointsRef {
+        EndpointsService_EndpointsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EndpointsServiceEndpointsElRef {
+impl EndpointsService_EndpointsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -672,7 +699,7 @@ impl EndpointsServiceEndpointsElRef {
 }
 
 #[derive(Serialize)]
-pub struct EndpointsServiceTimeoutsEl {
+pub struct EndpointsService_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -681,7 +708,7 @@ pub struct EndpointsServiceTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EndpointsServiceTimeoutsEl {
+impl EndpointsService_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -701,8 +728,8 @@ impl EndpointsServiceTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for EndpointsServiceTimeoutsEl {
-    type O = terrars::BlockAssignable<EndpointsServiceTimeoutsEl>;
+impl terrars::ToListMappable for EndpointsService_Timeouts {
+    type O = terrars::BlockAssignable<EndpointsService_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -713,11 +740,11 @@ impl terrars::ToListMappable for EndpointsServiceTimeoutsEl {
     }
 }
 
-pub struct BuildEndpointsServiceTimeoutsEl {}
+pub struct BuildEndpointsService_Timeouts {}
 
-impl BuildEndpointsServiceTimeoutsEl {
-    pub fn build(self) -> EndpointsServiceTimeoutsEl {
-        EndpointsServiceTimeoutsEl {
+impl BuildEndpointsService_Timeouts {
+    pub fn build(self) -> EndpointsService_Timeouts {
+        EndpointsService_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -725,21 +752,23 @@ impl BuildEndpointsServiceTimeoutsEl {
     }
 }
 
-pub struct EndpointsServiceTimeoutsElRef {
+#[allow(dead_code)]
+pub struct EndpointsService_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EndpointsServiceTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EndpointsServiceTimeoutsElRef {
-        EndpointsServiceTimeoutsElRef {
+impl terrars::Ref for EndpointsService_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EndpointsService_TimeoutsRef {
+        EndpointsService_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EndpointsServiceTimeoutsElRef {
+impl EndpointsService_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DocumentAiWarehouseDocumentSchemaData {
+struct DocumentAiWarehouseDocumentSchemaData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct DocumentAiWarehouseDocumentSchemaData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     display_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     document_is_folder: std::option::Option<terrars::PrimField<bool>>,
@@ -26,16 +30,16 @@ struct DocumentAiWarehouseDocumentSchemaData {
     location: terrars::PrimField<std::string::String>,
     project_number: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    property_definitions: std::option::Option<std::vec::Vec<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsEl>>,
+    property_definitions: std::option::Option<std::vec::Vec<DocumentAiWarehouseDocumentSchema_PropertyDefinitions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DocumentAiWarehouseDocumentSchemaTimeoutsEl>,
+    timeouts: std::option::Option<DocumentAiWarehouseDocumentSchema_Timeouts>,
     dynamic: DocumentAiWarehouseDocumentSchemaDynamic,
 }
 
 struct DocumentAiWarehouseDocumentSchema_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DocumentAiWarehouseDocumentSchemaData>,
+    data: std::cell::RefCell<DocumentAiWarehouseDocumentSchemaData_>,
 }
 
 #[derive(Clone)]
@@ -135,6 +139,13 @@ impl DocumentAiWarehouseDocumentSchema {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `document_is_folder`.\nTells whether the document is a folder or a typical document."]
     pub fn set_document_is_folder(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().document_is_folder = std::option::Option::Some(v.into());
@@ -150,7 +161,7 @@ impl DocumentAiWarehouseDocumentSchema {
     #[doc = "Set the field `property_definitions`.\n"]
     pub fn set_property_definitions(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DocumentAiWarehouseDocumentSchema_PropertyDefinitions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -164,9 +175,15 @@ impl DocumentAiWarehouseDocumentSchema {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DocumentAiWarehouseDocumentSchemaTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DocumentAiWarehouseDocumentSchema_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -204,13 +221,13 @@ impl DocumentAiWarehouseDocumentSchema {
     }
 
     #[doc = "Get a reference to the value of field `property_definitions` after provisioning.\n"]
-    pub fn property_definitions(&self) -> terrars::ListRef<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElRef> {
+    pub fn property_definitions(&self) -> terrars::ListRef<DocumentAiWarehouseDocumentSchema_PropertyDefinitionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.property_definitions", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DocumentAiWarehouseDocumentSchemaTimeoutsElRef {
-        DocumentAiWarehouseDocumentSchemaTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DocumentAiWarehouseDocumentSchema_TimeoutsRef {
+        DocumentAiWarehouseDocumentSchema_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -263,12 +280,13 @@ impl BuildDocumentAiWarehouseDocumentSchema {
         let out = DocumentAiWarehouseDocumentSchema(std::rc::Rc::new(DocumentAiWarehouseDocumentSchema_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DocumentAiWarehouseDocumentSchemaData {
+            data: std::cell::RefCell::new(DocumentAiWarehouseDocumentSchemaData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 display_name: self.display_name,
                 document_is_folder: core::default::Default::default(),
                 id: core::default::Default::default(),
@@ -308,6 +326,12 @@ impl DocumentAiWarehouseDocumentSchemaRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `display_name` after provisioning.\nName of the schema given by the user."]
     pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
@@ -342,26 +366,33 @@ impl DocumentAiWarehouseDocumentSchemaRef {
     }
 
     #[doc = "Get a reference to the value of field `property_definitions` after provisioning.\n"]
-    pub fn property_definitions(&self) -> terrars::ListRef<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElRef> {
+    pub fn property_definitions(&self) -> terrars::ListRef<DocumentAiWarehouseDocumentSchema_PropertyDefinitionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.property_definitions", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DocumentAiWarehouseDocumentSchemaTimeoutsElRef {
-        DocumentAiWarehouseDocumentSchemaTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DocumentAiWarehouseDocumentSchema_TimeoutsRef {
+        DocumentAiWarehouseDocumentSchema_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct DocumentAiWarehouseDocumentSchemaDynamic {
+    property_definitions: std
+    ::option
+    ::Option<terrars::DynamicBlock<DocumentAiWarehouseDocumentSchema_PropertyDefinitions>>,
+}
+
 #[derive(Serialize)]
-pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElDateTimeTypeOptionsEl {}
+pub struct DocumentAiWarehouseDocumentSchema_PropertyDefinitions_DateTimeTypeOptions {}
 
-impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElDateTimeTypeOptionsEl { }
+impl DocumentAiWarehouseDocumentSchema_PropertyDefinitions_DateTimeTypeOptions { }
 
-impl terrars::ToListMappable for DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElDateTimeTypeOptionsEl {
-    type O = terrars::BlockAssignable<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElDateTimeTypeOptionsEl>;
+impl terrars::ToListMappable for DocumentAiWarehouseDocumentSchema_PropertyDefinitions_DateTimeTypeOptions {
+    type O = terrars::BlockAssignable<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_DateTimeTypeOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -372,45 +403,47 @@ impl terrars::ToListMappable for DocumentAiWarehouseDocumentSchemaPropertyDefini
     }
 }
 
-pub struct BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsElDateTimeTypeOptionsEl {}
+pub struct BuildDocumentAiWarehouseDocumentSchema_PropertyDefinitions_DateTimeTypeOptions {}
 
-impl BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsElDateTimeTypeOptionsEl {
-    pub fn build(self) -> DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElDateTimeTypeOptionsEl {
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElDateTimeTypeOptionsEl {}
+impl BuildDocumentAiWarehouseDocumentSchema_PropertyDefinitions_DateTimeTypeOptions {
+    pub fn build(self) -> DocumentAiWarehouseDocumentSchema_PropertyDefinitions_DateTimeTypeOptions {
+        DocumentAiWarehouseDocumentSchema_PropertyDefinitions_DateTimeTypeOptions {}
     }
 }
 
-pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElDateTimeTypeOptionsElRef {
+#[allow(dead_code)]
+pub struct DocumentAiWarehouseDocumentSchema_PropertyDefinitions_DateTimeTypeOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElDateTimeTypeOptionsElRef {
+impl terrars::Ref for DocumentAiWarehouseDocumentSchema_PropertyDefinitions_DateTimeTypeOptionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElDateTimeTypeOptionsElRef {
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElDateTimeTypeOptionsElRef {
+    ) -> DocumentAiWarehouseDocumentSchema_PropertyDefinitions_DateTimeTypeOptionsRef {
+        DocumentAiWarehouseDocumentSchema_PropertyDefinitions_DateTimeTypeOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElDateTimeTypeOptionsElRef {
+impl DocumentAiWarehouseDocumentSchema_PropertyDefinitions_DateTimeTypeOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize)]
-pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElEnumTypeOptionsEl {
+pub struct DocumentAiWarehouseDocumentSchema_PropertyDefinitions_EnumTypeOptions {
     possible_values: terrars::ListField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     validation_check_disabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElEnumTypeOptionsEl {
+impl DocumentAiWarehouseDocumentSchema_PropertyDefinitions_EnumTypeOptions {
     #[doc =
         "Set the field `validation_check_disabled`.\nMake sure the enum property value provided in the document is in the possile value list during document creation. The validation check runs by default."]
     pub fn set_validation_check_disabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -419,8 +452,8 @@ impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElEnumTypeOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElEnumTypeOptionsEl {
-    type O = terrars::BlockAssignable<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElEnumTypeOptionsEl>;
+impl terrars::ToListMappable for DocumentAiWarehouseDocumentSchema_PropertyDefinitions_EnumTypeOptions {
+    type O = terrars::BlockAssignable<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_EnumTypeOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -431,38 +464,40 @@ impl terrars::ToListMappable for DocumentAiWarehouseDocumentSchemaPropertyDefini
     }
 }
 
-pub struct BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsElEnumTypeOptionsEl {
+pub struct BuildDocumentAiWarehouseDocumentSchema_PropertyDefinitions_EnumTypeOptions {
     #[doc = "List of possible enum values."]
     pub possible_values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsElEnumTypeOptionsEl {
-    pub fn build(self) -> DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElEnumTypeOptionsEl {
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElEnumTypeOptionsEl {
+impl BuildDocumentAiWarehouseDocumentSchema_PropertyDefinitions_EnumTypeOptions {
+    pub fn build(self) -> DocumentAiWarehouseDocumentSchema_PropertyDefinitions_EnumTypeOptions {
+        DocumentAiWarehouseDocumentSchema_PropertyDefinitions_EnumTypeOptions {
             possible_values: self.possible_values,
             validation_check_disabled: core::default::Default::default(),
         }
     }
 }
 
-pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElEnumTypeOptionsElRef {
+#[allow(dead_code)]
+pub struct DocumentAiWarehouseDocumentSchema_PropertyDefinitions_EnumTypeOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElEnumTypeOptionsElRef {
+impl terrars::Ref for DocumentAiWarehouseDocumentSchema_PropertyDefinitions_EnumTypeOptionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElEnumTypeOptionsElRef {
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElEnumTypeOptionsElRef {
+    ) -> DocumentAiWarehouseDocumentSchema_PropertyDefinitions_EnumTypeOptionsRef {
+        DocumentAiWarehouseDocumentSchema_PropertyDefinitions_EnumTypeOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElEnumTypeOptionsElRef {
+impl DocumentAiWarehouseDocumentSchema_PropertyDefinitions_EnumTypeOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -481,60 +516,12 @@ impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElEnumTypeOptionsElRef 
 }
 
 #[derive(Serialize)]
-pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElFloatTypeOptionsEl {}
+pub struct DocumentAiWarehouseDocumentSchema_PropertyDefinitions_FloatTypeOptions {}
 
-impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElFloatTypeOptionsEl { }
+impl DocumentAiWarehouseDocumentSchema_PropertyDefinitions_FloatTypeOptions { }
 
-impl terrars::ToListMappable for DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElFloatTypeOptionsEl {
-    type O = terrars::BlockAssignable<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElFloatTypeOptionsEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsElFloatTypeOptionsEl {}
-
-impl BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsElFloatTypeOptionsEl {
-    pub fn build(self) -> DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElFloatTypeOptionsEl {
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElFloatTypeOptionsEl {}
-    }
-}
-
-pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElFloatTypeOptionsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElFloatTypeOptionsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElFloatTypeOptionsElRef {
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElFloatTypeOptionsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElFloatTypeOptionsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-}
-
-#[derive(Serialize)]
-pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElIntegerTypeOptionsEl {}
-
-impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElIntegerTypeOptionsEl { }
-
-impl terrars::ToListMappable for DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElIntegerTypeOptionsEl {
-    type O = terrars::BlockAssignable<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElIntegerTypeOptionsEl>;
+impl terrars::ToListMappable for DocumentAiWarehouseDocumentSchema_PropertyDefinitions_FloatTypeOptions {
+    type O = terrars::BlockAssignable<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_FloatTypeOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -545,44 +532,46 @@ impl terrars::ToListMappable for DocumentAiWarehouseDocumentSchemaPropertyDefini
     }
 }
 
-pub struct BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsElIntegerTypeOptionsEl {}
+pub struct BuildDocumentAiWarehouseDocumentSchema_PropertyDefinitions_FloatTypeOptions {}
 
-impl BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsElIntegerTypeOptionsEl {
-    pub fn build(self) -> DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElIntegerTypeOptionsEl {
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElIntegerTypeOptionsEl {}
+impl BuildDocumentAiWarehouseDocumentSchema_PropertyDefinitions_FloatTypeOptions {
+    pub fn build(self) -> DocumentAiWarehouseDocumentSchema_PropertyDefinitions_FloatTypeOptions {
+        DocumentAiWarehouseDocumentSchema_PropertyDefinitions_FloatTypeOptions {}
     }
 }
 
-pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElIntegerTypeOptionsElRef {
+#[allow(dead_code)]
+pub struct DocumentAiWarehouseDocumentSchema_PropertyDefinitions_FloatTypeOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElIntegerTypeOptionsElRef {
+impl terrars::Ref for DocumentAiWarehouseDocumentSchema_PropertyDefinitions_FloatTypeOptionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElIntegerTypeOptionsElRef {
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElIntegerTypeOptionsElRef {
+    ) -> DocumentAiWarehouseDocumentSchema_PropertyDefinitions_FloatTypeOptionsRef {
+        DocumentAiWarehouseDocumentSchema_PropertyDefinitions_FloatTypeOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElIntegerTypeOptionsElRef {
+impl DocumentAiWarehouseDocumentSchema_PropertyDefinitions_FloatTypeOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize)]
-pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElMapTypeOptionsEl {}
+pub struct DocumentAiWarehouseDocumentSchema_PropertyDefinitions_IntegerTypeOptions {}
 
-impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElMapTypeOptionsEl { }
+impl DocumentAiWarehouseDocumentSchema_PropertyDefinitions_IntegerTypeOptions { }
 
-impl terrars::ToListMappable for DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElMapTypeOptionsEl {
-    type O = terrars::BlockAssignable<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElMapTypeOptionsEl>;
+impl terrars::ToListMappable for DocumentAiWarehouseDocumentSchema_PropertyDefinitions_IntegerTypeOptions {
+    type O = terrars::BlockAssignable<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_IntegerTypeOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -593,51 +582,46 @@ impl terrars::ToListMappable for DocumentAiWarehouseDocumentSchemaPropertyDefini
     }
 }
 
-pub struct BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsElMapTypeOptionsEl {}
+pub struct BuildDocumentAiWarehouseDocumentSchema_PropertyDefinitions_IntegerTypeOptions {}
 
-impl BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsElMapTypeOptionsEl {
-    pub fn build(self) -> DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElMapTypeOptionsEl {
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElMapTypeOptionsEl {}
+impl BuildDocumentAiWarehouseDocumentSchema_PropertyDefinitions_IntegerTypeOptions {
+    pub fn build(self) -> DocumentAiWarehouseDocumentSchema_PropertyDefinitions_IntegerTypeOptions {
+        DocumentAiWarehouseDocumentSchema_PropertyDefinitions_IntegerTypeOptions {}
     }
 }
 
-pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElMapTypeOptionsElRef {
+#[allow(dead_code)]
+pub struct DocumentAiWarehouseDocumentSchema_PropertyDefinitions_IntegerTypeOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElMapTypeOptionsElRef {
+impl terrars::Ref for DocumentAiWarehouseDocumentSchema_PropertyDefinitions_IntegerTypeOptionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElMapTypeOptionsElRef {
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElMapTypeOptionsElRef {
+    ) -> DocumentAiWarehouseDocumentSchema_PropertyDefinitions_IntegerTypeOptionsRef {
+        DocumentAiWarehouseDocumentSchema_PropertyDefinitions_IntegerTypeOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElMapTypeOptionsElRef {
+impl DocumentAiWarehouseDocumentSchema_PropertyDefinitions_IntegerTypeOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize)]
-pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElDateTimeTypeOptionsEl {}
+pub struct DocumentAiWarehouseDocumentSchema_PropertyDefinitions_MapTypeOptions {}
 
-impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElDateTimeTypeOptionsEl {
+impl DocumentAiWarehouseDocumentSchema_PropertyDefinitions_MapTypeOptions { }
 
-}
-
-impl terrars
-::ToListMappable for DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElDateTimeTypeOptionsEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElDateTimeTypeOptionsEl,
-        >;
+impl terrars::ToListMappable for DocumentAiWarehouseDocumentSchema_PropertyDefinitions_MapTypeOptions {
+    type O = terrars::BlockAssignable<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_MapTypeOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -648,308 +632,48 @@ impl terrars
     }
 }
 
-pub struct BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElDateTimeTypeOptionsEl {}
+pub struct BuildDocumentAiWarehouseDocumentSchema_PropertyDefinitions_MapTypeOptions {}
 
-impl BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElDateTimeTypeOptionsEl {
-    pub fn build(
-        self,
-    ) -> DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElDateTimeTypeOptionsEl {
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElDateTimeTypeOptionsEl {}
+impl BuildDocumentAiWarehouseDocumentSchema_PropertyDefinitions_MapTypeOptions {
+    pub fn build(self) -> DocumentAiWarehouseDocumentSchema_PropertyDefinitions_MapTypeOptions {
+        DocumentAiWarehouseDocumentSchema_PropertyDefinitions_MapTypeOptions {}
     }
 }
 
-pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElDateTimeTypeOptionsElRef {
+#[allow(dead_code)]
+pub struct DocumentAiWarehouseDocumentSchema_PropertyDefinitions_MapTypeOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars
-::Ref for DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElDateTimeTypeOptionsElRef {
+impl terrars::Ref for DocumentAiWarehouseDocumentSchema_PropertyDefinitions_MapTypeOptionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElDateTimeTypeOptionsElRef {
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElDateTimeTypeOptionsElRef {
+    ) -> DocumentAiWarehouseDocumentSchema_PropertyDefinitions_MapTypeOptionsRef {
+        DocumentAiWarehouseDocumentSchema_PropertyDefinitions_MapTypeOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElDateTimeTypeOptionsElRef {
+impl DocumentAiWarehouseDocumentSchema_PropertyDefinitions_MapTypeOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize)]
-pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElEnumTypeOptionsEl {
-    possible_values: terrars::ListField<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    validation_check_disabled: std::option::Option<terrars::PrimField<bool>>,
-}
-
-impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElEnumTypeOptionsEl {
-    #[doc =
-        "Set the field `validation_check_disabled`.\nMake sure the enum property value provided in the document is in the possile value list during document creation. The validation check runs by default."]
-    pub fn set_validation_check_disabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.validation_check_disabled = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElEnumTypeOptionsEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElEnumTypeOptionsEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElEnumTypeOptionsEl {
-    #[doc = "List of possible enum values."]
-    pub possible_values: terrars::ListField<terrars::PrimField<std::string::String>>,
-}
-
-impl BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElEnumTypeOptionsEl {
-    pub fn build(
-        self,
-    ) -> DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElEnumTypeOptionsEl {
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElEnumTypeOptionsEl {
-            possible_values: self.possible_values,
-            validation_check_disabled: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElEnumTypeOptionsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElEnumTypeOptionsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElEnumTypeOptionsElRef {
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElEnumTypeOptionsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElEnumTypeOptionsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `possible_values` after provisioning.\nList of possible enum values."]
-    pub fn possible_values(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.possible_values", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `validation_check_disabled` after provisioning.\nMake sure the enum property value provided in the document is in the possile value list during document creation. The validation check runs by default."]
-    pub fn validation_check_disabled(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.validation_check_disabled", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElFloatTypeOptionsEl {}
-
-impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElFloatTypeOptionsEl {
-
-}
-
-impl terrars
-::ToListMappable for DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElFloatTypeOptionsEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElFloatTypeOptionsEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElFloatTypeOptionsEl {}
-
-impl BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElFloatTypeOptionsEl {
-    pub fn build(
-        self,
-    ) -> DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElFloatTypeOptionsEl {
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElFloatTypeOptionsEl {}
-    }
-}
-
-pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElFloatTypeOptionsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElFloatTypeOptionsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElFloatTypeOptionsElRef {
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElFloatTypeOptionsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElFloatTypeOptionsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-}
-
-#[derive(Serialize)]
-pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElIntegerTypeOptionsEl {}
-
-impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElIntegerTypeOptionsEl {
-
-}
-
-impl terrars
-::ToListMappable for DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElIntegerTypeOptionsEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElIntegerTypeOptionsEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElIntegerTypeOptionsEl {}
-
-impl BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElIntegerTypeOptionsEl {
-    pub fn build(
-        self,
-    ) -> DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElIntegerTypeOptionsEl {
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElIntegerTypeOptionsEl {}
-    }
-}
-
-pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElIntegerTypeOptionsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElIntegerTypeOptionsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElIntegerTypeOptionsElRef {
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElIntegerTypeOptionsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElIntegerTypeOptionsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-}
-
-#[derive(Serialize)]
-pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElMapTypeOptionsEl {}
-
-impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElMapTypeOptionsEl {
-
-}
-
-impl terrars
-::ToListMappable for DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElMapTypeOptionsEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElMapTypeOptionsEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElMapTypeOptionsEl {}
-
-impl BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElMapTypeOptionsEl {
-    pub fn build(
-        self,
-    ) -> DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElMapTypeOptionsEl {
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElMapTypeOptionsEl {}
-    }
-}
-
-pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElMapTypeOptionsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElMapTypeOptionsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElMapTypeOptionsElRef {
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElMapTypeOptionsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElMapTypeOptionsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-}
-
-#[derive(Serialize)]
-pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElSchemaSourcesEl {
+pub struct DocumentAiWarehouseDocumentSchema_PropertyDefinitions_SchemaSources {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     processor_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElSchemaSourcesEl {
+impl DocumentAiWarehouseDocumentSchema_PropertyDefinitions_SchemaSources {
     #[doc = "Set the field `name`.\nThe schema name in the source."]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
@@ -963,13 +687,8 @@ impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsEl
     }
 }
 
-impl terrars
-::ToListMappable for DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElSchemaSourcesEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElSchemaSourcesEl,
-        >;
+impl terrars::ToListMappable for DocumentAiWarehouseDocumentSchema_PropertyDefinitions_SchemaSources {
+    type O = terrars::BlockAssignable<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_SchemaSources>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -980,38 +699,37 @@ impl terrars
     }
 }
 
-pub struct BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElSchemaSourcesEl {}
+pub struct BuildDocumentAiWarehouseDocumentSchema_PropertyDefinitions_SchemaSources {}
 
-impl BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElSchemaSourcesEl {
-    pub fn build(
-        self,
-    ) -> DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElSchemaSourcesEl {
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElSchemaSourcesEl {
+impl BuildDocumentAiWarehouseDocumentSchema_PropertyDefinitions_SchemaSources {
+    pub fn build(self) -> DocumentAiWarehouseDocumentSchema_PropertyDefinitions_SchemaSources {
+        DocumentAiWarehouseDocumentSchema_PropertyDefinitions_SchemaSources {
             name: core::default::Default::default(),
             processor_type: core::default::Default::default(),
         }
     }
 }
 
-pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElSchemaSourcesElRef {
+#[allow(dead_code)]
+pub struct DocumentAiWarehouseDocumentSchema_PropertyDefinitions_SchemaSourcesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars
-::Ref for DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElSchemaSourcesElRef {
+impl terrars::Ref for DocumentAiWarehouseDocumentSchema_PropertyDefinitions_SchemaSourcesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElSchemaSourcesElRef {
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElSchemaSourcesElRef {
+    ) -> DocumentAiWarehouseDocumentSchema_PropertyDefinitions_SchemaSourcesRef {
+        DocumentAiWarehouseDocumentSchema_PropertyDefinitions_SchemaSourcesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElSchemaSourcesElRef {
+impl DocumentAiWarehouseDocumentSchema_PropertyDefinitions_SchemaSourcesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1029,19 +747,12 @@ impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsEl
 }
 
 #[derive(Serialize)]
-pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElTextTypeOptionsEl {}
+pub struct DocumentAiWarehouseDocumentSchema_PropertyDefinitions_TextTypeOptions {}
 
-impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElTextTypeOptionsEl {
+impl DocumentAiWarehouseDocumentSchema_PropertyDefinitions_TextTypeOptions { }
 
-}
-
-impl terrars
-::ToListMappable for DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElTextTypeOptionsEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElTextTypeOptionsEl,
-        >;
+impl terrars::ToListMappable for DocumentAiWarehouseDocumentSchema_PropertyDefinitions_TextTypeOptions {
+    type O = terrars::BlockAssignable<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_TextTypeOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1052,54 +763,46 @@ impl terrars
     }
 }
 
-pub struct BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElTextTypeOptionsEl {}
+pub struct BuildDocumentAiWarehouseDocumentSchema_PropertyDefinitions_TextTypeOptions {}
 
-impl BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElTextTypeOptionsEl {
-    pub fn build(
-        self,
-    ) -> DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElTextTypeOptionsEl {
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElTextTypeOptionsEl {}
+impl BuildDocumentAiWarehouseDocumentSchema_PropertyDefinitions_TextTypeOptions {
+    pub fn build(self) -> DocumentAiWarehouseDocumentSchema_PropertyDefinitions_TextTypeOptions {
+        DocumentAiWarehouseDocumentSchema_PropertyDefinitions_TextTypeOptions {}
     }
 }
 
-pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElTextTypeOptionsElRef {
+#[allow(dead_code)]
+pub struct DocumentAiWarehouseDocumentSchema_PropertyDefinitions_TextTypeOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars
-::Ref for DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElTextTypeOptionsElRef {
+impl terrars::Ref for DocumentAiWarehouseDocumentSchema_PropertyDefinitions_TextTypeOptionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElTextTypeOptionsElRef {
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElTextTypeOptionsElRef {
+    ) -> DocumentAiWarehouseDocumentSchema_PropertyDefinitions_TextTypeOptionsRef {
+        DocumentAiWarehouseDocumentSchema_PropertyDefinitions_TextTypeOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElTextTypeOptionsElRef {
+impl DocumentAiWarehouseDocumentSchema_PropertyDefinitions_TextTypeOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize)]
-pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElTimestampTypeOptionsEl {}
+pub struct DocumentAiWarehouseDocumentSchema_PropertyDefinitions_TimestampTypeOptions {}
 
-impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElTimestampTypeOptionsEl {
+impl DocumentAiWarehouseDocumentSchema_PropertyDefinitions_TimestampTypeOptions { }
 
-}
-
-impl terrars
-::ToListMappable for DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElTimestampTypeOptionsEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElTimestampTypeOptionsEl,
-        >;
+impl terrars::ToListMappable for DocumentAiWarehouseDocumentSchema_PropertyDefinitions_TimestampTypeOptions {
+    type O = terrars::BlockAssignable<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_TimestampTypeOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1110,110 +813,69 @@ impl terrars
     }
 }
 
-pub struct BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElTimestampTypeOptionsEl {}
+pub struct BuildDocumentAiWarehouseDocumentSchema_PropertyDefinitions_TimestampTypeOptions {}
 
-impl BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElTimestampTypeOptionsEl {
-    pub fn build(
-        self,
-    ) -> DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElTimestampTypeOptionsEl {
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElTimestampTypeOptionsEl {}
+impl BuildDocumentAiWarehouseDocumentSchema_PropertyDefinitions_TimestampTypeOptions {
+    pub fn build(self) -> DocumentAiWarehouseDocumentSchema_PropertyDefinitions_TimestampTypeOptions {
+        DocumentAiWarehouseDocumentSchema_PropertyDefinitions_TimestampTypeOptions {}
     }
 }
 
-pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElTimestampTypeOptionsElRef {
+#[allow(dead_code)]
+pub struct DocumentAiWarehouseDocumentSchema_PropertyDefinitions_TimestampTypeOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars
-::Ref for DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElTimestampTypeOptionsElRef {
+impl terrars::Ref for DocumentAiWarehouseDocumentSchema_PropertyDefinitions_TimestampTypeOptionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElTimestampTypeOptionsElRef {
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElTimestampTypeOptionsElRef {
+    ) -> DocumentAiWarehouseDocumentSchema_PropertyDefinitions_TimestampTypeOptionsRef {
+        DocumentAiWarehouseDocumentSchema_PropertyDefinitions_TimestampTypeOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElTimestampTypeOptionsElRef {
+impl DocumentAiWarehouseDocumentSchema_PropertyDefinitions_TimestampTypeOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize, Default)]
-struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElDynamic {
+struct DocumentAiWarehouseDocumentSchema_PropertyDefinitions_PropertyTypeOptions_PropertyDefinitionsDynamic {
     date_time_type_options: std
     ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElDateTimeTypeOptionsEl,
-        >,
-    >,
+    ::Option<terrars::DynamicBlock<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_DateTimeTypeOptions>>,
     enum_type_options: std
     ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElEnumTypeOptionsEl,
-        >,
-    >,
+    ::Option<terrars::DynamicBlock<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_EnumTypeOptions>>,
     float_type_options: std
     ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElFloatTypeOptionsEl,
-        >,
-    >,
+    ::Option<terrars::DynamicBlock<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_FloatTypeOptions>>,
     integer_type_options: std
     ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElIntegerTypeOptionsEl,
-        >,
-    >,
+    ::Option<terrars::DynamicBlock<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_IntegerTypeOptions>>,
     map_type_options: std
     ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElMapTypeOptionsEl,
-        >,
-    >,
+    ::Option<terrars::DynamicBlock<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_MapTypeOptions>>,
     schema_sources: std
     ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElSchemaSourcesEl,
-        >,
-    >,
+    ::Option<terrars::DynamicBlock<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_SchemaSources>>,
     text_type_options: std
     ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElTextTypeOptionsEl,
-        >,
-    >,
+    ::Option<terrars::DynamicBlock<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_TextTypeOptions>>,
     timestamp_type_options: std
     ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElTimestampTypeOptionsEl,
-        >,
-    >,
+    ::Option<terrars::DynamicBlock<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_TimestampTypeOptions>>,
 }
 
 #[derive(Serialize)]
-pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsEl {
+pub struct DocumentAiWarehouseDocumentSchema_PropertyDefinitions_PropertyTypeOptions_PropertyDefinitions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     display_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1232,87 +894,39 @@ pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOpt
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     date_time_type_options: std
     ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<
-            DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElDateTimeTypeOptionsEl,
-        >,
-    >,
+    ::Option<std::vec::Vec<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_DateTimeTypeOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enum_type_options: std
     ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<
-            DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElEnumTypeOptionsEl,
-        >,
-    >,
+    ::Option<std::vec::Vec<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_EnumTypeOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     float_type_options: std
     ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<
-            DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElFloatTypeOptionsEl,
-        >,
-    >,
+    ::Option<std::vec::Vec<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_FloatTypeOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     integer_type_options: std
     ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<
-            DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElIntegerTypeOptionsEl,
-        >,
-    >,
+    ::Option<std::vec::Vec<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_IntegerTypeOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     map_type_options: std
     ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<
-            DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElMapTypeOptionsEl,
-        >,
-    >,
+    ::Option<std::vec::Vec<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_MapTypeOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     schema_sources: std
     ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<
-            DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElSchemaSourcesEl,
-        >,
-    >,
+    ::Option<std::vec::Vec<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_SchemaSources>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     text_type_options: std
     ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<
-            DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElTextTypeOptionsEl,
-        >,
-    >,
+    ::Option<std::vec::Vec<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_TextTypeOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     timestamp_type_options: std
     ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<
-            DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElTimestampTypeOptionsEl,
-        >,
-    >,
-    dynamic: DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElDynamic,
+    ::Option<std::vec::Vec<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_TimestampTypeOptions>>,
+    dynamic: DocumentAiWarehouseDocumentSchema_PropertyDefinitions_PropertyTypeOptions_PropertyDefinitionsDynamic,
 }
 
-impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsEl {
+impl DocumentAiWarehouseDocumentSchema_PropertyDefinitions_PropertyTypeOptions_PropertyDefinitions {
     #[doc = "Set the field `display_name`.\nThe display-name for the property, used for front-end."]
     pub fn set_display_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.display_name = std::option::Option::Some(v.into());
@@ -1370,9 +984,7 @@ impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsEl
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElDateTimeTypeOptionsEl,
-                        >,
+                        ::BlockAssignable<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_DateTimeTypeOptions>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1396,9 +1008,7 @@ impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsEl
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElEnumTypeOptionsEl,
-                        >,
+                        ::BlockAssignable<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_EnumTypeOptions>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1422,9 +1032,7 @@ impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsEl
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElFloatTypeOptionsEl,
-                        >,
+                        ::BlockAssignable<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_FloatTypeOptions>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1448,9 +1056,7 @@ impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsEl
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElIntegerTypeOptionsEl,
-                        >,
+                        ::BlockAssignable<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_IntegerTypeOptions>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1473,10 +1079,7 @@ impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsEl
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElMapTypeOptionsEl,
-                        >,
+                        terrars::BlockAssignable<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_MapTypeOptions>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1499,10 +1102,7 @@ impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsEl
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElSchemaSourcesEl,
-                        >,
+                        terrars::BlockAssignable<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_SchemaSources>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1526,9 +1126,7 @@ impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsEl
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElTextTypeOptionsEl,
-                        >,
+                        ::BlockAssignable<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_TextTypeOptions>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1552,9 +1150,7 @@ impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsEl
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElTimestampTypeOptionsEl,
-                        >,
+                        ::BlockAssignable<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_TimestampTypeOptions>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1570,11 +1166,11 @@ impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsEl
 }
 
 impl terrars
-::ToListMappable for DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsEl {
+::ToListMappable for DocumentAiWarehouseDocumentSchema_PropertyDefinitions_PropertyTypeOptions_PropertyDefinitions {
     type O =
         terrars
         ::BlockAssignable<
-            DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsEl,
+            DocumentAiWarehouseDocumentSchema_PropertyDefinitions_PropertyTypeOptions_PropertyDefinitions,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -1586,16 +1182,16 @@ impl terrars
     }
 }
 
-pub struct BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsEl {
+pub struct BuildDocumentAiWarehouseDocumentSchema_PropertyDefinitions_PropertyTypeOptions_PropertyDefinitions {
     #[doc = "The name of the metadata property."]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsEl {
+impl BuildDocumentAiWarehouseDocumentSchema_PropertyDefinitions_PropertyTypeOptions_PropertyDefinitions {
     pub fn build(
         self,
-    ) -> DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsEl {
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsEl {
+    ) -> DocumentAiWarehouseDocumentSchema_PropertyDefinitions_PropertyTypeOptions_PropertyDefinitions {
+        DocumentAiWarehouseDocumentSchema_PropertyDefinitions_PropertyTypeOptions_PropertyDefinitions {
             display_name: core::default::Default::default(),
             is_filterable: core::default::Default::default(),
             is_metadata: core::default::Default::default(),
@@ -1617,25 +1213,27 @@ impl BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOpti
     }
 }
 
-pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElRef {
+#[allow(dead_code)]
+pub struct DocumentAiWarehouseDocumentSchema_PropertyDefinitions_PropertyTypeOptions_PropertyDefinitionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElRef {
+::Ref for DocumentAiWarehouseDocumentSchema_PropertyDefinitions_PropertyTypeOptions_PropertyDefinitionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElRef {
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElRef {
+    ) -> DocumentAiWarehouseDocumentSchema_PropertyDefinitions_PropertyTypeOptions_PropertyDefinitionsRef {
+        DocumentAiWarehouseDocumentSchema_PropertyDefinitions_PropertyTypeOptions_PropertyDefinitionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElRef {
+impl DocumentAiWarehouseDocumentSchema_PropertyDefinitions_PropertyTypeOptions_PropertyDefinitionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1690,110 +1288,82 @@ impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsEl
     #[doc = "Get a reference to the value of field `date_time_type_options` after provisioning.\n"]
     pub fn date_time_type_options(
         &self,
-    ) -> terrars
-    ::ListRef<
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElDateTimeTypeOptionsElRef,
-    > {
+    ) -> terrars::ListRef<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_DateTimeTypeOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.date_time_type_options", self.base))
     }
 
     #[doc = "Get a reference to the value of field `enum_type_options` after provisioning.\n"]
     pub fn enum_type_options(
         &self,
-    ) -> terrars
-    ::ListRef<
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElEnumTypeOptionsElRef,
-    > {
+    ) -> terrars::ListRef<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_EnumTypeOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.enum_type_options", self.base))
     }
 
     #[doc = "Get a reference to the value of field `float_type_options` after provisioning.\n"]
     pub fn float_type_options(
         &self,
-    ) -> terrars
-    ::ListRef<
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElFloatTypeOptionsElRef,
-    > {
+    ) -> terrars::ListRef<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_FloatTypeOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.float_type_options", self.base))
     }
 
     #[doc = "Get a reference to the value of field `integer_type_options` after provisioning.\n"]
     pub fn integer_type_options(
         &self,
-    ) -> terrars
-    ::ListRef<
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElIntegerTypeOptionsElRef,
-    > {
+    ) -> terrars::ListRef<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_IntegerTypeOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.integer_type_options", self.base))
     }
 
     #[doc = "Get a reference to the value of field `map_type_options` after provisioning.\n"]
     pub fn map_type_options(
         &self,
-    ) -> terrars
-    ::ListRef<
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElMapTypeOptionsElRef,
-    > {
+    ) -> terrars::ListRef<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_MapTypeOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.map_type_options", self.base))
     }
 
     #[doc = "Get a reference to the value of field `schema_sources` after provisioning.\n"]
     pub fn schema_sources(
         &self,
-    ) -> terrars
-    ::ListRef<
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElSchemaSourcesElRef,
-    > {
+    ) -> terrars::ListRef<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_SchemaSourcesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.schema_sources", self.base))
     }
 
     #[doc = "Get a reference to the value of field `text_type_options` after provisioning.\n"]
     pub fn text_type_options(
         &self,
-    ) -> terrars
-    ::ListRef<
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElTextTypeOptionsElRef,
-    > {
+    ) -> terrars::ListRef<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_TextTypeOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.text_type_options", self.base))
     }
 
     #[doc = "Get a reference to the value of field `timestamp_type_options` after provisioning.\n"]
     pub fn timestamp_type_options(
         &self,
-    ) -> terrars
-    ::ListRef<
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElTimestampTypeOptionsElRef,
-    > {
+    ) -> terrars::ListRef<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_TimestampTypeOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.timestamp_type_options", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElDynamic {
+struct DocumentAiWarehouseDocumentSchema_PropertyDefinitions_PropertyTypeOptionsDynamic {
     property_definitions: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsEl,
-        >,
+        ::DynamicBlock<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_PropertyTypeOptions_PropertyDefinitions>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsEl {
+pub struct DocumentAiWarehouseDocumentSchema_PropertyDefinitions_PropertyTypeOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     property_definitions: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsEl>,
+        std::vec::Vec<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_PropertyTypeOptions_PropertyDefinitions>,
     >,
-    dynamic: DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElDynamic,
+    dynamic: DocumentAiWarehouseDocumentSchema_PropertyDefinitions_PropertyTypeOptionsDynamic,
 }
 
-impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsEl {
+impl DocumentAiWarehouseDocumentSchema_PropertyDefinitions_PropertyTypeOptions {
     #[doc = "Set the field `property_definitions`.\n"]
     pub fn set_property_definitions(
         mut self,
@@ -1805,7 +1375,7 @@ impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsEl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsEl,
+                            DocumentAiWarehouseDocumentSchema_PropertyDefinitions_PropertyTypeOptions_PropertyDefinitions,
                         >,
                     >,
     ) -> Self {
@@ -1821,8 +1391,8 @@ impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsEl
     }
 }
 
-impl terrars::ToListMappable for DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsEl {
-    type O = terrars::BlockAssignable<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsEl>;
+impl terrars::ToListMappable for DocumentAiWarehouseDocumentSchema_PropertyDefinitions_PropertyTypeOptions {
+    type O = terrars::BlockAssignable<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_PropertyTypeOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1833,35 +1403,37 @@ impl terrars::ToListMappable for DocumentAiWarehouseDocumentSchemaPropertyDefini
     }
 }
 
-pub struct BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsEl {}
+pub struct BuildDocumentAiWarehouseDocumentSchema_PropertyDefinitions_PropertyTypeOptions {}
 
-impl BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsEl {
-    pub fn build(self) -> DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsEl {
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsEl {
+impl BuildDocumentAiWarehouseDocumentSchema_PropertyDefinitions_PropertyTypeOptions {
+    pub fn build(self) -> DocumentAiWarehouseDocumentSchema_PropertyDefinitions_PropertyTypeOptions {
+        DocumentAiWarehouseDocumentSchema_PropertyDefinitions_PropertyTypeOptions {
             property_definitions: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElRef {
+#[allow(dead_code)]
+pub struct DocumentAiWarehouseDocumentSchema_PropertyDefinitions_PropertyTypeOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElRef {
+impl terrars::Ref for DocumentAiWarehouseDocumentSchema_PropertyDefinitions_PropertyTypeOptionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElRef {
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElRef {
+    ) -> DocumentAiWarehouseDocumentSchema_PropertyDefinitions_PropertyTypeOptionsRef {
+        DocumentAiWarehouseDocumentSchema_PropertyDefinitions_PropertyTypeOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElRef {
+impl DocumentAiWarehouseDocumentSchema_PropertyDefinitions_PropertyTypeOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1870,219 +1442,44 @@ impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsEl
     pub fn property_definitions(
         &self,
     ) -> terrars
-    ::ListRef<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElPropertyDefinitionsElRef> {
+    ::ListRef<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_PropertyTypeOptions_PropertyDefinitionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.property_definitions", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElSchemaSourcesEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    name: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    processor_type: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElSchemaSourcesEl {
-    #[doc = "Set the field `name`.\nThe schema name in the source."]
-    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.name = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `processor_type`.\nThe Doc AI processor type name."]
-    pub fn set_processor_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.processor_type = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElSchemaSourcesEl {
-    type O = terrars::BlockAssignable<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElSchemaSourcesEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsElSchemaSourcesEl {}
-
-impl BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsElSchemaSourcesEl {
-    pub fn build(self) -> DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElSchemaSourcesEl {
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElSchemaSourcesEl {
-            name: core::default::Default::default(),
-            processor_type: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElSchemaSourcesElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElSchemaSourcesElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElSchemaSourcesElRef {
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElSchemaSourcesElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElSchemaSourcesElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `name` after provisioning.\nThe schema name in the source."]
-    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `processor_type` after provisioning.\nThe Doc AI processor type name."]
-    pub fn processor_type(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.processor_type", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElTextTypeOptionsEl {}
-
-impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElTextTypeOptionsEl { }
-
-impl terrars::ToListMappable for DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElTextTypeOptionsEl {
-    type O = terrars::BlockAssignable<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElTextTypeOptionsEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsElTextTypeOptionsEl {}
-
-impl BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsElTextTypeOptionsEl {
-    pub fn build(self) -> DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElTextTypeOptionsEl {
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElTextTypeOptionsEl {}
-    }
-}
-
-pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElTextTypeOptionsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElTextTypeOptionsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElTextTypeOptionsElRef {
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElTextTypeOptionsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElTextTypeOptionsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-}
-
-#[derive(Serialize)]
-pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElTimestampTypeOptionsEl {}
-
-impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElTimestampTypeOptionsEl { }
-
-impl terrars::ToListMappable for DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElTimestampTypeOptionsEl {
-    type O = terrars::BlockAssignable<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElTimestampTypeOptionsEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsElTimestampTypeOptionsEl {}
-
-impl BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsElTimestampTypeOptionsEl {
-    pub fn build(self) -> DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElTimestampTypeOptionsEl {
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElTimestampTypeOptionsEl {}
-    }
-}
-
-pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElTimestampTypeOptionsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElTimestampTypeOptionsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElTimestampTypeOptionsElRef {
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElTimestampTypeOptionsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElTimestampTypeOptionsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-}
-
 #[derive(Serialize, Default)]
-struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElDynamic {
+struct DocumentAiWarehouseDocumentSchema_PropertyDefinitionsDynamic {
     date_time_type_options: std
     ::option
-    ::Option<terrars::DynamicBlock<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElDateTimeTypeOptionsEl>>,
+    ::Option<terrars::DynamicBlock<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_DateTimeTypeOptions>>,
     enum_type_options: std
     ::option
-    ::Option<terrars::DynamicBlock<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElEnumTypeOptionsEl>>,
+    ::Option<terrars::DynamicBlock<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_EnumTypeOptions>>,
     float_type_options: std
     ::option
-    ::Option<terrars::DynamicBlock<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElFloatTypeOptionsEl>>,
+    ::Option<terrars::DynamicBlock<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_FloatTypeOptions>>,
     integer_type_options: std
     ::option
-    ::Option<terrars::DynamicBlock<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElIntegerTypeOptionsEl>>,
+    ::Option<terrars::DynamicBlock<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_IntegerTypeOptions>>,
     map_type_options: std
     ::option
-    ::Option<terrars::DynamicBlock<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElMapTypeOptionsEl>>,
+    ::Option<terrars::DynamicBlock<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_MapTypeOptions>>,
     property_type_options: std
     ::option
-    ::Option<terrars::DynamicBlock<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsEl>>,
+    ::Option<terrars::DynamicBlock<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_PropertyTypeOptions>>,
     schema_sources: std
     ::option
-    ::Option<terrars::DynamicBlock<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElSchemaSourcesEl>>,
+    ::Option<terrars::DynamicBlock<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_SchemaSources>>,
     text_type_options: std
     ::option
-    ::Option<terrars::DynamicBlock<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElTextTypeOptionsEl>>,
+    ::Option<terrars::DynamicBlock<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_TextTypeOptions>>,
     timestamp_type_options: std
     ::option
-    ::Option<terrars::DynamicBlock<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElTimestampTypeOptionsEl>>,
+    ::Option<terrars::DynamicBlock<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_TimestampTypeOptions>>,
 }
 
 #[derive(Serialize)]
-pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsEl {
+pub struct DocumentAiWarehouseDocumentSchema_PropertyDefinitions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     display_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2101,43 +1498,43 @@ pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     date_time_type_options: std
     ::option
-    ::Option<std::vec::Vec<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElDateTimeTypeOptionsEl>>,
+    ::Option<std::vec::Vec<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_DateTimeTypeOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enum_type_options: std
     ::option
-    ::Option<std::vec::Vec<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElEnumTypeOptionsEl>>,
+    ::Option<std::vec::Vec<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_EnumTypeOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     float_type_options: std
     ::option
-    ::Option<std::vec::Vec<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElFloatTypeOptionsEl>>,
+    ::Option<std::vec::Vec<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_FloatTypeOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     integer_type_options: std
     ::option
-    ::Option<std::vec::Vec<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElIntegerTypeOptionsEl>>,
+    ::Option<std::vec::Vec<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_IntegerTypeOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     map_type_options: std
     ::option
-    ::Option<std::vec::Vec<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElMapTypeOptionsEl>>,
+    ::Option<std::vec::Vec<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_MapTypeOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     property_type_options: std
     ::option
-    ::Option<std::vec::Vec<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsEl>>,
+    ::Option<std::vec::Vec<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_PropertyTypeOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     schema_sources: std
     ::option
-    ::Option<std::vec::Vec<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElSchemaSourcesEl>>,
+    ::Option<std::vec::Vec<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_SchemaSources>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     text_type_options: std
     ::option
-    ::Option<std::vec::Vec<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElTextTypeOptionsEl>>,
+    ::Option<std::vec::Vec<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_TextTypeOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     timestamp_type_options: std
     ::option
-    ::Option<std::vec::Vec<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElTimestampTypeOptionsEl>>,
-    dynamic: DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElDynamic,
+    ::Option<std::vec::Vec<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_TimestampTypeOptions>>,
+    dynamic: DocumentAiWarehouseDocumentSchema_PropertyDefinitionsDynamic,
 }
 
-impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsEl {
+impl DocumentAiWarehouseDocumentSchema_PropertyDefinitions {
     #[doc = "Set the field `display_name`.\nThe display-name for the property, used for front-end."]
     pub fn set_display_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.display_name = std::option::Option::Some(v.into());
@@ -2195,7 +1592,7 @@ impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElDateTimeTypeOptionsEl>,
+                        ::BlockAssignable<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_DateTimeTypeOptions>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2219,7 +1616,7 @@ impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElEnumTypeOptionsEl>,
+                        ::BlockAssignable<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_EnumTypeOptions>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2243,7 +1640,7 @@ impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElFloatTypeOptionsEl>,
+                        ::BlockAssignable<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_FloatTypeOptions>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2267,7 +1664,7 @@ impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElIntegerTypeOptionsEl>,
+                        ::BlockAssignable<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_IntegerTypeOptions>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2290,8 +1687,7 @@ impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElMapTypeOptionsEl>,
+                        terrars::BlockAssignable<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_MapTypeOptions>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2315,7 +1711,7 @@ impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsEl>,
+                        ::BlockAssignable<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_PropertyTypeOptions>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2338,8 +1734,7 @@ impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElSchemaSourcesEl>,
+                        terrars::BlockAssignable<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_SchemaSources>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2363,7 +1758,7 @@ impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElTextTypeOptionsEl>,
+                        ::BlockAssignable<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_TextTypeOptions>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2387,9 +1782,7 @@ impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElTimestampTypeOptionsEl,
-                        >,
+                        ::BlockAssignable<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_TimestampTypeOptions>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2404,8 +1797,8 @@ impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsEl {
     }
 }
 
-impl terrars::ToListMappable for DocumentAiWarehouseDocumentSchemaPropertyDefinitionsEl {
-    type O = terrars::BlockAssignable<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsEl>;
+impl terrars::ToListMappable for DocumentAiWarehouseDocumentSchema_PropertyDefinitions {
+    type O = terrars::BlockAssignable<DocumentAiWarehouseDocumentSchema_PropertyDefinitions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2416,14 +1809,14 @@ impl terrars::ToListMappable for DocumentAiWarehouseDocumentSchemaPropertyDefini
     }
 }
 
-pub struct BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsEl {
+pub struct BuildDocumentAiWarehouseDocumentSchema_PropertyDefinitions {
     #[doc = "The name of the metadata property."]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsEl {
-    pub fn build(self) -> DocumentAiWarehouseDocumentSchemaPropertyDefinitionsEl {
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsEl {
+impl BuildDocumentAiWarehouseDocumentSchema_PropertyDefinitions {
+    pub fn build(self) -> DocumentAiWarehouseDocumentSchema_PropertyDefinitions {
+        DocumentAiWarehouseDocumentSchema_PropertyDefinitions {
             display_name: core::default::Default::default(),
             is_filterable: core::default::Default::default(),
             is_metadata: core::default::Default::default(),
@@ -2446,24 +1839,26 @@ impl BuildDocumentAiWarehouseDocumentSchemaPropertyDefinitionsEl {
     }
 }
 
-pub struct DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElRef {
+#[allow(dead_code)]
+pub struct DocumentAiWarehouseDocumentSchema_PropertyDefinitionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElRef {
+impl terrars::Ref for DocumentAiWarehouseDocumentSchema_PropertyDefinitionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElRef {
-        DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElRef {
+    ) -> DocumentAiWarehouseDocumentSchema_PropertyDefinitionsRef {
+        DocumentAiWarehouseDocumentSchema_PropertyDefinitionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElRef {
+impl DocumentAiWarehouseDocumentSchema_PropertyDefinitionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2518,76 +1913,76 @@ impl DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElRef {
     #[doc = "Get a reference to the value of field `date_time_type_options` after provisioning.\n"]
     pub fn date_time_type_options(
         &self,
-    ) -> terrars::ListRef<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElDateTimeTypeOptionsElRef> {
+    ) -> terrars::ListRef<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_DateTimeTypeOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.date_time_type_options", self.base))
     }
 
     #[doc = "Get a reference to the value of field `enum_type_options` after provisioning.\n"]
     pub fn enum_type_options(
         &self,
-    ) -> terrars::ListRef<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElEnumTypeOptionsElRef> {
+    ) -> terrars::ListRef<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_EnumTypeOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.enum_type_options", self.base))
     }
 
     #[doc = "Get a reference to the value of field `float_type_options` after provisioning.\n"]
     pub fn float_type_options(
         &self,
-    ) -> terrars::ListRef<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElFloatTypeOptionsElRef> {
+    ) -> terrars::ListRef<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_FloatTypeOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.float_type_options", self.base))
     }
 
     #[doc = "Get a reference to the value of field `integer_type_options` after provisioning.\n"]
     pub fn integer_type_options(
         &self,
-    ) -> terrars::ListRef<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElIntegerTypeOptionsElRef> {
+    ) -> terrars::ListRef<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_IntegerTypeOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.integer_type_options", self.base))
     }
 
     #[doc = "Get a reference to the value of field `map_type_options` after provisioning.\n"]
     pub fn map_type_options(
         &self,
-    ) -> terrars::ListRef<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElMapTypeOptionsElRef> {
+    ) -> terrars::ListRef<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_MapTypeOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.map_type_options", self.base))
     }
 
     #[doc = "Get a reference to the value of field `property_type_options` after provisioning.\n"]
     pub fn property_type_options(
         &self,
-    ) -> terrars::ListRef<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElPropertyTypeOptionsElRef> {
+    ) -> terrars::ListRef<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_PropertyTypeOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.property_type_options", self.base))
     }
 
     #[doc = "Get a reference to the value of field `schema_sources` after provisioning.\n"]
     pub fn schema_sources(
         &self,
-    ) -> terrars::ListRef<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElSchemaSourcesElRef> {
+    ) -> terrars::ListRef<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_SchemaSourcesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.schema_sources", self.base))
     }
 
     #[doc = "Get a reference to the value of field `text_type_options` after provisioning.\n"]
     pub fn text_type_options(
         &self,
-    ) -> terrars::ListRef<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElTextTypeOptionsElRef> {
+    ) -> terrars::ListRef<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_TextTypeOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.text_type_options", self.base))
     }
 
     #[doc = "Get a reference to the value of field `timestamp_type_options` after provisioning.\n"]
     pub fn timestamp_type_options(
         &self,
-    ) -> terrars::ListRef<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsElTimestampTypeOptionsElRef> {
+    ) -> terrars::ListRef<DocumentAiWarehouseDocumentSchema_PropertyDefinitions_TimestampTypeOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.timestamp_type_options", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DocumentAiWarehouseDocumentSchemaTimeoutsEl {
+pub struct DocumentAiWarehouseDocumentSchema_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DocumentAiWarehouseDocumentSchemaTimeoutsEl {
+impl DocumentAiWarehouseDocumentSchema_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -2601,8 +1996,8 @@ impl DocumentAiWarehouseDocumentSchemaTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DocumentAiWarehouseDocumentSchemaTimeoutsEl {
-    type O = terrars::BlockAssignable<DocumentAiWarehouseDocumentSchemaTimeoutsEl>;
+impl terrars::ToListMappable for DocumentAiWarehouseDocumentSchema_Timeouts {
+    type O = terrars::BlockAssignable<DocumentAiWarehouseDocumentSchema_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2613,35 +2008,34 @@ impl terrars::ToListMappable for DocumentAiWarehouseDocumentSchemaTimeoutsEl {
     }
 }
 
-pub struct BuildDocumentAiWarehouseDocumentSchemaTimeoutsEl {}
+pub struct BuildDocumentAiWarehouseDocumentSchema_Timeouts {}
 
-impl BuildDocumentAiWarehouseDocumentSchemaTimeoutsEl {
-    pub fn build(self) -> DocumentAiWarehouseDocumentSchemaTimeoutsEl {
-        DocumentAiWarehouseDocumentSchemaTimeoutsEl {
+impl BuildDocumentAiWarehouseDocumentSchema_Timeouts {
+    pub fn build(self) -> DocumentAiWarehouseDocumentSchema_Timeouts {
+        DocumentAiWarehouseDocumentSchema_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct DocumentAiWarehouseDocumentSchemaTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DocumentAiWarehouseDocumentSchema_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DocumentAiWarehouseDocumentSchemaTimeoutsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DocumentAiWarehouseDocumentSchemaTimeoutsElRef {
-        DocumentAiWarehouseDocumentSchemaTimeoutsElRef {
+impl terrars::Ref for DocumentAiWarehouseDocumentSchema_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DocumentAiWarehouseDocumentSchema_TimeoutsRef {
+        DocumentAiWarehouseDocumentSchema_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DocumentAiWarehouseDocumentSchemaTimeoutsElRef {
+impl DocumentAiWarehouseDocumentSchema_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2655,11 +2049,4 @@ impl DocumentAiWarehouseDocumentSchemaTimeoutsElRef {
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DocumentAiWarehouseDocumentSchemaDynamic {
-    property_definitions: std
-    ::option
-    ::Option<terrars::DynamicBlock<DocumentAiWarehouseDocumentSchemaPropertyDefinitionsEl>>,
 }

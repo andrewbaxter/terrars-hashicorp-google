@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataCatalogPolicyTagIamMemberData {
+struct DataCatalogPolicyTagIamMemberData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,14 +26,14 @@ struct DataCatalogPolicyTagIamMemberData {
     policy_tag: terrars::PrimField<std::string::String>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<DataCatalogPolicyTagIamMemberConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<DataCatalogPolicyTagIamMember_Condition>>,
     dynamic: DataCatalogPolicyTagIamMemberDynamic,
 }
 
 struct DataCatalogPolicyTagIamMember_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataCatalogPolicyTagIamMemberData>,
+    data: std::cell::RefCell<DataCatalogPolicyTagIamMemberData_>,
 }
 
 #[derive(Clone)]
@@ -140,7 +142,7 @@ impl DataCatalogPolicyTagIamMember {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataCatalogPolicyTagIamMemberConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataCatalogPolicyTagIamMember_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -179,7 +181,7 @@ impl DataCatalogPolicyTagIamMember {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<DataCatalogPolicyTagIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<DataCatalogPolicyTagIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -230,7 +232,7 @@ impl BuildDataCatalogPolicyTagIamMember {
         let out = DataCatalogPolicyTagIamMember(std::rc::Rc::new(DataCatalogPolicyTagIamMember_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataCatalogPolicyTagIamMemberData {
+            data: std::cell::RefCell::new(DataCatalogPolicyTagIamMemberData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -298,20 +300,25 @@ impl DataCatalogPolicyTagIamMemberRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<DataCatalogPolicyTagIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<DataCatalogPolicyTagIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataCatalogPolicyTagIamMemberDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<DataCatalogPolicyTagIamMember_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct DataCatalogPolicyTagIamMemberConditionEl {
+pub struct DataCatalogPolicyTagIamMember_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl DataCatalogPolicyTagIamMemberConditionEl {
+impl DataCatalogPolicyTagIamMember_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -319,8 +326,8 @@ impl DataCatalogPolicyTagIamMemberConditionEl {
     }
 }
 
-impl terrars::ToListMappable for DataCatalogPolicyTagIamMemberConditionEl {
-    type O = terrars::BlockAssignable<DataCatalogPolicyTagIamMemberConditionEl>;
+impl terrars::ToListMappable for DataCatalogPolicyTagIamMember_Condition {
+    type O = terrars::BlockAssignable<DataCatalogPolicyTagIamMember_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -331,16 +338,16 @@ impl terrars::ToListMappable for DataCatalogPolicyTagIamMemberConditionEl {
     }
 }
 
-pub struct BuildDataCatalogPolicyTagIamMemberConditionEl {
+pub struct BuildDataCatalogPolicyTagIamMember_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataCatalogPolicyTagIamMemberConditionEl {
-    pub fn build(self) -> DataCatalogPolicyTagIamMemberConditionEl {
-        DataCatalogPolicyTagIamMemberConditionEl {
+impl BuildDataCatalogPolicyTagIamMember_Condition {
+    pub fn build(self) -> DataCatalogPolicyTagIamMember_Condition {
+        DataCatalogPolicyTagIamMember_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -348,21 +355,23 @@ impl BuildDataCatalogPolicyTagIamMemberConditionEl {
     }
 }
 
-pub struct DataCatalogPolicyTagIamMemberConditionElRef {
+#[allow(dead_code)]
+pub struct DataCatalogPolicyTagIamMember_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCatalogPolicyTagIamMemberConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCatalogPolicyTagIamMemberConditionElRef {
-        DataCatalogPolicyTagIamMemberConditionElRef {
+impl terrars::Ref for DataCatalogPolicyTagIamMember_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCatalogPolicyTagIamMember_ConditionRef {
+        DataCatalogPolicyTagIamMember_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCatalogPolicyTagIamMemberConditionElRef {
+impl DataCatalogPolicyTagIamMember_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -381,9 +390,4 @@ impl DataCatalogPolicyTagIamMemberConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataCatalogPolicyTagIamMemberDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<DataCatalogPolicyTagIamMemberConditionEl>>,
 }

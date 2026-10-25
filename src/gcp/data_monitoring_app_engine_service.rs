@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataMonitoringAppEngineServiceData {
+struct DataMonitoringAppEngineServiceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -26,7 +28,7 @@ struct DataMonitoringAppEngineServiceData {
 struct DataMonitoringAppEngineService_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataMonitoringAppEngineServiceData>,
+    data: std::cell::RefCell<DataMonitoringAppEngineServiceData_>,
 }
 
 #[derive(Clone)]
@@ -84,6 +86,12 @@ impl DataMonitoringAppEngineService {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `display_name` after provisioning.\nName used for UI elements listing this Service."]
     pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
@@ -119,7 +127,7 @@ impl DataMonitoringAppEngineService {
 
     #[doc =
         "Get a reference to the value of field `telemetry` after provisioning.\nConfiguration for how to query telemetry on a Service."]
-    pub fn telemetry(&self) -> terrars::ListRef<DataMonitoringAppEngineServiceTelemetryElRef> {
+    pub fn telemetry(&self) -> terrars::ListRef<DataMonitoringAppEngineService_TelemetryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.telemetry", self.extract_ref()))
     }
 
@@ -173,7 +181,7 @@ impl BuildDataMonitoringAppEngineService {
         let out = DataMonitoringAppEngineService(std::rc::Rc::new(DataMonitoringAppEngineService_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataMonitoringAppEngineServiceData {
+            data: std::cell::RefCell::new(DataMonitoringAppEngineServiceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -212,6 +220,12 @@ impl DataMonitoringAppEngineServiceRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `display_name` after provisioning.\nName used for UI elements listing this Service."]
     pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
@@ -247,7 +261,7 @@ impl DataMonitoringAppEngineServiceRef {
 
     #[doc =
         "Get a reference to the value of field `telemetry` after provisioning.\nConfiguration for how to query telemetry on a Service."]
-    pub fn telemetry(&self) -> terrars::ListRef<DataMonitoringAppEngineServiceTelemetryElRef> {
+    pub fn telemetry(&self) -> terrars::ListRef<DataMonitoringAppEngineService_TelemetryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.telemetry", self.extract_ref()))
     }
 
@@ -259,12 +273,12 @@ impl DataMonitoringAppEngineServiceRef {
 }
 
 #[derive(Serialize)]
-pub struct DataMonitoringAppEngineServiceTelemetryEl {
+pub struct DataMonitoringAppEngineService_Telemetry {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resource_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataMonitoringAppEngineServiceTelemetryEl {
+impl DataMonitoringAppEngineService_Telemetry {
     #[doc = "Set the field `resource_name`.\n"]
     pub fn set_resource_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.resource_name = std::option::Option::Some(v.into());
@@ -272,8 +286,8 @@ impl DataMonitoringAppEngineServiceTelemetryEl {
     }
 }
 
-impl terrars::ToListMappable for DataMonitoringAppEngineServiceTelemetryEl {
-    type O = terrars::BlockAssignable<DataMonitoringAppEngineServiceTelemetryEl>;
+impl terrars::ToListMappable for DataMonitoringAppEngineService_Telemetry {
+    type O = terrars::BlockAssignable<DataMonitoringAppEngineService_Telemetry>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -284,29 +298,31 @@ impl terrars::ToListMappable for DataMonitoringAppEngineServiceTelemetryEl {
     }
 }
 
-pub struct BuildDataMonitoringAppEngineServiceTelemetryEl {}
+pub struct BuildDataMonitoringAppEngineService_Telemetry {}
 
-impl BuildDataMonitoringAppEngineServiceTelemetryEl {
-    pub fn build(self) -> DataMonitoringAppEngineServiceTelemetryEl {
-        DataMonitoringAppEngineServiceTelemetryEl { resource_name: core::default::Default::default() }
+impl BuildDataMonitoringAppEngineService_Telemetry {
+    pub fn build(self) -> DataMonitoringAppEngineService_Telemetry {
+        DataMonitoringAppEngineService_Telemetry { resource_name: core::default::Default::default() }
     }
 }
 
-pub struct DataMonitoringAppEngineServiceTelemetryElRef {
+#[allow(dead_code)]
+pub struct DataMonitoringAppEngineService_TelemetryRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataMonitoringAppEngineServiceTelemetryElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataMonitoringAppEngineServiceTelemetryElRef {
-        DataMonitoringAppEngineServiceTelemetryElRef {
+impl terrars::Ref for DataMonitoringAppEngineService_TelemetryRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataMonitoringAppEngineService_TelemetryRef {
+        DataMonitoringAppEngineService_TelemetryRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataMonitoringAppEngineServiceTelemetryElRef {
+impl DataMonitoringAppEngineService_TelemetryRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

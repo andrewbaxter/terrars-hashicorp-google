@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct TagsTagKeyData {
+struct TagsTagKeyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,10 @@ struct TagsTagKeyData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    allowed_values_regex: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -29,13 +35,13 @@ struct TagsTagKeyData {
     purpose_data: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     short_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<TagsTagKeyTimeoutsEl>,
+    timeouts: std::option::Option<TagsTagKey_Timeouts>,
 }
 
 struct TagsTagKey_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<TagsTagKeyData>,
+    data: std::cell::RefCell<TagsTagKeyData_>,
 }
 
 #[derive(Clone)]
@@ -135,6 +141,20 @@ impl TagsTagKey {
         self
     }
 
+    #[doc =
+        "Set the field `allowed_values_regex`.\nRegular expression constraint for dynamic tag values, follows RE2 syntax. If present, it implicitly allows dynamic values (constrained by the regex)."]
+    pub fn set_allowed_values_regex(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().allowed_values_regex = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nUser-assigned description of the TagKey. Must not exceed 256 characters."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -148,7 +168,7 @@ impl TagsTagKey {
     }
 
     #[doc =
-        "Set the field `purpose`.\nOptional. A purpose cannot be changed once set.\n\nA purpose denotes that this Tag is intended for use in policies of a specific policy engine, and will involve that policy engine in management operations involving this Tag. Possible values: [\"GCE_FIREWALL\"]"]
+        "Set the field `purpose`.\nOptional. A purpose cannot be changed once set.\n\nA purpose denotes that this Tag is intended for use in policies of a specific policy engine, and will involve that policy engine in management operations involving this Tag. Possible values: [\"GCE_FIREWALL\", \"DATA_GOVERNANCE\"]"]
     pub fn set_purpose(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().purpose = std::option::Option::Some(v.into());
         self
@@ -165,15 +185,27 @@ impl TagsTagKey {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<TagsTagKeyTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<TagsTagKey_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `allowed_values_regex` after provisioning.\nRegular expression constraint for dynamic tag values, follows RE2 syntax. If present, it implicitly allows dynamic values (constrained by the regex)."]
+    pub fn allowed_values_regex(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.allowed_values_regex", self.extract_ref()))
     }
 
     #[doc =
         "Get a reference to the value of field `create_time` after provisioning.\nOutput only. Creation time.\n\nA timestamp in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits. Examples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -206,7 +238,7 @@ impl TagsTagKey {
     }
 
     #[doc =
-        "Get a reference to the value of field `purpose` after provisioning.\nOptional. A purpose cannot be changed once set.\n\nA purpose denotes that this Tag is intended for use in policies of a specific policy engine, and will involve that policy engine in management operations involving this Tag. Possible values: [\"GCE_FIREWALL\"]"]
+        "Get a reference to the value of field `purpose` after provisioning.\nOptional. A purpose cannot be changed once set.\n\nA purpose denotes that this Tag is intended for use in policies of a specific policy engine, and will involve that policy engine in management operations involving this Tag. Possible values: [\"GCE_FIREWALL\", \"DATA_GOVERNANCE\"]"]
     pub fn purpose(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.purpose", self.extract_ref()))
     }
@@ -218,7 +250,7 @@ impl TagsTagKey {
     }
 
     #[doc =
-        "Get a reference to the value of field `short_name` after provisioning.\nInput only. The user friendly name for a TagKey. The short name should be unique for TagKeys within the same tag namespace.\n\nThe short name must be 1-63 characters, beginning and ending with an alphanumeric character ([a-z0-9A-Z]) with dashes (-), underscores (_), dots (.), and alphanumerics between."]
+        "Get a reference to the value of field `short_name` after provisioning.\nInput only. The user friendly name for a TagKey. The short name should be unique for TagKeys within the same tag namespace.\n\nThe short name can have a maximum length of 256 characters. The permitted character set for the shortName includes all UTF-8 encoded Unicode characters except single quotes ('), double quotes (\"), backslashes (\\\\), and forward slashes (/)."]
     pub fn short_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.short_name", self.extract_ref()))
     }
@@ -230,8 +262,8 @@ impl TagsTagKey {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> TagsTagKeyTimeoutsElRef {
-        TagsTagKeyTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> TagsTagKey_TimeoutsRef {
+        TagsTagKey_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -272,7 +304,7 @@ pub struct BuildTagsTagKey {
         "Input only. The resource name of the new TagKey's parent. Must be of the form organizations/{org_id} or projects/{project_id_or_number}."]
     pub parent: terrars::PrimField<std::string::String>,
     #[doc =
-        "Input only. The user friendly name for a TagKey. The short name should be unique for TagKeys within the same tag namespace.\n\nThe short name must be 1-63 characters, beginning and ending with an alphanumeric character ([a-z0-9A-Z]) with dashes (-), underscores (_), dots (.), and alphanumerics between."]
+        "Input only. The user friendly name for a TagKey. The short name should be unique for TagKeys within the same tag namespace.\n\nThe short name can have a maximum length of 256 characters. The permitted character set for the shortName includes all UTF-8 encoded Unicode characters except single quotes ('), double quotes (\"), backslashes (\\\\), and forward slashes (/)."]
     pub short_name: terrars::PrimField<std::string::String>,
 }
 
@@ -281,12 +313,14 @@ impl BuildTagsTagKey {
         let out = TagsTagKey(std::rc::Rc::new(TagsTagKey_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(TagsTagKeyData {
+            data: std::cell::RefCell::new(TagsTagKeyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                allowed_values_regex: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 parent: self.parent,
@@ -325,9 +359,21 @@ impl TagsTagKeyRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `allowed_values_regex` after provisioning.\nRegular expression constraint for dynamic tag values, follows RE2 syntax. If present, it implicitly allows dynamic values (constrained by the regex)."]
+    pub fn allowed_values_regex(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.allowed_values_regex", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `create_time` after provisioning.\nOutput only. Creation time.\n\nA timestamp in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits. Examples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -360,7 +406,7 @@ impl TagsTagKeyRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `purpose` after provisioning.\nOptional. A purpose cannot be changed once set.\n\nA purpose denotes that this Tag is intended for use in policies of a specific policy engine, and will involve that policy engine in management operations involving this Tag. Possible values: [\"GCE_FIREWALL\"]"]
+        "Get a reference to the value of field `purpose` after provisioning.\nOptional. A purpose cannot be changed once set.\n\nA purpose denotes that this Tag is intended for use in policies of a specific policy engine, and will involve that policy engine in management operations involving this Tag. Possible values: [\"GCE_FIREWALL\", \"DATA_GOVERNANCE\"]"]
     pub fn purpose(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.purpose", self.extract_ref()))
     }
@@ -372,7 +418,7 @@ impl TagsTagKeyRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `short_name` after provisioning.\nInput only. The user friendly name for a TagKey. The short name should be unique for TagKeys within the same tag namespace.\n\nThe short name must be 1-63 characters, beginning and ending with an alphanumeric character ([a-z0-9A-Z]) with dashes (-), underscores (_), dots (.), and alphanumerics between."]
+        "Get a reference to the value of field `short_name` after provisioning.\nInput only. The user friendly name for a TagKey. The short name should be unique for TagKeys within the same tag namespace.\n\nThe short name can have a maximum length of 256 characters. The permitted character set for the shortName includes all UTF-8 encoded Unicode characters except single quotes ('), double quotes (\"), backslashes (\\\\), and forward slashes (/)."]
     pub fn short_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.short_name", self.extract_ref()))
     }
@@ -384,13 +430,13 @@ impl TagsTagKeyRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> TagsTagKeyTimeoutsElRef {
-        TagsTagKeyTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> TagsTagKey_TimeoutsRef {
+        TagsTagKey_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct TagsTagKeyTimeoutsEl {
+pub struct TagsTagKey_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -399,7 +445,7 @@ pub struct TagsTagKeyTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl TagsTagKeyTimeoutsEl {
+impl TagsTagKey_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -419,8 +465,8 @@ impl TagsTagKeyTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for TagsTagKeyTimeoutsEl {
-    type O = terrars::BlockAssignable<TagsTagKeyTimeoutsEl>;
+impl terrars::ToListMappable for TagsTagKey_Timeouts {
+    type O = terrars::BlockAssignable<TagsTagKey_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -431,11 +477,11 @@ impl terrars::ToListMappable for TagsTagKeyTimeoutsEl {
     }
 }
 
-pub struct BuildTagsTagKeyTimeoutsEl {}
+pub struct BuildTagsTagKey_Timeouts {}
 
-impl BuildTagsTagKeyTimeoutsEl {
-    pub fn build(self) -> TagsTagKeyTimeoutsEl {
-        TagsTagKeyTimeoutsEl {
+impl BuildTagsTagKey_Timeouts {
+    pub fn build(self) -> TagsTagKey_Timeouts {
+        TagsTagKey_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -443,21 +489,23 @@ impl BuildTagsTagKeyTimeoutsEl {
     }
 }
 
-pub struct TagsTagKeyTimeoutsElRef {
+#[allow(dead_code)]
+pub struct TagsTagKey_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for TagsTagKeyTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> TagsTagKeyTimeoutsElRef {
-        TagsTagKeyTimeoutsElRef {
+impl terrars::Ref for TagsTagKey_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> TagsTagKey_TimeoutsRef {
+        TagsTagKey_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl TagsTagKeyTimeoutsElRef {
+impl TagsTagKey_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

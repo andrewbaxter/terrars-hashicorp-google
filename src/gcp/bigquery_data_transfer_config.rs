@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct BigqueryDataTransferConfigData {
+struct BigqueryDataTransferConfigData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,6 +23,8 @@ struct BigqueryDataTransferConfigData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     data_refresh_window_days: std::option::Option<terrars::PrimField<f64>>,
     data_source_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     destination_dataset_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -40,20 +44,22 @@ struct BigqueryDataTransferConfigData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     service_account_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    email_preferences: std::option::Option<std::vec::Vec<BigqueryDataTransferConfigEmailPreferencesEl>>,
+    email_preferences: std::option::Option<std::vec::Vec<BigqueryDataTransferConfig_EmailPreferences>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    schedule_options: std::option::Option<std::vec::Vec<BigqueryDataTransferConfigScheduleOptionsEl>>,
+    encryption_configuration: std::option::Option<std::vec::Vec<BigqueryDataTransferConfig_EncryptionConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sensitive_params: std::option::Option<std::vec::Vec<BigqueryDataTransferConfigSensitiveParamsEl>>,
+    schedule_options: std::option::Option<std::vec::Vec<BigqueryDataTransferConfig_ScheduleOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<BigqueryDataTransferConfigTimeoutsEl>,
+    sensitive_params: std::option::Option<std::vec::Vec<BigqueryDataTransferConfig_SensitiveParams>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<BigqueryDataTransferConfig_Timeouts>,
     dynamic: BigqueryDataTransferConfigDynamic,
 }
 
 struct BigqueryDataTransferConfig_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<BigqueryDataTransferConfigData>,
+    data: std::cell::RefCell<BigqueryDataTransferConfigData_>,
 }
 
 #[derive(Clone)]
@@ -160,6 +166,13 @@ impl BigqueryDataTransferConfig {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `destination_dataset_id`.\nThe BigQuery target dataset id."]
     pub fn set_destination_dataset_id(
         self,
@@ -205,7 +218,7 @@ impl BigqueryDataTransferConfig {
     }
 
     #[doc =
-        "Set the field `schedule`.\nData transfer schedule. If the data source does not support a custom\nschedule, this should be empty. If it is empty, the default value for\nthe data source will be used. The specified times are in UTC. Examples\nof valid format: 1st,3rd monday of month 15:30, every wed,fri of jan,\njun 13:15, and first sunday of quarter 00:00. See more explanation\nabout the format here:\nhttps://cloud.google.com/appengine/docs/flexible/python/scheduling-jobs-with-cron-yaml#the_schedule_format\nNOTE: the granularity should be at least 8 hours, or less frequent."]
+        "Set the field `schedule`.\nData transfer schedule. If the data source does not support a custom\nschedule, this should be empty. If it is empty, the default value for\nthe data source will be used. The specified times are in UTC. Examples\nof valid format: 1st,3rd monday of month 15:30, every wed,fri of jan,\njun 13:15, and first sunday of quarter 00:00. See more explanation\nabout the format here:\nhttps://cloud.google.com/appengine/docs/flexible/python/scheduling-jobs-with-cron-yaml#the_schedule_format\nNOTE: The minimum interval time between recurring transfers depends\non the data source; refer to the documentation for your data source."]
     pub fn set_schedule(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().schedule = std::option::Option::Some(v.into());
         self
@@ -221,7 +234,7 @@ impl BigqueryDataTransferConfig {
     #[doc = "Set the field `email_preferences`.\n"]
     pub fn set_email_preferences(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryDataTransferConfigEmailPreferencesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryDataTransferConfig_EmailPreferences>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -234,10 +247,26 @@ impl BigqueryDataTransferConfig {
         self
     }
 
+    #[doc = "Set the field `encryption_configuration`.\n"]
+    pub fn set_encryption_configuration(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryDataTransferConfig_EncryptionConfiguration>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().encryption_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.encryption_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `schedule_options`.\n"]
     pub fn set_schedule_options(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryDataTransferConfigScheduleOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryDataTransferConfig_ScheduleOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -253,7 +282,7 @@ impl BigqueryDataTransferConfig {
     #[doc = "Set the field `sensitive_params`.\n"]
     pub fn set_sensitive_params(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryDataTransferConfigSensitiveParamsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryDataTransferConfig_SensitiveParams>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -267,7 +296,7 @@ impl BigqueryDataTransferConfig {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<BigqueryDataTransferConfigTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<BigqueryDataTransferConfig_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -282,6 +311,12 @@ impl BigqueryDataTransferConfig {
         "Get a reference to the value of field `data_source_id` after provisioning.\nThe data source id. Cannot be changed once the transfer config is created."]
     pub fn data_source_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.data_source_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -337,7 +372,7 @@ impl BigqueryDataTransferConfig {
     }
 
     #[doc =
-        "Get a reference to the value of field `schedule` after provisioning.\nData transfer schedule. If the data source does not support a custom\nschedule, this should be empty. If it is empty, the default value for\nthe data source will be used. The specified times are in UTC. Examples\nof valid format: 1st,3rd monday of month 15:30, every wed,fri of jan,\njun 13:15, and first sunday of quarter 00:00. See more explanation\nabout the format here:\nhttps://cloud.google.com/appengine/docs/flexible/python/scheduling-jobs-with-cron-yaml#the_schedule_format\nNOTE: the granularity should be at least 8 hours, or less frequent."]
+        "Get a reference to the value of field `schedule` after provisioning.\nData transfer schedule. If the data source does not support a custom\nschedule, this should be empty. If it is empty, the default value for\nthe data source will be used. The specified times are in UTC. Examples\nof valid format: 1st,3rd monday of month 15:30, every wed,fri of jan,\njun 13:15, and first sunday of quarter 00:00. See more explanation\nabout the format here:\nhttps://cloud.google.com/appengine/docs/flexible/python/scheduling-jobs-with-cron-yaml#the_schedule_format\nNOTE: The minimum interval time between recurring transfers depends\non the data source; refer to the documentation for your data source."]
     pub fn schedule(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.schedule", self.extract_ref()))
     }
@@ -349,23 +384,28 @@ impl BigqueryDataTransferConfig {
     }
 
     #[doc = "Get a reference to the value of field `email_preferences` after provisioning.\n"]
-    pub fn email_preferences(&self) -> terrars::ListRef<BigqueryDataTransferConfigEmailPreferencesElRef> {
+    pub fn email_preferences(&self) -> terrars::ListRef<BigqueryDataTransferConfig_EmailPreferencesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.email_preferences", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `encryption_configuration` after provisioning.\n"]
+    pub fn encryption_configuration(&self) -> terrars::ListRef<BigqueryDataTransferConfig_EncryptionConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_configuration", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `schedule_options` after provisioning.\n"]
-    pub fn schedule_options(&self) -> terrars::ListRef<BigqueryDataTransferConfigScheduleOptionsElRef> {
+    pub fn schedule_options(&self) -> terrars::ListRef<BigqueryDataTransferConfig_ScheduleOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.schedule_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `sensitive_params` after provisioning.\n"]
-    pub fn sensitive_params(&self) -> terrars::ListRef<BigqueryDataTransferConfigSensitiveParamsElRef> {
+    pub fn sensitive_params(&self) -> terrars::ListRef<BigqueryDataTransferConfig_SensitiveParamsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sensitive_params", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> BigqueryDataTransferConfigTimeoutsElRef {
-        BigqueryDataTransferConfigTimeoutsElRef::new(
+    pub fn timeouts(&self) -> BigqueryDataTransferConfig_TimeoutsRef {
+        BigqueryDataTransferConfig_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -419,7 +459,7 @@ impl BuildBigqueryDataTransferConfig {
         let out = BigqueryDataTransferConfig(std::rc::Rc::new(BigqueryDataTransferConfig_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(BigqueryDataTransferConfigData {
+            data: std::cell::RefCell::new(BigqueryDataTransferConfigData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -427,6 +467,7 @@ impl BuildBigqueryDataTransferConfig {
                 provisioner: core::default::Default::default(),
                 data_refresh_window_days: core::default::Default::default(),
                 data_source_id: self.data_source_id,
+                deletion_policy: core::default::Default::default(),
                 destination_dataset_id: core::default::Default::default(),
                 disabled: core::default::Default::default(),
                 display_name: self.display_name,
@@ -438,6 +479,7 @@ impl BuildBigqueryDataTransferConfig {
                 schedule: core::default::Default::default(),
                 service_account_name: core::default::Default::default(),
                 email_preferences: core::default::Default::default(),
+                encryption_configuration: core::default::Default::default(),
                 schedule_options: core::default::Default::default(),
                 sensitive_params: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
@@ -482,6 +524,12 @@ impl BigqueryDataTransferConfigRef {
         "Get a reference to the value of field `data_source_id` after provisioning.\nThe data source id. Cannot be changed once the transfer config is created."]
     pub fn data_source_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.data_source_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -537,7 +585,7 @@ impl BigqueryDataTransferConfigRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `schedule` after provisioning.\nData transfer schedule. If the data source does not support a custom\nschedule, this should be empty. If it is empty, the default value for\nthe data source will be used. The specified times are in UTC. Examples\nof valid format: 1st,3rd monday of month 15:30, every wed,fri of jan,\njun 13:15, and first sunday of quarter 00:00. See more explanation\nabout the format here:\nhttps://cloud.google.com/appengine/docs/flexible/python/scheduling-jobs-with-cron-yaml#the_schedule_format\nNOTE: the granularity should be at least 8 hours, or less frequent."]
+        "Get a reference to the value of field `schedule` after provisioning.\nData transfer schedule. If the data source does not support a custom\nschedule, this should be empty. If it is empty, the default value for\nthe data source will be used. The specified times are in UTC. Examples\nof valid format: 1st,3rd monday of month 15:30, every wed,fri of jan,\njun 13:15, and first sunday of quarter 00:00. See more explanation\nabout the format here:\nhttps://cloud.google.com/appengine/docs/flexible/python/scheduling-jobs-with-cron-yaml#the_schedule_format\nNOTE: The minimum interval time between recurring transfers depends\non the data source; refer to the documentation for your data source."]
     pub fn schedule(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.schedule", self.extract_ref()))
     }
@@ -549,38 +597,53 @@ impl BigqueryDataTransferConfigRef {
     }
 
     #[doc = "Get a reference to the value of field `email_preferences` after provisioning.\n"]
-    pub fn email_preferences(&self) -> terrars::ListRef<BigqueryDataTransferConfigEmailPreferencesElRef> {
+    pub fn email_preferences(&self) -> terrars::ListRef<BigqueryDataTransferConfig_EmailPreferencesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.email_preferences", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `encryption_configuration` after provisioning.\n"]
+    pub fn encryption_configuration(&self) -> terrars::ListRef<BigqueryDataTransferConfig_EncryptionConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_configuration", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `schedule_options` after provisioning.\n"]
-    pub fn schedule_options(&self) -> terrars::ListRef<BigqueryDataTransferConfigScheduleOptionsElRef> {
+    pub fn schedule_options(&self) -> terrars::ListRef<BigqueryDataTransferConfig_ScheduleOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.schedule_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `sensitive_params` after provisioning.\n"]
-    pub fn sensitive_params(&self) -> terrars::ListRef<BigqueryDataTransferConfigSensitiveParamsElRef> {
+    pub fn sensitive_params(&self) -> terrars::ListRef<BigqueryDataTransferConfig_SensitiveParamsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sensitive_params", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> BigqueryDataTransferConfigTimeoutsElRef {
-        BigqueryDataTransferConfigTimeoutsElRef::new(
+    pub fn timeouts(&self) -> BigqueryDataTransferConfig_TimeoutsRef {
+        BigqueryDataTransferConfig_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct BigqueryDataTransferConfigDynamic {
+    email_preferences: std::option::Option<terrars::DynamicBlock<BigqueryDataTransferConfig_EmailPreferences>>,
+    encryption_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<BigqueryDataTransferConfig_EncryptionConfiguration>>,
+    schedule_options: std::option::Option<terrars::DynamicBlock<BigqueryDataTransferConfig_ScheduleOptions>>,
+    sensitive_params: std::option::Option<terrars::DynamicBlock<BigqueryDataTransferConfig_SensitiveParams>>,
+}
+
 #[derive(Serialize)]
-pub struct BigqueryDataTransferConfigEmailPreferencesEl {
+pub struct BigqueryDataTransferConfig_EmailPreferences {
     enable_failure_email: terrars::PrimField<bool>,
 }
 
-impl BigqueryDataTransferConfigEmailPreferencesEl { }
+impl BigqueryDataTransferConfig_EmailPreferences { }
 
-impl terrars::ToListMappable for BigqueryDataTransferConfigEmailPreferencesEl {
-    type O = terrars::BlockAssignable<BigqueryDataTransferConfigEmailPreferencesEl>;
+impl terrars::ToListMappable for BigqueryDataTransferConfig_EmailPreferences {
+    type O = terrars::BlockAssignable<BigqueryDataTransferConfig_EmailPreferences>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -591,35 +654,37 @@ impl terrars::ToListMappable for BigqueryDataTransferConfigEmailPreferencesEl {
     }
 }
 
-pub struct BuildBigqueryDataTransferConfigEmailPreferencesEl {
+pub struct BuildBigqueryDataTransferConfig_EmailPreferences {
     #[doc = "If true, email notifications will be sent on transfer run failures."]
     pub enable_failure_email: terrars::PrimField<bool>,
 }
 
-impl BuildBigqueryDataTransferConfigEmailPreferencesEl {
-    pub fn build(self) -> BigqueryDataTransferConfigEmailPreferencesEl {
-        BigqueryDataTransferConfigEmailPreferencesEl { enable_failure_email: self.enable_failure_email }
+impl BuildBigqueryDataTransferConfig_EmailPreferences {
+    pub fn build(self) -> BigqueryDataTransferConfig_EmailPreferences {
+        BigqueryDataTransferConfig_EmailPreferences { enable_failure_email: self.enable_failure_email }
     }
 }
 
-pub struct BigqueryDataTransferConfigEmailPreferencesElRef {
+#[allow(dead_code)]
+pub struct BigqueryDataTransferConfig_EmailPreferencesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryDataTransferConfigEmailPreferencesElRef {
+impl terrars::Ref for BigqueryDataTransferConfig_EmailPreferencesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> BigqueryDataTransferConfigEmailPreferencesElRef {
-        BigqueryDataTransferConfigEmailPreferencesElRef {
+    ) -> BigqueryDataTransferConfig_EmailPreferencesRef {
+        BigqueryDataTransferConfig_EmailPreferencesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryDataTransferConfigEmailPreferencesElRef {
+impl BigqueryDataTransferConfig_EmailPreferencesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -632,7 +697,68 @@ impl BigqueryDataTransferConfigEmailPreferencesElRef {
 }
 
 #[derive(Serialize)]
-pub struct BigqueryDataTransferConfigScheduleOptionsEl {
+pub struct BigqueryDataTransferConfig_EncryptionConfiguration {
+    kms_key_name: terrars::PrimField<std::string::String>,
+}
+
+impl BigqueryDataTransferConfig_EncryptionConfiguration { }
+
+impl terrars::ToListMappable for BigqueryDataTransferConfig_EncryptionConfiguration {
+    type O = terrars::BlockAssignable<BigqueryDataTransferConfig_EncryptionConfiguration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildBigqueryDataTransferConfig_EncryptionConfiguration {
+    #[doc = "The name of the KMS key used for encrypting BigQuery data."]
+    pub kms_key_name: terrars::PrimField<std::string::String>,
+}
+
+impl BuildBigqueryDataTransferConfig_EncryptionConfiguration {
+    pub fn build(self) -> BigqueryDataTransferConfig_EncryptionConfiguration {
+        BigqueryDataTransferConfig_EncryptionConfiguration { kms_key_name: self.kms_key_name }
+    }
+}
+
+#[allow(dead_code)]
+pub struct BigqueryDataTransferConfig_EncryptionConfigurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for BigqueryDataTransferConfig_EncryptionConfigurationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> BigqueryDataTransferConfig_EncryptionConfigurationRef {
+        BigqueryDataTransferConfig_EncryptionConfigurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl BigqueryDataTransferConfig_EncryptionConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `kms_key_name` after provisioning.\nThe name of the KMS key used for encrypting BigQuery data."]
+    pub fn kms_key_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_name", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct BigqueryDataTransferConfig_ScheduleOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     disable_auto_scheduling: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -641,7 +767,7 @@ pub struct BigqueryDataTransferConfigScheduleOptionsEl {
     start_time: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl BigqueryDataTransferConfigScheduleOptionsEl {
+impl BigqueryDataTransferConfig_ScheduleOptions {
     #[doc =
         "Set the field `disable_auto_scheduling`.\nIf true, automatic scheduling of data transfer runs for this\nconfiguration will be disabled. The runs can be started on ad-hoc\nbasis using transferConfigs.startManualRuns API. When automatic\nscheduling is disabled, the TransferConfig.schedule field will\nbe ignored."]
     pub fn set_disable_auto_scheduling(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -664,8 +790,8 @@ impl BigqueryDataTransferConfigScheduleOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for BigqueryDataTransferConfigScheduleOptionsEl {
-    type O = terrars::BlockAssignable<BigqueryDataTransferConfigScheduleOptionsEl>;
+impl terrars::ToListMappable for BigqueryDataTransferConfig_ScheduleOptions {
+    type O = terrars::BlockAssignable<BigqueryDataTransferConfig_ScheduleOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -676,11 +802,11 @@ impl terrars::ToListMappable for BigqueryDataTransferConfigScheduleOptionsEl {
     }
 }
 
-pub struct BuildBigqueryDataTransferConfigScheduleOptionsEl {}
+pub struct BuildBigqueryDataTransferConfig_ScheduleOptions {}
 
-impl BuildBigqueryDataTransferConfigScheduleOptionsEl {
-    pub fn build(self) -> BigqueryDataTransferConfigScheduleOptionsEl {
-        BigqueryDataTransferConfigScheduleOptionsEl {
+impl BuildBigqueryDataTransferConfig_ScheduleOptions {
+    pub fn build(self) -> BigqueryDataTransferConfig_ScheduleOptions {
+        BigqueryDataTransferConfig_ScheduleOptions {
             disable_auto_scheduling: core::default::Default::default(),
             end_time: core::default::Default::default(),
             start_time: core::default::Default::default(),
@@ -688,24 +814,23 @@ impl BuildBigqueryDataTransferConfigScheduleOptionsEl {
     }
 }
 
-pub struct BigqueryDataTransferConfigScheduleOptionsElRef {
+#[allow(dead_code)]
+pub struct BigqueryDataTransferConfig_ScheduleOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryDataTransferConfigScheduleOptionsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> BigqueryDataTransferConfigScheduleOptionsElRef {
-        BigqueryDataTransferConfigScheduleOptionsElRef {
+impl terrars::Ref for BigqueryDataTransferConfig_ScheduleOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryDataTransferConfig_ScheduleOptionsRef {
+        BigqueryDataTransferConfig_ScheduleOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryDataTransferConfigScheduleOptionsElRef {
+impl BigqueryDataTransferConfig_ScheduleOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -730,14 +855,44 @@ impl BigqueryDataTransferConfigScheduleOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct BigqueryDataTransferConfigSensitiveParamsEl {
-    secret_access_key: terrars::PrimField<std::string::String>,
+pub struct BigqueryDataTransferConfig_SensitiveParams {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secret_access_key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secret_access_key_wo: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secret_access_key_wo_version: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl BigqueryDataTransferConfigSensitiveParamsEl { }
+impl BigqueryDataTransferConfig_SensitiveParams {
+    #[doc = "Set the field `secret_access_key`.\nThe Secret Access Key of the AWS account transferring data from."]
+    pub fn set_secret_access_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.secret_access_key = std::option::Option::Some(v.into());
+        self
+    }
 
-impl terrars::ToListMappable for BigqueryDataTransferConfigSensitiveParamsEl {
-    type O = terrars::BlockAssignable<BigqueryDataTransferConfigSensitiveParamsEl>;
+    #[doc = "Set the field `secret_access_key_wo`.\nThe Secret Access Key of the AWS account transferring data from."]
+    pub fn set_secret_access_key_wo(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.secret_access_key_wo = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `secret_access_key_wo_version`.\nTriggers update of 'secret_access_key_wo' write-only. Increment this value when an update to 'secret_access_key_wo' is needed. For more info see [updating write-only arguments](/docs/providers/google/guides/using_write_only_arguments.html#updating-write-only-arguments)"]
+    pub fn set_secret_access_key_wo_version(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.secret_access_key_wo_version = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for BigqueryDataTransferConfig_SensitiveParams {
+    type O = terrars::BlockAssignable<BigqueryDataTransferConfig_SensitiveParams>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -748,35 +903,35 @@ impl terrars::ToListMappable for BigqueryDataTransferConfigSensitiveParamsEl {
     }
 }
 
-pub struct BuildBigqueryDataTransferConfigSensitiveParamsEl {
-    #[doc = "The Secret Access Key of the AWS account transferring data from."]
-    pub secret_access_key: terrars::PrimField<std::string::String>,
-}
+pub struct BuildBigqueryDataTransferConfig_SensitiveParams {}
 
-impl BuildBigqueryDataTransferConfigSensitiveParamsEl {
-    pub fn build(self) -> BigqueryDataTransferConfigSensitiveParamsEl {
-        BigqueryDataTransferConfigSensitiveParamsEl { secret_access_key: self.secret_access_key }
+impl BuildBigqueryDataTransferConfig_SensitiveParams {
+    pub fn build(self) -> BigqueryDataTransferConfig_SensitiveParams {
+        BigqueryDataTransferConfig_SensitiveParams {
+            secret_access_key: core::default::Default::default(),
+            secret_access_key_wo: core::default::Default::default(),
+            secret_access_key_wo_version: core::default::Default::default(),
+        }
     }
 }
 
-pub struct BigqueryDataTransferConfigSensitiveParamsElRef {
+#[allow(dead_code)]
+pub struct BigqueryDataTransferConfig_SensitiveParamsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryDataTransferConfigSensitiveParamsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> BigqueryDataTransferConfigSensitiveParamsElRef {
-        BigqueryDataTransferConfigSensitiveParamsElRef {
+impl terrars::Ref for BigqueryDataTransferConfig_SensitiveParamsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryDataTransferConfig_SensitiveParamsRef {
+        BigqueryDataTransferConfig_SensitiveParamsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryDataTransferConfigSensitiveParamsElRef {
+impl BigqueryDataTransferConfig_SensitiveParamsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -786,10 +941,22 @@ impl BigqueryDataTransferConfigSensitiveParamsElRef {
     pub fn secret_access_key(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_access_key", self.base))
     }
+
+    #[doc =
+        "Get a reference to the value of field `secret_access_key_wo` after provisioning.\nThe Secret Access Key of the AWS account transferring data from."]
+    pub fn secret_access_key_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_access_key_wo", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `secret_access_key_wo_version` after provisioning.\nTriggers update of 'secret_access_key_wo' write-only. Increment this value when an update to 'secret_access_key_wo' is needed. For more info see [updating write-only arguments](/docs/providers/google/guides/using_write_only_arguments.html#updating-write-only-arguments)"]
+    pub fn secret_access_key_wo_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_access_key_wo_version", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct BigqueryDataTransferConfigTimeoutsEl {
+pub struct BigqueryDataTransferConfig_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -798,7 +965,7 @@ pub struct BigqueryDataTransferConfigTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl BigqueryDataTransferConfigTimeoutsEl {
+impl BigqueryDataTransferConfig_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -818,8 +985,8 @@ impl BigqueryDataTransferConfigTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for BigqueryDataTransferConfigTimeoutsEl {
-    type O = terrars::BlockAssignable<BigqueryDataTransferConfigTimeoutsEl>;
+impl terrars::ToListMappable for BigqueryDataTransferConfig_Timeouts {
+    type O = terrars::BlockAssignable<BigqueryDataTransferConfig_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -830,11 +997,11 @@ impl terrars::ToListMappable for BigqueryDataTransferConfigTimeoutsEl {
     }
 }
 
-pub struct BuildBigqueryDataTransferConfigTimeoutsEl {}
+pub struct BuildBigqueryDataTransferConfig_Timeouts {}
 
-impl BuildBigqueryDataTransferConfigTimeoutsEl {
-    pub fn build(self) -> BigqueryDataTransferConfigTimeoutsEl {
-        BigqueryDataTransferConfigTimeoutsEl {
+impl BuildBigqueryDataTransferConfig_Timeouts {
+    pub fn build(self) -> BigqueryDataTransferConfig_Timeouts {
+        BigqueryDataTransferConfig_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -842,21 +1009,23 @@ impl BuildBigqueryDataTransferConfigTimeoutsEl {
     }
 }
 
-pub struct BigqueryDataTransferConfigTimeoutsElRef {
+#[allow(dead_code)]
+pub struct BigqueryDataTransferConfig_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryDataTransferConfigTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryDataTransferConfigTimeoutsElRef {
-        BigqueryDataTransferConfigTimeoutsElRef {
+impl terrars::Ref for BigqueryDataTransferConfig_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryDataTransferConfig_TimeoutsRef {
+        BigqueryDataTransferConfig_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryDataTransferConfigTimeoutsElRef {
+impl BigqueryDataTransferConfig_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -875,11 +1044,4 @@ impl BigqueryDataTransferConfigTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct BigqueryDataTransferConfigDynamic {
-    email_preferences: std::option::Option<terrars::DynamicBlock<BigqueryDataTransferConfigEmailPreferencesEl>>,
-    schedule_options: std::option::Option<terrars::DynamicBlock<BigqueryDataTransferConfigScheduleOptionsEl>>,
-    sensitive_params: std::option::Option<terrars::DynamicBlock<BigqueryDataTransferConfigSensitiveParamsEl>>,
 }

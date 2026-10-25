@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ProjectIamAuditConfigData {
+struct ProjectIamAuditConfigData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,14 +25,14 @@ struct ProjectIamAuditConfigData {
     project: terrars::PrimField<std::string::String>,
     service: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    audit_log_config: std::option::Option<std::vec::Vec<ProjectIamAuditConfigAuditLogConfigEl>>,
+    audit_log_config: std::option::Option<std::vec::Vec<ProjectIamAuditConfig_AuditLogConfig>>,
     dynamic: ProjectIamAuditConfigDynamic,
 }
 
 struct ProjectIamAuditConfig_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ProjectIamAuditConfigData>,
+    data: std::cell::RefCell<ProjectIamAuditConfigData_>,
 }
 
 #[derive(Clone)]
@@ -139,7 +141,7 @@ impl ProjectIamAuditConfig {
     #[doc = "Set the field `audit_log_config`.\n"]
     pub fn set_audit_log_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ProjectIamAuditConfigAuditLogConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ProjectIamAuditConfig_AuditLogConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -218,7 +220,7 @@ impl BuildProjectIamAuditConfig {
         let out = ProjectIamAuditConfig(std::rc::Rc::new(ProjectIamAuditConfig_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ProjectIamAuditConfigData {
+            data: std::cell::RefCell::new(ProjectIamAuditConfigData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -281,14 +283,19 @@ impl ProjectIamAuditConfigRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct ProjectIamAuditConfigDynamic {
+    audit_log_config: std::option::Option<terrars::DynamicBlock<ProjectIamAuditConfig_AuditLogConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct ProjectIamAuditConfigAuditLogConfigEl {
+pub struct ProjectIamAuditConfig_AuditLogConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     exempted_members: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     log_type: terrars::PrimField<std::string::String>,
 }
 
-impl ProjectIamAuditConfigAuditLogConfigEl {
+impl ProjectIamAuditConfig_AuditLogConfig {
     #[doc =
         "Set the field `exempted_members`.\nIdentities that do not cause logging for this type of permission. Each entry can have one of the following values:user:{emailid}: An email address that represents a specific Google account. For example, alice@gmail.com or joe@example.com. serviceAccount:{emailid}: An email address that represents a service account. For example, my-other-app@appspot.gserviceaccount.com. group:{emailid}: An email address that represents a Google group. For example, admins@example.com. domain:{domain}: A G Suite domain (primary, instead of alias) name that represents all the users of that domain. For example, google.com or example.com."]
     pub fn set_exempted_members(
@@ -300,8 +307,8 @@ impl ProjectIamAuditConfigAuditLogConfigEl {
     }
 }
 
-impl terrars::ToListMappable for ProjectIamAuditConfigAuditLogConfigEl {
-    type O = terrars::BlockAssignable<ProjectIamAuditConfigAuditLogConfigEl>;
+impl terrars::ToListMappable for ProjectIamAuditConfig_AuditLogConfig {
+    type O = terrars::BlockAssignable<ProjectIamAuditConfig_AuditLogConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -312,36 +319,38 @@ impl terrars::ToListMappable for ProjectIamAuditConfigAuditLogConfigEl {
     }
 }
 
-pub struct BuildProjectIamAuditConfigAuditLogConfigEl {
+pub struct BuildProjectIamAuditConfig_AuditLogConfig {
     #[doc =
         "Permission type for which logging is to be configured. Must be one of DATA_READ, DATA_WRITE, or ADMIN_READ."]
     pub log_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildProjectIamAuditConfigAuditLogConfigEl {
-    pub fn build(self) -> ProjectIamAuditConfigAuditLogConfigEl {
-        ProjectIamAuditConfigAuditLogConfigEl {
+impl BuildProjectIamAuditConfig_AuditLogConfig {
+    pub fn build(self) -> ProjectIamAuditConfig_AuditLogConfig {
+        ProjectIamAuditConfig_AuditLogConfig {
             exempted_members: core::default::Default::default(),
             log_type: self.log_type,
         }
     }
 }
 
-pub struct ProjectIamAuditConfigAuditLogConfigElRef {
+#[allow(dead_code)]
+pub struct ProjectIamAuditConfig_AuditLogConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ProjectIamAuditConfigAuditLogConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ProjectIamAuditConfigAuditLogConfigElRef {
-        ProjectIamAuditConfigAuditLogConfigElRef {
+impl terrars::Ref for ProjectIamAuditConfig_AuditLogConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ProjectIamAuditConfig_AuditLogConfigRef {
+        ProjectIamAuditConfig_AuditLogConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ProjectIamAuditConfigAuditLogConfigElRef {
+impl ProjectIamAuditConfig_AuditLogConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -357,9 +366,4 @@ impl ProjectIamAuditConfigAuditLogConfigElRef {
     pub fn log_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.log_type", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ProjectIamAuditConfigDynamic {
-    audit_log_config: std::option::Option<terrars::DynamicBlock<ProjectIamAuditConfigAuditLogConfigEl>>,
 }

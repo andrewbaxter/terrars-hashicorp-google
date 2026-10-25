@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct CloudIdsEndpointData {
+struct CloudIdsEndpointData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct CloudIdsEndpointData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -31,13 +35,13 @@ struct CloudIdsEndpointData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     threat_exceptions: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<CloudIdsEndpointTimeoutsEl>,
+    timeouts: std::option::Option<CloudIdsEndpoint_Timeouts>,
 }
 
 struct CloudIdsEndpoint_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CloudIdsEndpointData>,
+    data: std::cell::RefCell<CloudIdsEndpointData_>,
 }
 
 #[derive(Clone)]
@@ -137,6 +141,13 @@ impl CloudIdsEndpoint {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nAn optional description of the endpoint."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -166,7 +177,7 @@ impl CloudIdsEndpoint {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<CloudIdsEndpointTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<CloudIdsEndpoint_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -175,6 +186,12 @@ impl CloudIdsEndpoint {
         "Get a reference to the value of field `create_time` after provisioning.\nCreation timestamp in RFC 3339 text format."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -241,8 +258,8 @@ impl CloudIdsEndpoint {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> CloudIdsEndpointTimeoutsElRef {
-        CloudIdsEndpointTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> CloudIdsEndpoint_TimeoutsRef {
+        CloudIdsEndpoint_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -296,12 +313,13 @@ impl BuildCloudIdsEndpoint {
         let out = CloudIdsEndpoint(std::rc::Rc::new(CloudIdsEndpoint_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CloudIdsEndpointData {
+            data: std::cell::RefCell::new(CloudIdsEndpointData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 location: self.location,
@@ -345,6 +363,12 @@ impl CloudIdsEndpointRef {
         "Get a reference to the value of field `create_time` after provisioning.\nCreation timestamp in RFC 3339 text format."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -411,13 +435,13 @@ impl CloudIdsEndpointRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> CloudIdsEndpointTimeoutsElRef {
-        CloudIdsEndpointTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> CloudIdsEndpoint_TimeoutsRef {
+        CloudIdsEndpoint_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct CloudIdsEndpointTimeoutsEl {
+pub struct CloudIdsEndpoint_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -426,7 +450,7 @@ pub struct CloudIdsEndpointTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CloudIdsEndpointTimeoutsEl {
+impl CloudIdsEndpoint_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -446,8 +470,8 @@ impl CloudIdsEndpointTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for CloudIdsEndpointTimeoutsEl {
-    type O = terrars::BlockAssignable<CloudIdsEndpointTimeoutsEl>;
+impl terrars::ToListMappable for CloudIdsEndpoint_Timeouts {
+    type O = terrars::BlockAssignable<CloudIdsEndpoint_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -458,11 +482,11 @@ impl terrars::ToListMappable for CloudIdsEndpointTimeoutsEl {
     }
 }
 
-pub struct BuildCloudIdsEndpointTimeoutsEl {}
+pub struct BuildCloudIdsEndpoint_Timeouts {}
 
-impl BuildCloudIdsEndpointTimeoutsEl {
-    pub fn build(self) -> CloudIdsEndpointTimeoutsEl {
-        CloudIdsEndpointTimeoutsEl {
+impl BuildCloudIdsEndpoint_Timeouts {
+    pub fn build(self) -> CloudIdsEndpoint_Timeouts {
+        CloudIdsEndpoint_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -470,21 +494,23 @@ impl BuildCloudIdsEndpointTimeoutsEl {
     }
 }
 
-pub struct CloudIdsEndpointTimeoutsElRef {
+#[allow(dead_code)]
+pub struct CloudIdsEndpoint_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudIdsEndpointTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudIdsEndpointTimeoutsElRef {
-        CloudIdsEndpointTimeoutsElRef {
+impl terrars::Ref for CloudIdsEndpoint_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudIdsEndpoint_TimeoutsRef {
+        CloudIdsEndpoint_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudIdsEndpointTimeoutsElRef {
+impl CloudIdsEndpoint_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

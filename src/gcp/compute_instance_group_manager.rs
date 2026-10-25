@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeInstanceGroupManagerData {
+struct ComputeInstanceGroupManagerData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct ComputeInstanceGroupManagerData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     base_instance_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -33,36 +37,48 @@ struct ComputeInstanceGroupManagerData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     target_size: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    target_stopped_size: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    target_suspended_size: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     wait_for_instances: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     wait_for_instances_status: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     zone: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    auto_healing_policies: std::option::Option<std::vec::Vec<ComputeInstanceGroupManagerAutoHealingPoliciesEl>>,
+    all_instances_config: std::option::Option<std::vec::Vec<ComputeInstanceGroupManager_AllInstancesConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    instance_lifecycle_policy: std::option::Option<std::vec::Vec<ComputeInstanceGroupManagerInstanceLifecyclePolicyEl>>,
+    auto_healing_policies: std::option::Option<std::vec::Vec<ComputeInstanceGroupManager_AutoHealingPolicies>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    named_port: std::option::Option<std::vec::Vec<ComputeInstanceGroupManagerNamedPortEl>>,
+    instance_lifecycle_policy: std::option::Option<std::vec::Vec<ComputeInstanceGroupManager_InstanceLifecyclePolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    stateful_disk: std::option::Option<std::vec::Vec<ComputeInstanceGroupManagerStatefulDiskEl>>,
+    named_port: std::option::Option<std::vec::Vec<ComputeInstanceGroupManager_NamedPort>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    stateful_external_ip: std::option::Option<std::vec::Vec<ComputeInstanceGroupManagerStatefulExternalIpEl>>,
+    resource_policies: std::option::Option<std::vec::Vec<ComputeInstanceGroupManager_ResourcePolicies>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    stateful_internal_ip: std::option::Option<std::vec::Vec<ComputeInstanceGroupManagerStatefulInternalIpEl>>,
+    standby_policy: std::option::Option<std::vec::Vec<ComputeInstanceGroupManager_StandbyPolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComputeInstanceGroupManagerTimeoutsEl>,
+    stateful_disk: std::option::Option<std::vec::Vec<ComputeInstanceGroupManager_StatefulDisk>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    update_policy: std::option::Option<std::vec::Vec<ComputeInstanceGroupManagerUpdatePolicyEl>>,
+    stateful_external_ip: std::option::Option<std::vec::Vec<ComputeInstanceGroupManager_StatefulExternalIp>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    version: std::option::Option<std::vec::Vec<ComputeInstanceGroupManagerVersionEl>>,
+    stateful_internal_ip: std::option::Option<std::vec::Vec<ComputeInstanceGroupManager_StatefulInternalIp>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    target_size_policy: std::option::Option<std::vec::Vec<ComputeInstanceGroupManager_TargetSizePolicy>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<ComputeInstanceGroupManager_Timeouts>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update_policy: std::option::Option<std::vec::Vec<ComputeInstanceGroupManager_UpdatePolicy>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    version: std::option::Option<std::vec::Vec<ComputeInstanceGroupManager_Version>>,
     dynamic: ComputeInstanceGroupManagerDynamic,
 }
 
 struct ComputeInstanceGroupManager_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeInstanceGroupManagerData>,
+    data: std::cell::RefCell<ComputeInstanceGroupManagerData_>,
 }
 
 #[derive(Clone)]
@@ -162,6 +178,13 @@ impl ComputeInstanceGroupManager {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nAn optional textual description of the instance group manager."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -209,6 +232,20 @@ impl ComputeInstanceGroupManager {
     }
 
     #[doc =
+        "Set the field `target_stopped_size`.\nThe target number of stopped instances for this managed instance group."]
+    pub fn set_target_stopped_size(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().target_stopped_size = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `target_suspended_size`.\nThe target number of suspended instances for this managed instance group."]
+    pub fn set_target_suspended_size(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().target_suspended_size = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `wait_for_instances`.\nWhether to wait for all instances to be created/updated before returning. Note that if this is set to true and the operation does not succeed, Terraform will continue trying until it times out."]
     pub fn set_wait_for_instances(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().wait_for_instances = std::option::Option::Some(v.into());
@@ -216,7 +253,7 @@ impl ComputeInstanceGroupManager {
     }
 
     #[doc =
-        "Set the field `wait_for_instances_status`.\nWhen used with wait_for_instances specifies the status to wait for. When STABLE is specified this resource will wait until the instances are stable before returning. When UPDATED is set, it will wait for the version target to be reached and any per instance configs to be effective as well as all instances to be stable before returning."]
+        "Set the field `wait_for_instances_status`.\nWhen used with wait_for_instances specifies the status to wait for. When STABLE is specified this resource will wait until the instances are stable before returning. When UPDATED is set, it will wait for the version target to be reached and any per instance configs to be effective and all instances configs to be effective as well as all instances to be stable before returning."]
     pub fn set_wait_for_instances_status(
         self,
         v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
@@ -231,10 +268,26 @@ impl ComputeInstanceGroupManager {
         self
     }
 
+    #[doc = "Set the field `all_instances_config`.\n"]
+    pub fn set_all_instances_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeInstanceGroupManager_AllInstancesConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().all_instances_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.all_instances_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `auto_healing_policies`.\n"]
     pub fn set_auto_healing_policies(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeInstanceGroupManagerAutoHealingPoliciesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeInstanceGroupManager_AutoHealingPolicies>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -250,7 +303,7 @@ impl ComputeInstanceGroupManager {
     #[doc = "Set the field `instance_lifecycle_policy`.\n"]
     pub fn set_instance_lifecycle_policy(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeInstanceGroupManagerInstanceLifecyclePolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeInstanceGroupManager_InstanceLifecyclePolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -266,7 +319,7 @@ impl ComputeInstanceGroupManager {
     #[doc = "Set the field `named_port`.\n"]
     pub fn set_named_port(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeInstanceGroupManagerNamedPortEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeInstanceGroupManager_NamedPort>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -279,10 +332,42 @@ impl ComputeInstanceGroupManager {
         self
     }
 
+    #[doc = "Set the field `resource_policies`.\n"]
+    pub fn set_resource_policies(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeInstanceGroupManager_ResourcePolicies>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().resource_policies = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.resource_policies = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `standby_policy`.\n"]
+    pub fn set_standby_policy(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeInstanceGroupManager_StandbyPolicy>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().standby_policy = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.standby_policy = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `stateful_disk`.\n"]
     pub fn set_stateful_disk(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeInstanceGroupManagerStatefulDiskEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeInstanceGroupManager_StatefulDisk>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -298,7 +383,7 @@ impl ComputeInstanceGroupManager {
     #[doc = "Set the field `stateful_external_ip`.\n"]
     pub fn set_stateful_external_ip(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeInstanceGroupManagerStatefulExternalIpEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeInstanceGroupManager_StatefulExternalIp>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -314,7 +399,7 @@ impl ComputeInstanceGroupManager {
     #[doc = "Set the field `stateful_internal_ip`.\n"]
     pub fn set_stateful_internal_ip(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeInstanceGroupManagerStatefulInternalIpEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeInstanceGroupManager_StatefulInternalIp>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -327,8 +412,24 @@ impl ComputeInstanceGroupManager {
         self
     }
 
+    #[doc = "Set the field `target_size_policy`.\n"]
+    pub fn set_target_size_policy(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeInstanceGroupManager_TargetSizePolicy>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().target_size_policy = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.target_size_policy = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeInstanceGroupManagerTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeInstanceGroupManager_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -336,7 +437,7 @@ impl ComputeInstanceGroupManager {
     #[doc = "Set the field `update_policy`.\n"]
     pub fn set_update_policy(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeInstanceGroupManagerUpdatePolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeInstanceGroupManager_UpdatePolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -352,7 +453,7 @@ impl ComputeInstanceGroupManager {
     #[doc = "Set the field `version`.\n"]
     pub fn set_version(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeInstanceGroupManagerVersionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeInstanceGroupManager_Version>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -369,6 +470,18 @@ impl ComputeInstanceGroupManager {
         "Get a reference to the value of field `base_instance_name` after provisioning.\nThe base instance name to use for instances in this group. The value must be a valid RFC1035 name. Supported characters are lowercase letters, numbers, and hyphens (-). Instances are named by appending a hyphen and a random four-character string to the base instance name."]
     pub fn base_instance_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.base_instance_name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `creation_timestamp` after provisioning.\nCreation timestamp in RFC3339 text format."]
+    pub fn creation_timestamp(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_timestamp", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -392,6 +505,12 @@ impl ComputeInstanceGroupManager {
         "Get a reference to the value of field `instance_group` after provisioning.\nThe full URL of the instance group created by the manager."]
     pub fn instance_group(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_group", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `instance_group_manager_id` after provisioning.\nThe unique identifier number for the resource. This identifier is defined by the server."]
+    pub fn instance_group_manager_id(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_group_manager_id", self.extract_ref()))
     }
 
     #[doc =
@@ -427,7 +546,7 @@ impl ComputeInstanceGroupManager {
 
     #[doc =
         "Get a reference to the value of field `status` after provisioning.\nThe status of this managed instance group."]
-    pub fn status(&self) -> terrars::ListRef<ComputeInstanceGroupManagerStatusElRef> {
+    pub fn status(&self) -> terrars::ListRef<ComputeInstanceGroupManager_StatusRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
@@ -444,13 +563,25 @@ impl ComputeInstanceGroupManager {
     }
 
     #[doc =
+        "Get a reference to the value of field `target_stopped_size` after provisioning.\nThe target number of stopped instances for this managed instance group."]
+    pub fn target_stopped_size(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_stopped_size", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `target_suspended_size` after provisioning.\nThe target number of suspended instances for this managed instance group."]
+    pub fn target_suspended_size(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_suspended_size", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `wait_for_instances` after provisioning.\nWhether to wait for all instances to be created/updated before returning. Note that if this is set to true and the operation does not succeed, Terraform will continue trying until it times out."]
     pub fn wait_for_instances(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.wait_for_instances", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `wait_for_instances_status` after provisioning.\nWhen used with wait_for_instances specifies the status to wait for. When STABLE is specified this resource will wait until the instances are stable before returning. When UPDATED is set, it will wait for the version target to be reached and any per instance configs to be effective as well as all instances to be stable before returning."]
+        "Get a reference to the value of field `wait_for_instances_status` after provisioning.\nWhen used with wait_for_instances specifies the status to wait for. When STABLE is specified this resource will wait until the instances are stable before returning. When UPDATED is set, it will wait for the version target to be reached and any per instance configs to be effective and all instances configs to be effective as well as all instances to be stable before returning."]
     pub fn wait_for_instances_status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.wait_for_instances_status", self.extract_ref()))
     }
@@ -461,41 +592,61 @@ impl ComputeInstanceGroupManager {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.zone", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `all_instances_config` after provisioning.\n"]
+    pub fn all_instances_config(&self) -> terrars::ListRef<ComputeInstanceGroupManager_AllInstancesConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.all_instances_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `auto_healing_policies` after provisioning.\n"]
-    pub fn auto_healing_policies(&self) -> terrars::ListRef<ComputeInstanceGroupManagerAutoHealingPoliciesElRef> {
+    pub fn auto_healing_policies(&self) -> terrars::ListRef<ComputeInstanceGroupManager_AutoHealingPoliciesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.auto_healing_policies", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `instance_lifecycle_policy` after provisioning.\n"]
-    pub fn instance_lifecycle_policy(&self) -> terrars::ListRef<ComputeInstanceGroupManagerInstanceLifecyclePolicyElRef> {
+    pub fn instance_lifecycle_policy(&self) -> terrars::ListRef<ComputeInstanceGroupManager_InstanceLifecyclePolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.instance_lifecycle_policy", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `resource_policies` after provisioning.\n"]
+    pub fn resource_policies(&self) -> terrars::ListRef<ComputeInstanceGroupManager_ResourcePoliciesRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.resource_policies", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `standby_policy` after provisioning.\n"]
+    pub fn standby_policy(&self) -> terrars::ListRef<ComputeInstanceGroupManager_StandbyPolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.standby_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `stateful_external_ip` after provisioning.\n"]
-    pub fn stateful_external_ip(&self) -> terrars::ListRef<ComputeInstanceGroupManagerStatefulExternalIpElRef> {
+    pub fn stateful_external_ip(&self) -> terrars::ListRef<ComputeInstanceGroupManager_StatefulExternalIpRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.stateful_external_ip", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `stateful_internal_ip` after provisioning.\n"]
-    pub fn stateful_internal_ip(&self) -> terrars::ListRef<ComputeInstanceGroupManagerStatefulInternalIpElRef> {
+    pub fn stateful_internal_ip(&self) -> terrars::ListRef<ComputeInstanceGroupManager_StatefulInternalIpRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.stateful_internal_ip", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `target_size_policy` after provisioning.\n"]
+    pub fn target_size_policy(&self) -> terrars::ListRef<ComputeInstanceGroupManager_TargetSizePolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.target_size_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeInstanceGroupManagerTimeoutsElRef {
-        ComputeInstanceGroupManagerTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ComputeInstanceGroupManager_TimeoutsRef {
+        ComputeInstanceGroupManager_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 
     #[doc = "Get a reference to the value of field `update_policy` after provisioning.\n"]
-    pub fn update_policy(&self) -> terrars::ListRef<ComputeInstanceGroupManagerUpdatePolicyElRef> {
+    pub fn update_policy(&self) -> terrars::ListRef<ComputeInstanceGroupManager_UpdatePolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.update_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `version` after provisioning.\n"]
-    pub fn version(&self) -> terrars::ListRef<ComputeInstanceGroupManagerVersionElRef> {
+    pub fn version(&self) -> terrars::ListRef<ComputeInstanceGroupManager_VersionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.version", self.extract_ref()))
     }
 }
@@ -546,13 +697,14 @@ impl BuildComputeInstanceGroupManager {
         let out = ComputeInstanceGroupManager(std::rc::Rc::new(ComputeInstanceGroupManager_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeInstanceGroupManagerData {
+            data: std::cell::RefCell::new(ComputeInstanceGroupManagerData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 base_instance_name: self.base_instance_name,
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 list_managed_instances_results: core::default::Default::default(),
@@ -560,15 +712,21 @@ impl BuildComputeInstanceGroupManager {
                 project: core::default::Default::default(),
                 target_pools: core::default::Default::default(),
                 target_size: core::default::Default::default(),
+                target_stopped_size: core::default::Default::default(),
+                target_suspended_size: core::default::Default::default(),
                 wait_for_instances: core::default::Default::default(),
                 wait_for_instances_status: core::default::Default::default(),
                 zone: core::default::Default::default(),
+                all_instances_config: core::default::Default::default(),
                 auto_healing_policies: core::default::Default::default(),
                 instance_lifecycle_policy: core::default::Default::default(),
                 named_port: core::default::Default::default(),
+                resource_policies: core::default::Default::default(),
+                standby_policy: core::default::Default::default(),
                 stateful_disk: core::default::Default::default(),
                 stateful_external_ip: core::default::Default::default(),
                 stateful_internal_ip: core::default::Default::default(),
+                target_size_policy: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 update_policy: core::default::Default::default(),
                 version: core::default::Default::default(),
@@ -610,6 +768,18 @@ impl ComputeInstanceGroupManagerRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `creation_timestamp` after provisioning.\nCreation timestamp in RFC3339 text format."]
+    pub fn creation_timestamp(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_timestamp", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nAn optional textual description of the instance group manager."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -630,6 +800,12 @@ impl ComputeInstanceGroupManagerRef {
         "Get a reference to the value of field `instance_group` after provisioning.\nThe full URL of the instance group created by the manager."]
     pub fn instance_group(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_group", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `instance_group_manager_id` after provisioning.\nThe unique identifier number for the resource. This identifier is defined by the server."]
+    pub fn instance_group_manager_id(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_group_manager_id", self.extract_ref()))
     }
 
     #[doc =
@@ -665,7 +841,7 @@ impl ComputeInstanceGroupManagerRef {
 
     #[doc =
         "Get a reference to the value of field `status` after provisioning.\nThe status of this managed instance group."]
-    pub fn status(&self) -> terrars::ListRef<ComputeInstanceGroupManagerStatusElRef> {
+    pub fn status(&self) -> terrars::ListRef<ComputeInstanceGroupManager_StatusRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
@@ -682,13 +858,25 @@ impl ComputeInstanceGroupManagerRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `target_stopped_size` after provisioning.\nThe target number of stopped instances for this managed instance group."]
+    pub fn target_stopped_size(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_stopped_size", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `target_suspended_size` after provisioning.\nThe target number of suspended instances for this managed instance group."]
+    pub fn target_suspended_size(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_suspended_size", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `wait_for_instances` after provisioning.\nWhether to wait for all instances to be created/updated before returning. Note that if this is set to true and the operation does not succeed, Terraform will continue trying until it times out."]
     pub fn wait_for_instances(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.wait_for_instances", self.extract_ref()))
     }
 
     #[doc =
-        "Get a reference to the value of field `wait_for_instances_status` after provisioning.\nWhen used with wait_for_instances specifies the status to wait for. When STABLE is specified this resource will wait until the instances are stable before returning. When UPDATED is set, it will wait for the version target to be reached and any per instance configs to be effective as well as all instances to be stable before returning."]
+        "Get a reference to the value of field `wait_for_instances_status` after provisioning.\nWhen used with wait_for_instances specifies the status to wait for. When STABLE is specified this resource will wait until the instances are stable before returning. When UPDATED is set, it will wait for the version target to be reached and any per instance configs to be effective and all instances configs to be effective as well as all instances to be stable before returning."]
     pub fn wait_for_instances_status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.wait_for_instances_status", self.extract_ref()))
     }
@@ -699,61 +887,109 @@ impl ComputeInstanceGroupManagerRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.zone", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `all_instances_config` after provisioning.\n"]
+    pub fn all_instances_config(&self) -> terrars::ListRef<ComputeInstanceGroupManager_AllInstancesConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.all_instances_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `auto_healing_policies` after provisioning.\n"]
-    pub fn auto_healing_policies(&self) -> terrars::ListRef<ComputeInstanceGroupManagerAutoHealingPoliciesElRef> {
+    pub fn auto_healing_policies(&self) -> terrars::ListRef<ComputeInstanceGroupManager_AutoHealingPoliciesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.auto_healing_policies", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `instance_lifecycle_policy` after provisioning.\n"]
-    pub fn instance_lifecycle_policy(&self) -> terrars::ListRef<ComputeInstanceGroupManagerInstanceLifecyclePolicyElRef> {
+    pub fn instance_lifecycle_policy(&self) -> terrars::ListRef<ComputeInstanceGroupManager_InstanceLifecyclePolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.instance_lifecycle_policy", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `resource_policies` after provisioning.\n"]
+    pub fn resource_policies(&self) -> terrars::ListRef<ComputeInstanceGroupManager_ResourcePoliciesRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.resource_policies", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `standby_policy` after provisioning.\n"]
+    pub fn standby_policy(&self) -> terrars::ListRef<ComputeInstanceGroupManager_StandbyPolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.standby_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `stateful_external_ip` after provisioning.\n"]
-    pub fn stateful_external_ip(&self) -> terrars::ListRef<ComputeInstanceGroupManagerStatefulExternalIpElRef> {
+    pub fn stateful_external_ip(&self) -> terrars::ListRef<ComputeInstanceGroupManager_StatefulExternalIpRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.stateful_external_ip", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `stateful_internal_ip` after provisioning.\n"]
-    pub fn stateful_internal_ip(&self) -> terrars::ListRef<ComputeInstanceGroupManagerStatefulInternalIpElRef> {
+    pub fn stateful_internal_ip(&self) -> terrars::ListRef<ComputeInstanceGroupManager_StatefulInternalIpRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.stateful_internal_ip", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `target_size_policy` after provisioning.\n"]
+    pub fn target_size_policy(&self) -> terrars::ListRef<ComputeInstanceGroupManager_TargetSizePolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.target_size_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeInstanceGroupManagerTimeoutsElRef {
-        ComputeInstanceGroupManagerTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ComputeInstanceGroupManager_TimeoutsRef {
+        ComputeInstanceGroupManager_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 
     #[doc = "Get a reference to the value of field `update_policy` after provisioning.\n"]
-    pub fn update_policy(&self) -> terrars::ListRef<ComputeInstanceGroupManagerUpdatePolicyElRef> {
+    pub fn update_policy(&self) -> terrars::ListRef<ComputeInstanceGroupManager_UpdatePolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.update_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `version` after provisioning.\n"]
-    pub fn version(&self) -> terrars::ListRef<ComputeInstanceGroupManagerVersionElRef> {
+    pub fn version(&self) -> terrars::ListRef<ComputeInstanceGroupManager_VersionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.version", self.extract_ref()))
     }
 }
 
-#[derive(Serialize)]
-pub struct ComputeInstanceGroupManagerStatusElStatefulElPerInstanceConfigsEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    all_effective: std::option::Option<terrars::PrimField<bool>>,
+#[derive(Serialize, Default)]
+struct ComputeInstanceGroupManagerDynamic {
+    all_instances_config: std::option::Option<terrars::DynamicBlock<ComputeInstanceGroupManager_AllInstancesConfig>>,
+    auto_healing_policies: std
+    ::option
+    ::Option<terrars::DynamicBlock<ComputeInstanceGroupManager_AutoHealingPolicies>>,
+    instance_lifecycle_policy: std
+    ::option
+    ::Option<terrars::DynamicBlock<ComputeInstanceGroupManager_InstanceLifecyclePolicy>>,
+    named_port: std::option::Option<terrars::DynamicBlock<ComputeInstanceGroupManager_NamedPort>>,
+    resource_policies: std::option::Option<terrars::DynamicBlock<ComputeInstanceGroupManager_ResourcePolicies>>,
+    standby_policy: std::option::Option<terrars::DynamicBlock<ComputeInstanceGroupManager_StandbyPolicy>>,
+    stateful_disk: std::option::Option<terrars::DynamicBlock<ComputeInstanceGroupManager_StatefulDisk>>,
+    stateful_external_ip: std::option::Option<terrars::DynamicBlock<ComputeInstanceGroupManager_StatefulExternalIp>>,
+    stateful_internal_ip: std::option::Option<terrars::DynamicBlock<ComputeInstanceGroupManager_StatefulInternalIp>>,
+    target_size_policy: std::option::Option<terrars::DynamicBlock<ComputeInstanceGroupManager_TargetSizePolicy>>,
+    update_policy: std::option::Option<terrars::DynamicBlock<ComputeInstanceGroupManager_UpdatePolicy>>,
+    version: std::option::Option<terrars::DynamicBlock<ComputeInstanceGroupManager_Version>>,
 }
 
-impl ComputeInstanceGroupManagerStatusElStatefulElPerInstanceConfigsEl {
-    #[doc = "Set the field `all_effective`.\n"]
-    pub fn set_all_effective(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.all_effective = std::option::Option::Some(v.into());
+#[derive(Serialize)]
+pub struct ComputeInstanceGroupManager_Status_AllInstancesConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    current_revision: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    effective: std::option::Option<terrars::PrimField<bool>>,
+}
+
+impl ComputeInstanceGroupManager_Status_AllInstancesConfig {
+    #[doc = "Set the field `current_revision`.\n"]
+    pub fn set_current_revision(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.current_revision = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `effective`.\n"]
+    pub fn set_effective(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.effective = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for ComputeInstanceGroupManagerStatusElStatefulElPerInstanceConfigsEl {
-    type O = terrars::BlockAssignable<ComputeInstanceGroupManagerStatusElStatefulElPerInstanceConfigsEl>;
+impl terrars::ToListMappable for ComputeInstanceGroupManager_Status_AllInstancesConfig {
+    type O = terrars::BlockAssignable<ComputeInstanceGroupManager_Status_AllInstancesConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -764,34 +1000,108 @@ impl terrars::ToListMappable for ComputeInstanceGroupManagerStatusElStatefulElPe
     }
 }
 
-pub struct BuildComputeInstanceGroupManagerStatusElStatefulElPerInstanceConfigsEl {}
+pub struct BuildComputeInstanceGroupManager_Status_AllInstancesConfig {}
 
-impl BuildComputeInstanceGroupManagerStatusElStatefulElPerInstanceConfigsEl {
-    pub fn build(self) -> ComputeInstanceGroupManagerStatusElStatefulElPerInstanceConfigsEl {
-        ComputeInstanceGroupManagerStatusElStatefulElPerInstanceConfigsEl {
-            all_effective: core::default::Default::default(),
+impl BuildComputeInstanceGroupManager_Status_AllInstancesConfig {
+    pub fn build(self) -> ComputeInstanceGroupManager_Status_AllInstancesConfig {
+        ComputeInstanceGroupManager_Status_AllInstancesConfig {
+            current_revision: core::default::Default::default(),
+            effective: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeInstanceGroupManagerStatusElStatefulElPerInstanceConfigsElRef {
+#[allow(dead_code)]
+pub struct ComputeInstanceGroupManager_Status_AllInstancesConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeInstanceGroupManagerStatusElStatefulElPerInstanceConfigsElRef {
+impl terrars::Ref for ComputeInstanceGroupManager_Status_AllInstancesConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeInstanceGroupManagerStatusElStatefulElPerInstanceConfigsElRef {
-        ComputeInstanceGroupManagerStatusElStatefulElPerInstanceConfigsElRef {
+    ) -> ComputeInstanceGroupManager_Status_AllInstancesConfigRef {
+        ComputeInstanceGroupManager_Status_AllInstancesConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeInstanceGroupManagerStatusElStatefulElPerInstanceConfigsElRef {
+impl ComputeInstanceGroupManager_Status_AllInstancesConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `current_revision` after provisioning.\n"]
+    pub fn current_revision(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.current_revision", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `effective` after provisioning.\n"]
+    pub fn effective(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.effective", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ComputeInstanceGroupManager_Status_Stateful_PerInstanceConfigs {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    all_effective: std::option::Option<terrars::PrimField<bool>>,
+}
+
+impl ComputeInstanceGroupManager_Status_Stateful_PerInstanceConfigs {
+    #[doc = "Set the field `all_effective`.\n"]
+    pub fn set_all_effective(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.all_effective = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeInstanceGroupManager_Status_Stateful_PerInstanceConfigs {
+    type O = terrars::BlockAssignable<ComputeInstanceGroupManager_Status_Stateful_PerInstanceConfigs>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeInstanceGroupManager_Status_Stateful_PerInstanceConfigs {}
+
+impl BuildComputeInstanceGroupManager_Status_Stateful_PerInstanceConfigs {
+    pub fn build(self) -> ComputeInstanceGroupManager_Status_Stateful_PerInstanceConfigs {
+        ComputeInstanceGroupManager_Status_Stateful_PerInstanceConfigs {
+            all_effective: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeInstanceGroupManager_Status_Stateful_PerInstanceConfigsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeInstanceGroupManager_Status_Stateful_PerInstanceConfigsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputeInstanceGroupManager_Status_Stateful_PerInstanceConfigsRef {
+        ComputeInstanceGroupManager_Status_Stateful_PerInstanceConfigsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeInstanceGroupManager_Status_Stateful_PerInstanceConfigsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -803,16 +1113,16 @@ impl ComputeInstanceGroupManagerStatusElStatefulElPerInstanceConfigsElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeInstanceGroupManagerStatusElStatefulEl {
+pub struct ComputeInstanceGroupManager_Status_Stateful {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     has_stateful_config: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     per_instance_configs: std
     ::option
-    ::Option<terrars::ListField<ComputeInstanceGroupManagerStatusElStatefulElPerInstanceConfigsEl>>,
+    ::Option<terrars::ListField<ComputeInstanceGroupManager_Status_Stateful_PerInstanceConfigs>>,
 }
 
-impl ComputeInstanceGroupManagerStatusElStatefulEl {
+impl ComputeInstanceGroupManager_Status_Stateful {
     #[doc = "Set the field `has_stateful_config`.\n"]
     pub fn set_has_stateful_config(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.has_stateful_config = std::option::Option::Some(v.into());
@@ -827,15 +1137,15 @@ impl ComputeInstanceGroupManagerStatusElStatefulEl {
 
                     std
                     ::convert
-                    ::Into<terrars::ListField<ComputeInstanceGroupManagerStatusElStatefulElPerInstanceConfigsEl>>,
+                    ::Into<terrars::ListField<ComputeInstanceGroupManager_Status_Stateful_PerInstanceConfigs>>,
     ) -> Self {
         self.per_instance_configs = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for ComputeInstanceGroupManagerStatusElStatefulEl {
-    type O = terrars::BlockAssignable<ComputeInstanceGroupManagerStatusElStatefulEl>;
+impl terrars::ToListMappable for ComputeInstanceGroupManager_Status_Stateful {
+    type O = terrars::BlockAssignable<ComputeInstanceGroupManager_Status_Stateful>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -846,35 +1156,37 @@ impl terrars::ToListMappable for ComputeInstanceGroupManagerStatusElStatefulEl {
     }
 }
 
-pub struct BuildComputeInstanceGroupManagerStatusElStatefulEl {}
+pub struct BuildComputeInstanceGroupManager_Status_Stateful {}
 
-impl BuildComputeInstanceGroupManagerStatusElStatefulEl {
-    pub fn build(self) -> ComputeInstanceGroupManagerStatusElStatefulEl {
-        ComputeInstanceGroupManagerStatusElStatefulEl {
+impl BuildComputeInstanceGroupManager_Status_Stateful {
+    pub fn build(self) -> ComputeInstanceGroupManager_Status_Stateful {
+        ComputeInstanceGroupManager_Status_Stateful {
             has_stateful_config: core::default::Default::default(),
             per_instance_configs: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeInstanceGroupManagerStatusElStatefulElRef {
+#[allow(dead_code)]
+pub struct ComputeInstanceGroupManager_Status_StatefulRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeInstanceGroupManagerStatusElStatefulElRef {
+impl terrars::Ref for ComputeInstanceGroupManager_Status_StatefulRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeInstanceGroupManagerStatusElStatefulElRef {
-        ComputeInstanceGroupManagerStatusElStatefulElRef {
+    ) -> ComputeInstanceGroupManager_Status_StatefulRef {
+        ComputeInstanceGroupManager_Status_StatefulRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeInstanceGroupManagerStatusElStatefulElRef {
+impl ComputeInstanceGroupManager_Status_StatefulRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -887,18 +1199,18 @@ impl ComputeInstanceGroupManagerStatusElStatefulElRef {
     #[doc = "Get a reference to the value of field `per_instance_configs` after provisioning.\n"]
     pub fn per_instance_configs(
         &self,
-    ) -> terrars::ListRef<ComputeInstanceGroupManagerStatusElStatefulElPerInstanceConfigsElRef> {
+    ) -> terrars::ListRef<ComputeInstanceGroupManager_Status_Stateful_PerInstanceConfigsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.per_instance_configs", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeInstanceGroupManagerStatusElVersionTargetEl {
+pub struct ComputeInstanceGroupManager_Status_VersionTarget {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     is_reached: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl ComputeInstanceGroupManagerStatusElVersionTargetEl {
+impl ComputeInstanceGroupManager_Status_VersionTarget {
     #[doc = "Set the field `is_reached`.\n"]
     pub fn set_is_reached(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.is_reached = std::option::Option::Some(v.into());
@@ -906,8 +1218,8 @@ impl ComputeInstanceGroupManagerStatusElVersionTargetEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeInstanceGroupManagerStatusElVersionTargetEl {
-    type O = terrars::BlockAssignable<ComputeInstanceGroupManagerStatusElVersionTargetEl>;
+impl terrars::ToListMappable for ComputeInstanceGroupManager_Status_VersionTarget {
+    type O = terrars::BlockAssignable<ComputeInstanceGroupManager_Status_VersionTarget>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -918,32 +1230,34 @@ impl terrars::ToListMappable for ComputeInstanceGroupManagerStatusElVersionTarge
     }
 }
 
-pub struct BuildComputeInstanceGroupManagerStatusElVersionTargetEl {}
+pub struct BuildComputeInstanceGroupManager_Status_VersionTarget {}
 
-impl BuildComputeInstanceGroupManagerStatusElVersionTargetEl {
-    pub fn build(self) -> ComputeInstanceGroupManagerStatusElVersionTargetEl {
-        ComputeInstanceGroupManagerStatusElVersionTargetEl { is_reached: core::default::Default::default() }
+impl BuildComputeInstanceGroupManager_Status_VersionTarget {
+    pub fn build(self) -> ComputeInstanceGroupManager_Status_VersionTarget {
+        ComputeInstanceGroupManager_Status_VersionTarget { is_reached: core::default::Default::default() }
     }
 }
 
-pub struct ComputeInstanceGroupManagerStatusElVersionTargetElRef {
+#[allow(dead_code)]
+pub struct ComputeInstanceGroupManager_Status_VersionTargetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeInstanceGroupManagerStatusElVersionTargetElRef {
+impl terrars::Ref for ComputeInstanceGroupManager_Status_VersionTargetRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeInstanceGroupManagerStatusElVersionTargetElRef {
-        ComputeInstanceGroupManagerStatusElVersionTargetElRef {
+    ) -> ComputeInstanceGroupManager_Status_VersionTargetRef {
+        ComputeInstanceGroupManager_Status_VersionTargetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeInstanceGroupManagerStatusElVersionTargetElRef {
+impl ComputeInstanceGroupManager_Status_VersionTargetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -955,16 +1269,27 @@ impl ComputeInstanceGroupManagerStatusElVersionTargetElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeInstanceGroupManagerStatusEl {
+pub struct ComputeInstanceGroupManager_Status {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    all_instances_config: std::option::Option<terrars::ListField<ComputeInstanceGroupManager_Status_AllInstancesConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     is_stable: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    stateful: std::option::Option<terrars::ListField<ComputeInstanceGroupManagerStatusElStatefulEl>>,
+    stateful: std::option::Option<terrars::ListField<ComputeInstanceGroupManager_Status_Stateful>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    version_target: std::option::Option<terrars::ListField<ComputeInstanceGroupManagerStatusElVersionTargetEl>>,
+    version_target: std::option::Option<terrars::ListField<ComputeInstanceGroupManager_Status_VersionTarget>>,
 }
 
-impl ComputeInstanceGroupManagerStatusEl {
+impl ComputeInstanceGroupManager_Status {
+    #[doc = "Set the field `all_instances_config`.\n"]
+    pub fn set_all_instances_config(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<ComputeInstanceGroupManager_Status_AllInstancesConfig>>,
+    ) -> Self {
+        self.all_instances_config = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `is_stable`.\n"]
     pub fn set_is_stable(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.is_stable = std::option::Option::Some(v.into());
@@ -974,7 +1299,7 @@ impl ComputeInstanceGroupManagerStatusEl {
     #[doc = "Set the field `stateful`.\n"]
     pub fn set_stateful(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<ComputeInstanceGroupManagerStatusElStatefulEl>>,
+        v: impl std::convert::Into<terrars::ListField<ComputeInstanceGroupManager_Status_Stateful>>,
     ) -> Self {
         self.stateful = std::option::Option::Some(v.into());
         self
@@ -983,15 +1308,15 @@ impl ComputeInstanceGroupManagerStatusEl {
     #[doc = "Set the field `version_target`.\n"]
     pub fn set_version_target(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<ComputeInstanceGroupManagerStatusElVersionTargetEl>>,
+        v: impl std::convert::Into<terrars::ListField<ComputeInstanceGroupManager_Status_VersionTarget>>,
     ) -> Self {
         self.version_target = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for ComputeInstanceGroupManagerStatusEl {
-    type O = terrars::BlockAssignable<ComputeInstanceGroupManagerStatusEl>;
+impl terrars::ToListMappable for ComputeInstanceGroupManager_Status {
+    type O = terrars::BlockAssignable<ComputeInstanceGroupManager_Status>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1002,11 +1327,12 @@ impl terrars::ToListMappable for ComputeInstanceGroupManagerStatusEl {
     }
 }
 
-pub struct BuildComputeInstanceGroupManagerStatusEl {}
+pub struct BuildComputeInstanceGroupManager_Status {}
 
-impl BuildComputeInstanceGroupManagerStatusEl {
-    pub fn build(self) -> ComputeInstanceGroupManagerStatusEl {
-        ComputeInstanceGroupManagerStatusEl {
+impl BuildComputeInstanceGroupManager_Status {
+    pub fn build(self) -> ComputeInstanceGroupManager_Status {
+        ComputeInstanceGroupManager_Status {
+            all_instances_config: core::default::Default::default(),
             is_stable: core::default::Default::default(),
             stateful: core::default::Default::default(),
             version_target: core::default::Default::default(),
@@ -1014,23 +1340,30 @@ impl BuildComputeInstanceGroupManagerStatusEl {
     }
 }
 
-pub struct ComputeInstanceGroupManagerStatusElRef {
+#[allow(dead_code)]
+pub struct ComputeInstanceGroupManager_StatusRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeInstanceGroupManagerStatusElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeInstanceGroupManagerStatusElRef {
-        ComputeInstanceGroupManagerStatusElRef {
+impl terrars::Ref for ComputeInstanceGroupManager_StatusRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeInstanceGroupManager_StatusRef {
+        ComputeInstanceGroupManager_StatusRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeInstanceGroupManagerStatusElRef {
+impl ComputeInstanceGroupManager_StatusRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `all_instances_config` after provisioning.\n"]
+    pub fn all_instances_config(&self) -> terrars::ListRef<ComputeInstanceGroupManager_Status_AllInstancesConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.all_instances_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `is_stable` after provisioning.\n"]
@@ -1039,26 +1372,47 @@ impl ComputeInstanceGroupManagerStatusElRef {
     }
 
     #[doc = "Get a reference to the value of field `stateful` after provisioning.\n"]
-    pub fn stateful(&self) -> terrars::ListRef<ComputeInstanceGroupManagerStatusElStatefulElRef> {
+    pub fn stateful(&self) -> terrars::ListRef<ComputeInstanceGroupManager_Status_StatefulRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.stateful", self.base))
     }
 
     #[doc = "Get a reference to the value of field `version_target` after provisioning.\n"]
-    pub fn version_target(&self) -> terrars::ListRef<ComputeInstanceGroupManagerStatusElVersionTargetElRef> {
+    pub fn version_target(&self) -> terrars::ListRef<ComputeInstanceGroupManager_Status_VersionTargetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.version_target", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeInstanceGroupManagerAutoHealingPoliciesEl {
-    health_check: terrars::PrimField<std::string::String>,
-    initial_delay_sec: terrars::PrimField<f64>,
+pub struct ComputeInstanceGroupManager_AllInstancesConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    labels: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metadata: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
-impl ComputeInstanceGroupManagerAutoHealingPoliciesEl { }
+impl ComputeInstanceGroupManager_AllInstancesConfig {
+    #[doc = "Set the field `labels`.\nThe label key-value pairs that you want to patch onto the instance,"]
+    pub fn set_labels(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.labels = std::option::Option::Some(v.into());
+        self
+    }
 
-impl terrars::ToListMappable for ComputeInstanceGroupManagerAutoHealingPoliciesEl {
-    type O = terrars::BlockAssignable<ComputeInstanceGroupManagerAutoHealingPoliciesEl>;
+    #[doc =
+        "Set the field `metadata`.\nThe metadata key-value pairs that you want to patch onto the instance. For more information, see Project and instance metadata,"]
+    pub fn set_metadata(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.metadata = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeInstanceGroupManager_AllInstancesConfig {
+    type O = terrars::BlockAssignable<ComputeInstanceGroupManager_AllInstancesConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1069,7 +1423,75 @@ impl terrars::ToListMappable for ComputeInstanceGroupManagerAutoHealingPoliciesE
     }
 }
 
-pub struct BuildComputeInstanceGroupManagerAutoHealingPoliciesEl {
+pub struct BuildComputeInstanceGroupManager_AllInstancesConfig {}
+
+impl BuildComputeInstanceGroupManager_AllInstancesConfig {
+    pub fn build(self) -> ComputeInstanceGroupManager_AllInstancesConfig {
+        ComputeInstanceGroupManager_AllInstancesConfig {
+            labels: core::default::Default::default(),
+            metadata: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeInstanceGroupManager_AllInstancesConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeInstanceGroupManager_AllInstancesConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputeInstanceGroupManager_AllInstancesConfigRef {
+        ComputeInstanceGroupManager_AllInstancesConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeInstanceGroupManager_AllInstancesConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `labels` after provisioning.\nThe label key-value pairs that you want to patch onto the instance,"]
+    pub fn labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `metadata` after provisioning.\nThe metadata key-value pairs that you want to patch onto the instance. For more information, see Project and instance metadata,"]
+    pub fn metadata(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.metadata", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ComputeInstanceGroupManager_AutoHealingPolicies {
+    health_check: terrars::PrimField<std::string::String>,
+    initial_delay_sec: terrars::PrimField<f64>,
+}
+
+impl ComputeInstanceGroupManager_AutoHealingPolicies { }
+
+impl terrars::ToListMappable for ComputeInstanceGroupManager_AutoHealingPolicies {
+    type O = terrars::BlockAssignable<ComputeInstanceGroupManager_AutoHealingPolicies>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeInstanceGroupManager_AutoHealingPolicies {
     #[doc = "The health check resource that signals autohealing."]
     pub health_check: terrars::PrimField<std::string::String>,
     #[doc =
@@ -1077,33 +1499,35 @@ pub struct BuildComputeInstanceGroupManagerAutoHealingPoliciesEl {
     pub initial_delay_sec: terrars::PrimField<f64>,
 }
 
-impl BuildComputeInstanceGroupManagerAutoHealingPoliciesEl {
-    pub fn build(self) -> ComputeInstanceGroupManagerAutoHealingPoliciesEl {
-        ComputeInstanceGroupManagerAutoHealingPoliciesEl {
+impl BuildComputeInstanceGroupManager_AutoHealingPolicies {
+    pub fn build(self) -> ComputeInstanceGroupManager_AutoHealingPolicies {
+        ComputeInstanceGroupManager_AutoHealingPolicies {
             health_check: self.health_check,
             initial_delay_sec: self.initial_delay_sec,
         }
     }
 }
 
-pub struct ComputeInstanceGroupManagerAutoHealingPoliciesElRef {
+#[allow(dead_code)]
+pub struct ComputeInstanceGroupManager_AutoHealingPoliciesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeInstanceGroupManagerAutoHealingPoliciesElRef {
+impl terrars::Ref for ComputeInstanceGroupManager_AutoHealingPoliciesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeInstanceGroupManagerAutoHealingPoliciesElRef {
-        ComputeInstanceGroupManagerAutoHealingPoliciesElRef {
+    ) -> ComputeInstanceGroupManager_AutoHealingPoliciesRef {
+        ComputeInstanceGroupManager_AutoHealingPoliciesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeInstanceGroupManagerAutoHealingPoliciesElRef {
+impl ComputeInstanceGroupManager_AutoHealingPoliciesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1122,12 +1546,107 @@ impl ComputeInstanceGroupManagerAutoHealingPoliciesElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeInstanceGroupManagerInstanceLifecyclePolicyEl {
+pub struct ComputeInstanceGroupManager_InstanceLifecyclePolicy_OnRepair {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    force_update_on_repair: std::option::Option<terrars::PrimField<std::string::String>>,
+    allow_changing_zone: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeInstanceGroupManagerInstanceLifecyclePolicyEl {
+impl ComputeInstanceGroupManager_InstanceLifecyclePolicy_OnRepair {
+    #[doc =
+        "Set the field `allow_changing_zone`.\nSpecifies whether the MIG can change a VM's zone during a repair. If \"YES\", MIG can select a different zone for the VM during a repair. Else if \"NO\", MIG cannot change a VM's zone during a repair. The default value of allow_changing_zone is \"NO\"."]
+    pub fn set_allow_changing_zone(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.allow_changing_zone = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeInstanceGroupManager_InstanceLifecyclePolicy_OnRepair {
+    type O = terrars::BlockAssignable<ComputeInstanceGroupManager_InstanceLifecyclePolicy_OnRepair>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeInstanceGroupManager_InstanceLifecyclePolicy_OnRepair {}
+
+impl BuildComputeInstanceGroupManager_InstanceLifecyclePolicy_OnRepair {
+    pub fn build(self) -> ComputeInstanceGroupManager_InstanceLifecyclePolicy_OnRepair {
+        ComputeInstanceGroupManager_InstanceLifecyclePolicy_OnRepair {
+            allow_changing_zone: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeInstanceGroupManager_InstanceLifecyclePolicy_OnRepairRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeInstanceGroupManager_InstanceLifecyclePolicy_OnRepairRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputeInstanceGroupManager_InstanceLifecyclePolicy_OnRepairRef {
+        ComputeInstanceGroupManager_InstanceLifecyclePolicy_OnRepairRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeInstanceGroupManager_InstanceLifecyclePolicy_OnRepairRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `allow_changing_zone` after provisioning.\nSpecifies whether the MIG can change a VM's zone during a repair. If \"YES\", MIG can select a different zone for the VM during a repair. Else if \"NO\", MIG cannot change a VM's zone during a repair. The default value of allow_changing_zone is \"NO\"."]
+    pub fn allow_changing_zone(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.allow_changing_zone", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct ComputeInstanceGroupManager_InstanceLifecyclePolicyDynamic {
+    on_repair: std
+    ::option
+    ::Option<terrars::DynamicBlock<ComputeInstanceGroupManager_InstanceLifecyclePolicy_OnRepair>>,
+}
+
+#[derive(Serialize)]
+pub struct ComputeInstanceGroupManager_InstanceLifecyclePolicy {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    default_action_on_failure: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    force_update_on_repair: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    on_failed_health_check: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    on_repair: std::option::Option<std::vec::Vec<ComputeInstanceGroupManager_InstanceLifecyclePolicy_OnRepair>>,
+    dynamic: ComputeInstanceGroupManager_InstanceLifecyclePolicyDynamic,
+}
+
+impl ComputeInstanceGroupManager_InstanceLifecyclePolicy {
+    #[doc =
+        "Set the field `default_action_on_failure`.\nSpecifies the action that a MIG performs on a failed VM. If the value of the \"on_failed_health_check\" field is DEFAULT_ACTION, then the same action also applies to the VMs on which your application fails a health check. Valid values are: REPAIR, DO_NOTHING. If REPAIR (default), then MIG automatically repairs a failed VM by recreating it. For more information, see about repairing VMs in a MIG. If DO_NOTHING, then MIG does not repair a failed VM."]
+    pub fn set_default_action_on_failure(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.default_action_on_failure = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc =
         "Set the field `force_update_on_repair`.\nSpecifies whether to apply the group's latest configuration when repairing a VM. Valid options are: YES, NO. If YES and you updated the group's instance template or per-instance configurations after the VM was created, then these changes are applied when VM is repaired. If NO (default), then updates are applied in accordance with the group's update policy type."]
     pub fn set_force_update_on_repair(
@@ -1137,10 +1656,41 @@ impl ComputeInstanceGroupManagerInstanceLifecyclePolicyEl {
         self.force_update_on_repair = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc =
+        "Set the field `on_failed_health_check`.\nSpecifies the action that a MIG performs on an unhealthy VM. A VM is marked as unhealthy when the application running on that VM fails a health check. Valid values are: DEFAULT_ACTION, DO_NOTHING, REPAIR. If DEFAULT_ACTION (default), then MIG uses the same action configured for the  \"default_action_on_failure\" field. If DO_NOTHING, then MIG does not repair unhealthy VM. If REPAIR, then MIG automatically repairs an unhealthy VM by recreating it."]
+    pub fn set_on_failed_health_check(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.on_failed_health_check = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `on_repair`.\n"]
+    pub fn set_on_repair(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<ComputeInstanceGroupManager_InstanceLifecyclePolicy_OnRepair>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.on_repair = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.on_repair = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
 }
 
-impl terrars::ToListMappable for ComputeInstanceGroupManagerInstanceLifecyclePolicyEl {
-    type O = terrars::BlockAssignable<ComputeInstanceGroupManagerInstanceLifecyclePolicyEl>;
+impl terrars::ToListMappable for ComputeInstanceGroupManager_InstanceLifecyclePolicy {
+    type O = terrars::BlockAssignable<ComputeInstanceGroupManager_InstanceLifecyclePolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1151,36 +1701,48 @@ impl terrars::ToListMappable for ComputeInstanceGroupManagerInstanceLifecyclePol
     }
 }
 
-pub struct BuildComputeInstanceGroupManagerInstanceLifecyclePolicyEl {}
+pub struct BuildComputeInstanceGroupManager_InstanceLifecyclePolicy {}
 
-impl BuildComputeInstanceGroupManagerInstanceLifecyclePolicyEl {
-    pub fn build(self) -> ComputeInstanceGroupManagerInstanceLifecyclePolicyEl {
-        ComputeInstanceGroupManagerInstanceLifecyclePolicyEl {
+impl BuildComputeInstanceGroupManager_InstanceLifecyclePolicy {
+    pub fn build(self) -> ComputeInstanceGroupManager_InstanceLifecyclePolicy {
+        ComputeInstanceGroupManager_InstanceLifecyclePolicy {
+            default_action_on_failure: core::default::Default::default(),
             force_update_on_repair: core::default::Default::default(),
+            on_failed_health_check: core::default::Default::default(),
+            on_repair: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeInstanceGroupManagerInstanceLifecyclePolicyElRef {
+#[allow(dead_code)]
+pub struct ComputeInstanceGroupManager_InstanceLifecyclePolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeInstanceGroupManagerInstanceLifecyclePolicyElRef {
+impl terrars::Ref for ComputeInstanceGroupManager_InstanceLifecyclePolicyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeInstanceGroupManagerInstanceLifecyclePolicyElRef {
-        ComputeInstanceGroupManagerInstanceLifecyclePolicyElRef {
+    ) -> ComputeInstanceGroupManager_InstanceLifecyclePolicyRef {
+        ComputeInstanceGroupManager_InstanceLifecyclePolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeInstanceGroupManagerInstanceLifecyclePolicyElRef {
+impl ComputeInstanceGroupManager_InstanceLifecyclePolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `default_action_on_failure` after provisioning.\nSpecifies the action that a MIG performs on a failed VM. If the value of the \"on_failed_health_check\" field is DEFAULT_ACTION, then the same action also applies to the VMs on which your application fails a health check. Valid values are: REPAIR, DO_NOTHING. If REPAIR (default), then MIG automatically repairs a failed VM by recreating it. For more information, see about repairing VMs in a MIG. If DO_NOTHING, then MIG does not repair a failed VM."]
+    pub fn default_action_on_failure(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.default_action_on_failure", self.base))
     }
 
     #[doc =
@@ -1188,18 +1750,29 @@ impl ComputeInstanceGroupManagerInstanceLifecyclePolicyElRef {
     pub fn force_update_on_repair(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.force_update_on_repair", self.base))
     }
+
+    #[doc =
+        "Get a reference to the value of field `on_failed_health_check` after provisioning.\nSpecifies the action that a MIG performs on an unhealthy VM. A VM is marked as unhealthy when the application running on that VM fails a health check. Valid values are: DEFAULT_ACTION, DO_NOTHING, REPAIR. If DEFAULT_ACTION (default), then MIG uses the same action configured for the  \"default_action_on_failure\" field. If DO_NOTHING, then MIG does not repair unhealthy VM. If REPAIR, then MIG automatically repairs an unhealthy VM by recreating it."]
+    pub fn on_failed_health_check(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.on_failed_health_check", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `on_repair` after provisioning.\n"]
+    pub fn on_repair(&self) -> terrars::ListRef<ComputeInstanceGroupManager_InstanceLifecyclePolicy_OnRepairRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.on_repair", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct ComputeInstanceGroupManagerNamedPortEl {
+pub struct ComputeInstanceGroupManager_NamedPort {
     name: terrars::PrimField<std::string::String>,
     port: terrars::PrimField<f64>,
 }
 
-impl ComputeInstanceGroupManagerNamedPortEl { }
+impl ComputeInstanceGroupManager_NamedPort { }
 
-impl terrars::ToListMappable for ComputeInstanceGroupManagerNamedPortEl {
-    type O = terrars::BlockAssignable<ComputeInstanceGroupManagerNamedPortEl>;
+impl terrars::ToListMappable for ComputeInstanceGroupManager_NamedPort {
+    type O = terrars::BlockAssignable<ComputeInstanceGroupManager_NamedPort>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1210,37 +1783,39 @@ impl terrars::ToListMappable for ComputeInstanceGroupManagerNamedPortEl {
     }
 }
 
-pub struct BuildComputeInstanceGroupManagerNamedPortEl {
+pub struct BuildComputeInstanceGroupManager_NamedPort {
     #[doc = "The name of the port."]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = "The port number."]
     pub port: terrars::PrimField<f64>,
 }
 
-impl BuildComputeInstanceGroupManagerNamedPortEl {
-    pub fn build(self) -> ComputeInstanceGroupManagerNamedPortEl {
-        ComputeInstanceGroupManagerNamedPortEl {
+impl BuildComputeInstanceGroupManager_NamedPort {
+    pub fn build(self) -> ComputeInstanceGroupManager_NamedPort {
+        ComputeInstanceGroupManager_NamedPort {
             name: self.name,
             port: self.port,
         }
     }
 }
 
-pub struct ComputeInstanceGroupManagerNamedPortElRef {
+#[allow(dead_code)]
+pub struct ComputeInstanceGroupManager_NamedPortRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeInstanceGroupManagerNamedPortElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeInstanceGroupManagerNamedPortElRef {
-        ComputeInstanceGroupManagerNamedPortElRef {
+impl terrars::Ref for ComputeInstanceGroupManager_NamedPortRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeInstanceGroupManager_NamedPortRef {
+        ComputeInstanceGroupManager_NamedPortRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeInstanceGroupManagerNamedPortElRef {
+impl ComputeInstanceGroupManager_NamedPortRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1257,23 +1832,22 @@ impl ComputeInstanceGroupManagerNamedPortElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeInstanceGroupManagerStatefulDiskEl {
+pub struct ComputeInstanceGroupManager_ResourcePolicies {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    delete_rule: std::option::Option<terrars::PrimField<std::string::String>>,
-    device_name: terrars::PrimField<std::string::String>,
+    workload_policy: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeInstanceGroupManagerStatefulDiskEl {
+impl ComputeInstanceGroupManager_ResourcePolicies {
     #[doc =
-        "Set the field `delete_rule`.\nA value that prescribes what should happen to the stateful disk when the VM instance is deleted. The available options are NEVER and ON_PERMANENT_INSTANCE_DELETION. NEVER - detach the disk when the VM is deleted, but do not delete the disk. ON_PERMANENT_INSTANCE_DELETION will delete the stateful disk when the VM is permanently deleted from the instance group. The default is NEVER."]
-    pub fn set_delete_rule(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.delete_rule = std::option::Option::Some(v.into());
+        "Set the field `workload_policy`.\nThe URL of the workload policy that is specified for this managed instance group. It can be a full or partial URL."]
+    pub fn set_workload_policy(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.workload_policy = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for ComputeInstanceGroupManagerStatefulDiskEl {
-    type O = terrars::BlockAssignable<ComputeInstanceGroupManagerStatefulDiskEl>;
+impl terrars::ToListMappable for ComputeInstanceGroupManager_ResourcePolicies {
+    type O = terrars::BlockAssignable<ComputeInstanceGroupManager_ResourcePolicies>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1284,35 +1858,185 @@ impl terrars::ToListMappable for ComputeInstanceGroupManagerStatefulDiskEl {
     }
 }
 
-pub struct BuildComputeInstanceGroupManagerStatefulDiskEl {
-    #[doc = "The device name of the disk to be attached."]
-    pub device_name: terrars::PrimField<std::string::String>,
-}
+pub struct BuildComputeInstanceGroupManager_ResourcePolicies {}
 
-impl BuildComputeInstanceGroupManagerStatefulDiskEl {
-    pub fn build(self) -> ComputeInstanceGroupManagerStatefulDiskEl {
-        ComputeInstanceGroupManagerStatefulDiskEl {
-            delete_rule: core::default::Default::default(),
-            device_name: self.device_name,
-        }
+impl BuildComputeInstanceGroupManager_ResourcePolicies {
+    pub fn build(self) -> ComputeInstanceGroupManager_ResourcePolicies {
+        ComputeInstanceGroupManager_ResourcePolicies { workload_policy: core::default::Default::default() }
     }
 }
 
-pub struct ComputeInstanceGroupManagerStatefulDiskElRef {
+#[allow(dead_code)]
+pub struct ComputeInstanceGroupManager_ResourcePoliciesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeInstanceGroupManagerStatefulDiskElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeInstanceGroupManagerStatefulDiskElRef {
-        ComputeInstanceGroupManagerStatefulDiskElRef {
+impl terrars::Ref for ComputeInstanceGroupManager_ResourcePoliciesRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputeInstanceGroupManager_ResourcePoliciesRef {
+        ComputeInstanceGroupManager_ResourcePoliciesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeInstanceGroupManagerStatefulDiskElRef {
+impl ComputeInstanceGroupManager_ResourcePoliciesRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `workload_policy` after provisioning.\nThe URL of the workload policy that is specified for this managed instance group. It can be a full or partial URL."]
+    pub fn workload_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.workload_policy", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ComputeInstanceGroupManager_StandbyPolicy {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    initial_delay_sec: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mode: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl ComputeInstanceGroupManager_StandbyPolicy {
+    #[doc =
+        "Set the field `initial_delay_sec`.\nSpecifies the number of seconds that the MIG should wait to suspend or stop a VM after that VM was created. The initial delay gives the initialization script the time to prepare your VM for a quick scale out. The value of initial delay must be between 0 and 3600 seconds. The default value is 0."]
+    pub fn set_initial_delay_sec(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.initial_delay_sec = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `mode`.\nDefines how a MIG resumes or starts VMs from a standby pool when the group scales out. The default mode is \"MANUAL\"."]
+    pub fn set_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.mode = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeInstanceGroupManager_StandbyPolicy {
+    type O = terrars::BlockAssignable<ComputeInstanceGroupManager_StandbyPolicy>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeInstanceGroupManager_StandbyPolicy {}
+
+impl BuildComputeInstanceGroupManager_StandbyPolicy {
+    pub fn build(self) -> ComputeInstanceGroupManager_StandbyPolicy {
+        ComputeInstanceGroupManager_StandbyPolicy {
+            initial_delay_sec: core::default::Default::default(),
+            mode: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeInstanceGroupManager_StandbyPolicyRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeInstanceGroupManager_StandbyPolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeInstanceGroupManager_StandbyPolicyRef {
+        ComputeInstanceGroupManager_StandbyPolicyRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeInstanceGroupManager_StandbyPolicyRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `initial_delay_sec` after provisioning.\nSpecifies the number of seconds that the MIG should wait to suspend or stop a VM after that VM was created. The initial delay gives the initialization script the time to prepare your VM for a quick scale out. The value of initial delay must be between 0 and 3600 seconds. The default value is 0."]
+    pub fn initial_delay_sec(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.initial_delay_sec", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `mode` after provisioning.\nDefines how a MIG resumes or starts VMs from a standby pool when the group scales out. The default mode is \"MANUAL\"."]
+    pub fn mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.mode", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ComputeInstanceGroupManager_StatefulDisk {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete_rule: std::option::Option<terrars::PrimField<std::string::String>>,
+    device_name: terrars::PrimField<std::string::String>,
+}
+
+impl ComputeInstanceGroupManager_StatefulDisk {
+    #[doc =
+        "Set the field `delete_rule`.\nA value that prescribes what should happen to the stateful disk when the VM instance is deleted. The available options are NEVER and ON_PERMANENT_INSTANCE_DELETION. NEVER - detach the disk when the VM is deleted, but do not delete the disk. ON_PERMANENT_INSTANCE_DELETION will delete the stateful disk when the VM is permanently deleted from the instance group. The default is NEVER."]
+    pub fn set_delete_rule(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete_rule = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeInstanceGroupManager_StatefulDisk {
+    type O = terrars::BlockAssignable<ComputeInstanceGroupManager_StatefulDisk>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeInstanceGroupManager_StatefulDisk {
+    #[doc = "The device name of the disk to be attached."]
+    pub device_name: terrars::PrimField<std::string::String>,
+}
+
+impl BuildComputeInstanceGroupManager_StatefulDisk {
+    pub fn build(self) -> ComputeInstanceGroupManager_StatefulDisk {
+        ComputeInstanceGroupManager_StatefulDisk {
+            delete_rule: core::default::Default::default(),
+            device_name: self.device_name,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeInstanceGroupManager_StatefulDiskRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeInstanceGroupManager_StatefulDiskRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeInstanceGroupManager_StatefulDiskRef {
+        ComputeInstanceGroupManager_StatefulDiskRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeInstanceGroupManager_StatefulDiskRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1331,14 +2055,14 @@ impl ComputeInstanceGroupManagerStatefulDiskElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeInstanceGroupManagerStatefulExternalIpEl {
+pub struct ComputeInstanceGroupManager_StatefulExternalIp {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete_rule: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     interface_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeInstanceGroupManagerStatefulExternalIpEl {
+impl ComputeInstanceGroupManager_StatefulExternalIp {
     #[doc =
         "Set the field `delete_rule`.\nA value that prescribes what should happen to an associated static Address resource when a VM instance is permanently deleted. The available options are NEVER and ON_PERMANENT_INSTANCE_DELETION. NEVER - detach the IP when the VM is deleted, but do not delete the address resource. ON_PERMANENT_INSTANCE_DELETION will delete the stateful address when the VM is permanently deleted from the instance group. The default is NEVER."]
     pub fn set_delete_rule(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1353,8 +2077,8 @@ impl ComputeInstanceGroupManagerStatefulExternalIpEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeInstanceGroupManagerStatefulExternalIpEl {
-    type O = terrars::BlockAssignable<ComputeInstanceGroupManagerStatefulExternalIpEl>;
+impl terrars::ToListMappable for ComputeInstanceGroupManager_StatefulExternalIp {
+    type O = terrars::BlockAssignable<ComputeInstanceGroupManager_StatefulExternalIp>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1365,35 +2089,37 @@ impl terrars::ToListMappable for ComputeInstanceGroupManagerStatefulExternalIpEl
     }
 }
 
-pub struct BuildComputeInstanceGroupManagerStatefulExternalIpEl {}
+pub struct BuildComputeInstanceGroupManager_StatefulExternalIp {}
 
-impl BuildComputeInstanceGroupManagerStatefulExternalIpEl {
-    pub fn build(self) -> ComputeInstanceGroupManagerStatefulExternalIpEl {
-        ComputeInstanceGroupManagerStatefulExternalIpEl {
+impl BuildComputeInstanceGroupManager_StatefulExternalIp {
+    pub fn build(self) -> ComputeInstanceGroupManager_StatefulExternalIp {
+        ComputeInstanceGroupManager_StatefulExternalIp {
             delete_rule: core::default::Default::default(),
             interface_name: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeInstanceGroupManagerStatefulExternalIpElRef {
+#[allow(dead_code)]
+pub struct ComputeInstanceGroupManager_StatefulExternalIpRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeInstanceGroupManagerStatefulExternalIpElRef {
+impl terrars::Ref for ComputeInstanceGroupManager_StatefulExternalIpRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeInstanceGroupManagerStatefulExternalIpElRef {
-        ComputeInstanceGroupManagerStatefulExternalIpElRef {
+    ) -> ComputeInstanceGroupManager_StatefulExternalIpRef {
+        ComputeInstanceGroupManager_StatefulExternalIpRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeInstanceGroupManagerStatefulExternalIpElRef {
+impl ComputeInstanceGroupManager_StatefulExternalIpRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1411,14 +2137,14 @@ impl ComputeInstanceGroupManagerStatefulExternalIpElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeInstanceGroupManagerStatefulInternalIpEl {
+pub struct ComputeInstanceGroupManager_StatefulInternalIp {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete_rule: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     interface_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeInstanceGroupManagerStatefulInternalIpEl {
+impl ComputeInstanceGroupManager_StatefulInternalIp {
     #[doc =
         "Set the field `delete_rule`.\nA value that prescribes what should happen to an associated static Address resource when a VM instance is permanently deleted. The available options are NEVER and ON_PERMANENT_INSTANCE_DELETION. NEVER - detach the IP when the VM is deleted, but do not delete the address resource. ON_PERMANENT_INSTANCE_DELETION will delete the stateful address when the VM is permanently deleted from the instance group. The default is NEVER."]
     pub fn set_delete_rule(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1433,8 +2159,8 @@ impl ComputeInstanceGroupManagerStatefulInternalIpEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeInstanceGroupManagerStatefulInternalIpEl {
-    type O = terrars::BlockAssignable<ComputeInstanceGroupManagerStatefulInternalIpEl>;
+impl terrars::ToListMappable for ComputeInstanceGroupManager_StatefulInternalIp {
+    type O = terrars::BlockAssignable<ComputeInstanceGroupManager_StatefulInternalIp>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1445,35 +2171,37 @@ impl terrars::ToListMappable for ComputeInstanceGroupManagerStatefulInternalIpEl
     }
 }
 
-pub struct BuildComputeInstanceGroupManagerStatefulInternalIpEl {}
+pub struct BuildComputeInstanceGroupManager_StatefulInternalIp {}
 
-impl BuildComputeInstanceGroupManagerStatefulInternalIpEl {
-    pub fn build(self) -> ComputeInstanceGroupManagerStatefulInternalIpEl {
-        ComputeInstanceGroupManagerStatefulInternalIpEl {
+impl BuildComputeInstanceGroupManager_StatefulInternalIp {
+    pub fn build(self) -> ComputeInstanceGroupManager_StatefulInternalIp {
+        ComputeInstanceGroupManager_StatefulInternalIp {
             delete_rule: core::default::Default::default(),
             interface_name: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeInstanceGroupManagerStatefulInternalIpElRef {
+#[allow(dead_code)]
+pub struct ComputeInstanceGroupManager_StatefulInternalIpRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeInstanceGroupManagerStatefulInternalIpElRef {
+impl terrars::Ref for ComputeInstanceGroupManager_StatefulInternalIpRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeInstanceGroupManagerStatefulInternalIpElRef {
-        ComputeInstanceGroupManagerStatefulInternalIpElRef {
+    ) -> ComputeInstanceGroupManager_StatefulInternalIpRef {
+        ComputeInstanceGroupManager_StatefulInternalIpRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeInstanceGroupManagerStatefulInternalIpElRef {
+impl ComputeInstanceGroupManager_StatefulInternalIpRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1491,7 +2219,68 @@ impl ComputeInstanceGroupManagerStatefulInternalIpElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeInstanceGroupManagerTimeoutsEl {
+pub struct ComputeInstanceGroupManager_TargetSizePolicy {
+    mode: terrars::PrimField<std::string::String>,
+}
+
+impl ComputeInstanceGroupManager_TargetSizePolicy { }
+
+impl terrars::ToListMappable for ComputeInstanceGroupManager_TargetSizePolicy {
+    type O = terrars::BlockAssignable<ComputeInstanceGroupManager_TargetSizePolicy>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeInstanceGroupManager_TargetSizePolicy {
+    #[doc = "The mode of target size policy based on which the MIG creates its VMs individually or all at once."]
+    pub mode: terrars::PrimField<std::string::String>,
+}
+
+impl BuildComputeInstanceGroupManager_TargetSizePolicy {
+    pub fn build(self) -> ComputeInstanceGroupManager_TargetSizePolicy {
+        ComputeInstanceGroupManager_TargetSizePolicy { mode: self.mode }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeInstanceGroupManager_TargetSizePolicyRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeInstanceGroupManager_TargetSizePolicyRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ComputeInstanceGroupManager_TargetSizePolicyRef {
+        ComputeInstanceGroupManager_TargetSizePolicyRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeInstanceGroupManager_TargetSizePolicyRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `mode` after provisioning.\nThe mode of target size policy based on which the MIG creates its VMs individually or all at once."]
+    pub fn mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.mode", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ComputeInstanceGroupManager_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1500,7 +2289,7 @@ pub struct ComputeInstanceGroupManagerTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeInstanceGroupManagerTimeoutsEl {
+impl ComputeInstanceGroupManager_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1520,8 +2309,8 @@ impl ComputeInstanceGroupManagerTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeInstanceGroupManagerTimeoutsEl {
-    type O = terrars::BlockAssignable<ComputeInstanceGroupManagerTimeoutsEl>;
+impl terrars::ToListMappable for ComputeInstanceGroupManager_Timeouts {
+    type O = terrars::BlockAssignable<ComputeInstanceGroupManager_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1532,11 +2321,11 @@ impl terrars::ToListMappable for ComputeInstanceGroupManagerTimeoutsEl {
     }
 }
 
-pub struct BuildComputeInstanceGroupManagerTimeoutsEl {}
+pub struct BuildComputeInstanceGroupManager_Timeouts {}
 
-impl BuildComputeInstanceGroupManagerTimeoutsEl {
-    pub fn build(self) -> ComputeInstanceGroupManagerTimeoutsEl {
-        ComputeInstanceGroupManagerTimeoutsEl {
+impl BuildComputeInstanceGroupManager_Timeouts {
+    pub fn build(self) -> ComputeInstanceGroupManager_Timeouts {
+        ComputeInstanceGroupManager_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1544,21 +2333,23 @@ impl BuildComputeInstanceGroupManagerTimeoutsEl {
     }
 }
 
-pub struct ComputeInstanceGroupManagerTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComputeInstanceGroupManager_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeInstanceGroupManagerTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeInstanceGroupManagerTimeoutsElRef {
-        ComputeInstanceGroupManagerTimeoutsElRef {
+impl terrars::Ref for ComputeInstanceGroupManager_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeInstanceGroupManager_TimeoutsRef {
+        ComputeInstanceGroupManager_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeInstanceGroupManagerTimeoutsElRef {
+impl ComputeInstanceGroupManager_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1580,7 +2371,7 @@ impl ComputeInstanceGroupManagerTimeoutsElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeInstanceGroupManagerUpdatePolicyEl {
+pub struct ComputeInstanceGroupManager_UpdatePolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max_surge_fixed: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1598,30 +2389,30 @@ pub struct ComputeInstanceGroupManagerUpdatePolicyEl {
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl ComputeInstanceGroupManagerUpdatePolicyEl {
+impl ComputeInstanceGroupManager_UpdatePolicy {
     #[doc =
-        "Set the field `max_surge_fixed`.\nThe maximum number of instances that can be created above the specified targetSize during the update process. Conflicts with max_surge_percent. If neither is set, defaults to 1"]
+        "Set the field `max_surge_fixed`.\nSpecifies a fixed number of VM instances. This must be a positive integer. Conflicts with max_surge_percent. Both cannot be 0"]
     pub fn set_max_surge_fixed(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max_surge_fixed = std::option::Option::Some(v.into());
         self
     }
 
     #[doc =
-        "Set the field `max_surge_percent`.\nThe maximum number of instances(calculated as percentage) that can be created above the specified targetSize during the update process. Conflicts with max_surge_fixed."]
+        "Set the field `max_surge_percent`.\nSpecifies a percentage of instances between 0 to 100%, inclusive. For example, specify 80 for 80%. Conflicts with max_surge_fixed."]
     pub fn set_max_surge_percent(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max_surge_percent = std::option::Option::Some(v.into());
         self
     }
 
     #[doc =
-        "Set the field `max_unavailable_fixed`.\nThe maximum number of instances that can be unavailable during the update process. Conflicts with max_unavailable_percent. If neither is set, defaults to 1."]
+        "Set the field `max_unavailable_fixed`.\nSpecifies a fixed number of VM instances. This must be a positive integer."]
     pub fn set_max_unavailable_fixed(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max_unavailable_fixed = std::option::Option::Some(v.into());
         self
     }
 
     #[doc =
-        "Set the field `max_unavailable_percent`.\nThe maximum number of instances(calculated as percentage) that can be unavailable during the update process. Conflicts with max_unavailable_fixed."]
+        "Set the field `max_unavailable_percent`.\nSpecifies a percentage of instances between 0 to 100%, inclusive. For example, specify 80 for 80%."]
     pub fn set_max_unavailable_percent(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max_unavailable_percent = std::option::Option::Some(v.into());
         self
@@ -1648,8 +2439,8 @@ impl ComputeInstanceGroupManagerUpdatePolicyEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeInstanceGroupManagerUpdatePolicyEl {
-    type O = terrars::BlockAssignable<ComputeInstanceGroupManagerUpdatePolicyEl>;
+impl terrars::ToListMappable for ComputeInstanceGroupManager_UpdatePolicy {
+    type O = terrars::BlockAssignable<ComputeInstanceGroupManager_UpdatePolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1660,18 +2451,18 @@ impl terrars::ToListMappable for ComputeInstanceGroupManagerUpdatePolicyEl {
     }
 }
 
-pub struct BuildComputeInstanceGroupManagerUpdatePolicyEl {
+pub struct BuildComputeInstanceGroupManager_UpdatePolicy {
     #[doc =
-        "Minimal action to be taken on an instance. You can specify either REFRESH to update without stopping instances, RESTART to restart existing instances or REPLACE to delete and create new instances from the target template. If you specify a REFRESH, the Updater will attempt to perform that action only. However, if the Updater determines that the minimal action you specify is not enough to perform the update, it might perform a more disruptive action."]
+        "Minimal action to be taken on an instance. You can specify either NONE to forbid any actions, REFRESH to update without stopping instances, RESTART to restart existing instances or REPLACE to delete and create new instances from the target template. If you specify a REFRESH, the Updater will attempt to perform that action only. However, if the Updater determines that the minimal action you specify is not enough to perform the update, it might perform a more disruptive action."]
     pub minimal_action: terrars::PrimField<std::string::String>,
     #[doc =
         "The type of update process. You can specify either PROACTIVE so that the instance group manager proactively executes actions in order to bring instances to their target versions or OPPORTUNISTIC so that no action is proactively executed but the update will be performed as part of other actions (for example, resizes or recreateInstances calls)."]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputeInstanceGroupManagerUpdatePolicyEl {
-    pub fn build(self) -> ComputeInstanceGroupManagerUpdatePolicyEl {
-        ComputeInstanceGroupManagerUpdatePolicyEl {
+impl BuildComputeInstanceGroupManager_UpdatePolicy {
+    pub fn build(self) -> ComputeInstanceGroupManager_UpdatePolicy {
+        ComputeInstanceGroupManager_UpdatePolicy {
             max_surge_fixed: core::default::Default::default(),
             max_surge_percent: core::default::Default::default(),
             max_unavailable_fixed: core::default::Default::default(),
@@ -1684,51 +2475,53 @@ impl BuildComputeInstanceGroupManagerUpdatePolicyEl {
     }
 }
 
-pub struct ComputeInstanceGroupManagerUpdatePolicyElRef {
+#[allow(dead_code)]
+pub struct ComputeInstanceGroupManager_UpdatePolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeInstanceGroupManagerUpdatePolicyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeInstanceGroupManagerUpdatePolicyElRef {
-        ComputeInstanceGroupManagerUpdatePolicyElRef {
+impl terrars::Ref for ComputeInstanceGroupManager_UpdatePolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeInstanceGroupManager_UpdatePolicyRef {
+        ComputeInstanceGroupManager_UpdatePolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeInstanceGroupManagerUpdatePolicyElRef {
+impl ComputeInstanceGroupManager_UpdatePolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `max_surge_fixed` after provisioning.\nThe maximum number of instances that can be created above the specified targetSize during the update process. Conflicts with max_surge_percent. If neither is set, defaults to 1"]
+        "Get a reference to the value of field `max_surge_fixed` after provisioning.\nSpecifies a fixed number of VM instances. This must be a positive integer. Conflicts with max_surge_percent. Both cannot be 0"]
     pub fn max_surge_fixed(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_surge_fixed", self.base))
     }
 
     #[doc =
-        "Get a reference to the value of field `max_surge_percent` after provisioning.\nThe maximum number of instances(calculated as percentage) that can be created above the specified targetSize during the update process. Conflicts with max_surge_fixed."]
+        "Get a reference to the value of field `max_surge_percent` after provisioning.\nSpecifies a percentage of instances between 0 to 100%, inclusive. For example, specify 80 for 80%. Conflicts with max_surge_fixed."]
     pub fn max_surge_percent(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_surge_percent", self.base))
     }
 
     #[doc =
-        "Get a reference to the value of field `max_unavailable_fixed` after provisioning.\nThe maximum number of instances that can be unavailable during the update process. Conflicts with max_unavailable_percent. If neither is set, defaults to 1."]
+        "Get a reference to the value of field `max_unavailable_fixed` after provisioning.\nSpecifies a fixed number of VM instances. This must be a positive integer."]
     pub fn max_unavailable_fixed(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_unavailable_fixed", self.base))
     }
 
     #[doc =
-        "Get a reference to the value of field `max_unavailable_percent` after provisioning.\nThe maximum number of instances(calculated as percentage) that can be unavailable during the update process. Conflicts with max_unavailable_fixed."]
+        "Get a reference to the value of field `max_unavailable_percent` after provisioning.\nSpecifies a percentage of instances between 0 to 100%, inclusive. For example, specify 80 for 80%."]
     pub fn max_unavailable_percent(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_unavailable_percent", self.base))
     }
 
     #[doc =
-        "Get a reference to the value of field `minimal_action` after provisioning.\nMinimal action to be taken on an instance. You can specify either REFRESH to update without stopping instances, RESTART to restart existing instances or REPLACE to delete and create new instances from the target template. If you specify a REFRESH, the Updater will attempt to perform that action only. However, if the Updater determines that the minimal action you specify is not enough to perform the update, it might perform a more disruptive action."]
+        "Get a reference to the value of field `minimal_action` after provisioning.\nMinimal action to be taken on an instance. You can specify either NONE to forbid any actions, REFRESH to update without stopping instances, RESTART to restart existing instances or REPLACE to delete and create new instances from the target template. If you specify a REFRESH, the Updater will attempt to perform that action only. However, if the Updater determines that the minimal action you specify is not enough to perform the update, it might perform a more disruptive action."]
     pub fn minimal_action(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.minimal_action", self.base))
     }
@@ -1753,14 +2546,14 @@ impl ComputeInstanceGroupManagerUpdatePolicyElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeInstanceGroupManagerVersionElTargetSizeEl {
+pub struct ComputeInstanceGroupManager_Version_TargetSize {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     fixed: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     percent: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl ComputeInstanceGroupManagerVersionElTargetSizeEl {
+impl ComputeInstanceGroupManager_Version_TargetSize {
     #[doc =
         "Set the field `fixed`.\nThe number of instances which are managed for this version. Conflicts with percent."]
     pub fn set_fixed(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -1776,8 +2569,8 @@ impl ComputeInstanceGroupManagerVersionElTargetSizeEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeInstanceGroupManagerVersionElTargetSizeEl {
-    type O = terrars::BlockAssignable<ComputeInstanceGroupManagerVersionElTargetSizeEl>;
+impl terrars::ToListMappable for ComputeInstanceGroupManager_Version_TargetSize {
+    type O = terrars::BlockAssignable<ComputeInstanceGroupManager_Version_TargetSize>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1788,35 +2581,37 @@ impl terrars::ToListMappable for ComputeInstanceGroupManagerVersionElTargetSizeE
     }
 }
 
-pub struct BuildComputeInstanceGroupManagerVersionElTargetSizeEl {}
+pub struct BuildComputeInstanceGroupManager_Version_TargetSize {}
 
-impl BuildComputeInstanceGroupManagerVersionElTargetSizeEl {
-    pub fn build(self) -> ComputeInstanceGroupManagerVersionElTargetSizeEl {
-        ComputeInstanceGroupManagerVersionElTargetSizeEl {
+impl BuildComputeInstanceGroupManager_Version_TargetSize {
+    pub fn build(self) -> ComputeInstanceGroupManager_Version_TargetSize {
+        ComputeInstanceGroupManager_Version_TargetSize {
             fixed: core::default::Default::default(),
             percent: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeInstanceGroupManagerVersionElTargetSizeElRef {
+#[allow(dead_code)]
+pub struct ComputeInstanceGroupManager_Version_TargetSizeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeInstanceGroupManagerVersionElTargetSizeElRef {
+impl terrars::Ref for ComputeInstanceGroupManager_Version_TargetSizeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeInstanceGroupManagerVersionElTargetSizeElRef {
-        ComputeInstanceGroupManagerVersionElTargetSizeElRef {
+    ) -> ComputeInstanceGroupManager_Version_TargetSizeRef {
+        ComputeInstanceGroupManager_Version_TargetSizeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeInstanceGroupManagerVersionElTargetSizeElRef {
+impl ComputeInstanceGroupManager_Version_TargetSizeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1835,21 +2630,21 @@ impl ComputeInstanceGroupManagerVersionElTargetSizeElRef {
 }
 
 #[derive(Serialize, Default)]
-struct ComputeInstanceGroupManagerVersionElDynamic {
-    target_size: std::option::Option<terrars::DynamicBlock<ComputeInstanceGroupManagerVersionElTargetSizeEl>>,
+struct ComputeInstanceGroupManager_VersionDynamic {
+    target_size: std::option::Option<terrars::DynamicBlock<ComputeInstanceGroupManager_Version_TargetSize>>,
 }
 
 #[derive(Serialize)]
-pub struct ComputeInstanceGroupManagerVersionEl {
+pub struct ComputeInstanceGroupManager_Version {
     instance_template: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    target_size: std::option::Option<std::vec::Vec<ComputeInstanceGroupManagerVersionElTargetSizeEl>>,
-    dynamic: ComputeInstanceGroupManagerVersionElDynamic,
+    target_size: std::option::Option<std::vec::Vec<ComputeInstanceGroupManager_Version_TargetSize>>,
+    dynamic: ComputeInstanceGroupManager_VersionDynamic,
 }
 
-impl ComputeInstanceGroupManagerVersionEl {
+impl ComputeInstanceGroupManager_Version {
     #[doc = "Set the field `name`.\nVersion name."]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
@@ -1859,7 +2654,7 @@ impl ComputeInstanceGroupManagerVersionEl {
     #[doc = "Set the field `target_size`.\n"]
     pub fn set_target_size(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeInstanceGroupManagerVersionElTargetSizeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeInstanceGroupManager_Version_TargetSize>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1873,8 +2668,8 @@ impl ComputeInstanceGroupManagerVersionEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeInstanceGroupManagerVersionEl {
-    type O = terrars::BlockAssignable<ComputeInstanceGroupManagerVersionEl>;
+impl terrars::ToListMappable for ComputeInstanceGroupManager_Version {
+    type O = terrars::BlockAssignable<ComputeInstanceGroupManager_Version>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1885,14 +2680,14 @@ impl terrars::ToListMappable for ComputeInstanceGroupManagerVersionEl {
     }
 }
 
-pub struct BuildComputeInstanceGroupManagerVersionEl {
+pub struct BuildComputeInstanceGroupManager_Version {
     #[doc = "The full URL to an instance template from which all new instances of this version will be created."]
     pub instance_template: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputeInstanceGroupManagerVersionEl {
-    pub fn build(self) -> ComputeInstanceGroupManagerVersionEl {
-        ComputeInstanceGroupManagerVersionEl {
+impl BuildComputeInstanceGroupManager_Version {
+    pub fn build(self) -> ComputeInstanceGroupManager_Version {
+        ComputeInstanceGroupManager_Version {
             instance_template: self.instance_template,
             name: core::default::Default::default(),
             target_size: core::default::Default::default(),
@@ -1901,21 +2696,23 @@ impl BuildComputeInstanceGroupManagerVersionEl {
     }
 }
 
-pub struct ComputeInstanceGroupManagerVersionElRef {
+#[allow(dead_code)]
+pub struct ComputeInstanceGroupManager_VersionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeInstanceGroupManagerVersionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeInstanceGroupManagerVersionElRef {
-        ComputeInstanceGroupManagerVersionElRef {
+impl terrars::Ref for ComputeInstanceGroupManager_VersionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeInstanceGroupManager_VersionRef {
+        ComputeInstanceGroupManager_VersionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeInstanceGroupManagerVersionElRef {
+impl ComputeInstanceGroupManager_VersionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1932,27 +2729,7 @@ impl ComputeInstanceGroupManagerVersionElRef {
     }
 
     #[doc = "Get a reference to the value of field `target_size` after provisioning.\n"]
-    pub fn target_size(&self) -> terrars::ListRef<ComputeInstanceGroupManagerVersionElTargetSizeElRef> {
+    pub fn target_size(&self) -> terrars::ListRef<ComputeInstanceGroupManager_Version_TargetSizeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.target_size", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ComputeInstanceGroupManagerDynamic {
-    auto_healing_policies: std
-    ::option
-    ::Option<terrars::DynamicBlock<ComputeInstanceGroupManagerAutoHealingPoliciesEl>>,
-    instance_lifecycle_policy: std
-    ::option
-    ::Option<terrars::DynamicBlock<ComputeInstanceGroupManagerInstanceLifecyclePolicyEl>>,
-    named_port: std::option::Option<terrars::DynamicBlock<ComputeInstanceGroupManagerNamedPortEl>>,
-    stateful_disk: std::option::Option<terrars::DynamicBlock<ComputeInstanceGroupManagerStatefulDiskEl>>,
-    stateful_external_ip: std
-    ::option
-    ::Option<terrars::DynamicBlock<ComputeInstanceGroupManagerStatefulExternalIpEl>>,
-    stateful_internal_ip: std
-    ::option
-    ::Option<terrars::DynamicBlock<ComputeInstanceGroupManagerStatefulInternalIpEl>>,
-    update_policy: std::option::Option<terrars::DynamicBlock<ComputeInstanceGroupManagerUpdatePolicyEl>>,
-    version: std::option::Option<terrars::DynamicBlock<ComputeInstanceGroupManagerVersionEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct FirebaserulesReleaseData {
+struct FirebaserulesReleaseData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,19 +21,21 @@ struct FirebaserulesReleaseData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     ruleset_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<FirebaserulesReleaseTimeoutsEl>,
+    timeouts: std::option::Option<FirebaserulesRelease_Timeouts>,
 }
 
 struct FirebaserulesRelease_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<FirebaserulesReleaseData>,
+    data: std::cell::RefCell<FirebaserulesReleaseData_>,
 }
 
 #[derive(Clone)]
@@ -131,6 +135,13 @@ impl FirebaserulesRelease {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -144,7 +155,7 @@ impl FirebaserulesRelease {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<FirebaserulesReleaseTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<FirebaserulesRelease_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -153,6 +164,12 @@ impl FirebaserulesRelease {
         "Get a reference to the value of field `create_time` after provisioning.\nOutput only. Time the release was created."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -190,8 +207,8 @@ impl FirebaserulesRelease {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> FirebaserulesReleaseTimeoutsElRef {
-        FirebaserulesReleaseTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> FirebaserulesRelease_TimeoutsRef {
+        FirebaserulesRelease_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -241,12 +258,13 @@ impl BuildFirebaserulesRelease {
         let out = FirebaserulesRelease(std::rc::Rc::new(FirebaserulesRelease_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(FirebaserulesReleaseData {
+            data: std::cell::RefCell::new(FirebaserulesReleaseData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
                 project: core::default::Default::default(),
@@ -289,6 +307,12 @@ impl FirebaserulesReleaseRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `disabled` after provisioning.\nDisable the release to keep it from being served. The response code of NOT_FOUND will be given for executables generated from this Release."]
     pub fn disabled(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.disabled", self.extract_ref()))
@@ -323,20 +347,20 @@ impl FirebaserulesReleaseRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> FirebaserulesReleaseTimeoutsElRef {
-        FirebaserulesReleaseTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> FirebaserulesRelease_TimeoutsRef {
+        FirebaserulesRelease_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct FirebaserulesReleaseTimeoutsEl {
+pub struct FirebaserulesRelease_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl FirebaserulesReleaseTimeoutsEl {
+impl FirebaserulesRelease_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -350,8 +374,8 @@ impl FirebaserulesReleaseTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for FirebaserulesReleaseTimeoutsEl {
-    type O = terrars::BlockAssignable<FirebaserulesReleaseTimeoutsEl>;
+impl terrars::ToListMappable for FirebaserulesRelease_Timeouts {
+    type O = terrars::BlockAssignable<FirebaserulesRelease_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -362,32 +386,34 @@ impl terrars::ToListMappable for FirebaserulesReleaseTimeoutsEl {
     }
 }
 
-pub struct BuildFirebaserulesReleaseTimeoutsEl {}
+pub struct BuildFirebaserulesRelease_Timeouts {}
 
-impl BuildFirebaserulesReleaseTimeoutsEl {
-    pub fn build(self) -> FirebaserulesReleaseTimeoutsEl {
-        FirebaserulesReleaseTimeoutsEl {
+impl BuildFirebaserulesRelease_Timeouts {
+    pub fn build(self) -> FirebaserulesRelease_Timeouts {
+        FirebaserulesRelease_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct FirebaserulesReleaseTimeoutsElRef {
+#[allow(dead_code)]
+pub struct FirebaserulesRelease_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FirebaserulesReleaseTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FirebaserulesReleaseTimeoutsElRef {
-        FirebaserulesReleaseTimeoutsElRef {
+impl terrars::Ref for FirebaserulesRelease_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FirebaserulesRelease_TimeoutsRef {
+        FirebaserulesRelease_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FirebaserulesReleaseTimeoutsElRef {
+impl FirebaserulesRelease_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct HealthcareFhirStoreData {
+struct HealthcareFhirStoreData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,6 +26,8 @@ struct HealthcareFhirStoreData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     default_search_handling_strict: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     disable_referential_integrity: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     disable_resource_versioning: std::option::Option<terrars::PrimField<bool>>,
@@ -38,18 +42,22 @@ struct HealthcareFhirStoreData {
     name: terrars::PrimField<std::string::String>,
     version: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    notification_config: std::option::Option<std::vec::Vec<HealthcareFhirStoreNotificationConfigEl>>,
+    notification_config: std::option::Option<std::vec::Vec<HealthcareFhirStore_NotificationConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    stream_configs: std::option::Option<std::vec::Vec<HealthcareFhirStoreStreamConfigsEl>>,
+    notification_configs: std::option::Option<std::vec::Vec<HealthcareFhirStore_NotificationConfigs>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<HealthcareFhirStoreTimeoutsEl>,
+    stream_configs: std::option::Option<std::vec::Vec<HealthcareFhirStore_StreamConfigs>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<HealthcareFhirStore_Timeouts>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    validation_config: std::option::Option<std::vec::Vec<HealthcareFhirStore_ValidationConfig>>,
     dynamic: HealthcareFhirStoreDynamic,
 }
 
 struct HealthcareFhirStore_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<HealthcareFhirStoreData>,
+    data: std::cell::RefCell<HealthcareFhirStoreData_>,
 }
 
 #[derive(Clone)]
@@ -167,6 +175,13 @@ impl HealthcareFhirStore {
     }
 
     #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `disable_referential_integrity`.\nWhether to disable referential integrity in this FHIR store. This field is immutable after FHIR store\ncreation. The default value is false, meaning that the API will enforce referential integrity and fail the\nrequests that will result in inconsistent state in the FHIR store. When this field is set to true, the API\nwill skip referential integrity check. Consequently, operations that rely on references, such as\nPatient.get$everything, will not return all the results if broken references exist.\n\n** Changing this property may recreate the FHIR store (removing all data) **"]
     pub fn set_disable_referential_integrity(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().disable_referential_integrity = std::option::Option::Some(v.into());
@@ -213,7 +228,7 @@ impl HealthcareFhirStore {
     #[doc = "Set the field `notification_config`.\n"]
     pub fn set_notification_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<HealthcareFhirStoreNotificationConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<HealthcareFhirStore_NotificationConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -226,10 +241,26 @@ impl HealthcareFhirStore {
         self
     }
 
+    #[doc = "Set the field `notification_configs`.\n"]
+    pub fn set_notification_configs(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<HealthcareFhirStore_NotificationConfigs>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().notification_configs = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.notification_configs = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `stream_configs`.\n"]
     pub fn set_stream_configs(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<HealthcareFhirStoreStreamConfigsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<HealthcareFhirStore_StreamConfigs>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -243,8 +274,24 @@ impl HealthcareFhirStore {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<HealthcareFhirStoreTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<HealthcareFhirStore_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `validation_config`.\n"]
+    pub fn set_validation_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<HealthcareFhirStore_ValidationConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().validation_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.validation_config = std::option::Option::Some(d);
+            },
+        }
         self
     }
 
@@ -270,6 +317,12 @@ impl HealthcareFhirStore {
             self.shared().clone(),
             format!("{}.default_search_handling_strict", self.extract_ref()),
         )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -341,18 +394,28 @@ impl HealthcareFhirStore {
     }
 
     #[doc = "Get a reference to the value of field `notification_config` after provisioning.\n"]
-    pub fn notification_config(&self) -> terrars::ListRef<HealthcareFhirStoreNotificationConfigElRef> {
+    pub fn notification_config(&self) -> terrars::ListRef<HealthcareFhirStore_NotificationConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.notification_config", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `notification_configs` after provisioning.\n"]
+    pub fn notification_configs(&self) -> terrars::ListRef<HealthcareFhirStore_NotificationConfigsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.notification_configs", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `stream_configs` after provisioning.\n"]
-    pub fn stream_configs(&self) -> terrars::ListRef<HealthcareFhirStoreStreamConfigsElRef> {
+    pub fn stream_configs(&self) -> terrars::ListRef<HealthcareFhirStore_StreamConfigsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.stream_configs", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> HealthcareFhirStoreTimeoutsElRef {
-        HealthcareFhirStoreTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> HealthcareFhirStore_TimeoutsRef {
+        HealthcareFhirStore_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `validation_config` after provisioning.\n"]
+    pub fn validation_config(&self) -> terrars::ListRef<HealthcareFhirStore_ValidationConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.validation_config", self.extract_ref()))
     }
 }
 
@@ -404,7 +467,7 @@ impl BuildHealthcareFhirStore {
         let out = HealthcareFhirStore(std::rc::Rc::new(HealthcareFhirStore_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(HealthcareFhirStoreData {
+            data: std::cell::RefCell::new(HealthcareFhirStoreData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -413,6 +476,7 @@ impl BuildHealthcareFhirStore {
                 complex_data_type_reference_parsing: core::default::Default::default(),
                 dataset: self.dataset,
                 default_search_handling_strict: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 disable_referential_integrity: core::default::Default::default(),
                 disable_resource_versioning: core::default::Default::default(),
                 enable_history_import: core::default::Default::default(),
@@ -422,8 +486,10 @@ impl BuildHealthcareFhirStore {
                 name: self.name,
                 version: self.version,
                 notification_config: core::default::Default::default(),
+                notification_configs: core::default::Default::default(),
                 stream_configs: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
+                validation_config: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -480,6 +546,12 @@ impl HealthcareFhirStoreRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `disable_referential_integrity` after provisioning.\nWhether to disable referential integrity in this FHIR store. This field is immutable after FHIR store\ncreation. The default value is false, meaning that the API will enforce referential integrity and fail the\nrequests that will result in inconsistent state in the FHIR store. When this field is set to true, the API\nwill skip referential integrity check. Consequently, operations that rely on references, such as\nPatient.get$everything, will not return all the results if broken references exist.\n\n** Changing this property may recreate the FHIR store (removing all data) **"]
     pub fn disable_referential_integrity(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(
@@ -548,30 +620,48 @@ impl HealthcareFhirStoreRef {
     }
 
     #[doc = "Get a reference to the value of field `notification_config` after provisioning.\n"]
-    pub fn notification_config(&self) -> terrars::ListRef<HealthcareFhirStoreNotificationConfigElRef> {
+    pub fn notification_config(&self) -> terrars::ListRef<HealthcareFhirStore_NotificationConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.notification_config", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `notification_configs` after provisioning.\n"]
+    pub fn notification_configs(&self) -> terrars::ListRef<HealthcareFhirStore_NotificationConfigsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.notification_configs", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `stream_configs` after provisioning.\n"]
-    pub fn stream_configs(&self) -> terrars::ListRef<HealthcareFhirStoreStreamConfigsElRef> {
+    pub fn stream_configs(&self) -> terrars::ListRef<HealthcareFhirStore_StreamConfigsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.stream_configs", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> HealthcareFhirStoreTimeoutsElRef {
-        HealthcareFhirStoreTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> HealthcareFhirStore_TimeoutsRef {
+        HealthcareFhirStore_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `validation_config` after provisioning.\n"]
+    pub fn validation_config(&self) -> terrars::ListRef<HealthcareFhirStore_ValidationConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.validation_config", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct HealthcareFhirStoreDynamic {
+    notification_config: std::option::Option<terrars::DynamicBlock<HealthcareFhirStore_NotificationConfig>>,
+    notification_configs: std::option::Option<terrars::DynamicBlock<HealthcareFhirStore_NotificationConfigs>>,
+    stream_configs: std::option::Option<terrars::DynamicBlock<HealthcareFhirStore_StreamConfigs>>,
+    validation_config: std::option::Option<terrars::DynamicBlock<HealthcareFhirStore_ValidationConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct HealthcareFhirStoreNotificationConfigEl {
+pub struct HealthcareFhirStore_NotificationConfig {
     pubsub_topic: terrars::PrimField<std::string::String>,
 }
 
-impl HealthcareFhirStoreNotificationConfigEl { }
+impl HealthcareFhirStore_NotificationConfig { }
 
-impl terrars::ToListMappable for HealthcareFhirStoreNotificationConfigEl {
-    type O = terrars::BlockAssignable<HealthcareFhirStoreNotificationConfigEl>;
+impl terrars::ToListMappable for HealthcareFhirStore_NotificationConfig {
+    type O = terrars::BlockAssignable<HealthcareFhirStore_NotificationConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -582,33 +672,35 @@ impl terrars::ToListMappable for HealthcareFhirStoreNotificationConfigEl {
     }
 }
 
-pub struct BuildHealthcareFhirStoreNotificationConfigEl {
+pub struct BuildHealthcareFhirStore_NotificationConfig {
     #[doc =
         "The Cloud Pub/Sub topic that notifications of changes are published on. Supplied by the client.\nPubsubMessage.Data will contain the resource name. PubsubMessage.MessageId is the ID of this message.\nIt is guaranteed to be unique within the topic. PubsubMessage.PublishTime is the time at which the message\nwas published. Notifications are only sent if the topic is non-empty. Topic names must be scoped to a\nproject. service-PROJECT_NUMBER@gcp-sa-healthcare.iam.gserviceaccount.com must have publisher permissions on the given\nCloud Pub/Sub topic. Not having adequate permissions will cause the calls that send notifications to fail."]
     pub pubsub_topic: terrars::PrimField<std::string::String>,
 }
 
-impl BuildHealthcareFhirStoreNotificationConfigEl {
-    pub fn build(self) -> HealthcareFhirStoreNotificationConfigEl {
-        HealthcareFhirStoreNotificationConfigEl { pubsub_topic: self.pubsub_topic }
+impl BuildHealthcareFhirStore_NotificationConfig {
+    pub fn build(self) -> HealthcareFhirStore_NotificationConfig {
+        HealthcareFhirStore_NotificationConfig { pubsub_topic: self.pubsub_topic }
     }
 }
 
-pub struct HealthcareFhirStoreNotificationConfigElRef {
+#[allow(dead_code)]
+pub struct HealthcareFhirStore_NotificationConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for HealthcareFhirStoreNotificationConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> HealthcareFhirStoreNotificationConfigElRef {
-        HealthcareFhirStoreNotificationConfigElRef {
+impl terrars::Ref for HealthcareFhirStore_NotificationConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> HealthcareFhirStore_NotificationConfigRef {
+        HealthcareFhirStore_NotificationConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl HealthcareFhirStoreNotificationConfigElRef {
+impl HealthcareFhirStore_NotificationConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -621,14 +713,107 @@ impl HealthcareFhirStoreNotificationConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct HealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigElLastUpdatedPartitionConfigEl {
+pub struct HealthcareFhirStore_NotificationConfigs {
+    pubsub_topic: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    send_full_resource: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    send_previous_resource_on_delete: std::option::Option<terrars::PrimField<bool>>,
+}
+
+impl HealthcareFhirStore_NotificationConfigs {
+    #[doc =
+        "Set the field `send_full_resource`.\nWhether to send full FHIR resource to this Pub/Sub topic for Create and Update operation.\nNote that setting this to true does not guarantee that all resources will be sent in the format of\nfull FHIR resource. When a resource change is too large or during heavy traffic, only the resource name will be\nsent. Clients should always check the \"payloadType\" label from a Pub/Sub message to determine whether\nit needs to fetch the full resource as a separate operation."]
+    pub fn set_send_full_resource(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.send_full_resource = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `send_previous_resource_on_delete`.\nWhether to send full FHIR resource to this Pub/Sub topic for deleting FHIR resource. Note that setting this to\ntrue does not guarantee that all previous resources will be sent in the format of full FHIR resource. When a\nresource change is too large or during heavy traffic, only the resource name will be sent. Clients should always\ncheck the \"payloadType\" label from a Pub/Sub message to determine whether it needs to fetch the full previous\nresource as a separate operation."]
+    pub fn set_send_previous_resource_on_delete(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.send_previous_resource_on_delete = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for HealthcareFhirStore_NotificationConfigs {
+    type O = terrars::BlockAssignable<HealthcareFhirStore_NotificationConfigs>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildHealthcareFhirStore_NotificationConfigs {
+    #[doc =
+        "The Cloud Pub/Sub topic that notifications of changes are published on. Supplied by the client.\nPubsubMessage.Data will contain the resource name. PubsubMessage.MessageId is the ID of this message.\nIt is guaranteed to be unique within the topic. PubsubMessage.PublishTime is the time at which the message\nwas published. Notifications are only sent if the topic is non-empty. Topic names must be scoped to a\nproject. service-PROJECT_NUMBER@gcp-sa-healthcare.iam.gserviceaccount.com must have publisher permissions on the given\nCloud Pub/Sub topic. Not having adequate permissions will cause the calls that send notifications to fail."]
+    pub pubsub_topic: terrars::PrimField<std::string::String>,
+}
+
+impl BuildHealthcareFhirStore_NotificationConfigs {
+    pub fn build(self) -> HealthcareFhirStore_NotificationConfigs {
+        HealthcareFhirStore_NotificationConfigs {
+            pubsub_topic: self.pubsub_topic,
+            send_full_resource: core::default::Default::default(),
+            send_previous_resource_on_delete: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct HealthcareFhirStore_NotificationConfigsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for HealthcareFhirStore_NotificationConfigsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> HealthcareFhirStore_NotificationConfigsRef {
+        HealthcareFhirStore_NotificationConfigsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl HealthcareFhirStore_NotificationConfigsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `pubsub_topic` after provisioning.\nThe Cloud Pub/Sub topic that notifications of changes are published on. Supplied by the client.\nPubsubMessage.Data will contain the resource name. PubsubMessage.MessageId is the ID of this message.\nIt is guaranteed to be unique within the topic. PubsubMessage.PublishTime is the time at which the message\nwas published. Notifications are only sent if the topic is non-empty. Topic names must be scoped to a\nproject. service-PROJECT_NUMBER@gcp-sa-healthcare.iam.gserviceaccount.com must have publisher permissions on the given\nCloud Pub/Sub topic. Not having adequate permissions will cause the calls that send notifications to fail."]
+    pub fn pubsub_topic(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.pubsub_topic", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `send_full_resource` after provisioning.\nWhether to send full FHIR resource to this Pub/Sub topic for Create and Update operation.\nNote that setting this to true does not guarantee that all resources will be sent in the format of\nfull FHIR resource. When a resource change is too large or during heavy traffic, only the resource name will be\nsent. Clients should always check the \"payloadType\" label from a Pub/Sub message to determine whether\nit needs to fetch the full resource as a separate operation."]
+    pub fn send_full_resource(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.send_full_resource", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `send_previous_resource_on_delete` after provisioning.\nWhether to send full FHIR resource to this Pub/Sub topic for deleting FHIR resource. Note that setting this to\ntrue does not guarantee that all previous resources will be sent in the format of full FHIR resource. When a\nresource change is too large or during heavy traffic, only the resource name will be sent. Clients should always\ncheck the \"payloadType\" label from a Pub/Sub message to determine whether it needs to fetch the full previous\nresource as a separate operation."]
+    pub fn send_previous_resource_on_delete(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.send_previous_resource_on_delete", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct HealthcareFhirStore_StreamConfigs_BigqueryDestination_SchemaConfig_LastUpdatedPartitionConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     expiration_ms: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl HealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigElLastUpdatedPartitionConfigEl {
+impl HealthcareFhirStore_StreamConfigs_BigqueryDestination_SchemaConfig_LastUpdatedPartitionConfig {
     #[doc = "Set the field `expiration_ms`.\nNumber of milliseconds for which to keep the storage for a partition."]
     pub fn set_expiration_ms(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.expiration_ms = std::option::Option::Some(v.into());
@@ -637,11 +822,11 @@ impl HealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigElLastUp
 }
 
 impl terrars
-::ToListMappable for HealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigElLastUpdatedPartitionConfigEl {
+::ToListMappable for HealthcareFhirStore_StreamConfigs_BigqueryDestination_SchemaConfig_LastUpdatedPartitionConfig {
     type O =
         terrars
         ::BlockAssignable<
-            HealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigElLastUpdatedPartitionConfigEl,
+            HealthcareFhirStore_StreamConfigs_BigqueryDestination_SchemaConfig_LastUpdatedPartitionConfig,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -653,42 +838,44 @@ impl terrars
     }
 }
 
-pub struct BuildHealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigElLastUpdatedPartitionConfigEl {
+pub struct BuildHealthcareFhirStore_StreamConfigs_BigqueryDestination_SchemaConfig_LastUpdatedPartitionConfig {
     #[doc =
         "Type of partitioning. Possible values: [\"PARTITION_TYPE_UNSPECIFIED\", \"HOUR\", \"DAY\", \"MONTH\", \"YEAR\"]"]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildHealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigElLastUpdatedPartitionConfigEl {
+impl BuildHealthcareFhirStore_StreamConfigs_BigqueryDestination_SchemaConfig_LastUpdatedPartitionConfig {
     pub fn build(
         self,
-    ) -> HealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigElLastUpdatedPartitionConfigEl {
-        HealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigElLastUpdatedPartitionConfigEl {
+    ) -> HealthcareFhirStore_StreamConfigs_BigqueryDestination_SchemaConfig_LastUpdatedPartitionConfig {
+        HealthcareFhirStore_StreamConfigs_BigqueryDestination_SchemaConfig_LastUpdatedPartitionConfig {
             expiration_ms: core::default::Default::default(),
             type_: self.type_,
         }
     }
 }
 
-pub struct HealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigElLastUpdatedPartitionConfigElRef {
+#[allow(dead_code)]
+pub struct HealthcareFhirStore_StreamConfigs_BigqueryDestination_SchemaConfig_LastUpdatedPartitionConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for HealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigElLastUpdatedPartitionConfigElRef {
+::Ref for HealthcareFhirStore_StreamConfigs_BigqueryDestination_SchemaConfig_LastUpdatedPartitionConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> HealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigElLastUpdatedPartitionConfigElRef {
-        HealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigElLastUpdatedPartitionConfigElRef {
+    ) -> HealthcareFhirStore_StreamConfigs_BigqueryDestination_SchemaConfig_LastUpdatedPartitionConfigRef {
+        HealthcareFhirStore_StreamConfigs_BigqueryDestination_SchemaConfig_LastUpdatedPartitionConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl HealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigElLastUpdatedPartitionConfigElRef {
+impl HealthcareFhirStore_StreamConfigs_BigqueryDestination_SchemaConfig_LastUpdatedPartitionConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -707,19 +894,17 @@ impl HealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigElLastUp
 }
 
 #[derive(Serialize, Default)]
-struct HealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigElDynamic {
+struct HealthcareFhirStore_StreamConfigs_BigqueryDestination_SchemaConfigDynamic {
     last_updated_partition_config: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            HealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigElLastUpdatedPartitionConfigEl,
-        >,
+        ::DynamicBlock<HealthcareFhirStore_StreamConfigs_BigqueryDestination_SchemaConfig_LastUpdatedPartitionConfig>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct HealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigEl {
+pub struct HealthcareFhirStore_StreamConfigs_BigqueryDestination_SchemaConfig {
     recursive_structure_depth: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     schema_type: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -727,14 +912,12 @@ pub struct HealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigEl
     last_updated_partition_config: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<HealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigElLastUpdatedPartitionConfigEl>,
+        std::vec::Vec<HealthcareFhirStore_StreamConfigs_BigqueryDestination_SchemaConfig_LastUpdatedPartitionConfig>,
     >,
-    dynamic: HealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigElDynamic,
+    dynamic: HealthcareFhirStore_StreamConfigs_BigqueryDestination_SchemaConfigDynamic,
 }
 
-impl HealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigEl {
+impl HealthcareFhirStore_StreamConfigs_BigqueryDestination_SchemaConfig {
     #[doc =
         "Set the field `schema_type`.\nSpecifies the output schema type.\n * ANALYTICS: Analytics schema defined by the FHIR community.\n  See https://github.com/FHIR/sql-on-fhir/blob/master/sql-on-fhir.md.\n * ANALYTICS_V2: Analytics V2, similar to schema defined by the FHIR community, with added support for extensions with one or more occurrences and contained resources in stringified JSON.\n * LOSSLESS: A data-driven schema generated from the fields present in the FHIR data being exported, with no additional simplification. Default value: \"ANALYTICS\" Possible values: [\"ANALYTICS\", \"ANALYTICS_V2\", \"LOSSLESS\"]"]
     pub fn set_schema_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -753,7 +936,7 @@ impl HealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            HealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigElLastUpdatedPartitionConfigEl,
+                            HealthcareFhirStore_StreamConfigs_BigqueryDestination_SchemaConfig_LastUpdatedPartitionConfig,
                         >,
                     >,
     ) -> Self {
@@ -769,8 +952,8 @@ impl HealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigEl {
     }
 }
 
-impl terrars::ToListMappable for HealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigEl {
-    type O = terrars::BlockAssignable<HealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigEl>;
+impl terrars::ToListMappable for HealthcareFhirStore_StreamConfigs_BigqueryDestination_SchemaConfig {
+    type O = terrars::BlockAssignable<HealthcareFhirStore_StreamConfigs_BigqueryDestination_SchemaConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -781,15 +964,15 @@ impl terrars::ToListMappable for HealthcareFhirStoreStreamConfigsElBigqueryDesti
     }
 }
 
-pub struct BuildHealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigEl {
+pub struct BuildHealthcareFhirStore_StreamConfigs_BigqueryDestination_SchemaConfig {
     #[doc =
         "The depth for all recursive structures in the output analytics schema. For example, concept in the CodeSystem\nresource is a recursive structure; when the depth is 2, the CodeSystem table will have a column called\nconcept.concept but not concept.concept.concept. If not specified or set to 0, the server will use the default\nvalue 2. The maximum depth allowed is 5."]
     pub recursive_structure_depth: terrars::PrimField<f64>,
 }
 
-impl BuildHealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigEl {
-    pub fn build(self) -> HealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigEl {
-        HealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigEl {
+impl BuildHealthcareFhirStore_StreamConfigs_BigqueryDestination_SchemaConfig {
+    pub fn build(self) -> HealthcareFhirStore_StreamConfigs_BigqueryDestination_SchemaConfig {
+        HealthcareFhirStore_StreamConfigs_BigqueryDestination_SchemaConfig {
             recursive_structure_depth: self.recursive_structure_depth,
             schema_type: core::default::Default::default(),
             last_updated_partition_config: core::default::Default::default(),
@@ -798,24 +981,26 @@ impl BuildHealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigEl 
     }
 }
 
-pub struct HealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigElRef {
+#[allow(dead_code)]
+pub struct HealthcareFhirStore_StreamConfigs_BigqueryDestination_SchemaConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for HealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigElRef {
+impl terrars::Ref for HealthcareFhirStore_StreamConfigs_BigqueryDestination_SchemaConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> HealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigElRef {
-        HealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigElRef {
+    ) -> HealthcareFhirStore_StreamConfigs_BigqueryDestination_SchemaConfigRef {
+        HealthcareFhirStore_StreamConfigs_BigqueryDestination_SchemaConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl HealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigElRef {
+impl HealthcareFhirStore_StreamConfigs_BigqueryDestination_SchemaConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -836,29 +1021,27 @@ impl HealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigElRef {
     pub fn last_updated_partition_config(
         &self,
     ) -> terrars
-    ::ListRef<HealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigElLastUpdatedPartitionConfigElRef> {
+    ::ListRef<HealthcareFhirStore_StreamConfigs_BigqueryDestination_SchemaConfig_LastUpdatedPartitionConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.last_updated_partition_config", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct HealthcareFhirStoreStreamConfigsElBigqueryDestinationElDynamic {
+struct HealthcareFhirStore_StreamConfigs_BigqueryDestinationDynamic {
     schema_config: std
     ::option
-    ::Option<terrars::DynamicBlock<HealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigEl>>,
+    ::Option<terrars::DynamicBlock<HealthcareFhirStore_StreamConfigs_BigqueryDestination_SchemaConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct HealthcareFhirStoreStreamConfigsElBigqueryDestinationEl {
+pub struct HealthcareFhirStore_StreamConfigs_BigqueryDestination {
     dataset_uri: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    schema_config: std
-    ::option
-    ::Option<std::vec::Vec<HealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigEl>>,
-    dynamic: HealthcareFhirStoreStreamConfigsElBigqueryDestinationElDynamic,
+    schema_config: std::option::Option<std::vec::Vec<HealthcareFhirStore_StreamConfigs_BigqueryDestination_SchemaConfig>>,
+    dynamic: HealthcareFhirStore_StreamConfigs_BigqueryDestinationDynamic,
 }
 
-impl HealthcareFhirStoreStreamConfigsElBigqueryDestinationEl {
+impl HealthcareFhirStore_StreamConfigs_BigqueryDestination {
     #[doc = "Set the field `schema_config`.\n"]
     pub fn set_schema_config(
         mut self,
@@ -868,8 +1051,7 @@ impl HealthcareFhirStoreStreamConfigsElBigqueryDestinationEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<HealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigEl>,
+                        terrars::BlockAssignable<HealthcareFhirStore_StreamConfigs_BigqueryDestination_SchemaConfig>,
                     >,
     ) -> Self {
         match v.into() {
@@ -884,8 +1066,8 @@ impl HealthcareFhirStoreStreamConfigsElBigqueryDestinationEl {
     }
 }
 
-impl terrars::ToListMappable for HealthcareFhirStoreStreamConfigsElBigqueryDestinationEl {
-    type O = terrars::BlockAssignable<HealthcareFhirStoreStreamConfigsElBigqueryDestinationEl>;
+impl terrars::ToListMappable for HealthcareFhirStore_StreamConfigs_BigqueryDestination {
+    type O = terrars::BlockAssignable<HealthcareFhirStore_StreamConfigs_BigqueryDestination>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -896,14 +1078,14 @@ impl terrars::ToListMappable for HealthcareFhirStoreStreamConfigsElBigqueryDesti
     }
 }
 
-pub struct BuildHealthcareFhirStoreStreamConfigsElBigqueryDestinationEl {
+pub struct BuildHealthcareFhirStore_StreamConfigs_BigqueryDestination {
     #[doc = "BigQuery URI to a dataset, up to 2000 characters long, in the format bq://projectId.bqDatasetId"]
     pub dataset_uri: terrars::PrimField<std::string::String>,
 }
 
-impl BuildHealthcareFhirStoreStreamConfigsElBigqueryDestinationEl {
-    pub fn build(self) -> HealthcareFhirStoreStreamConfigsElBigqueryDestinationEl {
-        HealthcareFhirStoreStreamConfigsElBigqueryDestinationEl {
+impl BuildHealthcareFhirStore_StreamConfigs_BigqueryDestination {
+    pub fn build(self) -> HealthcareFhirStore_StreamConfigs_BigqueryDestination {
+        HealthcareFhirStore_StreamConfigs_BigqueryDestination {
             dataset_uri: self.dataset_uri,
             schema_config: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -911,24 +1093,26 @@ impl BuildHealthcareFhirStoreStreamConfigsElBigqueryDestinationEl {
     }
 }
 
-pub struct HealthcareFhirStoreStreamConfigsElBigqueryDestinationElRef {
+#[allow(dead_code)]
+pub struct HealthcareFhirStore_StreamConfigs_BigqueryDestinationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for HealthcareFhirStoreStreamConfigsElBigqueryDestinationElRef {
+impl terrars::Ref for HealthcareFhirStore_StreamConfigs_BigqueryDestinationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> HealthcareFhirStoreStreamConfigsElBigqueryDestinationElRef {
-        HealthcareFhirStoreStreamConfigsElBigqueryDestinationElRef {
+    ) -> HealthcareFhirStore_StreamConfigs_BigqueryDestinationRef {
+        HealthcareFhirStore_StreamConfigs_BigqueryDestinationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl HealthcareFhirStoreStreamConfigsElBigqueryDestinationElRef {
+impl HealthcareFhirStore_StreamConfigs_BigqueryDestinationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -942,28 +1126,28 @@ impl HealthcareFhirStoreStreamConfigsElBigqueryDestinationElRef {
     #[doc = "Get a reference to the value of field `schema_config` after provisioning.\n"]
     pub fn schema_config(
         &self,
-    ) -> terrars::ListRef<HealthcareFhirStoreStreamConfigsElBigqueryDestinationElSchemaConfigElRef> {
+    ) -> terrars::ListRef<HealthcareFhirStore_StreamConfigs_BigqueryDestination_SchemaConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.schema_config", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct HealthcareFhirStoreStreamConfigsElDynamic {
+struct HealthcareFhirStore_StreamConfigsDynamic {
     bigquery_destination: std
     ::option
-    ::Option<terrars::DynamicBlock<HealthcareFhirStoreStreamConfigsElBigqueryDestinationEl>>,
+    ::Option<terrars::DynamicBlock<HealthcareFhirStore_StreamConfigs_BigqueryDestination>>,
 }
 
 #[derive(Serialize)]
-pub struct HealthcareFhirStoreStreamConfigsEl {
+pub struct HealthcareFhirStore_StreamConfigs {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resource_types: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    bigquery_destination: std::option::Option<std::vec::Vec<HealthcareFhirStoreStreamConfigsElBigqueryDestinationEl>>,
-    dynamic: HealthcareFhirStoreStreamConfigsElDynamic,
+    bigquery_destination: std::option::Option<std::vec::Vec<HealthcareFhirStore_StreamConfigs_BigqueryDestination>>,
+    dynamic: HealthcareFhirStore_StreamConfigsDynamic,
 }
 
-impl HealthcareFhirStoreStreamConfigsEl {
+impl HealthcareFhirStore_StreamConfigs {
     #[doc =
         "Set the field `resource_types`.\nSupply a FHIR resource type (such as \"Patient\" or \"Observation\"). See\nhttps://www.hl7.org/fhir/valueset-resource-types.html for a list of all FHIR resource types. The server treats\nan empty list as an intent to stream all the supported resource types in this FHIR store."]
     pub fn set_resource_types(
@@ -977,12 +1161,7 @@ impl HealthcareFhirStoreStreamConfigsEl {
     #[doc = "Set the field `bigquery_destination`.\n"]
     pub fn set_bigquery_destination(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<HealthcareFhirStoreStreamConfigsElBigqueryDestinationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<HealthcareFhirStore_StreamConfigs_BigqueryDestination>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -996,8 +1175,8 @@ impl HealthcareFhirStoreStreamConfigsEl {
     }
 }
 
-impl terrars::ToListMappable for HealthcareFhirStoreStreamConfigsEl {
-    type O = terrars::BlockAssignable<HealthcareFhirStoreStreamConfigsEl>;
+impl terrars::ToListMappable for HealthcareFhirStore_StreamConfigs {
+    type O = terrars::BlockAssignable<HealthcareFhirStore_StreamConfigs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1008,11 +1187,11 @@ impl terrars::ToListMappable for HealthcareFhirStoreStreamConfigsEl {
     }
 }
 
-pub struct BuildHealthcareFhirStoreStreamConfigsEl {}
+pub struct BuildHealthcareFhirStore_StreamConfigs {}
 
-impl BuildHealthcareFhirStoreStreamConfigsEl {
-    pub fn build(self) -> HealthcareFhirStoreStreamConfigsEl {
-        HealthcareFhirStoreStreamConfigsEl {
+impl BuildHealthcareFhirStore_StreamConfigs {
+    pub fn build(self) -> HealthcareFhirStore_StreamConfigs {
+        HealthcareFhirStore_StreamConfigs {
             resource_types: core::default::Default::default(),
             bigquery_destination: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1020,21 +1199,23 @@ impl BuildHealthcareFhirStoreStreamConfigsEl {
     }
 }
 
-pub struct HealthcareFhirStoreStreamConfigsElRef {
+#[allow(dead_code)]
+pub struct HealthcareFhirStore_StreamConfigsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for HealthcareFhirStoreStreamConfigsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> HealthcareFhirStoreStreamConfigsElRef {
-        HealthcareFhirStoreStreamConfigsElRef {
+impl terrars::Ref for HealthcareFhirStore_StreamConfigsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> HealthcareFhirStore_StreamConfigsRef {
+        HealthcareFhirStore_StreamConfigsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl HealthcareFhirStoreStreamConfigsElRef {
+impl HealthcareFhirStore_StreamConfigsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1046,13 +1227,13 @@ impl HealthcareFhirStoreStreamConfigsElRef {
     }
 
     #[doc = "Get a reference to the value of field `bigquery_destination` after provisioning.\n"]
-    pub fn bigquery_destination(&self) -> terrars::ListRef<HealthcareFhirStoreStreamConfigsElBigqueryDestinationElRef> {
+    pub fn bigquery_destination(&self) -> terrars::ListRef<HealthcareFhirStore_StreamConfigs_BigqueryDestinationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.bigquery_destination", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct HealthcareFhirStoreTimeoutsEl {
+pub struct HealthcareFhirStore_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1061,7 +1242,7 @@ pub struct HealthcareFhirStoreTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl HealthcareFhirStoreTimeoutsEl {
+impl HealthcareFhirStore_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1081,8 +1262,8 @@ impl HealthcareFhirStoreTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for HealthcareFhirStoreTimeoutsEl {
-    type O = terrars::BlockAssignable<HealthcareFhirStoreTimeoutsEl>;
+impl terrars::ToListMappable for HealthcareFhirStore_Timeouts {
+    type O = terrars::BlockAssignable<HealthcareFhirStore_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1093,11 +1274,11 @@ impl terrars::ToListMappable for HealthcareFhirStoreTimeoutsEl {
     }
 }
 
-pub struct BuildHealthcareFhirStoreTimeoutsEl {}
+pub struct BuildHealthcareFhirStore_Timeouts {}
 
-impl BuildHealthcareFhirStoreTimeoutsEl {
-    pub fn build(self) -> HealthcareFhirStoreTimeoutsEl {
-        HealthcareFhirStoreTimeoutsEl {
+impl BuildHealthcareFhirStore_Timeouts {
+    pub fn build(self) -> HealthcareFhirStore_Timeouts {
+        HealthcareFhirStore_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1105,21 +1286,23 @@ impl BuildHealthcareFhirStoreTimeoutsEl {
     }
 }
 
-pub struct HealthcareFhirStoreTimeoutsElRef {
+#[allow(dead_code)]
+pub struct HealthcareFhirStore_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for HealthcareFhirStoreTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> HealthcareFhirStoreTimeoutsElRef {
-        HealthcareFhirStoreTimeoutsElRef {
+impl terrars::Ref for HealthcareFhirStore_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> HealthcareFhirStore_TimeoutsRef {
+        HealthcareFhirStore_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl HealthcareFhirStoreTimeoutsElRef {
+impl HealthcareFhirStore_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1140,8 +1323,140 @@ impl HealthcareFhirStoreTimeoutsElRef {
     }
 }
 
-#[derive(Serialize, Default)]
-struct HealthcareFhirStoreDynamic {
-    notification_config: std::option::Option<terrars::DynamicBlock<HealthcareFhirStoreNotificationConfigEl>>,
-    stream_configs: std::option::Option<terrars::DynamicBlock<HealthcareFhirStoreStreamConfigsEl>>,
+#[derive(Serialize)]
+pub struct HealthcareFhirStore_ValidationConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    disable_fhirpath_validation: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    disable_profile_validation: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    disable_reference_type_validation: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    disable_required_field_validation: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enabled_implementation_guides: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+}
+
+impl HealthcareFhirStore_ValidationConfig {
+    #[doc =
+        "Set the field `disable_fhirpath_validation`.\nWhether to disable FHIRPath validation for incoming resources. The default value is false. Set this to true to disable checking incoming resources for conformance against FHIRPath requirement defined in the FHIR specification. This property only affects resource types that do not have profiles configured for them, any rules in enabled implementation guides will still be enforced."]
+    pub fn set_disable_fhirpath_validation(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.disable_fhirpath_validation = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `disable_profile_validation`.\nWhether to disable profile validation for this FHIR store. The default value is false. Set this to true to disable checking incoming resources for conformance against structure definitions in this FHIR store."]
+    pub fn set_disable_profile_validation(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.disable_profile_validation = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `disable_reference_type_validation`.\nWhether to disable reference type validation for incoming resources. The default value is false. Set this to true to disable checking incoming resources for conformance against reference type requirement defined in the FHIR specification. This property only affects resource types that do not have profiles configured for them, any rules in enabled implementation guides will still be enforced."]
+    pub fn set_disable_reference_type_validation(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<bool>>,
+    ) -> Self {
+        self.disable_reference_type_validation = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `disable_required_field_validation`.\nWhether to disable required fields validation for incoming resources. The default value is false. Set this to true to disable checking incoming resources for conformance against required fields requirement defined in the FHIR specification. This property only affects resource types that do not have profiles configured for them, any rules in enabled implementation guides will still be enforced."]
+    pub fn set_disable_required_field_validation(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<bool>>,
+    ) -> Self {
+        self.disable_required_field_validation = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `enabled_implementation_guides`.\nA list of implementation guide URLs in this FHIR store that are used to configure the profiles to use for validation.\nWhen a URL cannot be resolved (for example, in a type assertion), the server does not return an error.\nFor example, to use the US Core profiles for validation, set enabledImplementationGuides to [\"http://hl7.org/fhir/us/core/ImplementationGuide/ig\"]. If enabledImplementationGuides is empty or omitted, then incoming resources are only required to conform to the base FHIR profiles. Otherwise, a resource must conform to at least one profile listed in the global property of one of the enabled ImplementationGuides.\nThe Cloud Healthcare API does not currently enforce all of the rules in a StructureDefinition. The following rules are supported:\n- min/max\n- minValue/maxValue\n- maxLength\n- type\n- fixed[x]\n- pattern[x] on simple types\n- slicing, when using \"value\" as the discriminator type"]
+    pub fn set_enabled_implementation_guides(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.enabled_implementation_guides = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for HealthcareFhirStore_ValidationConfig {
+    type O = terrars::BlockAssignable<HealthcareFhirStore_ValidationConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildHealthcareFhirStore_ValidationConfig {}
+
+impl BuildHealthcareFhirStore_ValidationConfig {
+    pub fn build(self) -> HealthcareFhirStore_ValidationConfig {
+        HealthcareFhirStore_ValidationConfig {
+            disable_fhirpath_validation: core::default::Default::default(),
+            disable_profile_validation: core::default::Default::default(),
+            disable_reference_type_validation: core::default::Default::default(),
+            disable_required_field_validation: core::default::Default::default(),
+            enabled_implementation_guides: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct HealthcareFhirStore_ValidationConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for HealthcareFhirStore_ValidationConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> HealthcareFhirStore_ValidationConfigRef {
+        HealthcareFhirStore_ValidationConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl HealthcareFhirStore_ValidationConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `disable_fhirpath_validation` after provisioning.\nWhether to disable FHIRPath validation for incoming resources. The default value is false. Set this to true to disable checking incoming resources for conformance against FHIRPath requirement defined in the FHIR specification. This property only affects resource types that do not have profiles configured for them, any rules in enabled implementation guides will still be enforced."]
+    pub fn disable_fhirpath_validation(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.disable_fhirpath_validation", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `disable_profile_validation` after provisioning.\nWhether to disable profile validation for this FHIR store. The default value is false. Set this to true to disable checking incoming resources for conformance against structure definitions in this FHIR store."]
+    pub fn disable_profile_validation(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.disable_profile_validation", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `disable_reference_type_validation` after provisioning.\nWhether to disable reference type validation for incoming resources. The default value is false. Set this to true to disable checking incoming resources for conformance against reference type requirement defined in the FHIR specification. This property only affects resource types that do not have profiles configured for them, any rules in enabled implementation guides will still be enforced."]
+    pub fn disable_reference_type_validation(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.disable_reference_type_validation", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `disable_required_field_validation` after provisioning.\nWhether to disable required fields validation for incoming resources. The default value is false. Set this to true to disable checking incoming resources for conformance against required fields requirement defined in the FHIR specification. This property only affects resource types that do not have profiles configured for them, any rules in enabled implementation guides will still be enforced."]
+    pub fn disable_required_field_validation(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.disable_required_field_validation", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `enabled_implementation_guides` after provisioning.\nA list of implementation guide URLs in this FHIR store that are used to configure the profiles to use for validation.\nWhen a URL cannot be resolved (for example, in a type assertion), the server does not return an error.\nFor example, to use the US Core profiles for validation, set enabledImplementationGuides to [\"http://hl7.org/fhir/us/core/ImplementationGuide/ig\"]. If enabledImplementationGuides is empty or omitted, then incoming resources are only required to conform to the base FHIR profiles. Otherwise, a resource must conform to at least one profile listed in the global property of one of the enabled ImplementationGuides.\nThe Cloud Healthcare API does not currently enforce all of the rules in a StructureDefinition. The following rules are supported:\n- min/max\n- minValue/maxValue\n- maxLength\n- type\n- fixed[x]\n- pattern[x] on simple types\n- slicing, when using \"value\" as the discriminator type"]
+    pub fn enabled_implementation_guides(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.enabled_implementation_guides", self.base))
+    }
 }

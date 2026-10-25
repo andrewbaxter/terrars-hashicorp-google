@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct BillingProjectInfoData {
+struct BillingProjectInfoData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,17 +22,19 @@ struct BillingProjectInfoData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     billing_account: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<BillingProjectInfoTimeoutsEl>,
+    timeouts: std::option::Option<BillingProjectInfo_Timeouts>,
 }
 
 struct BillingProjectInfo_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<BillingProjectInfoData>,
+    data: std::cell::RefCell<BillingProjectInfoData_>,
 }
 
 #[derive(Clone)]
@@ -130,6 +134,13 @@ impl BillingProjectInfo {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -143,7 +154,7 @@ impl BillingProjectInfo {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<BillingProjectInfoTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<BillingProjectInfo_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -152,6 +163,12 @@ impl BillingProjectInfo {
         "Get a reference to the value of field `billing_account` after provisioning.\nThe ID of the billing account associated with the project, if\nany. Set to empty string to disable billing for the project.\nFor example, '\"012345-567890-ABCDEF\"' or '\"\"'."]
     pub fn billing_account(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.billing_account", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -165,8 +182,8 @@ impl BillingProjectInfo {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> BillingProjectInfoTimeoutsElRef {
-        BillingProjectInfoTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> BillingProjectInfo_TimeoutsRef {
+        BillingProjectInfo_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -213,13 +230,14 @@ impl BuildBillingProjectInfo {
         let out = BillingProjectInfo(std::rc::Rc::new(BillingProjectInfo_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(BillingProjectInfoData {
+            data: std::cell::RefCell::new(BillingProjectInfoData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 billing_account: self.billing_account,
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 project: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
@@ -259,6 +277,12 @@ impl BillingProjectInfoRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.billing_account", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -270,13 +294,13 @@ impl BillingProjectInfoRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> BillingProjectInfoTimeoutsElRef {
-        BillingProjectInfoTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> BillingProjectInfo_TimeoutsRef {
+        BillingProjectInfo_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct BillingProjectInfoTimeoutsEl {
+pub struct BillingProjectInfo_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -285,7 +309,7 @@ pub struct BillingProjectInfoTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl BillingProjectInfoTimeoutsEl {
+impl BillingProjectInfo_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -305,8 +329,8 @@ impl BillingProjectInfoTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for BillingProjectInfoTimeoutsEl {
-    type O = terrars::BlockAssignable<BillingProjectInfoTimeoutsEl>;
+impl terrars::ToListMappable for BillingProjectInfo_Timeouts {
+    type O = terrars::BlockAssignable<BillingProjectInfo_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -317,11 +341,11 @@ impl terrars::ToListMappable for BillingProjectInfoTimeoutsEl {
     }
 }
 
-pub struct BuildBillingProjectInfoTimeoutsEl {}
+pub struct BuildBillingProjectInfo_Timeouts {}
 
-impl BuildBillingProjectInfoTimeoutsEl {
-    pub fn build(self) -> BillingProjectInfoTimeoutsEl {
-        BillingProjectInfoTimeoutsEl {
+impl BuildBillingProjectInfo_Timeouts {
+    pub fn build(self) -> BillingProjectInfo_Timeouts {
+        BillingProjectInfo_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -329,21 +353,23 @@ impl BuildBillingProjectInfoTimeoutsEl {
     }
 }
 
-pub struct BillingProjectInfoTimeoutsElRef {
+#[allow(dead_code)]
+pub struct BillingProjectInfo_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BillingProjectInfoTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BillingProjectInfoTimeoutsElRef {
-        BillingProjectInfoTimeoutsElRef {
+impl terrars::Ref for BillingProjectInfo_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BillingProjectInfo_TimeoutsRef {
+        BillingProjectInfo_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BillingProjectInfoTimeoutsElRef {
+impl BillingProjectInfo_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

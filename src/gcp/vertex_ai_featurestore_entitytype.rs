@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct VertexAiFeaturestoreEntitytypeData {
+struct VertexAiFeaturestoreEntitytypeData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct VertexAiFeaturestoreEntitytypeData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     featurestore: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,16 +32,16 @@ struct VertexAiFeaturestoreEntitytypeData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    monitoring_config: std::option::Option<std::vec::Vec<VertexAiFeaturestoreEntitytypeMonitoringConfigEl>>,
+    monitoring_config: std::option::Option<std::vec::Vec<VertexAiFeaturestoreEntitytype_MonitoringConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<VertexAiFeaturestoreEntitytypeTimeoutsEl>,
+    timeouts: std::option::Option<VertexAiFeaturestoreEntitytype_Timeouts>,
     dynamic: VertexAiFeaturestoreEntitytypeDynamic,
 }
 
 struct VertexAiFeaturestoreEntitytype_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<VertexAiFeaturestoreEntitytypeData>,
+    data: std::cell::RefCell<VertexAiFeaturestoreEntitytypeData_>,
 }
 
 #[derive(Clone)]
@@ -137,6 +141,13 @@ impl VertexAiFeaturestoreEntitytype {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nOptional. Description of the EntityType."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -169,7 +180,7 @@ impl VertexAiFeaturestoreEntitytype {
     #[doc = "Set the field `monitoring_config`.\n"]
     pub fn set_monitoring_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<VertexAiFeaturestoreEntitytypeMonitoringConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<VertexAiFeaturestoreEntitytype_MonitoringConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -183,7 +194,7 @@ impl VertexAiFeaturestoreEntitytype {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<VertexAiFeaturestoreEntitytypeTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<VertexAiFeaturestoreEntitytype_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -192,6 +203,12 @@ impl VertexAiFeaturestoreEntitytype {
         "Get a reference to the value of field `create_time` after provisioning.\nThe timestamp of when the featurestore was created in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -253,13 +270,13 @@ impl VertexAiFeaturestoreEntitytype {
     }
 
     #[doc = "Get a reference to the value of field `monitoring_config` after provisioning.\n"]
-    pub fn monitoring_config(&self) -> terrars::ListRef<VertexAiFeaturestoreEntitytypeMonitoringConfigElRef> {
+    pub fn monitoring_config(&self) -> terrars::ListRef<VertexAiFeaturestoreEntitytype_MonitoringConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.monitoring_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> VertexAiFeaturestoreEntitytypeTimeoutsElRef {
-        VertexAiFeaturestoreEntitytypeTimeoutsElRef::new(
+    pub fn timeouts(&self) -> VertexAiFeaturestoreEntitytype_TimeoutsRef {
+        VertexAiFeaturestoreEntitytype_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -309,12 +326,13 @@ impl BuildVertexAiFeaturestoreEntitytype {
         let out = VertexAiFeaturestoreEntitytype(std::rc::Rc::new(VertexAiFeaturestoreEntitytype_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(VertexAiFeaturestoreEntitytypeData {
+            data: std::cell::RefCell::new(VertexAiFeaturestoreEntitytypeData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 featurestore: self.featurestore,
                 id: core::default::Default::default(),
@@ -357,6 +375,12 @@ impl VertexAiFeaturestoreEntitytypeRef {
         "Get a reference to the value of field `create_time` after provisioning.\nThe timestamp of when the featurestore was created in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -418,28 +442,33 @@ impl VertexAiFeaturestoreEntitytypeRef {
     }
 
     #[doc = "Get a reference to the value of field `monitoring_config` after provisioning.\n"]
-    pub fn monitoring_config(&self) -> terrars::ListRef<VertexAiFeaturestoreEntitytypeMonitoringConfigElRef> {
+    pub fn monitoring_config(&self) -> terrars::ListRef<VertexAiFeaturestoreEntitytype_MonitoringConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.monitoring_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> VertexAiFeaturestoreEntitytypeTimeoutsElRef {
-        VertexAiFeaturestoreEntitytypeTimeoutsElRef::new(
+    pub fn timeouts(&self) -> VertexAiFeaturestoreEntitytype_TimeoutsRef {
+        VertexAiFeaturestoreEntitytype_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct VertexAiFeaturestoreEntitytypeDynamic {
+    monitoring_config: std::option::Option<terrars::DynamicBlock<VertexAiFeaturestoreEntitytype_MonitoringConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct VertexAiFeaturestoreEntitytypeMonitoringConfigElCategoricalThresholdConfigEl {
+pub struct VertexAiFeaturestoreEntitytype_MonitoringConfig_CategoricalThresholdConfig {
     value: terrars::PrimField<f64>,
 }
 
-impl VertexAiFeaturestoreEntitytypeMonitoringConfigElCategoricalThresholdConfigEl { }
+impl VertexAiFeaturestoreEntitytype_MonitoringConfig_CategoricalThresholdConfig { }
 
-impl terrars::ToListMappable for VertexAiFeaturestoreEntitytypeMonitoringConfigElCategoricalThresholdConfigEl {
-    type O = terrars::BlockAssignable<VertexAiFeaturestoreEntitytypeMonitoringConfigElCategoricalThresholdConfigEl>;
+impl terrars::ToListMappable for VertexAiFeaturestoreEntitytype_MonitoringConfig_CategoricalThresholdConfig {
+    type O = terrars::BlockAssignable<VertexAiFeaturestoreEntitytype_MonitoringConfig_CategoricalThresholdConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -450,36 +479,38 @@ impl terrars::ToListMappable for VertexAiFeaturestoreEntitytypeMonitoringConfigE
     }
 }
 
-pub struct BuildVertexAiFeaturestoreEntitytypeMonitoringConfigElCategoricalThresholdConfigEl {
+pub struct BuildVertexAiFeaturestoreEntitytype_MonitoringConfig_CategoricalThresholdConfig {
     #[doc =
         "Specify a threshold value that can trigger the alert. For categorical feature, the distribution distance is calculated by L-inifinity norm. Each feature must have a non-zero threshold if they need to be monitored. Otherwise no alert will be triggered for that feature. The default value is 0.3."]
     pub value: terrars::PrimField<f64>,
 }
 
-impl BuildVertexAiFeaturestoreEntitytypeMonitoringConfigElCategoricalThresholdConfigEl {
-    pub fn build(self) -> VertexAiFeaturestoreEntitytypeMonitoringConfigElCategoricalThresholdConfigEl {
-        VertexAiFeaturestoreEntitytypeMonitoringConfigElCategoricalThresholdConfigEl { value: self.value }
+impl BuildVertexAiFeaturestoreEntitytype_MonitoringConfig_CategoricalThresholdConfig {
+    pub fn build(self) -> VertexAiFeaturestoreEntitytype_MonitoringConfig_CategoricalThresholdConfig {
+        VertexAiFeaturestoreEntitytype_MonitoringConfig_CategoricalThresholdConfig { value: self.value }
     }
 }
 
-pub struct VertexAiFeaturestoreEntitytypeMonitoringConfigElCategoricalThresholdConfigElRef {
+#[allow(dead_code)]
+pub struct VertexAiFeaturestoreEntitytype_MonitoringConfig_CategoricalThresholdConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for VertexAiFeaturestoreEntitytypeMonitoringConfigElCategoricalThresholdConfigElRef {
+impl terrars::Ref for VertexAiFeaturestoreEntitytype_MonitoringConfig_CategoricalThresholdConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> VertexAiFeaturestoreEntitytypeMonitoringConfigElCategoricalThresholdConfigElRef {
-        VertexAiFeaturestoreEntitytypeMonitoringConfigElCategoricalThresholdConfigElRef {
+    ) -> VertexAiFeaturestoreEntitytype_MonitoringConfig_CategoricalThresholdConfigRef {
+        VertexAiFeaturestoreEntitytype_MonitoringConfig_CategoricalThresholdConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl VertexAiFeaturestoreEntitytypeMonitoringConfigElCategoricalThresholdConfigElRef {
+impl VertexAiFeaturestoreEntitytype_MonitoringConfig_CategoricalThresholdConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -492,14 +523,14 @@ impl VertexAiFeaturestoreEntitytypeMonitoringConfigElCategoricalThresholdConfigE
 }
 
 #[derive(Serialize)]
-pub struct VertexAiFeaturestoreEntitytypeMonitoringConfigElImportFeaturesAnalysisEl {
+pub struct VertexAiFeaturestoreEntitytype_MonitoringConfig_ImportFeaturesAnalysis {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     anomaly_detection_baseline: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     state: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl VertexAiFeaturestoreEntitytypeMonitoringConfigElImportFeaturesAnalysisEl {
+impl VertexAiFeaturestoreEntitytype_MonitoringConfig_ImportFeaturesAnalysis {
     #[doc =
         "Set the field `anomaly_detection_baseline`.\nDefines the baseline to do anomaly detection for feature values imported by each [entityTypes.importFeatureValues][] operation. The value must be one of the values below:\n* LATEST_STATS: Choose the later one statistics generated by either most recent snapshot analysis or previous import features analysis. If non of them exists, skip anomaly detection and only generate a statistics.\n* MOST_RECENT_SNAPSHOT_STATS: Use the statistics generated by the most recent snapshot analysis if exists.\n* PREVIOUS_IMPORT_FEATURES_STATS: Use the statistics generated by the previous import features analysis if exists."]
     pub fn set_anomaly_detection_baseline(
@@ -518,8 +549,8 @@ impl VertexAiFeaturestoreEntitytypeMonitoringConfigElImportFeaturesAnalysisEl {
     }
 }
 
-impl terrars::ToListMappable for VertexAiFeaturestoreEntitytypeMonitoringConfigElImportFeaturesAnalysisEl {
-    type O = terrars::BlockAssignable<VertexAiFeaturestoreEntitytypeMonitoringConfigElImportFeaturesAnalysisEl>;
+impl terrars::ToListMappable for VertexAiFeaturestoreEntitytype_MonitoringConfig_ImportFeaturesAnalysis {
+    type O = terrars::BlockAssignable<VertexAiFeaturestoreEntitytype_MonitoringConfig_ImportFeaturesAnalysis>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -530,35 +561,37 @@ impl terrars::ToListMappable for VertexAiFeaturestoreEntitytypeMonitoringConfigE
     }
 }
 
-pub struct BuildVertexAiFeaturestoreEntitytypeMonitoringConfigElImportFeaturesAnalysisEl {}
+pub struct BuildVertexAiFeaturestoreEntitytype_MonitoringConfig_ImportFeaturesAnalysis {}
 
-impl BuildVertexAiFeaturestoreEntitytypeMonitoringConfigElImportFeaturesAnalysisEl {
-    pub fn build(self) -> VertexAiFeaturestoreEntitytypeMonitoringConfigElImportFeaturesAnalysisEl {
-        VertexAiFeaturestoreEntitytypeMonitoringConfigElImportFeaturesAnalysisEl {
+impl BuildVertexAiFeaturestoreEntitytype_MonitoringConfig_ImportFeaturesAnalysis {
+    pub fn build(self) -> VertexAiFeaturestoreEntitytype_MonitoringConfig_ImportFeaturesAnalysis {
+        VertexAiFeaturestoreEntitytype_MonitoringConfig_ImportFeaturesAnalysis {
             anomaly_detection_baseline: core::default::Default::default(),
             state: core::default::Default::default(),
         }
     }
 }
 
-pub struct VertexAiFeaturestoreEntitytypeMonitoringConfigElImportFeaturesAnalysisElRef {
+#[allow(dead_code)]
+pub struct VertexAiFeaturestoreEntitytype_MonitoringConfig_ImportFeaturesAnalysisRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for VertexAiFeaturestoreEntitytypeMonitoringConfigElImportFeaturesAnalysisElRef {
+impl terrars::Ref for VertexAiFeaturestoreEntitytype_MonitoringConfig_ImportFeaturesAnalysisRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> VertexAiFeaturestoreEntitytypeMonitoringConfigElImportFeaturesAnalysisElRef {
-        VertexAiFeaturestoreEntitytypeMonitoringConfigElImportFeaturesAnalysisElRef {
+    ) -> VertexAiFeaturestoreEntitytype_MonitoringConfig_ImportFeaturesAnalysisRef {
+        VertexAiFeaturestoreEntitytype_MonitoringConfig_ImportFeaturesAnalysisRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl VertexAiFeaturestoreEntitytypeMonitoringConfigElImportFeaturesAnalysisElRef {
+impl VertexAiFeaturestoreEntitytype_MonitoringConfig_ImportFeaturesAnalysisRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -577,14 +610,14 @@ impl VertexAiFeaturestoreEntitytypeMonitoringConfigElImportFeaturesAnalysisElRef
 }
 
 #[derive(Serialize)]
-pub struct VertexAiFeaturestoreEntitytypeMonitoringConfigElNumericalThresholdConfigEl {
+pub struct VertexAiFeaturestoreEntitytype_MonitoringConfig_NumericalThresholdConfig {
     value: terrars::PrimField<f64>,
 }
 
-impl VertexAiFeaturestoreEntitytypeMonitoringConfigElNumericalThresholdConfigEl { }
+impl VertexAiFeaturestoreEntitytype_MonitoringConfig_NumericalThresholdConfig { }
 
-impl terrars::ToListMappable for VertexAiFeaturestoreEntitytypeMonitoringConfigElNumericalThresholdConfigEl {
-    type O = terrars::BlockAssignable<VertexAiFeaturestoreEntitytypeMonitoringConfigElNumericalThresholdConfigEl>;
+impl terrars::ToListMappable for VertexAiFeaturestoreEntitytype_MonitoringConfig_NumericalThresholdConfig {
+    type O = terrars::BlockAssignable<VertexAiFeaturestoreEntitytype_MonitoringConfig_NumericalThresholdConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -595,36 +628,38 @@ impl terrars::ToListMappable for VertexAiFeaturestoreEntitytypeMonitoringConfigE
     }
 }
 
-pub struct BuildVertexAiFeaturestoreEntitytypeMonitoringConfigElNumericalThresholdConfigEl {
+pub struct BuildVertexAiFeaturestoreEntitytype_MonitoringConfig_NumericalThresholdConfig {
     #[doc =
         "Specify a threshold value that can trigger the alert. For numerical feature, the distribution distance is calculated by Jensen–Shannon divergence. Each feature must have a non-zero threshold if they need to be monitored. Otherwise no alert will be triggered for that feature. The default value is 0.3."]
     pub value: terrars::PrimField<f64>,
 }
 
-impl BuildVertexAiFeaturestoreEntitytypeMonitoringConfigElNumericalThresholdConfigEl {
-    pub fn build(self) -> VertexAiFeaturestoreEntitytypeMonitoringConfigElNumericalThresholdConfigEl {
-        VertexAiFeaturestoreEntitytypeMonitoringConfigElNumericalThresholdConfigEl { value: self.value }
+impl BuildVertexAiFeaturestoreEntitytype_MonitoringConfig_NumericalThresholdConfig {
+    pub fn build(self) -> VertexAiFeaturestoreEntitytype_MonitoringConfig_NumericalThresholdConfig {
+        VertexAiFeaturestoreEntitytype_MonitoringConfig_NumericalThresholdConfig { value: self.value }
     }
 }
 
-pub struct VertexAiFeaturestoreEntitytypeMonitoringConfigElNumericalThresholdConfigElRef {
+#[allow(dead_code)]
+pub struct VertexAiFeaturestoreEntitytype_MonitoringConfig_NumericalThresholdConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for VertexAiFeaturestoreEntitytypeMonitoringConfigElNumericalThresholdConfigElRef {
+impl terrars::Ref for VertexAiFeaturestoreEntitytype_MonitoringConfig_NumericalThresholdConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> VertexAiFeaturestoreEntitytypeMonitoringConfigElNumericalThresholdConfigElRef {
-        VertexAiFeaturestoreEntitytypeMonitoringConfigElNumericalThresholdConfigElRef {
+    ) -> VertexAiFeaturestoreEntitytype_MonitoringConfig_NumericalThresholdConfigRef {
+        VertexAiFeaturestoreEntitytype_MonitoringConfig_NumericalThresholdConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl VertexAiFeaturestoreEntitytypeMonitoringConfigElNumericalThresholdConfigElRef {
+impl VertexAiFeaturestoreEntitytype_MonitoringConfig_NumericalThresholdConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -637,7 +672,7 @@ impl VertexAiFeaturestoreEntitytypeMonitoringConfigElNumericalThresholdConfigElR
 }
 
 #[derive(Serialize)]
-pub struct VertexAiFeaturestoreEntitytypeMonitoringConfigElSnapshotAnalysisEl {
+pub struct VertexAiFeaturestoreEntitytype_MonitoringConfig_SnapshotAnalysis {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     disabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -646,7 +681,7 @@ pub struct VertexAiFeaturestoreEntitytypeMonitoringConfigElSnapshotAnalysisEl {
     staleness_days: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl VertexAiFeaturestoreEntitytypeMonitoringConfigElSnapshotAnalysisEl {
+impl VertexAiFeaturestoreEntitytype_MonitoringConfig_SnapshotAnalysis {
     #[doc =
         "Set the field `disabled`.\nThe monitoring schedule for snapshot analysis. For EntityType-level config: unset / disabled = true indicates disabled by default for Features under it; otherwise by default enable snapshot analysis monitoring with monitoringInterval for Features under it."]
     pub fn set_disabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -669,8 +704,8 @@ impl VertexAiFeaturestoreEntitytypeMonitoringConfigElSnapshotAnalysisEl {
     }
 }
 
-impl terrars::ToListMappable for VertexAiFeaturestoreEntitytypeMonitoringConfigElSnapshotAnalysisEl {
-    type O = terrars::BlockAssignable<VertexAiFeaturestoreEntitytypeMonitoringConfigElSnapshotAnalysisEl>;
+impl terrars::ToListMappable for VertexAiFeaturestoreEntitytype_MonitoringConfig_SnapshotAnalysis {
+    type O = terrars::BlockAssignable<VertexAiFeaturestoreEntitytype_MonitoringConfig_SnapshotAnalysis>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -681,11 +716,11 @@ impl terrars::ToListMappable for VertexAiFeaturestoreEntitytypeMonitoringConfigE
     }
 }
 
-pub struct BuildVertexAiFeaturestoreEntitytypeMonitoringConfigElSnapshotAnalysisEl {}
+pub struct BuildVertexAiFeaturestoreEntitytype_MonitoringConfig_SnapshotAnalysis {}
 
-impl BuildVertexAiFeaturestoreEntitytypeMonitoringConfigElSnapshotAnalysisEl {
-    pub fn build(self) -> VertexAiFeaturestoreEntitytypeMonitoringConfigElSnapshotAnalysisEl {
-        VertexAiFeaturestoreEntitytypeMonitoringConfigElSnapshotAnalysisEl {
+impl BuildVertexAiFeaturestoreEntitytype_MonitoringConfig_SnapshotAnalysis {
+    pub fn build(self) -> VertexAiFeaturestoreEntitytype_MonitoringConfig_SnapshotAnalysis {
+        VertexAiFeaturestoreEntitytype_MonitoringConfig_SnapshotAnalysis {
             disabled: core::default::Default::default(),
             monitoring_interval_days: core::default::Default::default(),
             staleness_days: core::default::Default::default(),
@@ -693,24 +728,26 @@ impl BuildVertexAiFeaturestoreEntitytypeMonitoringConfigElSnapshotAnalysisEl {
     }
 }
 
-pub struct VertexAiFeaturestoreEntitytypeMonitoringConfigElSnapshotAnalysisElRef {
+#[allow(dead_code)]
+pub struct VertexAiFeaturestoreEntitytype_MonitoringConfig_SnapshotAnalysisRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for VertexAiFeaturestoreEntitytypeMonitoringConfigElSnapshotAnalysisElRef {
+impl terrars::Ref for VertexAiFeaturestoreEntitytype_MonitoringConfig_SnapshotAnalysisRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> VertexAiFeaturestoreEntitytypeMonitoringConfigElSnapshotAnalysisElRef {
-        VertexAiFeaturestoreEntitytypeMonitoringConfigElSnapshotAnalysisElRef {
+    ) -> VertexAiFeaturestoreEntitytype_MonitoringConfig_SnapshotAnalysisRef {
+        VertexAiFeaturestoreEntitytype_MonitoringConfig_SnapshotAnalysisRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl VertexAiFeaturestoreEntitytypeMonitoringConfigElSnapshotAnalysisElRef {
+impl VertexAiFeaturestoreEntitytype_MonitoringConfig_SnapshotAnalysisRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -735,43 +772,43 @@ impl VertexAiFeaturestoreEntitytypeMonitoringConfigElSnapshotAnalysisElRef {
 }
 
 #[derive(Serialize, Default)]
-struct VertexAiFeaturestoreEntitytypeMonitoringConfigElDynamic {
+struct VertexAiFeaturestoreEntitytype_MonitoringConfigDynamic {
     categorical_threshold_config: std
     ::option
-    ::Option<terrars::DynamicBlock<VertexAiFeaturestoreEntitytypeMonitoringConfigElCategoricalThresholdConfigEl>>,
+    ::Option<terrars::DynamicBlock<VertexAiFeaturestoreEntitytype_MonitoringConfig_CategoricalThresholdConfig>>,
     import_features_analysis: std
     ::option
-    ::Option<terrars::DynamicBlock<VertexAiFeaturestoreEntitytypeMonitoringConfigElImportFeaturesAnalysisEl>>,
+    ::Option<terrars::DynamicBlock<VertexAiFeaturestoreEntitytype_MonitoringConfig_ImportFeaturesAnalysis>>,
     numerical_threshold_config: std
     ::option
-    ::Option<terrars::DynamicBlock<VertexAiFeaturestoreEntitytypeMonitoringConfigElNumericalThresholdConfigEl>>,
+    ::Option<terrars::DynamicBlock<VertexAiFeaturestoreEntitytype_MonitoringConfig_NumericalThresholdConfig>>,
     snapshot_analysis: std
     ::option
-    ::Option<terrars::DynamicBlock<VertexAiFeaturestoreEntitytypeMonitoringConfigElSnapshotAnalysisEl>>,
+    ::Option<terrars::DynamicBlock<VertexAiFeaturestoreEntitytype_MonitoringConfig_SnapshotAnalysis>>,
 }
 
 #[derive(Serialize)]
-pub struct VertexAiFeaturestoreEntitytypeMonitoringConfigEl {
+pub struct VertexAiFeaturestoreEntitytype_MonitoringConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     categorical_threshold_config: std
     ::option
-    ::Option<std::vec::Vec<VertexAiFeaturestoreEntitytypeMonitoringConfigElCategoricalThresholdConfigEl>>,
+    ::Option<std::vec::Vec<VertexAiFeaturestoreEntitytype_MonitoringConfig_CategoricalThresholdConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     import_features_analysis: std
     ::option
-    ::Option<std::vec::Vec<VertexAiFeaturestoreEntitytypeMonitoringConfigElImportFeaturesAnalysisEl>>,
+    ::Option<std::vec::Vec<VertexAiFeaturestoreEntitytype_MonitoringConfig_ImportFeaturesAnalysis>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     numerical_threshold_config: std
     ::option
-    ::Option<std::vec::Vec<VertexAiFeaturestoreEntitytypeMonitoringConfigElNumericalThresholdConfigEl>>,
+    ::Option<std::vec::Vec<VertexAiFeaturestoreEntitytype_MonitoringConfig_NumericalThresholdConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     snapshot_analysis: std
     ::option
-    ::Option<std::vec::Vec<VertexAiFeaturestoreEntitytypeMonitoringConfigElSnapshotAnalysisEl>>,
-    dynamic: VertexAiFeaturestoreEntitytypeMonitoringConfigElDynamic,
+    ::Option<std::vec::Vec<VertexAiFeaturestoreEntitytype_MonitoringConfig_SnapshotAnalysis>>,
+    dynamic: VertexAiFeaturestoreEntitytype_MonitoringConfigDynamic,
 }
 
-impl VertexAiFeaturestoreEntitytypeMonitoringConfigEl {
+impl VertexAiFeaturestoreEntitytype_MonitoringConfig {
     #[doc = "Set the field `categorical_threshold_config`.\n"]
     pub fn set_categorical_threshold_config(
         mut self,
@@ -782,9 +819,7 @@ impl VertexAiFeaturestoreEntitytypeMonitoringConfigEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            VertexAiFeaturestoreEntitytypeMonitoringConfigElCategoricalThresholdConfigEl,
-                        >,
+                        ::BlockAssignable<VertexAiFeaturestoreEntitytype_MonitoringConfig_CategoricalThresholdConfig>,
                     >,
     ) -> Self {
         match v.into() {
@@ -808,7 +843,7 @@ impl VertexAiFeaturestoreEntitytypeMonitoringConfigEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<VertexAiFeaturestoreEntitytypeMonitoringConfigElImportFeaturesAnalysisEl>,
+                        ::BlockAssignable<VertexAiFeaturestoreEntitytype_MonitoringConfig_ImportFeaturesAnalysis>,
                     >,
     ) -> Self {
         match v.into() {
@@ -832,7 +867,7 @@ impl VertexAiFeaturestoreEntitytypeMonitoringConfigEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<VertexAiFeaturestoreEntitytypeMonitoringConfigElNumericalThresholdConfigEl>,
+                        ::BlockAssignable<VertexAiFeaturestoreEntitytype_MonitoringConfig_NumericalThresholdConfig>,
                     >,
     ) -> Self {
         match v.into() {
@@ -855,7 +890,7 @@ impl VertexAiFeaturestoreEntitytypeMonitoringConfigEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<VertexAiFeaturestoreEntitytypeMonitoringConfigElSnapshotAnalysisEl>,
+                        terrars::BlockAssignable<VertexAiFeaturestoreEntitytype_MonitoringConfig_SnapshotAnalysis>,
                     >,
     ) -> Self {
         match v.into() {
@@ -870,8 +905,8 @@ impl VertexAiFeaturestoreEntitytypeMonitoringConfigEl {
     }
 }
 
-impl terrars::ToListMappable for VertexAiFeaturestoreEntitytypeMonitoringConfigEl {
-    type O = terrars::BlockAssignable<VertexAiFeaturestoreEntitytypeMonitoringConfigEl>;
+impl terrars::ToListMappable for VertexAiFeaturestoreEntitytype_MonitoringConfig {
+    type O = terrars::BlockAssignable<VertexAiFeaturestoreEntitytype_MonitoringConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -882,11 +917,11 @@ impl terrars::ToListMappable for VertexAiFeaturestoreEntitytypeMonitoringConfigE
     }
 }
 
-pub struct BuildVertexAiFeaturestoreEntitytypeMonitoringConfigEl {}
+pub struct BuildVertexAiFeaturestoreEntitytype_MonitoringConfig {}
 
-impl BuildVertexAiFeaturestoreEntitytypeMonitoringConfigEl {
-    pub fn build(self) -> VertexAiFeaturestoreEntitytypeMonitoringConfigEl {
-        VertexAiFeaturestoreEntitytypeMonitoringConfigEl {
+impl BuildVertexAiFeaturestoreEntitytype_MonitoringConfig {
+    pub fn build(self) -> VertexAiFeaturestoreEntitytype_MonitoringConfig {
+        VertexAiFeaturestoreEntitytype_MonitoringConfig {
             categorical_threshold_config: core::default::Default::default(),
             import_features_analysis: core::default::Default::default(),
             numerical_threshold_config: core::default::Default::default(),
@@ -896,24 +931,26 @@ impl BuildVertexAiFeaturestoreEntitytypeMonitoringConfigEl {
     }
 }
 
-pub struct VertexAiFeaturestoreEntitytypeMonitoringConfigElRef {
+#[allow(dead_code)]
+pub struct VertexAiFeaturestoreEntitytype_MonitoringConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for VertexAiFeaturestoreEntitytypeMonitoringConfigElRef {
+impl terrars::Ref for VertexAiFeaturestoreEntitytype_MonitoringConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> VertexAiFeaturestoreEntitytypeMonitoringConfigElRef {
-        VertexAiFeaturestoreEntitytypeMonitoringConfigElRef {
+    ) -> VertexAiFeaturestoreEntitytype_MonitoringConfigRef {
+        VertexAiFeaturestoreEntitytype_MonitoringConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl VertexAiFeaturestoreEntitytypeMonitoringConfigElRef {
+impl VertexAiFeaturestoreEntitytype_MonitoringConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -921,34 +958,34 @@ impl VertexAiFeaturestoreEntitytypeMonitoringConfigElRef {
     #[doc = "Get a reference to the value of field `categorical_threshold_config` after provisioning.\n"]
     pub fn categorical_threshold_config(
         &self,
-    ) -> terrars::ListRef<VertexAiFeaturestoreEntitytypeMonitoringConfigElCategoricalThresholdConfigElRef> {
+    ) -> terrars::ListRef<VertexAiFeaturestoreEntitytype_MonitoringConfig_CategoricalThresholdConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.categorical_threshold_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `import_features_analysis` after provisioning.\n"]
     pub fn import_features_analysis(
         &self,
-    ) -> terrars::ListRef<VertexAiFeaturestoreEntitytypeMonitoringConfigElImportFeaturesAnalysisElRef> {
+    ) -> terrars::ListRef<VertexAiFeaturestoreEntitytype_MonitoringConfig_ImportFeaturesAnalysisRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.import_features_analysis", self.base))
     }
 
     #[doc = "Get a reference to the value of field `numerical_threshold_config` after provisioning.\n"]
     pub fn numerical_threshold_config(
         &self,
-    ) -> terrars::ListRef<VertexAiFeaturestoreEntitytypeMonitoringConfigElNumericalThresholdConfigElRef> {
+    ) -> terrars::ListRef<VertexAiFeaturestoreEntitytype_MonitoringConfig_NumericalThresholdConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.numerical_threshold_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `snapshot_analysis` after provisioning.\n"]
     pub fn snapshot_analysis(
         &self,
-    ) -> terrars::ListRef<VertexAiFeaturestoreEntitytypeMonitoringConfigElSnapshotAnalysisElRef> {
+    ) -> terrars::ListRef<VertexAiFeaturestoreEntitytype_MonitoringConfig_SnapshotAnalysisRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.snapshot_analysis", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct VertexAiFeaturestoreEntitytypeTimeoutsEl {
+pub struct VertexAiFeaturestoreEntitytype_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -957,7 +994,7 @@ pub struct VertexAiFeaturestoreEntitytypeTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl VertexAiFeaturestoreEntitytypeTimeoutsEl {
+impl VertexAiFeaturestoreEntitytype_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -977,8 +1014,8 @@ impl VertexAiFeaturestoreEntitytypeTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for VertexAiFeaturestoreEntitytypeTimeoutsEl {
-    type O = terrars::BlockAssignable<VertexAiFeaturestoreEntitytypeTimeoutsEl>;
+impl terrars::ToListMappable for VertexAiFeaturestoreEntitytype_Timeouts {
+    type O = terrars::BlockAssignable<VertexAiFeaturestoreEntitytype_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -989,11 +1026,11 @@ impl terrars::ToListMappable for VertexAiFeaturestoreEntitytypeTimeoutsEl {
     }
 }
 
-pub struct BuildVertexAiFeaturestoreEntitytypeTimeoutsEl {}
+pub struct BuildVertexAiFeaturestoreEntitytype_Timeouts {}
 
-impl BuildVertexAiFeaturestoreEntitytypeTimeoutsEl {
-    pub fn build(self) -> VertexAiFeaturestoreEntitytypeTimeoutsEl {
-        VertexAiFeaturestoreEntitytypeTimeoutsEl {
+impl BuildVertexAiFeaturestoreEntitytype_Timeouts {
+    pub fn build(self) -> VertexAiFeaturestoreEntitytype_Timeouts {
+        VertexAiFeaturestoreEntitytype_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1001,21 +1038,23 @@ impl BuildVertexAiFeaturestoreEntitytypeTimeoutsEl {
     }
 }
 
-pub struct VertexAiFeaturestoreEntitytypeTimeoutsElRef {
+#[allow(dead_code)]
+pub struct VertexAiFeaturestoreEntitytype_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for VertexAiFeaturestoreEntitytypeTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> VertexAiFeaturestoreEntitytypeTimeoutsElRef {
-        VertexAiFeaturestoreEntitytypeTimeoutsElRef {
+impl terrars::Ref for VertexAiFeaturestoreEntitytype_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> VertexAiFeaturestoreEntitytype_TimeoutsRef {
+        VertexAiFeaturestoreEntitytype_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl VertexAiFeaturestoreEntitytypeTimeoutsElRef {
+impl VertexAiFeaturestoreEntitytype_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1034,9 +1073,4 @@ impl VertexAiFeaturestoreEntitytypeTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct VertexAiFeaturestoreEntitytypeDynamic {
-    monitoring_config: std::option::Option<terrars::DynamicBlock<VertexAiFeaturestoreEntitytypeMonitoringConfigEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct GkeBackupRestorePlanIamBindingData {
+struct GkeBackupRestorePlanIamBindingData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,14 +30,14 @@ struct GkeBackupRestorePlanIamBindingData {
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<GkeBackupRestorePlanIamBindingConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<GkeBackupRestorePlanIamBinding_Condition>>,
     dynamic: GkeBackupRestorePlanIamBindingDynamic,
 }
 
 struct GkeBackupRestorePlanIamBinding_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<GkeBackupRestorePlanIamBindingData>,
+    data: std::cell::RefCell<GkeBackupRestorePlanIamBindingData_>,
 }
 
 #[derive(Clone)]
@@ -156,7 +158,7 @@ impl GkeBackupRestorePlanIamBinding {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GkeBackupRestorePlanIamBindingConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GkeBackupRestorePlanIamBinding_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -205,7 +207,7 @@ impl GkeBackupRestorePlanIamBinding {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<GkeBackupRestorePlanIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<GkeBackupRestorePlanIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -256,7 +258,7 @@ impl BuildGkeBackupRestorePlanIamBinding {
         let out = GkeBackupRestorePlanIamBinding(std::rc::Rc::new(GkeBackupRestorePlanIamBinding_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(GkeBackupRestorePlanIamBindingData {
+            data: std::cell::RefCell::new(GkeBackupRestorePlanIamBindingData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -336,20 +338,25 @@ impl GkeBackupRestorePlanIamBindingRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<GkeBackupRestorePlanIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<GkeBackupRestorePlanIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct GkeBackupRestorePlanIamBindingDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<GkeBackupRestorePlanIamBinding_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct GkeBackupRestorePlanIamBindingConditionEl {
+pub struct GkeBackupRestorePlanIamBinding_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl GkeBackupRestorePlanIamBindingConditionEl {
+impl GkeBackupRestorePlanIamBinding_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -357,8 +364,8 @@ impl GkeBackupRestorePlanIamBindingConditionEl {
     }
 }
 
-impl terrars::ToListMappable for GkeBackupRestorePlanIamBindingConditionEl {
-    type O = terrars::BlockAssignable<GkeBackupRestorePlanIamBindingConditionEl>;
+impl terrars::ToListMappable for GkeBackupRestorePlanIamBinding_Condition {
+    type O = terrars::BlockAssignable<GkeBackupRestorePlanIamBinding_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -369,16 +376,16 @@ impl terrars::ToListMappable for GkeBackupRestorePlanIamBindingConditionEl {
     }
 }
 
-pub struct BuildGkeBackupRestorePlanIamBindingConditionEl {
+pub struct BuildGkeBackupRestorePlanIamBinding_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildGkeBackupRestorePlanIamBindingConditionEl {
-    pub fn build(self) -> GkeBackupRestorePlanIamBindingConditionEl {
-        GkeBackupRestorePlanIamBindingConditionEl {
+impl BuildGkeBackupRestorePlanIamBinding_Condition {
+    pub fn build(self) -> GkeBackupRestorePlanIamBinding_Condition {
+        GkeBackupRestorePlanIamBinding_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -386,21 +393,23 @@ impl BuildGkeBackupRestorePlanIamBindingConditionEl {
     }
 }
 
-pub struct GkeBackupRestorePlanIamBindingConditionElRef {
+#[allow(dead_code)]
+pub struct GkeBackupRestorePlanIamBinding_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GkeBackupRestorePlanIamBindingConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeBackupRestorePlanIamBindingConditionElRef {
-        GkeBackupRestorePlanIamBindingConditionElRef {
+impl terrars::Ref for GkeBackupRestorePlanIamBinding_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GkeBackupRestorePlanIamBinding_ConditionRef {
+        GkeBackupRestorePlanIamBinding_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GkeBackupRestorePlanIamBindingConditionElRef {
+impl GkeBackupRestorePlanIamBinding_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -419,9 +428,4 @@ impl GkeBackupRestorePlanIamBindingConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct GkeBackupRestorePlanIamBindingDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<GkeBackupRestorePlanIamBindingConditionEl>>,
 }

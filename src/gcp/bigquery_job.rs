@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct BigqueryJobData {
+struct BigqueryJobData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -30,22 +32,22 @@ struct BigqueryJobData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    copy: std::option::Option<std::vec::Vec<BigqueryJobCopyEl>>,
+    copy: std::option::Option<std::vec::Vec<BigqueryJob_Copy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    extract: std::option::Option<std::vec::Vec<BigqueryJobExtractEl>>,
+    extract: std::option::Option<std::vec::Vec<BigqueryJob_Extract>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    load: std::option::Option<std::vec::Vec<BigqueryJobLoadEl>>,
+    load: std::option::Option<std::vec::Vec<BigqueryJob_Load>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    query: std::option::Option<std::vec::Vec<BigqueryJobQueryEl>>,
+    query: std::option::Option<std::vec::Vec<BigqueryJob_Query>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<BigqueryJobTimeoutsEl>,
+    timeouts: std::option::Option<BigqueryJob_Timeouts>,
     dynamic: BigqueryJobDynamic,
 }
 
 struct BigqueryJob_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<BigqueryJobData>,
+    data: std::cell::RefCell<BigqueryJobData_>,
 }
 
 #[derive(Clone)]
@@ -181,7 +183,7 @@ impl BigqueryJob {
     }
 
     #[doc = "Set the field `copy`.\n"]
-    pub fn set_copy(self, v: impl std::convert::Into<terrars::BlockAssignable<BigqueryJobCopyEl>>) -> Self {
+    pub fn set_copy(self, v: impl std::convert::Into<terrars::BlockAssignable<BigqueryJob_Copy>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().copy = std::option::Option::Some(v);
@@ -194,7 +196,7 @@ impl BigqueryJob {
     }
 
     #[doc = "Set the field `extract`.\n"]
-    pub fn set_extract(self, v: impl std::convert::Into<terrars::BlockAssignable<BigqueryJobExtractEl>>) -> Self {
+    pub fn set_extract(self, v: impl std::convert::Into<terrars::BlockAssignable<BigqueryJob_Extract>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().extract = std::option::Option::Some(v);
@@ -207,7 +209,7 @@ impl BigqueryJob {
     }
 
     #[doc = "Set the field `load`.\n"]
-    pub fn set_load(self, v: impl std::convert::Into<terrars::BlockAssignable<BigqueryJobLoadEl>>) -> Self {
+    pub fn set_load(self, v: impl std::convert::Into<terrars::BlockAssignable<BigqueryJob_Load>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().load = std::option::Option::Some(v);
@@ -220,7 +222,7 @@ impl BigqueryJob {
     }
 
     #[doc = "Set the field `query`.\n"]
-    pub fn set_query(self, v: impl std::convert::Into<terrars::BlockAssignable<BigqueryJobQueryEl>>) -> Self {
+    pub fn set_query(self, v: impl std::convert::Into<terrars::BlockAssignable<BigqueryJob_Query>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().query = std::option::Option::Some(v);
@@ -233,7 +235,7 @@ impl BigqueryJob {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<BigqueryJobTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<BigqueryJob_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -285,7 +287,7 @@ impl BigqueryJob {
 
     #[doc =
         "Get a reference to the value of field `status` after provisioning.\nThe status of this job. Examine this value when polling an asynchronous job to see if the job is complete."]
-    pub fn status(&self) -> terrars::ListRef<BigqueryJobStatusElRef> {
+    pub fn status(&self) -> terrars::ListRef<BigqueryJob_StatusRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
@@ -302,28 +304,28 @@ impl BigqueryJob {
     }
 
     #[doc = "Get a reference to the value of field `copy` after provisioning.\n"]
-    pub fn copy(&self) -> terrars::ListRef<BigqueryJobCopyElRef> {
+    pub fn copy(&self) -> terrars::ListRef<BigqueryJob_CopyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.copy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `extract` after provisioning.\n"]
-    pub fn extract(&self) -> terrars::ListRef<BigqueryJobExtractElRef> {
+    pub fn extract(&self) -> terrars::ListRef<BigqueryJob_ExtractRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.extract", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `load` after provisioning.\n"]
-    pub fn load(&self) -> terrars::ListRef<BigqueryJobLoadElRef> {
+    pub fn load(&self) -> terrars::ListRef<BigqueryJob_LoadRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.load", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `query` after provisioning.\n"]
-    pub fn query(&self) -> terrars::ListRef<BigqueryJobQueryElRef> {
+    pub fn query(&self) -> terrars::ListRef<BigqueryJob_QueryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.query", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> BigqueryJobTimeoutsElRef {
-        BigqueryJobTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> BigqueryJob_TimeoutsRef {
+        BigqueryJob_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -370,7 +372,7 @@ impl BuildBigqueryJob {
         let out = BigqueryJob(std::rc::Rc::new(BigqueryJob_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(BigqueryJobData {
+            data: std::cell::RefCell::new(BigqueryJobData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -465,7 +467,7 @@ impl BigqueryJobRef {
 
     #[doc =
         "Get a reference to the value of field `status` after provisioning.\nThe status of this job. Examine this value when polling an asynchronous job to see if the job is complete."]
-    pub fn status(&self) -> terrars::ListRef<BigqueryJobStatusElRef> {
+    pub fn status(&self) -> terrars::ListRef<BigqueryJob_StatusRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
@@ -482,33 +484,41 @@ impl BigqueryJobRef {
     }
 
     #[doc = "Get a reference to the value of field `copy` after provisioning.\n"]
-    pub fn copy(&self) -> terrars::ListRef<BigqueryJobCopyElRef> {
+    pub fn copy(&self) -> terrars::ListRef<BigqueryJob_CopyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.copy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `extract` after provisioning.\n"]
-    pub fn extract(&self) -> terrars::ListRef<BigqueryJobExtractElRef> {
+    pub fn extract(&self) -> terrars::ListRef<BigqueryJob_ExtractRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.extract", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `load` after provisioning.\n"]
-    pub fn load(&self) -> terrars::ListRef<BigqueryJobLoadElRef> {
+    pub fn load(&self) -> terrars::ListRef<BigqueryJob_LoadRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.load", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `query` after provisioning.\n"]
-    pub fn query(&self) -> terrars::ListRef<BigqueryJobQueryElRef> {
+    pub fn query(&self) -> terrars::ListRef<BigqueryJob_QueryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.query", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> BigqueryJobTimeoutsElRef {
-        BigqueryJobTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> BigqueryJob_TimeoutsRef {
+        BigqueryJob_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct BigqueryJobDynamic {
+    copy: std::option::Option<terrars::DynamicBlock<BigqueryJob_Copy>>,
+    extract: std::option::Option<terrars::DynamicBlock<BigqueryJob_Extract>>,
+    load: std::option::Option<terrars::DynamicBlock<BigqueryJob_Load>>,
+    query: std::option::Option<terrars::DynamicBlock<BigqueryJob_Query>>,
+}
+
 #[derive(Serialize)]
-pub struct BigqueryJobStatusElErrorResultEl {
+pub struct BigqueryJob_Status_ErrorResult {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     location: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -517,7 +527,7 @@ pub struct BigqueryJobStatusElErrorResultEl {
     reason: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl BigqueryJobStatusElErrorResultEl {
+impl BigqueryJob_Status_ErrorResult {
     #[doc = "Set the field `location`.\n"]
     pub fn set_location(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.location = std::option::Option::Some(v.into());
@@ -537,8 +547,8 @@ impl BigqueryJobStatusElErrorResultEl {
     }
 }
 
-impl terrars::ToListMappable for BigqueryJobStatusElErrorResultEl {
-    type O = terrars::BlockAssignable<BigqueryJobStatusElErrorResultEl>;
+impl terrars::ToListMappable for BigqueryJob_Status_ErrorResult {
+    type O = terrars::BlockAssignable<BigqueryJob_Status_ErrorResult>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -549,11 +559,11 @@ impl terrars::ToListMappable for BigqueryJobStatusElErrorResultEl {
     }
 }
 
-pub struct BuildBigqueryJobStatusElErrorResultEl {}
+pub struct BuildBigqueryJob_Status_ErrorResult {}
 
-impl BuildBigqueryJobStatusElErrorResultEl {
-    pub fn build(self) -> BigqueryJobStatusElErrorResultEl {
-        BigqueryJobStatusElErrorResultEl {
+impl BuildBigqueryJob_Status_ErrorResult {
+    pub fn build(self) -> BigqueryJob_Status_ErrorResult {
+        BigqueryJob_Status_ErrorResult {
             location: core::default::Default::default(),
             message: core::default::Default::default(),
             reason: core::default::Default::default(),
@@ -561,21 +571,23 @@ impl BuildBigqueryJobStatusElErrorResultEl {
     }
 }
 
-pub struct BigqueryJobStatusElErrorResultElRef {
+#[allow(dead_code)]
+pub struct BigqueryJob_Status_ErrorResultRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryJobStatusElErrorResultElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryJobStatusElErrorResultElRef {
-        BigqueryJobStatusElErrorResultElRef {
+impl terrars::Ref for BigqueryJob_Status_ErrorResultRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryJob_Status_ErrorResultRef {
+        BigqueryJob_Status_ErrorResultRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryJobStatusElErrorResultElRef {
+impl BigqueryJob_Status_ErrorResultRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -597,7 +609,7 @@ impl BigqueryJobStatusElErrorResultElRef {
 }
 
 #[derive(Serialize)]
-pub struct BigqueryJobStatusElErrorsEl {
+pub struct BigqueryJob_Status_Errors {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     location: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -606,7 +618,7 @@ pub struct BigqueryJobStatusElErrorsEl {
     reason: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl BigqueryJobStatusElErrorsEl {
+impl BigqueryJob_Status_Errors {
     #[doc = "Set the field `location`.\n"]
     pub fn set_location(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.location = std::option::Option::Some(v.into());
@@ -626,8 +638,8 @@ impl BigqueryJobStatusElErrorsEl {
     }
 }
 
-impl terrars::ToListMappable for BigqueryJobStatusElErrorsEl {
-    type O = terrars::BlockAssignable<BigqueryJobStatusElErrorsEl>;
+impl terrars::ToListMappable for BigqueryJob_Status_Errors {
+    type O = terrars::BlockAssignable<BigqueryJob_Status_Errors>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -638,11 +650,11 @@ impl terrars::ToListMappable for BigqueryJobStatusElErrorsEl {
     }
 }
 
-pub struct BuildBigqueryJobStatusElErrorsEl {}
+pub struct BuildBigqueryJob_Status_Errors {}
 
-impl BuildBigqueryJobStatusElErrorsEl {
-    pub fn build(self) -> BigqueryJobStatusElErrorsEl {
-        BigqueryJobStatusElErrorsEl {
+impl BuildBigqueryJob_Status_Errors {
+    pub fn build(self) -> BigqueryJob_Status_Errors {
+        BigqueryJob_Status_Errors {
             location: core::default::Default::default(),
             message: core::default::Default::default(),
             reason: core::default::Default::default(),
@@ -650,21 +662,23 @@ impl BuildBigqueryJobStatusElErrorsEl {
     }
 }
 
-pub struct BigqueryJobStatusElErrorsElRef {
+#[allow(dead_code)]
+pub struct BigqueryJob_Status_ErrorsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryJobStatusElErrorsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryJobStatusElErrorsElRef {
-        BigqueryJobStatusElErrorsElRef {
+impl terrars::Ref for BigqueryJob_Status_ErrorsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryJob_Status_ErrorsRef {
+        BigqueryJob_Status_ErrorsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryJobStatusElErrorsElRef {
+impl BigqueryJob_Status_ErrorsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -686,27 +700,27 @@ impl BigqueryJobStatusElErrorsElRef {
 }
 
 #[derive(Serialize)]
-pub struct BigqueryJobStatusEl {
+pub struct BigqueryJob_Status {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    error_result: std::option::Option<terrars::ListField<BigqueryJobStatusElErrorResultEl>>,
+    error_result: std::option::Option<terrars::ListField<BigqueryJob_Status_ErrorResult>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    errors: std::option::Option<terrars::ListField<BigqueryJobStatusElErrorsEl>>,
+    errors: std::option::Option<terrars::ListField<BigqueryJob_Status_Errors>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     state: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl BigqueryJobStatusEl {
+impl BigqueryJob_Status {
     #[doc = "Set the field `error_result`.\n"]
     pub fn set_error_result(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<BigqueryJobStatusElErrorResultEl>>,
+        v: impl std::convert::Into<terrars::ListField<BigqueryJob_Status_ErrorResult>>,
     ) -> Self {
         self.error_result = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `errors`.\n"]
-    pub fn set_errors(mut self, v: impl std::convert::Into<terrars::ListField<BigqueryJobStatusElErrorsEl>>) -> Self {
+    pub fn set_errors(mut self, v: impl std::convert::Into<terrars::ListField<BigqueryJob_Status_Errors>>) -> Self {
         self.errors = std::option::Option::Some(v.into());
         self
     }
@@ -718,8 +732,8 @@ impl BigqueryJobStatusEl {
     }
 }
 
-impl terrars::ToListMappable for BigqueryJobStatusEl {
-    type O = terrars::BlockAssignable<BigqueryJobStatusEl>;
+impl terrars::ToListMappable for BigqueryJob_Status {
+    type O = terrars::BlockAssignable<BigqueryJob_Status>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -730,11 +744,11 @@ impl terrars::ToListMappable for BigqueryJobStatusEl {
     }
 }
 
-pub struct BuildBigqueryJobStatusEl {}
+pub struct BuildBigqueryJob_Status {}
 
-impl BuildBigqueryJobStatusEl {
-    pub fn build(self) -> BigqueryJobStatusEl {
-        BigqueryJobStatusEl {
+impl BuildBigqueryJob_Status {
+    pub fn build(self) -> BigqueryJob_Status {
+        BigqueryJob_Status {
             error_result: core::default::Default::default(),
             errors: core::default::Default::default(),
             state: core::default::Default::default(),
@@ -742,32 +756,34 @@ impl BuildBigqueryJobStatusEl {
     }
 }
 
-pub struct BigqueryJobStatusElRef {
+#[allow(dead_code)]
+pub struct BigqueryJob_StatusRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryJobStatusElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryJobStatusElRef {
-        BigqueryJobStatusElRef {
+impl terrars::Ref for BigqueryJob_StatusRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryJob_StatusRef {
+        BigqueryJob_StatusRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryJobStatusElRef {
+impl BigqueryJob_StatusRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `error_result` after provisioning.\n"]
-    pub fn error_result(&self) -> terrars::ListRef<BigqueryJobStatusElErrorResultElRef> {
+    pub fn error_result(&self) -> terrars::ListRef<BigqueryJob_Status_ErrorResultRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.error_result", self.base))
     }
 
     #[doc = "Get a reference to the value of field `errors` after provisioning.\n"]
-    pub fn errors(&self) -> terrars::ListRef<BigqueryJobStatusElErrorsElRef> {
+    pub fn errors(&self) -> terrars::ListRef<BigqueryJob_Status_ErrorsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.errors", self.base))
     }
 
@@ -778,14 +794,14 @@ impl BigqueryJobStatusElRef {
 }
 
 #[derive(Serialize)]
-pub struct BigqueryJobCopyElDestinationEncryptionConfigurationEl {
+pub struct BigqueryJob_Copy_DestinationEncryptionConfiguration {
     kms_key_name: terrars::PrimField<std::string::String>,
 }
 
-impl BigqueryJobCopyElDestinationEncryptionConfigurationEl { }
+impl BigqueryJob_Copy_DestinationEncryptionConfiguration { }
 
-impl terrars::ToListMappable for BigqueryJobCopyElDestinationEncryptionConfigurationEl {
-    type O = terrars::BlockAssignable<BigqueryJobCopyElDestinationEncryptionConfigurationEl>;
+impl terrars::ToListMappable for BigqueryJob_Copy_DestinationEncryptionConfiguration {
+    type O = terrars::BlockAssignable<BigqueryJob_Copy_DestinationEncryptionConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -796,36 +812,38 @@ impl terrars::ToListMappable for BigqueryJobCopyElDestinationEncryptionConfigura
     }
 }
 
-pub struct BuildBigqueryJobCopyElDestinationEncryptionConfigurationEl {
+pub struct BuildBigqueryJob_Copy_DestinationEncryptionConfiguration {
     #[doc =
         "Describes the Cloud KMS encryption key that will be used to protect destination BigQuery table.\nThe BigQuery Service Account associated with your project requires access to this encryption key."]
     pub kms_key_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBigqueryJobCopyElDestinationEncryptionConfigurationEl {
-    pub fn build(self) -> BigqueryJobCopyElDestinationEncryptionConfigurationEl {
-        BigqueryJobCopyElDestinationEncryptionConfigurationEl { kms_key_name: self.kms_key_name }
+impl BuildBigqueryJob_Copy_DestinationEncryptionConfiguration {
+    pub fn build(self) -> BigqueryJob_Copy_DestinationEncryptionConfiguration {
+        BigqueryJob_Copy_DestinationEncryptionConfiguration { kms_key_name: self.kms_key_name }
     }
 }
 
-pub struct BigqueryJobCopyElDestinationEncryptionConfigurationElRef {
+#[allow(dead_code)]
+pub struct BigqueryJob_Copy_DestinationEncryptionConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryJobCopyElDestinationEncryptionConfigurationElRef {
+impl terrars::Ref for BigqueryJob_Copy_DestinationEncryptionConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> BigqueryJobCopyElDestinationEncryptionConfigurationElRef {
-        BigqueryJobCopyElDestinationEncryptionConfigurationElRef {
+    ) -> BigqueryJob_Copy_DestinationEncryptionConfigurationRef {
+        BigqueryJob_Copy_DestinationEncryptionConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryJobCopyElDestinationEncryptionConfigurationElRef {
+impl BigqueryJob_Copy_DestinationEncryptionConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -844,7 +862,7 @@ impl BigqueryJobCopyElDestinationEncryptionConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct BigqueryJobCopyElDestinationTableEl {
+pub struct BigqueryJob_Copy_DestinationTable {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dataset_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -852,7 +870,7 @@ pub struct BigqueryJobCopyElDestinationTableEl {
     table_id: terrars::PrimField<std::string::String>,
 }
 
-impl BigqueryJobCopyElDestinationTableEl {
+impl BigqueryJob_Copy_DestinationTable {
     #[doc = "Set the field `dataset_id`.\nThe ID of the dataset containing this table."]
     pub fn set_dataset_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.dataset_id = std::option::Option::Some(v.into());
@@ -866,8 +884,8 @@ impl BigqueryJobCopyElDestinationTableEl {
     }
 }
 
-impl terrars::ToListMappable for BigqueryJobCopyElDestinationTableEl {
-    type O = terrars::BlockAssignable<BigqueryJobCopyElDestinationTableEl>;
+impl terrars::ToListMappable for BigqueryJob_Copy_DestinationTable {
+    type O = terrars::BlockAssignable<BigqueryJob_Copy_DestinationTable>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -878,15 +896,15 @@ impl terrars::ToListMappable for BigqueryJobCopyElDestinationTableEl {
     }
 }
 
-pub struct BuildBigqueryJobCopyElDestinationTableEl {
+pub struct BuildBigqueryJob_Copy_DestinationTable {
     #[doc =
         "The table. Can be specified '{{table_id}}' if 'project_id' and 'dataset_id' are also set,\nor of the form 'projects/{{project}}/datasets/{{dataset_id}}/tables/{{table_id}}' if not."]
     pub table_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBigqueryJobCopyElDestinationTableEl {
-    pub fn build(self) -> BigqueryJobCopyElDestinationTableEl {
-        BigqueryJobCopyElDestinationTableEl {
+impl BuildBigqueryJob_Copy_DestinationTable {
+    pub fn build(self) -> BigqueryJob_Copy_DestinationTable {
+        BigqueryJob_Copy_DestinationTable {
             dataset_id: core::default::Default::default(),
             project_id: core::default::Default::default(),
             table_id: self.table_id,
@@ -894,21 +912,23 @@ impl BuildBigqueryJobCopyElDestinationTableEl {
     }
 }
 
-pub struct BigqueryJobCopyElDestinationTableElRef {
+#[allow(dead_code)]
+pub struct BigqueryJob_Copy_DestinationTableRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryJobCopyElDestinationTableElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryJobCopyElDestinationTableElRef {
-        BigqueryJobCopyElDestinationTableElRef {
+impl terrars::Ref for BigqueryJob_Copy_DestinationTableRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryJob_Copy_DestinationTableRef {
+        BigqueryJob_Copy_DestinationTableRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryJobCopyElDestinationTableElRef {
+impl BigqueryJob_Copy_DestinationTableRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -933,7 +953,7 @@ impl BigqueryJobCopyElDestinationTableElRef {
 }
 
 #[derive(Serialize)]
-pub struct BigqueryJobCopyElSourceTablesEl {
+pub struct BigqueryJob_Copy_SourceTables {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dataset_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -941,7 +961,7 @@ pub struct BigqueryJobCopyElSourceTablesEl {
     table_id: terrars::PrimField<std::string::String>,
 }
 
-impl BigqueryJobCopyElSourceTablesEl {
+impl BigqueryJob_Copy_SourceTables {
     #[doc = "Set the field `dataset_id`.\nThe ID of the dataset containing this table."]
     pub fn set_dataset_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.dataset_id = std::option::Option::Some(v.into());
@@ -955,8 +975,8 @@ impl BigqueryJobCopyElSourceTablesEl {
     }
 }
 
-impl terrars::ToListMappable for BigqueryJobCopyElSourceTablesEl {
-    type O = terrars::BlockAssignable<BigqueryJobCopyElSourceTablesEl>;
+impl terrars::ToListMappable for BigqueryJob_Copy_SourceTables {
+    type O = terrars::BlockAssignable<BigqueryJob_Copy_SourceTables>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -967,15 +987,15 @@ impl terrars::ToListMappable for BigqueryJobCopyElSourceTablesEl {
     }
 }
 
-pub struct BuildBigqueryJobCopyElSourceTablesEl {
+pub struct BuildBigqueryJob_Copy_SourceTables {
     #[doc =
         "The table. Can be specified '{{table_id}}' if 'project_id' and 'dataset_id' are also set,\nor of the form 'projects/{{project}}/datasets/{{dataset_id}}/tables/{{table_id}}' if not."]
     pub table_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBigqueryJobCopyElSourceTablesEl {
-    pub fn build(self) -> BigqueryJobCopyElSourceTablesEl {
-        BigqueryJobCopyElSourceTablesEl {
+impl BuildBigqueryJob_Copy_SourceTables {
+    pub fn build(self) -> BigqueryJob_Copy_SourceTables {
+        BigqueryJob_Copy_SourceTables {
             dataset_id: core::default::Default::default(),
             project_id: core::default::Default::default(),
             table_id: self.table_id,
@@ -983,21 +1003,23 @@ impl BuildBigqueryJobCopyElSourceTablesEl {
     }
 }
 
-pub struct BigqueryJobCopyElSourceTablesElRef {
+#[allow(dead_code)]
+pub struct BigqueryJob_Copy_SourceTablesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryJobCopyElSourceTablesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryJobCopyElSourceTablesElRef {
-        BigqueryJobCopyElSourceTablesElRef {
+impl terrars::Ref for BigqueryJob_Copy_SourceTablesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryJob_Copy_SourceTablesRef {
+        BigqueryJob_Copy_SourceTablesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryJobCopyElSourceTablesElRef {
+impl BigqueryJob_Copy_SourceTablesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1022,16 +1044,16 @@ impl BigqueryJobCopyElSourceTablesElRef {
 }
 
 #[derive(Serialize, Default)]
-struct BigqueryJobCopyElDynamic {
+struct BigqueryJob_CopyDynamic {
     destination_encryption_configuration: std
     ::option
-    ::Option<terrars::DynamicBlock<BigqueryJobCopyElDestinationEncryptionConfigurationEl>>,
-    destination_table: std::option::Option<terrars::DynamicBlock<BigqueryJobCopyElDestinationTableEl>>,
-    source_tables: std::option::Option<terrars::DynamicBlock<BigqueryJobCopyElSourceTablesEl>>,
+    ::Option<terrars::DynamicBlock<BigqueryJob_Copy_DestinationEncryptionConfiguration>>,
+    destination_table: std::option::Option<terrars::DynamicBlock<BigqueryJob_Copy_DestinationTable>>,
+    source_tables: std::option::Option<terrars::DynamicBlock<BigqueryJob_Copy_SourceTables>>,
 }
 
 #[derive(Serialize)]
-pub struct BigqueryJobCopyEl {
+pub struct BigqueryJob_Copy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create_disposition: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1039,15 +1061,15 @@ pub struct BigqueryJobCopyEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     destination_encryption_configuration: std
     ::option
-    ::Option<std::vec::Vec<BigqueryJobCopyElDestinationEncryptionConfigurationEl>>,
+    ::Option<std::vec::Vec<BigqueryJob_Copy_DestinationEncryptionConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    destination_table: std::option::Option<std::vec::Vec<BigqueryJobCopyElDestinationTableEl>>,
+    destination_table: std::option::Option<std::vec::Vec<BigqueryJob_Copy_DestinationTable>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    source_tables: std::option::Option<std::vec::Vec<BigqueryJobCopyElSourceTablesEl>>,
-    dynamic: BigqueryJobCopyElDynamic,
+    source_tables: std::option::Option<std::vec::Vec<BigqueryJob_Copy_SourceTables>>,
+    dynamic: BigqueryJob_CopyDynamic,
 }
 
-impl BigqueryJobCopyEl {
+impl BigqueryJob_Copy {
     #[doc =
         "Set the field `create_disposition`.\nSpecifies whether the job is allowed to create new tables. The following values are supported:\nCREATE_IF_NEEDED: If the table does not exist, BigQuery creates the table.\nCREATE_NEVER: The table must already exist. If it does not, a 'notFound' error is returned in the job result.\nCreation, truncation and append actions occur as one atomic update upon job completion Default value: \"CREATE_IF_NEEDED\" Possible values: [\"CREATE_IF_NEEDED\", \"CREATE_NEVER\"]"]
     pub fn set_create_disposition(
@@ -1068,7 +1090,7 @@ impl BigqueryJobCopyEl {
     #[doc = "Set the field `destination_encryption_configuration`.\n"]
     pub fn set_destination_encryption_configuration(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryJobCopyElDestinationEncryptionConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryJob_Copy_DestinationEncryptionConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1084,7 +1106,7 @@ impl BigqueryJobCopyEl {
     #[doc = "Set the field `destination_table`.\n"]
     pub fn set_destination_table(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryJobCopyElDestinationTableEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryJob_Copy_DestinationTable>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1100,7 +1122,7 @@ impl BigqueryJobCopyEl {
     #[doc = "Set the field `source_tables`.\n"]
     pub fn set_source_tables(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryJobCopyElSourceTablesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryJob_Copy_SourceTables>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1114,8 +1136,8 @@ impl BigqueryJobCopyEl {
     }
 }
 
-impl terrars::ToListMappable for BigqueryJobCopyEl {
-    type O = terrars::BlockAssignable<BigqueryJobCopyEl>;
+impl terrars::ToListMappable for BigqueryJob_Copy {
+    type O = terrars::BlockAssignable<BigqueryJob_Copy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1126,11 +1148,11 @@ impl terrars::ToListMappable for BigqueryJobCopyEl {
     }
 }
 
-pub struct BuildBigqueryJobCopyEl {}
+pub struct BuildBigqueryJob_Copy {}
 
-impl BuildBigqueryJobCopyEl {
-    pub fn build(self) -> BigqueryJobCopyEl {
-        BigqueryJobCopyEl {
+impl BuildBigqueryJob_Copy {
+    pub fn build(self) -> BigqueryJob_Copy {
+        BigqueryJob_Copy {
             create_disposition: core::default::Default::default(),
             write_disposition: core::default::Default::default(),
             destination_encryption_configuration: core::default::Default::default(),
@@ -1141,21 +1163,23 @@ impl BuildBigqueryJobCopyEl {
     }
 }
 
-pub struct BigqueryJobCopyElRef {
+#[allow(dead_code)]
+pub struct BigqueryJob_CopyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryJobCopyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryJobCopyElRef {
-        BigqueryJobCopyElRef {
+impl terrars::Ref for BigqueryJob_CopyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryJob_CopyRef {
+        BigqueryJob_CopyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryJobCopyElRef {
+impl BigqueryJob_CopyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1175,32 +1199,32 @@ impl BigqueryJobCopyElRef {
     #[doc = "Get a reference to the value of field `destination_encryption_configuration` after provisioning.\n"]
     pub fn destination_encryption_configuration(
         &self,
-    ) -> terrars::ListRef<BigqueryJobCopyElDestinationEncryptionConfigurationElRef> {
+    ) -> terrars::ListRef<BigqueryJob_Copy_DestinationEncryptionConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.destination_encryption_configuration", self.base))
     }
 
     #[doc = "Get a reference to the value of field `destination_table` after provisioning.\n"]
-    pub fn destination_table(&self) -> terrars::ListRef<BigqueryJobCopyElDestinationTableElRef> {
+    pub fn destination_table(&self) -> terrars::ListRef<BigqueryJob_Copy_DestinationTableRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.destination_table", self.base))
     }
 
     #[doc = "Get a reference to the value of field `source_tables` after provisioning.\n"]
-    pub fn source_tables(&self) -> terrars::ListRef<BigqueryJobCopyElSourceTablesElRef> {
+    pub fn source_tables(&self) -> terrars::ListRef<BigqueryJob_Copy_SourceTablesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source_tables", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct BigqueryJobExtractElSourceModelEl {
+pub struct BigqueryJob_Extract_SourceModel {
     dataset_id: terrars::PrimField<std::string::String>,
     model_id: terrars::PrimField<std::string::String>,
     project_id: terrars::PrimField<std::string::String>,
 }
 
-impl BigqueryJobExtractElSourceModelEl { }
+impl BigqueryJob_Extract_SourceModel { }
 
-impl terrars::ToListMappable for BigqueryJobExtractElSourceModelEl {
-    type O = terrars::BlockAssignable<BigqueryJobExtractElSourceModelEl>;
+impl terrars::ToListMappable for BigqueryJob_Extract_SourceModel {
+    type O = terrars::BlockAssignable<BigqueryJob_Extract_SourceModel>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1211,7 +1235,7 @@ impl terrars::ToListMappable for BigqueryJobExtractElSourceModelEl {
     }
 }
 
-pub struct BuildBigqueryJobExtractElSourceModelEl {
+pub struct BuildBigqueryJob_Extract_SourceModel {
     #[doc = "The ID of the dataset containing this model."]
     pub dataset_id: terrars::PrimField<std::string::String>,
     #[doc = "The ID of the model."]
@@ -1220,9 +1244,9 @@ pub struct BuildBigqueryJobExtractElSourceModelEl {
     pub project_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBigqueryJobExtractElSourceModelEl {
-    pub fn build(self) -> BigqueryJobExtractElSourceModelEl {
-        BigqueryJobExtractElSourceModelEl {
+impl BuildBigqueryJob_Extract_SourceModel {
+    pub fn build(self) -> BigqueryJob_Extract_SourceModel {
+        BigqueryJob_Extract_SourceModel {
             dataset_id: self.dataset_id,
             model_id: self.model_id,
             project_id: self.project_id,
@@ -1230,21 +1254,23 @@ impl BuildBigqueryJobExtractElSourceModelEl {
     }
 }
 
-pub struct BigqueryJobExtractElSourceModelElRef {
+#[allow(dead_code)]
+pub struct BigqueryJob_Extract_SourceModelRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryJobExtractElSourceModelElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryJobExtractElSourceModelElRef {
-        BigqueryJobExtractElSourceModelElRef {
+impl terrars::Ref for BigqueryJob_Extract_SourceModelRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryJob_Extract_SourceModelRef {
+        BigqueryJob_Extract_SourceModelRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryJobExtractElSourceModelElRef {
+impl BigqueryJob_Extract_SourceModelRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1268,7 +1294,7 @@ impl BigqueryJobExtractElSourceModelElRef {
 }
 
 #[derive(Serialize)]
-pub struct BigqueryJobExtractElSourceTableEl {
+pub struct BigqueryJob_Extract_SourceTable {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dataset_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1276,7 +1302,7 @@ pub struct BigqueryJobExtractElSourceTableEl {
     table_id: terrars::PrimField<std::string::String>,
 }
 
-impl BigqueryJobExtractElSourceTableEl {
+impl BigqueryJob_Extract_SourceTable {
     #[doc = "Set the field `dataset_id`.\nThe ID of the dataset containing this table."]
     pub fn set_dataset_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.dataset_id = std::option::Option::Some(v.into());
@@ -1290,8 +1316,8 @@ impl BigqueryJobExtractElSourceTableEl {
     }
 }
 
-impl terrars::ToListMappable for BigqueryJobExtractElSourceTableEl {
-    type O = terrars::BlockAssignable<BigqueryJobExtractElSourceTableEl>;
+impl terrars::ToListMappable for BigqueryJob_Extract_SourceTable {
+    type O = terrars::BlockAssignable<BigqueryJob_Extract_SourceTable>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1302,15 +1328,15 @@ impl terrars::ToListMappable for BigqueryJobExtractElSourceTableEl {
     }
 }
 
-pub struct BuildBigqueryJobExtractElSourceTableEl {
+pub struct BuildBigqueryJob_Extract_SourceTable {
     #[doc =
         "The table. Can be specified '{{table_id}}' if 'project_id' and 'dataset_id' are also set,\nor of the form 'projects/{{project}}/datasets/{{dataset_id}}/tables/{{table_id}}' if not."]
     pub table_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBigqueryJobExtractElSourceTableEl {
-    pub fn build(self) -> BigqueryJobExtractElSourceTableEl {
-        BigqueryJobExtractElSourceTableEl {
+impl BuildBigqueryJob_Extract_SourceTable {
+    pub fn build(self) -> BigqueryJob_Extract_SourceTable {
+        BigqueryJob_Extract_SourceTable {
             dataset_id: core::default::Default::default(),
             project_id: core::default::Default::default(),
             table_id: self.table_id,
@@ -1318,21 +1344,23 @@ impl BuildBigqueryJobExtractElSourceTableEl {
     }
 }
 
-pub struct BigqueryJobExtractElSourceTableElRef {
+#[allow(dead_code)]
+pub struct BigqueryJob_Extract_SourceTableRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryJobExtractElSourceTableElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryJobExtractElSourceTableElRef {
-        BigqueryJobExtractElSourceTableElRef {
+impl terrars::Ref for BigqueryJob_Extract_SourceTableRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryJob_Extract_SourceTableRef {
+        BigqueryJob_Extract_SourceTableRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryJobExtractElSourceTableElRef {
+impl BigqueryJob_Extract_SourceTableRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1357,13 +1385,13 @@ impl BigqueryJobExtractElSourceTableElRef {
 }
 
 #[derive(Serialize, Default)]
-struct BigqueryJobExtractElDynamic {
-    source_model: std::option::Option<terrars::DynamicBlock<BigqueryJobExtractElSourceModelEl>>,
-    source_table: std::option::Option<terrars::DynamicBlock<BigqueryJobExtractElSourceTableEl>>,
+struct BigqueryJob_ExtractDynamic {
+    source_model: std::option::Option<terrars::DynamicBlock<BigqueryJob_Extract_SourceModel>>,
+    source_table: std::option::Option<terrars::DynamicBlock<BigqueryJob_Extract_SourceTable>>,
 }
 
 #[derive(Serialize)]
-pub struct BigqueryJobExtractEl {
+pub struct BigqueryJob_Extract {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     compression: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1376,13 +1404,13 @@ pub struct BigqueryJobExtractEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     use_avro_logical_types: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    source_model: std::option::Option<std::vec::Vec<BigqueryJobExtractElSourceModelEl>>,
+    source_model: std::option::Option<std::vec::Vec<BigqueryJob_Extract_SourceModel>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    source_table: std::option::Option<std::vec::Vec<BigqueryJobExtractElSourceTableEl>>,
-    dynamic: BigqueryJobExtractElDynamic,
+    source_table: std::option::Option<std::vec::Vec<BigqueryJob_Extract_SourceTable>>,
+    dynamic: BigqueryJob_ExtractDynamic,
 }
 
-impl BigqueryJobExtractEl {
+impl BigqueryJob_Extract {
     #[doc =
         "Set the field `compression`.\nThe compression type to use for exported files. Possible values include GZIP, DEFLATE, SNAPPY, and NONE.\nThe default value is NONE. DEFLATE and SNAPPY are only supported for Avro."]
     pub fn set_compression(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1422,7 +1450,7 @@ impl BigqueryJobExtractEl {
     #[doc = "Set the field `source_model`.\n"]
     pub fn set_source_model(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryJobExtractElSourceModelEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryJob_Extract_SourceModel>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1438,7 +1466,7 @@ impl BigqueryJobExtractEl {
     #[doc = "Set the field `source_table`.\n"]
     pub fn set_source_table(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryJobExtractElSourceTableEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryJob_Extract_SourceTable>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1452,8 +1480,8 @@ impl BigqueryJobExtractEl {
     }
 }
 
-impl terrars::ToListMappable for BigqueryJobExtractEl {
-    type O = terrars::BlockAssignable<BigqueryJobExtractEl>;
+impl terrars::ToListMappable for BigqueryJob_Extract {
+    type O = terrars::BlockAssignable<BigqueryJob_Extract>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1464,14 +1492,14 @@ impl terrars::ToListMappable for BigqueryJobExtractEl {
     }
 }
 
-pub struct BuildBigqueryJobExtractEl {
+pub struct BuildBigqueryJob_Extract {
     #[doc = "A list of fully-qualified Google Cloud Storage URIs where the extracted table should be written."]
     pub destination_uris: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildBigqueryJobExtractEl {
-    pub fn build(self) -> BigqueryJobExtractEl {
-        BigqueryJobExtractEl {
+impl BuildBigqueryJob_Extract {
+    pub fn build(self) -> BigqueryJob_Extract {
+        BigqueryJob_Extract {
             compression: core::default::Default::default(),
             destination_format: core::default::Default::default(),
             destination_uris: self.destination_uris,
@@ -1485,21 +1513,23 @@ impl BuildBigqueryJobExtractEl {
     }
 }
 
-pub struct BigqueryJobExtractElRef {
+#[allow(dead_code)]
+pub struct BigqueryJob_ExtractRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryJobExtractElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryJobExtractElRef {
-        BigqueryJobExtractElRef {
+impl terrars::Ref for BigqueryJob_ExtractRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryJob_ExtractRef {
+        BigqueryJob_ExtractRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryJobExtractElRef {
+impl BigqueryJob_ExtractRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1541,180 +1571,25 @@ impl BigqueryJobExtractElRef {
     }
 
     #[doc = "Get a reference to the value of field `source_model` after provisioning.\n"]
-    pub fn source_model(&self) -> terrars::ListRef<BigqueryJobExtractElSourceModelElRef> {
+    pub fn source_model(&self) -> terrars::ListRef<BigqueryJob_Extract_SourceModelRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source_model", self.base))
     }
 
     #[doc = "Get a reference to the value of field `source_table` after provisioning.\n"]
-    pub fn source_table(&self) -> terrars::ListRef<BigqueryJobExtractElSourceTableElRef> {
+    pub fn source_table(&self) -> terrars::ListRef<BigqueryJob_Extract_SourceTableRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source_table", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct BigqueryJobLoadElDestinationEncryptionConfigurationEl {
-    kms_key_name: terrars::PrimField<std::string::String>,
-}
-
-impl BigqueryJobLoadElDestinationEncryptionConfigurationEl { }
-
-impl terrars::ToListMappable for BigqueryJobLoadElDestinationEncryptionConfigurationEl {
-    type O = terrars::BlockAssignable<BigqueryJobLoadElDestinationEncryptionConfigurationEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildBigqueryJobLoadElDestinationEncryptionConfigurationEl {
-    #[doc =
-        "Describes the Cloud KMS encryption key that will be used to protect destination BigQuery table.\nThe BigQuery Service Account associated with your project requires access to this encryption key."]
-    pub kms_key_name: terrars::PrimField<std::string::String>,
-}
-
-impl BuildBigqueryJobLoadElDestinationEncryptionConfigurationEl {
-    pub fn build(self) -> BigqueryJobLoadElDestinationEncryptionConfigurationEl {
-        BigqueryJobLoadElDestinationEncryptionConfigurationEl { kms_key_name: self.kms_key_name }
-    }
-}
-
-pub struct BigqueryJobLoadElDestinationEncryptionConfigurationElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for BigqueryJobLoadElDestinationEncryptionConfigurationElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> BigqueryJobLoadElDestinationEncryptionConfigurationElRef {
-        BigqueryJobLoadElDestinationEncryptionConfigurationElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl BigqueryJobLoadElDestinationEncryptionConfigurationElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `kms_key_name` after provisioning.\nDescribes the Cloud KMS encryption key that will be used to protect destination BigQuery table.\nThe BigQuery Service Account associated with your project requires access to this encryption key."]
-    pub fn kms_key_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_name", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `kms_key_version` after provisioning.\nDescribes the Cloud KMS encryption key version used to protect destination BigQuery table."]
-    pub fn kms_key_version(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_version", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct BigqueryJobLoadElDestinationTableEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    dataset_id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    project_id: std::option::Option<terrars::PrimField<std::string::String>>,
-    table_id: terrars::PrimField<std::string::String>,
-}
-
-impl BigqueryJobLoadElDestinationTableEl {
-    #[doc = "Set the field `dataset_id`.\nThe ID of the dataset containing this table."]
-    pub fn set_dataset_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.dataset_id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `project_id`.\nThe ID of the project containing this table."]
-    pub fn set_project_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.project_id = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for BigqueryJobLoadElDestinationTableEl {
-    type O = terrars::BlockAssignable<BigqueryJobLoadElDestinationTableEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildBigqueryJobLoadElDestinationTableEl {
-    #[doc =
-        "The table. Can be specified '{{table_id}}' if 'project_id' and 'dataset_id' are also set,\nor of the form 'projects/{{project}}/datasets/{{dataset_id}}/tables/{{table_id}}' if not."]
-    pub table_id: terrars::PrimField<std::string::String>,
-}
-
-impl BuildBigqueryJobLoadElDestinationTableEl {
-    pub fn build(self) -> BigqueryJobLoadElDestinationTableEl {
-        BigqueryJobLoadElDestinationTableEl {
-            dataset_id: core::default::Default::default(),
-            project_id: core::default::Default::default(),
-            table_id: self.table_id,
-        }
-    }
-}
-
-pub struct BigqueryJobLoadElDestinationTableElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for BigqueryJobLoadElDestinationTableElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryJobLoadElDestinationTableElRef {
-        BigqueryJobLoadElDestinationTableElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl BigqueryJobLoadElDestinationTableElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `dataset_id` after provisioning.\nThe ID of the dataset containing this table."]
-    pub fn dataset_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.dataset_id", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `project_id` after provisioning.\nThe ID of the project containing this table."]
-    pub fn project_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project_id", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `table_id` after provisioning.\nThe table. Can be specified '{{table_id}}' if 'project_id' and 'dataset_id' are also set,\nor of the form 'projects/{{project}}/datasets/{{dataset_id}}/tables/{{table_id}}' if not."]
-    pub fn table_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.table_id", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct BigqueryJobLoadElParquetOptionsEl {
+pub struct BigqueryJob_Load_ParquetOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_list_inference: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enum_as_string: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl BigqueryJobLoadElParquetOptionsEl {
+impl BigqueryJob_Load_ParquetOptions {
     #[doc =
         "Set the field `enable_list_inference`.\nIf sourceFormat is set to PARQUET, indicates whether to use schema inference specifically for Parquet LIST logical type."]
     pub fn set_enable_list_inference(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -1730,8 +1605,8 @@ impl BigqueryJobLoadElParquetOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for BigqueryJobLoadElParquetOptionsEl {
-    type O = terrars::BlockAssignable<BigqueryJobLoadElParquetOptionsEl>;
+impl terrars::ToListMappable for BigqueryJob_Load_ParquetOptions {
+    type O = terrars::BlockAssignable<BigqueryJob_Load_ParquetOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1742,32 +1617,34 @@ impl terrars::ToListMappable for BigqueryJobLoadElParquetOptionsEl {
     }
 }
 
-pub struct BuildBigqueryJobLoadElParquetOptionsEl {}
+pub struct BuildBigqueryJob_Load_ParquetOptions {}
 
-impl BuildBigqueryJobLoadElParquetOptionsEl {
-    pub fn build(self) -> BigqueryJobLoadElParquetOptionsEl {
-        BigqueryJobLoadElParquetOptionsEl {
+impl BuildBigqueryJob_Load_ParquetOptions {
+    pub fn build(self) -> BigqueryJob_Load_ParquetOptions {
+        BigqueryJob_Load_ParquetOptions {
             enable_list_inference: core::default::Default::default(),
             enum_as_string: core::default::Default::default(),
         }
     }
 }
 
-pub struct BigqueryJobLoadElParquetOptionsElRef {
+#[allow(dead_code)]
+pub struct BigqueryJob_Load_ParquetOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryJobLoadElParquetOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryJobLoadElParquetOptionsElRef {
-        BigqueryJobLoadElParquetOptionsElRef {
+impl terrars::Ref for BigqueryJob_Load_ParquetOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryJob_Load_ParquetOptionsRef {
+        BigqueryJob_Load_ParquetOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryJobLoadElParquetOptionsElRef {
+impl BigqueryJob_Load_ParquetOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1786,7 +1663,7 @@ impl BigqueryJobLoadElParquetOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct BigqueryJobLoadElTimePartitioningEl {
+pub struct BigqueryJob_Load_TimePartitioning {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     expiration_ms: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1795,7 +1672,7 @@ pub struct BigqueryJobLoadElTimePartitioningEl {
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl BigqueryJobLoadElTimePartitioningEl {
+impl BigqueryJob_Load_TimePartitioning {
     #[doc =
         "Set the field `expiration_ms`.\nNumber of milliseconds for which to keep the storage for a partition. A wrapper is used here because 0 is an invalid value."]
     pub fn set_expiration_ms(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1811,8 +1688,8 @@ impl BigqueryJobLoadElTimePartitioningEl {
     }
 }
 
-impl terrars::ToListMappable for BigqueryJobLoadElTimePartitioningEl {
-    type O = terrars::BlockAssignable<BigqueryJobLoadElTimePartitioningEl>;
+impl terrars::ToListMappable for BigqueryJob_Load_TimePartitioning {
+    type O = terrars::BlockAssignable<BigqueryJob_Load_TimePartitioning>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1823,15 +1700,15 @@ impl terrars::ToListMappable for BigqueryJobLoadElTimePartitioningEl {
     }
 }
 
-pub struct BuildBigqueryJobLoadElTimePartitioningEl {
+pub struct BuildBigqueryJob_Load_TimePartitioning {
     #[doc =
         "The only type supported is DAY, which will generate one partition per day. Providing an empty string used to cause an error,\nbut in OnePlatform the field will be treated as unset."]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBigqueryJobLoadElTimePartitioningEl {
-    pub fn build(self) -> BigqueryJobLoadElTimePartitioningEl {
-        BigqueryJobLoadElTimePartitioningEl {
+impl BuildBigqueryJob_Load_TimePartitioning {
+    pub fn build(self) -> BigqueryJob_Load_TimePartitioning {
+        BigqueryJob_Load_TimePartitioning {
             expiration_ms: core::default::Default::default(),
             field: core::default::Default::default(),
             type_: self.type_,
@@ -1839,21 +1716,23 @@ impl BuildBigqueryJobLoadElTimePartitioningEl {
     }
 }
 
-pub struct BigqueryJobLoadElTimePartitioningElRef {
+#[allow(dead_code)]
+pub struct BigqueryJob_Load_TimePartitioningRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryJobLoadElTimePartitioningElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryJobLoadElTimePartitioningElRef {
-        BigqueryJobLoadElTimePartitioningElRef {
+impl terrars::Ref for BigqueryJob_Load_TimePartitioningRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryJob_Load_TimePartitioningRef {
+        BigqueryJob_Load_TimePartitioningRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryJobLoadElTimePartitioningElRef {
+impl BigqueryJob_Load_TimePartitioningRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1878,17 +1757,17 @@ impl BigqueryJobLoadElTimePartitioningElRef {
 }
 
 #[derive(Serialize, Default)]
-struct BigqueryJobLoadElDynamic {
+struct BigqueryJob_LoadDynamic {
     destination_encryption_configuration: std
     ::option
-    ::Option<terrars::DynamicBlock<BigqueryJobLoadElDestinationEncryptionConfigurationEl>>,
-    destination_table: std::option::Option<terrars::DynamicBlock<BigqueryJobLoadElDestinationTableEl>>,
-    parquet_options: std::option::Option<terrars::DynamicBlock<BigqueryJobLoadElParquetOptionsEl>>,
-    time_partitioning: std::option::Option<terrars::DynamicBlock<BigqueryJobLoadElTimePartitioningEl>>,
+    ::Option<terrars::DynamicBlock<BigqueryJob_Copy_DestinationEncryptionConfiguration>>,
+    destination_table: std::option::Option<terrars::DynamicBlock<BigqueryJob_Copy_DestinationTable>>,
+    parquet_options: std::option::Option<terrars::DynamicBlock<BigqueryJob_Load_ParquetOptions>>,
+    time_partitioning: std::option::Option<terrars::DynamicBlock<BigqueryJob_Load_TimePartitioning>>,
 }
 
 #[derive(Serialize)]
-pub struct BigqueryJobLoadEl {
+pub struct BigqueryJob_Load {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allow_jagged_rows: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1925,17 +1804,17 @@ pub struct BigqueryJobLoadEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     destination_encryption_configuration: std
     ::option
-    ::Option<std::vec::Vec<BigqueryJobLoadElDestinationEncryptionConfigurationEl>>,
+    ::Option<std::vec::Vec<BigqueryJob_Copy_DestinationEncryptionConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    destination_table: std::option::Option<std::vec::Vec<BigqueryJobLoadElDestinationTableEl>>,
+    destination_table: std::option::Option<std::vec::Vec<BigqueryJob_Copy_DestinationTable>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    parquet_options: std::option::Option<std::vec::Vec<BigqueryJobLoadElParquetOptionsEl>>,
+    parquet_options: std::option::Option<std::vec::Vec<BigqueryJob_Load_ParquetOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    time_partitioning: std::option::Option<std::vec::Vec<BigqueryJobLoadElTimePartitioningEl>>,
-    dynamic: BigqueryJobLoadElDynamic,
+    time_partitioning: std::option::Option<std::vec::Vec<BigqueryJob_Load_TimePartitioning>>,
+    dynamic: BigqueryJob_LoadDynamic,
 }
 
-impl BigqueryJobLoadEl {
+impl BigqueryJob_Load {
     #[doc =
         "Set the field `allow_jagged_rows`.\nAccept rows that are missing trailing optional columns. The missing values are treated as nulls.\nIf false, records with missing trailing columns are treated as bad records, and if there are too many bad records,\nan invalid error is returned in the job result. The default value is false. Only applicable to CSV, ignored for other formats."]
     pub fn set_allow_jagged_rows(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -2060,7 +1939,7 @@ impl BigqueryJobLoadEl {
     #[doc = "Set the field `destination_encryption_configuration`.\n"]
     pub fn set_destination_encryption_configuration(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryJobLoadElDestinationEncryptionConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryJob_Copy_DestinationEncryptionConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2076,7 +1955,7 @@ impl BigqueryJobLoadEl {
     #[doc = "Set the field `destination_table`.\n"]
     pub fn set_destination_table(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryJobLoadElDestinationTableEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryJob_Copy_DestinationTable>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2092,7 +1971,7 @@ impl BigqueryJobLoadEl {
     #[doc = "Set the field `parquet_options`.\n"]
     pub fn set_parquet_options(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryJobLoadElParquetOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryJob_Load_ParquetOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2108,7 +1987,7 @@ impl BigqueryJobLoadEl {
     #[doc = "Set the field `time_partitioning`.\n"]
     pub fn set_time_partitioning(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryJobLoadElTimePartitioningEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryJob_Load_TimePartitioning>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2122,8 +2001,8 @@ impl BigqueryJobLoadEl {
     }
 }
 
-impl terrars::ToListMappable for BigqueryJobLoadEl {
-    type O = terrars::BlockAssignable<BigqueryJobLoadEl>;
+impl terrars::ToListMappable for BigqueryJob_Load {
+    type O = terrars::BlockAssignable<BigqueryJob_Load>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2134,15 +2013,15 @@ impl terrars::ToListMappable for BigqueryJobLoadEl {
     }
 }
 
-pub struct BuildBigqueryJobLoadEl {
+pub struct BuildBigqueryJob_Load {
     #[doc =
         "The fully-qualified URIs that point to your data in Google Cloud.\nFor Google Cloud Storage URIs: Each URI can contain one '\\*' wildcard character\nand it must come after the 'bucket' name. Size limits related to load jobs apply\nto external data sources. For Google Cloud Bigtable URIs: Exactly one URI can be\nspecified and it has be a fully specified and valid HTTPS URL for a Google Cloud Bigtable table.\nFor Google Cloud Datastore backups: Exactly one URI can be specified. Also, the '\\*' wildcard character is not allowed."]
     pub source_uris: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildBigqueryJobLoadEl {
-    pub fn build(self) -> BigqueryJobLoadEl {
-        BigqueryJobLoadEl {
+impl BuildBigqueryJob_Load {
+    pub fn build(self) -> BigqueryJob_Load {
+        BigqueryJob_Load {
             allow_jagged_rows: core::default::Default::default(),
             allow_quoted_newlines: core::default::Default::default(),
             autodetect: core::default::Default::default(),
@@ -2169,21 +2048,23 @@ impl BuildBigqueryJobLoadEl {
     }
 }
 
-pub struct BigqueryJobLoadElRef {
+#[allow(dead_code)]
+pub struct BigqueryJob_LoadRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryJobLoadElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryJobLoadElRef {
-        BigqueryJobLoadElRef {
+impl terrars::Ref for BigqueryJob_LoadRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryJob_LoadRef {
+        BigqueryJob_LoadRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryJobLoadElRef {
+impl BigqueryJob_LoadRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2293,43 +2174,36 @@ impl BigqueryJobLoadElRef {
     #[doc = "Get a reference to the value of field `destination_encryption_configuration` after provisioning.\n"]
     pub fn destination_encryption_configuration(
         &self,
-    ) -> terrars::ListRef<BigqueryJobLoadElDestinationEncryptionConfigurationElRef> {
+    ) -> terrars::ListRef<BigqueryJob_Copy_DestinationEncryptionConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.destination_encryption_configuration", self.base))
     }
 
     #[doc = "Get a reference to the value of field `destination_table` after provisioning.\n"]
-    pub fn destination_table(&self) -> terrars::ListRef<BigqueryJobLoadElDestinationTableElRef> {
+    pub fn destination_table(&self) -> terrars::ListRef<BigqueryJob_Copy_DestinationTableRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.destination_table", self.base))
     }
 
     #[doc = "Get a reference to the value of field `parquet_options` after provisioning.\n"]
-    pub fn parquet_options(&self) -> terrars::ListRef<BigqueryJobLoadElParquetOptionsElRef> {
+    pub fn parquet_options(&self) -> terrars::ListRef<BigqueryJob_Load_ParquetOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.parquet_options", self.base))
     }
 
     #[doc = "Get a reference to the value of field `time_partitioning` after provisioning.\n"]
-    pub fn time_partitioning(&self) -> terrars::ListRef<BigqueryJobLoadElTimePartitioningElRef> {
+    pub fn time_partitioning(&self) -> terrars::ListRef<BigqueryJob_Load_TimePartitioningRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.time_partitioning", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct BigqueryJobQueryElDefaultDatasetEl {
-    dataset_id: terrars::PrimField<std::string::String>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    project_id: std::option::Option<terrars::PrimField<std::string::String>>,
+pub struct BigqueryJob_Query_ConnectionProperties {
+    key: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
-impl BigqueryJobQueryElDefaultDatasetEl {
-    #[doc = "Set the field `project_id`.\nThe ID of the project containing this table."]
-    pub fn set_project_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.project_id = std::option::Option::Some(v.into());
-        self
-    }
-}
+impl BigqueryJob_Query_ConnectionProperties { }
 
-impl terrars::ToListMappable for BigqueryJobQueryElDefaultDatasetEl {
-    type O = terrars::BlockAssignable<BigqueryJobQueryElDefaultDatasetEl>;
+impl terrars::ToListMappable for BigqueryJob_Query_ConnectionProperties {
+    type O = terrars::BlockAssignable<BigqueryJob_Query_ConnectionProperties>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2340,36 +2214,115 @@ impl terrars::ToListMappable for BigqueryJobQueryElDefaultDatasetEl {
     }
 }
 
-pub struct BuildBigqueryJobQueryElDefaultDatasetEl {
+pub struct BuildBigqueryJob_Query_ConnectionProperties {
     #[doc =
-        "The dataset. Can be specified '{{dataset_id}}' if 'project_id' is also set,\nor of the form 'projects/{{project}}/datasets/{{dataset_id}}' if not."]
-    pub dataset_id: terrars::PrimField<std::string::String>,
+        "The key of the property to set. Currently supported connection properties:\n* 'dataset_project_id': represents the default project for datasets that are used in the query\n* 'time_zone': represents the default timezone used to run the query\n* 'session_id': associates the query with a given session\n* 'query_label': associates the query with a given job label\n* 'service_account': indicates the service account to use to run a continuous query"]
+    pub key: terrars::PrimField<std::string::String>,
+    #[doc = "The value of the property to set."]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBigqueryJobQueryElDefaultDatasetEl {
-    pub fn build(self) -> BigqueryJobQueryElDefaultDatasetEl {
-        BigqueryJobQueryElDefaultDatasetEl {
-            dataset_id: self.dataset_id,
-            project_id: core::default::Default::default(),
+impl BuildBigqueryJob_Query_ConnectionProperties {
+    pub fn build(self) -> BigqueryJob_Query_ConnectionProperties {
+        BigqueryJob_Query_ConnectionProperties {
+            key: self.key,
+            value: self.value,
         }
     }
 }
 
-pub struct BigqueryJobQueryElDefaultDatasetElRef {
+#[allow(dead_code)]
+pub struct BigqueryJob_Query_ConnectionPropertiesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryJobQueryElDefaultDatasetElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryJobQueryElDefaultDatasetElRef {
-        BigqueryJobQueryElDefaultDatasetElRef {
+impl terrars::Ref for BigqueryJob_Query_ConnectionPropertiesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryJob_Query_ConnectionPropertiesRef {
+        BigqueryJob_Query_ConnectionPropertiesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryJobQueryElDefaultDatasetElRef {
+impl BigqueryJob_Query_ConnectionPropertiesRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `key` after provisioning.\nThe key of the property to set. Currently supported connection properties:\n* 'dataset_project_id': represents the default project for datasets that are used in the query\n* 'time_zone': represents the default timezone used to run the query\n* 'session_id': associates the query with a given session\n* 'query_label': associates the query with a given job label\n* 'service_account': indicates the service account to use to run a continuous query"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `value` after provisioning.\nThe value of the property to set."]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct BigqueryJob_Query_DefaultDataset {
+    dataset_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    project_id: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl BigqueryJob_Query_DefaultDataset {
+    #[doc = "Set the field `project_id`.\nThe ID of the project containing this table."]
+    pub fn set_project_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.project_id = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for BigqueryJob_Query_DefaultDataset {
+    type O = terrars::BlockAssignable<BigqueryJob_Query_DefaultDataset>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildBigqueryJob_Query_DefaultDataset {
+    #[doc =
+        "The dataset. Can be specified '{{dataset_id}}' if 'project_id' is also set,\nor of the form 'projects/{{project}}/datasets/{{dataset_id}}' if not."]
+    pub dataset_id: terrars::PrimField<std::string::String>,
+}
+
+impl BuildBigqueryJob_Query_DefaultDataset {
+    pub fn build(self) -> BigqueryJob_Query_DefaultDataset {
+        BigqueryJob_Query_DefaultDataset {
+            dataset_id: self.dataset_id,
+            project_id: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct BigqueryJob_Query_DefaultDatasetRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for BigqueryJob_Query_DefaultDatasetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryJob_Query_DefaultDatasetRef {
+        BigqueryJob_Query_DefaultDatasetRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl BigqueryJob_Query_DefaultDatasetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2388,162 +2341,7 @@ impl BigqueryJobQueryElDefaultDatasetElRef {
 }
 
 #[derive(Serialize)]
-pub struct BigqueryJobQueryElDestinationEncryptionConfigurationEl {
-    kms_key_name: terrars::PrimField<std::string::String>,
-}
-
-impl BigqueryJobQueryElDestinationEncryptionConfigurationEl { }
-
-impl terrars::ToListMappable for BigqueryJobQueryElDestinationEncryptionConfigurationEl {
-    type O = terrars::BlockAssignable<BigqueryJobQueryElDestinationEncryptionConfigurationEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildBigqueryJobQueryElDestinationEncryptionConfigurationEl {
-    #[doc =
-        "Describes the Cloud KMS encryption key that will be used to protect destination BigQuery table.\nThe BigQuery Service Account associated with your project requires access to this encryption key."]
-    pub kms_key_name: terrars::PrimField<std::string::String>,
-}
-
-impl BuildBigqueryJobQueryElDestinationEncryptionConfigurationEl {
-    pub fn build(self) -> BigqueryJobQueryElDestinationEncryptionConfigurationEl {
-        BigqueryJobQueryElDestinationEncryptionConfigurationEl { kms_key_name: self.kms_key_name }
-    }
-}
-
-pub struct BigqueryJobQueryElDestinationEncryptionConfigurationElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for BigqueryJobQueryElDestinationEncryptionConfigurationElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> BigqueryJobQueryElDestinationEncryptionConfigurationElRef {
-        BigqueryJobQueryElDestinationEncryptionConfigurationElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl BigqueryJobQueryElDestinationEncryptionConfigurationElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `kms_key_name` after provisioning.\nDescribes the Cloud KMS encryption key that will be used to protect destination BigQuery table.\nThe BigQuery Service Account associated with your project requires access to this encryption key."]
-    pub fn kms_key_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_name", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `kms_key_version` after provisioning.\nDescribes the Cloud KMS encryption key version used to protect destination BigQuery table."]
-    pub fn kms_key_version(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_version", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct BigqueryJobQueryElDestinationTableEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    dataset_id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    project_id: std::option::Option<terrars::PrimField<std::string::String>>,
-    table_id: terrars::PrimField<std::string::String>,
-}
-
-impl BigqueryJobQueryElDestinationTableEl {
-    #[doc = "Set the field `dataset_id`.\nThe ID of the dataset containing this table."]
-    pub fn set_dataset_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.dataset_id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `project_id`.\nThe ID of the project containing this table."]
-    pub fn set_project_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.project_id = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for BigqueryJobQueryElDestinationTableEl {
-    type O = terrars::BlockAssignable<BigqueryJobQueryElDestinationTableEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildBigqueryJobQueryElDestinationTableEl {
-    #[doc =
-        "The table. Can be specified '{{table_id}}' if 'project_id' and 'dataset_id' are also set,\nor of the form 'projects/{{project}}/datasets/{{dataset_id}}/tables/{{table_id}}' if not."]
-    pub table_id: terrars::PrimField<std::string::String>,
-}
-
-impl BuildBigqueryJobQueryElDestinationTableEl {
-    pub fn build(self) -> BigqueryJobQueryElDestinationTableEl {
-        BigqueryJobQueryElDestinationTableEl {
-            dataset_id: core::default::Default::default(),
-            project_id: core::default::Default::default(),
-            table_id: self.table_id,
-        }
-    }
-}
-
-pub struct BigqueryJobQueryElDestinationTableElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for BigqueryJobQueryElDestinationTableElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryJobQueryElDestinationTableElRef {
-        BigqueryJobQueryElDestinationTableElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl BigqueryJobQueryElDestinationTableElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `dataset_id` after provisioning.\nThe ID of the dataset containing this table."]
-    pub fn dataset_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.dataset_id", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `project_id` after provisioning.\nThe ID of the project containing this table."]
-    pub fn project_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.project_id", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `table_id` after provisioning.\nThe table. Can be specified '{{table_id}}' if 'project_id' and 'dataset_id' are also set,\nor of the form 'projects/{{project}}/datasets/{{dataset_id}}/tables/{{table_id}}' if not."]
-    pub fn table_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.table_id", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct BigqueryJobQueryElScriptOptionsEl {
+pub struct BigqueryJob_Query_ScriptOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     key_result_statement: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2552,7 +2350,7 @@ pub struct BigqueryJobQueryElScriptOptionsEl {
     statement_timeout_ms: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl BigqueryJobQueryElScriptOptionsEl {
+impl BigqueryJob_Query_ScriptOptions {
     #[doc =
         "Set the field `key_result_statement`.\nDetermines which statement in the script represents the \"key result\",\nused to populate the schema and query results of the script job. Possible values: [\"LAST\", \"FIRST_SELECT\"]"]
     pub fn set_key_result_statement(
@@ -2583,8 +2381,8 @@ impl BigqueryJobQueryElScriptOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for BigqueryJobQueryElScriptOptionsEl {
-    type O = terrars::BlockAssignable<BigqueryJobQueryElScriptOptionsEl>;
+impl terrars::ToListMappable for BigqueryJob_Query_ScriptOptions {
+    type O = terrars::BlockAssignable<BigqueryJob_Query_ScriptOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2595,11 +2393,11 @@ impl terrars::ToListMappable for BigqueryJobQueryElScriptOptionsEl {
     }
 }
 
-pub struct BuildBigqueryJobQueryElScriptOptionsEl {}
+pub struct BuildBigqueryJob_Query_ScriptOptions {}
 
-impl BuildBigqueryJobQueryElScriptOptionsEl {
-    pub fn build(self) -> BigqueryJobQueryElScriptOptionsEl {
-        BigqueryJobQueryElScriptOptionsEl {
+impl BuildBigqueryJob_Query_ScriptOptions {
+    pub fn build(self) -> BigqueryJob_Query_ScriptOptions {
+        BigqueryJob_Query_ScriptOptions {
             key_result_statement: core::default::Default::default(),
             statement_byte_budget: core::default::Default::default(),
             statement_timeout_ms: core::default::Default::default(),
@@ -2607,21 +2405,23 @@ impl BuildBigqueryJobQueryElScriptOptionsEl {
     }
 }
 
-pub struct BigqueryJobQueryElScriptOptionsElRef {
+#[allow(dead_code)]
+pub struct BigqueryJob_Query_ScriptOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryJobQueryElScriptOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryJobQueryElScriptOptionsElRef {
-        BigqueryJobQueryElScriptOptionsElRef {
+impl terrars::Ref for BigqueryJob_Query_ScriptOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryJob_Query_ScriptOptionsRef {
+        BigqueryJob_Query_ScriptOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryJobQueryElScriptOptionsElRef {
+impl BigqueryJob_Query_ScriptOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2646,14 +2446,14 @@ impl BigqueryJobQueryElScriptOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct BigqueryJobQueryElUserDefinedFunctionResourcesEl {
+pub struct BigqueryJob_Query_UserDefinedFunctionResources {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     inline_code: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resource_uri: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl BigqueryJobQueryElUserDefinedFunctionResourcesEl {
+impl BigqueryJob_Query_UserDefinedFunctionResources {
     #[doc =
         "Set the field `inline_code`.\nAn inline resource that contains code for a user-defined function (UDF).\nProviding a inline code resource is equivalent to providing a URI for a file containing the same code."]
     pub fn set_inline_code(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -2669,8 +2469,8 @@ impl BigqueryJobQueryElUserDefinedFunctionResourcesEl {
     }
 }
 
-impl terrars::ToListMappable for BigqueryJobQueryElUserDefinedFunctionResourcesEl {
-    type O = terrars::BlockAssignable<BigqueryJobQueryElUserDefinedFunctionResourcesEl>;
+impl terrars::ToListMappable for BigqueryJob_Query_UserDefinedFunctionResources {
+    type O = terrars::BlockAssignable<BigqueryJob_Query_UserDefinedFunctionResources>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2681,35 +2481,37 @@ impl terrars::ToListMappable for BigqueryJobQueryElUserDefinedFunctionResourcesE
     }
 }
 
-pub struct BuildBigqueryJobQueryElUserDefinedFunctionResourcesEl {}
+pub struct BuildBigqueryJob_Query_UserDefinedFunctionResources {}
 
-impl BuildBigqueryJobQueryElUserDefinedFunctionResourcesEl {
-    pub fn build(self) -> BigqueryJobQueryElUserDefinedFunctionResourcesEl {
-        BigqueryJobQueryElUserDefinedFunctionResourcesEl {
+impl BuildBigqueryJob_Query_UserDefinedFunctionResources {
+    pub fn build(self) -> BigqueryJob_Query_UserDefinedFunctionResources {
+        BigqueryJob_Query_UserDefinedFunctionResources {
             inline_code: core::default::Default::default(),
             resource_uri: core::default::Default::default(),
         }
     }
 }
 
-pub struct BigqueryJobQueryElUserDefinedFunctionResourcesElRef {
+#[allow(dead_code)]
+pub struct BigqueryJob_Query_UserDefinedFunctionResourcesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryJobQueryElUserDefinedFunctionResourcesElRef {
+impl terrars::Ref for BigqueryJob_Query_UserDefinedFunctionResourcesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> BigqueryJobQueryElUserDefinedFunctionResourcesElRef {
-        BigqueryJobQueryElUserDefinedFunctionResourcesElRef {
+    ) -> BigqueryJob_Query_UserDefinedFunctionResourcesRef {
+        BigqueryJob_Query_UserDefinedFunctionResourcesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryJobQueryElUserDefinedFunctionResourcesElRef {
+impl BigqueryJob_Query_UserDefinedFunctionResourcesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2728,20 +2530,21 @@ impl BigqueryJobQueryElUserDefinedFunctionResourcesElRef {
 }
 
 #[derive(Serialize, Default)]
-struct BigqueryJobQueryElDynamic {
-    default_dataset: std::option::Option<terrars::DynamicBlock<BigqueryJobQueryElDefaultDatasetEl>>,
+struct BigqueryJob_QueryDynamic {
+    connection_properties: std::option::Option<terrars::DynamicBlock<BigqueryJob_Query_ConnectionProperties>>,
+    default_dataset: std::option::Option<terrars::DynamicBlock<BigqueryJob_Query_DefaultDataset>>,
     destination_encryption_configuration: std
     ::option
-    ::Option<terrars::DynamicBlock<BigqueryJobQueryElDestinationEncryptionConfigurationEl>>,
-    destination_table: std::option::Option<terrars::DynamicBlock<BigqueryJobQueryElDestinationTableEl>>,
-    script_options: std::option::Option<terrars::DynamicBlock<BigqueryJobQueryElScriptOptionsEl>>,
+    ::Option<terrars::DynamicBlock<BigqueryJob_Copy_DestinationEncryptionConfiguration>>,
+    destination_table: std::option::Option<terrars::DynamicBlock<BigqueryJob_Copy_DestinationTable>>,
+    script_options: std::option::Option<terrars::DynamicBlock<BigqueryJob_Query_ScriptOptions>>,
     user_defined_function_resources: std
     ::option
-    ::Option<terrars::DynamicBlock<BigqueryJobQueryElUserDefinedFunctionResourcesEl>>,
+    ::Option<terrars::DynamicBlock<BigqueryJob_Query_UserDefinedFunctionResources>>,
 }
 
 #[derive(Serialize)]
-pub struct BigqueryJobQueryEl {
+pub struct BigqueryJob_Query {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allow_large_results: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2766,21 +2569,23 @@ pub struct BigqueryJobQueryEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     write_disposition: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    default_dataset: std::option::Option<std::vec::Vec<BigqueryJobQueryElDefaultDatasetEl>>,
+    connection_properties: std::option::Option<std::vec::Vec<BigqueryJob_Query_ConnectionProperties>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    default_dataset: std::option::Option<std::vec::Vec<BigqueryJob_Query_DefaultDataset>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     destination_encryption_configuration: std
     ::option
-    ::Option<std::vec::Vec<BigqueryJobQueryElDestinationEncryptionConfigurationEl>>,
+    ::Option<std::vec::Vec<BigqueryJob_Copy_DestinationEncryptionConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    destination_table: std::option::Option<std::vec::Vec<BigqueryJobQueryElDestinationTableEl>>,
+    destination_table: std::option::Option<std::vec::Vec<BigqueryJob_Copy_DestinationTable>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    script_options: std::option::Option<std::vec::Vec<BigqueryJobQueryElScriptOptionsEl>>,
+    script_options: std::option::Option<std::vec::Vec<BigqueryJob_Query_ScriptOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    user_defined_function_resources: std::option::Option<std::vec::Vec<BigqueryJobQueryElUserDefinedFunctionResourcesEl>>,
-    dynamic: BigqueryJobQueryElDynamic,
+    user_defined_function_resources: std::option::Option<std::vec::Vec<BigqueryJob_Query_UserDefinedFunctionResources>>,
+    dynamic: BigqueryJob_QueryDynamic,
 }
 
-impl BigqueryJobQueryEl {
+impl BigqueryJob_Query {
     #[doc =
         "Set the field `allow_large_results`.\nIf true and query uses legacy SQL dialect, allows the query to produce arbitrarily large result tables at a slight cost in performance.\nRequires destinationTable to be set. For standard SQL queries, this flag is ignored and large results are always allowed.\nHowever, you must still set destinationTable when result size exceeds the allowed maximum response size."]
     pub fn set_allow_large_results(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -2867,10 +2672,26 @@ impl BigqueryJobQueryEl {
         self
     }
 
+    #[doc = "Set the field `connection_properties`.\n"]
+    pub fn set_connection_properties(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryJob_Query_ConnectionProperties>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.connection_properties = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.connection_properties = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `default_dataset`.\n"]
     pub fn set_default_dataset(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryJobQueryElDefaultDatasetEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryJob_Query_DefaultDataset>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2886,7 +2707,7 @@ impl BigqueryJobQueryEl {
     #[doc = "Set the field `destination_encryption_configuration`.\n"]
     pub fn set_destination_encryption_configuration(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryJobQueryElDestinationEncryptionConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryJob_Copy_DestinationEncryptionConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2902,7 +2723,7 @@ impl BigqueryJobQueryEl {
     #[doc = "Set the field `destination_table`.\n"]
     pub fn set_destination_table(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryJobQueryElDestinationTableEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryJob_Copy_DestinationTable>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2918,7 +2739,7 @@ impl BigqueryJobQueryEl {
     #[doc = "Set the field `script_options`.\n"]
     pub fn set_script_options(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryJobQueryElScriptOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryJob_Query_ScriptOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2934,7 +2755,7 @@ impl BigqueryJobQueryEl {
     #[doc = "Set the field `user_defined_function_resources`.\n"]
     pub fn set_user_defined_function_resources(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryJobQueryElUserDefinedFunctionResourcesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryJob_Query_UserDefinedFunctionResources>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2948,8 +2769,8 @@ impl BigqueryJobQueryEl {
     }
 }
 
-impl terrars::ToListMappable for BigqueryJobQueryEl {
-    type O = terrars::BlockAssignable<BigqueryJobQueryEl>;
+impl terrars::ToListMappable for BigqueryJob_Query {
+    type O = terrars::BlockAssignable<BigqueryJob_Query>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2960,15 +2781,15 @@ impl terrars::ToListMappable for BigqueryJobQueryEl {
     }
 }
 
-pub struct BuildBigqueryJobQueryEl {
+pub struct BuildBigqueryJob_Query {
     #[doc =
         "SQL query text to execute. The useLegacySql field can be used to indicate whether the query uses legacy SQL or standard SQL.\n*NOTE*: queries containing [DML language](https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language)\n('DELETE', 'UPDATE', 'MERGE', 'INSERT') must specify 'create_disposition = \"\"' and 'write_disposition = \"\"'."]
     pub query: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBigqueryJobQueryEl {
-    pub fn build(self) -> BigqueryJobQueryEl {
-        BigqueryJobQueryEl {
+impl BuildBigqueryJob_Query {
+    pub fn build(self) -> BigqueryJob_Query {
+        BigqueryJob_Query {
             allow_large_results: core::default::Default::default(),
             create_disposition: core::default::Default::default(),
             flatten_results: core::default::Default::default(),
@@ -2981,6 +2802,7 @@ impl BuildBigqueryJobQueryEl {
             use_legacy_sql: core::default::Default::default(),
             use_query_cache: core::default::Default::default(),
             write_disposition: core::default::Default::default(),
+            connection_properties: core::default::Default::default(),
             default_dataset: core::default::Default::default(),
             destination_encryption_configuration: core::default::Default::default(),
             destination_table: core::default::Default::default(),
@@ -2991,21 +2813,23 @@ impl BuildBigqueryJobQueryEl {
     }
 }
 
-pub struct BigqueryJobQueryElRef {
+#[allow(dead_code)]
+pub struct BigqueryJob_QueryRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryJobQueryElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryJobQueryElRef {
-        BigqueryJobQueryElRef {
+impl terrars::Ref for BigqueryJob_QueryRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryJob_QueryRef {
+        BigqueryJob_QueryRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryJobQueryElRef {
+impl BigqueryJob_QueryRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3082,45 +2906,50 @@ impl BigqueryJobQueryElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.write_disposition", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `connection_properties` after provisioning.\n"]
+    pub fn connection_properties(&self) -> terrars::ListRef<BigqueryJob_Query_ConnectionPropertiesRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.connection_properties", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `default_dataset` after provisioning.\n"]
-    pub fn default_dataset(&self) -> terrars::ListRef<BigqueryJobQueryElDefaultDatasetElRef> {
+    pub fn default_dataset(&self) -> terrars::ListRef<BigqueryJob_Query_DefaultDatasetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.default_dataset", self.base))
     }
 
     #[doc = "Get a reference to the value of field `destination_encryption_configuration` after provisioning.\n"]
     pub fn destination_encryption_configuration(
         &self,
-    ) -> terrars::ListRef<BigqueryJobQueryElDestinationEncryptionConfigurationElRef> {
+    ) -> terrars::ListRef<BigqueryJob_Copy_DestinationEncryptionConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.destination_encryption_configuration", self.base))
     }
 
     #[doc = "Get a reference to the value of field `destination_table` after provisioning.\n"]
-    pub fn destination_table(&self) -> terrars::ListRef<BigqueryJobQueryElDestinationTableElRef> {
+    pub fn destination_table(&self) -> terrars::ListRef<BigqueryJob_Copy_DestinationTableRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.destination_table", self.base))
     }
 
     #[doc = "Get a reference to the value of field `script_options` after provisioning.\n"]
-    pub fn script_options(&self) -> terrars::ListRef<BigqueryJobQueryElScriptOptionsElRef> {
+    pub fn script_options(&self) -> terrars::ListRef<BigqueryJob_Query_ScriptOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.script_options", self.base))
     }
 
     #[doc = "Get a reference to the value of field `user_defined_function_resources` after provisioning.\n"]
-    pub fn user_defined_function_resources(
-        &self,
-    ) -> terrars::ListRef<BigqueryJobQueryElUserDefinedFunctionResourcesElRef> {
+    pub fn user_defined_function_resources(&self) -> terrars::ListRef<BigqueryJob_Query_UserDefinedFunctionResourcesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.user_defined_function_resources", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct BigqueryJobTimeoutsEl {
+pub struct BigqueryJob_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl BigqueryJobTimeoutsEl {
+impl BigqueryJob_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -3132,10 +2961,16 @@ impl BigqueryJobTimeoutsEl {
         self.delete = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for BigqueryJobTimeoutsEl {
-    type O = terrars::BlockAssignable<BigqueryJobTimeoutsEl>;
+impl terrars::ToListMappable for BigqueryJob_Timeouts {
+    type O = terrars::BlockAssignable<BigqueryJob_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3146,32 +2981,35 @@ impl terrars::ToListMappable for BigqueryJobTimeoutsEl {
     }
 }
 
-pub struct BuildBigqueryJobTimeoutsEl {}
+pub struct BuildBigqueryJob_Timeouts {}
 
-impl BuildBigqueryJobTimeoutsEl {
-    pub fn build(self) -> BigqueryJobTimeoutsEl {
-        BigqueryJobTimeoutsEl {
+impl BuildBigqueryJob_Timeouts {
+    pub fn build(self) -> BigqueryJob_Timeouts {
+        BigqueryJob_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
+            update: core::default::Default::default(),
         }
     }
 }
 
-pub struct BigqueryJobTimeoutsElRef {
+#[allow(dead_code)]
+pub struct BigqueryJob_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryJobTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryJobTimeoutsElRef {
-        BigqueryJobTimeoutsElRef {
+impl terrars::Ref for BigqueryJob_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryJob_TimeoutsRef {
+        BigqueryJob_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryJobTimeoutsElRef {
+impl BigqueryJob_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3185,12 +3023,9 @@ impl BigqueryJobTimeoutsElRef {
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
-}
 
-#[derive(Serialize, Default)]
-struct BigqueryJobDynamic {
-    copy: std::option::Option<terrars::DynamicBlock<BigqueryJobCopyEl>>,
-    extract: std::option::Option<terrars::DynamicBlock<BigqueryJobExtractEl>>,
-    load: std::option::Option<terrars::DynamicBlock<BigqueryJobLoadEl>>,
-    query: std::option::Option<terrars::DynamicBlock<BigqueryJobQueryEl>>,
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    }
 }

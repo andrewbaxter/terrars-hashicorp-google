@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataprocJobIamMemberData {
+struct DataprocJobIamMemberData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,14 +30,14 @@ struct DataprocJobIamMemberData {
     region: std::option::Option<terrars::PrimField<std::string::String>>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<DataprocJobIamMemberConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<DataprocJobIamMember_Condition>>,
     dynamic: DataprocJobIamMemberDynamic,
 }
 
 struct DataprocJobIamMember_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataprocJobIamMemberData>,
+    data: std::cell::RefCell<DataprocJobIamMemberData_>,
 }
 
 #[derive(Clone)]
@@ -156,7 +158,7 @@ impl DataprocJobIamMember {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataprocJobIamMemberConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataprocJobIamMember_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -205,7 +207,7 @@ impl DataprocJobIamMember {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<DataprocJobIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<DataprocJobIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -256,7 +258,7 @@ impl BuildDataprocJobIamMember {
         let out = DataprocJobIamMember(std::rc::Rc::new(DataprocJobIamMember_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataprocJobIamMemberData {
+            data: std::cell::RefCell::new(DataprocJobIamMemberData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -336,20 +338,25 @@ impl DataprocJobIamMemberRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<DataprocJobIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<DataprocJobIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataprocJobIamMemberDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<DataprocJobIamMember_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct DataprocJobIamMemberConditionEl {
+pub struct DataprocJobIamMember_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl DataprocJobIamMemberConditionEl {
+impl DataprocJobIamMember_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -357,8 +364,8 @@ impl DataprocJobIamMemberConditionEl {
     }
 }
 
-impl terrars::ToListMappable for DataprocJobIamMemberConditionEl {
-    type O = terrars::BlockAssignable<DataprocJobIamMemberConditionEl>;
+impl terrars::ToListMappable for DataprocJobIamMember_Condition {
+    type O = terrars::BlockAssignable<DataprocJobIamMember_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -369,16 +376,16 @@ impl terrars::ToListMappable for DataprocJobIamMemberConditionEl {
     }
 }
 
-pub struct BuildDataprocJobIamMemberConditionEl {
+pub struct BuildDataprocJobIamMember_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataprocJobIamMemberConditionEl {
-    pub fn build(self) -> DataprocJobIamMemberConditionEl {
-        DataprocJobIamMemberConditionEl {
+impl BuildDataprocJobIamMember_Condition {
+    pub fn build(self) -> DataprocJobIamMember_Condition {
+        DataprocJobIamMember_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -386,21 +393,23 @@ impl BuildDataprocJobIamMemberConditionEl {
     }
 }
 
-pub struct DataprocJobIamMemberConditionElRef {
+#[allow(dead_code)]
+pub struct DataprocJobIamMember_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataprocJobIamMemberConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocJobIamMemberConditionElRef {
-        DataprocJobIamMemberConditionElRef {
+impl terrars::Ref for DataprocJobIamMember_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataprocJobIamMember_ConditionRef {
+        DataprocJobIamMember_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataprocJobIamMemberConditionElRef {
+impl DataprocJobIamMember_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -419,9 +428,4 @@ impl DataprocJobIamMemberConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataprocJobIamMemberDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<DataprocJobIamMemberConditionEl>>,
 }

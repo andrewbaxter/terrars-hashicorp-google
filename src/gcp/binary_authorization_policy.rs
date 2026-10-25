@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct BinaryAuthorizationPolicyData {
+struct BinaryAuthorizationPolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct BinaryAuthorizationPolicyData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     global_policy_evaluation_mode: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -29,20 +33,20 @@ struct BinaryAuthorizationPolicyData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     admission_whitelist_patterns: std
     ::option
-    ::Option<std::vec::Vec<BinaryAuthorizationPolicyAdmissionWhitelistPatternsEl>>,
+    ::Option<std::vec::Vec<BinaryAuthorizationPolicy_AdmissionWhitelistPatterns>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cluster_admission_rules: std::option::Option<std::vec::Vec<BinaryAuthorizationPolicyClusterAdmissionRulesEl>>,
+    cluster_admission_rules: std::option::Option<std::vec::Vec<BinaryAuthorizationPolicy_ClusterAdmissionRules>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    default_admission_rule: std::option::Option<std::vec::Vec<BinaryAuthorizationPolicyDefaultAdmissionRuleEl>>,
+    default_admission_rule: std::option::Option<std::vec::Vec<BinaryAuthorizationPolicy_DefaultAdmissionRule>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<BinaryAuthorizationPolicyTimeoutsEl>,
+    timeouts: std::option::Option<BinaryAuthorizationPolicy_Timeouts>,
     dynamic: BinaryAuthorizationPolicyDynamic,
 }
 
 struct BinaryAuthorizationPolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<BinaryAuthorizationPolicyData>,
+    data: std::cell::RefCell<BinaryAuthorizationPolicyData_>,
 }
 
 #[derive(Clone)]
@@ -142,6 +146,13 @@ impl BinaryAuthorizationPolicy {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nA descriptive comment."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -173,7 +184,7 @@ impl BinaryAuthorizationPolicy {
     #[doc = "Set the field `admission_whitelist_patterns`.\n"]
     pub fn set_admission_whitelist_patterns(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BinaryAuthorizationPolicyAdmissionWhitelistPatternsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BinaryAuthorizationPolicy_AdmissionWhitelistPatterns>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -189,7 +200,7 @@ impl BinaryAuthorizationPolicy {
     #[doc = "Set the field `cluster_admission_rules`.\n"]
     pub fn set_cluster_admission_rules(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BinaryAuthorizationPolicyClusterAdmissionRulesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BinaryAuthorizationPolicy_ClusterAdmissionRules>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -205,7 +216,7 @@ impl BinaryAuthorizationPolicy {
     #[doc = "Set the field `default_admission_rule`.\n"]
     pub fn set_default_admission_rule(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BinaryAuthorizationPolicyDefaultAdmissionRuleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BinaryAuthorizationPolicy_DefaultAdmissionRule>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -219,9 +230,15 @@ impl BinaryAuthorizationPolicy {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<BinaryAuthorizationPolicyTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<BinaryAuthorizationPolicy_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `description` after provisioning.\nA descriptive comment."]
@@ -251,21 +268,18 @@ impl BinaryAuthorizationPolicy {
     #[doc = "Get a reference to the value of field `admission_whitelist_patterns` after provisioning.\n"]
     pub fn admission_whitelist_patterns(
         &self,
-    ) -> terrars::ListRef<BinaryAuthorizationPolicyAdmissionWhitelistPatternsElRef> {
+    ) -> terrars::ListRef<BinaryAuthorizationPolicy_AdmissionWhitelistPatternsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.admission_whitelist_patterns", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `default_admission_rule` after provisioning.\n"]
-    pub fn default_admission_rule(&self) -> terrars::ListRef<BinaryAuthorizationPolicyDefaultAdmissionRuleElRef> {
+    pub fn default_admission_rule(&self) -> terrars::ListRef<BinaryAuthorizationPolicy_DefaultAdmissionRuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.default_admission_rule", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> BinaryAuthorizationPolicyTimeoutsElRef {
-        BinaryAuthorizationPolicyTimeoutsElRef::new(
-            self.shared().clone(),
-            format!("{}.timeouts", self.extract_ref()),
-        )
+    pub fn timeouts(&self) -> BinaryAuthorizationPolicy_TimeoutsRef {
+        BinaryAuthorizationPolicy_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -309,12 +323,13 @@ impl BuildBinaryAuthorizationPolicy {
         let out = BinaryAuthorizationPolicy(std::rc::Rc::new(BinaryAuthorizationPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(BinaryAuthorizationPolicyData {
+            data: std::cell::RefCell::new(BinaryAuthorizationPolicyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 global_policy_evaluation_mode: core::default::Default::default(),
                 id: core::default::Default::default(),
@@ -354,6 +369,12 @@ impl BinaryAuthorizationPolicyRef {
         &self.shared
     }
 
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `description` after provisioning.\nA descriptive comment."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -381,33 +402,43 @@ impl BinaryAuthorizationPolicyRef {
     #[doc = "Get a reference to the value of field `admission_whitelist_patterns` after provisioning.\n"]
     pub fn admission_whitelist_patterns(
         &self,
-    ) -> terrars::ListRef<BinaryAuthorizationPolicyAdmissionWhitelistPatternsElRef> {
+    ) -> terrars::ListRef<BinaryAuthorizationPolicy_AdmissionWhitelistPatternsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.admission_whitelist_patterns", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `default_admission_rule` after provisioning.\n"]
-    pub fn default_admission_rule(&self) -> terrars::ListRef<BinaryAuthorizationPolicyDefaultAdmissionRuleElRef> {
+    pub fn default_admission_rule(&self) -> terrars::ListRef<BinaryAuthorizationPolicy_DefaultAdmissionRuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.default_admission_rule", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> BinaryAuthorizationPolicyTimeoutsElRef {
-        BinaryAuthorizationPolicyTimeoutsElRef::new(
-            self.shared().clone(),
-            format!("{}.timeouts", self.extract_ref()),
-        )
+    pub fn timeouts(&self) -> BinaryAuthorizationPolicy_TimeoutsRef {
+        BinaryAuthorizationPolicy_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct BinaryAuthorizationPolicyDynamic {
+    admission_whitelist_patterns: std
+    ::option
+    ::Option<terrars::DynamicBlock<BinaryAuthorizationPolicy_AdmissionWhitelistPatterns>>,
+    cluster_admission_rules: std
+    ::option
+    ::Option<terrars::DynamicBlock<BinaryAuthorizationPolicy_ClusterAdmissionRules>>,
+    default_admission_rule: std
+    ::option
+    ::Option<terrars::DynamicBlock<BinaryAuthorizationPolicy_DefaultAdmissionRule>>,
+}
+
 #[derive(Serialize)]
-pub struct BinaryAuthorizationPolicyAdmissionWhitelistPatternsEl {
+pub struct BinaryAuthorizationPolicy_AdmissionWhitelistPatterns {
     name_pattern: terrars::PrimField<std::string::String>,
 }
 
-impl BinaryAuthorizationPolicyAdmissionWhitelistPatternsEl { }
+impl BinaryAuthorizationPolicy_AdmissionWhitelistPatterns { }
 
-impl terrars::ToListMappable for BinaryAuthorizationPolicyAdmissionWhitelistPatternsEl {
-    type O = terrars::BlockAssignable<BinaryAuthorizationPolicyAdmissionWhitelistPatternsEl>;
+impl terrars::ToListMappable for BinaryAuthorizationPolicy_AdmissionWhitelistPatterns {
+    type O = terrars::BlockAssignable<BinaryAuthorizationPolicy_AdmissionWhitelistPatterns>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -418,36 +449,38 @@ impl terrars::ToListMappable for BinaryAuthorizationPolicyAdmissionWhitelistPatt
     }
 }
 
-pub struct BuildBinaryAuthorizationPolicyAdmissionWhitelistPatternsEl {
+pub struct BuildBinaryAuthorizationPolicy_AdmissionWhitelistPatterns {
     #[doc =
         "An image name pattern to whitelist, in the form\n'registry/path/to/image'. This supports a trailing * as a\nwildcard, but this is allowed only in text after the registry/\npart."]
     pub name_pattern: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBinaryAuthorizationPolicyAdmissionWhitelistPatternsEl {
-    pub fn build(self) -> BinaryAuthorizationPolicyAdmissionWhitelistPatternsEl {
-        BinaryAuthorizationPolicyAdmissionWhitelistPatternsEl { name_pattern: self.name_pattern }
+impl BuildBinaryAuthorizationPolicy_AdmissionWhitelistPatterns {
+    pub fn build(self) -> BinaryAuthorizationPolicy_AdmissionWhitelistPatterns {
+        BinaryAuthorizationPolicy_AdmissionWhitelistPatterns { name_pattern: self.name_pattern }
     }
 }
 
-pub struct BinaryAuthorizationPolicyAdmissionWhitelistPatternsElRef {
+#[allow(dead_code)]
+pub struct BinaryAuthorizationPolicy_AdmissionWhitelistPatternsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BinaryAuthorizationPolicyAdmissionWhitelistPatternsElRef {
+impl terrars::Ref for BinaryAuthorizationPolicy_AdmissionWhitelistPatternsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> BinaryAuthorizationPolicyAdmissionWhitelistPatternsElRef {
-        BinaryAuthorizationPolicyAdmissionWhitelistPatternsElRef {
+    ) -> BinaryAuthorizationPolicy_AdmissionWhitelistPatternsRef {
+        BinaryAuthorizationPolicy_AdmissionWhitelistPatternsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BinaryAuthorizationPolicyAdmissionWhitelistPatternsElRef {
+impl BinaryAuthorizationPolicy_AdmissionWhitelistPatternsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -460,7 +493,7 @@ impl BinaryAuthorizationPolicyAdmissionWhitelistPatternsElRef {
 }
 
 #[derive(Serialize)]
-pub struct BinaryAuthorizationPolicyClusterAdmissionRulesEl {
+pub struct BinaryAuthorizationPolicy_ClusterAdmissionRules {
     cluster: terrars::PrimField<std::string::String>,
     enforcement_mode: terrars::PrimField<std::string::String>,
     evaluation_mode: terrars::PrimField<std::string::String>,
@@ -468,7 +501,7 @@ pub struct BinaryAuthorizationPolicyClusterAdmissionRulesEl {
     require_attestations_by: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl BinaryAuthorizationPolicyClusterAdmissionRulesEl {
+impl BinaryAuthorizationPolicy_ClusterAdmissionRules {
     #[doc =
         "Set the field `require_attestations_by`.\nThe resource names of the attestors that must attest to a\ncontainer image. If the attestor is in a different project from the\npolicy, it should be specified in the format 'projects/*/attestors/*'.\nEach attestor must exist before a policy can reference it. To add an\nattestor to a policy the principal issuing the policy change\nrequest must be able to read the attestor resource.\n\nNote: this field must be non-empty when the evaluation_mode field\nspecifies REQUIRE_ATTESTATION, otherwise it must be empty."]
     pub fn set_require_attestations_by(
@@ -480,8 +513,8 @@ impl BinaryAuthorizationPolicyClusterAdmissionRulesEl {
     }
 }
 
-impl terrars::ToListMappable for BinaryAuthorizationPolicyClusterAdmissionRulesEl {
-    type O = terrars::BlockAssignable<BinaryAuthorizationPolicyClusterAdmissionRulesEl>;
+impl terrars::ToListMappable for BinaryAuthorizationPolicy_ClusterAdmissionRules {
+    type O = terrars::BlockAssignable<BinaryAuthorizationPolicy_ClusterAdmissionRules>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -492,7 +525,7 @@ impl terrars::ToListMappable for BinaryAuthorizationPolicyClusterAdmissionRulesE
     }
 }
 
-pub struct BuildBinaryAuthorizationPolicyClusterAdmissionRulesEl {
+pub struct BuildBinaryAuthorizationPolicy_ClusterAdmissionRules {
     #[doc = ""]
     pub cluster: terrars::PrimField<std::string::String>,
     #[doc =
@@ -503,9 +536,9 @@ pub struct BuildBinaryAuthorizationPolicyClusterAdmissionRulesEl {
     pub evaluation_mode: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBinaryAuthorizationPolicyClusterAdmissionRulesEl {
-    pub fn build(self) -> BinaryAuthorizationPolicyClusterAdmissionRulesEl {
-        BinaryAuthorizationPolicyClusterAdmissionRulesEl {
+impl BuildBinaryAuthorizationPolicy_ClusterAdmissionRules {
+    pub fn build(self) -> BinaryAuthorizationPolicy_ClusterAdmissionRules {
+        BinaryAuthorizationPolicy_ClusterAdmissionRules {
             cluster: self.cluster,
             enforcement_mode: self.enforcement_mode,
             evaluation_mode: self.evaluation_mode,
@@ -514,24 +547,26 @@ impl BuildBinaryAuthorizationPolicyClusterAdmissionRulesEl {
     }
 }
 
-pub struct BinaryAuthorizationPolicyClusterAdmissionRulesElRef {
+#[allow(dead_code)]
+pub struct BinaryAuthorizationPolicy_ClusterAdmissionRulesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BinaryAuthorizationPolicyClusterAdmissionRulesElRef {
+impl terrars::Ref for BinaryAuthorizationPolicy_ClusterAdmissionRulesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> BinaryAuthorizationPolicyClusterAdmissionRulesElRef {
-        BinaryAuthorizationPolicyClusterAdmissionRulesElRef {
+    ) -> BinaryAuthorizationPolicy_ClusterAdmissionRulesRef {
+        BinaryAuthorizationPolicy_ClusterAdmissionRulesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BinaryAuthorizationPolicyClusterAdmissionRulesElRef {
+impl BinaryAuthorizationPolicy_ClusterAdmissionRulesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -561,14 +596,14 @@ impl BinaryAuthorizationPolicyClusterAdmissionRulesElRef {
 }
 
 #[derive(Serialize)]
-pub struct BinaryAuthorizationPolicyDefaultAdmissionRuleEl {
+pub struct BinaryAuthorizationPolicy_DefaultAdmissionRule {
     enforcement_mode: terrars::PrimField<std::string::String>,
     evaluation_mode: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     require_attestations_by: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl BinaryAuthorizationPolicyDefaultAdmissionRuleEl {
+impl BinaryAuthorizationPolicy_DefaultAdmissionRule {
     #[doc =
         "Set the field `require_attestations_by`.\nThe resource names of the attestors that must attest to a\ncontainer image. If the attestor is in a different project from the\npolicy, it should be specified in the format 'projects/*/attestors/*'.\nEach attestor must exist before a policy can reference it. To add an\nattestor to a policy the principal issuing the policy change\nrequest must be able to read the attestor resource.\n\nNote: this field must be non-empty when the evaluation_mode field\nspecifies REQUIRE_ATTESTATION, otherwise it must be empty."]
     pub fn set_require_attestations_by(
@@ -580,8 +615,8 @@ impl BinaryAuthorizationPolicyDefaultAdmissionRuleEl {
     }
 }
 
-impl terrars::ToListMappable for BinaryAuthorizationPolicyDefaultAdmissionRuleEl {
-    type O = terrars::BlockAssignable<BinaryAuthorizationPolicyDefaultAdmissionRuleEl>;
+impl terrars::ToListMappable for BinaryAuthorizationPolicy_DefaultAdmissionRule {
+    type O = terrars::BlockAssignable<BinaryAuthorizationPolicy_DefaultAdmissionRule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -592,7 +627,7 @@ impl terrars::ToListMappable for BinaryAuthorizationPolicyDefaultAdmissionRuleEl
     }
 }
 
-pub struct BuildBinaryAuthorizationPolicyDefaultAdmissionRuleEl {
+pub struct BuildBinaryAuthorizationPolicy_DefaultAdmissionRule {
     #[doc =
         "The action when a pod creation is denied by the admission rule. Possible values: [\"ENFORCED_BLOCK_AND_AUDIT_LOG\", \"DRYRUN_AUDIT_LOG_ONLY\"]"]
     pub enforcement_mode: terrars::PrimField<std::string::String>,
@@ -601,9 +636,9 @@ pub struct BuildBinaryAuthorizationPolicyDefaultAdmissionRuleEl {
     pub evaluation_mode: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBinaryAuthorizationPolicyDefaultAdmissionRuleEl {
-    pub fn build(self) -> BinaryAuthorizationPolicyDefaultAdmissionRuleEl {
-        BinaryAuthorizationPolicyDefaultAdmissionRuleEl {
+impl BuildBinaryAuthorizationPolicy_DefaultAdmissionRule {
+    pub fn build(self) -> BinaryAuthorizationPolicy_DefaultAdmissionRule {
+        BinaryAuthorizationPolicy_DefaultAdmissionRule {
             enforcement_mode: self.enforcement_mode,
             evaluation_mode: self.evaluation_mode,
             require_attestations_by: core::default::Default::default(),
@@ -611,24 +646,26 @@ impl BuildBinaryAuthorizationPolicyDefaultAdmissionRuleEl {
     }
 }
 
-pub struct BinaryAuthorizationPolicyDefaultAdmissionRuleElRef {
+#[allow(dead_code)]
+pub struct BinaryAuthorizationPolicy_DefaultAdmissionRuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BinaryAuthorizationPolicyDefaultAdmissionRuleElRef {
+impl terrars::Ref for BinaryAuthorizationPolicy_DefaultAdmissionRuleRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> BinaryAuthorizationPolicyDefaultAdmissionRuleElRef {
-        BinaryAuthorizationPolicyDefaultAdmissionRuleElRef {
+    ) -> BinaryAuthorizationPolicy_DefaultAdmissionRuleRef {
+        BinaryAuthorizationPolicy_DefaultAdmissionRuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BinaryAuthorizationPolicyDefaultAdmissionRuleElRef {
+impl BinaryAuthorizationPolicy_DefaultAdmissionRuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -653,7 +690,7 @@ impl BinaryAuthorizationPolicyDefaultAdmissionRuleElRef {
 }
 
 #[derive(Serialize)]
-pub struct BinaryAuthorizationPolicyTimeoutsEl {
+pub struct BinaryAuthorizationPolicy_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -662,7 +699,7 @@ pub struct BinaryAuthorizationPolicyTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl BinaryAuthorizationPolicyTimeoutsEl {
+impl BinaryAuthorizationPolicy_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -682,8 +719,8 @@ impl BinaryAuthorizationPolicyTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for BinaryAuthorizationPolicyTimeoutsEl {
-    type O = terrars::BlockAssignable<BinaryAuthorizationPolicyTimeoutsEl>;
+impl terrars::ToListMappable for BinaryAuthorizationPolicy_Timeouts {
+    type O = terrars::BlockAssignable<BinaryAuthorizationPolicy_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -694,11 +731,11 @@ impl terrars::ToListMappable for BinaryAuthorizationPolicyTimeoutsEl {
     }
 }
 
-pub struct BuildBinaryAuthorizationPolicyTimeoutsEl {}
+pub struct BuildBinaryAuthorizationPolicy_Timeouts {}
 
-impl BuildBinaryAuthorizationPolicyTimeoutsEl {
-    pub fn build(self) -> BinaryAuthorizationPolicyTimeoutsEl {
-        BinaryAuthorizationPolicyTimeoutsEl {
+impl BuildBinaryAuthorizationPolicy_Timeouts {
+    pub fn build(self) -> BinaryAuthorizationPolicy_Timeouts {
+        BinaryAuthorizationPolicy_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -706,21 +743,23 @@ impl BuildBinaryAuthorizationPolicyTimeoutsEl {
     }
 }
 
-pub struct BinaryAuthorizationPolicyTimeoutsElRef {
+#[allow(dead_code)]
+pub struct BinaryAuthorizationPolicy_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BinaryAuthorizationPolicyTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BinaryAuthorizationPolicyTimeoutsElRef {
-        BinaryAuthorizationPolicyTimeoutsElRef {
+impl terrars::Ref for BinaryAuthorizationPolicy_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BinaryAuthorizationPolicy_TimeoutsRef {
+        BinaryAuthorizationPolicy_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BinaryAuthorizationPolicyTimeoutsElRef {
+impl BinaryAuthorizationPolicy_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -739,17 +778,4 @@ impl BinaryAuthorizationPolicyTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct BinaryAuthorizationPolicyDynamic {
-    admission_whitelist_patterns: std
-    ::option
-    ::Option<terrars::DynamicBlock<BinaryAuthorizationPolicyAdmissionWhitelistPatternsEl>>,
-    cluster_admission_rules: std
-    ::option
-    ::Option<terrars::DynamicBlock<BinaryAuthorizationPolicyClusterAdmissionRulesEl>>,
-    default_admission_rule: std
-    ::option
-    ::Option<terrars::DynamicBlock<BinaryAuthorizationPolicyDefaultAdmissionRuleEl>>,
 }

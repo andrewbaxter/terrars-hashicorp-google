@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataVmwareengineNetworkData {
+struct DataVmwareengineNetworkData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -27,7 +29,7 @@ struct DataVmwareengineNetworkData {
 struct DataVmwareengineNetwork_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataVmwareengineNetworkData>,
+    data: std::cell::RefCell<DataVmwareengineNetworkData_>,
 }
 
 #[derive(Clone)]
@@ -85,9 +87,27 @@ impl DataVmwareengineNetwork {
     }
 
     #[doc =
+        "Get a reference to the value of field `create_time` after provisioning.\nCreation time of this resource.\nA timestamp in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
+    pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nUser-provided description for this VMware Engine network."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `etag` after provisioning.\nChecksum that may be sent on update and delete requests to ensure that the user-provided value is up to date befor\nThe server computes checksums based on the value of other fields in the request."]
+    pub fn etag(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.etag", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -129,8 +149,14 @@ impl DataVmwareengineNetwork {
     }
 
     #[doc =
+        "Get a reference to the value of field `update_time` after provisioning.\nLast update time of this resource.\nA timestamp in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
+    pub fn update_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update_time", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `vpc_networks` after provisioning.\nVMware Engine service VPC networks that provide connectivity from a private cloud to customer projects,\nthe internet, and other Google Cloud services."]
-    pub fn vpc_networks(&self) -> terrars::ListRef<DataVmwareengineNetworkVpcNetworksElRef> {
+    pub fn vpc_networks(&self) -> terrars::ListRef<DataVmwareengineNetwork_VpcNetworksRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_networks", self.extract_ref()))
     }
 }
@@ -179,7 +205,7 @@ impl BuildDataVmwareengineNetwork {
         let out = DataVmwareengineNetwork(std::rc::Rc::new(DataVmwareengineNetwork_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataVmwareengineNetworkData {
+            data: std::cell::RefCell::new(DataVmwareengineNetworkData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -219,9 +245,27 @@ impl DataVmwareengineNetworkRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `create_time` after provisioning.\nCreation time of this resource.\nA timestamp in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
+    pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nUser-provided description for this VMware Engine network."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `etag` after provisioning.\nChecksum that may be sent on update and delete requests to ensure that the user-provided value is up to date befor\nThe server computes checksums based on the value of other fields in the request."]
+    pub fn etag(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.etag", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -263,21 +307,27 @@ impl DataVmwareengineNetworkRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `update_time` after provisioning.\nLast update time of this resource.\nA timestamp in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits.\nExamples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
+    pub fn update_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update_time", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `vpc_networks` after provisioning.\nVMware Engine service VPC networks that provide connectivity from a private cloud to customer projects,\nthe internet, and other Google Cloud services."]
-    pub fn vpc_networks(&self) -> terrars::ListRef<DataVmwareengineNetworkVpcNetworksElRef> {
+    pub fn vpc_networks(&self) -> terrars::ListRef<DataVmwareengineNetwork_VpcNetworksRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_networks", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataVmwareengineNetworkVpcNetworksEl {
+pub struct DataVmwareengineNetwork_VpcNetworks {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     network: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataVmwareengineNetworkVpcNetworksEl {
+impl DataVmwareengineNetwork_VpcNetworks {
     #[doc = "Set the field `network`.\n"]
     pub fn set_network(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.network = std::option::Option::Some(v.into());
@@ -291,8 +341,8 @@ impl DataVmwareengineNetworkVpcNetworksEl {
     }
 }
 
-impl terrars::ToListMappable for DataVmwareengineNetworkVpcNetworksEl {
-    type O = terrars::BlockAssignable<DataVmwareengineNetworkVpcNetworksEl>;
+impl terrars::ToListMappable for DataVmwareengineNetwork_VpcNetworks {
+    type O = terrars::BlockAssignable<DataVmwareengineNetwork_VpcNetworks>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -303,32 +353,34 @@ impl terrars::ToListMappable for DataVmwareengineNetworkVpcNetworksEl {
     }
 }
 
-pub struct BuildDataVmwareengineNetworkVpcNetworksEl {}
+pub struct BuildDataVmwareengineNetwork_VpcNetworks {}
 
-impl BuildDataVmwareengineNetworkVpcNetworksEl {
-    pub fn build(self) -> DataVmwareengineNetworkVpcNetworksEl {
-        DataVmwareengineNetworkVpcNetworksEl {
+impl BuildDataVmwareengineNetwork_VpcNetworks {
+    pub fn build(self) -> DataVmwareengineNetwork_VpcNetworks {
+        DataVmwareengineNetwork_VpcNetworks {
             network: core::default::Default::default(),
             type_: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataVmwareengineNetworkVpcNetworksElRef {
+#[allow(dead_code)]
+pub struct DataVmwareengineNetwork_VpcNetworksRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataVmwareengineNetworkVpcNetworksElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVmwareengineNetworkVpcNetworksElRef {
-        DataVmwareengineNetworkVpcNetworksElRef {
+impl terrars::Ref for DataVmwareengineNetwork_VpcNetworksRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVmwareengineNetwork_VpcNetworksRef {
+        DataVmwareengineNetwork_VpcNetworksRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataVmwareengineNetworkVpcNetworksElRef {
+impl DataVmwareengineNetwork_VpcNetworksRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

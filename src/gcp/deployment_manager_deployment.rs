@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DeploymentManagerDeploymentData {
+struct DeploymentManagerDeploymentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,6 +25,8 @@ struct DeploymentManagerDeploymentData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -32,18 +36,18 @@ struct DeploymentManagerDeploymentData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    labels: std::option::Option<std::vec::Vec<DeploymentManagerDeploymentLabelsEl>>,
+    labels: std::option::Option<std::vec::Vec<DeploymentManagerDeployment_Labels>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    target: std::option::Option<std::vec::Vec<DeploymentManagerDeploymentTargetEl>>,
+    target: std::option::Option<std::vec::Vec<DeploymentManagerDeployment_Target>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DeploymentManagerDeploymentTimeoutsEl>,
+    timeouts: std::option::Option<DeploymentManagerDeployment_Timeouts>,
     dynamic: DeploymentManagerDeploymentDynamic,
 }
 
 struct DeploymentManagerDeployment_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DeploymentManagerDeploymentData>,
+    data: std::cell::RefCell<DeploymentManagerDeploymentData_>,
 }
 
 #[derive(Clone)]
@@ -157,6 +161,13 @@ impl DeploymentManagerDeployment {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nOptional user-provided description of deployment."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -185,7 +196,7 @@ impl DeploymentManagerDeployment {
     #[doc = "Set the field `labels`.\n"]
     pub fn set_labels(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DeploymentManagerDeploymentLabelsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DeploymentManagerDeployment_Labels>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -201,7 +212,7 @@ impl DeploymentManagerDeployment {
     #[doc = "Set the field `target`.\n"]
     pub fn set_target(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DeploymentManagerDeploymentTargetEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DeploymentManagerDeployment_Target>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -215,7 +226,7 @@ impl DeploymentManagerDeployment {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DeploymentManagerDeploymentTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DeploymentManagerDeployment_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -230,6 +241,12 @@ impl DeploymentManagerDeployment {
         "Get a reference to the value of field `delete_policy` after provisioning.\nSet the policy to use for deleting new resources on update/delete.\nValid values are 'DELETE' (default) or 'ABANDON'. If 'DELETE',\nresource is deleted after removal from Deployment Manager. If\n'ABANDON', the resource is only removed from Deployment Manager\nand is not actually deleted. Note that updating this field does not\nactually change the deployment, just how it is updated. Default value: \"DELETE\" Possible values: [\"ABANDON\", \"DELETE\"]"]
     pub fn delete_policy(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete_policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -278,13 +295,13 @@ impl DeploymentManagerDeployment {
     }
 
     #[doc = "Get a reference to the value of field `target` after provisioning.\n"]
-    pub fn target(&self) -> terrars::ListRef<DeploymentManagerDeploymentTargetElRef> {
+    pub fn target(&self) -> terrars::ListRef<DeploymentManagerDeployment_TargetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.target", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DeploymentManagerDeploymentTimeoutsElRef {
-        DeploymentManagerDeploymentTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DeploymentManagerDeployment_TimeoutsRef {
+        DeploymentManagerDeployment_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -333,7 +350,7 @@ impl BuildDeploymentManagerDeployment {
         let out = DeploymentManagerDeployment(std::rc::Rc::new(DeploymentManagerDeployment_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DeploymentManagerDeploymentData {
+            data: std::cell::RefCell::new(DeploymentManagerDeploymentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -341,6 +358,7 @@ impl BuildDeploymentManagerDeployment {
                 provisioner: core::default::Default::default(),
                 create_policy: core::default::Default::default(),
                 delete_policy: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
@@ -393,6 +411,12 @@ impl DeploymentManagerDeploymentRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `deployment_id` after provisioning.\nUnique identifier for deployment. Output only."]
     pub fn deployment_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.deployment_id", self.extract_ref()))
@@ -438,28 +462,34 @@ impl DeploymentManagerDeploymentRef {
     }
 
     #[doc = "Get a reference to the value of field `target` after provisioning.\n"]
-    pub fn target(&self) -> terrars::ListRef<DeploymentManagerDeploymentTargetElRef> {
+    pub fn target(&self) -> terrars::ListRef<DeploymentManagerDeployment_TargetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.target", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DeploymentManagerDeploymentTimeoutsElRef {
-        DeploymentManagerDeploymentTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DeploymentManagerDeployment_TimeoutsRef {
+        DeploymentManagerDeployment_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct DeploymentManagerDeploymentDynamic {
+    labels: std::option::Option<terrars::DynamicBlock<DeploymentManagerDeployment_Labels>>,
+    target: std::option::Option<terrars::DynamicBlock<DeploymentManagerDeployment_Target>>,
+}
+
 #[derive(Serialize)]
-pub struct DeploymentManagerDeploymentLabelsEl {
+pub struct DeploymentManagerDeployment_Labels {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DeploymentManagerDeploymentLabelsEl {
+impl DeploymentManagerDeployment_Labels {
     #[doc = "Set the field `key`.\nKey for label."]
     pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.key = std::option::Option::Some(v.into());
@@ -473,8 +503,8 @@ impl DeploymentManagerDeploymentLabelsEl {
     }
 }
 
-impl terrars::ToListMappable for DeploymentManagerDeploymentLabelsEl {
-    type O = terrars::BlockAssignable<DeploymentManagerDeploymentLabelsEl>;
+impl terrars::ToListMappable for DeploymentManagerDeployment_Labels {
+    type O = terrars::BlockAssignable<DeploymentManagerDeployment_Labels>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -485,32 +515,34 @@ impl terrars::ToListMappable for DeploymentManagerDeploymentLabelsEl {
     }
 }
 
-pub struct BuildDeploymentManagerDeploymentLabelsEl {}
+pub struct BuildDeploymentManagerDeployment_Labels {}
 
-impl BuildDeploymentManagerDeploymentLabelsEl {
-    pub fn build(self) -> DeploymentManagerDeploymentLabelsEl {
-        DeploymentManagerDeploymentLabelsEl {
+impl BuildDeploymentManagerDeployment_Labels {
+    pub fn build(self) -> DeploymentManagerDeployment_Labels {
+        DeploymentManagerDeployment_Labels {
             key: core::default::Default::default(),
             value: core::default::Default::default(),
         }
     }
 }
 
-pub struct DeploymentManagerDeploymentLabelsElRef {
+#[allow(dead_code)]
+pub struct DeploymentManagerDeployment_LabelsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DeploymentManagerDeploymentLabelsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DeploymentManagerDeploymentLabelsElRef {
-        DeploymentManagerDeploymentLabelsElRef {
+impl terrars::Ref for DeploymentManagerDeployment_LabelsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DeploymentManagerDeployment_LabelsRef {
+        DeploymentManagerDeployment_LabelsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DeploymentManagerDeploymentLabelsElRef {
+impl DeploymentManagerDeployment_LabelsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -527,14 +559,14 @@ impl DeploymentManagerDeploymentLabelsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DeploymentManagerDeploymentTargetElConfigEl {
+pub struct DeploymentManagerDeployment_Target_Config {
     content: terrars::PrimField<std::string::String>,
 }
 
-impl DeploymentManagerDeploymentTargetElConfigEl { }
+impl DeploymentManagerDeployment_Target_Config { }
 
-impl terrars::ToListMappable for DeploymentManagerDeploymentTargetElConfigEl {
-    type O = terrars::BlockAssignable<DeploymentManagerDeploymentTargetElConfigEl>;
+impl terrars::ToListMappable for DeploymentManagerDeployment_Target_Config {
+    type O = terrars::BlockAssignable<DeploymentManagerDeployment_Target_Config>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -545,35 +577,34 @@ impl terrars::ToListMappable for DeploymentManagerDeploymentTargetElConfigEl {
     }
 }
 
-pub struct BuildDeploymentManagerDeploymentTargetElConfigEl {
+pub struct BuildDeploymentManagerDeployment_Target_Config {
     #[doc = "The full YAML contents of your configuration file."]
     pub content: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDeploymentManagerDeploymentTargetElConfigEl {
-    pub fn build(self) -> DeploymentManagerDeploymentTargetElConfigEl {
-        DeploymentManagerDeploymentTargetElConfigEl { content: self.content }
+impl BuildDeploymentManagerDeployment_Target_Config {
+    pub fn build(self) -> DeploymentManagerDeployment_Target_Config {
+        DeploymentManagerDeployment_Target_Config { content: self.content }
     }
 }
 
-pub struct DeploymentManagerDeploymentTargetElConfigElRef {
+#[allow(dead_code)]
+pub struct DeploymentManagerDeployment_Target_ConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DeploymentManagerDeploymentTargetElConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DeploymentManagerDeploymentTargetElConfigElRef {
-        DeploymentManagerDeploymentTargetElConfigElRef {
+impl terrars::Ref for DeploymentManagerDeployment_Target_ConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DeploymentManagerDeployment_Target_ConfigRef {
+        DeploymentManagerDeployment_Target_ConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DeploymentManagerDeploymentTargetElConfigElRef {
+impl DeploymentManagerDeployment_Target_ConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -586,14 +617,14 @@ impl DeploymentManagerDeploymentTargetElConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct DeploymentManagerDeploymentTargetElImportsEl {
+pub struct DeploymentManagerDeployment_Target_Imports {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     content: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DeploymentManagerDeploymentTargetElImportsEl {
+impl DeploymentManagerDeployment_Target_Imports {
     #[doc = "Set the field `content`.\nThe full contents of the template that you want to import."]
     pub fn set_content(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.content = std::option::Option::Some(v.into());
@@ -607,8 +638,8 @@ impl DeploymentManagerDeploymentTargetElImportsEl {
     }
 }
 
-impl terrars::ToListMappable for DeploymentManagerDeploymentTargetElImportsEl {
-    type O = terrars::BlockAssignable<DeploymentManagerDeploymentTargetElImportsEl>;
+impl terrars::ToListMappable for DeploymentManagerDeployment_Target_Imports {
+    type O = terrars::BlockAssignable<DeploymentManagerDeployment_Target_Imports>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -619,35 +650,34 @@ impl terrars::ToListMappable for DeploymentManagerDeploymentTargetElImportsEl {
     }
 }
 
-pub struct BuildDeploymentManagerDeploymentTargetElImportsEl {}
+pub struct BuildDeploymentManagerDeployment_Target_Imports {}
 
-impl BuildDeploymentManagerDeploymentTargetElImportsEl {
-    pub fn build(self) -> DeploymentManagerDeploymentTargetElImportsEl {
-        DeploymentManagerDeploymentTargetElImportsEl {
+impl BuildDeploymentManagerDeployment_Target_Imports {
+    pub fn build(self) -> DeploymentManagerDeployment_Target_Imports {
+        DeploymentManagerDeployment_Target_Imports {
             content: core::default::Default::default(),
             name: core::default::Default::default(),
         }
     }
 }
 
-pub struct DeploymentManagerDeploymentTargetElImportsElRef {
+#[allow(dead_code)]
+pub struct DeploymentManagerDeployment_Target_ImportsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DeploymentManagerDeploymentTargetElImportsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DeploymentManagerDeploymentTargetElImportsElRef {
-        DeploymentManagerDeploymentTargetElImportsElRef {
+impl terrars::Ref for DeploymentManagerDeployment_Target_ImportsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DeploymentManagerDeployment_Target_ImportsRef {
+        DeploymentManagerDeployment_Target_ImportsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DeploymentManagerDeploymentTargetElImportsElRef {
+impl DeploymentManagerDeployment_Target_ImportsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -666,25 +696,25 @@ impl DeploymentManagerDeploymentTargetElImportsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct DeploymentManagerDeploymentTargetElDynamic {
-    config: std::option::Option<terrars::DynamicBlock<DeploymentManagerDeploymentTargetElConfigEl>>,
-    imports: std::option::Option<terrars::DynamicBlock<DeploymentManagerDeploymentTargetElImportsEl>>,
+struct DeploymentManagerDeployment_TargetDynamic {
+    config: std::option::Option<terrars::DynamicBlock<DeploymentManagerDeployment_Target_Config>>,
+    imports: std::option::Option<terrars::DynamicBlock<DeploymentManagerDeployment_Target_Imports>>,
 }
 
 #[derive(Serialize)]
-pub struct DeploymentManagerDeploymentTargetEl {
+pub struct DeploymentManagerDeployment_Target {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    config: std::option::Option<std::vec::Vec<DeploymentManagerDeploymentTargetElConfigEl>>,
+    config: std::option::Option<std::vec::Vec<DeploymentManagerDeployment_Target_Config>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    imports: std::option::Option<std::vec::Vec<DeploymentManagerDeploymentTargetElImportsEl>>,
-    dynamic: DeploymentManagerDeploymentTargetElDynamic,
+    imports: std::option::Option<std::vec::Vec<DeploymentManagerDeployment_Target_Imports>>,
+    dynamic: DeploymentManagerDeployment_TargetDynamic,
 }
 
-impl DeploymentManagerDeploymentTargetEl {
+impl DeploymentManagerDeployment_Target {
     #[doc = "Set the field `config`.\n"]
     pub fn set_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DeploymentManagerDeploymentTargetElConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DeploymentManagerDeployment_Target_Config>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -700,7 +730,7 @@ impl DeploymentManagerDeploymentTargetEl {
     #[doc = "Set the field `imports`.\n"]
     pub fn set_imports(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DeploymentManagerDeploymentTargetElImportsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DeploymentManagerDeployment_Target_Imports>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -714,8 +744,8 @@ impl DeploymentManagerDeploymentTargetEl {
     }
 }
 
-impl terrars::ToListMappable for DeploymentManagerDeploymentTargetEl {
-    type O = terrars::BlockAssignable<DeploymentManagerDeploymentTargetEl>;
+impl terrars::ToListMappable for DeploymentManagerDeployment_Target {
+    type O = terrars::BlockAssignable<DeploymentManagerDeployment_Target>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -726,11 +756,11 @@ impl terrars::ToListMappable for DeploymentManagerDeploymentTargetEl {
     }
 }
 
-pub struct BuildDeploymentManagerDeploymentTargetEl {}
+pub struct BuildDeploymentManagerDeployment_Target {}
 
-impl BuildDeploymentManagerDeploymentTargetEl {
-    pub fn build(self) -> DeploymentManagerDeploymentTargetEl {
-        DeploymentManagerDeploymentTargetEl {
+impl BuildDeploymentManagerDeployment_Target {
+    pub fn build(self) -> DeploymentManagerDeployment_Target {
+        DeploymentManagerDeployment_Target {
             config: core::default::Default::default(),
             imports: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -738,38 +768,40 @@ impl BuildDeploymentManagerDeploymentTargetEl {
     }
 }
 
-pub struct DeploymentManagerDeploymentTargetElRef {
+#[allow(dead_code)]
+pub struct DeploymentManagerDeployment_TargetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DeploymentManagerDeploymentTargetElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DeploymentManagerDeploymentTargetElRef {
-        DeploymentManagerDeploymentTargetElRef {
+impl terrars::Ref for DeploymentManagerDeployment_TargetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DeploymentManagerDeployment_TargetRef {
+        DeploymentManagerDeployment_TargetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DeploymentManagerDeploymentTargetElRef {
+impl DeploymentManagerDeployment_TargetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `config` after provisioning.\n"]
-    pub fn config(&self) -> terrars::ListRef<DeploymentManagerDeploymentTargetElConfigElRef> {
+    pub fn config(&self) -> terrars::ListRef<DeploymentManagerDeployment_Target_ConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `imports` after provisioning.\n"]
-    pub fn imports(&self) -> terrars::ListRef<DeploymentManagerDeploymentTargetElImportsElRef> {
+    pub fn imports(&self) -> terrars::ListRef<DeploymentManagerDeployment_Target_ImportsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.imports", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DeploymentManagerDeploymentTimeoutsEl {
+pub struct DeploymentManagerDeployment_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -778,7 +810,7 @@ pub struct DeploymentManagerDeploymentTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DeploymentManagerDeploymentTimeoutsEl {
+impl DeploymentManagerDeployment_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -798,8 +830,8 @@ impl DeploymentManagerDeploymentTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DeploymentManagerDeploymentTimeoutsEl {
-    type O = terrars::BlockAssignable<DeploymentManagerDeploymentTimeoutsEl>;
+impl terrars::ToListMappable for DeploymentManagerDeployment_Timeouts {
+    type O = terrars::BlockAssignable<DeploymentManagerDeployment_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -810,11 +842,11 @@ impl terrars::ToListMappable for DeploymentManagerDeploymentTimeoutsEl {
     }
 }
 
-pub struct BuildDeploymentManagerDeploymentTimeoutsEl {}
+pub struct BuildDeploymentManagerDeployment_Timeouts {}
 
-impl BuildDeploymentManagerDeploymentTimeoutsEl {
-    pub fn build(self) -> DeploymentManagerDeploymentTimeoutsEl {
-        DeploymentManagerDeploymentTimeoutsEl {
+impl BuildDeploymentManagerDeployment_Timeouts {
+    pub fn build(self) -> DeploymentManagerDeployment_Timeouts {
+        DeploymentManagerDeployment_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -822,21 +854,23 @@ impl BuildDeploymentManagerDeploymentTimeoutsEl {
     }
 }
 
-pub struct DeploymentManagerDeploymentTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DeploymentManagerDeployment_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DeploymentManagerDeploymentTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DeploymentManagerDeploymentTimeoutsElRef {
-        DeploymentManagerDeploymentTimeoutsElRef {
+impl terrars::Ref for DeploymentManagerDeployment_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DeploymentManagerDeployment_TimeoutsRef {
+        DeploymentManagerDeployment_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DeploymentManagerDeploymentTimeoutsElRef {
+impl DeploymentManagerDeployment_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -855,10 +889,4 @@ impl DeploymentManagerDeploymentTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DeploymentManagerDeploymentDynamic {
-    labels: std::option::Option<terrars::DynamicBlock<DeploymentManagerDeploymentLabelsEl>>,
-    target: std::option::Option<terrars::DynamicBlock<DeploymentManagerDeploymentTargetEl>>,
 }

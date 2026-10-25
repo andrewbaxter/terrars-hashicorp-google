@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct SourcerepoRepositoryIamMemberData {
+struct SourcerepoRepositoryIamMemberData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,14 +28,14 @@ struct SourcerepoRepositoryIamMemberData {
     repository: terrars::PrimField<std::string::String>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<SourcerepoRepositoryIamMemberConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<SourcerepoRepositoryIamMember_Condition>>,
     dynamic: SourcerepoRepositoryIamMemberDynamic,
 }
 
 struct SourcerepoRepositoryIamMember_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SourcerepoRepositoryIamMemberData>,
+    data: std::cell::RefCell<SourcerepoRepositoryIamMemberData_>,
 }
 
 #[derive(Clone)]
@@ -148,7 +150,7 @@ impl SourcerepoRepositoryIamMember {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SourcerepoRepositoryIamMemberConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SourcerepoRepositoryIamMember_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -192,7 +194,7 @@ impl SourcerepoRepositoryIamMember {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<SourcerepoRepositoryIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<SourcerepoRepositoryIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -243,7 +245,7 @@ impl BuildSourcerepoRepositoryIamMember {
         let out = SourcerepoRepositoryIamMember(std::rc::Rc::new(SourcerepoRepositoryIamMember_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SourcerepoRepositoryIamMemberData {
+            data: std::cell::RefCell::new(SourcerepoRepositoryIamMemberData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -317,20 +319,25 @@ impl SourcerepoRepositoryIamMemberRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<SourcerepoRepositoryIamMemberConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<SourcerepoRepositoryIamMember_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct SourcerepoRepositoryIamMemberDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<SourcerepoRepositoryIamMember_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct SourcerepoRepositoryIamMemberConditionEl {
+pub struct SourcerepoRepositoryIamMember_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl SourcerepoRepositoryIamMemberConditionEl {
+impl SourcerepoRepositoryIamMember_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -338,8 +345,8 @@ impl SourcerepoRepositoryIamMemberConditionEl {
     }
 }
 
-impl terrars::ToListMappable for SourcerepoRepositoryIamMemberConditionEl {
-    type O = terrars::BlockAssignable<SourcerepoRepositoryIamMemberConditionEl>;
+impl terrars::ToListMappable for SourcerepoRepositoryIamMember_Condition {
+    type O = terrars::BlockAssignable<SourcerepoRepositoryIamMember_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -350,16 +357,16 @@ impl terrars::ToListMappable for SourcerepoRepositoryIamMemberConditionEl {
     }
 }
 
-pub struct BuildSourcerepoRepositoryIamMemberConditionEl {
+pub struct BuildSourcerepoRepositoryIamMember_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSourcerepoRepositoryIamMemberConditionEl {
-    pub fn build(self) -> SourcerepoRepositoryIamMemberConditionEl {
-        SourcerepoRepositoryIamMemberConditionEl {
+impl BuildSourcerepoRepositoryIamMember_Condition {
+    pub fn build(self) -> SourcerepoRepositoryIamMember_Condition {
+        SourcerepoRepositoryIamMember_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -367,21 +374,23 @@ impl BuildSourcerepoRepositoryIamMemberConditionEl {
     }
 }
 
-pub struct SourcerepoRepositoryIamMemberConditionElRef {
+#[allow(dead_code)]
+pub struct SourcerepoRepositoryIamMember_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SourcerepoRepositoryIamMemberConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SourcerepoRepositoryIamMemberConditionElRef {
-        SourcerepoRepositoryIamMemberConditionElRef {
+impl terrars::Ref for SourcerepoRepositoryIamMember_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SourcerepoRepositoryIamMember_ConditionRef {
+        SourcerepoRepositoryIamMember_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SourcerepoRepositoryIamMemberConditionElRef {
+impl SourcerepoRepositoryIamMember_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -400,9 +409,4 @@ impl SourcerepoRepositoryIamMemberConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct SourcerepoRepositoryIamMemberDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<SourcerepoRepositoryIamMemberConditionEl>>,
 }

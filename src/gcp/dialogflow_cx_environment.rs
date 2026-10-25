@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DialogflowCxEnvironmentData {
+struct DialogflowCxEnvironmentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct DialogflowCxEnvironmentData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     display_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,16 +30,16 @@ struct DialogflowCxEnvironmentData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     parent: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DialogflowCxEnvironmentTimeoutsEl>,
+    timeouts: std::option::Option<DialogflowCxEnvironment_Timeouts>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    version_configs: std::option::Option<std::vec::Vec<DialogflowCxEnvironmentVersionConfigsEl>>,
+    version_configs: std::option::Option<std::vec::Vec<DialogflowCxEnvironment_VersionConfigs>>,
     dynamic: DialogflowCxEnvironmentDynamic,
 }
 
 struct DialogflowCxEnvironment_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DialogflowCxEnvironmentData>,
+    data: std::cell::RefCell<DialogflowCxEnvironmentData_>,
 }
 
 #[derive(Clone)]
@@ -136,6 +140,13 @@ impl DialogflowCxEnvironment {
     }
 
     #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `description`.\nThe human-readable description of the environment. The maximum length is 500 characters. If exceeded, the request is rejected."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -156,7 +167,7 @@ impl DialogflowCxEnvironment {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DialogflowCxEnvironmentTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DialogflowCxEnvironment_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -164,7 +175,7 @@ impl DialogflowCxEnvironment {
     #[doc = "Set the field `version_configs`.\n"]
     pub fn set_version_configs(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxEnvironmentVersionConfigsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DialogflowCxEnvironment_VersionConfigs>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -175,6 +186,12 @@ impl DialogflowCxEnvironment {
             },
         }
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -212,12 +229,12 @@ impl DialogflowCxEnvironment {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DialogflowCxEnvironmentTimeoutsElRef {
-        DialogflowCxEnvironmentTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DialogflowCxEnvironment_TimeoutsRef {
+        DialogflowCxEnvironment_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `version_configs` after provisioning.\n"]
-    pub fn version_configs(&self) -> terrars::ListRef<DialogflowCxEnvironmentVersionConfigsElRef> {
+    pub fn version_configs(&self) -> terrars::ListRef<DialogflowCxEnvironment_VersionConfigsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.version_configs", self.extract_ref()))
     }
 }
@@ -264,12 +281,13 @@ impl BuildDialogflowCxEnvironment {
         let out = DialogflowCxEnvironment(std::rc::Rc::new(DialogflowCxEnvironment_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DialogflowCxEnvironmentData {
+            data: std::cell::RefCell::new(DialogflowCxEnvironmentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 display_name: self.display_name,
                 id: core::default::Default::default(),
@@ -308,6 +326,12 @@ impl DialogflowCxEnvironmentRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nThe human-readable description of the environment. The maximum length is 500 characters. If exceeded, the request is rejected."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -342,18 +366,23 @@ impl DialogflowCxEnvironmentRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DialogflowCxEnvironmentTimeoutsElRef {
-        DialogflowCxEnvironmentTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DialogflowCxEnvironment_TimeoutsRef {
+        DialogflowCxEnvironment_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `version_configs` after provisioning.\n"]
-    pub fn version_configs(&self) -> terrars::ListRef<DialogflowCxEnvironmentVersionConfigsElRef> {
+    pub fn version_configs(&self) -> terrars::ListRef<DialogflowCxEnvironment_VersionConfigsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.version_configs", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DialogflowCxEnvironmentDynamic {
+    version_configs: std::option::Option<terrars::DynamicBlock<DialogflowCxEnvironment_VersionConfigs>>,
+}
+
 #[derive(Serialize)]
-pub struct DialogflowCxEnvironmentTimeoutsEl {
+pub struct DialogflowCxEnvironment_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -362,7 +391,7 @@ pub struct DialogflowCxEnvironmentTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DialogflowCxEnvironmentTimeoutsEl {
+impl DialogflowCxEnvironment_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -382,8 +411,8 @@ impl DialogflowCxEnvironmentTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DialogflowCxEnvironmentTimeoutsEl {
-    type O = terrars::BlockAssignable<DialogflowCxEnvironmentTimeoutsEl>;
+impl terrars::ToListMappable for DialogflowCxEnvironment_Timeouts {
+    type O = terrars::BlockAssignable<DialogflowCxEnvironment_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -394,11 +423,11 @@ impl terrars::ToListMappable for DialogflowCxEnvironmentTimeoutsEl {
     }
 }
 
-pub struct BuildDialogflowCxEnvironmentTimeoutsEl {}
+pub struct BuildDialogflowCxEnvironment_Timeouts {}
 
-impl BuildDialogflowCxEnvironmentTimeoutsEl {
-    pub fn build(self) -> DialogflowCxEnvironmentTimeoutsEl {
-        DialogflowCxEnvironmentTimeoutsEl {
+impl BuildDialogflowCxEnvironment_Timeouts {
+    pub fn build(self) -> DialogflowCxEnvironment_Timeouts {
+        DialogflowCxEnvironment_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -406,21 +435,23 @@ impl BuildDialogflowCxEnvironmentTimeoutsEl {
     }
 }
 
-pub struct DialogflowCxEnvironmentTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxEnvironment_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxEnvironmentTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxEnvironmentTimeoutsElRef {
-        DialogflowCxEnvironmentTimeoutsElRef {
+impl terrars::Ref for DialogflowCxEnvironment_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxEnvironment_TimeoutsRef {
+        DialogflowCxEnvironment_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxEnvironmentTimeoutsElRef {
+impl DialogflowCxEnvironment_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -442,14 +473,14 @@ impl DialogflowCxEnvironmentTimeoutsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DialogflowCxEnvironmentVersionConfigsEl {
+pub struct DialogflowCxEnvironment_VersionConfigs {
     version: terrars::PrimField<std::string::String>,
 }
 
-impl DialogflowCxEnvironmentVersionConfigsEl { }
+impl DialogflowCxEnvironment_VersionConfigs { }
 
-impl terrars::ToListMappable for DialogflowCxEnvironmentVersionConfigsEl {
-    type O = terrars::BlockAssignable<DialogflowCxEnvironmentVersionConfigsEl>;
+impl terrars::ToListMappable for DialogflowCxEnvironment_VersionConfigs {
+    type O = terrars::BlockAssignable<DialogflowCxEnvironment_VersionConfigs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -460,32 +491,34 @@ impl terrars::ToListMappable for DialogflowCxEnvironmentVersionConfigsEl {
     }
 }
 
-pub struct BuildDialogflowCxEnvironmentVersionConfigsEl {
+pub struct BuildDialogflowCxEnvironment_VersionConfigs {
     #[doc = "Format: projects/{{project}}/locations/{{location}}/agents/{{agent}}/flows/{{flow}}/versions/{{version}}."]
     pub version: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDialogflowCxEnvironmentVersionConfigsEl {
-    pub fn build(self) -> DialogflowCxEnvironmentVersionConfigsEl {
-        DialogflowCxEnvironmentVersionConfigsEl { version: self.version }
+impl BuildDialogflowCxEnvironment_VersionConfigs {
+    pub fn build(self) -> DialogflowCxEnvironment_VersionConfigs {
+        DialogflowCxEnvironment_VersionConfigs { version: self.version }
     }
 }
 
-pub struct DialogflowCxEnvironmentVersionConfigsElRef {
+#[allow(dead_code)]
+pub struct DialogflowCxEnvironment_VersionConfigsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DialogflowCxEnvironmentVersionConfigsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxEnvironmentVersionConfigsElRef {
-        DialogflowCxEnvironmentVersionConfigsElRef {
+impl terrars::Ref for DialogflowCxEnvironment_VersionConfigsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DialogflowCxEnvironment_VersionConfigsRef {
+        DialogflowCxEnvironment_VersionConfigsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DialogflowCxEnvironmentVersionConfigsElRef {
+impl DialogflowCxEnvironment_VersionConfigsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -495,9 +528,4 @@ impl DialogflowCxEnvironmentVersionConfigsElRef {
     pub fn version(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.version", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DialogflowCxEnvironmentDynamic {
-    version_configs: std::option::Option<terrars::DynamicBlock<DialogflowCxEnvironmentVersionConfigsEl>>,
 }

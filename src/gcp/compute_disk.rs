@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeDiskData {
+struct ComputeDiskData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,7 +21,19 @@ struct ComputeDiskData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    access_mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    architecture: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create_snapshot_before_destroy: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create_snapshot_before_destroy_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_confidential_compute: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -43,29 +57,37 @@ struct ComputeDiskData {
     snapshot: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     source_disk: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source_instant_snapshot: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source_storage_object: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    storage_pool: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     zone: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    async_primary_disk: std::option::Option<std::vec::Vec<ComputeDiskAsyncPrimaryDiskEl>>,
+    async_primary_disk: std::option::Option<std::vec::Vec<ComputeDisk_AsyncPrimaryDisk>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    disk_encryption_key: std::option::Option<std::vec::Vec<ComputeDiskDiskEncryptionKeyEl>>,
+    disk_encryption_key: std::option::Option<std::vec::Vec<ComputeDisk_DiskEncryptionKey>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    guest_os_features: std::option::Option<std::vec::Vec<ComputeDiskGuestOsFeaturesEl>>,
+    guest_os_features: std::option::Option<std::vec::Vec<ComputeDisk_GuestOsFeatures>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    source_image_encryption_key: std::option::Option<std::vec::Vec<ComputeDiskSourceImageEncryptionKeyEl>>,
+    params: std::option::Option<std::vec::Vec<ComputeDisk_Params>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    source_snapshot_encryption_key: std::option::Option<std::vec::Vec<ComputeDiskSourceSnapshotEncryptionKeyEl>>,
+    source_image_encryption_key: std::option::Option<std::vec::Vec<ComputeDisk_SourceImageEncryptionKey>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComputeDiskTimeoutsEl>,
+    source_snapshot_encryption_key: std::option::Option<std::vec::Vec<ComputeDisk_SourceSnapshotEncryptionKey>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<ComputeDisk_Timeouts>,
     dynamic: ComputeDiskDynamic,
 }
 
 struct ComputeDisk_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeDiskData>,
+    data: std::cell::RefCell<ComputeDiskData_>,
 }
 
 #[derive(Clone)]
@@ -166,9 +188,53 @@ impl ComputeDisk {
     }
 
     #[doc =
+        "Set the field `access_mode`.\nThe access mode of the disk.\nFor example:\n  * READ_WRITE_SINGLE: The default AccessMode, means the disk can be attached to single instance in RW mode.\n  * READ_WRITE_MANY: The AccessMode means the disk can be attached to multiple instances in RW mode.\n  * READ_ONLY_SINGLE: The AccessMode means the disk can be attached to multiple instances in RO mode.\nThe AccessMode is only valid for Hyperdisk disk types."]
+    pub fn set_access_mode(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().access_mode = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `architecture`.\nThe architecture of the disk. Values include 'X86_64', 'ARM64'."]
+    pub fn set_architecture(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().architecture = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `create_snapshot_before_destroy`.\nIf set to true, a snapshot of the disk will be created before it is destroyed.\nIf your disk is encrypted with customer managed encryption keys these will be reused for the snapshot creation.\nThe name of the snapshot by default will be '{{disk-name}}-YYYYMMDD-HHmm'"]
+    pub fn set_create_snapshot_before_destroy(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().create_snapshot_before_destroy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `create_snapshot_before_destroy_prefix`.\nThis will set a custom name prefix for the snapshot that's created when the disk is deleted."]
+    pub fn set_create_snapshot_before_destroy_prefix(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().create_snapshot_before_destroy_prefix = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `description`.\nAn optional description of this resource. Provide this property when\nyou create the resource."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `enable_confidential_compute`.\nWhether this disk is using confidential compute mode.\nNote: Only supported on hyperdisk skus, disk_encryption_key is required when setting to true"]
+    pub fn set_enable_confidential_compute(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().enable_confidential_compute = std::option::Option::Some(v.into());
         self
     }
 
@@ -253,6 +319,30 @@ impl ComputeDisk {
     }
 
     #[doc =
+        "Set the field `source_instant_snapshot`.\nThe source instant snapshot used to create this disk. You can provide this as a partial or full URL to the resource.\nFor example, the following are valid values:\n\n* 'https://www.googleapis.com/compute/v1/projects/project/zones/zone/instantSnapshots/instantSnapshot'\n* 'projects/project/zones/zone/instantSnapshots/instantSnapshot'\n* 'zones/zone/instantSnapshots/instantSnapshot'"]
+    pub fn set_source_instant_snapshot(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().source_instant_snapshot = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `source_storage_object`.\nThe full Google Cloud Storage URI where the disk image is stored.\nThis file must be a gzip-compressed tarball whose name ends in .tar.gz or virtual machine disk whose name ends in vmdk.\nValid URIs may start with gs:// or https://storage.googleapis.com/.\nThis flag is not optimized for creating multiple disks from a source storage object.\nTo create many disks from a source storage object, use gcloud compute images import instead."]
+    pub fn set_source_storage_object(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().source_storage_object = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `storage_pool`.\nThe URL or the name of the storage pool in which the new disk is created.\nFor example:\n* https://www.googleapis.com/compute/v1/projects/{project}/zones/{zone}/storagePools/{storagePool}\n* /projects/{project}/zones/{zone}/storagePools/{storagePool}\n* /zones/{zone}/storagePools/{storagePool}\n* /{storagePool}"]
+    pub fn set_storage_pool(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().storage_pool = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `type_`.\nURL of the disk type resource describing which disk type to use to\ncreate the disk. Provide this when creating the disk."]
     pub fn set_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().type_ = std::option::Option::Some(v.into());
@@ -268,7 +358,7 @@ impl ComputeDisk {
     #[doc = "Set the field `async_primary_disk`.\n"]
     pub fn set_async_primary_disk(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeDiskAsyncPrimaryDiskEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeDisk_AsyncPrimaryDisk>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -284,7 +374,7 @@ impl ComputeDisk {
     #[doc = "Set the field `disk_encryption_key`.\n"]
     pub fn set_disk_encryption_key(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeDiskDiskEncryptionKeyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeDisk_DiskEncryptionKey>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -300,7 +390,7 @@ impl ComputeDisk {
     #[doc = "Set the field `guest_os_features`.\n"]
     pub fn set_guest_os_features(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeDiskGuestOsFeaturesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeDisk_GuestOsFeatures>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -313,10 +403,23 @@ impl ComputeDisk {
         self
     }
 
+    #[doc = "Set the field `params`.\n"]
+    pub fn set_params(self, v: impl std::convert::Into<terrars::BlockAssignable<ComputeDisk_Params>>) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().params = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.params = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `source_image_encryption_key`.\n"]
     pub fn set_source_image_encryption_key(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeDiskSourceImageEncryptionKeyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeDisk_SourceImageEncryptionKey>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -332,7 +435,7 @@ impl ComputeDisk {
     #[doc = "Set the field `source_snapshot_encryption_key`.\n"]
     pub fn set_source_snapshot_encryption_key(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputeDiskSourceSnapshotEncryptionKeyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputeDisk_SourceSnapshotEncryptionKey>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -346,9 +449,39 @@ impl ComputeDisk {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeDiskTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeDisk_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `access_mode` after provisioning.\nThe access mode of the disk.\nFor example:\n  * READ_WRITE_SINGLE: The default AccessMode, means the disk can be attached to single instance in RW mode.\n  * READ_WRITE_MANY: The AccessMode means the disk can be attached to multiple instances in RW mode.\n  * READ_ONLY_SINGLE: The AccessMode means the disk can be attached to multiple instances in RO mode.\nThe AccessMode is only valid for Hyperdisk disk types."]
+    pub fn access_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.access_mode", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `architecture` after provisioning.\nThe architecture of the disk. Values include 'X86_64', 'ARM64'."]
+    pub fn architecture(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.architecture", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `create_snapshot_before_destroy` after provisioning.\nIf set to true, a snapshot of the disk will be created before it is destroyed.\nIf your disk is encrypted with customer managed encryption keys these will be reused for the snapshot creation.\nThe name of the snapshot by default will be '{{disk-name}}-YYYYMMDD-HHmm'"]
+    pub fn create_snapshot_before_destroy(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.create_snapshot_before_destroy", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `create_snapshot_before_destroy_prefix` after provisioning.\nThis will set a custom name prefix for the snapshot that's created when the disk is deleted."]
+    pub fn create_snapshot_before_destroy_prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.create_snapshot_before_destroy_prefix", self.extract_ref()),
+        )
     }
 
     #[doc =
@@ -358,15 +491,33 @@ impl ComputeDisk {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nAn optional description of this resource. Provide this property when\nyou create the resource."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
     #[doc =
+        "Get a reference to the value of field `disk_id` after provisioning.\nThe unique identifier for the resource. This identifier is defined by the server."]
+    pub fn disk_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.disk_id", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
     pub fn effective_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `enable_confidential_compute` after provisioning.\nWhether this disk is using confidential compute mode.\nNote: Only supported on hyperdisk skus, disk_encryption_key is required when setting to true"]
+    pub fn enable_confidential_compute(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_confidential_compute", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -474,9 +625,33 @@ impl ComputeDisk {
     }
 
     #[doc =
+        "Get a reference to the value of field `source_instant_snapshot` after provisioning.\nThe source instant snapshot used to create this disk. You can provide this as a partial or full URL to the resource.\nFor example, the following are valid values:\n\n* 'https://www.googleapis.com/compute/v1/projects/project/zones/zone/instantSnapshots/instantSnapshot'\n* 'projects/project/zones/zone/instantSnapshots/instantSnapshot'\n* 'zones/zone/instantSnapshots/instantSnapshot'"]
+    pub fn source_instant_snapshot(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_instant_snapshot", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `source_instant_snapshot_id` after provisioning.\nThe unique ID of the instant snapshot used to create this disk. This value identifies\nthe exact instant snapshot that was used to create this persistent disk.\nFor example, if you created the persistent disk from an instant snapshot that was later\ndeleted and recreated under the same name, the source instant snapshot ID would identify\nthe exact version of the instant snapshot that was used."]
+    pub fn source_instant_snapshot_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_instant_snapshot_id", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `source_snapshot_id` after provisioning.\nThe unique ID of the snapshot used to create this disk. This value\nidentifies the exact snapshot that was used to create this persistent\ndisk. For example, if you created the persistent disk from a snapshot\nthat was later deleted and recreated under the same name, the source\nsnapshot ID would identify the exact version of the snapshot that was\nused."]
     pub fn source_snapshot_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_snapshot_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `source_storage_object` after provisioning.\nThe full Google Cloud Storage URI where the disk image is stored.\nThis file must be a gzip-compressed tarball whose name ends in .tar.gz or virtual machine disk whose name ends in vmdk.\nValid URIs may start with gs:// or https://storage.googleapis.com/.\nThis flag is not optimized for creating multiple disks from a source storage object.\nTo create many disks from a source storage object, use gcloud compute images import instead."]
+    pub fn source_storage_object(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_storage_object", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `storage_pool` after provisioning.\nThe URL or the name of the storage pool in which the new disk is created.\nFor example:\n* https://www.googleapis.com/compute/v1/projects/{project}/zones/{zone}/storagePools/{storagePool}\n* /projects/{project}/zones/{zone}/storagePools/{storagePool}\n* /zones/{zone}/storagePools/{storagePool}\n* /{storagePool}"]
+    pub fn storage_pool(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.storage_pool", self.extract_ref()))
     }
 
     #[doc =
@@ -504,22 +679,27 @@ impl ComputeDisk {
     }
 
     #[doc = "Get a reference to the value of field `async_primary_disk` after provisioning.\n"]
-    pub fn async_primary_disk(&self) -> terrars::ListRef<ComputeDiskAsyncPrimaryDiskElRef> {
+    pub fn async_primary_disk(&self) -> terrars::ListRef<ComputeDisk_AsyncPrimaryDiskRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.async_primary_disk", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `disk_encryption_key` after provisioning.\n"]
-    pub fn disk_encryption_key(&self) -> terrars::ListRef<ComputeDiskDiskEncryptionKeyElRef> {
+    pub fn disk_encryption_key(&self) -> terrars::ListRef<ComputeDisk_DiskEncryptionKeyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.disk_encryption_key", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `params` after provisioning.\n"]
+    pub fn params(&self) -> terrars::ListRef<ComputeDisk_ParamsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.params", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `source_image_encryption_key` after provisioning.\n"]
-    pub fn source_image_encryption_key(&self) -> terrars::ListRef<ComputeDiskSourceImageEncryptionKeyElRef> {
+    pub fn source_image_encryption_key(&self) -> terrars::ListRef<ComputeDisk_SourceImageEncryptionKeyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source_image_encryption_key", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `source_snapshot_encryption_key` after provisioning.\n"]
-    pub fn source_snapshot_encryption_key(&self) -> terrars::ListRef<ComputeDiskSourceSnapshotEncryptionKeyElRef> {
+    pub fn source_snapshot_encryption_key(&self) -> terrars::ListRef<ComputeDisk_SourceSnapshotEncryptionKeyRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.source_snapshot_encryption_key", self.extract_ref()),
@@ -527,8 +707,8 @@ impl ComputeDisk {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeDiskTimeoutsElRef {
-        ComputeDiskTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeDisk_TimeoutsRef {
+        ComputeDisk_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -575,13 +755,19 @@ impl BuildComputeDisk {
         let out = ComputeDisk(std::rc::Rc::new(ComputeDisk_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeDiskData {
+            data: std::cell::RefCell::new(ComputeDiskData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                access_mode: core::default::Default::default(),
+                architecture: core::default::Default::default(),
+                create_snapshot_before_destroy: core::default::Default::default(),
+                create_snapshot_before_destroy_prefix: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
+                enable_confidential_compute: core::default::Default::default(),
                 id: core::default::Default::default(),
                 image: core::default::Default::default(),
                 labels: core::default::Default::default(),
@@ -594,11 +780,15 @@ impl BuildComputeDisk {
                 size: core::default::Default::default(),
                 snapshot: core::default::Default::default(),
                 source_disk: core::default::Default::default(),
+                source_instant_snapshot: core::default::Default::default(),
+                source_storage_object: core::default::Default::default(),
+                storage_pool: core::default::Default::default(),
                 type_: core::default::Default::default(),
                 zone: core::default::Default::default(),
                 async_primary_disk: core::default::Default::default(),
                 disk_encryption_key: core::default::Default::default(),
                 guest_os_features: core::default::Default::default(),
+                params: core::default::Default::default(),
                 source_image_encryption_key: core::default::Default::default(),
                 source_snapshot_encryption_key: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
@@ -634,9 +824,45 @@ impl ComputeDiskRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `access_mode` after provisioning.\nThe access mode of the disk.\nFor example:\n  * READ_WRITE_SINGLE: The default AccessMode, means the disk can be attached to single instance in RW mode.\n  * READ_WRITE_MANY: The AccessMode means the disk can be attached to multiple instances in RW mode.\n  * READ_ONLY_SINGLE: The AccessMode means the disk can be attached to multiple instances in RO mode.\nThe AccessMode is only valid for Hyperdisk disk types."]
+    pub fn access_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.access_mode", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `architecture` after provisioning.\nThe architecture of the disk. Values include 'X86_64', 'ARM64'."]
+    pub fn architecture(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.architecture", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `create_snapshot_before_destroy` after provisioning.\nIf set to true, a snapshot of the disk will be created before it is destroyed.\nIf your disk is encrypted with customer managed encryption keys these will be reused for the snapshot creation.\nThe name of the snapshot by default will be '{{disk-name}}-YYYYMMDD-HHmm'"]
+    pub fn create_snapshot_before_destroy(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.create_snapshot_before_destroy", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `create_snapshot_before_destroy_prefix` after provisioning.\nThis will set a custom name prefix for the snapshot that's created when the disk is deleted."]
+    pub fn create_snapshot_before_destroy_prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.create_snapshot_before_destroy_prefix", self.extract_ref()),
+        )
+    }
+
+    #[doc =
         "Get a reference to the value of field `creation_timestamp` after provisioning.\nCreation timestamp in RFC3339 text format."]
     pub fn creation_timestamp(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_timestamp", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -646,9 +872,21 @@ impl ComputeDiskRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `disk_id` after provisioning.\nThe unique identifier for the resource. This identifier is defined by the server."]
+    pub fn disk_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.disk_id", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `effective_labels` after provisioning.\nAll of labels (key/value pairs) present on the resource in GCP, including the labels configured through Terraform, other clients and services."]
     pub fn effective_labels(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.effective_labels", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `enable_confidential_compute` after provisioning.\nWhether this disk is using confidential compute mode.\nNote: Only supported on hyperdisk skus, disk_encryption_key is required when setting to true"]
+    pub fn enable_confidential_compute(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_confidential_compute", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -756,9 +994,33 @@ impl ComputeDiskRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `source_instant_snapshot` after provisioning.\nThe source instant snapshot used to create this disk. You can provide this as a partial or full URL to the resource.\nFor example, the following are valid values:\n\n* 'https://www.googleapis.com/compute/v1/projects/project/zones/zone/instantSnapshots/instantSnapshot'\n* 'projects/project/zones/zone/instantSnapshots/instantSnapshot'\n* 'zones/zone/instantSnapshots/instantSnapshot'"]
+    pub fn source_instant_snapshot(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_instant_snapshot", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `source_instant_snapshot_id` after provisioning.\nThe unique ID of the instant snapshot used to create this disk. This value identifies\nthe exact instant snapshot that was used to create this persistent disk.\nFor example, if you created the persistent disk from an instant snapshot that was later\ndeleted and recreated under the same name, the source instant snapshot ID would identify\nthe exact version of the instant snapshot that was used."]
+    pub fn source_instant_snapshot_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_instant_snapshot_id", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `source_snapshot_id` after provisioning.\nThe unique ID of the snapshot used to create this disk. This value\nidentifies the exact snapshot that was used to create this persistent\ndisk. For example, if you created the persistent disk from a snapshot\nthat was later deleted and recreated under the same name, the source\nsnapshot ID would identify the exact version of the snapshot that was\nused."]
     pub fn source_snapshot_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_snapshot_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `source_storage_object` after provisioning.\nThe full Google Cloud Storage URI where the disk image is stored.\nThis file must be a gzip-compressed tarball whose name ends in .tar.gz or virtual machine disk whose name ends in vmdk.\nValid URIs may start with gs:// or https://storage.googleapis.com/.\nThis flag is not optimized for creating multiple disks from a source storage object.\nTo create many disks from a source storage object, use gcloud compute images import instead."]
+    pub fn source_storage_object(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_storage_object", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `storage_pool` after provisioning.\nThe URL or the name of the storage pool in which the new disk is created.\nFor example:\n* https://www.googleapis.com/compute/v1/projects/{project}/zones/{zone}/storagePools/{storagePool}\n* /projects/{project}/zones/{zone}/storagePools/{storagePool}\n* /zones/{zone}/storagePools/{storagePool}\n* /{storagePool}"]
+    pub fn storage_pool(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.storage_pool", self.extract_ref()))
     }
 
     #[doc =
@@ -786,22 +1048,27 @@ impl ComputeDiskRef {
     }
 
     #[doc = "Get a reference to the value of field `async_primary_disk` after provisioning.\n"]
-    pub fn async_primary_disk(&self) -> terrars::ListRef<ComputeDiskAsyncPrimaryDiskElRef> {
+    pub fn async_primary_disk(&self) -> terrars::ListRef<ComputeDisk_AsyncPrimaryDiskRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.async_primary_disk", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `disk_encryption_key` after provisioning.\n"]
-    pub fn disk_encryption_key(&self) -> terrars::ListRef<ComputeDiskDiskEncryptionKeyElRef> {
+    pub fn disk_encryption_key(&self) -> terrars::ListRef<ComputeDisk_DiskEncryptionKeyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.disk_encryption_key", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `params` after provisioning.\n"]
+    pub fn params(&self) -> terrars::ListRef<ComputeDisk_ParamsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.params", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `source_image_encryption_key` after provisioning.\n"]
-    pub fn source_image_encryption_key(&self) -> terrars::ListRef<ComputeDiskSourceImageEncryptionKeyElRef> {
+    pub fn source_image_encryption_key(&self) -> terrars::ListRef<ComputeDisk_SourceImageEncryptionKeyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source_image_encryption_key", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `source_snapshot_encryption_key` after provisioning.\n"]
-    pub fn source_snapshot_encryption_key(&self) -> terrars::ListRef<ComputeDiskSourceSnapshotEncryptionKeyElRef> {
+    pub fn source_snapshot_encryption_key(&self) -> terrars::ListRef<ComputeDisk_SourceSnapshotEncryptionKeyRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.source_snapshot_encryption_key", self.extract_ref()),
@@ -809,20 +1076,32 @@ impl ComputeDiskRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeDiskTimeoutsElRef {
-        ComputeDiskTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeDisk_TimeoutsRef {
+        ComputeDisk_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ComputeDiskDynamic {
+    async_primary_disk: std::option::Option<terrars::DynamicBlock<ComputeDisk_AsyncPrimaryDisk>>,
+    disk_encryption_key: std::option::Option<terrars::DynamicBlock<ComputeDisk_DiskEncryptionKey>>,
+    guest_os_features: std::option::Option<terrars::DynamicBlock<ComputeDisk_GuestOsFeatures>>,
+    params: std::option::Option<terrars::DynamicBlock<ComputeDisk_Params>>,
+    source_image_encryption_key: std::option::Option<terrars::DynamicBlock<ComputeDisk_SourceImageEncryptionKey>>,
+    source_snapshot_encryption_key: std
+    ::option
+    ::Option<terrars::DynamicBlock<ComputeDisk_SourceSnapshotEncryptionKey>>,
+}
+
 #[derive(Serialize)]
-pub struct ComputeDiskAsyncPrimaryDiskEl {
+pub struct ComputeDisk_AsyncPrimaryDisk {
     disk: terrars::PrimField<std::string::String>,
 }
 
-impl ComputeDiskAsyncPrimaryDiskEl { }
+impl ComputeDisk_AsyncPrimaryDisk { }
 
-impl terrars::ToListMappable for ComputeDiskAsyncPrimaryDiskEl {
-    type O = terrars::BlockAssignable<ComputeDiskAsyncPrimaryDiskEl>;
+impl terrars::ToListMappable for ComputeDisk_AsyncPrimaryDisk {
+    type O = terrars::BlockAssignable<ComputeDisk_AsyncPrimaryDisk>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -833,32 +1112,34 @@ impl terrars::ToListMappable for ComputeDiskAsyncPrimaryDiskEl {
     }
 }
 
-pub struct BuildComputeDiskAsyncPrimaryDiskEl {
+pub struct BuildComputeDisk_AsyncPrimaryDisk {
     #[doc = "Primary disk for asynchronous disk replication."]
     pub disk: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputeDiskAsyncPrimaryDiskEl {
-    pub fn build(self) -> ComputeDiskAsyncPrimaryDiskEl {
-        ComputeDiskAsyncPrimaryDiskEl { disk: self.disk }
+impl BuildComputeDisk_AsyncPrimaryDisk {
+    pub fn build(self) -> ComputeDisk_AsyncPrimaryDisk {
+        ComputeDisk_AsyncPrimaryDisk { disk: self.disk }
     }
 }
 
-pub struct ComputeDiskAsyncPrimaryDiskElRef {
+#[allow(dead_code)]
+pub struct ComputeDisk_AsyncPrimaryDiskRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeDiskAsyncPrimaryDiskElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeDiskAsyncPrimaryDiskElRef {
-        ComputeDiskAsyncPrimaryDiskElRef {
+impl terrars::Ref for ComputeDisk_AsyncPrimaryDiskRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeDisk_AsyncPrimaryDiskRef {
+        ComputeDisk_AsyncPrimaryDiskRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeDiskAsyncPrimaryDiskElRef {
+impl ComputeDisk_AsyncPrimaryDiskRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -871,7 +1152,7 @@ impl ComputeDiskAsyncPrimaryDiskElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeDiskDiskEncryptionKeyEl {
+pub struct ComputeDisk_DiskEncryptionKey {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_self_link: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -879,10 +1160,18 @@ pub struct ComputeDiskDiskEncryptionKeyEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     raw_key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    raw_key_wo: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    raw_key_wo_version: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     rsa_encrypted_key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    rsa_encrypted_key_wo: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    rsa_encrypted_key_wo_version: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeDiskDiskEncryptionKeyEl {
+impl ComputeDisk_DiskEncryptionKey {
     #[doc =
         "Set the field `kms_key_self_link`.\nThe self link of the encryption key used to encrypt the disk. Also called KmsKeyName\nin the cloud console. Your project's Compute Engine System service account\n('service-{{PROJECT_NUMBER}}@compute-system.iam.gserviceaccount.com') must have\n'roles/cloudkms.cryptoKeyEncrypterDecrypter' to use this feature.\nSee https://cloud.google.com/compute/docs/disks/customer-managed-encryption#encrypt_a_new_persistent_disk_with_your_own_keys"]
     pub fn set_kms_key_self_link(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -904,6 +1193,23 @@ impl ComputeDiskDiskEncryptionKeyEl {
         "Set the field `raw_key`.\nSpecifies a 256-bit customer-supplied encryption key, encoded in\nRFC 4648 base64 to either encrypt or decrypt this resource."]
     pub fn set_raw_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.raw_key = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `raw_key_wo`.\nSpecifies a 256-bit customer-supplied encryption key, encoded in\nRFC 4648 base64 to either encrypt or decrypt this resource."]
+    pub fn set_raw_key_wo(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.raw_key_wo = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `raw_key_wo_version`.\nTriggers update of 'raw_key_wo' write-only. Increment this value when an update to 'raw_key_wo' is needed. For more info see [updating write-only arguments](/docs/providers/google/guides/using_write_only_arguments.html#updating-write-only-arguments)"]
+    pub fn set_raw_key_wo_version(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.raw_key_wo_version = std::option::Option::Some(v.into());
         self
     }
 
@@ -913,10 +1219,30 @@ impl ComputeDiskDiskEncryptionKeyEl {
         self.rsa_encrypted_key = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc =
+        "Set the field `rsa_encrypted_key_wo`.\nSpecifies an RFC 4648 base64 encoded, RSA-wrapped 2048-bit\ncustomer-supplied encryption key to either encrypt or decrypt\nthis resource. You can provide either the rawKey or the rsaEncryptedKey."]
+    pub fn set_rsa_encrypted_key_wo(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.rsa_encrypted_key_wo = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `rsa_encrypted_key_wo_version`.\nTriggers update of 'rsa_encrypted_key_wo' write-only. Increment this value when an update to 'rsa_encrypted_key_wo' is needed. For more info see [updating write-only arguments](/docs/providers/google/guides/using_write_only_arguments.html#updating-write-only-arguments)"]
+    pub fn set_rsa_encrypted_key_wo_version(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.rsa_encrypted_key_wo_version = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for ComputeDiskDiskEncryptionKeyEl {
-    type O = terrars::BlockAssignable<ComputeDiskDiskEncryptionKeyEl>;
+impl terrars::ToListMappable for ComputeDisk_DiskEncryptionKey {
+    type O = terrars::BlockAssignable<ComputeDisk_DiskEncryptionKey>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -927,34 +1253,40 @@ impl terrars::ToListMappable for ComputeDiskDiskEncryptionKeyEl {
     }
 }
 
-pub struct BuildComputeDiskDiskEncryptionKeyEl {}
+pub struct BuildComputeDisk_DiskEncryptionKey {}
 
-impl BuildComputeDiskDiskEncryptionKeyEl {
-    pub fn build(self) -> ComputeDiskDiskEncryptionKeyEl {
-        ComputeDiskDiskEncryptionKeyEl {
+impl BuildComputeDisk_DiskEncryptionKey {
+    pub fn build(self) -> ComputeDisk_DiskEncryptionKey {
+        ComputeDisk_DiskEncryptionKey {
             kms_key_self_link: core::default::Default::default(),
             kms_key_service_account: core::default::Default::default(),
             raw_key: core::default::Default::default(),
+            raw_key_wo: core::default::Default::default(),
+            raw_key_wo_version: core::default::Default::default(),
             rsa_encrypted_key: core::default::Default::default(),
+            rsa_encrypted_key_wo: core::default::Default::default(),
+            rsa_encrypted_key_wo_version: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeDiskDiskEncryptionKeyElRef {
+#[allow(dead_code)]
+pub struct ComputeDisk_DiskEncryptionKeyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeDiskDiskEncryptionKeyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeDiskDiskEncryptionKeyElRef {
-        ComputeDiskDiskEncryptionKeyElRef {
+impl terrars::Ref for ComputeDisk_DiskEncryptionKeyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeDisk_DiskEncryptionKeyRef {
+        ComputeDisk_DiskEncryptionKeyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeDiskDiskEncryptionKeyElRef {
+impl ComputeDisk_DiskEncryptionKeyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -975,6 +1307,18 @@ impl ComputeDiskDiskEncryptionKeyElRef {
         "Get a reference to the value of field `raw_key` after provisioning.\nSpecifies a 256-bit customer-supplied encryption key, encoded in\nRFC 4648 base64 to either encrypt or decrypt this resource."]
     pub fn raw_key(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.raw_key", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `raw_key_wo` after provisioning.\nSpecifies a 256-bit customer-supplied encryption key, encoded in\nRFC 4648 base64 to either encrypt or decrypt this resource."]
+    pub fn raw_key_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.raw_key_wo", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `raw_key_wo_version` after provisioning.\nTriggers update of 'raw_key_wo' write-only. Increment this value when an update to 'raw_key_wo' is needed. For more info see [updating write-only arguments](/docs/providers/google/guides/using_write_only_arguments.html#updating-write-only-arguments)"]
+    pub fn raw_key_wo_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.raw_key_wo_version", self.base))
     }
 
     #[doc =
@@ -984,6 +1328,18 @@ impl ComputeDiskDiskEncryptionKeyElRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `rsa_encrypted_key_wo` after provisioning.\nSpecifies an RFC 4648 base64 encoded, RSA-wrapped 2048-bit\ncustomer-supplied encryption key to either encrypt or decrypt\nthis resource. You can provide either the rawKey or the rsaEncryptedKey."]
+    pub fn rsa_encrypted_key_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rsa_encrypted_key_wo", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `rsa_encrypted_key_wo_version` after provisioning.\nTriggers update of 'rsa_encrypted_key_wo' write-only. Increment this value when an update to 'rsa_encrypted_key_wo' is needed. For more info see [updating write-only arguments](/docs/providers/google/guides/using_write_only_arguments.html#updating-write-only-arguments)"]
+    pub fn rsa_encrypted_key_wo_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rsa_encrypted_key_wo_version", self.base))
+    }
+
+    #[doc =
         "Get a reference to the value of field `sha256` after provisioning.\nThe RFC 4648 base64 encoded SHA-256 hash of the customer-supplied\nencryption key that protects this resource."]
     pub fn sha256(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.sha256", self.base))
@@ -991,15 +1347,15 @@ impl ComputeDiskDiskEncryptionKeyElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeDiskGuestOsFeaturesEl {
+pub struct ComputeDisk_GuestOsFeatures {
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl ComputeDiskGuestOsFeaturesEl { }
+impl ComputeDisk_GuestOsFeatures { }
 
-impl terrars::ToListMappable for ComputeDiskGuestOsFeaturesEl {
-    type O = terrars::BlockAssignable<ComputeDiskGuestOsFeaturesEl>;
+impl terrars::ToListMappable for ComputeDisk_GuestOsFeatures {
+    type O = terrars::BlockAssignable<ComputeDisk_GuestOsFeatures>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1010,46 +1366,114 @@ impl terrars::ToListMappable for ComputeDiskGuestOsFeaturesEl {
     }
 }
 
-pub struct BuildComputeDiskGuestOsFeaturesEl {
+pub struct BuildComputeDisk_GuestOsFeatures {
     #[doc =
-        "The type of supported feature. Read [Enabling guest operating system features](https://cloud.google.com/compute/docs/images/create-delete-deprecate-private-images#guest-os-features) to see a list of available options. Possible values: [\"MULTI_IP_SUBNET\", \"SECURE_BOOT\", \"SEV_CAPABLE\", \"UEFI_COMPATIBLE\", \"VIRTIO_SCSI_MULTIQUEUE\", \"WINDOWS\", \"GVNIC\", \"SEV_LIVE_MIGRATABLE\", \"SEV_SNP_CAPABLE\", \"SUSPEND_RESUME_COMPATIBLE\", \"TDX_CAPABLE\"]"]
+        "The type of supported feature. Read [Enabling guest operating system features](https://cloud.google.com/compute/docs/images/create-delete-deprecate-private-images#guest-os-features) to see a list of available options."]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputeDiskGuestOsFeaturesEl {
-    pub fn build(self) -> ComputeDiskGuestOsFeaturesEl {
-        ComputeDiskGuestOsFeaturesEl { type_: self.type_ }
+impl BuildComputeDisk_GuestOsFeatures {
+    pub fn build(self) -> ComputeDisk_GuestOsFeatures {
+        ComputeDisk_GuestOsFeatures { type_: self.type_ }
     }
 }
 
-pub struct ComputeDiskGuestOsFeaturesElRef {
+#[allow(dead_code)]
+pub struct ComputeDisk_GuestOsFeaturesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeDiskGuestOsFeaturesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeDiskGuestOsFeaturesElRef {
-        ComputeDiskGuestOsFeaturesElRef {
+impl terrars::Ref for ComputeDisk_GuestOsFeaturesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeDisk_GuestOsFeaturesRef {
+        ComputeDisk_GuestOsFeaturesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeDiskGuestOsFeaturesElRef {
+impl ComputeDisk_GuestOsFeaturesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc =
-        "Get a reference to the value of field `type_` after provisioning.\nThe type of supported feature. Read [Enabling guest operating system features](https://cloud.google.com/compute/docs/images/create-delete-deprecate-private-images#guest-os-features) to see a list of available options. Possible values: [\"MULTI_IP_SUBNET\", \"SECURE_BOOT\", \"SEV_CAPABLE\", \"UEFI_COMPATIBLE\", \"VIRTIO_SCSI_MULTIQUEUE\", \"WINDOWS\", \"GVNIC\", \"SEV_LIVE_MIGRATABLE\", \"SEV_SNP_CAPABLE\", \"SUSPEND_RESUME_COMPATIBLE\", \"TDX_CAPABLE\"]"]
+        "Get a reference to the value of field `type_` after provisioning.\nThe type of supported feature. Read [Enabling guest operating system features](https://cloud.google.com/compute/docs/images/create-delete-deprecate-private-images#guest-os-features) to see a list of available options."]
     pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeDiskSourceImageEncryptionKeyEl {
+pub struct ComputeDisk_Params {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_manager_tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+}
+
+impl ComputeDisk_Params {
+    #[doc =
+        "Set the field `resource_manager_tags`.\nResource manager tags to be bound to the disk. Tag keys and values have the\nsame definition as resource manager tags. Keys must be in the format tagKeys/{tag_key_id},\nand values are in the format tagValues/456."]
+    pub fn set_resource_manager_tags(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.resource_manager_tags = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ComputeDisk_Params {
+    type O = terrars::BlockAssignable<ComputeDisk_Params>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildComputeDisk_Params {}
+
+impl BuildComputeDisk_Params {
+    pub fn build(self) -> ComputeDisk_Params {
+        ComputeDisk_Params { resource_manager_tags: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ComputeDisk_ParamsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ComputeDisk_ParamsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeDisk_ParamsRef {
+        ComputeDisk_ParamsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ComputeDisk_ParamsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `resource_manager_tags` after provisioning.\nResource manager tags to be bound to the disk. Tag keys and values have the\nsame definition as resource manager tags. Keys must be in the format tagKeys/{tag_key_id},\nand values are in the format tagValues/456."]
+    pub fn resource_manager_tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.resource_manager_tags", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ComputeDisk_SourceImageEncryptionKey {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_self_link: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1058,7 +1482,7 @@ pub struct ComputeDiskSourceImageEncryptionKeyEl {
     raw_key: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeDiskSourceImageEncryptionKeyEl {
+impl ComputeDisk_SourceImageEncryptionKey {
     #[doc =
         "Set the field `kms_key_self_link`.\nThe self link of the encryption key used to encrypt the disk. Also called KmsKeyName\nin the cloud console. Your project's Compute Engine System service account\n('service-{{PROJECT_NUMBER}}@compute-system.iam.gserviceaccount.com') must have\n'roles/cloudkms.cryptoKeyEncrypterDecrypter' to use this feature.\nSee https://cloud.google.com/compute/docs/disks/customer-managed-encryption#encrypt_a_new_persistent_disk_with_your_own_keys"]
     pub fn set_kms_key_self_link(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1084,8 +1508,8 @@ impl ComputeDiskSourceImageEncryptionKeyEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeDiskSourceImageEncryptionKeyEl {
-    type O = terrars::BlockAssignable<ComputeDiskSourceImageEncryptionKeyEl>;
+impl terrars::ToListMappable for ComputeDisk_SourceImageEncryptionKey {
+    type O = terrars::BlockAssignable<ComputeDisk_SourceImageEncryptionKey>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1096,11 +1520,11 @@ impl terrars::ToListMappable for ComputeDiskSourceImageEncryptionKeyEl {
     }
 }
 
-pub struct BuildComputeDiskSourceImageEncryptionKeyEl {}
+pub struct BuildComputeDisk_SourceImageEncryptionKey {}
 
-impl BuildComputeDiskSourceImageEncryptionKeyEl {
-    pub fn build(self) -> ComputeDiskSourceImageEncryptionKeyEl {
-        ComputeDiskSourceImageEncryptionKeyEl {
+impl BuildComputeDisk_SourceImageEncryptionKey {
+    pub fn build(self) -> ComputeDisk_SourceImageEncryptionKey {
+        ComputeDisk_SourceImageEncryptionKey {
             kms_key_self_link: core::default::Default::default(),
             kms_key_service_account: core::default::Default::default(),
             raw_key: core::default::Default::default(),
@@ -1108,21 +1532,23 @@ impl BuildComputeDiskSourceImageEncryptionKeyEl {
     }
 }
 
-pub struct ComputeDiskSourceImageEncryptionKeyElRef {
+#[allow(dead_code)]
+pub struct ComputeDisk_SourceImageEncryptionKeyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeDiskSourceImageEncryptionKeyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeDiskSourceImageEncryptionKeyElRef {
-        ComputeDiskSourceImageEncryptionKeyElRef {
+impl terrars::Ref for ComputeDisk_SourceImageEncryptionKeyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeDisk_SourceImageEncryptionKeyRef {
+        ComputeDisk_SourceImageEncryptionKeyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeDiskSourceImageEncryptionKeyElRef {
+impl ComputeDisk_SourceImageEncryptionKeyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1153,7 +1579,7 @@ impl ComputeDiskSourceImageEncryptionKeyElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeDiskSourceSnapshotEncryptionKeyEl {
+pub struct ComputeDisk_SourceSnapshotEncryptionKey {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_self_link: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1162,7 +1588,7 @@ pub struct ComputeDiskSourceSnapshotEncryptionKeyEl {
     raw_key: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeDiskSourceSnapshotEncryptionKeyEl {
+impl ComputeDisk_SourceSnapshotEncryptionKey {
     #[doc =
         "Set the field `kms_key_self_link`.\nThe self link of the encryption key used to encrypt the disk. Also called KmsKeyName\nin the cloud console. Your project's Compute Engine System service account\n('service-{{PROJECT_NUMBER}}@compute-system.iam.gserviceaccount.com') must have\n'roles/cloudkms.cryptoKeyEncrypterDecrypter' to use this feature.\nSee https://cloud.google.com/compute/docs/disks/customer-managed-encryption#encrypt_a_new_persistent_disk_with_your_own_keys"]
     pub fn set_kms_key_self_link(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1188,8 +1614,8 @@ impl ComputeDiskSourceSnapshotEncryptionKeyEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeDiskSourceSnapshotEncryptionKeyEl {
-    type O = terrars::BlockAssignable<ComputeDiskSourceSnapshotEncryptionKeyEl>;
+impl terrars::ToListMappable for ComputeDisk_SourceSnapshotEncryptionKey {
+    type O = terrars::BlockAssignable<ComputeDisk_SourceSnapshotEncryptionKey>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1200,11 +1626,11 @@ impl terrars::ToListMappable for ComputeDiskSourceSnapshotEncryptionKeyEl {
     }
 }
 
-pub struct BuildComputeDiskSourceSnapshotEncryptionKeyEl {}
+pub struct BuildComputeDisk_SourceSnapshotEncryptionKey {}
 
-impl BuildComputeDiskSourceSnapshotEncryptionKeyEl {
-    pub fn build(self) -> ComputeDiskSourceSnapshotEncryptionKeyEl {
-        ComputeDiskSourceSnapshotEncryptionKeyEl {
+impl BuildComputeDisk_SourceSnapshotEncryptionKey {
+    pub fn build(self) -> ComputeDisk_SourceSnapshotEncryptionKey {
+        ComputeDisk_SourceSnapshotEncryptionKey {
             kms_key_self_link: core::default::Default::default(),
             kms_key_service_account: core::default::Default::default(),
             raw_key: core::default::Default::default(),
@@ -1212,21 +1638,23 @@ impl BuildComputeDiskSourceSnapshotEncryptionKeyEl {
     }
 }
 
-pub struct ComputeDiskSourceSnapshotEncryptionKeyElRef {
+#[allow(dead_code)]
+pub struct ComputeDisk_SourceSnapshotEncryptionKeyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeDiskSourceSnapshotEncryptionKeyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeDiskSourceSnapshotEncryptionKeyElRef {
-        ComputeDiskSourceSnapshotEncryptionKeyElRef {
+impl terrars::Ref for ComputeDisk_SourceSnapshotEncryptionKeyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeDisk_SourceSnapshotEncryptionKeyRef {
+        ComputeDisk_SourceSnapshotEncryptionKeyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeDiskSourceSnapshotEncryptionKeyElRef {
+impl ComputeDisk_SourceSnapshotEncryptionKeyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1257,7 +1685,7 @@ impl ComputeDiskSourceSnapshotEncryptionKeyElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeDiskTimeoutsEl {
+pub struct ComputeDisk_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1266,7 +1694,7 @@ pub struct ComputeDiskTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeDiskTimeoutsEl {
+impl ComputeDisk_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1286,8 +1714,8 @@ impl ComputeDiskTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeDiskTimeoutsEl {
-    type O = terrars::BlockAssignable<ComputeDiskTimeoutsEl>;
+impl terrars::ToListMappable for ComputeDisk_Timeouts {
+    type O = terrars::BlockAssignable<ComputeDisk_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1298,11 +1726,11 @@ impl terrars::ToListMappable for ComputeDiskTimeoutsEl {
     }
 }
 
-pub struct BuildComputeDiskTimeoutsEl {}
+pub struct BuildComputeDisk_Timeouts {}
 
-impl BuildComputeDiskTimeoutsEl {
-    pub fn build(self) -> ComputeDiskTimeoutsEl {
-        ComputeDiskTimeoutsEl {
+impl BuildComputeDisk_Timeouts {
+    pub fn build(self) -> ComputeDisk_Timeouts {
+        ComputeDisk_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1310,21 +1738,23 @@ impl BuildComputeDiskTimeoutsEl {
     }
 }
 
-pub struct ComputeDiskTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComputeDisk_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeDiskTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeDiskTimeoutsElRef {
-        ComputeDiskTimeoutsElRef {
+impl terrars::Ref for ComputeDisk_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeDisk_TimeoutsRef {
+        ComputeDisk_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeDiskTimeoutsElRef {
+impl ComputeDisk_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1343,15 +1773,4 @@ impl ComputeDiskTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ComputeDiskDynamic {
-    async_primary_disk: std::option::Option<terrars::DynamicBlock<ComputeDiskAsyncPrimaryDiskEl>>,
-    disk_encryption_key: std::option::Option<terrars::DynamicBlock<ComputeDiskDiskEncryptionKeyEl>>,
-    guest_os_features: std::option::Option<terrars::DynamicBlock<ComputeDiskGuestOsFeaturesEl>>,
-    source_image_encryption_key: std::option::Option<terrars::DynamicBlock<ComputeDiskSourceImageEncryptionKeyEl>>,
-    source_snapshot_encryption_key: std
-    ::option
-    ::Option<terrars::DynamicBlock<ComputeDiskSourceSnapshotEncryptionKeyEl>>,
 }

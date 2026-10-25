@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeNetworkFirewallPolicyAssociationData {
+struct ComputeNetworkFirewallPolicyAssociationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct ComputeNetworkFirewallPolicyAssociationData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     attachment_target: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     firewall_policy: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -26,13 +30,13 @@ struct ComputeNetworkFirewallPolicyAssociationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComputeNetworkFirewallPolicyAssociationTimeoutsEl>,
+    timeouts: std::option::Option<ComputeNetworkFirewallPolicyAssociation_Timeouts>,
 }
 
 struct ComputeNetworkFirewallPolicyAssociation_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeNetworkFirewallPolicyAssociationData>,
+    data: std::cell::RefCell<ComputeNetworkFirewallPolicyAssociationData_>,
 }
 
 #[derive(Clone)]
@@ -132,20 +136,27 @@ impl ComputeNetworkFirewallPolicyAssociation {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc = "Set the field `project`.\nThe project for the resource"]
+    #[doc = "Set the field `project`.\n"]
     pub fn set_project(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().project = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeNetworkFirewallPolicyAssociationTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeNetworkFirewallPolicyAssociation_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -157,7 +168,13 @@ impl ComputeNetworkFirewallPolicyAssociation {
     }
 
     #[doc =
-        "Get a reference to the value of field `firewall_policy` after provisioning.\nThe firewall policy ID of the association."]
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `firewall_policy` after provisioning.\nThe firewall policy of the resource."]
     pub fn firewall_policy(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.firewall_policy", self.extract_ref()))
     }
@@ -172,7 +189,7 @@ impl ComputeNetworkFirewallPolicyAssociation {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `project` after provisioning.\nThe project for the resource"]
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
     pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
@@ -184,8 +201,8 @@ impl ComputeNetworkFirewallPolicyAssociation {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeNetworkFirewallPolicyAssociationTimeoutsElRef {
-        ComputeNetworkFirewallPolicyAssociationTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ComputeNetworkFirewallPolicyAssociation_TimeoutsRef {
+        ComputeNetworkFirewallPolicyAssociation_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -227,7 +244,7 @@ pub struct BuildComputeNetworkFirewallPolicyAssociation {
     pub tf_id: std::string::String,
     #[doc = "The target that the firewall policy is attached to."]
     pub attachment_target: terrars::PrimField<std::string::String>,
-    #[doc = "The firewall policy ID of the association."]
+    #[doc = "The firewall policy of the resource."]
     pub firewall_policy: terrars::PrimField<std::string::String>,
     #[doc = "The name for an association."]
     pub name: terrars::PrimField<std::string::String>,
@@ -238,13 +255,14 @@ impl BuildComputeNetworkFirewallPolicyAssociation {
         let out = ComputeNetworkFirewallPolicyAssociation(std::rc::Rc::new(ComputeNetworkFirewallPolicyAssociation_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeNetworkFirewallPolicyAssociationData {
+            data: std::cell::RefCell::new(ComputeNetworkFirewallPolicyAssociationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 attachment_target: self.attachment_target,
+                deletion_policy: core::default::Default::default(),
                 firewall_policy: self.firewall_policy,
                 id: core::default::Default::default(),
                 name: self.name,
@@ -287,7 +305,13 @@ impl ComputeNetworkFirewallPolicyAssociationRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `firewall_policy` after provisioning.\nThe firewall policy ID of the association."]
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `firewall_policy` after provisioning.\nThe firewall policy of the resource."]
     pub fn firewall_policy(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.firewall_policy", self.extract_ref()))
     }
@@ -302,7 +326,7 @@ impl ComputeNetworkFirewallPolicyAssociationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `project` after provisioning.\nThe project for the resource"]
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
     pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
@@ -314,8 +338,8 @@ impl ComputeNetworkFirewallPolicyAssociationRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeNetworkFirewallPolicyAssociationTimeoutsElRef {
-        ComputeNetworkFirewallPolicyAssociationTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ComputeNetworkFirewallPolicyAssociation_TimeoutsRef {
+        ComputeNetworkFirewallPolicyAssociation_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -323,14 +347,14 @@ impl ComputeNetworkFirewallPolicyAssociationRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputeNetworkFirewallPolicyAssociationTimeoutsEl {
+pub struct ComputeNetworkFirewallPolicyAssociation_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeNetworkFirewallPolicyAssociationTimeoutsEl {
+impl ComputeNetworkFirewallPolicyAssociation_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -344,8 +368,8 @@ impl ComputeNetworkFirewallPolicyAssociationTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeNetworkFirewallPolicyAssociationTimeoutsEl {
-    type O = terrars::BlockAssignable<ComputeNetworkFirewallPolicyAssociationTimeoutsEl>;
+impl terrars::ToListMappable for ComputeNetworkFirewallPolicyAssociation_Timeouts {
+    type O = terrars::BlockAssignable<ComputeNetworkFirewallPolicyAssociation_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -356,35 +380,37 @@ impl terrars::ToListMappable for ComputeNetworkFirewallPolicyAssociationTimeouts
     }
 }
 
-pub struct BuildComputeNetworkFirewallPolicyAssociationTimeoutsEl {}
+pub struct BuildComputeNetworkFirewallPolicyAssociation_Timeouts {}
 
-impl BuildComputeNetworkFirewallPolicyAssociationTimeoutsEl {
-    pub fn build(self) -> ComputeNetworkFirewallPolicyAssociationTimeoutsEl {
-        ComputeNetworkFirewallPolicyAssociationTimeoutsEl {
+impl BuildComputeNetworkFirewallPolicyAssociation_Timeouts {
+    pub fn build(self) -> ComputeNetworkFirewallPolicyAssociation_Timeouts {
+        ComputeNetworkFirewallPolicyAssociation_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeNetworkFirewallPolicyAssociationTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComputeNetworkFirewallPolicyAssociation_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeNetworkFirewallPolicyAssociationTimeoutsElRef {
+impl terrars::Ref for ComputeNetworkFirewallPolicyAssociation_TimeoutsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputeNetworkFirewallPolicyAssociationTimeoutsElRef {
-        ComputeNetworkFirewallPolicyAssociationTimeoutsElRef {
+    ) -> ComputeNetworkFirewallPolicyAssociation_TimeoutsRef {
+        ComputeNetworkFirewallPolicyAssociation_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeNetworkFirewallPolicyAssociationTimeoutsElRef {
+impl ComputeNetworkFirewallPolicyAssociation_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

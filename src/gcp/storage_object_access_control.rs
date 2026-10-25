@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct StorageObjectAccessControlData {
+struct StorageObjectAccessControlData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,19 +21,21 @@ struct StorageObjectAccessControlData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     bucket: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     entity: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     object: terrars::PrimField<std::string::String>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<StorageObjectAccessControlTimeoutsEl>,
+    timeouts: std::option::Option<StorageObjectAccessControl_Timeouts>,
 }
 
 struct StorageObjectAccessControl_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<StorageObjectAccessControlData>,
+    data: std::cell::RefCell<StorageObjectAccessControlData_>,
 }
 
 #[derive(Clone)]
@@ -131,6 +135,13 @@ impl StorageObjectAccessControl {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -138,7 +149,7 @@ impl StorageObjectAccessControl {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<StorageObjectAccessControlTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<StorageObjectAccessControl_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -146,6 +157,12 @@ impl StorageObjectAccessControl {
     #[doc = "Get a reference to the value of field `bucket` after provisioning.\nThe name of the bucket."]
     pub fn bucket(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -190,7 +207,7 @@ impl StorageObjectAccessControl {
 
     #[doc =
         "Get a reference to the value of field `project_team` after provisioning.\nThe project team associated with the entity"]
-    pub fn project_team(&self) -> terrars::ListRef<StorageObjectAccessControlProjectTeamElRef> {
+    pub fn project_team(&self) -> terrars::ListRef<StorageObjectAccessControl_ProjectTeamRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.project_team", self.extract_ref()))
     }
 
@@ -201,8 +218,8 @@ impl StorageObjectAccessControl {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> StorageObjectAccessControlTimeoutsElRef {
-        StorageObjectAccessControlTimeoutsElRef::new(
+    pub fn timeouts(&self) -> StorageObjectAccessControl_TimeoutsRef {
+        StorageObjectAccessControl_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -258,13 +275,14 @@ impl BuildStorageObjectAccessControl {
         let out = StorageObjectAccessControl(std::rc::Rc::new(StorageObjectAccessControl_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(StorageObjectAccessControlData {
+            data: std::cell::RefCell::new(StorageObjectAccessControlData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 bucket: self.bucket,
+                deletion_policy: core::default::Default::default(),
                 entity: self.entity,
                 id: core::default::Default::default(),
                 object: self.object,
@@ -303,6 +321,12 @@ impl StorageObjectAccessControlRef {
     #[doc = "Get a reference to the value of field `bucket` after provisioning.\nThe name of the bucket."]
     pub fn bucket(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -347,7 +371,7 @@ impl StorageObjectAccessControlRef {
 
     #[doc =
         "Get a reference to the value of field `project_team` after provisioning.\nThe project team associated with the entity"]
-    pub fn project_team(&self) -> terrars::ListRef<StorageObjectAccessControlProjectTeamElRef> {
+    pub fn project_team(&self) -> terrars::ListRef<StorageObjectAccessControl_ProjectTeamRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.project_team", self.extract_ref()))
     }
 
@@ -358,8 +382,8 @@ impl StorageObjectAccessControlRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> StorageObjectAccessControlTimeoutsElRef {
-        StorageObjectAccessControlTimeoutsElRef::new(
+    pub fn timeouts(&self) -> StorageObjectAccessControl_TimeoutsRef {
+        StorageObjectAccessControl_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -367,14 +391,14 @@ impl StorageObjectAccessControlRef {
 }
 
 #[derive(Serialize)]
-pub struct StorageObjectAccessControlProjectTeamEl {
+pub struct StorageObjectAccessControl_ProjectTeam {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project_number: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     team: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl StorageObjectAccessControlProjectTeamEl {
+impl StorageObjectAccessControl_ProjectTeam {
     #[doc = "Set the field `project_number`.\n"]
     pub fn set_project_number(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.project_number = std::option::Option::Some(v.into());
@@ -388,8 +412,8 @@ impl StorageObjectAccessControlProjectTeamEl {
     }
 }
 
-impl terrars::ToListMappable for StorageObjectAccessControlProjectTeamEl {
-    type O = terrars::BlockAssignable<StorageObjectAccessControlProjectTeamEl>;
+impl terrars::ToListMappable for StorageObjectAccessControl_ProjectTeam {
+    type O = terrars::BlockAssignable<StorageObjectAccessControl_ProjectTeam>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -400,32 +424,34 @@ impl terrars::ToListMappable for StorageObjectAccessControlProjectTeamEl {
     }
 }
 
-pub struct BuildStorageObjectAccessControlProjectTeamEl {}
+pub struct BuildStorageObjectAccessControl_ProjectTeam {}
 
-impl BuildStorageObjectAccessControlProjectTeamEl {
-    pub fn build(self) -> StorageObjectAccessControlProjectTeamEl {
-        StorageObjectAccessControlProjectTeamEl {
+impl BuildStorageObjectAccessControl_ProjectTeam {
+    pub fn build(self) -> StorageObjectAccessControl_ProjectTeam {
+        StorageObjectAccessControl_ProjectTeam {
             project_number: core::default::Default::default(),
             team: core::default::Default::default(),
         }
     }
 }
 
-pub struct StorageObjectAccessControlProjectTeamElRef {
+#[allow(dead_code)]
+pub struct StorageObjectAccessControl_ProjectTeamRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for StorageObjectAccessControlProjectTeamElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> StorageObjectAccessControlProjectTeamElRef {
-        StorageObjectAccessControlProjectTeamElRef {
+impl terrars::Ref for StorageObjectAccessControl_ProjectTeamRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> StorageObjectAccessControl_ProjectTeamRef {
+        StorageObjectAccessControl_ProjectTeamRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl StorageObjectAccessControlProjectTeamElRef {
+impl StorageObjectAccessControl_ProjectTeamRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -442,7 +468,7 @@ impl StorageObjectAccessControlProjectTeamElRef {
 }
 
 #[derive(Serialize)]
-pub struct StorageObjectAccessControlTimeoutsEl {
+pub struct StorageObjectAccessControl_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -451,7 +477,7 @@ pub struct StorageObjectAccessControlTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl StorageObjectAccessControlTimeoutsEl {
+impl StorageObjectAccessControl_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -471,8 +497,8 @@ impl StorageObjectAccessControlTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for StorageObjectAccessControlTimeoutsEl {
-    type O = terrars::BlockAssignable<StorageObjectAccessControlTimeoutsEl>;
+impl terrars::ToListMappable for StorageObjectAccessControl_Timeouts {
+    type O = terrars::BlockAssignable<StorageObjectAccessControl_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -483,11 +509,11 @@ impl terrars::ToListMappable for StorageObjectAccessControlTimeoutsEl {
     }
 }
 
-pub struct BuildStorageObjectAccessControlTimeoutsEl {}
+pub struct BuildStorageObjectAccessControl_Timeouts {}
 
-impl BuildStorageObjectAccessControlTimeoutsEl {
-    pub fn build(self) -> StorageObjectAccessControlTimeoutsEl {
-        StorageObjectAccessControlTimeoutsEl {
+impl BuildStorageObjectAccessControl_Timeouts {
+    pub fn build(self) -> StorageObjectAccessControl_Timeouts {
+        StorageObjectAccessControl_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -495,21 +521,23 @@ impl BuildStorageObjectAccessControlTimeoutsEl {
     }
 }
 
-pub struct StorageObjectAccessControlTimeoutsElRef {
+#[allow(dead_code)]
+pub struct StorageObjectAccessControl_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for StorageObjectAccessControlTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> StorageObjectAccessControlTimeoutsElRef {
-        StorageObjectAccessControlTimeoutsElRef {
+impl terrars::Ref for StorageObjectAccessControl_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> StorageObjectAccessControl_TimeoutsRef {
+        StorageObjectAccessControl_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl StorageObjectAccessControlTimeoutsElRef {
+impl StorageObjectAccessControl_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

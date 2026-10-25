@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataplexTaskData {
+struct DataplexTaskData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct DataplexTaskData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -35,22 +39,22 @@ struct DataplexTaskData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     task_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    execution_spec: std::option::Option<std::vec::Vec<DataplexTaskExecutionSpecEl>>,
+    execution_spec: std::option::Option<std::vec::Vec<DataplexTask_ExecutionSpec>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    notebook: std::option::Option<std::vec::Vec<DataplexTaskNotebookEl>>,
+    notebook: std::option::Option<std::vec::Vec<DataplexTask_Notebook>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    spark: std::option::Option<std::vec::Vec<DataplexTaskSparkEl>>,
+    spark: std::option::Option<std::vec::Vec<DataplexTask_Spark>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataplexTaskTimeoutsEl>,
+    timeouts: std::option::Option<DataplexTask_Timeouts>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    trigger_spec: std::option::Option<std::vec::Vec<DataplexTaskTriggerSpecEl>>,
+    trigger_spec: std::option::Option<std::vec::Vec<DataplexTask_TriggerSpec>>,
     dynamic: DataplexTaskDynamic,
 }
 
 struct DataplexTask_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataplexTaskData>,
+    data: std::cell::RefCell<DataplexTaskData_>,
 }
 
 #[derive(Clone)]
@@ -150,6 +154,13 @@ impl DataplexTask {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\nUser-provided description of the task."]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -205,7 +216,7 @@ impl DataplexTask {
     #[doc = "Set the field `execution_spec`.\n"]
     pub fn set_execution_spec(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataplexTaskExecutionSpecEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataplexTask_ExecutionSpec>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -219,7 +230,7 @@ impl DataplexTask {
     }
 
     #[doc = "Set the field `notebook`.\n"]
-    pub fn set_notebook(self, v: impl std::convert::Into<terrars::BlockAssignable<DataplexTaskNotebookEl>>) -> Self {
+    pub fn set_notebook(self, v: impl std::convert::Into<terrars::BlockAssignable<DataplexTask_Notebook>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().notebook = std::option::Option::Some(v);
@@ -232,7 +243,7 @@ impl DataplexTask {
     }
 
     #[doc = "Set the field `spark`.\n"]
-    pub fn set_spark(self, v: impl std::convert::Into<terrars::BlockAssignable<DataplexTaskSparkEl>>) -> Self {
+    pub fn set_spark(self, v: impl std::convert::Into<terrars::BlockAssignable<DataplexTask_Spark>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().spark = std::option::Option::Some(v);
@@ -245,7 +256,7 @@ impl DataplexTask {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataplexTaskTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataplexTask_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -253,7 +264,7 @@ impl DataplexTask {
     #[doc = "Set the field `trigger_spec`.\n"]
     pub fn set_trigger_spec(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataplexTaskTriggerSpecEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataplexTask_TriggerSpec>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -270,6 +281,12 @@ impl DataplexTask {
         "Get a reference to the value of field `create_time` after provisioning.\nThe time when the task was created."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -291,7 +308,7 @@ impl DataplexTask {
 
     #[doc =
         "Get a reference to the value of field `execution_status` after provisioning.\nConfiguration for the cluster"]
-    pub fn execution_status(&self) -> terrars::ListRef<DataplexTaskExecutionStatusElRef> {
+    pub fn execution_status(&self) -> terrars::ListRef<DataplexTask_ExecutionStatusRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.execution_status", self.extract_ref()))
     }
 
@@ -358,27 +375,27 @@ impl DataplexTask {
     }
 
     #[doc = "Get a reference to the value of field `execution_spec` after provisioning.\n"]
-    pub fn execution_spec(&self) -> terrars::ListRef<DataplexTaskExecutionSpecElRef> {
+    pub fn execution_spec(&self) -> terrars::ListRef<DataplexTask_ExecutionSpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.execution_spec", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `notebook` after provisioning.\n"]
-    pub fn notebook(&self) -> terrars::ListRef<DataplexTaskNotebookElRef> {
+    pub fn notebook(&self) -> terrars::ListRef<DataplexTask_NotebookRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.notebook", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `spark` after provisioning.\n"]
-    pub fn spark(&self) -> terrars::ListRef<DataplexTaskSparkElRef> {
+    pub fn spark(&self) -> terrars::ListRef<DataplexTask_SparkRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.spark", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataplexTaskTimeoutsElRef {
-        DataplexTaskTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataplexTask_TimeoutsRef {
+        DataplexTask_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `trigger_spec` after provisioning.\n"]
-    pub fn trigger_spec(&self) -> terrars::ListRef<DataplexTaskTriggerSpecElRef> {
+    pub fn trigger_spec(&self) -> terrars::ListRef<DataplexTask_TriggerSpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.trigger_spec", self.extract_ref()))
     }
 }
@@ -423,12 +440,13 @@ impl BuildDataplexTask {
         let out = DataplexTask(std::rc::Rc::new(DataplexTask_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataplexTaskData {
+            data: std::cell::RefCell::new(DataplexTaskData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 display_name: core::default::Default::default(),
                 id: core::default::Default::default(),
@@ -480,6 +498,12 @@ impl DataplexTaskRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `description` after provisioning.\nUser-provided description of the task."]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -498,7 +522,7 @@ impl DataplexTaskRef {
 
     #[doc =
         "Get a reference to the value of field `execution_status` after provisioning.\nConfiguration for the cluster"]
-    pub fn execution_status(&self) -> terrars::ListRef<DataplexTaskExecutionStatusElRef> {
+    pub fn execution_status(&self) -> terrars::ListRef<DataplexTask_ExecutionStatusRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.execution_status", self.extract_ref()))
     }
 
@@ -565,33 +589,41 @@ impl DataplexTaskRef {
     }
 
     #[doc = "Get a reference to the value of field `execution_spec` after provisioning.\n"]
-    pub fn execution_spec(&self) -> terrars::ListRef<DataplexTaskExecutionSpecElRef> {
+    pub fn execution_spec(&self) -> terrars::ListRef<DataplexTask_ExecutionSpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.execution_spec", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `notebook` after provisioning.\n"]
-    pub fn notebook(&self) -> terrars::ListRef<DataplexTaskNotebookElRef> {
+    pub fn notebook(&self) -> terrars::ListRef<DataplexTask_NotebookRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.notebook", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `spark` after provisioning.\n"]
-    pub fn spark(&self) -> terrars::ListRef<DataplexTaskSparkElRef> {
+    pub fn spark(&self) -> terrars::ListRef<DataplexTask_SparkRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.spark", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataplexTaskTimeoutsElRef {
-        DataplexTaskTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataplexTask_TimeoutsRef {
+        DataplexTask_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `trigger_spec` after provisioning.\n"]
-    pub fn trigger_spec(&self) -> terrars::ListRef<DataplexTaskTriggerSpecElRef> {
+    pub fn trigger_spec(&self) -> terrars::ListRef<DataplexTask_TriggerSpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.trigger_spec", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataplexTaskDynamic {
+    execution_spec: std::option::Option<terrars::DynamicBlock<DataplexTask_ExecutionSpec>>,
+    notebook: std::option::Option<terrars::DynamicBlock<DataplexTask_Notebook>>,
+    spark: std::option::Option<terrars::DynamicBlock<DataplexTask_Spark>>,
+    trigger_spec: std::option::Option<terrars::DynamicBlock<DataplexTask_TriggerSpec>>,
+}
+
 #[derive(Serialize)]
-pub struct DataplexTaskExecutionStatusElLatestJobEl {
+pub struct DataplexTask_ExecutionStatus_LatestJob {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     end_time: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -612,7 +644,7 @@ pub struct DataplexTaskExecutionStatusElLatestJobEl {
     uid: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataplexTaskExecutionStatusElLatestJobEl {
+impl DataplexTask_ExecutionStatus_LatestJob {
     #[doc = "Set the field `end_time`.\n"]
     pub fn set_end_time(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.end_time = std::option::Option::Some(v.into());
@@ -668,8 +700,8 @@ impl DataplexTaskExecutionStatusElLatestJobEl {
     }
 }
 
-impl terrars::ToListMappable for DataplexTaskExecutionStatusElLatestJobEl {
-    type O = terrars::BlockAssignable<DataplexTaskExecutionStatusElLatestJobEl>;
+impl terrars::ToListMappable for DataplexTask_ExecutionStatus_LatestJob {
+    type O = terrars::BlockAssignable<DataplexTask_ExecutionStatus_LatestJob>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -680,11 +712,11 @@ impl terrars::ToListMappable for DataplexTaskExecutionStatusElLatestJobEl {
     }
 }
 
-pub struct BuildDataplexTaskExecutionStatusElLatestJobEl {}
+pub struct BuildDataplexTask_ExecutionStatus_LatestJob {}
 
-impl BuildDataplexTaskExecutionStatusElLatestJobEl {
-    pub fn build(self) -> DataplexTaskExecutionStatusElLatestJobEl {
-        DataplexTaskExecutionStatusElLatestJobEl {
+impl BuildDataplexTask_ExecutionStatus_LatestJob {
+    pub fn build(self) -> DataplexTask_ExecutionStatus_LatestJob {
+        DataplexTask_ExecutionStatus_LatestJob {
             end_time: core::default::Default::default(),
             message: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -698,21 +730,23 @@ impl BuildDataplexTaskExecutionStatusElLatestJobEl {
     }
 }
 
-pub struct DataplexTaskExecutionStatusElLatestJobElRef {
+#[allow(dead_code)]
+pub struct DataplexTask_ExecutionStatus_LatestJobRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataplexTaskExecutionStatusElLatestJobElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexTaskExecutionStatusElLatestJobElRef {
-        DataplexTaskExecutionStatusElLatestJobElRef {
+impl terrars::Ref for DataplexTask_ExecutionStatus_LatestJobRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexTask_ExecutionStatus_LatestJobRef {
+        DataplexTask_ExecutionStatus_LatestJobRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataplexTaskExecutionStatusElLatestJobElRef {
+impl DataplexTask_ExecutionStatus_LatestJobRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -764,18 +798,18 @@ impl DataplexTaskExecutionStatusElLatestJobElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataplexTaskExecutionStatusEl {
+pub struct DataplexTask_ExecutionStatus {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    latest_job: std::option::Option<terrars::ListField<DataplexTaskExecutionStatusElLatestJobEl>>,
+    latest_job: std::option::Option<terrars::ListField<DataplexTask_ExecutionStatus_LatestJob>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     update_time: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataplexTaskExecutionStatusEl {
+impl DataplexTask_ExecutionStatus {
     #[doc = "Set the field `latest_job`.\n"]
     pub fn set_latest_job(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataplexTaskExecutionStatusElLatestJobEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataplexTask_ExecutionStatus_LatestJob>>,
     ) -> Self {
         self.latest_job = std::option::Option::Some(v.into());
         self
@@ -788,8 +822,8 @@ impl DataplexTaskExecutionStatusEl {
     }
 }
 
-impl terrars::ToListMappable for DataplexTaskExecutionStatusEl {
-    type O = terrars::BlockAssignable<DataplexTaskExecutionStatusEl>;
+impl terrars::ToListMappable for DataplexTask_ExecutionStatus {
+    type O = terrars::BlockAssignable<DataplexTask_ExecutionStatus>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -800,38 +834,40 @@ impl terrars::ToListMappable for DataplexTaskExecutionStatusEl {
     }
 }
 
-pub struct BuildDataplexTaskExecutionStatusEl {}
+pub struct BuildDataplexTask_ExecutionStatus {}
 
-impl BuildDataplexTaskExecutionStatusEl {
-    pub fn build(self) -> DataplexTaskExecutionStatusEl {
-        DataplexTaskExecutionStatusEl {
+impl BuildDataplexTask_ExecutionStatus {
+    pub fn build(self) -> DataplexTask_ExecutionStatus {
+        DataplexTask_ExecutionStatus {
             latest_job: core::default::Default::default(),
             update_time: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataplexTaskExecutionStatusElRef {
+#[allow(dead_code)]
+pub struct DataplexTask_ExecutionStatusRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataplexTaskExecutionStatusElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexTaskExecutionStatusElRef {
-        DataplexTaskExecutionStatusElRef {
+impl terrars::Ref for DataplexTask_ExecutionStatusRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexTask_ExecutionStatusRef {
+        DataplexTask_ExecutionStatusRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataplexTaskExecutionStatusElRef {
+impl DataplexTask_ExecutionStatusRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `latest_job` after provisioning.\n"]
-    pub fn latest_job(&self) -> terrars::ListRef<DataplexTaskExecutionStatusElLatestJobElRef> {
+    pub fn latest_job(&self) -> terrars::ListRef<DataplexTask_ExecutionStatus_LatestJobRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.latest_job", self.base))
     }
 
@@ -842,7 +878,7 @@ impl DataplexTaskExecutionStatusElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataplexTaskExecutionSpecEl {
+pub struct DataplexTask_ExecutionSpec {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     args: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -854,7 +890,7 @@ pub struct DataplexTaskExecutionSpecEl {
     service_account: terrars::PrimField<std::string::String>,
 }
 
-impl DataplexTaskExecutionSpecEl {
+impl DataplexTask_ExecutionSpec {
     #[doc =
         "Set the field `args`.\nThe arguments to pass to the task. The args can use placeholders of the format ${placeholder} as part of key/value string. These will be interpolated before passing the args to the driver. Currently supported placeholders: - ${taskId} - ${job_time} To pass positional args, set the key as TASK_ARGS. The value should be a comma-separated string of all the positional arguments. To use a delimiter other than comma, refer to https://cloud.google.com/sdk/gcloud/reference/topic/escaping. In case of other keys being present in the args, then TASK_ARGS will be passed as the last argument. An object containing a list of 'key': value pairs. Example: { 'name': 'wrench', 'mass': '1.3kg', 'count': '3' }."]
     pub fn set_args(
@@ -890,8 +926,8 @@ impl DataplexTaskExecutionSpecEl {
     }
 }
 
-impl terrars::ToListMappable for DataplexTaskExecutionSpecEl {
-    type O = terrars::BlockAssignable<DataplexTaskExecutionSpecEl>;
+impl terrars::ToListMappable for DataplexTask_ExecutionSpec {
+    type O = terrars::BlockAssignable<DataplexTask_ExecutionSpec>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -902,15 +938,15 @@ impl terrars::ToListMappable for DataplexTaskExecutionSpecEl {
     }
 }
 
-pub struct BuildDataplexTaskExecutionSpecEl {
+pub struct BuildDataplexTask_ExecutionSpec {
     #[doc =
         "Service account to use to execute a task. If not provided, the default Compute service account for the project is used."]
     pub service_account: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataplexTaskExecutionSpecEl {
-    pub fn build(self) -> DataplexTaskExecutionSpecEl {
-        DataplexTaskExecutionSpecEl {
+impl BuildDataplexTask_ExecutionSpec {
+    pub fn build(self) -> DataplexTask_ExecutionSpec {
+        DataplexTask_ExecutionSpec {
             args: core::default::Default::default(),
             kms_key: core::default::Default::default(),
             max_job_execution_lifetime: core::default::Default::default(),
@@ -920,21 +956,23 @@ impl BuildDataplexTaskExecutionSpecEl {
     }
 }
 
-pub struct DataplexTaskExecutionSpecElRef {
+#[allow(dead_code)]
+pub struct DataplexTask_ExecutionSpecRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataplexTaskExecutionSpecElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexTaskExecutionSpecElRef {
-        DataplexTaskExecutionSpecElRef {
+impl terrars::Ref for DataplexTask_ExecutionSpecRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexTask_ExecutionSpecRef {
+        DataplexTask_ExecutionSpecRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataplexTaskExecutionSpecElRef {
+impl DataplexTask_ExecutionSpecRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -971,14 +1009,14 @@ impl DataplexTaskExecutionSpecElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataplexTaskNotebookElInfrastructureSpecElBatchEl {
+pub struct DataplexTask_Spark_InfrastructureSpec_Batch {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     executors_count: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max_executors_count: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataplexTaskNotebookElInfrastructureSpecElBatchEl {
+impl DataplexTask_Spark_InfrastructureSpec_Batch {
     #[doc =
         "Set the field `executors_count`.\nTotal number of job executors. Executor Count should be between 2 and 100. [Default=2]"]
     pub fn set_executors_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
@@ -994,8 +1032,8 @@ impl DataplexTaskNotebookElInfrastructureSpecElBatchEl {
     }
 }
 
-impl terrars::ToListMappable for DataplexTaskNotebookElInfrastructureSpecElBatchEl {
-    type O = terrars::BlockAssignable<DataplexTaskNotebookElInfrastructureSpecElBatchEl>;
+impl terrars::ToListMappable for DataplexTask_Spark_InfrastructureSpec_Batch {
+    type O = terrars::BlockAssignable<DataplexTask_Spark_InfrastructureSpec_Batch>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1006,35 +1044,37 @@ impl terrars::ToListMappable for DataplexTaskNotebookElInfrastructureSpecElBatch
     }
 }
 
-pub struct BuildDataplexTaskNotebookElInfrastructureSpecElBatchEl {}
+pub struct BuildDataplexTask_Spark_InfrastructureSpec_Batch {}
 
-impl BuildDataplexTaskNotebookElInfrastructureSpecElBatchEl {
-    pub fn build(self) -> DataplexTaskNotebookElInfrastructureSpecElBatchEl {
-        DataplexTaskNotebookElInfrastructureSpecElBatchEl {
+impl BuildDataplexTask_Spark_InfrastructureSpec_Batch {
+    pub fn build(self) -> DataplexTask_Spark_InfrastructureSpec_Batch {
+        DataplexTask_Spark_InfrastructureSpec_Batch {
             executors_count: core::default::Default::default(),
             max_executors_count: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataplexTaskNotebookElInfrastructureSpecElBatchElRef {
+#[allow(dead_code)]
+pub struct DataplexTask_Spark_InfrastructureSpec_BatchRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataplexTaskNotebookElInfrastructureSpecElBatchElRef {
+impl terrars::Ref for DataplexTask_Spark_InfrastructureSpec_BatchRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataplexTaskNotebookElInfrastructureSpecElBatchElRef {
-        DataplexTaskNotebookElInfrastructureSpecElBatchElRef {
+    ) -> DataplexTask_Spark_InfrastructureSpec_BatchRef {
+        DataplexTask_Spark_InfrastructureSpec_BatchRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataplexTaskNotebookElInfrastructureSpecElBatchElRef {
+impl DataplexTask_Spark_InfrastructureSpec_BatchRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1053,7 +1093,7 @@ impl DataplexTaskNotebookElInfrastructureSpecElBatchElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataplexTaskNotebookElInfrastructureSpecElContainerImageEl {
+pub struct DataplexTask_Spark_InfrastructureSpec_ContainerImage {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     image: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1064,7 +1104,7 @@ pub struct DataplexTaskNotebookElInfrastructureSpecElContainerImageEl {
     python_packages: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DataplexTaskNotebookElInfrastructureSpecElContainerImageEl {
+impl DataplexTask_Spark_InfrastructureSpec_ContainerImage {
     #[doc = "Set the field `image`.\nContainer image to use."]
     pub fn set_image(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.image = std::option::Option::Some(v.into());
@@ -1102,8 +1142,8 @@ impl DataplexTaskNotebookElInfrastructureSpecElContainerImageEl {
     }
 }
 
-impl terrars::ToListMappable for DataplexTaskNotebookElInfrastructureSpecElContainerImageEl {
-    type O = terrars::BlockAssignable<DataplexTaskNotebookElInfrastructureSpecElContainerImageEl>;
+impl terrars::ToListMappable for DataplexTask_Spark_InfrastructureSpec_ContainerImage {
+    type O = terrars::BlockAssignable<DataplexTask_Spark_InfrastructureSpec_ContainerImage>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1114,11 +1154,11 @@ impl terrars::ToListMappable for DataplexTaskNotebookElInfrastructureSpecElConta
     }
 }
 
-pub struct BuildDataplexTaskNotebookElInfrastructureSpecElContainerImageEl {}
+pub struct BuildDataplexTask_Spark_InfrastructureSpec_ContainerImage {}
 
-impl BuildDataplexTaskNotebookElInfrastructureSpecElContainerImageEl {
-    pub fn build(self) -> DataplexTaskNotebookElInfrastructureSpecElContainerImageEl {
-        DataplexTaskNotebookElInfrastructureSpecElContainerImageEl {
+impl BuildDataplexTask_Spark_InfrastructureSpec_ContainerImage {
+    pub fn build(self) -> DataplexTask_Spark_InfrastructureSpec_ContainerImage {
+        DataplexTask_Spark_InfrastructureSpec_ContainerImage {
             image: core::default::Default::default(),
             java_jars: core::default::Default::default(),
             properties: core::default::Default::default(),
@@ -1127,24 +1167,26 @@ impl BuildDataplexTaskNotebookElInfrastructureSpecElContainerImageEl {
     }
 }
 
-pub struct DataplexTaskNotebookElInfrastructureSpecElContainerImageElRef {
+#[allow(dead_code)]
+pub struct DataplexTask_Spark_InfrastructureSpec_ContainerImageRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataplexTaskNotebookElInfrastructureSpecElContainerImageElRef {
+impl terrars::Ref for DataplexTask_Spark_InfrastructureSpec_ContainerImageRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataplexTaskNotebookElInfrastructureSpecElContainerImageElRef {
-        DataplexTaskNotebookElInfrastructureSpecElContainerImageElRef {
+    ) -> DataplexTask_Spark_InfrastructureSpec_ContainerImageRef {
+        DataplexTask_Spark_InfrastructureSpec_ContainerImageRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataplexTaskNotebookElInfrastructureSpecElContainerImageElRef {
+impl DataplexTask_Spark_InfrastructureSpec_ContainerImageRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1174,7 +1216,7 @@ impl DataplexTaskNotebookElInfrastructureSpecElContainerImageElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataplexTaskNotebookElInfrastructureSpecElVpcNetworkEl {
+pub struct DataplexTask_Spark_InfrastructureSpec_VpcNetwork {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     network: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1183,7 +1225,7 @@ pub struct DataplexTaskNotebookElInfrastructureSpecElVpcNetworkEl {
     sub_network: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataplexTaskNotebookElInfrastructureSpecElVpcNetworkEl {
+impl DataplexTask_Spark_InfrastructureSpec_VpcNetwork {
     #[doc =
         "Set the field `network`.\nThe Cloud VPC network in which the job is run. By default, the Cloud VPC network named Default within the project is used."]
     pub fn set_network(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1207,8 +1249,8 @@ impl DataplexTaskNotebookElInfrastructureSpecElVpcNetworkEl {
     }
 }
 
-impl terrars::ToListMappable for DataplexTaskNotebookElInfrastructureSpecElVpcNetworkEl {
-    type O = terrars::BlockAssignable<DataplexTaskNotebookElInfrastructureSpecElVpcNetworkEl>;
+impl terrars::ToListMappable for DataplexTask_Spark_InfrastructureSpec_VpcNetwork {
+    type O = terrars::BlockAssignable<DataplexTask_Spark_InfrastructureSpec_VpcNetwork>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1219,11 +1261,11 @@ impl terrars::ToListMappable for DataplexTaskNotebookElInfrastructureSpecElVpcNe
     }
 }
 
-pub struct BuildDataplexTaskNotebookElInfrastructureSpecElVpcNetworkEl {}
+pub struct BuildDataplexTask_Spark_InfrastructureSpec_VpcNetwork {}
 
-impl BuildDataplexTaskNotebookElInfrastructureSpecElVpcNetworkEl {
-    pub fn build(self) -> DataplexTaskNotebookElInfrastructureSpecElVpcNetworkEl {
-        DataplexTaskNotebookElInfrastructureSpecElVpcNetworkEl {
+impl BuildDataplexTask_Spark_InfrastructureSpec_VpcNetwork {
+    pub fn build(self) -> DataplexTask_Spark_InfrastructureSpec_VpcNetwork {
+        DataplexTask_Spark_InfrastructureSpec_VpcNetwork {
             network: core::default::Default::default(),
             network_tags: core::default::Default::default(),
             sub_network: core::default::Default::default(),
@@ -1231,24 +1273,26 @@ impl BuildDataplexTaskNotebookElInfrastructureSpecElVpcNetworkEl {
     }
 }
 
-pub struct DataplexTaskNotebookElInfrastructureSpecElVpcNetworkElRef {
+#[allow(dead_code)]
+pub struct DataplexTask_Spark_InfrastructureSpec_VpcNetworkRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataplexTaskNotebookElInfrastructureSpecElVpcNetworkElRef {
+impl terrars::Ref for DataplexTask_Spark_InfrastructureSpec_VpcNetworkRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataplexTaskNotebookElInfrastructureSpecElVpcNetworkElRef {
-        DataplexTaskNotebookElInfrastructureSpecElVpcNetworkElRef {
+    ) -> DataplexTask_Spark_InfrastructureSpec_VpcNetworkRef {
+        DataplexTask_Spark_InfrastructureSpec_VpcNetworkRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataplexTaskNotebookElInfrastructureSpecElVpcNetworkElRef {
+impl DataplexTask_Spark_InfrastructureSpec_VpcNetworkRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1273,30 +1317,30 @@ impl DataplexTaskNotebookElInfrastructureSpecElVpcNetworkElRef {
 }
 
 #[derive(Serialize, Default)]
-struct DataplexTaskNotebookElInfrastructureSpecElDynamic {
-    batch: std::option::Option<terrars::DynamicBlock<DataplexTaskNotebookElInfrastructureSpecElBatchEl>>,
+struct DataplexTask_Spark_InfrastructureSpecDynamic {
+    batch: std::option::Option<terrars::DynamicBlock<DataplexTask_Spark_InfrastructureSpec_Batch>>,
     container_image: std
     ::option
-    ::Option<terrars::DynamicBlock<DataplexTaskNotebookElInfrastructureSpecElContainerImageEl>>,
-    vpc_network: std::option::Option<terrars::DynamicBlock<DataplexTaskNotebookElInfrastructureSpecElVpcNetworkEl>>,
+    ::Option<terrars::DynamicBlock<DataplexTask_Spark_InfrastructureSpec_ContainerImage>>,
+    vpc_network: std::option::Option<terrars::DynamicBlock<DataplexTask_Spark_InfrastructureSpec_VpcNetwork>>,
 }
 
 #[derive(Serialize)]
-pub struct DataplexTaskNotebookElInfrastructureSpecEl {
+pub struct DataplexTask_Spark_InfrastructureSpec {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    batch: std::option::Option<std::vec::Vec<DataplexTaskNotebookElInfrastructureSpecElBatchEl>>,
+    batch: std::option::Option<std::vec::Vec<DataplexTask_Spark_InfrastructureSpec_Batch>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    container_image: std::option::Option<std::vec::Vec<DataplexTaskNotebookElInfrastructureSpecElContainerImageEl>>,
+    container_image: std::option::Option<std::vec::Vec<DataplexTask_Spark_InfrastructureSpec_ContainerImage>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpc_network: std::option::Option<std::vec::Vec<DataplexTaskNotebookElInfrastructureSpecElVpcNetworkEl>>,
-    dynamic: DataplexTaskNotebookElInfrastructureSpecElDynamic,
+    vpc_network: std::option::Option<std::vec::Vec<DataplexTask_Spark_InfrastructureSpec_VpcNetwork>>,
+    dynamic: DataplexTask_Spark_InfrastructureSpecDynamic,
 }
 
-impl DataplexTaskNotebookElInfrastructureSpecEl {
+impl DataplexTask_Spark_InfrastructureSpec {
     #[doc = "Set the field `batch`.\n"]
     pub fn set_batch(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataplexTaskNotebookElInfrastructureSpecElBatchEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataplexTask_Spark_InfrastructureSpec_Batch>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1312,12 +1356,7 @@ impl DataplexTaskNotebookElInfrastructureSpecEl {
     #[doc = "Set the field `container_image`.\n"]
     pub fn set_container_image(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<DataplexTaskNotebookElInfrastructureSpecElContainerImageEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataplexTask_Spark_InfrastructureSpec_ContainerImage>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1333,7 +1372,7 @@ impl DataplexTaskNotebookElInfrastructureSpecEl {
     #[doc = "Set the field `vpc_network`.\n"]
     pub fn set_vpc_network(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataplexTaskNotebookElInfrastructureSpecElVpcNetworkEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataplexTask_Spark_InfrastructureSpec_VpcNetwork>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1347,8 +1386,8 @@ impl DataplexTaskNotebookElInfrastructureSpecEl {
     }
 }
 
-impl terrars::ToListMappable for DataplexTaskNotebookElInfrastructureSpecEl {
-    type O = terrars::BlockAssignable<DataplexTaskNotebookElInfrastructureSpecEl>;
+impl terrars::ToListMappable for DataplexTask_Spark_InfrastructureSpec {
+    type O = terrars::BlockAssignable<DataplexTask_Spark_InfrastructureSpec>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1359,11 +1398,11 @@ impl terrars::ToListMappable for DataplexTaskNotebookElInfrastructureSpecEl {
     }
 }
 
-pub struct BuildDataplexTaskNotebookElInfrastructureSpecEl {}
+pub struct BuildDataplexTask_Spark_InfrastructureSpec {}
 
-impl BuildDataplexTaskNotebookElInfrastructureSpecEl {
-    pub fn build(self) -> DataplexTaskNotebookElInfrastructureSpecEl {
-        DataplexTaskNotebookElInfrastructureSpecEl {
+impl BuildDataplexTask_Spark_InfrastructureSpec {
+    pub fn build(self) -> DataplexTask_Spark_InfrastructureSpec {
+        DataplexTask_Spark_InfrastructureSpec {
             batch: core::default::Default::default(),
             container_image: core::default::Default::default(),
             vpc_network: core::default::Default::default(),
@@ -1372,59 +1411,61 @@ impl BuildDataplexTaskNotebookElInfrastructureSpecEl {
     }
 }
 
-pub struct DataplexTaskNotebookElInfrastructureSpecElRef {
+#[allow(dead_code)]
+pub struct DataplexTask_Spark_InfrastructureSpecRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataplexTaskNotebookElInfrastructureSpecElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexTaskNotebookElInfrastructureSpecElRef {
-        DataplexTaskNotebookElInfrastructureSpecElRef {
+impl terrars::Ref for DataplexTask_Spark_InfrastructureSpecRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexTask_Spark_InfrastructureSpecRef {
+        DataplexTask_Spark_InfrastructureSpecRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataplexTaskNotebookElInfrastructureSpecElRef {
+impl DataplexTask_Spark_InfrastructureSpecRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `batch` after provisioning.\n"]
-    pub fn batch(&self) -> terrars::ListRef<DataplexTaskNotebookElInfrastructureSpecElBatchElRef> {
+    pub fn batch(&self) -> terrars::ListRef<DataplexTask_Spark_InfrastructureSpec_BatchRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.batch", self.base))
     }
 
     #[doc = "Get a reference to the value of field `container_image` after provisioning.\n"]
-    pub fn container_image(&self) -> terrars::ListRef<DataplexTaskNotebookElInfrastructureSpecElContainerImageElRef> {
+    pub fn container_image(&self) -> terrars::ListRef<DataplexTask_Spark_InfrastructureSpec_ContainerImageRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.container_image", self.base))
     }
 
     #[doc = "Get a reference to the value of field `vpc_network` after provisioning.\n"]
-    pub fn vpc_network(&self) -> terrars::ListRef<DataplexTaskNotebookElInfrastructureSpecElVpcNetworkElRef> {
+    pub fn vpc_network(&self) -> terrars::ListRef<DataplexTask_Spark_InfrastructureSpec_VpcNetworkRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_network", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct DataplexTaskNotebookElDynamic {
-    infrastructure_spec: std::option::Option<terrars::DynamicBlock<DataplexTaskNotebookElInfrastructureSpecEl>>,
+struct DataplexTask_NotebookDynamic {
+    infrastructure_spec: std::option::Option<terrars::DynamicBlock<DataplexTask_Spark_InfrastructureSpec>>,
 }
 
 #[derive(Serialize)]
-pub struct DataplexTaskNotebookEl {
+pub struct DataplexTask_Notebook {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     archive_uris: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     file_uris: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     notebook: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    infrastructure_spec: std::option::Option<std::vec::Vec<DataplexTaskNotebookElInfrastructureSpecEl>>,
-    dynamic: DataplexTaskNotebookElDynamic,
+    infrastructure_spec: std::option::Option<std::vec::Vec<DataplexTask_Spark_InfrastructureSpec>>,
+    dynamic: DataplexTask_NotebookDynamic,
 }
 
-impl DataplexTaskNotebookEl {
+impl DataplexTask_Notebook {
     #[doc =
         "Set the field `archive_uris`.\nCloud Storage URIs of archives to be extracted into the working directory of each executor. Supported file types: .jar, .tar, .tar.gz, .tgz, and .zip."]
     pub fn set_archive_uris(
@@ -1448,7 +1489,7 @@ impl DataplexTaskNotebookEl {
     #[doc = "Set the field `infrastructure_spec`.\n"]
     pub fn set_infrastructure_spec(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataplexTaskNotebookElInfrastructureSpecEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataplexTask_Spark_InfrastructureSpec>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1462,8 +1503,8 @@ impl DataplexTaskNotebookEl {
     }
 }
 
-impl terrars::ToListMappable for DataplexTaskNotebookEl {
-    type O = terrars::BlockAssignable<DataplexTaskNotebookEl>;
+impl terrars::ToListMappable for DataplexTask_Notebook {
+    type O = terrars::BlockAssignable<DataplexTask_Notebook>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1474,15 +1515,15 @@ impl terrars::ToListMappable for DataplexTaskNotebookEl {
     }
 }
 
-pub struct BuildDataplexTaskNotebookEl {
+pub struct BuildDataplexTask_Notebook {
     #[doc =
         "Path to input notebook. This can be the Cloud Storage URI of the notebook file or the path to a Notebook Content. The execution args are accessible as environment variables (TASK_key=value)."]
     pub notebook: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataplexTaskNotebookEl {
-    pub fn build(self) -> DataplexTaskNotebookEl {
-        DataplexTaskNotebookEl {
+impl BuildDataplexTask_Notebook {
+    pub fn build(self) -> DataplexTask_Notebook {
+        DataplexTask_Notebook {
             archive_uris: core::default::Default::default(),
             file_uris: core::default::Default::default(),
             notebook: self.notebook,
@@ -1492,21 +1533,23 @@ impl BuildDataplexTaskNotebookEl {
     }
 }
 
-pub struct DataplexTaskNotebookElRef {
+#[allow(dead_code)]
+pub struct DataplexTask_NotebookRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataplexTaskNotebookElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexTaskNotebookElRef {
-        DataplexTaskNotebookElRef {
+impl terrars::Ref for DataplexTask_NotebookRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexTask_NotebookRef {
+        DataplexTask_NotebookRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataplexTaskNotebookElRef {
+impl DataplexTask_NotebookRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1530,455 +1573,18 @@ impl DataplexTaskNotebookElRef {
     }
 
     #[doc = "Get a reference to the value of field `infrastructure_spec` after provisioning.\n"]
-    pub fn infrastructure_spec(&self) -> terrars::ListRef<DataplexTaskNotebookElInfrastructureSpecElRef> {
+    pub fn infrastructure_spec(&self) -> terrars::ListRef<DataplexTask_Spark_InfrastructureSpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.infrastructure_spec", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct DataplexTaskSparkElInfrastructureSpecElBatchEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    executors_count: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    max_executors_count: std::option::Option<terrars::PrimField<f64>>,
-}
-
-impl DataplexTaskSparkElInfrastructureSpecElBatchEl {
-    #[doc =
-        "Set the field `executors_count`.\nTotal number of job executors. Executor Count should be between 2 and 100. [Default=2]"]
-    pub fn set_executors_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.executors_count = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `max_executors_count`.\nMax configurable executors. If maxExecutorsCount > executorsCount, then auto-scaling is enabled. Max Executor Count should be between 2 and 1000. [Default=1000]"]
-    pub fn set_max_executors_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.max_executors_count = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataplexTaskSparkElInfrastructureSpecElBatchEl {
-    type O = terrars::BlockAssignable<DataplexTaskSparkElInfrastructureSpecElBatchEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataplexTaskSparkElInfrastructureSpecElBatchEl {}
-
-impl BuildDataplexTaskSparkElInfrastructureSpecElBatchEl {
-    pub fn build(self) -> DataplexTaskSparkElInfrastructureSpecElBatchEl {
-        DataplexTaskSparkElInfrastructureSpecElBatchEl {
-            executors_count: core::default::Default::default(),
-            max_executors_count: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataplexTaskSparkElInfrastructureSpecElBatchElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataplexTaskSparkElInfrastructureSpecElBatchElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataplexTaskSparkElInfrastructureSpecElBatchElRef {
-        DataplexTaskSparkElInfrastructureSpecElBatchElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataplexTaskSparkElInfrastructureSpecElBatchElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `executors_count` after provisioning.\nTotal number of job executors. Executor Count should be between 2 and 100. [Default=2]"]
-    pub fn executors_count(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.executors_count", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `max_executors_count` after provisioning.\nMax configurable executors. If maxExecutorsCount > executorsCount, then auto-scaling is enabled. Max Executor Count should be between 2 and 1000. [Default=1000]"]
-    pub fn max_executors_count(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_executors_count", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataplexTaskSparkElInfrastructureSpecElContainerImageEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    image: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    java_jars: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    properties: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    python_packages: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
-}
-
-impl DataplexTaskSparkElInfrastructureSpecElContainerImageEl {
-    #[doc = "Set the field `image`.\nContainer image to use."]
-    pub fn set_image(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.image = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `java_jars`.\nA list of Java JARS to add to the classpath. Valid input includes Cloud Storage URIs to Jar binaries. For example, gs://bucket-name/my/path/to/file.jar"]
-    pub fn set_java_jars(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.java_jars = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `properties`.\nOverride to common configuration of open source components installed on the Dataproc cluster. The properties to set on daemon config files. Property keys are specified in prefix:property format, for example core:hadoop.tmp.dir. For more information, see Cluster properties."]
-    pub fn set_properties(
-        mut self,
-        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.properties = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `python_packages`.\nA list of python packages to be installed. Valid formats include Cloud Storage URI to a PIP installable library. For example, gs://bucket-name/my/path/to/lib.tar.gz"]
-    pub fn set_python_packages(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.python_packages = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataplexTaskSparkElInfrastructureSpecElContainerImageEl {
-    type O = terrars::BlockAssignable<DataplexTaskSparkElInfrastructureSpecElContainerImageEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataplexTaskSparkElInfrastructureSpecElContainerImageEl {}
-
-impl BuildDataplexTaskSparkElInfrastructureSpecElContainerImageEl {
-    pub fn build(self) -> DataplexTaskSparkElInfrastructureSpecElContainerImageEl {
-        DataplexTaskSparkElInfrastructureSpecElContainerImageEl {
-            image: core::default::Default::default(),
-            java_jars: core::default::Default::default(),
-            properties: core::default::Default::default(),
-            python_packages: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataplexTaskSparkElInfrastructureSpecElContainerImageElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataplexTaskSparkElInfrastructureSpecElContainerImageElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataplexTaskSparkElInfrastructureSpecElContainerImageElRef {
-        DataplexTaskSparkElInfrastructureSpecElContainerImageElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataplexTaskSparkElInfrastructureSpecElContainerImageElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `image` after provisioning.\nContainer image to use."]
-    pub fn image(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.image", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `java_jars` after provisioning.\nA list of Java JARS to add to the classpath. Valid input includes Cloud Storage URIs to Jar binaries. For example, gs://bucket-name/my/path/to/file.jar"]
-    pub fn java_jars(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.java_jars", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `properties` after provisioning.\nOverride to common configuration of open source components installed on the Dataproc cluster. The properties to set on daemon config files. Property keys are specified in prefix:property format, for example core:hadoop.tmp.dir. For more information, see Cluster properties."]
-    pub fn properties(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
-        terrars::RecRef::new(self.shared().clone(), format!("{}.properties", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `python_packages` after provisioning.\nA list of python packages to be installed. Valid formats include Cloud Storage URI to a PIP installable library. For example, gs://bucket-name/my/path/to/lib.tar.gz"]
-    pub fn python_packages(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.python_packages", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataplexTaskSparkElInfrastructureSpecElVpcNetworkEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    network: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    network_tags: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sub_network: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DataplexTaskSparkElInfrastructureSpecElVpcNetworkEl {
-    #[doc =
-        "Set the field `network`.\nThe Cloud VPC network in which the job is run. By default, the Cloud VPC network named Default within the project is used."]
-    pub fn set_network(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.network = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `network_tags`.\nList of network tags to apply to the job."]
-    pub fn set_network_tags(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.network_tags = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `sub_network`.\nThe Cloud VPC sub-network in which the job is run."]
-    pub fn set_sub_network(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.sub_network = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataplexTaskSparkElInfrastructureSpecElVpcNetworkEl {
-    type O = terrars::BlockAssignable<DataplexTaskSparkElInfrastructureSpecElVpcNetworkEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataplexTaskSparkElInfrastructureSpecElVpcNetworkEl {}
-
-impl BuildDataplexTaskSparkElInfrastructureSpecElVpcNetworkEl {
-    pub fn build(self) -> DataplexTaskSparkElInfrastructureSpecElVpcNetworkEl {
-        DataplexTaskSparkElInfrastructureSpecElVpcNetworkEl {
-            network: core::default::Default::default(),
-            network_tags: core::default::Default::default(),
-            sub_network: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataplexTaskSparkElInfrastructureSpecElVpcNetworkElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataplexTaskSparkElInfrastructureSpecElVpcNetworkElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataplexTaskSparkElInfrastructureSpecElVpcNetworkElRef {
-        DataplexTaskSparkElInfrastructureSpecElVpcNetworkElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataplexTaskSparkElInfrastructureSpecElVpcNetworkElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `network` after provisioning.\nThe Cloud VPC network in which the job is run. By default, the Cloud VPC network named Default within the project is used."]
-    pub fn network(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `network_tags` after provisioning.\nList of network tags to apply to the job."]
-    pub fn network_tags(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.network_tags", self.base))
-    }
-
-    #[doc =
-        "Get a reference to the value of field `sub_network` after provisioning.\nThe Cloud VPC sub-network in which the job is run."]
-    pub fn sub_network(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sub_network", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct DataplexTaskSparkElInfrastructureSpecElDynamic {
-    batch: std::option::Option<terrars::DynamicBlock<DataplexTaskSparkElInfrastructureSpecElBatchEl>>,
-    container_image: std
-    ::option
-    ::Option<terrars::DynamicBlock<DataplexTaskSparkElInfrastructureSpecElContainerImageEl>>,
-    vpc_network: std::option::Option<terrars::DynamicBlock<DataplexTaskSparkElInfrastructureSpecElVpcNetworkEl>>,
+struct DataplexTask_SparkDynamic {
+    infrastructure_spec: std::option::Option<terrars::DynamicBlock<DataplexTask_Spark_InfrastructureSpec>>,
 }
 
 #[derive(Serialize)]
-pub struct DataplexTaskSparkElInfrastructureSpecEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    batch: std::option::Option<std::vec::Vec<DataplexTaskSparkElInfrastructureSpecElBatchEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    container_image: std::option::Option<std::vec::Vec<DataplexTaskSparkElInfrastructureSpecElContainerImageEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpc_network: std::option::Option<std::vec::Vec<DataplexTaskSparkElInfrastructureSpecElVpcNetworkEl>>,
-    dynamic: DataplexTaskSparkElInfrastructureSpecElDynamic,
-}
-
-impl DataplexTaskSparkElInfrastructureSpecEl {
-    #[doc = "Set the field `batch`.\n"]
-    pub fn set_batch(
-        mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataplexTaskSparkElInfrastructureSpecElBatchEl>>,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.batch = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.batch = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `container_image`.\n"]
-    pub fn set_container_image(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<DataplexTaskSparkElInfrastructureSpecElContainerImageEl>>,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.container_image = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.container_image = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `vpc_network`.\n"]
-    pub fn set_vpc_network(
-        mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataplexTaskSparkElInfrastructureSpecElVpcNetworkEl>>,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.vpc_network = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.vpc_network = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataplexTaskSparkElInfrastructureSpecEl {
-    type O = terrars::BlockAssignable<DataplexTaskSparkElInfrastructureSpecEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataplexTaskSparkElInfrastructureSpecEl {}
-
-impl BuildDataplexTaskSparkElInfrastructureSpecEl {
-    pub fn build(self) -> DataplexTaskSparkElInfrastructureSpecEl {
-        DataplexTaskSparkElInfrastructureSpecEl {
-            batch: core::default::Default::default(),
-            container_image: core::default::Default::default(),
-            vpc_network: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataplexTaskSparkElInfrastructureSpecElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataplexTaskSparkElInfrastructureSpecElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexTaskSparkElInfrastructureSpecElRef {
-        DataplexTaskSparkElInfrastructureSpecElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataplexTaskSparkElInfrastructureSpecElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `batch` after provisioning.\n"]
-    pub fn batch(&self) -> terrars::ListRef<DataplexTaskSparkElInfrastructureSpecElBatchElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.batch", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `container_image` after provisioning.\n"]
-    pub fn container_image(&self) -> terrars::ListRef<DataplexTaskSparkElInfrastructureSpecElContainerImageElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.container_image", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `vpc_network` after provisioning.\n"]
-    pub fn vpc_network(&self) -> terrars::ListRef<DataplexTaskSparkElInfrastructureSpecElVpcNetworkElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_network", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct DataplexTaskSparkElDynamic {
-    infrastructure_spec: std::option::Option<terrars::DynamicBlock<DataplexTaskSparkElInfrastructureSpecEl>>,
-}
-
-#[derive(Serialize)]
-pub struct DataplexTaskSparkEl {
+pub struct DataplexTask_Spark {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     archive_uris: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1994,11 +1600,11 @@ pub struct DataplexTaskSparkEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sql_script_file: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    infrastructure_spec: std::option::Option<std::vec::Vec<DataplexTaskSparkElInfrastructureSpecEl>>,
-    dynamic: DataplexTaskSparkElDynamic,
+    infrastructure_spec: std::option::Option<std::vec::Vec<DataplexTask_Spark_InfrastructureSpec>>,
+    dynamic: DataplexTask_SparkDynamic,
 }
 
-impl DataplexTaskSparkEl {
+impl DataplexTask_Spark {
     #[doc =
         "Set the field `archive_uris`.\nCloud Storage URIs of archives to be extracted into the working directory of each executor. Supported file types: .jar, .tar, .tar.gz, .tgz, and .zip."]
     pub fn set_archive_uris(
@@ -2060,7 +1666,7 @@ impl DataplexTaskSparkEl {
     #[doc = "Set the field `infrastructure_spec`.\n"]
     pub fn set_infrastructure_spec(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataplexTaskSparkElInfrastructureSpecEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataplexTask_Spark_InfrastructureSpec>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2074,8 +1680,8 @@ impl DataplexTaskSparkEl {
     }
 }
 
-impl terrars::ToListMappable for DataplexTaskSparkEl {
-    type O = terrars::BlockAssignable<DataplexTaskSparkEl>;
+impl terrars::ToListMappable for DataplexTask_Spark {
+    type O = terrars::BlockAssignable<DataplexTask_Spark>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2086,11 +1692,11 @@ impl terrars::ToListMappable for DataplexTaskSparkEl {
     }
 }
 
-pub struct BuildDataplexTaskSparkEl {}
+pub struct BuildDataplexTask_Spark {}
 
-impl BuildDataplexTaskSparkEl {
-    pub fn build(self) -> DataplexTaskSparkEl {
-        DataplexTaskSparkEl {
+impl BuildDataplexTask_Spark {
+    pub fn build(self) -> DataplexTask_Spark {
+        DataplexTask_Spark {
             archive_uris: core::default::Default::default(),
             file_uris: core::default::Default::default(),
             main_class: core::default::Default::default(),
@@ -2104,21 +1710,23 @@ impl BuildDataplexTaskSparkEl {
     }
 }
 
-pub struct DataplexTaskSparkElRef {
+#[allow(dead_code)]
+pub struct DataplexTask_SparkRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataplexTaskSparkElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexTaskSparkElRef {
-        DataplexTaskSparkElRef {
+impl terrars::Ref for DataplexTask_SparkRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexTask_SparkRef {
+        DataplexTask_SparkRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataplexTaskSparkElRef {
+impl DataplexTask_SparkRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2166,13 +1774,13 @@ impl DataplexTaskSparkElRef {
     }
 
     #[doc = "Get a reference to the value of field `infrastructure_spec` after provisioning.\n"]
-    pub fn infrastructure_spec(&self) -> terrars::ListRef<DataplexTaskSparkElInfrastructureSpecElRef> {
+    pub fn infrastructure_spec(&self) -> terrars::ListRef<DataplexTask_Spark_InfrastructureSpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.infrastructure_spec", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataplexTaskTimeoutsEl {
+pub struct DataplexTask_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2181,7 +1789,7 @@ pub struct DataplexTaskTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataplexTaskTimeoutsEl {
+impl DataplexTask_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -2201,8 +1809,8 @@ impl DataplexTaskTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataplexTaskTimeoutsEl {
-    type O = terrars::BlockAssignable<DataplexTaskTimeoutsEl>;
+impl terrars::ToListMappable for DataplexTask_Timeouts {
+    type O = terrars::BlockAssignable<DataplexTask_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2213,11 +1821,11 @@ impl terrars::ToListMappable for DataplexTaskTimeoutsEl {
     }
 }
 
-pub struct BuildDataplexTaskTimeoutsEl {}
+pub struct BuildDataplexTask_Timeouts {}
 
-impl BuildDataplexTaskTimeoutsEl {
-    pub fn build(self) -> DataplexTaskTimeoutsEl {
-        DataplexTaskTimeoutsEl {
+impl BuildDataplexTask_Timeouts {
+    pub fn build(self) -> DataplexTask_Timeouts {
+        DataplexTask_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -2225,21 +1833,23 @@ impl BuildDataplexTaskTimeoutsEl {
     }
 }
 
-pub struct DataplexTaskTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataplexTask_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataplexTaskTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexTaskTimeoutsElRef {
-        DataplexTaskTimeoutsElRef {
+impl terrars::Ref for DataplexTask_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexTask_TimeoutsRef {
+        DataplexTask_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataplexTaskTimeoutsElRef {
+impl DataplexTask_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2261,7 +1871,7 @@ impl DataplexTaskTimeoutsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataplexTaskTriggerSpecEl {
+pub struct DataplexTask_TriggerSpec {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     disabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2274,7 +1884,7 @@ pub struct DataplexTaskTriggerSpecEl {
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl DataplexTaskTriggerSpecEl {
+impl DataplexTask_TriggerSpec {
     #[doc =
         "Set the field `disabled`.\nPrevent the task from executing. This does not cancel already running tasks. It is intended to temporarily disable RECURRING tasks."]
     pub fn set_disabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -2304,8 +1914,8 @@ impl DataplexTaskTriggerSpecEl {
     }
 }
 
-impl terrars::ToListMappable for DataplexTaskTriggerSpecEl {
-    type O = terrars::BlockAssignable<DataplexTaskTriggerSpecEl>;
+impl terrars::ToListMappable for DataplexTask_TriggerSpec {
+    type O = terrars::BlockAssignable<DataplexTask_TriggerSpec>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2316,14 +1926,14 @@ impl terrars::ToListMappable for DataplexTaskTriggerSpecEl {
     }
 }
 
-pub struct BuildDataplexTaskTriggerSpecEl {
+pub struct BuildDataplexTask_TriggerSpec {
     #[doc = "Trigger type of the user-specified Task Possible values: [\"ON_DEMAND\", \"RECURRING\"]"]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataplexTaskTriggerSpecEl {
-    pub fn build(self) -> DataplexTaskTriggerSpecEl {
-        DataplexTaskTriggerSpecEl {
+impl BuildDataplexTask_TriggerSpec {
+    pub fn build(self) -> DataplexTask_TriggerSpec {
+        DataplexTask_TriggerSpec {
             disabled: core::default::Default::default(),
             max_retries: core::default::Default::default(),
             schedule: core::default::Default::default(),
@@ -2333,21 +1943,23 @@ impl BuildDataplexTaskTriggerSpecEl {
     }
 }
 
-pub struct DataplexTaskTriggerSpecElRef {
+#[allow(dead_code)]
+pub struct DataplexTask_TriggerSpecRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataplexTaskTriggerSpecElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexTaskTriggerSpecElRef {
-        DataplexTaskTriggerSpecElRef {
+impl terrars::Ref for DataplexTask_TriggerSpecRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataplexTask_TriggerSpecRef {
+        DataplexTask_TriggerSpecRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataplexTaskTriggerSpecElRef {
+impl DataplexTask_TriggerSpecRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2381,12 +1993,4 @@ impl DataplexTaskTriggerSpecElRef {
     pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataplexTaskDynamic {
-    execution_spec: std::option::Option<terrars::DynamicBlock<DataplexTaskExecutionSpecEl>>,
-    notebook: std::option::Option<terrars::DynamicBlock<DataplexTaskNotebookEl>>,
-    spark: std::option::Option<terrars::DynamicBlock<DataplexTaskSparkEl>>,
-    trigger_spec: std::option::Option<terrars::DynamicBlock<DataplexTaskTriggerSpecEl>>,
 }

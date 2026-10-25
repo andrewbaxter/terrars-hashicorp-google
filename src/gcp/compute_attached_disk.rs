@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputeAttachedDiskData {
+struct ComputeAttachedDiskData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,11 +21,15 @@ struct ComputeAttachedDiskData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     device_name: std::option::Option<terrars::PrimField<std::string::String>>,
     disk: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     instance: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    interface: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     mode: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -31,13 +37,13 @@ struct ComputeAttachedDiskData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     zone: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComputeAttachedDiskTimeoutsEl>,
+    timeouts: std::option::Option<ComputeAttachedDisk_Timeouts>,
 }
 
 struct ComputeAttachedDisk_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputeAttachedDiskData>,
+    data: std::cell::RefCell<ComputeAttachedDiskData_>,
 }
 
 #[derive(Clone)]
@@ -138,6 +144,13 @@ impl ComputeAttachedDisk {
     }
 
     #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `device_name`.\nSpecifies a unique device name of your choice that is reflected into the /dev/disk/by-id/google-* tree of a Linux operating system running within the instance. This name can be used to reference the device for mounting, resizing, and so on, from within the instance. If not specified, the server chooses a default device name to apply to this disk, in the form persistent-disks-x, where x is a number assigned by Google Compute Engine."]
     pub fn set_device_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().device_name = std::option::Option::Some(v.into());
@@ -147,6 +160,13 @@ impl ComputeAttachedDisk {
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `interface`.\nThe disk interface used for attaching this disk. One of SCSI or NVME. (This field is only used for specific cases, please don't specify this field without advice from Google.)"]
+    pub fn set_interface(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().interface = std::option::Option::Some(v.into());
         self
     }
 
@@ -172,9 +192,15 @@ impl ComputeAttachedDisk {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeAttachedDiskTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputeAttachedDisk_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -201,6 +227,12 @@ impl ComputeAttachedDisk {
     }
 
     #[doc =
+        "Get a reference to the value of field `interface` after provisioning.\nThe disk interface used for attaching this disk. One of SCSI or NVME. (This field is only used for specific cases, please don't specify this field without advice from Google.)"]
+    pub fn interface(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.interface", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `mode` after provisioning.\nThe mode in which to attach this disk, either READ_WRITE or READ_ONLY. If not specified, the default is to attach the disk in READ_WRITE mode."]
     pub fn mode(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.mode", self.extract_ref()))
@@ -219,8 +251,8 @@ impl ComputeAttachedDisk {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeAttachedDiskTimeoutsElRef {
-        ComputeAttachedDiskTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeAttachedDisk_TimeoutsRef {
+        ComputeAttachedDisk_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -269,16 +301,18 @@ impl BuildComputeAttachedDisk {
         let out = ComputeAttachedDisk(std::rc::Rc::new(ComputeAttachedDisk_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputeAttachedDiskData {
+            data: std::cell::RefCell::new(ComputeAttachedDiskData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 device_name: core::default::Default::default(),
                 disk: self.disk,
                 id: core::default::Default::default(),
                 instance: self.instance,
+                interface: core::default::Default::default(),
                 mode: core::default::Default::default(),
                 project: core::default::Default::default(),
                 zone: core::default::Default::default(),
@@ -314,6 +348,12 @@ impl ComputeAttachedDiskRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `device_name` after provisioning.\nSpecifies a unique device name of your choice that is reflected into the /dev/disk/by-id/google-* tree of a Linux operating system running within the instance. This name can be used to reference the device for mounting, resizing, and so on, from within the instance. If not specified, the server chooses a default device name to apply to this disk, in the form persistent-disks-x, where x is a number assigned by Google Compute Engine."]
     pub fn device_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.device_name", self.extract_ref()))
@@ -337,6 +377,12 @@ impl ComputeAttachedDiskRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `interface` after provisioning.\nThe disk interface used for attaching this disk. One of SCSI or NVME. (This field is only used for specific cases, please don't specify this field without advice from Google.)"]
+    pub fn interface(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.interface", self.extract_ref()))
+    }
+
+    #[doc =
         "Get a reference to the value of field `mode` after provisioning.\nThe mode in which to attach this disk, either READ_WRITE or READ_ONLY. If not specified, the default is to attach the disk in READ_WRITE mode."]
     pub fn mode(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.mode", self.extract_ref()))
@@ -355,20 +401,20 @@ impl ComputeAttachedDiskRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputeAttachedDiskTimeoutsElRef {
-        ComputeAttachedDiskTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputeAttachedDisk_TimeoutsRef {
+        ComputeAttachedDisk_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComputeAttachedDiskTimeoutsEl {
+pub struct ComputeAttachedDisk_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputeAttachedDiskTimeoutsEl {
+impl ComputeAttachedDisk_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -382,8 +428,8 @@ impl ComputeAttachedDiskTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ComputeAttachedDiskTimeoutsEl {
-    type O = terrars::BlockAssignable<ComputeAttachedDiskTimeoutsEl>;
+impl terrars::ToListMappable for ComputeAttachedDisk_Timeouts {
+    type O = terrars::BlockAssignable<ComputeAttachedDisk_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -394,32 +440,34 @@ impl terrars::ToListMappable for ComputeAttachedDiskTimeoutsEl {
     }
 }
 
-pub struct BuildComputeAttachedDiskTimeoutsEl {}
+pub struct BuildComputeAttachedDisk_Timeouts {}
 
-impl BuildComputeAttachedDiskTimeoutsEl {
-    pub fn build(self) -> ComputeAttachedDiskTimeoutsEl {
-        ComputeAttachedDiskTimeoutsEl {
+impl BuildComputeAttachedDisk_Timeouts {
+    pub fn build(self) -> ComputeAttachedDisk_Timeouts {
+        ComputeAttachedDisk_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComputeAttachedDiskTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComputeAttachedDisk_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputeAttachedDiskTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeAttachedDiskTimeoutsElRef {
-        ComputeAttachedDiskTimeoutsElRef {
+impl terrars::Ref for ComputeAttachedDisk_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputeAttachedDisk_TimeoutsRef {
+        ComputeAttachedDisk_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputeAttachedDiskTimeoutsElRef {
+impl ComputeAttachedDisk_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

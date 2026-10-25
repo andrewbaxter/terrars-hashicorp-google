@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataFolderData {
+struct DataFolderData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -26,7 +28,7 @@ struct DataFolderData {
 struct DataFolder_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataFolderData>,
+    data: std::cell::RefCell<DataFolderData_>,
 }
 
 #[derive(Clone)]
@@ -83,9 +85,24 @@ impl DataFolder {
         self
     }
 
+    #[doc = "Get a reference to the value of field `configured_capabilities` after provisioning.\n"]
+    pub fn configured_capabilities(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.configured_capabilities", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `create_time` after provisioning.\n"]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `deletion_policy` after provisioning.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `deletion_protection` after provisioning.\n"]
+    pub fn deletion_protection(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_protection", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `display_name` after provisioning.\n"]
@@ -116,6 +133,11 @@ impl DataFolder {
     #[doc = "Get a reference to the value of field `lookup_organization` after provisioning.\n"]
     pub fn lookup_organization(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.lookup_organization", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `management_project` after provisioning.\n"]
+    pub fn management_project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.management_project", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
@@ -176,7 +198,7 @@ impl BuildDataFolder {
         let out = DataFolder(std::rc::Rc::new(DataFolder_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataFolderData {
+            data: std::cell::RefCell::new(DataFolderData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -214,9 +236,24 @@ impl DataFolderRef {
         self.base.clone()
     }
 
+    #[doc = "Get a reference to the value of field `configured_capabilities` after provisioning.\n"]
+    pub fn configured_capabilities(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.configured_capabilities", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `create_time` after provisioning.\n"]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `deletion_policy` after provisioning.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `deletion_protection` after provisioning.\n"]
+    pub fn deletion_protection(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_protection", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `display_name` after provisioning.\n"]
@@ -247,6 +284,11 @@ impl DataFolderRef {
     #[doc = "Get a reference to the value of field `lookup_organization` after provisioning.\n"]
     pub fn lookup_organization(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.lookup_organization", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `management_project` after provisioning.\n"]
+    pub fn management_project(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.management_project", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct BigqueryDatasetData {
+struct BigqueryDatasetData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,6 +30,8 @@ struct BigqueryDatasetData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete_contents_on_destroy: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     friendly_name: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -44,20 +48,26 @@ struct BigqueryDatasetData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     storage_billing_model: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    access: std::option::Option<std::vec::Vec<BigqueryDatasetAccessEl>>,
+    access: std::option::Option<std::vec::Vec<BigqueryDataset_Access>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    default_encryption_configuration: std::option::Option<std::vec::Vec<BigqueryDatasetDefaultEncryptionConfigurationEl>>,
+    default_encryption_configuration: std::option::Option<std::vec::Vec<BigqueryDataset_DefaultEncryptionConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<BigqueryDatasetTimeoutsEl>,
+    external_catalog_dataset_options: std::option::Option<std::vec::Vec<BigqueryDataset_ExternalCatalogDatasetOptions>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    external_dataset_reference: std::option::Option<std::vec::Vec<BigqueryDataset_ExternalDatasetReference>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<BigqueryDataset_Timeouts>,
     dynamic: BigqueryDatasetDynamic,
 }
 
 struct BigqueryDataset_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<BigqueryDatasetData>,
+    data: std::cell::RefCell<BigqueryDatasetData_>,
 }
 
 #[derive(Clone)]
@@ -165,14 +175,14 @@ impl BigqueryDataset {
     }
 
     #[doc =
-        "Set the field `default_partition_expiration_ms`.\nThe default partition expiration for all partitioned tables in\nthe dataset, in milliseconds.\n\n\nOnce this property is set, all newly-created partitioned tables in\nthe dataset will have an 'expirationMs' property in the 'timePartitioning'\nsettings set to this value, and changing the value will only\naffect new tables, not existing ones. The storage in a partition will\nhave an expiration time of its partition time plus this value.\nSetting this property overrides the use of 'defaultTableExpirationMs'\nfor partitioned tables: only one of 'defaultTableExpirationMs' and\n'defaultPartitionExpirationMs' will be used for any new partitioned\ntable. If you provide an explicit 'timePartitioning.expirationMs' when\ncreating or updating a partitioned table, that value takes precedence\nover the default partition expiration time indicated by this property."]
+        "Set the field `default_partition_expiration_ms`.\nThe default partition expiration for all partitioned tables in\nthe dataset, in milliseconds.\nOnce this property is set, all newly-created partitioned tables in\nthe dataset will have an 'expirationMs' property in the 'timePartitioning'\nsettings set to this value, and changing the value will only\naffect new tables, not existing ones. The storage in a partition will\nhave an expiration time of its partition time plus this value.\nSetting this property overrides the use of 'defaultTableExpirationMs'\nfor partitioned tables: only one of 'defaultTableExpirationMs' and\n'defaultPartitionExpirationMs' will be used for any new partitioned\ntable. If you provide an explicit 'timePartitioning.expirationMs' when\ncreating or updating a partitioned table, that value takes precedence\nover the default partition expiration time indicated by this property."]
     pub fn set_default_partition_expiration_ms(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.0.data.borrow_mut().default_partition_expiration_ms = std::option::Option::Some(v.into());
         self
     }
 
     #[doc =
-        "Set the field `default_table_expiration_ms`.\nThe default lifetime of all tables in the dataset, in milliseconds.\nThe minimum value is 3600000 milliseconds (one hour).\n\n\nOnce this property is set, all newly-created tables in the dataset\nwill have an 'expirationTime' property set to the creation time plus\nthe value in this property, and changing the value will only affect\nnew tables, not existing ones. When the 'expirationTime' for a given\ntable is reached, that table will be deleted automatically.\nIf a table's 'expirationTime' is modified or removed before the\ntable expires, or if you provide an explicit 'expirationTime' when\ncreating a table, that value takes precedence over the default\nexpiration time indicated by this property."]
+        "Set the field `default_table_expiration_ms`.\nThe default lifetime of all tables in the dataset, in milliseconds.\nThe minimum value is 3600000 milliseconds (one hour).\nOnce this property is set, all newly-created tables in the dataset\nwill have an 'expirationTime' property set to the creation time plus\nthe value in this property, and changing the value will only affect\nnew tables, not existing ones. When the 'expirationTime' for a given\ntable is reached, that table will be deleted automatically.\nIf a table's 'expirationTime' is modified or removed before the\ntable expires, or if you provide an explicit 'expirationTime' when\ncreating a table, that value takes precedence over the default\nexpiration time indicated by this property."]
     pub fn set_default_table_expiration_ms(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.0.data.borrow_mut().default_table_expiration_ms = std::option::Option::Some(v.into());
         self
@@ -182,6 +192,13 @@ impl BigqueryDataset {
         "Set the field `delete_contents_on_destroy`.\nIf set to 'true', delete all the tables in the\ndataset when destroying the resource; otherwise,\ndestroying the resource will fail if tables are present."]
     pub fn set_delete_contents_on_destroy(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().delete_contents_on_destroy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
         self
     }
 
@@ -221,7 +238,7 @@ impl BigqueryDataset {
     }
 
     #[doc =
-        "Set the field `location`.\nThe geographic location where the dataset should reside.\nSee [official docs](https://cloud.google.com/bigquery/docs/dataset-locations).\n\n\nThere are two types of locations, regional or multi-regional. A regional\nlocation is a specific geographic place, such as Tokyo, and a multi-regional\nlocation is a large geographic area, such as the United States, that\ncontains at least two geographic places.\n\n\nThe default value is multi-regional location 'US'.\nChanging this forces a new resource to be created."]
+        "Set the field `location`.\nThe geographic location where the dataset should reside.\nSee [official docs](https://cloud.google.com/bigquery/docs/dataset-locations).\nThere are two types of locations, regional or multi-regional. A regional\nlocation is a specific geographic place, such as Tokyo, and a multi-regional\nlocation is a large geographic area, such as the United States, that\ncontains at least two geographic places.\nThe default value is multi-regional location 'US'.\nChanging this forces a new resource to be created."]
     pub fn set_location(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().location = std::option::Option::Some(v.into());
         self
@@ -241,6 +258,16 @@ impl BigqueryDataset {
     }
 
     #[doc =
+        "Set the field `resource_tags`.\nThe tags attached to this table. Tag keys are globally unique. Tag key is expected to be\nin the namespaced format, for example \"123456789012/environment\" where 123456789012 is the\nID of the parent organization or project resource for this tag key. Tag value is expected\nto be the short name, for example \"Production\". See [Tag definitions](https://cloud.google.com/iam/docs/tags-access-control#definitions)\nfor more details."]
+    pub fn set_resource_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().resource_tags = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `storage_billing_model`.\nSpecifies the storage billing model for the dataset.\nSet this flag value to LOGICAL to use logical bytes for storage billing,\nor to PHYSICAL to use physical bytes instead.\n\nLOGICAL is the default if this flag isn't specified."]
     pub fn set_storage_billing_model(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().storage_billing_model = std::option::Option::Some(v.into());
@@ -248,7 +275,7 @@ impl BigqueryDataset {
     }
 
     #[doc = "Set the field `access`.\n"]
-    pub fn set_access(self, v: impl std::convert::Into<terrars::BlockAssignable<BigqueryDatasetAccessEl>>) -> Self {
+    pub fn set_access(self, v: impl std::convert::Into<terrars::BlockAssignable<BigqueryDataset_Access>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().access = std::option::Option::Some(v);
@@ -263,7 +290,7 @@ impl BigqueryDataset {
     #[doc = "Set the field `default_encryption_configuration`.\n"]
     pub fn set_default_encryption_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryDatasetDefaultEncryptionConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryDataset_DefaultEncryptionConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -276,8 +303,40 @@ impl BigqueryDataset {
         self
     }
 
+    #[doc = "Set the field `external_catalog_dataset_options`.\n"]
+    pub fn set_external_catalog_dataset_options(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryDataset_ExternalCatalogDatasetOptions>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().external_catalog_dataset_options = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.external_catalog_dataset_options = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `external_dataset_reference`.\n"]
+    pub fn set_external_dataset_reference(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryDataset_ExternalDatasetReference>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().external_dataset_reference = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.external_dataset_reference = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<BigqueryDatasetTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<BigqueryDataset_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -301,7 +360,7 @@ impl BigqueryDataset {
     }
 
     #[doc =
-        "Get a reference to the value of field `default_partition_expiration_ms` after provisioning.\nThe default partition expiration for all partitioned tables in\nthe dataset, in milliseconds.\n\n\nOnce this property is set, all newly-created partitioned tables in\nthe dataset will have an 'expirationMs' property in the 'timePartitioning'\nsettings set to this value, and changing the value will only\naffect new tables, not existing ones. The storage in a partition will\nhave an expiration time of its partition time plus this value.\nSetting this property overrides the use of 'defaultTableExpirationMs'\nfor partitioned tables: only one of 'defaultTableExpirationMs' and\n'defaultPartitionExpirationMs' will be used for any new partitioned\ntable. If you provide an explicit 'timePartitioning.expirationMs' when\ncreating or updating a partitioned table, that value takes precedence\nover the default partition expiration time indicated by this property."]
+        "Get a reference to the value of field `default_partition_expiration_ms` after provisioning.\nThe default partition expiration for all partitioned tables in\nthe dataset, in milliseconds.\nOnce this property is set, all newly-created partitioned tables in\nthe dataset will have an 'expirationMs' property in the 'timePartitioning'\nsettings set to this value, and changing the value will only\naffect new tables, not existing ones. The storage in a partition will\nhave an expiration time of its partition time plus this value.\nSetting this property overrides the use of 'defaultTableExpirationMs'\nfor partitioned tables: only one of 'defaultTableExpirationMs' and\n'defaultPartitionExpirationMs' will be used for any new partitioned\ntable. If you provide an explicit 'timePartitioning.expirationMs' when\ncreating or updating a partitioned table, that value takes precedence\nover the default partition expiration time indicated by this property."]
     pub fn default_partition_expiration_ms(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(
             self.shared().clone(),
@@ -310,7 +369,7 @@ impl BigqueryDataset {
     }
 
     #[doc =
-        "Get a reference to the value of field `default_table_expiration_ms` after provisioning.\nThe default lifetime of all tables in the dataset, in milliseconds.\nThe minimum value is 3600000 milliseconds (one hour).\n\n\nOnce this property is set, all newly-created tables in the dataset\nwill have an 'expirationTime' property set to the creation time plus\nthe value in this property, and changing the value will only affect\nnew tables, not existing ones. When the 'expirationTime' for a given\ntable is reached, that table will be deleted automatically.\nIf a table's 'expirationTime' is modified or removed before the\ntable expires, or if you provide an explicit 'expirationTime' when\ncreating a table, that value takes precedence over the default\nexpiration time indicated by this property."]
+        "Get a reference to the value of field `default_table_expiration_ms` after provisioning.\nThe default lifetime of all tables in the dataset, in milliseconds.\nThe minimum value is 3600000 milliseconds (one hour).\nOnce this property is set, all newly-created tables in the dataset\nwill have an 'expirationTime' property set to the creation time plus\nthe value in this property, and changing the value will only affect\nnew tables, not existing ones. When the 'expirationTime' for a given\ntable is reached, that table will be deleted automatically.\nIf a table's 'expirationTime' is modified or removed before the\ntable expires, or if you provide an explicit 'expirationTime' when\ncreating a table, that value takes precedence over the default\nexpiration time indicated by this property."]
     pub fn default_table_expiration_ms(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.default_table_expiration_ms", self.extract_ref()))
     }
@@ -319,6 +378,12 @@ impl BigqueryDataset {
         "Get a reference to the value of field `delete_contents_on_destroy` after provisioning.\nIf set to 'true', delete all the tables in the\ndataset when destroying the resource; otherwise,\ndestroying the resource will fail if tables are present."]
     pub fn delete_contents_on_destroy(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete_contents_on_destroy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -368,7 +433,7 @@ impl BigqueryDataset {
     }
 
     #[doc =
-        "Get a reference to the value of field `location` after provisioning.\nThe geographic location where the dataset should reside.\nSee [official docs](https://cloud.google.com/bigquery/docs/dataset-locations).\n\n\nThere are two types of locations, regional or multi-regional. A regional\nlocation is a specific geographic place, such as Tokyo, and a multi-regional\nlocation is a large geographic area, such as the United States, that\ncontains at least two geographic places.\n\n\nThe default value is multi-regional location 'US'.\nChanging this forces a new resource to be created."]
+        "Get a reference to the value of field `location` after provisioning.\nThe geographic location where the dataset should reside.\nSee [official docs](https://cloud.google.com/bigquery/docs/dataset-locations).\nThere are two types of locations, regional or multi-regional. A regional\nlocation is a specific geographic place, such as Tokyo, and a multi-regional\nlocation is a large geographic area, such as the United States, that\ncontains at least two geographic places.\nThe default value is multi-regional location 'US'.\nChanging this forces a new resource to be created."]
     pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
@@ -382,6 +447,12 @@ impl BigqueryDataset {
     #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
     pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `resource_tags` after provisioning.\nThe tags attached to this table. Tag keys are globally unique. Tag key is expected to be\nin the namespaced format, for example \"123456789012/environment\" where 123456789012 is the\nID of the parent organization or project resource for this tag key. Tag value is expected\nto be the short name, for example \"Production\". See [Tag definitions](https://cloud.google.com/iam/docs/tags-access-control#definitions)\nfor more details."]
+    pub fn resource_tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.resource_tags", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `self_link` after provisioning.\n"]
@@ -404,16 +475,29 @@ impl BigqueryDataset {
     #[doc = "Get a reference to the value of field `default_encryption_configuration` after provisioning.\n"]
     pub fn default_encryption_configuration(
         &self,
-    ) -> terrars::ListRef<BigqueryDatasetDefaultEncryptionConfigurationElRef> {
+    ) -> terrars::ListRef<BigqueryDataset_DefaultEncryptionConfigurationRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.default_encryption_configuration", self.extract_ref()),
         )
     }
 
+    #[doc = "Get a reference to the value of field `external_catalog_dataset_options` after provisioning.\n"]
+    pub fn external_catalog_dataset_options(&self) -> terrars::ListRef<BigqueryDataset_ExternalCatalogDatasetOptionsRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.external_catalog_dataset_options", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `external_dataset_reference` after provisioning.\n"]
+    pub fn external_dataset_reference(&self) -> terrars::ListRef<BigqueryDataset_ExternalDatasetReferenceRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.external_dataset_reference", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> BigqueryDatasetTimeoutsElRef {
-        BigqueryDatasetTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> BigqueryDataset_TimeoutsRef {
+        BigqueryDataset_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -460,7 +544,7 @@ impl BuildBigqueryDataset {
         let out = BigqueryDataset(std::rc::Rc::new(BigqueryDataset_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(BigqueryDatasetData {
+            data: std::cell::RefCell::new(BigqueryDatasetData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -471,6 +555,7 @@ impl BuildBigqueryDataset {
                 default_partition_expiration_ms: core::default::Default::default(),
                 default_table_expiration_ms: core::default::Default::default(),
                 delete_contents_on_destroy: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 friendly_name: core::default::Default::default(),
                 id: core::default::Default::default(),
@@ -479,9 +564,12 @@ impl BuildBigqueryDataset {
                 location: core::default::Default::default(),
                 max_time_travel_hours: core::default::Default::default(),
                 project: core::default::Default::default(),
+                resource_tags: core::default::Default::default(),
                 storage_billing_model: core::default::Default::default(),
                 access: core::default::Default::default(),
                 default_encryption_configuration: core::default::Default::default(),
+                external_catalog_dataset_options: core::default::Default::default(),
+                external_dataset_reference: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -533,7 +621,7 @@ impl BigqueryDatasetRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `default_partition_expiration_ms` after provisioning.\nThe default partition expiration for all partitioned tables in\nthe dataset, in milliseconds.\n\n\nOnce this property is set, all newly-created partitioned tables in\nthe dataset will have an 'expirationMs' property in the 'timePartitioning'\nsettings set to this value, and changing the value will only\naffect new tables, not existing ones. The storage in a partition will\nhave an expiration time of its partition time plus this value.\nSetting this property overrides the use of 'defaultTableExpirationMs'\nfor partitioned tables: only one of 'defaultTableExpirationMs' and\n'defaultPartitionExpirationMs' will be used for any new partitioned\ntable. If you provide an explicit 'timePartitioning.expirationMs' when\ncreating or updating a partitioned table, that value takes precedence\nover the default partition expiration time indicated by this property."]
+        "Get a reference to the value of field `default_partition_expiration_ms` after provisioning.\nThe default partition expiration for all partitioned tables in\nthe dataset, in milliseconds.\nOnce this property is set, all newly-created partitioned tables in\nthe dataset will have an 'expirationMs' property in the 'timePartitioning'\nsettings set to this value, and changing the value will only\naffect new tables, not existing ones. The storage in a partition will\nhave an expiration time of its partition time plus this value.\nSetting this property overrides the use of 'defaultTableExpirationMs'\nfor partitioned tables: only one of 'defaultTableExpirationMs' and\n'defaultPartitionExpirationMs' will be used for any new partitioned\ntable. If you provide an explicit 'timePartitioning.expirationMs' when\ncreating or updating a partitioned table, that value takes precedence\nover the default partition expiration time indicated by this property."]
     pub fn default_partition_expiration_ms(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(
             self.shared().clone(),
@@ -542,7 +630,7 @@ impl BigqueryDatasetRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `default_table_expiration_ms` after provisioning.\nThe default lifetime of all tables in the dataset, in milliseconds.\nThe minimum value is 3600000 milliseconds (one hour).\n\n\nOnce this property is set, all newly-created tables in the dataset\nwill have an 'expirationTime' property set to the creation time plus\nthe value in this property, and changing the value will only affect\nnew tables, not existing ones. When the 'expirationTime' for a given\ntable is reached, that table will be deleted automatically.\nIf a table's 'expirationTime' is modified or removed before the\ntable expires, or if you provide an explicit 'expirationTime' when\ncreating a table, that value takes precedence over the default\nexpiration time indicated by this property."]
+        "Get a reference to the value of field `default_table_expiration_ms` after provisioning.\nThe default lifetime of all tables in the dataset, in milliseconds.\nThe minimum value is 3600000 milliseconds (one hour).\nOnce this property is set, all newly-created tables in the dataset\nwill have an 'expirationTime' property set to the creation time plus\nthe value in this property, and changing the value will only affect\nnew tables, not existing ones. When the 'expirationTime' for a given\ntable is reached, that table will be deleted automatically.\nIf a table's 'expirationTime' is modified or removed before the\ntable expires, or if you provide an explicit 'expirationTime' when\ncreating a table, that value takes precedence over the default\nexpiration time indicated by this property."]
     pub fn default_table_expiration_ms(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.default_table_expiration_ms", self.extract_ref()))
     }
@@ -551,6 +639,12 @@ impl BigqueryDatasetRef {
         "Get a reference to the value of field `delete_contents_on_destroy` after provisioning.\nIf set to 'true', delete all the tables in the\ndataset when destroying the resource; otherwise,\ndestroying the resource will fail if tables are present."]
     pub fn delete_contents_on_destroy(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete_contents_on_destroy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -600,7 +694,7 @@ impl BigqueryDatasetRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `location` after provisioning.\nThe geographic location where the dataset should reside.\nSee [official docs](https://cloud.google.com/bigquery/docs/dataset-locations).\n\n\nThere are two types of locations, regional or multi-regional. A regional\nlocation is a specific geographic place, such as Tokyo, and a multi-regional\nlocation is a large geographic area, such as the United States, that\ncontains at least two geographic places.\n\n\nThe default value is multi-regional location 'US'.\nChanging this forces a new resource to be created."]
+        "Get a reference to the value of field `location` after provisioning.\nThe geographic location where the dataset should reside.\nSee [official docs](https://cloud.google.com/bigquery/docs/dataset-locations).\nThere are two types of locations, regional or multi-regional. A regional\nlocation is a specific geographic place, such as Tokyo, and a multi-regional\nlocation is a large geographic area, such as the United States, that\ncontains at least two geographic places.\nThe default value is multi-regional location 'US'.\nChanging this forces a new resource to be created."]
     pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
@@ -614,6 +708,12 @@ impl BigqueryDatasetRef {
     #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
     pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `resource_tags` after provisioning.\nThe tags attached to this table. Tag keys are globally unique. Tag key is expected to be\nin the namespaced format, for example \"123456789012/environment\" where 123456789012 is the\nID of the parent organization or project resource for this tag key. Tag value is expected\nto be the short name, for example \"Production\". See [Tag definitions](https://cloud.google.com/iam/docs/tags-access-control#definitions)\nfor more details."]
+    pub fn resource_tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.resource_tags", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `self_link` after provisioning.\n"]
@@ -636,29 +736,82 @@ impl BigqueryDatasetRef {
     #[doc = "Get a reference to the value of field `default_encryption_configuration` after provisioning.\n"]
     pub fn default_encryption_configuration(
         &self,
-    ) -> terrars::ListRef<BigqueryDatasetDefaultEncryptionConfigurationElRef> {
+    ) -> terrars::ListRef<BigqueryDataset_DefaultEncryptionConfigurationRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.default_encryption_configuration", self.extract_ref()),
         )
     }
 
+    #[doc = "Get a reference to the value of field `external_catalog_dataset_options` after provisioning.\n"]
+    pub fn external_catalog_dataset_options(&self) -> terrars::ListRef<BigqueryDataset_ExternalCatalogDatasetOptionsRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.external_catalog_dataset_options", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `external_dataset_reference` after provisioning.\n"]
+    pub fn external_dataset_reference(&self) -> terrars::ListRef<BigqueryDataset_ExternalDatasetReferenceRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.external_dataset_reference", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> BigqueryDatasetTimeoutsElRef {
-        BigqueryDatasetTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> BigqueryDataset_TimeoutsRef {
+        BigqueryDataset_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
-#[derive(Serialize)]
-pub struct BigqueryDatasetAccessElDatasetElDatasetEl {
-    dataset_id: terrars::PrimField<std::string::String>,
-    project_id: terrars::PrimField<std::string::String>,
+#[derive(Serialize, Default)]
+struct BigqueryDatasetDynamic {
+    access: std::option::Option<terrars::DynamicBlock<BigqueryDataset_Access>>,
+    default_encryption_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<BigqueryDataset_DefaultEncryptionConfiguration>>,
+    external_catalog_dataset_options: std
+    ::option
+    ::Option<terrars::DynamicBlock<BigqueryDataset_ExternalCatalogDatasetOptions>>,
+    external_dataset_reference: std
+    ::option
+    ::Option<terrars::DynamicBlock<BigqueryDataset_ExternalDatasetReference>>,
 }
 
-impl BigqueryDatasetAccessElDatasetElDatasetEl { }
+#[derive(Serialize)]
+pub struct BigqueryDataset_Access_Condition {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    description: std::option::Option<terrars::PrimField<std::string::String>>,
+    expression: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    location: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    title: std::option::Option<terrars::PrimField<std::string::String>>,
+}
 
-impl terrars::ToListMappable for BigqueryDatasetAccessElDatasetElDatasetEl {
-    type O = terrars::BlockAssignable<BigqueryDatasetAccessElDatasetElDatasetEl>;
+impl BigqueryDataset_Access_Condition {
+    #[doc =
+        "Set the field `description`.\nDescription of the expression. This is a longer text which describes the expression,\ne.g. when hovered over it in a UI."]
+    pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.description = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `location`.\nString indicating the location of the expression for error reporting, e.g. a file\nname and a position in the file."]
+    pub fn set_location(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.location = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `title`.\nTitle for the expression, i.e. a short string describing its purpose.\nThis can be used e.g. in UIs which allow to enter the expression."]
+    pub fn set_title(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.title = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for BigqueryDataset_Access_Condition {
+    type O = terrars::BlockAssignable<BigqueryDataset_Access_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -669,37 +822,121 @@ impl terrars::ToListMappable for BigqueryDatasetAccessElDatasetElDatasetEl {
     }
 }
 
-pub struct BuildBigqueryDatasetAccessElDatasetElDatasetEl {
-    #[doc = "The ID of the dataset containing this table."]
-    pub dataset_id: terrars::PrimField<std::string::String>,
-    #[doc = "The ID of the project containing this table."]
-    pub project_id: terrars::PrimField<std::string::String>,
+pub struct BuildBigqueryDataset_Access_Condition {
+    #[doc = "Textual representation of an expression in Common Expression Language syntax."]
+    pub expression: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBigqueryDatasetAccessElDatasetElDatasetEl {
-    pub fn build(self) -> BigqueryDatasetAccessElDatasetElDatasetEl {
-        BigqueryDatasetAccessElDatasetElDatasetEl {
-            dataset_id: self.dataset_id,
-            project_id: self.project_id,
+impl BuildBigqueryDataset_Access_Condition {
+    pub fn build(self) -> BigqueryDataset_Access_Condition {
+        BigqueryDataset_Access_Condition {
+            description: core::default::Default::default(),
+            expression: self.expression,
+            location: core::default::Default::default(),
+            title: core::default::Default::default(),
         }
     }
 }
 
-pub struct BigqueryDatasetAccessElDatasetElDatasetElRef {
+#[allow(dead_code)]
+pub struct BigqueryDataset_Access_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryDatasetAccessElDatasetElDatasetElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryDatasetAccessElDatasetElDatasetElRef {
-        BigqueryDatasetAccessElDatasetElDatasetElRef {
+impl terrars::Ref for BigqueryDataset_Access_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryDataset_Access_ConditionRef {
+        BigqueryDataset_Access_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryDatasetAccessElDatasetElDatasetElRef {
+impl BigqueryDataset_Access_ConditionRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `description` after provisioning.\nDescription of the expression. This is a longer text which describes the expression,\ne.g. when hovered over it in a UI."]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `expression` after provisioning.\nTextual representation of an expression in Common Expression Language syntax."]
+    pub fn expression(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.expression", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `location` after provisioning.\nString indicating the location of the expression for error reporting, e.g. a file\nname and a position in the file."]
+    pub fn location(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `title` after provisioning.\nTitle for the expression, i.e. a short string describing its purpose.\nThis can be used e.g. in UIs which allow to enter the expression."]
+    pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct BigqueryDataset_Access_Dataset_Dataset {
+    dataset_id: terrars::PrimField<std::string::String>,
+    project_id: terrars::PrimField<std::string::String>,
+}
+
+impl BigqueryDataset_Access_Dataset_Dataset { }
+
+impl terrars::ToListMappable for BigqueryDataset_Access_Dataset_Dataset {
+    type O = terrars::BlockAssignable<BigqueryDataset_Access_Dataset_Dataset>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildBigqueryDataset_Access_Dataset_Dataset {
+    #[doc = "The ID of the dataset containing this table."]
+    pub dataset_id: terrars::PrimField<std::string::String>,
+    #[doc = "The ID of the project containing this table."]
+    pub project_id: terrars::PrimField<std::string::String>,
+}
+
+impl BuildBigqueryDataset_Access_Dataset_Dataset {
+    pub fn build(self) -> BigqueryDataset_Access_Dataset_Dataset {
+        BigqueryDataset_Access_Dataset_Dataset {
+            dataset_id: self.dataset_id,
+            project_id: self.project_id,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct BigqueryDataset_Access_Dataset_DatasetRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for BigqueryDataset_Access_Dataset_DatasetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryDataset_Access_Dataset_DatasetRef {
+        BigqueryDataset_Access_Dataset_DatasetRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl BigqueryDataset_Access_Dataset_DatasetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -718,23 +955,23 @@ impl BigqueryDatasetAccessElDatasetElDatasetElRef {
 }
 
 #[derive(Serialize, Default)]
-struct BigqueryDatasetAccessElDatasetElDynamic {
-    dataset: std::option::Option<terrars::DynamicBlock<BigqueryDatasetAccessElDatasetElDatasetEl>>,
+struct BigqueryDataset_Access_DatasetDynamic {
+    dataset: std::option::Option<terrars::DynamicBlock<BigqueryDataset_Access_Dataset_Dataset>>,
 }
 
 #[derive(Serialize)]
-pub struct BigqueryDatasetAccessElDatasetEl {
+pub struct BigqueryDataset_Access_Dataset {
     target_types: terrars::ListField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    dataset: std::option::Option<std::vec::Vec<BigqueryDatasetAccessElDatasetElDatasetEl>>,
-    dynamic: BigqueryDatasetAccessElDatasetElDynamic,
+    dataset: std::option::Option<std::vec::Vec<BigqueryDataset_Access_Dataset_Dataset>>,
+    dynamic: BigqueryDataset_Access_DatasetDynamic,
 }
 
-impl BigqueryDatasetAccessElDatasetEl {
+impl BigqueryDataset_Access_Dataset {
     #[doc = "Set the field `dataset`.\n"]
     pub fn set_dataset(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryDatasetAccessElDatasetElDatasetEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryDataset_Access_Dataset_Dataset>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -748,8 +985,8 @@ impl BigqueryDatasetAccessElDatasetEl {
     }
 }
 
-impl terrars::ToListMappable for BigqueryDatasetAccessElDatasetEl {
-    type O = terrars::BlockAssignable<BigqueryDatasetAccessElDatasetEl>;
+impl terrars::ToListMappable for BigqueryDataset_Access_Dataset {
+    type O = terrars::BlockAssignable<BigqueryDataset_Access_Dataset>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -760,15 +997,15 @@ impl terrars::ToListMappable for BigqueryDatasetAccessElDatasetEl {
     }
 }
 
-pub struct BuildBigqueryDatasetAccessElDatasetEl {
+pub struct BuildBigqueryDataset_Access_Dataset {
     #[doc =
         "Which resources in the dataset this entry applies to. Currently, only views are supported,\nbut additional target types may be added in the future. Possible values: VIEWS"]
     pub target_types: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildBigqueryDatasetAccessElDatasetEl {
-    pub fn build(self) -> BigqueryDatasetAccessElDatasetEl {
-        BigqueryDatasetAccessElDatasetEl {
+impl BuildBigqueryDataset_Access_Dataset {
+    pub fn build(self) -> BigqueryDataset_Access_Dataset {
+        BigqueryDataset_Access_Dataset {
             target_types: self.target_types,
             dataset: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -776,21 +1013,23 @@ impl BuildBigqueryDatasetAccessElDatasetEl {
     }
 }
 
-pub struct BigqueryDatasetAccessElDatasetElRef {
+#[allow(dead_code)]
+pub struct BigqueryDataset_Access_DatasetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryDatasetAccessElDatasetElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryDatasetAccessElDatasetElRef {
-        BigqueryDatasetAccessElDatasetElRef {
+impl terrars::Ref for BigqueryDataset_Access_DatasetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryDataset_Access_DatasetRef {
+        BigqueryDataset_Access_DatasetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryDatasetAccessElDatasetElRef {
+impl BigqueryDataset_Access_DatasetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -802,22 +1041,22 @@ impl BigqueryDatasetAccessElDatasetElRef {
     }
 
     #[doc = "Get a reference to the value of field `dataset` after provisioning.\n"]
-    pub fn dataset(&self) -> terrars::ListRef<BigqueryDatasetAccessElDatasetElDatasetElRef> {
+    pub fn dataset(&self) -> terrars::ListRef<BigqueryDataset_Access_Dataset_DatasetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dataset", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct BigqueryDatasetAccessElRoutineEl {
+pub struct BigqueryDataset_Access_Routine {
     dataset_id: terrars::PrimField<std::string::String>,
     project_id: terrars::PrimField<std::string::String>,
     routine_id: terrars::PrimField<std::string::String>,
 }
 
-impl BigqueryDatasetAccessElRoutineEl { }
+impl BigqueryDataset_Access_Routine { }
 
-impl terrars::ToListMappable for BigqueryDatasetAccessElRoutineEl {
-    type O = terrars::BlockAssignable<BigqueryDatasetAccessElRoutineEl>;
+impl terrars::ToListMappable for BigqueryDataset_Access_Routine {
+    type O = terrars::BlockAssignable<BigqueryDataset_Access_Routine>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -828,7 +1067,7 @@ impl terrars::ToListMappable for BigqueryDatasetAccessElRoutineEl {
     }
 }
 
-pub struct BuildBigqueryDatasetAccessElRoutineEl {
+pub struct BuildBigqueryDataset_Access_Routine {
     #[doc = "The ID of the dataset containing this table."]
     pub dataset_id: terrars::PrimField<std::string::String>,
     #[doc = "The ID of the project containing this table."]
@@ -838,9 +1077,9 @@ pub struct BuildBigqueryDatasetAccessElRoutineEl {
     pub routine_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBigqueryDatasetAccessElRoutineEl {
-    pub fn build(self) -> BigqueryDatasetAccessElRoutineEl {
-        BigqueryDatasetAccessElRoutineEl {
+impl BuildBigqueryDataset_Access_Routine {
+    pub fn build(self) -> BigqueryDataset_Access_Routine {
+        BigqueryDataset_Access_Routine {
             dataset_id: self.dataset_id,
             project_id: self.project_id,
             routine_id: self.routine_id,
@@ -848,21 +1087,23 @@ impl BuildBigqueryDatasetAccessElRoutineEl {
     }
 }
 
-pub struct BigqueryDatasetAccessElRoutineElRef {
+#[allow(dead_code)]
+pub struct BigqueryDataset_Access_RoutineRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryDatasetAccessElRoutineElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryDatasetAccessElRoutineElRef {
-        BigqueryDatasetAccessElRoutineElRef {
+impl terrars::Ref for BigqueryDataset_Access_RoutineRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryDataset_Access_RoutineRef {
+        BigqueryDataset_Access_RoutineRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryDatasetAccessElRoutineElRef {
+impl BigqueryDataset_Access_RoutineRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -887,16 +1128,16 @@ impl BigqueryDatasetAccessElRoutineElRef {
 }
 
 #[derive(Serialize)]
-pub struct BigqueryDatasetAccessElViewEl {
+pub struct BigqueryDataset_Access_View {
     dataset_id: terrars::PrimField<std::string::String>,
     project_id: terrars::PrimField<std::string::String>,
     table_id: terrars::PrimField<std::string::String>,
 }
 
-impl BigqueryDatasetAccessElViewEl { }
+impl BigqueryDataset_Access_View { }
 
-impl terrars::ToListMappable for BigqueryDatasetAccessElViewEl {
-    type O = terrars::BlockAssignable<BigqueryDatasetAccessElViewEl>;
+impl terrars::ToListMappable for BigqueryDataset_Access_View {
+    type O = terrars::BlockAssignable<BigqueryDataset_Access_View>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -907,7 +1148,7 @@ impl terrars::ToListMappable for BigqueryDatasetAccessElViewEl {
     }
 }
 
-pub struct BuildBigqueryDatasetAccessElViewEl {
+pub struct BuildBigqueryDataset_Access_View {
     #[doc = "The ID of the dataset containing this table."]
     pub dataset_id: terrars::PrimField<std::string::String>,
     #[doc = "The ID of the project containing this table."]
@@ -917,9 +1158,9 @@ pub struct BuildBigqueryDatasetAccessElViewEl {
     pub table_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBigqueryDatasetAccessElViewEl {
-    pub fn build(self) -> BigqueryDatasetAccessElViewEl {
-        BigqueryDatasetAccessElViewEl {
+impl BuildBigqueryDataset_Access_View {
+    pub fn build(self) -> BigqueryDataset_Access_View {
+        BigqueryDataset_Access_View {
             dataset_id: self.dataset_id,
             project_id: self.project_id,
             table_id: self.table_id,
@@ -927,21 +1168,23 @@ impl BuildBigqueryDatasetAccessElViewEl {
     }
 }
 
-pub struct BigqueryDatasetAccessElViewElRef {
+#[allow(dead_code)]
+pub struct BigqueryDataset_Access_ViewRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryDatasetAccessElViewElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryDatasetAccessElViewElRef {
-        BigqueryDatasetAccessElViewElRef {
+impl terrars::Ref for BigqueryDataset_Access_ViewRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryDataset_Access_ViewRef {
+        BigqueryDataset_Access_ViewRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryDatasetAccessElViewElRef {
+impl BigqueryDataset_Access_ViewRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -966,14 +1209,15 @@ impl BigqueryDatasetAccessElViewElRef {
 }
 
 #[derive(Serialize, Default)]
-struct BigqueryDatasetAccessElDynamic {
-    dataset: std::option::Option<terrars::DynamicBlock<BigqueryDatasetAccessElDatasetEl>>,
-    routine: std::option::Option<terrars::DynamicBlock<BigqueryDatasetAccessElRoutineEl>>,
-    view: std::option::Option<terrars::DynamicBlock<BigqueryDatasetAccessElViewEl>>,
+struct BigqueryDataset_AccessDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<BigqueryDataset_Access_Condition>>,
+    dataset: std::option::Option<terrars::DynamicBlock<BigqueryDataset_Access_Dataset>>,
+    routine: std::option::Option<terrars::DynamicBlock<BigqueryDataset_Access_Routine>>,
+    view: std::option::Option<terrars::DynamicBlock<BigqueryDataset_Access_View>>,
 }
 
 #[derive(Serialize)]
-pub struct BigqueryDatasetAccessEl {
+pub struct BigqueryDataset_Access {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     domain: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -987,15 +1231,17 @@ pub struct BigqueryDatasetAccessEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     user_by_email: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    dataset: std::option::Option<std::vec::Vec<BigqueryDatasetAccessElDatasetEl>>,
+    condition: std::option::Option<std::vec::Vec<BigqueryDataset_Access_Condition>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    routine: std::option::Option<std::vec::Vec<BigqueryDatasetAccessElRoutineEl>>,
+    dataset: std::option::Option<std::vec::Vec<BigqueryDataset_Access_Dataset>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    view: std::option::Option<std::vec::Vec<BigqueryDatasetAccessElViewEl>>,
-    dynamic: BigqueryDatasetAccessElDynamic,
+    routine: std::option::Option<std::vec::Vec<BigqueryDataset_Access_Routine>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    view: std::option::Option<std::vec::Vec<BigqueryDataset_Access_View>>,
+    dynamic: BigqueryDataset_AccessDynamic,
 }
 
-impl BigqueryDatasetAccessEl {
+impl BigqueryDataset_Access {
     #[doc =
         "Set the field `domain`.\nA domain to grant access to. Any users signed in with the\ndomain specified will be granted the specified access"]
     pub fn set_domain(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1024,7 +1270,7 @@ impl BigqueryDatasetAccessEl {
     }
 
     #[doc =
-        "Set the field `special_group`.\nA special group to grant access to. Possible values include:\n\n\n* 'projectOwners': Owners of the enclosing project.\n\n\n* 'projectReaders': Readers of the enclosing project.\n\n\n* 'projectWriters': Writers of the enclosing project.\n\n\n* 'allAuthenticatedUsers': All authenticated BigQuery users."]
+        "Set the field `special_group`.\nA special group to grant access to. Possible values include:\n* 'projectOwners': Owners of the enclosing project.\n* 'projectReaders': Readers of the enclosing project.\n* 'projectWriters': Writers of the enclosing project.\n* 'allAuthenticatedUsers': All authenticated BigQuery users."]
     pub fn set_special_group(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.special_group = std::option::Option::Some(v.into());
         self
@@ -1037,10 +1283,26 @@ impl BigqueryDatasetAccessEl {
         self
     }
 
+    #[doc = "Set the field `condition`.\n"]
+    pub fn set_condition(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryDataset_Access_Condition>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.condition = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.condition = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `dataset`.\n"]
     pub fn set_dataset(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryDatasetAccessElDatasetEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryDataset_Access_Dataset>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1056,7 +1318,7 @@ impl BigqueryDatasetAccessEl {
     #[doc = "Set the field `routine`.\n"]
     pub fn set_routine(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryDatasetAccessElRoutineEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryDataset_Access_Routine>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1072,7 +1334,7 @@ impl BigqueryDatasetAccessEl {
     #[doc = "Set the field `view`.\n"]
     pub fn set_view(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryDatasetAccessElViewEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BigqueryDataset_Access_View>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1086,8 +1348,8 @@ impl BigqueryDatasetAccessEl {
     }
 }
 
-impl terrars::ToListMappable for BigqueryDatasetAccessEl {
-    type O = terrars::BlockAssignable<BigqueryDatasetAccessEl>;
+impl terrars::ToListMappable for BigqueryDataset_Access {
+    type O = terrars::BlockAssignable<BigqueryDataset_Access>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1098,17 +1360,18 @@ impl terrars::ToListMappable for BigqueryDatasetAccessEl {
     }
 }
 
-pub struct BuildBigqueryDatasetAccessEl {}
+pub struct BuildBigqueryDataset_Access {}
 
-impl BuildBigqueryDatasetAccessEl {
-    pub fn build(self) -> BigqueryDatasetAccessEl {
-        BigqueryDatasetAccessEl {
+impl BuildBigqueryDataset_Access {
+    pub fn build(self) -> BigqueryDataset_Access {
+        BigqueryDataset_Access {
             domain: core::default::Default::default(),
             group_by_email: core::default::Default::default(),
             iam_member: core::default::Default::default(),
             role: core::default::Default::default(),
             special_group: core::default::Default::default(),
             user_by_email: core::default::Default::default(),
+            condition: core::default::Default::default(),
             dataset: core::default::Default::default(),
             routine: core::default::Default::default(),
             view: core::default::Default::default(),
@@ -1117,21 +1380,23 @@ impl BuildBigqueryDatasetAccessEl {
     }
 }
 
-pub struct BigqueryDatasetAccessElRef {
+#[allow(dead_code)]
+pub struct BigqueryDataset_AccessRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryDatasetAccessElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryDatasetAccessElRef {
-        BigqueryDatasetAccessElRef {
+impl terrars::Ref for BigqueryDataset_AccessRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryDataset_AccessRef {
+        BigqueryDataset_AccessRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryDatasetAccessElRef {
+impl BigqueryDataset_AccessRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1161,7 +1426,7 @@ impl BigqueryDatasetAccessElRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `special_group` after provisioning.\nA special group to grant access to. Possible values include:\n\n\n* 'projectOwners': Owners of the enclosing project.\n\n\n* 'projectReaders': Readers of the enclosing project.\n\n\n* 'projectWriters': Writers of the enclosing project.\n\n\n* 'allAuthenticatedUsers': All authenticated BigQuery users."]
+        "Get a reference to the value of field `special_group` after provisioning.\nA special group to grant access to. Possible values include:\n* 'projectOwners': Owners of the enclosing project.\n* 'projectReaders': Readers of the enclosing project.\n* 'projectWriters': Writers of the enclosing project.\n* 'allAuthenticatedUsers': All authenticated BigQuery users."]
     pub fn special_group(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.special_group", self.base))
     }
@@ -1172,31 +1437,36 @@ impl BigqueryDatasetAccessElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_by_email", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
+    pub fn condition(&self) -> terrars::ListRef<BigqueryDataset_Access_ConditionRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `dataset` after provisioning.\n"]
-    pub fn dataset(&self) -> terrars::ListRef<BigqueryDatasetAccessElDatasetElRef> {
+    pub fn dataset(&self) -> terrars::ListRef<BigqueryDataset_Access_DatasetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dataset", self.base))
     }
 
     #[doc = "Get a reference to the value of field `routine` after provisioning.\n"]
-    pub fn routine(&self) -> terrars::ListRef<BigqueryDatasetAccessElRoutineElRef> {
+    pub fn routine(&self) -> terrars::ListRef<BigqueryDataset_Access_RoutineRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.routine", self.base))
     }
 
     #[doc = "Get a reference to the value of field `view` after provisioning.\n"]
-    pub fn view(&self) -> terrars::ListRef<BigqueryDatasetAccessElViewElRef> {
+    pub fn view(&self) -> terrars::ListRef<BigqueryDataset_Access_ViewRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.view", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct BigqueryDatasetDefaultEncryptionConfigurationEl {
+pub struct BigqueryDataset_DefaultEncryptionConfiguration {
     kms_key_name: terrars::PrimField<std::string::String>,
 }
 
-impl BigqueryDatasetDefaultEncryptionConfigurationEl { }
+impl BigqueryDataset_DefaultEncryptionConfiguration { }
 
-impl terrars::ToListMappable for BigqueryDatasetDefaultEncryptionConfigurationEl {
-    type O = terrars::BlockAssignable<BigqueryDatasetDefaultEncryptionConfigurationEl>;
+impl terrars::ToListMappable for BigqueryDataset_DefaultEncryptionConfiguration {
+    type O = terrars::BlockAssignable<BigqueryDataset_DefaultEncryptionConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1207,36 +1477,38 @@ impl terrars::ToListMappable for BigqueryDatasetDefaultEncryptionConfigurationEl
     }
 }
 
-pub struct BuildBigqueryDatasetDefaultEncryptionConfigurationEl {
+pub struct BuildBigqueryDataset_DefaultEncryptionConfiguration {
     #[doc =
         "Describes the Cloud KMS encryption key that will be used to protect destination\nBigQuery table. The BigQuery Service Account associated with your project requires\naccess to this encryption key."]
     pub kms_key_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBigqueryDatasetDefaultEncryptionConfigurationEl {
-    pub fn build(self) -> BigqueryDatasetDefaultEncryptionConfigurationEl {
-        BigqueryDatasetDefaultEncryptionConfigurationEl { kms_key_name: self.kms_key_name }
+impl BuildBigqueryDataset_DefaultEncryptionConfiguration {
+    pub fn build(self) -> BigqueryDataset_DefaultEncryptionConfiguration {
+        BigqueryDataset_DefaultEncryptionConfiguration { kms_key_name: self.kms_key_name }
     }
 }
 
-pub struct BigqueryDatasetDefaultEncryptionConfigurationElRef {
+#[allow(dead_code)]
+pub struct BigqueryDataset_DefaultEncryptionConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryDatasetDefaultEncryptionConfigurationElRef {
+impl terrars::Ref for BigqueryDataset_DefaultEncryptionConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> BigqueryDatasetDefaultEncryptionConfigurationElRef {
-        BigqueryDatasetDefaultEncryptionConfigurationElRef {
+    ) -> BigqueryDataset_DefaultEncryptionConfigurationRef {
+        BigqueryDataset_DefaultEncryptionConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryDatasetDefaultEncryptionConfigurationElRef {
+impl BigqueryDataset_DefaultEncryptionConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1249,7 +1521,168 @@ impl BigqueryDatasetDefaultEncryptionConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct BigqueryDatasetTimeoutsEl {
+pub struct BigqueryDataset_ExternalCatalogDatasetOptions {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    default_storage_location_uri: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    parameters: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+}
+
+impl BigqueryDataset_ExternalCatalogDatasetOptions {
+    #[doc =
+        "Set the field `default_storage_location_uri`.\nThe storage location URI for all tables in the dataset. Equivalent to hive metastore's\ndatabase locationUri. Maximum length of 1024 characters."]
+    pub fn set_default_storage_location_uri(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.default_storage_location_uri = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `parameters`.\nA map of key value pairs defining the parameters and properties of the open source schema.\nMaximum size of 2Mib."]
+    pub fn set_parameters(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.parameters = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for BigqueryDataset_ExternalCatalogDatasetOptions {
+    type O = terrars::BlockAssignable<BigqueryDataset_ExternalCatalogDatasetOptions>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildBigqueryDataset_ExternalCatalogDatasetOptions {}
+
+impl BuildBigqueryDataset_ExternalCatalogDatasetOptions {
+    pub fn build(self) -> BigqueryDataset_ExternalCatalogDatasetOptions {
+        BigqueryDataset_ExternalCatalogDatasetOptions {
+            default_storage_location_uri: core::default::Default::default(),
+            parameters: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct BigqueryDataset_ExternalCatalogDatasetOptionsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for BigqueryDataset_ExternalCatalogDatasetOptionsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> BigqueryDataset_ExternalCatalogDatasetOptionsRef {
+        BigqueryDataset_ExternalCatalogDatasetOptionsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl BigqueryDataset_ExternalCatalogDatasetOptionsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `default_storage_location_uri` after provisioning.\nThe storage location URI for all tables in the dataset. Equivalent to hive metastore's\ndatabase locationUri. Maximum length of 1024 characters."]
+    pub fn default_storage_location_uri(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.default_storage_location_uri", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `parameters` after provisioning.\nA map of key value pairs defining the parameters and properties of the open source schema.\nMaximum size of 2Mib."]
+    pub fn parameters(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.parameters", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct BigqueryDataset_ExternalDatasetReference {
+    connection: terrars::PrimField<std::string::String>,
+    external_source: terrars::PrimField<std::string::String>,
+}
+
+impl BigqueryDataset_ExternalDatasetReference { }
+
+impl terrars::ToListMappable for BigqueryDataset_ExternalDatasetReference {
+    type O = terrars::BlockAssignable<BigqueryDataset_ExternalDatasetReference>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildBigqueryDataset_ExternalDatasetReference {
+    #[doc =
+        "The connection id that is used to access the externalSource.\nFormat: projects/{projectId}/locations/{locationId}/connections/{connectionId}"]
+    pub connection: terrars::PrimField<std::string::String>,
+    #[doc = "External source that backs this dataset."]
+    pub external_source: terrars::PrimField<std::string::String>,
+}
+
+impl BuildBigqueryDataset_ExternalDatasetReference {
+    pub fn build(self) -> BigqueryDataset_ExternalDatasetReference {
+        BigqueryDataset_ExternalDatasetReference {
+            connection: self.connection,
+            external_source: self.external_source,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct BigqueryDataset_ExternalDatasetReferenceRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for BigqueryDataset_ExternalDatasetReferenceRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryDataset_ExternalDatasetReferenceRef {
+        BigqueryDataset_ExternalDatasetReferenceRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl BigqueryDataset_ExternalDatasetReferenceRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `connection` after provisioning.\nThe connection id that is used to access the externalSource.\nFormat: projects/{projectId}/locations/{locationId}/connections/{connectionId}"]
+    pub fn connection(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.connection", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `external_source` after provisioning.\nExternal source that backs this dataset."]
+    pub fn external_source(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.external_source", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct BigqueryDataset_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1258,7 +1691,7 @@ pub struct BigqueryDatasetTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl BigqueryDatasetTimeoutsEl {
+impl BigqueryDataset_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1278,8 +1711,8 @@ impl BigqueryDatasetTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for BigqueryDatasetTimeoutsEl {
-    type O = terrars::BlockAssignable<BigqueryDatasetTimeoutsEl>;
+impl terrars::ToListMappable for BigqueryDataset_Timeouts {
+    type O = terrars::BlockAssignable<BigqueryDataset_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1290,11 +1723,11 @@ impl terrars::ToListMappable for BigqueryDatasetTimeoutsEl {
     }
 }
 
-pub struct BuildBigqueryDatasetTimeoutsEl {}
+pub struct BuildBigqueryDataset_Timeouts {}
 
-impl BuildBigqueryDatasetTimeoutsEl {
-    pub fn build(self) -> BigqueryDatasetTimeoutsEl {
-        BigqueryDatasetTimeoutsEl {
+impl BuildBigqueryDataset_Timeouts {
+    pub fn build(self) -> BigqueryDataset_Timeouts {
+        BigqueryDataset_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1302,21 +1735,23 @@ impl BuildBigqueryDatasetTimeoutsEl {
     }
 }
 
-pub struct BigqueryDatasetTimeoutsElRef {
+#[allow(dead_code)]
+pub struct BigqueryDataset_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BigqueryDatasetTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryDatasetTimeoutsElRef {
-        BigqueryDatasetTimeoutsElRef {
+impl terrars::Ref for BigqueryDataset_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BigqueryDataset_TimeoutsRef {
+        BigqueryDataset_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BigqueryDatasetTimeoutsElRef {
+impl BigqueryDataset_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1335,12 +1770,4 @@ impl BigqueryDatasetTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct BigqueryDatasetDynamic {
-    access: std::option::Option<terrars::DynamicBlock<BigqueryDatasetAccessEl>>,
-    default_encryption_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<BigqueryDatasetDefaultEncryptionConfigurationEl>>,
 }

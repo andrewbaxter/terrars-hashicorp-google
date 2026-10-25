@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataPipelinePipelineData {
+struct DataPipelinePipelineData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct DataPipelinePipelineData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     display_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -35,18 +39,18 @@ struct DataPipelinePipelineData {
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    schedule_info: std::option::Option<std::vec::Vec<DataPipelinePipelineScheduleInfoEl>>,
+    schedule_info: std::option::Option<std::vec::Vec<DataPipelinePipeline_ScheduleInfo>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataPipelinePipelineTimeoutsEl>,
+    timeouts: std::option::Option<DataPipelinePipeline_Timeouts>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    workload: std::option::Option<std::vec::Vec<DataPipelinePipelineWorkloadEl>>,
+    workload: std::option::Option<std::vec::Vec<DataPipelinePipeline_Workload>>,
     dynamic: DataPipelinePipelineDynamic,
 }
 
 struct DataPipelinePipeline_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataPipelinePipelineData>,
+    data: std::cell::RefCell<DataPipelinePipelineData_>,
 }
 
 #[derive(Clone)]
@@ -147,6 +151,13 @@ impl DataPipelinePipeline {
     }
 
     #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `display_name`.\nThe display name of the pipeline. It can contain only letters ([A-Za-z]), numbers ([0-9]), hyphens (-), and underscores (_)."]
     pub fn set_display_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().display_name = std::option::Option::Some(v.into());
@@ -194,7 +205,7 @@ impl DataPipelinePipeline {
     #[doc = "Set the field `schedule_info`.\n"]
     pub fn set_schedule_info(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataPipelinePipelineScheduleInfoEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataPipelinePipeline_ScheduleInfo>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -208,7 +219,7 @@ impl DataPipelinePipeline {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataPipelinePipelineTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataPipelinePipeline_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -216,7 +227,7 @@ impl DataPipelinePipeline {
     #[doc = "Set the field `workload`.\n"]
     pub fn set_workload(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataPipelinePipelineWorkloadEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataPipelinePipeline_Workload>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -233,6 +244,12 @@ impl DataPipelinePipeline {
         "Get a reference to the value of field `create_time` after provisioning.\nThe timestamp when the pipeline was initially created. Set by the Data Pipelines service.\nA timestamp in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits. Examples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -301,17 +318,17 @@ impl DataPipelinePipeline {
     }
 
     #[doc = "Get a reference to the value of field `schedule_info` after provisioning.\n"]
-    pub fn schedule_info(&self) -> terrars::ListRef<DataPipelinePipelineScheduleInfoElRef> {
+    pub fn schedule_info(&self) -> terrars::ListRef<DataPipelinePipeline_ScheduleInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.schedule_info", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataPipelinePipelineTimeoutsElRef {
-        DataPipelinePipelineTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataPipelinePipeline_TimeoutsRef {
+        DataPipelinePipeline_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `workload` after provisioning.\n"]
-    pub fn workload(&self) -> terrars::ListRef<DataPipelinePipelineWorkloadElRef> {
+    pub fn workload(&self) -> terrars::ListRef<DataPipelinePipeline_WorkloadRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.workload", self.extract_ref()))
     }
 }
@@ -365,12 +382,13 @@ impl BuildDataPipelinePipeline {
         let out = DataPipelinePipeline(std::rc::Rc::new(DataPipelinePipeline_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataPipelinePipelineData {
+            data: std::cell::RefCell::new(DataPipelinePipelineData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 display_name: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
@@ -418,6 +436,12 @@ impl DataPipelinePipelineRef {
         "Get a reference to the value of field `create_time` after provisioning.\nThe timestamp when the pipeline was initially created. Set by the Data Pipelines service.\nA timestamp in RFC3339 UTC \"Zulu\" format, with nanosecond resolution and up to nine fractional digits. Examples: \"2014-10-02T15:01:23Z\" and \"2014-10-02T15:01:23.045123456Z\"."]
     pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc =
@@ -486,30 +510,36 @@ impl DataPipelinePipelineRef {
     }
 
     #[doc = "Get a reference to the value of field `schedule_info` after provisioning.\n"]
-    pub fn schedule_info(&self) -> terrars::ListRef<DataPipelinePipelineScheduleInfoElRef> {
+    pub fn schedule_info(&self) -> terrars::ListRef<DataPipelinePipeline_ScheduleInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.schedule_info", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataPipelinePipelineTimeoutsElRef {
-        DataPipelinePipelineTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataPipelinePipeline_TimeoutsRef {
+        DataPipelinePipeline_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `workload` after provisioning.\n"]
-    pub fn workload(&self) -> terrars::ListRef<DataPipelinePipelineWorkloadElRef> {
+    pub fn workload(&self) -> terrars::ListRef<DataPipelinePipeline_WorkloadRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.workload", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataPipelinePipelineDynamic {
+    schedule_info: std::option::Option<terrars::DynamicBlock<DataPipelinePipeline_ScheduleInfo>>,
+    workload: std::option::Option<terrars::DynamicBlock<DataPipelinePipeline_Workload>>,
+}
+
 #[derive(Serialize)]
-pub struct DataPipelinePipelineScheduleInfoEl {
+pub struct DataPipelinePipeline_ScheduleInfo {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     schedule: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     time_zone: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataPipelinePipelineScheduleInfoEl {
+impl DataPipelinePipeline_ScheduleInfo {
     #[doc =
         "Set the field `schedule`.\nUnix-cron format of the schedule. This information is retrieved from the linked Cloud Scheduler."]
     pub fn set_schedule(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -525,8 +555,8 @@ impl DataPipelinePipelineScheduleInfoEl {
     }
 }
 
-impl terrars::ToListMappable for DataPipelinePipelineScheduleInfoEl {
-    type O = terrars::BlockAssignable<DataPipelinePipelineScheduleInfoEl>;
+impl terrars::ToListMappable for DataPipelinePipeline_ScheduleInfo {
+    type O = terrars::BlockAssignable<DataPipelinePipeline_ScheduleInfo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -537,32 +567,34 @@ impl terrars::ToListMappable for DataPipelinePipelineScheduleInfoEl {
     }
 }
 
-pub struct BuildDataPipelinePipelineScheduleInfoEl {}
+pub struct BuildDataPipelinePipeline_ScheduleInfo {}
 
-impl BuildDataPipelinePipelineScheduleInfoEl {
-    pub fn build(self) -> DataPipelinePipelineScheduleInfoEl {
-        DataPipelinePipelineScheduleInfoEl {
+impl BuildDataPipelinePipeline_ScheduleInfo {
+    pub fn build(self) -> DataPipelinePipeline_ScheduleInfo {
+        DataPipelinePipeline_ScheduleInfo {
             schedule: core::default::Default::default(),
             time_zone: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataPipelinePipelineScheduleInfoElRef {
+#[allow(dead_code)]
+pub struct DataPipelinePipeline_ScheduleInfoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataPipelinePipelineScheduleInfoElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataPipelinePipelineScheduleInfoElRef {
-        DataPipelinePipelineScheduleInfoElRef {
+impl terrars::Ref for DataPipelinePipeline_ScheduleInfoRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataPipelinePipeline_ScheduleInfoRef {
+        DataPipelinePipeline_ScheduleInfoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataPipelinePipelineScheduleInfoElRef {
+impl DataPipelinePipeline_ScheduleInfoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -587,7 +619,7 @@ impl DataPipelinePipelineScheduleInfoElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataPipelinePipelineTimeoutsEl {
+pub struct DataPipelinePipeline_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -596,7 +628,7 @@ pub struct DataPipelinePipelineTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataPipelinePipelineTimeoutsEl {
+impl DataPipelinePipeline_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -616,8 +648,8 @@ impl DataPipelinePipelineTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataPipelinePipelineTimeoutsEl {
-    type O = terrars::BlockAssignable<DataPipelinePipelineTimeoutsEl>;
+impl terrars::ToListMappable for DataPipelinePipeline_Timeouts {
+    type O = terrars::BlockAssignable<DataPipelinePipeline_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -628,11 +660,11 @@ impl terrars::ToListMappable for DataPipelinePipelineTimeoutsEl {
     }
 }
 
-pub struct BuildDataPipelinePipelineTimeoutsEl {}
+pub struct BuildDataPipelinePipeline_Timeouts {}
 
-impl BuildDataPipelinePipelineTimeoutsEl {
-    pub fn build(self) -> DataPipelinePipelineTimeoutsEl {
-        DataPipelinePipelineTimeoutsEl {
+impl BuildDataPipelinePipeline_Timeouts {
+    pub fn build(self) -> DataPipelinePipeline_Timeouts {
+        DataPipelinePipeline_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -640,21 +672,23 @@ impl BuildDataPipelinePipelineTimeoutsEl {
     }
 }
 
-pub struct DataPipelinePipelineTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataPipelinePipeline_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataPipelinePipelineTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataPipelinePipelineTimeoutsElRef {
-        DataPipelinePipelineTimeoutsElRef {
+impl terrars::Ref for DataPipelinePipeline_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataPipelinePipeline_TimeoutsRef {
+        DataPipelinePipeline_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataPipelinePipelineTimeoutsElRef {
+impl DataPipelinePipeline_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -676,7 +710,7 @@ impl DataPipelinePipelineTimeoutsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterElEnvironmentEl {
+pub struct DataPipelinePipeline_Workload_DataflowFlexTemplateRequest_LaunchParameter_Environment {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     additional_experiments: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -711,7 +745,7 @@ pub struct DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchPara
     zone: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterElEnvironmentEl {
+impl DataPipelinePipeline_Workload_DataflowFlexTemplateRequest_LaunchParameter_Environment {
     #[doc = "Set the field `additional_experiments`.\nAdditional experiment flags for the job."]
     pub fn set_additional_experiments(
         mut self,
@@ -831,10 +865,10 @@ impl DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterE
 }
 
 impl terrars
-::ToListMappable for DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterElEnvironmentEl {
+::ToListMappable for DataPipelinePipeline_Workload_DataflowFlexTemplateRequest_LaunchParameter_Environment {
     type O =
         terrars
-        ::BlockAssignable<DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterElEnvironmentEl>;
+        ::BlockAssignable<DataPipelinePipeline_Workload_DataflowFlexTemplateRequest_LaunchParameter_Environment>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -845,11 +879,11 @@ impl terrars
     }
 }
 
-pub struct BuildDataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterElEnvironmentEl {}
+pub struct BuildDataPipelinePipeline_Workload_DataflowFlexTemplateRequest_LaunchParameter_Environment {}
 
-impl BuildDataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterElEnvironmentEl {
-    pub fn build(self) -> DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterElEnvironmentEl {
-        DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterElEnvironmentEl {
+impl BuildDataPipelinePipeline_Workload_DataflowFlexTemplateRequest_LaunchParameter_Environment {
+    pub fn build(self) -> DataPipelinePipeline_Workload_DataflowFlexTemplateRequest_LaunchParameter_Environment {
+        DataPipelinePipeline_Workload_DataflowFlexTemplateRequest_LaunchParameter_Environment {
             additional_experiments: core::default::Default::default(),
             additional_user_labels: core::default::Default::default(),
             enable_streaming_engine: core::default::Default::default(),
@@ -870,24 +904,26 @@ impl BuildDataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParam
     }
 }
 
-pub struct DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterElEnvironmentElRef {
+#[allow(dead_code)]
+pub struct DataPipelinePipeline_Workload_DataflowFlexTemplateRequest_LaunchParameter_EnvironmentRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterElEnvironmentElRef {
+impl terrars::Ref for DataPipelinePipeline_Workload_DataflowFlexTemplateRequest_LaunchParameter_EnvironmentRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterElEnvironmentElRef {
-        DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterElEnvironmentElRef {
+    ) -> DataPipelinePipeline_Workload_DataflowFlexTemplateRequest_LaunchParameter_EnvironmentRef {
+        DataPipelinePipeline_Workload_DataflowFlexTemplateRequest_LaunchParameter_EnvironmentRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterElEnvironmentElRef {
+impl DataPipelinePipeline_Workload_DataflowFlexTemplateRequest_LaunchParameter_EnvironmentRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -990,17 +1026,16 @@ impl DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterE
 }
 
 #[derive(Serialize, Default)]
-struct DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterElDynamic {
+struct DataPipelinePipeline_Workload_DataflowFlexTemplateRequest_LaunchParameterDynamic {
     environment: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterElEnvironmentEl>,
+        terrars::DynamicBlock<DataPipelinePipeline_Workload_DataflowFlexTemplateRequest_LaunchParameter_Environment>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterEl {
+pub struct DataPipelinePipeline_Workload_DataflowFlexTemplateRequest_LaunchParameter {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     container_spec_gcs_path: std::option::Option<terrars::PrimField<std::string::String>>,
     job_name: terrars::PrimField<std::string::String>,
@@ -1015,13 +1050,11 @@ pub struct DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchPara
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     environment: std
     ::option
-    ::Option<
-        std::vec::Vec<DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterElEnvironmentEl>,
-    >,
-    dynamic: DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterElDynamic,
+    ::Option<std::vec::Vec<DataPipelinePipeline_Workload_DataflowFlexTemplateRequest_LaunchParameter_Environment>>,
+    dynamic: DataPipelinePipeline_Workload_DataflowFlexTemplateRequest_LaunchParameterDynamic,
 }
 
-impl DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterEl {
+impl DataPipelinePipeline_Workload_DataflowFlexTemplateRequest_LaunchParameter {
     #[doc =
         "Set the field `container_spec_gcs_path`.\nCloud Storage path to a file with a JSON-serialized ContainerSpec as content."]
     pub fn set_container_spec_gcs_path(
@@ -1080,7 +1113,7 @@ impl DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterElEnvironmentEl,
+                            DataPipelinePipeline_Workload_DataflowFlexTemplateRequest_LaunchParameter_Environment,
                         >,
                     >,
     ) -> Self {
@@ -1096,8 +1129,8 @@ impl DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterE
     }
 }
 
-impl terrars::ToListMappable for DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterEl {
-    type O = terrars::BlockAssignable<DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterEl>;
+impl terrars::ToListMappable for DataPipelinePipeline_Workload_DataflowFlexTemplateRequest_LaunchParameter {
+    type O = terrars::BlockAssignable<DataPipelinePipeline_Workload_DataflowFlexTemplateRequest_LaunchParameter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1108,15 +1141,15 @@ impl terrars::ToListMappable for DataPipelinePipelineWorkloadElDataflowFlexTempl
     }
 }
 
-pub struct BuildDataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterEl {
+pub struct BuildDataPipelinePipeline_Workload_DataflowFlexTemplateRequest_LaunchParameter {
     #[doc =
         "The job name to use for the created job. For an update job request, the job name should be the same as the existing running job."]
     pub job_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterEl {
-    pub fn build(self) -> DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterEl {
-        DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterEl {
+impl BuildDataPipelinePipeline_Workload_DataflowFlexTemplateRequest_LaunchParameter {
+    pub fn build(self) -> DataPipelinePipeline_Workload_DataflowFlexTemplateRequest_LaunchParameter {
+        DataPipelinePipeline_Workload_DataflowFlexTemplateRequest_LaunchParameter {
             container_spec_gcs_path: core::default::Default::default(),
             job_name: self.job_name,
             launch_options: core::default::Default::default(),
@@ -1129,24 +1162,26 @@ impl BuildDataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParam
     }
 }
 
-pub struct DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterElRef {
+#[allow(dead_code)]
+pub struct DataPipelinePipeline_Workload_DataflowFlexTemplateRequest_LaunchParameterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterElRef {
+impl terrars::Ref for DataPipelinePipeline_Workload_DataflowFlexTemplateRequest_LaunchParameterRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterElRef {
-        DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterElRef {
+    ) -> DataPipelinePipeline_Workload_DataflowFlexTemplateRequest_LaunchParameterRef {
+        DataPipelinePipeline_Workload_DataflowFlexTemplateRequest_LaunchParameterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterElRef {
+impl DataPipelinePipeline_Workload_DataflowFlexTemplateRequest_LaunchParameterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1190,21 +1225,20 @@ impl DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterE
     #[doc = "Get a reference to the value of field `environment` after provisioning.\n"]
     pub fn environment(
         &self,
-    ) -> terrars
-    ::ListRef<DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterElEnvironmentElRef> {
+    ) -> terrars::ListRef<DataPipelinePipeline_Workload_DataflowFlexTemplateRequest_LaunchParameter_EnvironmentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.environment", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElDynamic {
+struct DataPipelinePipeline_Workload_DataflowFlexTemplateRequestDynamic {
     launch_parameter: std
     ::option
-    ::Option<terrars::DynamicBlock<DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterEl>>,
+    ::Option<terrars::DynamicBlock<DataPipelinePipeline_Workload_DataflowFlexTemplateRequest_LaunchParameter>>,
 }
 
 #[derive(Serialize)]
-pub struct DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestEl {
+pub struct DataPipelinePipeline_Workload_DataflowFlexTemplateRequest {
     location: terrars::PrimField<std::string::String>,
     project_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1212,11 +1246,11 @@ pub struct DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     launch_parameter: std
     ::option
-    ::Option<std::vec::Vec<DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterEl>>,
-    dynamic: DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElDynamic,
+    ::Option<std::vec::Vec<DataPipelinePipeline_Workload_DataflowFlexTemplateRequest_LaunchParameter>>,
+    dynamic: DataPipelinePipeline_Workload_DataflowFlexTemplateRequestDynamic,
 }
 
-impl DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestEl {
+impl DataPipelinePipeline_Workload_DataflowFlexTemplateRequest {
     #[doc =
         "Set the field `validate_only`.\nIf true, the request is validated but not actually executed. Defaults to false."]
     pub fn set_validate_only(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
@@ -1234,9 +1268,7 @@ impl DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterEl,
-                        >,
+                        ::BlockAssignable<DataPipelinePipeline_Workload_DataflowFlexTemplateRequest_LaunchParameter>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1251,8 +1283,8 @@ impl DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestEl {
     }
 }
 
-impl terrars::ToListMappable for DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestEl {
-    type O = terrars::BlockAssignable<DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestEl>;
+impl terrars::ToListMappable for DataPipelinePipeline_Workload_DataflowFlexTemplateRequest {
+    type O = terrars::BlockAssignable<DataPipelinePipeline_Workload_DataflowFlexTemplateRequest>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1263,16 +1295,16 @@ impl terrars::ToListMappable for DataPipelinePipelineWorkloadElDataflowFlexTempl
     }
 }
 
-pub struct BuildDataPipelinePipelineWorkloadElDataflowFlexTemplateRequestEl {
+pub struct BuildDataPipelinePipeline_Workload_DataflowFlexTemplateRequest {
     #[doc = "The regional endpoint to which to direct the request. For example, us-central1, us-west1."]
     pub location: terrars::PrimField<std::string::String>,
     #[doc = "The ID of the Cloud Platform project that the job belongs to."]
     pub project_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataPipelinePipelineWorkloadElDataflowFlexTemplateRequestEl {
-    pub fn build(self) -> DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestEl {
-        DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestEl {
+impl BuildDataPipelinePipeline_Workload_DataflowFlexTemplateRequest {
+    pub fn build(self) -> DataPipelinePipeline_Workload_DataflowFlexTemplateRequest {
+        DataPipelinePipeline_Workload_DataflowFlexTemplateRequest {
             location: self.location,
             project_id: self.project_id,
             validate_only: core::default::Default::default(),
@@ -1282,24 +1314,26 @@ impl BuildDataPipelinePipelineWorkloadElDataflowFlexTemplateRequestEl {
     }
 }
 
-pub struct DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElRef {
+#[allow(dead_code)]
+pub struct DataPipelinePipeline_Workload_DataflowFlexTemplateRequestRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElRef {
+impl terrars::Ref for DataPipelinePipeline_Workload_DataflowFlexTemplateRequestRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElRef {
-        DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElRef {
+    ) -> DataPipelinePipeline_Workload_DataflowFlexTemplateRequestRef {
+        DataPipelinePipeline_Workload_DataflowFlexTemplateRequestRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElRef {
+impl DataPipelinePipeline_Workload_DataflowFlexTemplateRequestRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1325,13 +1359,13 @@ impl DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElRef {
     #[doc = "Get a reference to the value of field `launch_parameter` after provisioning.\n"]
     pub fn launch_parameter(
         &self,
-    ) -> terrars::ListRef<DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElLaunchParameterElRef> {
+    ) -> terrars::ListRef<DataPipelinePipeline_Workload_DataflowFlexTemplateRequest_LaunchParameterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.launch_parameter", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParametersElEnvironmentEl {
+pub struct DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest_LaunchParameters_Environment {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     additional_experiments: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1366,7 +1400,7 @@ pub struct DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchPa
     zone: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParametersElEnvironmentEl {
+impl DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest_LaunchParameters_Environment {
     #[doc = "Set the field `additional_experiments`.\nAdditional experiment flags for the job."]
     pub fn set_additional_experiments(
         mut self,
@@ -1486,12 +1520,10 @@ impl DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParamete
 }
 
 impl terrars
-::ToListMappable for DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParametersElEnvironmentEl {
+::ToListMappable for DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest_LaunchParameters_Environment {
     type O =
         terrars
-        ::BlockAssignable<
-            DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParametersElEnvironmentEl,
-        >;
+        ::BlockAssignable<DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest_LaunchParameters_Environment>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1502,13 +1534,11 @@ impl terrars
     }
 }
 
-pub struct BuildDataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParametersElEnvironmentEl {}
+pub struct BuildDataPipelinePipeline_Workload_DataflowLaunchTemplateRequest_LaunchParameters_Environment {}
 
-impl BuildDataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParametersElEnvironmentEl {
-    pub fn build(
-        self,
-    ) -> DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParametersElEnvironmentEl {
-        DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParametersElEnvironmentEl {
+impl BuildDataPipelinePipeline_Workload_DataflowLaunchTemplateRequest_LaunchParameters_Environment {
+    pub fn build(self) -> DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest_LaunchParameters_Environment {
+        DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest_LaunchParameters_Environment {
             additional_experiments: core::default::Default::default(),
             additional_user_labels: core::default::Default::default(),
             bypass_temp_dir_validation: core::default::Default::default(),
@@ -1529,24 +1559,26 @@ impl BuildDataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchPar
     }
 }
 
-pub struct DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParametersElEnvironmentElRef {
+#[allow(dead_code)]
+pub struct DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest_LaunchParameters_EnvironmentRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParametersElEnvironmentElRef {
+impl terrars::Ref for DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest_LaunchParameters_EnvironmentRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParametersElEnvironmentElRef {
-        DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParametersElEnvironmentElRef {
+    ) -> DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest_LaunchParameters_EnvironmentRef {
+        DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest_LaunchParameters_EnvironmentRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParametersElEnvironmentElRef {
+impl DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest_LaunchParameters_EnvironmentRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1649,17 +1681,17 @@ impl DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParamete
 }
 
 #[derive(Serialize, Default)]
-struct DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParametersElDynamic {
+struct DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest_LaunchParametersDynamic {
     environment: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParametersElEnvironmentEl>,
+        ::DynamicBlock<DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest_LaunchParameters_Environment>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParametersEl {
+pub struct DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest_LaunchParameters {
     job_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     parameters: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -1670,13 +1702,11 @@ pub struct DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchPa
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     environment: std
     ::option
-    ::Option<
-        std::vec::Vec<DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParametersElEnvironmentEl>,
-    >,
-    dynamic: DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParametersElDynamic,
+    ::Option<std::vec::Vec<DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest_LaunchParameters_Environment>>,
+    dynamic: DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest_LaunchParametersDynamic,
 }
 
-impl DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParametersEl {
+impl DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest_LaunchParameters {
     #[doc =
         "Set the field `parameters`.\nThe runtime parameters to pass to the job.\n'An object containing a list of \"key\": value pairs. Example: { \"name\": \"wrench\", \"mass\": \"1.3kg\", \"count\": \"3\" }.'"]
     pub fn set_parameters(
@@ -1715,7 +1745,7 @@ impl DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParamete
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParametersElEnvironmentEl,
+                            DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest_LaunchParameters_Environment,
                         >,
                     >,
     ) -> Self {
@@ -1731,9 +1761,8 @@ impl DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParamete
     }
 }
 
-impl terrars::ToListMappable for DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParametersEl {
-    type O =
-        terrars::BlockAssignable<DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParametersEl>;
+impl terrars::ToListMappable for DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest_LaunchParameters {
+    type O = terrars::BlockAssignable<DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest_LaunchParameters>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1744,14 +1773,14 @@ impl terrars::ToListMappable for DataPipelinePipelineWorkloadElDataflowLaunchTem
     }
 }
 
-pub struct BuildDataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParametersEl {
+pub struct BuildDataPipelinePipeline_Workload_DataflowLaunchTemplateRequest_LaunchParameters {
     #[doc = "The job name to use for the created job."]
     pub job_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParametersEl {
-    pub fn build(self) -> DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParametersEl {
-        DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParametersEl {
+impl BuildDataPipelinePipeline_Workload_DataflowLaunchTemplateRequest_LaunchParameters {
+    pub fn build(self) -> DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest_LaunchParameters {
+        DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest_LaunchParameters {
             job_name: self.job_name,
             parameters: core::default::Default::default(),
             transform_name_mapping: core::default::Default::default(),
@@ -1762,24 +1791,26 @@ impl BuildDataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchPar
     }
 }
 
-pub struct DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParametersElRef {
+#[allow(dead_code)]
+pub struct DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest_LaunchParametersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParametersElRef {
+impl terrars::Ref for DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest_LaunchParametersRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParametersElRef {
-        DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParametersElRef {
+    ) -> DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest_LaunchParametersRef {
+        DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest_LaunchParametersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParametersElRef {
+impl DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest_LaunchParametersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1812,20 +1843,20 @@ impl DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParamete
     pub fn environment(
         &self,
     ) -> terrars
-    ::ListRef<DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParametersElEnvironmentElRef> {
+    ::ListRef<DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest_LaunchParameters_EnvironmentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.environment", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElDynamic {
+struct DataPipelinePipeline_Workload_DataflowLaunchTemplateRequestDynamic {
     launch_parameters: std
     ::option
-    ::Option<terrars::DynamicBlock<DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParametersEl>>,
+    ::Option<terrars::DynamicBlock<DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest_LaunchParameters>>,
 }
 
 #[derive(Serialize)]
-pub struct DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestEl {
+pub struct DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     gcs_path: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1836,11 +1867,11 @@ pub struct DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     launch_parameters: std
     ::option
-    ::Option<std::vec::Vec<DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParametersEl>>,
-    dynamic: DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElDynamic,
+    ::Option<std::vec::Vec<DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest_LaunchParameters>>,
+    dynamic: DataPipelinePipeline_Workload_DataflowLaunchTemplateRequestDynamic,
 }
 
-impl DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestEl {
+impl DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest {
     #[doc =
         "Set the field `gcs_path`.\nA Cloud Storage path to the template from which to create the job. Must be a valid Cloud Storage URL, beginning with 'gs://'."]
     pub fn set_gcs_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -1871,7 +1902,7 @@ impl DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParametersEl,
+                            DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest_LaunchParameters,
                         >,
                     >,
     ) -> Self {
@@ -1887,8 +1918,8 @@ impl DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestEl {
     }
 }
 
-impl terrars::ToListMappable for DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestEl {
-    type O = terrars::BlockAssignable<DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestEl>;
+impl terrars::ToListMappable for DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest {
+    type O = terrars::BlockAssignable<DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1899,14 +1930,14 @@ impl terrars::ToListMappable for DataPipelinePipelineWorkloadElDataflowLaunchTem
     }
 }
 
-pub struct BuildDataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestEl {
+pub struct BuildDataPipelinePipeline_Workload_DataflowLaunchTemplateRequest {
     #[doc = "The ID of the Cloud Platform project that the job belongs to."]
     pub project_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestEl {
-    pub fn build(self) -> DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestEl {
-        DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestEl {
+impl BuildDataPipelinePipeline_Workload_DataflowLaunchTemplateRequest {
+    pub fn build(self) -> DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest {
+        DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest {
             gcs_path: core::default::Default::default(),
             location: core::default::Default::default(),
             project_id: self.project_id,
@@ -1917,24 +1948,26 @@ impl BuildDataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestEl {
     }
 }
 
-pub struct DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElRef {
+#[allow(dead_code)]
+pub struct DataPipelinePipeline_Workload_DataflowLaunchTemplateRequestRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElRef {
+impl terrars::Ref for DataPipelinePipeline_Workload_DataflowLaunchTemplateRequestRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElRef {
-        DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElRef {
+    ) -> DataPipelinePipeline_Workload_DataflowLaunchTemplateRequestRef {
+        DataPipelinePipeline_Workload_DataflowLaunchTemplateRequestRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElRef {
+impl DataPipelinePipeline_Workload_DataflowLaunchTemplateRequestRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1965,35 +1998,35 @@ impl DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElRef {
     #[doc = "Get a reference to the value of field `launch_parameters` after provisioning.\n"]
     pub fn launch_parameters(
         &self,
-    ) -> terrars::ListRef<DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElLaunchParametersElRef> {
+    ) -> terrars::ListRef<DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest_LaunchParametersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.launch_parameters", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct DataPipelinePipelineWorkloadElDynamic {
+struct DataPipelinePipeline_WorkloadDynamic {
     dataflow_flex_template_request: std
     ::option
-    ::Option<terrars::DynamicBlock<DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestEl>>,
+    ::Option<terrars::DynamicBlock<DataPipelinePipeline_Workload_DataflowFlexTemplateRequest>>,
     dataflow_launch_template_request: std
     ::option
-    ::Option<terrars::DynamicBlock<DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestEl>>,
+    ::Option<terrars::DynamicBlock<DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest>>,
 }
 
 #[derive(Serialize)]
-pub struct DataPipelinePipelineWorkloadEl {
+pub struct DataPipelinePipeline_Workload {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dataflow_flex_template_request: std
     ::option
-    ::Option<std::vec::Vec<DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestEl>>,
+    ::Option<std::vec::Vec<DataPipelinePipeline_Workload_DataflowFlexTemplateRequest>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dataflow_launch_template_request: std
     ::option
-    ::Option<std::vec::Vec<DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestEl>>,
-    dynamic: DataPipelinePipelineWorkloadElDynamic,
+    ::Option<std::vec::Vec<DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest>>,
+    dynamic: DataPipelinePipeline_WorkloadDynamic,
 }
 
-impl DataPipelinePipelineWorkloadEl {
+impl DataPipelinePipeline_Workload {
     #[doc = "Set the field `dataflow_flex_template_request`.\n"]
     pub fn set_dataflow_flex_template_request(
         mut self,
@@ -2002,7 +2035,7 @@ impl DataPipelinePipelineWorkloadEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestEl>>,
+                    ::Into<terrars::BlockAssignable<DataPipelinePipeline_Workload_DataflowFlexTemplateRequest>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2023,7 +2056,7 @@ impl DataPipelinePipelineWorkloadEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestEl>>,
+                    ::Into<terrars::BlockAssignable<DataPipelinePipeline_Workload_DataflowLaunchTemplateRequest>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2037,8 +2070,8 @@ impl DataPipelinePipelineWorkloadEl {
     }
 }
 
-impl terrars::ToListMappable for DataPipelinePipelineWorkloadEl {
-    type O = terrars::BlockAssignable<DataPipelinePipelineWorkloadEl>;
+impl terrars::ToListMappable for DataPipelinePipeline_Workload {
+    type O = terrars::BlockAssignable<DataPipelinePipeline_Workload>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2049,11 +2082,11 @@ impl terrars::ToListMappable for DataPipelinePipelineWorkloadEl {
     }
 }
 
-pub struct BuildDataPipelinePipelineWorkloadEl {}
+pub struct BuildDataPipelinePipeline_Workload {}
 
-impl BuildDataPipelinePipelineWorkloadEl {
-    pub fn build(self) -> DataPipelinePipelineWorkloadEl {
-        DataPipelinePipelineWorkloadEl {
+impl BuildDataPipelinePipeline_Workload {
+    pub fn build(self) -> DataPipelinePipeline_Workload {
+        DataPipelinePipeline_Workload {
             dataflow_flex_template_request: core::default::Default::default(),
             dataflow_launch_template_request: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -2061,21 +2094,23 @@ impl BuildDataPipelinePipelineWorkloadEl {
     }
 }
 
-pub struct DataPipelinePipelineWorkloadElRef {
+#[allow(dead_code)]
+pub struct DataPipelinePipeline_WorkloadRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataPipelinePipelineWorkloadElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataPipelinePipelineWorkloadElRef {
-        DataPipelinePipelineWorkloadElRef {
+impl terrars::Ref for DataPipelinePipeline_WorkloadRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataPipelinePipeline_WorkloadRef {
+        DataPipelinePipeline_WorkloadRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataPipelinePipelineWorkloadElRef {
+impl DataPipelinePipeline_WorkloadRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2083,20 +2118,14 @@ impl DataPipelinePipelineWorkloadElRef {
     #[doc = "Get a reference to the value of field `dataflow_flex_template_request` after provisioning.\n"]
     pub fn dataflow_flex_template_request(
         &self,
-    ) -> terrars::ListRef<DataPipelinePipelineWorkloadElDataflowFlexTemplateRequestElRef> {
+    ) -> terrars::ListRef<DataPipelinePipeline_Workload_DataflowFlexTemplateRequestRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dataflow_flex_template_request", self.base))
     }
 
     #[doc = "Get a reference to the value of field `dataflow_launch_template_request` after provisioning.\n"]
     pub fn dataflow_launch_template_request(
         &self,
-    ) -> terrars::ListRef<DataPipelinePipelineWorkloadElDataflowLaunchTemplateRequestElRef> {
+    ) -> terrars::ListRef<DataPipelinePipeline_Workload_DataflowLaunchTemplateRequestRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dataflow_launch_template_request", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataPipelinePipelineDynamic {
-    schedule_info: std::option::Option<terrars::DynamicBlock<DataPipelinePipelineScheduleInfoEl>>,
-    workload: std::option::Option<terrars::DynamicBlock<DataPipelinePipelineWorkloadEl>>,
 }

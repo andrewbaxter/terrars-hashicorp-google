@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct DataComputeInstanceGroupData {
+struct DataComputeInstanceGroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -31,7 +33,7 @@ struct DataComputeInstanceGroupData {
 struct DataComputeInstanceGroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataComputeInstanceGroupData>,
+    data: std::cell::RefCell<DataComputeInstanceGroupData_>,
 }
 
 #[derive(Clone)]
@@ -106,6 +108,11 @@ impl DataComputeInstanceGroup {
         self
     }
 
+    #[doc = "Get a reference to the value of field `deletion_policy` after provisioning.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -127,7 +134,7 @@ impl DataComputeInstanceGroup {
     }
 
     #[doc = "Get a reference to the value of field `named_port` after provisioning.\n"]
-    pub fn named_port(&self) -> terrars::ListRef<DataComputeInstanceGroupNamedPortElRef> {
+    pub fn named_port(&self) -> terrars::ListRef<DataComputeInstanceGroup_NamedPortRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.named_port", self.extract_ref()))
     }
 
@@ -197,7 +204,7 @@ impl BuildDataComputeInstanceGroup {
         let out = DataComputeInstanceGroup(std::rc::Rc::new(DataComputeInstanceGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataComputeInstanceGroupData {
+            data: std::cell::RefCell::new(DataComputeInstanceGroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -237,6 +244,11 @@ impl DataComputeInstanceGroupRef {
         self.base.clone()
     }
 
+    #[doc = "Get a reference to the value of field `deletion_policy` after provisioning.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -258,7 +270,7 @@ impl DataComputeInstanceGroupRef {
     }
 
     #[doc = "Get a reference to the value of field `named_port` after provisioning.\n"]
-    pub fn named_port(&self) -> terrars::ListRef<DataComputeInstanceGroupNamedPortElRef> {
+    pub fn named_port(&self) -> terrars::ListRef<DataComputeInstanceGroup_NamedPortRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.named_port", self.extract_ref()))
     }
 
@@ -289,14 +301,14 @@ impl DataComputeInstanceGroupRef {
 }
 
 #[derive(Serialize)]
-pub struct DataComputeInstanceGroupNamedPortEl {
+pub struct DataComputeInstanceGroup_NamedPort {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     port: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataComputeInstanceGroupNamedPortEl {
+impl DataComputeInstanceGroup_NamedPort {
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
@@ -310,8 +322,8 @@ impl DataComputeInstanceGroupNamedPortEl {
     }
 }
 
-impl terrars::ToListMappable for DataComputeInstanceGroupNamedPortEl {
-    type O = terrars::BlockAssignable<DataComputeInstanceGroupNamedPortEl>;
+impl terrars::ToListMappable for DataComputeInstanceGroup_NamedPort {
+    type O = terrars::BlockAssignable<DataComputeInstanceGroup_NamedPort>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -322,32 +334,34 @@ impl terrars::ToListMappable for DataComputeInstanceGroupNamedPortEl {
     }
 }
 
-pub struct BuildDataComputeInstanceGroupNamedPortEl {}
+pub struct BuildDataComputeInstanceGroup_NamedPort {}
 
-impl BuildDataComputeInstanceGroupNamedPortEl {
-    pub fn build(self) -> DataComputeInstanceGroupNamedPortEl {
-        DataComputeInstanceGroupNamedPortEl {
+impl BuildDataComputeInstanceGroup_NamedPort {
+    pub fn build(self) -> DataComputeInstanceGroup_NamedPort {
+        DataComputeInstanceGroup_NamedPort {
             name: core::default::Default::default(),
             port: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataComputeInstanceGroupNamedPortElRef {
+#[allow(dead_code)]
+pub struct DataComputeInstanceGroup_NamedPortRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataComputeInstanceGroupNamedPortElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeInstanceGroupNamedPortElRef {
-        DataComputeInstanceGroupNamedPortElRef {
+impl terrars::Ref for DataComputeInstanceGroup_NamedPortRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataComputeInstanceGroup_NamedPortRef {
+        DataComputeInstanceGroup_NamedPortRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataComputeInstanceGroupNamedPortElRef {
+impl DataComputeInstanceGroup_NamedPortRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

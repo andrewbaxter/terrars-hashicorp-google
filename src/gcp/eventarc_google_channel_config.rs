@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct EventarcGoogleChannelConfigData {
+struct EventarcGoogleChannelConfigData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -27,13 +29,13 @@ struct EventarcGoogleChannelConfigData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     project: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<EventarcGoogleChannelConfigTimeoutsEl>,
+    timeouts: std::option::Option<EventarcGoogleChannelConfig_Timeouts>,
 }
 
 struct EventarcGoogleChannelConfig_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<EventarcGoogleChannelConfigData>,
+    data: std::cell::RefCell<EventarcGoogleChannelConfigData_>,
 }
 
 #[derive(Clone)]
@@ -134,7 +136,7 @@ impl EventarcGoogleChannelConfig {
     }
 
     #[doc =
-        "Set the field `crypto_key_name`.\nOptional. Resource name of a KMS crypto key (managed by the user) used to encrypt/decrypt their event data. It must match the pattern `projects/*/locations/*/keyRings/*/cryptoKeys/*`."]
+        "Set the field `crypto_key_name`.\nOptional. Resource name of a KMS crypto key (managed by the user) used to encrypt/decrypt their event data. It must match the pattern 'projects/*/locations/*/keyRings/*/cryptoKeys/*'."]
     pub fn set_crypto_key_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().crypto_key_name = std::option::Option::Some(v.into());
         self
@@ -146,20 +148,20 @@ impl EventarcGoogleChannelConfig {
         self
     }
 
-    #[doc = "Set the field `project`.\nThe project for the resource"]
+    #[doc = "Set the field `project`.\n"]
     pub fn set_project(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().project = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<EventarcGoogleChannelConfigTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<EventarcGoogleChannelConfig_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
     #[doc =
-        "Get a reference to the value of field `crypto_key_name` after provisioning.\nOptional. Resource name of a KMS crypto key (managed by the user) used to encrypt/decrypt their event data. It must match the pattern `projects/*/locations/*/keyRings/*/cryptoKeys/*`."]
+        "Get a reference to the value of field `crypto_key_name` after provisioning.\nOptional. Resource name of a KMS crypto key (managed by the user) used to encrypt/decrypt their event data. It must match the pattern 'projects/*/locations/*/keyRings/*/cryptoKeys/*'."]
     pub fn crypto_key_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.crypto_key_name", self.extract_ref()))
     }
@@ -175,12 +177,12 @@ impl EventarcGoogleChannelConfig {
     }
 
     #[doc =
-        "Get a reference to the value of field `name` after provisioning.\nRequired. The resource name of the config. Must be in the format of, `projects/{project}/locations/{location}/googleChannelConfig`."]
+        "Get a reference to the value of field `name` after provisioning.\nRequired. The resource name of the config. Must be in the format of, 'projects/{project}/locations/{location}/googleChannelConfig'."]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `project` after provisioning.\nThe project for the resource"]
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
     pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
@@ -192,8 +194,8 @@ impl EventarcGoogleChannelConfig {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> EventarcGoogleChannelConfigTimeoutsElRef {
-        EventarcGoogleChannelConfigTimeoutsElRef::new(
+    pub fn timeouts(&self) -> EventarcGoogleChannelConfig_TimeoutsRef {
+        EventarcGoogleChannelConfig_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -236,7 +238,7 @@ pub struct BuildEventarcGoogleChannelConfig {
     #[doc = "The location for the resource"]
     pub location: terrars::PrimField<std::string::String>,
     #[doc =
-        "Required. The resource name of the config. Must be in the format of, `projects/{project}/locations/{location}/googleChannelConfig`."]
+        "Required. The resource name of the config. Must be in the format of, 'projects/{project}/locations/{location}/googleChannelConfig'."]
     pub name: terrars::PrimField<std::string::String>,
 }
 
@@ -245,7 +247,7 @@ impl BuildEventarcGoogleChannelConfig {
         let out = EventarcGoogleChannelConfig(std::rc::Rc::new(EventarcGoogleChannelConfig_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(EventarcGoogleChannelConfigData {
+            data: std::cell::RefCell::new(EventarcGoogleChannelConfigData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -288,7 +290,7 @@ impl EventarcGoogleChannelConfigRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `crypto_key_name` after provisioning.\nOptional. Resource name of a KMS crypto key (managed by the user) used to encrypt/decrypt their event data. It must match the pattern `projects/*/locations/*/keyRings/*/cryptoKeys/*`."]
+        "Get a reference to the value of field `crypto_key_name` after provisioning.\nOptional. Resource name of a KMS crypto key (managed by the user) used to encrypt/decrypt their event data. It must match the pattern 'projects/*/locations/*/keyRings/*/cryptoKeys/*'."]
     pub fn crypto_key_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.crypto_key_name", self.extract_ref()))
     }
@@ -304,12 +306,12 @@ impl EventarcGoogleChannelConfigRef {
     }
 
     #[doc =
-        "Get a reference to the value of field `name` after provisioning.\nRequired. The resource name of the config. Must be in the format of, `projects/{project}/locations/{location}/googleChannelConfig`."]
+        "Get a reference to the value of field `name` after provisioning.\nRequired. The resource name of the config. Must be in the format of, 'projects/{project}/locations/{location}/googleChannelConfig'."]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `project` after provisioning.\nThe project for the resource"]
+    #[doc = "Get a reference to the value of field `project` after provisioning.\n"]
     pub fn project(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
@@ -321,8 +323,8 @@ impl EventarcGoogleChannelConfigRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> EventarcGoogleChannelConfigTimeoutsElRef {
-        EventarcGoogleChannelConfigTimeoutsElRef::new(
+    pub fn timeouts(&self) -> EventarcGoogleChannelConfig_TimeoutsRef {
+        EventarcGoogleChannelConfig_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -330,7 +332,7 @@ impl EventarcGoogleChannelConfigRef {
 }
 
 #[derive(Serialize)]
-pub struct EventarcGoogleChannelConfigTimeoutsEl {
+pub struct EventarcGoogleChannelConfig_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -339,7 +341,7 @@ pub struct EventarcGoogleChannelConfigTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EventarcGoogleChannelConfigTimeoutsEl {
+impl EventarcGoogleChannelConfig_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -359,8 +361,8 @@ impl EventarcGoogleChannelConfigTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for EventarcGoogleChannelConfigTimeoutsEl {
-    type O = terrars::BlockAssignable<EventarcGoogleChannelConfigTimeoutsEl>;
+impl terrars::ToListMappable for EventarcGoogleChannelConfig_Timeouts {
+    type O = terrars::BlockAssignable<EventarcGoogleChannelConfig_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -371,11 +373,11 @@ impl terrars::ToListMappable for EventarcGoogleChannelConfigTimeoutsEl {
     }
 }
 
-pub struct BuildEventarcGoogleChannelConfigTimeoutsEl {}
+pub struct BuildEventarcGoogleChannelConfig_Timeouts {}
 
-impl BuildEventarcGoogleChannelConfigTimeoutsEl {
-    pub fn build(self) -> EventarcGoogleChannelConfigTimeoutsEl {
-        EventarcGoogleChannelConfigTimeoutsEl {
+impl BuildEventarcGoogleChannelConfig_Timeouts {
+    pub fn build(self) -> EventarcGoogleChannelConfig_Timeouts {
+        EventarcGoogleChannelConfig_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -383,21 +385,23 @@ impl BuildEventarcGoogleChannelConfigTimeoutsEl {
     }
 }
 
-pub struct EventarcGoogleChannelConfigTimeoutsElRef {
+#[allow(dead_code)]
+pub struct EventarcGoogleChannelConfig_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EventarcGoogleChannelConfigTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EventarcGoogleChannelConfigTimeoutsElRef {
-        EventarcGoogleChannelConfigTimeoutsElRef {
+impl terrars::Ref for EventarcGoogleChannelConfig_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EventarcGoogleChannelConfig_TimeoutsRef {
+        EventarcGoogleChannelConfig_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EventarcGoogleChannelConfigTimeoutsElRef {
+impl EventarcGoogleChannelConfig_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

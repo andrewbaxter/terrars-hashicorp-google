@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct PubsubTopicIamBindingData {
+struct PubsubTopicIamBindingData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,14 +28,14 @@ struct PubsubTopicIamBindingData {
     role: terrars::PrimField<std::string::String>,
     topic: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<PubsubTopicIamBindingConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<PubsubTopicIamBinding_Condition>>,
     dynamic: PubsubTopicIamBindingDynamic,
 }
 
 struct PubsubTopicIamBinding_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<PubsubTopicIamBindingData>,
+    data: std::cell::RefCell<PubsubTopicIamBindingData_>,
 }
 
 #[derive(Clone)]
@@ -148,7 +150,7 @@ impl PubsubTopicIamBinding {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<PubsubTopicIamBindingConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<PubsubTopicIamBinding_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -192,7 +194,7 @@ impl PubsubTopicIamBinding {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<PubsubTopicIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<PubsubTopicIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -243,7 +245,7 @@ impl BuildPubsubTopicIamBinding {
         let out = PubsubTopicIamBinding(std::rc::Rc::new(PubsubTopicIamBinding_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(PubsubTopicIamBindingData {
+            data: std::cell::RefCell::new(PubsubTopicIamBindingData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -317,20 +319,25 @@ impl PubsubTopicIamBindingRef {
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<PubsubTopicIamBindingConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<PubsubTopicIamBinding_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct PubsubTopicIamBindingDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<PubsubTopicIamBinding_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct PubsubTopicIamBindingConditionEl {
+pub struct PubsubTopicIamBinding_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     expression: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
 }
 
-impl PubsubTopicIamBindingConditionEl {
+impl PubsubTopicIamBinding_Condition {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -338,8 +345,8 @@ impl PubsubTopicIamBindingConditionEl {
     }
 }
 
-impl terrars::ToListMappable for PubsubTopicIamBindingConditionEl {
-    type O = terrars::BlockAssignable<PubsubTopicIamBindingConditionEl>;
+impl terrars::ToListMappable for PubsubTopicIamBinding_Condition {
+    type O = terrars::BlockAssignable<PubsubTopicIamBinding_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -350,16 +357,16 @@ impl terrars::ToListMappable for PubsubTopicIamBindingConditionEl {
     }
 }
 
-pub struct BuildPubsubTopicIamBindingConditionEl {
+pub struct BuildPubsubTopicIamBinding_Condition {
     #[doc = ""]
     pub expression: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub title: terrars::PrimField<std::string::String>,
 }
 
-impl BuildPubsubTopicIamBindingConditionEl {
-    pub fn build(self) -> PubsubTopicIamBindingConditionEl {
-        PubsubTopicIamBindingConditionEl {
+impl BuildPubsubTopicIamBinding_Condition {
+    pub fn build(self) -> PubsubTopicIamBinding_Condition {
+        PubsubTopicIamBinding_Condition {
             description: core::default::Default::default(),
             expression: self.expression,
             title: self.title,
@@ -367,21 +374,23 @@ impl BuildPubsubTopicIamBindingConditionEl {
     }
 }
 
-pub struct PubsubTopicIamBindingConditionElRef {
+#[allow(dead_code)]
+pub struct PubsubTopicIamBinding_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PubsubTopicIamBindingConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> PubsubTopicIamBindingConditionElRef {
-        PubsubTopicIamBindingConditionElRef {
+impl terrars::Ref for PubsubTopicIamBinding_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> PubsubTopicIamBinding_ConditionRef {
+        PubsubTopicIamBinding_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PubsubTopicIamBindingConditionElRef {
+impl PubsubTopicIamBinding_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -400,9 +409,4 @@ impl PubsubTopicIamBindingConditionElRef {
     pub fn title(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.title", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct PubsubTopicIamBindingDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<PubsubTopicIamBindingConditionEl>>,
 }

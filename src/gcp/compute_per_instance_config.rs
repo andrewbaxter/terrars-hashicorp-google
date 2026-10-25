@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderGoogle;
 
 #[derive(Serialize)]
-struct ComputePerInstanceConfigData {
+struct ComputePerInstanceConfigData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct ComputePerInstanceConfigData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     instance_group_manager: terrars::PrimField<std::string::String>,
@@ -35,16 +39,16 @@ struct ComputePerInstanceConfigData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     zone: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    preserved_state: std::option::Option<std::vec::Vec<ComputePerInstanceConfigPreservedStateEl>>,
+    preserved_state: std::option::Option<std::vec::Vec<ComputePerInstanceConfig_PreservedState>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComputePerInstanceConfigTimeoutsEl>,
+    timeouts: std::option::Option<ComputePerInstanceConfig_Timeouts>,
     dynamic: ComputePerInstanceConfigDynamic,
 }
 
 struct ComputePerInstanceConfig_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComputePerInstanceConfigData>,
+    data: std::cell::RefCell<ComputePerInstanceConfigData_>,
 }
 
 #[derive(Clone)]
@@ -144,6 +148,13 @@ impl ComputePerInstanceConfig {
         self
     }
 
+    #[doc =
+        "Set the field `deletion_policy`.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn set_deletion_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().deletion_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -196,7 +207,7 @@ impl ComputePerInstanceConfig {
     #[doc = "Set the field `preserved_state`.\n"]
     pub fn set_preserved_state(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputePerInstanceConfigPreservedStateEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputePerInstanceConfig_PreservedState>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -210,9 +221,15 @@ impl ComputePerInstanceConfig {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComputePerInstanceConfigTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComputePerInstanceConfig_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -274,13 +291,13 @@ impl ComputePerInstanceConfig {
     }
 
     #[doc = "Get a reference to the value of field `preserved_state` after provisioning.\n"]
-    pub fn preserved_state(&self) -> terrars::ListRef<ComputePerInstanceConfigPreservedStateElRef> {
+    pub fn preserved_state(&self) -> terrars::ListRef<ComputePerInstanceConfig_PreservedStateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.preserved_state", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputePerInstanceConfigTimeoutsElRef {
-        ComputePerInstanceConfigTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputePerInstanceConfig_TimeoutsRef {
+        ComputePerInstanceConfig_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -328,12 +345,13 @@ impl BuildComputePerInstanceConfig {
         let out = ComputePerInstanceConfig(std::rc::Rc::new(ComputePerInstanceConfig_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComputePerInstanceConfigData {
+            data: std::cell::RefCell::new(ComputePerInstanceConfigData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 instance_group_manager: self.instance_group_manager,
                 minimal_action: core::default::Default::default(),
@@ -374,6 +392,12 @@ impl ComputePerInstanceConfigRef {
 
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `deletion_policy` after provisioning.\nWhether Terraform will be prevented from destroying the instance. Defaults to \"DELETE\".\nWhen a 'terraform destroy' or 'terraform apply' would delete the instance,\nthe command will fail if this field is set to \"PREVENT\" in Terraform state.\nWhen set to \"ABANDON\", the command will remove the resource from Terraform\nmanagement without updating or deleting the resource in the API.\nWhen set to \"DELETE\", deleting the resource is allowed.\n"]
+    pub fn deletion_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -435,18 +459,23 @@ impl ComputePerInstanceConfigRef {
     }
 
     #[doc = "Get a reference to the value of field `preserved_state` after provisioning.\n"]
-    pub fn preserved_state(&self) -> terrars::ListRef<ComputePerInstanceConfigPreservedStateElRef> {
+    pub fn preserved_state(&self) -> terrars::ListRef<ComputePerInstanceConfig_PreservedStateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.preserved_state", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComputePerInstanceConfigTimeoutsElRef {
-        ComputePerInstanceConfigTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ComputePerInstanceConfig_TimeoutsRef {
+        ComputePerInstanceConfig_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ComputePerInstanceConfigDynamic {
+    preserved_state: std::option::Option<terrars::DynamicBlock<ComputePerInstanceConfig_PreservedState>>,
+}
+
 #[derive(Serialize)]
-pub struct ComputePerInstanceConfigPreservedStateElDiskEl {
+pub struct ComputePerInstanceConfig_PreservedState_Disk {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete_rule: std::option::Option<terrars::PrimField<std::string::String>>,
     device_name: terrars::PrimField<std::string::String>,
@@ -455,7 +484,7 @@ pub struct ComputePerInstanceConfigPreservedStateElDiskEl {
     source: terrars::PrimField<std::string::String>,
 }
 
-impl ComputePerInstanceConfigPreservedStateElDiskEl {
+impl ComputePerInstanceConfig_PreservedState_Disk {
     #[doc =
         "Set the field `delete_rule`.\nA value that prescribes what should happen to the stateful disk when the VM instance is deleted.\nThe available options are 'NEVER' and 'ON_PERMANENT_INSTANCE_DELETION'.\n'NEVER' - detach the disk when the VM is deleted, but do not delete the disk.\n'ON_PERMANENT_INSTANCE_DELETION' will delete the stateful disk when the VM is permanently\ndeleted from the instance group. Default value: \"NEVER\" Possible values: [\"NEVER\", \"ON_PERMANENT_INSTANCE_DELETION\"]"]
     pub fn set_delete_rule(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -471,8 +500,8 @@ impl ComputePerInstanceConfigPreservedStateElDiskEl {
     }
 }
 
-impl terrars::ToListMappable for ComputePerInstanceConfigPreservedStateElDiskEl {
-    type O = terrars::BlockAssignable<ComputePerInstanceConfigPreservedStateElDiskEl>;
+impl terrars::ToListMappable for ComputePerInstanceConfig_PreservedState_Disk {
+    type O = terrars::BlockAssignable<ComputePerInstanceConfig_PreservedState_Disk>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -483,7 +512,7 @@ impl terrars::ToListMappable for ComputePerInstanceConfigPreservedStateElDiskEl 
     }
 }
 
-pub struct BuildComputePerInstanceConfigPreservedStateElDiskEl {
+pub struct BuildComputePerInstanceConfig_PreservedState_Disk {
     #[doc =
         "A unique device name that is reflected into the /dev/ tree of a Linux operating system running within the instance."]
     pub device_name: terrars::PrimField<std::string::String>,
@@ -492,9 +521,9 @@ pub struct BuildComputePerInstanceConfigPreservedStateElDiskEl {
     pub source: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputePerInstanceConfigPreservedStateElDiskEl {
-    pub fn build(self) -> ComputePerInstanceConfigPreservedStateElDiskEl {
-        ComputePerInstanceConfigPreservedStateElDiskEl {
+impl BuildComputePerInstanceConfig_PreservedState_Disk {
+    pub fn build(self) -> ComputePerInstanceConfig_PreservedState_Disk {
+        ComputePerInstanceConfig_PreservedState_Disk {
             delete_rule: core::default::Default::default(),
             device_name: self.device_name,
             mode: core::default::Default::default(),
@@ -503,24 +532,26 @@ impl BuildComputePerInstanceConfigPreservedStateElDiskEl {
     }
 }
 
-pub struct ComputePerInstanceConfigPreservedStateElDiskElRef {
+#[allow(dead_code)]
+pub struct ComputePerInstanceConfig_PreservedState_DiskRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputePerInstanceConfigPreservedStateElDiskElRef {
+impl terrars::Ref for ComputePerInstanceConfig_PreservedState_DiskRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputePerInstanceConfigPreservedStateElDiskElRef {
-        ComputePerInstanceConfigPreservedStateElDiskElRef {
+    ) -> ComputePerInstanceConfig_PreservedState_DiskRef {
+        ComputePerInstanceConfig_PreservedState_DiskRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputePerInstanceConfigPreservedStateElDiskElRef {
+impl ComputePerInstanceConfig_PreservedState_DiskRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -551,12 +582,12 @@ impl ComputePerInstanceConfigPreservedStateElDiskElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressEl {
+pub struct ComputePerInstanceConfig_PreservedState_ExternalIp_IpAddress {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     address: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressEl {
+impl ComputePerInstanceConfig_PreservedState_ExternalIp_IpAddress {
     #[doc = "Set the field `address`.\nThe URL of the reservation for this IP address."]
     pub fn set_address(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.address = std::option::Option::Some(v.into());
@@ -564,8 +595,8 @@ impl ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressEl {
     }
 }
 
-impl terrars::ToListMappable for ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressEl {
-    type O = terrars::BlockAssignable<ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressEl>;
+impl terrars::ToListMappable for ComputePerInstanceConfig_PreservedState_ExternalIp_IpAddress {
+    type O = terrars::BlockAssignable<ComputePerInstanceConfig_PreservedState_ExternalIp_IpAddress>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -576,34 +607,34 @@ impl terrars::ToListMappable for ComputePerInstanceConfigPreservedStateElExterna
     }
 }
 
-pub struct BuildComputePerInstanceConfigPreservedStateElExternalIpElIpAddressEl {}
+pub struct BuildComputePerInstanceConfig_PreservedState_ExternalIp_IpAddress {}
 
-impl BuildComputePerInstanceConfigPreservedStateElExternalIpElIpAddressEl {
-    pub fn build(self) -> ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressEl {
-        ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressEl {
-            address: core::default::Default::default(),
-        }
+impl BuildComputePerInstanceConfig_PreservedState_ExternalIp_IpAddress {
+    pub fn build(self) -> ComputePerInstanceConfig_PreservedState_ExternalIp_IpAddress {
+        ComputePerInstanceConfig_PreservedState_ExternalIp_IpAddress { address: core::default::Default::default() }
     }
 }
 
-pub struct ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressElRef {
+#[allow(dead_code)]
+pub struct ComputePerInstanceConfig_PreservedState_ExternalIp_IpAddressRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressElRef {
+impl terrars::Ref for ComputePerInstanceConfig_PreservedState_ExternalIp_IpAddressRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressElRef {
-        ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressElRef {
+    ) -> ComputePerInstanceConfig_PreservedState_ExternalIp_IpAddressRef {
+        ComputePerInstanceConfig_PreservedState_ExternalIp_IpAddressRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressElRef {
+impl ComputePerInstanceConfig_PreservedState_ExternalIp_IpAddressRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -616,23 +647,23 @@ impl ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressElRef {
 }
 
 #[derive(Serialize, Default)]
-struct ComputePerInstanceConfigPreservedStateElExternalIpElDynamic {
+struct ComputePerInstanceConfig_PreservedState_ExternalIpDynamic {
     ip_address: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressEl>>,
+    ::Option<terrars::DynamicBlock<ComputePerInstanceConfig_PreservedState_ExternalIp_IpAddress>>,
 }
 
 #[derive(Serialize)]
-pub struct ComputePerInstanceConfigPreservedStateElExternalIpEl {
+pub struct ComputePerInstanceConfig_PreservedState_ExternalIp {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     auto_delete: std::option::Option<terrars::PrimField<std::string::String>>,
     interface_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ip_address: std::option::Option<std::vec::Vec<ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressEl>>,
-    dynamic: ComputePerInstanceConfigPreservedStateElExternalIpElDynamic,
+    ip_address: std::option::Option<std::vec::Vec<ComputePerInstanceConfig_PreservedState_ExternalIp_IpAddress>>,
+    dynamic: ComputePerInstanceConfig_PreservedState_ExternalIpDynamic,
 }
 
-impl ComputePerInstanceConfigPreservedStateElExternalIpEl {
+impl ComputePerInstanceConfig_PreservedState_ExternalIp {
     #[doc =
         "Set the field `auto_delete`.\nThese stateful IPs will never be released during autohealing, update or VM instance recreate operations. This flag is used to configure if the IP reservation should be deleted after it is no longer used by the group, e.g. when the given instance or the whole group is deleted. Default value: \"NEVER\" Possible values: [\"NEVER\", \"ON_PERMANENT_INSTANCE_DELETION\"]"]
     pub fn set_auto_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -648,7 +679,7 @@ impl ComputePerInstanceConfigPreservedStateElExternalIpEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressEl>>,
+                    ::Into<terrars::BlockAssignable<ComputePerInstanceConfig_PreservedState_ExternalIp_IpAddress>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -662,8 +693,8 @@ impl ComputePerInstanceConfigPreservedStateElExternalIpEl {
     }
 }
 
-impl terrars::ToListMappable for ComputePerInstanceConfigPreservedStateElExternalIpEl {
-    type O = terrars::BlockAssignable<ComputePerInstanceConfigPreservedStateElExternalIpEl>;
+impl terrars::ToListMappable for ComputePerInstanceConfig_PreservedState_ExternalIp {
+    type O = terrars::BlockAssignable<ComputePerInstanceConfig_PreservedState_ExternalIp>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -674,14 +705,14 @@ impl terrars::ToListMappable for ComputePerInstanceConfigPreservedStateElExterna
     }
 }
 
-pub struct BuildComputePerInstanceConfigPreservedStateElExternalIpEl {
+pub struct BuildComputePerInstanceConfig_PreservedState_ExternalIp {
     #[doc = ""]
     pub interface_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputePerInstanceConfigPreservedStateElExternalIpEl {
-    pub fn build(self) -> ComputePerInstanceConfigPreservedStateElExternalIpEl {
-        ComputePerInstanceConfigPreservedStateElExternalIpEl {
+impl BuildComputePerInstanceConfig_PreservedState_ExternalIp {
+    pub fn build(self) -> ComputePerInstanceConfig_PreservedState_ExternalIp {
+        ComputePerInstanceConfig_PreservedState_ExternalIp {
             auto_delete: core::default::Default::default(),
             interface_name: self.interface_name,
             ip_address: core::default::Default::default(),
@@ -690,24 +721,26 @@ impl BuildComputePerInstanceConfigPreservedStateElExternalIpEl {
     }
 }
 
-pub struct ComputePerInstanceConfigPreservedStateElExternalIpElRef {
+#[allow(dead_code)]
+pub struct ComputePerInstanceConfig_PreservedState_ExternalIpRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputePerInstanceConfigPreservedStateElExternalIpElRef {
+impl terrars::Ref for ComputePerInstanceConfig_PreservedState_ExternalIpRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputePerInstanceConfigPreservedStateElExternalIpElRef {
-        ComputePerInstanceConfigPreservedStateElExternalIpElRef {
+    ) -> ComputePerInstanceConfig_PreservedState_ExternalIpRef {
+        ComputePerInstanceConfig_PreservedState_ExternalIpRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputePerInstanceConfigPreservedStateElExternalIpElRef {
+impl ComputePerInstanceConfig_PreservedState_ExternalIpRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -724,94 +757,29 @@ impl ComputePerInstanceConfigPreservedStateElExternalIpElRef {
     }
 
     #[doc = "Get a reference to the value of field `ip_address` after provisioning.\n"]
-    pub fn ip_address(&self) -> terrars::ListRef<ComputePerInstanceConfigPreservedStateElExternalIpElIpAddressElRef> {
+    pub fn ip_address(&self) -> terrars::ListRef<ComputePerInstanceConfig_PreservedState_ExternalIp_IpAddressRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ip_address", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct ComputePerInstanceConfigPreservedStateElInternalIpElIpAddressEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    address: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl ComputePerInstanceConfigPreservedStateElInternalIpElIpAddressEl {
-    #[doc = "Set the field `address`.\nThe URL of the reservation for this IP address."]
-    pub fn set_address(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.address = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for ComputePerInstanceConfigPreservedStateElInternalIpElIpAddressEl {
-    type O = terrars::BlockAssignable<ComputePerInstanceConfigPreservedStateElInternalIpElIpAddressEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildComputePerInstanceConfigPreservedStateElInternalIpElIpAddressEl {}
-
-impl BuildComputePerInstanceConfigPreservedStateElInternalIpElIpAddressEl {
-    pub fn build(self) -> ComputePerInstanceConfigPreservedStateElInternalIpElIpAddressEl {
-        ComputePerInstanceConfigPreservedStateElInternalIpElIpAddressEl {
-            address: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct ComputePerInstanceConfigPreservedStateElInternalIpElIpAddressElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for ComputePerInstanceConfigPreservedStateElInternalIpElIpAddressElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ComputePerInstanceConfigPreservedStateElInternalIpElIpAddressElRef {
-        ComputePerInstanceConfigPreservedStateElInternalIpElIpAddressElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl ComputePerInstanceConfigPreservedStateElInternalIpElIpAddressElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc =
-        "Get a reference to the value of field `address` after provisioning.\nThe URL of the reservation for this IP address."]
-    pub fn address(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.address", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct ComputePerInstanceConfigPreservedStateElInternalIpElDynamic {
+struct ComputePerInstanceConfig_PreservedState_InternalIpDynamic {
     ip_address: std
     ::option
-    ::Option<terrars::DynamicBlock<ComputePerInstanceConfigPreservedStateElInternalIpElIpAddressEl>>,
+    ::Option<terrars::DynamicBlock<ComputePerInstanceConfig_PreservedState_ExternalIp_IpAddress>>,
 }
 
 #[derive(Serialize)]
-pub struct ComputePerInstanceConfigPreservedStateElInternalIpEl {
+pub struct ComputePerInstanceConfig_PreservedState_InternalIp {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     auto_delete: std::option::Option<terrars::PrimField<std::string::String>>,
     interface_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ip_address: std::option::Option<std::vec::Vec<ComputePerInstanceConfigPreservedStateElInternalIpElIpAddressEl>>,
-    dynamic: ComputePerInstanceConfigPreservedStateElInternalIpElDynamic,
+    ip_address: std::option::Option<std::vec::Vec<ComputePerInstanceConfig_PreservedState_ExternalIp_IpAddress>>,
+    dynamic: ComputePerInstanceConfig_PreservedState_InternalIpDynamic,
 }
 
-impl ComputePerInstanceConfigPreservedStateElInternalIpEl {
+impl ComputePerInstanceConfig_PreservedState_InternalIp {
     #[doc =
         "Set the field `auto_delete`.\nThese stateful IPs will never be released during autohealing, update or VM instance recreate operations. This flag is used to configure if the IP reservation should be deleted after it is no longer used by the group, e.g. when the given instance or the whole group is deleted. Default value: \"NEVER\" Possible values: [\"NEVER\", \"ON_PERMANENT_INSTANCE_DELETION\"]"]
     pub fn set_auto_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
@@ -827,7 +795,7 @@ impl ComputePerInstanceConfigPreservedStateElInternalIpEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<ComputePerInstanceConfigPreservedStateElInternalIpElIpAddressEl>>,
+                    ::Into<terrars::BlockAssignable<ComputePerInstanceConfig_PreservedState_ExternalIp_IpAddress>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -841,8 +809,8 @@ impl ComputePerInstanceConfigPreservedStateElInternalIpEl {
     }
 }
 
-impl terrars::ToListMappable for ComputePerInstanceConfigPreservedStateElInternalIpEl {
-    type O = terrars::BlockAssignable<ComputePerInstanceConfigPreservedStateElInternalIpEl>;
+impl terrars::ToListMappable for ComputePerInstanceConfig_PreservedState_InternalIp {
+    type O = terrars::BlockAssignable<ComputePerInstanceConfig_PreservedState_InternalIp>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -853,14 +821,14 @@ impl terrars::ToListMappable for ComputePerInstanceConfigPreservedStateElInterna
     }
 }
 
-pub struct BuildComputePerInstanceConfigPreservedStateElInternalIpEl {
+pub struct BuildComputePerInstanceConfig_PreservedState_InternalIp {
     #[doc = ""]
     pub interface_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComputePerInstanceConfigPreservedStateElInternalIpEl {
-    pub fn build(self) -> ComputePerInstanceConfigPreservedStateElInternalIpEl {
-        ComputePerInstanceConfigPreservedStateElInternalIpEl {
+impl BuildComputePerInstanceConfig_PreservedState_InternalIp {
+    pub fn build(self) -> ComputePerInstanceConfig_PreservedState_InternalIp {
+        ComputePerInstanceConfig_PreservedState_InternalIp {
             auto_delete: core::default::Default::default(),
             interface_name: self.interface_name,
             ip_address: core::default::Default::default(),
@@ -869,24 +837,26 @@ impl BuildComputePerInstanceConfigPreservedStateElInternalIpEl {
     }
 }
 
-pub struct ComputePerInstanceConfigPreservedStateElInternalIpElRef {
+#[allow(dead_code)]
+pub struct ComputePerInstanceConfig_PreservedState_InternalIpRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputePerInstanceConfigPreservedStateElInternalIpElRef {
+impl terrars::Ref for ComputePerInstanceConfig_PreservedState_InternalIpRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComputePerInstanceConfigPreservedStateElInternalIpElRef {
-        ComputePerInstanceConfigPreservedStateElInternalIpElRef {
+    ) -> ComputePerInstanceConfig_PreservedState_InternalIpRef {
+        ComputePerInstanceConfig_PreservedState_InternalIpRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputePerInstanceConfigPreservedStateElInternalIpElRef {
+impl ComputePerInstanceConfig_PreservedState_InternalIpRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -903,32 +873,32 @@ impl ComputePerInstanceConfigPreservedStateElInternalIpElRef {
     }
 
     #[doc = "Get a reference to the value of field `ip_address` after provisioning.\n"]
-    pub fn ip_address(&self) -> terrars::ListRef<ComputePerInstanceConfigPreservedStateElInternalIpElIpAddressElRef> {
+    pub fn ip_address(&self) -> terrars::ListRef<ComputePerInstanceConfig_PreservedState_ExternalIp_IpAddressRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ip_address", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct ComputePerInstanceConfigPreservedStateElDynamic {
-    disk: std::option::Option<terrars::DynamicBlock<ComputePerInstanceConfigPreservedStateElDiskEl>>,
-    external_ip: std::option::Option<terrars::DynamicBlock<ComputePerInstanceConfigPreservedStateElExternalIpEl>>,
-    internal_ip: std::option::Option<terrars::DynamicBlock<ComputePerInstanceConfigPreservedStateElInternalIpEl>>,
+struct ComputePerInstanceConfig_PreservedStateDynamic {
+    disk: std::option::Option<terrars::DynamicBlock<ComputePerInstanceConfig_PreservedState_Disk>>,
+    external_ip: std::option::Option<terrars::DynamicBlock<ComputePerInstanceConfig_PreservedState_ExternalIp>>,
+    internal_ip: std::option::Option<terrars::DynamicBlock<ComputePerInstanceConfig_PreservedState_InternalIp>>,
 }
 
 #[derive(Serialize)]
-pub struct ComputePerInstanceConfigPreservedStateEl {
+pub struct ComputePerInstanceConfig_PreservedState {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     metadata: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    disk: std::option::Option<std::vec::Vec<ComputePerInstanceConfigPreservedStateElDiskEl>>,
+    disk: std::option::Option<std::vec::Vec<ComputePerInstanceConfig_PreservedState_Disk>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    external_ip: std::option::Option<std::vec::Vec<ComputePerInstanceConfigPreservedStateElExternalIpEl>>,
+    external_ip: std::option::Option<std::vec::Vec<ComputePerInstanceConfig_PreservedState_ExternalIp>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    internal_ip: std::option::Option<std::vec::Vec<ComputePerInstanceConfigPreservedStateElInternalIpEl>>,
-    dynamic: ComputePerInstanceConfigPreservedStateElDynamic,
+    internal_ip: std::option::Option<std::vec::Vec<ComputePerInstanceConfig_PreservedState_InternalIp>>,
+    dynamic: ComputePerInstanceConfig_PreservedStateDynamic,
 }
 
-impl ComputePerInstanceConfigPreservedStateEl {
+impl ComputePerInstanceConfig_PreservedState {
     #[doc =
         "Set the field `metadata`.\nPreserved metadata defined for this instance. This is a list of key->value pairs."]
     pub fn set_metadata(
@@ -942,7 +912,7 @@ impl ComputePerInstanceConfigPreservedStateEl {
     #[doc = "Set the field `disk`.\n"]
     pub fn set_disk(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputePerInstanceConfigPreservedStateElDiskEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputePerInstanceConfig_PreservedState_Disk>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -958,7 +928,7 @@ impl ComputePerInstanceConfigPreservedStateEl {
     #[doc = "Set the field `external_ip`.\n"]
     pub fn set_external_ip(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputePerInstanceConfigPreservedStateElExternalIpEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputePerInstanceConfig_PreservedState_ExternalIp>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -974,7 +944,7 @@ impl ComputePerInstanceConfigPreservedStateEl {
     #[doc = "Set the field `internal_ip`.\n"]
     pub fn set_internal_ip(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComputePerInstanceConfigPreservedStateElInternalIpEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComputePerInstanceConfig_PreservedState_InternalIp>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -988,8 +958,8 @@ impl ComputePerInstanceConfigPreservedStateEl {
     }
 }
 
-impl terrars::ToListMappable for ComputePerInstanceConfigPreservedStateEl {
-    type O = terrars::BlockAssignable<ComputePerInstanceConfigPreservedStateEl>;
+impl terrars::ToListMappable for ComputePerInstanceConfig_PreservedState {
+    type O = terrars::BlockAssignable<ComputePerInstanceConfig_PreservedState>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1000,11 +970,11 @@ impl terrars::ToListMappable for ComputePerInstanceConfigPreservedStateEl {
     }
 }
 
-pub struct BuildComputePerInstanceConfigPreservedStateEl {}
+pub struct BuildComputePerInstanceConfig_PreservedState {}
 
-impl BuildComputePerInstanceConfigPreservedStateEl {
-    pub fn build(self) -> ComputePerInstanceConfigPreservedStateEl {
-        ComputePerInstanceConfigPreservedStateEl {
+impl BuildComputePerInstanceConfig_PreservedState {
+    pub fn build(self) -> ComputePerInstanceConfig_PreservedState {
+        ComputePerInstanceConfig_PreservedState {
             metadata: core::default::Default::default(),
             disk: core::default::Default::default(),
             external_ip: core::default::Default::default(),
@@ -1014,21 +984,23 @@ impl BuildComputePerInstanceConfigPreservedStateEl {
     }
 }
 
-pub struct ComputePerInstanceConfigPreservedStateElRef {
+#[allow(dead_code)]
+pub struct ComputePerInstanceConfig_PreservedStateRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputePerInstanceConfigPreservedStateElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputePerInstanceConfigPreservedStateElRef {
-        ComputePerInstanceConfigPreservedStateElRef {
+impl terrars::Ref for ComputePerInstanceConfig_PreservedStateRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputePerInstanceConfig_PreservedStateRef {
+        ComputePerInstanceConfig_PreservedStateRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputePerInstanceConfigPreservedStateElRef {
+impl ComputePerInstanceConfig_PreservedStateRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1041,7 +1013,7 @@ impl ComputePerInstanceConfigPreservedStateElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComputePerInstanceConfigTimeoutsEl {
+pub struct ComputePerInstanceConfig_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1050,7 +1022,7 @@ pub struct ComputePerInstanceConfigTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComputePerInstanceConfigTimeoutsEl {
+impl ComputePerInstanceConfig_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1070,8 +1042,8 @@ impl ComputePerInstanceConfigTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ComputePerInstanceConfigTimeoutsEl {
-    type O = terrars::BlockAssignable<ComputePerInstanceConfigTimeoutsEl>;
+impl terrars::ToListMappable for ComputePerInstanceConfig_Timeouts {
+    type O = terrars::BlockAssignable<ComputePerInstanceConfig_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1082,11 +1054,11 @@ impl terrars::ToListMappable for ComputePerInstanceConfigTimeoutsEl {
     }
 }
 
-pub struct BuildComputePerInstanceConfigTimeoutsEl {}
+pub struct BuildComputePerInstanceConfig_Timeouts {}
 
-impl BuildComputePerInstanceConfigTimeoutsEl {
-    pub fn build(self) -> ComputePerInstanceConfigTimeoutsEl {
-        ComputePerInstanceConfigTimeoutsEl {
+impl BuildComputePerInstanceConfig_Timeouts {
+    pub fn build(self) -> ComputePerInstanceConfig_Timeouts {
+        ComputePerInstanceConfig_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1094,21 +1066,23 @@ impl BuildComputePerInstanceConfigTimeoutsEl {
     }
 }
 
-pub struct ComputePerInstanceConfigTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComputePerInstanceConfig_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComputePerInstanceConfigTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputePerInstanceConfigTimeoutsElRef {
-        ComputePerInstanceConfigTimeoutsElRef {
+impl terrars::Ref for ComputePerInstanceConfig_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComputePerInstanceConfig_TimeoutsRef {
+        ComputePerInstanceConfig_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComputePerInstanceConfigTimeoutsElRef {
+impl ComputePerInstanceConfig_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1127,9 +1101,4 @@ impl ComputePerInstanceConfigTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ComputePerInstanceConfigDynamic {
-    preserved_state: std::option::Option<terrars::DynamicBlock<ComputePerInstanceConfigPreservedStateEl>>,
 }
